@@ -1,4 +1,4 @@
-// Mirrors api/HrManagementSystem/Shared/Consts/Permissions.cs.
+// Mirrors api/HrManagementSystem/Shared/Consts/Permissions.cs; parity is enforced by a test.
 export const permissions = {
   ViewAddresses: "Addresses:View",
   CreateAddresses: "Addresses:Create",
@@ -29,6 +29,7 @@ export const permissions = {
   EditDistricts: "Districts:Edit",
   DeleteDistricts: "Districts:Delete",
   ViewChangeLogs: "ChangeLogs:View",
+  ManageDatabaseViews: "DatabaseViews:Manage",
   ViewLocalizations: "Localizations:View",
   CreateLocalizations: "Localizations:Create",
   EditLocalizations: "Localizations:Edit",
@@ -123,6 +124,7 @@ export type PermissionModule =
   | "Countries"
   | "Districts"
   | "ChangeLogs"
+  | "DatabaseViews"
   | "Localizations"
   | "ReportsCategories"
   | "Roles"

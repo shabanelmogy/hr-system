@@ -18,6 +18,7 @@ import LanguageSelector from "./LanguageSelector";
 import MobileMenu from "./MobileMenu";
 import SettingsSystem from "./SettingsSystem";
 import ThemeToggler from "./ThemeToggler";
+import DisplayDebugger from "./DisplayDebugger";
 
 // Import styled components
 import { AppBar, StyledToolbar } from "./TopBarStyles";
@@ -157,6 +158,8 @@ const TopBar = ({
           )}
 
           {isAuthenticated && <NotificationBell />}
+
+          {process.env.NODE_ENV === "development" && <DisplayDebugger />}
 
           {isAuthenticated && (
             <Box sx={{ display: { xs: "none", md: "flex" } }}>

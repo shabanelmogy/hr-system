@@ -15,7 +15,12 @@ export async function GET(request: NextRequest) {
 
   if (resolved.status === "unavailable") {
     console.warn(`${TAG} Auth service unavailable`);
-    return NextResponse.json({ message: "Authentication service unavailable" }, { status: 503 });
+    const response = NextResponse.json(
+      { message: "Authentication service unavailable" },
+      { status: 503, headers: { "cache-control": "no-store" } },
+    );
+    if (resolved.authPayload) setAuthCookies(response, resolved.authPayload);
+    return response;
   }
 
   if (resolved.status === "unauthenticated") {

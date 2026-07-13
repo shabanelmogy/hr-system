@@ -2,6 +2,10 @@
 
 import axios, { type AxiosError, type AxiosInstance, type AxiosRequestConfig, type Method } from "axios";
 import i18n from "i18next";
+import {
+  SESSION_CHANGED_EVENT,
+  SESSION_REFRESHED_HEADER,
+} from "@/lib/auth/constants";
 
 export type ApiError = {
   status: number;
@@ -31,8 +35,14 @@ class ApiClient {
     });
 
     this.api.interceptors.response.use(
-      (response) => response,
+      (response) => {
+        notifySessionRefresh(response.headers[SESSION_REFRESHED_HEADER]);
+        return response;
+      },
       async (error: AxiosError) => {
+        notifySessionRefresh(
+          error.response?.headers[SESSION_REFRESHED_HEADER],
+        );
         const url = error.config?.url ?? "";
         if (
           error.response?.status === 401 &&
@@ -135,6 +145,12 @@ class ApiClient {
 
   externalAuth<T = any>(endpoint: string, data: unknown) {
     return this.post<T>(endpoint, data);
+  }
+}
+
+function notifySessionRefresh(value: unknown) {
+  if (value === "1" && typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent(SESSION_CHANGED_EVENT));
   }
 }
 

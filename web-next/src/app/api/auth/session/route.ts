@@ -10,10 +10,12 @@ export async function GET(request: NextRequest) {
   const resolved = await resolveSession(accessToken, refreshToken);
 
   if (resolved.status === "unavailable") {
-    return NextResponse.json(
+    const response = NextResponse.json(
       { message: "Authentication service unavailable" },
       { status: 503, headers: { "cache-control": "no-store" } },
     );
+    if (resolved.authPayload) setAuthCookies(response, resolved.authPayload);
+    return response;
   }
 
   if (resolved.status === "unauthenticated") {

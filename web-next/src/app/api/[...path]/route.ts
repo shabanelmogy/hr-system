@@ -1,6 +1,10 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from "@/lib/auth/constants";
+import {
+  ACCESS_TOKEN_COOKIE,
+  REFRESH_TOKEN_COOKIE,
+  SESSION_REFRESHED_HEADER,
+} from "@/lib/auth/constants";
 import {
   clearAuthCookies,
   isAuthPayload,
@@ -59,7 +63,7 @@ async function toNextResponse(backendResponse: Response, authPayload?: AuthPaylo
   console.log(`${TAG} Backend returned status: ${backendResponse.status}`);
   if ([204, 205, 304].includes(backendResponse.status)) {
     const response = new NextResponse(null, { status: backendResponse.status });
-    if (authPayload) setAuthCookies(response, authPayload);
+    applyAuthPayload(response, authPayload);
     response.headers.set("cache-control", "no-store");
     return response;
   }
@@ -72,7 +76,7 @@ async function toNextResponse(backendResponse: Response, authPayload?: AuthPaylo
       const body = await backendResponse.text();
       if (!body.trim()) {
         response = new NextResponse(null, { status: backendResponse.status });
-        if (authPayload) setAuthCookies(response, authPayload);
+        applyAuthPayload(response, authPayload);
         response.headers.set("cache-control", "no-store");
         return response;
       }
@@ -83,26 +87,38 @@ async function toNextResponse(backendResponse: Response, authPayload?: AuthPaylo
         isAuthPayload(payload) ? sanitizeAuthPayload(payload) : payload,
         { status: backendResponse.status }
       );
-      if (discoveredAuth) setAuthCookies(response, discoveredAuth);
+      applyAuthPayload(response, discoveredAuth);
     } else {
       response = new NextResponse(await backendResponse.arrayBuffer(), {
         status: backendResponse.status,
         headers: { "content-type": contentType }
       });
-      if (authPayload) setAuthCookies(response, authPayload);
+      applyAuthPayload(response, authPayload);
     }
   } catch (error) {
     console.error(`${TAG} Invalid backend response body`, error);
-    return NextResponse.json(
+    const response = NextResponse.json(
       { title: "Invalid response from backend service" },
       { status: 502 },
     );
+    applyAuthPayload(response, authPayload);
+    return response;
   }
 
   const disposition = backendResponse.headers.get("content-disposition");
   if (disposition) response.headers.set("content-disposition", disposition);
   response.headers.set("cache-control", "no-store");
   return response;
+}
+
+function applyAuthPayload(
+  response: NextResponse,
+  authPayload?: AuthPayload | null,
+) {
+  if (!authPayload) return;
+
+  setAuthCookies(response, authPayload);
+  response.headers.set(SESSION_REFRESHED_HEADER, "1");
 }
 
 async function handle(request: NextRequest, parameters: RouteParameters) {
@@ -145,7 +161,12 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
         backendResponse = await callBackend(request, path, refreshedAuth.token, body);
         console.log(`${TAG} ✅ Retry successful: ${backendResponse.status} for /api/${route}`);
       } catch {
-        return NextResponse.json({ title: "Backend service unavailable" }, { status: 502 });
+        const response = NextResponse.json(
+          { title: "Backend service unavailable" },
+          { status: 502 },
+        );
+        applyAuthPayload(response, refreshedAuth);
+        return response;
       }
     } else {
       console.warn(`${TAG} ❌ Refresh rejected for /api/${route}`);

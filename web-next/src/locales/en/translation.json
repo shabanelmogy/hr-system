@@ -38,6 +38,15 @@
     "average": "Average",
     "poor": "Poor"
   },
+  "displayDebugger": {
+    "title": "Display",
+    "viewport": "Viewport",
+    "screen": "Screen",
+    "pixelRatio": "Pixel ratio",
+    "copy": "Copy dimensions",
+    "copied": "Dimensions copied",
+    "open": "Display dimensions"
+  },
   "errorDialog": {
     "title": "Something went wrong",
     "subtitle": "Review the details below or share them with support.",

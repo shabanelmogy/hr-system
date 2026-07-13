@@ -19,11 +19,14 @@ export type RefreshResult =
 
 export type ResolvedSession =
   | { status: "authenticated"; session: SessionClaims; authPayload?: AuthPayload }
-  | { status: "unauthenticated" }
-  | { status: "unavailable" };
+  | { status: "unauthenticated"; authPayload?: never }
+  | { status: "unavailable"; authPayload?: AuthPayload };
 
 const refreshRequests = new Map<string, Promise<RefreshResult>>();
 const completedRefreshGraceMs = 10_000;
+const sessionValidationTimeoutMs = 3_000;
+const tokenRefreshTimeoutMs = 5_000;
+const definitiveRefreshRejectionStatuses = new Set([400, 401, 403]);
 
 export async function resolveSession(
   accessToken?: string,
@@ -59,7 +62,13 @@ export async function resolveSession(
 
   console.log(`${TAG} Tokens refreshed successfully`);
   const refreshedSession = await fetchVerifiedSession(refreshResult.payload.token);
-  if (refreshedSession.status !== "authenticated") return refreshedSession;
+  if (refreshedSession.status === "unavailable") {
+    return {
+      status: "unavailable",
+      authPayload: refreshResult.payload,
+    };
+  }
+  if (refreshedSession.status === "unauthenticated") return refreshedSession;
 
   return {
     ...refreshedSession,
@@ -103,6 +112,7 @@ async function fetchVerifiedSession(accessToken: string): Promise<SessionLookup>
     const response = await fetch(`${getBackendUrl()}/api/v1/auth/session`, {
       headers: { authorization: `Bearer ${accessToken}` },
       cache: "no-store",
+      signal: AbortSignal.timeout(sessionValidationTimeoutMs),
     });
 
     if (response.status === 404) {
@@ -120,7 +130,7 @@ async function fetchVerifiedSession(accessToken: string): Promise<SessionLookup>
     return valid
       ? { status: "authenticated", session: payload }
       : { status: "unavailable" };
-  } catch (err) {
+  } catch {
     return { status: "unavailable" };
   }
 }
@@ -130,6 +140,7 @@ async function fetchValidatedClaimsFromCheckAuth(accessToken: string): Promise<S
     const response = await fetch(`${getBackendUrl()}/api/v1/auth/checkAuth/CheckAuth`, {
       headers: { authorization: `Bearer ${accessToken}` },
       cache: "no-store",
+      signal: AbortSignal.timeout(sessionValidationTimeoutMs),
     });
 
     if (response.status === 401 || response.status === 403) {
@@ -223,17 +234,18 @@ async function requestTokenRefresh(
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ token: accessToken, refreshToken }),
       cache: "no-store",
+      signal: AbortSignal.timeout(tokenRefreshTimeoutMs),
     });
 
     console.log(`${TAG} 🔄 Refresh response: ${response.status} ${sanitizeForLog(response.statusText)}`);
 
-    if (response.status >= 500) {
-      console.warn(`${TAG} ❌ Refresh unavailable: server error ${response.status}`);
-      return { status: "unavailable" };
-    }
-    if (!response.ok) {
+    if (definitiveRefreshRejectionStatuses.has(response.status)) {
       console.warn(`${TAG} ❌ Refresh rejected: ${response.status}`);
       return { status: "rejected" };
+    }
+    if (!response.ok) {
+      console.warn(`${TAG} ❌ Refresh temporarily unavailable: ${response.status}`);
+      return { status: "unavailable" };
     }
 
     const payload: unknown = await response.json();

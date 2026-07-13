@@ -5,7 +5,7 @@ vi.mock("@/lib/env/server", () => ({
   getBackendUrl: () => "https://api.example.test",
 }));
 
-import { resolveSession } from "./backend-session";
+import { refreshAuthTokens, resolveSession } from "./backend-session";
 
 const session = {
   userId: "user-id",
@@ -27,6 +27,7 @@ const refreshedAuth = {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
 });
 
 describe("resolveSession", () => {
@@ -82,6 +83,40 @@ describe("resolveSession", () => {
     expect(refreshCalls(fetchMock)).toHaveLength(1);
   });
 
+  it("preserves rotated tokens when post-refresh verification is unavailable", async () => {
+    const fetchMock = vi.fn(async (input: string | URL | Request) => {
+      const url = input.toString();
+      if (url.endsWith("/auth/refreshToken")) {
+        return jsonResponse(refreshedAuth);
+      }
+      if (url.endsWith("/auth/session") && fetchMock.mock.calls.length === 1) {
+        return jsonResponse({}, 401);
+      }
+      return jsonResponse({}, 503);
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(
+      resolveSession("expired-access-token", "rotation-test-refresh-token"),
+    ).resolves.toEqual({
+      status: "unavailable",
+      authPayload: refreshedAuth,
+    });
+  });
+
+  it("applies separate deadlines to validation and refresh requests", async () => {
+    const timeoutSpy = vi.spyOn(AbortSignal, "timeout");
+    const fetchMock = createRefreshFlowMock();
+    vi.stubGlobal("fetch", fetchMock);
+
+    await resolveSession("expired-access-token", "timeout-test-refresh-token");
+
+    expect(timeoutSpy.mock.calls).toEqual([[3_000], [5_000], [3_000]]);
+    for (const [, init] of fetchMock.mock.calls) {
+      expect(init?.signal).toBeInstanceOf(AbortSignal);
+    }
+  });
+
   it("does not destroy the session when the authentication API is unavailable", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(jsonResponse({}, 503)));
 
@@ -89,6 +124,30 @@ describe("resolveSession", () => {
       status: "unavailable",
     });
   });
+});
+
+describe("refreshAuthTokens", () => {
+  it.each([400, 401, 403])(
+    "treats status %i as a definitive credential rejection",
+    async (status) => {
+      vi.stubGlobal("fetch", vi.fn().mockResolvedValue(jsonResponse({}, status)));
+
+      await expect(
+        refreshAuthTokens("access-token", `rejected-refresh-${status}`),
+      ).resolves.toEqual({ status: "rejected" });
+    },
+  );
+
+  it.each([408, 409, 422, 429, 500, 503])(
+    "treats status %i as a temporary authentication outage",
+    async (status) => {
+      vi.stubGlobal("fetch", vi.fn().mockResolvedValue(jsonResponse({}, status)));
+
+      await expect(
+        refreshAuthTokens("access-token", `unavailable-refresh-${status}`),
+      ).resolves.toEqual({ status: "unavailable" });
+    },
+  );
 });
 
 function createRefreshFlowMock(delayMs = 0) {

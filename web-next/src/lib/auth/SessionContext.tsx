@@ -6,6 +6,12 @@ import { isSessionClaims, type SessionClaims } from "./session";
 import { hasPermission as checkPermission } from "./permissions";
 import type { PermissionString } from "./permissions";
 import apiClient from "@/lib/api/client";
+import { SESSION_CHANGED_EVENT } from "./constants";
+
+const sessionRevalidationIntervalMs = 5 * 60_000;
+const sessionExpiryBufferMs = 30_000;
+const focusRevalidationThrottleMs = 60_000;
+const maxTimerDelayMs = 2_147_000_000;
 
 type SessionContextValue = {
   user: SessionClaims | null;
@@ -27,6 +33,7 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const refreshPromiseRef = useRef<Promise<void> | null>(null);
+  const lastRefreshAtRef = useRef(0);
 
   const refresh = useCallback(async () => {
     // Reuse in-flight request to prevent race conditions
@@ -35,6 +42,7 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
     }
 
     setIsLoading(true);
+    lastRefreshAtRef.current = Date.now();
     const promise = (async () => {
       setError(null);
       try {
@@ -76,6 +84,53 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
     refreshPromiseRef.current = promise;
     return promise;
   }, []);
+
+  useEffect(() => {
+    const handleSessionChanged = () => {
+      void refresh();
+    };
+
+    window.addEventListener(SESSION_CHANGED_EVENT, handleSessionChanged);
+    return () => {
+      window.removeEventListener(SESSION_CHANGED_EVENT, handleSessionChanged);
+    };
+  }, [refresh]);
+
+  const userId = user?.userId;
+  const expiresAt = user?.expiresAt;
+
+  useEffect(() => {
+    if (!userId || !expiresAt) return;
+
+    const refreshIfStale = () => {
+      if (Date.now() - lastRefreshAtRef.current >= focusRevalidationThrottleMs) {
+        void refresh();
+      }
+    };
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") refreshIfStale();
+    };
+    const expiryDelay = Math.min(
+      Math.max(0, expiresAt - Date.now() - sessionExpiryBufferMs),
+      maxTimerDelayMs,
+    );
+    const expiryTimer = window.setTimeout(() => {
+      void refresh();
+    }, expiryDelay);
+    const intervalTimer = window.setInterval(() => {
+      void refresh();
+    }, sessionRevalidationIntervalMs);
+
+    window.addEventListener("focus", refreshIfStale);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.clearTimeout(expiryTimer);
+      window.clearInterval(intervalTimer);
+      window.removeEventListener("focus", refreshIfStale);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [expiresAt, refresh, userId]);
 
   const logout = useCallback(async () => {
     // 1. Delete cookies server-side first — proxy will see no cookies on next request

@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import type { ReactNode } from "react";
 import type { ThemeMode } from "@/theme/ThemePreferences";
-import { resolveSession } from "@/lib/auth/backend-session";
-import {
-  ACCESS_TOKEN_COOKIE,
-  LEGACY_ACCESS_TOKEN_COOKIE,
-  LEGACY_REFRESH_TOKEN_COOKIE,
-  REFRESH_TOKEN_COOKIE,
-} from "@/lib/auth/constants";
+import { INTERNAL_SESSION_HEADER } from "@/lib/auth/constants";
+import { decodeRequestSession } from "@/lib/auth/request-session";
 import { Providers } from "./providers";
 import { AppEmotionCacheProvider } from "@/theme/AppEmotionCacheProvider";
 import "@/index.css";
@@ -26,10 +21,10 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const savedLang = cookieStore.get("i18next")?.value === "ar" ? "ar" : "en";
   const dir = savedLang === "ar" ? "rtl" : "ltr";
 
-  const accessToken = cookieStore.get(ACCESS_TOKEN_COOKIE)?.value ?? cookieStore.get(LEGACY_ACCESS_TOKEN_COOKIE)?.value;
-  const refreshToken = cookieStore.get(REFRESH_TOKEN_COOKIE)?.value ?? cookieStore.get(LEGACY_REFRESH_TOKEN_COOKIE)?.value;
-  const resolved = await resolveSession(accessToken, refreshToken);
-  const initialUser = resolved.status === "authenticated" ? resolved.session : null;
+  const requestHeaders = await headers();
+  const initialUser = decodeRequestSession(
+    requestHeaders.get(INTERNAL_SESSION_HEADER),
+  );
 
   const fg = initialThemeMode === "dark" ? "#90caf9" : "#1976d2";
 

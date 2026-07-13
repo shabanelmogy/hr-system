@@ -4,6 +4,11 @@ export const REFRESH_TOKEN_COOKIE = "__Host-hrms-refresh-token";
 export const LEGACY_ACCESS_TOKEN_COOKIE = "hrms_access_token";
 export const LEGACY_REFRESH_TOKEN_COOKIE = "hrms_refresh_token";
 
+// Set by the proxy after backend verification and consumed only by server components.
+export const INTERNAL_SESSION_HEADER = "x-hrms-resolved-session";
+export const SESSION_REFRESHED_HEADER = "x-hrms-session-refreshed";
+export const SESSION_CHANGED_EVENT = "auth:session-changed";
+
 export const PUBLIC_ROUTES = [
   // Auth pages
   "/login",

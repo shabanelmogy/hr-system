@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { appRoutes } from "@/config/routes";
 import { permissions } from "./permissions";
-import { canAccessRoute, isKnownProtectedRoute } from "./route-access";
+import { canAccessRoute } from "./route-access";
 import type { SessionClaims } from "./session";
 
 const session: SessionClaims = {
@@ -16,10 +16,9 @@ const session: SessionClaims = {
 };
 
 describe("route access policies", () => {
-  it("recognizes unrestricted and restricted protected routes", () => {
-    expect(isKnownProtectedRoute(appRoutes.home)).toBe(true);
-    expect(isKnownProtectedRoute(appRoutes.basicData.countries)).toBe(true);
-    expect(isKnownProtectedRoute("/not-configured")).toBe(false);
+  it("allows registered unrestricted routes and denies unknown routes", () => {
+    expect(canAccessRoute(appRoutes.home, session)).toBe(true);
+    expect(canAccessRoute("/not-configured", session)).toBe(false);
   });
 
   it("enforces permissions for nested routes", () => {

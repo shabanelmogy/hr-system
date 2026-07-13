@@ -195,7 +195,7 @@ const MultiViewHeader = ({
         {/* Desktop Layout */}
         <Box
           sx={{
-            p: { xs: 2, md: 3 },
+            p: { xs: 2, md: 2.5, xl: 3 },
             display: { xs: "none", md: "flex" },
             justifyContent: "space-between",
             alignItems: "center",
@@ -203,7 +203,15 @@ const MultiViewHeader = ({
           }}
         >
           {/* Left Section - Title and Stats */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2, flex: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+              flex: 1,
+              minWidth: 0,
+            }}
+          >
             <Box>
               <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}>
                 {showBackButton && (
@@ -220,7 +228,8 @@ const MultiViewHeader = ({
                   variant="h5"
                   sx={{
                     color: "text.primary",
-                    fontWeight: 600
+                    fontWeight: 600,
+                    whiteSpace: "nowrap",
                   }}>
                   {title}
                 </Typography>
@@ -251,10 +260,19 @@ const MultiViewHeader = ({
               display: "flex",
               alignItems: "center",
               gap: 1.5,
+              minWidth: 0,
+              flexShrink: 0,
             }}
           >
             {/* Action Buttons */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                flexShrink: 0,
+              }}
+            >
               {showActions.add && (
                 <Tooltip title={t("actions.add") || "Add"} arrow>
                   <Button
@@ -320,12 +338,18 @@ const MultiViewHeader = ({
               sx={{
                 backgroundColor: theme.palette.background.paper,
                 borderRadius: 2,
+                minWidth: 0,
+                maxWidth: "100%",
+                overflowX: "auto",
+                scrollbarWidth: "thin",
                 "& .MuiToggleButton-root": {
                   border: `1px solid ${theme.palette.divider}`,
                   borderRadius: "8px !important",
                   mx: 0.25,
-                  px: 1.5,
+                  px: { md: 1, lg: 1.5 },
                   py: 0.75,
+                  flexShrink: 0,
+                  whiteSpace: "nowrap",
                   transition: "all 0.2s ease-in-out",
                   "&.Mui-selected": {
                     backgroundColor: theme.palette.primary.main,
@@ -347,8 +371,19 @@ const MultiViewHeader = ({
                   value={option.value}
                   aria-label={option.label}
                 >
-                  {option.icon}
-                  <Box sx={{ ml: 1, display: "block" }}>{option.label}</Box>
+                  <Tooltip title={option.label} arrow>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      {option.icon}
+                      <Box
+                        sx={{
+                          ml: 1,
+                          display: { md: "none", lg: "block" },
+                        }}
+                      >
+                        {option.label}
+                      </Box>
+                    </Box>
+                  </Tooltip>
                 </ToggleButton>
               ))}
             </ToggleButtonGroup>

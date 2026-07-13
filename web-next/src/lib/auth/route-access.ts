@@ -81,7 +81,7 @@ const includesIgnoreCase = (values: readonly string[], expected: string) => {
 
 export function canAccessRoute(pathname: string, session: SessionClaims): boolean {
   const rule = routePolicies.find(({ path }) => matchesRoute(pathname, path));
-  if (!rule) return true;
+  if (!rule) return false;
 
   // If rule has no restrictions, allow access
   if (!rule.roles && !rule.permissions) return true;
@@ -103,8 +103,4 @@ export function canAccessRoute(pathname: string, session: SessionClaims): boolea
   }
 
   return matchesRole || matchesPermission;
-}
-
-export function isKnownProtectedRoute(pathname: string): boolean {
-  return routePolicies.some(({ path }) => matchesRoute(pathname, path));
 }
