@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  Countries Controller — External XML Documentation                          ║
+║  Base URL  : /api/v1/countries                                              ║
+║  Namespace : HrManagementSystem.Features.GeographicalInformation.Countries.Controllers.V1                              ║
+║  Guide     : Docs/Controllers/Geographic/CountriesController.md             ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+-->
+
+<doc>
+  <members>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GET /api/v1/countries
+         Permission : Countries:View
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Countries.Controllers.V1.CountriesController.GetAll(System.Threading.CancellationToken)">
+
+      <summary>Get all countries.</summary>
+
+      <remarks>
+        Returns active country records.
+        <br/><br/>
+        <b>Permission required:</b> <c>Countries:View</c>
+      </remarks>
+
+      <param name="cancellationToken">Request cancellation token.</param>
+
+      <returns>Array of <c>CountryResponse</c> objects.</returns>
+
+      <response code="200">
+        List returned successfully.
+        <code>
+        [
+          {
+            "id"           : 1,
+            "nameAr"       : "مصر",
+            "nameEn"       : "Egypt",
+            "alpha2Code"   : "EG",
+            "alpha3Code"   : "EGY",
+            "phoneCode"    : "20",
+            "currencyCode" : "EGP",
+            "states"       : [],
+            "createdOn"    : "2024-01-15T10:30:00Z",
+            "updatedOn"    : null,
+            "isDeleted"    : false
+          }
+        ]
+        </code>
+      </response>
+      <response code="401">Unauthorized — missing or invalid JWT token.</response>
+      <response code="403">Forbidden — user lacks <c>Countries:View</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GET /api/v1/countries/{id}
+         Permission : Countries:View
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Countries.Controllers.V1.CountriesController.GetByID(System.Int32,System.Threading.CancellationToken)">
+
+      <summary>Get a single country by ID.</summary>
+
+      <remarks>
+        <b>Permission required:</b> <c>Countries:View</c>
+      </remarks>
+
+      <param name="id">Country ID — integer, route parameter.</param>
+
+      <param name="cancellationToken">Request cancellation token.</param>
+
+      <returns>Single <c>CountryResponse</c> object.</returns>
+
+      <response code="200">
+        Country found and returned.
+        <code>
+        {
+          "id"           : 1,
+          "nameAr"       : "مصر",
+          "nameEn"       : "Egypt",
+          "alpha2Code"   : "EG",
+          "alpha3Code"   : "EGY",
+          "phoneCode"    : "20",
+          "currencyCode" : "EGP",
+          "states"       : [],
+          "createdOn"    : "2024-01-15T10:30:00Z",
+          "updatedOn"    : null,
+          "isDeleted"    : false
+        }
+        </code>
+      </response>
+      <response code="404">Country with the given ID does not exist.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>Countries:View</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GET /api/v1/countries/{id}/states
+         Permission : Countries:View
+         ⚡ Use this to populate the States dropdown after a country is selected.
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Countries.Controllers.V1.CountriesController.GetCountryWithStates(System.Int32,System.Threading.CancellationToken)">
+
+      <summary>Get a country with its full states list populated.</summary>
+
+      <remarks>
+        Use this endpoint to load the <b>States dropdown</b> after the user selects a country.
+        The <c>states</c> array is fully populated with all non-deleted states.
+        <br/><br/>
+        <b>Permission required:</b> <c>Countries:View</c>
+        <br/>
+        <b>UI usage:</b> On country select → call this endpoint → bind <c>states</c> to the State dropdown.
+      </remarks>
+
+      <param name="id">Country ID — integer, route parameter.</param>
+
+      <param name="cancellationToken">Request cancellation token.</param>
+
+      <returns><c>CountryResponse</c> with the <c>states</c> array fully populated.</returns>
+
+      <response code="200">
+        Country with states returned.
+        <code>
+        {
+          "id"           : 1,
+          "nameAr"       : "مصر",
+          "nameEn"       : "Egypt",
+          "alpha2Code"   : "EG",
+          "alpha3Code"   : "EGY",
+          "phoneCode"    : "20",
+          "currencyCode" : "EGP",
+          "states" : [
+            { "id": 1, "nameAr": "القاهرة",    "nameEn": "Cairo",      "code": "CAI", "isDeleted": false },
+            { "id": 2, "nameAr": "الإسكندرية", "nameEn": "Alexandria", "code": "ALX", "isDeleted": false }
+          ],
+          "createdOn"  : "2024-01-15T10:30:00Z",
+          "updatedOn"  : null,
+          "isDeleted"  : false
+        }
+        </code>
+      </response>
+      <response code="404">Country not found.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>Countries:View</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         POST /api/v1/countries
+         Permission : Countries:Create
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Countries.Controllers.V1.CountriesController.Add(HrManagementSystem.Features.GeographicalInformation.Countries.Contracts.CountryRequest,System.Threading.CancellationToken)">
+
+      <summary>Create a new country.</summary>
+
+      <remarks>
+        <b>Permission required:</b> <c>Countries:Create</c>
+        <br/><br/>
+        <b>Field rules:</b>
+        <list type="table">
+          <listheader><term>Field</term><term>Required</term><term>Validation</term></listheader>
+          <item><term>id</term>           <term>❌</term><term>Optional for new records. Send null or 0.</term></item>
+          <item><term>nameAr</term>       <term>✅</term><term>2–100 chars · Arabic letters only · globally unique.</term></item>
+          <item><term>nameEn</term>       <term>✅</term><term>2–100 chars · English letters only · globally unique.</term></item>
+          <item><term>alpha2Code</term>   <term>❌</term><term>Exactly 2 English letters if provided · stored uppercase · globally unique. e.g. EG</term></item>
+          <item><term>alpha3Code</term>   <term>❌</term><term>Exactly 3 English letters if provided · stored uppercase · globally unique. e.g. EGY</term></item>
+          <item><term>phoneCode</term>    <term>❌</term><term>1–10 chars if provided. e.g. 20, 966</term></item>
+          <item><term>currencyCode</term> <term>❌</term><term>Exactly 3 English letters if provided · stored uppercase. e.g. EGP</term></item>
+        </list>
+      </remarks>
+
+      <param name="request">
+        <c>CountryRequest</c> body (JSON). The <c>id</c> property is optional for new records; send <c>null</c>, omit it, or send <c>0</c>.
+        <code>
+        {
+          "id"           : 0,
+          "nameAr"       : "مصر",
+          "nameEn"       : "Egypt",
+          "alpha2Code"   : "EG",
+          "alpha3Code"   : "EGY",
+          "phoneCode"    : "20",
+          "currencyCode" : "EGP"
+        }
+        </code>
+      </param>
+
+      <param name="cancellationToken">Request cancellation token.</param>
+
+      <returns>The newly created <c>CountryResponse</c> (HTTP 201).</returns>
+
+      <response code="201">Country created successfully. Returns the new country object.</response>
+      <response code="400">Validation failed — check field constraints above.</response>
+      <response code="409"><c>nameAr</c>, <c>nameEn</c>, <c>alpha2Code</c>, or <c>alpha3Code</c> already exists in another country.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>Countries:Create</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         POST /api/v1/countries/bulk
+         Permission : Countries:Create
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Countries.Controllers.V1.CountriesController.AddRange(System.Collections.Generic.List{HrManagementSystem.Features.GeographicalInformation.Countries.Contracts.CountryRequest},System.Threading.CancellationToken)">
+
+      <summary>Bulk insert multiple countries at once.</summary>
+
+      <remarks>
+        Validates the full request before inserting.
+        All items must have <c>id</c> omitted, <c>null</c>, or <c>0</c>.
+        <br/><br/>
+        <b>Permission required:</b> <c>Countries:Create</c>
+      </remarks>
+
+      <param name="requests">
+        Array of <c>CountryRequest</c> objects.
+        <code>
+        [
+          { "id": 0, "nameAr": "مصر",      "nameEn": "Egypt",        "alpha2Code": "EG", "alpha3Code": "EGY", "phoneCode": "20",  "currencyCode": "EGP" },
+          { "id": 0, "nameAr": "السعودية", "nameEn": "Saudi Arabia", "alpha2Code": "SA", "alpha3Code": "SAU", "phoneCode": "966", "currencyCode": "SAR" }
+        ]
+        </code>
+      </param>
+
+      <param name="cancellationToken">Request cancellation token.</param>
+
+      <returns>HTTP 204 No Content on success.</returns>
+
+      <response code="204">All countries inserted successfully.</response>
+      <response code="400">Empty list provided or validation failed on one of the items.</response>
+      <response code="409">One or more names or codes already exist.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>Countries:Create</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         PUT /api/v1/countries
+         Permission : Countries:Edit
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Countries.Controllers.V1.CountriesController.Update(HrManagementSystem.Features.GeographicalInformation.Countries.Contracts.CountryRequest,System.Threading.CancellationToken)">
+
+      <summary>Update an existing country.</summary>
+
+      <remarks>
+        Send the full object including the existing <c>id</c>.
+        Same field rules as POST apply.
+        <br/><br/>
+        <b>Permission required:</b> <c>Countries:Edit</c>
+      </remarks>
+
+      <param name="request">
+        <c>CountryRequest</c> body. <c>id</c> must be the existing record's ID.
+        <code>
+        {
+          "id"           : 1,
+          "nameAr"       : "مصر",
+          "nameEn"       : "Egypt",
+          "alpha2Code"   : "EG",
+          "alpha3Code"   : "EGY",
+          "phoneCode"    : "20",
+          "currencyCode" : "EGP"
+        }
+        </code>
+      </param>
+
+      <param name="cancellationToken">Request cancellation token.</param>
+
+      <returns>The updated <c>CountryResponse</c> (HTTP 201).</returns>
+
+      <response code="201">Country updated successfully. Returns the updated country object.</response>
+      <response code="400">Validation failed.</response>
+      <response code="404">Country with the given <c>id</c> not found.</response>
+      <response code="409">Name or code conflict with another country.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>Countries:Edit</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         DELETE /api/v1/countries/{id}
+         Permission : Countries:Delete
+         ⚠ Soft delete — toggles IsDeleted. Call again to restore.
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Countries.Controllers.V1.CountriesController.Delete(System.Int32,System.Threading.CancellationToken)">
+
+      <summary>Toggle soft-delete state of a country (delete or restore).</summary>
+
+      <remarks>
+        <b>Soft delete only</b> — sets <c>IsDeleted = true</c>. Calling again restores the record.
+        <br/>
+        Cannot delete if the country has active associated states. Soft-deleted states do not block delete.
+        <br/><br/>
+        <b>Permission required:</b> <c>Countries:Delete</c>
+        <br/>
+        <b>UI tip:</b> On HTTP 400, show — <i>"This country cannot be deleted because it has active associated states."</i>
+      </remarks>
+
+      <param name="id">Country ID — integer, route parameter.</param>
+
+      <param name="cancellationToken">Request cancellation token.</param>
+
+      <returns>HTTP 204 No Content on success.</returns>
+
+      <response code="204">Toggled successfully.</response>
+      <response code="400">Country is referenced by one or more active states and cannot be deleted.</response>
+      <response code="404">Country not found.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>Countries:Delete</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GET /api/v1/countries/count
+         Permission : Countries:View
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Countries.Controllers.V1.CountriesController.GetCount(System.Threading.CancellationToken)">
+
+      <summary>Get the total count of active (non-deleted) countries.</summary>
+
+      <remarks>
+        <b>Permission required:</b> <c>Countries:View</c>
+        <br/>
+        Use this to display a summary card at the top of the Countries page.
+      </remarks>
+
+      <param name="cancellationToken">Request cancellation token.</param>
+
+      <returns><c>CountriesCountResponse</c> object.</returns>
+
+      <response code="200">
+        Count returned successfully.
+        <code>
+        { "count": 195, "country": null, "action": null }
+        </code>
+      </response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>Countries:View</c> permission.</response>
+
+    </member>
+
+  </members>
+</doc>

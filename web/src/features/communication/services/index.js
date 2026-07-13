@@ -1,0 +1,1 @@
+export { default as communicationService } from './communicationService';

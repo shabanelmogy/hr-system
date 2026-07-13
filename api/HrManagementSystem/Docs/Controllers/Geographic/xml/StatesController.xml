@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  States Controller — External XML Documentation                             ║
+║  Base URL  : /api/v1/states                                                 ║
+║  Namespace : HrManagementSystem.Features.GeographicalInformation.States.Controllers.V1                              ║
+║  Guide     : Docs/Controllers/Geographic/StatesController.md                ║
+║  Dropdown  : countryId → load from GET /api/v1/countries                   ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+-->
+
+<doc>
+  <members>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GET /api/v1/states
+         Permission : States:View
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.States.Controllers.V1.StatesController.GetAll(System.Threading.CancellationToken)">
+
+      <summary>Get all states with their parent country info.</summary>
+
+      <remarks>
+        Returns active state records including the nested <c>country</c> object.
+        <br/><br/>
+        <b>Permission required:</b> <c>States:View</c>
+      </remarks>
+
+      <returns>Array of <c>StateResponse</c> objects.</returns>
+      <param name="cancellationToken">Token used to cancel the request.</param>
+
+      <response code="200">
+        List returned successfully.
+        <code>
+        [
+          {
+            "id"        : 1,
+            "nameAr"    : "القاهرة",
+            "nameEn"    : "Cairo",
+            "code"      : "CAI",
+            "country"   : { "id": 1, "nameAr": "مصر", "nameEn": "Egypt" },
+            "createdOn" : "2024-01-15T10:30:00Z",
+            "updatedOn" : null,
+            "isDeleted" : false
+          }
+        ]
+        </code>
+      </response>
+      <response code="401">Unauthorized — missing or invalid JWT token.</response>
+      <response code="403">Forbidden — user lacks <c>States:View</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GET /api/v1/states/by-country/{countryId}
+         Permission : States:View
+         ⚡ Use this to populate the States dropdown after a country is selected.
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.States.Controllers.V1.StatesController.GetAllByCountry(System.Int32,System.Threading.CancellationToken)">
+
+      <summary>Get all active states for a specific country.</summary>
+
+      <remarks>
+        Use this to populate the <b>States dropdown</b> after the user selects a country.
+        Only non-deleted states are returned.
+        <br/><br/>
+        <b>Permission required:</b> <c>States:View</c>
+        <br/>
+        <b>UI usage:</b> On country select → call this endpoint → bind results to the State dropdown.
+        <br/>
+        <b>Cascading flow:</b>
+        <list type="number">
+          <item>Load countries: <c>GET /api/v1/countries</c></item>
+          <item>On country select → load states: <c>GET /api/v1/states/by-country/{countryId}</c></item>
+          <item>On state select → load districts: <c>GET /api/v1/districts/by-state/{stateId}</c></item>
+        </list>
+      </remarks>
+
+      <param name="countryId">Country ID — integer, route parameter.</param>
+      <param name="cancellationToken">Request cancellation token.</param>
+
+      <returns>Array of <c>StateResponse</c> objects filtered to the given country.</returns>
+
+      <response code="200">
+        States for the country returned successfully.
+        <code>
+        [
+          { "id": 1, "nameAr": "القاهرة",    "nameEn": "Cairo",      "code": "CAI", "country": { "id": 1, "nameAr": "مصر", "nameEn": "Egypt" }, "createdOn": "2024-01-15T10:30:00Z", "updatedOn": null, "isDeleted": false },
+          { "id": 2, "nameAr": "الإسكندرية", "nameEn": "Alexandria", "code": "ALX", "country": { "id": 1, "nameAr": "مصر", "nameEn": "Egypt" }, "createdOn": "2024-01-15T10:30:00Z", "updatedOn": null, "isDeleted": false }
+        ]
+        </code>
+      </response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>States:View</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GET /api/v1/states/{id}
+         Permission : States:View
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.States.Controllers.V1.StatesController.GetByID(System.Int32,System.Threading.CancellationToken)">
+
+      <summary>Get a single state by ID.</summary>
+
+      <remarks>
+        <b>Permission required:</b> <c>States:View</c>
+      </remarks>
+
+      <param name="id">State ID — integer, route parameter.</param>
+      <param name="cancellationToken">Request cancellation token.</param>
+
+      <returns>Single <c>StateResponse</c> object.</returns>
+
+      <response code="200">
+        State found and returned.
+        <code>
+        {
+          "id"        : 1,
+          "nameAr"    : "القاهرة",
+          "nameEn"    : "Cairo",
+          "code"      : "CAI",
+          "country"   : { "id": 1, "nameAr": "مصر", "nameEn": "Egypt" },
+          "createdOn" : "2024-01-15T10:30:00Z",
+          "updatedOn" : null,
+          "isDeleted" : false
+        }
+        </code>
+      </response>
+      <response code="404">State with the given ID does not exist.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>States:View</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GET /api/v1/states/{id}/districts
+         Permission : States:View
+         ⚡ Use this to populate the Districts dropdown after a state is selected.
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.States.Controllers.V1.StatesController.GetStateWithDistricts(System.Int32,System.Threading.CancellationToken)">
+
+      <summary>Get an active state with its active districts list populated.</summary>
+
+      <remarks>
+        Use this to load the <b>Districts dropdown</b> when a state is selected.
+        Only non-deleted districts are returned.
+        <br/><br/>
+        <b>Permission required:</b> <c>States:View</c>
+      </remarks>
+
+      <param name="id">State ID — integer, route parameter.</param>
+      <param name="cancellationToken">Request cancellation token.</param>
+
+      <param name="cancellationToken">Token used to cancel the request.</param>
+
+      <returns><c>StateResponse</c> for the selected state.</returns>
+
+      <response code="200">State with districts returned.</response>
+      <response code="404">State not found.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>States:View</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         POST /api/v1/states
+         Permission : States:Create
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.States.Controllers.V1.StatesController.Add(HrManagementSystem.Features.GeographicalInformation.States.Contracts.StateRequest,System.Threading.CancellationToken)">
+
+      <summary>Create a new state.</summary>
+
+      <remarks>
+        <b>Permission required:</b> <c>States:Create</c>
+        <br/><br/>
+        <b>Field rules:</b>
+        <list type="table">
+          <listheader><term>Field</term><term>Required</term><term>Validation</term></listheader>
+          <item><term>id</term>        <term>Optional</term><term>Send <c>null</c>, omit it, or send <c>0</c> for new records.</term></item>
+          <item><term>nameAr</term>    <term>✅</term><term>2–100 chars · Arabic letters only · unique within the same country.</term></item>
+          <item><term>nameEn</term>    <term>✅</term><term>2–100 chars · English letters only · unique within the same country.</term></item>
+          <item><term>code</term>      <term>✅</term><term>2–10 chars · letters, digits, or hyphen · unique within the same country. Stored uppercase. e.g. CAI, RYD</term></item>
+          <item><term>countryId</term> <term>✅</term><term>Valid non-deleted country ID. <b>DROPDOWN</b> — load from GET /api/v1/countries.</term></item>
+        </list>
+        <br/>
+        <b>Note:</b> Uniqueness for <c>nameAr</c>, <c>nameEn</c>, and <c>code</c> is scoped to the country — the same name can exist in two different countries.
+      </remarks>
+
+      <param name="request">
+        <c>StateRequest</c> body (JSON). <c>id</c> is optional for new records. Send <c>null</c>, omit it, or send <c>0</c>.
+        <code>
+        {
+          "id"        : 0,
+          "nameAr"    : "القاهرة",
+          "nameEn"    : "Cairo",
+          "code"      : "CAI",
+          "countryId" : 1
+        }
+        </code>
+      </param>
+      <param name="cancellationToken">Request cancellation token.</param>
+
+      <returns>The newly created <c>StateResponse</c> (HTTP 201).</returns>
+
+      <response code="201">State created successfully. Returns the new state object.</response>
+      <response code="400">Validation failed or <c>countryId</c> does not reference a valid country.</response>
+      <response code="409"><c>nameAr</c>, <c>nameEn</c>, or <c>code</c> already exists within the same country.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>States:Create</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         PUT /api/v1/states
+         Permission : States:Edit
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.States.Controllers.V1.StatesController.Update(HrManagementSystem.Features.GeographicalInformation.States.Contracts.StateRequest,System.Threading.CancellationToken)">
+
+      <summary>Update an existing state.</summary>
+
+      <remarks>
+        Send the full object including the existing <c>id</c>.
+        Same field rules as POST apply.
+        <br/><br/>
+        <b>Permission required:</b> <c>States:Edit</c>
+      </remarks>
+
+      <param name="request">
+        <c>StateRequest</c> body. <c>id</c> must be the existing record's ID.
+        <code>
+        {
+          "id"        : 1,
+          "nameAr"    : "القاهرة",
+          "nameEn"    : "Cairo",
+          "code"      : "CAI",
+          "countryId" : 1
+        }
+        </code>
+      </param>
+      <param name="cancellationToken">Request cancellation token.</param>
+
+      <returns>The updated <c>StateResponse</c> (HTTP 200).</returns>
+
+      <response code="200">State updated successfully. Returns the updated state object.</response>
+      <response code="400">Validation failed.</response>
+      <response code="404">State with the given <c>id</c> not found.</response>
+      <response code="409">Name or code conflict within the same country.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>States:Edit</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         DELETE /api/v1/states/{id}
+         Permission : States:Delete
+         ⚠ Soft delete — toggles IsDeleted. Call again to restore.
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.States.Controllers.V1.StatesController.Delete(System.Int32,System.Threading.CancellationToken)">
+
+      <summary>Toggle soft-delete state of a state (delete or restore).</summary>
+
+      <remarks>
+        <b>Soft delete only</b> — sets <c>IsDeleted = true</c>. Calling again restores the record.
+        <br/>
+        Cannot delete if the state has active associated districts. Soft-deleted districts do not block deletion.
+        <br/><br/>
+        <b>Permission required:</b> <c>States:Delete</c>
+        <br/>
+        <b>UI tip:</b> On HTTP 400, show — <i>"This state cannot be deleted because it has active associated districts."</i>
+      </remarks>
+
+      <param name="id">State ID — integer, route parameter.</param>
+      <param name="cancellationToken">Request cancellation token.</param>
+
+      <returns>HTTP 204 No Content on success.</returns>
+
+      <response code="204">Toggled successfully.</response>
+      <response code="400">State is referenced by one or more active districts and cannot be deleted.</response>
+      <response code="404">State not found.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>States:Delete</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GET /api/v1/states/count
+         Permission : States:View
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.States.Controllers.V1.StatesController.GetCount(System.Threading.CancellationToken)">
+
+      <summary>Get the total count of active (non-deleted) states.</summary>
+
+      <remarks>
+        <b>Permission required:</b> <c>States:View</c>
+        <br/>
+        Use this to display a summary card at the top of the States page.
+      </remarks>
+
+      <returns><c>StatesCountResponse</c> object.</returns>
+      <param name="cancellationToken">Token used to cancel the request.</param>
+
+      <response code="200">
+        Count returned successfully.
+        <code>
+        { "count": 27, "state": null, "action": null }
+        </code>
+      </response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>States:View</c> permission.</response>
+
+    </member>
+
+  </members>
+</doc>

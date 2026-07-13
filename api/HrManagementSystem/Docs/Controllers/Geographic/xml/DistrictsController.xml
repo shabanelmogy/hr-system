@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  Districts Controller — External XML Documentation                          ║
+║  Base URL  : /api/v1/districts                                              ║
+║  Namespace : HrManagementSystem.Features.GeographicalInformation.Districts.Controllers.V1                              ║
+║  Guide     : Docs/Controllers/Geographic/DistrictsController.md             ║
+║  Dropdown  : stateId → load from GET /api/v1/states/by-country/{countryId} ║
+║  Cascading : Country → State → District                                     ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+-->
+
+<doc>
+  <members>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GET /api/v1/districts
+         Permission : Districts:View
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Districts.Controllers.V1.DistrictsController.GetAll(System.Threading.CancellationToken)">
+
+      <summary>Get all districts with their parent state info.</summary>
+
+      <remarks>
+        Returns every district record including the nested <c>state</c> object.
+        <br/><br/>
+        <b>Permission required:</b> <c>Districts:View</c>
+      </remarks>
+
+      <returns>Array of <c>DistrictResponse</c> objects.</returns>
+
+      <response code="200">
+        List returned successfully.
+        <code>
+        [
+          {
+            "id"        : 1,
+            "nameAr"    : "القاهرة الجديدة",
+            "nameEn"    : "New Cairo",
+            "code"      : "NC",
+            "stateId"   : 1,
+            "state"     : { "id": 1, "nameAr": "القاهرة", "nameEn": "Cairo", "code": "CAI", "isDeleted": false },
+            "createdOn" : "2024-01-15T10:30:00Z",
+            "updatedOn" : null,
+            "isDeleted" : false
+          }
+        ]
+        </code>
+      </response>
+      <response code="401">Unauthorized — missing or invalid JWT token.</response>
+      <response code="403">Forbidden — user lacks <c>Districts:View</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GET /api/v1/districts/by-state/{stateId}
+         Permission : Districts:View
+         ⚡ Use this to populate the Districts dropdown after a state is selected.
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Districts.Controllers.V1.DistrictsController.GetAllByState(System.Int32,System.Threading.CancellationToken)">
+
+      <summary>Get all active districts for a specific state.</summary>
+
+      <remarks>
+        Use this to populate the <b>Districts dropdown</b> after the user selects a state.
+        Only non-deleted districts are returned.
+        <br/><br/>
+        <b>Permission required:</b> <c>Districts:View</c>
+        <br/>
+        <b>UI usage:</b> On state select → call this endpoint → bind results to the District dropdown.
+        <br/>
+        <b>Full cascading flow for address forms:</b>
+        <list type="number">
+          <item>Load countries : <c>GET /api/v1/countries</c></item>
+          <item>On country select → load states    : <c>GET /api/v1/states/by-country/{countryId}</c></item>
+          <item>On state select   → load districts : <c>GET /api/v1/districts/by-state/{stateId}</c></item>
+        </list>
+      </remarks>
+
+      <param name="stateId">State ID — integer, route parameter.</param>
+
+      <returns>Array of <c>DistrictResponse</c> objects filtered to the given state.</returns>
+
+      <response code="200">
+        Districts for the state returned successfully.
+        <code>
+        [
+          { "id": 1, "nameAr": "القاهرة الجديدة", "nameEn": "New Cairo", "code": "NC",  "stateId": 1, "state": { "id": 1, "nameAr": "القاهرة", "nameEn": "Cairo", "code": "CAI", "isDeleted": false }, "createdOn": "2024-01-15T10:30:00Z", "updatedOn": null, "isDeleted": false },
+          { "id": 2, "nameAr": "مدينة نصر",       "nameEn": "Nasr City", "code": "NSR", "stateId": 1, "state": { "id": 1, "nameAr": "القاهرة", "nameEn": "Cairo", "code": "CAI", "isDeleted": false }, "createdOn": "2024-01-15T10:30:00Z", "updatedOn": null, "isDeleted": false }
+        ]
+        </code>
+      </response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>Districts:View</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GET /api/v1/districts/{id}
+         Permission : Districts:View
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Districts.Controllers.V1.DistrictsController.GetByID(System.Int32,System.Threading.CancellationToken)">
+
+      <summary>Get a single district by ID.</summary>
+
+      <remarks>
+        <b>Permission required:</b> <c>Districts:View</c>
+      </remarks>
+
+      <param name="id">District ID — integer, route parameter.</param>
+
+      <returns>Single <c>DistrictResponse</c> object.</returns>
+
+      <response code="200">
+        District found and returned.
+        <code>
+        {
+          "id"        : 1,
+          "nameAr"    : "القاهرة الجديدة",
+          "nameEn"    : "New Cairo",
+          "code"      : "NC",
+          "stateId"   : 1,
+          "state"     : { "id": 1, "nameAr": "القاهرة", "nameEn": "Cairo", "code": "CAI", "isDeleted": false },
+          "createdOn" : "2024-01-15T10:30:00Z",
+          "updatedOn" : null,
+          "isDeleted" : false
+        }
+        </code>
+      </response>
+      <response code="404">District with the given ID does not exist.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>Districts:View</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GET /api/v1/districts/{id}/addresses
+         Permission : Districts:View
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Districts.Controllers.V1.DistrictsController.GetDistrictWithAddresses(System.Int32,System.Threading.CancellationToken)">
+
+      <summary>Get a district with its full addresses list populated.</summary>
+
+      <remarks>
+        <b>Permission required:</b> <c>Districts:View</c>
+      </remarks>
+
+      <param name="id">District ID — integer, route parameter.</param>
+
+      <returns><c>DistrictResponse</c> with the <c>addresses</c> array fully populated.</returns>
+
+      <response code="200">District with addresses returned.</response>
+      <response code="404">District not found.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>Districts:View</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         POST /api/v1/districts
+         Permission : Districts:Create
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Districts.Controllers.V1.DistrictsController.Add(HrManagementSystem.Features.GeographicalInformation.Districts.Contracts.DistrictRequest,System.Threading.CancellationToken)">
+
+      <summary>Create a new district.</summary>
+
+      <remarks>
+        <b>Permission required:</b> <c>Districts:Create</c>
+        <br/><br/>
+        <b>Field rules:</b>
+        <list type="table">
+          <listheader><term>Field</term><term>Required</term><term>Validation</term></listheader>
+          <item><term>id</term>      <term>✅</term><term>Always send 0 for new records.</term></item>
+          <item><term>nameAr</term>  <term>✅</term><term>2–100 chars · unique within the same state.</term></item>
+          <item><term>nameEn</term>  <term>✅</term><term>2–100 chars · unique within the same state.</term></item>
+          <item><term>code</term>    <term>✅</term><term>2–10 chars · unique within the same state. e.g. NC, NR</term></item>
+          <item><term>stateId</term> <term>✅</term><term>Valid non-deleted state ID. <b>DROPDOWN</b> — load from GET /api/v1/states/by-country/{countryId}.</term></item>
+        </list>
+        <br/>
+        <b>Note:</b> Uniqueness for <c>nameAr</c>, <c>nameEn</c>, and <c>code</c> is scoped to the state — the same name can exist in two different states.
+      </remarks>
+
+      <param name="request">
+        <c>DistrictRequest</c> body (JSON). Send <c>id = 0</c> for new records.
+        <code>
+        {
+          "id"      : 0,
+          "nameAr"  : "القاهرة الجديدة",
+          "nameEn"  : "New Cairo",
+          "code"    : "NC",
+          "stateId" : 1
+        }
+        </code>
+      </param>
+
+      <returns>The newly created <c>DistrictResponse</c> (HTTP 201).</returns>
+
+      <response code="201">District created successfully. Returns the new district object.</response>
+      <response code="400">Validation failed or <c>stateId</c> does not reference a valid state.</response>
+      <response code="409"><c>nameAr</c>, <c>nameEn</c>, or <c>code</c> already exists within the same state.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>Districts:Create</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         PUT /api/v1/districts
+         Permission : Districts:Edit
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Districts.Controllers.V1.DistrictsController.Update(HrManagementSystem.Features.GeographicalInformation.Districts.Contracts.DistrictRequest,System.Threading.CancellationToken)">
+
+      <summary>Update an existing district.</summary>
+
+      <remarks>
+        Send the full object including the existing <c>id</c>.
+        Same field rules as POST apply.
+        <br/><br/>
+        <b>Permission required:</b> <c>Districts:Edit</c>
+      </remarks>
+
+      <param name="request">
+        <c>DistrictRequest</c> body. <c>id</c> must be the existing record's ID.
+        <code>
+        {
+          "id"      : 1,
+          "nameAr"  : "القاهرة الجديدة",
+          "nameEn"  : "New Cairo",
+          "code"    : "NC",
+          "stateId" : 1
+        }
+        </code>
+      </param>
+
+      <returns>The updated <c>DistrictResponse</c> (HTTP 201).</returns>
+
+      <response code="201">District updated successfully. Returns the updated district object.</response>
+      <response code="400">Validation failed or <c>stateId</c> is invalid.</response>
+      <response code="404">District with the given <c>id</c> not found.</response>
+      <response code="409">Name or code conflict within the same state.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>Districts:Edit</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         DELETE /api/v1/districts/{id}
+         Permission : Districts:Delete
+         ⚠ Soft delete — toggles IsDeleted. Call again to restore.
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Districts.Controllers.V1.DistrictsController.Delete(System.Int32,System.Threading.CancellationToken)">
+
+      <summary>Toggle soft-delete state of a district (delete or restore).</summary>
+
+      <remarks>
+        <b>Soft delete only</b> — sets <c>IsDeleted = true</c>. Calling again restores the record.
+        <br/>
+        Cannot delete if the district has associated addresses.
+        <br/><br/>
+        <b>Permission required:</b> <c>Districts:Delete</c>
+        <br/>
+        <b>UI tip:</b> On HTTP 400, show — <i>"This district cannot be deleted because it has associated addresses."</i>
+      </remarks>
+
+      <param name="id">District ID — integer, route parameter.</param>
+
+      <returns>HTTP 204 No Content on success.</returns>
+
+      <response code="204">Toggled successfully.</response>
+      <response code="400">District is referenced by one or more addresses and cannot be deleted.</response>
+      <response code="404">District not found.</response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>Districts:Delete</c> permission.</response>
+
+    </member>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GET /api/v1/districts/count
+         Permission : Districts:View
+         ══════════════════════════════════════════════════════════════════════ -->
+    <member name="M:HrManagementSystem.Features.GeographicalInformation.Districts.Controllers.V1.DistrictsController.GetCount(System.Threading.CancellationToken)">
+
+      <summary>Get the total count of active (non-deleted) districts.</summary>
+
+      <remarks>
+        <b>Permission required:</b> <c>Districts:View</c>
+        <br/>
+        Use this to display a summary card at the top of the Districts page.
+      </remarks>
+
+      <returns><c>DistrictsCountResponse</c> object.</returns>
+
+      <response code="200">
+        Count returned successfully.
+        <code>
+        { "count": 142 }
+        </code>
+      </response>
+      <response code="401">Unauthorized.</response>
+      <response code="403">Forbidden — user lacks <c>Districts:View</c> permission.</response>
+
+    </member>
+
+  </members>
+</doc>

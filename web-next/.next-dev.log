@@ -1,0 +1,11 @@
+
+> hrmanagementsystem-next@0.1.0 dev
+> next dev --port 3000
+
+▲ Next.js 16.2.10 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.7:3000
+✓ Ready in 1872ms
+
+ GET / 200 in 3.8s (next.js: 3.1s, application-code: 677ms)
+[?25h

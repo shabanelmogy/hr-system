@@ -1,0 +1,344 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="supported-color-schemes" content="light dark" />
+    <title>Verify Your Email</title>
+    <style type="text/css" rel="stylesheet" media="all">
+        /* Modern Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        body {
+            width: 100% !important;
+            height: 100%;
+            margin: 0;
+            -webkit-text-size-adjust: none;
+            background-color: #f8fafc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .preheader {
+            display: none !important;
+            visibility: hidden;
+            mso-hide: all;
+            font-size: 1px;
+            line-height: 1px;
+            max-height: 0;
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+        /* Layout */
+        .email-wrapper {
+            width: 100%;
+            margin: 0;
+            padding: 40px 0;
+            background-color: #f8fafc;
+        }
+
+        .email-content {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .email-masthead {
+            padding: 25px 0;
+            text-align: center;
+        }
+
+        .email-masthead_name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
+            text-decoration: none;
+            letter-spacing: -0.025em;
+        }
+
+        .email-body {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .email-body_inner {
+            width: 570px;
+            margin: 0 auto;
+            padding: 0;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .content-cell {
+            padding: 40px;
+        }
+
+        /* Typography */
+        h1 {
+            margin: 0 0 16px;
+            color: #1e293b;
+            font-size: 24px;
+            font-weight: 600;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        p {
+            margin: 0 0 16px;
+            color: #475569;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Button */
+        .button {
+            display: inline-block;
+            background-color: #3b82f6;
+            color: #ffffff !important;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            padding: 12px 32px;
+            border-radius: 8px;
+            box-shadow: 0 2px 3px rgba(59, 130, 246, 0.3);
+            transition: all 0.15s ease;
+        }
+
+            .button:hover {
+                background-color: #2563eb;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+            }
+
+        .button--green {
+            background-color: #10b981;
+        }
+
+            .button--green:hover {
+                background-color: #059669;
+            }
+
+        .button--red {
+            background-color: #ef4444;
+        }
+
+            .button--red:hover {
+                background-color: #dc2626;
+            }
+
+        /* Body Action */
+        .body-action {
+            width: 100%;
+            margin: 30px auto;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Body Sub */
+        .body-sub {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .sub {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .email-footer {
+            width: 570px;
+            margin: 0 auto;
+            padding: 0;
+            text-align: center;
+        }
+
+            .email-footer p {
+                color: #6b7280;
+                font-size: 14px;
+                line-height: 1.6;
+                margin: 16px 0;
+            }
+
+        /* Responsive Design */
+        @media only screen and (max-width: 600px) {
+            .email-body_inner,
+            .email-footer {
+                width: 100% !important;
+            }
+
+            .content-cell {
+                padding: 32px 24px;
+            }
+
+            .button {
+                width: 100% !important;
+                text-align: center !important;
+            }
+        }
+
+        /* Dark Mode */
+        @media (prefers-color-scheme: dark) {
+            body,
+            .email-wrapper {
+                background-color: #1e293b !important;
+            }
+
+            .email-body_inner {
+                background-color: #334155 !important;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            }
+
+            .email-masthead_name,
+            h1 {
+                color: #f8fafc !important;
+            }
+
+            p {
+                color: #cbd5e1 !important;
+            }
+
+            .sub {
+                color: #94a3b8 !important;
+            }
+
+            .body-sub {
+                border-top-color: #475569 !important;
+            }
+
+            .email-footer p {
+                color: #94a3b8 !important;
+            }
+        }
+
+        :root {
+            color-scheme: light dark;
+            supported-color-schemes: light dark;
+        }
+    </style>
+    <!--[if mso]>
+      <style type="text/css">
+        .f-fallback {
+          font-family: Arial, sans-serif;
+        }
+      </style>
+    <![endif]-->
+</head>
+<body>
+    <span class="preheader">
+        Use this link to reset your password. The link is only valid for 24 hours.
+    </span>
+    <table class="email-wrapper"
+           width="100%"
+           cellpadding="0"
+           cellspacing="0"
+           role="presentation">
+        <tr>
+            <td align="center">
+                <table class="email-content"
+                       width="100%"
+                       cellpadding="0"
+                       cellspacing="0"
+                       role="presentation">
+                    <tr>
+                        <td class="email-masthead">
+                            <a href="https://example.com"
+                               class="f-fallback email-masthead_name">
+                                Hr Management System
+                            </a>
+                        </td>
+                    </tr>
+                    <!-- Email Body -->
+                    <tr>
+                        <td class="email-body"
+                            width="570"
+                            cellpadding="0"
+                            cellspacing="0">
+                            <table class="email-body_inner"
+                                   align="center"
+                                   width="570"
+                                   cellpadding="0"
+                                   cellspacing="0"
+                                   role="presentation">
+                                <!-- Body content -->
+                                <tr>
+                                    <td class="content-cell">
+                                        <div class="f-fallback">
+                                            <h1>Hi {{name}},</h1>
+                                            <p>
+                                                To confirm your email, please click the button below:
+                                            </p>
+                                            <!-- Action -->
+                                            <table class="body-action"
+                                                   align="center"
+                                                   width="100%"
+                                                   cellpadding="0"
+                                                   cellspacing="0"
+                                                   role="presentation">
+                                                <tr>
+                                                    <td align="center">
+                                                        <a href="{{action_url}}"
+                                                           class="f-fallback button button--red"
+                                                           target="_blank">Verify email address</a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <p>Thanks,<br>Hr Management System Team</p>
+                                            <!-- Sub copy -->
+                                            <table class="body-sub" role="presentation">
+                                                <tr>
+                                                    <td>
+                                                        <p class="f-fallback sub">
+                                                            If you're having trouble with the button above,
+                                                            copy and paste the URL below into your web
+                                                            browser.
+                                                        </p>
+                                                        <p class="f-fallback sub">{{action_url}}</p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="email-footer"
+                                   align="center"
+                                   width="570"
+                                   cellpadding="0"
+                                   cellspacing="0"
+                                   role="presentation">
+                                <tr>
+                                    <td class="content-cell" align="center">
+                                        <p class="f-fallback sub align-center">
+                                            Hr Management System<br>
+                                            1234 Street Rd.<br>
+                                            Port-Said, Egypt
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

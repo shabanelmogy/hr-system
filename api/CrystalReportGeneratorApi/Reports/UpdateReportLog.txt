@@ -1,0 +1,19 @@
+[11/04/2025 1:03:44 AM] Starting update for: D:\Projects Folder\Own Projects\TechnicalSupport\TechnicalSupportApi\TechnicalSupportApi\CrystalReportGeneratorApi\Reports\Company.rpt
+[11/04/2025 1:03:44 AM] Validating inputs
+[11/04/2025 1:03:44 AM] Inputs valid: D:\Projects Folder\Own Projects\TechnicalSupport\TechnicalSupportApi\TechnicalSupportApi\CrystalReportGeneratorApi\Reports\Company.rpt, DESKTOP-IGALHEL, TechnicalSupportDb
+[11/04/2025 1:03:44 AM] Loading report
+[11/04/2025 1:03:44 AM] Report loaded, tables: 1
+[11/04/2025 1:03:44 AM] Connection info set: DESKTOP-IGALHEL, TechnicalSupportDb
+[11/04/2025 1:03:44 AM] Table: Command, Location: SELECT * FROM Companies
+[11/04/2025 1:03:44 AM] Connection applied to: Command
+[11/04/2025 1:03:44 AM] First table: Command
+[11/04/2025 1:03:44 AM] Attempting command: SELECT * FROM Companies
+[11/04/2025 1:03:44 AM] Validating command with connection: Provider=SQLOLEDB;Data Source=DESKTOP-IGALHEL;Initial Catalog=TechnicalSupportDb;User ID=sa;Password=togetherforever;
+[11/04/2025 1:03:44 AM] Command validated
+[11/04/2025 1:03:44 AM] WARNING: Engine API cannot reliably set command text
+[11/04/2025 1:03:44 AM] Location set to: SELECT * FROM Companies (likely ineffective)
+[11/04/2025 1:03:44 AM] Saving to temp: D:\Projects Folder\Own Projects\TechnicalSupport\TechnicalSupportApi\TechnicalSupportApi\CrystalReportGeneratorApi\Reports\TempReport.rpt
+[11/04/2025 1:03:44 AM] Temp save completed
+[11/04/2025 1:03:44 AM] Save failed: The process cannot access the file 'D:\Projects Folder\Own Projects\TechnicalSupport\TechnicalSupportApi\TechnicalSupportApi\CrystalReportGeneratorApi\Reports\Company.rpt' because it is being used by another process.
+[11/04/2025 1:03:44 AM] Error: Failed to save report
+[11/04/2025 1:03:44 AM] Inner Error: The process cannot access the file 'D:\Projects Folder\Own Projects\TechnicalSupport\TechnicalSupportApi\TechnicalSupportApi\CrystalReportGeneratorApi\Reports\Company.rpt' because it is being used by another process.

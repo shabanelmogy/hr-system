@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": true,
+    "incremental": false
+  },
+  "include": [
+    "next-env.d.ts",
+    "src/app/api/**/*.ts",
+    "src/config/**/*.ts",
+    "src/lib/**/*.ts",
+    "src/lib/**/*.tsx",
+    "src/proxy.ts",
+    "src/theme/**/*.ts",
+    "src/theme/**/*.tsx",
+    "src/types/**/*.d.ts"
+  ],
+  "exclude": ["node_modules"]
+}
