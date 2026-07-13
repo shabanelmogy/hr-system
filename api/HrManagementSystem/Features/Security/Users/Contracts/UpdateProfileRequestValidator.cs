@@ -32,15 +32,14 @@ namespace HrManagementSystem.Features.Security.Users.Contracts
               .WithMessage(_localizer[Strings.MaxLengthError]);
 
             RuleFor(c => c)
-                .Must(c => !IsUserNameDuplicated(c))
+                .MustAsync(IsUserNameUniqueAsync)
                .WithMessage(_localizer[Strings.DuplicatedValue]);
 
         }
 
-        private bool IsUserNameDuplicated(UpdateProfileRequest profile)
-        {
-            var newCompany = _dbContext.Users.Any(c => c.UserName == profile.UserName && c.Id != profile.Id);
-            return newCompany;
-        }
+        private async Task<bool> IsUserNameUniqueAsync(UpdateProfileRequest profile, CancellationToken cancellationToken) =>
+            !await _dbContext.Users.AnyAsync(
+                user => user.UserName == profile.UserName && user.Id != profile.Id,
+                cancellationToken);
     }
 }

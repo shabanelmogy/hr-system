@@ -12,14 +12,7 @@ public class EntityChangeLogsController(IEntityChangeLogService entityChangeLogS
     [HasPermission(Permissions.ViewChangeLogs)]
     public async Task<IActionResult> GetAllChangesLogs()
     {
-        try
-        {
-            var changeLogs = await _entityChangeLogService.GetChangeLogKeyValuesAsync();
-            return Ok(changeLogs);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { Error = "An error occurred while processing your request.", Details = ex.Message });
-        }
+        var changeLogs = await _entityChangeLogService.GetChangeLogKeyValuesAsync();
+        return Ok(changeLogs);
     }
 }

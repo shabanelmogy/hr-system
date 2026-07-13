@@ -20,7 +20,7 @@ public class LoginAuditService(ApplicationDbContext context) : ILoginAuditServic
 
     public async Task RecordLogoutAsync(string userId, CancellationToken cancellationToken)
     {
-        var currentLogin = await _context.UserLogins
+        var currentLogin = await _context.LoginAudits
             .Where(login => login.UserId == userId && login.LogOutDate == null)
             .OrderByDescending(login => login.LoginDate)
             .FirstOrDefaultAsync(cancellationToken);

@@ -20,9 +20,9 @@ public class RolesController(IRoleService roleService) : ControllerBase
 
     [HttpGet("{id}")]
     [HasPermission(Permissions.ViewRoles)]
-    public async Task<IActionResult> Get([FromRoute] string id)
+    public async Task<IActionResult> Get([FromRoute] string id, CancellationToken cancellationToken)
     {
-        var result = await _roleService.GetAsync(id);
+        var result = await _roleService.GetAsync(id, cancellationToken);
 
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
@@ -54,9 +54,9 @@ public class RolesController(IRoleService roleService) : ControllerBase
 
     [HttpGet]
     [HasPermission(Permissions.ViewRoles)]
-    public async Task<IActionResult> GetRoleClaims([FromQuery] string roleId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetRoleClaims([FromQuery] RoleIdQuery query, CancellationToken cancellationToken)
     {
-        var result = await _roleService.GetRoleClaims(roleId, cancellationToken);
+        var result = await _roleService.GetRoleClaims(query.RoleId, cancellationToken);
 
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }

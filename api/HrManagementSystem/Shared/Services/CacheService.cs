@@ -22,7 +22,15 @@ namespace HrManagementSystem.Shared.Services
         {
             _logger.LogInformation("Set cache with key: {key}", key);
 
-            await _distributedCache.SetStringAsync(key, JsonSerializer.Serialize(value), cancellationToken);
+            await _distributedCache.SetStringAsync(
+                key,
+                JsonSerializer.Serialize(value),
+                new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10),
+                    SlidingExpiration = TimeSpan.FromMinutes(2)
+                },
+                cancellationToken);
         }
 
         public async Task RemoveAsync(string key, CancellationToken cancellationToken = default)

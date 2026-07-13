@@ -37,22 +37,25 @@ namespace HrManagementSystem.Features.Analytics.Reports.Contracts
                  .WithMessage(_localizer[Strings.GreaterThanZero]);
 
             RuleFor(x => x)
-                .Must(x => !IsPropertyNameDuplicated(x))
+                .MustAsync(IsPropertyNameUniqueAsync)
                 .WithMessage(_localizer[Strings.DuplicatedValue]);
 
             RuleFor(x => x)
-                .Must(x => !IsColumnNameDuplicated(x))
+                .MustAsync(IsColumnNameUniqueAsync)
                 .WithMessage(_localizer[Strings.DuplicatedValue]);
         }
-        private bool IsPropertyNameDuplicated(ReportDetailRequest request)
-        {
-            var newPropertyName = _dbContext.ReportsDetails.Any(c => c.PropertyName == request.PropertyName && c.ReportMasterId != request.ReportMasterId);
-            return newPropertyName;
-        }
-        private bool IsColumnNameDuplicated(ReportDetailRequest request)
-        {
-            var newColumnName = _dbContext.ReportsDetails.Any(c => c.ColumnName == request.ColumnName && c.ReportMasterId != request.ReportMasterId);
-            return newColumnName;
-        }
+        private async Task<bool> IsPropertyNameUniqueAsync(ReportDetailRequest request, CancellationToken cancellationToken) =>
+            !await _dbContext.ReportsDetails.AnyAsync(
+                detail => detail.PropertyName == request.PropertyName &&
+                          detail.ReportMasterId == request.ReportMasterId &&
+                          detail.Id != request.Id,
+                cancellationToken);
+
+        private async Task<bool> IsColumnNameUniqueAsync(ReportDetailRequest request, CancellationToken cancellationToken) =>
+            !await _dbContext.ReportsDetails.AnyAsync(
+                detail => detail.ColumnName == request.ColumnName &&
+                          detail.ReportMasterId == request.ReportMasterId &&
+                          detail.Id != request.Id,
+                cancellationToken);
     }
 }

@@ -19,4 +19,3 @@ export * from './types/State';
 
 // Utils
 export { getStateValidationSchema } from './utils/validation';
-export { default as stateHandler } from './utils/stateHandler';

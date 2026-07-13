@@ -22,7 +22,7 @@ public class CategoryService(
     {
         return await _hybridCache.GetOrCreateAsync(
             _cacheKey,
-            async cacheEntry => await _context.Categories
+            async _ => await _context.Categories
                 .AsNoTracking()
                 .Where(c => !c.IsDeleted)
                 .Select(c => new CategoryResponse(
@@ -32,7 +32,7 @@ public class CategoryService(
                     c.CategorySubcategories
                         .Where(cs => cs.SubCategory != null && !cs.SubCategory.IsDeleted)
                         .Select(cs => new SimpleSubCategoryResponse(
-                            cs.SubCategory.Id,
+                            cs.SubCategory!.Id,
                             cs.SubCategory.NameAr,
                             cs.SubCategory.NameEn,
                             cs.SubCategory.IsDeleted
@@ -42,7 +42,8 @@ public class CategoryService(
                     c.UpdatedOn,
                     c.IsDeleted
                 ))
-                .ToListAsync(cancellationToken));
+                .ToListAsync(cancellationToken),
+            cancellationToken: cancellationToken);
     }
 
     public async Task<Result<CategoryResponse>> GetAsync(int id, CancellationToken cancellationToken)
@@ -98,11 +99,10 @@ public class CategoryService(
         await _hybridCache.RemoveAsync(_cacheKey, cancellationToken);
 
         var response = await _context.Categories
-                                     .Include(c => c.CategorySubcategories)
-                                     .ThenInclude(s => s.SubCategory)
-                                     .Where(c => c.Id == updatedCategory.Id)
-                                     .Select(c => _mapper.Map<CategoryResponse>(c))
-                                     .FirstOrDefaultAsync(cancellationToken);
+            .AsNoTracking()
+            .Where(category => category.Id == currentCategory.Id)
+            .ProjectToType<CategoryResponse>()
+            .SingleAsync(cancellationToken);
 
         return Result.Success(response);
     }
@@ -115,7 +115,11 @@ public class CategoryService(
         if (category == null)
             return Result.Failure(_categoryErrors.CategoryNotFound);
 
-        if (_context.CategorySubcategories.Any(cs => cs.CategoryId == id && !cs.SubCategory.IsDeleted))
+        if (await _context.CategorySubcategories.AnyAsync(
+                relationship => relationship.CategoryId == id &&
+                                relationship.SubCategory != null &&
+                                !relationship.SubCategory.IsDeleted,
+                cancellationToken))
             return Result.Failure(_categoryErrors.CategoryHasSubCategories);
 
         // Cascade delete will handle CategorySubcategories

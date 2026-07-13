@@ -40,43 +40,41 @@ public class DistrictRequestValidator : AbstractValidator<DistrictRequest>
             .WithMessage(_localizer[Strings.Required]);
 
         RuleFor(d => d)
-           .Must(d => !IsDistrictNameEnDuplicated(d))
+           .MustAsync(IsDistrictNameEnUniqueAsync)
            .WithName(Strings.NameEn)
            .WithMessage(_localizer[Strings.DuplicatedValue]);
 
         RuleFor(d => d)
-           .Must(d => !IsDistrictNameArDuplicated(d))
+           .MustAsync(IsDistrictNameArUniqueAsync)
            .WithName(Strings.NameAr)
            .WithMessage(_localizer[Strings.DuplicatedValue]);
 
         RuleFor(d => d)
-           .Must(d => !IsCodeDuplicated(d))
+           .MustAsync(IsCodeUniqueAsync)
            .WithName(Strings.Code)
            .WithMessage(_localizer[Strings.DuplicatedValue]);
 
         RuleFor(d => d)
-           .Must(d => IsStateExists(d.StateId))
+           .MustAsync(IsStateValidAsync)
            .WithName(Strings.State)
            .WithMessage(_localizer[Strings.StateNotFound]);
     }
 
-    private bool IsDistrictNameEnDuplicated(DistrictRequest district)
-    {
-        return _dbContext.Districts.Any(d => d.NameEn == district.NameEn && d.StateId == district.StateId && d.Id != district.Id);
-    }
+    private async Task<bool> IsDistrictNameEnUniqueAsync(DistrictRequest district, CancellationToken cancellationToken) =>
+        !await _dbContext.Districts.AnyAsync(
+            candidate => candidate.NameEn == district.NameEn && candidate.StateId == district.StateId && candidate.Id != district.Id,
+            cancellationToken);
 
-    private bool IsDistrictNameArDuplicated(DistrictRequest district)
-    {
-        return _dbContext.Districts.Any(d => d.NameAr == district.NameAr && d.StateId == district.StateId && d.Id != district.Id);
-    }
+    private async Task<bool> IsDistrictNameArUniqueAsync(DistrictRequest district, CancellationToken cancellationToken) =>
+        !await _dbContext.Districts.AnyAsync(
+            candidate => candidate.NameAr == district.NameAr && candidate.StateId == district.StateId && candidate.Id != district.Id,
+            cancellationToken);
 
-    private bool IsCodeDuplicated(DistrictRequest district)
-    {
-        return _dbContext.Districts.Any(d => d.Code == district.Code && d.StateId == district.StateId && d.Id != district.Id);
-    }
+    private async Task<bool> IsCodeUniqueAsync(DistrictRequest district, CancellationToken cancellationToken) =>
+        !await _dbContext.Districts.AnyAsync(
+            candidate => candidate.Code == district.Code && candidate.StateId == district.StateId && candidate.Id != district.Id,
+            cancellationToken);
 
-    private bool IsStateExists(int stateId)
-    {
-        return _dbContext.States.Any(s => s.Id == stateId && !s.IsDeleted);
-    }
+    private Task<bool> IsStateValidAsync(DistrictRequest district, CancellationToken cancellationToken) =>
+        _dbContext.States.AnyAsync(state => state.Id == district.StateId && !state.IsDeleted, cancellationToken);
 }

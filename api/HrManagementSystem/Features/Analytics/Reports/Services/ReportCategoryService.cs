@@ -29,7 +29,7 @@ public class ReportCategoryService(
         return ReportsCategories;
     }
 
-    public async Task<Result<ReportCategoryResponse>>? GetAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Result<ReportCategoryResponse>> GetAsync(int id, CancellationToken cancellationToken = default)
     {
         var response = await _context.ReportsCategories.FindAsync(id, cancellationToken);
 

@@ -26,23 +26,23 @@ namespace HrManagementSystem.Features.Catalog.Categories.Contracts
                 .WithMessage(_localizer[Strings.EnglishLetterOnly]);
 
             RuleFor(c => c)
-                .Must(c => !IsNameArDuplicated(c))
+                .MustAsync(IsNameArUniqueAsync)
                 .WithMessage(_localizer[Strings.DuplicatedValue]);
 
             RuleFor(c => c)
-                .Must(c => !IsNameEnDuplicated(c))
+                .MustAsync(IsNameEnUniqueAsync)
                 .WithMessage(_localizer[Strings.DuplicatedValue]);
 
         }
 
-        private bool IsNameArDuplicated(CategoryRequest category)
-        {
-            return _dbContext.Categories.Any(c => c.NameAr == category.NameAr && c.Id != category.Id);
-        }
+        private async Task<bool> IsNameArUniqueAsync(CategoryRequest category, CancellationToken cancellationToken) =>
+            !await _dbContext.Categories.AnyAsync(
+                candidate => candidate.NameAr == category.NameAr && candidate.Id != category.Id,
+                cancellationToken);
 
-        private bool IsNameEnDuplicated(CategoryRequest category)
-        {
-            return _dbContext.Categories.Any(c => c.NameEn == category.NameEn && c.Id != category.Id);
-        }
+        private async Task<bool> IsNameEnUniqueAsync(CategoryRequest category, CancellationToken cancellationToken) =>
+            !await _dbContext.Categories.AnyAsync(
+                candidate => candidate.NameEn == category.NameEn && candidate.Id != category.Id,
+                cancellationToken);
     }
 }

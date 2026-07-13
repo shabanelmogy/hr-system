@@ -41,7 +41,7 @@ public class DistrictService(
         return districts;
     }
 
-    public async Task<Result<DistrictResponse>>? GetAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Result<DistrictResponse>> GetAsync(int id, CancellationToken cancellationToken = default)
     {
         var response = await _context.Districts.FindAsync(id, cancellationToken);
 
@@ -50,7 +50,7 @@ public class DistrictService(
             : Result.Failure<DistrictResponse>(_districtErrors.DistrictNotFound);
     }
 
-    public async Task<Result<DistrictResponse>>? GetRelatedAddresses(int id, CancellationToken cancellationToken = default)
+    public async Task<Result<DistrictResponse>> GetRelatedAddresses(int id, CancellationToken cancellationToken = default)
     {
         var response = await _context.Districts
                                         .Include(d => d.Addresses)

@@ -6,6 +6,7 @@ namespace HrManagementSystem.Features.Security.Authentication.Controllers.V1;
 [Route("api/account")]
 [ApiController]
 [AllowAnonymous]
+[EnableRateLimiting("authentication")]
 public sealed class GoogleAuthController(
     IAuthService authService,
     IHttpClientFactory httpClientFactory,
@@ -24,9 +25,12 @@ public sealed class GoogleAuthController(
         if (string.IsNullOrWhiteSpace(request.Credential) || string.IsNullOrWhiteSpace(_googleClientId))
             return Unauthorized();
 
-        var client = _httpClientFactory.CreateClient();
-        var tokenInfoResponse = await client.GetAsync(
-            $"https://oauth2.googleapis.com/tokeninfo?access_token={Uri.EscapeDataString(request.Credential)}",
+        var client = _httpClientFactory.CreateClient("Google");
+        using var tokenInfoResponse = await SendWithTransientRetryAsync(
+            client,
+            () => new HttpRequestMessage(
+                HttpMethod.Get,
+                $"https://oauth2.googleapis.com/tokeninfo?access_token={Uri.EscapeDataString(request.Credential)}"),
             cancellationToken);
 
         if (!tokenInfoResponse.IsSuccessStatusCode)
@@ -42,12 +46,15 @@ public sealed class GoogleAuthController(
             return Unauthorized();
         }
 
-        using var userInfoRequest = new HttpRequestMessage(
-            HttpMethod.Get,
-            "https://www.googleapis.com/oauth2/v3/userinfo");
-        userInfoRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", request.Credential);
-
-        var userInfoResponse = await client.SendAsync(userInfoRequest, cancellationToken);
+        using var userInfoResponse = await SendWithTransientRetryAsync(
+            client,
+            () =>
+            {
+                var userInfoRequest = new HttpRequestMessage(HttpMethod.Get, "oauth2/v3/userinfo");
+                userInfoRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", request.Credential);
+                return userInfoRequest;
+            },
+            cancellationToken);
         if (!userInfoResponse.IsSuccessStatusCode)
             return Unauthorized();
 
@@ -69,6 +76,43 @@ public sealed class GoogleAuthController(
         var result = await _authService.LoginWithGoogleAsync(principal, cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
+
+    private static async Task<HttpResponseMessage> SendWithTransientRetryAsync(
+        HttpClient client,
+        Func<HttpRequestMessage> requestFactory,
+        CancellationToken cancellationToken)
+    {
+        const int maxAttempts = 2;
+
+        for (var attempt = 1; attempt <= maxAttempts; attempt++)
+        {
+            try
+            {
+                using var request = requestFactory();
+                var response = await client.SendAsync(
+                    request,
+                    HttpCompletionOption.ResponseHeadersRead,
+                    cancellationToken);
+
+                if (attempt == maxAttempts || !IsTransient(response.StatusCode))
+                    return response;
+
+                response.Dispose();
+            }
+            catch (HttpRequestException) when (attempt < maxAttempts)
+            {
+            }
+
+            await Task.Delay(TimeSpan.FromMilliseconds(200), cancellationToken);
+        }
+
+        throw new InvalidOperationException("The outbound request did not produce a response.");
+    }
+
+    private static bool IsTransient(System.Net.HttpStatusCode statusCode) =>
+        statusCode == System.Net.HttpStatusCode.RequestTimeout ||
+        (int)statusCode == StatusCodes.Status429TooManyRequests ||
+        (int)statusCode >= StatusCodes.Status500InternalServerError;
 }
 
 public sealed record GoogleAuthRequest(string Credential);

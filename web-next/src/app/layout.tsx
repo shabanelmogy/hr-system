@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
 import { cookies } from "next/headers";
 import type { ReactNode } from "react";
 import type { ThemeMode } from "@/theme/ThemePreferences";
@@ -11,6 +10,7 @@ import {
   REFRESH_TOKEN_COOKIE,
 } from "@/lib/auth/constants";
 import { Providers } from "./providers";
+import { AppEmotionCacheProvider } from "@/theme/AppEmotionCacheProvider";
 import "@/index.css";
 
 export const metadata: Metadata = {
@@ -31,22 +31,28 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const resolved = await resolveSession(accessToken, refreshToken);
   const initialUser = resolved.status === "authenticated" ? resolved.session : null;
 
-  const bg = initialThemeMode === "dark" ? "#121212" : "#ffffff";
   const fg = initialThemeMode === "dark" ? "#90caf9" : "#1976d2";
 
   return (
-    <html lang={savedLang} dir={dir} data-theme={initialThemeMode} style={{ background: bg }}>
+    <html lang={savedLang} dir={dir} data-theme={initialThemeMode}>
       <head>
         <style dangerouslySetInnerHTML={{ __html: `
+          html[data-theme="light"] {
+            --app-background: #ffffff;
+            color-scheme: light;
+          }
+          html[data-theme="dark"] {
+            --app-background: #121212;
+            color-scheme: dark;
+          }
           html, body {
-            background: ${bg} !important;
-            color-scheme: ${initialThemeMode};
+            background: var(--app-background) !important;
           }
           body { margin: 0; }
           #app-loader {
             position: fixed; inset: 0; z-index: 9999;
             display: flex; align-items: center; justify-content: center;
-            background: ${bg};
+            background: var(--app-background);
             opacity: 1;
             visibility: visible;
             pointer-events: all;
@@ -61,16 +67,22 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           @keyframes spin { to { transform: rotate(360deg); } }
         `}} />
       </head>
-      <body className={initialThemeMode} style={{ background: bg }}>
+      <body className={initialThemeMode}>
         <div id="app-loader">
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
             <circle cx="24" cy="24" r="20" stroke={fg} strokeOpacity="0.2" strokeWidth="4" />
             <path d="M44 24a20 20 0 0 0-20-20" stroke={fg} strokeWidth="4" strokeLinecap="round" />
           </svg>
         </div>
-        <AppRouterCacheProvider>
-          <Providers initialThemeMode={initialThemeMode} initialUser={initialUser}>{children}</Providers>
-        </AppRouterCacheProvider>
+        <AppEmotionCacheProvider direction={dir}>
+          <Providers
+            initialThemeMode={initialThemeMode}
+            initialDirection={dir}
+            initialUser={initialUser}
+          >
+            {children}
+          </Providers>
+        </AppEmotionCacheProvider>
       </body>
     </html>
   );

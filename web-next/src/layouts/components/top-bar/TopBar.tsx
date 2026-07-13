@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 
@@ -12,11 +11,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth/SessionContext";
 import { useThemeSettingsContext } from "@/theme/ThemeShell";
+import { NotificationBell } from "@/shared/notifications";
 
 // Import sub-components
 import LanguageSelector from "./LanguageSelector";
 import MobileMenu from "./MobileMenu";
-import NotificationsSystem from "./notification-menu/SimpleNotificationsSystem";
 import SettingsSystem from "./SettingsSystem";
 import ThemeToggler from "./ThemeToggler";
 
@@ -35,7 +34,7 @@ const TopBar = ({
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<HTMLElement | null>(null);
   const { t, i18n } = useTranslation();
   const { direction, setMode } = useThemeSettingsContext();
-  const { user, isLoading, logout: sessionLogout } = useSession();
+  const { user, logout: sessionLogout } = useSession();
   const isAuthenticated = user !== null;
 
   const router = useRouter();
@@ -51,7 +50,7 @@ const TopBar = ({
   const handleLanguageChange = (value: string) => {
     const language = value === "ltr" ? "en" : "ar";
     cookies.set("i18next", language, { expires: 365, sameSite: "lax" });
-    void i18n.changeLanguage(language);
+    void i18n.changeLanguage(language).then(() => window.location.reload());
     handleMobileMenuClose();
   };
 
@@ -77,9 +76,7 @@ const TopBar = ({
 
   return (
     <>
-      {/* @ts-ignore */}
       <AppBar position="fixed" open={open}>
-        {/* @ts-ignore */}
         <StyledToolbar open={open}>
           {/* Left Section */}
           <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -149,10 +146,6 @@ const TopBar = ({
                 currentMode={theme.palette.mode}
                 onToggle={handleThemeToggle}
               />
-              {isAuthenticated && <NotificationsSystem />}
-              {isAuthenticated && <SettingsSystem />}
-
-              {isAuthenticated && <Box sx={{ display: "flex" }}></Box>}
             </Box>
           </Box>
 
@@ -163,14 +156,16 @@ const TopBar = ({
             </Box>
           )}
 
+          {isAuthenticated && <NotificationBell />}
+
+          {isAuthenticated && (
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <SettingsSystem />
+            </Box>
+          )}
+
           {/* Mobile More Button */}
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            {isAuthenticated && (
-              <Box sx={{ display: "flex" }}>
-                <NotificationsSystem />
-              </Box>
-            )}
-
             <IconButton
               size="large"
               aria-label="show more"

@@ -19,14 +19,14 @@ public class SubcategoryService(
 
     public async Task<IEnumerable<SubCategoryResponse>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        var subCategories = await _context.SubCategories
-                 .AsNoTracking()
-                 .Include(s => s.CategorySubcategories)
-                 .ThenInclude(cs => cs.Category) // Include the Category data
-                 .Select(s => _mapper.Map<SubCategoryResponse>(s))
-                 .ToListAsync(cancellationToken);
-
-        return subCategories;
+        return await _hybridCache.GetOrCreateAsync(
+            _cacheKey,
+            async _ => await _context.SubCategories
+                .AsNoTracking()
+                .Where(subCategory => !subCategory.IsDeleted)
+                .ProjectToType<SubCategoryResponse>()
+                .ToListAsync(cancellationToken),
+            cancellationToken: cancellationToken);
     }
 
     public async Task<IEnumerable<SubCategoryResponse>> GetAllAsyncRelatedToCategeory(int CategoryId, CancellationToken cancellationToken = default)
@@ -65,12 +65,11 @@ public class SubcategoryService(
         await _context.SubCategories.AddAsync(newSubcategory, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
-        var savedSubcategory = await _context.SubCategories
-                .Include(sc => sc.CategorySubcategories)
-                .ThenInclude(cs => cs.Category) // Include the Category data
-                .FirstOrDefaultAsync(sc => sc.Id == newSubcategory.Id, cancellationToken);
-
-        var response = savedSubcategory.Adapt<SubCategoryResponse>();
+        var response = await _context.SubCategories
+            .AsNoTracking()
+            .Where(subCategory => subCategory.Id == newSubcategory.Id)
+            .ProjectToType<SubCategoryResponse>()
+            .SingleAsync(cancellationToken);
         await _hybridCache.RemoveAsync(_cacheKey, cancellationToken);
 
         return Result.Success(response);
@@ -118,12 +117,11 @@ public class SubcategoryService(
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        var savedSubcategory = await _context.SubCategories
-            .Include(sc => sc.CategorySubcategories)
-            .ThenInclude(cs => cs.Category)
-            .FirstOrDefaultAsync(sc => sc.Id == currentSubcategory.Id, cancellationToken);
-
-        var response = savedSubcategory.Adapt<SubCategoryResponse>();
+        var response = await _context.SubCategories
+            .AsNoTracking()
+            .Where(subCategory => subCategory.Id == currentSubcategory.Id)
+            .ProjectToType<SubCategoryResponse>()
+            .SingleAsync(cancellationToken);
         await _hybridCache.RemoveAsync(_cacheKey, cancellationToken);
 
         return Result.Success(response);

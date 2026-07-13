@@ -40,6 +40,7 @@
     "InvalidFileSize": "اقصى حجم ملف مسموح",
     "ExtensionFileNotAllowed": "إمتداد الملف غير مسموح به",
     "NotAllowedFileContent": "غير مسموح برفع نوع الملف",
+    "TooManyFiles": "الحد الأقصى المسموح به هو 10 ملفات لكل طلب",
     "StartEndDateValidation": "تاريخ البداية يجب ان يكون اكبر من اويساوى تاريخ النهاية",
 
     //Entities Keys
@@ -113,6 +114,7 @@
     "UserNotFound": "إسم المستخدم غير موجود",
 
     "LocalizationFileNotFound": "ملف الترجمة غير موجود",
+    "InvalidLanguage": "اللغة المطلوبة غير مدعومة",
     "LocalizationKeyNotFound": "المفتاح غير موجود",
 
     "ReportCategoryNotFound": "تصنيف التقرير غير موجود",
@@ -180,5 +182,14 @@
     "InvalidLatitude": "يجب أن يكون خط العرض بين -90 و 90 درجة",
     "InvalidLongitude": "يجب أن يكون خط الطول بين -180 و 180 درجة",
     "InvalidAddressType": "نوع عنوان غير صحيح",
-    "InvalidDistrict": "منطقة غير صحيحة"
+    "InvalidDistrict": "منطقة غير صحيحة",
+    "NotificationNotFound": "الإشعار غير موجود",
+    "InvalidNotificationRequest": "طلب الإشعار غير صالح",
+    "NotificationPublishFailed": "تعذر حفظ الإشعار",
+    "CountryNotificationTitle": "تم تحديث بيانات الدول",
+    "CountryCreatedNotificationMessage": "تم إنشاء الدولة {NameEn}",
+    "CountriesCreatedNotificationMessage": "تم إنشاء {Count} دولة",
+    "CountryUpdatedNotificationMessage": "تم تحديث الدولة {NameEn}",
+    "CountryDeletedNotificationMessage": "تم حذف الدولة {NameEn}",
+    "CountryRestoredNotificationMessage": "تمت استعادة الدولة {NameEn}"
 }

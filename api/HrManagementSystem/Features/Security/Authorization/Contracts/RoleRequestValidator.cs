@@ -19,19 +19,17 @@ public class RoleRequestValidator : AbstractValidator<RoleRequest>
 
         //check role duplicate
         RuleFor(r => r)
-            .Must(r => IsRoleNameDuplicated(r))
+            .MustAsync(IsRoleNameUniqueAsync)
             .WithMessage(_localizer[Strings.RoleDuplicated]);
     }
 
-    private bool IsRoleNameDuplicated(RoleRequest request)
+    private async Task<bool> IsRoleNameUniqueAsync(RoleRequest request, CancellationToken cancellationToken)
     {
-        // If no ID (new record), check if name exists
         if (string.IsNullOrEmpty(request.Id))
-        {
-            return !_dbContext.Roles.Any(c => c.Name == request.Name);
-        }
+            return !await _dbContext.Roles.AnyAsync(role => role.Name == request.Name, cancellationToken);
 
-        // If has ID (update), check if name exists for different record
-        return !_dbContext.Roles.Any(c => c.Name == request.Name && c.Id != request.Id);
+        return !await _dbContext.Roles.AnyAsync(
+            role => role.Name == request.Name && role.Id != request.Id,
+            cancellationToken);
     }
 }

@@ -3,7 +3,7 @@ namespace HrManagementSystem.Features.Security.Authentication.Contracts
     public class ResetPasswordRequestValidator : AbstractValidator<ResetPasswordRequest>
     {
         private readonly IStringLocalizer<ResetPasswordRequest> _localizer;
-        public ResetPasswordRequestValidator(IStringLocalizer<ResetPasswordRequest> localizer = null)
+        public ResetPasswordRequestValidator(IStringLocalizer<ResetPasswordRequest> localizer)
         {
             _localizer = localizer;
 

@@ -6,7 +6,10 @@ import {
   isPublicRoute,
 } from "@/lib/auth/constants";
 import { clearAuthCookies, setAuthCookies } from "@/lib/auth/cookies";
-import { resolveSession, type ResolvedSession } from "@/lib/auth/backend-session";
+import {
+  resolveSession,
+  type ResolvedSession,
+} from "@/lib/auth/backend-session";
 import {
   canAccessRoute,
   isKnownProtectedRoute,
@@ -17,13 +20,18 @@ export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const accessToken = request.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
   const refreshToken = request.cookies.get(REFRESH_TOKEN_COOKIE)?.value;
-  
+
   const resolved = await resolveSession(accessToken, refreshToken);
 
   if (resolved.status === "unavailable") {
     const unavailableUrl = request.nextUrl.clone();
     unavailableUrl.pathname = UNAVAILABLE_ROUTE;
     unavailableUrl.search = "";
+    unavailableUrl.searchParams.set("reason", "service");
+    unavailableUrl.searchParams.set(
+      "returnTo",
+      `${pathname}${request.nextUrl.search}`,
+    );
     return NextResponse.rewrite(unavailableUrl, { status: 503 });
   }
 
@@ -35,7 +43,10 @@ export async function proxy(request: NextRequest) {
     }
 
     const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("returnTo", `${pathname}${request.nextUrl.search}`);
+    loginUrl.searchParams.set(
+      "returnTo",
+      `${pathname}${request.nextUrl.search}`,
+    );
     const response = NextResponse.redirect(loginUrl);
     clearAuthCookies(response);
     return response;
@@ -48,10 +59,14 @@ export async function proxy(request: NextRequest) {
     );
   }
 
-  if (!isKnownProtectedRoute(pathname) || !canAccessRoute(pathname, resolved.session)) {
+  if (
+    !isKnownProtectedRoute(pathname) ||
+    !canAccessRoute(pathname, resolved.session)
+  ) {
     const unavailableUrl = request.nextUrl.clone();
     unavailableUrl.pathname = UNAVAILABLE_ROUTE;
     unavailableUrl.search = "";
+    unavailableUrl.searchParams.set("reason", "access");
     return applyRefreshedCookies(
       NextResponse.rewrite(unavailableUrl, { status: 404 }),
       resolved,
@@ -61,7 +76,10 @@ export async function proxy(request: NextRequest) {
   return applyRefreshedCookies(NextResponse.next(), resolved);
 }
 
-function applyRefreshedCookies(response: NextResponse, resolved: ResolvedSession) {
+function applyRefreshedCookies(
+  response: NextResponse,
+  resolved: ResolvedSession,
+) {
   if (resolved.status === "authenticated" && resolved.authPayload) {
     setAuthCookies(response, resolved.authPayload);
   }

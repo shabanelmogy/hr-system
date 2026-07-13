@@ -24,7 +24,7 @@ public class AddressesController(IAddressService addressService) : ControllerBas
     {
         var response = await _addressService.GetAsync(id, cancellationToken);
 
-        return response.IsSuccess ? Ok(response) : response.ToProblem();
+        return response.IsSuccess ? Ok(response.Value) : response.ToProblem();
     }
 
     [HttpGet("{id}/details")]
@@ -33,7 +33,7 @@ public class AddressesController(IAddressService addressService) : ControllerBas
     {
         var response = await _addressService.GetWithRelatedEntities(id, cancellationToken);
 
-        return response.IsSuccess ? Ok(response) : response.ToProblem();
+        return response.IsSuccess ? Ok(response.Value) : response.ToProblem();
     }
 
     [HttpPost]
@@ -42,7 +42,9 @@ public class AddressesController(IAddressService addressService) : ControllerBas
     {
         var result = await _addressService.AddAsync(request, cancellationToken);
 
-        return CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result);
+        return result.IsSuccess
+            ? CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result.Value)
+            : result.ToProblem();
     }
 
     [HttpPut("")]
@@ -51,7 +53,7 @@ public class AddressesController(IAddressService addressService) : ControllerBas
     {
         var result = await _addressService.UpdateAsync(request, cancellationToken);
 
-        return CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
     [HttpDelete("{id}")]
@@ -68,6 +70,6 @@ public class AddressesController(IAddressService addressService) : ControllerBas
     public async Task<IActionResult> GetCount(CancellationToken cancellationToken)
     {
         var result = await _addressService.GetCountAsync(cancellationToken);
-        return result.IsSuccess ? Ok(result) : result.ToProblem();
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 }

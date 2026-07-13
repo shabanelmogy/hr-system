@@ -15,7 +15,7 @@ public class EntityChangeLogService : IEntityChangeLogService
         _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
     }
 
-    public async Task<EntityChangeLogsRequest> CreateChangeLogAsync<TEntity>(int entityId, TEntity existingEntity, TEntity updatedEntity) where TEntity : class
+    public async Task<EntityChangeLogsRequest?> CreateChangeLogAsync<TEntity>(int entityId, TEntity existingEntity, TEntity updatedEntity) where TEntity : class
     {
         if (existingEntity == null || updatedEntity == null)
         {
@@ -116,9 +116,9 @@ public class EntityChangeLogService : IEntityChangeLogService
     }
 
     // Helper method to get changed values as JSON, excluding navigation properties
-    private static string GetValuesAsJson<TEntity>(TEntity existingEntity, TEntity updatedEntity, bool forOldValues) where TEntity : class
+    private static string? GetValuesAsJson<TEntity>(TEntity existingEntity, TEntity updatedEntity, bool forOldValues) where TEntity : class
     {
-        var differences = new Dictionary<string, object>();
+        var differences = new Dictionary<string, object?>();
         var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
         foreach (var property in properties)

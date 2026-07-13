@@ -35,6 +35,7 @@ namespace HrManagementSystem.Shared.Consts
         public const string MustStartWithCapitalLetter = nameof(MustStartWithCapitalLetter);
 
         public const string NotAllowedFileContent = nameof(NotAllowedFileContent);
+        public const string TooManyFiles = nameof(TooManyFiles);
 
         public const string InvalidPath = nameof(InvalidPath);
 

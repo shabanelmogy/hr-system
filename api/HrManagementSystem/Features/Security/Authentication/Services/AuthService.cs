@@ -155,7 +155,6 @@ public sealed class AuthService(
             string.Equals(storedToken.JwtId, validatedAccessToken.JwtId, StringComparison.Ordinal) &&
             string.Equals(user.SecurityStamp, validatedAccessToken.SecurityStamp, StringComparison.Ordinal);
 
-        // Allow refresh even if token was already used once (grace period for concurrent requests)
         if (!claimsMatchSession)
         {
             RevokeSessionFamily(user, storedToken.SessionId, "Token claims mismatch");
@@ -164,10 +163,14 @@ public sealed class AuthService(
             return Result.Failure<AuthResponse>(userErrors.InvalidRefreshToken);
         }
 
-        if (storedToken.IsExpired)
+        if (!storedToken.IsActive)
         {
-            storedToken.Revoke("Expired");
-            await userManager.UpdateAsync(user);
+            if (storedToken.RevokedOn is null)
+            {
+                storedToken.Revoke("Expired");
+                await userManager.UpdateAsync(user);
+            }
+
             return Result.Failure<AuthResponse>(userErrors.InvalidRefreshToken);
         }
 

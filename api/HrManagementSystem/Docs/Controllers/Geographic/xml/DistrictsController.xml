@@ -80,6 +80,7 @@
       </remarks>
 
       <param name="stateId">State ID — integer, route parameter.</param>
+      <param name="cancellationToken">Token used to cancel the request.</param>
 
       <returns>Array of <c>DistrictResponse</c> objects filtered to the given state.</returns>
 
@@ -111,6 +112,7 @@
       </remarks>
 
       <param name="id">District ID — integer, route parameter.</param>
+      <param name="cancellationToken">Token used to cancel the request.</param>
 
       <returns>Single <c>DistrictResponse</c> object.</returns>
 
@@ -150,6 +152,7 @@
       </remarks>
 
       <param name="id">District ID — integer, route parameter.</param>
+      <param name="cancellationToken">Token used to cancel the request.</param>
 
       <returns><c>DistrictResponse</c> with the <c>addresses</c> array fully populated.</returns>
 
@@ -197,6 +200,7 @@
         }
         </code>
       </param>
+      <param name="cancellationToken">Token used to cancel the request.</param>
 
       <returns>The newly created <c>DistrictResponse</c> (HTTP 201).</returns>
 
@@ -236,10 +240,11 @@
         }
         </code>
       </param>
+      <param name="cancellationToken">Token used to cancel the request.</param>
 
-      <returns>The updated <c>DistrictResponse</c> (HTTP 201).</returns>
+      <returns>The updated <c>DistrictResponse</c> (HTTP 200).</returns>
 
-      <response code="201">District updated successfully. Returns the updated district object.</response>
+      <response code="200">District updated successfully. Returns the updated district object.</response>
       <response code="400">Validation failed or <c>stateId</c> is invalid.</response>
       <response code="404">District with the given <c>id</c> not found.</response>
       <response code="409">Name or code conflict within the same state.</response>
@@ -269,6 +274,7 @@
       </remarks>
 
       <param name="id">District ID — integer, route parameter.</param>
+      <param name="cancellationToken">Token used to cancel the request.</param>
 
       <returns>HTTP 204 No Content on success.</returns>
 

@@ -8,6 +8,9 @@ namespace HrManagementSystem.Features.Platform.Localization.Errors
             new("Localization.LocalizationFileNotFound", _localizer[nameof(LocalizationFileNotFound)], StatusCodes.Status404NotFound);
 
         public Error LocalizationKeyNotFound =>
-        new("Localization.LocalizationFileNotFound", _localizer[nameof(LocalizationKeyNotFound)], StatusCodes.Status404NotFound);
+        new("Localization.LocalizationKeyNotFound", _localizer[nameof(LocalizationKeyNotFound)], StatusCodes.Status404NotFound);
+
+        public Error InvalidLanguage =>
+            new("Localization.InvalidLanguage", _localizer[nameof(InvalidLanguage)], StatusCodes.Status400BadRequest);
     }
 }

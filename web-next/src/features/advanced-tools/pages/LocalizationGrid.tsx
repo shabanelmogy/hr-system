@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import {
-  DataGrid,
   GridActionsCellItem,
   GridRowModes,
   GridRowEditStopReasons,
@@ -13,6 +12,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
 import { MyHeader } from "@/shared/components/common";
+import ClientDataGrid from "@/shared/components/common/datagrid/ClientDataGrid";
 import { ContentWrapper } from "@/shared/components/layout";
 import { useSnackbar } from "@/shared/hooks";
 import { HandleApiError } from "@/shared/services";
@@ -172,7 +172,7 @@ const LocalizationGrid = () => {
           title={t("localizationApi.title")}
           subTitle={t("localizationApi.subTitle")}
         />
-        <DataGrid
+        <ClientDataGrid
           rows={rows}
           columns={columns}
           paginationModel={paginationModel}

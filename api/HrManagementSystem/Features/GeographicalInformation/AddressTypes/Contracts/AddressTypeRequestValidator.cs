@@ -27,23 +27,23 @@ public class AddressTypeRequestValidator : AbstractValidator<AddressTypeRequest>
             .WithMessage(_localizer[Strings.MaxLengthError]);
 
         RuleFor(a => a)
-           .Must(a => !IsAddressTypeNameEnDuplicated(a))
+           .MustAsync(IsAddressTypeNameEnUniqueAsync)
            .WithName(Strings.NameEn)
            .WithMessage(_localizer[Strings.DuplicatedValue]);
 
         RuleFor(a => a)
-           .Must(a => !IsAddressTypeNameArDuplicated(a))
+           .MustAsync(IsAddressTypeNameArUniqueAsync)
            .WithName(Strings.NameAr)
            .WithMessage(_localizer[Strings.DuplicatedValue]);
     }
 
-    private bool IsAddressTypeNameEnDuplicated(AddressTypeRequest addressType)
-    {
-        return _dbContext.AddressTypes.Any(a => a.NameEn == addressType.NameEn && a.Id != addressType.Id);
-    }
+    private async Task<bool> IsAddressTypeNameEnUniqueAsync(AddressTypeRequest addressType, CancellationToken cancellationToken) =>
+        !await _dbContext.AddressTypes.AnyAsync(
+            candidate => candidate.NameEn == addressType.NameEn && candidate.Id != addressType.Id,
+            cancellationToken);
 
-    private bool IsAddressTypeNameArDuplicated(AddressTypeRequest addressType)
-    {
-        return _dbContext.AddressTypes.Any(a => a.NameAr == addressType.NameAr && a.Id != addressType.Id);
-    }
+    private async Task<bool> IsAddressTypeNameArUniqueAsync(AddressTypeRequest addressType, CancellationToken cancellationToken) =>
+        !await _dbContext.AddressTypes.AnyAsync(
+            candidate => candidate.NameAr == addressType.NameAr && candidate.Id != addressType.Id,
+            cancellationToken);
 }

@@ -2,6 +2,7 @@ using HrManagementSystem.Features.GeographicalInformation.Addresses.Entities;
 using HrManagementSystem.Features.GeographicalInformation.AddressTypes.Entities;
 using HrManagementSystem.Features.GeographicalInformation.Countries.Entities;
 using HrManagementSystem.Features.GeographicalInformation.Districts.Entities;
+using HrManagementSystem.Features.Platform.Notifications.Entities;
 
 namespace HrManagementSystem.Infrastructure.Persistance;
 
@@ -12,7 +13,7 @@ public class ApplicationDbContext(
 {
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
-    public DbSet<UserLogin> UserLogins { get; set; }
+    public DbSet<UserLogin> LoginAudits { get; set; }
     public DbSet<EntityChangeLog> EntityChangeLogs { get; set; }
     public DbSet<UploadedFile> Files { get; set; }
     public DbSet<Category> Categories { get; set; }
@@ -28,31 +29,13 @@ public class ApplicationDbContext(
     public DbSet<Address> Addresses { get; set; }
     public DbSet<AddressType> AddressTypes { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         RestrictCascadeDelete(modelBuilder);
-        //TrimStrings(modelBuilder);
         base.OnModelCreating(modelBuilder);
-    }
-
-    //review side effect
-    private static void TrimStrings(ModelBuilder modelBuilder)
-    {
-        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-        {
-            foreach (var property in entityType.GetProperties())
-            {
-                if (property.ClrType == typeof(string))
-                {
-                    property.SetValueConverter(new ValueConverter<string, string>(
-                        v => v != null ? v.Trim() : null,
-                        v => v
-                    ));
-                }
-            }
-        }
     }
 
     private static void RestrictCascadeDelete(ModelBuilder modelBuilder)
@@ -60,7 +43,9 @@ public class ApplicationDbContext(
         var cascadeFKs = modelBuilder.Model
             .GetEntityTypes()
             .SelectMany(t => t.GetForeignKeys())
-            .Where(fk => fk.DeleteBehavior == DeleteBehavior.Cascade);
+            .Where(fk =>
+                fk.DeleteBehavior == DeleteBehavior.Cascade &&
+                !fk.DeclaringEntityType.IsOwned());
 
         foreach (var fk in cascadeFKs)
         {

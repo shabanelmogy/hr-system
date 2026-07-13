@@ -373,12 +373,15 @@ const ReportViewer = ({
             <NoResultsMessage />
           ) : reportUrl ? (
             <iframe
+              key={`${reportUrl}-${theme.palette.mode}`}
               src={reportUrl}
               style={{
                 width: "100%",
                 height: "100%",
                 border: "none",
                 display: "block",
+                backgroundColor: theme.palette.background.default,
+                colorScheme: theme.palette.mode,
               }}
               title="Report Viewer"
               allowFullScreen

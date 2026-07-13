@@ -25,30 +25,42 @@ namespace HrManagementSystem.Features.Catalog.SubCategories.Contracts
                 .WithMessage(_localizer[Strings.MaxLengthError]);
 
             RuleFor(s => s)
-                .Must(s => !IsNameArDuplicated(s))
+                .MustAsync(IsNameArUniqueAsync)
                 .WithMessage(_localizer[Strings.DuplicatedValue]);
 
             RuleFor(s => s)
-                .Must(s => !IsNameEnDuplicated(s))
+                .MustAsync(IsNameEnUniqueAsync)
                    .WithMessage(_localizer[Strings.DuplicatedValue]);
 
             RuleFor(s => s.CategoryIds)
                         .NotNull()
-                        .WithMessage(_localizer[_localizer[Strings.Required]])
-                        .Must(ids => ids.All(id => _dbContext.Categories.Any(c => c.Id == id)))
+                        .WithMessage(_localizer[Strings.Required])
+                        .MustAsync(AreCategoriesValidAsync)
                         .WithMessage(_localizer[Strings.InvalidValues])
-                        .Must(ids => ids.Count == ids.Distinct().Count())
+                        .Must(ids => ids is not null && ids.Count == ids.Distinct().Count())
                         .WithMessage(_localizer[Strings.DuplicatedValue]);
         }
 
-        private bool IsNameArDuplicated(SubCategoryRequest subcategory)
-        {
-            return _dbContext.SubCategories.Any(s => s.NameAr == subcategory.NameAr && s.Id != subcategory.Id);
-        }
+        private async Task<bool> IsNameArUniqueAsync(SubCategoryRequest subcategory, CancellationToken cancellationToken) =>
+            !await _dbContext.SubCategories.AnyAsync(
+                candidate => candidate.NameAr == subcategory.NameAr && candidate.Id != subcategory.Id,
+                cancellationToken);
 
-        private bool IsNameEnDuplicated(SubCategoryRequest subcategory)
+        private async Task<bool> IsNameEnUniqueAsync(SubCategoryRequest subcategory, CancellationToken cancellationToken) =>
+            !await _dbContext.SubCategories.AnyAsync(
+                candidate => candidate.NameEn == subcategory.NameEn && candidate.Id != subcategory.Id,
+                cancellationToken);
+
+        private async Task<bool> AreCategoriesValidAsync(IList<int>? ids, CancellationToken cancellationToken)
         {
-            return _dbContext.SubCategories.Any(s => s.NameEn == subcategory.NameEn && s.Id != subcategory.Id);
+            if (ids is null)
+                return false;
+
+            var distinctIds = ids.Distinct().ToArray();
+            var existingCount = await _dbContext.Categories.CountAsync(
+                category => distinctIds.Contains(category.Id) && !category.IsDeleted,
+                cancellationToken);
+            return existingCount == distinctIds.Length;
         }
     }
 }

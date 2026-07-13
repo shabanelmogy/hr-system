@@ -56,8 +56,9 @@ async function callBackend(request: NextRequest, path: string[], token?: string,
 }
 
 async function toNextResponse(backendResponse: Response, authPayload?: AuthPayload | null) {
-  if (backendResponse.status === 204) {
-    const response = new NextResponse(null, { status: 204 });
+  console.log(`${TAG} Backend returned status: ${backendResponse.status}`);
+  if ([204, 205, 304].includes(backendResponse.status)) {
+    const response = new NextResponse(null, { status: backendResponse.status });
     if (authPayload) setAuthCookies(response, authPayload);
     response.headers.set("cache-control", "no-store");
     return response;
@@ -66,20 +67,36 @@ async function toNextResponse(backendResponse: Response, authPayload?: AuthPaylo
   const contentType = backendResponse.headers.get("content-type") ?? "application/json";
   let response: NextResponse;
 
-  if (contentType.includes("application/json")) {
-    const payload: unknown = await backendResponse.json();
-    const discoveredAuth = isAuthPayload(payload) ? payload : authPayload;
-    response = NextResponse.json(
-      isAuthPayload(payload) ? sanitizeAuthPayload(payload) : payload,
-      { status: backendResponse.status }
+  try {
+    if (contentType.includes("application/json")) {
+      const body = await backendResponse.text();
+      if (!body.trim()) {
+        response = new NextResponse(null, { status: backendResponse.status });
+        if (authPayload) setAuthCookies(response, authPayload);
+        response.headers.set("cache-control", "no-store");
+        return response;
+      }
+
+      const payload: unknown = JSON.parse(body);
+      const discoveredAuth = isAuthPayload(payload) ? payload : authPayload;
+      response = NextResponse.json(
+        isAuthPayload(payload) ? sanitizeAuthPayload(payload) : payload,
+        { status: backendResponse.status }
+      );
+      if (discoveredAuth) setAuthCookies(response, discoveredAuth);
+    } else {
+      response = new NextResponse(await backendResponse.arrayBuffer(), {
+        status: backendResponse.status,
+        headers: { "content-type": contentType }
+      });
+      if (authPayload) setAuthCookies(response, authPayload);
+    }
+  } catch (error) {
+    console.error(`${TAG} Invalid backend response body`, error);
+    return NextResponse.json(
+      { title: "Invalid response from backend service" },
+      { status: 502 },
     );
-    if (discoveredAuth) setAuthCookies(response, discoveredAuth);
-  } else {
-    response = new NextResponse(await backendResponse.arrayBuffer(), {
-      status: backendResponse.status,
-      headers: { "content-type": contentType }
-    });
-    if (authPayload) setAuthCookies(response, authPayload);
   }
 
   const disposition = backendResponse.headers.get("content-disposition");
@@ -103,8 +120,9 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
   let backendResponse: Response;
   try {
     backendResponse = await callBackend(request, path, accessToken, body);
-  } catch {
-    return NextResponse.json({ title: "Backend service unavailable" }, { status: 502 });
+  } catch (error) {
+    console.error(`${TAG} Error calling backend:`, error);
+    return NextResponse.json({ title: "Backend service unavailable", details: String(error) }, { status: 502 });
   }
 
   let refreshedAuth: AuthPayload | null = null;

@@ -3,7 +3,7 @@ namespace HrManagementSystem.Features.Platform.Files.Controllers.V1;
 [Route(ApiRoutes.BaseRoute)]
 [ApiVersion("1.0")]
 [ApiController]
-
+[EnableRateLimiting("fileOperations")]
 public class FilesController(IFileService fileService) : ControllerBase
 {
     private readonly IFileService _fileService = fileService;
@@ -42,9 +42,9 @@ public class FilesController(IFileService fileService) : ControllerBase
     [HttpGet("{storedFilename}")]
     public async Task<IActionResult> Download([FromRoute] string storedFilename, CancellationToken cancellationToken)
     {
-        var (fileContent, contentType, fileName) = await _fileService.DownloadAsync(storedFilename, cancellationToken);
+        var (stream, contentType, fileName) = await _fileService.DownloadAsync(storedFilename, cancellationToken);
 
-        return fileContent is [] ? NotFound() : File(fileContent, contentType, fileName);
+        return stream is null ? NotFound() : File(stream, contentType, fileName, enableRangeProcessing: true);
     }
 
     [HttpGet()]
@@ -58,7 +58,9 @@ public class FilesController(IFileService fileService) : ControllerBase
     public async Task<IActionResult> Stream([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var (fileStream, contentType, fileName) = await _fileService.StreamAsync(id, cancellationToken);
-        return File(fileStream, contentType, enableRangeProcessing: true);
+        return fileStream is null
+            ? NotFound()
+            : File(fileStream, contentType, fileName, enableRangeProcessing: true);
     }
 
     [HttpDelete("{storedFilename}")]

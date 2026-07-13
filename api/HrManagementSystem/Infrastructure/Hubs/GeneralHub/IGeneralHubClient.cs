@@ -2,6 +2,7 @@ using HrManagementSystem.Features.GeographicalInformation.Addresses.Contracts;
 using HrManagementSystem.Features.GeographicalInformation.AddressTypes.Contracts;
 using HrManagementSystem.Features.GeographicalInformation.Countries.Contracts;
 using HrManagementSystem.Features.GeographicalInformation.Districts.Contracts;
+using HrManagementSystem.Features.Platform.Notifications.Contracts;
 
 namespace HrManagementSystem.Infrastructure.Hubs.GeneralHub;
 
@@ -14,4 +15,5 @@ public interface IGeneralHubClient
     Task ReceiveAddressTypeUpdate(Result<AddressTypesCountResponse> addressTypesCount);
     Task ReceiveAddressUpdate(Result<AddressesCountResponse> addressesCount);
     Task ReceiveTokenRevoked(string message); 
+    Task ReceiveNotification(NotificationRealtimeResponse notification);
 }

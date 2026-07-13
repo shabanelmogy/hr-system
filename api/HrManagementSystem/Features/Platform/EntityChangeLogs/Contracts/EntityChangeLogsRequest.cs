@@ -6,7 +6,7 @@ namespace HrManagementSystem.Features.Platform.EntityChangeLogs.Contracts
         public string? EntityName { get; set; }
         public string? JsonOldValues { get; set; }
         public string? JsonNewValues { get; set; }
-        public string ChangedById { get; set; }
-        public string ChangedByPc { get; set; }
+        public string ChangedById { get; set; } = string.Empty;
+        public string ChangedByPc { get; set; } = string.Empty;
     }
 }

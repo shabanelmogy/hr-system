@@ -8,14 +8,21 @@ public static class BasicService
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddControllers().AddJsonOptions(options =>
+        services.AddControllers(options =>
+        {
+            options.Filters.AddService<AsyncValidationFilter>();
+        }).AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         });
 
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         services.AddHttpContextAccessor();
-        services.AddHttpClient();
+        services.AddHttpClient("Google", client =>
+        {
+            client.BaseAddress = new Uri("https://www.googleapis.com/");
+            client.Timeout = TimeSpan.FromSeconds(10);
+        });
 
         var syncfusionLicense = configuration["Syncfusion:LicenseKey"];
         if (!string.IsNullOrWhiteSpace(syncfusionLicense))
@@ -23,7 +30,14 @@ public static class BasicService
 
         services.AddDistributedMemoryCache();
         services.AddSignalR();
-        services.AddHybridCache();
+        services.AddHybridCache(options =>
+        {
+            options.DefaultEntryOptions = new HybridCacheEntryOptions
+            {
+                Expiration = TimeSpan.FromMinutes(10),
+                LocalCacheExpiration = TimeSpan.FromMinutes(2)
+            };
+        });
 
         return services;
     }

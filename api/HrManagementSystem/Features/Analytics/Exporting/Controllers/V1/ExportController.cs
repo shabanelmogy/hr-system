@@ -23,19 +23,8 @@ public class ExportController(IExportExcelService excelService) : ControllerBase
             fileName = "export.csv";
         }
 
-        try
-        {
-            var csvBytes = _excelService.ExportToCsvBytes(data);
-            return File(csvBytes, "text/csv", fileName);
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest(new { Message = ex.Message });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { Message = "An error occurred while processing the request.", Details = ex.Message });
-        }
+        var csvBytes = _excelService.ExportToCsvBytes(data);
+        return File(csvBytes, "text/csv", fileName);
     }
 
 

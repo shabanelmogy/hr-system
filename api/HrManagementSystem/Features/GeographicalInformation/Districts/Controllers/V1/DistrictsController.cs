@@ -42,7 +42,7 @@ public class DistrictsController(IDistrictService districtService) : ControllerB
     public async Task<IActionResult> GetByID([FromRoute] int id, CancellationToken cancellationToken)
     {
         var response = await _districtService.GetAsync(id, cancellationToken);
-        return response.IsSuccess ? Ok(response) : response.ToProblem();
+        return response.IsSuccess ? Ok(response.Value) : response.ToProblem();
     }
 
     /// <include file='../../../../../Docs/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Features.GeographicalInformation.Districts.Controllers.V1.DistrictsController.GetDistrictWithAddresses(System.Int32,System.Threading.CancellationToken)"]/*' />
@@ -55,7 +55,7 @@ public class DistrictsController(IDistrictService districtService) : ControllerB
     public async Task<IActionResult> GetDistrictWithAddresses([FromRoute] int id, CancellationToken cancellationToken)
     {
         var response = await _districtService.GetRelatedAddresses(id, cancellationToken);
-        return response.IsSuccess ? Ok(response) : response.ToProblem();
+        return response.IsSuccess ? Ok(response.Value) : response.ToProblem();
     }
 
     /// <include file='../../../../../Docs/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Features.GeographicalInformation.Districts.Controllers.V1.DistrictsController.Add(HrManagementSystem.Features.GeographicalInformation.Districts.Contracts.DistrictRequest,System.Threading.CancellationToken)"]/*' />
@@ -69,7 +69,9 @@ public class DistrictsController(IDistrictService districtService) : ControllerB
     public async Task<IActionResult> Add([FromBody] DistrictRequest request, CancellationToken cancellationToken)
     {
         var result = await _districtService.AddAsync(request, cancellationToken);
-        return CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result);
+        return result.IsSuccess
+            ? CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result.Value)
+            : result.ToProblem();
     }
 
     /// <include file='../../../../../Docs/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Features.GeographicalInformation.Districts.Controllers.V1.DistrictsController.Update(HrManagementSystem.Features.GeographicalInformation.Districts.Contracts.DistrictRequest,System.Threading.CancellationToken)"]/*' />
@@ -84,7 +86,7 @@ public class DistrictsController(IDistrictService districtService) : ControllerB
     public async Task<IActionResult> Update([FromBody] DistrictRequest request, CancellationToken cancellationToken)
     {
         var result = await _districtService.UpdateAsync(request, cancellationToken);
-        return CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
     /// <include file='../../../../../Docs/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Features.GeographicalInformation.Districts.Controllers.V1.DistrictsController.Delete(System.Int32,System.Threading.CancellationToken)"]/*' />
@@ -110,6 +112,6 @@ public class DistrictsController(IDistrictService districtService) : ControllerB
     public async Task<IActionResult> GetCount(CancellationToken cancellationToken)
     {
         var result = await _districtService.GetCountAsync(cancellationToken);
-        return result.IsSuccess ? Ok(result) : result.ToProblem();
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 }

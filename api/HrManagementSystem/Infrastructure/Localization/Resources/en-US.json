@@ -40,6 +40,7 @@
     "InvalidFileSize": "Max file size is ",
     "ExtensionFileNotAllowed": "File extension is not allowed",
     "NotAllowedFileContent": "Not allowed file content",
+    "TooManyFiles": "A maximum of 10 files is allowed per request",
     "StartEndDateValidation": "Start date must be less than or equal to end date",
 
     //Entities Keys
@@ -113,6 +114,7 @@
     "UserNotFound": "User is not found",
 
     "LocalizationFileNotFound": "Localization File Not Found",
+    "InvalidLanguage": "The requested language is not supported",
     "LocalizationKeyNotFound": "Localization Key Not Found",
 
     "ReportCategoryNotFound": "Report Category not found",
@@ -177,5 +179,14 @@
     "InvalidLatitude": "Latitude must be between -90 and 90 degrees",
     "InvalidLongitude": "Longitude must be between -180 and 180 degrees",
     "InvalidAddressType": "Invalid address type selected",
-    "InvalidDistrict": "Invalid district selected"
+    "InvalidDistrict": "Invalid district selected",
+    "NotificationNotFound": "Notification was not found",
+    "InvalidNotificationRequest": "Notification request is invalid",
+    "NotificationPublishFailed": "Notification could not be saved",
+    "CountryNotificationTitle": "Country updated",
+    "CountryCreatedNotificationMessage": "Country {NameEn} was created",
+    "CountriesCreatedNotificationMessage": "{Count} countries were created",
+    "CountryUpdatedNotificationMessage": "Country {NameEn} was updated",
+    "CountryDeletedNotificationMessage": "Country {NameEn} was deleted",
+    "CountryRestoredNotificationMessage": "Country {NameEn} was restored"
 }

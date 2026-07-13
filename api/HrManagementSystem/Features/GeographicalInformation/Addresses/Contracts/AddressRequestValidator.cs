@@ -62,24 +62,24 @@ public class AddressRequestValidator : AbstractValidator<AddressRequest>
             .GreaterThan(0)
             .WithName(Strings.AddressType)
             .WithMessage(_localizer[Strings.Required])
-            .Must(BeValidAddressType)
+            .MustAsync(BeValidAddressTypeAsync)
             .WithMessage(_localizer[Strings.InvalidAddressType]);
 
         RuleFor(a => a.DistrictId)
             .GreaterThan(0)
             .WithName(Strings.District)
             .WithMessage(_localizer[Strings.Required])
-            .Must(BeValidDistrict)
+            .MustAsync(BeValidDistrictAsync)
             .WithMessage(_localizer[Strings.InvalidDistrict]);
     }
 
-    private bool BeValidAddressType(int addressTypeId)
-    {
-        return _dbContext.AddressTypes.Any(at => at.Id == addressTypeId && !at.IsDeleted);
-    }
+    private Task<bool> BeValidAddressTypeAsync(int addressTypeId, CancellationToken cancellationToken) =>
+        _dbContext.AddressTypes.AnyAsync(
+            addressType => addressType.Id == addressTypeId && !addressType.IsDeleted,
+            cancellationToken);
 
-    private bool BeValidDistrict(int districtId)
-    {
-        return _dbContext.Districts.Any(d => d.Id == districtId && !d.IsDeleted);
-    }
+    private Task<bool> BeValidDistrictAsync(int districtId, CancellationToken cancellationToken) =>
+        _dbContext.Districts.AnyAsync(
+            district => district.Id == districtId && !district.IsDeleted,
+            cancellationToken);
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { CacheProvider } from "@emotion/react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import {
@@ -19,7 +18,7 @@ const ThemeSettingsContext = createContext<ThemeSettings | null>(null);
 
 export function ThemeShell({ children }: { children: ReactNode }) {
   const settings = useThemeSettings();
-  const { cacheProvider, mode, theme } = settings;
+  const { mode, theme } = settings;
 
   useEffect(() => {
     document.body.classList.remove("dark", "light");
@@ -29,12 +28,10 @@ export function ThemeShell({ children }: { children: ReactNode }) {
 
   return (
     <ThemeSettingsContext.Provider value={settings}>
-      <CacheProvider value={cacheProvider}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <ToastProvider position="top-right">{children}</ToastProvider>
-        </ThemeProvider>
-      </CacheProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <ToastProvider position="top-right">{children}</ToastProvider>
+      </ThemeProvider>
     </ThemeSettingsContext.Provider>
   );
 }

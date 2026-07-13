@@ -12,6 +12,7 @@ import { SessionProvider } from "@/lib/auth/SessionContext";
 import i18n from "@/locales/i18n";
 import {
   ThemePreferencesProvider,
+  type ThemeDirection,
   type ThemeMode,
 } from "@/theme/ThemePreferences";
 import { ThemeShell } from "@/theme/ThemeShell";
@@ -20,10 +21,16 @@ import type { SessionClaims } from "@/lib/auth/session";
 type ProvidersProps = {
   children: ReactNode;
   initialThemeMode: ThemeMode;
+  initialDirection: ThemeDirection;
   initialUser: SessionClaims | null;
 };
 
-export function Providers({ children, initialThemeMode, initialUser }: ProvidersProps) {
+export function Providers({
+  children,
+  initialThemeMode,
+  initialDirection,
+  initialUser,
+}: ProvidersProps) {
   const [queryClient] = useState(() => createQueryClient());
 
   useEffect(() => {
@@ -69,7 +76,10 @@ export function Providers({ children, initialThemeMode, initialUser }: Providers
   }, []);
 
   return (
-    <ThemePreferencesProvider initialMode={initialThemeMode}>
+    <ThemePreferencesProvider
+      initialMode={initialThemeMode}
+      initialDirection={initialDirection}
+    >
       <ThemeShell>
         <GoogleOAuthProvider
           clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? ""}

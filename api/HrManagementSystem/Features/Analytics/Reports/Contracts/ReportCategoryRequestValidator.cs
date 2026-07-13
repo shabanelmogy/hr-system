@@ -25,13 +25,12 @@ namespace HrManagementSystem.Features.Analytics.Reports.Contracts
                 .When(x => !string.IsNullOrEmpty(x.Name));
 
             RuleFor(x => x)
-                .Must(x => !IsNameDuplicated(x))
+                .MustAsync(IsNameUniqueAsync)
                 .WithMessage(_localizer[Strings.DuplicatedValue]);
         }
-        private bool IsNameDuplicated(ReportCategoryRequest request)
-        {
-            var newReportCategory = _dbContext.ReportsCategories.Any(c => c.Name == request.Name && c.Id != request.Id);
-            return newReportCategory;
-        }
+        private async Task<bool> IsNameUniqueAsync(ReportCategoryRequest request, CancellationToken cancellationToken) =>
+            !await _dbContext.ReportsCategories.AnyAsync(
+                category => category.Name == request.Name && category.Id != request.Id,
+                cancellationToken);
     }
 }

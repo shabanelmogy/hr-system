@@ -7,7 +7,11 @@ export type ApiError = {
   status: number;
   title: string;
   message: string;
-  errors: unknown[] | null;
+  detail?: string;
+  traceId?: string;
+  type?: string;
+  errorCodes?: string[];
+  errors: string[] | null;
 };
 
 class ApiClient {
@@ -52,12 +56,32 @@ class ApiClient {
       };
     }
 
-    const data = error.response.data as { title?: string; errors?: Record<string, unknown[]> } | undefined;
+    const data = error.response.data as
+      | {
+          title?: string;
+          detail?: string;
+          traceId?: string;
+          type?: string;
+          errors?: Record<string, unknown[]> | unknown[];
+        }
+      | undefined;
+    const errors = normalizeApiErrors(data?.errors);
     return {
       status: error.response.status,
       title: data?.title ?? "Error",
-      errors: data?.errors ? Object.values(data.errors).flat() : null,
-      message: data?.title ?? `Request failed with status ${error.response.status}`
+      detail: data?.detail,
+      traceId: data?.traceId,
+      type: data?.type,
+      errorCodes:
+        data?.errors && !Array.isArray(data.errors)
+          ? Object.keys(data.errors)
+          : undefined,
+      errors,
+      message:
+        data?.detail ??
+        errors?.[0] ??
+        data?.title ??
+        `Request failed with status ${error.response.status}`
     };
   }
 
@@ -127,4 +151,18 @@ function isPublicAuthenticationRequest(url: string) {
     "/auth/resendConfirmationEmail",
     "/account/google-auth",
   ].some((path) => url.toLowerCase().includes(path.toLowerCase()));
+}
+
+function normalizeApiErrors(
+  errors: Record<string, unknown[]> | unknown[] | undefined,
+): string[] | null {
+  if (!errors) return null;
+
+  const values = Array.isArray(errors) ? errors : Object.values(errors).flat();
+  const messages = values
+    .filter((value): value is string => typeof value === "string")
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  return messages.length > 0 ? messages : null;
 }

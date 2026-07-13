@@ -407,7 +407,42 @@ The `Countries` feature is the reference module for new geographical-information
 - EF configuration contains only the current entity configuration, required fields, max lengths, indexes, and relationships.
 - Mapping uses the injected Mapster `IMapper` consistently inside the service.
 
-## 18. Done Checklist
+## 18. API Boundary And Production Readiness
+
+- Use the shared asynchronous validation filter; do not add MVC synchronous FluentValidation auto-validation.
+- Keep exactly one request validator per request DTO and use `MustAsync`/`AnyAsync` for database checks.
+- Return RFC 7807 problem details for failures. Never return exception messages, stack traces, or exception sources.
+- Include a trace ID in unexpected-error responses and keep full exception details in server logs only.
+- Pass `CancellationToken` from controllers through services, EF queries, outbound HTTP, and file I/O.
+- Use named HTTP clients with explicit timeouts. Retry only transient failures and only for idempotent operations.
+- Apply rate limiting globally and stricter named policies to authentication, upload, and expensive export endpoints.
+- Store protected uploads outside `wwwroot`; use generated stored names and stream downloads through authorized endpoints.
+- Validate file count, individual size, filename, extension, and content signatures before persistence.
+- Do not expose client-callable SignalR methods that broadcast server events. Publish through `IHubContext` in trusted services.
+- Give caches explicit expiration, pass cancellation tokens, and invalidate all affected keys after successful mutations.
+- Validate pagination bounds, filter operations, sort directions, and sortable column names. Apply deterministic ordering before `Skip`/`Take`.
+- Keep dynamic database administration endpoints Development-only, permission-protected, and identifier-validated.
+- Before production, move secrets from tracked settings to a secret provider and rotate any value previously committed.
+- Reverse-proxy/API-gateway configuration is deployment work and is intentionally deferred; document it before production rollout.
+
+## 19. Durable Notifications
+
+- Treat the notification table as the source of truth. SignalR is delivery only; clients must refetch after login and reconnect.
+- Publish entity notifications through `INotificationPublisher` after the entity database operation succeeds.
+- Pass the entity's required view permission, such as `Permissions.ViewCountries`; create recipient rows only for active users whose roles currently contain that permission.
+- Store the required permission on each row and recheck current role claims before inbox access or realtime delivery because permissions may change after publication.
+- Recheck the entity permission again in its API when a user opens the notification target.
+- Scope every inbox query and mutation by the authenticated user ID. Never accept a recipient user ID from the client.
+- Own-inbox read and dismiss endpoints require authentication but no additional entity permission because recipients were permission-filtered when rows were created.
+- Store localization keys and bounded placeholder parameters, not prelocalized messages.
+- Use relative allow-listed action URLs and never store tokens, request bodies, stack traces, or sensitive entity fields in notification payloads.
+- Use a correlation ID and optional idempotency/deduplication key to prevent duplicate rows.
+- Persist retry state and use a bounded delivery lease so multiple workers cannot deliver the same pending row concurrently.
+- Keep retries bounded with backoff, retain failed rows for diagnosis, and run configurable expiry/retention cleanup.
+- Before physically deleting a user, check notification recipient/actor foreign keys and apply an explicit retention or anonymization policy.
+- Test recipient permission filtering, disabled users, cross-user access, expired/dismissed filtering, deduplication, and SignalR user isolation.
+
+## 20. Done Checklist
 
 - Build succeeds with `0 Error(s)`.
 - No namespace points to an old folder name.

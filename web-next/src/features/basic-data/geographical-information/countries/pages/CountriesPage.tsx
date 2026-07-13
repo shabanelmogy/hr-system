@@ -1,39 +1,15 @@
 "use client";
 
 // CountriesPage.js - TanStack Query Implementation
-import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, Box, Button } from "@mui/material";
 import CountriesMultiView from "../components/CountriesMultiView";
 import CountryDeleteDialog from "../components/CountryDeleteDialog";
 import CountryForm from "../components/CountryForm";
 import useCountryGridLogic from "../hooks/useCountryGridLogic";
-import countryHandler from "../utils/countryHandler";
 
 const CountriesPage = () => {
   const { t } = useTranslation();
-  const initializedRef = useRef(false);
-
-  // Initialize SignalR handler once on mount.
-  // Pass a notification system when one is available in the app.
-  // For now, a no-op implementation is used so the handler is registered
-  // and real-time updates are received even without UI notifications.
-  useEffect(() => {
-    if (initializedRef.current) return;
-    initializedRef.current = true;
-
-    countryHandler.initialize({
-      addNotification: () => {
-        // TODO: replace with real notification system (e.g. useSnackbar, toast, etc.)
-      },
-    });
-
-    return () => {
-      countryHandler.destroy();
-      initializedRef.current = false;
-    };
-  }, []);
-
   // All logic is now in the TanStack Query hook
   const {
     dialogType,

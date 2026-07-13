@@ -6,7 +6,6 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import {
-  DataGrid,
   GridFooterContainer,
   GridPagination,
 } from "@mui/x-data-grid";
@@ -15,6 +14,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { MyCustomToolbar } from "./MyCustomToolbar";
 import { GridFooter } from "./GridFooter";
+import ClientDataGrid from "./ClientDataGrid";
 
 const dataGridStyles = {
   "& .highlighted-row": {
@@ -236,7 +236,7 @@ const MyDataGrid = ({
 
   return (
     <Box sx={{ minWidth: "1200px" }}>
-      <DataGrid
+      <ClientDataGrid
         checkboxSelection
         rows={rows}
         columns={columns}

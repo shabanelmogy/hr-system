@@ -31,7 +31,7 @@ namespace HrManagementSystem.Features.Analytics.Exporting.Services
             return memoryStream.ToArray();
         }
 
-        private static DataTable ListToDataTable(List<Dictionary<string, object?>> list)
+        private static DataTable ListToDataTable(List<Dictionary<string, object>> list)
         {
             if (list == null || list.Count == 0)
             {

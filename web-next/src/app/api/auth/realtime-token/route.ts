@@ -5,12 +5,7 @@ import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from "@/lib/auth/constants"
 import { clearAuthCookies, setAuthCookies } from "@/lib/auth/cookies";
 import { getBackendUrl } from "@/lib/env/server";
 
-const TAG = "[🔑 realtime-token]";
-
-function tokenPreview(token?: string) {
-  if (!token) return "(none)";
-  return `${token.slice(0, 20)}…${token.slice(-8)} (${token.length}ch)`;
-}
+const TAG = "[Realtime Token]";
 
 export async function GET(request: NextRequest) {
   const accessToken = request.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
@@ -19,7 +14,7 @@ export async function GET(request: NextRequest) {
   const resolved = await resolveSession(accessToken, refreshToken);
 
   if (resolved.status === "unavailable") {
-    console.warn(`${TAG} ❌ Auth service unavailable`);
+    console.warn(`${TAG} Auth service unavailable`);
     return NextResponse.json({ message: "Authentication service unavailable" }, { status: 503 });
   }
 
@@ -44,7 +39,7 @@ export async function GET(request: NextRequest) {
     });
 
     if (!backendResponse.ok) {
-      console.warn(`${TAG} ❌ Backend returned ${backendResponse.status}`);
+      console.warn(`${TAG} Backend returned ${backendResponse.status}`);
       const response = NextResponse.json(
         { message: backendResponse.status === 401 ? "Unauthorized" : "Realtime service unavailable" },
         { status: backendResponse.status === 401 ? 401 : 503 },
@@ -55,7 +50,7 @@ export async function GET(request: NextRequest) {
 
     const payload = (await backendResponse.json()) as { token?: unknown };
     if (typeof payload.token !== "string") {
-      console.warn(`${TAG} ❌ Invalid token in response: ${typeof payload.token}`);
+      console.warn(`${TAG} Invalid token response`);
       return NextResponse.json({ message: "Invalid realtime token response" }, { status: 502 });
     }
 
@@ -68,7 +63,7 @@ export async function GET(request: NextRequest) {
     }
     return response;
   } catch (err) {
-    console.error(`${TAG} ❌ Backend fetch error:`, err);
+    console.error(`${TAG} Backend fetch error:`, err);
     return NextResponse.json({ message: "Realtime service unavailable" }, { status: 503 });
   }
 }

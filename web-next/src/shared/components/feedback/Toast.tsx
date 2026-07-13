@@ -1,191 +1,222 @@
-import React from 'react';
-import toast, { Toaster, ToastOptions } from 'react-hot-toast';
-import { useTheme, alpha } from '@mui/material/styles';
+"use client";
 
-// Toast configuration
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
+import { alpha, useTheme } from "@mui/material/styles";
+import type { CSSProperties, ReactNode } from "react";
+import toast, {
+  Toaster,
+  type DefaultToastOptions,
+  type ToastOptions,
+} from "react-hot-toast";
+import {
+  ErrorDialogHost,
+  showErrorDialog,
+  type ErrorDialogDetails,
+} from "./ErrorDialog";
+
 const defaultToastOptions: ToastOptions = {
-  duration: 5000,
-  position: 'top-right',
+  duration: 4500,
+  position: "top-right",
   style: {
-    borderRadius: '8px',
-    background: '#333',
-    color: '#fff',
-    fontSize: '14px',
-    fontWeight: '500',
-    padding: '12px 16px',
-    maxWidth: '400px',
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: 600,
+    lineHeight: 1.45,
+    padding: "13px 16px",
+    minWidth: "280px",
+    maxWidth: "min(420px, calc(100vw - 32px))",
   },
 };
 
-// Helpers to detect mode for non-React calls
-const getMode = (): 'dark' | 'light' => {
+const getMode = (): "dark" | "light" => {
   try {
-    const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('currentMode') : null;
-    if (stored === 'dark' || stored === 'light') return stored;
-  } catch {}
-  if (typeof window !== 'undefined' && window.matchMedia) {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const stored =
+      typeof localStorage !== "undefined"
+        ? localStorage.getItem("currentMode")
+        : null;
+    if (stored === "dark" || stored === "light") return stored;
+  } catch {
+    // Storage can be unavailable in restricted browser contexts.
   }
-  return 'light';
+
+  if (typeof window !== "undefined" && window.matchMedia) {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
+
+  return "light";
 };
 
-const getWarningStyle = (mode: 'dark' | 'light') => ({
-  background: mode === 'dark' ? '#78350f' : '#f59e0b', // amber variants
-  color: '#fff',
-  border: `1px solid ${mode === 'dark' ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.08)'}`,
-});
-
-const getInfoStyle = (mode: 'dark' | 'light') => ({
-  background: mode === 'dark' ? '#1e3a8a' : '#2563eb', // blue variants
-  color: '#fff',
-  border: `1px solid ${mode === 'dark' ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.08)'}`,
-});
-
-// Success toast options
-const successOptions: ToastOptions = {
-  ...defaultToastOptions,
+const getStaticToastStyle = (accent: string): CSSProperties => {
+  const dark = getMode() === "dark";
+  return {
+    ...defaultToastOptions.style,
+    background: dark ? "#1e1e1e" : "#ffffff",
+    color: dark ? "#f5f5f5" : "#1f2937",
+    border: `1px solid ${dark ? "#3f3f46" : "#e5e7eb"}`,
+    borderInlineStart: `4px solid ${accent}`,
+    boxShadow: dark
+      ? "0 12px 30px rgba(0,0,0,0.45)"
+      : "0 12px 30px rgba(15,23,42,0.14)",
+  };
 };
 
-// Error toast options
-const errorOptions: ToastOptions = {
-  ...defaultToastOptions,
-};
-
-// Warning toast options
-
-// Info toast options
-
-// Loading toast options
 const loadingOptions: ToastOptions = {
   ...defaultToastOptions,
-  duration: Infinity, // Loading toasts don't auto-dismiss
+  duration: Infinity,
 };
 
-// Toast utility functions
+type ErrorInput = string | string[] | Error | ErrorDialogDetails | unknown;
+
 export const showToast = {
-  success: (message: string, options?: ToastOptions) => 
-    toast.success(message, { ...successOptions, ...options }),
-  
-  error: (message: string, options?: ToastOptions) => 
-    toast.error(message, { ...errorOptions, ...options }),
-  
-  warning: (message: string, options?: ToastOptions) => {
-    const mode = getMode();
-    return toast(message, {
+  success: (message: string, options?: ToastOptions) =>
+    toast.success(message, { ...defaultToastOptions, ...options }),
+
+  error: (error: ErrorInput, options?: ToastOptions) => {
+    void options;
+    showErrorDialog(error);
+    return "error-dialog";
+  },
+
+  warning: (message: string, options?: ToastOptions) =>
+    toast(message, {
       ...defaultToastOptions,
       ...options,
-      icon: '⚠️',
+      icon: <WarningAmberRoundedIcon sx={{ color: "#f59e0b" }} />,
       style: {
-        ...defaultToastOptions.style,
-        ...getWarningStyle(mode),
-        ...(options?.style || {}),
+        ...getStaticToastStyle("#f59e0b"),
+        ...options?.style,
       },
-    });
-  },
-  
-  info: (message: string, options?: ToastOptions) => {
-    const mode = getMode();
-    return toast(message, {
+    }),
+
+  info: (message: string, options?: ToastOptions) =>
+    toast(message, {
       ...defaultToastOptions,
       ...options,
-      icon: 'ℹ️',
+      icon: <InfoOutlinedIcon sx={{ color: "#0284c7" }} />,
       style: {
-        ...defaultToastOptions.style,
-        ...getInfoStyle(mode),
-        ...(options?.style || {}),
+        ...getStaticToastStyle("#0284c7"),
+        ...options?.style,
       },
-    });
-  },
-  
-  loading: (message: string, options?: ToastOptions) => 
+    }),
+
+  loading: (message: string, options?: ToastOptions) =>
     toast.loading(message, { ...loadingOptions, ...options }),
-  
+
   promise: <T,>(
     promise: Promise<T>,
     messages: {
       loading: string;
       success: string | ((data: T) => string);
-      error: string | ((error: any) => string);
+      error: string | ((error: unknown) => string);
     },
-    options?: ToastOptions
-  ) => 
-    toast.promise(promise, messages, { ...defaultToastOptions, ...options }),
-  
-  custom: (message: string, options?: ToastOptions) => 
+    options?: ToastOptions,
+  ) => {
+    const toastId = toast.loading(messages.loading, {
+      ...loadingOptions,
+      ...options,
+    });
+
+    return promise.then(
+      (data) => {
+        const message =
+          typeof messages.success === "function"
+            ? messages.success(data)
+            : messages.success;
+        toast.success(message, { ...defaultToastOptions, ...options, id: toastId });
+        return data;
+      },
+      (error: unknown) => {
+        toast.dismiss(toastId);
+        const fallbackTitle =
+          typeof messages.error === "function"
+            ? messages.error(error)
+            : messages.error;
+        showErrorDialog(error, fallbackTitle);
+        throw error;
+      },
+    );
+  },
+
+  custom: (message: string, options?: ToastOptions) =>
     toast(message, { ...defaultToastOptions, ...options }),
-  
+
   dismiss: (toastId?: string) => toast.dismiss(toastId),
-  
   remove: (toastId?: string) => toast.remove(toastId),
 };
 
-// Toast Provider Component
 interface ToastProviderProps {
-  children: React.ReactNode;
-  position?: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
+  children: ReactNode;
+  position?:
+    | "top-left"
+    | "top-center"
+    | "top-right"
+    | "bottom-left"
+    | "bottom-center"
+    | "bottom-right";
   reverseOrder?: boolean;
   gutter?: number;
   containerClassName?: string;
-  containerStyle?: React.CSSProperties;
+  containerStyle?: CSSProperties;
   toastOptions?: ToastOptions;
 }
 
-export const ToastProvider: React.FC<ToastProviderProps> = ({
+export function ToastProvider({
   children,
-  position = 'top-right',
+  position = "top-right",
   reverseOrder = false,
-  gutter = 8,
+  gutter = 10,
   containerClassName,
   containerStyle,
   toastOptions,
-}) => {
+}: ToastProviderProps) {
   const theme = useTheme();
-  const isDark = theme.palette.mode === 'dark';
-  const baseBorder = alpha(theme.palette.divider, isDark ? 0.3 : 0.2);
+  const isDark = theme.palette.mode === "dark";
+  const baseBorder = alpha(theme.palette.divider, isDark ? 0.7 : 0.85);
+  const baseStyle: CSSProperties = {
+    ...defaultToastOptions.style,
+    background: theme.palette.background.paper,
+    color: theme.palette.text.primary,
+    border: `1px solid ${baseBorder}`,
+    boxShadow: isDark
+      ? "0 12px 30px rgba(0,0,0,0.5)"
+      : "0 12px 30px rgba(15,23,42,0.14)",
+  };
 
-  const themedToastOptions: ToastOptions = {
+  const themedToastOptions: DefaultToastOptions = {
     ...defaultToastOptions,
-    style: {
-      borderRadius: '10px',
-      background: theme.palette.background.paper,
-      color: theme.palette.text.primary,
-      fontSize: '14px',
-      fontWeight: '500',
-      padding: '12px 16px',
-      maxWidth: '420px',
-      border: `1px solid ${baseBorder}`,
-      boxShadow: isDark ? '0 8px 22px rgba(0,0,0,0.6)' : '0 8px 22px rgba(0,0,0,0.08)',
-    },
+    style: baseStyle,
     success: {
+      iconTheme: {
+        primary: theme.palette.success.main,
+        secondary: theme.palette.background.paper,
+      },
       style: {
-        background: theme.palette.success.main,
-        color: theme.palette.getContrastText(theme.palette.success.main),
-        border: `1px solid ${alpha(theme.palette.success.main, 0.3)}`,
+        ...baseStyle,
+        borderInlineStart: `4px solid ${theme.palette.success.main}`,
       },
     },
     error: {
+      iconTheme: {
+        primary: theme.palette.error.main,
+        secondary: theme.palette.background.paper,
+      },
       style: {
-        background: theme.palette.error.main,
-        color: theme.palette.getContrastText(theme.palette.error.main),
-        border: `1px solid ${alpha(theme.palette.error.main, 0.3)}`,
+        ...baseStyle,
+        borderInlineStart: `4px solid ${theme.palette.error.main}`,
       },
     },
     loading: {
       duration: Infinity,
       style: {
-        background: isDark ? '#374151' : '#e5e7eb',
-        color: isDark ? '#fff' : '#111827',
-        border: `1px solid ${baseBorder}`,
+        ...baseStyle,
+        borderInlineStart: `4px solid ${theme.palette.info.main}`,
       },
     },
-    blank: {
-      style: {
-        background: theme.palette.background.paper,
-        color: theme.palette.text.primary,
-        border: `1px solid ${baseBorder}`,
-      },
-    },
-  } as ToastOptions;
+    blank: { style: baseStyle },
+  };
 
   return (
     <>
@@ -201,26 +232,23 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
           ...toastOptions,
         }}
       />
+      <ErrorDialogHost />
     </>
   );
-};
+}
 
-// Hook for using toast in components
-export const useToast = () => {
-  return {
-    success: showToast.success,
-    error: showToast.error,
-    warning: showToast.warning,
-    info: showToast.info,
-    loading: showToast.loading,
-    promise: showToast.promise,
-    custom: showToast.custom,
-    dismiss: showToast.dismiss,
-    remove: showToast.remove,
-  };
-};
+export const useToast = () => ({
+  success: showToast.success,
+  error: showToast.error,
+  warning: showToast.warning,
+  info: showToast.info,
+  loading: showToast.loading,
+  promise: showToast.promise,
+  custom: showToast.custom,
+  dismiss: showToast.dismiss,
+  remove: showToast.remove,
+});
 
-// Export the toast instance for direct use
 export { toast };
 
 export default showToast;

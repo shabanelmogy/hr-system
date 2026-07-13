@@ -6,7 +6,7 @@ namespace HrManagementSystem.Features.Security.Authorization.Services
     {
         Task<List<RoleResponse>> GetAllAsync(CancellationToken cancellationToken = default);
 
-        Task<Result<RoleDetailResponse>> GetAsync(string id);
+        Task<Result<RoleDetailResponse>> GetAsync(string id, CancellationToken cancellationToken = default);
 
         Task<Result<RoleResponse>> AddAsync(RoleRequest request, CancellationToken cancellationToken = default);
 

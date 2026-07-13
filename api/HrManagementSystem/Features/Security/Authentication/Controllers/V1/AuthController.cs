@@ -10,6 +10,7 @@ public class AuthController(IAuthService authService, IJwtProvider jwtProvider) 
 
     [HttpPost]
     [AllowAnonymous]
+    [EnableRateLimiting("authentication")]
     public async Task<IActionResult> Login(
         [FromBody] LoginRequest request,
         CancellationToken cancellationToken)
@@ -24,6 +25,7 @@ public class AuthController(IAuthService authService, IJwtProvider jwtProvider) 
 
     [HttpPost]
     [AllowAnonymous]
+    [EnableRateLimiting("authentication")]
     public async Task<IActionResult> Register(
         [FromBody] RegisterRequest request,
         CancellationToken cancellationToken)
@@ -44,6 +46,7 @@ public class AuthController(IAuthService authService, IJwtProvider jwtProvider) 
 
     [HttpPost]
     [AllowAnonymous]
+    [EnableRateLimiting("authentication")]
     public async Task<IActionResult> RefreshToken(
         [FromBody] RefreshTokenRequest request,
         CancellationToken cancellationToken)
@@ -55,10 +58,10 @@ public class AuthController(IAuthService authService, IJwtProvider jwtProvider) 
     [HttpPut]
     [HasPermission(Permissions.EditUsers)]
     public async Task<IActionResult> RevokeRefreshTokenByUserId(
-        [FromQuery] string userId,
+        [FromQuery] RevokeUserSessionsRequest request,
         CancellationToken cancellationToken)
     {
-        var result = await _authService.RevokeRefreshTokenByUserIdAsync(userId, cancellationToken);
+        var result = await _authService.RevokeRefreshTokenByUserIdAsync(request.UserId, cancellationToken);
         return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 
@@ -89,6 +92,7 @@ public class AuthController(IAuthService authService, IJwtProvider jwtProvider) 
 
     [HttpPost]
     [AllowAnonymous]
+    [EnableRateLimiting("authentication")]
     public async Task<IActionResult> ConfirmEmail(
         [FromBody] ConfirmEmailRequest request,
         CancellationToken cancellationToken)
@@ -99,6 +103,7 @@ public class AuthController(IAuthService authService, IJwtProvider jwtProvider) 
 
     [HttpPost]
     [AllowAnonymous]
+    [EnableRateLimiting("authentication")]
     public async Task<IActionResult> ResendConfirmationEmail(
         [FromBody] ResendConfirmationEmailRequest request,
         CancellationToken cancellationToken)
@@ -109,6 +114,7 @@ public class AuthController(IAuthService authService, IJwtProvider jwtProvider) 
 
     [HttpPost]
     [AllowAnonymous]
+    [EnableRateLimiting("authentication")]
     public async Task<IActionResult> ForgetPassword(
         [FromBody] ForgetPasswordRequest request,
         CancellationToken cancellationToken)
@@ -119,6 +125,7 @@ public class AuthController(IAuthService authService, IJwtProvider jwtProvider) 
 
     [HttpPost]
     [AllowAnonymous]
+    [EnableRateLimiting("authentication")]
     public async Task<IActionResult> ResetPassword(
         [FromBody] ResetPasswordRequest request,
         CancellationToken cancellationToken)

@@ -18,18 +18,8 @@ namespace HrManagementSystem.Features.Analytics.Exporting.Controllers.V1
                 return BadRequest("Forecast data cannot be null or empty.");
             }
 
-            try
-            {
-                // Generate the PDF as a byte array
-                var pdfBytes = _pdfService.CreatePDF(Forecasts, fileName, reportHead, culture);
-
-                // Return the PDF as a filea
-                return File(pdfBytes, "application/pdf", $"{fileName}_{DateTime.Now:yyyy-MM-dd}.pdf");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            var pdfBytes = _pdfService.CreatePDF(Forecasts, fileName, reportHead, culture);
+            return File(pdfBytes, "application/pdf", $"{fileName}_{DateTime.UtcNow:yyyy-MM-dd}.pdf");
         }
     }
 }

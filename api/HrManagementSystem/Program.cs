@@ -10,6 +10,9 @@ builder.Host.UseSerilog((context, configuration) =>
 
 var app = builder.Build();
 
+ProtectedFileStorage.MigrateLegacyFiles(app.Environment);
+app.UseExceptionHandler();
+
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -22,8 +25,8 @@ app.UseSerilogRequestLogging();
 
 app.Use(async (context, next) =>
 {
-    LogContext.PushProperty("UserId", context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-    LogContext.PushProperty("UserName", context.User.FindFirst(ClaimTypes.Name)?.Value);
+    using var userId = LogContext.PushProperty("UserId", context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+    using var userName = LogContext.PushProperty("UserName", context.User.FindFirst(ClaimTypes.Name)?.Value);
 
     await next();
 });
@@ -68,6 +71,7 @@ if (app.Environment.IsDevelopment())
 #region "Authentication And Authorization"
 
 app.UseAuthentication();
+app.UseRateLimiter();
 app.UseAuthorization();
 
 #endregion
@@ -84,7 +88,7 @@ app.UseHangfireDashboard("/hangfire", new DashboardOptions
 
 
 //Hangfire Jobs
-//HangfireJobConfig.RegisterJobs();
+HrManagementSystem.Features.Platform.Notifications.Services.NotificationJobConfiguration.RegisterNotificationJobs();
 
 #endregion
 
@@ -105,13 +109,9 @@ app.AddSeedsRequest().GetAwaiter().GetResult();
 
 #endregion
 
-app.MapControllers();
-app.UseExceptionHandler();
-
 app.UseMiddleware<CultureMiddleware>();
 app.UseStaticFiles();
-app.UseFileServer();
-app.UseRateLimiter();
+app.MapControllers();
 
 app.MapHealthChecks("health", new HealthCheckOptions
 {

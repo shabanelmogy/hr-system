@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
+import { useSession } from "@/lib/auth/SessionContext";
 import signalRService from "@/shared/services/signalRService";
 
 type SignalRContextValue = {
@@ -13,57 +20,51 @@ const SignalRContext = createContext<SignalRContextValue>({
   isConnecting: false,
 });
 
-let startPromise: Promise<void> | null = null;
-let isStarted = false;
-
 export function SignalRProvider({ children }: { children: ReactNode }) {
-  const [isConnected, setIsConnected] = useState(false);
-  const [isConnecting, setIsConnecting] = useState(false);
+  const { user, isLoading } = useSession();
+  const [connectionState, setConnectionState] = useState<SignalRContextValue>({
+    isConnected: false,
+    isConnecting: false,
+  });
 
   useEffect(() => {
-    // Only start once globally
-    if (isStarted || startPromise) {
-      console.log("[SignalR Provider] Already started or starting, skipping");
-      return;
-    }
-
-    console.log("[SignalR Provider] Starting SignalR connection...");
-    setIsConnecting(true);
-
-    startPromise = signalRService
-      .start()
-      .then(() => {
-        console.log("[SignalR Provider] Connected successfully");
-        isStarted = true;
-        setIsConnected(true);
-        setIsConnecting(false);
-      })
-      .catch((error) => {
-        console.error("[SignalR Provider] Connection failed:", error);
-        startPromise = null; // Allow retry
-        setIsConnecting(false);
-      });
+    const unsubscribe = signalRService.subscribe((isConnected, isConnecting) => {
+      setConnectionState({ isConnected, isConnecting });
+    });
 
     return () => {
-      console.log("[SignalR Provider] Stopping SignalR connection...");
-      signalRService.stop();
-      isStarted = false;
-      startPromise = null;
-      setIsConnected(false);
+      unsubscribe();
+      void signalRService.setEnabled(false);
     };
   }, []);
 
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (!user) {
+      void signalRService.setEnabled(false);
+      return;
+    }
+
+    const startWhenIdle = () => void signalRService.setEnabled(true);
+    if ("requestIdleCallback" in window) {
+      const requestId = window.requestIdleCallback(startWhenIdle, {
+        timeout: 2_000,
+      });
+      return () => window.cancelIdleCallback(requestId);
+    }
+
+    const timeoutId = setTimeout(startWhenIdle, 500);
+    return () => clearTimeout(timeoutId);
+  }, [isLoading, user]);
+
   return (
-    <SignalRContext.Provider value={{ isConnected, isConnecting }}>
+    <SignalRContext.Provider value={connectionState}>
       {children}
     </SignalRContext.Provider>
   );
 }
 
 export function useSignalRConnection() {
-  const context = useContext(SignalRContext);
-  if (!context) {
-    throw new Error("useSignalRConnection must be used within SignalRProvider");
-  }
-  return context;
+  return useContext(SignalRContext);
 }

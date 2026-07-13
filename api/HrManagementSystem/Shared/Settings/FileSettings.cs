@@ -4,6 +4,7 @@ namespace HrManagementSystem.Shared.Settings
     {
         public const int MaxFileSizeInMB = 10;
         public const int MaxFileSizeInBytes = MaxFileSizeInMB * 1024 * 1024;
+        public const int MaxFilesPerRequest = 10;
         public static readonly string[] BlockedSignatures = ["4D-5A", "2F-2A", "D0-CF"];
         public static readonly string[] AllowedImagesExtensions = [".jpg", ".jpeg", ".png"];
     }

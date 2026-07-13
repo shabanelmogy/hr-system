@@ -40,6 +40,7 @@ public static class Permissions
     public const string DeleteDistricts = "Districts:Delete";
 
     public const string ViewChangeLogs = "ChangeLogs:View";
+    public const string ManageDatabaseViews = "DatabaseViews:Manage";
 
     public const string ViewLocalizations = "Localizations:View";
     public const string CreateLocalizations = "Localizations:Create";
@@ -154,7 +155,10 @@ public static class Permissions
     public const string ModerateChat = "Chat:Moderate";
     public const string ViewChatAnalytics = "Chat:ViewAnalytics";
 
-    public static IList<string?> GetAllPermissions() =>
-     typeof(Permissions).GetFields().Select(x => x.GetValue(x) as string).ToList();
+    public static IReadOnlyList<string> GetAllPermissions() =>
+        typeof(Permissions).GetFields()
+            .Select(field => field.GetValue(null))
+            .OfType<string>()
+            .ToList();
 
 }

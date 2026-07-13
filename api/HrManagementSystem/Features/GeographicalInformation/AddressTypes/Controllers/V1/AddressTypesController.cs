@@ -22,7 +22,7 @@ public class AddressTypesController(IAddressTypeService addressTypeService) : Co
     {
         var response = await _addressTypeService.GetAsync(id, cancellationToken);
 
-        return response.IsSuccess ? Ok(response) : response.ToProblem();
+        return response.IsSuccess ? Ok(response.Value) : response.ToProblem();
     }
 
     [HttpGet("{id}/addresses")]
@@ -31,7 +31,7 @@ public class AddressTypesController(IAddressTypeService addressTypeService) : Co
     {
         var response = await _addressTypeService.GetRelatedAddresses(id, cancellationToken);
 
-        return response.IsSuccess ? Ok(response) : response.ToProblem();
+        return response.IsSuccess ? Ok(response.Value) : response.ToProblem();
     }
 
     [HttpPost]
@@ -40,7 +40,9 @@ public class AddressTypesController(IAddressTypeService addressTypeService) : Co
     {
         var result = await _addressTypeService.AddAsync(request, cancellationToken);
 
-        return CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result);
+        return result.IsSuccess
+            ? CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result.Value)
+            : result.ToProblem();
     }
 
     [HttpPut("")]
@@ -49,7 +51,7 @@ public class AddressTypesController(IAddressTypeService addressTypeService) : Co
     {
         var result = await _addressTypeService.UpdateAsync(request, cancellationToken);
 
-        return CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
     [HttpDelete("{id}")]
@@ -66,6 +68,6 @@ public class AddressTypesController(IAddressTypeService addressTypeService) : Co
     public async Task<IActionResult> GetCount(CancellationToken cancellationToken)
     {
         var result = await _addressTypeService.GetCountAsync(cancellationToken);
-        return result.IsSuccess ? Ok(result) : result.ToProblem();
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 }

@@ -23,6 +23,11 @@ namespace HrManagementSystem.Shared.Paginations
 
         public static async Task<PagedList<T>> ToPagedList(IQueryable<T> source, int pageNumber, int pageSize, CancellationToken cancellationToken = default)
         {
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentOutOfRangeException.ThrowIfLessThan(pageNumber, 1);
+            ArgumentOutOfRangeException.ThrowIfLessThan(pageSize, 1);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(pageSize, PaginationRequest.MaxPageSize);
+
             var count = await source.CountAsync(cancellationToken);
             var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
             return new PagedList<T>(items, count, pageNumber, pageSize);

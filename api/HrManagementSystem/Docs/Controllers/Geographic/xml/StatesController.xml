@@ -156,8 +156,6 @@
       <param name="id">State ID — integer, route parameter.</param>
       <param name="cancellationToken">Request cancellation token.</param>
 
-      <param name="cancellationToken">Token used to cancel the request.</param>
-
       <returns><c>StateResponse</c> for the selected state.</returns>
 
       <response code="200">State with districts returned.</response>

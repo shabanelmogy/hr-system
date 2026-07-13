@@ -11,7 +11,7 @@ namespace HrManagementSystem.Shared.Contracts
             RuleFor(x => x)
                 .Must((request, context) =>
                 {
-                    BinaryReader binary = new(request.OpenReadStream());
+                    using BinaryReader binary = new(request.OpenReadStream());
                     var bytes = binary.ReadBytes(2);
 
                     var fileSequenceHex = BitConverter.ToString(bytes);

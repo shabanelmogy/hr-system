@@ -30,7 +30,7 @@ public class AddressTypeService(
         return addressTypes;
     }
 
-    public async Task<Result<AddressTypeResponse>>? GetAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Result<AddressTypeResponse>> GetAsync(int id, CancellationToken cancellationToken = default)
     {
         var response = await _context.AddressTypes.FindAsync(id, cancellationToken);
 
@@ -39,7 +39,7 @@ public class AddressTypeService(
             : Result.Failure<AddressTypeResponse>(_addressTypeErrors.AddressTypeNotFound);
     }
 
-    public async Task<Result<AddressTypeResponse>>? GetRelatedAddresses(int id, CancellationToken cancellationToken = default)
+    public async Task<Result<AddressTypeResponse>> GetRelatedAddresses(int id, CancellationToken cancellationToken = default)
     {
         var response = await _context.AddressTypes
                                     .Include(a => a.Addresses)
@@ -76,7 +76,7 @@ public class AddressTypeService(
         var updatedAddressType = addressTypeRequest.Adapt<AddressType>();
         await _entityChangeLogService.CreateChangeLogAsync(addressTypeRequest.Id, currentAddressType, updatedAddressType);
 
-        mapper.Map(addressTypeRequest, currentAddressType);
+        _mapper.Map(addressTypeRequest, currentAddressType);
         _context.Update(currentAddressType);
         await _context.SaveChangesAsync(cancellationToken);
 

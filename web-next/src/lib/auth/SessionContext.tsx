@@ -24,7 +24,7 @@ const SessionContext = createContext<SessionContextValue | null>(null);
 export function SessionProvider({ children, initialUser }: { children: ReactNode; initialUser: SessionClaims | null }) {
   const router = useRouter();
   const [user, setUser] = useState<SessionClaims | null>(initialUser);
-  const [isLoading, setIsLoading] = useState(initialUser === null);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const refreshPromiseRef = useRef<Promise<void> | null>(null);
 
@@ -34,6 +34,7 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
       return refreshPromiseRef.current;
     }
 
+    setIsLoading(true);
     const promise = (async () => {
       setError(null);
       try {
@@ -106,10 +107,6 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
     window.addEventListener("auth:logout", handler);
     return () => window.removeEventListener("auth:logout", handler);
   }, [logout]);
-
-  useEffect(() => {
-    if (!initialUser) void refresh();
-  }, [initialUser, refresh]);
 
   const value = useMemo<SessionContextValue>(() => ({
     user,

@@ -17,12 +17,20 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <SidebarContext.Provider value={{ open, setOpen }}>
-      <Box sx={{ display: "flex", width: "100%", overflow: "hidden" }}>
+      <Box
+        sx={{
+          display: "flex",
+          width: "100%",
+          minHeight: "100vh",
+          overflow: "hidden",
+          bgcolor: "background.default",
+        }}
+      >
         <TopBar open={open} handleDrawerOpen={handleDrawerOpen} />
 
         <SideBar open={open} handleDrawerClose={handleDrawerClose} />
 
-        <Box component="main" sx={{ flexGrow: 1, m: 3 }}>
+        <Box component="main" sx={{ flexGrow: 1, minWidth: 0, m: 3 }}>
           <ToolbarSpacer />
           {children}
         </Box>

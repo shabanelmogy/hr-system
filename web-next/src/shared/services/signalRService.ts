@@ -1,99 +1,115 @@
 import * as signalR from "@microsoft/signalr";
 
-const isBrowser = () => typeof window !== "undefined";
-
-const TOKEN_TAG = "[🔑 Token]";
-const SIGNALR_TAG = "[📡 SignalR]";
-
-function tokenPreview(token?: string) {
-  if (!token) return "(empty)";
-  return `${token.slice(0, 20)}…${token.slice(-8)} (${token.length} chars)`;
-}
+const SIGNALR_TAG = "[SignalR]";
+const RESTART_DELAY_MS = 5_000;
+const TOKEN_EXPIRY_BUFFER_MS = 30_000;
 
 type SignalRCallback = (...args: unknown[]) => void;
+type ConnectionStateCallback = (connected: boolean, connecting: boolean) => void;
 
 class SignalRService {
   private readonly connection: signalR.HubConnection;
-  private prefetchedToken: string | undefined;
+  private readonly stateCallbacks = new Set<ConnectionStateCallback>();
+  private startPromise: Promise<boolean> | null = null;
+  private restartTimer: ReturnType<typeof setTimeout> | null = null;
+  private intentionallyStopped = false;
+  private enabled = false;
+  private cachedToken: { value: string; expiresAt: number } | null = null;
+  private tokenPromise: Promise<string> | null = null;
+  private tokenVersion = 0;
 
   constructor(hubUrl: string) {
     const options: signalR.IHttpConnectionOptions = {
-      accessTokenFactory: async () => {
-        if (!isBrowser()) return "";
-
-        if (this.prefetchedToken !== undefined) {
-          const token = this.prefetchedToken;
-          this.prefetchedToken = undefined;
-          console.log(`${TOKEN_TAG} accessTokenFactory: using prefetched token: ${tokenPreview(token)}`);
-          return token;
-        }
-
-        console.log(`${TOKEN_TAG} accessTokenFactory: no prefetched token, fetching fresh realtime token…`);
-        const response = await fetch("/api/auth/realtime-token", { cache: "no-store" });
-        if (!response.ok) {
-          console.warn(`${TOKEN_TAG} accessTokenFactory: fetch failed with status ${response.status}`);
-          return "";
-        }
-
-        const payload = (await response.json()) as { token?: string };
-        console.log(`${TOKEN_TAG} accessTokenFactory: got fresh token: ${tokenPreview(payload.token)}`);
-        return payload.token ?? "";
-      },
-      withCredentials: false
+      accessTokenFactory: () => this.fetchRealtimeToken(),
+      withCredentials: false,
     };
 
-    if (hubUrl.includes("runasp.net") || hubUrl.startsWith("/api/hubs/") || hubUrl === "/hubs/company") {
+    // The Next.js route handler cannot proxy WebSocket upgrades, so same-origin
+    // hub requests use long polling and receive a fresh token for each request.
+    if (hubUrl.startsWith("/api/hubs/")) {
       options.transport = signalR.HttpTransportType.LongPolling;
     }
 
     this.connection = new signalR.HubConnectionBuilder()
       .withUrl(hubUrl, options)
-      .withAutomaticReconnect()
+      .withAutomaticReconnect([0, 2_000, 5_000, 10_000, 30_000])
+      .configureLogging(new SignalRLogger())
       .build();
-  }
 
-  async start() {
-    try {
-      console.log(`${SIGNALR_TAG} start() called | connection state: ${this.connection.state}`);
-      if (this.connection.state !== signalR.HubConnectionState.Disconnected) {
-        console.log(`${SIGNALR_TAG} start() skipped: state is ${this.connection.state}`);
-        return;
-      }
+    this.connection.onreconnecting(() => this.notifyState(false, true));
+    this.connection.onreconnected(() => this.notifyState(true, false));
+    this.connection.onclose(() => {
+      this.notifyState(false, false);
+      if (!this.intentionallyStopped) this.scheduleRestart();
+    });
 
-      if (isBrowser()) {
-        console.log(`${TOKEN_TAG} Prefetching realtime token…`);
-        const response = await fetch("/api/auth/realtime-token", { cache: "no-store" });
-        console.log(`${TOKEN_TAG} Prefetch response: ${response.status} ${response.statusText}`);
-        if (!response.ok) {
-          console.warn(`${SIGNALR_TAG} Connection skipped: User not authenticated (status ${response.status}).`);
-          return;
-        }
-
-        const payload = (await response.json()) as { token?: string };
-        this.prefetchedToken = payload.token ?? "";
-        console.log(`${TOKEN_TAG} Prefetched realtime token: ${tokenPreview(this.prefetchedToken)}`);
-      }
-
-      // Check again after async fetch to avoid race conditions if start() was called multiple times
-      if (this.connection.state !== signalR.HubConnectionState.Disconnected) {
-        console.log(`${SIGNALR_TAG} start() aborted after prefetch: state changed to ${this.connection.state}`);
-        return;
-      }
-
-      console.log(`${SIGNALR_TAG} Calling connection.start()…`);
-      await this.connection.start();
-      console.log(`${SIGNALR_TAG} ✅ Connected! State: ${this.connection.state}`);
-    } catch (error) {
-      console.error(`${SIGNALR_TAG} ❌ Connection Error:`, error);
-    }
-  }
-
-  stop() {
-    if (this.connection.state === signalR.HubConnectionState.Connected) {
-      this.connection.stop().catch((error: unknown) => {
-        console.error("Error stopping SignalR:", error);
+    if (typeof window !== "undefined") {
+      window.addEventListener("online", () => {
+        if (this.enabled) void this.start();
       });
+      window.addEventListener("auth:logout", () => void this.setEnabled(false));
     }
+  }
+
+  async setEnabled(enabled: boolean): Promise<void> {
+    if (this.enabled === enabled) return;
+
+    this.enabled = enabled;
+    if (enabled) {
+      this.intentionallyStopped = false;
+      await this.start();
+      return;
+    }
+
+    this.tokenVersion += 1;
+    this.cachedToken = null;
+    this.tokenPromise = null;
+    await this.stop();
+  }
+
+  async start(): Promise<boolean> {
+    if (!this.enabled) return false;
+
+    if (this.connection.state === signalR.HubConnectionState.Connected) {
+      this.notifyState(true, false);
+      return true;
+    }
+
+    if (this.connection.state !== signalR.HubConnectionState.Disconnected) {
+      this.notifyState(false, true);
+      return false;
+    }
+
+    if (this.startPromise) return this.startPromise;
+
+    this.intentionallyStopped = false;
+    this.clearRestartTimer();
+    this.notifyState(false, true);
+
+    this.startPromise = this.startConnection().finally(() => {
+      this.startPromise = null;
+    });
+
+    return this.startPromise;
+  }
+
+  async stop(): Promise<void> {
+    this.intentionallyStopped = true;
+    this.clearRestartTimer();
+
+    if (this.connection.state !== signalR.HubConnectionState.Disconnected) {
+      await this.connection.stop();
+    }
+
+    // React development mode can disable and re-enable the provider while an
+    // asynchronous stop is still finishing. Honor the latest desired state.
+    if (this.enabled) {
+      this.intentionallyStopped = false;
+      void this.start();
+      return;
+    }
+
+    this.notifyState(false, false);
   }
 
   on(eventName: string, callback: SignalRCallback) {
@@ -108,21 +124,154 @@ class SignalRService {
 
     this.connection.off(eventName);
   }
+
+  subscribe(callback: ConnectionStateCallback) {
+    this.stateCallbacks.add(callback);
+    callback(
+      this.connection.state === signalR.HubConnectionState.Connected,
+      this.connection.state === signalR.HubConnectionState.Connecting ||
+        this.connection.state === signalR.HubConnectionState.Reconnecting,
+    );
+    return () => {
+      this.stateCallbacks.delete(callback);
+    };
+  }
+
+  private async startConnection(): Promise<boolean> {
+    try {
+      await this.connection.start();
+      this.notifyState(true, false);
+      return true;
+    } catch (error) {
+      this.notifyState(false, false);
+      console.warn(`${SIGNALR_TAG} Connection delayed: ${getErrorMessage(error)}`);
+      if (!this.intentionallyStopped) this.scheduleRestart();
+      return false;
+    }
+  }
+
+  private async fetchRealtimeToken(): Promise<string> {
+    if (
+      this.cachedToken &&
+      this.cachedToken.expiresAt > Date.now() + TOKEN_EXPIRY_BUFFER_MS
+    ) {
+      return this.cachedToken.value;
+    }
+
+    if (this.tokenPromise) return this.tokenPromise;
+
+    const request = this.requestRealtimeToken(this.tokenVersion);
+    this.tokenPromise = request;
+    const clearRequest = () => {
+      if (this.tokenPromise === request) this.tokenPromise = null;
+    };
+    void request.then(clearRequest, clearRequest);
+    return request;
+  }
+
+  private async requestRealtimeToken(tokenVersion: number): Promise<string> {
+    const response = await fetch("/api/auth/realtime-token", {
+      cache: "no-store",
+      credentials: "same-origin",
+    });
+
+    if (!response.ok) {
+      if (response.status === 401 && typeof window !== "undefined") {
+        this.cachedToken = null;
+        window.dispatchEvent(new CustomEvent("auth:logout"));
+      }
+      throw new Error(`Realtime token request failed with status ${response.status}`);
+    }
+
+    const payload = (await response.json()) as { token?: unknown };
+    if (typeof payload.token !== "string" || !payload.token) {
+      throw new Error("Realtime token response did not contain a token");
+    }
+
+    if (this.enabled && tokenVersion === this.tokenVersion) {
+      this.cachedToken = {
+        value: payload.token,
+        expiresAt: getJwtExpiration(payload.token),
+      };
+    }
+    return payload.token;
+  }
+
+  private scheduleRestart() {
+    if (
+      this.restartTimer ||
+      !this.enabled ||
+      this.intentionallyStopped ||
+      !navigator.onLine
+    ) {
+      return;
+    }
+
+    this.restartTimer = setTimeout(() => {
+      this.restartTimer = null;
+      void this.start();
+    }, RESTART_DELAY_MS);
+  }
+
+  private clearRestartTimer() {
+    if (!this.restartTimer) return;
+    clearTimeout(this.restartTimer);
+    this.restartTimer = null;
+  }
+
+  private notifyState(connected: boolean, connecting: boolean) {
+    this.stateCallbacks.forEach((callback) => callback(connected, connecting));
+  }
 }
 
-const envHubUrl = process.env.NEXT_PUBLIC_SIGNALR_HUB_URL?.trim() || null;
-// Default to the /api/hubs proxy route so that:
-//  1. Node.js handles TLS (NODE_TLS_REJECT_UNAUTHORIZED=0 works server-side).
-//  2. The access_token query param flows through for backend JWT auth.
-const hubUrl = envHubUrl || "/api/hubs/company";
+class SignalRLogger implements signalR.ILogger {
+  log(logLevel: signalR.LogLevel, message: string): void {
+    if (logLevel < signalR.LogLevel.Warning) return;
+
+    // Authentication expiry during long polling is recoverable. Keep it visible
+    // for diagnostics without turning it into a Next.js console-error overlay.
+    console.warn(`${SIGNALR_TAG} ${message}`);
+  }
+}
+
+function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
+}
+
+function getJwtExpiration(token: string): number {
+  try {
+    const encodedPayload = token.split(".")[1];
+    if (!encodedPayload) return 0;
+
+    const normalized = encodedPayload.replace(/-/g, "+").replace(/_/g, "/");
+    const padding = "=".repeat((4 - (normalized.length % 4)) % 4);
+    const payload = JSON.parse(atob(normalized + padding)) as { exp?: unknown };
+    return typeof payload.exp === "number" ? payload.exp * 1_000 : 0;
+  } catch {
+    return 0;
+  }
+}
+
+const hubUrl =
+  process.env.NEXT_PUBLIC_SIGNALR_HUB_URL?.trim() || "/api/hubs/company";
 
 const noopSignalRService = {
-  async start() {},
-  stop() {},
+  async setEnabled() {},
+  async start() {
+    return false;
+  },
+  async stop() {},
   on() {},
-  off() {}
-} satisfies Pick<SignalRService, "start" | "stop" | "on" | "off">;
+  off() {},
+  subscribe() {
+    return () => {};
+  },
+} satisfies Pick<
+  SignalRService,
+  "setEnabled" | "start" | "stop" | "on" | "off" | "subscribe"
+>;
 
-const signalRService = isBrowser() ? new SignalRService(hubUrl) : noopSignalRService;
+const signalRService =
+  typeof window !== "undefined" ? new SignalRService(hubUrl) : noopSignalRService;
 
 export default signalRService;

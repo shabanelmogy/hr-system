@@ -8,7 +8,7 @@
     "npm": ">=10.0.0"
   },
   "scripts": {
-    "dev": "next dev --experimental-https",
+    "dev": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 next dev --experimental-https",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
@@ -100,6 +100,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/react-simple-maps": "^3.0.6",
     "@types/stylis": "^4.2.7",
+    "cross-env": "^10.1.0",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.10",
     "eslint-plugin-import": "^2.32.0",

@@ -21,8 +21,12 @@ namespace HrManagementSystem.Features.Security.Authorization.Services
             return roles;
         }
 
-        public async Task<Result<RoleDetailResponse>> GetAsync(string id)
+        public async Task<Result<RoleDetailResponse>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+            if (string.IsNullOrWhiteSpace(id))
+                return Result.Failure<RoleDetailResponse>(_roleErrors.RoleNotFound);
+
             if (await _roleManager.FindByIdAsync(id) is not { } role)
                 return Result.Failure<RoleDetailResponse>(_roleErrors.RoleNotFound);
 
@@ -45,7 +49,7 @@ namespace HrManagementSystem.Features.Security.Authorization.Services
 
             if (result.Succeeded)
             {
-                var response = new RoleResponse(role.Id, role.Name, role.IsDeleted, null);
+                var response = new RoleResponse(role.Id, role.Name ?? string.Empty, role.IsDeleted, null);
                 return Result.Success(response);
             }
 
@@ -56,6 +60,10 @@ namespace HrManagementSystem.Features.Security.Authorization.Services
 
         public async Task<Result> UpdateAsync(RoleRequest roleRequest, CancellationToken cancellationToken)
         {
+            if (string.IsNullOrWhiteSpace(roleRequest.Id))
+                return Result.Failure(_roleErrors.RoleNotFound);
+
+            cancellationToken.ThrowIfCancellationRequested();
             var currentRole = await _roleManager.FindByIdAsync(roleRequest.Id);
             if (currentRole is null)
                 return Result.Failure(_roleErrors.RoleNotFound);
@@ -92,23 +100,28 @@ namespace HrManagementSystem.Features.Security.Authorization.Services
             if (role == null)
                 return Result.Failure<RoleResponse>(_roleErrors.RoleNotFound);
 
-            var roleClaims = _roleManager.GetClaimsAsync(role).Result.Select(c => c.Value).ToList();
+            cancellationToken.ThrowIfCancellationRequested();
+            var roleClaims = (await _roleManager.GetClaimsAsync(role)).Select(claim => claim.Value).ToHashSet();
             var allClaims = Permissions.GetAllPermissions();
-            var currentClaims = allClaims.Select(p => new CheckBoxViewModel { DisplayValue = p }).ToList();
+            var currentClaims = allClaims
+                .Select(permission => new CheckBoxViewModel
+                {
+                    DisplayValue = permission,
+                    IsSelected = roleClaims.Contains(permission)
+                })
+                .ToList();
 
-            foreach (var claim in currentClaims)
-            {
-                if (roleClaims.Any(c => c == claim.DisplayValue))
-                    claim.IsSelected = true;
-            }
-
-            var response = new RoleResponse(roleId, role.Name, role.IsDeleted, currentClaims);
+            var response = new RoleResponse(roleId, role.Name ?? string.Empty, role.IsDeleted, currentClaims);
 
             return Result.Success(response);
         }
 
         public async Task<Result> UpdateRoleClaims(RoleRequest rolerequest, CancellationToken cancellationToken)
         {
+            if (string.IsNullOrWhiteSpace(rolerequest.Id))
+                return Result.Failure(_roleErrors.RoleNotFound);
+
+            cancellationToken.ThrowIfCancellationRequested();
             var role = await _roleManager.FindByIdAsync(rolerequest.Id);
 
             if (role == null)
@@ -117,12 +130,18 @@ namespace HrManagementSystem.Features.Security.Authorization.Services
             var roleClaims = await _roleManager.GetClaimsAsync(role);
 
             foreach (var claim in roleClaims)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
                 await _roleManager.RemoveClaimAsync(role, claim);
+            }
 
-            var selectedClaims = rolerequest.RoleClaims.Where(c => c.IsSelected).ToList();
+            var selectedClaims = rolerequest.RoleClaims?.Where(claim => claim.IsSelected).ToList() ?? [];
 
             foreach (var claim in selectedClaims)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
                 await _roleManager.AddClaimAsync(role, new Claim(Permissions.Type, claim.DisplayValue));
+            }
 
             return Result.Success();
         }

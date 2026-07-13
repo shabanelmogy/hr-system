@@ -7,70 +7,50 @@ public static class RateLimitingService
         services.AddRateLimiter(rateLimiterOptions =>
         {
             rateLimiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+            rateLimiterOptions.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+                CreateFixedWindowPartition(httpContext, "global", 120, TimeSpan.FromMinutes(1)));
 
-            //Number Of Request Can Send in Same Time
-            //rateLimiterOptions.AddConcurrencyLimiter("concurrency", options =>
-            //{
-            //    options.PermitLimit = 2;
-            //    options.QueueLimit = 1;
-            //    options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-            //});
+            rateLimiterOptions.AddPolicy("authentication", httpContext =>
+                CreateFixedWindowPartition(httpContext, "authentication", 10, TimeSpan.FromMinutes(1)));
 
-            //Number Of Requests can send in period and increase to token limit
-            //rateLimiterOptions.AddTokenBucketLimiter("bucket", options =>
-            //{
-            //    options.TokenLimit = 2;
-            //    options.QueueLimit = 1;
-            //    options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-            //    options.ReplenishmentPeriod = TimeSpan.FromSeconds(60);
-            //    options.TokensPerPeriod = 2;
-            //    options.AutoReplenishment = true;
-            //});
+            rateLimiterOptions.AddPolicy("fileOperations", httpContext =>
+                CreateFixedWindowPartition(httpContext, "files", 30, TimeSpan.FromMinutes(1)));
 
-            //Number Of Requests Can Send In Period And When Full Period End Get New Requests like Cinema 
-            //And Queue Waiting For Time End
-            //rateLimiterOptions.AddFixedWindowLimiter("fixed", options =>
-            //{
-            //    options.PermitLimit = 2;
-            //    options.QueueLimit = 1;
-            //    options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-            //    options.Window = TimeSpan.FromSeconds(30);
-            //});
+            rateLimiterOptions.OnRejected = async (context, cancellationToken) =>
+            {
+                if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+                    context.HttpContext.Response.Headers.RetryAfter = ((int)retryAfter.TotalSeconds).ToString();
 
-            //Divide Window In Segments And When Segment End Number Of His Requests Go To Another Segment
-            //rateLimiterOptions.AddSlidingWindowLimiter("rateLimiter", options =>
-            //{
-            //    options.PermitLimit = 2;
-            //    options.QueueLimit = 1;
-            //    options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-            //    options.Window = TimeSpan.FromSeconds(30);
-            //    options.SegmentsPerWindow = 2;
-            //});
-
-            //Limit Request Sends From Specific Ip
-            //rateLimiterOptions.AddPolicy("ipLimiter", httpContext =>
-            //RateLimitPartition.GetFixedWindowLimiter(
-            //    partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
-            //    factory: _ => new FixedWindowRateLimiterOptions
-            //    {
-            //        PermitLimit = 2,
-            //        Window = TimeSpan.FromSeconds(20)
-            //    }
-            //));
-            //
-
-            rateLimiterOptions.AddPolicy("userLimiter", httpContext =>
-             RateLimitPartition.GetFixedWindowLimiter(
-             partitionKey: httpContext.User.GetUserId(),
-             factory: _ => new FixedWindowRateLimiterOptions
-             {
-                 PermitLimit = 2,
-                 Window = TimeSpan.FromSeconds(20)
-             }
-         )
-        );
+                await context.HttpContext.Response.WriteAsJsonAsync(new ProblemDetails
+                {
+                    Status = StatusCodes.Status429TooManyRequests,
+                    Title = "Too many requests",
+                    Detail = "Please wait before retrying the request."
+                }, cancellationToken);
+            };
         });
 
         return services;
+    }
+
+    private static RateLimitPartition<string> CreateFixedWindowPartition(
+        HttpContext context,
+        string policy,
+        int permitLimit,
+        TimeSpan window)
+    {
+        var subject = context.User.FindFirstValue(ClaimTypes.NameIdentifier)
+            ?? context.Connection.RemoteIpAddress?.ToString()
+            ?? "unknown";
+
+        return RateLimitPartition.GetFixedWindowLimiter(
+            $"{policy}:{subject}",
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = permitLimit,
+                Window = window,
+                QueueLimit = 0,
+                AutoReplenishment = true
+            });
     }
 }

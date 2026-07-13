@@ -1,4 +1,5 @@
 using HrManagementSystem.Features.Appointments.Errors;
+using HrManagementSystem.Features.Platform.Notifications.Errors;
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
 public static class ErrorsService
@@ -18,6 +19,7 @@ public static class ErrorsService
         service.AddScoped<AddressErrors>();
         service.AddScoped<AddressTypeErrors>();
         service.AddScoped<AppointmentErrors>();
+        service.AddScoped<NotificationErrors>();
 
         return service;
     }

@@ -4,12 +4,7 @@ import { getBackendUrl } from "@/lib/env/server";
 
 type RouteParameters = { params: Promise<{ path: string[] }> };
 
-const TAG = "[📡 SignalR proxy]";
-
-function tokenPreview(token?: string) {
-  if (!token) return "(none)";
-  return `${token.slice(0, 20)}…${token.slice(-8)} (${token.length}ch)`;
-}
+const TAG = "[SignalR Proxy]";
 
 /**
  * Proxy for SignalR hub connections.
@@ -30,15 +25,12 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
   // Preserve all query parameters (access_token, negotiateVersion, id, etc.)
   backendUrl.search = request.nextUrl.search;
 
-  // Log incoming request details
   const authHeader = request.headers.get("authorization");
   const queryToken = request.nextUrl.searchParams.get("access_token");
   console.log(`${TAG} ${request.method} /hubs/${hubPath}`);
   if (process.env.NODE_ENV !== "production") {
-    console.log(`${TAG}   Authorization header: ${authHeader ? tokenPreview(authHeader.replace("Bearer ", "")) : "(missing)"}`);
-    console.log(`${TAG}   Query access_token: ${queryToken ? tokenPreview(queryToken) : "(none)"}`);
+    console.log(`${TAG} Authentication: ${authHeader || queryToken ? "present" : "missing"}`);
   }
-  console.log(`${TAG}   → Forwarding to: ${backendUrl.pathname}`);
 
   const forwardHeaders = new Headers();
   for (const name of ["authorization", "content-type", "user-agent", "x-forwarded-for"] as const) {
@@ -58,15 +50,14 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
       redirect: "manual",
     });
   } catch (err) {
-    console.error(`${TAG} ❌ Backend unreachable:`, err);
+    console.error(`${TAG} Backend unreachable:`, err);
     return NextResponse.json({ message: "SignalR backend unavailable" }, { status: 503 });
   }
 
-  console.log(`${TAG} ← Backend response: ${backendResponse.status} ${backendResponse.statusText}`);
+  console.log(`${TAG} Backend returned ${backendResponse.status} ${backendResponse.statusText}`);
 
   if (backendResponse.status === 401) {
-    const body = await backendResponse.clone().text();
-    console.warn(`${TAG} ❌ 401 Unauthorized — response body: ${body.slice(0, 300)}`);
+    console.warn(`${TAG} Long-poll request was unauthorized; reconnecting with a fresh token`);
   }
 
   const responseHeaders = new Headers();

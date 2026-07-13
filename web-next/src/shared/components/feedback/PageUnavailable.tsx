@@ -1,9 +1,13 @@
 "use client";
 
 import HomeOutlined from "@mui/icons-material/HomeOutlined";
+import RefreshOutlined from "@mui/icons-material/RefreshOutlined";
 import SearchOffOutlined from "@mui/icons-material/SearchOffOutlined";
 import { Box, Button, Typography, keyframes } from "@mui/material";
+import type { Route } from "next";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo } from "react";
 
 // ─── animations ────────────────────────────────────────────────
 const float = keyframes`
@@ -30,7 +34,46 @@ const orbDrift = keyframes`
   75%       { transform: translate(15px, 15px) scale(1.04); }
 `;
 
-export default function PageUnavailable() {
+type PageUnavailableProps = {
+  reason?: "access" | "service";
+  returnTo?: string;
+};
+
+const RETRY_STORAGE_KEY = "hr-service-unavailable-retry";
+const AUTO_RETRY_COOLDOWN_MS = 10_000;
+
+export default function PageUnavailable({
+  reason = "access",
+  returnTo = "/",
+}: PageUnavailableProps) {
+  const router = useRouter();
+  const isServiceUnavailable = reason === "service";
+  const safeReturnTo = useMemo(
+    () =>
+      returnTo.startsWith("/") && !returnTo.startsWith("//") ? returnTo : "/",
+    [returnTo],
+  );
+
+  useEffect(() => {
+    if (!isServiceUnavailable) return;
+
+    const lastRetry = Number(sessionStorage.getItem(RETRY_STORAGE_KEY) ?? 0);
+    if (Date.now() - lastRetry < AUTO_RETRY_COOLDOWN_MS) return;
+
+    sessionStorage.setItem(RETRY_STORAGE_KEY, String(Date.now()));
+    const timer = window.setTimeout(
+      () => router.replace(safeReturnTo as Route),
+      1_500,
+    );
+    return () => window.clearTimeout(timer);
+  }, [isServiceUnavailable, router, safeReturnTo]);
+
+  const retry = () => {
+    sessionStorage.removeItem(RETRY_STORAGE_KEY);
+    router.replace(safeReturnTo as Route);
+    router.refresh();
+  };
+
   return (
     <Box
       component="main"
@@ -52,10 +95,38 @@ export default function PageUnavailable() {
     >
       {/* ── Decorative floating orbs ── */}
       {[
-        { size: 280, top: "5%",  left: "-8%",  delay: "0s",   dur: "12s", color: "rgba(124,58,237,0.12)" },
-        { size: 200, top: "60%", right: "-6%", delay: "3s",   dur: "15s", color: "rgba(99,102,241,0.1)" },
-        { size: 140, top: "80%", left: "10%",  delay: "6s",   dur: "10s", color: "rgba(167,139,250,0.1)" },
-        { size: 100, top: "15%", right: "12%", delay: "1.5s", dur: "14s", color: "rgba(139,92,246,0.08)" },
+        {
+          size: 280,
+          top: "5%",
+          left: "-8%",
+          delay: "0s",
+          dur: "12s",
+          color: "rgba(124,58,237,0.12)",
+        },
+        {
+          size: 200,
+          top: "60%",
+          right: "-6%",
+          delay: "3s",
+          dur: "15s",
+          color: "rgba(99,102,241,0.1)",
+        },
+        {
+          size: 140,
+          top: "80%",
+          left: "10%",
+          delay: "6s",
+          dur: "10s",
+          color: "rgba(167,139,250,0.1)",
+        },
+        {
+          size: 100,
+          top: "15%",
+          right: "12%",
+          delay: "1.5s",
+          dur: "14s",
+          color: "rgba(139,92,246,0.08)",
+        },
       ].map((orb, i) => (
         <Box
           key={i}
@@ -164,7 +235,7 @@ export default function PageUnavailable() {
             animation: `${slideUp} 0.6s 0.1s both`,
           }}
         >
-          404
+          {isServiceUnavailable ? "503" : "404"}
         </Typography>
 
         {/* ── Heading ── */}
@@ -184,7 +255,9 @@ export default function PageUnavailable() {
             animation: `${slideUp} 0.6s 0.2s both`,
           }}
         >
-          Page Unavailable
+          {isServiceUnavailable
+            ? "Service Temporarily Unavailable"
+            : "Page Unavailable"}
         </Typography>
 
         {/* ── Description ── */}
@@ -196,17 +269,18 @@ export default function PageUnavailable() {
             animation: `${slideUp} 0.6s 0.35s both`,
           }}
         >
-          The address is incorrect, the page no longer exists, or you do not
-          have access to view it.
+          {isServiceUnavailable
+            ? "The application service is starting or temporarily unavailable. We will retry shortly."
+            : "The address is incorrect, the page no longer exists, or you do not have access to view it."}
         </Typography>
 
         {/* ── CTA button ── */}
         <Box sx={{ animation: `${slideUp} 0.6s 0.5s both` }}>
           <Button
-            component={Link}
-            href="/"
+            {...(isServiceUnavailable
+              ? { onClick: retry, startIcon: <RefreshOutlined /> }
+              : { component: Link, href: "/", startIcon: <HomeOutlined /> })}
             variant="contained"
-            startIcon={<HomeOutlined />}
             size="large"
             sx={{
               px: 4,
@@ -228,7 +302,7 @@ export default function PageUnavailable() {
               },
             }}
           >
-            Back to Dashboard
+            {isServiceUnavailable ? "Retry" : "Back to Dashboard"}
           </Button>
         </Box>
       </Box>

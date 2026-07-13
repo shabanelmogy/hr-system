@@ -1,49 +1,32 @@
-import createCache, { EmotionCache } from "@emotion/cache";
 import { createTheme, Theme } from "@mui/material/styles";
 import * as React from "react";
 import i18n from "../locales/i18n";
 import { getDesignTokens } from "./theme";
-import { prefixer } from "stylis";
-import rtlPlugin from "stylis-plugin-rtl";
 import {
+  useInitialThemeDirection,
   useInitialThemeMode,
+  type ThemeDirection,
   type ThemeMode,
 } from "./ThemePreferences";
-
-type Direction = "ltr" | "rtl";
-
-const ltrCache: EmotionCache = createCache({ key: "muiltr" });
-
-// Create RTL cache once at module level (static import avoids ChunkLoadError)
-const rtlCacheInstance: EmotionCache = createCache({
-  key: "muirtl",
-  stylisPlugins: [prefixer, rtlPlugin],
-});
 
 export interface ThemeSettings {
   mode: ThemeMode;
   setMode: React.Dispatch<React.SetStateAction<ThemeMode>>;
-  direction: Direction;
+  direction: ThemeDirection;
   theme: Theme;
-  cacheProvider: EmotionCache;
 }
 
 export const useThemeSettings = (): ThemeSettings => {
   const initialMode = useInitialThemeMode();
+  const initialDirection = useInitialThemeDirection();
   const [mode, setMode] = React.useState<ThemeMode>(initialMode);
-  // Read the direction already stamped on <html dir="..."> by the server so
-  // the client's first paint matches SSR and avoids a style flash.
-  const [direction, setDirection] = React.useState<Direction>(() => {
-    if (typeof window !== "undefined") {
-      return (document.documentElement.dir as Direction) || "ltr";
-    }
-    return "ltr";
-  });
+  const [direction, setDirection] =
+    React.useState<ThemeDirection>(initialDirection);
 
   React.useEffect(() => {
     const syncDirection = (language: string | undefined) => {
       const isArabic = language?.startsWith("ar");
-      const nextDirection: Direction = isArabic ? "rtl" : "ltr";
+      const nextDirection: ThemeDirection = isArabic ? "rtl" : "ltr";
       setDirection(nextDirection);
       document.documentElement.lang = isArabic ? "ar" : "en";
       document.documentElement.dir = nextDirection;
@@ -69,6 +52,5 @@ export const useThemeSettings = (): ThemeSettings => {
     setMode,
     direction,
     theme,
-    cacheProvider: direction === "rtl" ? rtlCacheInstance : ltrCache,
   };
 };
