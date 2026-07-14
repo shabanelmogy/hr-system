@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import SecurityIcon from "@mui/icons-material/Security";
@@ -18,6 +17,7 @@ import {
 interface SecurityHeaderProps {
   isEditing: boolean;
   isSubmitting: boolean;
+  isDirty: boolean;
   setIsEditing: (editing: boolean) => void;
   handleCancel: () => void;
   handleSave: () => void;
@@ -27,6 +27,7 @@ interface SecurityHeaderProps {
 const SecurityHeader = ({
   isEditing,
   isSubmitting,
+  isDirty,
   setIsEditing,
   handleCancel,
   handleSave,
@@ -35,7 +36,11 @@ const SecurityHeader = ({
   const theme = useTheme();
 
   return (
-    <Stack direction="row" spacing={2} sx={{ alignItems: "center", mb: 3 }}>
+    <Stack
+      direction={{ xs: "column", sm: "row" }}
+      spacing={2}
+      sx={{ alignItems: { xs: "stretch", sm: "center" }, mb: 3 }}
+    >
       <Box
         sx={{
           width: 48,
@@ -59,12 +64,12 @@ const SecurityHeader = ({
           }}
         />
       </Box>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1, minWidth: 0 }}>
         <Typography
-          variant="h5"
+          variant="h6"
           sx={{
             fontWeight: 700,
-            letterSpacing: "-0.02em",
+            letterSpacing: 0,
             background:
               theme.palette.mode === "dark"
                 ? "linear-gradient(90deg, #fff, #e2e8f0)"
@@ -75,7 +80,7 @@ const SecurityHeader = ({
             fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
           }}
         >
-          {t("auth.securitySettings").toUpperCase()}
+          {t("auth.securitySettings")}
         </Typography>
         <Typography variant="body2" sx={{
           color: "text.secondary"
@@ -102,7 +107,7 @@ const SecurityHeader = ({
           }}
         />
       ) : (
-        <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
+        <Stack direction="row" spacing={1} sx={{ alignItems: "center", alignSelf: { xs: "flex-end", sm: "center" } }}>
           {/* Cancel button - only visible in edit mode */}
           {isEditing && (
             <Tooltip title={t("actions.undoChanges")}>
@@ -137,7 +142,7 @@ const SecurityHeader = ({
           >
             <IconButton
               onClick={isEditing ? handleSave : () => setIsEditing(true)}
-              disabled={isSubmitting}
+              disabled={isSubmitting || (isEditing && !isDirty)}
               aria-label={isEditing ? t("actions.save") : t("actions.edit")}
               sx={{
                 bgcolor: isEditing

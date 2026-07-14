@@ -1,7 +1,7 @@
 import { passwordPolicyPattern } from "@/features/auth/validation/passwordPolicy";
 import { z } from "zod";
 
-const getPasswordChangeSchema = (t: (key: string, options?: any) => string) =>
+const getPasswordChangeSchema = (t: (key: string, options?: Record<string, unknown>) => string) =>
   z
     .object({
       currentPassword: z.string().min(1, t("validation.required")),

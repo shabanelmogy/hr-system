@@ -42,6 +42,17 @@ public class UsersController(IUserService userService) : ControllerBase
 
     [HttpPut("{id}")]
     [HasPermission(Permissions.EditUsers)]
+    public async Task<IActionResult> ChangePassword(
+        [FromRoute] string id,
+        [FromBody] ChangeUserPasswordRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await _userService.ChangeUserPasswordAsync(id, request, cancellationToken);
+        return result.IsSuccess ? NoContent() : result.ToProblem();
+    }
+
+    [HttpPut("{id}")]
+    [HasPermission(Permissions.EditUsers)]
     public async Task<IActionResult> Toggle([FromRoute] string id)
     {
         var result = await _userService.ToggleStatus(id);

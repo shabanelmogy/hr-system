@@ -26,6 +26,7 @@ export interface UsersRoutes {
   getAll: string;
   add: string;
   update: (id: Id) => string;
+  changePassword: (id: Id) => string;
   toggle: (id: Id) => string;
   unlock: (id: Id) => string;
   revoke: (userId: Id) => string;

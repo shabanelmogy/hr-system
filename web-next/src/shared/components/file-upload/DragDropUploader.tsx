@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import {
   Paper,
   Stack,
@@ -68,21 +67,33 @@ const DragDropUploader = ({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={handleClick}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            handleClick();
+          }
+        }}
+        role="button"
+        tabIndex={0}
+        aria-label={t("actions.updateProfile")}
       >
         <input
           ref={fileInputRef}
           hidden
-          accept="image/*"
+          accept="image/jpeg,image/png,image/webp"
           type="file"
           onChange={handleFileInputChange}
+          aria-label={t("actions.updateProfile")}
         />
         <Stack
-          direction="row"
-          spacing={2}
+          direction={{ xs: "column", sm: "row" }}
+          spacing={{ xs: 1, sm: 2 }}
           sx={{
             alignItems: "center",
-            justifyContent: "center"
-          }}>
+            justifyContent: "center",
+            textAlign: { xs: "center", sm: "start" },
+          }}
+        >
           <ImageIcon
             sx={{
               fontSize: 32,
@@ -107,7 +118,7 @@ const DragDropUploader = ({
                 color: "text.secondary",
                 mt: 0.5
               }}>
-              {t("actions.drapPhoto")}
+              {t("actions.dragPhoto")}
             </Typography>
           </Box>
         </Stack>

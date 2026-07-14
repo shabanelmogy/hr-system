@@ -1,5 +1,17 @@
-import React, { useCallback, useEffect, useRef } from "react";
-import { Dialog, Box, Slide, useTheme, alpha } from "@mui/material";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import {
+  Button,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Slide,
+  useTheme,
+  alpha,
+} from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { FormProvider } from "./FormContext";
 import type { MyFormProps } from "./types";
 
@@ -12,6 +24,7 @@ export const FormContainer: React.FC<MyFormProps> = ({
   onSubmit,
   children = null,
   isSubmitting = false,
+  isDirty,
   icon = null,
   maxWidth = "sm",
   variant = "default",
@@ -28,8 +41,30 @@ export const FormContainer: React.FC<MyFormProps> = ({
   footerLeft = null,
 }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const dialogContentRef = useRef<HTMLDivElement>(null);
   const hasScrolledToError = useRef(false);
+  const [discardDialogOpen, setDiscardDialogOpen] = useState(false);
+
+  const handleClose = useCallback(() => {
+    if (isSubmitting) return;
+
+    if (isDirty) {
+      setDiscardDialogOpen(true);
+      return;
+    }
+
+    onClose();
+  }, [isDirty, isSubmitting, onClose]);
+
+  const cancelDiscard = useCallback(() => {
+    setDiscardDialogOpen(false);
+  }, []);
+
+  const confirmDiscard = useCallback(() => {
+    setDiscardDialogOpen(false);
+    onClose();
+  }, [onClose]);
 
   const getDialogStyles = () => {
     const baseStyles = {
@@ -211,11 +246,12 @@ export const FormContainer: React.FC<MyFormProps> = ({
   // The context value provides everything children might need
   const contextValue = {
     open,
-    onClose,
+    onClose: handleClose,
     title,
     subtitle,
     submitButtonText,
     isSubmitting,
+    isDirty,
     icon,
     maxWidth,
     variant,
@@ -237,7 +273,7 @@ export const FormContainer: React.FC<MyFormProps> = ({
     <FormProvider value={contextValue}>
       <Dialog
         open={open}
-        onClose={onClose}
+        onClose={handleClose}
         maxWidth={maxWidth}
         fullWidth
         disableScrollLock
@@ -264,6 +300,40 @@ export const FormContainer: React.FC<MyFormProps> = ({
         >
           {children}
         </Box>
+      </Dialog>
+
+      <Dialog
+        open={open && discardDialogOpen}
+        onClose={cancelDiscard}
+        maxWidth="xs"
+        fullWidth
+        aria-labelledby="discard-changes-dialog-title"
+        aria-describedby="discard-changes-dialog-description"
+        sx={{
+          "& .MuiDialog-paper": {
+            borderRadius: 3,
+            border: `1px solid ${alpha(theme.palette.warning.main, 0.35)}`,
+            boxShadow: theme.shadows[18],
+          },
+        }}
+      >
+        <DialogTitle id="discard-changes-dialog-title" sx={{ fontWeight: 700 }}>
+          {t("messages.unsavedChangesTitle") || "Unsaved changes"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="discard-changes-dialog-description">
+            {t("messages.unsavedChangesConfirm") ||
+              "You have unsaved changes. Discard them?"}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2.5, gap: 1 }}>
+          <Button onClick={cancelDiscard} variant="outlined" autoFocus>
+            {t("actions.cancel")}
+          </Button>
+          <Button onClick={confirmDiscard} variant="contained" color="warning">
+            {t("messages.discardChanges") || "Discard changes"}
+          </Button>
+        </DialogActions>
       </Dialog>
     </FormProvider>
   );

@@ -38,7 +38,7 @@ const RoleForm = ({
     handleSubmit,
     reset,
     control,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm({
     resolver: zodResolver(schema),
     mode: "onChange",
@@ -119,6 +119,7 @@ const RoleForm = ({
       }
       onSubmit={isViewMode ? undefined : handleSubmit(onSubmit)}
       isSubmitting={loading}
+      isDirty={isDirty}
       hideFooter={isViewMode}
       recordId={selectedRole?.id}
       focusFieldName="name" // Specify which field to focus

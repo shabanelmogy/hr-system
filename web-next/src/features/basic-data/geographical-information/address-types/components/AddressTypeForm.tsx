@@ -31,8 +31,9 @@ const AddressTypeForm = ({
   const {
     handleSubmit,
     reset,
+    setValue,
     control,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<CreateAddressTypeRequest>({
     resolver: zodResolver(schema),
     mode: "onChange",
@@ -76,10 +77,9 @@ const AddressTypeForm = ({
       nameAr: addressType.nameAr,
     };
 
-    reset({
-      nameEn: mockData.nameEn,
-      nameAr: mockData.nameAr,
-    });
+    const mockOptions = { shouldDirty: true, shouldValidate: true };
+    setValue("nameEn", mockData.nameEn, mockOptions);
+    setValue("nameAr", mockData.nameAr, mockOptions);
   };
 
   const getOverlayActionType = (): string => {
@@ -140,6 +140,7 @@ const AddressTypeForm = ({
       }
       onSubmit={isViewMode ? undefined : handleSubmit(onSubmit)}
       isSubmitting={loading}
+      isDirty={isDirty}
       hideFooter={isViewMode}
       recordId={selectedItem?.id}
       focusFieldName="nameAr"
@@ -184,6 +185,7 @@ const AddressTypeForm = ({
           errors={errors}
           control={control}
           placeholder={t("addressTypes.nameArPlaceholder")}
+          maxLength={100}
           showCounter={!isViewMode}
           readOnly={isViewMode}
           data-field-name="nameAr"
@@ -197,6 +199,7 @@ const AddressTypeForm = ({
         errors={errors}
         control={control}
         placeholder={t("addressTypes.nameEnPlaceholder")}
+        maxLength={100}
         showCounter={!isViewMode}
         readOnly={isViewMode}
         data-field-name="nameEn"

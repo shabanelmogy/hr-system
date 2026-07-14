@@ -62,10 +62,11 @@ const UserForm = ({
   const {
     handleSubmit,
     reset,
+    setValue,
     control,
     watch,
     clearErrors,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm({
     resolver: zodResolver(schema),
     mode: "onChange",
@@ -257,12 +258,8 @@ const UserForm = ({
     
     // Clear password fields and errors when hiding section
     if (!newShowPassword) {
-      const currentValues = watch();
-      reset({
-        ...currentValues,
-        password: "",
-        confirmPassword: "",
-      });
+      setValue("password", "", { shouldDirty: true, shouldValidate: false });
+      setValue("confirmPassword", "", { shouldDirty: true, shouldValidate: false });
       clearErrors(["password", "confirmPassword"]);
     }
   };
@@ -294,6 +291,7 @@ const UserForm = ({
       }
       onSubmit={isViewMode ? undefined : handleSubmit(handleFormSubmit)}
       isSubmitting={loading}
+      isDirty={isDirty}
       hideFooter={isViewMode}
       recordId={selectedUser?.id}
       focusFieldName="firstName"

@@ -64,8 +64,8 @@ export const useUserPhoto = (options: any = {}) => {
 export const useUpdateUserInfo = (options: any = {}) => {
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: UserProfileService.updateUserInfo,
+  return useMutation<unknown, unknown, UserInfo>({
+    mutationFn: (userData) => UserProfileService.updateUserInfo(userData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: USER_PROFILE_KEYS.all });
     },

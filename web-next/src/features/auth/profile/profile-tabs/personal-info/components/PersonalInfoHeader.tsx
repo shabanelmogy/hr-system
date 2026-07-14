@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import {
   Box,
   Stack,
@@ -16,6 +15,7 @@ import UndoIcon from "@mui/icons-material/Undo";
 interface PersonalInfoHeaderProps {
   isEditing: boolean;
   isSaving: boolean;
+  isDirty: boolean;
   onButtonClick: () => void;
   handleUndo: () => void;
   t: (key: string) => string;
@@ -24,17 +24,19 @@ interface PersonalInfoHeaderProps {
 const PersonalInfoHeader = ({
   isEditing,
   isSaving,
+  isDirty,
   onButtonClick,
   handleUndo,
   t,
 }: PersonalInfoHeaderProps) => {
   return (
-    <Box
+    <Stack
+      direction={{ xs: "column", sm: "row" }}
       sx={{
-        display: "flex",
         justifyContent: "space-between",
-        alignItems: "center",
-        p: 1,
+        alignItems: { xs: "stretch", sm: "center" },
+        gap: 2,
+        p: { xs: 2, sm: 2.5 },
         background: (theme) =>
           theme.palette.mode === "dark"
             ? `linear-gradient(145deg, ${alpha(
@@ -49,31 +51,24 @@ const PersonalInfoHeader = ({
           `1px solid ${alpha(theme.palette.info.main, 0.2)}`,
       }}
     >
-      <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
-        <Chip
-          size="small"
-          label={isEditing ? t("actions.editingMode") : t("actions.viewOnly")}
-          color={isEditing ? "primary" : "info"}
-          variant={isEditing ? "filled" : "outlined"}
-          sx={{
-            fontWeight: "medium",
-            transition: "all 0.2s ease",
-            px: 0.5,
-          }}
-        />
-        {isEditing && (
-          <Typography
-            variant="caption"
-            sx={{
-              color: "text.secondary",
-              ml: 1,
-              fontStyle: "italic"
-            }}>
-            {t("actions.modifyInformation")}
+      <Box sx={{ minWidth: 0 }}>
+        <Stack direction="row" spacing={1} sx={{ alignItems: "center", flexWrap: "wrap" }}>
+          <Typography component="h3" variant="h6" sx={{ fontWeight: 800 }}>
+            {t("auth.personalDetails")}
           </Typography>
-        )}
-      </Stack>
-      <Stack direction="row" spacing={1}>
+          <Chip
+            size="small"
+            label={isEditing ? t("actions.editingMode") : t("actions.viewOnly")}
+            color={isEditing ? "primary" : "info"}
+            variant={isEditing ? "filled" : "outlined"}
+            sx={{ fontWeight: 600 }}
+          />
+        </Stack>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+          {isEditing ? t("actions.modifyInformation") : t("auth.profileOverview")}
+        </Typography>
+      </Box>
+      <Stack direction="row" spacing={1} sx={{ alignSelf: { xs: "flex-end", sm: "center" } }}>
         {isEditing && (
           <Tooltip title={t("actions.undoChanges")}>
             <IconButton
@@ -105,7 +100,8 @@ const PersonalInfoHeader = ({
           <IconButton
             color={isEditing ? "primary" : "info"}
             onClick={onButtonClick}
-            disabled={isSaving}
+            disabled={isSaving || (isEditing && !isDirty)}
+            aria-label={isEditing ? t("actions.saveInformation") : t("actions.editInformation")}
             sx={{
               background: (theme) =>
                 isEditing
@@ -135,7 +131,7 @@ const PersonalInfoHeader = ({
           </IconButton>
         </Tooltip>
       </Stack>
-    </Box>
+    </Stack>
   );
 };
 

@@ -13,6 +13,7 @@ import Validation from "./utils/validation";
 import PasswordChangeForm from "./components/PasswordChangeForm";
 import SecurityHeader from "./components/SecurityHeader";
 import StyledCard, { StyledDivider } from "./components/StyledCard";
+import type { PasswordChangeValues } from "./components/PasswordChangeForm";
 
 const ChangePassword = ({ showSuccess = null, showError = null }) => {
   const { t } = useTranslation();
@@ -23,9 +24,9 @@ const ChangePassword = ({ showSuccess = null, showError = null }) => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
     reset,
-  } = useForm({
+  } = useForm<PasswordChangeValues>({
     mode: "onChange",
     resolver: zodResolver(validationScheme),
     defaultValues: {
@@ -34,7 +35,7 @@ const ChangePassword = ({ showSuccess = null, showError = null }) => {
     },
   });
 
-  const handleChangePassword = async (data: { currentPassword?: string; newPassword?: string }) => {
+  const handleChangePassword = async (data: PasswordChangeValues) => {
     setIsSubmitting(true);
     try {
       await apiService.put(apiRoutes.auth.changePassword, data);
@@ -45,20 +46,19 @@ const ChangePassword = ({ showSuccess = null, showError = null }) => {
       }
 
       reset();
+      setIsEditing(false);
       await apiService.logout();
       return true;
     } catch (error) {
-      HandleApiError(error, (updatedState: any) => {
+      HandleApiError(error, (updatedState) => {
         // Use the showError function passed from parent
         if (showError) {
-          showError(updatedState.messages, (error as any)?.title);
+          showError(updatedState.messages.join("\n"), updatedState.title);
         }
       });
       return false;
     } finally {
-      setTimeout(() => {
-        setIsSubmitting(false);
-      }, 800);
+      setIsSubmitting(false);
     }
   };
 
@@ -73,6 +73,7 @@ const ChangePassword = ({ showSuccess = null, showError = null }) => {
       <SecurityHeader
         isEditing={isEditing}
         isSubmitting={isSubmitting}
+        isDirty={isDirty}
         setIsEditing={setIsEditing}
         handleCancel={handleCancel}
         handleSave={handleSubmit(handleChangePassword)}

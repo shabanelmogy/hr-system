@@ -101,7 +101,7 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
     handleSubmit,
     reset,
     setValue,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<RoleClaimsFormData>({
     resolver: zodResolver(roleClaimsSchema),
     defaultValues: { id: roleId, name: "", roleClaims: [] },
@@ -172,6 +172,17 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const handleBack = () => {
+    if (
+      isDirty &&
+      typeof window !== "undefined" &&
+      !window.confirm("You have unsaved changes. Discard them?")
+    ) {
+      return;
+    }
+    router.push("/administration/roles");
   };
 
   // Handle individual checkbox change
@@ -697,7 +708,7 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
                   <Button
                     variant="outlined"
                     startIcon={<ArrowBack />}
-                    onClick={() => router.push("/administration/roles")}
+                    onClick={handleBack}
                     disabled={isSaving}
                   >
                     Back To Roles

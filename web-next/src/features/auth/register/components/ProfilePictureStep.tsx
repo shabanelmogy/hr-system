@@ -192,7 +192,7 @@ const ProfilePictureStep = ({
             type="file"
             ref={fileInputRef}
             style={{ display: "none" }}
-            accept="image/jpeg,image/png"
+            accept="image/jpeg,image/png,image/gif,image/webp"
             onChange={onFileChange}
           />
 
@@ -254,7 +254,7 @@ const ProfilePictureStep = ({
           variant="contained"
           color="primary"
           fullWidth
-          disabled={isLoading || !previewUrl}
+          disabled={isLoading}
           endIcon={!isLoading && <HowToRegIcon />}
           sx={{
             py: 1.25,
@@ -301,8 +301,8 @@ const ProfilePictureStep = ({
           <Typography variant="caption" sx={{
             color: "text.secondary"
           }}>
-            {t("auth.profilePictureRequired") ||
-              "A profile picture is required to complete registration"}
+            {t("auth.profilePictureOptional") ||
+              "Profile picture is optional and can be added later"}
           </Typography>
         </Box>
       )}

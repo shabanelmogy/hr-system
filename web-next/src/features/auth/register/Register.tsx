@@ -6,6 +6,7 @@ import { alpha, Box, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "next/navigation";
 
 // Services and Constants
 import { apiRoutes } from "@/config";
@@ -38,6 +39,7 @@ import { useFormSteps } from "./hooks/FormSteps";
 const Register = () => {
   // Navigation and translation
   const { t } = useTranslation();
+  const router = useRouter();
   const { showSnackbar, SnackbarComponent } = useSnackbar();
 
   // Theme and responsive design
@@ -333,15 +335,15 @@ const Register = () => {
     }, 300);
 
     const requestData = {
-      ...data,
-      ProfilePicture: selectedFileBase64 || null,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      userName: data.userName,
+      email: data.email,
+      password: data.password,
+      profilePicture: selectedFileBase64 || null,
     };
 
     try {
-      // Artificially delay for demo purposes
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      // @ts-ignore
       await apiService.post(apiRoutes.auth.register, requestData);
       reset();
 
@@ -355,11 +357,10 @@ const Register = () => {
         t("messages.success") || "Success"
       );
 
-      // Add a short delay before redirect for better UX
-      setTimeout(() => {
-        // @ts-ignore
-        window.location.href = ROUTES.RESEND_EMAIL_CONFIRMATION;
-      }, 1500);
+      // Keep the form locked while the success message is visible, then use
+      // client-side navigation to the configured confirmation route.
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+      router.replace(appRoutes.resendEmailConfirmation);
     } catch (error) {
       HandleApiError(error, (updatedState: any) => {
         showSnackbar("error", updatedState.messages, (error as any)?.title);

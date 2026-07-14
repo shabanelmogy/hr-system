@@ -12,7 +12,7 @@ export const FormFooter: React.FC = () => {
     variant, 
     footerLeft, 
     onClose, 
-    isSubmitting, 
+    isSubmitting,
     icon, 
     isViewMode,
     submitButtonText 

@@ -31,7 +31,8 @@ const Login = () => {
   // Get all form-related props and handlers from custom hook
   const {
     t,
-    isSubmitting,
+    isFormSubmitting,
+    isSubmittingState,
     showPassword,
     setShowPassword,
     userNameRef,
@@ -44,7 +45,6 @@ const Login = () => {
     errors,
     handleSocialLogin,
     SnackbarComponent,
-    setValue,
   } = useLoginForm();
 
   return (
@@ -85,18 +85,17 @@ const Login = () => {
             userNameRef={userNameRef}
             showPassword={showPassword}
             setShowPassword={setShowPassword}
-            loading={isSubmitting.current}
             handleSubmit={handleSubmit}
             onSubmit={onSubmit}
             loginAs={loginAs}
-            isSubmitting={isSubmitting}
+            isFormSubmitting={isFormSubmitting}
+            loading={isSubmittingState}
             control={control}
             errors={errors}
             register={register}
             handleSocialLogin={handleSocialLogin}
             reset={reset}
             appRoutes={appRoutes}
-            setValue={setValue}
           />
         </Paper>
       </Container>

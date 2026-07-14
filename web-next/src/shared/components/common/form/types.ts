@@ -9,6 +9,8 @@ export interface MyFormProps {
   onSubmit: (event?: any) => void;
   children?: ReactNode;
   isSubmitting?: boolean;
+  /** Prevents accidental dismissal and disables unchanged saves when supplied. */
+  isDirty?: boolean;
   icon?: ReactNode;
   maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false;
   variant?: "default" | "modern" | "glassmorphic";

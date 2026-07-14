@@ -55,15 +55,30 @@ const useUserStore = create(
             apiRoutes.users.update(userData.id),
             userData
           );
-          const updatedUser = extractValue(response);
+          const responseUser = extractValue(response);
+          const safeUserData = { ...userData };
+          delete safeUserData.password;
+          delete safeUserData.confirmPassword;
+          const updatedUser = responseUser && typeof responseUser === "object"
+            ? responseUser
+            : {
+                ...(useUserStore.getState().users.find((user: any) => user.id === userData.id) || {}),
+                ...safeUserData,
+              };
 
           set((state: any) => ({
             users: state.users.map(
-              (user: any) => (user.id === userData.id ? updatedUser : user) // Complete replacement
+              (user: any) => (user.id === userData.id ? updatedUser : user)
             ),
           }));
           return updatedUser;
         },
+
+        changeUserPassword: async ({ id, newPassword, confirmPassword }: any) =>
+          apiService.put(apiRoutes.users.changePassword(id), {
+            newPassword,
+            confirmPassword,
+          }),
 
         toggleUser: async (id: any) => {
           await apiService.put(apiRoutes.users.toggle(id));

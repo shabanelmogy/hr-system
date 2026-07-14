@@ -151,6 +151,32 @@ public class UserService(
         return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
     }
 
+    public async Task<Result> ChangeUserPasswordAsync(
+        string id,
+        ChangeUserPasswordRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        if (await _userManager.Users
+                .Include(candidate => candidate.RefreshTokens)
+                .SingleOrDefaultAsync(candidate => candidate.Id == id, cancellationToken) is not { } user)
+            return Result.Failure(_userErrors.UserNotFound);
+
+        var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var result = await _userManager.ResetPasswordAsync(user, resetToken, request.NewPassword);
+
+        if (!result.Succeeded)
+        {
+            var error = result.Errors.First();
+            return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
+        }
+
+        RevokeActiveSessions(user, "Password changed by an administrator");
+        await _companyHubContext.Clients.User(user.Id)
+            .ReceiveTokenRevoked("Your password was changed. Please sign in again.");
+
+        return Result.Success();
+    }
+
     public async Task<Result> ToggleStatus(string id)
     {
         if (await _userManager.Users

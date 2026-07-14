@@ -13,6 +13,8 @@ interface UploadSectionProps {
   loadingText: string;
   uploadProgress: number;
   countriesCount: number;
+  failedCount: number;
+  uploadableCount: number;
   onFileSelect: (file: File) => void;
   validateFile: (file: File) => boolean;
   onUpload: () => void;
@@ -25,6 +27,8 @@ const UploadSection: React.FC<UploadSectionProps> = ({
   loadingText,
   uploadProgress,
   countriesCount,
+  failedCount,
+  uploadableCount,
   onFileSelect,
   validateFile,
   onUpload,
@@ -70,10 +74,12 @@ const UploadSection: React.FC<UploadSectionProps> = ({
             variant="contained"
             startIcon={<UploadIcon />}
             onClick={onUpload}
-            disabled={countriesCount === 0 || loading}
+            disabled={uploadableCount === 0 || loading}
             size="large"
           >
-            {t("imports.uploadData") || "Upload"}
+            {failedCount > 0
+              ? t("imports.retryFailed") || "Retry failed"
+              : t("imports.uploadData") || "Upload"}
           </Button>
           {countriesCount > 0 && (
             <Button

@@ -28,6 +28,8 @@ const ImportCountries = () => {
     elapsedTime,
     selectedFile,
     uploadProgress,
+    failedCount,
+    uploadableCount,
     handleFileSelect,
     validateFile,
     uploadCountries,
@@ -46,6 +48,8 @@ const ImportCountries = () => {
           loadingText={loadingText}
           uploadProgress={uploadProgress}
           countriesCount={countries.length}
+          failedCount={failedCount}
+          uploadableCount={uploadableCount}
           onFileSelect={handleFileSelect}
           validateFile={validateFile}
           onUpload={uploadCountries}

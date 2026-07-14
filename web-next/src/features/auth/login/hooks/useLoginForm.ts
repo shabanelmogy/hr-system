@@ -2,7 +2,7 @@ import { apiRoutes } from "@/config";
 import { useNotifications } from "@/shared/hooks";
 import { apiService, HandleApiError } from "@/shared/services";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
@@ -24,6 +24,8 @@ const useLoginForm = () => {
 
   // Ref-based guard prevents double-submit race condition (useState is async)
   const isSubmitting = useRef(false);
+  const [isSubmittingState, setIsSubmittingState] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const userNameRef = useRef<HTMLInputElement>(null);
 
@@ -34,7 +36,7 @@ const useLoginForm = () => {
     control,
     reset,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting: isFormSubmitting },
     setValue,
   } = useForm({
     defaultValues: { username: "", password: "" },
@@ -60,6 +62,7 @@ const useLoginForm = () => {
   const submitCredentials = async (username: string, password: string) => {
     if (isSubmitting.current) return;
     isSubmitting.current = true;
+    setIsSubmittingState(true);
     try {
       const data = await apiService.post(apiRoutes.auth.login, { username, password });
       const success = handleAuthSuccess(data);
@@ -72,6 +75,7 @@ const useLoginForm = () => {
       });
     } finally {
       isSubmitting.current = false;
+      setIsSubmittingState(false);
     }
   };
 
@@ -91,6 +95,7 @@ const useLoginForm = () => {
   const handleGoogleAuth = async (credentialResponse: any) => {
     if (isSubmitting.current) return;
     isSubmitting.current = true;
+    setIsSubmittingState(true);
     try {
       const token =
         credentialResponse?.access_token ||
@@ -113,6 +118,7 @@ const useLoginForm = () => {
       });
     } finally {
       isSubmitting.current = false;
+      setIsSubmittingState(false);
     }
   };
 
@@ -129,10 +135,10 @@ const useLoginForm = () => {
 
   return {
     t,
-    // Expose ref so LoginForm can read isSubmitting synchronously for button states
-    isSubmitting,
-    showPassword: false,
-    setShowPassword: (_: boolean) => {},
+    isFormSubmitting,
+    isSubmittingState,
+    showPassword,
+    setShowPassword,
     userNameRef,
     handleSubmit,
     onSubmit,
@@ -143,7 +149,6 @@ const useLoginForm = () => {
     errors,
     handleSocialLogin,
     SnackbarComponent,
-    setValue,
     socialProviders: "google",
     validationSchema,
   };

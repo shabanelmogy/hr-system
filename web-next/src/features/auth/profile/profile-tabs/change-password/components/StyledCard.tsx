@@ -12,7 +12,7 @@ const StyledCard = ({ children }: StyledCardProps) => {
       sx={{
         mt: 2,
         p: 0,
-        borderRadius: 4,
+        borderRadius: 1,
         background:
           theme.palette.mode === "dark" ? "rgba(30, 30, 30, 0.9)" : "#ffffff",
         backdropFilter: "blur(10px)",
@@ -21,15 +21,7 @@ const StyledCard = ({ children }: StyledCardProps) => {
           theme.palette.mode === "dark"
             ? `0 8px 32px ${alpha(theme.palette.common.black, 0.2)}`
             : `0 8px 32px ${alpha(theme.palette.common.black, 0.08)}`,
-        overflow: "visible",
-        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-        "&:hover": {
-          transform: "translateY(-4px)",
-          boxShadow:
-            theme.palette.mode === "dark"
-              ? `0 12px 40px ${alpha(theme.palette.common.black, 0.3)}`
-              : `0 12px 40px ${alpha(theme.palette.common.black, 0.12)}`,
-        },
+        overflow: "hidden",
       }}
     >
       <CardContent sx={{ p: { xs: 2, sm: 3 } }}>{children}</CardContent>

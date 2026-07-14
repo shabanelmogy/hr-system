@@ -26,6 +26,7 @@ const useUserGridLogic = () => {
   const users = useUserStore((state: any) => state.users);
   const addUser = useUserStore((state: any) => state.addUser);
   const updateUser = useUserStore((state: any) => state.updateUser);
+  const changeUserPassword = useUserStore((state: any) => state.changeUserPassword);
   const toggleUser = useUserStore((state: any) => state.toggleUser);
   const unLockUser = useUserStore((state: any) => state.unLockUser);
   const revokeToken = useUserStore((state: any) => state.revokeToken);
@@ -108,16 +109,38 @@ const useUserGridLogic = () => {
     async (formdata: any) => {
       let gridAction = null;
       if (dialogType === "edit" && selectedUser?.id) {
+        const {
+          password,
+          confirmPassword,
+          ...userData
+        } = formdata;
+
         const result = await handleApiCall(
-          () => updateUser({ ...formdata, id: selectedUser.id }),
+          async () => {
+            const updatedUser = await updateUser({ ...userData, id: selectedUser.id });
+
+            if (password?.trim()) {
+              await changeUserPassword({
+                id: selectedUser.id,
+                newPassword: password,
+                confirmPassword,
+              });
+            }
+
+            return updatedUser;
+          },
           t("users.updated")
         );
+        if (!result) return;
         gridAction = { type: "edit", id: result.id };
       } else if (dialogType === "add") {
+        const userData = { ...formdata };
+        delete userData.confirmPassword;
         const response = await handleApiCall(
-          () => addUser(formdata),
+          () => addUser(userData),
           t("users.created")
         );
+        if (!response) return;
         gridAction = { type: "add", id: response.id };
       }
       closeDialog();
@@ -130,6 +153,7 @@ const useUserGridLogic = () => {
       dialogType,
       selectedUser,
       updateUser,
+      changeUserPassword,
       addUser,
       handleApiCall,
       t,

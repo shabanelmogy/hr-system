@@ -4,10 +4,20 @@ import { apiService, HandleApiError } from "@/shared/services";
 import { useSnackbar } from "@/shared/hooks";
 import { readExcelFile } from "@/shared/services/excelService";
 import { apiRoutes } from "@/config";
+import getCountryValidationSchema from "../../utils/validation";
 import { Country } from "./types";
 
+type UploadStatus = "pending" | "uploaded" | "failed";
+
+type ImportCountry = Country & {
+  rowNumber: number;
+  uploadStatus: UploadStatus;
+  importStatus: string;
+  errorMessage?: string;
+};
+
 export const useCountryImport = () => {
-  const [countries, setCountries] = useState<Country[]>([]);
+  const [countries, setCountries] = useState<ImportCountry[]>([]);
   const { showSnackbar, SnackbarComponent } = useSnackbar();
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState("");
@@ -28,20 +38,51 @@ export const useCountryImport = () => {
     };
   }, []);
 
-  const parseCountriesFromExcel = async (file: File): Promise<Country[]> => {
+  const getStatusLabel = (status: UploadStatus) => {
+    const labels: Record<UploadStatus, string> = {
+      pending: t("imports.pending") || "Pending",
+      uploaded: t("imports.uploaded") || "Uploaded",
+      failed: t("imports.failed") || "Failed",
+    };
+    return labels[status];
+  };
+
+  const updateRowStatus = (
+    rowNumber: number,
+    uploadStatus: UploadStatus,
+    errorMessage?: string,
+  ) => {
+    setCountries((currentRows) =>
+      currentRows.map((row) =>
+        row.rowNumber === rowNumber
+          ? {
+              ...row,
+              uploadStatus,
+              importStatus: getStatusLabel(uploadStatus),
+              errorMessage,
+            }
+          : row,
+      ),
+    );
+  };
+
+  const parseCountriesFromExcel = async (file: File): Promise<ImportCountry[]> => {
     const jsonData = await readExcelFile(file);
 
     // Skip the header row and map to country structure
     return jsonData
       .slice(1)
       .filter((row: any) => Array.isArray(row) && row.length > 0)
-      .map((row: any) => ({
-        nameAr: row[0] || "",
-        nameEn: row[1] || "",
-        alpha2Code: row[2] || "",
-        alpha3Code: row[3] || "",
-        phoneCode: row[4] ? String(row[4]) : "",
-        currencyCode: row[5] || null,
+      .map((row: any, index: number) => ({
+        nameAr: String(row[0] ?? "").trim(),
+        nameEn: String(row[1] ?? "").trim(),
+        alpha2Code: String(row[2] ?? "").trim(),
+        alpha3Code: String(row[3] ?? "").trim(),
+        phoneCode: String(row[4] ?? "").trim(),
+        currencyCode: String(row[5] ?? "").trim(),
+        rowNumber: index + 2,
+        uploadStatus: "pending" as const,
+        importStatus: getStatusLabel("pending"),
       }));
   };
 
@@ -88,11 +129,13 @@ export const useCountryImport = () => {
   };
 
   const uploadCountries = async () => {
-    if (countries.length === 0) return;
+    const rowsToUpload = countries.filter((country) => country.uploadStatus !== "uploaded");
+    if (rowsToUpload.length === 0) return;
 
     try {
       setShowCounter(true);
       startTimeRef.current = Date.now();
+      setElapsedTime("0s");
       setLoading(true);
       setLoadingText(t("uploading") || "Uploading...");
 
@@ -103,54 +146,71 @@ export const useCountryImport = () => {
         setElapsedTime(`${seconds}s`);
       }, 1000);
 
-      // Sequential upload using existing add endpoint
+      const validationSchema = getCountryValidationSchema(t);
       let success = 0;
-      for (let i = 0; i < countries.length; i++) {
-        const c = countries[i];
+      const failures: string[] = [];
+
+      // Validate and upload each row independently so failed rows remain retryable.
+      for (let i = 0; i < rowsToUpload.length; i++) {
+        const c = rowsToUpload[i];
+        const validation = validationSchema.safeParse({
+          nameAr: c.nameAr,
+          nameEn: c.nameEn,
+          alpha2Code: c.alpha2Code,
+          alpha3Code: c.alpha3Code,
+          phoneCode: c.phoneCode,
+          currencyCode: c.currencyCode ?? "",
+        });
+
+        if (!validation.success) {
+          const message = validation.error.issues
+            .map((issue) => issue.message)
+            .join(" | ");
+          updateRowStatus(c.rowNumber, "failed", message);
+          failures.push(`${t("imports.row") || "Row"} ${c.rowNumber}: ${message}`);
+          setUploadProgress(Math.round(((i + 1) / rowsToUpload.length) * 100));
+          continue;
+        }
+
         try {
           await apiService.post(apiRoutes.countries.add, {
-            nameEn: c.nameEn,
-            nameAr: c.nameAr,
-            alpha2Code: c.alpha2Code || null,
-            alpha3Code: c.alpha3Code || null,
-            phoneCode: c.phoneCode || null,
-            currencyCode: c.currencyCode || null,
+            nameEn: validation.data.nameEn,
+            nameAr: validation.data.nameAr,
+            alpha2Code: validation.data.alpha2Code || null,
+            alpha3Code: validation.data.alpha3Code || null,
+            phoneCode: validation.data.phoneCode || null,
+            currencyCode: validation.data.currencyCode || null,
           });
           success++;
-          // update progress
-          setUploadProgress(Math.round(((i + 1) / countries.length) * 100));
-          showSnackbar(
-            "success",
-            [
-              `${success}/${countries.length} ${
-                t("countries.uploaded") || "countries uploaded"
-              }`,
-            ],
-            t("messages.success") || "Success"
-          );
-
-          setCountries([]);
-          setSelectedFile(null);
+          updateRowStatus(c.rowNumber, "uploaded");
         } catch (err) {
-          // Continue uploading remaining items; collect errors via snackbar
-          HandleApiError(err, (updatedState: any) => {
-            showSnackbar(
-              "error",
-              updatedState?.messages || [
-                (err as any)?.message || "Upload error",
-              ],
-              (err as any)?.title || t("messages.error") || "Error"
-            );
-            return;
+          let message = err instanceof Error ? err.message : t("messages.error") || "Upload error";
+          HandleApiError(err, (updatedState) => {
+            message = updatedState.messages.join(" | ") || updatedState.title || message;
           });
+          updateRowStatus(c.rowNumber, "failed", message);
+          failures.push(`${t("imports.row") || "Row"} ${c.rowNumber}: ${message}`);
         }
+
+        setUploadProgress(Math.round(((i + 1) / rowsToUpload.length) * 100));
+      }
+
+      if (success > 0) {
+        showSnackbar(
+          "success",
+          [`${success} ${t("countries.uploaded") || "countries uploaded"}`],
+          t("messages.success") || "Success",
+        );
+      }
+      if (failures.length > 0) {
+        showSnackbar("error", failures, t("messages.error") || "Error");
       }
     } catch (error) {
-      HandleApiError(error, (updatedState: any) => {
+      HandleApiError(error, (updatedState) => {
         showSnackbar(
           "error",
-          updatedState?.messages,
-          (error as any)?.title || t("messages.error") || "Error"
+          updatedState.messages,
+          updatedState.title || t("messages.error") || "Error"
         );
       });
     } finally {
@@ -165,7 +225,11 @@ export const useCountryImport = () => {
   const clearData = () => {
     setCountries([]);
     setSelectedFile(null);
+    setUploadProgress(0);
   };
+
+  const failedCount = countries.filter((country) => country.uploadStatus === "failed").length;
+  const uploadableCount = countries.filter((country) => country.uploadStatus !== "uploaded").length;
 
   return {
     countries,
@@ -175,6 +239,8 @@ export const useCountryImport = () => {
     elapsedTime,
     selectedFile,
     uploadProgress,
+    failedCount,
+    uploadableCount,
     handleFileSelect,
     validateFile,
     uploadCountries,

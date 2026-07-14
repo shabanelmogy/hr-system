@@ -51,8 +51,7 @@ const DistrictForm = ({
     reset,
     control,
     setValue,
-    watch,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<DistrictFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
@@ -63,8 +62,6 @@ const DistrictForm = ({
       stateId: 0,
     },
   });
-
-  const watchedStateId = watch("stateId");
 
   useEffect(() => {
     if (open) {
@@ -80,7 +77,7 @@ const DistrictForm = ({
         });
       }
     }
-  }, [open, dialogType, selectedDistrict, reset, isEditMode, isViewMode, states.length]);
+  }, [open, dialogType, selectedDistrict, reset, isEditMode, isViewMode]);
 
   const getOverlayActionType = (): string => {
     if (isAddMode) return "create";
@@ -116,16 +113,6 @@ const DistrictForm = ({
     displayName: `${state.nameEn} (${state.nameAr})`,
   }));
 
-  // Late-loading handling for states
-  useEffect(() => {
-    if (open && (isEditMode || isViewMode) && selectedDistrict && states.length > 0) {
-      const stateId = selectedDistrict.stateId || selectedDistrict.state?.id;
-      if (stateId && watchedStateId !== Number(stateId)) {
-        setValue("stateId", Number(stateId));
-      }
-    }
-  }, [open, isEditMode, isViewMode, selectedDistrict, states.length, watchedStateId, setValue]);
-
   // Mock data for districts: use state code + random number
   const generateMockData = (): void => {
     if (!states || states.length === 0) return;
@@ -140,10 +127,11 @@ const DistrictForm = ({
       stateId: Number(base.id),
     };
 
-    setValue("nameEn", mock.nameEn);
-    setValue("nameAr", mock.nameAr);
-    setValue("code", mock.code);
-    setValue("stateId", mock.stateId);
+    const mockOptions = { shouldDirty: true, shouldValidate: true };
+    setValue("nameEn", mock.nameEn, mockOptions);
+    setValue("nameAr", mock.nameAr, mockOptions);
+    setValue("code", mock.code, mockOptions);
+    setValue("stateId", mock.stateId, mockOptions);
   };
 
   return (
@@ -164,6 +152,7 @@ const DistrictForm = ({
       submitButtonText={isViewMode ? null : isEditMode ? t("actions.update") : t("actions.create")}
       onSubmit={isViewMode ? undefined : handleSubmit(onSubmit)}
       isSubmitting={loading}
+      isDirty={isDirty}
       hideFooter={isViewMode}
       recordId={selectedDistrict?.id}
       focusFieldName="nameAr"
@@ -209,6 +198,7 @@ const DistrictForm = ({
           errors={errors}
           control={control}
           placeholder={t("districts.nameArPlaceholder") || "الاسم بالعربية"}
+          maxLength={100}
           showCounter={!isViewMode}
           readOnly={isViewMode}
           data-field-name="nameAr"
@@ -223,6 +213,7 @@ const DistrictForm = ({
         errors={errors}
         control={control}
         placeholder={t("districts.nameEnPlaceholder") || "English name"}
+        maxLength={100}
         showCounter={!isViewMode}
         readOnly={isViewMode}
         data-field-name="nameEn"

@@ -5,6 +5,7 @@ import {
   Phone as PhoneIcon,
   AttachMoney as CurrencyIcon,
   Code as CodeIcon,
+  FactCheck as StatusIcon,
 } from "@mui/icons-material";
 import { ColumnConfig } from "./types";
 
@@ -51,6 +52,13 @@ export const useCountryColumns = (): ColumnConfig[] => {
         headerName: t("countries.currencyCode") || "Currency",
         mobileHeader: t("countries.currencyCode") || "Curr",
         icon: <CurrencyIcon />,
+        type: "chip",
+      },
+      {
+        field: "importStatus",
+        headerName: t("imports.status") || "Status",
+        mobileHeader: t("imports.status") || "Status",
+        icon: <StatusIcon />,
         type: "chip",
       },
     ],

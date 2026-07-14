@@ -49,8 +49,7 @@ const StateForm = ({
     reset,
     control,
     setValue,
-    watch,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<StateFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
@@ -61,9 +60,6 @@ const StateForm = ({
       countryId: 0,
     },
   });
-
-  // Watch the countryId value
-  const watchedCountryId = watch("countryId");
 
   // Reset form when dialog opens or selected state changes
   useEffect(() => {
@@ -89,7 +85,7 @@ const StateForm = ({
         });
       }
     }
-  }, [open, dialogType, selectedState, reset, isEditMode, isViewMode, countries.length]);
+  }, [open, dialogType, selectedState, reset, isEditMode, isViewMode]);
 
   // Get appropriate action type for overlay
   const getOverlayActionType = (): string => {
@@ -131,34 +127,6 @@ const StateForm = ({
     displayName: `${country.nameEn} (${country.nameAr})`,
   }));
 
-  // Additional effect to handle late-loading countries data
-  useEffect(() => {
-    if (open && (isEditMode || isViewMode) && selectedState && countries.length > 0) {
-      const countryId = selectedState.countryId || selectedState.country?.id;
-      if (countryId && watchedCountryId !== Number(countryId)) {
-        setValue("countryId", Number(countryId));
-      }
-    }
-  }, [open, isEditMode, isViewMode, selectedState, countries.length, watchedCountryId, setValue]);
-
-  // Force update when countries load and we have a selected state
-  useEffect(() => {
-    if (open && (isEditMode || isViewMode) && selectedState && countries.length > 0) {
-      // Small delay to ensure the form is ready
-      const timer = setTimeout(() => {
-        const countryId = selectedState.countryId || selectedState.country?.id;
-        if (countryId && watchedCountryId !== Number(countryId)) {
-          setValue("countryId", Number(countryId), { shouldValidate: true });
-        }
-      }, 100);
-
-      return () => clearTimeout(timer);
-    }
-
-    // Return undefined for the else case
-    return undefined;
-  }, [open, isEditMode, isViewMode, selectedState, countries.length, watchedCountryId, setValue]);
-
   // Generate mock data using Faker.js and existing fakeData
   const usedIndexes = useRef(new Set<number>());
 
@@ -187,10 +155,11 @@ const StateForm = ({
       mockData.countryId = countriesData[randomCountryIndex].id;
     }
 
-    setValue("nameEn", mockData.nameEn);
-    setValue("nameAr", mockData.nameAr);
-    setValue("code", mockData.code);
-    setValue("countryId", mockData.countryId);
+    const mockOptions = { shouldDirty: true, shouldValidate: true };
+    setValue("nameEn", mockData.nameEn, mockOptions);
+    setValue("nameAr", mockData.nameAr, mockOptions);
+    setValue("code", mockData.code, mockOptions);
+    setValue("countryId", mockData.countryId, mockOptions);
   };
 
   const onSubmitHandler: SubmitHandler<StateFormData> = (data) => onSubmit(data);
@@ -223,6 +192,7 @@ const StateForm = ({
       }
       onSubmit={isViewMode ? undefined : handleSubmit(onSubmitHandler)}
       isSubmitting={loading}
+      isDirty={isDirty}
       hideFooter={isViewMode}
       recordId={selectedState?.id}
       focusFieldName="nameAr"
@@ -270,6 +240,7 @@ const StateForm = ({
           errors={errors}
           control={control}
           placeholder={t("states.nameArPlaceholder")}
+          maxLength={100}
           showCounter={!isViewMode}
           readOnly={isViewMode}
           data-field-name="nameAr"
@@ -284,6 +255,7 @@ const StateForm = ({
         errors={errors}
         control={control}
         placeholder={t("states.nameEnPlaceholder")}
+        maxLength={100}
         showCounter={!isViewMode}
         readOnly={isViewMode}
         data-field-name="nameEn"

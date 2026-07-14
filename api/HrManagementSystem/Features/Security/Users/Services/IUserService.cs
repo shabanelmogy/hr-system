@@ -10,6 +10,8 @@ public interface IUserService
 
     Task<Result> UpdateAsync(string id, UpdateUserRequest request, CancellationToken cancellationToken = default);
 
+    Task<Result> ChangeUserPasswordAsync(string id, ChangeUserPasswordRequest request, CancellationToken cancellationToken = default);
+
     Task<Result> UpdateProfilePictureAsync(string id, UpdateProfilePictureRequest request, CancellationToken cancellationToken);
 
     Task<Result> ToggleStatus(string id);

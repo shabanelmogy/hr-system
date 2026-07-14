@@ -1,12 +1,9 @@
-/* eslint-disable react/prop-types */
 import LockIcon from "@mui/icons-material/Lock";
 import PersonIcon from "@mui/icons-material/Person";
 import {
   alpha,
   Box,
-  Divider,
   Fade,
-  Paper,
   Tab,
   Tabs,
   useTheme,
@@ -14,13 +11,14 @@ import {
 import { useTranslation } from "react-i18next";
 import ChangePassword from "./change-password/ChangePassword";
 import PersonalInfo from "./personal-info/PersonalInfo";
+import type { ProfileUserData } from "../types";
 
 interface ProfileTabsProps {
   tabIndex: number;
   setTabIndex: (index: number) => void;
   showSuccess?: (message: string, title: string) => void;
   showError?: (message: string, title: string) => void;
-  onInfoUpdated?: (data: any) => void;
+  onInfoUpdated?: (data: ProfileUserData) => void;
 }
 
 const ProfileTabs = ({
@@ -34,27 +32,24 @@ const ProfileTabs = ({
   const { t } = useTranslation();
 
   return (
-    <Paper
-      elevation={0}
+    <Box
       sx={{
-        borderRadius: 3,
-        overflow: "hidden",
-        background:
-          theme.palette.mode === "dark" ? "rgba(30, 30, 30, 0.8)" : "#ffffff",
-        backdropFilter: theme.palette.mode === "dark" ? "blur(10px)" : "none",
-        border: `1px solid ${alpha(theme.palette.divider, 0.15)}`,
-        boxShadow:
-          theme.palette.mode === "dark"
-            ? `0 4px 20px ${alpha(theme.palette.common.black, 0.2)}`
-            : `0 4px 20px ${alpha(theme.palette.common.black, 0.06)}`,
+        width: "100%",
       }}
     >
       <Tabs
         value={tabIndex}
         onChange={(_, newIndex) => setTabIndex(newIndex)}
-        variant="fullWidth"
+        variant="scrollable"
+        scrollButtons="auto"
         sx={{
+          minHeight: 52,
+          borderBottom: `1px solid ${alpha(theme.palette.divider, 0.25)}`,
+          "& .MuiTabs-flexContainer": {
+            justifyContent: { sm: "center" },
+          },
           "& .MuiTabs-indicator": {
+            height: 3,
             borderRadius: "3px 3px 0 0",
             background:
               theme.palette.mode === "dark"
@@ -64,9 +59,10 @@ const ProfileTabs = ({
           "& .MuiTab-root": {
             textTransform: "none",
             fontWeight: 600,
-            fontSize: "1rem",
-            py: 1,
-            transition: "all 0.3s ease",
+            fontSize: { xs: "0.9rem", sm: "1rem" },
+            minHeight: 52,
+            px: { xs: 2, sm: 4 },
+            transition: "background-color 0.2s ease, color 0.2s ease",
             "&.Mui-selected": {
               color: theme.palette.mode === "dark" ? "#8b5cf6" : "#3b82f6",
             },
@@ -88,13 +84,9 @@ const ProfileTabs = ({
         />
       </Tabs>
 
-      <Divider />
-
-      {/* Tab Content with Enhanced Container */}
       <Box
         sx={{
-          p: { xs: 2, sm: 3 },
-          minHeight: 350,
+          pt: { xs: 2, md: 3 },
           position: "relative",
         }}
       >
@@ -117,7 +109,7 @@ const ProfileTabs = ({
           </Box>
         </Fade>
       </Box>
-    </Paper>
+    </Box>
   );
 };
 

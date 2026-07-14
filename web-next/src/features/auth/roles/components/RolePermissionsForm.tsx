@@ -39,7 +39,7 @@ const RoleForm = ({
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty },
   } = useForm<{ name: string }>({
     resolver: zodResolver(validationSchema),
     defaultValues: { name: "" },
@@ -99,6 +99,13 @@ const RoleForm = ({
   // CloseDialog - exact match to Blazor method
   const closeDialog = () => {
     if (isSubmitting) return;
+    if (
+      isDirty &&
+      typeof window !== "undefined" &&
+      !window.confirm("You have unsaved changes. Discard them?")
+    ) {
+      return;
+    }
     onClose(false);
   };
 

@@ -4,7 +4,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import PersonIcon from "@mui/icons-material/Person";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { alpha, Avatar, Box, Divider, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { gradientIconStyle } from "@/theme/componentStyles";
 import SocialLoginButtons from "./SocialLoginButtons";
@@ -26,8 +26,7 @@ const LoginForm = ({
   handleSocialLogin,
   reset,
   appRoutes,
-  setValue,
-  isSubmitting,
+  isFormSubmitting,
 }: {
   t: any;
   theme: any;
@@ -35,7 +34,7 @@ const LoginForm = ({
   userNameRef: any;
   showPassword: any;
   setShowPassword: any;
-  loading: any;
+  loading: boolean;
   handleSubmit: any;
   onSubmit: any;
   loginAs: (role: "user" | "admin") => Promise<void>;
@@ -45,30 +44,39 @@ const LoginForm = ({
   handleSocialLogin: any;
   reset: any;
   appRoutes: any;
-  setValue: any;
-  isSubmitting: React.MutableRefObject<boolean>;
+  isFormSubmitting: boolean;
 }) => {
   const [activeButton, setActiveButton] = useState<"main" | "user" | "admin" | null>(null);
 
-  useEffect(() => {
-    if (!loading) setActiveButton(null);
-  }, [loading]);
-
-  const isAnySubmitting = activeButton !== null;
+  const isAnySubmitting = loading || isFormSubmitting || activeButton !== null;
 
   const wrappedSubmit = handleSubmit(async (data: any) => {
     setActiveButton("main");
-    await onSubmit(data);
+    try {
+      await onSubmit(data);
+    } finally {
+      setActiveButton(null);
+    }
   });
 
   const handleUserLogin = async () => {
+    if (isAnySubmitting) return;
     setActiveButton("user");
-    await loginAs("user");
+    try {
+      await loginAs("user");
+    } finally {
+      setActiveButton(null);
+    }
   };
 
   const handleAdminLogin = async () => {
+    if (isAnySubmitting) return;
     setActiveButton("admin");
-    await loginAs("admin");
+    try {
+      await loginAs("admin");
+    } finally {
+      setActiveButton(null);
+    }
   };
 
   return (

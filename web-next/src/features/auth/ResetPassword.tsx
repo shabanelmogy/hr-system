@@ -11,6 +11,7 @@ import {
   Card,
   CardContent,
   Container,
+  Alert,
   IconButton,
   InputAdornment,
   TextField,
@@ -22,6 +23,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import {
   ResetPasswordFormData,
+  getResetPasswordLinkSchema,
   getResetPasswordSchema,
 } from "./validation/recoverySchemas";
 
@@ -35,10 +37,18 @@ const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const validationSchema = getResetPasswordSchema(t);
+  const emailFromLink = searchParams.get("email")?.trim() || "";
+  const codeFromLink = searchParams.get("code")?.trim() || "";
+  const linkValidation = getResetPasswordLinkSchema(t).safeParse({
+    email: emailFromLink,
+    code: codeFromLink,
+  });
+  const hasInvalidResetLink = !linkValidation.success;
 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
     reset,
   } = useForm<ResetPasswordFormData>({
@@ -48,13 +58,24 @@ const ResetPassword = () => {
   });
 
   useEffect(() => {
-    reset({
-      email: searchParams.get("email") || "",
-      code: searchParams.get("code") || "",
-      newPassword: "",
-    });
+    const linkData = {
+      email: emailFromLink,
+      code: codeFromLink,
+    };
+    const validation = getResetPasswordLinkSchema(t).safeParse(linkData);
+    reset({ ...linkData, newPassword: "" });
+
+    if (!validation.success) {
+      validation.error.issues.forEach((issue) => {
+        const field = issue.path[0];
+        if (field === "email" || field === "code") {
+          setError(field, { type: "manual", message: issue.message });
+        }
+      });
+    }
+
     inputRef.current?.focus();
-  }, [searchParams, reset]);
+  }, [codeFromLink, emailFromLink, reset, setError, t]);
 
   const passwordInputProps = useMemo(
     () => ({
@@ -76,10 +97,18 @@ const ResetPassword = () => {
         </InputAdornment>
       ),
     }),
-    [showPassword]
+    [showPassword, t]
   ); // Only update when showPassword changes
 
   const onSubmit = async (data: ResetPasswordFormData) => {
+    const linkValidation = getResetPasswordLinkSchema(t).safeParse({
+      email: data.email,
+      code: data.code,
+    });
+    if (!linkValidation.success) {
+      return;
+    }
+
     setLoading(true);
     try {
       await apiService.post(apiRoutes.auth.resetPassword, data);
@@ -89,7 +118,7 @@ const ResetPassword = () => {
       }, 1000); // Adjust delay if necessary
     } catch (error) {
       HandleApiError(error as Error, (updatedState) => {
-        showSnackbar("error", updatedState.messages, (error as any).title);
+        showSnackbar("error", updatedState.messages, updatedState.title);
       });
     } finally {
       setLoading(false);
@@ -103,7 +132,14 @@ const ResetPassword = () => {
           <Typography variant="h5" align="center" gutterBottom>
             {t("auth.resetPassword")}
           </Typography>
+          {hasInvalidResetLink && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {t("auth.invalidResetLink")}
+            </Alert>
+          )}
           <form onSubmit={handleSubmit(onSubmit)}>
+            <input type="hidden" {...register("email")} />
+            <input type="hidden" {...register("code")} />
             <TextField
               {...register("newPassword")}
               label={t("auth.newPassword")}
@@ -122,7 +158,7 @@ const ResetPassword = () => {
               variant="contained"
               fullWidth
               sx={{ mt: 2 }}
-              disabled={loading}
+              disabled={loading || hasInvalidResetLink}
             >
               {loading ? t("actions.processing") : t("auth.resetPassword")}
             </Button>

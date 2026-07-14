@@ -1,14 +1,14 @@
-/* eslint-disable react/prop-types */
-import { Stack } from "@mui/material";
+import { Grid } from "@mui/material";
 import { MyTextField } from "@/shared/components/common";
 import { Control, FieldErrors, UseFormHandleSubmit } from "react-hook-form";
+import type { PersonalInfoValues } from "../../../types";
 
 interface PersonalInfoFormProps {
   isEditing: boolean;
-  control: Control<any>;
-  errors: FieldErrors<any>;
-  handleSubmit: UseFormHandleSubmit<any>;
-  handleSave: (data: any) => void;
+  control: Control<PersonalInfoValues>;
+  errors: FieldErrors<PersonalInfoValues>;
+  handleSubmit: UseFormHandleSubmit<PersonalInfoValues>;
+  handleSave: (data: PersonalInfoValues) => void;
 }
 
 const PersonalInfoForm = ({
@@ -20,34 +20,40 @@ const PersonalInfoForm = ({
 }: PersonalInfoFormProps) => {
   return (
     <form onSubmit={handleSubmit(handleSave)}>
-      <Stack spacing={3}>
-        <MyTextField
-          name="userName"
-          labelKey="auth.userName"
-          control={control}
-          errors={errors}
-          showCounter={false}
-          readOnly={!isEditing}
-        />
+      <Grid container spacing={{ xs: 1, sm: 2 }}>
+        <Grid size={{ xs: 12, sm: 4 }}>
+          <MyTextField
+            name="userName"
+            labelKey="auth.userName"
+            control={control}
+            errors={errors}
+            showCounter={false}
+            readOnly={!isEditing}
+          />
+        </Grid>
 
-        <MyTextField
-          name="firstName"
-          labelKey="auth.firstName"
-          control={control}
-          errors={errors}
-          showCounter={false}
-          readOnly={!isEditing}
-        />
+        <Grid size={{ xs: 12, sm: 4 }}>
+          <MyTextField
+            name="firstName"
+            labelKey="auth.firstName"
+            control={control}
+            errors={errors}
+            showCounter={false}
+            readOnly={!isEditing}
+          />
+        </Grid>
 
-        <MyTextField
-          name="lastName"
-          labelKey="auth.lastName"
-          control={control}
-          errors={errors}
-          showCounter={false}
-          readOnly={!isEditing}
-        />
-      </Stack>
+        <Grid size={{ xs: 12, sm: 4 }}>
+          <MyTextField
+            name="lastName"
+            labelKey="auth.lastName"
+            control={control}
+            errors={errors}
+            showCounter={false}
+            readOnly={!isEditing}
+          />
+        </Grid>
+      </Grid>
     </form>
   );
 };

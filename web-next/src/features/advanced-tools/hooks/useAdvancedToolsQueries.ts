@@ -43,7 +43,11 @@ export const useUpdateLocalization = (culture: string, options?: UseMutationOpti
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: UpdateLocalizationRequest) => {
-      return await apiService.put(`${apiRoutes.advancedTools.updateLocalizationApi}/${culture}`, data);
+      return await apiService.put(apiRoutes.advancedTools.updateLocalizationApi, {
+        Language: data.Language || culture,
+        Key: data.key,
+        Value: data.value,
+      });
     },
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: advancedToolsKeys.localization(culture) });

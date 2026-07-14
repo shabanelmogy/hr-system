@@ -36,7 +36,7 @@ const CountryForm = ({
     reset,
     control,
     setValue,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm({
     resolver: zodResolver(schema),
     mode: "onChange",
@@ -119,12 +119,13 @@ const CountryForm = ({
       currencyCode: faker.finance.currencyCode(),
     };
 
-    setValue("nameEn", mockData.nameEn);
-    setValue("nameAr", mockData.nameAr);
-    setValue("alpha2Code", mockData.alpha2Code);
-    setValue("alpha3Code", mockData.alpha3Code);
-    setValue("phoneCode", mockData.phoneCode);
-    setValue("currencyCode", mockData.currencyCode);
+    const mockOptions = { shouldDirty: true, shouldValidate: true };
+    setValue("nameEn", mockData.nameEn, mockOptions);
+    setValue("nameAr", mockData.nameAr, mockOptions);
+    setValue("alpha2Code", mockData.alpha2Code, mockOptions);
+    setValue("alpha3Code", mockData.alpha3Code, mockOptions);
+    setValue("phoneCode", mockData.phoneCode, mockOptions);
+    setValue("currencyCode", mockData.currencyCode, mockOptions);
   };
 
 
@@ -155,6 +156,7 @@ const CountryForm = ({
       }
       onSubmit={isViewMode ? undefined : handleSubmit(onSubmit as any)}
       isSubmitting={loading}
+      isDirty={isDirty}
       hideFooter={isViewMode}
       recordId={selectedCountry?.id}
       focusFieldName="nameAr"
@@ -191,6 +193,7 @@ const CountryForm = ({
           errors={errors}
           control={control}
           placeholder={t("countries.nameArPlaceholder")}
+          maxLength={100}
           showCounter={!isViewMode}
           readOnly={isViewMode}
         />
@@ -204,6 +207,7 @@ const CountryForm = ({
         errors={errors}
         control={control}
         placeholder={t("countries.nameEnPlaceholder")}
+        maxLength={100}
         showCounter={!isViewMode}
         readOnly={isViewMode}
       />

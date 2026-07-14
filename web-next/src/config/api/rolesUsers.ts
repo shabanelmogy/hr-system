@@ -15,6 +15,7 @@ export const users: UsersRoutes = {
   getAll: `${version}/users/getAll`,
   add: `${version}/users/add`,
   update: (id: Id) => `${version}/users/update/${id}`,
+  changePassword: (id: Id) => `${version}/users/changePassword/${id}`,
   toggle: (id: Id) => `${version}/users/toggle/${id}`,
   unlock: (id: Id) => `${version}/users/unlock/${id}`,
   revoke: (userId: Id) => `${version}/auth/revokeRefreshTokenByUserId?userId=${userId}`,

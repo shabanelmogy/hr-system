@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useRef } from "react";
 import {
   Avatar,
@@ -6,11 +5,13 @@ import {
   IconButton,
   CircularProgress,
   Fade,
+  Tooltip,
   useTheme,
   alpha,
 } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { useTranslation } from "react-i18next";
 
 interface ProfileAvatarProps {
   imageUrl: string | null;
@@ -42,6 +43,7 @@ const ProfileAvatar = ({
   handleImageLoad,
 }: ProfileAvatarProps) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const avatarRef = useRef(null);
 
   // Get name initials for avatar fallback
@@ -89,26 +91,15 @@ const ProfileAvatar = ({
         justifyContent: "center",
       }}
     >
-      {/* Decorative ring animation */}
+      {/* Stable focus ring keeps the avatar polished without constant motion. */}
       <Box
         sx={{
           position: "absolute",
           width: "100%",
           height: "100%",
           borderRadius: "50%",
-          background: `conic-gradient(from 180deg at 50% 50%, 
-            ${theme.palette.primary.main} 0deg, 
-            ${alpha(theme.palette.primary.main, 0.6)} 90deg, 
-            ${alpha(theme.palette.primary.main, 0.1)} 180deg, 
-            ${alpha(theme.palette.primary.main, 0.3)} 270deg, 
-            ${theme.palette.primary.main} 360deg)`,
-          animation: "spin 8s linear infinite",
-          "@keyframes spin": {
-            "0%": { transform: "rotate(0deg)" },
-            "100%": { transform: "rotate(360deg)" },
-          },
-          filter: "blur(6px)",
-          opacity: 0.8,
+          border: `2px solid ${alpha(theme.palette.primary.main, 0.35)}`,
+          boxShadow: `0 0 0 6px ${alpha(theme.palette.primary.main, 0.08)}`,
         }}
       />
 
@@ -154,6 +145,7 @@ const ProfileAvatar = ({
           <Avatar
             ref={avatarRef}
             src={imageUrl}
+            alt={userData.userName || t("auth.profilePictureAlt")}
             onLoad={handleImageLoad}
             sx={{
               width: "92%",
@@ -222,36 +214,39 @@ const ProfileAvatar = ({
 
       {/* Delete button */}
       {isEditing && imageUrl && (
-        <IconButton
-          sx={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            bgcolor: theme.palette.error.main,
-            color: "white",
-            border: `2px solid ${theme.palette.background.paper}`,
-            "&:hover": {
-              bgcolor: theme.palette.error.dark,
-              transform: "rotate(90deg)",
-            },
-            width: 32,
-            height: 32,
-            transition: "all 0.3s ease",
-            boxShadow: theme.shadows[4],
-            zIndex: 4, // Above all other overlays
-          }}
-          size="small"
-          onClick={(e) => {
-            e.stopPropagation();
-            setSelectedFile(null);
-            setImageUrl(null);
-            if (fileInputRef.current) {
-              fileInputRef.current.value = "";
-            }
-          }}
-        >
-          <CancelIcon sx={{ fontSize: 18 }} />
-        </IconButton>
+        <Tooltip title={t("auth.removeProfilePicture")}>
+          <IconButton
+            sx={{
+              position: "absolute",
+              top: 0,
+              insetInlineEnd: 0,
+              bgcolor: theme.palette.error.main,
+              color: "white",
+              border: `2px solid ${theme.palette.background.paper}`,
+              "&:hover": {
+                bgcolor: theme.palette.error.dark,
+                transform: "scale(1.05)",
+              },
+              width: 32,
+              height: 32,
+              transition: "all 0.2s ease",
+              boxShadow: theme.shadows[3],
+              zIndex: 4,
+            }}
+            size="small"
+            aria-label={t("auth.removeProfilePicture")}
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedFile(null);
+              setImageUrl(null);
+              if (fileInputRef.current) {
+                fileInputRef.current.value = "";
+              }
+            }}
+          >
+            <CancelIcon sx={{ fontSize: 18 }} />
+          </IconButton>
+        </Tooltip>
       )}
     </Box>
   );

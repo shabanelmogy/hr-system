@@ -1,29 +1,41 @@
-/* eslint-disable react/prop-types */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, CardContent, Fade, alpha } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { apiRoutes } from "@/config";
+import { useSession } from "@/lib/auth/SessionContext";
 import { MySimpleLoader } from "@/shared/components/common";
-import { HandleApiError, apiService } from "@/shared/services";
+import { useUpdateUserInfo, useUserInfo } from "@/shared/hooks";
+import { HandleApiError } from "@/shared/services";
 import PersonalInfoForm from "./components/PersonalInfoForm";
 import PersonalInfoHeader from "./components/PersonalInfoHeader";
 import getPersonalDetailsSchema from "./utils/validation";
+import type { PersonalInfoValues, ProfileUserData } from "../../types";
 
 interface PersonalInfoProps {
-  onInfoUpdated?: (data: any) => void;
+  onInfoUpdated?: (data: ProfileUserData) => void;
   showSuccess?: (message: string, title: string) => void;
   showError?: (message: string, title: string) => void;
 }
 
 const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoProps) => {
   const { t } = useTranslation();
+  const { user, isLoading: isSessionLoading } = useSession();
   const [isEditing, setIsEditing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const originalData = useRef(null);
+  const originalData = useRef<PersonalInfoValues | null>(null);
+  const reportedLoadError = useRef<unknown>(null);
+  const {
+    data: userInfo,
+    error: userInfoError,
+    isLoading: isUserInfoLoading,
+  } = useUserInfo({
+    enabled: Boolean(user) && !isSessionLoading,
+    retry: (failureCount: number, error: unknown) =>
+      getErrorStatus(error) !== 429 && failureCount < 1,
+  });
+  const updateUserInfo = useUpdateUserInfo();
 
   const validationSchema = getPersonalDetailsSchema(t);
 
@@ -31,46 +43,59 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
     control,
     handleSubmit,
     reset,
-    formState: { errors },
-  } = useForm({
+    formState: { errors, isDirty },
+  } = useForm<PersonalInfoValues>({
     resolver: zodResolver(validationSchema),
     mode: "onChange",
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      userName: "",
+      firstName: user?.firstName ?? "",
+      lastName: user?.lastName ?? "",
+      userName: user?.userName ?? "",
     },
   });
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        setIsLoading(true);
-        const userInfo = await apiService.get(apiRoutes.auth.getUserInfo);
-        originalData.current = JSON.parse(JSON.stringify(userInfo));
-        reset(userInfo);
-        if (onInfoUpdated) {
-          onInfoUpdated(userInfo);
-        }
-      } catch (error) {
-        console.error("Failed to fetch user info:", error);
-        if (showError) {
-          showError(t("auth.failedLoadUserInfo"), t("messages.error"));
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    if (!user) return;
 
-    fetchUserData();
-  }, []);
+    const values: PersonalInfoValues = {
+      firstName: userInfo?.firstName ?? user.firstName ?? "",
+      lastName: userInfo?.lastName ?? user.lastName ?? "",
+      userName: userInfo?.userName ?? user.userName ?? "",
+    };
+    originalData.current = values;
+    reset(values);
+    onInfoUpdated?.({
+      ...values,
+      email: user.email,
+      roles: user.roles,
+    });
+  }, [onInfoUpdated, reset, user, userInfo]);
+
+  useEffect(() => {
+    if (!userInfoError || reportedLoadError.current === userInfoError) return;
+    reportedLoadError.current = userInfoError;
+
+    const details = describeProfileError(userInfoError);
+
+    // Session claims contain every field shown by this form, so a temporary
+    // rate limit should not block the profile page or open an error dialog.
+    if (getErrorStatus(userInfoError) === 429 && user) {
+      console.warn("Profile information was rate-limited; using session values.", details);
+      return;
+    }
+
+    console.error("Failed to fetch user info:", details);
+
+    if (showError) {
+      const status = getErrorStatus(userInfoError);
+      showError(
+        `${t("auth.failedLoadUserInfo")}${status ? ` (${status})` : ""}`,
+        t("messages.error"),
+      );
+    }
+  }, [showError, t, user, userInfoError]);
 
   const toggleEdit = () => {
-    if (!isEditing) {
-      // Store current form values when entering edit mode
-      const currentValues = control._formValues;
-      originalData.current = JSON.parse(JSON.stringify(currentValues));
-    }
     setIsEditing((prev) => !prev);
   };
 
@@ -90,15 +115,10 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
     }
   };
 
-  const handleSave = async (data: { firstName?: string; lastName?: string; userName?: string }) => {
+  const handleSave = async (data: PersonalInfoValues) => {
     setIsSaving(true);
     try {
-      const requestData = {
-        ...data,
-        request: data,
-      };
-
-      await apiService.put(apiRoutes.auth.updateUserInfo, requestData);
+      await updateUserInfo.mutateAsync(data);
 
       // Update localStorage
       localStorage.setItem("userName", data.userName);
@@ -111,7 +131,8 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
       }
 
       // Update original data reference
-      originalData.current = JSON.parse(JSON.stringify(data));
+      originalData.current = data;
+      reset(data);
 
       // Update parent component
       if (onInfoUpdated) {
@@ -121,9 +142,9 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
       // IMPORTANT: Exit edit mode after successful save
       setIsEditing(false);
     } catch (error) {
-      HandleApiError(error, (updatedState: any) => {
+      HandleApiError(error, (updatedState) => {
         if (showError) {
-          showError(updatedState.messages, (error as any)?.title);
+          showError(updatedState.messages.join("\n"), updatedState.title);
         }
       });
     } finally {
@@ -142,37 +163,35 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
     }
   };
 
-  if (isLoading) {
+  if (isSessionLoading && !user) {
     return <MySimpleLoader />;
   }
+
+  if (isUserInfoLoading && !user) return <MySimpleLoader />;
 
   return (
     <Fade in={true} timeout={300}>
       <Card
         sx={{
           p: 0,
-          borderRadius: 3,
+          borderRadius: 1,
           boxShadow: (theme) =>
             `0 8px 24px ${alpha(theme.palette.common.black, 0.1)}`,
           overflow: "hidden",
-          transition: "all 0.3s ease-in-out",
           border: (theme) =>
             `1px solid ${alpha(theme.palette.info.light, 0.2)}`,
-          "&:hover": {
-            boxShadow: (theme) =>
-              `0 12px 28px ${alpha(theme.palette.common.black, 0.15)}`,
-          },
         }}
       >
         <PersonalInfoHeader
           isEditing={isEditing}
           isSaving={isSaving}
+          isDirty={isDirty}
           onButtonClick={onButtonClick}
           handleUndo={handleUndo}
           t={t}
         />
 
-        <CardContent sx={{ p: 3 }}>
+        <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
           <PersonalInfoForm
             isEditing={isEditing}
             control={control}
@@ -187,3 +206,28 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
 };
 
 export default PersonalInfo;
+
+function getErrorStatus(error: unknown) {
+  if (!error || typeof error !== "object") return undefined;
+  const status = (error as { status?: unknown }).status;
+  return typeof status === "number" ? status : undefined;
+}
+
+function describeProfileError(error: unknown) {
+  if (error && typeof error === "object") {
+    const value = error as {
+      status?: number;
+      title?: string;
+      message?: string;
+      detail?: string;
+    };
+    return {
+      status: value.status,
+      title: value.title,
+      message: value.message,
+      detail: value.detail,
+    };
+  }
+
+  return error instanceof Error ? error.message : String(error);
+}

@@ -1,14 +1,14 @@
-/* eslint-disable react/prop-types */
 import { DragDropUploader } from "@/shared/components/file-upload";
 import { alpha, Card, CardContent, Stack, useTheme } from "@mui/material";
 import { useState } from "react";
 import useProfileImage from "../hooks/useProfileImage";
+import type { ProfileUserData } from "../types";
 import EditControls from "./EditControls";
 import ProfileAvatar from "./ProfileAvatar";
 import UserInfoDisplay from "./UserInfoDisplay";
 
 interface ProfileHeaderProps {
-  userData: { userName?: string; [key: string]: any };
+  userData: ProfileUserData;
 }
 
 const ProfileHeader = ({ userData }: ProfileHeaderProps) => {
@@ -96,7 +96,8 @@ const ProfileHeader = ({ userData }: ProfileHeaderProps) => {
     <>
       <Card
         sx={{
-          borderRadius: 4,
+          position: "relative",
+          borderRadius: 1,
           background:
             theme.palette.mode === "dark" ? "rgba(30, 30, 30, 0.9)" : "#ffffff",
           backdropFilter: "blur(10px)",
@@ -105,24 +106,24 @@ const ProfileHeader = ({ userData }: ProfileHeaderProps) => {
             theme.palette.mode === "dark"
               ? `0 8px 32px ${alpha(theme.palette.common.black, 0.2)}`
               : `0 8px 32px ${alpha(theme.palette.common.black, 0.08)}`,
-          overflow: "visible",
-          transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-          "&:hover": {
-            transform: "translateY(-4px)",
-            boxShadow:
-              theme.palette.mode === "dark"
-                ? `0 12px 40px ${alpha(theme.palette.common.black, 0.3)}`
-                : `0 12px 40px ${alpha(theme.palette.common.black, 0.12)}`,
+          overflow: "hidden",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            insetInline: 0,
+            top: 0,
+            height: 4,
+            background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
           },
         }}
       >
-        <CardContent sx={{ p: 2 }}>
-          <Stack spacing={4}>
+        <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
+          <Stack spacing={{ xs: 2.5, md: 3 }}>
             {/* Top Section with Avatar and Info */}
             <Stack
-              direction={{ xs: "column", sm: "row" }}
-              spacing={3}
-              sx={{ alignItems: "center" }}
+              direction={{ xs: "column", md: "row" }}
+              spacing={{ xs: 2, md: 3 }}
+              sx={{ alignItems: { xs: "center", md: "flex-start" } }}
             >
               {/* Profile Avatar Component */}
               <ProfileAvatar
