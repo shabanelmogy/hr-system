@@ -14,11 +14,10 @@ import { useSnackbar } from "@/shared/hooks";
 import { apiService, HandleApiError } from "@/shared/services";
 import { createImageFileValidationSchema } from "@/shared/validation/fileValidation";
 import { appRoutes } from "@/config/routes";
-import { createColorSystem } from "./constants/colors";
 import {
   getRegistrationValidationSchema,
-  getValidationSchema,
 } from "./constants/validation";
+import type { RegistrationFormData } from "./types";
 
 // Components
 import { EnhancedStepper } from "./components/EnhancedStepper";
@@ -50,39 +49,27 @@ const Register = () => {
 
   // Form state
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedFileBase64, setSelectedFileBase64] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
+  const [selectedFileBase64, setSelectedFileBase64] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [isDragActive, setIsDragActive] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [completed, setCompleted] = useState<Record<number, boolean>>({});
-  const [uploadError, setUploadError] = useState("");
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const [registrationProgress, setRegistrationProgress] = useState(0);
 
   // Refs
-  const firstNameRef = useRef(null);
-  const lastNameRef = useRef(null);
-  const userNameRef = useRef(null);
-  const emailRef = useRef(null);
-  const fileInputRef = useRef(null);
-  const dropZoneRef = useRef(null);
-  const formRef = useRef(null);
+  const firstNameRef = useRef<HTMLInputElement>(null);
+  const lastNameRef = useRef<HTMLInputElement>(null);
+  const userNameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const dropZoneRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
 
   // Validation schema
-  const validationSchema = useMemo(() => {
-    return getValidationSchema(activeStep, t);
-  }, [activeStep, t]);
-
-  // Form type interface
-  interface FormData {
-    firstName: string;
-    lastName: string;
-    userName: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }
+  const validationSchema = useMemo(() => getRegistrationValidationSchema(t), [t]);
 
   // Form setup with react-hook-form and Zod validation
   const {
@@ -91,10 +78,9 @@ const Register = () => {
     watch,
     reset,
     trigger,
-    setError,
-    formState: { errors, isValid },
-  } = useForm<FormData>({
-    resolver: zodResolver(validationSchema) as any,
+    formState: { errors },
+  } = useForm<RegistrationFormData>({
+    resolver: zodResolver(validationSchema),
     mode: "onChange",
     defaultValues: {
       firstName: "",
@@ -104,14 +90,6 @@ const Register = () => {
       password: "",
       confirmPassword: "",
     },
-  });
-
-  // Enhanced color palette with modern design tokens
-  const colors = createColorSystem({
-    isDarkMode,
-    theme: theme,
-    // @ts-ignore
-    alpha: theme.palette.alpha, // Using MUI's alpha function
   });
 
   // Formation of the step sequence
@@ -190,13 +168,9 @@ const Register = () => {
       // Length check
       if (watchPassword.length >= 8) strength += 1;
 
-      // Character variety checks
-      // @ts-ignore
       if (/[A-Z]/.test(watchPassword) && /[a-z]/.test(watchPassword))
         strength += 1;
-      // @ts-ignore
       if (/[0-9]/.test(watchPassword)) strength += 0.5;
-      // @ts-ignore
       if (/[^A-Za-z0-9]/.test(watchPassword)) strength += 0.5;
 
       // Update state with calculated strength (0-3)
@@ -208,7 +182,12 @@ const Register = () => {
 
   // Navigation handlers
   const handleNext = async () => {
-    const stepResult = await trigger();
+    const stepFields = [
+      ["firstName", "lastName", "userName"],
+      ["email", "password", "confirmPassword"],
+    ] as const;
+    const fields = stepFields[activeStep as 0 | 1];
+    const stepResult = fields ? await trigger(fields) : true;
 
     if (stepResult) {
       setActiveStep((prevStep) => prevStep + 1);
@@ -220,11 +199,14 @@ const Register = () => {
   };
 
   // File handling functions
-  const onFileChange = (event: React.ChangeEvent<HTMLInputElement> | React.DragEvent<HTMLDivElement>) => {
-    setUploadError("");
+  const onFileChange = (
+    event: React.ChangeEvent<HTMLInputElement> | React.DragEvent<HTMLDivElement>,
+  ) => {
+    setUploadError(null);
 
     // Get file from event
-    const file = (event.target as HTMLInputElement)?.files?.[0] || ('dataTransfer' in event ? event.dataTransfer?.files?.[0] : null);
+    const files = "dataTransfer" in event ? event.dataTransfer.files : event.target.files;
+    const file = files?.[0];
     if (!file) return;
 
     const validation = createImageFileValidationSchema({
@@ -249,29 +231,29 @@ const Register = () => {
     // Preview Image
     const reader = new FileReader();
     reader.onloadend = () => {
-      setPreviewUrl(reader.result);
+      setPreviewUrl(typeof reader.result === "string" ? reader.result : null);
     };
     reader.readAsDataURL(file);
 
     // Convert file to Base64
     const base64Reader = new FileReader();
     base64Reader.onload = () => {
-      // @ts-ignore
-      const base64String = base64Reader.result.split(",")[1]; // Extract only Base64 part
-      setSelectedFileBase64(base64String);
+      if (typeof base64Reader.result !== "string") return;
+      const [, base64String] = base64Reader.result.split(",", 2);
+      setSelectedFileBase64(base64String || null);
     };
     base64Reader.readAsDataURL(file);
   };
 
   // Drag and drop handlers
-  const handleDragEnter = (e: React.DragEvent<Element>) => {
+  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragActive(true);
-    setUploadError("");
+    setUploadError(null);
   };
 
-  const handleDragLeave = (e: React.DragEvent<Element>) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -288,39 +270,21 @@ const Register = () => {
     }
   };
 
-  const handleDragOver = (e: React.DragEvent<Element>) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragActive(true);
   };
 
-  const handleDrop = (e: React.DragEvent<Element>) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragActive(false);
-    onFileChange(e as React.DragEvent<HTMLDivElement>);
+    onFileChange(e);
   };
 
   // Form submission
-  const onSubmit = async (data: {
-    firstName: string;
-    lastName: string;
-    userName: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }) => {
-    const completeValidation = getRegistrationValidationSchema(t).safeParse(data);
-    if (!completeValidation.success) {
-      completeValidation.error.issues.forEach((issue) => {
-        const field = issue.path[0];
-        if (typeof field === "string") {
-          setError(field as keyof typeof data, { message: issue.message });
-        }
-      });
-      return;
-    }
-
+  const onSubmit = async (data: RegistrationFormData) => {
     setIsLoading(true);
 
     // Simulate progress during submission
@@ -362,8 +326,8 @@ const Register = () => {
       await new Promise((resolve) => setTimeout(resolve, 1200));
       router.replace(appRoutes.resendEmailConfirmation);
     } catch (error) {
-      HandleApiError(error, (updatedState: any) => {
-        showSnackbar("error", updatedState.messages, (error as any)?.title);
+      HandleApiError(error, (updatedState) => {
+        showSnackbar("error", updatedState.messages, updatedState.title);
       });
       // Reset progress on error
       setRegistrationProgress(0);
@@ -384,11 +348,6 @@ const Register = () => {
             firstNameRef={firstNameRef}
             lastNameRef={lastNameRef}
             userNameRef={userNameRef}
-            // @ts-ignore
-            colors={colors}
-            alpha={alpha}
-            isDarkMode={isDarkMode}
-            theme={theme}
             t={t}
           />
         );
@@ -403,11 +362,6 @@ const Register = () => {
             passwordStrength={passwordStrength}
             showPassword={showPassword}
             setShowPassword={setShowPassword}
-            // @ts-ignore
-            colors={colors}
-            alpha={alpha}
-            isDarkMode={isDarkMode}
-            theme={theme}
             t={t}
           />
         );
@@ -427,12 +381,7 @@ const Register = () => {
             dropZoneRef={dropZoneRef}
             isLoading={isLoading}
             registrationProgress={registrationProgress}
-            // @ts-ignore
-            colors={colors}
-            alpha={alpha}
-            isDarkMode={isDarkMode}
             isMobile={isMobile}
-            theme={theme}
             t={t}
           />
         );
@@ -447,46 +396,29 @@ const Register = () => {
       <FormStepsWrapper formRef={formRef}>
         {/* Header */}
         <FormHeader
-          // @ts-ignore
-          colors={colors}
-          alpha={alpha}
           t={t}
         >
           <EnhancedStepper
             activeStep={activeStep}
             isTablet={isTablet}
-            // @ts-ignore
-            alpha={theme.palette.action.activatedOpacity}
             formSteps={formSteps}
-            inDarkHeader={true} // Pass flag to stepper
           />
         </FormHeader>
 
         {/* Form body */}
         <FormBody
-          // @ts-ignore
-          isDarkMode={isDarkMode}
           activeStep={activeStep}
           handleBack={handleBack}
           handleNext={handleNext}
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}
           renderStepContent={renderStepContent}
-          theme={theme}
-          colors={colors}
-          alpha={alpha}
-          isValid={isValid}
           t={t}
         />
 
         {/* Footer */}
         <FormFooter
           t={t}
-          // @ts-ignore
-          isDarkMode={isDarkMode}
-          colors={colors}
-          alpha={alpha}
-          theme={theme}
           appRoutes={appRoutes}
         />
       </FormStepsWrapper>

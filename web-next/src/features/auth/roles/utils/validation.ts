@@ -1,6 +1,8 @@
 import { z } from "zod";
 
-export const getRoleValidationSchema = (t: (key: string, options?: any) => string) =>
+type Translator = (key: string, options?: Record<string, unknown>) => string;
+
+export const getRoleValidationSchema = (t: Translator) =>
   z.object({
     name: z
       .string()
@@ -10,7 +12,7 @@ export const getRoleValidationSchema = (t: (key: string, options?: any) => strin
       .max(50, t("validation.maxLength", { count: 50 }))
   });
 
-export const getRoleClaimsValidationSchema = (t?: (key: string, options?: any) => string) =>
+export const getRoleClaimsValidationSchema = (t?: Translator) =>
   z.object({
     id: z.string().min(1, t?.("validation.required") ?? "Required"),
     name: z

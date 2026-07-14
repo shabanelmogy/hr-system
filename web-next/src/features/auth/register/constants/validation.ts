@@ -1,7 +1,9 @@
 import { passwordPolicyPattern } from "@/features/auth/validation/passwordPolicy";
 import { z } from "zod";
 
-const personalDetailsSchema = (t: (key: string, options?: any) => string) =>
+type Translator = (key: string, options?: Record<string, unknown>) => string;
+
+const personalDetailsSchema = (t: Translator) =>
   z.object({
     firstName: z
       .string()
@@ -23,7 +25,7 @@ const personalDetailsSchema = (t: (key: string, options?: any) => string) =>
       .max(50, t("validation.maxLength", { count: 50 })),
   });
 
-const accountSecuritySchema = (t: (key: string, options?: any) => string) =>
+const accountSecuritySchema = (t: Translator) =>
   z
     .object({
       email: z.string().trim().min(1, t("validation.required")).email(t("validation.invalidEmail")),
@@ -39,10 +41,10 @@ const accountSecuritySchema = (t: (key: string, options?: any) => string) =>
       message: t("validation.passwordsMustMatch"),
     });
 
-export const getRegistrationValidationSchema = (t: (key: string, options?: any) => string) =>
+export const getRegistrationValidationSchema = (t: Translator) =>
   personalDetailsSchema(t).merge(accountSecuritySchema(t));
 
-export const getValidationSchema = (activeStep: number, t: (key: string, options?: any) => string) => {
+export const getValidationSchema = (activeStep: number, t: Translator) => {
   if (activeStep === 0) return personalDetailsSchema(t);
   if (activeStep === 1) return accountSecuritySchema(t);
 

@@ -2,15 +2,16 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, Button, useTheme } from "@mui/material";
+import type { SubmitHandler, UseFormHandleSubmit } from "react-hook-form";
+import type { RegistrationFormData } from "../types";
 
 interface FormBodyProps {
   activeStep: number;
   handleBack: () => void;
-  handleNext: () => void;
-  handleSubmit: (callback: (data: any) => void) => (e?: React.FormEvent) => void;
-  onSubmit: (data: any) => void;
+  handleNext: () => void | Promise<void>;
+  handleSubmit: UseFormHandleSubmit<RegistrationFormData>;
+  onSubmit: SubmitHandler<RegistrationFormData>;
   renderStepContent: () => React.ReactNode;
-  isValid: boolean;
   t: (key: string) => string;
 }
 
@@ -21,13 +22,9 @@ export default function FormBody({
   handleSubmit,
   onSubmit,
   renderStepContent,
-  isValid,
   t,
 }: FormBodyProps) {
   const theme = useTheme();
-
-  // Determine if next button should be disabled based on current step
-  const isNextDisabled = !isValid;
 
   return (
     <Box
@@ -75,7 +72,6 @@ export default function FormBody({
             color="primary"
             onClick={handleNext}
             endIcon={<ArrowForwardIcon />}
-            disabled={isNextDisabled}
             sx={{
               borderRadius: 10,
               py: 0.75,

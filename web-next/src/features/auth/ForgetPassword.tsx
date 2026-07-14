@@ -225,7 +225,7 @@ const ForgetPassword = () => {
                   fontWeight: 500,
                 }}
               >
-                {t("auth.forgotPasswordTitle") || "Forgot your password?"}
+                {t("auth.forgotPasswordTitle")}
               </Typography>
               <Typography
                 variant="body2"
@@ -235,8 +235,7 @@ const ForgetPassword = () => {
                     : theme.palette.grey[600],
                 }}
               >
-                {t("auth.forgotPasswordDescription") ||
-                  "Enter your email address and we'll send you instructions to reset your password"}
+                {t("auth.forgotPasswordDescription")}
               </Typography>
             </Box>
 

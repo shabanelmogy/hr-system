@@ -22,11 +22,13 @@ interface ProfilePictureStepProps {
   previewUrl: string | null;
   isDragActive: boolean;
   uploadError: string | null;
-  onFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleDragEnter: (event: React.DragEvent) => void;
-  handleDragLeave: (event: React.DragEvent) => void;
-  handleDragOver: (event: React.DragEvent) => void;
-  handleDrop: (event: React.DragEvent) => void;
+  onFileChange: (
+    event: React.ChangeEvent<HTMLInputElement> | React.DragEvent<HTMLDivElement>,
+  ) => void;
+  handleDragEnter: (event: React.DragEvent<HTMLDivElement>) => void;
+  handleDragLeave: (event: React.DragEvent<HTMLDivElement>) => void;
+  handleDragOver: (event: React.DragEvent<HTMLDivElement>) => void;
+  handleDrop: (event: React.DragEvent<HTMLDivElement>) => void;
   fileInputRef: React.RefObject<HTMLInputElement>;
   dropZoneRef: React.RefObject<HTMLDivElement>;
   isLoading: boolean;

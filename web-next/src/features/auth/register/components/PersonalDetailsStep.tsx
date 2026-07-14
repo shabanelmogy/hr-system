@@ -6,14 +6,16 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import type { FieldErrors, UseFormRegister } from "react-hook-form";
+import type { RegistrationFormData } from "../types";
 
 // Icons
 import BadgeIcon from "@mui/icons-material/Badge";
 import Person2Icon from "@mui/icons-material/Person2";
 
 interface PersonalDetailsStepProps {
-  register: any;
-  errors: any;
+  register: UseFormRegister<RegistrationFormData>;
+  errors: FieldErrors<RegistrationFormData>;
   firstNameRef: React.RefObject<HTMLInputElement>;
   lastNameRef: React.RefObject<HTMLInputElement>;
   userNameRef: React.RefObject<HTMLInputElement>;

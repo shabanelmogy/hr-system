@@ -122,7 +122,6 @@ const RolesDataGrid = ({
   );
 
   return (
-    // @ts-ignore
     <MyDataGrid
       rows={roles}
       columns={columns}

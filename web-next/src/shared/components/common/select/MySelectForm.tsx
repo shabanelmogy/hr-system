@@ -1,4 +1,3 @@
-// @ts-nocheck
 /* eslint-disable react/prop-types */
 import {
   Autocomplete,
@@ -135,8 +134,8 @@ const MySelectForm = ({
                         key={option[valueMember] || index}
                         label={option[displayMember]}
                         color={getChipColor(option)}
-                        variant={chipVariant}
-                        size={chipSize}
+                        variant={chipVariant as "filled" | "outlined"}
+                        size={chipSize as "small" | "medium"}
                         deleteIcon={
                           !isViewMode && showDeleteIcon ? <Close /> : undefined
                         }
@@ -180,7 +179,6 @@ const MySelectForm = ({
                     },
 
                     formHelperText: {
-                      ...params.slotProps.formHelperText,
                       id: `${name}-error`,
                     },
 

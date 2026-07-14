@@ -8,9 +8,11 @@
  * - alpha: a function to manipulate color opacity
  */
 
+import type { Theme } from "@mui/material/styles";
+
 interface ColorSystemParams {
   isDarkMode: boolean;
-  theme?: any;
+  theme?: Theme;
   alpha?: (color: string, opacity: number) => string;
 }
 

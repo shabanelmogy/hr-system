@@ -13,9 +13,13 @@ interface RoleFormProps {
   dialogType: "add" | "edit" | "view";
   selectedRole: { id: string; name: string } | null;
   onClose: () => void;
-  onSubmit: (data: any) => void | Promise<void>;
+  onSubmit: (data: RoleFormData) => void | Promise<void>;
   loading: boolean;
   t: (key: string) => string;
+}
+
+interface RoleFormData {
+  name: string;
 }
 
 const RoleForm = ({
@@ -41,7 +45,7 @@ const RoleForm = ({
     control,
     setError,
     formState: { errors, isDirty },
-  } = useForm({
+  } = useForm<RoleFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
@@ -93,7 +97,7 @@ const RoleForm = ({
     // - Additional UI feedback
   };
 
-  const handleFormSubmit = async (data: { name: string }) => {
+  const handleFormSubmit = async (data: RoleFormData) => {
     try {
       await onSubmit(data);
     } catch (error) {

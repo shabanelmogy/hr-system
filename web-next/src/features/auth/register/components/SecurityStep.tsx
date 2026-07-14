@@ -9,6 +9,8 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import type { FieldErrors, UseFormRegister } from "react-hook-form";
+import type { RegistrationFormData } from "../types";
 
 // Icons
 import CheckIcon from "@mui/icons-material/Check";
@@ -19,8 +21,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 interface SecurityStepProps {
-  register: any;
-  errors: any;
+  register: UseFormRegister<RegistrationFormData>;
+  errors: FieldErrors<RegistrationFormData>;
   emailRef: React.RefObject<HTMLInputElement>;
   watchPassword: string;
   passwordStrength: number;
