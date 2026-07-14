@@ -71,8 +71,8 @@ const ResendEmailConfirmation = () => {
       reset();
       showSuccess(t("auth.confirmationEmailSent"), t("messages.success"));
     } catch (error) {
-      HandleApiError(error as Error, (updatedState) => {
-        showError(updatedState.messages, (error as any).title);
+      HandleApiError(error, (updatedState) => {
+        showError(updatedState.messages, updatedState.title);
       });
     } finally {
       setIsSubmitting(false);
@@ -219,7 +219,7 @@ const ResendEmailConfirmation = () => {
                   fontWeight: 500,
                 }}
               >
-                Check your email inbox to activate your account
+                {t("auth.emailConfirmationInstructions")}
               </Typography>
               <Typography
                 variant="body2"
@@ -229,7 +229,7 @@ const ResendEmailConfirmation = () => {
                     : theme.palette.grey[600],
                 }}
               >
-                Didn't receive the email? Enter your address below to resend it
+                {t("auth.emailConfirmationResendDescription")}
               </Typography>
             </Box>
 
@@ -257,7 +257,7 @@ const ResendEmailConfirmation = () => {
                   autoComplete="off"
                   {...register("email")}
                   error={!!errors.email}
-                  helperText={errors.email?.message as string}
+                  helperText={errors.email?.message}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 2,
@@ -281,6 +281,10 @@ const ResendEmailConfirmation = () => {
                     },
                   }}
                   slotProps={{
+                    htmlInput: {
+                      "aria-required": true,
+                      "aria-invalid": !!errors.email,
+                    },
                     input: {
                       startAdornment: (
                         <InputAdornment position="start">

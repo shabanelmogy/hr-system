@@ -36,7 +36,7 @@ const ForgetPassword = () => {
   const { showSnackbar, SnackbarComponent } = useSnackbar();
   const { t } = useTranslation();
   const theme = useTheme();
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isDarkMode = theme.palette.mode === "dark";
@@ -60,7 +60,7 @@ const ForgetPassword = () => {
     inputRef.current?.focus();
   }, []);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: EmailRecoveryFormData) => {
     setIsSubmitting(true);
     try {
       await apiService.post(apiRoutes.auth.forgetPassword, data, {
@@ -73,8 +73,8 @@ const ForgetPassword = () => {
         t("messages.success")
       );
     } catch (error) {
-      HandleApiError(error, (updatedState: any) => {
-        showSnackbar("error", updatedState.messages, (error as any).title);
+      HandleApiError(error, (updatedState) => {
+        showSnackbar("error", updatedState.messages, updatedState.title);
       });
     } finally {
       setIsSubmitting(false);
@@ -264,7 +264,7 @@ const ForgetPassword = () => {
                   autoComplete="off"
                   {...register("email")}
                   error={!!errors.email}
-                  helperText={errors.email?.message as string}
+                  helperText={errors.email?.message}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 2,
