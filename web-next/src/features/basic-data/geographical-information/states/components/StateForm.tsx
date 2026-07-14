@@ -9,6 +9,7 @@ import { useCountries } from "../../countries/hooks/useCountryQueries";
 import { State } from "../types/State";
 import { states } from "../utils/fakeData";
 import { getStateValidationSchema } from "../utils/validation";
+import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 
 interface StateFormData {
   nameAr: string;
@@ -22,7 +23,7 @@ interface StateFormProps {
   dialogType: "add" | "edit" | "view";
   selectedState?: State | null;
   onClose: () => void;
-  onSubmit: (data: StateFormData) => void;
+  onSubmit: (data: StateFormData) => void | Promise<void>;
   loading: boolean;
 }
 
@@ -49,9 +50,10 @@ const StateForm = ({
     reset,
     control,
     setValue,
+    setError,
     formState: { errors, isDirty },
   } = useForm<StateFormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
     mode: "onChange",
     defaultValues: {
       nameAr: "",
@@ -162,7 +164,16 @@ const StateForm = ({
     setValue("countryId", mockData.countryId, mockOptions);
   };
 
-  const onSubmitHandler: SubmitHandler<StateFormData> = (data) => onSubmit(data);
+  const onSubmitHandler: SubmitHandler<StateFormData> = async (data) => {
+    try {
+      await onSubmit(data);
+    } catch (error) {
+      applyApiFieldErrors(error, setError, {
+        Country: "countryId",
+        "State.Duplicated": ["nameAr", "nameEn", "code"],
+      });
+    }
+  };
 
   return (
     <MyForm
@@ -190,7 +201,7 @@ const StateForm = ({
             ? t("actions.update")
             : t("actions.create")
       }
-      onSubmit={isViewMode ? undefined : handleSubmit(onSubmitHandler)}
+      onSubmit={isViewMode ? undefined : (handleSubmit(onSubmitHandler) as any)}
       isSubmitting={loading}
       isDirty={isDirty}
       hideFooter={isViewMode}

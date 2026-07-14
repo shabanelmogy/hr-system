@@ -209,8 +209,8 @@ const useCountryGridLogic = (): UseCountryGridLogicReturn => {
         } else if (dialogType === "add") {
           await createCountryMutation.mutateAsync(formdata);
         }
-      } catch {
-        // Errors are handled in mutation onError callbacks
+      } catch (error) {
+        throw error;
       }
     },
     [dialogType, selectedCountry, updateCountryMutation, createCountryMutation]

@@ -6,18 +6,18 @@ export const getRoleValidationSchema = (t: (key: string, options?: any) => strin
       .string()
       .trim()
       .min(1, t("validation.required"))
-      .min(2, t("validation.minLength", { count: 2 }))
+      .min(3, t("validation.minLength", { count: 3 }))
       .max(50, t("validation.maxLength", { count: 50 }))
-      .regex(
-        /^[a-zA-Z\s]+$/,
-        t("validation.englishOnly") || "Role name can only contain letters and spaces",
-      ),
   });
 
-export const getRoleClaimsValidationSchema = (t?: (key: string) => string) =>
+export const getRoleClaimsValidationSchema = (t?: (key: string, options?: any) => string) =>
   z.object({
     id: z.string().min(1, t?.("validation.required") ?? "Required"),
-    name: z.string().min(1, t?.("validation.required") ?? "Required"),
+    name: z
+      .string()
+      .trim()
+      .min(3, t?.("validation.minLength", { count: 3 }) ?? "Minimum 3 characters")
+      .max(50, t?.("validation.maxLength", { count: 50 }) ?? "Maximum 50 characters"),
     roleClaims: z.array(
       z.object({
         displayValue: z.string().min(1, t?.("validation.required") ?? "Required"),

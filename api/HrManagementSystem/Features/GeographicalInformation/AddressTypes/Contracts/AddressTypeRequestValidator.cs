@@ -18,6 +18,10 @@ public class AddressTypeRequestValidator : AbstractValidator<AddressTypeRequest>
             .Length(2, 100)
             .WithMessage(_localizer[Strings.MaxLengthError]);
 
+        RuleFor(a => a.NameEn)
+            .Matches(RegexPattern.EnglishLettersAndSpaces)
+            .WithMessage(_localizer[Strings.EnglishLetterOnly]);
+
         RuleFor(a => a.NameAr)
             .Trimmed()
             .NotEmpty()
@@ -25,6 +29,10 @@ public class AddressTypeRequestValidator : AbstractValidator<AddressTypeRequest>
             .WithMessage(_localizer[Strings.Required])
             .Length(2, 100)
             .WithMessage(_localizer[Strings.MaxLengthError]);
+
+        RuleFor(a => a.NameAr)
+            .Matches(RegexPattern.ArabicLettersAndSpaces)
+            .WithMessage(_localizer[Strings.ArabicLetterOnly]);
 
         RuleFor(a => a)
            .MustAsync(IsAddressTypeNameEnUniqueAsync)

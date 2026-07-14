@@ -186,7 +186,7 @@ const useStateGridLogic = (): UseStateGridLogicReturn => {
           await createStateMutation.mutateAsync(formdata as any);
         }
       } catch (error) {
-        console.error("State form submission error:", error);
+        throw error;
       }
     },
     [dialogType, selectedState, updateStateMutation, createStateMutation]

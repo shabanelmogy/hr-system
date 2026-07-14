@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { District } from "../types/District";
 import { useStates } from "../../states/hooks/useStateQueries";
 import { getDistrictValidationSchema } from "../utils/validation";
+import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 
 interface DistrictFormData {
   nameAr: string;
@@ -22,7 +23,7 @@ interface DistrictFormProps {
   dialogType: "add" | "edit" | "view";
   selectedDistrict?: District | null;
   onClose: () => void;
-  onSubmit: (data: DistrictFormData) => void;
+  onSubmit: (data: DistrictFormData) => void | Promise<void>;
   loading: boolean;
 }
 
@@ -51,9 +52,10 @@ const DistrictForm = ({
     reset,
     control,
     setValue,
+    setError,
     formState: { errors, isDirty },
   } = useForm<DistrictFormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
     mode: "onChange",
     defaultValues: {
       nameAr: "",
@@ -150,7 +152,20 @@ const DistrictForm = ({
           : t("districts.addSubtitle") || "Add a new district to the system"
       }
       submitButtonText={isViewMode ? null : isEditMode ? t("actions.update") : t("actions.create")}
-      onSubmit={isViewMode ? undefined : handleSubmit(onSubmit)}
+      onSubmit={
+        isViewMode
+          ? undefined
+          : (handleSubmit(async (data) => {
+              try {
+                await onSubmit(data);
+              } catch (error) {
+                applyApiFieldErrors(error, setError, {
+                  State: "stateId",
+                  "District.Duplicated": ["nameAr", "nameEn", "code"],
+                });
+              }
+            }) as any)
+      }
       isSubmitting={loading}
       isDirty={isDirty}
       hideFooter={isViewMode}

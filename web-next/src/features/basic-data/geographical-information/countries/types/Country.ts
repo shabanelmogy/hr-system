@@ -48,6 +48,6 @@ export interface CountryFormProps {
   dialogType: "add" | "edit" | "view";
   selectedCountry?: Country | null;
   onClose: () => void;
-  onSubmit: (data: CountryFormData) => void;
+  onSubmit: (data: CountryFormData) => void | Promise<void>;
   loading: boolean;
 }

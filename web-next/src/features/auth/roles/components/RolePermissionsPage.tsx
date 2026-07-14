@@ -49,6 +49,11 @@ import {
   Tooltip,
   Typography,
   useTheme,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -58,6 +63,7 @@ import {
   getRoleClaimsValidationSchema,
   RoleClaimsFormData,
 } from "../utils/validation";
+import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 
 // Get modules dynamically from Permissions class
 const MODULES = getAllPermissionModules();
@@ -88,6 +94,7 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
   const [selectedModule, setSelectedModule] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [discardDialogOpen, setDiscardDialogOpen] = useState(false);
 
   // Enhanced UI state
   const [searchTerm, setSearchTerm] = useState("");
@@ -101,6 +108,7 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
     handleSubmit,
     reset,
     setValue,
+    setError,
     formState: { errors, isDirty },
   } = useForm<RoleClaimsFormData>({
     resolver: zodResolver(roleClaimsSchema),
@@ -168,6 +176,7 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
       router.push("/administration/roles");
       showSuccess("Role permissions updated successfully");
     } catch (error) {
+      applyApiFieldErrors(error, setError, { Name: "name" });
       showError((error as Error)?.message || "Failed to update role permissions");
     } finally {
       setIsSaving(false);
@@ -175,13 +184,15 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
   };
 
   const handleBack = () => {
-    if (
-      isDirty &&
-      typeof window !== "undefined" &&
-      !window.confirm("You have unsaved changes. Discard them?")
-    ) {
+    if (isDirty) {
+      setDiscardDialogOpen(true);
       return;
     }
+    router.push("/administration/roles");
+  };
+
+  const confirmBack = () => {
+    setDiscardDialogOpen(false);
     router.push("/administration/roles");
   };
 
@@ -745,6 +756,25 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
         </Box>
       </Fade>
       {SnackbarComponent}
+      <Dialog
+        open={discardDialogOpen}
+        onClose={() => setDiscardDialogOpen(false)}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle>Discard unsaved changes?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Your permission changes have not been saved. Do you want to leave this page?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDiscardDialogOpen(false)}>Keep editing</Button>
+          <Button onClick={confirmBack} color="error" variant="contained" autoFocus>
+            Discard changes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </ContentWrapper>
   );
 };

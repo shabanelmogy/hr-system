@@ -50,7 +50,8 @@ public sealed record NotificationRealtimeResponse(
     string? EntityId,
     string? ActionUrl,
     Guid CorrelationId,
-    DateTime CreatedOn);
+    DateTime CreatedOn,
+    string? ActorUserId);
 
 public sealed record NotificationPublishRequest(
     string RequiredPermission,

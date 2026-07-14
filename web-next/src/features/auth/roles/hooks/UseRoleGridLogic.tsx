@@ -96,13 +96,17 @@ const useRoleGridLogic = () => {
       if (dialogType === "edit" && selectedRole?.id) {
         const result = await handleApiCall(
           () => updateRole({ ...formdata, id: selectedRole.id }),
-          t("roles.updated")
+          t("roles.updated"),
+          null,
+          true,
         );
         gridAction = { type: "edit", id: result.id };
       } else if (dialogType === "add") {
         const response = await handleApiCall(
           () => addRole(formdata),
-          t("roles.created")
+          t("roles.created"),
+          null,
+          true,
         );
         gridAction = { type: "add", id: response.id };
       }

@@ -129,7 +129,9 @@ const useUserGridLogic = () => {
 
             return updatedUser;
           },
-          t("users.updated")
+          t("users.updated"),
+          null,
+          true,
         );
         if (!result) return;
         gridAction = { type: "edit", id: result.id };
@@ -138,7 +140,9 @@ const useUserGridLogic = () => {
         delete userData.confirmPassword;
         const response = await handleApiCall(
           () => addUser(userData),
-          t("users.created")
+          t("users.created"),
+          null,
+          true,
         );
         if (!response) return;
         gridAction = { type: "add", id: response.id };

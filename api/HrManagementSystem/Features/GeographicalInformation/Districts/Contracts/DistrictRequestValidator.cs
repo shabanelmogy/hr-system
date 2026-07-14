@@ -18,6 +18,10 @@ public class DistrictRequestValidator : AbstractValidator<DistrictRequest>
             .Length(2, 100)
             .WithMessage(_localizer[Strings.MaxLengthError]);
 
+        RuleFor(d => d.NameEn)
+            .Matches(RegexPattern.EnglishLettersAndSpaces)
+            .WithMessage(_localizer[Strings.EnglishLetterOnly]);
+
         RuleFor(d => d.NameAr)
             .Trimmed()
             .NotEmpty()
@@ -25,6 +29,10 @@ public class DistrictRequestValidator : AbstractValidator<DistrictRequest>
             .WithMessage(_localizer[Strings.Required])
             .Length(2, 100)
             .WithMessage(_localizer[Strings.MaxLengthError]);
+
+        RuleFor(d => d.NameAr)
+            .Matches(RegexPattern.ArabicLettersAndSpaces)
+            .WithMessage(_localizer[Strings.ArabicLetterOnly]);
 
         RuleFor(d => d.Code)
             .Trimmed()

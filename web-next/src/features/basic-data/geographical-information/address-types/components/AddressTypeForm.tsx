@@ -11,6 +11,7 @@ import {
 } from "../types/AddressType";
 import { Casino } from "@mui/icons-material";
 import { addressTypes } from "../utils/fakeData";
+import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 
 const AddressTypeForm = ({
   open,
@@ -32,6 +33,7 @@ const AddressTypeForm = ({
     handleSubmit,
     reset,
     setValue,
+    setError,
     control,
     formState: { errors, isDirty },
   } = useForm<CreateAddressTypeRequest>({
@@ -138,7 +140,19 @@ const AddressTypeForm = ({
           ? t("actions.update")
           : t("actions.create")
       }
-      onSubmit={isViewMode ? undefined : handleSubmit(onSubmit)}
+      onSubmit={
+        isViewMode
+          ? undefined
+          : handleSubmit(async (data) => {
+              try {
+                await onSubmit(data);
+              } catch (error) {
+                applyApiFieldErrors(error, setError, {
+                  "AddressType.Duplicated": ["nameAr", "nameEn"],
+                });
+              }
+            })
+      }
       isSubmitting={loading}
       isDirty={isDirty}
       hideFooter={isViewMode}

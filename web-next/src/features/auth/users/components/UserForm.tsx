@@ -18,13 +18,14 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { getUserValidationSchema } from "../utils/validation";
 import useRoleStore from "../../roles/store/useRoleStore";
+import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 
 interface UserFormProps {
   open: boolean;
   dialogType: string;
   selectedUser: any;
   onClose: () => void;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: any) => void | Promise<void>;
   loading: boolean;
   t: (key: string) => string;
 }
@@ -66,6 +67,7 @@ const UserForm = ({
     control,
     watch,
     clearErrors,
+    setError,
     formState: { errors, isDirty },
   } = useForm({
     resolver: zodResolver(schema),
@@ -232,7 +234,7 @@ const UserForm = ({
   };
 
   // Handle form submission with password logic
-  const handleFormSubmit = (data: any) => {
+  const handleFormSubmit = async (data: any) => {
     // ✅ FIXED: Clean up password data properly
     const submitData = { ...data };
     
@@ -248,7 +250,20 @@ const UserForm = ({
       }
     }
     
-    onSubmit(submitData);
+    try {
+      await onSubmit(submitData);
+    } catch (error) {
+      applyApiFieldErrors(error, setError, {
+        FirstName: "firstName",
+        LastName: "lastName",
+        UserName: "userName",
+        Email: "email",
+        Roles: "roles",
+        "User.DuplicatedUserName": "userName",
+        "User.DuplicatedEmail": "email",
+        "Role.InvalidRoles": "roles",
+      });
+    }
   };
 
   // Handle password section toggle with cleanup

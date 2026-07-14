@@ -15,6 +15,7 @@ export type ApiError = {
   traceId?: string;
   type?: string;
   errorCodes?: string[];
+  fieldErrors: Record<string, string[]> | null;
   errors: string[] | null;
 };
 
@@ -67,6 +68,7 @@ class ApiClient {
         status: 0,
         title: "Network Error",
         message: "Failed to connect to the server",
+        fieldErrors: null,
         errors: null
       };
     }
@@ -81,6 +83,7 @@ class ApiClient {
         }
       | undefined;
     const errors = normalizeApiErrors(data?.errors);
+    const fieldErrors = normalizeFieldErrors(data?.errors);
     return {
       status: error.response.status,
       title: data?.title ?? "Error",
@@ -91,6 +94,7 @@ class ApiClient {
         data?.errors && !Array.isArray(data.errors)
           ? Object.keys(data.errors)
           : undefined,
+      fieldErrors,
       errors,
       message:
         data?.detail ??
@@ -197,4 +201,24 @@ function normalizeApiErrors(
     .filter(Boolean);
 
   return messages.length > 0 ? messages : null;
+}
+
+function normalizeFieldErrors(
+  errors: Record<string, unknown[]> | unknown[] | undefined,
+): Record<string, string[]> | null {
+  if (!errors || Array.isArray(errors)) return null;
+
+  const normalized = Object.fromEntries(
+    Object.entries(errors)
+      .map(([field, value]) => [
+        field,
+        (Array.isArray(value) ? value : [value])
+          .filter((item): item is string => typeof item === "string")
+          .map((item) => item.trim())
+          .filter(Boolean),
+      ])
+      .filter(([, messages]) => messages.length > 0),
+  );
+
+  return Object.keys(normalized).length > 0 ? normalized : null;
 }

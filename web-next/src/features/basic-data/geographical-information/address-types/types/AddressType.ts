@@ -23,6 +23,6 @@ export interface AddressTypeFormProps {
   dialogType: "add" | "edit" | "view";
   selectedItem?: AddressType | null;
   onClose: () => void;
-  onSubmit: (data: CreateAddressTypeRequest) => void;
+  onSubmit: (data: CreateAddressTypeRequest) => void | Promise<void>;
   loading: boolean;
 }

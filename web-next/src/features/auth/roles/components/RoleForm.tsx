@@ -6,13 +6,14 @@ import { Box, TextField } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { getRoleValidationSchema } from "../utils/validation";
+import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 
 interface RoleFormProps {
   open: boolean;
   dialogType: "add" | "edit" | "view";
   selectedRole: { id: string; name: string } | null;
   onClose: () => void;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: any) => void | Promise<void>;
   loading: boolean;
   t: (key: string) => string;
 }
@@ -38,6 +39,7 @@ const RoleForm = ({
     handleSubmit,
     reset,
     control,
+    setError,
     formState: { errors, isDirty },
   } = useForm({
     resolver: zodResolver(schema),
@@ -91,6 +93,17 @@ const RoleForm = ({
     // - Additional UI feedback
   };
 
+  const handleFormSubmit = async (data: { name: string }) => {
+    try {
+      await onSubmit(data);
+    } catch (error) {
+      applyApiFieldErrors(error, setError, {
+        Name: "name",
+        "Role.DuplicatedRole": "name",
+      });
+    }
+  };
+
   return (
     <MyForm
       open={open}
@@ -117,7 +130,7 @@ const RoleForm = ({
             ? t("actions.update")
             : t("actions.create")
       }
-      onSubmit={isViewMode ? undefined : handleSubmit(onSubmit)}
+      onSubmit={isViewMode ? undefined : handleSubmit(handleFormSubmit)}
       isSubmitting={loading}
       isDirty={isDirty}
       hideFooter={isViewMode}

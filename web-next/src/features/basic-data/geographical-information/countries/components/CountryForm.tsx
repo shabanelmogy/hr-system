@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { countries } from "../utils/fakeData";
 import { getCountryValidationSchema } from "../utils/validation";
 import { CountryFormData, CountryFormProps } from "../types/Country";
+import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 
 const CountryForm = ({
   open,
@@ -36,6 +37,7 @@ const CountryForm = ({
     reset,
     control,
     setValue,
+    setError,
     formState: { errors, isDirty },
   } = useForm({
     resolver: zodResolver(schema),
@@ -154,7 +156,19 @@ const CountryForm = ({
             ? t("actions.update")
             : t("actions.create")
       }
-      onSubmit={isViewMode ? undefined : handleSubmit(onSubmit as any)}
+      onSubmit={
+        isViewMode
+          ? undefined
+          : handleSubmit(async (data) => {
+              try {
+                await onSubmit(data as CountryFormData);
+              } catch (error) {
+                applyApiFieldErrors(error, setError, {
+                  "Country.Duplicated": ["nameAr", "nameEn", "alpha2Code", "alpha3Code"],
+                });
+              }
+            })
+      }
       isSubmitting={loading}
       isDirty={isDirty}
       hideFooter={isViewMode}
@@ -247,7 +261,7 @@ const CountryForm = ({
         control={control}
         placeholder="20, 1, 966"
         showCounter={!isViewMode}
-        maxLength={5}
+        maxLength={10}
         readOnly={isViewMode}
       />
 

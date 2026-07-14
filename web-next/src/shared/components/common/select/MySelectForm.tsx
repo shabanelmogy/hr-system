@@ -110,7 +110,7 @@ const MySelectForm = ({
                 // Format the new value to be just the ID(s) for the form state.
                 const formattedValue = multiple
                   ? newValue?.map((item) => item[valueMember]) || []
-                  : newValue?.[valueMember] || null;
+                  : newValue?.[valueMember] ?? undefined;
 
                 // Update the form state.
                 fieldOnChange(formattedValue);

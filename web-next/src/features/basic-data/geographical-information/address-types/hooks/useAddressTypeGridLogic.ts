@@ -325,7 +325,7 @@ const useAddressTypeGridLogic = (): UseAddressTypeGridLogicReturn => {
           await createMutation.mutateAsync(formdata as any);
         }
       } catch (error) {
-        console.error("Form submission error:", error);
+        throw error;
       }
     },
     [dialogType, selectedItem, updateMutation, createMutation]

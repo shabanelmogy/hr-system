@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
+import { useSession } from "@/lib/auth/SessionContext";
 import { useSignalRConnection } from "@/lib/signalr/SignalRProvider";
 import { showToast } from "@/shared/components/feedback";
 import signalRService from "@/shared/services/signalRService";
@@ -36,11 +37,13 @@ const notificationSchema = z.object({
   actionUrl: z.string().nullable(),
   correlationId: z.string(),
   createdOn: z.string(),
+  actorUserId: z.string().nullable().optional(),
 });
 
 export function NotificationRealtimeBridge() {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
+  const { user } = useSession();
   const { isConnected } = useSignalRConnection();
   const wasConnected = useRef(false);
   const receivedIds = useRef(new Set<number>());
@@ -66,6 +69,12 @@ export function NotificationRealtimeBridge() {
       void queryClient.invalidateQueries({ queryKey: notificationKeys.lists() });
       void queryClient.invalidateQueries({ queryKey: notificationKeys.unreadCount() });
 
+      // The actor also receives the persisted notification, but should not see
+      // a second toast for the action they just performed.
+      if (notification.actorUserId && notification.actorUserId === user?.userId) {
+        return;
+      }
+
       const { title, message } = translateNotification(notification, t);
       const toastMessage = `${title}: ${message}`;
       const severity = normalizeSeverity(notification.severity);
@@ -77,7 +86,7 @@ export function NotificationRealtimeBridge() {
 
     signalRService.on("ReceiveNotification", receiveNotification);
     return () => signalRService.off("ReceiveNotification", receiveNotification);
-  }, [queryClient, t]);
+  }, [queryClient, t, user?.userId]);
 
   useEffect(() => {
     if (isConnected && !wasConnected.current) {

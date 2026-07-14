@@ -176,7 +176,7 @@ const useDistrictGridLogic = (): UseDistrictGridLogicReturn => {
           await createDistrictMutation.mutateAsync(formdata as any);
         }
       } catch (error) {
-        console.error("District form submission error:", error);
+        throw error;
       }
     },
     [dialogType, selectedDistrict, updateDistrictMutation, createDistrictMutation]

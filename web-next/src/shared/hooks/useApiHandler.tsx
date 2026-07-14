@@ -15,7 +15,12 @@ const useApiHandler = (options: any = {}) => {
   const { t } = useTranslation();
 
   const handleApiCall = useCallback(
-    async (apiCall: any, successMessage: any = null, errorHandler: any = null) => {
+    async (
+      apiCall: any,
+      successMessage: any = null,
+      errorHandler: any = null,
+      rethrowError = false,
+    ) => {
       if (loading) return null;
 
       setLoading(true);
@@ -38,6 +43,7 @@ const useApiHandler = (options: any = {}) => {
             showError(updatedState.messages, error.title);
           });
         }
+        if (rethrowError) throw error;
       } finally {
         setLoading(false);
       }
