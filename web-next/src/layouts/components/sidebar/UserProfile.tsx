@@ -79,6 +79,7 @@ const UserProfile = ({ open }: UserProfileProps) => {
 
   return (
     <Box
+      dir={theme.direction}
       sx={{
         p: 1.5,
         mx: 1,
@@ -104,7 +105,11 @@ const UserProfile = ({ open }: UserProfileProps) => {
         },
       }}
     >
-      <Tooltip title={open ? "" : `${displayName} • ${userRole}`} placement="right" arrow>
+      <Tooltip
+        title={open ? "" : `${displayName} • ${userRole}`}
+        placement={theme.direction === "rtl" ? "left" : "right"}
+        arrow
+      >
         <Box 
           sx={{ 
             display: "flex",

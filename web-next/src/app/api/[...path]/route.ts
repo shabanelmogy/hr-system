@@ -1,13 +1,10 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import {
-  ACCESS_TOKEN_COOKIE,
-  REFRESH_TOKEN_COOKIE,
-  SESSION_REFRESHED_HEADER,
-} from "@/lib/auth/constants";
+import { SESSION_REFRESHED_HEADER } from "@/lib/auth/constants";
 import {
   clearAuthCookies,
   isAuthPayload,
+  readAuthTokens,
   sanitizeAuthPayload,
   setAuthCookies,
   type AuthPayload
@@ -128,8 +125,9 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
 
   const { path } = await parameters.params;
   const route = path.join("/");
-  const accessToken = request.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
-  const refreshToken = request.cookies.get(REFRESH_TOKEN_COOKIE)?.value;
+  const { accessToken, refreshToken, migrationPayload } = readAuthTokens(
+    request.cookies,
+  );
 
   console.log(`${TAG} 📋 Request to /api/${route}`);
   const body = await requestBody(request);
@@ -173,7 +171,10 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
     }
   }
 
-  const response = await toNextResponse(backendResponse, refreshedAuth);
+  const response = await toNextResponse(
+    backendResponse,
+    refreshedAuth ?? migrationPayload,
+  );
   if (backendResponse.status === 401 && !refreshedAuth) {
     console.warn(`${TAG} ❌ Clearing auth cookies — 401 with no successful refresh`);
     clearAuthCookies(response);

@@ -20,7 +20,7 @@ const LanguageSelector = ({ direction, handleLanguageChange }: { direction: stri
         onChange={(e) => handleLanguageChange(e.target.value)}
         MenuProps={{ disableScrollLock: true }}
         label={t("general.lang")}
-        sx={{ width: 125, color: "white", mr: 2 }}
+        sx={{ width: 125, color: "white", marginInlineEnd: 2 }}
       >
         <MenuItem
           value="ltr"

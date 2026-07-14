@@ -13,6 +13,7 @@ import {
   useThemeSettings,
   type ThemeSettings,
 } from "./useThemeSettings";
+import { AppEmotionCacheProvider } from "./AppEmotionCacheProvider";
 
 const ThemeSettingsContext = createContext<ThemeSettings | null>(null);
 
@@ -28,10 +29,12 @@ export function ThemeShell({ children }: { children: ReactNode }) {
 
   return (
     <ThemeSettingsContext.Provider value={settings}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <ToastProvider position="top-right">{children}</ToastProvider>
-      </ThemeProvider>
+      <AppEmotionCacheProvider direction={settings.direction}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <ToastProvider position="top-right">{children}</ToastProvider>
+        </ThemeProvider>
+      </AppEmotionCacheProvider>
     </ThemeSettingsContext.Provider>
   );
 }

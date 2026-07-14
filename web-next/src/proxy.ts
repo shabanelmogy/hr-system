@@ -1,12 +1,14 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import {
-  ACCESS_TOKEN_COOKIE,
   INTERNAL_SESSION_HEADER,
-  REFRESH_TOKEN_COOKIE,
   isPublicRoute,
 } from "@/lib/auth/constants";
-import { clearAuthCookies, setAuthCookies } from "@/lib/auth/cookies";
+import {
+  clearAuthCookies,
+  readAuthTokens,
+  setAuthCookies,
+} from "@/lib/auth/cookies";
 import {
   resolveSession,
   type ResolvedSession,
@@ -19,8 +21,9 @@ import { encodeRequestSession } from "@/lib/auth/request-session";
 
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  const accessToken = request.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
-  const refreshToken = request.cookies.get(REFRESH_TOKEN_COOKIE)?.value;
+  const { accessToken, refreshToken, migrationPayload } = readAuthTokens(
+    request.cookies,
+  );
 
   const resolved = await resolveSession(accessToken, refreshToken);
 
@@ -36,6 +39,7 @@ export async function proxy(request: NextRequest) {
     return applyRefreshedCookies(
       rewriteWithSession(request, unavailableUrl, 503, resolved),
       resolved,
+      migrationPayload,
     );
   }
 
@@ -60,6 +64,7 @@ export async function proxy(request: NextRequest) {
     return applyRefreshedCookies(
       NextResponse.redirect(new URL("/", request.url)),
       resolved,
+      migrationPayload,
     );
   }
 
@@ -71,10 +76,15 @@ export async function proxy(request: NextRequest) {
     return applyRefreshedCookies(
       rewriteWithSession(request, unavailableUrl, 404, resolved),
       resolved,
+      migrationPayload,
     );
   }
 
-  return applyRefreshedCookies(nextWithSession(request, resolved), resolved);
+  return applyRefreshedCookies(
+    nextWithSession(request, resolved),
+    resolved,
+    migrationPayload,
+  );
 }
 
 function requestHeadersWithSession(
@@ -115,9 +125,11 @@ function rewriteWithSession(
 function applyRefreshedCookies(
   response: NextResponse,
   resolved: ResolvedSession,
+  migrationPayload?: Parameters<typeof setAuthCookies>[1],
 ) {
-  if (resolved.authPayload) {
-    setAuthCookies(response, resolved.authPayload);
+  const authPayload = resolved.authPayload ?? migrationPayload;
+  if (authPayload) {
+    setAuthCookies(response, authPayload);
   }
   return response;
 }

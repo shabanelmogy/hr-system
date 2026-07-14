@@ -99,13 +99,18 @@ function NavigationItem({
 
   return (
     <>
-      <Tooltip title={open ? null : title} placement="left">
+      <Tooltip
+        title={open ? null : title}
+        placement={theme.direction === "rtl" ? "right" : "left"}
+      >
         <ListItemButton
+          dir={theme.direction}
           onClick={handleClick}
           sx={[
             {
               minHeight: 48,
-              pl: 4,
+              paddingInlineStart: theme.spacing(4),
+              textAlign: "start",
               bgcolor: getBgColor(),
             },
             open
@@ -120,15 +125,17 @@ function NavigationItem({
           <ListItemIcon
             sx={[
               {
-                minWidth: 0,
+                minWidth: 28,
+                width: 28,
+                flexShrink: 0,
                 justifyContent: "center",
               },
               open
                 ? {
-                    mr: 3,
+                    marginInlineEnd: theme.spacing(3),
                   }
                 : {
-                    mr: "auto",
+                    marginInlineEnd: 0,
                   },
             ]}
           >
@@ -140,9 +147,11 @@ function NavigationItem({
               open
                 ? {
                     opacity: 1,
+                    textAlign: "start",
                   }
                 : {
                     opacity: 0,
+                    display: "none",
                   },
             ]}
           />

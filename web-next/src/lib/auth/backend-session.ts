@@ -32,35 +32,27 @@ export async function resolveSession(
   accessToken?: string,
   refreshToken?: string,
 ): Promise<ResolvedSession> {
-  console.log(`${TAG} 🔍 Resolving session...`);
   if (!accessToken) {
-    console.log(`${TAG} ❌ No access token, unauthenticated`);
     return { status: "unauthenticated" };
   }
 
   const currentSession = await fetchVerifiedSession(accessToken);
 
   if (currentSession.status === "authenticated") {
-    console.log(`${TAG} ✅ Access token valid, authenticated`);
     return currentSession;
   }
   if (currentSession.status === "unavailable") {
-    console.log(`${TAG} ⚠️ Session verification unavailable`);
     return currentSession;
   }
   if (!refreshToken) {
-    console.log(`${TAG} ❌ No refresh token available`);
     return { status: "unauthenticated" };
   }
 
-  console.log(`${TAG} Access token invalid, attempting refresh…`);
   const refreshResult = await refreshAuthTokens(accessToken, refreshToken);
-  console.log(`${TAG} Refresh result: ${refreshResult.status}`);
 
   if (refreshResult.status === "unavailable") return { status: "unavailable" };
   if (refreshResult.status === "rejected") return { status: "unauthenticated" };
 
-  console.log(`${TAG} Tokens refreshed successfully`);
   const refreshedSession = await fetchVerifiedSession(refreshResult.payload.token);
   if (refreshedSession.status === "unavailable") {
     return {
@@ -83,11 +75,9 @@ export function refreshAuthTokens(
   const key = createHash("sha256").update(refreshToken).digest("hex").slice(0, 12);
   const existingRequest = refreshRequests.get(key);
   if (existingRequest) {
-    console.log(`${TAG} ♻️ Reusing in-flight refresh request (key: ${key})`);
     return existingRequest;
   }
 
-  console.log(`${TAG} Starting token refresh (key: ${key})`);
   const request = requestTokenRefresh(accessToken, refreshToken);
   
   // Set cache immediately to avoid race condition
@@ -97,7 +87,6 @@ export function refreshAuthTokens(
   request.finally(() => {
     const timer = setTimeout(() => {
       if (refreshRequests.get(key) === request) {
-        console.log(`${TAG} 🗑️ Refresh grace period expired, clearing cache (key: ${key})`);
         refreshRequests.delete(key);
       }
     }, completedRefreshGraceMs);
@@ -219,16 +208,11 @@ function asStringArray(value: unknown): string[] {
   return [value];
 }
 
-function sanitizeForLog(value: string): string {
-  return value.replace(/[\n\r\t]/g, '');
-}
-
 async function requestTokenRefresh(
   accessToken: string,
   refreshToken: string,
 ): Promise<RefreshResult> {
   try {
-    console.log(`${TAG} 🔄 Calling backend refresh endpoint…`);
     const response = await fetch(`${getBackendUrl()}/api/v1/auth/refreshToken`, {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -236,8 +220,6 @@ async function requestTokenRefresh(
       cache: "no-store",
       signal: AbortSignal.timeout(tokenRefreshTimeoutMs),
     });
-
-    console.log(`${TAG} 🔄 Refresh response: ${response.status} ${sanitizeForLog(response.statusText)}`);
 
     if (definitiveRefreshRejectionStatuses.has(response.status)) {
       console.warn(`${TAG} ❌ Refresh rejected: ${response.status}`);
@@ -250,7 +232,6 @@ async function requestTokenRefresh(
 
     const payload: unknown = await response.json();
     if (isAuthPayload(payload)) {
-      console.log(`${TAG} Refresh successful`);
       return { status: "refreshed", payload };
     }
 

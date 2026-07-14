@@ -25,6 +25,7 @@ import {
   ZoomOut,
   CenterFocusStrong,
 } from "@mui/icons-material";
+import { normalizeWorldMapMove } from "./worldMapUtils";
 
 // Source topology (no token required)
 const GEO_URL =
@@ -343,8 +344,10 @@ const WorldMap: React.FC<WorldMapProps> = ({
               center={center}
               zoom={zoom}
               onMoveEnd={(pos) => {
-                const nextCenter = pos.coordinates as [number, number];
-                const nextZoom = pos.zoom;
+                const nextMove = normalizeWorldMapMove(pos);
+                if (!nextMove) return;
+
+                const { center: nextCenter, zoom: nextZoom } = nextMove;
 
                 // react-simple-maps can invoke onMoveEnd while it is rendering.
                 // Defer controlled-state updates until after that render completes.

@@ -22,6 +22,7 @@ type ProvidersProps = {
   children: ReactNode;
   initialThemeMode: ThemeMode;
   initialDirection: ThemeDirection;
+  initialLanguage: "en" | "ar";
   initialUser: SessionClaims | null;
 };
 
@@ -29,9 +30,16 @@ export function Providers({
   children,
   initialThemeMode,
   initialDirection,
+  initialLanguage,
   initialUser,
 }: ProvidersProps) {
   const [queryClient] = useState(() => createQueryClient());
+
+  // Match the server-selected cookie language before any translated client
+  // component renders, preventing an English/Arabic hydration mismatch.
+  if (i18n.resolvedLanguage !== initialLanguage) {
+    void i18n.changeLanguage(initialLanguage);
+  }
 
   useEffect(() => {
     // Keep the static loader visible until the client provider tree and theme are mounted.

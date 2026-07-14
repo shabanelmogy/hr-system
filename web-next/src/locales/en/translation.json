@@ -99,6 +99,8 @@
   "CountryDeletedNotificationMessage": "{{NameEn}} was deleted.",
   "CountryRestoredNotificationMessage": "{{NameEn}} was restored.",
   "menu": {
+    "profileDescription": "View and edit your personal information",
+    "logoutDescription": "Sign out of your account",
     "dashboard": "Dashboard",
     "welcomeToYourDashboard": "Welcome to your Dashboard",
     "users": "Users",

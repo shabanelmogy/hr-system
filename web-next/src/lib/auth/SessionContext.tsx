@@ -7,6 +7,7 @@ import { hasPermission as checkPermission } from "./permissions";
 import type { PermissionString } from "./permissions";
 import apiClient from "@/lib/api/client";
 import { SESSION_CHANGED_EVENT } from "./constants";
+import { SessionRequestState } from "./session-request-state";
 
 const sessionRevalidationIntervalMs = 5 * 60_000;
 const sessionExpiryBufferMs = 30_000;
@@ -32,18 +33,16 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
   const [user, setUser] = useState<SessionClaims | null>(initialUser);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const refreshPromiseRef = useRef<Promise<void> | null>(null);
+  const refreshStateRef = useRef<SessionRequestState | null>(null);
   const lastRefreshAtRef = useRef(0);
+  if (refreshStateRef.current == null) {
+    refreshStateRef.current = new SessionRequestState();
+  }
 
   const refresh = useCallback(async () => {
-    // Reuse in-flight request to prevent race conditions
-    if (refreshPromiseRef.current) {
-      return refreshPromiseRef.current;
-    }
-
-    setIsLoading(true);
-    lastRefreshAtRef.current = Date.now();
-    const promise = (async () => {
+    return refreshStateRef.current!.run(async (requestGeneration) => {
+      setIsLoading(true);
+      lastRefreshAtRef.current = Date.now();
       setError(null);
       try {
         const response = await fetch("/api/auth/session", {
@@ -53,18 +52,23 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
         
         // 401 = not authenticated (expected, not an error)
         if (response.status === 401) {
-          setUser(null);
-          setError(null);
+          if (refreshStateRef.current!.isCurrent(requestGeneration)) {
+            setUser(null);
+            setError(null);
+          }
           return;
         }
         
         // Server errors - don't clear user, they might still be authenticated
         if (!response.ok) {
-          setError(`Server error: ${response.status}`);
+          if (refreshStateRef.current!.isCurrent(requestGeneration)) {
+            setError(`Server error: ${response.status}`);
+          }
           return;
         }
         
         const payload = (await response.json()) as { user?: unknown };
+        if (!refreshStateRef.current!.isCurrent(requestGeneration)) return;
         if (isSessionClaims(payload.user)) {
           setUser(payload.user);
           setError(null);
@@ -74,15 +78,15 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
         }
       } catch (err) {
         // Network errors - don't clear user
-        setError(err instanceof Error ? err.message : "Network error");
+        if (refreshStateRef.current!.isCurrent(requestGeneration)) {
+          setError(err instanceof Error ? err.message : "Network error");
+        }
       } finally {
-        setIsLoading(false);
-        refreshPromiseRef.current = null;
+        if (refreshStateRef.current!.isCurrent(requestGeneration)) {
+          setIsLoading(false);
+        }
       }
-    })();
-
-    refreshPromiseRef.current = promise;
-    return promise;
+    });
   }, []);
 
   useEffect(() => {
@@ -133,6 +137,9 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
   }, [expiresAt, refresh, userId]);
 
   const logout = useCallback(async () => {
+    refreshStateRef.current!.invalidate();
+    setIsLoading(false);
+
     // 1. Delete cookies server-side first — proxy will see no cookies on next request
     try {
       await fetch("/api/auth/logout", {

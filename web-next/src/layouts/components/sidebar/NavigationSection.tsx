@@ -120,15 +120,19 @@ function NavigationSection({
   }
 
   return (
-    <List>
+    <List dir={theme.direction}>
       {/* Section Header - Always clickable */}
-      <Tooltip title={open ? null : t(section.title)} placement="left">
+      <Tooltip
+        title={open ? null : t(section.title)}
+        placement={theme.direction === "rtl" ? "right" : "left"}
+      >
         <ListItemButton
           onClick={() => onToggle && onToggle(section.id)}
           sx={[
             {
               minHeight: 48,
               px: 2.5,
+              textAlign: "start",
               backgroundColor: sectionTitleMatches
                 ? alpha(theme.palette.primary.main, 0.08)
                 : "transparent",
@@ -145,15 +149,17 @@ function NavigationSection({
           <ListItemIcon
             sx={[
               {
-                minWidth: 0,
+                minWidth: 28,
+                width: 28,
+                flexShrink: 0,
                 justifyContent: "center",
               },
               open
                 ? {
-                    mr: 3,
+                    marginInlineEnd: theme.spacing(3),
                   }
                 : {
-                    mr: "auto",
+                    marginInlineEnd: 0,
                   },
             ]}
           >
@@ -174,9 +180,11 @@ function NavigationSection({
               open
                 ? {
                     opacity: 1,
+                    textAlign: "start",
                   }
                 : {
                     opacity: 0,
+                    display: "none",
                   },
             ]}
           />

@@ -26,7 +26,7 @@ function DrawerHeader({ handleDrawerClose, anySectionExpanded = false }: {
   const theme = useTheme();
 
   return (
-    <StyledDrawerHeader>
+    <StyledDrawerHeader dir={theme.direction}>
       {/* Only show close button when no sections are expanded */}
       <Collapse in={!anySectionExpanded} timeout="auto">
         <CloseButtonContainer>

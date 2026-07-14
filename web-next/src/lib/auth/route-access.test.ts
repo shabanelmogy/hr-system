@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { appRoutes } from "@/config/routes";
 import { permissions } from "./permissions";
-import { canAccessRoute } from "./route-access";
+import { canAccessRoute, routePolicies } from "./route-access";
 import type { SessionClaims } from "./session";
 
 const session: SessionClaims = {
@@ -35,5 +35,21 @@ describe("route access policies", () => {
       ...session,
       roles: ["ADMIN"],
     })).toBe(true);
+  });
+
+  it("covers every registered page policy", () => {
+    for (const policy of routePolicies) {
+      const authorizedSession = {
+        ...session,
+        roles: policy.roles ? [...policy.roles] : [],
+        permissions: policy.permissions ? [...policy.permissions] : [],
+      };
+
+      expect(canAccessRoute(policy.path, authorizedSession)).toBe(true);
+
+      if (policy.roles || policy.permissions) {
+        expect(canAccessRoute(policy.path, session)).toBe(false);
+      }
+    }
   });
 });

@@ -14,6 +14,37 @@ export type AuthPayload = {
   [key: string]: unknown;
 };
 
+export type AuthCookieSource = {
+  get(name: string): { value: string } | undefined;
+};
+
+export type AuthTokens = {
+  accessToken?: string;
+  refreshToken?: string;
+  migrationPayload?: AuthPayload;
+};
+
+export function readAuthTokens(source: AuthCookieSource): AuthTokens {
+  const currentAccessToken = source.get(ACCESS_TOKEN_COOKIE)?.value || undefined;
+  const legacyAccessToken = source.get(LEGACY_ACCESS_TOKEN_COOKIE)?.value || undefined;
+  const currentRefreshToken = source.get(REFRESH_TOKEN_COOKIE)?.value || undefined;
+  const legacyRefreshToken = source.get(LEGACY_REFRESH_TOKEN_COOKIE)?.value || undefined;
+  const accessToken = currentAccessToken ?? legacyAccessToken;
+  const refreshToken = currentRefreshToken ?? legacyRefreshToken;
+  const usesLegacyCookie =
+    (!currentAccessToken && Boolean(legacyAccessToken)) ||
+    (!currentRefreshToken && Boolean(legacyRefreshToken));
+
+  return {
+    accessToken,
+    refreshToken,
+    migrationPayload:
+      usesLegacyCookie && accessToken && refreshToken
+        ? { token: accessToken, refreshToken }
+        : undefined,
+  };
+}
+
 const cookieOptions = (expires?: string) => ({
   httpOnly: true,
   secure: true,

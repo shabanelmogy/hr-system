@@ -145,10 +145,17 @@ function NotificationPopover({
         open={open}
         anchorEl={anchorEl}
         onClose={onClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: i18n.dir() === "rtl" ? "left" : "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: i18n.dir() === "rtl" ? "left" : "right",
+        }}
         slotProps={{
           paper: {
+            dir: i18n.dir(),
             role: "dialog",
             "aria-label": t("notifications.title"),
             sx: {

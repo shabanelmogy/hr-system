@@ -56,18 +56,19 @@ const MobileMenu = ({
       anchorEl={anchorEl}
       anchorOrigin={{
         vertical: "top",
-        horizontal: "right",
+        horizontal: direction === "rtl" ? "left" : "right",
       }}
       keepMounted
       transformOrigin={{
         vertical: "top",
-        horizontal: "right",
+        horizontal: direction === "rtl" ? "left" : "right",
       }}
       open={open}
       onClose={onClose}
       disableScrollLock
       slotProps={{
         paper: {
+          dir: direction,
           style: {
             maxHeight: "65vh",
             width: "200px",
@@ -75,7 +76,7 @@ const MobileMenu = ({
         },
       }}
     >
-      <List component="nav" dense sx={{ p: 0 }}>
+      <List component="nav" dense dir={direction} sx={{ p: 0 }}>
         {/* Theme Toggle Button */}
         <StyledListItem onClick={handleThemeToggle}>
           <ListItemIcon>

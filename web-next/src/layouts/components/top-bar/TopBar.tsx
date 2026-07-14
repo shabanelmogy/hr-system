@@ -51,7 +51,7 @@ const TopBar = ({
   const handleLanguageChange = (value: string) => {
     const language = value === "ltr" ? "en" : "ar";
     cookies.set("i18next", language, { expires: 365, sameSite: "lax" });
-    void i18n.changeLanguage(language).then(() => window.location.reload());
+    void i18n.changeLanguage(language);
     handleMobileMenuClose();
   };
 
@@ -77,8 +77,8 @@ const TopBar = ({
 
   return (
     <>
-      <AppBar position="fixed" open={open}>
-        <StyledToolbar open={open}>
+      <AppBar position="fixed" open={open} dir={direction}>
+        <StyledToolbar open={open} dir={direction}>
           {/* Left Section */}
           <Box sx={{ display: "flex", alignItems: "center" }}>
             {isAuthenticated && (
@@ -90,7 +90,7 @@ const TopBar = ({
                   e.currentTarget.blur();
                 }}
                 edge="start"
-                sx={[{ marginRight: 5 }, open && { display: "none" }]}
+                sx={[{ marginInlineEnd: 5 }, open && { display: "none" }]}
               >
                 <MenuIcon />
               </IconButton>
@@ -103,7 +103,7 @@ const TopBar = ({
                 color: "inherit",
               }}
             >
-              <Diversity3Icon sx={{ mr: 2 }} />
+              <Diversity3Icon sx={{ marginInlineEnd: 2 }} />
               <Typography
                 variant="body1"
                 sx={{ fontWeight: "bold" }}
@@ -120,7 +120,7 @@ const TopBar = ({
 
           {/* User Welcome - Desktop */}
           {isAuthenticated && (
-            <Box sx={{ display: { xs: "none", md: "flex" }, mr: 2 }}>
+            <Box sx={{ display: { xs: "none", md: "flex" }, marginInlineEnd: 2 }}>
               <UserWelcome />
             </Box>
           )}
@@ -152,7 +152,7 @@ const TopBar = ({
 
           {/* Mobile User Welcome */}
           {isAuthenticated && (
-            <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
+            <Box sx={{ display: { xs: "flex", md: "none" }, marginInlineEnd: 1 }}>
               <UserWelcome isMobile={true} />
             </Box>
           )}

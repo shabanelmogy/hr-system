@@ -1,11 +1,10 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { REFRESH_TOKEN_COOKIE } from "@/lib/auth/constants";
-import { clearAuthCookies } from "@/lib/auth/cookies";
+import { clearAuthCookies, readAuthTokens } from "@/lib/auth/cookies";
 import { getBackendUrl } from "@/lib/env/server";
 
 export async function POST(request: NextRequest) {
-  const refreshToken = request.cookies.get(REFRESH_TOKEN_COOKIE)?.value;
+  const { refreshToken } = readAuthTokens(request.cookies);
 
   if (refreshToken) {
     try {

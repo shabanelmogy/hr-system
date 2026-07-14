@@ -26,7 +26,7 @@ type DisplayMetrics = {
 const emptyDimensions = "-- x --";
 
 export default function DisplayDebugger() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [metrics, setMetrics] = useState<DisplayMetrics | null>(null);
   const [copied, setCopied] = useState(false);
@@ -131,10 +131,17 @@ export default function DisplayDebugger() {
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         onClose={() => setAnchorEl(null)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: i18n.dir() === "rtl" ? "left" : "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: i18n.dir() === "rtl" ? "left" : "right",
+        }}
         slotProps={{
           paper: {
+            dir: i18n.dir(),
             sx: {
               width: 290,
               mt: 1,

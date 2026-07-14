@@ -5,7 +5,6 @@ import type { ThemeMode } from "@/theme/ThemePreferences";
 import { INTERNAL_SESSION_HEADER } from "@/lib/auth/constants";
 import { decodeRequestSession } from "@/lib/auth/request-session";
 import { Providers } from "./providers";
-import { AppEmotionCacheProvider } from "@/theme/AppEmotionCacheProvider";
 import "@/index.css";
 
 export const metadata: Metadata = {
@@ -69,15 +68,14 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             <path d="M44 24a20 20 0 0 0-20-20" stroke={fg} strokeWidth="4" strokeLinecap="round" />
           </svg>
         </div>
-        <AppEmotionCacheProvider direction={dir}>
-          <Providers
-            initialThemeMode={initialThemeMode}
-            initialDirection={dir}
-            initialUser={initialUser}
-          >
-            {children}
-          </Providers>
-        </AppEmotionCacheProvider>
+        <Providers
+          initialThemeMode={initialThemeMode}
+          initialDirection={dir}
+          initialLanguage={savedLang}
+          initialUser={initialUser}
+        >
+          {children}
+        </Providers>
       </body>
     </html>
   );

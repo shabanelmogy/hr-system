@@ -1,4 +1,5 @@
 import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
 import * as React from "react";
 
 import useTokenRevocation from "../../shared/store/useTokenRevocation";
@@ -8,6 +9,7 @@ import TopBar from "../components/top-bar/TopBar";
 import ToolbarSpacer from "../components/top-bar/ToolbarSpacer";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
+  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => setOpen(true);
@@ -18,8 +20,10 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarContext.Provider value={{ open, setOpen }}>
       <Box
+        dir="ltr"
         sx={{
           display: "flex",
+          flexDirection: theme.direction === "rtl" ? "row-reverse" : "row",
           width: "100%",
           minHeight: "100vh",
           overflow: "hidden",
@@ -30,7 +34,15 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
 
         <SideBar open={open} handleDrawerClose={handleDrawerClose} />
 
-        <Box component="main" sx={{ flexGrow: 1, minWidth: 0, m: 3 }}>
+        <Box
+          component="main"
+          dir={theme.direction}
+          sx={{
+            flexGrow: 1,
+            minWidth: 0,
+            m: 3,
+          }}
+        >
           <ToolbarSpacer />
           {children}
         </Box>

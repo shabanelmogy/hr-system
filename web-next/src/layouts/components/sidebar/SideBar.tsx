@@ -53,12 +53,13 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "center",
   color: theme.palette.text.secondary,
+  insetInlineStart: 0,
 }));
 
 const ClearButton = styled(IconButton)(({ theme }) => ({
   padding: theme.spacing(0.5),
   position: "absolute",
-  right: 0,
+  insetInlineEnd: 0,
   color: theme.palette.text.secondary,
 }));
 
@@ -259,9 +260,12 @@ function SideBar({ open, handleDrawerClose }: { open: boolean; handleDrawerClose
 
   return (
     <MuiDrawer
+      dir={theme.direction}
       variant={isSmallScreen ? "temporary" : "permanent"}
+      anchor="left"
       open={open || !isSmallScreen}
       onClose={handleDrawerClose}
+      slotProps={{ paper: { dir: theme.direction } }}
       sx={{
         width: isSmallScreen
           ? drawerWidth

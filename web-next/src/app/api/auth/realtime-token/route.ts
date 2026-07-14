@@ -1,15 +1,15 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { resolveSession } from "@/lib/auth/backend-session";
-import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from "@/lib/auth/constants";
-import { clearAuthCookies, setAuthCookies } from "@/lib/auth/cookies";
+import { clearAuthCookies, readAuthTokens, setAuthCookies } from "@/lib/auth/cookies";
 import { getBackendUrl } from "@/lib/env/server";
 
 const TAG = "[Realtime Token]";
 
 export async function GET(request: NextRequest) {
-  const accessToken = request.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
-  const refreshToken = request.cookies.get(REFRESH_TOKEN_COOKIE)?.value;
+  const { accessToken, refreshToken, migrationPayload } = readAuthTokens(
+    request.cookies,
+  );
 
   const resolved = await resolveSession(accessToken, refreshToken);
 
@@ -63,8 +63,8 @@ export async function GET(request: NextRequest) {
       { token: payload.token },
       { headers: { "cache-control": "no-store" } },
     );
-    if (resolved.authPayload) {
-      setAuthCookies(response, resolved.authPayload);
+    if (resolved.authPayload ?? migrationPayload) {
+      setAuthCookies(response, resolved.authPayload ?? migrationPayload!);
     }
     return response;
   } catch (err) {

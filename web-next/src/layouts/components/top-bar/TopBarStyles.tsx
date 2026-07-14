@@ -12,18 +12,18 @@ export const AppBar = styled(MuiAppBar, {
   boxSizing: "border-box",
   className: "mui-fixed",
   position: "fixed",
-  left: 0,
+  insetInlineStart: "auto",
+  insetInlineEnd: 0,
   width: "calc(100vw - 1px)",
   ...(open && {
-    marginLeft: drawerWidth,
     width: `calc(100vw - ${drawerWidth}px - 1px)`,
   }),
-  transition: theme.transitions.create(["width", "margin"], {
+  transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
-    transition: theme.transitions.create(["width", "margin"], {
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
