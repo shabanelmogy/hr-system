@@ -1,4 +1,4 @@
 namespace HrManagementSystem.Features.Security.Users.Contracts
 {
-    public record UpdateProfilePictureRequest(IFormFile ProfilePicture);
+    public record UpdateProfilePictureRequest(IFormFile? ProfilePicture, bool Remove = false);
 }

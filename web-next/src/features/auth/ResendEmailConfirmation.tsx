@@ -1,6 +1,7 @@
 "use client";
 
 import { apiRoutes } from "@/config";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useNotifications } from "@/shared/hooks";
 import { apiService, HandleApiError } from "@/shared/services";
 import EmailIcon from "@mui/icons-material/Email";
@@ -26,10 +27,10 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-
-interface ResendEmailForm {
-  email: string;
-}
+import {
+  EmailRecoveryFormData,
+  getEmailRecoverySchema,
+} from "./validation/recoverySchemas";
 
 const ResendEmailConfirmation = () => {
   const { t } = useTranslation();
@@ -40,12 +41,18 @@ const ResendEmailConfirmation = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isDarkMode = theme.palette.mode === "dark";
 
+  const validationSchema = getEmailRecoverySchema(t);
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ResendEmailForm>();
+  } = useForm<EmailRecoveryFormData>({
+    resolver: zodResolver(validationSchema),
+    defaultValues: { email: "" },
+    mode: "onChange",
+  });
 
   const imagePath = `/images/confirmedemail${isDarkMode ? "-dark" : ""}.png`;
 
@@ -53,7 +60,7 @@ const ResendEmailConfirmation = () => {
     inputRef.current?.focus();
   }, []);
 
-  const onSubmit = async (data: ResendEmailForm) => {
+  const onSubmit = async (data: EmailRecoveryFormData) => {
     setIsSubmitting(true);
     try {
       await apiService.post(
@@ -248,13 +255,7 @@ const ResendEmailConfirmation = () => {
                   variant="outlined"
                   fullWidth
                   autoComplete="off"
-                  {...register("email", {
-                    required: "Email is required",
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address",
-                    },
-                  })}
+                  {...register("email")}
                   error={!!errors.email}
                   helperText={errors.email?.message as string}
                   sx={{

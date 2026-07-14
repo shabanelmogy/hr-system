@@ -13,10 +13,13 @@ const sessionRevalidationIntervalMs = 5 * 60_000;
 const sessionExpiryBufferMs = 30_000;
 const focusRevalidationThrottleMs = 60_000;
 const maxTimerDelayMs = 2_147_000_000;
+const logoutTransitionDurationMs = 360;
+const logoutRequestTimeoutMs = 5_000;
 
 type SessionContextValue = {
   user: SessionClaims | null;
   isLoading: boolean;
+  isLoggingOut: boolean;
   error: string | null;
   refresh: () => Promise<void>;
   logout: () => Promise<void>;
@@ -32,8 +35,10 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
   const router = useRouter();
   const [user, setUser] = useState<SessionClaims | null>(initialUser);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const refreshStateRef = useRef<SessionRequestState | null>(null);
+  const logoutPromiseRef = useRef<Promise<void> | null>(null);
   const lastRefreshAtRef = useRef(0);
   if (refreshStateRef.current == null) {
     refreshStateRef.current = new SessionRequestState();
@@ -71,6 +76,7 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
         if (!refreshStateRef.current!.isCurrent(requestGeneration)) return;
         if (isSessionClaims(payload.user)) {
           setUser(payload.user);
+          setIsLoggingOut(false);
           setError(null);
         } else {
           setError("Invalid session data");
@@ -136,31 +142,47 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
     };
   }, [expiresAt, refresh, userId]);
 
-  const logout = useCallback(async () => {
-    refreshStateRef.current!.invalidate();
-    setIsLoading(false);
+  const logout = useCallback(() => {
+    if (logoutPromiseRef.current) return logoutPromiseRef.current;
 
-    // 1. Delete cookies server-side first — proxy will see no cookies on next request
-    try {
-      await fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "same-origin",
+    const performLogout = async () => {
+      refreshStateRef.current!.invalidate();
+      setIsLoading(false);
+      setIsLoggingOut(true);
+
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      const transitionDelay = new Promise<void>((resolve) => {
+        window.setTimeout(
+          resolve,
+          prefersReducedMotion ? 0 : logoutTransitionDurationMs,
+        );
       });
-    } catch {
-      // Network failure — still proceed with local cleanup
-    }
 
-    // 2. Navigate before clearing React state so the (main) layout is already
-    //    unmounting when the re-render cascade from setUser(null) fires.
-    //    router.replace keeps the history stack clean (back button won’t return to protected page).
-    router.replace("/login");
+      try {
+        await Promise.all([
+          fetch("/api/auth/logout", {
+            method: "POST",
+            credentials: "same-origin",
+            signal: AbortSignal.timeout(logoutRequestTimeoutMs),
+          }).catch(() => undefined),
+          transitionDelay,
+        ]);
 
-    // 3. Clear local state after navigation has started
-    setUser(null);
-    setError(null);
+        // Keep the history stack clean so Back cannot reopen a protected page.
+        router.replace("/login");
+        setUser(null);
+        setError(null);
+        apiClient.resetLogoutGuard();
+      } finally {
+        logoutPromiseRef.current = null;
+      }
+    };
 
-    // 4. Reset the apiClient guard so future 401s can trigger logout again
-    apiClient.resetLogoutGuard();
+    const logoutPromise = performLogout();
+    logoutPromiseRef.current = logoutPromise;
+    return logoutPromise;
   }, [router]);
 
   // Handle logout events dispatched by apiClient (e.g. on 401 interceptor)
@@ -173,6 +195,7 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
   const value = useMemo<SessionContextValue>(() => ({
     user,
     isLoading,
+    isLoggingOut,
     error,
     refresh,
     logout,
@@ -188,7 +211,7 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
       if (!user) return false;
       return permissions.some((permission) => checkPermission(user.permissions, permission));
     }
-  }), [isLoading, error, refresh, logout, user]);
+  }), [isLoading, isLoggingOut, error, refresh, logout, user]);
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 }

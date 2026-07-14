@@ -31,17 +31,34 @@ const miniDrawerWidth = 64;
 
 // Search container
 const SearchContainer = styled("div")<{ open: boolean }>(({ theme, open }) => ({
-  display: open ? "flex" : "none",
+  display: "flex",
   width: "calc(100% - 16px)",
+  minHeight: open ? 40 : 0,
+  maxHeight: open ? 48 : 0,
   alignItems: "center",
   position: "relative",
+  overflow: "hidden",
+  opacity: open ? 1 : 0,
+  pointerEvents: open ? "auto" : "none",
+  transform: open ? "translateY(0)" : "translateY(-4px)",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.1),
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.15),
   },
-  margin: theme.spacing(1),
-  border: `1px solid ${alpha(theme.palette.divider, 0.2)}`,
+  marginInline: theme.spacing(1),
+  marginTop: open ? theme.spacing(3) : 0,
+  marginBottom: open ? theme.spacing(1) : 0,
+  border: `1px solid ${open ? alpha(theme.palette.divider, 0.2) : "transparent"}`,
+  transition: theme.transitions.create(
+    ["max-height", "min-height", "opacity", "transform", "margin-top", "margin-bottom"],
+    {
+      easing: theme.transitions.easing.sharp,
+      duration: open
+        ? theme.transitions.duration.enteringScreen
+        : theme.transitions.duration.leavingScreen,
+    },
+  ),
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
@@ -101,15 +118,29 @@ const ScrollableContent = styled(Box)(({ theme }) => ({
 const ToggleButton = styled(Button, {
   shouldForwardProp: (prop) => prop !== "expanded" && prop !== "open",
 })<{ open: boolean; expanded: boolean }>(({ theme, open }) => ({
-  display: open ? "flex" : "none",
+  display: "flex",
   width: "100%",
+  minHeight: open ? 40 : 0,
+  maxHeight: open ? 48 : 0,
   justifyContent: "flex-start",
-  padding: theme.spacing(1, 2),
+  overflow: "hidden",
+  opacity: open ? 1 : 0,
+  pointerEvents: open ? "auto" : "none",
+  padding: open ? theme.spacing(1, 2) : theme.spacing(0, 2),
   textTransform: "none",
   borderRadius: 0,
   fontWeight: 500,
   color: theme.palette.text.primary,
-  borderBottom: `1px solid ${alpha(theme.palette.divider, 0.5)}`,
+  borderBottom: `1px solid ${open ? alpha(theme.palette.divider, 0.5) : "transparent"}`,
+  transition: theme.transitions.create(
+    ["max-height", "min-height", "opacity", "padding"],
+    {
+      easing: theme.transitions.easing.sharp,
+      duration: open
+        ? theme.transitions.duration.enteringScreen
+        : theme.transitions.duration.leavingScreen,
+    },
+  ),
 
   // Use CSS classes instead of props
   "&.expanded": {
@@ -132,6 +163,17 @@ function SideBar({ open, handleDrawerClose }: { open: boolean; handleDrawerClose
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const { user } = useSession();
+  const currentDrawerWidth = isSmallScreen
+    ? drawerWidth
+    : open
+      ? drawerWidth
+      : miniDrawerWidth;
+  const widthTransition = theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: open
+      ? theme.transitions.duration.enteringScreen
+      : theme.transitions.duration.leavingScreen,
+  });
 
   // Track expanded sections with an object
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
@@ -260,40 +302,35 @@ function SideBar({ open, handleDrawerClose }: { open: boolean; handleDrawerClose
 
   return (
     <MuiDrawer
+      id="app-sidebar"
       dir={theme.direction}
       variant={isSmallScreen ? "temporary" : "permanent"}
       anchor="left"
       open={open || !isSmallScreen}
       onClose={handleDrawerClose}
+      transitionDuration={{
+        enter: theme.transitions.duration.enteringScreen,
+        exit: theme.transitions.duration.leavingScreen,
+      }}
       slotProps={{ paper: { dir: theme.direction } }}
       sx={{
-        width: isSmallScreen
-          ? drawerWidth
-          : open
-          ? drawerWidth
-          : miniDrawerWidth,
+        width: currentDrawerWidth,
         flexShrink: 0,
+        transition: isSmallScreen ? undefined : widthTransition,
         "& .MuiDrawer-paper": {
-          width: isSmallScreen
-            ? drawerWidth
-            : open
-            ? drawerWidth
-            : miniDrawerWidth,
+          width: currentDrawerWidth,
           boxSizing: "border-box",
           overflowX: "hidden",
-          transition: theme.transitions.create("width", {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-          }),
+          whiteSpace: "nowrap",
+          willChange: isSmallScreen ? undefined : "width",
+          transition: isSmallScreen ? undefined : widthTransition,
+          boxShadow: open && !isSmallScreen ? theme.shadows[2] : "none",
         },
       }}
     >
       <DrawerContent>
         {/* Drawer Header - Always Show*/}
-        <DrawerHeader
-          handleDrawerClose={handleDrawerClose}
-          anySectionExpanded={false} // Force to always be visible
-        />
+        <DrawerHeader open={open} handleDrawerClose={handleDrawerClose} />
 
         {/* Toggle Expand/Collapse Button - Always visible */}
         <ToggleButton
@@ -317,7 +354,7 @@ function SideBar({ open, handleDrawerClose }: { open: boolean; handleDrawerClose
         </Collapse>
 
         {/* Search Input */}
-        <SearchContainer open={open} sx={{ mt: 3 }}>
+        <SearchContainer open={open}>
           <SearchIconWrapper>
             <SearchIcon fontSize="small" />
           </SearchIconWrapper>

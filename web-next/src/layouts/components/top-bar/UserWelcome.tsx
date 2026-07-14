@@ -4,6 +4,7 @@ import { Avatar, Box, Fade, Paper, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { getUserPhotoDataUrl } from "../../../shared/services/userProfileService";
 import { useUserPhoto } from "../../../shared/hooks";
 import { useSession } from "@/lib/auth/SessionContext";
 
@@ -18,9 +19,7 @@ const UserWelcome = ({ isMobile = false }: { isMobile?: boolean }) => {
 
   // Fetch user photo
   const { data: photoData } = useUserPhoto();
-  const avatarSrc = photoData?.profilePicture
-    ? `data:image/*;base64,${photoData.profilePicture}`
-    : undefined;
+  const avatarSrc = getUserPhotoDataUrl(photoData);
 
   function capitalizeFirstLetter(string: string) {
     if (!string) return "";

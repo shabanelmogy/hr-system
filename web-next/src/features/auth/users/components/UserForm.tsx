@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 // components/UserForm.jsx - FINAL FIX: No password required in edit mode
 import { MyForm, MySelectForm, MyTextField } from "@/shared/components/common";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
   TextField,
@@ -67,7 +67,7 @@ const UserForm = ({
     clearErrors,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
       firstName: "",

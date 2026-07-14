@@ -101,7 +101,7 @@ function NavigationItem({
     <>
       <Tooltip
         title={open ? null : title}
-        placement={theme.direction === "rtl" ? "right" : "left"}
+        placement={theme.direction === "rtl" ? "left" : "right"}
       >
         <ListItemButton
           dir={theme.direction}
@@ -112,6 +112,10 @@ function NavigationItem({
               paddingInlineStart: theme.spacing(4),
               textAlign: "start",
               bgcolor: getBgColor(),
+              transition: theme.transitions.create(
+                ["background-color", "padding"],
+                { duration: theme.transitions.duration.shortest },
+              ),
             },
             open
               ? {
@@ -119,6 +123,8 @@ function NavigationItem({
                 }
               : {
                   justifyContent: "center",
+                  paddingInlineStart: theme.spacing(2.25),
+                  paddingInlineEnd: theme.spacing(2.25),
                 },
           ]}
         >
@@ -129,6 +135,9 @@ function NavigationItem({
                 width: 28,
                 flexShrink: 0,
                 justifyContent: "center",
+                transition: theme.transitions.create("margin", {
+                  duration: theme.transitions.duration.shortest,
+                }),
               },
               open
                 ? {
@@ -143,17 +152,28 @@ function NavigationItem({
           </ListItemIcon>
           <ListItemText
             primary={titleComponent || title}
-            sx={[
-              open
-                ? {
-                    opacity: 1,
-                    textAlign: "start",
-                  }
-                : {
-                    opacity: 0,
-                    display: "none",
-                  },
-            ]}
+            sx={{
+              flex: open ? "1 1 auto" : "0 0 0",
+              minWidth: 0,
+              maxWidth: open ? 144 : 0,
+              opacity: open ? 1 : 0,
+              overflow: "hidden",
+              textAlign: "start",
+              pointerEvents: "none",
+              transition: theme.transitions.create(
+                ["flex-basis", "max-width", "opacity"],
+                {
+                  duration: open
+                    ? theme.transitions.duration.enteringScreen
+                    : theme.transitions.duration.leavingScreen,
+                },
+              ),
+              "& .MuiListItemText-primary": {
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              },
+            }}
           />
           {open && hasChildren && (expanded ? <ExpandLess /> : <ExpandMore />)}
         </ListItemButton>

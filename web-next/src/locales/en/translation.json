@@ -99,6 +99,8 @@
   "CountryDeletedNotificationMessage": "{{NameEn}} was deleted.",
   "CountryRestoredNotificationMessage": "{{NameEn}} was restored.",
   "menu": {
+    "openSidebar": "Open navigation",
+    "closeSidebar": "Close navigation",
     "profileDescription": "View and edit your personal information",
     "logoutDescription": "Sign out of your account",
     "dashboard": "Dashboard",
@@ -201,6 +203,8 @@
     "register": "Register",
     "login": "Login",
     "logout": "Logout",
+    "signingOut": "Signing out",
+    "signingOutDescription": "Securing your session before you leave...",
     "forgotPassword": "Forgot Password?",
     "resetPassword": "Reset Password",
     "forgetPasswordEmail": "Email sent successfully, check your email",

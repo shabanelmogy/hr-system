@@ -124,7 +124,7 @@ function NavigationSection({
       {/* Section Header - Always clickable */}
       <Tooltip
         title={open ? null : t(section.title)}
-        placement={theme.direction === "rtl" ? "right" : "left"}
+        placement={theme.direction === "rtl" ? "left" : "right"}
       >
         <ListItemButton
           onClick={() => onToggle && onToggle(section.id)}
@@ -136,6 +136,10 @@ function NavigationSection({
               backgroundColor: sectionTitleMatches
                 ? alpha(theme.palette.primary.main, 0.08)
                 : "transparent",
+              transition: theme.transitions.create(
+                ["background-color", "padding"],
+                { duration: theme.transitions.duration.shortest },
+              ),
             },
             open
               ? {
@@ -153,6 +157,9 @@ function NavigationSection({
                 width: 28,
                 flexShrink: 0,
                 justifyContent: "center",
+                transition: theme.transitions.create("margin", {
+                  duration: theme.transitions.duration.shortest,
+                }),
               },
               open
                 ? {
@@ -167,26 +174,33 @@ function NavigationSection({
           </ListItemIcon>
           <ListItemText
             primary={
-              open ? (
-                <HighlightedText
-                  text={t(section.title)}
-                  searchTerm={searchTerm}
-                />
-              ) : (
-                t(section.title)
-              )
+              <HighlightedText
+                text={t(section.title)}
+                searchTerm={searchTerm}
+              />
             }
-            sx={[
-              open
-                ? {
-                    opacity: 1,
-                    textAlign: "start",
-                  }
-                : {
-                    opacity: 0,
-                    display: "none",
-                  },
-            ]}
+            sx={{
+              flex: open ? "1 1 auto" : "0 0 0",
+              minWidth: 0,
+              maxWidth: open ? 160 : 0,
+              opacity: open ? 1 : 0,
+              overflow: "hidden",
+              textAlign: "start",
+              pointerEvents: "none",
+              transition: theme.transitions.create(
+                ["flex-basis", "max-width", "opacity"],
+                {
+                  duration: open
+                    ? theme.transitions.duration.enteringScreen
+                    : theme.transitions.duration.leavingScreen,
+                },
+              ),
+              "& .MuiListItemText-primary": {
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              },
+            }}
           />
           {open && (isExpanded ? <ExpandLess /> : <ExpandMore />)}
         </ListItemButton>

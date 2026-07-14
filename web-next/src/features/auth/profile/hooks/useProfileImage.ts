@@ -1,7 +1,7 @@
 import { apiRoutes } from "@/config";
 import { useNotifications, USER_PROFILE_KEYS } from "@/shared/hooks";
-import { apiService, HandleApiError } from "@/shared/services";
-import { useSession } from "@/lib/auth/SessionContext";
+import { apiService, getUserPhotoDataUrl, HandleApiError } from "@/shared/services";
+import { createImageFileValidationSchema } from "@/shared/validation/fileValidation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -15,7 +15,6 @@ const useProfileImage = () => {
   const fileInputRef = useRef(null);
   const { t } = useTranslation();
   const queryClient = useQueryClient();
-  const { user } = useSession();
 
   // Fetch user photo from API
   const fetchUserPhoto = async () => {
@@ -24,8 +23,9 @@ const useProfileImage = () => {
       const userPhoto = await apiService.get(apiRoutes.auth.getUserPhoto);
 
       if (userPhoto?.profilePicture) {
-        // Add cache-busting query parameter to force refresh
-        setImageUrl(`data:image/*;base64,${userPhoto.profilePicture}`);
+        setImageUrl(getUserPhotoDataUrl(userPhoto) || null);
+      } else {
+        setImageUrl(null);
       }
     } catch (error) {
       console.error("Failed to fetch user photo:", error);
@@ -47,24 +47,15 @@ const useProfileImage = () => {
     setIsImageLoading(false);
   };
 
-  // Convert file to base64
-  const fileToBase64 = (file: any) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        // Extract base64 content without the data URL prefix
-        const result = reader.result as string;
-        const base64String = result.split(",")[1];
-        resolve(base64String);
-      };
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
   // Handle file selection
-  const handleFileSelect = async (file: any) => {
-    if (file && file.type.startsWith("image/")) {
+  const handleFileSelect = async (file: File | null) => {
+    const validation = createImageFileValidationSchema({
+      required: t("validation.required"),
+      tooLarge: t("validation.fileTooLarge") || "File too large (max 10MB)",
+      invalidType: t("validation.invalidFileType") || "Invalid image file",
+    }).safeParse({ file });
+
+    if (validation.success) {
       try {
         setIsImageLoading(true);
         // Set preview immediately
@@ -98,64 +89,28 @@ const useProfileImage = () => {
       const isClearingImage = selectedFile === null && imageUrl === null;
 
       if (selectedFile instanceof File || isClearingImage) {
-        let base64String = null;
+        const formData = new FormData();
 
-        // Only convert to base64 if we have a file
         if (selectedFile instanceof File) {
-          base64String = await fileToBase64(selectedFile);
+          formData.append("ProfilePicture", selectedFile, selectedFile.name);
         } else {
-          console.log("Clearing profile picture");
+          formData.append("Remove", "true");
         }
 
-        // IMPORTANT: Using the correct API endpoint
-        let success = false;
+        await apiService.put(apiRoutes.auth.updateUserPhoto, formData);
 
-        // Approach 1: Directly send profile picture in request (or empty value to clear)
-
-        await apiService.put(apiRoutes.auth.updateUserPhoto, {
-          profilePicture: base64String, // This will be null for clearing the image
-        });
-        success = true;
-
-        if (success) {
+        {
           showSuccess(
-            t(
-              isClearingImage
-                ? t("auth.profilePictureRemoved")
-                : t("auth.profilePictureUpdated")
-            ),
+            isClearingImage
+              ? t("auth.profilePictureRemoved")
+              : t("auth.profilePictureUpdated"),
             t("messages.success")
           );
           setSelectedFile(null);
 
-          // Optimistically update React Query caches so UI (e.g., sidebar) updates immediately
-          const userId = user?.userId || "anonymous";
-          // Update the photo-only cache
-          queryClient.setQueryData([...USER_PROFILE_KEYS.photo(), userId], {
-            profilePicture: base64String,
-          });
-          // Update the full profile cache (uses data URL format in profile)
-          queryClient.setQueryData(
-            [...USER_PROFILE_KEYS.profile(), userId],
-            (prev: any) =>
-              prev && typeof prev === 'object'
-                ? {
-                    ...prev,
-                    profilePicture: base64String
-                      ? `data:image/*;base64,${base64String}`
-                      : null,
-                  }
-                : prev
-          );
-          // Invalidate to refetch and ensure consistency across the app
+          // The API returns the stored image as base64 from the read endpoint.
+          // Refetch all profile consumers so every avatar receives the same value.
           queryClient.invalidateQueries({ queryKey: USER_PROFILE_KEYS.all });
-        } else {
-          showError(
-            isClearingImage
-              ? t("auth.failedRemoveImage")
-              : t("auth.failedUpdateImage"),
-            t("messages.error")
-          );
         }
       }
     } catch (error) {

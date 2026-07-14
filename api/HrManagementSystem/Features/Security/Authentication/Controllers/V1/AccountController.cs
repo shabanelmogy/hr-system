@@ -36,9 +36,9 @@ public class AccountController(IUserService userService) : ControllerBase
     [HttpPut]
     public async Task<IActionResult> UpdateUserPicture([FromForm] UpdateProfilePictureRequest request, CancellationToken cancellationToken)
     {
-        await _userService.UpdateProfilePictureAsync(User.GetUserId()!, request, cancellationToken);
+        var result = await _userService.UpdateProfilePictureAsync(User.GetUserId()!, request, cancellationToken);
 
-        return NoContent();
+        return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 
     [HttpPut]

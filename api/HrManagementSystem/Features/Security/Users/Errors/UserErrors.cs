@@ -37,6 +37,12 @@ namespace HrManagementSystem.Features.Security.Users.Errors
         public Error UserNotFound =>
         new("User.UserNotFound", _localizer[nameof(UserNotFound)], StatusCodes.Status404NotFound);
 
+        public Error ProfilePictureRequired =>
+            new("User.ProfilePictureRequired", _localizer[nameof(ProfilePictureRequired)], StatusCodes.Status400BadRequest);
+
+        public Error InvalidProfilePicture =>
+            new("User.InvalidProfilePicture", _localizer[nameof(InvalidProfilePicture)], StatusCodes.Status400BadRequest);
+
         public Error InvalidRoles =>
             new("Role.InvalidRoles", _localizer[nameof(InvalidRoles)], StatusCodes.Status400BadRequest);
 

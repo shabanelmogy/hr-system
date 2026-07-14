@@ -2,6 +2,7 @@
 
 // RolePermissionsPage.jsx - Enhanced with dynamic permissions
 import { getAllPermissionModules } from "@/lib/auth/permissions";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ContentWrapper } from "@/shared/components/layout";
 import { useNotifications } from "@/shared/hooks";
 import {
@@ -50,8 +51,13 @@ import {
   useTheme,
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import useRoleStore from "../store/useRoleStore";
+import {
+  getRoleClaimsValidationSchema,
+  RoleClaimsFormData,
+} from "../utils/validation";
 
 // Get modules dynamically from Permissions class
 const MODULES = getAllPermissionModules();
@@ -90,6 +96,17 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
   const [showOnlySelected, setShowOnlySelected] = useState(false);
 
   const { getRoleWithClaims, updateRoleClaims } = useRoleStore();
+  const roleClaimsSchema = getRoleClaimsValidationSchema();
+  const {
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<RoleClaimsFormData>({
+    resolver: zodResolver(roleClaimsSchema),
+    defaultValues: { id: roleId, name: "", roleClaims: [] },
+    mode: "onChange",
+  });
 
   // LoadRoleClaims - exact match to Blazor method
   const loadRoleClaims = async () => {
@@ -97,6 +114,11 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
       const result = await getRoleWithClaims(roleId);
       if (result != null) {
         setRoleViewModel(result);
+        reset({
+          id: result.id || roleId,
+          name: result.name || "",
+          roleClaims: result.roleClaims || [],
+        });
       }
       setIsLoading(false);
     } catch (error) {
@@ -109,17 +131,20 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
   const selectAll = (suffix: string, isSelected: boolean) => {
     if (!roleViewModel?.roleClaims) return;
 
-    const claims = roleViewModel.roleClaims.filter((c: any) =>
-      c.displayValue.toLowerCase().endsWith(`:${suffix.toLowerCase()}`)
-    );
+    const updatedRoleViewModel = {
+      ...roleViewModel,
+      roleClaims: roleViewModel.roleClaims.map((claim: any) =>
+        claim.displayValue.toLowerCase().endsWith(`:${suffix.toLowerCase()}`)
+          ? { ...claim, isSelected }
+          : claim,
+      ),
+    };
 
-    // Set the state of the IsSelected property for each claim
-    claims.forEach((claim: any) => {
-      claim.isSelected = isSelected;
+    setRoleViewModel(updatedRoleViewModel);
+    setValue("roleClaims", updatedRoleViewModel.roleClaims, {
+      shouldDirty: true,
+      shouldValidate: true,
     });
-
-    // Update state
-    setRoleViewModel({ ...roleViewModel });
   };
 
   // AreAllSelected - exact match to Blazor method
@@ -136,10 +161,10 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
   };
 
   // UpdateRole - exact match to Blazor method with loading state
-  const updateRole = async () => {
+  const updateRole = async (data: RoleClaimsFormData) => {
     setIsSaving(true);
     try {
-      await updateRoleClaims(roleViewModel);
+      await updateRoleClaims(data);
       router.push("/administration/roles");
       showSuccess("Role permissions updated successfully");
     } catch (error) {
@@ -151,10 +176,17 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
 
   // Handle individual checkbox change
   const handleClaimChange = (claimIndex: number) => {
-    const updatedViewModel = { ...roleViewModel };
-    updatedViewModel.roleClaims[claimIndex].isSelected =
-      !updatedViewModel.roleClaims[claimIndex].isSelected;
+    const updatedViewModel = {
+      ...roleViewModel,
+      roleClaims: roleViewModel.roleClaims.map((claim: any, index: number) =>
+        index === claimIndex ? { ...claim, isSelected: !claim.isSelected } : claim,
+      ),
+    };
     setRoleViewModel(updatedViewModel);
+    setValue("roleClaims", updatedViewModel.roleClaims, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
   };
 
   // Enhanced filtering and pagination logic
@@ -424,13 +456,12 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
             </Box>
 
             {/* Form starts here */}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                updateRole();
-              }}
-            >
-              <input type="hidden" value={roleId} />
+            <form onSubmit={handleSubmit(updateRole)} noValidate>
+              {Object.keys(errors).length > 0 && (
+                <Alert severity="error" sx={{ mb: 2 }}>
+                  Please review the role permissions before saving.
+                </Alert>
+              )}
 
               {/* Enhanced Table */}
               <TableContainer sx={{ maxHeight: 600 }}>

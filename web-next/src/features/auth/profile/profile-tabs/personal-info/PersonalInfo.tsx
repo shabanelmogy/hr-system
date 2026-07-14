@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, CardContent, Fade, alpha } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -33,7 +33,7 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(validationSchema),
+    resolver: zodResolver(validationSchema),
     mode: "onChange",
     defaultValues: {
       firstName: "",

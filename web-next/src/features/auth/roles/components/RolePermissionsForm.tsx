@@ -8,7 +8,10 @@ import {
   Typography,
   CircularProgress 
 } from "@mui/material";
-import { useState, useEffect, useRef } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { getRoleValidationSchema } from "../utils/validation";
 
 interface RoleFormProps {
   open: boolean;
@@ -29,24 +32,23 @@ const RoleForm = ({
   onSuccess,
   t,
 }: RoleFormProps) => {
-  // State variables matching Blazor exactly
-  const [role, setRole] = useState({ id: "", name: "" });
-  const [originalRole, setOriginalRole] = useState({ id: "", name: "" });
-  const [isBusy, setIsBusy] = useState(false);
-  
+  const roleId = editedRole?.id || "";
+  const validationSchema = getRoleValidationSchema(t || ((key) => key));
   const focusText = useRef(null);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<{ name: string }>({
+    resolver: zodResolver(validationSchema),
+    defaultValues: { name: "" },
+    mode: "onChange",
+  });
 
   // Initialize edited role - exact match to Blazor method
   const initializeEditedRole = () => {
-    if (editedRole?.id) {
-      const clonedRole = { ...editedRole };
-      setRole(clonedRole);
-      setOriginalRole({ ...clonedRole }); // Deep clone equivalent
-    } else {
-      const newRole = { id: "", name: "" };
-      setRole(newRole);
-      setOriginalRole(newRole);
-    }
+    reset({ name: editedRole?.name || "" });
   };
 
   // OnParametersSet equivalent
@@ -67,11 +69,9 @@ const RoleForm = ({
   }, [open]);
 
   // SaveRole - exact match to Blazor method
-  const saveRole = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsBusy(true);
-    
+  const saveRole = async (data: { name: string }) => {
     try {
+      const role = { id: roleId, name: data.name.trim() };
       if (!role.id) {
         // Add new role
         const response = await onSubmit(role, "add");
@@ -93,23 +93,13 @@ const RoleForm = ({
       }
     } catch (error) {
       onError?.([(error as Error)?.message || 'An error occurred']);
-    } finally {
-      setIsBusy(false);
     }
   };
 
   // CloseDialog - exact match to Blazor method
   const closeDialog = () => {
-    if (isBusy) return;
-    
-    // Restore original values
-    setRole({ ...originalRole });
+    if (isSubmitting) return;
     onClose(false);
-  };
-
-  // Handle input change
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRole({ ...role, name: e.target.value });
   };
 
   if (!open) return null;
@@ -132,24 +122,22 @@ const RoleForm = ({
       <Card sx={{ p: 3, minWidth: 400, maxWidth: 600 }}>
         {/* Title */}
         <Typography variant="h5" gutterBottom>
-          {role.id ? t?.("roles.edit") || "Edit Role" : t?.("roles.add") || "Add Role"}
+          {roleId ? t?.("roles.edit") || "Edit Role" : t?.("roles.add") || "Add Role"}
         </Typography>
 
         {/* Form - exact match to RadzenTemplateForm */}
-        <form onSubmit={saveRole}>
+        <form onSubmit={handleSubmit(saveRole)} noValidate>
           {/* Role Name Field - exact match to RadzenFormField */}
           <Box sx={{ mb: 2 }}>
             <TextField
               label={t?.("general.name") || "Role Name"}
               fullWidth
               autoComplete="off"
-              value={role.name}
-              onChange={handleNameChange}
-              required
-              disabled={isBusy}
+              {...register("name")}
+              disabled={isSubmitting}
               inputRef={focusText}
-              error={!role.name && role.name !== ""}
-              helperText={!role.name && role.name !== "" ? (t?.("validation.required") || "Required field") : ""}
+              error={!!errors.name}
+              helperText={errors.name?.message || ""}
               slotProps={{
                 htmlInput: { maxLength: 50 }
               }}
@@ -166,11 +154,11 @@ const RoleForm = ({
             <Button
               type="submit"
               variant="contained"
-              disabled={isBusy || !role.name}
+              disabled={isSubmitting}
               size="small"
-              startIcon={isBusy && <CircularProgress size={16} />}
+              startIcon={isSubmitting && <CircularProgress size={16} />}
             >
-              {isBusy 
+              {isSubmitting
                 ? (t?.("general.submitting") || "Submitting...") 
                 : (t?.("actions.save") || "Save")
               }
@@ -180,7 +168,7 @@ const RoleForm = ({
               type="button"
               variant="outlined"
               onClick={closeDialog}
-              disabled={isBusy}
+              disabled={isSubmitting}
               size="small"
             >
               {t?.("actions.close") || "Close"}

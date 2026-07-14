@@ -6,6 +6,7 @@ import EngineeringIcon from "@mui/icons-material/Engineering";
 import { Avatar, Box, Tooltip, Typography, useTheme } from "@mui/material";
 import { useMemo } from "react";
 import { useUserInfo, useUserPhoto } from "../../../shared/hooks";
+import { getUserPhotoDataUrl } from "../../../shared/services/userProfileService";
 import { useSession } from "@/lib/auth/SessionContext";
 
 interface UserProfileProps {
@@ -36,7 +37,7 @@ const UserProfile = ({ open }: UserProfileProps) => {
     return "U";
   }, [info]);
 
-  const avatarSrc = photoData?.profilePicture ? `data:image/*;base64,${photoData.profilePicture}` : undefined;
+  const avatarSrc = getUserPhotoDataUrl(photoData);
 
   const getRoleIcon = () => {
     const role = userRole.toLowerCase();
@@ -56,7 +57,7 @@ const UserProfile = ({ open }: UserProfileProps) => {
     return (
       <Box
         sx={{
-          p: 1.5,
+          p: open ? 1.5 : 0.5,
           mx: 1,
           mt: 1,
           mb: 0,
@@ -70,7 +71,18 @@ const UserProfile = ({ open }: UserProfileProps) => {
             : "0 4px 12px rgba(99, 102, 241, 0.2)",
         }}
       >
-        <Avatar sx={{ mx: "auto", width: open ? 64 : 40, height: open ? 64 : 40 }}>
+        <Avatar
+          sx={{
+            mx: "auto",
+            width: open ? 64 : 38,
+            height: open ? 64 : 38,
+            transition: theme.transitions.create(["width", "height"], {
+              duration: open
+                ? theme.transitions.duration.enteringScreen
+                : theme.transitions.duration.leavingScreen,
+            }),
+          }}
+        >
           <PersonIcon />
         </Avatar>
       </Box>
@@ -81,7 +93,7 @@ const UserProfile = ({ open }: UserProfileProps) => {
     <Box
       dir={theme.direction}
       sx={{
-        p: 1.5,
+        p: open ? 1.5 : 0.5,
         mx: 1,
         mt: 1,
         mb: 0,
@@ -96,7 +108,11 @@ const UserProfile = ({ open }: UserProfileProps) => {
           ? "0 4px 12px rgba(0, 0, 0, 0.3)"
           : "0 4px 12px rgba(99, 102, 241, 0.2)",
         border: `1px solid ${theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(99, 102, 241, 0.2)"}`,
-        transition: "all 0.3s ease",
+        transition: theme.transitions.create(["padding", "box-shadow", "transform"], {
+          duration: open
+            ? theme.transitions.duration.enteringScreen
+            : theme.transitions.duration.leavingScreen,
+        }),
         "&:hover": {
           transform: "translateY(-2px)",
           boxShadow: theme.palette.mode === "dark"
@@ -106,7 +122,7 @@ const UserProfile = ({ open }: UserProfileProps) => {
       }}
     >
       <Tooltip
-        title={open ? "" : `${displayName} • ${userRole}`}
+        title={open ? "" : `${displayName} - ${userRole}`}
         placement={theme.direction === "rtl" ? "left" : "right"}
         arrow
       >
@@ -123,10 +139,15 @@ const UserProfile = ({ open }: UserProfileProps) => {
             <Avatar
               src={avatarSrc}
               sx={{
-                width: open ? 64 : 40,
-                height: open ? 64 : 40,
+                width: open ? 64 : 38,
+                height: open ? 64 : 38,
                 bgcolor: theme.palette.primary.main,
                 border: "3px solid rgba(255, 255, 255, 0.2)",
+                transition: theme.transitions.create(["width", "height"], {
+                  duration: open
+                    ? theme.transitions.duration.enteringScreen
+                    : theme.transitions.duration.leavingScreen,
+                }),
               }}
               alt={displayName}
             >
@@ -150,8 +171,20 @@ const UserProfile = ({ open }: UserProfileProps) => {
         </Box>
       </Tooltip>
 
-      {open && (
-        <>
+      <Box
+        aria-hidden={!open}
+        sx={{
+          maxHeight: open ? 72 : 0,
+          opacity: open ? 1 : 0,
+          overflow: "hidden",
+          pointerEvents: open ? "auto" : "none",
+          transition: theme.transitions.create(["max-height", "opacity"], {
+            duration: open
+              ? theme.transitions.duration.enteringScreen
+              : theme.transitions.duration.leavingScreen,
+          }),
+        }}
+      >
           <Typography 
             variant="subtitle2" 
             sx={{ 
@@ -187,8 +220,7 @@ const UserProfile = ({ open }: UserProfileProps) => {
               {userRole}
             </Typography>
           </Box>
-        </>
-      )}
+      </Box>
     </Box>
   );
 };

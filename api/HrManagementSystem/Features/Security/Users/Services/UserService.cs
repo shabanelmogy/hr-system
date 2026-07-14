@@ -17,7 +17,9 @@ public class UserService(
     private readonly IDashboardService _dashboardService = dashboardService;
     private readonly IHubContext<GeneralHub, IGeneralHubClient> _companyHubContext = companyHubContext;
     private readonly ApplicationDbContext _context = context;
-    private readonly string _profilePicturesPath = Path.Combine(webHostEnvironment.WebRootPath, "profile-pictures");
+    private readonly string _profilePicturesPath = Path.Combine(
+        webHostEnvironment.WebRootPath ?? Path.Combine(webHostEnvironment.ContentRootPath, "wwwroot"),
+        "profile-pictures");
 
     public async Task<IEnumerable<UserResponse>> GetAllAsync(CancellationToken cancellationToken = default) =>
         await (from u in _context.Users
@@ -215,12 +217,21 @@ public class UserService(
 
     public async Task<Result<UserPhoto>> GetUserPhotoAsync(string userId, CancellationToken cancellationToken)
     {
-        var picture = await _userManager.Users
+        var fileName = await _userManager.Users
             .Where(u => u.Id == userId)
             .Select(u => u.ProfilePicture)
             .SingleOrDefaultAsync(cancellationToken);
 
-        return Result.Success(new UserPhoto { ProfilePicture = picture });
+        var filePath = GetProfilePicturePath(fileName);
+        if (filePath is null || !File.Exists(filePath))
+            return Result.Success(new UserPhoto());
+
+        var bytes = await File.ReadAllBytesAsync(filePath, cancellationToken);
+        return Result.Success(new UserPhoto
+        {
+            ProfilePicture = Convert.ToBase64String(bytes),
+            ContentType = GetImageContentType(fileName),
+        });
     }
     public async Task<Result> UpdateProfileAsync(string userId, UpdateProfileRequest request, CancellationToken cancellationToken)
     {
@@ -242,25 +253,45 @@ public class UserService(
         if (user is null)
             return Result.Failure(_userErrors.UserNotFound);
 
-        // Delete old picture from disk if exists
-        if (!string.IsNullOrEmpty(user.ProfilePicture))
+        var oldPath = GetProfilePicturePath(user.ProfilePicture);
+
+        if (request.Remove)
         {
-            var oldPath = Path.Combine(_profilePicturesPath, user.ProfilePicture);
-            if (File.Exists(oldPath))
-                File.Delete(oldPath);
+            await _userManager.Users
+                .Where(u => u.Id == userId)
+                .ExecuteUpdateAsync(s => s.SetProperty(u => u.ProfilePicture, (string?)null), cancellationToken);
+
+            DeleteFileIfExists(oldPath);
+            return Result.Success();
         }
 
-        // Save new picture to disk
-        Directory.CreateDirectory(_profilePicturesPath);
-        var fileName = $"{userId}{Path.GetExtension(request.ProfilePicture.FileName)}";
-        var filePath = Path.Combine(_profilePicturesPath, fileName);
+        if (request.ProfilePicture is null)
+            return Result.Failure(_userErrors.ProfilePictureRequired);
 
-        using (var stream = File.Create(filePath))
+        var extension = Path.GetExtension(request.ProfilePicture.FileName).ToLowerInvariant();
+        if (!FileSettings.AllowedImagesExtensions.Contains(extension))
+            return Result.Failure(_userErrors.InvalidProfilePicture);
+
+        Directory.CreateDirectory(_profilePicturesPath);
+        var newFileName = $"{Guid.NewGuid():N}{extension}";
+        var filePath = GetProfilePicturePath(newFileName)!;
+
+        try
+        {
+            await using var stream = File.Create(filePath);
             await request.ProfilePicture.CopyToAsync(stream, cancellationToken);
 
-        await _userManager.Users
-            .Where(u => u.Id == userId)
-            .ExecuteUpdateAsync(s => s.SetProperty(u => u.ProfilePicture, fileName), cancellationToken);
+            await _userManager.Users
+                .Where(u => u.Id == userId)
+                .ExecuteUpdateAsync(s => s.SetProperty(u => u.ProfilePicture, newFileName), cancellationToken);
+        }
+        catch
+        {
+            DeleteFileIfExists(filePath);
+            throw;
+        }
+
+        DeleteFileIfExists(oldPath);
 
         return Result.Success();
     }
@@ -295,4 +326,38 @@ public class UserService(
         foreach (var token in user.RefreshTokens.Where(token => token.IsActive))
             token.Revoke(reason);
     }
+
+    private string? GetProfilePicturePath(string? fileName)
+    {
+        if (string.IsNullOrWhiteSpace(fileName))
+            return null;
+
+        var safeFileName = Path.GetFileName(fileName);
+        if (!string.Equals(safeFileName, fileName, StringComparison.Ordinal))
+            return null;
+
+        var rootPath = Path.GetFullPath(_profilePicturesPath);
+        var filePath = Path.GetFullPath(Path.Combine(rootPath, safeFileName));
+        var rootPrefix = rootPath.EndsWith(Path.DirectorySeparatorChar)
+            ? rootPath
+            : rootPath + Path.DirectorySeparatorChar;
+
+        return filePath.StartsWith(rootPrefix, StringComparison.OrdinalIgnoreCase)
+            ? filePath
+            : null;
+    }
+
+    private static void DeleteFileIfExists(string? filePath)
+    {
+        if (filePath is not null && File.Exists(filePath))
+            File.Delete(filePath);
+    }
+
+    private static string GetImageContentType(string? fileName) =>
+        Path.GetExtension(fileName ?? string.Empty).ToLowerInvariant() switch
+        {
+            ".jpg" or ".jpeg" => "image/jpeg",
+            ".png" => "image/png",
+            _ => "application/octet-stream",
+        };
 }

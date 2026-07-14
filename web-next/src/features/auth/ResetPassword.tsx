@@ -1,6 +1,7 @@
 "use client";
 
 import { apiRoutes } from "@/config";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useSnackbar } from "@/shared/hooks";
 import { apiService, HandleApiError } from "@/shared/services";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -19,12 +20,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
-
-interface ResetPasswordForm {
-  email?: string;
-  code?: string;
-  newPassword?: string;
-}
+import {
+  ResetPasswordFormData,
+  getResetPasswordSchema,
+} from "./validation/recoverySchemas";
 
 const ResetPassword = () => {
   const { t } = useTranslation();
@@ -35,19 +34,27 @@ const ResetPassword = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [showPassword, setShowPassword] = useState(false);
 
+  const validationSchema = getResetPasswordSchema(t);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    setValue,
-  } = useForm<ResetPasswordForm>();
+  } = useForm<ResetPasswordFormData>({
+    resolver: zodResolver(validationSchema),
+    defaultValues: { email: "", code: "", newPassword: "" },
+    mode: "onChange",
+  });
 
   useEffect(() => {
-    setValue("email", searchParams.get("email") || "");
-    setValue("code", searchParams.get("code") || "");
+    reset({
+      email: searchParams.get("email") || "",
+      code: searchParams.get("code") || "",
+      newPassword: "",
+    });
     inputRef.current?.focus();
-  }, [searchParams, setValue]);
+  }, [searchParams, reset]);
 
   const passwordInputProps = useMemo(
     () => ({
@@ -59,6 +66,8 @@ const ResetPassword = () => {
       endAdornment: (
         <InputAdornment position="end">
           <IconButton
+            type="button"
+            aria-label={showPassword ? t("actions.hidePassword") : t("actions.showPassword")}
             onClick={() => setShowPassword((prev) => !prev)}
             edge="end"
           >
@@ -70,7 +79,7 @@ const ResetPassword = () => {
     [showPassword]
   ); // Only update when showPassword changes
 
-  const onSubmit = async (data: ResetPasswordForm) => {
+  const onSubmit = async (data: ResetPasswordFormData) => {
     setLoading(true);
     try {
       await apiService.post(apiRoutes.auth.resetPassword, data);
@@ -82,8 +91,9 @@ const ResetPassword = () => {
       HandleApiError(error as Error, (updatedState) => {
         showSnackbar("error", updatedState.messages, (error as any).title);
       });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -95,7 +105,7 @@ const ResetPassword = () => {
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextField
-              {...register("newPassword", { required: "Password is required" })}
+              {...register("newPassword")}
               label={t("auth.newPassword")}
               type={showPassword ? "text" : "password"}
               fullWidth

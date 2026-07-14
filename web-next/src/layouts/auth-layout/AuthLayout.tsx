@@ -17,7 +17,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
       }}
     >
       <Container maxWidth="md">
-        <TopBar open={false} handleDrawerOpen={() => {}} />
+        <TopBar open={false} handleDrawerToggle={() => {}} />
         {children}
       </Container>
     </Box>

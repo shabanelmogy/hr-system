@@ -31,6 +31,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { alpha } from "@mui/material/styles";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs, { Dayjs } from "dayjs";
+import { appointmentValidationSchema } from "../validation/appointmentValidation";
 
 const todayStart = dayjs().startOf("day");
 
@@ -72,23 +73,27 @@ const AddAppointmentDialog: React.FC<AddAppointmentDialogProps> = ({
     setErrors({});
   }, [defaultTitle, defaultStart, defaultEnd, open]);
 
-  const validate = () => {
-    const errs: { title?: string; time?: string } = {};
-    if (!title.trim()) errs.title = "Title is required";
-    if (!start || !end) errs.time = "Start and End are required";
-    else if (end.isBefore(start)) errs.time = "End must be after Start";
-    else if (start.startOf("day").isBefore(todayStart)) errs.time = "Cannot create in past days";
-    setErrors(errs);
-    return Object.keys(errs).length === 0;
-  };
-
   const handleSubmit = () => {
-    if (!validate()) return;
-    onSubmit({
-      text: title.trim(),
-      start: start!.format("YYYY-MM-DDTHH:mm"),
-      end: end!.format("YYYY-MM-DDTHH:mm"),
+    const result = appointmentValidationSchema.safeParse({
+      text: title,
+      start: start?.format("YYYY-MM-DDTHH:mm") || "",
+      end: end?.format("YYYY-MM-DDTHH:mm") || "",
     });
+
+    if (!result.success) {
+      const nextErrors: { title?: string; time?: string } = {};
+      result.error.issues.forEach((issue) => {
+        const field = issue.path[0];
+        if (field === "title" || field === "time") {
+          nextErrors[field] ??= issue.message;
+        }
+      });
+      setErrors(nextErrors);
+      return;
+    }
+
+    setErrors({});
+    onSubmit(result.data);
   };
 
   return (

@@ -31,6 +31,11 @@ class ApiClient {
 
     this.api.interceptors.request.use((config) => {
       config.headers.Culture = i18n.language || "en";
+
+      if (typeof FormData !== "undefined" && config.data instanceof FormData) {
+        config.headers.delete("Content-Type");
+      }
+
       return config;
     });
 
@@ -109,15 +114,15 @@ class ApiClient {
   }
 
   post<T = any>(endpoint: string, data?: unknown, headers: Record<string, string> = {}) {
-    return this.request<T>("POST", endpoint, { data, headers });
+    return this.request<T>("POST", endpoint, { data, headers: getDataHeaders(data, headers) });
   }
 
-  put<T = any>(endpoint: string, data?: unknown) {
-    return this.request<T>("PUT", endpoint, { data });
+  put<T = any>(endpoint: string, data?: unknown, headers: Record<string, string> = {}) {
+    return this.request<T>("PUT", endpoint, { data, headers: getDataHeaders(data, headers) });
   }
 
-  patch<T = any>(endpoint: string, data?: unknown) {
-    return this.request<T>("PATCH", endpoint, { data });
+  patch<T = any>(endpoint: string, data?: unknown, headers: Record<string, string> = {}) {
+    return this.request<T>("PATCH", endpoint, { data, headers: getDataHeaders(data, headers) });
   }
 
   delete<T = any>(endpoint: string) {
@@ -146,6 +151,17 @@ class ApiClient {
   externalAuth<T = any>(endpoint: string, data: unknown) {
     return this.post<T>(endpoint, data);
   }
+}
+
+function getDataHeaders(data: unknown, headers: Record<string, string>) {
+  if (typeof FormData !== "undefined" && data instanceof FormData) {
+    const multipartHeaders = { ...headers };
+    delete multipartHeaders["Content-Type"];
+    delete multipartHeaders["content-type"];
+    return multipartHeaders;
+  }
+
+  return headers;
 }
 
 function notifySessionRefresh(value: unknown) {

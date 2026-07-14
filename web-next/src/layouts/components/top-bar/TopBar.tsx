@@ -1,8 +1,9 @@
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Tooltip, Typography, alpha, useTheme } from "@mui/material";
 import { useState } from "react";
 
 import Diversity3Icon from "@mui/icons-material/Diversity3";
-import MenuIcon from "@mui/icons-material/Menu";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+import MenuOpenRoundedIcon from "@mui/icons-material/MenuOpenRounded";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import cookies from "js-cookie";
@@ -26,10 +27,10 @@ import UserWelcome from "./UserWelcome";
 
 const TopBar = ({
   open,
-  handleDrawerOpen,
+  handleDrawerToggle,
 }: {
   open: boolean;
-  handleDrawerOpen: () => void;
+  handleDrawerToggle: () => void;
 }) => {
   const theme = useTheme();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<HTMLElement | null>(null);
@@ -82,18 +83,44 @@ const TopBar = ({
           {/* Left Section */}
           <Box sx={{ display: "flex", alignItems: "center" }}>
             {isAuthenticated && (
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={(e) => {
-                  handleDrawerOpen();
-                  e.currentTarget.blur();
-                }}
-                edge="start"
-                sx={[{ marginInlineEnd: 5 }, open && { display: "none" }]}
+              <Tooltip
+                title={t(open ? "menu.closeSidebar" : "menu.openSidebar")}
               >
-                <MenuIcon />
-              </IconButton>
+                <IconButton
+                  color="inherit"
+                  aria-label={t(open ? "menu.closeSidebar" : "menu.openSidebar")}
+                  aria-controls="app-sidebar"
+                  aria-expanded={open}
+                  onClick={handleDrawerToggle}
+                  sx={{
+                    width: 40,
+                    height: 40,
+                    flexShrink: 0,
+                    marginInlineEnd: { xs: 1, md: 2 },
+                    borderRadius: 1,
+                    backgroundColor: open
+                      ? alpha(theme.palette.common.white, 0.14)
+                      : "transparent",
+                    transition: theme.transitions.create(
+                      ["background-color", "transform"],
+                      { duration: theme.transitions.duration.shortest },
+                    ),
+                    "&:hover": {
+                      backgroundColor: alpha(theme.palette.common.white, 0.2),
+                    },
+                  }}
+                >
+                  {open ? (
+                    <MenuOpenRoundedIcon
+                      sx={{
+                        transform: direction === "rtl" ? "scaleX(-1)" : "none",
+                      }}
+                    />
+                  ) : (
+                    <MenuRoundedIcon />
+                  )}
+                </IconButton>
+              </Tooltip>
             )}
             <Link
               href="/"

@@ -2,7 +2,10 @@ import { useState } from "react";
 import { apiService } from "@/shared/services";
 import { useSnackbar } from "@/shared/hooks";
 import HandleApiError from "@/shared/services/apiError";
-import { FILE_CONFIG } from "../constants/fileUpload.type";
+import {
+  createFileValidationSchema,
+  FILE_CONFIG,
+} from "../constants/fileUpload.type";
 import { FileUploadItem, UseFileUploadArgs } from "../types/fileUpload.type";
 import { useTranslation } from "react-i18next";
 import { apiRoutes } from "@/config";
@@ -19,33 +22,28 @@ export default function useFileUpload({
   const { showSnackbar, SnackbarComponent } = useSnackbar();
   const { t } = useTranslation();
 
-  const validateFileSize = (file: File): boolean => {
-    if (file.size > FILE_CONFIG.MAX_FILE_SIZE) {
-      const sizeMB = (FILE_CONFIG.MAX_FILE_SIZE / (1024 * 1024)).toFixed(0);
-      // const errorMessage = `File "${file.name}" exceeds maximum size of ${sizeMB}MB`;
-      const errorMessage = t("files.fileTooLarge", {
-        fileName: file.name,
-        size: sizeMB,
-      });
-      setGlobalError(errorMessage);
-      return false;
-    }
-    return true;
-  };
-
-  const validateFileType = (file: File): boolean => {
-    if (!FILE_CONFIG.ALLOWED_TYPES.includes(file.type as any)) {
-      const errorMessage = t('files.fileTypeNotAllowed', { type: file.type, fileName: file.name });
-      setGlobalError(errorMessage);
-      return false;
-    }
-    return true;
-  };
-
   const validateFiles = (fileList: File[]): File[] => {
-    return fileList.filter(
-      (file) => validateFileSize(file) && validateFileType(file)
-    );
+    const validationErrors: string[] = [];
+    const fileSchema = createFileValidationSchema({
+      required: t("files.fileRequired"),
+      tooLarge: t("files.fileTooLarge", {
+        size: (FILE_CONFIG.MAX_FILE_SIZE / (1024 * 1024)).toFixed(0),
+      }),
+      invalidType: t("files.fileTypeNotAllowed"),
+      invalidName: t("files.invalidFileName"),
+    });
+
+    const validFiles = fileList.filter((file) => {
+      const result = fileSchema.safeParse({ file });
+      if (!result.success) {
+        validationErrors.push(...result.error.issues.map((issue) => `${file.name}: ${issue.message}`));
+        return false;
+      }
+      return true;
+    });
+
+    setGlobalError(validationErrors.length > 0 ? validationErrors.join("\n") : null);
+    return validFiles;
   };
 
   const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
@@ -94,7 +92,9 @@ export default function useFileUpload({
     setFiles((prevFiles) =>
       multiple ? [...prevFiles, ...newFiles] : newFiles
     );
-    setGlobalError(null);
+    if (validFiles.length === fileArray.length) {
+      setGlobalError(null);
+    }
   };
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,6 +109,11 @@ export default function useFileUpload({
 
   const uploadFiles = async () => {
     if (files.length === 0) return;
+
+    if (files.length > FILE_CONFIG.MAX_FILES_PER_UPLOAD) {
+      setGlobalError(t("files.tooManyFiles", { count: FILE_CONFIG.MAX_FILES_PER_UPLOAD }));
+      return;
+    }
 
     setIsUploading(true);
     setGlobalError(null);

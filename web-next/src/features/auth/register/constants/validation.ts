@@ -1,43 +1,51 @@
 import { passwordPolicyPattern } from "@/features/auth/validation/passwordPolicy";
-import * as yup from "yup";
+import { z } from "zod";
+
+const personalDetailsSchema = (t: (key: string, options?: any) => string) =>
+  z.object({
+    firstName: z
+      .string()
+      .trim()
+      .min(1, t("validation.required"))
+      .min(3, t("validation.minLength", { count: 3 }))
+      .max(50, t("validation.maxLength", { count: 50 })),
+    lastName: z
+      .string()
+      .trim()
+      .min(1, t("validation.required"))
+      .min(3, t("validation.minLength", { count: 3 }))
+      .max(50, t("validation.maxLength", { count: 50 })),
+    userName: z
+      .string()
+      .trim()
+      .min(1, t("validation.required"))
+      .min(3, t("validation.minLength", { count: 3 }))
+      .max(50, t("validation.maxLength", { count: 50 })),
+  });
+
+const accountSecuritySchema = (t: (key: string, options?: any) => string) =>
+  z
+    .object({
+      email: z.string().trim().min(1, t("validation.required")).email(t("validation.invalidEmail")),
+      password: z
+        .string()
+        .min(1, t("validation.required"))
+        .min(8, t("validation.invalidPassword", { count: 8 }))
+        .regex(passwordPolicyPattern, t("validation.invalidPassword")),
+      confirmPassword: z.string().min(1, t("validation.invalidPassword")),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      path: ["confirmPassword"],
+      message: t("validation.passwordsMustMatch"),
+    });
+
+export const getRegistrationValidationSchema = (t: (key: string, options?: any) => string) =>
+  personalDetailsSchema(t).merge(accountSecuritySchema(t));
 
 export const getValidationSchema = (activeStep: number, t: (key: string, options?: any) => string) => {
-  const personalDetailsSchema = yup.object({
-    firstName: yup
-      .string()
-      .required(t("validation.required"))
-      .min(3, t("validation.minLength", { count: 3 }))
-      .max(50, t("validation.maxLength", { count: 50 })),
-    lastName: yup
-      .string()
-      .required(t("validation.required"))
-      .min(3, t("validation.minLength", { count: 3 }))
-      .max(50, t("validation.maxLength", { count: 50 })),
-    userName: yup
-      .string()
-      .required(t("validation.required"))
-      .min(3, t("validation.minLength", { count: 3 }))
-      .max(50, t("validation.maxLength", { count: 50 })),
-  });
+  if (activeStep === 0) return personalDetailsSchema(t);
+  if (activeStep === 1) return accountSecuritySchema(t);
 
-  const accountSecuritySchema = yup.object({
-    email: yup
-      .string()
-      .required(t("validation.required"))
-      .email(t("validation.invalidEmail")),
-    password: yup
-      .string()
-      .required(t("validation.required"))
-      .min(8, t("validation.invalidPassword", { count: 8 }))
-      .matches(passwordPolicyPattern, t("validation.invalidPassword")),
-    confirmPassword: yup
-      .string()
-      .required(t("validation.invalidPassword"))
-      .oneOf([yup.ref("password")], t("validation.passwordsMustMatch")),
-  });
-
-  if (activeStep === 0) return personalDetailsSchema;
-  if (activeStep === 1) return accountSecuritySchema;
-
-  return yup.object(); // default empty schema
+  // The final step contains no text fields, but the complete form must still be validated.
+  return getRegistrationValidationSchema(t);
 };

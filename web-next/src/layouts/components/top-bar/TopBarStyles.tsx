@@ -15,30 +15,29 @@ export const AppBar = styled(MuiAppBar, {
   insetInlineStart: "auto",
   insetInlineEnd: 0,
   width: "calc(100vw - 1px)",
-  ...(open && {
-    width: `calc(100vw - ${drawerWidth}px - 1px)`,
-  }),
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+    duration: open
+      ? theme.transitions.duration.enteringScreen
+      : theme.transitions.duration.leavingScreen,
   }),
-  ...(open && {
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
+  [theme.breakpoints.up("md")]: open
+    ? { width: `calc(100vw - ${drawerWidth}px - 1px)` }
+    : {},
 }));
 
 // Toolbar styled component
 export const StyledToolbar = styled(Toolbar)<{ open?: boolean }>(({ theme, open }) => ({
   width: "100%",
-  maxWidth: open ? `calc(100vw - ${drawerWidth}px - 1px)` : "calc(100vw - 1px)",
+  maxWidth: "calc(100vw - 1px)",
   boxSizing: "border-box",
   display: "flex",
   justifyContent: "space-between",
   padding: theme.spacing(0, 2),
   margin: 0,
+  [theme.breakpoints.up("md")]: open
+    ? { maxWidth: `calc(100vw - ${drawerWidth}px - 1px)` }
+    : {},
 }));
 
 // ListItem styled component

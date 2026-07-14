@@ -26,6 +26,11 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { apiRoutes } from "@/config";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  EmailRecoveryFormData,
+  getEmailRecoverySchema,
+} from "./validation/recoverySchemas";
 
 const ForgetPassword = () => {
   const { showSnackbar, SnackbarComponent } = useSnackbar();
@@ -36,12 +41,18 @@ const ForgetPassword = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isDarkMode = theme.palette.mode === "dark";
 
+  const validationSchema = getEmailRecoverySchema(t);
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<EmailRecoveryFormData>({
+    resolver: zodResolver(validationSchema),
+    defaultValues: { email: "" },
+    mode: "onChange",
+  });
 
   const imagePath = `images/forgetpassword${isDarkMode ? "-dark" : ""}.png`;
 
@@ -251,13 +262,7 @@ const ForgetPassword = () => {
                   variant="outlined"
                   fullWidth
                   autoComplete="off"
-                  {...register("email", {
-                    required: t("validation.required"),
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: t("validation.invalidEmail") || "Invalid email address",
-                    },
-                  })}
+                  {...register("email")}
                   error={!!errors.email}
                   helperText={errors.email?.message as string}
                   sx={{

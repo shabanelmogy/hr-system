@@ -1,33 +1,31 @@
-import * as yup from "yup";
+import { z } from "zod";
 
-export const getRoleValidationSchema = (t: any) => {
-  return yup.object({
-    // Required: Role Name
-    name: yup
+export const getRoleValidationSchema = (t: (key: string, options?: any) => string) =>
+  z.object({
+    name: z
       .string()
       .trim()
-      .required(t("validation.required"))
+      .min(1, t("validation.required"))
       .min(2, t("validation.minLength", { count: 2 }))
       .max(50, t("validation.maxLength", { count: 50 }))
-      .matches(
+      .regex(
         /^[a-zA-Z\s]+$/,
-        t("validation.englishOnly") ||
-          "Role name can only contain letters and spaces"
+        t("validation.englishOnly") || "Role name can only contain letters and spaces",
       ),
   });
-};
 
-export const getRoleClaimsValidationSchema = () => {
-  return yup.object({
-    id: yup.string().required(),
-    name: yup.string().required(),
-    roleClaims: yup.array().of(
-      yup.object({
-        displayValue: yup.string().required(),
-        isSelected: yup.boolean().required(),
-      })
+export const getRoleClaimsValidationSchema = (t?: (key: string) => string) =>
+  z.object({
+    id: z.string().min(1, t?.("validation.required") ?? "Required"),
+    name: z.string().min(1, t?.("validation.required") ?? "Required"),
+    roleClaims: z.array(
+      z.object({
+        displayValue: z.string().min(1, t?.("validation.required") ?? "Required"),
+        isSelected: z.boolean(),
+      }),
     ),
   });
-};
+
+export type RoleClaimsFormData = z.infer<ReturnType<typeof getRoleClaimsValidationSchema>>;
 
 export default getRoleValidationSchema;

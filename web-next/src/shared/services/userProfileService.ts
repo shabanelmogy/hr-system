@@ -13,7 +13,15 @@ export interface UserInfo {
 
 export interface UserPhoto {
   profilePicture?: string;
+  contentType?: string;
 }
+
+export const getUserPhotoDataUrl = (photo?: UserPhoto | null) => {
+  if (!photo?.profilePicture) return undefined;
+  if (photo.profilePicture.startsWith("data:")) return photo.profilePicture;
+
+  return `data:${photo.contentType || "image/jpeg"};base64,${photo.profilePicture}`;
+};
 
 class UserProfileService {
   /**
@@ -43,10 +51,15 @@ class UserProfileService {
   /**
    * Update user profile picture
    */
-  static async updateUserPhoto(profilePicture: any) {
-    return await apiService.put(apiRoutes.auth.updateUserPhoto, {
-      profilePicture,
-    });
+  static async updateUserPhoto(profilePicture: File | null) {
+    const formData = new FormData();
+    if (profilePicture) {
+      formData.append("ProfilePicture", profilePicture, profilePicture.name);
+    } else {
+      formData.append("Remove", "true");
+    }
+
+    return await apiService.put(apiRoutes.auth.updateUserPhoto, formData);
   }
 
   /**
@@ -79,7 +92,7 @@ class UserProfileService {
       profile.userName = userInfo.value.userName || profile.userName;
     }
     if (userPhoto.status === "fulfilled" && userPhoto.value?.profilePicture) {
-      profile.profilePicture = `data:image/*;base64,${userPhoto.value.profilePicture}`;
+      profile.profilePicture = getUserPhotoDataUrl(userPhoto.value) || null;
     }
     return profile;
   }

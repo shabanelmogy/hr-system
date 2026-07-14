@@ -1,19 +1,19 @@
 import { passwordPolicyPattern } from "@/features/auth/validation/passwordPolicy";
-import * as yup from "yup";
+import { z } from "zod";
 
 const getPasswordChangeSchema = (t: (key: string, options?: any) => string) =>
-  yup.object({
-    currentPassword: yup.string().required(t("validation.required")),
-
-    newPassword: yup
-      .string()
-      .required(t("validation.required"))
-      .min(8, t("validation.minLength", { count: 8 }))
-      .matches(passwordPolicyPattern, t("validation.invalidPassword"))
-      .notOneOf(
-        [yup.ref("currentPassword")],
-        t("validation.passwordMustNotBeCurrent")
-      ),
-  });
+  z
+    .object({
+      currentPassword: z.string().min(1, t("validation.required")),
+      newPassword: z
+        .string()
+        .min(1, t("validation.required"))
+        .min(8, t("validation.minLength", { count: 8 }))
+        .regex(passwordPolicyPattern, t("validation.invalidPassword")),
+    })
+    .refine((data) => data.currentPassword !== data.newPassword, {
+      path: ["newPassword"],
+      message: t("validation.passwordMustNotBeCurrent"),
+    });
 
 export default getPasswordChangeSchema;

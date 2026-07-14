@@ -192,7 +192,7 @@ const ProfilePictureStep = ({
             type="file"
             ref={fileInputRef}
             style={{ display: "none" }}
-            accept="image/jpeg,image/png,image/gif,image/webp"
+            accept="image/jpeg,image/png"
             onChange={onFileChange}
           />
 
@@ -234,7 +234,7 @@ const ProfilePictureStep = ({
           >
             {uploadError ||
               t("general.supportedFormats") ||
-              "Supported formats: JPEG, PNG, GIF, WebP"}
+              "Supported formats: JPEG, PNG"}
           </Typography>
           <Typography
             variant="caption"
@@ -243,7 +243,7 @@ const ProfilePictureStep = ({
               display: "block",
               mt: 0.5
             }}>
-            {t("validation.maxFileSize") || "Max file size: 5MB"}
+            {t("validation.maxFileSize") || "Max file size: 10MB"}
           </Typography>
         </Box>
       </Box>

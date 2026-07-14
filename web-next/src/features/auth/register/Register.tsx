@@ -1,7 +1,7 @@
 "use client";
 
 /* eslint-disable react/prop-types */
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { alpha, Box, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -11,9 +11,13 @@ import { useTranslation } from "react-i18next";
 import { apiRoutes } from "@/config";
 import { useSnackbar } from "@/shared/hooks";
 import { apiService, HandleApiError } from "@/shared/services";
+import { createImageFileValidationSchema } from "@/shared/validation/fileValidation";
 import { appRoutes } from "@/config/routes";
 import { createColorSystem } from "./constants/colors";
-import { getValidationSchema } from "./constants/validation";
+import {
+  getRegistrationValidationSchema,
+  getValidationSchema,
+} from "./constants/validation";
 
 // Components
 import { EnhancedStepper } from "./components/EnhancedStepper";
@@ -78,16 +82,17 @@ const Register = () => {
     confirmPassword: string;
   }
 
-  // Form setup with react-hook-form and Yup validation
+  // Form setup with react-hook-form and Zod validation
   const {
     register,
     handleSubmit,
     watch,
     reset,
     trigger,
+    setError,
     formState: { errors, isValid },
   } = useForm<FormData>({
-    resolver: yupResolver(validationSchema) as any,
+    resolver: zodResolver(validationSchema) as any,
     mode: "onChange",
     defaultValues: {
       firstName: "",
@@ -220,33 +225,20 @@ const Register = () => {
     const file = (event.target as HTMLInputElement)?.files?.[0] || ('dataTransfer' in event ? event.dataTransfer?.files?.[0] : null);
     if (!file) return;
 
-    // Check file size (5MB limit)
-    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
-    if (file.size > maxSize) {
-      setUploadError(
-        t("validation.fileTooLarge") || "File too large (max 5MB)"
-      );
-      showSnackbar(
-        "error",
-        [t("validation.fileTooLarge") || "File too large (max 5MB)"],
-        t("messages.error") || "Error"
-      );
-      return;
-    }
-
-    // Check file type
-    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
-    if (!allowedTypes.includes(file.type)) {
-      setUploadError(
+    const validation = createImageFileValidationSchema({
+      required: t("validation.required"),
+      tooLarge: t("validation.fileTooLarge") || "File too large (max 10MB)",
+      invalidType:
         t("validation.invalidFileType") ||
-        "Invalid file type. Please upload a JPEG, PNG, GIF or WebP image"
-      );
+        "Invalid file type. Please upload a JPEG, PNG, GIF or WebP image",
+    }).safeParse({ file });
+
+    if (!validation.success) {
+      const messages = validation.error.issues.map((issue) => issue.message);
+      setUploadError(messages[0]);
       showSnackbar(
         "error",
-        [
-          t("validation.invalidFileType") ||
-          "Invalid file type. Please upload a JPEG, PNG, GIF or WebP image",
-        ],
+        messages,
         t("messages.error") || "Error"
       );
       return;
@@ -316,6 +308,17 @@ const Register = () => {
     password: string;
     confirmPassword: string;
   }) => {
+    const completeValidation = getRegistrationValidationSchema(t).safeParse(data);
+    if (!completeValidation.success) {
+      completeValidation.error.issues.forEach((issue) => {
+        const field = issue.path[0];
+        if (typeof field === "string") {
+          setError(field as keyof typeof data, { message: issue.message });
+        }
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     // Simulate progress during submission

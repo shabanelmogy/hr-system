@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 // components/RoleForm.jsx
 import { MyForm, MyTextField } from "@/shared/components/common";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, TextField } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
@@ -40,7 +40,7 @@ const RoleForm = ({
     control,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
       name: "",

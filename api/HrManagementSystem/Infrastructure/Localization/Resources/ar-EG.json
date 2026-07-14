@@ -112,6 +112,8 @@
     "InvalidCode": "كود غير صالح",
     "DuplicatedConfirmation": "البريد الإلكترونى مفعل",
     "UserNotFound": "إسم المستخدم غير موجود",
+    "ProfilePictureRequired": "صورة الملف الشخصي مطلوبة",
+    "InvalidProfilePicture": "صورة الملف الشخصي غير صالحة",
 
     "LocalizationFileNotFound": "ملف الترجمة غير موجود",
     "InvalidLanguage": "اللغة المطلوبة غير مدعومة",

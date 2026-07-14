@@ -1,6 +1,6 @@
 "use client";
 
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -27,7 +27,7 @@ const ChangePassword = ({ showSuccess = null, showError = null }) => {
     reset,
   } = useForm({
     mode: "onChange",
-    resolver: yupResolver(validationScheme),
+    resolver: zodResolver(validationScheme),
     defaultValues: {
       currentPassword: "",
       newPassword: "",

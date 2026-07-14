@@ -1,7 +1,7 @@
 import { apiRoutes } from "@/config";
 import { useNotifications } from "@/shared/hooks";
 import { apiService, HandleApiError } from "@/shared/services";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -38,7 +38,7 @@ const useLoginForm = () => {
     setValue,
   } = useForm({
     defaultValues: { username: "", password: "" },
-    resolver: yupResolver(validationSchema),
+    resolver: zodResolver(validationSchema),
     mode: "onChange",
   });
 

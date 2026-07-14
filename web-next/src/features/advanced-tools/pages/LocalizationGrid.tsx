@@ -16,7 +16,8 @@ import ClientDataGrid from "@/shared/components/common/datagrid/ClientDataGrid";
 import { ContentWrapper } from "@/shared/components/layout";
 import { useSnackbar } from "@/shared/hooks";
 import { HandleApiError } from "@/shared/services";
-import { useLocalization, useUpdateLocalization, LocalizationEntry } from "../hooks/useAdvancedToolsQueries";
+import { useLocalization, useUpdateLocalization } from "../hooks/useAdvancedToolsQueries";
+import { localizationEntrySchema } from "../validation/localizationValidation";
 
 const LocalizationGrid = () => {
   const [rowModesModel, setRowModesModel] = useState<any>({});
@@ -120,21 +121,22 @@ const LocalizationGrid = () => {
 
   const processRowUpdate = async (newRow: any, oldRow: any) => {
     try {
-      // Validate data
-      if (!newRow.key || !newRow.value) {
+      const validation = localizationEntrySchema.safeParse({
+        Language: currentCulture,
+        key: newRow.key,
+        value: newRow.value,
+      });
+
+      if (!validation.success) {
         showSnackbar(
           "error",
-          [t("localizationApi.keyAndValueMustNotBeEmpty")],
+          validation.error.issues.map((issue) => issue.message),
           t("messages.error")
         );
         return oldRow;
       }
 
-      await updateLocalizationMutation.mutateAsync({
-        Language: currentCulture,
-        key: newRow.key,
-        value: newRow.value,
-      });
+      await updateLocalizationMutation.mutateAsync(validation.data);
 
       showSnackbar("success", [t("localizationApi.localizationUpdated")], t("messages.success"));
       return newRow;

@@ -1,17 +1,14 @@
-import * as yup from "yup";
+import { z } from "zod";
 
-export const createLoginValidationSchema = (t: any) => {
-  return yup.object().shape({
-    username: yup
+export const createLoginValidationSchema = (t: (key: string, options?: any) => string) =>
+  z.object({
+    username: z
       .string()
-      .required(t("validation.required"))
+      .trim()
+      .min(1, t("validation.required"))
       .min(3, t("validation.minLength", { count: 3 }))
-      .max(50, t("validation.maxLength", { count: 50 }))
-      .trim(),
-
-    password: yup
-      .string()
-      .required(t("validation.required"))
-      .trim(),
+      .max(50, t("validation.maxLength", { count: 50 })),
+    password: z.string().trim().min(1, t("validation.required")),
   });
-};
+
+export type LoginFormData = z.infer<ReturnType<typeof createLoginValidationSchema>>;

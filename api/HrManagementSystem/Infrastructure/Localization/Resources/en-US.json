@@ -112,6 +112,8 @@
     "InvalidCode": "Invalid code",
     "DuplicatedConfirmation": "Email already confirmed",
     "UserNotFound": "User is not found",
+    "ProfilePictureRequired": "A profile picture is required",
+    "InvalidProfilePicture": "The profile picture is invalid",
 
     "LocalizationFileNotFound": "Localization File Not Found",
     "InvalidLanguage": "The requested language is not supported",
