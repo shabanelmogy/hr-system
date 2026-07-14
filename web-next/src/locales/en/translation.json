@@ -265,6 +265,8 @@
     "forgotPasswordTitle": "Forgot Password",
     "forgotPasswordDescription": "Enter your email to reset your password",
     "emailConfirmation": "Email Confirmation",
+    "emailConfirmationInstructions": "Check your email inbox to activate your account",
+    "emailConfirmationResendDescription": "Didn't receive the email? Enter your address below to resend it",
     "resendConfirmation": "Resend Confirmation",
     "usernameNotAvailable": "Username is unavailable",
     "emailNotAvailable": "Email is unavailable",

@@ -265,6 +265,8 @@
     "forgotPasswordTitle": "نسيت كلمة المرور",
     "forgotPasswordDescription": "ادخل بريدك الالكتروني لاستعادة كلمة المرور",
     "emailConfirmation": "تاكيد البريد الالكتروني",
+    "emailConfirmationInstructions": "تحقق من بريدك الإلكتروني لتفعيل حسابك",
+    "emailConfirmationResendDescription": "لم تستلم البريد؟ أدخل بريدك لإعادة إرساله",
     "resendConfirmation": "اعادة ارسال التاكيد",
     "usernameNotAvailable": "اسم المستخدم غير متاح",
     "emailNotAvailable": "البريد الالكتروني غير متاح",
