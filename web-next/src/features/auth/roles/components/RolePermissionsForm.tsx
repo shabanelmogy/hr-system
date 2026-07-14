@@ -146,7 +146,11 @@ const RoleForm = ({
               error={!!errors.name}
               helperText={errors.name?.message || ""}
               slotProps={{
-                htmlInput: { maxLength: 50 }
+                htmlInput: {
+                  maxLength: 50,
+                  "aria-required": true,
+                  "aria-invalid": !!errors.name,
+                }
               }}
             />
           </Box>

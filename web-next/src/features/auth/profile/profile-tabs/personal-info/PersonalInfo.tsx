@@ -41,6 +41,7 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
 
   const {
     control,
+    register,
     handleSubmit,
     reset,
     formState: { errors, isDirty },
@@ -48,6 +49,7 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
     resolver: zodResolver(validationSchema),
     mode: "onChange",
     defaultValues: {
+      id: user?.userId ?? "",
       firstName: user?.firstName ?? "",
       lastName: user?.lastName ?? "",
       userName: user?.userName ?? "",
@@ -58,6 +60,7 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
     if (!user) return;
 
     const values: PersonalInfoValues = {
+      id: userInfo?.id ?? user.userId,
       firstName: userInfo?.firstName ?? user.firstName ?? "",
       lastName: userInfo?.lastName ?? user.lastName ?? "",
       userName: userInfo?.userName ?? user.userName ?? "",
@@ -118,12 +121,13 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
   const handleSave = async (data: PersonalInfoValues) => {
     setIsSaving(true);
     try {
-      await updateUserInfo.mutateAsync(data);
+      const savedData: PersonalInfoValues = { ...data, id: data.id || user?.userId || "" };
+      await updateUserInfo.mutateAsync(savedData);
 
       // Update localStorage
-      localStorage.setItem("userName", data.userName);
-      localStorage.setItem("firstName", data.firstName);
-      localStorage.setItem("lastName", data.lastName);
+      localStorage.setItem("userName", savedData.userName);
+      localStorage.setItem("firstName", savedData.firstName);
+      localStorage.setItem("lastName", savedData.lastName);
 
       // Show success notification
       if (showSuccess) {
@@ -131,12 +135,12 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
       }
 
       // Update original data reference
-      originalData.current = data;
-      reset(data);
+      originalData.current = savedData;
+      reset(savedData);
 
       // Update parent component
       if (onInfoUpdated) {
-        onInfoUpdated(data);
+        onInfoUpdated(savedData);
       }
 
       // IMPORTANT: Exit edit mode after successful save
@@ -195,6 +199,7 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
           <PersonalInfoForm
             isEditing={isEditing}
             control={control}
+            register={register}
             errors={errors}
             handleSubmit={handleSubmit}
             handleSave={handleSave}

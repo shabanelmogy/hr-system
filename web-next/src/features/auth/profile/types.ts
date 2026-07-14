@@ -1,4 +1,5 @@
 export interface ProfileUserData {
+  id?: string;
   userName?: string;
   firstName?: string;
   lastName?: string;
@@ -8,6 +9,7 @@ export interface ProfileUserData {
 }
 
 export interface PersonalInfoValues {
+  id: string;
   firstName: string;
   lastName: string;
   userName: string;

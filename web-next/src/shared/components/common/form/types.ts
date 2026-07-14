@@ -6,7 +6,7 @@ export interface MyFormProps {
   title: string;
   subtitle?: string;
   submitButtonText?: string;
-  onSubmit: (event?: any) => void;
+  onSubmit?: (event?: React.FormEvent) => void | Promise<void>;
   children?: ReactNode;
   isSubmitting?: boolean;
   /** Prevents accidental dismissal and disables unchanged saves when supplied. */

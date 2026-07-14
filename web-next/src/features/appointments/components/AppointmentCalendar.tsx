@@ -34,6 +34,8 @@ import dayjs, { Dayjs } from "dayjs";
 import { appointmentValidationSchema } from "../validation/appointmentValidation";
 
 const todayStart = dayjs().startOf("day");
+const initialAppointmentStart = dayjs().toISOString();
+const initialAppointmentEnd = dayjs().add(1, "hour").toISOString();
 
 // Note: CSS imports are removed due to package exports. Add styles via CDN in index.html if needed.
 
@@ -42,6 +44,8 @@ type AddAppointmentDialogProps = {
   open: boolean;
   loading?: boolean;
   mode?: "add" | "edit";
+  /** Month-view end dates are inclusive in the dialog, but exclusive in the API. */
+  inclusiveEnd?: boolean;
   defaultTitle?: string;
   defaultStart: string;
   defaultEnd: string;
@@ -54,6 +58,7 @@ const AddAppointmentDialog: React.FC<AddAppointmentDialogProps> = ({
   open,
   loading,
   mode = "add",
+  inclusiveEnd = false,
   defaultTitle,
   defaultStart,
   defaultEnd,
@@ -73,19 +78,26 @@ const AddAppointmentDialog: React.FC<AddAppointmentDialogProps> = ({
     setErrors({});
   }, [defaultTitle, defaultStart, defaultEnd, open]);
 
-  const handleSubmit = () => {
+  const handleSubmit = (event?: React.FormEvent<HTMLFormElement>) => {
+    event?.preventDefault();
+
+    // FullCalendar presents an all-day end date inclusively while the API
+    // stores it exclusively. Validate the equivalent API range.
+    const validationEnd = inclusiveEnd && end ? end.add(1, "day") : end;
     const result = appointmentValidationSchema.safeParse({
       text: title,
       start: start?.format("YYYY-MM-DDTHH:mm") || "",
-      end: end?.format("YYYY-MM-DDTHH:mm") || "",
+      end: validationEnd?.format("YYYY-MM-DDTHH:mm") || "",
     });
 
     if (!result.success) {
       const nextErrors: { title?: string; time?: string } = {};
       result.error.issues.forEach((issue) => {
         const field = issue.path[0];
-        if (field === "title" || field === "time") {
-          nextErrors[field] ??= issue.message;
+        if (field === "text") {
+          nextErrors.title ??= issue.message;
+        } else if (field === "time") {
+          nextErrors.time ??= issue.message;
         }
       });
       setErrors(nextErrors);
@@ -97,11 +109,20 @@ const AddAppointmentDialog: React.FC<AddAppointmentDialogProps> = ({
   };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog
+      open={open}
+      onClose={() => {
+        if (loading) return;
+        onClose();
+      }}
+      fullWidth
+      maxWidth="sm"
+    >
       <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
         <EventAvailableIcon color="primary" />
         <Typography variant="h6" component="div">{mode === "edit" ? "Edit Appointment" : "New Appointment"}</Typography>
       </DialogTitle>
+      <Box component="form" onSubmit={handleSubmit} noValidate>
       <DialogContent>
         <Stack spacing={2} sx={{ mt: 1 }}>
           <TextField
@@ -115,13 +136,20 @@ const AddAppointmentDialog: React.FC<AddAppointmentDialogProps> = ({
             error={!!errors.title}
             helperText={errors.title || " "}
             slotProps={{
+              htmlInput: {
+                maxLength: 200,
+                "aria-required": true,
+                "aria-invalid": Boolean(errors.title),
+                "aria-describedby": errors.title ? "appointment-title-error" : undefined,
+              },
               input: {
                 startAdornment: (
                   <InputAdornment position="start">
                     <TextFieldsIcon fontSize="small" />
                   </InputAdornment>
                 ),
-              }
+              },
+              formHelperText: { id: "appointment-title-error" },
             }}
           />
 
@@ -137,7 +165,14 @@ const AddAppointmentDialog: React.FC<AddAppointmentDialogProps> = ({
                 textField: {
                   fullWidth: true,
                   size: "small",
+                  error: Boolean(errors.time),
+                  helperText: errors.time || " ",
                   slotProps: {
+                    htmlInput: {
+                      "aria-required": true,
+                      "aria-invalid": Boolean(errors.time),
+                      "aria-describedby": errors.time ? "appointment-time-error" : undefined,
+                    },
                     input: {
                       startAdornment: (
                         <InputAdornment position="start">
@@ -160,7 +195,14 @@ const AddAppointmentDialog: React.FC<AddAppointmentDialogProps> = ({
                 textField: {
                   fullWidth: true,
                   size: "small",
+                  error: Boolean(errors.time),
+                  helperText: " ",
                   slotProps: {
+                    htmlInput: {
+                      "aria-required": true,
+                      "aria-invalid": Boolean(errors.time),
+                      "aria-describedby": errors.time ? "appointment-time-error" : undefined,
+                    },
                     input: {
                       startAdornment: (
                         <InputAdornment position="start">
@@ -175,7 +217,7 @@ const AddAppointmentDialog: React.FC<AddAppointmentDialogProps> = ({
           </Stack>
 
           {errors.time && (
-            <Typography color="error" variant="body2">
+            <Typography id="appointment-time-error" color="error" variant="body2">
               {errors.time}
             </Typography>
           )}
@@ -191,10 +233,11 @@ const AddAppointmentDialog: React.FC<AddAppointmentDialogProps> = ({
         <Button onClick={onClose} color="inherit" disabled={loading} startIcon={<CloseIcon />}>
           Cancel
         </Button>
-        <Button variant="contained" onClick={handleSubmit} disabled={loading} startIcon={<SaveIcon />}>
+        <Button type="submit" variant="contained" disabled={loading} startIcon={<SaveIcon />}>
           {loading ? "Saving..." : mode === "edit" ? "Save Changes" : "Add Appointment"}
         </Button>
       </DialogActions>
+      </Box>
     </Dialog>
   );
 };
@@ -206,8 +249,8 @@ const AppointmentCalendar: React.FC = () => {
   const deleteMutation = useDeleteAppointment();
 
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [defaultStart, setDefaultStart] = useState<string>(new Date().toISOString());
-  const [defaultEnd, setDefaultEnd] = useState<string>(new Date(Date.now() + 60 * 60 * 1000).toISOString());
+  const [defaultStart, setDefaultStart] = useState<string>(initialAppointmentStart);
+  const [defaultEnd, setDefaultEnd] = useState<string>(initialAppointmentEnd);
   const [defaultTitle, setDefaultTitle] = useState<string>("");
   const [editingId, setEditingId] = useState<number | null>(null);
   const [currentView, setCurrentView] = useState<string>("dayGridMonth");
@@ -342,6 +385,12 @@ const AppointmentCalendar: React.FC = () => {
   const onEventChange = (changeInfo: EventChangeArg) => {
     const e = changeInfo.event;
     const id = Number(e.id);
+    const revertWithError = (error: unknown, fallback: string) => {
+      // FullCalendar applies drag/resize changes optimistically. Always put
+      // the event back when the API rejects the new range.
+      changeInfo.revert();
+      showToast.error(error instanceof Error ? error.message : fallback);
+    };
 
     // In month view/all-day, use date-only semantics and save at UTC noon to avoid day shifts
     if (e.allDay || currentView === "dayGridMonth") {
@@ -352,13 +401,21 @@ const AppointmentCalendar: React.FC = () => {
 
       const invalidAllDay = dayjs(startStr).isBefore(todayStart) || endMinusOne.isBefore(todayStart);
       if (invalidAllDay) {
-        changeInfo.revert();
+        revertWithError(undefined, "Appointments cannot be moved to a previous day");
+        return;
+      }
+
+      if (!dayjs(endStr).isAfter(dayjs(startStr))) {
+        revertWithError(undefined, "End must be after Start");
         return;
       }
 
       const startIsoUtcNoon = `${startStr}T12:00:00Z`;
       const endIsoUtcNoon = `${endStr}T12:00:00Z`;
-      updateMutation.mutate({ id, start: startIsoUtcNoon, end: endIsoUtcNoon, text: e.title });
+      updateMutation.mutate(
+        { id, start: startIsoUtcNoon, end: endIsoUtcNoon, text: e.title },
+        { onError: (error) => revertWithError(error, "Failed to update appointment") },
+      );
       return;
     }
 
@@ -367,11 +424,19 @@ const AppointmentCalendar: React.FC = () => {
     const endDate = e.end ? dayjs(e.end) : startDate;
     const isInvalid = startDate.startOf("day").isBefore(todayStart) || endDate.startOf("day").isBefore(todayStart);
     if (isInvalid) {
-      changeInfo.revert();
+      revertWithError(undefined, "Appointments cannot be moved to a previous day");
       return;
     }
 
-    updateMutation.mutate({ id, start: startDate.toISOString(), end: endDate.toISOString(), text: e.title });
+    if (!endDate.isAfter(startDate)) {
+      revertWithError(undefined, "End must be after Start");
+      return;
+    }
+
+    updateMutation.mutate(
+      { id, start: startDate.toISOString(), end: endDate.toISOString(), text: e.title },
+      { onError: (error) => revertWithError(error, "Failed to update appointment") },
+    );
   };
 
   const onEventClick = (clickInfo: EventClickArg) => {
@@ -547,6 +612,7 @@ const AppointmentCalendar: React.FC = () => {
             defaultTitle={defaultTitle}
             defaultStart={defaultStart}
             defaultEnd={defaultEnd}
+            inclusiveEnd={currentView === "dayGridMonth"}
             onClose={() => {
               setDialogOpen(false);
               setEditingId(null);

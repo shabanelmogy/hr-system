@@ -24,7 +24,6 @@ interface PersonalInfoHeaderProps {
 const PersonalInfoHeader = ({
   isEditing,
   isSaving,
-  isDirty,
   onButtonClick,
   handleUndo,
   t,
@@ -100,7 +99,7 @@ const PersonalInfoHeader = ({
           <IconButton
             color={isEditing ? "primary" : "info"}
             onClick={onButtonClick}
-            disabled={isSaving || (isEditing && !isDirty)}
+            disabled={isSaving}
             aria-label={isEditing ? t("actions.saveInformation") : t("actions.editInformation")}
             sx={{
               background: (theme) =>

@@ -60,6 +60,7 @@ const MyTextField = ({
   counterFormat = "fraction",
   warningThreshold = 70,
   errorThreshold = 90,
+  required = false,
   normalColor = "primary",
   warningColor = "warning",
   errorColor = "error",
@@ -202,6 +203,7 @@ const MyTextField = ({
         elements.push(
           <IconButton
             key="clear"
+            type="button"
             aria-label={`Clear ${actualFieldName}`}
             onClick={onClear}
             disabled={loading}
@@ -224,6 +226,7 @@ const MyTextField = ({
         elements.push(
           <IconButton
             key="password-toggle"
+            type="button"
             onClick={handleTogglePasswordVisibility}
             edge="end"
             size="small"
@@ -296,6 +299,7 @@ const MyTextField = ({
   const getCommonTextFieldProps = useCallback(
     (fieldValue, onClear) => ({
       label: actualLabel,
+      required,
       type: isPasswordField ? (showPassword ? "text" : "password") : type,
       margin: margin as "normal" | "none" | "dense",
       variant: "outlined" as const,
@@ -311,14 +315,17 @@ const MyTextField = ({
           "aria-autocomplete": "none",
           "data-lpignore": "true",
           "data-form-type": "other",
-          "aria-describedby": showCounter
-            ? `${actualFieldName}-counter`
-            : undefined,
           ...(isPasswordField && {
             style: {
               WebkitTextSecurity: showPassword ? "none" : "disc",
             },
           }),
+          ...(required && { "aria-required": true }),
+          "aria-invalid": Boolean(fieldError),
+          "aria-describedby": [
+            showCounter ? `${actualFieldName}-counter` : null,
+            fieldError ? `${actualFieldName}-error` : null,
+          ].filter(Boolean).join(" ") || undefined,
         },
         input: {
           startAdornment: startIcon ? (
@@ -328,6 +335,9 @@ const MyTextField = ({
         },
         inputLabel: {
           ...(type === "date" && { shrink: true }),
+        },
+        formHelperText: {
+          id: `${actualFieldName}-error`,
         },
       },
       sx: {

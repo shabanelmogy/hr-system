@@ -1,11 +1,12 @@
 import { Grid } from "@mui/material";
 import { MyTextField } from "@/shared/components/common";
-import { Control, FieldErrors, UseFormHandleSubmit } from "react-hook-form";
+import { Control, FieldErrors, UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
 import type { PersonalInfoValues } from "../../../types";
 
 interface PersonalInfoFormProps {
   isEditing: boolean;
   control: Control<PersonalInfoValues>;
+  register: UseFormRegister<PersonalInfoValues>;
   errors: FieldErrors<PersonalInfoValues>;
   handleSubmit: UseFormHandleSubmit<PersonalInfoValues>;
   handleSave: (data: PersonalInfoValues) => void;
@@ -14,12 +15,14 @@ interface PersonalInfoFormProps {
 const PersonalInfoForm = ({
   isEditing,
   control,
+  register,
   errors,
   handleSubmit,
   handleSave,
 }: PersonalInfoFormProps) => {
   return (
     <form onSubmit={handleSubmit(handleSave)}>
+      <input type="hidden" {...register("id")} />
       <Grid container spacing={{ xs: 1, sm: 2 }}>
         <Grid size={{ xs: 12, sm: 4 }}>
           <MyTextField

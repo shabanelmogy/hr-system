@@ -13,6 +13,7 @@ namespace HrManagementSystem.Features.Platform.Files.Contracts
             RuleFor(x => x.Image)
                 .SetValidator(new FileSizeValidator(_fileLocalizer))
                 .SetValidator(new BlockedSignaturesValidator(_fileLocalizer))
+                .SetValidator(new FileContentTypeValidator(_fileLocalizer))
                 .SetValidator(new FileNameValidator(_fileLocalizer));
 
             RuleFor(x => x.Image)

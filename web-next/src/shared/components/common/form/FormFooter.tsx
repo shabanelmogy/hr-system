@@ -15,7 +15,7 @@ export const FormFooter: React.FC = () => {
     isSubmitting,
     icon, 
     isViewMode,
-    submitButtonText 
+    submitButtonText,
   } = useFormContext();
 
   if (hideFooter) return null;

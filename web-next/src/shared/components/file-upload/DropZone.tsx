@@ -29,7 +29,7 @@ const DropZone = ({
   onFileInput,
   onClick,
 }: DropZoneProps) => {
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onFileInput?.(e);
@@ -43,6 +43,14 @@ const DropZone = ({
     inputRef.current?.click();
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (isUploading) return;
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleClick();
+    }
+  };
+
   const { t } = useTranslation();
 
   return (
@@ -53,6 +61,11 @@ const DropZone = ({
       onDragOver={onDragOver}
       onDrop={onDrop}
       onClick={onClick || handleClick}
+      onKeyDown={handleKeyDown}
+      role="group"
+      tabIndex={isUploading ? -1 : 0}
+      aria-disabled={isUploading}
+      aria-label={t("files.selectFiles") || "Select files"}
     >
       <CloudUploadIcon sx={{ fontSize: 48, color: "text.secondary", mb: 2 }} />
       <Typography variant="h6" gutterBottom sx={{

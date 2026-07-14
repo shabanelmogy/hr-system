@@ -288,6 +288,10 @@ const ForgetPassword = () => {
                     },
                   }}
                   slotProps={{
+                    htmlInput: {
+                      "aria-required": true,
+                      "aria-invalid": !!errors.email,
+                    },
                     input: {
                       startAdornment: (
                         <InputAdornment position="start">

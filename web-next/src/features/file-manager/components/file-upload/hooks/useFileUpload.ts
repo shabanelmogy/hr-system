@@ -22,7 +22,7 @@ export default function useFileUpload({
   const { showSnackbar, SnackbarComponent } = useSnackbar();
   const { t } = useTranslation();
 
-  const validateFiles = (fileList: File[]): File[] => {
+  const validateFiles = (fileList: File[]) => {
     const validationErrors: string[] = [];
     const fileSchema = createFileValidationSchema({
       required: t("files.fileRequired"),
@@ -42,8 +42,7 @@ export default function useFileUpload({
       return true;
     });
 
-    setGlobalError(validationErrors.length > 0 ? validationErrors.join("\n") : null);
-    return validFiles;
+    return { validFiles, validationErrors };
   };
 
   const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
@@ -69,9 +68,11 @@ export default function useFileUpload({
   const handleFiles = (fileList: FileList) => {
     const fileArray = Array.from(fileList);
 
-    // Validate files
-    const validFiles = validateFiles(fileArray);
-    if (validFiles.length === 0) return;
+    const { validFiles, validationErrors } = validateFiles(fileArray);
+    if (validFiles.length === 0) {
+      if (validationErrors.length > 0) setGlobalError(validationErrors.join("\n"));
+      return;
+    }
 
     const newFiles: FileUploadItem[] = validFiles.map((file) => ({
       file,
@@ -80,20 +81,31 @@ export default function useFileUpload({
     }));
 
     if (!multiple && newFiles.length > 1) {
-      setGlobalError(t('files.onlyOneAllowed'));
+      validationErrors.push(t('files.onlyOneAllowed'));
       showSnackbar(
         "error",
         [t('files.onlyOneAtATime')],
         t('messages.error')
       );
+      setGlobalError(validationErrors.join("\n"));
+      return;
+    }
+
+    if (multiple && files.length + newFiles.length > FILE_CONFIG.MAX_FILES_PER_UPLOAD) {
+      validationErrors.push(
+        t("files.tooManyFiles", { count: FILE_CONFIG.MAX_FILES_PER_UPLOAD }),
+      );
+      setGlobalError(validationErrors.join("\n"));
       return;
     }
 
     setFiles((prevFiles) =>
       multiple ? [...prevFiles, ...newFiles] : newFiles
     );
-    if (validFiles.length === fileArray.length) {
-      setGlobalError(null);
+    if (validationErrors.length > 0) {
+      // Keep invalid-selection feedback visible even when valid files from
+      // the same selection are accepted.
+      setGlobalError(validationErrors.join("\n"));
     }
   };
 
@@ -116,8 +128,6 @@ export default function useFileUpload({
     }
 
     setIsUploading(true);
-    setGlobalError(null);
-
     const uploadUrl = apiRoutes.files.uploadMany;
 
     // Update all files to uploading status
@@ -152,6 +162,7 @@ export default function useFileUpload({
         [t('files.uploadSuccess', { count: files.length })],
         t('messages.success')
       );
+      setGlobalError(null);
 
       setTimeout(() => {
         onClose?.();

@@ -45,9 +45,11 @@ export const FormContainer: React.FC<MyFormProps> = ({
   const dialogContentRef = useRef<HTMLDivElement>(null);
   const hasScrolledToError = useRef(false);
   const [discardDialogOpen, setDiscardDialogOpen] = useState(false);
+  const [internalSubmitting, setInternalSubmitting] = useState(false);
+  const submissionPending = isSubmitting || internalSubmitting;
 
   const handleClose = useCallback(() => {
-    if (isSubmitting) return;
+    if (submissionPending) return;
 
     if (isDirty) {
       setDiscardDialogOpen(true);
@@ -55,7 +57,7 @@ export const FormContainer: React.FC<MyFormProps> = ({
     }
 
     onClose();
-  }, [isDirty, isSubmitting, onClose]);
+  }, [isDirty, onClose, submissionPending]);
 
   const cancelDiscard = useCallback(() => {
     setDiscardDialogOpen(false);
@@ -207,13 +209,18 @@ export const FormContainer: React.FC<MyFormProps> = ({
   }, [errors, open, scrollToError]);
 
   const handleFormSubmit = useCallback(
-    (e: React.FormEvent) => {
+    async (e: React.FormEvent) => {
       e.preventDefault();
-      if (onSubmit) {
-        onSubmit(e);
+      if (!onSubmit || submissionPending) return;
+
+      setInternalSubmitting(true);
+      try {
+        await onSubmit(e);
+      } finally {
+        setInternalSubmitting(false);
       }
     },
-    [onSubmit]
+    [onSubmit, submissionPending]
   );
 
   useEffect(() => {
@@ -250,7 +257,7 @@ export const FormContainer: React.FC<MyFormProps> = ({
     title,
     subtitle,
     submitButtonText,
-    isSubmitting,
+    isSubmitting: submissionPending,
     isDirty,
     icon,
     maxWidth,
@@ -273,7 +280,10 @@ export const FormContainer: React.FC<MyFormProps> = ({
     <FormProvider value={contextValue}>
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={() => {
+          if (submissionPending) return;
+          handleClose();
+        }}
         maxWidth={maxWidth}
         fullWidth
         disableScrollLock

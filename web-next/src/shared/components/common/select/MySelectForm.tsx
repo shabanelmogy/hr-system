@@ -30,6 +30,7 @@ const MySelectForm = ({
   multiple = false,
   loading = false,
   disabled = false,
+  required = false,
   placeholder = "",
   showClearButton = false,
   limitTags = 3,
@@ -168,6 +169,20 @@ const MySelectForm = ({
                   autoComplete="off"
                   slotProps={{
                     ...params.slotProps,
+
+                    htmlInput: {
+                      ...params.slotProps.htmlInput,
+                      "aria-required": required || undefined,
+                      "aria-invalid": !!errors[errorFieldName],
+                      "aria-describedby": errors[errorFieldName]
+                        ? `${name}-error`
+                        : undefined,
+                    },
+
+                    formHelperText: {
+                      ...params.slotProps.formHelperText,
+                      id: `${name}-error`,
+                    },
 
                     input: {
                       ...params.slotProps.input,

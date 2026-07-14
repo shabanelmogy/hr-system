@@ -27,7 +27,6 @@ interface SecurityHeaderProps {
 const SecurityHeader = ({
   isEditing,
   isSubmitting,
-  isDirty,
   setIsEditing,
   handleCancel,
   handleSave,
@@ -142,7 +141,7 @@ const SecurityHeader = ({
           >
             <IconButton
               onClick={isEditing ? handleSave : () => setIsEditing(true)}
-              disabled={isSubmitting || (isEditing && !isDirty)}
+              disabled={isSubmitting}
               aria-label={isEditing ? t("actions.save") : t("actions.edit")}
               sx={{
                 bgcolor: isEditing

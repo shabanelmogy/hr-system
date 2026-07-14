@@ -150,6 +150,10 @@ const ResetPassword = () => {
               error={!!errors.newPassword}
               helperText={errors.newPassword?.message as string}
               slotProps={{
+                htmlInput: {
+                  "aria-required": true,
+                  "aria-invalid": !!errors.newPassword,
+                },
                 input: passwordInputProps
               }}
             />

@@ -87,6 +87,10 @@ const SecurityStep = ({
         inputRef={emailRef}
         sx={textFieldStyles}
         slotProps={{
+          htmlInput: {
+            "aria-required": true,
+            "aria-invalid": !!errors.email,
+          },
           input: {
             startAdornment: (
               <InputAdornment position="start">
@@ -116,6 +120,7 @@ const SecurityStep = ({
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
+                    type="button"
                     aria-label="toggle password visibility"
                     onClick={() => setShowPassword(!showPassword)}
                     edge="end"

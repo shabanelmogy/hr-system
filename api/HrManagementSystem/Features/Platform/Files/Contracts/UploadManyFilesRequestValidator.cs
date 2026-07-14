@@ -18,6 +18,7 @@ namespace HrManagementSystem.Features.Platform.Files.Contracts
             RuleForEach(x => x.Files)
                 .SetValidator(new FileSizeValidator(_fileLocalizer))
                 .SetValidator(new BlockedSignaturesValidator(_fileLocalizer))
+                .SetValidator(new FileContentTypeValidator(_fileLocalizer))
                 .SetValidator(new FileNameValidator(_fileLocalizer));
         }
     }

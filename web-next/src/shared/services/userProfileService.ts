@@ -5,6 +5,7 @@ import { apiRoutes } from "@/config";
  * Simplified User Profile Service
  */
 export interface UserInfo {
+  id?: string;
   firstName?: string;
   lastName?: string;
   userName?: string;
@@ -42,10 +43,7 @@ class UserProfileService {
    * Update user information
    */
   static async updateUserInfo(userData: any) {
-    return apiService.put(apiRoutes.auth.updateUserInfo, {
-      ...userData,
-      request: userData,
-    });
+    return apiService.put(apiRoutes.auth.updateUserInfo, userData);
   }
 
   /**
