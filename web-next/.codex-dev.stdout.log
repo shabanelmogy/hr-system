@@ -10,3 +10,161 @@
 ✓ Ready in 4.6s
 ○ Compiling proxy ...
 
+✓ Finished filesystem cache database compaction in 30.2s
+ GET / 200 in 2.7s (next.js: 156ms, proxy.ts: 619ms, application-code: 1893ms)
+[📡 API Proxy] 📋 Request to /api/account-info/GetUserPhoto
+[📡 API Proxy] 📋 Request to /api/v1/notifications/getUnreadCount
+[📡 API Proxy] 📋 Request to /api/account-info/GetInfo
+[📡 API Proxy] Backend returned status: 200
+[📡 API Proxy] Backend returned status: 200
+ GET /api/account-info/GetUserPhoto 200 in 1341ms (next.js: 1093ms, application-code: 248ms)
+ GET /api/v1/notifications/getUnreadCount 200 in 1340ms (next.js: 1093ms, application-code: 248ms)
+[📡 API Proxy] Backend returned status: 200
+ GET /api/account-info/GetInfo 200 in 1615ms (next.js: 1091ms, application-code: 524ms)
+ GET /api/auth/realtime-token 200 in 230ms (next.js: 46ms, application-code: 185ms)
+[SignalR Proxy] POST /hubs/company/negotiate
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] Backend returned 200 OK
+ POST /api/hubs/company/negotiate?negotiateVersion=1 200 in 1036ms (next.js: 935ms, application-code: 101ms)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=xB0vAPde-EV5cabQ-kfPEA&_=1784115638744 200 in 114ms (next.js: 15ms, application-code: 99ms)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] POST /hubs/company
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=xB0vAPde-EV5cabQ-kfPEA&_=1784115638879 200 in 118ms (next.js: 5ms, application-code: 113ms)
+[SignalR Proxy] Backend returned 200 OK
+ POST /api/hubs/company?id=xB0vAPde-EV5cabQ-kfPEA 200 in 129ms (next.js: 18ms, application-code: 111ms)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[📡 API Proxy] 📋 Request to /api/v1/notifications/getUnreadCount
+[📡 API Proxy] Backend returned status: 200
+ GET /api/v1/notifications/getUnreadCount 200 in 268ms (next.js: 22ms, application-code: 246ms)
+ GET /basic-data/countries 200 in 186ms (next.js: 41ms, proxy.ts: 102ms, application-code: 43ms)
+[📡 API Proxy] 📋 Request to /api/v1/countries/getAll
+[📡 API Proxy] Backend returned status: 200
+ GET /api/v1/countries/getAll 200 in 192ms (next.js: 12ms, application-code: 180ms)
+[📡 API Proxy] 📋 Request to /api/v1/export/exportExcel/Countries/en
+[📡 API Proxy] Backend returned status: 200
+ POST /api/v1/export/exportExcel/Countries/en 200 in 9.1s (next.js: 17ms, application-code: 9.1s)
+✓ Finished filesystem cache database compaction in 17.5s
+[📡 API Proxy] 📋 Request to /api/v1/notifications/getUnreadCount
+ GET /api/auth/session 200 in 252ms (next.js: 134ms, application-code: 118ms)
+[📡 API Proxy] Backend returned status: 200
+ GET /api/v1/notifications/getUnreadCount 200 in 255ms (next.js: 16ms, application-code: 239ms)
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=xB0vAPde-EV5cabQ-kfPEA&_=1784115639629 200 in 90s (next.js: 10ms, application-code: 90s)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[📡 API Proxy] 📋 Request to /api/v1/notifications/getUnreadCount
+ GET /api/auth/session 200 in 137ms (next.js: 7ms, application-code: 130ms)
+[📡 API Proxy] Backend returned status: 200
+ GET /api/v1/notifications/getUnreadCount 200 in 258ms (next.js: 22ms, application-code: 236ms)
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=xB0vAPde-EV5cabQ-kfPEA&_=1784115729766 200 in 90s (next.js: 12ms, application-code: 90s)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[📡 API Proxy] 📋 Request to /api/v1/notifications/getUnreadCount
+[📡 API Proxy] Backend returned status: 200
+ GET /api/v1/notifications/getUnreadCount 200 in 217ms (next.js: 15ms, application-code: 202ms)
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=xB0vAPde-EV5cabQ-kfPEA&_=1784115819889 200 in 90s (next.js: 16ms, application-code: 90s)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+ GET /api/auth/session 200 in 105ms (next.js: 5ms, application-code: 100ms)
+ GET /api/auth/session 200 in 95ms (next.js: 4ms, application-code: 91ms)
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=xB0vAPde-EV5cabQ-kfPEA&_=1784115910017 200 in 90s (next.js: 13ms, application-code: 90s)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] Backend returned 401 Unauthorized
+ GET /api/hubs/company?id=xB0vAPde-EV5cabQ-kfPEA&_=1784116000163 401 in 42ms (next.js: 18ms, application-code: 24ms)
+ GET /api/auth/realtime-token 200 in 1902ms (next.js: 6ms, application-code: 1896ms)
+[SignalR Proxy] POST /hubs/company/negotiate
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] Backend returned 200 OK
+ POST /api/hubs/company/negotiate?negotiateVersion=1 200 in 287ms (next.js: 11ms, application-code: 276ms)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=qbqlOSJFZicgh3q3KRrSew&_=1784116002428 200 in 101ms (next.js: 6ms, application-code: 95ms)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] POST /hubs/company
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=qbqlOSJFZicgh3q3KRrSew&_=1784116002537 200 in 122ms (next.js: 7ms, application-code: 115ms)
+[SignalR Proxy] Backend returned 200 OK
+ POST /api/hubs/company?id=qbqlOSJFZicgh3q3KRrSew 200 in 109ms (next.js: 5ms, application-code: 103ms)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[📡 API Proxy] 📋 Request to /api/v1/notifications/getUnreadCount
+[📡 API Proxy] Backend returned status: 200
+ GET /api/v1/notifications/getUnreadCount 200 in 200ms (next.js: 16ms, application-code: 184ms)
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=qbqlOSJFZicgh3q3KRrSew&_=1784116002682 200 in 90s (next.js: 6ms, application-code: 90s)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[📡 API Proxy] 📋 Request to /api/v1/notifications/getUnreadCount
+ GET /api/auth/session 200 in 147ms (next.js: 7ms, application-code: 140ms)
+[📡 API Proxy] Backend returned status: 200
+ GET /api/v1/notifications/getUnreadCount 200 in 198ms (next.js: 17ms, application-code: 181ms)
+○ Compiling /basic-data/states ...
+ GET /basic-data/states 200 in 6.0s (next.js: 5.8s, proxy.ts: 91ms, application-code: 63ms)
+[📡 API Proxy] 📋 Request to /api/v1/states/getAll
+[📡 API Proxy] Backend returned status: 200
+ GET /api/v1/states/getAll 200 in 479ms (next.js: 12ms, application-code: 468ms)
+[📡 API Proxy] 📋 Request to /api/v1/export/exportExcel/States/en
+[📡 API Proxy] Backend returned status: 200
+ POST /api/v1/export/exportExcel/States/en 200 in 167ms (next.js: 14ms, application-code: 154ms)
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=qbqlOSJFZicgh3q3KRrSew&_=1784116092812 200 in 90s (next.js: 11ms, application-code: 90s)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+✓ Finished filesystem cache database compaction in 11.2s
+✓ Finished filesystem cache database compaction in 11.8s
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=qbqlOSJFZicgh3q3KRrSew&_=1784116182928 200 in 90s (next.js: 19ms, application-code: 90s)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=qbqlOSJFZicgh3q3KRrSew&_=1784116273106 200 in 90s (next.js: 19ms, application-code: 90s)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] Backend returned 401 Unauthorized
+ GET /api/hubs/company?id=qbqlOSJFZicgh3q3KRrSew&_=1784116363239 401 in 27ms (next.js: 11ms, application-code: 16ms)
+ GET /api/auth/realtime-token 200 in 175ms (next.js: 5ms, application-code: 170ms)
+[SignalR Proxy] POST /hubs/company/negotiate
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] Backend returned 200 OK
+ POST /api/hubs/company/negotiate?negotiateVersion=1 200 in 95ms (next.js: 4ms, application-code: 91ms)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=OTB5dOAlag2FUn7T9HXaPA&_=1784116363553 200 in 102ms (next.js: 4ms, application-code: 98ms)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] POST /hubs/company
+[SignalR Proxy] Authentication: present
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=OTB5dOAlag2FUn7T9HXaPA&_=1784116363661 200 in 112ms (next.js: 5ms, application-code: 107ms)
+[SignalR Proxy] Backend returned 200 OK
+ POST /api/hubs/company?id=OTB5dOAlag2FUn7T9HXaPA 200 in 103ms (next.js: 3ms, application-code: 99ms)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+[📡 API Proxy] 📋 Request to /api/v1/notifications/getUnreadCount
+[📡 API Proxy] Backend returned status: 200
+ GET /api/v1/notifications/getUnreadCount 200 in 213ms (next.js: 15ms, application-code: 198ms)
+ GET /api/auth/session 200 in 122ms (next.js: 6ms, application-code: 116ms)
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=OTB5dOAlag2FUn7T9HXaPA&_=1784116363791 200 in 90s (next.js: 4ms, application-code: 90s)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present
+ GET /api/auth/session 200 in 120ms (next.js: 8ms, application-code: 112ms)
+[📡 API Proxy] 📋 Request to /api/v1/notifications/getUnreadCount
+[📡 API Proxy] Backend returned status: 200
+ GET /api/v1/notifications/getUnreadCount 200 in 202ms (next.js: 16ms, application-code: 186ms)
+ GET /basic-data/countries 200 in 182ms (next.js: 30ms, proxy.ts: 107ms, application-code: 45ms)
