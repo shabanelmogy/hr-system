@@ -39,7 +39,8 @@ const SummaryCards: React.FC<SummaryCardsProps> = ({
     },
     {
       title: t("states.dashboard.dataQuality") || "Data Quality",
-      value: `${completionRate}%`,
+      value: completionRate,
+      unit: '%',
       icon: DonutLarge,
       color: 'warning' as const,
     },
@@ -52,12 +53,13 @@ const SummaryCards: React.FC<SummaryCardsProps> = ({
           <MetricCard
             title={card.title}
             value={card.value}
+            unit={card.unit}
             icon={card.icon}
             color={card.color}
             gradient={true}
             size="medium"
             elevation={2}
-            formatValue={(value) => value.toString()}
+            formatValue={(value) => String(value)}
           />
         </Grid>
       ))}

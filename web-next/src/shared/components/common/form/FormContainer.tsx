@@ -12,8 +12,18 @@ import {
   alpha,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import type { TransitionProps } from "@mui/material/transitions";
 import { FormProvider } from "./FormContext";
 import type { MyFormProps } from "./types";
+
+const DialogTransition = React.forwardRef<
+  unknown,
+  TransitionProps & { children: React.ReactElement<unknown> }
+>(
+  function DialogTransition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  },
+);
 
 export const FormContainer: React.FC<MyFormProps> = ({
   open,
@@ -288,13 +298,12 @@ export const FormContainer: React.FC<MyFormProps> = ({
         fullWidth
         disableScrollLock
         slots={{
-          transition: Slide,
+          transition: DialogTransition,
         }}
         slotProps={{
           transition: {
-            direction: "up",
             onEntered: handleFocusAndScroll,
-          } as any,
+          },
         }}
         sx={getDialogStyles()}
       >

@@ -3,7 +3,7 @@ import { useCollectionExports } from "@/shared/hooks/useCollectionExports";
 import { Box } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { GridApiCommon } from "@mui/x-data-grid";
+import type { GridApi } from "@mui/x-data-grid";
 import type { Country } from "../types/Country";
 import CountriesCardView from "./CountriesCardView";
 import CountriesChartView from "./CountriesChartView";
@@ -28,7 +28,7 @@ interface CountriesMultiViewProps {
   countries: Country[];
   loading: boolean;
   isFetching?: boolean;
-  apiRef?: React.RefObject<GridApiCommon | null>;
+  apiRef?: React.RefObject<GridApi | null>;
   onEdit: (country: Country) => void;
   onDelete: (country: Country) => void;
   onView: (country: Country) => void;

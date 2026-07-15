@@ -3,7 +3,7 @@ import { useCollectionExports } from "@/shared/hooks/useCollectionExports";
 import { Box } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { GridApiCommon } from "@mui/x-data-grid";
+import type { GridApi } from "@mui/x-data-grid";
 import type { District } from "../types/District";
 import DistrictsCardView from "./DistrictsCardView";
 import DistrictsChartView from "./DistrictsChartView";
@@ -23,7 +23,7 @@ interface DistrictsMultiViewProps {
   districts: District[];
   loading: boolean;
   isFetching?: boolean;
-  apiRef?: React.RefObject<GridApiCommon | null>;
+  apiRef?: React.RefObject<GridApi | null>;
   onEdit: (district: District) => void;
   onDelete: (district: District) => void;
   onView: (district: District) => void;

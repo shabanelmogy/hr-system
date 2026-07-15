@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
-import { MyOverlayLoader } from "../loaders";
-import { usePdfExport, useServerExport, useSnackbar } from "@/shared/hooks";
+import MyOverlayLoader from "../loaders/MyOverlayLoader";
+import usePdfExport from "@/shared/hooks/usePdfExport";
+import useServerExport from "@/shared/hooks/useServerExport";
 import { Add, SaveAlt as ExportIcon, ViewList, ViewModule } from "@mui/icons-material";
 import {
   Button,
@@ -19,8 +19,18 @@ import {
   GridToolbarFilterButton,
   useGridApiContext,
 } from "@mui/x-data-grid";
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
+
+interface MyCustomToolbarProps {
+  showAddButton?: boolean;
+  addNewRow?: () => void;
+  fileName?: string;
+  reportPdfHeader?: string;
+  excludeColumnsFromExport?: string[];
+  viewMode?: string;
+  onViewModeChange?: (mode: string) => void;
+}
 
 export const MyCustomToolbar = ({
   showAddButton = false,
@@ -30,12 +40,11 @@ export const MyCustomToolbar = ({
   excludeColumnsFromExport = [],
   viewMode = "list",
   onViewModeChange,
-}) => {
-  const [anchorEl, setAnchorEl] = useState(null);
+}: MyCustomToolbarProps) => {
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
   const { t } = useTranslation();
   const apiRef = useGridApiContext();
-  const { showSnackbar } = useSnackbar();
   const theme = useTheme();
 
   const culture = theme.direction === "rtl" ? "ar" : "en";
@@ -61,7 +70,7 @@ export const MyCustomToolbar = ({
   // Determine if any export is in progress
   const isAnyExportInProgress = isPdfExporting || isServerExporting;
 
-  const handleExportClick = (event) => {
+  const handleExportClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 

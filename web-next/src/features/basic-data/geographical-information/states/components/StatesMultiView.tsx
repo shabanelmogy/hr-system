@@ -1,7 +1,7 @@
 import { MultiViewHeader } from "@/shared/components/common";
 import { useCollectionExports } from "@/shared/hooks/useCollectionExports";
 import { Box } from "@mui/material";
-import type { GridApiCommon } from "@mui/x-data-grid";
+import type { GridApi } from "@mui/x-data-grid";
 import { useCallback, useMemo, useState, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import type { State } from "../types/State";
@@ -23,7 +23,7 @@ interface StatesMultiViewProps {
   states: State[];
   loading: boolean;
   isFetching?: boolean;
-  apiRef?: RefObject<GridApiCommon | null>;
+  apiRef?: RefObject<GridApi | null>;
   onEdit: (state: State) => void;
   onDelete: (state: State) => void;
   onView: (state: State) => void;

@@ -26,7 +26,7 @@ const CurrencyChart: React.FC<CurrencyChartProps> = ({ data }) => {
       barRadius={4}
       orientation="horizontal"
       formatValue={(value) => value.toString()}
-      formatLabel={(label) => label}
+      formatLabel={(label) => String(label ?? '')}
       subtitle={undefined} />
   );
 };

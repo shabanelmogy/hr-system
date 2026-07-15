@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useCallback } from "react";
-import { GridApiCommon } from "@mui/x-data-grid";
+import { GridApi } from "@mui/x-data-grid";
 import { ContentWrapper } from "@/shared/components/layout";
 import { MyDataGrid } from "@/shared/components/common";
 import { useStatesPermissions } from "@/shared/hooks/usePermissions";
@@ -13,7 +13,7 @@ import { useStateColumns } from "./Columns";
 interface StatesDataGridProps {
   states: State[];
   loading?: boolean;
-  apiRef?: React.RefObject<GridApiCommon | null>;
+  apiRef?: React.RefObject<GridApi | null>;
   onEdit: (state: State) => void;
   onDelete: (state: State) => void;
   onView: (state: State) => void;

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import {
   CheckCircle,
   Error as ErrorIcon,
@@ -18,6 +17,17 @@ import {
 import ChartContainer from "./ChartContainer";
 import { formatNumber } from "./chartUtils";
 import { formatDisplayDate } from "@/shared/utils/dateUtils";
+import type { ChartContainerProps } from "./ChartContainer";
+import type { ChartInteractionHandler, TimelineChartBaseProps } from "./types";
+import { getChartValue } from "./types";
+
+export type SimpleTimelineChartProps = TimelineChartBaseProps &
+  Omit<ChartContainerProps, keyof TimelineChartBaseProps | "children"> & {
+    showDates?: boolean;
+  };
+
+const toDateValue = (value: unknown): string | number | Date | null =>
+  typeof value === "string" || typeof value === "number" || value instanceof Date ? value : null;
 
 const SimpleTimelineChart = ({
   data = [],
@@ -25,7 +35,7 @@ const SimpleTimelineChart = ({
   subtitle,
   height = 400,
   loading = false,
-  error = null,
+  error,
   gradient = false,
   showDates = true,
   showConnectors = true,
@@ -34,14 +44,14 @@ const SimpleTimelineChart = ({
   descriptionKey = "description",
   statusKey = "status",
   valueKey = "value",
-  formatValue = (value) => formatNumber(value),
+  formatValue = formatNumber,
   formatDate = formatDisplayDate,
-  onItemClick = null,
+  onItemClick,
   ...props
-}) => {
+}: SimpleTimelineChartProps) => {
   const theme = useTheme();
 
-  const getStatusIcon = (status) => {
+  const getStatusIcon = (status: string) => {
     switch (status) {
       case "completed":
       case "success":
@@ -58,7 +68,7 @@ const SimpleTimelineChart = ({
     }
   };
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string): string => {
     switch (status) {
       case "completed":
       case "success":
@@ -75,10 +85,8 @@ const SimpleTimelineChart = ({
     }
   };
 
-  const handleItemClick = (item, index) => {
-    if (onItemClick) {
-      onItemClick(item, index);
-    }
+  const handleItemClick: ChartInteractionHandler = (item, index) => {
+    onItemClick?.(item, index);
   };
 
   const chartContent = (
@@ -106,7 +114,11 @@ const SimpleTimelineChart = ({
     >
       <Stack spacing={2}>
         {data.map((item, index) => {
-          const status = item[statusKey] || "default";
+          const status = String(getChartValue(item, statusKey) || "default");
+          const dateValue = toDateValue(getChartValue(item, dateKey));
+          const itemValue = getChartValue(item, valueKey);
+          const category = getChartValue(item, "category");
+          const priority = getChartValue(item, "priority");
           const statusColor = getStatusColor(status);
           const isLast = index === data.length - 1;
 
@@ -139,7 +151,7 @@ const SimpleTimelineChart = ({
                 {/* Content */}
                 <Box sx={{ flex: 1, minWidth: 0, overflow: "hidden" }}>
                   {/* Date */}
-                  {showDates && item[dateKey] && (
+                  {showDates && dateValue !== null && (
                     <Typography
                       variant="caption"
                       sx={{
@@ -150,7 +162,7 @@ const SimpleTimelineChart = ({
                         overflow: "hidden",
                         textOverflow: "ellipsis"
                       }}>
-                      {formatDate(item[dateKey])}
+                      {formatDate(dateValue)}
                     </Typography>
                   )}
 
@@ -187,11 +199,11 @@ const SimpleTimelineChart = ({
                         whiteSpace: "nowrap",
                       }}
                     >
-                      {item[titleKey]}
+                      {String(getChartValue(item, titleKey) ?? '')}
                     </Typography>
 
                     {/* Description */}
-                    {item[descriptionKey] && (
+                    {getChartValue(item, descriptionKey) != null && (
                       <Typography
                         variant="body2"
                         sx={{
@@ -204,15 +216,15 @@ const SimpleTimelineChart = ({
                           WebkitBoxOrient: "vertical",
                           lineHeight: 1.4
                         }}>
-                        {item[descriptionKey]}
+                        {String(getChartValue(item, descriptionKey))}
                       </Typography>
                     )}
 
                     {/* Value */}
-                    {item[valueKey] && (
+                    {itemValue != null && (
                       <Box sx={{ mb: 1 }}>
                         <Chip
-                          label={formatValue(item[valueKey])}
+                          label={formatValue(itemValue)}
                           size="small"
                           color="primary"
                           variant="outlined"
@@ -242,23 +254,23 @@ const SimpleTimelineChart = ({
                         }}
                       />
 
-                      {item.category && (
+                      {category != null && (
                         <Chip
-                          label={item.category}
+                          label={String(category)}
                           size="small"
                           variant="outlined"
                         />
                       )}
 
-                      {item.priority && (
+                      {priority != null && (
                         <Chip
-                          label={`${item.priority}`}
+                          label={String(priority)}
                           size="small"
                           variant="outlined"
                           color={
-                            item.priority === "high"
+                            priority === "high"
                               ? "error"
-                              : item.priority === "medium"
+                              : priority === "medium"
                               ? "warning"
                               : "default"
                           }

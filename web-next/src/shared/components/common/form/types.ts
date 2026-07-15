@@ -16,13 +16,13 @@ export interface MyFormProps {
   variant?: "default" | "modern" | "glassmorphic";
   maxHeight?: string;
   hideFooter?: boolean;
-  recordId?: any;
+  recordId?: string | number | null;
   isViewMode?: boolean;
   focusFieldName?: string | null;
   autoFocusFirst?: boolean;
   overlayActionType?: string | null;
   overlayMessage?: string | null;
   errors?: Record<string, string>;
-  onErrorFound?: (errorField: string, fieldElement?: any) => void;
+  onErrorFound?: (errorField: string, fieldElement: HTMLElement) => void;
   footerLeft?: ReactNode;
 }

@@ -1,6 +1,12 @@
 import { Typography } from "@mui/material";
+import type { ReactNode } from "react";
 
-export default function MyBackGroundText({ text, direction }) {
+interface MyBackGroundTextProps {
+  text: ReactNode;
+  direction: "ltr" | "rtl";
+}
+
+export default function MyBackGroundText({ text, direction }: MyBackGroundTextProps) {
   return (
     <Typography
       variant="h4"

@@ -1,5 +1,17 @@
 // KPI Row dummy data
-export const kpisCore = [
+type KpiColor = "primary" | "secondary" | "success" | "warning" | "error" | "info";
+
+interface KpiData {
+  title: string;
+  value: number;
+  previousValue: number;
+  target: number;
+  unit?: string;
+  color: KpiColor;
+  description: string;
+}
+
+export const kpisCore: KpiData[] = [
   {
     title: "Total Employees",
     value: 1284,
@@ -54,7 +66,7 @@ export const openPositionsByDept = [
 ];
 
 // Additional KPIs to display with the same style
-export const extraKpis = [
+export const extraKpis: KpiData[] = [
   {
     title: "Avg Time to Hire",
     value: 32,

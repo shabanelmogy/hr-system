@@ -1,9 +1,29 @@
-/* eslint-disable react/prop-types */
 import { ResponsiveContainer, Treemap, Tooltip } from 'recharts';
+import type { TreemapNode } from 'recharts';
 import { useTheme } from '@mui/material';
 import { getChartTheme } from './chartThemes';
 import { COLOR_PALETTES, formatNumber, resolveChartColors, type ChartColors } from './chartUtils';
 import ChartContainer from './ChartContainer';
+import type { ChartContainerProps } from './ChartContainer';
+import type { ChartFormatter, ChartInteractionHandler, ChartTooltipProps } from './types';
+import { getChartValue } from './types';
+
+export interface TreemapDataItem {
+  children?: readonly TreemapDataItem[];
+  [key: string]: unknown;
+}
+
+export type TreemapChartProps = Omit<ChartContainerProps, 'children'> & {
+  data?: TreemapDataItem[];
+  colors?: ChartColors;
+  showTooltip?: boolean;
+  dataKey?: string;
+  nameKey?: string;
+  formatValue?: ChartFormatter;
+  formatLabel?: ChartFormatter;
+  onRectClick?: ChartInteractionHandler;
+  strokeWidth?: number;
+};
 
 const TreemapChart = ({
   data = [],
@@ -13,63 +33,65 @@ const TreemapChart = ({
   colors = COLOR_PALETTES.primary as ChartColors,
   showTooltip = true,
   loading = false,
-  error = null,
+  error,
   gradient = false,
   dataKey = 'size',
   nameKey = 'name',
-  formatValue = (value) => formatNumber(value),
-  formatLabel = (label) => label,
-  onRectClick = null,
+  formatValue = formatNumber,
+  formatLabel = (label) => String(label ?? ''),
+  onRectClick,
   strokeWidth = 2,
   ...props
-}) => {
+}: TreemapChartProps) => {
   const theme = useTheme();
   const chartTheme = getChartTheme(theme);
   const colorPalette = resolveChartColors(colors, theme.palette.mode);
 
-  const CustomTooltip = ({ active, payload }: any) => {
+  const CustomTooltip = ({ active, payload }: ChartTooltipProps) => {
     if (!active || !payload || !payload.length) return null;
 
-    const data = payload[0].payload;
+    const tooltipData = payload[0].payload;
+    if (!tooltipData || typeof tooltipData !== 'object') return null;
+    const category = getChartValue(tooltipData, 'category');
     return (
       <div style={chartTheme.tooltip.contentStyle}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{formatLabel(data[nameKey])}</p>
+        <p style={{ margin: 0, fontWeight: 'bold' }}>{formatLabel(getChartValue(tooltipData, nameKey))}</p>
         <p style={{ margin: '4px 0', color: payload[0].color }}>
-          Size: {formatValue(data[dataKey])}
+          Size: {formatValue(getChartValue(tooltipData, dataKey))}
         </p>
-        {data.category && (
+        {category != null && (
           <p style={{ margin: '4px 0', color: payload[0].color }}>
-            Category: {data.category}
+            Category: {String(category)}
           </p>
         )}
       </div>
     );
   };
 
-  const CustomizedContent = ({ root, depth, x, y, width, height, index, payload, nameKey, dataKey }: any) => {
-    const nodeName = (payload && (payload[nameKey] ?? payload.name)) || '';
+  const CustomizedContent = ({ depth, x, y, width, height: nodeHeight, index, ...node }: TreemapNode) => {
+    const nodeName = String(getChartValue(node, nameKey) ?? node.name ?? '');
     return (
       <g>
         <rect
           x={x}
           y={y}
           width={width}
-          height={height}
+          height={nodeHeight}
           style={{
             fill: depth < 2 ? colorPalette[index % colorPalette.length] : 'none',
             stroke: theme.palette.background.paper,
             strokeWidth: strokeWidth,
             strokeOpacity: 1,
           }}
-          onClick={() => onRectClick && onRectClick(payload, index)}
+          onClick={() => onRectClick?.(node, index)}
         />
         {depth === 1 ? (
           <text
             x={x + width / 2}
-            y={y + height / 2 + 7}
+            y={y + nodeHeight / 2 + 7}
             textAnchor="middle"
             fill={theme.palette.text.primary}
-            fontSize={Math.min(width / 8, height / 8, 14)}
+            fontSize={Math.min(width / 8, nodeHeight / 8, 14)}
             fontFamily={theme.typography.fontFamily}
           >
             {nodeName}
@@ -99,9 +121,9 @@ const TreemapChart = ({
         aspectRatio={4 / 3}
         stroke={theme.palette.background.paper}
         fill={colorPalette[0]}
-        content={<CustomizedContent nameKey={nameKey} dataKey={dataKey} />}
+        content={CustomizedContent}
       >
-        {showTooltip && <Tooltip content={<CustomTooltip />} />}
+        {showTooltip && <Tooltip content={CustomTooltip} />}
       </Treemap>
     </ResponsiveContainer>
   );

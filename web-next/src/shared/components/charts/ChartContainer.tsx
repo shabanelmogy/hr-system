@@ -1,6 +1,27 @@
-/* eslint-disable react/prop-types */
+import type { ElementType, ReactNode } from 'react';
+
 import { Box, Paper, Typography, Skeleton, useTheme, alpha } from '@mui/material';
+import type { PaperProps, SvgIconProps } from '@mui/material';
 import { TrendingUp } from '@mui/icons-material';
+
+export interface ChartContainerProps extends Omit<PaperProps, 'children' | 'title'> {
+  title?: ReactNode;
+  subtitle?: ReactNode;
+  children: ReactNode;
+  loading?: boolean;
+  error?: unknown;
+  height?: number | string;
+  gradient?: boolean;
+  fullHeight?: boolean;
+  icon?: ElementType<SvgIconProps>;
+  actions?: ReactNode;
+}
+
+const getErrorMessage = (error: unknown): string => {
+  if (error instanceof Error && error.message) return error.message;
+  if (typeof error === 'string' && error) return error;
+  return 'An unexpected error occurred';
+};
 
 const ChartContainer = ({
   title,
@@ -14,13 +35,14 @@ const ChartContainer = ({
   fullHeight = false,
   icon: Icon = TrendingUp,
   actions = null,
-  ...props
-}) => {
+  sx,
+  ...paperProps
+}: ChartContainerProps) => {
   const theme = useTheme();
 
   if (loading) {
     return (
-      <Paper elevation={elevation} sx={{ p: 3, borderRadius: 2, ...props.sx }}>
+      <Paper elevation={elevation} sx={[{ p: 3, borderRadius: 2 }, ...(Array.isArray(sx) ? sx : [sx])]} {...paperProps}>
         {title && <Skeleton variant="text" width="30%" height={32} />}
         <Skeleton variant="rectangular" width="100%" height={height} sx={{ mt: 2, borderRadius: 1 }} />
       </Paper>
@@ -29,7 +51,7 @@ const ChartContainer = ({
 
   if (error) {
     return (
-      <Paper elevation={elevation} sx={{ p: 3, borderRadius: 2, ...props.sx }}>
+      <Paper elevation={elevation} sx={[{ p: 3, borderRadius: 2 }, ...(Array.isArray(sx) ? sx : [sx])]} {...paperProps}>
         <Box
           sx={{
             display: 'flex',
@@ -50,7 +72,7 @@ const ChartContainer = ({
               color: "text.secondary",
               mt: 1
             }}>
-            {error.message || 'An unexpected error occurred'}
+            {getErrorMessage(error)}
           </Typography>
         </Box>
       </Paper>
@@ -60,7 +82,8 @@ const ChartContainer = ({
   return (
     <Paper
       elevation={elevation}
-      sx={{
+      {...paperProps}
+      sx={[{
         p: 3,
         borderRadius: 2,
         background: gradient
@@ -71,8 +94,7 @@ const ChartContainer = ({
           boxShadow: theme.shadows[4]
         },
         ...(fullHeight ? { height: '100%', display: 'flex', flexDirection: 'column', minHeight: height } : {}),
-        ...props.sx
-      }}
+      }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       {(title || actions) && (
         <Box

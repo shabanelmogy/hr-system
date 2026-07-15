@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useCallback } from "react";
-import { GridApiCommon } from "@mui/x-data-grid";
+import { GridApi } from "@mui/x-data-grid";
 import { ContentWrapper } from "@/shared/components/layout";
 import { MyDataGrid } from "@/shared/components/common";
 import { useModulePermissions } from "@/shared/hooks/usePermissions";
@@ -12,7 +12,7 @@ import { useAddressTypeColumns } from "./Columns";
 interface AddressTypesDataGridProps {
   items: AddressType[];
   loading?: boolean;
-  apiRef?: React.RefObject<GridApiCommon | null>;
+  apiRef?: React.RefObject<GridApi | null>;
   onEdit: (item: AddressType) => void;
   onDelete: (item: AddressType) => void;
   onView: (item: AddressType) => void;
@@ -69,7 +69,6 @@ const AddressTypesDataGrid: React.FC<AddressTypesDataGridProps> = ({
         lastAddedId={lastAddedId}
         lastEditedId={lastEditedId}
         lastDeletedIndex={lastDeletedIndex}
-        refreshData={onRefresh}
       />
     </ContentWrapper>
   );

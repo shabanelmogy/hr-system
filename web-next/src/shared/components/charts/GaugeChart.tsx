@@ -1,8 +1,24 @@
-/* eslint-disable react/prop-types */
 import { Box, Typography, useTheme } from '@mui/material';
 import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { formatNumber, formatPercentage } from './chartUtils';
 import ChartContainer from './ChartContainer';
+import type { ChartContainerProps } from './ChartContainer';
+import type { ChartFormatter } from './types';
+
+export type GaugeChartProps = Omit<ChartContainerProps, 'children'> & {
+  value?: number;
+  maxValue?: number;
+  minValue?: number;
+  colors?: readonly [string, string, string] | string[];
+  showValue?: boolean;
+  showPercentage?: boolean;
+  thickness?: number;
+  formatValue?: ChartFormatter;
+  thresholds?: readonly [number, number] | number[];
+  centerY?: number | string;
+  trackColor?: string;
+  arcGradient?: boolean;
+};
 
 const GaugeChart = ({
   value = 0,
@@ -15,17 +31,16 @@ const GaugeChart = ({
   showValue = true,
   showPercentage = true,
   loading = false,
-  error = null,
+  error,
   gradient = false,
   thickness = 20,
-  formatValue = (value) => formatNumber(value),
-  formatLabel = (label) => label,
+  formatValue = formatNumber,
   thresholds = [33, 66], // Percentage thresholds for color changes
   centerY = '64%', // vertical position of center content
-  trackColor = null, // optional custom track color
+  trackColor, // optional custom track color
   arcGradient = true, // use gradient fill for active arc
   ...props
-}) => {
+}: GaugeChartProps) => {
   const theme = useTheme();
 
   // Calculate percentage
@@ -33,9 +48,9 @@ const GaugeChart = ({
   
   // Determine color based on percentage and thresholds
   const getColor = () => {
-    if (percentage <= thresholds[0]) return colors[0]; // Red
-    if (percentage <= thresholds[1]) return colors[1]; // Yellow
-    return colors[2]; // Green
+    if (percentage <= (thresholds[0] ?? 33)) return colors[0] ?? '#ff4444';
+    if (percentage <= (thresholds[1] ?? 66)) return colors[1] ?? '#ffaa00';
+    return colors[2] ?? '#00aa00';
   };
 
   const activeColor = getColor();

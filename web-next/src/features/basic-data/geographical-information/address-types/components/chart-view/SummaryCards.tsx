@@ -50,9 +50,10 @@ const SummaryCards: React.FC<SummaryCardsProps> = ({
             gradient={true}
             size="medium"
             elevation={2}
-            formatValue={(value) => 
-              card.title.includes("Length") ? `${value.toFixed(1)} chars` : value.toString()
-            }
+            formatValue={(value) => {
+              const numericValue = Number(value);
+              return card.title.includes("Length") ? `${numericValue.toFixed(1)} chars` : String(value);
+            }}
           />
         </Grid>
       ))}

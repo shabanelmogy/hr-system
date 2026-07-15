@@ -1,9 +1,17 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import { GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
+import type {
+  GridApi,
+  GridPaginationModel,
+  GridRowId,
+  GridRowIdGetter,
+  GridRowsProp,
+  GridSortModel,
+} from "@mui/x-data-grid";
 
 interface UseGridPaginationProps {
-  apiRef: any;
-  rows: any[];
+  apiRef: React.RefObject<GridApi | null> | null;
+  rows: GridRowsProp;
+  rowId: GridRowIdGetter;
   paginationModel: GridPaginationModel;
   onPaginationModelChange: (model: GridPaginationModel) => void;
   paginationDirectionRef?: React.MutableRefObject<"forward" | "backward" | null>;
@@ -13,18 +21,14 @@ interface UseGridPaginationProps {
 export const useGridPagination = ({
   apiRef,
   rows = [],
+  rowId,
   paginationModel,
   onPaginationModelChange,
   paginationDirectionRef,
   onNavigationUpdate,
 }: UseGridPaginationProps) => {
-  const [displayPaginationModel, setDisplayPaginationModel] = useState(paginationModel);
   const [navigationCounter, setNavigationCounter] = useState(1);
   const navigationInProgressRef = useRef(false);
-
-  useEffect(() => {
-    setDisplayPaginationModel(paginationModel);
-  }, [paginationModel]);
 
   const getOrderedIds = useCallback(() => {
     const api = apiRef?.current;
@@ -32,8 +36,8 @@ export const useGridPagination = ({
       const sorted = api.getSortedRowIds();
       if (sorted.length > 0) return sorted;
     }
-    return rows.map((r) => r.id);
-  }, [apiRef, rows]);
+    return rows.map(rowId);
+  }, [apiRef, rowId, rows]);
 
   const syncNavigationWithSelection = useCallback(() => {
     const orderedIds = getOrderedIds();
@@ -45,7 +49,7 @@ export const useGridPagination = ({
     const selection = apiRef.current.getSelectedRows();
     if (selection && selection.size > 0) {
       const selectedId = Array.from(selection.keys())[0];
-      const rowIndex = orderedIds.findIndex((id) => id === selectedId);
+      const rowIndex = orderedIds.findIndex((id: GridRowId) => id === selectedId);
       if (rowIndex !== -1) {
         setNavigationCounter(rowIndex + 1);
         return;
@@ -61,13 +65,9 @@ export const useGridPagination = ({
   }, [onNavigationUpdate, syncNavigationWithSelection]);
 
   useEffect(() => {
-    const orderedIds = getOrderedIds();
-    if (orderedIds.length > 0) {
-      syncNavigationWithSelection();
-    } else {
-      setNavigationCounter(0);
-    }
-  }, [getOrderedIds, syncNavigationWithSelection]);
+    const timer = setTimeout(syncNavigationWithSelection, 0);
+    return () => clearTimeout(timer);
+  }, [syncNavigationWithSelection]);
 
   useEffect(() => {
     if (!apiRef?.current) return;
@@ -88,18 +88,9 @@ export const useGridPagination = ({
 
     const unsubscribePagination = apiRef.current.subscribeEvent(
       "paginationModelChange",
-      (model: GridPaginationModel) => {
-        if (!model) return;
-
+      () => {
         const isMovingToPreviousPage =
           paginationDirectionRef?.current === "backward";
-
-        const nextModel = {
-          page: model.page ?? 0,
-          pageSize: model.pageSize ?? displayPaginationModel.pageSize,
-        };
-
-        setDisplayPaginationModel(nextModel);
 
         if (navigationInProgressRef.current) return;
         
@@ -116,7 +107,7 @@ export const useGridPagination = ({
           const selectedId = Array.from(
             apiRef.current.getSelectedRows?.().keys?.() ?? []
           )[0];
-          const selectedIndex = orderedIds.findIndex((id) => id === selectedId);
+          const selectedIndex = orderedIds.findIndex((id: GridRowId) => id === selectedId);
           const movedBackFromLaterPage =
             selectedIndex >= firstIndexOnPage + pageSize;
 
@@ -142,7 +133,7 @@ export const useGridPagination = ({
       unsubscribeSort();
       unsubscribePagination();
     };
-  }, [apiRef, paginationDirectionRef, displayPaginationModel, syncNavigationWithSelection]);
+  }, [apiRef, paginationDirectionRef, syncNavigationWithSelection]);
 
   const navigateToIndex = useCallback(
     (targetIndex: number) => {
@@ -150,18 +141,13 @@ export const useGridPagination = ({
       if (targetIndex < 0 || targetIndex >= orderedIds.length) return;
 
       const targetRowId = orderedIds[targetIndex];
-      const { pageSize } = displayPaginationModel;
+      const { pageSize } = paginationModel;
       const targetPage = Math.floor(targetIndex / pageSize);
       const rowIndexOnPage = targetIndex % pageSize;
 
       setNavigationCounter(targetIndex + 1);
-      setDisplayPaginationModel((prev) => ({
-        ...prev,
-        page: targetPage,
-      }));
-
       navigationInProgressRef.current = true;
-      onPaginationModelChange({ ...displayPaginationModel, page: targetPage });
+      onPaginationModelChange({ ...paginationModel, page: targetPage });
 
       setTimeout(() => {
         apiRef?.current?.setRowSelectionModel({
@@ -172,13 +158,13 @@ export const useGridPagination = ({
         navigationInProgressRef.current = false;
       }, 150);
     },
-    [apiRef, getOrderedIds, displayPaginationModel, onPaginationModelChange]
+    [apiRef, getOrderedIds, paginationModel, onPaginationModelChange]
   );
 
   return {
     navigationCounter,
-    displayPaginationModel,
-    orderedCount: getOrderedIds().length,
+    displayPaginationModel: paginationModel,
+    orderedCount: rows.length,
     navigateToIndex,
     handleGoToFirstRecord: () => navigateToIndex(0),
     handleGoToLastRecord: () => navigateToIndex(getOrderedIds().length - 1),

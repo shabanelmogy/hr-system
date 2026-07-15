@@ -1,7 +1,36 @@
-/* eslint-disable react/prop-types */
-import { Box, Typography, useTheme, alpha } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import { formatNumber } from './chartUtils';
 import ChartContainer from './ChartContainer';
+import type { ChartContainerProps } from './ChartContainer';
+import type { ChartData, ChartFormatter } from './types';
+import { getChartNumber, getChartValue } from './types';
+
+type HeatmapAxisValue = string | number;
+
+export type HeatmapChartProps = Omit<ChartContainerProps, 'children' | 'height'> & {
+  data?: ChartData;
+  height?: number;
+  colors?: readonly [string, string] | string[];
+  showLabels?: boolean;
+  xKey?: string;
+  yKey?: string;
+  valueKey?: string;
+  formatValue?: ChartFormatter;
+  formatLabel?: ChartFormatter;
+  onCellClick?: (cellData: object) => void;
+  cellSize?: 'auto' | number;
+  borderRadius?: number;
+  showColorScale?: boolean;
+};
+
+interface RgbColor {
+  r: number;
+  g: number;
+  b: number;
+}
+
+const toAxisValue = (value: unknown): HeatmapAxisValue =>
+  typeof value === 'number' ? value : String(value ?? '');
 
 const HeatmapChart = ({
   data = [],
@@ -9,42 +38,40 @@ const HeatmapChart = ({
   subtitle,
   height = 400,
   colors = ['#ffffff', '#1976d2'], // From light to dark
-  showTooltip = true,
   showLabels = true,
   loading = false,
-  error = null,
+  error,
   gradient = false,
   xKey = 'x',
   yKey = 'y',
   valueKey = 'value',
-  formatValue = (value) => formatNumber(value),
-  formatLabel = (label) => label,
-  onCellClick = null,
+  formatValue = formatNumber,
+  formatLabel = (label) => String(label ?? ''),
+  onCellClick,
   cellSize = 'auto', // 'auto' or number
   borderRadius = 4,
   showColorScale = true,
   ...props
-}) => {
+}: HeatmapChartProps) => {
   const theme = useTheme();
 
   // Get unique x and y values
-  const xValues = [...new Set(data.map(d => d[xKey]))].sort();
-  const yValues = [...new Set(data.map(d => d[yKey]))].sort();
+  const xValues = [...new Set(data.map(d => toAxisValue(getChartValue(d, xKey))))].sort((a, b) => String(a).localeCompare(String(b), undefined, { numeric: true }));
+  const yValues = [...new Set(data.map(d => toAxisValue(getChartValue(d, yKey))))].sort((a, b) => String(a).localeCompare(String(b), undefined, { numeric: true }));
   
   // Get min and max values for color scaling
-  const values = data.map(d => d[valueKey]).filter(v => v !== null && v !== undefined);
+  const values = data.map(d => getChartNumber(d, valueKey));
   const minValue = Math.min(...values);
   const maxValue = Math.max(...values);
 
   // Create a map for quick lookup
-  const dataMap = new Map();
+  const dataMap = new Map<string, object>();
   data.forEach(d => {
-    const key = `${d[xKey]}-${d[yKey]}`;
+    const key = `${getChartValue(d, xKey)}-${getChartValue(d, yKey)}`;
     dataMap.set(key, d);
   });
 
   // Calculate cell size
-  const containerWidth = '100%';
   const containerHeight = height - 40; // Account for labels
   const calculatedCellSize = cellSize === 'auto' 
     ? Math.min(
@@ -54,7 +81,7 @@ const HeatmapChart = ({
     : cellSize;
 
   // Color interpolation function
-  const getColor = (value) => {
+  const getColor = (value: number | null | undefined): string => {
     if (value === null || value === undefined) {
       return theme.palette.grey[100];
     }
@@ -62,11 +89,11 @@ const HeatmapChart = ({
     const normalizedValue = (value - minValue) / (maxValue - minValue);
     
     // Simple linear interpolation between two colors
-    const startColor = colors[0];
-    const endColor = colors[1];
+    const startColor = colors[0] ?? '#ffffff';
+    const endColor = colors[1] ?? '#1976d2';
     
     // Convert hex to RGB
-    const hexToRgb = (hex) => {
+    const hexToRgb = (hex: string): RgbColor | null => {
       const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
       return result ? {
         r: parseInt(result[1], 16),
@@ -88,12 +115,12 @@ const HeatmapChart = ({
   };
 
   // Get normalized value for a given value
-  const getNormalizedValue = (value) => {
+  const getNormalizedValue = (value: number | null | undefined): number => {
     if (value === null || value === undefined) return 0;
     return (value - minValue) / (maxValue - minValue);
   };
 
-  const handleCellClick = (cellData) => {
+  const handleCellClick = (cellData: object | undefined) => {
     if (onCellClick && cellData) {
       onCellClick(cellData);
     }
@@ -102,8 +129,6 @@ const HeatmapChart = ({
   const renderColorScale = () => {
     if (!showColorScale) return null;
     
-    const scaleSteps = 5;
-    const stepValue = (maxValue - minValue) / (scaleSteps - 1);
     
     return (
       <Box sx={{ display: 'flex', alignItems: 'center', mt: 2, justifyContent: 'center' }}>
@@ -141,7 +166,7 @@ const HeatmapChart = ({
         <Box sx={{ display: 'flex' }}>
           {/* Y-axis labels */}
           <Box sx={{ display: 'flex', flexDirection: 'column', mr: 1, justifyContent: 'space-around' }}>
-            {yValues.map((yValue, yIndex) => (
+            {yValues.map((yValue) => (
               <Box
                 key={yValue}
                 sx={{
@@ -187,11 +212,11 @@ const HeatmapChart = ({
             </Box>
             
             {/* Heatmap cells */}
-            {yValues.map((yValue, yIndex) => (
+            {yValues.map((yValue) => (
               <Box key={yValue} sx={{ display: 'flex' }}>
-                {xValues.map((xValue, xIndex) => {
+                {xValues.map((xValue) => {
                   const cellData = dataMap.get(`${xValue}-${yValue}`);
-                  const value = cellData ? cellData[valueKey] : null;
+                  const value = cellData ? getChartNumber(cellData, valueKey) : null;
                   const cellColor = getColor(value);
                   const normalizedValue = getNormalizedValue(value);
                   

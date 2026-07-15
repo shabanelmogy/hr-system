@@ -102,7 +102,7 @@ const CountryReportPage = () => {
       {(updateSearchParams: UpdateSearchParams, currentParams: ReportSearchParams) => (
         <>
           <TextFieldWithClear
-            searchText={currentParams.CountryAr || ""}
+            searchText={String(currentParams.CountryAr ?? "")}
             label={t("countries.arabicName")}
             handleSearch={(e: ChangeEvent<HTMLInputElement>) =>
               updateSearchParams({ CountryAr: e.target.value })
@@ -111,7 +111,7 @@ const CountryReportPage = () => {
           />
 
           <TextFieldWithClear
-            searchText={currentParams.CountryEn || ""}
+            searchText={String(currentParams.CountryEn ?? "")}
             label={t("countries.englishName")}
             handleSearch={(e: ChangeEvent<HTMLInputElement>) =>
               updateSearchParams({ CountryEn: e.target.value })

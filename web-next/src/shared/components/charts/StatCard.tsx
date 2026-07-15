@@ -1,4 +1,5 @@
-/* eslint-disable react/prop-types */
+import type { ElementType, ReactNode } from 'react';
+
 import {
   Box,
   Card,
@@ -7,14 +8,60 @@ import {
   useTheme,
   alpha,
   Grid,
-  Divider,
-  Chip,
   Skeleton,
   Avatar,
   LinearProgress
 } from '@mui/material';
-import { TrendingUp, TrendingDown, Remove, ArrowUpward, ArrowDownward } from '@mui/icons-material';
+import type { CardProps, SvgIconProps, TypographyProps } from '@mui/material';
+import { Remove, ArrowUpward, ArrowDownward } from '@mui/icons-material';
 import { formatNumber, formatPercentage } from './chartUtils';
+import type { ChartFormatter } from './types';
+
+type StatColor = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+type StatSize = 'small' | 'medium' | 'large';
+type StatVariant = 'default' | 'elevated' | 'outlined' | 'filled';
+
+export interface StatCardItem {
+  label: ReactNode;
+  value: unknown;
+  unit?: string;
+  color?: StatColor;
+  icon?: ElementType<SvgIconProps>;
+  trend?: number | null;
+  trendDirection?: 'up' | 'down' | 'neutral' | null;
+  subtitle?: ReactNode;
+  formatValue?: ChartFormatter;
+  progress?: number | null;
+  description?: ReactNode;
+}
+
+interface StatColumns {
+  xs: number;
+  sm: number;
+  md: number;
+  lg: number;
+}
+
+export type StatCardProps = Omit<CardProps, 'children' | 'onClick' | 'title' | 'variant'> & {
+  stats?: readonly StatCardItem[];
+  title?: ReactNode;
+  subtitle?: ReactNode;
+  height?: number | 'auto';
+  loading?: boolean;
+  error?: unknown;
+  gradient?: boolean;
+  columns?: StatColumns;
+  cardElevation?: number;
+  variant?: StatVariant;
+  size?: StatSize;
+  onClick?: (stat: StatCardItem, index: number) => void;
+};
+
+const getErrorMessage = (error: unknown): string => {
+  if (error instanceof Error && error.message) return error.message;
+  if (typeof error === 'string' && error) return error;
+  return 'An unexpected error occurred';
+};
 
 const StatCard = ({
   stats = [],
@@ -22,18 +69,17 @@ const StatCard = ({
   subtitle,
   height = 'auto',
   loading = false,
-  error = null,
+  error,
   gradient = false,
   columns = { xs: 1, sm: 2, md: 3, lg: 4 },
-  showDividers = true,
   cardElevation = 1,
   variant = 'default', // 'default', 'elevated', 'outlined', 'filled'
   size = 'medium', // 'small', 'medium', 'large'
-  onClick = null,
-  ...props
-}) => {
+  onClick,
+  sx,
+  ...cardProps
+}: StatCardProps) => {
   const theme = useTheme();
-  const GridCompat = Grid as any;
   const isDark = theme.palette.mode === 'dark';
 
   // Loading state
@@ -44,22 +90,22 @@ const StatCard = ({
         sx={{
           height: height === 'auto' ? 'auto' : height,
           borderRadius: 3,
-          ...props.sx
+          ...(Array.isArray(sx) ? Object.assign({}, ...sx) : sx)
         }}
       >
         <CardContent sx={{ p: 3 }}>
           {title && <Skeleton variant="text" width="40%" height={32} sx={{ mb: 2 }} />}
-          <GridCompat container spacing={3}>
+          <Grid container spacing={3}>
             {Array.from({ length: 4 }).map((_, index) => (
-              <GridCompat item xs={columns.xs} sm={columns.sm} md={columns.md} lg={columns.lg} key={index}>
+              <Grid size={{ xs: columns.xs, sm: columns.sm, md: columns.md, lg: columns.lg }} key={index}>
                 <Box sx={{ textAlign: 'center', p: 2 }}>
                   <Skeleton variant="circular" width={48} height={48} sx={{ mb: 2, mx: 'auto' }} />
                   <Skeleton variant="text" width="60%" height={40} sx={{ mb: 1, mx: 'auto' }} />
                   <Skeleton variant="text" width="80%" height={20} sx={{ mx: 'auto' }} />
                 </Box>
-              </GridCompat>
+              </Grid>
             ))}
-          </GridCompat>
+          </Grid>
         </CardContent>
       </Card>
     );
@@ -73,7 +119,7 @@ const StatCard = ({
         sx={{
           height: height === 'auto' ? 'auto' : height,
           borderRadius: 3,
-          ...props.sx
+          ...(Array.isArray(sx) ? Object.assign({}, ...sx) : sx)
         }}
       >
         <CardContent sx={{ p: 3, textAlign: 'center' }}>
@@ -83,14 +129,14 @@ const StatCard = ({
           <Typography variant="body2" sx={{
             color: "text.secondary"
           }}>
-            {error.message || 'An unexpected error occurred'}
+            {getErrorMessage(error)}
           </Typography>
         </CardContent>
       </Card>
     );
   }
 
-  const getSizeStyles = () => {
+  const getSizeStyles = (): { p: number; iconSize: number; titleVariant: TypographyProps['variant']; valueVariant: TypographyProps['variant'] } => {
     switch (size) {
       case 'small':
         return { p: 1.5, iconSize: 24, titleVariant: 'h6', valueVariant: 'h5' };
@@ -103,19 +149,19 @@ const StatCard = ({
 
   const sizeStyles = getSizeStyles();
 
-  const renderStat = (stat, index) => {
+  const renderStat = (stat: StatCardItem, index: number) => {
     const {
       label,
       value,
       unit = '',
       color = 'primary',
-      icon: Icon = null,
+      icon: Icon,
       trend = null,
       trendDirection = null, // 'up', 'down', 'neutral'
       subtitle: statSubtitle = null,
-      formatValue: customFormat = null,
+      formatValue: customFormat,
       progress = null, // Progress bar value (0-100)
-      description = null
+      description
     } = stat;
 
     const themeColor = theme.palette[color] || theme.palette.primary;
@@ -173,7 +219,7 @@ const StatCard = ({
     };
 
     return (
-      <GridCompat item xs={columns.xs} sm={columns.sm} md={columns.md} lg={columns.lg} key={index}>
+      <Grid size={{ xs: columns.xs, sm: columns.sm, md: columns.md, lg: columns.lg }} key={index}>
         <Box sx={cardStyles} onClick={() => onClick && onClick(stat, index)}>
           {/* Icon with Avatar background */}
           {Icon && (
@@ -201,7 +247,7 @@ const StatCard = ({
 
           {/* Main value with enhanced typography */}
           <Typography
-            variant={sizeStyles.valueVariant as any}
+            variant={sizeStyles.valueVariant}
             className="stat-value"
             sx={{
               fontWeight: 700,
@@ -327,14 +373,15 @@ const StatCard = ({
             </Typography>
           )}
         </Box>
-      </GridCompat>
+      </Grid>
     );
   };
 
   return (
     <Card
+      {...cardProps}
       elevation={cardElevation}
-      sx={{
+      sx={[{
         background: gradient
           ? `linear-gradient(135deg, ${alpha(theme.palette.background.paper, 0.95)} 0%, ${alpha(theme.palette.background.default, 0.95)} 100%)`
           : theme.palette.background.paper,
@@ -345,8 +392,7 @@ const StatCard = ({
         '&:hover': {
           boxShadow: theme.shadows[cardElevation + 2]
         },
-        ...props.sx
-      }}
+      }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       <CardContent sx={{ p: 3 }}>
         {/* Enhanced Header */}

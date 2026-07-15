@@ -2,7 +2,7 @@
 // components/RolesDataGrid.jsx
 import { Delete, Edit, Key, Visibility } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
-import { GridActionsCellItem } from "@mui/x-data-grid";
+import { GridActionsCellItem, type GridColDef } from "@mui/x-data-grid";
 import { useCallback, useMemo } from "react";
 
 import { MyDataGrid } from "@/shared/components/common";
@@ -75,7 +75,7 @@ const RolesDataGrid = ({
   );
 
   // Memoized columns
-  const columns = useMemo(
+  const columns = useMemo<GridColDef[]>(
     () => [
       {
         field: "id",

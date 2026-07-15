@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useCallback } from "react";
-import { GridApiCommon } from "@mui/x-data-grid";
+import { GridApi } from "@mui/x-data-grid";
 import { ContentWrapper } from "@/shared/components/layout";
 import { MyDataGrid } from "@/shared/components/common";
 import { useModulePermissions } from "@/shared/hooks/usePermissions";
@@ -13,7 +13,7 @@ import { useDistrictColumns } from "./Columns";
 interface DistrictsDataGridProps {
   districts: District[];
   loading?: boolean;
-  apiRef?: React.RefObject<GridApiCommon | null>;
+  apiRef?: React.RefObject<GridApi | null>;
   onEdit: (district: District) => void;
   onDelete: (district: District) => void;
   onView: (district: District) => void;
@@ -71,7 +71,6 @@ const DistrictsDataGrid: React.FC<DistrictsDataGridProps> = ({
         pageSizeOptions={[5, 10, 25]}
         fileName={t("districts.title") || "Districts"}
         reportPdfHeader={t("districts.title") || "Districts"}
-        refreshData={onRefresh}
         lastAddedId={lastAddedId}
         lastEditedId={lastEditedId}
         lastDeletedIndex={lastDeletedIndex}

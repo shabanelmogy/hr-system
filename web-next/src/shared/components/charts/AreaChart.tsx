@@ -1,9 +1,23 @@
-/* eslint-disable react/prop-types */
 import { ResponsiveContainer, AreaChart as RechartsAreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useTheme } from '@mui/material';
 import { getChartTheme } from './chartThemes';
 import { COLOR_PALETTES, formatNumber, resolveChartColors, type ChartColors } from './chartUtils';
 import ChartContainer from './ChartContainer';
+import type { ChartContainerProps } from './ChartContainer';
+import type {
+  CartesianChartProps,
+  ChartInteractionHandler,
+  ChartTooltipProps,
+} from './types';
+
+export type AreaChartProps = CartesianChartProps &
+  Omit<ChartContainerProps, keyof CartesianChartProps | 'children'> & {
+    strokeWidth?: number;
+    fillOpacity?: number;
+    smooth?: boolean;
+    stacked?: boolean;
+    onAreaClick?: ChartInteractionHandler;
+  };
 
 const AreaChart = ({
   data = [],
@@ -17,23 +31,23 @@ const AreaChart = ({
   showLegend = false,
   showTooltip = true,
   loading = false,
-  error = null,
+  error,
   strokeWidth = 2,
   fillOpacity = 0.6,
   gradient = true,
   smooth = true,
   stacked = false,
   multiSeries = [], // Array of objects: [{ key: 'series1', name: 'Series 1', color: '#color' }]
-  formatValue = (value) => formatNumber(value),
-  formatLabel = (label) => label,
-  onAreaClick = null,
+  formatValue = formatNumber,
+  formatLabel = (label) => String(label ?? ''),
+  onAreaClick,
   ...props
-}) => {
+}: AreaChartProps) => {
   const theme = useTheme();
   const chartTheme = getChartTheme(theme);
   const colorPalette = resolveChartColors(colors, theme.palette.mode);
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: ChartTooltipProps) => {
     if (!active || !payload || !payload.length) return null;
 
     return (
@@ -48,20 +62,9 @@ const AreaChart = ({
     );
   };
 
-  const handleAreaClick = (data, index) => {
-    if (onAreaClick) {
-      onAreaClick(data, index);
-    }
+  const handleAreaClick: ChartInteractionHandler = (data, index) => {
+    onAreaClick?.(data, index);
   };
-
-  const createGradient = (color, id) => (
-    <defs>
-      <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
-        <stop offset="5%" stopColor={color} stopOpacity={0.8}/>
-        <stop offset="95%" stopColor={color} stopOpacity={0.1}/>
-      </linearGradient>
-    </defs>
-  );
 
   const renderAreas = () => {
     if (multiSeries.length > 0) {
@@ -80,7 +83,7 @@ const AreaChart = ({
             strokeWidth={strokeWidth}
             fill={gradient ? `url(#${gradientId})` : color}
             fillOpacity={fillOpacity}
-            onClick={handleAreaClick as any}
+            onClick={onAreaClick ? (data) => handleAreaClick(data, index) : undefined}
           />
         );
       });
@@ -97,7 +100,7 @@ const AreaChart = ({
         strokeWidth={strokeWidth}
         fill={gradient ? `url(#${gradientId})` : color}
         fillOpacity={fillOpacity}
-        onClick={handleAreaClick as any}
+        onClick={onAreaClick ? (data) => handleAreaClick(data, 0) : undefined}
       />
     );
   };
@@ -162,7 +165,7 @@ const AreaChart = ({
           tickFormatter={formatValue}
         />
         
-        {showTooltip && <Tooltip content={<CustomTooltip />} />}
+        {showTooltip && <Tooltip content={CustomTooltip} />}
         {showLegend && <Legend wrapperStyle={chartTheme.legend.wrapperStyle} />}
         
         {renderAreas()}

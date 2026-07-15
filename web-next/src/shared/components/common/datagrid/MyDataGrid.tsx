@@ -1,22 +1,13 @@
-/* eslint-disable react/prop-types */
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import FirstPageIcon from "@mui/icons-material/FirstPage";
-import LastPageIcon from "@mui/icons-material/LastPage";
-import { Box, IconButton, Tooltip, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import {
-  GridFooterContainer,
-  GridPagination,
-} from "@mui/x-data-grid";
+import { Box } from "@mui/material";
+import { useTheme, type SxProps, type Theme } from "@mui/material/styles";
+import type { GridPaginationModel, GridRowId } from "@mui/x-data-grid";
 import { arSD } from "@mui/x-data-grid/locales";
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { MyCustomToolbar } from "./MyCustomToolbar";
 import { GridFooter } from "./GridFooter";
 import ClientDataGrid from "./ClientDataGrid";
 
-const dataGridStyles = {
+const dataGridStyles: SxProps<Theme> = {
   "& .highlighted-row": {
     backgroundColor: "#ffe0b2 !important",
     fontWeight: "bold",
@@ -40,14 +31,14 @@ const dataGridStyles = {
     padding: "0 16px",
   },
   "& .MuiDataGrid-row.Mui-selected": {
-    backgroundColor: (theme) => theme.palette.primary.light + "30",
+    backgroundColor: (theme: Theme) => theme.palette.primary.light + "30",
     "&:hover": {
-      backgroundColor: (theme) => theme.palette.primary.light + "40",
+      backgroundColor: (theme: Theme) => theme.palette.primary.light + "40",
     },
   },
 };
 
-import type { MyDataGridProps } from "./types";
+import type { MyDataGridProps, NavigationUpdate } from "./types";
 
 const MyDataGrid = ({
   rows = [],
@@ -62,7 +53,7 @@ const MyDataGrid = ({
   fileName,
   reportPdfHeader,
   showNavigationButtons = true,
-  onNavigationUpdate = null,
+  onNavigationUpdate,
   excludeColumnsFromExport = [],
   viewMode = "list",
   onViewModeChange = () => {},
@@ -73,43 +64,21 @@ const MyDataGrid = ({
 }: MyDataGridProps) => {
   const theme = useTheme();
 
-  // Patch apiRef.current.setRowSelectionModel to support both old array syntax and new object syntax in MUI v9
-  if (apiRef?.current) {
-    const originalSetRowSelectionModel = apiRef.current.setRowSelectionModel;
-    if (originalSetRowSelectionModel && !originalSetRowSelectionModel.isPatched) {
-      const patched = function (model, reason) {
-        if (Array.isArray(model)) {
-          return originalSetRowSelectionModel.call(apiRef.current, {
-            type: "include",
-            ids: new Set(model),
-          }, reason);
-        }
-        return originalSetRowSelectionModel.call(apiRef.current, model, reason);
-      };
-      patched.isPatched = true;
-      apiRef.current.setRowSelectionModel = patched;
-    }
-  }
-
   // ── Controlled pagination ─────────────────────────────────────────────────
   // Using controlled paginationModel instead of initialState so we can clamp
   // the page whenever rows shrink (e.g. after a delete). With initialState the
   // DataGrid is uncontrolled and ignores external setPage calls during the same
   // render cycle, causing it to show only the leftover rows on a ghost page.
-  const [paginationModel, setPaginationModel] = React.useState({
+  const [paginationModel, setPaginationModel] = React.useState<GridPaginationModel>({
     page: 0,
     pageSize: 5,
   });
-  const paginationDirectionRef = React.useRef("forward");
+  const pageSize = paginationModel.pageSize;
+  const paginationDirectionRef = React.useRef<"forward" | "backward">("forward");
 
-  const handlePaginationModelChange = React.useCallback((modelOrUpdater) => {
+  const handlePaginationModelChange = React.useCallback((next: GridPaginationModel) => {
     setPaginationModel((prev) => {
-      const next =
-        typeof modelOrUpdater === "function"
-          ? modelOrUpdater(prev)
-          : modelOrUpdater;
-
-      if (next?.pageSize !== prev.pageSize) {
+      if (next.pageSize !== prev.pageSize) {
         paginationDirectionRef.current = "forward";
       } else if (next?.page < prev.page) {
         paginationDirectionRef.current = "backward";
@@ -117,10 +86,7 @@ const MyDataGrid = ({
         paginationDirectionRef.current = "forward";
       }
 
-      if (
-        !next ||
-        (next.page === prev.page && next.pageSize === prev.pageSize)
-      ) {
+      if (next.page === prev.page && next.pageSize === prev.pageSize) {
         return prev;
       }
 
@@ -130,30 +96,28 @@ const MyDataGrid = ({
 
   // Clamp page to last valid page whenever row count changes.
   // This is the single source of truth — no apiRef.setPage needed.
-  React.useEffect(() => {
-    if (rows.length === 0) return;
+  const clampedPaginationModel = React.useMemo(() => {
+    if (rows.length === 0) return { page: 0, pageSize };
     const lastValidPage = Math.max(
       0,
-      Math.ceil(rows.length / paginationModel.pageSize) - 1
+      Math.ceil(rows.length / pageSize) - 1
     );
-    if (paginationModel.page > lastValidPage) {
-      setPaginationModel((prev) => ({ ...prev, page: lastValidPage }));
-    }
-  }, [rows.length, paginationModel.pageSize, paginationModel.page]);
+    return { page: Math.min(paginationModel.page, lastValidPage), pageSize };
+  }, [rows.length, pageSize, paginationModel.page]);
 
   // Store the navigation update function
-  const navigationUpdateRef = React.useRef(null);
+  const navigationUpdateRef = React.useRef<NavigationUpdate | null>(null);
 
   // Effect to handle last added/edited/deleted row selection and scroll
   React.useEffect(() => {
     if (!apiRef?.current || rows.length === 0) return;
+    const api = apiRef.current;
 
-    const selectAndScroll = (id) => {
-      const orderedIds = apiRef.current.getSortedRowIds();
+    const selectAndScroll = (id: GridRowId) => {
+      const orderedIds = api.getSortedRowIds();
       const rowIndex = orderedIds.findIndex((rId) => rId === id);
       if (rowIndex === -1) return;
 
-      const { pageSize } = paginationModel;
       const targetPage = Math.floor(rowIndex / pageSize);
       const rowIndexOnPage = rowIndex % pageSize;
 
@@ -170,12 +134,12 @@ const MyDataGrid = ({
     };
 
     const timer = setTimeout(() => {
-      if (lastAddedId && rows.some((row) => row.id === lastAddedId)) {
+      if (lastAddedId != null && rows.some((row) => row.id === lastAddedId)) {
         selectAndScroll(lastAddedId);
-      } else if (lastEditedId && rows.some((row) => row.id === lastEditedId)) {
+      } else if (lastEditedId != null && rows.some((row) => row.id === lastEditedId)) {
         selectAndScroll(lastEditedId);
       } else if (lastDeletedIndex !== null) {
-        const orderedIds = apiRef.current.getSortedRowIds();
+        const orderedIds = api.getSortedRowIds();
         const targetIndex = Math.min(lastDeletedIndex, orderedIds.length - 1);
         if (targetIndex >= 0) {
           selectAndScroll(orderedIds[targetIndex]);
@@ -184,7 +148,7 @@ const MyDataGrid = ({
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [apiRef, rows, lastAddedId, lastEditedId, lastDeletedIndex]);
+  }, [apiRef, rows, lastAddedId, lastEditedId, lastDeletedIndex, pageSize]);
 
   // ── Auto-select first row on initial data load ────────────────────────────
   // Fires once when rows first arrive (no pending add/edit/delete operation).
@@ -194,8 +158,8 @@ const MyDataGrid = ({
       !apiRef?.current ||
       rows.length === 0 ||
       initialSelectionDone.current ||
-      lastAddedId ||
-      lastEditedId ||
+      lastAddedId != null ||
+      lastEditedId != null ||
       lastDeletedIndex !== null
     )
       return;
@@ -241,7 +205,7 @@ const MyDataGrid = ({
         rows={rows}
         columns={columns}
         loading={loading}
-        apiRef={apiRef}
+        apiRef={apiRef ?? undefined}
         filterMode={filterMode}
         getRowId={rowId}
         localeText={getLocaleText()}
@@ -250,7 +214,7 @@ const MyDataGrid = ({
             sortModel: sortModel,
           },
         }}
-        paginationModel={paginationModel}
+        paginationModel={clampedPaginationModel}
         onPaginationModelChange={handlePaginationModelChange}
         pageSizeOptions={[5, 10, 25, 50]}
         sx={dataGridStyles}
@@ -272,10 +236,11 @@ const MyDataGrid = ({
               <GridFooter
                 apiRef={apiRef}
                 rows={rows}
-                paginationModel={paginationModel}
+                rowId={rowId}
+                paginationModel={clampedPaginationModel}
                 onPaginationModelChange={handlePaginationModelChange}
                 paginationDirectionRef={paginationDirectionRef}
-                onNavigationUpdate={(updateFn: any) => {
+                onNavigationUpdate={(updateFn) => {
                   navigationUpdateRef.current = updateFn;
                 }}
               />

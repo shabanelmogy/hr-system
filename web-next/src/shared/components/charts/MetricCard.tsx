@@ -1,4 +1,5 @@
-/* eslint-disable react/prop-types */
+import type { ElementType, MouseEventHandler, ReactNode } from "react";
+
 import { East, North, South } from "@mui/icons-material";
 import {
   alpha,
@@ -14,7 +15,46 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import type { CardProps, SvgIconProps, TypographyProps } from "@mui/material";
 import { formatNumber, formatPercentage } from "./chartUtils";
+import type { ChartFormatter } from "./types";
+
+export type MetricColor = "primary" | "secondary" | "success" | "warning" | "error" | "info";
+type MetricSize = "small" | "medium" | "large";
+type MetricVariant = "default" | "elevated" | "outlined" | "glassmorphism";
+
+interface MetricSizeConfig {
+  padding: number;
+  titleVariant: TypographyProps["variant"];
+  valueVariant: TypographyProps["variant"];
+  subtitleVariant: TypographyProps["variant"];
+  iconSize: number;
+  avatarSize: number;
+  badgeSize: "small" | "medium";
+}
+
+export type MetricCardProps = Omit<CardProps, "children" | "onClick" | "title" | "variant"> & {
+  title: ReactNode;
+  value: number;
+  previousValue?: number | null;
+  target?: number | null;
+  unit?: string;
+  icon?: ElementType<SvgIconProps>;
+  color?: MetricColor;
+  showTrend?: boolean;
+  showProgress?: boolean;
+  showTarget?: boolean;
+  formatValue?: ChartFormatter;
+  onClick?: MouseEventHandler<HTMLDivElement>;
+  gradient?: boolean;
+  size?: MetricSize;
+  variant?: MetricVariant;
+  loading?: boolean;
+  subtitle?: ReactNode;
+  description?: ReactNode;
+  badge?: ReactNode;
+  footerContent?: ReactNode;
+};
 
 const MetricCard = ({
   title,
@@ -22,24 +62,25 @@ const MetricCard = ({
   previousValue = null,
   target = null,
   unit = "",
-  icon: Icon = null,
+  icon: Icon,
   color = "primary",
   showTrend = true,
   showProgress = false,
   showTarget = false,
-  formatValue = (value) => formatNumber(value),
-  onClick = null,
+  formatValue = formatNumber,
+  onClick,
   elevation = 1,
   gradient = false,
   size = "medium", // 'small', 'medium', 'large'
   variant = "default", // 'default', 'elevated', 'outlined', 'glassmorphism'
   loading = false,
-  subtitle = null,
-  description = null,
-  badge = null, // Additional badge/count indicator
-  footerContent = null, // Optional footer content (e.g., sparkline)
-  ...props
-}) => {
+  subtitle,
+  description,
+  badge, // Additional badge/count indicator
+  footerContent, // Optional footer content (e.g., sparkline)
+  sx,
+  ...cardProps
+}: MetricCardProps) => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 
@@ -51,7 +92,7 @@ const MetricCard = ({
         sx={{
           borderRadius: 3,
           overflow: "hidden",
-          ...props.sx,
+          ...(Array.isArray(sx) ? Object.assign({}, ...sx) : sx),
         }}
       >
         <CardContent sx={{ p: 3 }}>
@@ -104,7 +145,7 @@ const MetricCard = ({
   };
 
   // Enhanced size configurations
-  const sizeConfig = {
+  const sizeConfig: Record<MetricSize, MetricSizeConfig> = {
     small: {
       padding: 2,
       titleVariant: "body2",
@@ -130,7 +171,7 @@ const MetricCard = ({
       subtitleVariant: "body1",
       iconSize: 44,
       avatarSize: 72,
-      badgeSize: "large",
+      badgeSize: "medium",
     },
   };
 
@@ -222,11 +263,9 @@ const MetricCard = ({
 
   return (
     <Card
+      {...cardProps}
       elevation={variant === "elevated" ? elevation + 2 : elevation}
-      sx={{
-        ...getVariantStyles(),
-        ...props.sx,
-      }}
+      sx={[getVariantStyles(), ...(Array.isArray(sx) ? sx : [sx])]}
       onClick={onClick}
     >
       <CardContent sx={{ p: config.padding, position: "relative" }}>

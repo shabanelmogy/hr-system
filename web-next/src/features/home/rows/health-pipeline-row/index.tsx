@@ -35,7 +35,7 @@ const HealthPipelineRow = () => {
           showValue
           showPercentage
           gradient
-          formatValue={(v) => String(Math.round(v))}
+          formatValue={(v) => String(Math.round(Number(v)))}
         />
       </Grid>
 
@@ -63,7 +63,7 @@ const HealthPipelineRow = () => {
           showValue
           showPercentage
           gradient
-          formatValue={(v) => String(Math.round(v))}
+          formatValue={(v) => String(Math.round(Number(v)))}
         />
       </Grid>
 

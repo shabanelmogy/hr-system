@@ -1,9 +1,27 @@
-/* eslint-disable react/prop-types */
 import { ResponsiveContainer, ComposedChart as RechartsComposedChart, Bar, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useTheme } from '@mui/material';
 import { getChartTheme } from './chartThemes';
 import { COLOR_PALETTES, formatNumber, resolveChartColors, type ChartColors } from './chartUtils';
 import ChartContainer from './ChartContainer';
+import type { ChartContainerProps } from './ChartContainer';
+import type { CartesianChartProps, ChartInteractionHandler, ChartTooltipProps } from './types';
+
+interface ComposedSeries {
+  type: 'bar' | 'line' | 'area';
+  key: string;
+  name?: string;
+  color?: string;
+  yAxisId?: 'left' | 'right' | string;
+  barSize?: number;
+  strokeWidth?: number;
+  fillOpacity?: number;
+}
+
+export type ComposedChartProps = Omit<CartesianChartProps, 'multiSeries' | 'yKey'> &
+  Omit<ChartContainerProps, keyof CartesianChartProps | 'children'> & {
+    series?: readonly ComposedSeries[];
+    onElementClick?: ChartInteractionHandler;
+  };
 
 const ComposedChart = ({
   data = [],
@@ -16,19 +34,19 @@ const ComposedChart = ({
   showLegend = true,
   showTooltip = true,
   loading = false,
-  error = null,
+  error,
   gradient = false,
   series = [], // Array of series config: [{ type: 'bar', key: 'value1', name: 'Series 1', color: '#color', yAxisId: 'left' }]
-  formatValue = (value) => formatNumber(value),
-  formatLabel = (label) => label,
-  onElementClick = null,
+  formatValue = formatNumber,
+  formatLabel = (label) => String(label ?? ''),
+  onElementClick,
   ...props
-}) => {
+}: ComposedChartProps) => {
   const theme = useTheme();
   const chartTheme = getChartTheme(theme);
   const colorPalette = resolveChartColors(colors, theme.palette.mode);
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: ChartTooltipProps) => {
     if (!active || !payload || !payload.length) return null;
 
     return (
@@ -43,10 +61,8 @@ const ComposedChart = ({
     );
   };
 
-  const handleElementClick = (data, index) => {
-    if (onElementClick) {
-      onElementClick(data, index);
-    }
+  const handleElementClick: ChartInteractionHandler = (data, index) => {
+    onElementClick?.(data, index);
   };
 
   const renderElements = () => {
@@ -56,7 +72,6 @@ const ComposedChart = ({
         dataKey: seriesConfig.key,
         name: seriesConfig.name,
         yAxisId: seriesConfig.yAxisId || 'left',
-        onClick: handleElementClick as any
       };
 
       switch (seriesConfig.type) {
@@ -68,6 +83,7 @@ const ComposedChart = ({
               fill={color}
               radius={[4, 4, 0, 0]}
               maxBarSize={seriesConfig.barSize}
+              onClick={onElementClick ? (datum, elementIndex) => handleElementClick(datum, elementIndex) : undefined}
             />
           );
         
@@ -81,6 +97,7 @@ const ComposedChart = ({
               strokeWidth={seriesConfig.strokeWidth || 2}
               dot={{ r: 4, fill: color }}
               activeDot={{ r: 6 }}
+              onClick={onElementClick ? (datum) => handleElementClick(datum, index) : undefined}
             />
           );
         
@@ -94,6 +111,7 @@ const ComposedChart = ({
               strokeWidth={seriesConfig.strokeWidth || 2}
               fill={color}
               fillOpacity={seriesConfig.fillOpacity || 0.6}
+              onClick={onElementClick ? (datum) => handleElementClick(datum, index) : undefined}
             />
           );
         
@@ -143,7 +161,7 @@ const ComposedChart = ({
           />
         )}
         
-        {showTooltip && <Tooltip content={<CustomTooltip />} />}
+        {showTooltip && <Tooltip content={CustomTooltip} />}
         {showLegend && <Legend wrapperStyle={chartTheme.legend.wrapperStyle} />}
         
         {renderElements()}

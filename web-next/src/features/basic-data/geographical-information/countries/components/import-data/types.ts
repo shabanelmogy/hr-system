@@ -5,12 +5,8 @@ export interface Country {
   alpha3Code: string;
   phoneCode: string;
   currencyCode: string | null;
+  importStatus?: string;
 }
 
-export interface ColumnConfig {
-  field: string;
-  headerName: string;
-  mobileHeader: string;
-  icon: React.ReactNode;
-  type?: string;
-}
+export type ColumnConfig = MyDataTableColumn<Country>;
+import type { MyDataTableColumn } from "@/shared/components/common/datagrid/MyDataTable";

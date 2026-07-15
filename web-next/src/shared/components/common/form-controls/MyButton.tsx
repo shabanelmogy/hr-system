@@ -1,10 +1,15 @@
-/* eslint-disable react/prop-types */
-// components/CustomButton.jsx
 import { Button, CircularProgress } from "@mui/material";
+import type { ButtonProps } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 
+interface MyButtonProps extends ButtonProps {
+  loading?: boolean;
+  gradientColors?: readonly string[];
+  hoverColors?: readonly string[];
+}
+
 const MyButton = ({
-  children = undefined,
+  children,
   loading = false,
   variant = "contained",
   gradientColors = ["#2575fc", "#6a11cb"],
@@ -13,32 +18,35 @@ const MyButton = ({
   size = "large",
   type = "button",
   disabled = false,
-  onClick = undefined,
-  sx = {},
+  onClick,
+  sx,
   ...otherProps
-}) => {
+}: MyButtonProps) => {
+  const startColor = gradientColors[0] ?? "#2575fc";
+  const endColor = gradientColors[1] ?? startColor;
+  const hoverStartColor = hoverColors[0] ?? "#1e5ed6";
+  const hoverEndColor = hoverColors[1] ?? hoverStartColor;
   const buttonStyle = {
     color: "#fff",
-    background: `linear-gradient(45deg, ${gradientColors[0]}, ${gradientColors[1]})`,
+    background: `linear-gradient(45deg, ${startColor}, ${endColor})`,
     "&:hover": {
-      background: `linear-gradient(45deg, ${hoverColors[0]}, ${hoverColors[1]})`,
+      background: `linear-gradient(45deg, ${hoverStartColor}, ${hoverEndColor})`,
     },
     py: 1.2,
     fontWeight: "bold",
     fontSize: 16,
-    boxShadow: `0 4px 12px ${alpha(gradientColors[0], 0.4)}`,
+    boxShadow: `0 4px 12px ${alpha(startColor, 0.4)}`,
     borderRadius: 2,
     textTransform: "none",
-    ...sx,
   };
 
   return (
     <Button
       type={type}
-      variant={variant as "text" | "outlined" | "contained"}
+      variant={variant}
       fullWidth={fullWidth}
-      size={size as "small" | "medium" | "large"}
-      sx={buttonStyle}
+      size={size}
+      sx={[buttonStyle, ...(Array.isArray(sx) ? sx : [sx])]}
       disabled={disabled || loading}
       onClick={onClick}
       {...otherProps}

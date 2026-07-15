@@ -21,7 +21,6 @@ const TimelineChart: React.FC<TimelineChartProps> = ({ data, t }) => {
           colors="blue"
           showGrid={true}
           showTooltip={true}
-          curve="monotone"
         />
       </CardContent>
     </Card>

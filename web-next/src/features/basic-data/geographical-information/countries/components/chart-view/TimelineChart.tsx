@@ -32,7 +32,7 @@ const TimelineChart: React.FC<TimelineChartProps> = ({ data }) => {
       strokeWidth={2}
       fillOpacity={0.3}
       formatValue={(value) => value.toString()}
-      formatLabel={(label) => label}
+      formatLabel={(label) => String(label ?? '')}
       subtitle={undefined} />
   );
 };

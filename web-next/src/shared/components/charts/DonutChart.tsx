@@ -1,7 +1,15 @@
-/* eslint-disable react/prop-types */
-import { Box, Typography, useTheme } from "@mui/material";
-import PieChart from "./PieChart";
+import type { ReactNode } from "react";
+
+import { Box, Typography } from "@mui/material";
+import PieChart, { type PieChartProps } from "./PieChart";
 import { formatNumber, type ChartColors } from "./chartUtils";
+import { getChartNumber } from "./types";
+
+export type DonutChartProps = PieChartProps & {
+  centerContent?: ReactNode;
+  showCenterValue?: boolean;
+  centerLabel?: ReactNode;
+};
 
 const DonutChart = ({
   data = [],
@@ -15,21 +23,20 @@ const DonutChart = ({
   showTooltip = true,
   showLabels = false, // Usually false for donut charts
   loading = false,
-  error = null,
+  error,
   innerRadius = 60,
   outerRadius = 120,
   gradient = false,
-  centerContent = null, // Custom content for center
+  centerContent, // Custom content for center
   showCenterValue = true, // Show total value in center
   centerLabel = "Total",
-  formatValue = (value) => formatNumber(value),
-  formatLabel = (label) => label,
-  onSliceClick = null,
+  formatValue = formatNumber,
+  formatLabel = (label) => String(label ?? ''),
+  onSliceClick,
   ...props
-}) => {
-  const theme = useTheme();
+}: DonutChartProps) => {
 
-  const total = data.reduce((sum, item) => sum + (item[valueKey] || 0), 0);
+  const total = data.reduce((sum, item) => sum + getChartNumber(item, valueKey), 0);
 
   const defaultCenterContent = showCenterValue ? (
     <Box

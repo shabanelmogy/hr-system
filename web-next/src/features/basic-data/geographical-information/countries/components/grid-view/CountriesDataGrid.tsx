@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { GridApiCommon } from "@mui/x-data-grid";
+import { GridApi } from "@mui/x-data-grid";
 import { ContentWrapper } from "@/shared/components/layout";
 import { MyDataGrid } from "@/shared/components/common";
 import { useCountriesPermissions } from "@/shared/hooks/usePermissions";
@@ -13,7 +13,7 @@ interface CountriesDataGridProps {
   countries: Country[];
   loading?: boolean;
   isFetching?: boolean;
-  apiRef?: React.RefObject<GridApiCommon | null>;
+  apiRef?: React.RefObject<GridApi | null>;
   onEdit: (country: Country) => void;
   onDelete: (country: Country) => void;
   onView: (country: Country) => void;
@@ -66,7 +66,6 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
         pageSizeOptions={[5, 10, 25]}
         fileName={t("countries.title")}
         reportPdfHeader={t("countries.title")}
-        refreshData={onRefresh}
         lastAddedId={lastAddedId}
         lastEditedId={lastEditedId}
         lastDeletedIndex={lastDeletedIndex}

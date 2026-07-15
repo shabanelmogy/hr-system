@@ -1,9 +1,23 @@
-/* eslint-disable react/prop-types */
 import { ResponsiveContainer, BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell } from 'recharts';
 import { useTheme } from '@mui/material';
 import { getChartTheme } from './chartThemes';
 import { formatNumber, resolveChartColors, type ChartColors } from './chartUtils';
 import ChartContainer from './ChartContainer';
+import type { ChartContainerProps } from './ChartContainer';
+import type {
+  CartesianChartProps,
+  ChartInteractionHandler,
+  ChartTooltipProps,
+} from './types';
+
+export type BarChartProps = CartesianChartProps &
+  Omit<ChartContainerProps, keyof CartesianChartProps | 'children'> & {
+    orientation?: 'vertical' | 'horizontal';
+    barRadius?: number;
+    barSize?: number;
+    stacked?: boolean;
+    onBarClick?: ChartInteractionHandler;
+  };
 
 const BarChart = ({
   data = [],
@@ -17,24 +31,24 @@ const BarChart = ({
   showLegend = false,
   showTooltip = true,
   loading = false,
-  error = null,
+  error,
   orientation = 'vertical', // 'vertical' or 'horizontal'
   barRadius = 4,
-  barSize = null,
+  barSize,
   gradient = false,
   stacked = false,
   multiSeries = [], // Array of objects: [{ key: 'series1', name: 'Series 1', color: '#color' }]
-  formatValue = (value) => formatNumber(value),
-  formatLabel = (label) => label,
-  onBarClick = null,
+  formatValue = formatNumber,
+  formatLabel = (label) => String(label ?? ''),
+  onBarClick,
   ...props
-}) => {
+}: BarChartProps) => {
   const theme = useTheme();
   const chartTheme = getChartTheme(theme);
   const colorPalette = resolveChartColors(colors, theme.palette.mode);
   const hoverCursor = chartTheme.tooltip.cursor;
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: ChartTooltipProps) => {
     if (!active || !payload || !payload.length) return null;
 
     return (
@@ -49,10 +63,8 @@ const BarChart = ({
     );
   };
 
-  const handleBarClick = (data, index) => {
-    if (onBarClick) {
-      onBarClick(data, index);
-    }
+  const handleBarClick: ChartInteractionHandler = (data, index) => {
+    onBarClick?.(data, index);
   };
 
   const renderBars = () => {
@@ -65,7 +77,8 @@ const BarChart = ({
           fill={series.color || colorPalette[index % colorPalette.length]}
           radius={orientation === 'vertical' ? [barRadius, barRadius, 0, 0] : [0, barRadius, barRadius, 0]}
           maxBarSize={barSize}
-          onClick={handleBarClick as any}
+          stackId={stacked ? 'stack' : undefined}
+          onClick={onBarClick ? handleBarClick : undefined}
         />
       ));
     }
@@ -76,7 +89,7 @@ const BarChart = ({
         fill={colorPalette[0]}
         radius={orientation === 'vertical' ? [barRadius, barRadius, 0, 0] : [0, barRadius, barRadius, 0]}
         maxBarSize={barSize}
-        onClick={handleBarClick as any}
+        onClick={onBarClick ? handleBarClick : undefined}
       >
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={colorPalette[index % colorPalette.length]} />
@@ -132,7 +145,7 @@ const BarChart = ({
           </>
         )}
         
-        {showTooltip && <Tooltip content={<CustomTooltip />} cursor={hoverCursor} />}
+        {showTooltip && <Tooltip content={CustomTooltip} cursor={hoverCursor} />}
         {showLegend && <Legend wrapperStyle={chartTheme.legend.wrapperStyle} />}
         
         {renderBars()}

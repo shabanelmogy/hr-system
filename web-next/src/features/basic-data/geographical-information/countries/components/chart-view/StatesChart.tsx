@@ -21,8 +21,8 @@ const StatesChart: React.FC<StatesChartProps> = ({ data }) => {
       title={t("countries.charts.statesByCountry") || "States by Country"}
       subtitle={t("countries.charts.statesByCountryDesc") || "Top countries with most states"}
       data={chartData}
-      xAxisKey="name"
-      yAxisKeys={[
+      xKey="name"
+      multiSeries={[
         {
           key: 'states',
           name: t("countries.charts.activeStates") || 'Active States',

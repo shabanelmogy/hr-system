@@ -3,7 +3,7 @@ import { useCollectionExports } from "@/shared/hooks/useCollectionExports";
 import { Box } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { GridApiCommon } from "@mui/x-data-grid";
+import type { GridApi } from "@mui/x-data-grid";
 import type { AddressType } from "../types/AddressType";
 import AddressTypesDataGrid from "./grid-view/AddressTypesDataGrid";
 import AddressTypesCardView from "./AddressTypesCardView";
@@ -21,7 +21,7 @@ interface AddressTypesMultiViewProps {
   items: AddressType[];
   loading: boolean;
   isFetching?: boolean;
-  apiRef?: React.RefObject<GridApiCommon | null>;
+  apiRef?: React.RefObject<GridApi | null>;
   onEdit: (item: AddressType) => void;
   onDelete: (item: AddressType) => void;
   onView: (item: AddressType) => void;

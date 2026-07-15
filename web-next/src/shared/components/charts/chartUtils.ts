@@ -1,5 +1,7 @@
 // Chart utility functions and constants
 
+import type { PaletteMode } from '@mui/material';
+
 // Enhanced color palettes optimized for dark and light modes
 export const COLOR_PALETTES = {
   primary: {
@@ -37,9 +39,15 @@ export const COLOR_PALETTES = {
 };
 
 // Backward compatibility - return appropriate palette based on theme mode
-export const getColorPalette = (paletteName, mode = 'light') => {
+export type ChartPaletteName = keyof typeof COLOR_PALETTES;
+export type ChartColors = string[] | { light: string[]; dark: string[] } | string;
+
+const isChartPaletteName = (value: string): value is ChartPaletteName => value in COLOR_PALETTES;
+
+export const getColorPalette = (paletteName: string, mode: PaletteMode = 'light'): string[] => {
+  if (!isChartPaletteName(paletteName)) return COLOR_PALETTES.primary[mode];
   const palette = COLOR_PALETTES[paletteName];
-  return palette ? palette[mode] : COLOR_PALETTES.primary[mode];
+  return palette[mode];
 };
 
 // Chart dimensions
@@ -58,30 +66,39 @@ export const ANIMATION_CONFIG = {
 };
 
 // Format number with locale
-export const formatNumber = (value, locale = 'en-US', options = {}) => {
+const toFiniteNumber = (value: unknown): number => {
+  const numberValue = typeof value === 'number' ? value : Number(value);
+  return Number.isFinite(numberValue) ? numberValue : 0;
+};
+
+export const formatNumber = (
+  value: unknown,
+  locale = 'en-US',
+  options: Intl.NumberFormatOptions = {},
+): string => {
   return new Intl.NumberFormat(locale, {
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
     ...options
-  }).format(value);
+  }).format(toFiniteNumber(value));
 };
 
 // Format percentage
-export const formatPercentage = (value, decimals = 1) => {
-  return `${Number(value).toFixed(decimals)}%`;
+export const formatPercentage = (value: unknown, decimals = 1): string => {
+  return `${toFiniteNumber(value).toFixed(decimals)}%`;
 };
 
 // Format currency
-export const formatCurrency = (value, currency = 'USD', locale = 'en-US') => {
+export const formatCurrency = (value: unknown, currency = 'USD', locale = 'en-US'): string => {
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: currency
-  }).format(value);
+  }).format(toFiniteNumber(value));
 };
 
 // Generate gradient colors
-export const generateGradient = (color, steps = 5) => {
-  const colors = [];
+export const generateGradient = (color: string, steps = 5): string[] => {
+  const colors: string[] = [];
   for (let i = 0; i < steps; i++) {
     const opacity = 1 - (i * 0.2);
     colors.push(`${color}${Math.round(opacity * 255).toString(16).padStart(2, '0')}`);
@@ -90,7 +107,10 @@ export const generateGradient = (color, steps = 5) => {
 };
 
 // Get responsive font size
-export const getResponsiveFontSize = (size, breakpoint = 'md') => {
+export const getResponsiveFontSize = (
+  size: number,
+  breakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md',
+): number => {
   const sizes = {
     xs: size * 0.75,
     sm: size * 0.85,
@@ -102,7 +122,7 @@ export const getResponsiveFontSize = (size, breakpoint = 'md') => {
 };
 
 // Calculate chart margins
-export const calculateMargins = (hasLegend, hasTitle, hasLabels) => {
+export const calculateMargins = (hasLegend: boolean, hasTitle: boolean, hasLabels: boolean) => {
   return {
     top: hasTitle ? 40 : 20,
     right: hasLegend ? 100 : 20,
@@ -112,13 +132,20 @@ export const calculateMargins = (hasLegend, hasTitle, hasLabels) => {
 };
 
 // Data transformation utilities
-export const transformDataForChart = (data, xKey, yKey, groupKey = null) => {
+type ChartRecord = Record<string, unknown>;
+
+export const transformDataForChart = (
+  data: readonly ChartRecord[] | null | undefined,
+  xKey: string,
+  yKey: string,
+  groupKey: string | null = null,
+): ChartRecord[] => {
   if (!data || !Array.isArray(data)) return [];
   
   if (groupKey) {
     // Group data by groupKey
-    const grouped = data.reduce<Record<string, any[]>>((acc, item: any) => {
-      const group = item[groupKey];
+    const grouped = data.reduce<Record<string, ChartRecord[]>>((acc, item) => {
+      const group = String(item[groupKey] ?? '');
       if (!acc[group]) acc[group] = [];
       acc[group].push(item);
       return acc;
@@ -126,7 +153,7 @@ export const transformDataForChart = (data, xKey, yKey, groupKey = null) => {
     
     return Object.entries(grouped).map(([key, items]) => ({
       [xKey]: key,
-      [yKey]: items.reduce((sum, item) => sum + (item[yKey] || 0), 0),
+      [yKey]: items.reduce((sum, item) => sum + toFiniteNumber(item[yKey]), 0),
       items: items
     }));
   }
@@ -139,28 +166,34 @@ export const transformDataForChart = (data, xKey, yKey, groupKey = null) => {
 };
 
 // Sort data for charts
-export const sortChartData = (data, key, direction = 'desc') => {
+export const sortChartData = <T extends ChartRecord>(
+  data: readonly T[],
+  key: string,
+  direction: 'asc' | 'desc' = 'desc',
+): T[] => {
   return [...data].sort((a, b) => {
     const aVal = a[key];
     const bVal = b[key];
     
-    if (direction === 'asc') {
-      return aVal > bVal ? 1 : -1;
-    }
-    return aVal < bVal ? 1 : -1;
+    const result = String(aVal ?? '').localeCompare(String(bVal ?? ''), undefined, {
+      numeric: true,
+      sensitivity: 'base',
+    });
+    return direction === 'asc' ? result : -result;
   });
 };
 
 // Filter top N items
-export const getTopItems = (data, key, count = 10) => {
+export const getTopItems = <T extends ChartRecord>(data: readonly T[], key: string, count = 10): T[] => {
   return sortChartData(data, key, 'desc').slice(0, count);
 };
 
 // Calculate statistics
-export const calculateStats = (data, key) => {
+export const calculateStats = (data: readonly ChartRecord[], key: string) => {
   if (!data || data.length === 0) return null;
   
-  const values = data.map(item => item[key]).filter(val => typeof val === 'number');
+  const values = data.map(item => item[key]).filter((value): value is number => typeof value === 'number');
+  if (values.length === 0) return null;
   const sum = values.reduce((acc, val) => acc + val, 0);
   const avg = sum / values.length;
   const min = Math.min(...values);
@@ -170,9 +203,9 @@ export const calculateStats = (data, key) => {
 };
 
 // Generate mock data for testing
-export const generateMockData = (count = 10, type = 'bar') => {
+export const generateMockData = (count = 10): ChartRecord[] => {
   const categories = ['Category A', 'Category B', 'Category C', 'Category D', 'Category E'];
-  const data = [];
+  const data: ChartRecord[] = [];
   
   for (let i = 0; i < count; i++) {
     data.push({
@@ -186,12 +219,9 @@ export const generateMockData = (count = 10, type = 'bar') => {
   return data;
 };
 
-export type ChartPaletteName = keyof typeof COLOR_PALETTES;
-export type ChartColors = string[] | { light: string[]; dark: string[] } | string;
-
 export const resolveChartColors = (
   colors: ChartColors,
-  mode: 'light' | 'dark',
+  mode: PaletteMode,
 ): string[] => {
   if (Array.isArray(colors)) return colors;
   if (typeof colors === 'string') return getColorPalette(colors, mode);

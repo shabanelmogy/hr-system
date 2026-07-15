@@ -31,10 +31,11 @@ export const MyLoadingIndicator = ({
 
   // Handle visibility based on isLoading prop
   useEffect(() => {
-    setVisible(isLoading);
-    if (isLoading) {
-      setProgress(0); // Reset progress when shown again
-    }
+    const timer = setTimeout(() => {
+      setVisible(isLoading);
+      if (isLoading) setProgress(0);
+    }, 0);
+    return () => clearTimeout(timer);
   }, [isLoading]);
 
   // Auto-hide functionality

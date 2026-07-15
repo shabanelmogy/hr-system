@@ -27,7 +27,7 @@ const CountryBarChart: React.FC<CountryBarChartProps> = ({ data, t }) => {
       barRadius={4}
       orientation="vertical"
       formatValue={(value) => value.toString()}
-      formatLabel={(label) => label}
+      formatLabel={(label) => String(label ?? '')}
       subtitle={undefined}
     />
   );

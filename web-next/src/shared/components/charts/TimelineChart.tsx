@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { 
   Box, 
   Typography, 
@@ -25,6 +24,17 @@ import {
 import { formatNumber } from './chartUtils';
 import ChartContainer from './ChartContainer';
 import { formatDisplayDate } from '@/shared/utils/dateUtils';
+import type { ChartContainerProps } from './ChartContainer';
+import type { ChartInteractionHandler, TimelineChartBaseProps } from './types';
+import { getChartValue } from './types';
+
+export type TimelineChartProps = TimelineChartBaseProps &
+  Omit<ChartContainerProps, keyof TimelineChartBaseProps | 'children'> & {
+    showOppositeContent?: boolean;
+  };
+
+const toDateValue = (value: unknown): string | number | Date | null =>
+  typeof value === 'string' || typeof value === 'number' || value instanceof Date ? value : null;
 
 const TimelineChart = ({
   data = [],
@@ -32,7 +42,7 @@ const TimelineChart = ({
   subtitle,
   height = 400,
   loading = false,
-  error = null,
+  error,
   gradient = false,
   showOppositeContent = true,
   showConnectors = true,
@@ -41,14 +51,14 @@ const TimelineChart = ({
   descriptionKey = 'description',
   statusKey = 'status',
   valueKey = 'value',
-  formatValue = (value) => formatNumber(value),
+  formatValue = formatNumber,
   formatDate = formatDisplayDate,
-  onItemClick = null,
+  onItemClick,
   ...props
-}) => {
+}: TimelineChartProps) => {
   const theme = useTheme();
 
-  const getStatusIcon = (status) => {
+  const getStatusIcon = (status: string) => {
     switch (status) {
       case 'completed':
       case 'success':
@@ -65,7 +75,7 @@ const TimelineChart = ({
     }
   };
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string): string => {
     switch (status) {
       case 'completed':
       case 'success':
@@ -82,17 +92,19 @@ const TimelineChart = ({
     }
   };
 
-  const handleItemClick = (item, index) => {
-    if (onItemClick) {
-      onItemClick(item, index);
-    }
+  const handleItemClick: ChartInteractionHandler = (item, index) => {
+    onItemClick?.(item, index);
   };
 
   const chartContent = (
     <Box sx={{ p: 2 }}>
       <Timeline position="alternate">
         {data.map((item, index) => {
-          const status = item[statusKey] || 'default';
+          const status = String(getChartValue(item, statusKey) || 'default');
+          const dateValue = toDateValue(getChartValue(item, dateKey));
+          const itemValue = getChartValue(item, valueKey);
+          const category = getChartValue(item, 'category');
+          const priority = getChartValue(item, 'priority');
           const statusColor = getStatusColor(status);
           const isLast = index === data.length - 1;
 
@@ -109,11 +121,11 @@ const TimelineChart = ({
                     flex: 0.3,
                     minWidth: 100
                   }}>
-                  {item[dateKey] && formatDate(item[dateKey])}
-                  {item[valueKey] && (
+                  {dateValue !== null && formatDate(dateValue)}
+                  {itemValue != null && (
                     <Box sx={{ mt: 0.5 }}>
                       <Chip
-                        label={formatValue(item[valueKey])}
+                        label={formatValue(itemValue)}
                         size="small"
                         color="primary"
                         variant="outlined"
@@ -175,18 +187,18 @@ const TimelineChart = ({
                       mb: 1
                     }}
                   >
-                    {item[titleKey]}
+                    {String(getChartValue(item, titleKey) ?? '')}
                   </Typography>
 
                   {/* Description */}
-                  {item[descriptionKey] && (
+                  {getChartValue(item, descriptionKey) != null && (
                     <Typography
                       variant="body2"
                       sx={{
                         color: "text.secondary",
                         mb: 1
                       }}>
-                      {item[descriptionKey]}
+                      {String(getChartValue(item, descriptionKey))}
                     </Typography>
                   )}
 
@@ -202,21 +214,21 @@ const TimelineChart = ({
                       }}
                     />
                     
-                    {item.category && (
+                    {category != null && (
                       <Chip
-                        label={item.category}
+                        label={String(category)}
                         size="small"
                         variant="outlined"
                       />
                     )}
 
-                    {item.priority && (
+                    {priority != null && (
                       <Chip
-                        label={`Priority: ${item.priority}`}
+                        label={`Priority: ${String(priority)}`}
                         size="small"
                         variant="outlined"
-                        color={item.priority === 'high' ? 'error' : 
-                               item.priority === 'medium' ? 'warning' : 'default'}
+                        color={priority === 'high' ? 'error' :
+                               priority === 'medium' ? 'warning' : 'default'}
                       />
                     )}
                   </Box>

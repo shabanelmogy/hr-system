@@ -1,9 +1,24 @@
-/* eslint-disable react/prop-types */
 import { ResponsiveContainer, LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useTheme } from '@mui/material';
 import { getChartTheme } from './chartThemes';
 import { formatNumber, resolveChartColors, type ChartColors } from './chartUtils';
 import ChartContainer from './ChartContainer';
+import type { ChartContainerProps } from './ChartContainer';
+import type {
+  CartesianChartProps,
+  ChartInteractionHandler,
+  ChartTooltipProps,
+} from './types';
+
+export type LineChartProps = CartesianChartProps &
+  Omit<ChartContainerProps, keyof CartesianChartProps | 'children'> & {
+    strokeWidth?: number;
+    strokeDasharray?: string;
+    showDots?: boolean;
+    dotSize?: number;
+    smooth?: boolean;
+    onDotClick?: ChartInteractionHandler;
+  };
 
 const LineChart = ({
   data = [],
@@ -17,24 +32,24 @@ const LineChart = ({
   showLegend = false,
   showTooltip = true,
   loading = false,
-  error = null,
+  error,
   strokeWidth = 2,
-  strokeDasharray = null, // e.g., "5 5" for dashed line
+  strokeDasharray, // e.g., "5 5" for dashed line
   showDots = true,
   dotSize = 4,
   gradient = false,
   smooth = true, // Use smooth curves
   multiSeries = [], // Array of objects: [{ key: 'series1', name: 'Series 1', color: '#color' }]
-  formatValue = (value) => formatNumber(value),
-  formatLabel = (label) => label,
-  onDotClick = null,
+  formatValue = formatNumber,
+  formatLabel = (label) => String(label ?? ''),
+  onDotClick,
   ...props
-}) => {
+}: LineChartProps) => {
   const theme = useTheme();
   const chartTheme = getChartTheme(theme);
   const colorPalette = resolveChartColors(colors, theme.palette.mode);
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: ChartTooltipProps) => {
     if (!active || !payload || !payload.length) return null;
 
     return (
@@ -49,10 +64,8 @@ const LineChart = ({
     );
   };
 
-  const handleDotClick = (data, index) => {
-    if (onDotClick) {
-      onDotClick(data, index);
-    }
+  const handleDotClick: ChartInteractionHandler = (data, index) => {
+    onDotClick?.(data, index);
   };
 
   const renderLines = () => {
@@ -67,7 +80,8 @@ const LineChart = ({
           strokeWidth={strokeWidth}
           strokeDasharray={series.dasharray || strokeDasharray}
           dot={showDots ? { r: dotSize, fill: series.color || colorPalette[index % colorPalette.length] } : false}
-          activeDot={{ r: dotSize + 2, onClick: handleDotClick as any }}
+          activeDot={{ r: dotSize + 2 }}
+          onClick={onDotClick ? (data) => handleDotClick(data, index) : undefined}
         />
       ));
     }
@@ -80,7 +94,8 @@ const LineChart = ({
         strokeWidth={strokeWidth}
         strokeDasharray={strokeDasharray}
         dot={showDots ? { r: dotSize, fill: colorPalette[0] } : false}
-        activeDot={{ r: dotSize + 2, onClick: handleDotClick as any }}
+        activeDot={{ r: dotSize + 2 }}
+        onClick={onDotClick ? (data) => handleDotClick(data, 0) : undefined}
       />
     );
   };
@@ -111,7 +126,7 @@ const LineChart = ({
           tickFormatter={formatValue}
         />
         
-        {showTooltip && <Tooltip content={<CustomTooltip />} />}
+        {showTooltip && <Tooltip content={CustomTooltip} />}
         {showLegend && <Legend wrapperStyle={chartTheme.legend.wrapperStyle} />}
         
         {renderLines()}

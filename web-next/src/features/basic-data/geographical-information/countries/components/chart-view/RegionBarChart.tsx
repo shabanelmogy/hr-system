@@ -26,7 +26,7 @@ const RegionBarChart: React.FC<RegionBarChartProps> = ({ data }) => {
       barRadius={4}
       orientation="vertical"
       formatValue={(value) => value.toString()}
-      formatLabel={(label) => label} 
+      formatLabel={(label) => String(label ?? '')}
       subtitle={undefined}    />
   );
 };

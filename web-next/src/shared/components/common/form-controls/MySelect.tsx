@@ -1,49 +1,70 @@
-/* eslint-disable react/prop-types */
-import { FormControl, TextField, Box, Autocomplete } from "@mui/material";
-import { useTheme } from "@mui/material";
+import { Autocomplete, Box, FormControl, TextField } from "@mui/material";
+import type { ReactNode } from "react";
+import { useTheme } from "@mui/material/styles";
 
-const MySelect = ({
+type OptionKey<TOption extends object> = Extract<keyof TOption, string>;
+
+interface SelectionEvent {
+  target: { value: unknown };
+}
+
+interface MySelectProps<TOption extends object> {
+  dataSource: readonly TOption[];
+  selectedItem: unknown;
+  handleSelectionChange: (event: SelectionEvent) => void;
+  loading?: boolean;
+  label: ReactNode;
+  displayValue: OptionKey<TOption>;
+  displayMember: OptionKey<TOption>;
+  all?: boolean;
+  showClearButton?: boolean;
+}
+
+interface NormalizedOption<TOption extends object> {
+  source: TOption | null;
+  value: unknown;
+  label: string;
+}
+
+const MySelect = <TOption extends object>({
   dataSource,
   selectedItem,
   handleSelectionChange,
-  loading,
+  loading = false,
   label,
   displayValue,
   displayMember,
   all = true,
-  showClearButton = false, // Default to true since Autocomplete handles this well
-}) => {
+  showClearButton = false,
+}: MySelectProps<TOption>) => {
   const theme = useTheme();
-  const isRTL = theme.direction === "rtl";
-
-  // Find the selected option object from dataSource
-  const selectedOption =
-    dataSource.find((item) => item[displayValue] === selectedItem) || null;
-
-  // All option
-  const allOption = all
-    ? { [displayValue]: 0, [displayMember]: isRTL ? "الكل" : "All" }
-    : null;
-
-  // Handle selection change
-  const handleChange = (event, newValue) => {
-    if (!newValue) {
-      // If clearing the selection
-      handleSelectionChange({ target: { value: all ? 0 : "" } });
-    } else {
-      // Normal selection
-      handleSelectionChange({ target: { value: newValue[displayValue] } });
-    }
+  const options: NormalizedOption<TOption>[] = dataSource.map((item) => ({
+    source: item,
+    value: item[displayValue],
+    label: String(item[displayMember] ?? ""),
+  }));
+  const allOption: NormalizedOption<TOption> = {
+    source: null,
+    value: 0,
+    label: theme.direction === "rtl" ? "\u0627\u0644\u0643\u0644" : "All",
   };
+  const availableOptions = all ? [allOption, ...options] : options;
+  const selectedOption =
+    availableOptions.find((option) => Object.is(option.value, selectedItem)) ??
+    null;
 
   return (
     <Box>
-      <FormControl sx={{ width: "100%" }}>
+      <FormControl fullWidth>
         <Autocomplete
-          options={all ? [allOption, ...dataSource] : dataSource}
-          getOptionLabel={(option) => option?.[displayMember] || ""}
-          value={selectedItem === 0 && all ? allOption : selectedOption}
-          onChange={handleChange}
+          options={availableOptions}
+          getOptionLabel={(option) => option.label}
+          value={selectedOption}
+          onChange={(_, newValue) => {
+            handleSelectionChange({
+              target: { value: newValue?.value ?? (all ? 0 : "") },
+            });
+          }}
           disabled={loading}
           disableClearable={!showClearButton}
           renderInput={(params) => (
@@ -53,16 +74,15 @@ const MySelect = ({
               slotProps={{
                 ...params.slotProps,
                 htmlInput: {
-                  ...params.slotProps.htmlInput, // Fallback for v6
-                  ...(params.slotProps?.htmlInput || {}),
-                  autoComplete: "new-password", // Disable browser autocomplete
+                  ...params.slotProps.htmlInput,
+                  autoComplete: "new-password",
                 },
               }}
             />
           )}
-          isOptionEqualToValue={(option, value) => {
-            return option?.[displayValue] === value?.[displayValue];
-          }}
+          isOptionEqualToValue={(option, value) =>
+            Object.is(option.value, value.value)
+          }
         />
       </FormControl>
     </Box>

@@ -1,7 +1,48 @@
-/* eslint-disable react/prop-types */
-import { Box, Typography, useTheme, LinearProgress } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import { formatNumber } from './chartUtils';
 import ChartContainer from './ChartContainer';
+import type { ChartContainerProps } from './ChartContainer';
+import type { ChartData, ChartFormatter, ChartInteractionHandler } from './types';
+import { getChartNumber, getChartValue } from './types';
+
+interface BulletRange {
+  value: number;
+  color?: string;
+  label?: string;
+}
+
+export type BulletChartProps = Omit<ChartContainerProps, 'children'> & {
+  data?: ChartData;
+  valueKey?: string;
+  targetKey?: string;
+  nameKey?: string;
+  maxKey?: string;
+  rangesKey?: string;
+  formatValue?: ChartFormatter;
+  formatLabel?: ChartFormatter;
+  orientation?: 'horizontal' | 'vertical';
+  showLabels?: boolean;
+  showTarget?: boolean;
+  onBarClick?: ChartInteractionHandler;
+};
+
+const getRanges = (item: object, key: string): BulletRange[] => {
+  const ranges = getChartValue(item, key);
+  if (!Array.isArray(ranges)) return [];
+  return ranges.flatMap((range) => {
+    if (!range || typeof range !== 'object') return [];
+    const value = getChartNumber(range, 'value');
+    const color = getChartValue(range, 'color');
+    const label = getChartValue(range, 'label');
+    return [{
+      value,
+      color: typeof color === 'string' ? color : undefined,
+      label: typeof label === 'string' ? label : undefined,
+    }];
+  });
+};
+
+const rangeShades = [200, 300, 400, 500] as const;
 
 const BulletChart = ({
   data = [],
@@ -9,29 +50,29 @@ const BulletChart = ({
   subtitle,
   height = 300,
   loading = false,
-  error = null,
+  error,
   gradient = false,
   valueKey = 'value',
   targetKey = 'target',
   nameKey = 'name',
   maxKey = 'max',
   rangesKey = 'ranges', // Array of range objects: [{ value: 50, color: '#color', label: 'Poor' }]
-  formatValue = (value) => formatNumber(value),
-  formatLabel = (label) => label,
+  formatValue = formatNumber,
+  formatLabel = (label) => String(label ?? ''),
   orientation = 'horizontal', // 'horizontal' or 'vertical'
   showLabels = true,
   showTarget = true,
-  onBarClick = null,
+  onBarClick,
   ...props
-}) => {
+}: BulletChartProps) => {
   const theme = useTheme();
 
-  const renderHorizontalBullet = (item, index) => {
-    const value = item[valueKey] || 0;
-    const target = item[targetKey] || 0;
-    const max = item[maxKey] || Math.max(value, target) * 1.2;
-    const ranges = item[rangesKey] || [];
-    const name = item[nameKey] || `Item ${index + 1}`;
+  const renderHorizontalBullet = (item: object, index: number) => {
+    const value = getChartNumber(item, valueKey);
+    const target = getChartNumber(item, targetKey);
+    const max = getChartNumber(item, maxKey) || Math.max(value, target) * 1.2;
+    const ranges = getRanges(item, rangesKey);
+    const name = getChartValue(item, nameKey) || `Item ${index + 1}`;
 
     const valuePercent = (value / max) * 100;
     const targetPercent = (target / max) * 100;
@@ -63,7 +104,7 @@ const BulletChart = ({
                   sx={{
                     width: `${rangePercent}%`,
                     height: '100%',
-                    backgroundColor: range.color || theme.palette.grey[200 + rangeIndex * 100],
+                    backgroundColor: range.color || theme.palette.grey[rangeShades[rangeIndex % rangeShades.length]],
                     border: `1px solid ${theme.palette.divider}`,
                     display: 'flex',
                     alignItems: 'center',
@@ -144,12 +185,12 @@ const BulletChart = ({
     );
   };
 
-  const renderVerticalBullet = (item, index) => {
-    const value = item[valueKey] || 0;
-    const target = item[targetKey] || 0;
-    const max = item[maxKey] || Math.max(value, target) * 1.2;
-    const ranges = item[rangesKey] || [];
-    const name = item[nameKey] || `Item ${index + 1}`;
+  const renderVerticalBullet = (item: object, index: number) => {
+    const value = getChartNumber(item, valueKey);
+    const target = getChartNumber(item, targetKey);
+    const max = getChartNumber(item, maxKey) || Math.max(value, target) * 1.2;
+    const ranges = getRanges(item, rangesKey);
+    const name = getChartValue(item, nameKey) || `Item ${index + 1}`;
 
     const valuePercent = (value / max) * 100;
     const targetPercent = (target / max) * 100;
@@ -168,7 +209,7 @@ const BulletChart = ({
                   sx={{
                     height: `${rangePercent}%`,
                     width: '100%',
-                    backgroundColor: range.color || theme.palette.grey[200 + rangeIndex * 100],
+                    backgroundColor: range.color || theme.palette.grey[rangeShades[rangeIndex % rangeShades.length]],
                     border: `1px solid ${theme.palette.divider}`,
                     display: 'flex',
                     alignItems: 'center',

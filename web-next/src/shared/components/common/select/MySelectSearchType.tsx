@@ -1,18 +1,39 @@
-/* eslint-disable react/prop-types */
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  type SelectChangeEvent,
+} from "@mui/material";
 import { useTranslation } from "react-i18next";
+
+type SearchType =
+  | "contains"
+  | "notcontains"
+  | "startswith"
+  | "notstartswith"
+  | "endswith"
+  | "notendswith"
+  | "equal"
+  | "notEqual";
+
+interface MySelectSearchTypeProps {
+  searchType: SearchType;
+  handleSearchTypeChange: (event: SelectChangeEvent<SearchType>) => void;
+  loading?: boolean;
+}
 
 const MySelectSearchType = ({
   searchType,
   handleSearchTypeChange,
-  loading,
-}) => {
+  loading = false,
+}: MySelectSearchTypeProps) => {
   const { t } = useTranslation();
 
   return (
-    <FormControl sx={{ width: "100%" }}>
+    <FormControl fullWidth>
       <InputLabel>{t("searchType")}</InputLabel>
-      <Select
+      <Select<SearchType>
         MenuProps={{ disableScrollLock: true }}
         value={searchType}
         label={t("searchType")}

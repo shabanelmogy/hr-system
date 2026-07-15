@@ -1,9 +1,43 @@
-/* eslint-disable react/prop-types */
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell, ReferenceLine } from 'recharts';
 import { useTheme } from '@mui/material';
 import { getChartTheme } from './chartThemes';
 import { formatNumber } from './chartUtils';
 import ChartContainer from './ChartContainer';
+import type { ChartContainerProps } from './ChartContainer';
+import type { ChartData, ChartFormatter, ChartTooltipProps } from './types';
+import { getChartNumber, getChartValue } from './types';
+
+interface WaterfallDatum extends Record<string, unknown> {
+  start: number;
+  end: number;
+  value: number;
+  displayValue: number;
+  color: string;
+  isTotal: boolean;
+  isNegative?: boolean;
+}
+
+interface WaterfallBarProps {
+  payload?: WaterfallDatum;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
+}
+
+export type WaterfallChartProps = Omit<ChartContainerProps, 'children'> & {
+  data?: ChartData;
+  showGrid?: boolean;
+  showTooltip?: boolean;
+  xKey?: string;
+  valueKey?: string;
+  formatValue?: ChartFormatter;
+  formatLabel?: ChartFormatter;
+  onBarClick?: (data: WaterfallDatum) => void;
+  positiveColor?: string;
+  negativeColor?: string;
+  totalColor?: string;
+};
 
 const WaterfallChart = ({
   data = [],
@@ -13,18 +47,18 @@ const WaterfallChart = ({
   showGrid = true,
   showTooltip = true,
   loading = false,
-  error = null,
+  error,
   gradient = false,
   xKey = 'name',
   valueKey = 'value',
-  formatValue = (value) => formatNumber(value),
-  formatLabel = (label) => label,
-  onBarClick = null,
-  positiveColor = null,
-  negativeColor = null,
-  totalColor = null,
+  formatValue = formatNumber,
+  formatLabel = (label) => String(label ?? ''),
+  onBarClick,
+  positiveColor,
+  negativeColor,
+  totalColor,
   ...props
-}) => {
+}: WaterfallChartProps) => {
   const theme = useTheme();
   const chartTheme = getChartTheme(theme);
 
@@ -36,18 +70,18 @@ const WaterfallChart = ({
   };
 
   // Transform data for waterfall chart
-  const transformedData = [];
+  const transformedData: WaterfallDatum[] = [];
   let runningTotal = 0;
 
-  data.forEach((item, index) => {
-    const value = item[valueKey];
-    const isTotal = item.type === 'total';
+  data.forEach((item) => {
+    const value = getChartNumber(item, valueKey);
+    const isTotal = getChartValue(item, 'type') === 'total';
     const isNegative = value < 0;
     
     if (isTotal) {
       // For total bars, start from 0
       transformedData.push({
-        ...item,
+        ...(item as Record<string, unknown>),
         start: 0,
         end: runningTotal,
         value: runningTotal,
@@ -62,7 +96,7 @@ const WaterfallChart = ({
       const end = runningTotal;
       
       transformedData.push({
-        ...item,
+        ...(item as Record<string, unknown>),
         start: Math.min(start, end),
         end: Math.max(start, end),
         value: Math.abs(value),
@@ -74,24 +108,28 @@ const WaterfallChart = ({
     }
   });
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: ChartTooltipProps) => {
     if (!active || !payload || !payload.length) return null;
 
     const data = payload[0].payload;
+    if (!data || typeof data !== 'object') return null;
+    const color = String(getChartValue(data, 'color') ?? theme.palette.text.primary);
+    const displayValue = getChartValue(data, 'displayValue');
+    const isTotal = getChartValue(data, 'isTotal') === true;
     return (
       <div style={chartTheme.tooltip.contentStyle}>
         <p style={{ margin: 0, fontWeight: 'bold' }}>{formatLabel(label)}</p>
-        <p style={{ margin: '4px 0', color: data.color }}>
-          Value: {formatValue(data.displayValue)}
+        <p style={{ margin: '4px 0', color }}>
+          Value: {formatValue(displayValue)}
         </p>
-        {!data.isTotal && (
+        {!isTotal && (
           <p style={{ margin: '4px 0', color: theme.palette.text.secondary }}>
-            Running Total: {formatValue(data.end)}
+            Running Total: {formatValue(getChartValue(data, 'end'))}
           </p>
         )}
-        {data.isTotal && (
+        {isTotal && (
           <p style={{ margin: '4px 0', color: theme.palette.text.secondary }}>
-            Total: {formatValue(data.value)}
+            Total: {formatValue(getChartValue(data, 'value'))}
           </p>
         )}
       </div>
@@ -99,9 +137,8 @@ const WaterfallChart = ({
   };
 
   // Custom bar shape for waterfall
-  const WaterfallBar = (props) => {
-    const { payload, x, y, width, height } = props;
-    if (!payload) return null;
+  const WaterfallBar = ({ payload, x, y, width, height }: WaterfallBarProps) => {
+    if (!payload || x == null || y == null || width == null || height == null) return null;
 
     const barHeight = height * (payload.value / (payload.end - payload.start || 1));
     const barY = payload.isTotal ? y + height - (height * (payload.value / payload.value)) : 
@@ -152,11 +189,11 @@ const WaterfallChart = ({
         {/* Reference line at zero */}
         <ReferenceLine y={0} stroke={theme.palette.divider} strokeDasharray="2 2" />
         
-        {showTooltip && <Tooltip content={<CustomTooltip />} />}
+        {showTooltip && <Tooltip content={CustomTooltip} />}
         
         <Bar
           dataKey="value"
-          shape={<WaterfallBar />}
+          shape={WaterfallBar}
         >
           {transformedData.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={entry.color} />

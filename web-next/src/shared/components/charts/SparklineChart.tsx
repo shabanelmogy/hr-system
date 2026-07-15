@@ -1,31 +1,47 @@
-/* eslint-disable react/prop-types */
-import React, { useMemo } from 'react';
+import { useId } from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
+import type { BoxProps } from '@mui/material';
 import { ResponsiveContainer, LineChart, Line, Area, AreaChart, BarChart, Bar } from 'recharts';
 import { formatNumber } from './chartUtils';
+import type { ChartData, ChartFormatter } from './types';
+import { getChartNumber } from './types';
+
+export type SparklineChartProps = Omit<BoxProps, 'height' | 'width'> & {
+  data?: ChartData;
+  type?: 'line' | 'area' | 'bar';
+  width?: number | string;
+  height?: number | string;
+  color?: string;
+  strokeWidth?: number;
+  showValue?: boolean;
+  showTrend?: boolean;
+  valueKey?: string;
+  formatValue?: ChartFormatter;
+};
 
 const SparklineChart = ({
   data = [],
   type = 'line', // 'line', 'area', 'bar'
   width = 100,
   height = 40,
-  color = null,
+  color,
   strokeWidth = 2,
   showValue = false,
   showTrend = false,
   valueKey = 'value',
-  formatValue = (value) => formatNumber(value),
-  ...props
-}) => {
+  formatValue = formatNumber,
+  sx,
+  ...boxProps
+}: SparklineChartProps) => {
   const theme = useTheme();
   
   const chartColor = color || theme.palette.primary.main;
-  const currentValue = data.length > 0 ? data[data.length - 1][valueKey] : 0;
-  const previousValue = data.length > 1 ? data[data.length - 2][valueKey] : currentValue;
+  const currentValue = data.length > 0 ? getChartNumber(data[data.length - 1], valueKey) : 0;
+  const previousValue = data.length > 1 ? getChartNumber(data[data.length - 2], valueKey) : currentValue;
   const trend = currentValue - previousValue;
   const isPositive = trend >= 0;
 
-  const gradientId = useMemo(() => `sparkline-gradient-${Math.random().toString(36).slice(2)}`, []);
+  const gradientId = `sparkline-gradient-${useId().replace(/:/g, '')}`;
 
   const renderChart = () => {
     const commonProps = {
@@ -87,12 +103,12 @@ const SparklineChart = ({
 
   return (
     <Box 
-      sx={{ 
+      {...boxProps}
+      sx={[{
         display: 'flex', 
         alignItems: 'center', 
         gap: 1,
-        ...props.sx 
-      }}
+      }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       {/* Chart */}
       <Box sx={{ width: width, height: height, flexShrink: 0 }}>

@@ -8,15 +8,34 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { useGridPagination } from "./useGridPagination";
+import type {
+  GridApi,
+  GridPaginationModel,
+  GridRowIdGetter,
+  GridRowsProp,
+} from "@mui/x-data-grid";
+import type { MutableRefObject, RefObject } from "react";
+import type { NavigationUpdate } from "./types";
+
+interface GridFooterProps {
+  apiRef: RefObject<GridApi | null> | null;
+  rows?: GridRowsProp;
+  rowId: GridRowIdGetter;
+  onNavigationUpdate?: (updateFn: NavigationUpdate) => void;
+  paginationModel: GridPaginationModel;
+  onPaginationModelChange: (model: GridPaginationModel) => void;
+  paginationDirectionRef?: MutableRefObject<"forward" | "backward">;
+}
 
 export const GridFooter = ({
   apiRef,
   rows = [],
+  rowId,
   onNavigationUpdate,
   paginationModel,
   onPaginationModelChange,
   paginationDirectionRef,
-}: any) => {
+}: GridFooterProps) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const isRTL = theme.direction === "rtl";
@@ -32,6 +51,7 @@ export const GridFooter = ({
   } = useGridPagination({
     apiRef,
     rows,
+    rowId,
     paginationModel,
     onPaginationModelChange,
     paginationDirectionRef,

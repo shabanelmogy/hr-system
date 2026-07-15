@@ -1,8 +1,8 @@
+import type { Theme } from '@mui/material/styles';
+
 // Chart theme configurations
 
-export const getChartTheme = (muiTheme) => {
-  const isDark = muiTheme.palette.mode === 'dark';
-
+export const getChartTheme = (muiTheme: Theme) => {
   return {
     // Grid styles
     grid: {

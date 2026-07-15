@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { 
   Box, 
   Typography, 
@@ -17,6 +16,24 @@ import {
 } from '@mui/icons-material';
 import { formatNumber, formatPercentage } from './chartUtils';
 import ChartContainer from './ChartContainer';
+import type { ChartContainerProps } from './ChartContainer';
+
+export interface RatingChartItem {
+  rating: number;
+  count: number;
+}
+
+export type RatingChartProps = Omit<ChartContainerProps, 'children'> & {
+  data?: readonly RatingChartItem[];
+  type?: 'stars' | 'hearts' | 'thumbs';
+  showDistribution?: boolean;
+  showAverage?: boolean;
+  showTotal?: boolean;
+  maxRating?: number;
+  precision?: number;
+  size?: 'small' | 'medium' | 'large';
+  onRatingClick?: (rating: number, count: number) => void;
+};
 
 const RatingChart = ({
   data = [],
@@ -24,7 +41,7 @@ const RatingChart = ({
   subtitle,
   height = 300,
   loading = false,
-  error = null,
+  error,
   gradient = false,
   type = 'stars', // 'stars', 'hearts', 'thumbs'
   showDistribution = true,
@@ -33,9 +50,9 @@ const RatingChart = ({
   maxRating = 5,
   precision = 0.5,
   size = 'medium',
-  onRatingClick = null,
+  onRatingClick,
   ...props
-}) => {
+}: RatingChartProps) => {
   const theme = useTheme();
 
   // Calculate statistics
@@ -59,7 +76,7 @@ const RatingChart = ({
   const icons = getIcons();
 
   // Get color based on rating
-  const getRatingColor = (rating) => {
+  const getRatingColor = (rating: number): string => {
     const percentage = (rating / maxRating) * 100;
     if (percentage >= 80) return theme.palette.success.main;
     if (percentage >= 60) return theme.palette.warning.main;
@@ -67,10 +84,8 @@ const RatingChart = ({
     return theme.palette.error.main;
   };
 
-  const handleRatingClick = (rating, count) => {
-    if (onRatingClick) {
-      onRatingClick(rating, count);
-    }
+  const handleRatingClick = (rating: number, count: number) => {
+    onRatingClick?.(rating, count);
   };
 
   const chartContent = (

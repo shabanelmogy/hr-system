@@ -1,11 +1,39 @@
-/* eslint-disable react/prop-types */
-import { FormControl, TextField, Box, Autocomplete, Chip } from "@mui/material";
-import { useTheme } from "@mui/material";
+import { Autocomplete, Box, Chip, FormControl, TextField } from "@mui/material";
+import type { ReactNode } from "react";
+import { useTheme } from "@mui/material/styles";
 
-const MySelectMultiple = ({
+type OptionKey<TOption extends object> = Extract<keyof TOption, string>;
+
+interface SelectionEvent {
+  target: { value: unknown };
+}
+
+interface MySelectMultipleProps<TOption extends object> {
+  dataSource?: readonly TOption[];
+  selectedItem?: unknown;
+  selectedItems?: readonly unknown[];
+  handleSelectionChange: (event: SelectionEvent) => void;
+  loading?: boolean;
+  label: ReactNode;
+  displayValue: OptionKey<TOption>;
+  displayMember: OptionKey<TOption>;
+  all?: boolean;
+  showClearButton?: boolean;
+  isMulti?: boolean;
+  limitTags?: number;
+  placeholder?: string;
+}
+
+interface NormalizedOption<TOption extends object> {
+  source: TOption | null;
+  value: unknown;
+  label: string;
+}
+
+const MySelectMultiple = <TOption extends object>({
   dataSource = [],
-  selectedItem, // For single select
-  selectedItems = [], // For multi select
+  selectedItem,
+  selectedItems = [],
   handleSelectionChange,
   loading = false,
   label,
@@ -13,65 +41,57 @@ const MySelectMultiple = ({
   displayMember,
   all = true,
   showClearButton = false,
-  isMulti = false, // Flag to enable multi-select
-  limitTags = 3, // Limit displayed tags before showing "+X"
+  isMulti = false,
+  limitTags = 3,
   placeholder = "",
-}) => {
+}: MySelectMultipleProps<TOption>) => {
   const theme = useTheme();
-  const isRTL = theme.direction === "rtl";
-
-  // All option (only for single select)
-  const allOption =
-    all && !isMulti
-      ? { [displayValue]: 0, [displayMember]: isRTL ? "الكل" : "All" }
-      : null;
-
-  // Determine the selected value(s)
-  const selectedValue = isMulti
-    ? dataSource.filter((item) =>
-        selectedItems?.includes(item[displayValue])
-      ) || []
-    : selectedItem === 0 && all
-    ? allOption
-    : dataSource.find((item) => item[displayValue] === selectedItem) || null;
-
-  // Handle selection change
-  const handleChange = (event, newValue) => {
-    if (isMulti) {
-      // For multi-select: return array of selected values
-      const values = newValue?.map((item) => item[displayValue]) || [];
-      handleSelectionChange({ target: { value: values } });
-    } else {
-      // For single-select: return selected value or default
-      if (!newValue) {
-        handleSelectionChange({ target: { value: all ? 0 : "" } });
-      } else {
-        handleSelectionChange({ target: { value: newValue[displayValue] } });
-      }
-    }
+  const options: NormalizedOption<TOption>[] = dataSource.map((item) => ({
+    source: item,
+    value: item[displayValue],
+    label: String(item[displayMember] ?? ""),
+  }));
+  const allOption: NormalizedOption<TOption> = {
+    source: null,
+    value: 0,
+    label: theme.direction === "rtl" ? "\u0627\u0644\u0643\u0644" : "All",
   };
+  const availableOptions = all && !isMulti ? [allOption, ...options] : options;
+  const selectedValue = isMulti
+    ? options.filter((option) => selectedItems.includes(option.value))
+    : availableOptions.find((option) => Object.is(option.value, selectedItem)) ??
+      null;
 
   return (
     <Box>
-      <FormControl sx={{ width: "100%" }}>
-        <Autocomplete
+      <FormControl fullWidth>
+        <Autocomplete<NormalizedOption<TOption>, boolean, boolean, false>
           multiple={isMulti}
-          options={all && !isMulti ? [allOption, ...dataSource] : dataSource}
-          getOptionLabel={(option) => option?.[displayMember] || ""}
+          options={availableOptions}
+          getOptionLabel={(option) => option.label}
           value={selectedValue}
-          onChange={handleChange}
+          onChange={(_, newValue) => {
+            const value = Array.isArray(newValue)
+              ? newValue.map((option) => option.value)
+              : newValue?.value ?? (all ? 0 : "");
+            handleSelectionChange({ target: { value } });
+          }}
           disabled={loading}
           disableClearable={!showClearButton}
           limitTags={limitTags}
           renderValue={(tagValue, getItemProps) =>
-            tagValue.map((option, index) => (
-              <Chip
-                key={option[displayValue]}
-                label={option[displayMember]}
-                {...getItemProps({ index })}
-                size="small"
-              />
-            ))
+            isMulti
+              ? (tagValue as readonly NormalizedOption<TOption>[]).map(
+                  (option, index) => (
+                    <Chip
+                      key={String(option.value ?? index)}
+                      label={option.label}
+                      {...getItemProps({ index })}
+                      size="small"
+                    />
+                  ),
+                )
+              : undefined
           }
           renderInput={(params) => (
             <TextField
@@ -80,16 +100,15 @@ const MySelectMultiple = ({
               placeholder={placeholder}
               slotProps={{
                 ...params.slotProps,
-
                 input: {
                   ...params.slotProps.input,
-                  autoComplete: "new-password", // Disable browser autocomplete
-                }
+                  autoComplete: "new-password",
+                },
               }}
             />
           )}
           isOptionEqualToValue={(option, value) =>
-            option?.[displayValue] === value?.[displayValue]
+            Object.is(option.value, value.value)
           }
         />
       </FormControl>

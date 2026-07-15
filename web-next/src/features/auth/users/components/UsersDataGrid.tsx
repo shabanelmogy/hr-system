@@ -9,7 +9,7 @@ import {
   Visibility
 } from "@mui/icons-material";
 import { Avatar, Chip, Tooltip } from "@mui/material";
-import { GridActionsCellItem } from "@mui/x-data-grid";
+import { GridActionsCellItem, type GridColDef } from "@mui/x-data-grid";
 import { useCallback, useMemo } from "react";
 
 import {
@@ -202,7 +202,7 @@ const UsersDataGrid = ({
   );
 
   // Memoized columns with separate status renderers
-  const columns = useMemo(
+  const columns = useMemo<GridColDef[]>(
     () => [
       {
         field: "firstName",

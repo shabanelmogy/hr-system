@@ -28,9 +28,9 @@ const RegionPieChart: React.FC<RegionPieChartProps> = ({ data, colors }) => {
       showLabels={true}
       outerRadius={120}
       formatValue={(value) => value.toString()}
-      formatLabel={(label) => label}
-      customLabel={({ name, percent }: { name: string; percent: number }) =>
-        `${name} ${(percent * 100).toFixed(0)}%`
+      formatLabel={(label) => String(label ?? '')}
+      customLabel={({ name, percent = 0 }) =>
+        `${String(name ?? '')} ${(percent * 100).toFixed(0)}%`
       }
       subtitle={undefined}    />
   );

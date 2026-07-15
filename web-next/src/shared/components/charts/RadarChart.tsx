@@ -1,9 +1,18 @@
-/* eslint-disable react/prop-types */
 import { ResponsiveContainer, RadarChart as RechartsRadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, Tooltip } from 'recharts';
 import { useTheme } from '@mui/material';
 import { getChartTheme } from './chartThemes';
 import { COLOR_PALETTES, formatNumber, resolveChartColors, type ChartColors } from './chartUtils';
 import ChartContainer from './ChartContainer';
+import type { ChartContainerProps } from './ChartContainer';
+import type { CartesianChartProps, ChartInteractionHandler, ChartTooltipProps } from './types';
+import { getChartValue } from './types';
+
+export type RadarChartProps = CartesianChartProps &
+  Omit<ChartContainerProps, keyof CartesianChartProps | 'children'> & {
+    fillOpacity?: number;
+    strokeWidth?: number;
+    onAreaClick?: ChartInteractionHandler;
+  };
 
 const RadarChart = ({
   data = [],
@@ -15,21 +24,21 @@ const RadarChart = ({
   showLegend = true,
   showTooltip = true,
   loading = false,
-  error = null,
+  error,
   fillOpacity = 0.6,
   strokeWidth = 2,
   gradient = false,
   multiSeries = [], // Array of objects: [{ key: 'series1', name: 'Series 1', color: '#color' }]
-  formatValue = (value) => formatNumber(value),
-  formatLabel = (label) => label,
-  onAreaClick = null,
+  formatValue = formatNumber,
+  formatLabel = (label) => String(label ?? ''),
+  onAreaClick,
   ...props
-}) => {
+}: RadarChartProps) => {
   const theme = useTheme();
   const chartTheme = getChartTheme(theme);
   const colorPalette = resolveChartColors(colors, theme.palette.mode);
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: ChartTooltipProps) => {
     if (!active || !payload || !payload.length) return null;
 
     return (
@@ -44,10 +53,8 @@ const RadarChart = ({
     );
   };
 
-  const handleAreaClick = (data, index) => {
-    if (onAreaClick) {
-      onAreaClick(data, index);
-    }
+  const handleAreaClick: ChartInteractionHandler = (data, index) => {
+    onAreaClick?.(data, index);
   };
 
   const renderRadars = () => {
@@ -61,14 +68,15 @@ const RadarChart = ({
           fill={series.color || colorPalette[index % colorPalette.length]}
           fillOpacity={fillOpacity}
           strokeWidth={strokeWidth}
-          onClick={handleAreaClick as any}
+          onClick={onAreaClick ? (datum) => handleAreaClick(datum, index) : undefined}
         />
       ));
     }
 
     // If no multiSeries, assume data has multiple numeric properties
-    const numericKeys = Object.keys(data[0] || {}).filter(key => 
-      typeof data[0][key] === 'number'
+    const firstDatum = data[0];
+    const numericKeys = Object.keys(firstDatum ?? {}).filter(key =>
+      firstDatum ? typeof getChartValue(firstDatum, key) === 'number' : false
     );
 
     return numericKeys.map((key, index) => (
@@ -80,7 +88,7 @@ const RadarChart = ({
         fill={colorPalette[index % colorPalette.length]}
         fillOpacity={fillOpacity}
         strokeWidth={strokeWidth}
-        onClick={handleAreaClick as any}
+        onClick={onAreaClick ? (datum) => handleAreaClick(datum, index) : undefined}
       />
     ));
   };
@@ -107,7 +115,7 @@ const RadarChart = ({
           domain={[0, 'dataMax']}
         />
         
-        {showTooltip && <Tooltip content={<CustomTooltip />} />}
+        {showTooltip && <Tooltip content={CustomTooltip} />}
         {showLegend && <Legend wrapperStyle={chartTheme.legend.wrapperStyle} />}
         
         {renderRadars()}

@@ -1,7 +1,27 @@
-/* eslint-disable react/prop-types */
 import { Box, Typography, useTheme, LinearProgress, CircularProgress } from '@mui/material';
 import { formatNumber, formatPercentage } from './chartUtils';
 import ChartContainer from './ChartContainer';
+import type { ChartContainerProps } from './ChartContainer';
+import type { ChartFormatter, ChartInteractionHandler } from './types';
+
+export interface ProgressChartItem {
+  name?: string;
+  value?: number;
+  max?: number;
+}
+
+export type ProgressChartProps = Omit<ChartContainerProps, 'children'> & {
+  data?: readonly ProgressChartItem[];
+  orientation?: 'horizontal' | 'circular';
+  showLabels?: boolean;
+  showValues?: boolean;
+  showPercentages?: boolean;
+  formatValue?: ChartFormatter;
+  formatLabel?: ChartFormatter;
+  onProgressClick?: ChartInteractionHandler;
+  thickness?: number;
+  size?: number;
+};
 
 const ProgressChart = ({
   data = [],
@@ -9,29 +29,29 @@ const ProgressChart = ({
   subtitle,
   height = 300,
   loading = false,
-  error = null,
+  error,
   gradient = false,
   orientation = 'horizontal', // 'horizontal' or 'circular'
   showLabels = true,
   showValues = true,
   showPercentages = true,
-  formatValue = (value) => formatNumber(value),
-  formatLabel = (label) => label,
-  onProgressClick = null,
+  formatValue = formatNumber,
+  formatLabel = (label) => String(label ?? ''),
+  onProgressClick,
   thickness = 4,
   size = 80, // For circular progress
   ...props
-}) => {
+}: ProgressChartProps) => {
   const theme = useTheme();
 
-  const getProgressColor = (value, max) => {
+  const getProgressColor = (value: number, max: number): string => {
     const percentage = (value / max) * 100;
     if (percentage < 30) return theme.palette.error.main;
     if (percentage < 70) return theme.palette.warning.main;
     return theme.palette.success.main;
   };
 
-  const renderHorizontalProgress = (item, index) => {
+  const renderHorizontalProgress = (item: ProgressChartItem, index: number) => {
     const value = item.value || 0;
     const max = item.max || 100;
     const percentage = Math.min((value / max) * 100, 100);
@@ -91,7 +111,7 @@ const ProgressChart = ({
     );
   };
 
-  const renderCircularProgress = (item, index) => {
+  const renderCircularProgress = (item: ProgressChartItem, index: number) => {
     const value = item.value || 0;
     const max = item.max || 100;
     const percentage = Math.min((value / max) * 100, 100);

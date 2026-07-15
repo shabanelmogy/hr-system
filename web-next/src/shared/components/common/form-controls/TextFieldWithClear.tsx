@@ -1,8 +1,21 @@
-import { useState, useRef } from "react";
-import { TextField, InputAdornment, IconButton } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
+import {
+  IconButton,
+  InputAdornment,
+  TextField,
+  type TextFieldProps,
+} from "@mui/material";
+import { useRef, useState, type ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
-import PropTypes from "prop-types";
+
+interface TextFieldWithClearProps
+  extends Omit<TextFieldProps, "value" | "onChange" | "label" | "inputRef"> {
+  searchText: string;
+  handleSearch: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  loading?: boolean;
+  handleClearSearch: () => void;
+  label?: string;
+}
 
 const TextFieldWithClear = ({
   searchText,
@@ -11,40 +24,32 @@ const TextFieldWithClear = ({
   handleClearSearch,
   label = "search",
   ...props
-}) => {
+}: TextFieldWithClearProps) => {
   const { t } = useTranslation();
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [focused, setFocused] = useState(false);
 
-  // Handle label position when text is cleared
   const onClearClick = () => {
     handleClearSearch();
-
-    // Keep focus on the input element after clearing
-    // This ensures proper handling of the floating label
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+    inputRef.current?.focus();
   };
 
   return (
     <TextField
+      {...props}
       label={t(label)}
       variant="outlined"
       fullWidth
       value={searchText}
       onChange={handleSearch}
       disabled={loading}
-      sx={{ width: "100%" }}
+      sx={{ width: "100%", ...props.sx }}
       autoComplete="off"
       inputRef={inputRef}
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
-      // This ensures label behaves correctly
       slotProps={{
-        inputLabel: {
-          shrink: Boolean(searchText) || focused,
-        },
+        inputLabel: { shrink: Boolean(searchText) || focused },
         input: {
           endAdornment: searchText ? (
             <InputAdornment position="end">
@@ -58,19 +63,10 @@ const TextFieldWithClear = ({
               </IconButton>
             </InputAdornment>
           ) : null,
-        }
+        },
       }}
-      {...props}
     />
   );
-};
-
-TextFieldWithClear.propTypes = {
-  searchText: PropTypes.string,
-  handleSearch: PropTypes.func.isRequired,
-  loading: PropTypes.bool,
-  handleClearSearch: PropTypes.func.isRequired,
-  label: PropTypes.string,
 };
 
 export default TextFieldWithClear;

@@ -5,7 +5,7 @@ import { ContentWrapper } from "@/shared/components/layout";
 import { MyDataGrid, MyHeader } from "@/shared/components/common";
 import { useSnackbar } from "@/shared/hooks";
 import { HandleApiError } from "@/shared/services";
-import { useGridApiRef } from "@mui/x-data-grid";
+import { useGridApiRef, type GridColDef } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -26,7 +26,7 @@ const TrackChangesGrid = () => {
     }
   }, [error, showSnackbar]);
 
-  const columns = useMemo(
+  const columns = useMemo<GridColDef[]>(
     () => [
       {
         field: "changeLogId",
