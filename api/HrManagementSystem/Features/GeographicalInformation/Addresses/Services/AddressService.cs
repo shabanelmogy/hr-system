@@ -1,7 +1,9 @@
 using HrManagementSystem.Features.GeographicalInformation.Addresses.Contracts;
 using HrManagementSystem.Features.GeographicalInformation.Addresses.Entities;
 using HrManagementSystem.Features.GeographicalInformation.Addresses.Errors;
-using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
+using HrManagementSystem.Features.GeographicalInformation.Addresses.Jobs;
+
+using HrManagementSystem.Features.Platform.EntityChangeLogs.Services;
 
 namespace HrManagementSystem.Features.GeographicalInformation.Addresses.Services;
 
@@ -10,7 +12,6 @@ public class AddressService(
     IHttpContextAccessor httpContextAccessor,
     IEntityChangeLogService entityChangeLogService,
     AddressErrors addressErrors,
-    IHubContext<GeneralHub, IGeneralHubClient> generalHubContext,
     IMapper mapper) : IAddressService
 {
     private readonly ApplicationDbContext _context = context;
@@ -18,7 +19,6 @@ public class AddressService(
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
     private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
     private readonly AddressErrors _addressErrors = addressErrors;
-    private readonly IHubContext<GeneralHub, IGeneralHubClient> _generalHubContext = generalHubContext;
 
     public async Task<IEnumerable<AddressResponse>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -66,9 +66,7 @@ public class AddressService(
 
         var response = newAddress.Adapt<AddressResponse>();
 
-        var addressesCount = await GetCountAsync(cancellationToken);
-
-        await _generalHubContext.Clients.All.ReceiveAddressUpdate(addressesCount);
+        QueueAddressChanged(response, "Add");
 
         return Result.Success(response);
     }
@@ -94,6 +92,7 @@ public class AddressService(
         await _context.SaveChangesAsync(cancellationToken);
 
         var response = _mapper.Map<AddressResponse>(currentAddress);
+        QueueAddressChanged(response, "Update");
 
         return Result.Success(response);
     }
@@ -116,6 +115,9 @@ public class AddressService(
 
         await _context.SaveChangesAsync(cancellationToken);
 
+        var action = address.IsDeleted ? "Delete" : "Restore";
+        QueueAddressChanged(_mapper.Map<AddressResponse>(address), action);
+
         return Result.Success();
     }
 
@@ -128,6 +130,18 @@ public class AddressService(
         var response = new AddressesCountResponse(count);
 
         return Result.Success(response);
+    }
+
+    private void QueueAddressChanged(AddressResponse address, string action)
+    {
+        var request = new AddressChangedJobRequest(
+            address,
+            action,
+            _httpContextAccessor.HttpContext?.User.GetUserId(),
+            Guid.NewGuid());
+
+        BackgroundJob.Enqueue<AddressChangedJob>(
+            job => job.ExecuteAsync(request, CancellationToken.None));
     }
 
     private async Task UnsetOtherDefaultAddresses(CancellationToken cancellationToken = default)

@@ -1,3 +1,6 @@
+using HrManagementSystem.Features.Platform.Localization.Contracts;
+using HrManagementSystem.Features.Platform.Localization.Services;
+
 namespace HrManagementSystem.Features.Platform.Localization.Controllers.V1;
 
 [ApiVersion("1.0")]

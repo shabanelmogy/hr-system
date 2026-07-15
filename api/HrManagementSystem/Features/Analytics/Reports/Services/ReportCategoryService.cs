@@ -1,3 +1,9 @@
+using HrManagementSystem.Features.Analytics.Reports.Contracts;
+using HrManagementSystem.Features.Analytics.Reports.Errors;
+using HrManagementSystem.Features.Platform.EntityChangeLogs.Services;
+
+using HrManagementSystem.Features.Analytics.Reports.Entities;
+
 namespace HrManagementSystem.Features.Analytics.Reports.Services;
 
 public class ReportCategoryService(

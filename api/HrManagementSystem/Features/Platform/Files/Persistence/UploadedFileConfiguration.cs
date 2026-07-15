@@ -1,4 +1,6 @@
 
+using HrManagementSystem.Features.Platform.Files.Entities;
+
 namespace HrManagementSystem.Features.Platform.Files.Persistence;
 
 public class UploadedFileConfiguration : IEntityTypeConfiguration<UploadedFile>

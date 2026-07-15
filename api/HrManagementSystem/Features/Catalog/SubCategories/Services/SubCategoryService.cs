@@ -1,3 +1,10 @@
+using HrManagementSystem.Features.Catalog.SubCategories.Contracts;
+using HrManagementSystem.Features.Catalog.SubCategories.Errors;
+using HrManagementSystem.Features.Platform.EntityChangeLogs.Services;
+
+using HrManagementSystem.Features.Catalog.Categories.Entities;
+using HrManagementSystem.Features.Catalog.SubCategories.Entities;
+
 namespace HrManagementSystem.Features.Catalog.SubCategories.Services;
 
 public class SubcategoryService(

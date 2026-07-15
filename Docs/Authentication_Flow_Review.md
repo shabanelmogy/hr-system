@@ -4,6 +4,8 @@
 **Frontend:** Next.js (App Router) - `web-next/`  
 **Backend:** ASP.NET Core Web API - `api/HrManagementSystem/`
 
+> **Frontend ownership:** `web-next/` is the canonical frontend and deployment target. The Vite application in `web/` is legacy, frozen except for migration/removal work, and scheduled for removal after migration validation.
+
 ---
 
 ## 📋 Overview

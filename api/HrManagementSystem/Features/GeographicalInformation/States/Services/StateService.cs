@@ -1,4 +1,10 @@
-using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
+using HrManagementSystem.Features.GeographicalInformation.States.Jobs;
+
+using HrManagementSystem.Features.GeographicalInformation.States.Contracts;
+using HrManagementSystem.Features.GeographicalInformation.States.Errors;
+using HrManagementSystem.Features.Platform.EntityChangeLogs.Services;
+
+using HrManagementSystem.Features.GeographicalInformation.States.Entities;
 
 namespace HrManagementSystem.Features.GeographicalInformation.States.Services;
 
@@ -7,7 +13,6 @@ public class StateService(
     IHttpContextAccessor httpContextAccessor,
     IEntityChangeLogService entityChangeLogService,
     StateErrors stateErrors,
-    IHubContext<GeneralHub, IGeneralHubClient> generalHubContext,
     IMapper mapper) : IStateService
 {
     private readonly ApplicationDbContext _context = context;
@@ -15,7 +20,6 @@ public class StateService(
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
     private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
     private readonly StateErrors _stateErrors = stateErrors;
-    private readonly IHubContext<GeneralHub, IGeneralHubClient> _generalHubContext = generalHubContext;
 
     public async Task<IEnumerable<StateResponse>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -83,7 +87,7 @@ public class StateService(
 
         var response = _mapper.Map<StateResponse>(savedState!);
 
-        await PublishStateUpdateAsync(response, "Add", cancellationToken);
+        QueueStateChanged(response, "Add");
 
         return Result.Success(response);
     }
@@ -115,14 +119,16 @@ public class StateService(
 
         var response = _mapper.Map<StateResponse>(savedState!);
 
-        await PublishStateUpdateAsync(response, "Update", cancellationToken);
+        QueueStateChanged(response, "Update");
 
         return Result.Success(response);
     }
 
     public async Task<Result> ToggleDeleteAsync(int id, CancellationToken cancellationToken = default)
     {
-        var state = await _context.States.FirstOrDefaultAsync(state => state.Id == id, cancellationToken);
+        var state = await _context.States
+            .Include(state => state.Country)
+            .FirstOrDefaultAsync(state => state.Id == id, cancellationToken);
 
         if (state is null)
             return Result.Failure(_stateErrors.StateNotFound);
@@ -141,7 +147,7 @@ public class StateService(
         await _context.SaveChangesAsync(cancellationToken);
         
         var action = state.IsDeleted ? "Delete" : "Restore";
-        await PublishStateUpdateAsync(null, action, cancellationToken);
+        QueueStateChanged(_mapper.Map<StateResponse>(state), action);
 
         return Result.Success();
     }
@@ -167,13 +173,15 @@ public class StateService(
         };
     }
 
-    private async Task PublishStateUpdateAsync(StateResponse? response, string action, CancellationToken cancellationToken)
+    private void QueueStateChanged(StateResponse state, string action)
     {
-        var statesCountResult = await GetCountAsync(cancellationToken);
-        if (statesCountResult.IsSuccess)
-        {
-            var statesCount = new StatesCountResponse(statesCountResult.Value.Count, response, action);
-            await _generalHubContext.Clients.All.ReceiveStateUpdate(statesCount);
-        }
+        var request = new StateChangedJobRequest(
+            state,
+            action,
+            _httpContextAccessor.HttpContext?.User.GetUserId(),
+            Guid.NewGuid());
+
+        BackgroundJob.Enqueue<StateChangedJob>(
+            job => job.ExecuteAsync(request, CancellationToken.None));
     }
 }

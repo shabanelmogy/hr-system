@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.Catalog.Categories.Entities;
+
 namespace HrManagementSystem.Features.Catalog.SubCategories.Entities
 {
     public class SubCategory : AuditableEntity

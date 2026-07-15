@@ -2,6 +2,8 @@ using System.Collections;
 using HrManagementSystem.Features.Platform.EntityChangeLogs.Contracts;
 using Newtonsoft.Json;
 
+using HrManagementSystem.Features.Platform.EntityChangeLogs.Entities;
+
 namespace HrManagementSystem.Features.Platform.EntityChangeLogs.Services;
 
 public class EntityChangeLogService : IEntityChangeLogService

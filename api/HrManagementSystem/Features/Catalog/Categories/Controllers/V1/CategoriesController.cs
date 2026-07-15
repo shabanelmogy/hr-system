@@ -1,3 +1,6 @@
+using HrManagementSystem.Features.Catalog.Categories.Contracts;
+using HrManagementSystem.Features.Catalog.Categories.Services;
+
 namespace HrManagementSystem.Features.Catalog.Categories.Controllers.V1;
 
 [ApiVersion("1.0")]

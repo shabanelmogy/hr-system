@@ -1,3 +1,6 @@
+using HrManagementSystem.Features.Platform.Files.Contracts;
+using HrManagementSystem.Features.Platform.Files.Entities;
+
 namespace HrManagementSystem.Features.Platform.Files.Services;
 
 public class FileService(IWebHostEnvironment webHostEnvironment, ApplicationDbContext context) : IFileService

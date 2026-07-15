@@ -1049,15 +1049,6 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<DateTime?>("DeliveredOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DeliveryAttempts")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeliveryClaimedUntil")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime?>("DismissedOn")
                         .HasColumnType("datetime2");
 
@@ -1077,17 +1068,10 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Property<DateTime?>("ExpiresOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("LastDeliveryError")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
                     b.Property<string>("MessageKey")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<DateTime?>("NextDeliveryAttemptOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("ParametersJson")
                         .IsRequired()
@@ -1127,8 +1111,6 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasIndex("RecipientUserId", "ReadOn")
                         .HasFilter("[DismissedOn] IS NULL AND [ReadOn] IS NULL");
-
-                    b.HasIndex("DeliveredOn", "NextDeliveryAttemptOn", "DeliveryClaimedUntil");
 
                     b.HasIndex("RecipientUserId", "CreatedOn", "Id");
 

@@ -1,6 +1,10 @@
 using HrManagementSystem.Features.Appointments.Contracts;
 using HrManagementSystem.Features.Appointments.Errors;
 
+using HrManagementSystem.Features.Platform.EntityChangeLogs.Services;
+
+using HrManagementSystem.Features.Appointments.Entities;
+
 namespace HrManagementSystem.Features.Appointments.Services;
 
 public class AppointmentService(

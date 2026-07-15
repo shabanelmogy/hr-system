@@ -1,5 +1,7 @@
 using HrManagementSystem.Features.GeographicalInformation.Addresses.Entities;
 
+using HrManagementSystem.Features.Employees.Entities;
+
 namespace HrManagementSystem.Features.OrganizationalStructure.Entities;
 
 public class Company : AuditableEntity

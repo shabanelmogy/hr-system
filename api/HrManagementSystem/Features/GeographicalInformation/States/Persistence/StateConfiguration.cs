@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.GeographicalInformation.States.Entities;
+
 namespace HrManagementSystem.Features.GeographicalInformation.States.Persistence;
 
 public class StateConfiguration : IEntityTypeConfiguration<State>

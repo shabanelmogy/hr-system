@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.Security.Authorization.Errors;
+
 namespace HrManagementSystem.Features.Platform.Localization.Errors
 {
     public class LocalizationError(IStringLocalizer<RoleErrors> localizer)

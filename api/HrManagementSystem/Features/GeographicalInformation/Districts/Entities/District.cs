@@ -1,5 +1,7 @@
 using HrManagementSystem.Features.GeographicalInformation.Addresses.Entities;
 
+using HrManagementSystem.Features.GeographicalInformation.States.Entities;
+
 namespace HrManagementSystem.Features.GeographicalInformation.Districts.Entities;
 
 public class District : AuditableEntity

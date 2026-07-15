@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.GeographicalInformation.States.Entities;
+
 namespace HrManagementSystem.Features.GeographicalInformation.Countries.Entities;
 
 public class Country : AuditableEntity

@@ -1,3 +1,10 @@
+using HrManagementSystem.Features.Catalog.Categories.Contracts;
+using HrManagementSystem.Features.Catalog.Categories.Errors;
+using HrManagementSystem.Features.Platform.EntityChangeLogs.Services;
+
+using HrManagementSystem.Features.Catalog.Categories.Entities;
+using HrManagementSystem.Features.Catalog.SubCategories.Contracts;
+
 namespace HrManagementSystem.Features.Catalog.Categories.Services;
 
 public class CategoryService(

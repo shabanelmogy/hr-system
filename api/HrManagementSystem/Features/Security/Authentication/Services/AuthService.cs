@@ -1,5 +1,8 @@
 using HrManagementSystem.Features.Security.Authentication.Contracts;
-using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
+using HrManagementSystem.Features.Security.Authentication.Jobs;
+
+using HrManagementSystem.Features.Security.Authentication.Entities;
+using HrManagementSystem.Features.Security.Users.Errors;
 
 namespace HrManagementSystem.Features.Security.Authentication.Services;
 
@@ -8,7 +11,6 @@ public sealed class AuthService(
     SignInManager<ApplicationUser> signInManager,
     IJwtProvider jwtProvider,
     UserErrors userErrors,
-    IHubContext<GeneralHub, IGeneralHubClient> companyHubContext,
     IAuthEmailService emailService,
     ILoginAuditService loginAudit) : IAuthService
 {
@@ -159,7 +161,7 @@ public sealed class AuthService(
         {
             RevokeSessionFamily(user, storedToken.SessionId, "Token claims mismatch");
             await userManager.UpdateAsync(user);
-            await NotifySessionRevokedAsync(user.Id, "Your session was revoked due to security validation failure.");
+            QueueSessionRevoked(user.Id, "Your session was revoked due to security validation failure.");
             return Result.Failure<AuthResponse>(userErrors.InvalidRefreshToken);
         }
 
@@ -210,7 +212,7 @@ public sealed class AuthService(
         if (!result.Succeeded)
             return Result.Failure(userErrors.UpdateFailed);
 
-        await NotifySessionRevokedAsync(user.Id, "Your session has been revoked by an administrator.");
+        QueueSessionRevoked(user.Id, "Your session has been revoked by an administrator.");
         return Result.Success();
     }
 
@@ -334,7 +336,7 @@ public sealed class AuthService(
 
         RevokeAllSessions(user, "Password was reset");
         await userManager.UpdateAsync(user);
-        await NotifySessionRevokedAsync(user.Id, "Your password was reset. Please sign in again.");
+        QueueSessionRevoked(user.Id, "Your password was reset. Please sign in again.");
         return Result.Success();
     }
 
@@ -443,8 +445,11 @@ public sealed class AuthService(
             (t.RevokedOn is null && t.ExpiresOn < removeBefore));
     }
 
-    private Task NotifySessionRevokedAsync(string userId, string message) =>
-        companyHubContext.Clients.User(userId).ReceiveTokenRevoked(message);
+    private static void QueueSessionRevoked(string userId, string message)
+    {
+        BackgroundJob.Enqueue<SessionRevokedJob>(
+            job => job.ExecuteAsync(userId, message));
+    }
 
     private static Error IdentityFailure(IdentityResult result)
     {

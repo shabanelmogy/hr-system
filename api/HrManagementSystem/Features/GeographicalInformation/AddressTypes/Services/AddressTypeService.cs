@@ -1,7 +1,9 @@
 using HrManagementSystem.Features.GeographicalInformation.AddressTypes.Contracts;
 using HrManagementSystem.Features.GeographicalInformation.AddressTypes.Entities;
 using HrManagementSystem.Features.GeographicalInformation.AddressTypes.Errors;
-using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
+using HrManagementSystem.Features.GeographicalInformation.AddressTypes.Jobs;
+
+using HrManagementSystem.Features.Platform.EntityChangeLogs.Services;
 
 namespace HrManagementSystem.Features.GeographicalInformation.AddressTypes.Services;
 
@@ -10,7 +12,6 @@ public class AddressTypeService(
     IHttpContextAccessor httpContextAccessor,
     IEntityChangeLogService entityChangeLogService,
     AddressTypeErrors addressTypeErrors,
-    IHubContext<GeneralHub, IGeneralHubClient> generalHubContext,
     IMapper mapper) : IAddressTypeService
 {
     private readonly ApplicationDbContext _context = context;
@@ -18,7 +19,6 @@ public class AddressTypeService(
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
     private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
     private readonly AddressTypeErrors _addressTypeErrors = addressTypeErrors;
-    private readonly IHubContext<GeneralHub, IGeneralHubClient> _generalHubContext = generalHubContext;
 
     public async Task<IEnumerable<AddressTypeResponse>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -59,9 +59,7 @@ public class AddressTypeService(
 
         var response = newAddressType.Adapt<AddressTypeResponse>();
 
-        var addressTypesCount = await GetCountAsync(cancellationToken);
-
-        await _generalHubContext.Clients.All.ReceiveAddressTypeUpdate(addressTypesCount);
+        QueueAddressTypeChanged(response, "Add");
 
         return Result.Success(response);
     }
@@ -81,6 +79,7 @@ public class AddressTypeService(
         await _context.SaveChangesAsync(cancellationToken);
 
         var response = _mapper.Map<AddressTypeResponse>(currentAddressType);
+        QueueAddressTypeChanged(response, "Update");
 
         return Result.Success(response);
     }
@@ -104,6 +103,9 @@ public class AddressTypeService(
 
         await _context.SaveChangesAsync(cancellationToken);
 
+        var action = addressType.IsDeleted ? "Delete" : "Restore";
+        QueueAddressTypeChanged(_mapper.Map<AddressTypeResponse>(addressType), action);
+
         return Result.Success();
     }
 
@@ -116,5 +118,17 @@ public class AddressTypeService(
         var response = new AddressTypesCountResponse(count);
 
         return Result.Success(response);
+    }
+
+    private void QueueAddressTypeChanged(AddressTypeResponse addressType, string action)
+    {
+        var request = new AddressTypeChangedJobRequest(
+            addressType,
+            action,
+            _httpContextAccessor.HttpContext?.User.GetUserId(),
+            Guid.NewGuid());
+
+        BackgroundJob.Enqueue<AddressTypeChangedJob>(
+            job => job.ExecuteAsync(request, CancellationToken.None));
     }
 }

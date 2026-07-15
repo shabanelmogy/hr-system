@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.GeographicalInformation.States.Contracts;
+
 namespace HrManagementSystem.Features.GeographicalInformation.States.Services;
 
 public interface IStateService

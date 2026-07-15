@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.Employees.Entities;
+
 namespace HrManagementSystem.Features.OrganizationalStructure.Entities;
 
 public class Divsion : AuditableEntity

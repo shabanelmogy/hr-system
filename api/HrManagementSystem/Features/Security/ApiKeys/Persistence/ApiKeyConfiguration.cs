@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.Security.ApiKeys.Entities;
+
 namespace HrManagementSystem.Features.Security.ApiKeys.Persistence;
 
 public class ApiKeyConfiguration : IEntityTypeConfiguration<ApiKey>

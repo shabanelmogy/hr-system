@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.Analytics.Dashboard.Services;
+
 namespace HrManagementSystem.Features.Analytics.Dashboard.Controllers.V1;
 
 [ApiVersion("1.0")]

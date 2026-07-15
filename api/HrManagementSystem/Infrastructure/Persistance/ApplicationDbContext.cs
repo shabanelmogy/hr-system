@@ -4,6 +4,16 @@ using HrManagementSystem.Features.GeographicalInformation.Countries.Entities;
 using HrManagementSystem.Features.GeographicalInformation.Districts.Entities;
 using HrManagementSystem.Features.Platform.Notifications.Entities;
 
+using HrManagementSystem.Features.Analytics.Reports.Entities;
+using HrManagementSystem.Features.Appointments.Entities;
+using HrManagementSystem.Features.Catalog.Categories.Entities;
+using HrManagementSystem.Features.Catalog.SubCategories.Entities;
+using HrManagementSystem.Features.GeographicalInformation.States.Entities;
+using HrManagementSystem.Features.Platform.EntityChangeLogs.Entities;
+using HrManagementSystem.Features.Platform.Files.Entities;
+using HrManagementSystem.Features.Security.ApiKeys.Entities;
+using HrManagementSystem.Features.Security.Authentication.Entities;
+
 namespace HrManagementSystem.Infrastructure.Persistance;
 
 public class ApplicationDbContext(

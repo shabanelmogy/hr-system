@@ -4,11 +4,14 @@ using HrManagementSystem.Features.GeographicalInformation.Countries.Contracts;
 using HrManagementSystem.Features.GeographicalInformation.Districts.Contracts;
 using HrManagementSystem.Features.Platform.Notifications.Contracts;
 
+using HrManagementSystem.Features.GeographicalInformation.States.Contracts;
+using HrManagementSystem.Features.Security.Users.Contracts;
+
 namespace HrManagementSystem.Infrastructure.Hubs.GeneralHub;
 
 public interface IGeneralHubClient
 {
-    Task ReceiveUserUpdate(Result<UsersCountResponse> usersCount);
+    Task ReceiveUserUpdate(Result<UserChangedResponse> usersUpdate);
     Task ReceiveCountryUpdate(CountriesCountResponse countriesCount);
     Task ReceiveStateUpdate(StatesCountResponse statesCount);
     Task ReceiveDistrictUpdate(Result<DistrictsCountResponse> districtsCount);

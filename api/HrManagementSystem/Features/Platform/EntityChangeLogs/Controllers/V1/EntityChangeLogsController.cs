@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.Platform.EntityChangeLogs.Services;
+
 namespace HrManagementSystem.Features.Platform.EntityChangeLogs.Controllers.V1;
 
 [ApiVersion("1.0", Deprecated = true)]

@@ -1,5 +1,8 @@
 using HrManagementSystem.Features.Security.Authorization.Contracts;
 
+using HrManagementSystem.Features.Security.Authentication.Entities;
+using HrManagementSystem.Features.Security.Authorization.Errors;
+
 namespace HrManagementSystem.Features.Security.Authorization.Services
 {
     public class RoleService(

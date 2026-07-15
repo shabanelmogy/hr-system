@@ -1,6 +1,8 @@
 using HrManagementSystem.Features.Platform.Localization.Contracts;
 using Newtonsoft.Json;
 
+using HrManagementSystem.Features.Platform.Localization.Errors;
+
 namespace HrManagementSystem.Features.Platform.Localization.Services
 {
     public class LocalizationService : ILocalizationService

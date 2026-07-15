@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.Catalog.Categories.Entities;
+
 namespace HrManagementSystem.Features.Catalog.Categories.Persistence;
 
 public class CategorySubcategoryConfiguration : IEntityTypeConfiguration<CategorySubcategory>

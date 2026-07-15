@@ -1,5 +1,7 @@
 using HrManagementSystem.Features.GeographicalInformation.States.Contracts;
 
+using HrManagementSystem.Features.GeographicalInformation.States.Services;
+
 namespace HrManagementSystem.Features.GeographicalInformation.States.Controllers.V1;
 
 [ApiVersion("1.0")]

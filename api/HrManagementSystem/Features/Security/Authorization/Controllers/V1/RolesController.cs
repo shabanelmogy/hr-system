@@ -1,3 +1,6 @@
+using HrManagementSystem.Features.Security.Authorization.Contracts;
+using HrManagementSystem.Features.Security.Authorization.Services;
+
 namespace HrManagementSystem.Features.Security.Authorization.Controllers.V1;
 
 [Route(ApiRoutes.BaseRoute)]

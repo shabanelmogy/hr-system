@@ -1,4 +1,10 @@
-using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
+using HrManagementSystem.Features.Security.Authentication.Jobs;
+using HrManagementSystem.Features.Security.Users.Jobs;
+
+using HrManagementSystem.Features.Security.Authentication.Entities;
+using HrManagementSystem.Features.Security.Authorization.Services;
+using HrManagementSystem.Features.Security.Users.Contracts;
+using HrManagementSystem.Features.Security.Users.Errors;
 
 namespace HrManagementSystem.Features.Security.Users.Services;
 
@@ -6,17 +12,15 @@ public class UserService(
     UserManager<ApplicationUser> userManager,
     IRoleService roleService,
     UserErrors userErrors,
-    IDashboardService dashboardService,
-    IHubContext<GeneralHub, IGeneralHubClient> companyHubContext,
     ApplicationDbContext context,
+    IHttpContextAccessor httpContextAccessor,
     IWebHostEnvironment webHostEnvironment) : IUserService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly IRoleService _roleService = roleService;
     private readonly UserErrors _userErrors = userErrors;
-    private readonly IDashboardService _dashboardService = dashboardService;
-    private readonly IHubContext<GeneralHub, IGeneralHubClient> _companyHubContext = companyHubContext;
     private readonly ApplicationDbContext _context = context;
+    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
     private readonly string _profilePicturesPath = Path.Combine(
         webHostEnvironment.WebRootPath ?? Path.Combine(webHostEnvironment.ContentRootPath, "wwwroot"),
         "profile-pictures");
@@ -91,9 +95,7 @@ public class UserService(
 
             var response = (user, request.Roles).Adapt<UserResponse>();
 
-            var usersCount = await _dashboardService.GetUsersCountAsync(cancellationToken);
-
-            await _companyHubContext.Clients.All.ReceiveUserUpdate(usersCount);
+            QueueUserChanged(response, "Add");
 
             return Result.Success(response);
         }
@@ -140,8 +142,10 @@ public class UserService(
             await _userManager.UpdateSecurityStampAsync(user);
             RevokeActiveSessions(user, "Account permissions changed");
             await _userManager.UpdateAsync(user);
-            await _companyHubContext.Clients.User(user.Id)
-                .ReceiveTokenRevoked("Your account permissions changed. Please sign in again.");
+            QueueSessionRevoked(
+                user.Id,
+                "Your account permissions changed. Please sign in again.");
+            QueueUserChanged((user, request.Roles).Adapt<UserResponse>(), "Update");
 
             return Result.Success();
         }
@@ -171,8 +175,7 @@ public class UserService(
         }
 
         RevokeActiveSessions(user, "Password changed by an administrator");
-        await _companyHubContext.Clients.User(user.Id)
-            .ReceiveTokenRevoked("Your password was changed. Please sign in again.");
+        QueueSessionRevoked(user.Id, "Your password was changed. Please sign in again.");
 
         return Result.Success();
     }
@@ -195,9 +198,13 @@ public class UserService(
         {
             if (user.IsDisabled)
             {
-                await _companyHubContext.Clients.User(user.Id)
-                    .ReceiveTokenRevoked("Your account has been disabled.");
+                QueueSessionRevoked(user.Id, "Your account has been disabled.");
             }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            QueueUserChanged(
+                (user, roles).Adapt<UserResponse>(),
+                user.IsDisabled ? "Disable" : "Enable");
 
             return Result.Success();
         }
@@ -227,6 +234,9 @@ public class UserService(
             var error = updateResult.Errors.First();
             return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
         }
+
+        var roles = await _userManager.GetRolesAsync(user);
+        QueueUserChanged((user, roles).Adapt<UserResponse>(), "Unlock");
 
         return Result.Success();
     }
@@ -337,8 +347,7 @@ public class UserService(
         {
             RevokeActiveSessions(user, "Password changed");
             await _userManager.UpdateAsync(user);
-            await _companyHubContext.Clients.User(user.Id)
-                .ReceiveTokenRevoked("Your password changed. Please sign in again.");
+            QueueSessionRevoked(user.Id, "Your password changed. Please sign in again.");
             return Result.Success();
         }
 
@@ -351,6 +360,24 @@ public class UserService(
     {
         foreach (var token in user.RefreshTokens.Where(token => token.IsActive))
             token.Revoke(reason);
+    }
+
+    private static void QueueSessionRevoked(string userId, string message)
+    {
+        BackgroundJob.Enqueue<SessionRevokedJob>(
+            job => job.ExecuteAsync(userId, message));
+    }
+
+    private void QueueUserChanged(UserResponse user, string action)
+    {
+        var request = new UserChangedJobRequest(
+            user,
+            action,
+            _httpContextAccessor.HttpContext?.User.GetUserId(),
+            Guid.NewGuid());
+
+        BackgroundJob.Enqueue<UserChangedJob>(
+            job => job.ExecuteAsync(request, CancellationToken.None));
     }
 
     private string? GetProfilePicturePath(string? fileName)

@@ -8,7 +8,8 @@ namespace HrManagementSystem.Features.Platform.Notifications.Services;
 public sealed class NotificationPublisher(
     ApplicationDbContext context,
     NotificationErrors errors,
-    IBackgroundJobClient backgroundJobs,
+    IHubContext<GeneralHub, IGeneralHubClient> hubContext,
+    IMapper mapper,
     ILogger<NotificationPublisher> logger) : INotificationPublisher
 {
     public async Task<Result<int>> PublishToPermissionAsync(
@@ -35,21 +36,21 @@ public sealed class NotificationPublisher(
         if (recipientIds.Count == 0)
             return Result.Success(0);
 
+        var notificationsToPublish = new List<Notification>();
         if (!string.IsNullOrWhiteSpace(request.DeduplicationKey))
         {
-            var existingRecipients = await context.Set<Notification>()
+            var existingNotifications = await context.Set<Notification>()
                 .AsNoTracking()
                 .Where(notification =>
                     recipientIds.Contains(notification.RecipientUserId) &&
                     notification.DeduplicationKey == request.DeduplicationKey)
-                .Select(notification => notification.RecipientUserId)
                 .ToListAsync(cancellationToken);
 
-            recipientIds = recipientIds.Except(existingRecipients).ToList();
+            notificationsToPublish.AddRange(existingNotifications);
+            recipientIds = recipientIds
+                .Except(existingNotifications.Select(notification => notification.RecipientUserId))
+                .ToList();
         }
-
-        if (recipientIds.Count == 0)
-            return Result.Success(0);
 
         var now = DateTime.UtcNow;
         var correlationId = request.CorrelationId ?? Guid.NewGuid();
@@ -58,7 +59,7 @@ public sealed class NotificationPublisher(
         if (parametersJson.Length > 2000)
             return Result.Failure<int>(errors.InvalidNotificationRequest);
 
-        var notifications = recipientIds.Select(recipientId => new Notification
+        var newNotifications = recipientIds.Select(recipientId => new Notification
         {
             RecipientUserId = recipientId,
             ActorUserId = request.ActorUserId,
@@ -78,35 +79,33 @@ public sealed class NotificationPublisher(
             ExpiresOn = request.ExpiresOn
         }).ToList();
 
-        try
+        if (newNotifications.Count > 0)
         {
-            await context.Set<Notification>().AddRangeAsync(notifications, cancellationToken);
-            await context.SaveChangesAsync(cancellationToken);
-        }
-        catch (DbUpdateException exception)
-        {
-            logger.LogError(
-                exception,
-                "Failed to persist notification event {EventType} for permission {Permission}",
-                request.EventType,
-                request.RequiredPermission);
-            return Result.Failure<int>(errors.NotificationPublishFailed);
+            try
+            {
+                await context.Set<Notification>().AddRangeAsync(newNotifications, cancellationToken);
+                await context.SaveChangesAsync(cancellationToken);
+            }
+            catch (DbUpdateException exception)
+            {
+                logger.LogError(
+                    exception,
+                    "Failed to persist notification event {EventType} for permission {Permission}",
+                    request.EventType,
+                    request.RequiredPermission);
+                return Result.Failure<int>(errors.NotificationPublishFailed);
+            }
+
+            notificationsToPublish.AddRange(newNotifications);
         }
 
-        try
+        foreach (var notification in notificationsToPublish)
         {
-            backgroundJobs.Enqueue<INotificationDeliveryService>(
-                service => service.DeliverPendingAsync(CancellationToken.None));
-        }
-        catch (Exception exception)
-        {
-            logger.LogWarning(
-                exception,
-                "Notification delivery enqueue failed; recurring delivery will recover event {EventType}",
-                request.EventType);
+            await hubContext.Clients.User(notification.RecipientUserId)
+                .ReceiveNotification(mapper.Map<NotificationRealtimeResponse>(notification));
         }
 
-        return Result.Success(notifications.Count);
+        return Result.Success(newNotifications.Count);
     }
 
     private static bool IsValid(NotificationPublishRequest request)

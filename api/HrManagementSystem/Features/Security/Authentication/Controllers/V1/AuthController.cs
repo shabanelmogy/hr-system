@@ -1,3 +1,6 @@
+using HrManagementSystem.Features.Security.Authentication.Contracts;
+using HrManagementSystem.Features.Security.Authentication.Services;
+
 namespace HrManagementSystem.Features.Security.Authentication.Controllers.V1;
 
 [ApiVersion("1.0")]

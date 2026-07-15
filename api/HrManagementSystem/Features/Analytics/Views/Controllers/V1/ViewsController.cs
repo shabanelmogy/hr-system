@@ -1,3 +1,6 @@
+using HrManagementSystem.Features.Analytics.Views.Contracts;
+using HrManagementSystem.Features.Analytics.Views.Services;
+
 namespace HrManagementSystem.Features.Analytics.Views.Controllers.V1;
 
 [ApiVersion("1.0")]

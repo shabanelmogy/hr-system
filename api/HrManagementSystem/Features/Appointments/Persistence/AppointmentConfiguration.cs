@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.Appointments.Entities;
+
 namespace HrManagementSystem.Features.Appointments.Persistence;
 
 public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>

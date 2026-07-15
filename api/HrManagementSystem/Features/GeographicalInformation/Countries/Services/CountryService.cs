@@ -2,10 +2,9 @@ using EFCore.BulkExtensions;
 using HrManagementSystem.Features.GeographicalInformation.Countries.Contracts;
 using HrManagementSystem.Features.GeographicalInformation.Countries.Entities;
 using HrManagementSystem.Features.GeographicalInformation.Countries.Errors;
-using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
-using HrManagementSystem.Features.Platform.Notifications.Contracts;
-using HrManagementSystem.Features.Platform.Notifications.Entities;
-using HrManagementSystem.Features.Platform.Notifications.Services;
+using HrManagementSystem.Features.GeographicalInformation.Countries.Jobs;
+
+using HrManagementSystem.Features.Platform.EntityChangeLogs.Services;
 
 namespace HrManagementSystem.Features.GeographicalInformation.Countries.Services;
 
@@ -14,9 +13,6 @@ public class CountryService(
     IHttpContextAccessor httpContextAccessor,
     IEntityChangeLogService entityChangeLogService,
     CountryErrors countryErrors,
-    IHubContext<GeneralHub, IGeneralHubClient> generalHubContext,
-    INotificationPublisher notificationPublisher,
-    ILogger<CountryService> logger,
     IMapper mapper) : ICountryService
 {
     private readonly ApplicationDbContext _context = context;
@@ -24,9 +20,6 @@ public class CountryService(
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
     private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
     private readonly CountryErrors _countryErrors = countryErrors;
-    private readonly IHubContext<GeneralHub, IGeneralHubClient> _generalHubContext = generalHubContext;
-    private readonly INotificationPublisher _notificationPublisher = notificationPublisher;
-    private readonly ILogger<CountryService> _logger = logger;
 
     public async Task<IEnumerable<CountryResponse>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -75,7 +68,7 @@ public class CountryService(
 
         var response = _mapper.Map<CountryResponse>(newCountry);
 
-        await PublishCountryUpdateAsync(response, "Add", cancellationToken);
+        QueueCountryChanged(response, "Add");
 
         return Result.Success(response);
     }
@@ -129,7 +122,7 @@ public class CountryService(
             .ToList();
 
         await _context.BulkInsertAsync(newCountries, cancellationToken: cancellationToken);
-        await PublishCountryUpdateAsync(null, "BulkAdd", cancellationToken, countryRequests.Count);
+        QueueCountryChanged(null, "BulkAdd", countryRequests.Count);
 
         return Result.Success();
     }
@@ -156,7 +149,7 @@ public class CountryService(
 
         var response = _mapper.Map<CountryResponse>(currentCountry);
 
-        await PublishCountryUpdateAsync(response, "Update", cancellationToken);
+        QueueCountryChanged(response, "Update");
 
         return Result.Success(response);
     }
@@ -179,7 +172,7 @@ public class CountryService(
         country.DeletedOn = country.IsDeleted ? DateTime.UtcNow : null;
 
         await _context.SaveChangesAsync(cancellationToken);
-        await PublishCountryUpdateAsync(_mapper.Map<CountryResponse>(country), action, cancellationToken);
+        QueueCountryChanged(_mapper.Map<CountryResponse>(country), action);
 
         return Result.Success();
     }
@@ -230,95 +223,19 @@ public class CountryService(
             : value.Trim();
     }
 
-    private async Task PublishCountryUpdateAsync(
+    private void QueueCountryChanged(
         CountryResponse? country,
         string action,
-        CancellationToken cancellationToken,
         int? bulkCount = null)
     {
-        await PublishDurableNotificationAsync(country, action, bulkCount, cancellationToken);
+        var request = new CountryChangedJobRequest(
+            country,
+            action,
+            bulkCount,
+            _httpContextAccessor.HttpContext?.User.GetUserId(),
+            Guid.NewGuid());
 
-        var countriesCount = await GetCountAsync(cancellationToken);
-        await _generalHubContext.Clients.All.ReceiveCountryUpdate(
-            new CountriesCountResponse(countriesCount.Value.Count, country, action));
-    }
-
-    private async Task PublishDurableNotificationAsync(
-        CountryResponse? country,
-        string action,
-        int? bulkCount,
-        CancellationToken cancellationToken)
-    {
-        var eventType = action switch
-        {
-            "Add" => "Countries.Created",
-            "BulkAdd" => "Countries.BulkCreated",
-            "Update" => "Countries.Updated",
-            "Delete" => "Countries.Deleted",
-            "Restore" => "Countries.Restored",
-            _ => "Countries.Changed"
-        };
-
-        var messageKey = action switch
-        {
-            "Add" => "CountryCreatedNotificationMessage",
-            "BulkAdd" => "CountriesCreatedNotificationMessage",
-            "Update" => "CountryUpdatedNotificationMessage",
-            "Delete" => "CountryDeletedNotificationMessage",
-            "Restore" => "CountryRestoredNotificationMessage",
-            _ => "CountryUpdatedNotificationMessage"
-        };
-
-        var parameters = country is null
-            ? new Dictionary<string, string> { ["Count"] = (bulkCount ?? 0).ToString(CultureInfo.InvariantCulture) }
-            : new Dictionary<string, string>
-            {
-                ["NameAr"] = country.NameAr,
-                ["NameEn"] = country.NameEn
-            };
-
-        var httpContext = _httpContextAccessor.HttpContext;
-        var operationId = httpContext?.Request.Headers["Idempotency-Key"].FirstOrDefault();
-        operationId = string.IsNullOrWhiteSpace(operationId)
-            ? httpContext?.TraceIdentifier ?? Guid.NewGuid().ToString("N")
-            : operationId;
-
-        try
-        {
-            var result = await _notificationPublisher.PublishToPermissionAsync(
-                new NotificationPublishRequest(
-                    Permissions.ViewCountries,
-                    "GeographicalInformation",
-                    eventType,
-                    action == "Delete" ? NotificationSeverity.Warning : NotificationSeverity.Success,
-                    "CountryNotificationTitle",
-                    messageKey,
-                    parameters,
-                    nameof(Country),
-                    country?.Id.ToString(CultureInfo.InvariantCulture),
-                    "/basic-data/countries",
-                    httpContext?.User.GetUserId(),
-                    $"{eventType}:{country?.Id.ToString(CultureInfo.InvariantCulture) ?? "bulk"}:{operationId}"),
-                cancellationToken);
-
-            if (result.IsFailure)
-            {
-                _logger.LogWarning(
-                    "Country event {EventType} was saved, but its notification failed with {ErrorCode}",
-                    eventType,
-                    result.Error.Code);
-            }
-        }
-        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
-        {
-            throw;
-        }
-        catch (Exception exception)
-        {
-            _logger.LogError(
-                exception,
-                "Country event {EventType} was saved, but its notification could not be created",
-                eventType);
-        }
+        BackgroundJob.Enqueue<CountryChangedJob>(
+            job => job.ExecuteAsync(request, CancellationToken.None));
     }
 }

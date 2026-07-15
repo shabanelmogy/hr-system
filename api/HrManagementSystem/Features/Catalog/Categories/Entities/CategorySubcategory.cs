@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.Catalog.SubCategories.Entities;
+
 namespace HrManagementSystem.Features.Catalog.Categories.Entities
 {
     public class CategorySubcategory

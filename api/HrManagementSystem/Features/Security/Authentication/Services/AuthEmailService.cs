@@ -1,5 +1,7 @@
 using HrManagementSystem.Shared.Settings;
 
+using HrManagementSystem.Features.Security.Authentication.Entities;
+
 namespace HrManagementSystem.Features.Security.Authentication.Services;
 
 public class AuthEmailService(

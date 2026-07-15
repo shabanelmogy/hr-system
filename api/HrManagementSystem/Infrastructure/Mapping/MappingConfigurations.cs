@@ -1,3 +1,10 @@
+using HrManagementSystem.Features.Catalog.Categories.Contracts;
+using HrManagementSystem.Features.Catalog.Categories.Entities;
+using HrManagementSystem.Features.Catalog.SubCategories.Contracts;
+using HrManagementSystem.Features.Catalog.SubCategories.Entities;
+using HrManagementSystem.Features.Security.Authentication.Entities;
+using HrManagementSystem.Features.Security.Users.Contracts;
+
 namespace HrManagementSystem.Infrastructure.Mapping;
 
 public class MappingConfigurations : IRegister

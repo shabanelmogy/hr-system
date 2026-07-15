@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.GeographicalInformation.States.Contracts;
+
 namespace HrManagementSystem.Features.GeographicalInformation.Districts.Contracts;
 
 public record DistrictResponse(

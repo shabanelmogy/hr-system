@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.Analytics.Reports.Entities;
+
 namespace HrManagementSystem.Features.Analytics.Reports.Persistence;
 
 public class ReportCategoryConfiguration : IEntityTypeConfiguration<ReportCategory>

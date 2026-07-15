@@ -1,7 +1,9 @@
 using HrManagementSystem.Features.GeographicalInformation.Districts.Contracts;
 using HrManagementSystem.Features.GeographicalInformation.Districts.Entities;
 using HrManagementSystem.Features.GeographicalInformation.Districts.Errors;
-using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
+using HrManagementSystem.Features.GeographicalInformation.Districts.Jobs;
+
+using HrManagementSystem.Features.Platform.EntityChangeLogs.Services;
 
 namespace HrManagementSystem.Features.GeographicalInformation.Districts.Services;
 
@@ -10,7 +12,6 @@ public class DistrictService(
     IHttpContextAccessor httpContextAccessor,
     IEntityChangeLogService entityChangeLogService,
     DistrictErrors districtErrors,
-    IHubContext<GeneralHub, IGeneralHubClient> generalHubContext,
     IMapper mapper) : IDistrictService
 {
     private readonly ApplicationDbContext _context = context;
@@ -18,7 +19,6 @@ public class DistrictService(
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
     private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
     private readonly DistrictErrors _districtErrors = districtErrors;
-    private readonly IHubContext<GeneralHub, IGeneralHubClient> _generalHubContext = generalHubContext;
 
     public async Task<IEnumerable<DistrictResponse>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -73,18 +73,22 @@ public class DistrictService(
         await _context.AddAsync(newDistrict, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
-        var response = newDistrict.Adapt<DistrictResponse>();
+        var savedDistrict = await _context.Districts
+            .AsNoTracking()
+            .Include(district => district.State)
+            .FirstAsync(district => district.Id == newDistrict.Id, cancellationToken);
+        var response = _mapper.Map<DistrictResponse>(savedDistrict);
 
-        var districtsCount = await GetCountAsync(cancellationToken);
-
-        await _generalHubContext.Clients.All.ReceiveDistrictUpdate(districtsCount);
+        QueueDistrictChanged(response, "Add");
 
         return Result.Success(response);
     }
 
     public async Task<Result<DistrictResponse>> UpdateAsync(DistrictRequest districtRequest, CancellationToken cancellationToken = default)
     {
-        var currentDistrict = await _context.Districts.FirstOrDefaultAsync(d => d.Id == districtRequest.Id, cancellationToken);
+        var currentDistrict = await _context.Districts
+            .Include(district => district.State)
+            .FirstOrDefaultAsync(district => district.Id == districtRequest.Id, cancellationToken);
         if (currentDistrict is null)
             return Result.Failure<DistrictResponse>(_districtErrors.DistrictNotFound);
 
@@ -100,14 +104,21 @@ public class DistrictService(
         _context.Update(currentDistrict);
         await _context.SaveChangesAsync(cancellationToken);
 
-        var response = _mapper.Map<DistrictResponse>(currentDistrict);
+        var savedDistrict = await _context.Districts
+            .AsNoTracking()
+            .Include(district => district.State)
+            .FirstAsync(district => district.Id == currentDistrict.Id, cancellationToken);
+        var response = _mapper.Map<DistrictResponse>(savedDistrict);
+        QueueDistrictChanged(response, "Update");
 
         return Result.Success(response);
     }
 
     public async Task<Result> ToggleAsync(int id, CancellationToken cancellationToken = default)
     {
-        var district = await _context.Districts.FindAsync(id);
+        var district = await _context.Districts
+            .Include(item => item.State)
+            .FirstOrDefaultAsync(item => item.Id == id, cancellationToken);
         if (district is null)
             return Result.Failure(_districtErrors.DistrictNotFound);
 
@@ -122,6 +133,9 @@ public class DistrictService(
 
         await _context.SaveChangesAsync(cancellationToken);
 
+        var action = district.IsDeleted ? "Delete" : "Restore";
+        QueueDistrictChanged(_mapper.Map<DistrictResponse>(district), action);
+
         return Result.Success();
     }
 
@@ -134,6 +148,18 @@ public class DistrictService(
         var response = new DistrictsCountResponse(count);
 
         return Result.Success(response);
+    }
+
+    private void QueueDistrictChanged(DistrictResponse district, string action)
+    {
+        var request = new DistrictChangedJobRequest(
+            district,
+            action,
+            _httpContextAccessor.HttpContext?.User.GetUserId(),
+            Guid.NewGuid());
+
+        BackgroundJob.Enqueue<DistrictChangedJob>(
+            job => job.ExecuteAsync(request, CancellationToken.None));
     }
 }
 

@@ -1,3 +1,9 @@
+# Legacy Frontend (Deprecated)
+
+> This Vite application is not the canonical frontend. It is temporarily retained only for migration/reference and is scheduled for removal. Do not add new features, routine fixes, configuration, or deployment work here. All supported frontend work belongs in `../web-next/`.
+
+## Historical Documentation
+
 HR Management System
 A modern, full-stack Human Resources Management System built with React 18 and TypeScript, focusing on scalable architecture and exceptional user experience.
 

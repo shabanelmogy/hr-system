@@ -1,5 +1,9 @@
 using HrManagementSystem.Features.Security.ApiKeys.Contracts;
 
+using HrManagementSystem.Features.Security.ApiKeys.Errors;
+
+using HrManagementSystem.Features.Security.ApiKeys.Entities;
+
 namespace HrManagementSystem.Features.Security.ApiKeys.Services;
 
 public class ApiKeyService : IApiKeyService

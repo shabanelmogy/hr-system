@@ -1,3 +1,6 @@
+using HrManagementSystem.Features.Platform.Files.Contracts;
+using HrManagementSystem.Features.Platform.Files.Services;
+
 namespace HrManagementSystem.Features.Platform.Files.Controllers.V1;
 
 [Route(ApiRoutes.BaseRoute)]

@@ -1,5 +1,12 @@
 using Scrutor;
+using HrManagementSystem.Features.GeographicalInformation.Addresses.Jobs;
+using HrManagementSystem.Features.GeographicalInformation.AddressTypes.Jobs;
+using HrManagementSystem.Features.GeographicalInformation.Countries.Jobs;
+using HrManagementSystem.Features.GeographicalInformation.Districts.Jobs;
+using HrManagementSystem.Features.GeographicalInformation.States.Jobs;
 using HrManagementSystem.Features.Platform.Notifications.Services;
+using HrManagementSystem.Features.Security.Authentication.Jobs;
+using HrManagementSystem.Features.Security.Users.Jobs;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
@@ -9,6 +16,13 @@ public static class EntitiesService
     {
         services.AddScoped<IEmailSender, EmailService>();
         services.AddScoped<INotificationPublisher, NotificationPublisher>();
+        services.AddScoped<CountryChangedJob>();
+        services.AddScoped<StateChangedJob>();
+        services.AddScoped<DistrictChangedJob>();
+        services.AddScoped<AddressTypeChangedJob>();
+        services.AddScoped<AddressChangedJob>();
+        services.AddScoped<UserChangedJob>();
+        services.AddScoped<SessionRevokedJob>();
 
         services.Scan(scan => scan
             .FromAssemblies(typeof(AllDependencies).Assembly)

@@ -17,36 +17,6 @@ global using Microsoft.EntityFrameworkCore.ChangeTracking;
 global using Microsoft.EntityFrameworkCore.Diagnostics;
 global using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-global using HrManagementSystem.Features.Security.Authorization.Contracts;
-global using HrManagementSystem.Features.Security.Authorization.Services;
-global using HrManagementSystem.Features.GeographicalInformation.States.Services;
-global using HrManagementSystem.Features.Analytics.Reports.Contracts;
-global using HrManagementSystem.Features.Analytics.Reports.Services;
-global using HrManagementSystem.Features.Security.Users.Contracts;
-global using HrManagementSystem.Features.Platform.Files.Contracts;
-global using HrManagementSystem.Features.Platform.Localization.Contracts;
-global using HrManagementSystem.Features.Catalog.SubCategories.Contracts;
-global using HrManagementSystem.Features.GeographicalInformation.Addresses.Contracts;
-global using HrManagementSystem.Features.GeographicalInformation.States.Contracts;
-global using HrManagementSystem.Features.Platform.Files.Services;
-global using HrManagementSystem.Features.Platform.Localization.Services;
-global using HrManagementSystem.Features.Catalog.SubCategories.Services;
-global using HrManagementSystem.Features.Security.Users.Services;
-global using HrManagementSystem.Features.Analytics.Views.Contracts;
-global using HrManagementSystem.Features.Analytics.Views.Services;
-global using HrManagementSystem.Features.GeographicalInformation.Addresses.Errors;
-global using HrManagementSystem.Features.GeographicalInformation.AddressTypes.Errors;
-global using HrManagementSystem.Features.Security.ApiKeys.Errors;
-global using HrManagementSystem.Features.Security.Authorization.Errors;
-global using HrManagementSystem.Features.Catalog.Categories.Errors;
-global using HrManagementSystem.Features.GeographicalInformation.Countries.Errors;
-global using HrManagementSystem.Features.GeographicalInformation.Districts.Errors;
-global using HrManagementSystem.Features.Platform.Localization.Errors;
-global using HrManagementSystem.Features.Analytics.Reports.Errors;
-global using HrManagementSystem.Features.GeographicalInformation.States.Errors;
-global using HrManagementSystem.Features.Catalog.SubCategories.Errors;
-global using HrManagementSystem.Features.Security.Users.Errors;
-
 global using HrManagementSystem.Infrastructure.Security.Authorization.Filters;
 global using HrManagementSystem.Shared.Errors;
 global using HrManagementSystem.Infrastructure.Persistance.Seeds;
@@ -67,43 +37,7 @@ global using HrManagementSystem.Infrastructure.Dependencies;
 global using HrManagementSystem.Infrastructure.Hangfire.Filters;
 global using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
 
-global using HrManagementSystem.Features.Security.ApiKeys.Entities;
-global using HrManagementSystem.Features.Appointments.Entities;
-
-
-global using HrManagementSystem.Features.Security.Authentication.Entities;
-global using HrManagementSystem.Features.Catalog.Categories.Entities;
-global using HrManagementSystem.Features.Platform.EntityChangeLogs.Entities;
-global using HrManagementSystem.Features.Platform.Files.Entities;
-global using HrManagementSystem.Features.Analytics.Reports.Entities;
-global using HrManagementSystem.Features.Catalog.SubCategories.Entities;
 global using HrManagementSystem.Shared.Entities;
-global using HrManagementSystem.Features.GeographicalInformation.Addresses.Entities;
-global using HrManagementSystem.Features.GeographicalInformation.AddressTypes.Entities;
-global using HrManagementSystem.Features.GeographicalInformation.Countries.Entities;
-
-global using HrManagementSystem.Features.GeographicalInformation.Districts.Entities;
-
-global using HrManagementSystem.Features.GeographicalInformation.States.Entities;
-global using HrManagementSystem.Features.Employees.Entities;
-
-global using HrManagementSystem.Features.Platform.EntityChangeLogs.Services;
-global using HrManagementSystem.Features.Analytics.Exporting.Services;
-global using HrManagementSystem.Features.Catalog.Categories.Services;
-global using HrManagementSystem.Features.Analytics.Dashboard.Services;
-global using HrManagementSystem.Features.Security.Authentication.Services;
-global using HrManagementSystem.Features.GeographicalInformation.AddressTypes.Services;
-global using HrManagementSystem.Features.GeographicalInformation.Districts.Services;
-global using HrManagementSystem.Features.GeographicalInformation.Countries.Services;
-
-global using HrManagementSystem.Features.Security.Authentication.Contracts;
-global using HrManagementSystem.Features.Catalog.Categories.Contracts;
-global using HrManagementSystem.Features.Analytics.Dashboard.Contracts;
-global using HrManagementSystem.Features.GeographicalInformation.AddressTypes.Contracts;
-global using HrManagementSystem.Features.GeographicalInformation.Countries.Contracts;
-global using HrManagementSystem.Features.GeographicalInformation.Districts.Contracts;
-
-global using HrManagementSystem.Features.Security.ApiKeys.Services;
 global using HrManagementSystem.Shared.Services;
 
 global using Mapster;

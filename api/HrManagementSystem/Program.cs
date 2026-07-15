@@ -87,9 +87,6 @@ app.UseHangfireDashboard("/hangfire", new DashboardOptions
 });
 
 
-//Hangfire Jobs
-HrManagementSystem.Features.Platform.Notifications.Services.NotificationJobConfiguration.RegisterNotificationJobs();
-
 #endregion
 
 #region "Localization"

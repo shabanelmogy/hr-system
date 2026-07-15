@@ -1,3 +1,6 @@
+using HrManagementSystem.Features.Security.Authentication.Entities;
+using HrManagementSystem.Features.Security.Authentication.Services;
+
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
 public static class AuthenticationService

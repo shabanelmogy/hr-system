@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.Security.Authentication.Entities;
+
 namespace HrManagementSystem.Features.Platform.Notifications.Entities;
 
 public enum NotificationSeverity
@@ -29,11 +31,6 @@ public sealed class Notification
     public DateTime? ReadOn { get; set; }
     public DateTime? DismissedOn { get; set; }
     public DateTime? ExpiresOn { get; set; }
-    public DateTime? DeliveredOn { get; set; }
-    public int DeliveryAttempts { get; set; }
-    public DateTime? NextDeliveryAttemptOn { get; set; }
-    public DateTime? DeliveryClaimedUntil { get; set; }
-    public string? LastDeliveryError { get; set; }
 
     public ApplicationUser RecipientUser { get; set; } = default!;
     public ApplicationUser? ActorUser { get; set; }

@@ -1,3 +1,6 @@
+using HrManagementSystem.Features.Security.Users.Contracts;
+using HrManagementSystem.Features.Security.Users.Services;
+
 namespace HrManagementSystem.Features.Security.Users.Controllers.V1;
 
 [ApiVersion("1.0")]

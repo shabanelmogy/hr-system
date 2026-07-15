@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.Security.Authentication.Entities;
+
 namespace HrManagementSystem.Features.Security.Authentication.Persistence;
 
 public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>

@@ -21,7 +21,6 @@ public sealed class NotificationConfiguration : IEntityTypeConfiguration<Notific
         builder.Property(notification => notification.EntityId).HasMaxLength(100);
         builder.Property(notification => notification.ActionUrl).HasMaxLength(500);
         builder.Property(notification => notification.DeduplicationKey).HasMaxLength(250);
-        builder.Property(notification => notification.LastDeliveryError).HasMaxLength(500);
         builder.Property(notification => notification.Severity).HasConversion<string>().HasMaxLength(20);
 
         builder.HasOne(notification => notification.RecipientUser)
@@ -43,13 +42,6 @@ public sealed class NotificationConfiguration : IEntityTypeConfiguration<Notific
 
         builder.HasIndex(notification => new { notification.RecipientUserId, notification.ReadOn })
             .HasFilter("[DismissedOn] IS NULL AND [ReadOn] IS NULL");
-
-        builder.HasIndex(notification => new
-        {
-            notification.DeliveredOn,
-            notification.NextDeliveryAttemptOn,
-            notification.DeliveryClaimedUntil
-        });
 
         builder.HasIndex(notification => new { notification.RecipientUserId, notification.DeduplicationKey })
             .IsUnique()

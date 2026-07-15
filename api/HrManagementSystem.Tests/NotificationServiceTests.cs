@@ -1,18 +1,18 @@
-using Hangfire;
-using Hangfire.Common;
-using Hangfire.States;
+using System.Reflection;
 using HrManagementSystem.Features.Platform.Notifications.Contracts;
 using HrManagementSystem.Features.Platform.Notifications.Entities;
 using HrManagementSystem.Features.Platform.Notifications.Errors;
 using HrManagementSystem.Features.Platform.Notifications.Mapping;
 using HrManagementSystem.Features.Platform.Notifications.Services;
 using HrManagementSystem.Features.Security.Authentication.Entities;
+using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
 using HrManagementSystem.Infrastructure.Persistance;
 using HrManagementSystem.Shared.Consts;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -164,11 +164,7 @@ public sealed class NotificationServiceTests
         });
         await context.SaveChangesAsync();
 
-        var publisher = new NotificationPublisher(
-            context,
-            CreateErrors(),
-            new NoOpBackgroundJobClient(),
-            NullLogger<NotificationPublisher>.Instance);
+        var publisher = CreatePublisher(context);
 
         var request = new NotificationPublishRequest(
             Permissions.ViewCountries,
@@ -206,6 +202,20 @@ public sealed class NotificationServiceTests
         var config = new TypeAdapterConfig();
         new NotificationMappingConfig().Register(config);
         return new NotificationService(context, CreateErrors(), new Mapper(config));
+    }
+
+    private static NotificationPublisher CreatePublisher(ApplicationDbContext context)
+    {
+        var config = new TypeAdapterConfig();
+        new NotificationMappingConfig().Register(config);
+        var hubClient = DispatchProxy.Create<IGeneralHubClient, NoOpHubClientProxy>();
+
+        return new NotificationPublisher(
+            context,
+            CreateErrors(),
+            new TestHubContext(hubClient),
+            new Mapper(config),
+            NullLogger<NotificationPublisher>.Instance);
     }
 
     private static NotificationErrors CreateErrors() => new(new TestStringLocalizer<NotificationQueryRequest>());
@@ -251,11 +261,30 @@ public sealed class NotificationServiceTests
         });
     }
 
-    private sealed class NoOpBackgroundJobClient : IBackgroundJobClient
+    private sealed class TestHubContext(IGeneralHubClient client)
+        : IHubContext<GeneralHub, IGeneralHubClient>
     {
-        public string Create(Job job, IState state) => Guid.NewGuid().ToString("N");
+        public IHubClients<IGeneralHubClient> Clients { get; } = new TestHubClients(client);
+        public IGroupManager Groups => null!;
+    }
 
-        public bool ChangeState(string jobId, IState state, string? expectedState) => true;
+    private sealed class TestHubClients(IGeneralHubClient client) : IHubClients<IGeneralHubClient>
+    {
+        public IGeneralHubClient All => client;
+        public IGeneralHubClient AllExcept(IReadOnlyList<string> excludedConnectionIds) => client;
+        public IGeneralHubClient Client(string connectionId) => client;
+        public IGeneralHubClient Clients(IReadOnlyList<string> connectionIds) => client;
+        public IGeneralHubClient Group(string groupName) => client;
+        public IGeneralHubClient GroupExcept(string groupName, IReadOnlyList<string> excludedConnectionIds) => client;
+        public IGeneralHubClient Groups(IReadOnlyList<string> groupNames) => client;
+        public IGeneralHubClient User(string userId) => client;
+        public IGeneralHubClient Users(IReadOnlyList<string> userIds) => client;
+    }
+
+    public class NoOpHubClientProxy : DispatchProxy
+    {
+        protected override object? Invoke(MethodInfo? targetMethod, object?[]? args) =>
+            Task.CompletedTask;
     }
 
     private sealed class TestStringLocalizer<T> : IStringLocalizer<T>

@@ -51,7 +51,7 @@ Use this order when creating a new feature:
 4. Validator: add FluentValidation rules and duplicate checks.
 5. Errors: add feature-specific errors.
 6. Mapping if needed: add custom Mapster rules only when convention mapping is not enough.
-7. Realtime if needed: add SignalR update contract when the frontend needs live updates.
+7. Realtime if needed: add a typed SignalR contract and a feature-owned Hangfire job.
 8. Service interface: define behavior with `Task<Result<T>>`.
 9. Service implementation: implement queries, add, update, delete, and count.
 10. Controller: expose API endpoints and permissions.
@@ -231,8 +231,13 @@ Features/GeographicalInformation/Countries/Mapping/CountryMappingConfig.cs
   - `Infrastructure/Hubs/GeneralHub/GeneralHub.cs`
   - `Infrastructure/Hubs/GeneralHub/IGeneralHubClient.cs`
 - Add a typed client method to `IGeneralHubClient`, for example `ReceiveCountryUpdate`.
-- Send the event from the service after `SaveChangesAsync` or successful bulk operation.
+- Create one feature-owned job in `Features/<Area>/<Feature>/Jobs/<Feature>ChangedJob.cs`.
+- The job request must include the changed response DTO, action, actor user ID, and one operation ID. Bulk requests may use a count when there is no single entity DTO.
+- The typed SignalR update payload must include the current count, changed entity, and action. Do not send count-only payloads for entity changes.
+- After `SaveChangesAsync` or a successful bulk operation, enqueue the feature job directly with `BackgroundJob.Enqueue<FeatureChangedJob>(...)`.
 - Do not publish SignalR events before the database transaction succeeds.
+- Feature services must not inject `IHubContext`; the feature-owned job owns realtime delivery.
+- Rely on Hangfire persistence and retries. Do not add an outbox table, dispatcher, polling loop, lease, or recovery service for noncritical realtime updates.
 - Keep event payloads small. Prefer count/update DTOs instead of returning full entity graphs.
 - Include an action value when the frontend needs to know what happened, for example `Add`, `Update`, `Delete`, or `Restore`.
 - Create a separate feature hub only when the module needs isolated connection rules, groups, permissions, or streaming behavior.
@@ -244,6 +249,9 @@ Default shared hub path:
 Infrastructure/Hubs/GeneralHub
   GeneralHub.cs
   IGeneralHubClient.cs
+
+Features/GeographicalInformation/Countries/Jobs
+  CountryChangedJob.cs
 ```
 
 Example typed client method:
@@ -252,12 +260,28 @@ Example typed client method:
 Task ReceiveCountryUpdate(CountriesCountResponse countriesCount);
 ```
 
-Example service publish:
+Example service enqueue after persistence:
 
 ```csharp
-await _generalHubContext.Clients.All.ReceiveCountryUpdate(
-    new CountriesCountResponse(count, response, "Add"));
+await _context.SaveChangesAsync(cancellationToken);
+
+BackgroundJob.Enqueue<CountryChangedJob>(
+    job => job.ExecuteAsync(request, CancellationToken.None));
 ```
+
+Detailed notification requirements for entity jobs:
+
+- Use `INotificationPublisher` inside the Hangfire job, not inside the CRUD service.
+- Select recipients with the entity's view permission, for example `Permissions.ViewCountries`.
+- Include category, event type, severity, title key, action message key, bounded parameters, entity type/ID, actor user ID, and a valid relative action URL when a frontend page exists.
+- Use a stable deduplication key containing event type, entity ID, and the request operation ID so Hangfire retries do not create duplicate rows.
+- Add every title/message key to both API localization files:
+  - `Infrastructure/Localization/Resources/en-US.json`
+  - `Infrastructure/Localization/Resources/ar-EG.json`
+- Add the same keys to frontend localization files:
+  - `web-next/src/locales/en/translation.json`
+  - `web-next/src/locales/ar/translation.json`
+- Register each concrete job explicitly in `Infrastructure/Dependencies/EntitiesService.cs`.
 
 ## 10. Service Rules
 
@@ -418,7 +442,7 @@ The `Countries` feature is the reference module for new geographical-information
 - Apply rate limiting globally and stricter named policies to authentication, upload, and expensive export endpoints.
 - Store protected uploads outside `wwwroot`; use generated stored names and stream downloads through authorized endpoints.
 - Validate file count, individual size, filename, extension, and content signatures before persistence.
-- Do not expose client-callable SignalR methods that broadcast server events. Publish through `IHubContext` in trusted services.
+- Do not expose client-callable SignalR methods that broadcast server events. Publish through trusted feature-owned Hangfire jobs.
 - Give caches explicit expiration, pass cancellation tokens, and invalidate all affected keys after successful mutations.
 - Validate pagination bounds, filter operations, sort directions, and sortable column names. Apply deterministic ordering before `Skip`/`Take`.
 - Keep dynamic database administration endpoints Development-only, permission-protected, and identifier-validated.
@@ -428,7 +452,7 @@ The `Countries` feature is the reference module for new geographical-information
 ## 19. Durable Notifications
 
 - Treat the notification table as the source of truth. SignalR is delivery only; clients must refetch after login and reconnect.
-- Publish entity notifications through `INotificationPublisher` after the entity database operation succeeds.
+- After the entity database operation succeeds, enqueue the feature-owned changed job. The job uses `INotificationPublisher` when persisted inbox notifications are required.
 - Pass the entity's required view permission, such as `Permissions.ViewCountries`; create recipient rows only for active users whose roles currently contain that permission.
 - Store the required permission on each row and recheck current role claims before inbox access or realtime delivery because permissions may change after publication.
 - Recheck the entity permission again in its API when a user opens the notification target.
@@ -437,8 +461,8 @@ The `Countries` feature is the reference module for new geographical-information
 - Store localization keys and bounded placeholder parameters, not prelocalized messages.
 - Use relative allow-listed action URLs and never store tokens, request bodies, stack traces, or sensitive entity fields in notification payloads.
 - Use a correlation ID and optional idempotency/deduplication key to prevent duplicate rows.
-- Persist retry state and use a bounded delivery lease so multiple workers cannot deliver the same pending row concurrently.
-- Keep retries bounded with backoff, retain failed rows for diagnosis, and run configurable expiry/retention cleanup.
+- Use Hangfire's built-in job persistence and bounded automatic retries for background execution.
+- Do not add custom delivery polling, leasing, retry counters, recovery jobs, or a transactional outbox unless a documented business requirement makes notification delivery critical.
 - Before physically deleting a user, check notification recipient/actor foreign keys and apply an explicit retention or anonymization policy.
 - Test recipient permission filtering, disabled users, cross-user access, expired/dismissed filtering, deduplication, and SignalR user isolation.
 
@@ -451,5 +475,5 @@ The `Countries` feature is the reference module for new geographical-information
 - Permissions exist and match controller attributes.
 - EF configuration is applied from `ApplicationDbContext`.
 - Localization keys exist for validation messages and every feature error property.
-- SignalR update method and payload are added for modules that need live frontend updates.
+- SignalR update method, detailed payload, and matching feature-owned Hangfire job are added for modules that need live frontend updates.
 - If EF configuration changed, create or update a migration deliberately.

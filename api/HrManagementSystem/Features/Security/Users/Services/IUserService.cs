@@ -1,3 +1,6 @@
+using HrManagementSystem.Features.Security.Authentication.Entities;
+using HrManagementSystem.Features.Security.Users.Contracts;
+
 namespace HrManagementSystem.Features.Security.Users.Services;
 
 public interface IUserService

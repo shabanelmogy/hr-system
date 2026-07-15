@@ -1,6 +1,8 @@
 using System.Net.Http.Headers;
 using System.Text.Json.Serialization;
 
+using HrManagementSystem.Features.Security.Authentication.Services;
+
 namespace HrManagementSystem.Features.Security.Authentication.Controllers.V1;
 
 [Route("api/account")]

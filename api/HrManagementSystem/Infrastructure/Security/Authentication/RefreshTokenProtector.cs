@@ -1,3 +1,5 @@
+using HrManagementSystem.Features.Security.Authentication.Entities;
+
 namespace HrManagementSystem.Infrastructure.Security.Authentication;
 
 public static class RefreshTokenProtector
