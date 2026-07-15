@@ -1,12 +1,21 @@
 import { MultiViewHeader } from "@/shared/components/common";
+import { useCollectionExports } from "@/shared/hooks";
 import { Box } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { GridApiCommon } from "@mui/x-data-grid";
 import type { AddressType } from "../types/AddressType";
 import AddressTypesDataGrid from "./grid-view/AddressTypesDataGrid";
 import AddressTypesCardView from "./AddressTypesCardView";
 import AddressTypesChartView from "./AddressTypesChartView";
+
+const addressTypeExportColumns = [
+  "id",
+  "nameAr",
+  "nameEn",
+  "createdOn",
+  "updatedOn",
+] as const;
 
 interface AddressTypesMultiViewProps {
   items: AddressType[];
@@ -36,10 +45,31 @@ const AddressTypesMultiView = ({
   lastEditedId,
   lastDeletedIndex,
 }: AddressTypesMultiViewProps) => {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [currentViewType, setCurrentViewType] = useState<
     "grid" | "cards" | "chart"
   >("grid");
+  const culture = i18n.resolvedLanguage?.toLowerCase().startsWith("ar") ? "ar" : "en";
+  const exportFileName = t("addressTypes.title") || "Address Types";
+  const exportRows = useMemo(
+    () =>
+      items.map((item) => ({
+        id: item.id,
+        nameAr: item.nameAr,
+        nameEn: item.nameEn,
+        createdOn: item.createdOn,
+        updatedOn: item.updatedOn,
+      })),
+    [items],
+  );
+  const { exportOptions } = useCollectionExports({
+    rows: exportRows,
+    columns: addressTypeExportColumns,
+    fileName: exportFileName,
+    culture,
+    reportHeader: exportFileName,
+    disabled: loading || exportRows.length === 0,
+  });
 
   const handleViewTypeChange = useCallback(
     (newViewType: "grid" | "cards" | "chart") => {
@@ -132,9 +162,9 @@ const AddressTypesMultiView = ({
         dataCount={items?.length || 0}
         totalLabel={t("addressTypes.total") || "Total"}
         onRefresh={onRefresh}
+        exportOptions={exportOptions}
         onViewTypeChange={handleViewTypeChange}
-        showActions={{ add: true, refresh: true, export: false, filter: false }}
-        onFilter={undefined}
+        showActions={{ add: true, refresh: true, export: true, filter: false }}
       />
 
       <Box

@@ -3,10 +3,11 @@ import {
   arabicLettersAndSpacesPattern,
   englishLettersAndSpacesPattern,
 } from "@/features/basic-data/geographical-information/validation/patterns";
+import type { TFunction } from "i18next";
 
 export type AddressTypeValidationSchema = z.infer<ReturnType<typeof getAddressTypeValidationSchema>>;
 
-export const getAddressTypeValidationSchema = (t: (key: string, options?: any) => string) => {
+export const getAddressTypeValidationSchema = (t: TFunction) => {
   return z.object({
     // Required: Arabic Name
     nameAr: z

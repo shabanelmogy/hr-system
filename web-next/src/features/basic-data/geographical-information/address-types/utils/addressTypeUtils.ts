@@ -2,7 +2,7 @@ import type { AddressType } from "../types/AddressType";
 
 // Returns only non-deleted address types
 export const getActiveAddressTypes = (items: AddressType[] = []): AddressType[] =>
-  items.filter((a) => !(a as any)?.isDeleted);
+  items.filter((item) => !item.isDeleted);
 
 // Safely returns a display name based on locale preference
 export const getAddressTypeDisplayName = (
@@ -10,8 +10,8 @@ export const getAddressTypeDisplayName = (
   locale: "ar" | "en" = "en"
 ): string => {
   if (!item) return "";
-  const nameAr = (item as any).nameAr ?? "";
-  const nameEn = (item as any).nameEn ?? "";
+  const nameAr = item.nameAr ?? "";
+  const nameEn = item.nameEn ?? "";
   return locale === "ar" ? nameAr || nameEn || "" : nameEn || nameAr || "";
 };
 
@@ -43,10 +43,12 @@ export const searchAddressTypes = (
   );
 };
 
-export default {
+const addressTypeUtils = {
   getActiveAddressTypes,
   getAddressTypeDisplayName,
   getAddressTypesCount,
   formatAddressTypesForSelect,
   searchAddressTypes,
 };
+
+export default addressTypeUtils;

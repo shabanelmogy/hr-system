@@ -3,7 +3,12 @@ import { Box, Chip, IconButton, Menu, MenuItem, Typography, useTheme } from "@mu
 import { useState, type ComponentProps, type ReactNode } from "react";
 import type { Chip as MuiChip } from "@mui/material";
 import HeaderActions from "./HeaderActions";
-import type { HeaderActions as HeaderActionsConfig, ViewOption, ViewType } from "./types";
+import type {
+  HeaderActions as HeaderActionsConfig,
+  HeaderExportOption,
+  ViewOption,
+  ViewType,
+} from "./types";
 import ViewToggle from "./ViewToggle";
 
 type MobileHeaderLayoutProps = {
@@ -14,6 +19,7 @@ type MobileHeaderLayoutProps = {
   actions: HeaderActionsConfig;
   onAdd?: () => void;
   onRefresh: () => void;
+  exportOptions: HeaderExportOption[];
   viewType: ViewType;
   viewOptions: ViewOption[];
   isXs: boolean;
@@ -39,7 +45,14 @@ export default function MobileHeaderLayout(props: MobileHeaderLayoutProps) {
           <Typography variant="h6" sx={{ color: "text.primary", fontWeight: 600, fontSize: "1.1rem", overflowWrap: "anywhere" }}>{props.title}</Typography>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mx: 1 }}>
-          <HeaderActions actions={props.actions} compact iconOnlyAdd={props.isXs} onAdd={props.onAdd} onRefresh={props.onRefresh} />
+          <HeaderActions
+            actions={props.actions}
+            compact
+            iconOnlyAdd={props.isXs}
+            onAdd={props.onAdd}
+            onRefresh={props.onRefresh}
+            exportOptions={props.exportOptions}
+          />
         </Box>
         <Box sx={{ display: "flex", flexShrink: 0 }}>
           <ViewToggle value={props.viewType} options={visibleOptions} compact onChange={props.onViewChange} />

@@ -12,9 +12,21 @@
     "src/lib/**/*.ts",
     "src/lib/**/*.tsx",
     "src/proxy.ts",
+    "src/shared/export/**/*.ts",
+    "src/shared/components/common/header/multi-view-header/types.ts",
     "src/theme/**/*.ts",
     "src/theme/**/*.tsx",
-    "src/types/**/*.d.ts"
+    "src/types/**/*.d.ts",
+    "src/features/basic-data/geographical-information/validation/**/*.ts",
+    "src/features/basic-data/geographical-information/countries/types/**/*.ts",
+    "src/features/basic-data/geographical-information/countries/utils/validation.ts",
+    "src/features/basic-data/geographical-information/states/types/**/*.ts",
+    "src/features/basic-data/geographical-information/states/utils/validation.ts",
+    "src/features/basic-data/geographical-information/districts/types/**/*.ts",
+    "src/features/basic-data/geographical-information/districts/utils/validation.ts",
+    "src/features/basic-data/geographical-information/address-types/types/**/*.ts",
+    "src/features/basic-data/geographical-information/address-types/utils/addressTypeUtils.ts",
+    "src/features/basic-data/geographical-information/address-types/utils/validation.ts"
   ],
   "exclude": ["node_modules"]
 }

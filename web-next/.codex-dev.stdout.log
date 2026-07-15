@@ -1,0 +1,12 @@
+
+> hrmanagementsystem-next@0.1.0 dev
+> cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 next dev --experimental-https
+
+  Using already generated self signed certificate
+▲ Next.js 16.2.10 (Turbopack)
+- Local:         https://localhost:3000
+- Network:       https://192.168.1.200:3000
+- Environments: .env
+✓ Ready in 4.6s
+○ Compiling proxy ...
+

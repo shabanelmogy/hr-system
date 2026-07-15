@@ -8,7 +8,11 @@ import type { MultiViewHeaderProps, ViewType } from "./multi-view-header/types";
 import ViewActivities from "./multi-view-header/ViewActivities";
 import { createViewOptions } from "./multi-view-header/viewOptions";
 
-export type { MultiViewHeaderProps, ViewType } from "./multi-view-header/types";
+export type {
+  HeaderExportOption,
+  MultiViewHeaderProps,
+  ViewType,
+} from "./multi-view-header/types";
 
 export default function MultiViewHeader({
   title,
@@ -23,6 +27,7 @@ export default function MultiViewHeader({
   dataCount = 0,
   totalLabel = "Total",
   onRefresh,
+  exportOptions = [],
   showActions = { add: true, refresh: true, export: false, filter: false },
   additionalChips = [],
   sx = {},
@@ -64,6 +69,7 @@ export default function MultiViewHeader({
     actions: showActions,
     onAdd,
     onRefresh: handleRefresh,
+    exportOptions,
     viewType,
     viewOptions,
     additionalChips,

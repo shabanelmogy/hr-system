@@ -41,6 +41,15 @@ export type ExportRunOptions = {
   includeColumns?: string[] | null;
 };
 
+export type ExportMenuOption = {
+  id: string;
+  label: string;
+  format?: "excel" | "pdf" | "csv" | "print";
+  onSelect: () => void | Promise<void>;
+  disabled?: boolean;
+  loading?: boolean;
+};
+
 export type PreparedExport = {
   rows: ExportRow[];
   columns: string[];

@@ -184,6 +184,7 @@
     "cancel": "Cancel",
     "preview": "Preview",
     "browse": "Browse",
+    "export": "Export",
     "exportExcel": "Export to Excel",
     "exportPdf": "Export to PDF",
     "undoChanges": "Undo Changes",

@@ -148,7 +148,6 @@ const FilesMultiView = ({
           export: false,
           filter: false,
         }}
-        onExport={undefined}
         onFilter={undefined}
       />
 

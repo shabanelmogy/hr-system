@@ -1,6 +1,7 @@
 import { MultiViewHeader } from "@/shared/components/common";
+import { useCollectionExports } from "@/shared/hooks";
 import { Box } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { GridApiCommon } from "@mui/x-data-grid";
 import type { Country } from "../types/Country";
@@ -9,6 +10,19 @@ import CountriesChartView from "./CountriesChartView";
 import CountriesDataGrid from "./grid-view/CountriesDataGrid";
 import CountryReportPage from "../reports/pages/CountryReportPage";
 import ImportCountries from "./import-data/ImportCountries";
+
+const countryExportColumns = [
+  "id",
+  "nameAr",
+  "nameEn",
+  "alpha2Code",
+  "alpha3Code",
+  "phoneCode",
+  "currencyCode",
+  "states",
+  "createdOn",
+  "updatedOn",
+] as const;
 
 interface CountriesMultiViewProps {
   countries: Country[];
@@ -39,15 +53,37 @@ const CountriesMultiView = ({
   lastEditedId,
   lastDeletedIndex,
 }: CountriesMultiViewProps) => {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [currentViewType, setCurrentViewType] = useState<"grid" | "cards" | "chart" | "report" | "import">("grid");
-
-  // Use original countries and loading states (search is handled within specific views when applicable)
-
-  const handleExport = () => {
-    // Export is handled by MyDataGrid's built-in toolbar export button
-    // This handler is kept for future custom export logic if needed
-  };
+  const culture = i18n.resolvedLanguage?.toLowerCase().startsWith("ar") ? "ar" : "en";
+  const exportFileName = t("countries.title") || "Countries";
+  const exportRows = useMemo(
+    () =>
+      countries.map((country) => ({
+        id: country.id,
+        nameAr: country.nameAr,
+        nameEn: country.nameEn,
+        alpha2Code: country.alpha2Code,
+        alpha3Code: country.alpha3Code,
+        phoneCode: country.phoneCode,
+        currencyCode: country.currencyCode,
+        states: (country.states ?? [])
+          .filter((state) => !state.isDeleted)
+          .map((state) => (culture === "ar" ? state.nameAr : state.nameEn))
+          .join(", "),
+        createdOn: country.createdOn,
+        updatedOn: country.updatedOn,
+      })),
+    [countries, culture],
+  );
+  const { exportOptions } = useCollectionExports({
+    rows: exportRows,
+    columns: countryExportColumns,
+    fileName: exportFileName,
+    culture,
+    reportHeader: exportFileName,
+    disabled: loading || exportRows.length === 0,
+  });
 
   const handleViewTypeChange = useCallback((newViewType: "grid" | "cards" | "chart" | "report" | "import") => {
     setCurrentViewType(newViewType);
@@ -148,14 +184,15 @@ const CountriesMultiView = ({
         dataCount={countries?.length || 0}
         totalLabel={t("countries.total") || "Total"}
         onRefresh={onRefresh}
-        onExport={handleExport}
+        exportOptions={exportOptions}
         onViewTypeChange={handleViewTypeChange}
         showActions={{
           add: true,
           refresh: true,
-          export: false,
+          export: true,
           filter: false,
-        }} onFilter={undefined}/>
+        }}
+      />
 
       {/* Scrollable View Content */}
       <Box

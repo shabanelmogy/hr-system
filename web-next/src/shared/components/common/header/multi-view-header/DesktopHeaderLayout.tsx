@@ -3,7 +3,12 @@ import { Box, Chip, Divider, IconButton, Typography, useTheme } from "@mui/mater
 import type { ComponentProps, ReactNode } from "react";
 import type { Chip as MuiChip } from "@mui/material";
 import HeaderActions from "./HeaderActions";
-import type { HeaderActions as HeaderActionsConfig, ViewOption, ViewType } from "./types";
+import type {
+  HeaderActions as HeaderActionsConfig,
+  HeaderExportOption,
+  ViewOption,
+  ViewType,
+} from "./types";
 import ViewToggle from "./ViewToggle";
 
 type DesktopHeaderLayoutProps = {
@@ -14,6 +19,7 @@ type DesktopHeaderLayoutProps = {
   actions: HeaderActionsConfig;
   onAdd?: () => void;
   onRefresh: () => void;
+  exportOptions: HeaderExportOption[];
   viewType: ViewType;
   viewOptions: ViewOption[];
   additionalChips: ComponentProps<typeof MuiChip>[];
@@ -41,7 +47,12 @@ export default function DesktopHeaderLayout(props: DesktopHeaderLayoutProps) {
       </Box>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, minWidth: 0, flexShrink: 0 }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexShrink: 0 }}>
-          <HeaderActions actions={props.actions} onAdd={props.onAdd} onRefresh={props.onRefresh} />
+          <HeaderActions
+            actions={props.actions}
+            onAdd={props.onAdd}
+            onRefresh={props.onRefresh}
+            exportOptions={props.exportOptions}
+          />
         </Box>
         <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
         <ViewToggle value={props.viewType} options={props.viewOptions} showLabels onChange={props.onViewChange} />

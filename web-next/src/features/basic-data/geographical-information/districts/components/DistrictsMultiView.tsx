@@ -1,12 +1,23 @@
 import { MultiViewHeader } from "@/shared/components/common";
+import { useCollectionExports } from "@/shared/hooks";
 import { Box } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { GridApiCommon } from "@mui/x-data-grid";
 import type { District } from "../types/District";
 import DistrictsCardView from "./DistrictsCardView";
 import DistrictsChartView from "./DistrictsChartView";
 import DistrictsDataGrid from "./grid-view/DistrictsDataGrid";
+
+const districtExportColumns = [
+  "id",
+  "nameAr",
+  "nameEn",
+  "code",
+  "state",
+  "createdOn",
+  "updatedOn",
+] as const;
 
 interface DistrictsMultiViewProps {
   districts: District[];
@@ -36,8 +47,34 @@ const DistrictsMultiView = ({
   lastEditedId,
   lastDeletedIndex,
 }: DistrictsMultiViewProps) => {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [currentViewType, setCurrentViewType] = useState<"grid" | "cards" | "chart">("grid");
+  const culture = i18n.resolvedLanguage?.toLowerCase().startsWith("ar") ? "ar" : "en";
+  const exportFileName = t("districts.title") || "Districts";
+  const exportRows = useMemo(
+    () =>
+      districts.map((district) => ({
+        id: district.id,
+        nameAr: district.nameAr,
+        nameEn: district.nameEn,
+        code: district.code,
+        state:
+          culture === "ar"
+            ? district.state?.nameAr ?? district.state?.nameEn ?? ""
+            : district.state?.nameEn ?? district.state?.nameAr ?? "",
+        createdOn: district.createdOn,
+        updatedOn: district.updatedOn,
+      })),
+    [culture, districts],
+  );
+  const { exportOptions } = useCollectionExports({
+    rows: exportRows,
+    columns: districtExportColumns,
+    fileName: exportFileName,
+    culture,
+    reportHeader: exportFileName,
+    disabled: loading || exportRows.length === 0,
+  });
 
   const handleViewTypeChange = useCallback((newViewType: "grid" | "cards" | "chart") => {
     setCurrentViewType(newViewType);
@@ -119,9 +156,9 @@ const DistrictsMultiView = ({
         dataCount={districts?.length || 0}
         totalLabel={t("districts.total") || "Total"}
         onRefresh={onRefresh}
+        exportOptions={exportOptions}
         onViewTypeChange={handleViewTypeChange}
-        showActions={{ add: true, refresh: true, export: false, filter: false }}
-        onFilter={undefined}
+        showActions={{ add: true, refresh: true, export: true, filter: false }}
       />
 
       <Box sx={{ flex: 1, minHeight: 0, overflow: "auto", position: "relative" }}>{renderView()}</Box>

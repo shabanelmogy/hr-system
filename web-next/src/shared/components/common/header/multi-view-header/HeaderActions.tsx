@@ -1,7 +1,29 @@
-import { Add, Refresh } from "@mui/icons-material";
-import { Button, IconButton, Tooltip, useTheme } from "@mui/material";
+import {
+  Add,
+  Description,
+  PictureAsPdf,
+  Print,
+  Refresh,
+  SaveAlt,
+  TableView,
+} from "@mui/icons-material";
+import {
+  Button,
+  CircularProgress,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Tooltip,
+  useTheme,
+} from "@mui/material";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { HeaderActions as HeaderActionsConfig } from "./types";
+import type {
+  HeaderActions as HeaderActionsConfig,
+  HeaderExportOption,
+} from "./types";
 
 type HeaderActionsProps = {
   actions: HeaderActionsConfig;
@@ -9,11 +31,35 @@ type HeaderActionsProps = {
   iconOnlyAdd?: boolean;
   onAdd?: () => void;
   onRefresh: () => void;
+  exportOptions: HeaderExportOption[];
 };
+
+function exportIcon(format: HeaderExportOption["format"]) {
+  switch (format) {
+    case "excel":
+      return <TableView fontSize="small" color="success" />;
+    case "pdf":
+      return <PictureAsPdf fontSize="small" color="error" />;
+    case "csv":
+      return <Description fontSize="small" color="info" />;
+    case "print":
+      return <Print fontSize="small" />;
+    default:
+      return <SaveAlt fontSize="small" />;
+  }
+}
 
 export default function HeaderActions(props: HeaderActionsProps) {
   const { t } = useTranslation();
   const theme = useTheme();
+  const [exportAnchor, setExportAnchor] = useState<HTMLElement | null>(null);
+  const isExporting = props.exportOptions.some((option) => option.loading);
+  const hasAvailableExport = props.exportOptions.some((option) => !option.disabled);
+
+  const handleExport = (option: HeaderExportOption) => {
+    setExportAnchor(null);
+    void option.onSelect();
+  };
 
   return (
     <>
@@ -65,6 +111,51 @@ export default function HeaderActions(props: HeaderActionsProps) {
             <Refresh fontSize={props.compact ? "small" : "medium"} />
           </IconButton>
         </Tooltip>
+      )}
+      {props.actions.export && props.exportOptions.length > 0 && (
+        <>
+          <Tooltip title={t("actions.export") || "Export"} arrow>
+            <span>
+              <IconButton
+                size="small"
+                onClick={(event) => setExportAnchor(event.currentTarget)}
+                disabled={isExporting || !hasAvailableExport}
+                aria-label={t("actions.export") || "Export"}
+                aria-controls={exportAnchor ? "multi-view-export-menu" : undefined}
+                aria-haspopup="menu"
+                aria-expanded={exportAnchor ? "true" : undefined}
+                sx={{
+                  backgroundColor: theme.palette.action.hover,
+                  width: props.compact ? 32 : undefined,
+                  height: props.compact ? 32 : undefined,
+                  "&:hover": { backgroundColor: theme.palette.action.selected },
+                }}
+              >
+                {isExporting ? <CircularProgress size={18} /> : <SaveAlt fontSize="small" />}
+              </IconButton>
+            </span>
+          </Tooltip>
+          <Menu
+            id="multi-view-export-menu"
+            anchorEl={exportAnchor}
+            open={Boolean(exportAnchor)}
+            onClose={() => setExportAnchor(null)}
+            slotProps={{ paper: { sx: { minWidth: 210 } } }}
+          >
+            {props.exportOptions.map((option) => (
+              <MenuItem
+                key={option.id}
+                disabled={option.disabled || option.loading}
+                onClick={() => handleExport(option)}
+              >
+                <ListItemIcon>
+                  {option.loading ? <CircularProgress size={18} /> : exportIcon(option.format)}
+                </ListItemIcon>
+                <ListItemText primary={option.label} />
+              </MenuItem>
+            ))}
+          </Menu>
+        </>
       )}
     </>
   );

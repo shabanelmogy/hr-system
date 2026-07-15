@@ -9,7 +9,6 @@ export interface State {
   createdOn: string;
   updatedOn: string;
   isDeleted?: boolean;
-  [key: string]: any;
 }
 
 export interface SimpleCountry {

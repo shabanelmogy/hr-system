@@ -6,9 +6,10 @@ import {
   isoAlpha2CodePattern,
   isoAlpha3CodePattern,
 } from "@/features/basic-data/geographical-information/validation/patterns";
+import type { TFunction } from "i18next";
 import { z } from "zod";
 
-export const getCountryValidationSchema = (t: any) => {
+export const getCountryValidationSchema = (t: TFunction) => {
   return z.object({
     // Required: Arabic Name
     nameAr: z

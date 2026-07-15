@@ -5,10 +5,11 @@ import {
   englishLettersAndSpacesPattern,
   stateCodePattern,
 } from "@/features/basic-data/geographical-information/validation/patterns";
+import type { TFunction } from "i18next";
 
 export type StateValidationSchema = z.infer<ReturnType<typeof getStateValidationSchema>>;
 
-export const getStateValidationSchema = (t: (key: string, options?: any) => string) => {
+export const getStateValidationSchema = (t: TFunction) => {
   return z.object({
     nameAr: z
       .string()

@@ -1,5 +1,6 @@
 import type { Chip, Paper } from "@mui/material";
 import type { ComponentProps, ComponentType, ReactElement, ReactNode } from "react";
+import type { ExportMenuOption } from "@/shared/export/types";
 
 export type ViewType = string;
 
@@ -16,8 +17,9 @@ export type HeaderActions = {
   filter?: boolean;
 };
 
+export type HeaderExportOption = ExportMenuOption;
+
 export interface MultiViewHeaderProps {
-  [key: string]: unknown;
   title: ReactNode;
   titleIcon?: ReactNode;
   onBack?: () => void;
@@ -30,7 +32,7 @@ export interface MultiViewHeaderProps {
   dataCount?: number;
   totalLabel?: string;
   onRefresh?: () => void;
-  onExport?: () => void;
+  exportOptions?: HeaderExportOption[];
   onFilter?: () => void;
   showActions?: HeaderActions;
   additionalChips?: ComponentProps<typeof Chip>[];
