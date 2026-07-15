@@ -167,7 +167,7 @@ export default function useFileUpload({
       setTimeout(() => {
         onClose?.();
       }, 1000);
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Update all files to error status
       const errorMessage =
         error instanceof Error ? error.message : t('files.uploadFailed');
@@ -175,8 +175,8 @@ export default function useFileUpload({
         prevFiles.map((f) => ({ ...f, status: "error", error: errorMessage }))
       );
 
-      HandleApiError(error, (updatedState: any) => {
-        showSnackbar("error", updatedState.messages, error?.title || t('messages.error'));
+      HandleApiError(error, (updatedState) => {
+        showSnackbar("error", updatedState.messages, updatedState.title || t('messages.error'));
       });
     } finally {
       setIsUploading(false);

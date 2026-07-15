@@ -1,7 +1,8 @@
 import { MultiViewHeader } from "@/shared/components/common";
 import { Box } from "@mui/material";
 import { useCallback, useState, useRef } from "react";
-import type { GridApiCommon } from "@mui/x-data-grid";
+import type { GridApi } from "@mui/x-data-grid";
+import type { RefObject } from "react";
 import type { TFunction } from "i18next";
 import type { FileItem } from "../types/File";
 import FilesDataGrid from "./FilesDataGrid";
@@ -12,7 +13,7 @@ interface FilesMultiViewProps {
   files: FileItem[];
   loading: boolean;
   isFetching?: boolean;
-  apiRef?: React.RefObject<GridApiCommon>;
+  apiRef?: RefObject<GridApi | null>;
   onDownload: (file: FileItem) => void;
   onView: (file: FileItem) => void;
   onDelete: (file: FileItem) => void;
@@ -80,10 +81,10 @@ const FilesMultiView = ({
       case "grouped":
         return (
           <GroupedFilesView
-            files={displayFiles as any}
-            onOpenFile={(f) => onView?.(f as any)}
+            files={displayFiles}
+            onOpenFile={onView}
             onDeleteFile={(f) => {
-              onDelete?.(f as any);
+              onDelete(f);
             }}
             onOpenGroup={() => {}}
             onGroupChange={setSelectedGroup}

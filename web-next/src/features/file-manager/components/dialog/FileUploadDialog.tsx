@@ -5,7 +5,7 @@ interface FileUploadDialogProps {
   open: boolean;
   onClose: () => void;
   onSuccess: (fileName: string) => void;
-  onError: (errors: any) => void;
+  onError?: (errors: unknown) => void;
   loading?: boolean;
 }
 

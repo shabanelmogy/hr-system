@@ -1,4 +1,5 @@
 import { GridActionsCellItem } from "@mui/x-data-grid";
+import type { GridActionsColDef, GridRowParams } from "@mui/x-data-grid";
 import { Delete, Download, Visibility } from "@mui/icons-material";
 import type { TFunction } from "i18next";
 import type { FileItem } from "../../../types/File";
@@ -24,9 +25,9 @@ export default function makeFileActions({
   onDownload: (file: FileItem) => void;
   onView: (file: FileItem) => void;
   onDelete: (file: FileItem) => void;
-}) {
-  return (params: any) => {
-    const file = params.row as FileItem;
+}): NonNullable<GridActionsColDef<FileItem>["getActions"]> {
+  return (params: GridRowParams<FileItem>) => {
+    const file = params.row;
     const actions = [
       <GridActionsCellItem
         key={`download-${file.id}`}

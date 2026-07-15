@@ -60,9 +60,9 @@ const GroupedFilesView: React.FC<GroupedFilesViewProps> = ({
     return filterGroupsByQuery(sorted, query);
   }, [sorted, query]);
 
-  const handleGroupClick = (group: string, items: MappedFile[]) => {
+  const handleGroupClick = (group: string, _items: MappedFile[]) => {
     setSelectedGroup(group);
-    onOpenGroup?.(group as FileTypeGroup, items as any);
+    onOpenGroup?.(group as FileTypeGroup, groupedByType[group as FileTypeGroup] ?? []);
     onGroupChange?.({
       name: group,
       icon: getGroupIcon(group),
@@ -84,8 +84,8 @@ const GroupedFilesView: React.FC<GroupedFilesViewProps> = ({
   }, [onBackToGroups]);
 
   // If a group is selected, show files in that group
-  if (selectedGroup && (groups as any)[selectedGroup]) {
-    const allGroupFiles = (groups as any)[selectedGroup];
+  if (selectedGroup && groups[selectedGroup]) {
+    const allGroupFiles = groups[selectedGroup];
 
     return (
       <GroupFilesView

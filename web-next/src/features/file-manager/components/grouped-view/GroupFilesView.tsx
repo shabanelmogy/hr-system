@@ -88,14 +88,14 @@ const GroupFilesView: React.FC<GroupFilesViewProps> = ({
                 .filter(Boolean)
                 .join(" • ")}
               onOpen={() => {
-                if (originalFile) onOpenFile?.(originalFile as any);
+                if (originalFile) onOpenFile?.(originalFile);
               }}
               onDelete={() => {
-                if (originalFile) onDeleteFile?.(originalFile as any);
+                if (originalFile) onDeleteFile?.(originalFile);
               }}
               onPreview={() => {
                 if (originalFile) {
-                  onOpenFile?.(originalFile as any);
+                  onOpenFile?.(originalFile);
                 }
                 return null;
               }}

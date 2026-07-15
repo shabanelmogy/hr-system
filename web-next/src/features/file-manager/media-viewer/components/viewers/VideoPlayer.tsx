@@ -70,7 +70,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ mediaUrl, onError, onBack }) 
       <VideoElement
         ref={videoRef}
         src={mediaUrl}
-        {...({ controlsList: "nodownload" } as any)}
+        controlsList="nodownload"
         preload="metadata"
         onClick={handlePlayPause}
         onLoadStart={() => console.log("Video load started")}

@@ -10,15 +10,9 @@ export type FileTypeGroup =
   | "Code"
   | "Others";
 
-export interface FileItem {
-  id: string;
-  name: string;
-  size?: number;
-  mimeType?: string;
-  extension?: string;
-  url?: string;
-  updatedAt?: string | number | Date;
-}
+import type { FileItem } from "../../types/File";
+
+export type { FileItem };
 
 const imageExt = ["png", "jpg", "jpeg", "gif", "bmp", "svg", "webp", "tiff"];
 const docExt = ["doc", "docx", "rtf", "odt", "txt", "md" ];
@@ -37,9 +31,8 @@ function getExtension(name: string): string | undefined {
 }
 
 export function classifyFileType(file: FileItem): FileTypeGroup {
-  // Support both mapped and unmapped file properties
-  const extension = file.extension || (file as any).fileExtension?.replace(".", "") || getExtension(file.name) || "";
-  const mimeType = file.mimeType || (file as any).contentType || "";
+  const extension = file.fileExtension.replace(".", "") || getExtension(file.fileName) || "";
+  const mimeType = file.contentType || "";
   
   const ext = extension.toLowerCase();
   const mime = mimeType.toLowerCase();

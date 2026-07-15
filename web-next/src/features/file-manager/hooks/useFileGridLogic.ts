@@ -1,7 +1,12 @@
 // hooks/useFileGridLogic.ts - TanStack Query Implementation
 import { showToast } from "@/shared/components/feedback";
 import { extractErrorMessage } from "@/shared/utils";
-import { useGridApiRef } from "@mui/x-data-grid";
+import {
+  useGridApiRef,
+  type GridApi,
+  type GridPaginationModel,
+  type GridRowId,
+} from "@mui/x-data-grid";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
@@ -51,7 +56,7 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
         setLastDeletedSortedIndex(null);
       }, 4000);
     },
-    onError: (error: any) => {
+    onError: (error: Error) => {
       const errorMessage = extractErrorMessage(error);
       showToast.error(t("files.deleteError") || errorMessage);
     },
@@ -66,7 +71,7 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
         showToast.error(result.message);
       }
     },
-    onError: (error: any) => {
+    onError: (error: Error) => {
       const errorMessage = extractErrorMessage(error);
       showToast.error(t("files.uploadError") || errorMessage);
     },
@@ -76,7 +81,7 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
     onSuccess: () => {
       showToast.success(t("files.downloadStarted"));
     },
-    onError: (error: any) => {
+    onError: (error: Error) => {
       const errorMessage = extractErrorMessage(error);
       showToast.error(t("files.downloadError") || errorMessage);
     },
@@ -101,16 +106,16 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
 
   // Reliable navigation helper: change page if needed, then select and scroll
   const navigateTo = useCallback(
-    (targetIndex: number, targetRowId: any) => {
-      const api: any = apiRef.current;
+    (targetIndex: number, targetRowId: GridRowId) => {
+      const api: GridApi | null = apiRef.current;
       if (!api || targetIndex < 0) return;
 
-      const pageSize = api.state?.pagination?.paginationModel?.pageSize || 5;
+      const pageSize = api.state.pagination.paginationModel.pageSize || 5;
       const targetPage = Math.floor(targetIndex / pageSize);
       const rowIndexOnPage = targetIndex % pageSize;
 
       const finalize = () => {
-        const cur: any = apiRef.current;
+        const cur = apiRef.current;
         if (!cur) return;
         cur.setRowSelectionModel({ type: "include", ids: new Set([targetRowId]) });
         cur.scrollToIndexes({ rowIndex: rowIndexOnPage, colIndex: 0 });
@@ -120,12 +125,11 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
       if (currentPage === targetPage) {
         setTimeout(finalize, 0);
       } else {
-        let unsub: any = null;
-        const onPageChange = (model: any) => {
-          const page =
-            model?.page ?? api.state?.pagination?.paginationModel?.page;
+        let unsub: (() => void) | null = null;
+        const onPageChange = (model: GridPaginationModel) => {
+          const page = model.page ?? api.state.pagination.paginationModel.page;
           if (page === targetPage) {
-            if (typeof unsub === "function") unsub();
+            unsub?.();
             setTimeout(finalize, 50);
           }
         };
@@ -188,50 +192,42 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
   useEffect(() => {
     if (!newRowAdded || !apiRef.current || files.length === 0) return;
 
-    const api: any = apiRef.current;
+    const api = apiRef.current;
+    if (!api) return;
 
     // Resolve effective ID
-    let effectiveId: any = lastAddedRowId;
-    if (!effectiveId && pendingAddedFileName) {
+    let effectiveId: number | null = lastAddedRowId;
+    if (effectiveId === null && pendingAddedFileName) {
       const uploadedFile = files.find(
-        (f: any) => f.fileName === pendingAddedFileName
+        (f) => f.fileName === pendingAddedFileName
       );
       if (uploadedFile) {
-        effectiveId =
-          typeof uploadedFile.id === "string"
-            ? parseInt(uploadedFile.id, 10)
-            : uploadedFile.id;
+        effectiveId = uploadedFile.id;
         setLastAddedRowId(effectiveId);
       }
     }
 
     // Compute target index and row id
     let targetIndex = -1;
-    let targetRowId: any = null;
-    if (effectiveId) {
-      const sortedIds =
-        typeof api.getSortedRowIds === "function"
-          ? api.getSortedRowIds()
-          : files.map((r: any) => r.id);
+    let targetRowId: GridRowId | null = null;
+    if (effectiveId !== null) {
+      const sortedIds = api.getSortedRowIds();
       targetIndex = sortedIds.findIndex(
-        (id: any) => String(id) === String(effectiveId)
+        (id) => String(id) === String(effectiveId)
       );
       if (targetIndex >= 0) targetRowId = sortedIds[targetIndex];
     }
 
     // Fallback to last row if ID not resolved
     if (targetIndex < 0) {
-      const sortedIds =
-        typeof api.getSortedRowIds === "function"
-          ? api.getSortedRowIds()
-          : files.map((r: any) => r.id);
+      const sortedIds = api.getSortedRowIds();
       if (sortedIds.length > 0) {
         targetIndex = sortedIds.length - 1;
         targetRowId = sortedIds[targetIndex];
       }
     }
 
-    if (targetIndex >= 0) {
+    if (targetIndex >= 0 && targetRowId !== null) {
       navigateTo(targetIndex, targetRowId);
       setNewRowAdded(false);
       setLastAddedRowId(null);
@@ -250,50 +246,42 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
     )
       return;
 
-    const api: any = apiRef.current;
+    const api = apiRef.current;
+    if (!api) return;
 
     // Resolve effective ID
-    let effectiveId: any = lastAddedRowId;
-    if (!effectiveId && pendingAddedFileName) {
+    let effectiveId: number | null = lastAddedRowId;
+    if (effectiveId === null && pendingAddedFileName) {
       const uploadedFile = files.find(
-        (f: any) => f.fileName === pendingAddedFileName
+        (f) => f.fileName === pendingAddedFileName
       );
       if (uploadedFile) {
-        effectiveId =
-          typeof uploadedFile.id === "string"
-            ? parseInt(uploadedFile.id, 10)
-            : uploadedFile.id;
+        effectiveId = uploadedFile.id;
         setLastAddedRowId(effectiveId);
       }
     }
 
     // Compute target index and row id
     let targetIndex = -1;
-    let targetRowId: any = null;
-    if (effectiveId) {
-      const sortedIds =
-        typeof api.getSortedRowIds === "function"
-          ? api.getSortedRowIds()
-          : files.map((r: any) => r.id);
+    let targetRowId: GridRowId | null = null;
+    if (effectiveId !== null) {
+      const sortedIds = api.getSortedRowIds();
       targetIndex = sortedIds.findIndex(
-        (id: any) => String(id) === String(effectiveId)
+        (id) => String(id) === String(effectiveId)
       );
       if (targetIndex >= 0) targetRowId = sortedIds[targetIndex];
     }
 
     // Fallback to last row if ID not resolved
     if (targetIndex < 0) {
-      const sortedIds =
-        typeof api.getSortedRowIds === "function"
-          ? api.getSortedRowIds()
-          : files.map((r: any) => r.id);
+      const sortedIds = api.getSortedRowIds();
       if (sortedIds.length > 0) {
         targetIndex = sortedIds.length - 1;
         targetRowId = sortedIds[targetIndex];
       }
     }
 
-    if (targetIndex >= 0) {
+    if (targetIndex >= 0 && targetRowId !== null) {
       setTimeout(() => {
         navigateTo(targetIndex, targetRowId);
         setNewRowAdded(false);
@@ -390,11 +378,7 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
       // Try immediate ID resolution if available to speed up navigation
       const uploadedFile = files.find((file) => file.fileName === fileName);
       if (uploadedFile) {
-        const idNum: number =
-          typeof (uploadedFile as any).id === "string"
-            ? parseInt((uploadedFile as any).id, 10)
-            : (uploadedFile as any).id;
-        setLastAddedRowId(idNum);
+        setLastAddedRowId(uploadedFile.id);
       }
 
       setNewRowAdded(true);

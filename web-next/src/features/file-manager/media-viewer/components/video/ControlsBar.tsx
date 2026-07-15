@@ -24,10 +24,15 @@ import {
   MoreVert as MoreVertIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
+
+interface TimeDisplayProps {
+  children?: React.ReactNode;
+}
 
 interface ControlsBarProps {
-  TimeDisplay: React.ComponentType<any>;
-  t: (key: string, opts?: any) => string;
+  TimeDisplay: React.ComponentType<TimeDisplayProps>;
+  t: TFunction;
   formatTime: (s: number) => string;
   currentTime: number;
   duration: number;

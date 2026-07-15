@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 
-export function useExcelFilter(sheetData: any[][], currentSheetIndex: number, searchTerm: string) {
-  const [filteredData, setFilteredData] = useState<any[][]>([]);
+export function useExcelFilter(
+  sheetData: unknown[][][],
+  currentSheetIndex: number,
+  searchTerm: string
+) {
+  const [filteredData, setFilteredData] = useState<unknown[][]>([]);
 
   useEffect(() => {
     if (!sheetData || sheetData.length === 0) return;
@@ -13,7 +17,7 @@ export function useExcelFilter(sheetData: any[][], currentSheetIndex: number, se
     }
 
     const searchLower = searchTerm.toLowerCase();
-    const filtered = currentData.filter((row: any[]) =>
+    const filtered = currentData.filter((row: unknown[]) =>
       row.some((cell: unknown) => String(cell ?? "").toLowerCase().includes(searchLower))
     );
 

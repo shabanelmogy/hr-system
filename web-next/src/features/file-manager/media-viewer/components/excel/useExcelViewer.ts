@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
 
 export const useExcelViewer = (mediaUrl: string, onError: (message: string) => void) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [sheetData, setSheetData] = useState<any[][]>([]);
+  const [sheetData, setSheetData] = useState<unknown[][][]>([]);
   const [sheetNames, setSheetNames] = useState<string[]>([]);
   const [currentSheetIndex, setCurrentSheetIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,11 +25,11 @@ export const useExcelViewer = (mediaUrl: string, onError: (message: string) => v
       const sheets = workbook.SheetNames;
       setSheetNames(sheets);
 
-      const allSheets: any[][] = [];
+      const allSheets: unknown[][][] = [];
       sheets.forEach((sheetName) => {
         const worksheet = workbook.Sheets[sheetName];
-        const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-        allSheets.push(data as any[]);
+        const data = XLSX.utils.sheet_to_json<unknown[]>(worksheet, { header: 1 });
+        allSheets.push(data);
       });
 
       setSheetData(allSheets);
@@ -57,7 +57,7 @@ export const useExcelViewer = (mediaUrl: string, onError: (message: string) => v
     setSearchTerm("");
   };
 
-  const handleFullscreen = (containerRef: React.RefObject<HTMLElement>) => {
+  const handleFullscreen = (containerRef: RefObject<HTMLElement | null>) => {
     if (!containerRef.current) return;
 
     if (!isFullscreen) {

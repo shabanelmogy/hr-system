@@ -48,9 +48,15 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 export interface ExcelTableProps {
-  headers: any[];
-  rows: any[][];
+  headers: unknown[];
+  rows: unknown[][];
   searchTerm: string;
+}
+
+function displayCell(value: unknown): string {
+  if (value === null || value === undefined || value === "") return "-";
+  if (value instanceof Date) return value.toLocaleString();
+  return String(value);
 }
 
 const ExcelTable: React.FC<ExcelTableProps> = ({
@@ -67,7 +73,9 @@ const ExcelTable: React.FC<ExcelTableProps> = ({
           <TableRow>
             {headers.map((header, index) => (
               <StyledTableCell key={index} align="left">
-                {header || `Column ${index + 1}`}
+                {displayCell(header) === "-"
+                  ? `Column ${index + 1}`
+                  : displayCell(header)}
               </StyledTableCell>
             ))}
           </TableRow>
@@ -78,7 +86,7 @@ const ExcelTable: React.FC<ExcelTableProps> = ({
               <StyledTableRow key={rowIndex}>
                 {headers.map((_, colIndex) => (
                   <StyledTableCell key={colIndex} align="left">
-                    {row[colIndex] || "-"}
+                    {displayCell(row[colIndex])}
                   </StyledTableCell>
                 ))}
               </StyledTableRow>

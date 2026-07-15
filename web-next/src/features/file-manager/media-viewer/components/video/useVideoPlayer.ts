@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import type { TFunction } from "i18next";
 
 export type RepeatMode = "off" | "all" | "one";
 
 interface UseVideoPlayerArgs {
   mediaUrl: string;
   onError: (message: string) => void;
-  t: (key: string, opts?: any) => string;
+  t: TFunction;
 }
 
 export const useVideoPlayer = ({

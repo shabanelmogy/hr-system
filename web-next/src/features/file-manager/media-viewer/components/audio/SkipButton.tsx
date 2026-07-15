@@ -23,7 +23,7 @@ const SkipButton: React.FC<SkipButtonProps> = ({
       <IconButton
         onClick={() => onSkip(delta)}
         size={size}
-        sx={{ width: btnSize as any, height: btnSize as any }}
+        sx={{ width: btnSize, height: btnSize }}
       >
         <Typography sx={{ fontSize: "0.6rem", fontWeight: 600 }}>
           {label ?? (delta > 0 ? `+${delta}` : `${delta}`)}

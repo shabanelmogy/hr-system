@@ -1,4 +1,8 @@
-import { GridColDef, GridActionsColDef } from "@mui/x-data-grid";
+import type {
+  GridActionsColDef,
+  GridColDef,
+  GridRenderCellParams,
+} from "@mui/x-data-grid";
 import type { TFunction } from "i18next";
 import type { FileItem } from "../../../types/File";
 import FileTypeIcon from "./FileTypeIcon";
@@ -9,10 +13,10 @@ export default function makeFileColumns({
   getActions,
 }: {
   t: TFunction;
-  getActions: NonNullable<GridActionsColDef["getActions"]>;
-}): Array<GridColDef | GridActionsColDef> {
-  const renderExtCell = (params: any) => {
-    const file = params.row as FileItem;
+  getActions: NonNullable<GridActionsColDef<FileItem>["getActions"]>;
+}): Array<GridColDef<FileItem> | GridActionsColDef<FileItem>> {
+  const renderExtCell = (params: GridRenderCellParams<FileItem>) => {
+    const file = params.row;
     return <FileTypeIcon file={file} />;
   };
 
@@ -63,6 +67,6 @@ export default function makeFileColumns({
       align: "center",
       headerAlign: "center",
       getActions,
-    } as GridActionsColDef,
+    } as GridActionsColDef<FileItem>,
   ];
 }

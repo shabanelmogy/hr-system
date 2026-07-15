@@ -1,24 +1,20 @@
-import { FileItem } from "./FileTypeClassifier";
+import type { FileItem } from "../../types/File";
 
 export interface MappedFile {
   id: string;
   name: string;
-  size: number | undefined;
+  size?: number;
   mimeType: string;
-  extension: string | undefined;
+  extension?: string;
   updatedAt: string;
 }
 
 export const mapFiles = (files: FileItem[]): MappedFile[] => {
   return files.map((file) => ({
     id: file.id.toString(),
-    name:
-      (file as any).fileName ||
-      (file as any).storedFileName ||
-      `File ${file.id}`,
-    size: undefined as number | undefined, // Not available in current FileItem
-    mimeType: (file as any).contentType,
-    extension: (file as any).fileExtension?.replace(".", ""),
-    updatedAt: (file as any).updatedOn,
+    name: file.fileName || file.storedFileName || `File ${file.id}`,
+    mimeType: file.contentType ?? "",
+    extension: file.fileExtension.replace(".", ""),
+    updatedAt: file.updatedOn ?? "",
   }));
 };

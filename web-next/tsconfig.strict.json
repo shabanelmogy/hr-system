@@ -78,7 +78,9 @@
     "src/features/auth/roles/hooks/UseRoleGridLogic.tsx",
     "src/features/auth/roles/hooks/useRolePermissions.ts",
     "src/features/auth/roles/components/RoleForm.tsx",
-    "src/features/auth/roles/components/RolesDataGrid.tsx"
+    "src/features/auth/roles/components/RolesDataGrid.tsx",
+    "src/features/file-manager/**/*.ts",
+    "src/features/file-manager/**/*.tsx"
   ],
   "exclude": ["node_modules"]
 }
