@@ -1,6 +1,7 @@
 import { z } from "zod";
+import type { Translator } from "../../types";
 
-export const createLoginValidationSchema = (t: (key: string, options?: any) => string) =>
+export const createLoginValidationSchema = (t: Translator) =>
   z.object({
     username: z
       .string()

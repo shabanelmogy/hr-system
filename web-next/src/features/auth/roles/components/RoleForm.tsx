@@ -1,11 +1,13 @@
-/* eslint-disable react/prop-types */
-// components/RoleForm.jsx
-import { MyForm, MyTextField } from "@/shared/components/common";
+import MyForm from "@/shared/components/common/form/MyForm";
+import MyTextField from "@/shared/components/common/form-controls/MyTextField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, TextField } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { getRoleValidationSchema } from "../utils/validation";
+import {
+  getRoleValidationSchema,
+  type RoleFormData,
+} from "../utils/validation";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 
 interface RoleFormProps {
@@ -16,10 +18,6 @@ interface RoleFormProps {
   onSubmit: (data: RoleFormData) => void | Promise<void>;
   loading: boolean;
   t: (key: string) => string;
-}
-
-interface RoleFormData {
-  name: string;
 }
 
 const RoleForm = ({
@@ -129,7 +127,7 @@ const RoleForm = ({
       }
       submitButtonText={
         isViewMode
-          ? null
+          ? undefined
           : isEditMode
             ? t("actions.update")
             : t("actions.create")
@@ -138,7 +136,7 @@ const RoleForm = ({
       isSubmitting={loading}
       isDirty={isDirty}
       hideFooter={isViewMode}
-      recordId={selectedRole?.id}
+      recordId={selectedRole?.id ?? undefined}
       focusFieldName="name" // Specify which field to focus
       autoFocusFirst={true} // Will focus first field if name not found
       // Overlay customization

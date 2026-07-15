@@ -1,4 +1,4 @@
-import { useNotifications } from "@/shared/hooks";
+import useNotifications from "@/shared/hooks/useNotifications";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";

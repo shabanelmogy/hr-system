@@ -1,13 +1,45 @@
-import { MyButton, MyTextField } from "@/shared/components/common";
+import MyButton from "@/shared/components/common/form-controls/MyButton";
+import MyTextField from "@/shared/components/common/form-controls/MyTextField";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonIcon from "@mui/icons-material/Person";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import { alpha, Avatar, Box, Divider, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { alpha, Avatar, Box, Divider, Typography, type Theme } from "@mui/material";
+import { useState, type Dispatch, type RefObject, type SetStateAction } from "react";
 import Link from "next/link";
 import { gradientIconStyle } from "@/theme/componentStyles";
+import type { AppRoutes } from "@/config/routes";
+import type { Translator } from "../../types";
+import type { SocialLoginHandler } from "../types";
+import type { LoginFormData } from "../validation/loginValidation";
+import type {
+  Control,
+  FieldErrors,
+  UseFormHandleSubmit,
+  UseFormRegister,
+  UseFormReset,
+} from "react-hook-form";
 import SocialLoginButtons from "./SocialLoginButtons";
+
+interface LoginFormProps {
+  t: Translator;
+  theme: Theme;
+  isDarkMode: boolean;
+  userNameRef: RefObject<HTMLInputElement | null>;
+  showPassword: boolean;
+  setShowPassword: Dispatch<SetStateAction<boolean>>;
+  loading: boolean;
+  handleSubmit: UseFormHandleSubmit<LoginFormData>;
+  onSubmit: (data: LoginFormData) => Promise<void>;
+  loginAs: (role: "user" | "admin") => Promise<void>;
+  control: Control<LoginFormData>;
+  errors: FieldErrors<LoginFormData>;
+  register: UseFormRegister<LoginFormData>;
+  handleSocialLogin: SocialLoginHandler;
+  reset: UseFormReset<LoginFormData>;
+  appRoutes: AppRoutes;
+  isFormSubmitting: boolean;
+}
 
 const LoginForm = ({
   t,
@@ -27,30 +59,12 @@ const LoginForm = ({
   reset,
   appRoutes,
   isFormSubmitting,
-}: {
-  t: any;
-  theme: any;
-  isDarkMode: any;
-  userNameRef: any;
-  showPassword: any;
-  setShowPassword: any;
-  loading: boolean;
-  handleSubmit: any;
-  onSubmit: any;
-  loginAs: (role: "user" | "admin") => Promise<void>;
-  control: any;
-  errors: any;
-  register: any;
-  handleSocialLogin: any;
-  reset: any;
-  appRoutes: any;
-  isFormSubmitting: boolean;
-}) => {
+}: LoginFormProps) => {
   const [activeButton, setActiveButton] = useState<"main" | "user" | "admin" | null>(null);
 
   const isAnySubmitting = loading || isFormSubmitting || activeButton !== null;
 
-  const wrappedSubmit = handleSubmit(async (data: any) => {
+  const wrappedSubmit = handleSubmit(async (data) => {
     setActiveButton("main");
     try {
       await onSubmit(data);
@@ -167,7 +181,7 @@ const LoginForm = ({
  * FormHeader component
  * Displays the login form header with icon and title
  */
-const FormHeader = ({ t, theme }: { t: any; theme: any }) => (
+const FormHeader = ({ t, theme }: { t: Translator; theme: Theme }) => (
   <Box sx={{ textAlign: "center", mb: 2.5, mt: 1 }}>
     <Avatar
       sx={{
@@ -190,7 +204,15 @@ const FormHeader = ({ t, theme }: { t: any; theme: any }) => (
  * ForgotPasswordLink component
  * Displays the forgot password link
  */
-const ForgotPasswordLink = ({ t, theme, appRoutes }: { t: any; theme: any; appRoutes: any }) => (
+const ForgotPasswordLink = ({
+  t,
+  theme,
+  appRoutes,
+}: {
+  t: Translator;
+  theme: Theme;
+  appRoutes: AppRoutes;
+}) => (
   <Box
     sx={{
       display: "flex",
@@ -220,7 +242,15 @@ const ForgotPasswordLink = ({ t, theme, appRoutes }: { t: any; theme: any; appRo
  * LoginButton component
  * Displays the login button with loading state
  */
-const LoginButton = ({ t, loading, disabled }: { t: any; loading: any; disabled: any }) => (
+const LoginButton = ({
+  t,
+  loading,
+  disabled,
+}: {
+  t: Translator;
+  loading: boolean;
+  disabled: boolean;
+}) => (
   <MyButton type="submit" fullWidth loading={loading} disabled={disabled} startIcon={<LoginIcon />}>
     {t("auth.login")}
   </MyButton>
@@ -230,7 +260,17 @@ const LoginButton = ({ t, loading, disabled }: { t: any; loading: any; disabled:
  * UserLoginButton component
  * Displays the login as user button
  */
-const UserLoginButton = ({ t, loading, onClick, disabled }: { t: any; loading: any; onClick: any; disabled: any }) => (
+const UserLoginButton = ({
+  t,
+  loading,
+  onClick,
+  disabled,
+}: {
+  t: Translator;
+  loading: boolean;
+  onClick: () => Promise<void>;
+  disabled: boolean;
+}) => (
   <MyButton
     type="button"
     fullWidth
@@ -248,7 +288,17 @@ const UserLoginButton = ({ t, loading, onClick, disabled }: { t: any; loading: a
  * AdminLoginButton component
  * Displays the login as admin button
  */
-const AdminLoginButton = ({ t, loading, onClick, disabled }: { t: any; loading: any; onClick: any; disabled: any }) => (
+const AdminLoginButton = ({
+  t,
+  loading,
+  onClick,
+  disabled,
+}: {
+  t: Translator;
+  loading: boolean;
+  onClick: () => Promise<void>;
+  disabled: boolean;
+}) => (
   <MyButton
     type="button"
     fullWidth
@@ -268,7 +318,7 @@ const AdminLoginButton = ({ t, loading, onClick, disabled }: { t: any; loading: 
  * DividerWithText component
  * Displays a divider with text "or continue with"
  */
-const DividerWithText = ({ t }: { t: any }) => (
+const DividerWithText = ({ t }: { t: Translator }) => (
   <Box sx={{ my: 2, position: "relative", textAlign: "center" }}>
     <Divider>
       <Typography variant="body2" sx={{ color: "text.secondary", px: 1 }}>
@@ -282,7 +332,17 @@ const DividerWithText = ({ t }: { t: any }) => (
  * RegisterLink component
  * Displays the link to register page
  */
-const RegisterLink = ({ t, theme, reset, appRoutes }: { t: any; theme: any; reset: any; appRoutes: any }) => (
+const RegisterLink = ({
+  t,
+  theme,
+  reset,
+  appRoutes,
+}: {
+  t: Translator;
+  theme: Theme;
+  reset: UseFormReset<LoginFormData>;
+  appRoutes: AppRoutes;
+}) => (
   <Typography variant="body2">
     {t("auth.dontHaveAccount")}{" "}
     <Link

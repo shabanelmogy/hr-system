@@ -1,7 +1,8 @@
 import { passwordPolicyPattern } from "@/features/auth/validation/passwordPolicy";
 import { z } from "zod";
+import type { Translator } from "../../types";
 
-export const getUserValidationSchema = (t: (key: string, options?: any) => string, isAddMode = false) =>
+export const getUserValidationSchema = (t: Translator, isAddMode = false) =>
   z
     .object({
       firstName: z
@@ -63,5 +64,7 @@ export const getUserValidationSchema = (t: (key: string, options?: any) => strin
         }
       }
     });
+
+export type UserFormData = z.infer<ReturnType<typeof getUserValidationSchema>>;
 
 export default getUserValidationSchema;

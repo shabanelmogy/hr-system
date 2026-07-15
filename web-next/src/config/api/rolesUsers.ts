@@ -19,5 +19,4 @@ export const users: UsersRoutes = {
   toggle: (id: Id) => `${version}/users/toggle/${id}`,
   unlock: (id: Id) => `${version}/users/unlock/${id}`,
   revoke: (userId: Id) => `${version}/auth/revokeRefreshTokenByUserId?userId=${userId}`,
-  delete: (id: Id) => `${version}/users/delete/${id}`,
 };

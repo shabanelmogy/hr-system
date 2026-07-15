@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-// components/UsersDataGrid.jsx - Updated with separate status renderers and revoke button
 import {
   Edit,
   LockOpen,
@@ -9,38 +7,34 @@ import {
   Visibility
 } from "@mui/icons-material";
 import { Avatar, Chip, Tooltip } from "@mui/material";
-import { GridActionsCellItem, type GridColDef } from "@mui/x-data-grid";
-import { useCallback, useMemo } from "react";
-
 import {
-  MyDataGrid,
+  GridActionsCellItem,
+  type GridActionsCellItemProps,
+  type GridApi,
+  type GridColDef,
+  type GridRenderCellParams,
+  type GridRowParams,
+} from "@mui/x-data-grid";
+import { useCallback, useMemo, type ReactElement, type RefObject } from "react";
+
+import MyDataGrid from "@/shared/components/common/datagrid/MyDataGrid";
+import {
   renderDisabledStatus,
   renderLockedStatus,
-} from "@/shared/components/common";
-
-interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  roles: string[];
-  isDisabled: boolean;
-  isLocked: boolean;
-  profilePicture?: string;
-}
+} from "@/shared/components/common/datagrid/DataGridCellRenderers";
+import type { Translator, User } from "../../types";
 
 interface UsersDataGridProps {
   users: User[];
   loading: boolean;
-  apiRef: any;
+  apiRef: RefObject<GridApi | null>;
   onEdit: (user: User) => void;
   onView: (user: User) => void;
   onAdd: () => void;
   onToggle: (user: User) => void;
   onUnlock: (user: User) => void;
   onRevoke: (user: User) => void;
-  t: any;
+  t: Translator;
 }
 
 const UsersDataGrid = ({
@@ -57,7 +51,7 @@ const UsersDataGrid = ({
 }: UsersDataGridProps) => {
   // Custom renderers
   const renderUserName = useCallback(
-    (params: any) => (
+    (params: GridRenderCellParams<User, string>) => (
       <div
         style={{
           display: "flex",
@@ -65,7 +59,7 @@ const UsersDataGrid = ({
           gap: 8,
         }}
       >
-        <Avatar src={params.row.profilePicture} sx={{ width: 32, height: 32 }}>
+        <Avatar src={params.row.profilePicture ?? undefined} sx={{ width: 32, height: 32 }}>
           {params.row.firstName?.charAt(0) || params.row.userName?.charAt(0)}
         </Avatar>
         <span>{params.value}</span>
@@ -75,7 +69,7 @@ const UsersDataGrid = ({
   );
 
   const renderRoles = useCallback(
-    (params: any) => (
+    (params: GridRenderCellParams<User, string[]>) => (
       <div
         style={{
           display: "flex",
@@ -85,9 +79,9 @@ const UsersDataGrid = ({
           flexWrap: "wrap",
         }}
       >
-        {params.value?.map((role: string, index: number) => (
+        {params.value?.map((role) => (
           <Chip
-            key={index}
+            key={role}
             label={role}
             size="small"
             color={role === "admin" ? "error" : "primary"}
@@ -101,7 +95,7 @@ const UsersDataGrid = ({
 
   // Memoized action buttons
   const getActions = useCallback(
-    (params: any) => {
+    (params: GridRowParams<User>): ReactElement<GridActionsCellItemProps>[] => {
       const { isDisabled, isLocked } = params.row;
 
       const actions = [
@@ -202,7 +196,7 @@ const UsersDataGrid = ({
   );
 
   // Memoized columns with separate status renderers
-  const columns = useMemo<GridColDef[]>(
+  const columns = useMemo<GridColDef<User>[]>(
     () => [
       {
         field: "firstName",
@@ -274,13 +268,6 @@ const UsersDataGrid = ({
       getActions,
       renderUserName,
       renderRoles,
-      renderDisabledStatus,
-      renderLockedStatus,
-      onEdit,
-      onView,
-      onToggle,
-      onUnlock,
-      onRevoke,
     ]
   );
 

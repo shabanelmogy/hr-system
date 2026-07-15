@@ -1,155 +1,117 @@
 import { apiRoutes } from "@/config";
 import { apiService } from "@/shared/services";
+import type {
+  CreateRoleRequest,
+  Role,
+  RoleWithClaims,
+  UpdateRoleRequest,
+} from "../../types";
+import {
+  parseRoleResponse,
+  parseRolesResponse,
+  parseRoleWithClaimsResponse,
+} from "../../utils/apiResponse";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
-interface RoleStore {
-  roles: any[];
-  error: any;
-  fetchRoles: () => Promise<any[]>;
-  getRoleById: (id: any) => Promise<any>;
-  getRoleWithClaims: (id: any) => Promise<any>;
-  addRole: (roleData: any) => Promise<any>;
-  updateRole: (roleData: any) => Promise<any>;
-  updateRoleClaims: (roleData: any) => Promise<any>;
-  deleteRole: (id: any) => Promise<void>;
-  toggleRole: (id: any) => Promise<any>;
+export interface RoleStore {
+  roles: Role[];
+  fetchRoles: () => Promise<Role[]>;
+  getRoleById: (id: string) => Promise<Role>;
+  getRoleWithClaims: (id: string) => Promise<RoleWithClaims>;
+  addRole: (request: CreateRoleRequest) => Promise<Role>;
+  updateRole: (request: UpdateRoleRequest) => Promise<Role>;
+  updateRoleClaims: (request: UpdateRoleRequest) => Promise<RoleWithClaims>;
+  toggleRole: (id: string) => Promise<Role>;
   resetRoleData: () => void;
 }
-
-// Helper function to extract value from API response
-const extractValue = (response: any) => {
-  // If response has a value property and it's successful, return the value
-  if (response?.value && response?.isSuccess) {
-    return response.value;
-  }
-  // If response has data property (fallback)
-  if (response?.data) {
-    return response.data;
-  }
-  // Otherwise return the response as-is
-  return response;
-};
-
-// Helper function to extract array of values from API response
-const extractValues = (response: any) => {
-  const extracted = extractValue(response);
-  // If it's an array of wrapped objects, extract values
-  if (Array.isArray(extracted) && extracted[0]?.value) {
-    return extracted.map((item) => extractValue(item));
-  }
-  return extracted;
-};
 
 const useRoleStore = create<RoleStore>()(
   devtools(
     persist(
       (set, get) => ({
-        roles: [] as any[],
-        error: null as any,
+        roles: [],
 
         fetchRoles: async () => {
-          set({ error: null });
-          const response = await apiService.get(apiRoutes.roles.getAll);
-          const allRoles = extractValues(response);
-          set({ roles: allRoles });
-          return allRoles;
+          const response = await apiService.get<unknown>(apiRoutes.roles.getAll);
+          const roles = parseRolesResponse(response);
+          set({ roles });
+          return roles;
         },
 
-        getRoleById: async (id: any) => {
-          set({ error: null });
-          const role = (get() as any).roles.find((r: any) => r.id === id);
-          if (role) return role;
+        getRoleById: async (id) => {
+          const cachedRole = get().roles.find((role) => role.id === id);
+          if (cachedRole) return cachedRole;
 
-          const response = await apiService.get(apiRoutes.roles.getById(id));
-          const newRole = extractValue(response);
-
-          if (newRole && newRole.id) {
-            set((state: any) => ({
-              roles: [...state.roles, newRole],
-            }));
-          }
-          return newRole;
+          const response = await apiService.get<unknown>(apiRoutes.roles.getById(id));
+          const role = parseRoleResponse(response);
+          set((state) => ({ roles: [...state.roles, role] }));
+          return role;
         },
 
-        getRoleWithClaims: async (id: any) => {
-          set({ error: null });
-          const response = await apiService.get(
-            apiRoutes.roles.getRoleClaims(id)
+        getRoleWithClaims: async (id) => {
+          const response = await apiService.get<unknown>(
+            apiRoutes.roles.getRoleClaims(id),
           );
-          return extractValue(response);
+          return parseRoleWithClaimsResponse(response);
         },
 
-        addRole: async (roleData: any) => {
-          set({ error: null });
-          const response = await apiService.post(apiRoutes.roles.add, roleData);
-          const newRole = extractValue(response);
-
-          set((state: any) => ({
-            roles: [...state.roles, newRole],
-          }));
-          return newRole;
+        addRole: async (request) => {
+          const response = await apiService.post<unknown>(apiRoutes.roles.add, request);
+          const role = parseRoleResponse(response);
+          set((state) => ({ roles: [...state.roles, role] }));
+          return role;
         },
 
-        updateRole: async (roleData: any) => {
-          set({ error: null });
-          const response = await apiService.put(
-            apiRoutes.roles.update,
-            roleData
-          );
-          const updatedRole = extractValue(response);
+        updateRole: async (request) => {
+          await apiService.put<void>(apiRoutes.roles.update, request);
+          const current = get().roles.find((role) => role.id === request.id);
+          if (!current) throw new Error("Updated role was not found in the local store.");
 
-          set((state: any) => ({
-            roles: state.roles.map((role: any) =>
-              role.id === roleData.id ? { ...role, ...updatedRole } : role
+          const updatedRole: Role = {
+            ...current,
+            name: request.name,
+            roleClaims: request.roleClaims ?? current.roleClaims,
+          };
+          set((state) => ({
+            roles: state.roles.map((role) =>
+              role.id === request.id ? updatedRole : role,
             ),
           }));
           return updatedRole;
         },
 
-        updateRoleClaims: async (roleData: any) => {
-          set({ error: null });
-          const response = await apiService.put(
-            apiRoutes.roles.updateRoleClaims,
-            roleData
-          );
-          return extractValue(response);
+        updateRoleClaims: async (request) => {
+          await apiService.put<void>(apiRoutes.roles.updateRoleClaims, request);
+          const current = get().roles.find((role) => role.id === request.id);
+          return {
+            id: request.id,
+            name: request.name,
+            isDeleted: current?.isDeleted ?? false,
+            roleClaims: request.roleClaims ?? [],
+          };
         },
 
-        deleteRole: async (id: any) => {
-          set({ error: null });
-          await apiService.delete((apiRoutes.roles as any).delete(id));
+        toggleRole: async (id) => {
+          await apiService.put<void>(apiRoutes.roles.toggle(id));
+          const current = get().roles.find((role) => role.id === id);
+          if (!current) throw new Error("Toggled role was not found in the local store.");
 
-          set((state: any) => ({
-            roles: state.roles.filter((r: any) => r.id !== id),
-          }));
-        },
-
-        toggleRole: async (id: any) => {
-          set({ error: null });
-          const response = await apiService.put(apiRoutes.roles.toggle(id));
-          const updatedRole = extractValue(response);
-
-          set((state: any) => ({
-            roles: state.roles.map((role: any) =>
-              role.id === id ? { ...role, ...updatedRole } : role
-            ),
+          const updatedRole = { ...current, isDeleted: !current.isDeleted };
+          set((state) => ({
+            roles: state.roles.map((role) => role.id === id ? updatedRole : role),
           }));
           return updatedRole;
         },
 
-        resetRoleData: () =>
-          set({
-            roles: [],
-            error: null,
-          }),
+        resetRoleData: () => set({ roles: [] }),
       }),
       {
         name: "role-storage",
         storage: createJSONStorage(() => sessionStorage),
-      }
-    )
-  )
+      },
+    ),
+  ),
 );
 
 export default useRoleStore;

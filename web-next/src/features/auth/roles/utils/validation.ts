@@ -12,6 +12,8 @@ export const getRoleValidationSchema = (t: Translator) =>
       .max(50, t("validation.maxLength", { count: 50 }))
   });
 
+export type RoleFormData = z.infer<ReturnType<typeof getRoleValidationSchema>>;
+
 export const getRoleClaimsValidationSchema = (t?: Translator) =>
   z.object({
     id: z.string().min(1, t?.("validation.required") ?? "Required"),

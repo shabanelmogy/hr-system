@@ -28,6 +28,7 @@
     "src/shared/components/charts/**/*.tsx",
     "src/shared/hooks/useGridCrudController.ts",
     "src/shared/hooks/useGridRowNavigation.ts",
+    "src/shared/hooks/useApiHandler.tsx",
     "src/shared/services/excelService.ts",
     "src/shared/utils/errorUtils.ts",
     "src/theme/**/*.ts",
@@ -62,7 +63,22 @@
     "src/features/basic-data/geographical-information/address-types/services/**/*.ts",
     "src/features/basic-data/geographical-information/address-types/components/AddressTypeForm.tsx",
     "src/features/basic-data/geographical-information/address-types/utils/addressTypeUtils.ts",
-    "src/features/basic-data/geographical-information/address-types/utils/validation.ts"
+    "src/features/basic-data/geographical-information/address-types/utils/validation.ts",
+    "src/features/auth/types.ts",
+    "src/features/auth/utils/apiResponse.ts",
+    "src/features/auth/login/**/*.ts",
+    "src/features/auth/login/**/*.tsx",
+    "src/features/auth/users/utils/validation.ts",
+    "src/features/auth/users/store/useUserStore.ts",
+    "src/features/auth/users/hooks/useUserGridLogic.ts",
+    "src/features/auth/users/components/UserForm.tsx",
+    "src/features/auth/users/components/UsersDataGrid.tsx",
+    "src/features/auth/roles/utils/validation.ts",
+    "src/features/auth/roles/store/useRoleStore.ts",
+    "src/features/auth/roles/hooks/UseRoleGridLogic.tsx",
+    "src/features/auth/roles/hooks/useRolePermissions.ts",
+    "src/features/auth/roles/components/RoleForm.tsx",
+    "src/features/auth/roles/components/RolesDataGrid.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -30,7 +30,6 @@ export interface UsersRoutes {
   toggle: (id: Id) => string;
   unlock: (id: Id) => string;
   revoke: (userId: Id) => string;
-  delete: (id: Id) => string;
 }
 
 export interface ExportRoutes {

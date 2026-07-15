@@ -1,140 +1,114 @@
 import { apiRoutes } from "@/config";
 import { apiService } from "@/shared/services";
+import type {
+  ChangeUserPasswordRequest,
+  CreateUserRequest,
+  UpdateUserRequest,
+  User,
+} from "../../types";
+import {
+  parseUserResponse,
+  parseUsersResponse,
+} from "../../utils/apiResponse";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
-// Helper function to extract value from API response
-const extractValue = (response: any) => {
-  // If response has a value property and it's successful, return the value
-  if (response?.value && response?.isSuccess) {
-    return response.value;
-  }
-  // If response has data property (fallback)
-  if (response?.data) {
-    return response.data;
-  }
-  // Otherwise return the response as-is
-  return response;
-};
+export interface UserStore {
+  users: User[];
+  fetchUsers: () => Promise<User[]>;
+  addUser: (request: CreateUserRequest) => Promise<User>;
+  updateUser: (request: UpdateUserRequest) => Promise<User>;
+  changeUserPassword: (request: ChangeUserPasswordRequest) => Promise<void>;
+  toggleUser: (id: string) => Promise<User>;
+  unLockUser: (id: string) => Promise<User>;
+  revokeToken: (userId: string) => Promise<void>;
+  resetUserData: () => void;
+}
 
-// Helper function to extract array of values from API response
-const extractValues = (response: any) => {
-  const extracted = extractValue(response);
-  // If it's an array of wrapped objects, extract values
-  if (Array.isArray(extracted) && extracted[0]?.value) {
-    return extracted.map((item: any) => extractValue(item));
-  }
-  return extracted;
-};
-
-const useUserStore = create(
+const useUserStore = create<UserStore>()(
   devtools(
     persist(
-      (set: any) => ({
-        users: [] as any[],
+      (set, get) => ({
+        users: [],
 
         fetchUsers: async () => {
-          const response = await apiService.get(apiRoutes.users.getAll);
-          const allUsers = extractValues(response);
-          set({ users: allUsers });
-          return allUsers;
+          const response = await apiService.get<unknown>(apiRoutes.users.getAll);
+          const users = parseUsersResponse(response);
+          set({ users });
+          return users;
         },
 
-        addUser: async (userData: any) => {
-          const response = await apiService.post(apiRoutes.users.add, userData);
-          const newUser = extractValue(response);
-
-          set((state: any) => ({
-            users: [...state.users, newUser],
-          }));
-          return newUser;
+        addUser: async (request) => {
+          const response = await apiService.post<unknown>(apiRoutes.users.add, request);
+          const user = parseUserResponse(response);
+          set((state) => ({ users: [...state.users, user] }));
+          return user;
         },
 
-        updateUser: async (userData: any) => {
-          const response = await apiService.put(
-            apiRoutes.users.update(userData.id),
-            userData
-          );
-          const responseUser = extractValue(response);
-          const safeUserData = { ...userData };
-          delete safeUserData.password;
-          delete safeUserData.confirmPassword;
-          const updatedUser = responseUser && typeof responseUser === "object"
-            ? responseUser
-            : {
-                ...(useUserStore.getState().users.find((user: any) => user.id === userData.id) || {}),
-                ...safeUserData,
-              };
+        updateUser: async (request) => {
+          await apiService.put<void>(apiRoutes.users.update(request.id), {
+            firstName: request.firstName,
+            lastName: request.lastName,
+            userName: request.userName,
+            email: request.email,
+            roles: request.roles,
+          });
 
-          set((state: any) => ({
-            users: state.users.map(
-              (user: any) => (user.id === userData.id ? updatedUser : user)
+          const current = get().users.find((user) => user.id === request.id);
+          if (!current) throw new Error("Updated user was not found in the local store.");
+
+          const updatedUser: User = { ...current, ...request };
+          set((state) => ({
+            users: state.users.map((user) =>
+              user.id === request.id ? updatedUser : user,
             ),
           }));
           return updatedUser;
         },
 
-        changeUserPassword: async ({ id, newPassword, confirmPassword }: any) =>
-          apiService.put(apiRoutes.users.changePassword(id), {
+        changeUserPassword: async ({ id, newPassword, confirmPassword }) => {
+          await apiService.put<void>(apiRoutes.users.changePassword(id), {
             newPassword,
             confirmPassword,
-          }),
+          });
+        },
 
-        toggleUser: async (id: any) => {
-          await apiService.put(apiRoutes.users.toggle(id));
+        toggleUser: async (id) => {
+          await apiService.put<void>(apiRoutes.users.toggle(id));
+          const current = get().users.find((user) => user.id === id);
+          if (!current) throw new Error("Toggled user was not found in the local store.");
 
-          // Update the user's isDisabled status by toggling it
-          set((state: any) => ({
-            users: state.users.map((u: any) => {
-              if (u.id === id) {
-                const newStatus = !u.isDisabled;
-                return { ...u, isDisabled: newStatus };
-              }
-              return u;
-            }),
+          const updatedUser = { ...current, isDisabled: !current.isDisabled };
+          set((state) => ({
+            users: state.users.map((user) => user.id === id ? updatedUser : user),
           }));
+          return updatedUser;
         },
-        // Fixed unLockUser method in useUserStore.js
 
-        unLockUser: async (id: any) => {
-          await apiService.put(apiRoutes.users.unlock(id));
+        unLockUser: async (id) => {
+          await apiService.put<void>(apiRoutes.users.unlock(id));
+          const current = get().users.find((user) => user.id === id);
+          if (!current) throw new Error("Unlocked user was not found in the local store.");
 
-          // Update the user's lock status (not disabled status)
-          set((state: any) => ({
-            users: state.users.map((user: any) =>
-              user.id === id
-                ? {
-                    ...user,
-                    isLocked: false, // ✅ Fixed: unlock sets isLocked to false
-                  }
-                : user
-            ),
+          const updatedUser = { ...current, isLocked: false };
+          set((state) => ({
+            users: state.users.map((user) => user.id === id ? updatedUser : user),
           }));
-        },
-        revokeToken: async (refreshToken: any) => {
-          await apiService.put(apiRoutes.users.revoke(refreshToken));
+          return updatedUser;
         },
 
-        deleteUser: async (id: any) => {
-          await apiService.delete(apiRoutes.users.delete(id));
-
-          set((state: any) => ({
-            users: state.users.filter((user: any) => user.id !== id),
-          }));
+        revokeToken: async (userId) => {
+          await apiService.put<void>(apiRoutes.users.revoke(userId));
         },
 
-        resetUserData: () =>
-          set({
-            users: [],
-            error: null,
-          }),
+        resetUserData: () => set({ users: [] }),
       }),
       {
         name: "user-storage",
         storage: createJSONStorage(() => sessionStorage),
-      }
-    )
-  )
+      },
+    ),
+  ),
 );
 
 export default useUserStore;

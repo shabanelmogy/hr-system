@@ -6,7 +6,6 @@ import { ForbiddenPage } from "@/shared/components/auth";
 import { usePageGuard } from "@/shared/hooks";
 import { permissions } from "@/lib/auth/permissions";
 import { useTranslation } from "react-i18next";
-import UserDeleteDialog from "./components/UserDeleteDialog";
 import UserForm from "./components/UserForm";
 import UsersDashboardHeader from "./components/UsersDashboardHeader";
 import UsersDataGrid from "./components/UsersDataGrid";
@@ -31,9 +30,10 @@ const UsersPageContent = () => {
     onRevoke,
     closeDialog,
     handleFormSubmit,
-    handleDelete,
     SnackbarComponent,
   } = useUserGridLogic();
+  const userFormDialogType =
+    dialogType === "edit" || dialogType === "view" ? dialogType : "add";
 
   return (
     <>
@@ -56,8 +56,8 @@ const UsersPageContent = () => {
         />
 
         <UserForm
-          open={["edit", "add", "view"].includes(dialogType)}
-          dialogType={dialogType}
+          open={dialogType === "edit" || dialogType === "add" || dialogType === "view"}
+          dialogType={userFormDialogType}
           selectedUser={selectedUser}
           onClose={closeDialog}
           onSubmit={handleFormSubmit}
@@ -65,12 +65,6 @@ const UsersPageContent = () => {
           t={t}
         />
 
-        <UserDeleteDialog
-          open={dialogType === "delete"}
-          onClose={closeDialog}
-          onConfirm={handleDelete}
-          selectedUser={selectedUser}
-        />
       </ContentWrapper>
       {SnackbarComponent}
     </>
@@ -91,4 +85,4 @@ const UsersPage = () => {
   return <UsersPageContent />;
 };
 
-export default UsersPage;
+export default UsersPage;

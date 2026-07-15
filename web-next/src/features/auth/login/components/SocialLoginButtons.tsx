@@ -1,24 +1,30 @@
-/* eslint-disable react/prop-types */
-// Create or update SocialLoginButtons.jsx
 import GoogleIcon from "@mui/icons-material/Google";
 import { Box, Button, useTheme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useTranslation } from "react-i18next";
+import type { SocialLoginHandler } from "../types";
 
-const SocialLoginButtons = ({ handleSocialLogin, isDarkMode, loading, disabled }: {
-  handleSocialLogin: any;
-  isDarkMode: any;
-  loading: any;
-  disabled: any;
-}) => {
+interface SocialLoginButtonsProps {
+  handleSocialLogin: SocialLoginHandler;
+  isDarkMode: boolean;
+  loading: boolean;
+  disabled: boolean;
+}
+
+const SocialLoginButtons = ({
+  handleSocialLogin,
+  isDarkMode,
+  loading,
+  disabled,
+}: SocialLoginButtonsProps) => {
   const theme = useTheme();
   const { t } = useTranslation();
 
   // Set up Google login
   const googleLogin = useGoogleLogin({
     onSuccess: (credentialResponse) => {
-      handleSocialLogin("google", credentialResponse);
+      void handleSocialLogin("google", credentialResponse);
     },
     onError: () => { },
   });

@@ -1,68 +1,69 @@
-// hooks/useApiHandler.js
 import { HandleApiError } from "@/shared/services";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-const useApiHandler = (options: any = {}) => {
-  const {
-    showSuccess,
-    showError,
-    showSuccessNotification = true,
-    showErrorNotification = true,
-  } = options;
+type NotificationHandler = (message: unknown, title?: string) => void;
+type ApiErrorHandler = (error: unknown) => void;
 
+interface UseApiHandlerOptions {
+  showSuccess?: NotificationHandler;
+  showError?: NotificationHandler;
+  showSuccessNotification?: boolean;
+  showErrorNotification?: boolean;
+}
+
+const useApiHandler = ({
+  showSuccess,
+  showError,
+  showSuccessNotification = true,
+  showErrorNotification = true,
+}: UseApiHandlerOptions = {}) => {
   const [loading, setLoading] = useState(false);
+  const loadingRef = useRef(false);
   const { t } = useTranslation();
 
   const handleApiCall = useCallback(
-    async (
-      apiCall: any,
-      successMessage: any = null,
-      errorHandler: any = null,
+    async <T,>(
+      apiCall: () => Promise<T>,
+      successMessage: unknown = null,
+      errorHandler: ApiErrorHandler | null = null,
       rethrowError = false,
-    ) => {
-      if (loading) return null;
+    ): Promise<T | null> => {
+      if (loadingRef.current) return null;
 
+      loadingRef.current = true;
       setLoading(true);
       try {
         const result = await apiCall();
-
-        // Show success notification if enabled and message provided
         if (showSuccessNotification && successMessage && showSuccess) {
-          showSuccess([successMessage], t("messages.success"));
+          showSuccess(successMessage, t("messages.success"));
         }
-
         return result;
       } catch (error) {
-        // Use custom error handler if provided
         if (errorHandler) {
           errorHandler(error);
         } else if (showErrorNotification && showError) {
-          // Default error handling
-          HandleApiError(error, (updatedState) => {
-            showError(updatedState.messages, error.title);
+          HandleApiError(error, (notification) => {
+            showError(notification.messages, notification.title);
           });
         }
         if (rethrowError) throw error;
+        return null;
       } finally {
+        loadingRef.current = false;
         setLoading(false);
       }
     },
     [
-      loading,
-      showSuccess,
       showError,
-      showSuccessNotification,
       showErrorNotification,
+      showSuccess,
+      showSuccessNotification,
       t,
-    ]
+    ],
   );
 
-  return {
-    loading,
-    handleApiCall,
-    setLoading, // Expose setLoading in case manual control is needed
-  };
+  return { loading, handleApiCall, setLoading };
 };
 
 export default useApiHandler;

@@ -29,6 +29,8 @@ const RolesPage = () => {
     handleDelete,
     SnackbarComponent,
   } = useRoleGridLogic();
+  const roleFormDialogType =
+    dialogType === "edit" || dialogType === "view" ? dialogType : "add";
 
   return (
     <>
@@ -51,8 +53,8 @@ const RolesPage = () => {
         />
 
         <RoleForm
-          open={["edit", "add", "view"].includes(dialogType)}
-          dialogType={dialogType}
+          open={dialogType === "edit" || dialogType === "add" || dialogType === "view"}
+          dialogType={roleFormDialogType}
           selectedRole={selectedRole}
           onClose={closeDialog}
           onSubmit={handleFormSubmit}

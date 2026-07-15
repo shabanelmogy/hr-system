@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import { Box, keyframes, Typography, useTheme } from "@mui/material";
+import type { Translator } from "../../types";
 
 // Define animations
 const float = keyframes`
@@ -23,7 +23,7 @@ const slideIn = keyframes`
   to { opacity: 1; transform: translateX(0); }
 `;
 
-const LeftPanel = ({ t }: { t: any }) => {
+const LeftPanel = ({ t }: { t: Translator }) => {
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
 
@@ -161,7 +161,7 @@ const LeftPanel = ({ t }: { t: any }) => {
 /**
  * FeatureList component with enhanced design
  */
-const FeatureList = ({ t }: { t: any }) => {
+const FeatureList = ({ t }: { t: Translator }) => {
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
 
@@ -294,7 +294,7 @@ const FeatureList = ({ t }: { t: any }) => {
 /**
  * Enhanced FooterContent component
  */
-const FooterContent = ({ t }: { t: any }) => {
+const FooterContent = ({ t }: { t: Translator }) => {
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
 

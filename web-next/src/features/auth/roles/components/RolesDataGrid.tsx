@@ -1,22 +1,28 @@
-/* eslint-disable react/prop-types */
-// components/RolesDataGrid.jsx
 import { Delete, Edit, Key, Visibility } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
-import { GridActionsCellItem, type GridColDef } from "@mui/x-data-grid";
-import { useCallback, useMemo } from "react";
+import {
+  GridActionsCellItem,
+  type GridActionsCellItemProps,
+  type GridApi,
+  type GridColDef,
+  type GridRenderCellParams,
+  type GridRowParams,
+} from "@mui/x-data-grid";
+import { useCallback, useMemo, type ReactElement, type RefObject } from "react";
 
-import { MyDataGrid } from "@/shared/components/common";
+import MyDataGrid from "@/shared/components/common/datagrid/MyDataGrid";
+import type { Role, Translator } from "../../types";
 
 interface RolesDataGridProps {
-  roles: any[];
+  roles: Role[];
   loading: boolean;
-  apiRef: any;
-  onEdit: (row: any) => void;
-  onDelete: (row: any) => void;
-  onView: (row: any) => void;
-  onManagePermissions: (row: any) => void;
+  apiRef: RefObject<GridApi | null>;
+  onEdit: (row: Role) => void;
+  onDelete: (row: Role) => void;
+  onView: (row: Role) => void;
+  onManagePermissions: (row: Role) => void;
   onAdd: () => void;
-  t: (key: string) => string;
+  t: Translator;
 }
 
 const RolesDataGrid = ({
@@ -32,7 +38,7 @@ const RolesDataGrid = ({
 }: RolesDataGridProps) => {
   // Memoized action buttons
   const getActions = useCallback(
-    (params: any) => [
+    (params: GridRowParams<Role>): ReactElement<GridActionsCellItemProps>[] => [
       <Tooltip title={t("actions.view")} key={`view-${params.row.id}`} arrow>
         <GridActionsCellItem
           icon={<Visibility sx={{ fontSize: 25, color: "info.main" }} />}
@@ -75,7 +81,7 @@ const RolesDataGrid = ({
   );
 
   // Memoized columns
-  const columns = useMemo<GridColDef[]>(
+  const columns = useMemo<GridColDef<Role>[]>(
     () => [
       {
         field: "id",
@@ -97,7 +103,7 @@ const RolesDataGrid = ({
         flex: 1,
         align: "center",
         headerAlign: "center",
-        renderCell: (params: any) => (
+        renderCell: (params: GridRenderCellParams<Role, boolean>) => (
           <span
             style={{
               color: params.value ? "#d32f2f" : "#2e7d32",

@@ -1,267 +1,179 @@
-// hooks/useUserGridLogic.js - SIMPLE VERSION (NO LOCK FUNCTION)
-import { useNotifications } from "@/shared/hooks";
+import type { CreateUserRequest, UpdateUserRequest, User } from "../../types";
 import useApiHandler from "@/shared/hooks/useApiHandler";
+import { useGridRowNavigation } from "@/shared/hooks/useGridRowNavigation";
+import useNotifications from "@/shared/hooks/useNotifications";
 import { useGridApiRef } from "@mui/x-data-grid";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useUserStore from "../store/useUserStore";
+import type { UserFormData } from "../utils/validation";
+
+type UserDialogType = "add" | "edit" | "view" | null;
 
 const useUserGridLogic = () => {
-  // Hooks
   const { t } = useTranslation();
   const { showError, showSuccess, SnackbarComponent } = useNotifications();
-  const { loading, handleApiCall } = useApiHandler({
-    showSuccess,
-    showError,
-  });
-
-  // State management
-  const [fetchTriggered, setFetchTriggered] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [showDisabled, setShowDisabled] = useState(true);
-  const [dialogType, setDialogType] = useState(null);
-
-  // Store access - ONLY using what you have
-  const fetchUsers = useUserStore((state: any) => state.fetchUsers);
-  const users = useUserStore((state: any) => state.users);
-  const addUser = useUserStore((state: any) => state.addUser);
-  const updateUser = useUserStore((state: any) => state.updateUser);
-  const changeUserPassword = useUserStore((state: any) => state.changeUserPassword);
-  const toggleUser = useUserStore((state: any) => state.toggleUser);
-  const unLockUser = useUserStore((state: any) => state.unLockUser);
-  const revokeToken = useUserStore((state: any) => state.revokeToken);
-  const deleteUser = useUserStore((state: any) => state.deleteUser);
-
-  // Refs for grid navigation
-  const gridActionRef = useRef(null);
+  const { loading, handleApiCall } = useApiHandler({ showSuccess, showError });
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [dialogType, setDialogType] = useState<UserDialogType>(null);
+  const [lastAddedId, setLastAddedId] = useState<string | null>(null);
+  const [lastEditedId, setLastEditedId] = useState<string | null>(null);
+  const fetchStartedRef = useRef(false);
   const apiRef = useGridApiRef();
 
-  // Memoized users with filtering logic
-  const stableUsers = useMemo(() => {
-    if (showDisabled) {
-      return users;
-    } else {
-      return users.filter((u: any) => !u.isDisabled);
-    }
-  }, [users, showDisabled]);
+  const fetchUsers = useUserStore((state) => state.fetchUsers);
+  const users = useUserStore((state) => state.users);
+  const addUser = useUserStore((state) => state.addUser);
+  const updateUser = useUserStore((state) => state.updateUser);
+  const changeUserPassword = useUserStore((state) => state.changeUserPassword);
+  const toggleUser = useUserStore((state) => state.toggleUser);
+  const unLockUser = useUserStore((state) => state.unLockUser);
+  const revokeToken = useUserStore((state) => state.revokeToken);
 
-  // Fetch users
-  const getAllUsers = useCallback(async () => {
-    if (loading || fetchTriggered) return;
-    setFetchTriggered(true);
-    await handleApiCall(async () => {
-      const response = await fetchUsers();
-      useUserStore.setState({ users: response });
-      return response;
-    }, t("users.fetched"));
-  }, [fetchUsers, handleApiCall, loading, fetchTriggered, t]);
-
-  // Toggle function to show/hide disabled users
-  const toggleShowDisabled = useCallback(() => {
-    setShowDisabled((prev) => !prev);
-  }, []);
-
-  // Dialog management
-  const openDialog = useCallback((type: "add" | "edit" | "view" | "delete", user: any = null) => {
-    setDialogType(type);
-    setSelectedUser(user);
-  }, []);
+  const stableUsers = useMemo(() => users, [users]);
 
   const closeDialog = useCallback(() => {
     setDialogType(null);
     setSelectedUser(null);
   }, []);
 
-  // Grid navigation
-  const handleGridNavigation = useCallback(() => {
-    const gridAction = gridActionRef.current;
-    if (!gridAction || !apiRef.current || !stableUsers.length) {
-      gridActionRef.current = null;
+  const openDialog = useCallback((type: UserDialogType, user: User | null = null) => {
+    setDialogType(type);
+    setSelectedUser(user);
+  }, []);
+
+  const handleFormSubmit = useCallback(async (formData: UserFormData) => {
+    if (dialogType === "add") {
+      const request = toCreateUserRequest(formData);
+      const created = await handleApiCall(
+        () => addUser(request),
+        t("users.created"),
+        null,
+        true,
+      );
+      if (!created) return;
+      setLastAddedId(created.id);
+      closeDialog();
       return;
     }
 
-    const { type, id } = gridAction;
-    const pageSize = apiRef.current.state.pagination.paginationModel.pageSize;
-    let targetIndex;
-
-    if (type === "add") {
-      targetIndex = stableUsers.length - 1;
-    } else if (type === "edit") {
-      targetIndex = stableUsers.findIndex((row: any) => row.id === id);
-    } else if (type === "delete") {
-      const deletedIndex = stableUsers.findIndex((row: any) => row.id === id);
-      targetIndex = Math.max(0, deletedIndex - 1);
-    }
-
-    if (targetIndex >= 0 && targetIndex < stableUsers.length) {
-      const newPage = Math.floor(targetIndex / pageSize);
-      apiRef.current.setPage(newPage);
-      apiRef.current.scrollToIndexes({ rowIndex: targetIndex, colIndex: 0 });
-      const selectId = type === "delete" ? stableUsers[targetIndex]?.id : id;
-      if (selectId) apiRef.current.selectRow(selectId, true);
-    }
-
-    gridActionRef.current = null;
-  }, [stableUsers, gridActionRef, apiRef]);
-
-  // Form submission handler
-  const handleFormSubmit = useCallback(
-    async (formdata: any) => {
-      let gridAction = null;
-      if (dialogType === "edit" && selectedUser?.id) {
-        const {
-          password,
-          confirmPassword,
-          ...userData
-        } = formdata;
-
-        const result = await handleApiCall(
-          async () => {
-            const updatedUser = await updateUser({ ...userData, id: selectedUser.id });
-
-            if (password?.trim()) {
-              await changeUserPassword({
-                id: selectedUser.id,
-                newPassword: password,
-                confirmPassword,
-              });
-            }
-
-            return updatedUser;
-          },
-          t("users.updated"),
-          null,
-          true,
-        );
-        if (!result) return;
-        gridAction = { type: "edit", id: result.id };
-      } else if (dialogType === "add") {
-        const userData = { ...formdata };
-        delete userData.confirmPassword;
-        const response = await handleApiCall(
-          () => addUser(userData),
-          t("users.created"),
-          null,
-          true,
-        );
-        if (!response) return;
-        gridAction = { type: "add", id: response.id };
-      }
-      closeDialog();
-      if (gridAction) {
-        gridActionRef.current = gridAction;
-        handleGridNavigation();
-      }
-    },
-    [
-      dialogType,
-      selectedUser,
-      updateUser,
-      changeUserPassword,
-      addUser,
-      handleApiCall,
-      t,
-      closeDialog,
-      gridActionRef,
-      handleGridNavigation,
-    ]
-  );
-
-  // Handle enable/disable user - using toggleUser function
-  const handleToggleUser = useCallback(
-    async (user: any) => {
-      const action = user.isDisabled ? "enabled" : "disabled";
-      await handleApiCall(async () => {
-        const result = await toggleUser(user.id);
+    if (dialogType !== "edit" || !selectedUser) return;
+    const request = toUpdateUserRequest(selectedUser.id, formData);
+    const updated = await handleApiCall(
+      async () => {
+        const result = await updateUser(request);
+        const password = formData.password?.trim();
+        if (password) {
+          await changeUserPassword({
+            id: selectedUser.id,
+            newPassword: password,
+            confirmPassword: formData.confirmPassword ?? "",
+          });
+        }
         return result;
-      }, t(`users.${action}`));
-    },
-    [toggleUser, fetchUsers, handleApiCall, t]
-  );
+      },
+      t("users.updated"),
+      null,
+      true,
+    );
+    if (!updated) return;
+    setLastEditedId(updated.id);
+    closeDialog();
+  }, [
+    addUser,
+    changeUserPassword,
+    closeDialog,
+    dialogType,
+    handleApiCall,
+    selectedUser,
+    t,
+    updateUser,
+  ]);
 
-  // Handle unlock user - using your existing unLockUser function
-  const handleUnlockUser = useCallback(
-    async (user: any) => {
-      await handleApiCall(async () => {
-        const result = await unLockUser(user.id);
-        // No need to fetch all users - store already updated in unLockUser
-        return result;
-      }, t("users.unlocked"));
-    },
-    [unLockUser, handleApiCall, t]
-  );
+  const handleToggleUser = useCallback(async (user: User) => {
+    const action = user.isDisabled ? "enabled" : "disabled";
+    await handleApiCall(() => toggleUser(user.id), t(`users.${action}`));
+  }, [handleApiCall, t, toggleUser]);
 
-  //Handle Revoke Token
-  const handleRevokeToken = useCallback(async (user: any) => {
-    await handleApiCall(async () => {
-      const result = await revokeToken(user.id);
-      return result;
-    }, t("users.revoked"));
-  }, []);
+  const handleUnlockUser = useCallback(async (user: User) => {
+    await handleApiCall(() => unLockUser(user.id), t("users.unlocked"));
+  }, [handleApiCall, t, unLockUser]);
 
-  // Handle delete user
-  const handleDelete = useCallback(
-    async () => {
-      if (!selectedUser?.id) return;
+  const handleRevokeToken = useCallback(async (user: User) => {
+    await handleApiCall(() => revokeToken(user.id), t("users.revoked"));
+  }, [handleApiCall, revokeToken, t]);
 
-      await handleApiCall(async () => {
-        const result = await deleteUser(selectedUser.id);
-        gridActionRef.current = { type: "delete", id: selectedUser.id };
-        return result;
-      }, t("users.deleted"));
+  const onAdd = useCallback(() => openDialog("add"), [openDialog]);
+  const onEdit = useCallback((user: User) => openDialog("edit", user), [openDialog]);
+  const onView = useCallback((user: User) => openDialog("view", user), [openDialog]);
+  const clearLastAdded = useCallback(() => setLastAddedId(null), []);
+  const clearLastEdited = useCallback(() => setLastEditedId(null), []);
 
-      closeDialog();
-      handleGridNavigation();
-    },
-    [selectedUser, deleteUser, handleApiCall, t, closeDialog, handleGridNavigation]
-  );
+  useGridRowNavigation({
+    apiRef,
+    items: stableUsers,
+    isLoading: loading,
+    isFetching: false,
+    lastAddedId,
+    lastEditedId,
+    lastDeletedIndex: null,
+    clearLastAdded,
+    clearLastEdited,
+    clearLastDeleted: noop,
+  });
 
-  // Get user counts for display
-  const userCounts = useMemo(() => {
-    const total = users.length;
-    const active = users.filter((u: any) => !u.isDisabled).length;
-    const disabled = users.filter((u: any) => u.isDisabled).length;
-    const locked = users.filter((u: any) => u.isLocked).length;
-
-    return { total, active, disabled, locked };
-  }, [users]);
-
-  // Initial fetch
   useEffect(() => {
-    getAllUsers();
-  }, [getAllUsers]);
+    if (fetchStartedRef.current) return;
+    fetchStartedRef.current = true;
+    void handleApiCall(() => fetchUsers(), null);
+  }, [fetchUsers, handleApiCall]);
 
   return {
-    // State
     dialogType,
     selectedUser,
     loading,
     users: stableUsers,
     apiRef,
-    showDisabled,
-    userCounts,
-
-    // Methods
     openDialog,
     closeDialog,
     handleFormSubmit,
-    handleToggleUser, // Single function for enable/disable
-    handleUnlockUser, // Unlock only
-    toggleShowDisabled,
-    handleRevokeToken,
-    handleDelete,
-
-    // Actions for grid
-    onEdit: (user: any) => openDialog("edit", user),
-    onView: (user: any) => openDialog("view", user),
-    onAdd: () => openDialog("add"),
-    onToggle: handleToggleUser, // Enable/Disable toggle
+    onEdit,
+    onView,
+    onAdd,
+    onToggle: handleToggleUser,
     onUnlock: handleUnlockUser,
-    onRevoke: handleRevokeToken, // Unlock only
-
-    // Components
+    onRevoke: handleRevokeToken,
     SnackbarComponent,
   };
 };
+
+function toCreateUserRequest(formData: UserFormData): CreateUserRequest {
+  const password = formData.password?.trim();
+  if (!password) throw new Error("A password is required when creating a user.");
+  return {
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    userName: formData.userName,
+    email: formData.email,
+    password,
+    roles: formData.roles,
+  };
+}
+
+function toUpdateUserRequest(
+  id: string,
+  formData: UserFormData,
+): UpdateUserRequest {
+  return {
+    id,
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    userName: formData.userName,
+    email: formData.email,
+    roles: formData.roles,
+  };
+}
+
+function noop() {}
 
 export default useUserGridLogic;

@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
-// components/UserForm.jsx - FINAL FIX: No password required in edit mode
-import { MyForm, MySelectForm, MyTextField } from "@/shared/components/common";
+import MyForm from "@/shared/components/common/form/MyForm";
+import MyTextField from "@/shared/components/common/form-controls/MyTextField";
+import MySelectForm from "@/shared/components/common/select/MySelectForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
@@ -9,25 +9,31 @@ import {
   Button,
   Alert,
   Divider,
+  type SvgIconProps,
 } from "@mui/material";
 import {
   VpnKey,
   Security,
 } from "@mui/icons-material";
 import { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { getUserValidationSchema } from "../utils/validation";
+import { useForm, useWatch } from "react-hook-form";
+import {
+  getUserValidationSchema,
+  type UserFormData,
+} from "../utils/validation";
 import useRoleStore from "../../roles/store/useRoleStore";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
+import type { Translator, User } from "../../types";
+import useApiHandler from "@/shared/hooks/useApiHandler";
 
 interface UserFormProps {
   open: boolean;
-  dialogType: string;
-  selectedUser: any;
+  dialogType: "add" | "edit" | "view";
+  selectedUser: User | null;
   onClose: () => void;
-  onSubmit: (data: any) => void | Promise<void>;
+  onSubmit: (data: UserFormData) => void | Promise<void>;
   loading: boolean;
-  t: (key: string) => string;
+  t: Translator;
 }
 
 const UserForm = ({
@@ -39,19 +45,23 @@ const UserForm = ({
   loading,
   t,
 }: UserFormProps) => {
-  const firstNameRef = useRef(null);
-  const lastNameRef = useRef(null);
-  const userNameRef = useRef(null);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const confirmPasswordRef = useRef(null);
-
-
-
+  const firstNameRef = useRef<HTMLInputElement>(null);
+  const lastNameRef = useRef<HTMLInputElement>(null);
+  const userNameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const confirmPasswordRef = useRef<HTMLInputElement>(null);
   const [showPasswordSection, setShowPasswordSection] = useState(false);
+  const {
+    loading: rolesLoading,
+    handleApiCall: handleRolesApiCall,
+  } = useApiHandler({
+    showSuccessNotification: false,
+    showErrorNotification: false,
+  });
 
-  // Use the role store
-  const { roles, fetchRoles, loading: rolesLoading } = useRoleStore() as any;
+  const roles = useRoleStore((state) => state.roles);
+  const fetchRoles = useRoleStore((state) => state.fetchRoles);
 
   const isViewMode = dialogType === "view";
   const isEditMode = dialogType === "edit";
@@ -65,11 +75,10 @@ const UserForm = ({
     reset,
     setValue,
     control,
-    watch,
     clearErrors,
     setError,
     formState: { errors, isDirty },
-  } = useForm({
+  } = useForm<UserFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
@@ -85,28 +94,28 @@ const UserForm = ({
   });
 
   // Watch password for strength indicator
-  const watchedPassword = watch("password");
+  const watchedPassword = useWatch({ control, name: "password" });
 
   // Fetch roles when form opens
   useEffect(() => {
     if (open) {
-      fetchRoles();
+      void handleRolesApiCall(() => fetchRoles());
     }
-  }, [open, fetchRoles]);
+  }, [open, fetchRoles, handleRolesApiCall]);
 
   // Reset password section state when dialog opens/closes
   useEffect(() => {
-    if (open) {
-      setShowPasswordSection(isAddMode); // Show by default for add mode
-      // Clear password errors when opening in edit mode
-      if (isEditMode) {
-        setTimeout(() => {
+    const timer = window.setTimeout(() => {
+      if (open) {
+        setShowPasswordSection(isAddMode);
+        if (isEditMode) {
           clearErrors(["password", "confirmPassword"]);
-        }, 100);
+        }
+      } else {
+        setShowPasswordSection(false);
       }
-    } else {
-      setShowPasswordSection(false);
-    }
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, [open, isAddMode, isEditMode, clearErrors]);
 
   // Clear password errors when hiding password section in edit mode
@@ -117,8 +126,8 @@ const UserForm = ({
   }, [showPasswordSection, isEditMode, clearErrors]);
 
   // Get random but consistent color for each role
-  const getRandomRoleColor = (roleName: any) => {
-    const colors = ["primary", "warning", "error", "secondary", "success"];
+  const getRandomRoleColor = (roleName: string) => {
+    const colors = ["primary", "warning", "error", "secondary", "success"] as const;
 
     let hash = 0;
     if (roleName) {
@@ -134,42 +143,35 @@ const UserForm = ({
   };
 
   // Convert roles to autocomplete options
-  const roleOptions =
-    roles?.map((role: any) => ({
+  const roleOptions = roles.map((role) => ({
       label: role.name,
       value: role.name,
       color: getRandomRoleColor(role.name),
       ...role,
-    })) || [];
+    }));
 
   // Password strength checker
-  const getPasswordStrength = (password: any) => {
-    if (!password) return { score: 0, label: "", color: "default" };
-
-    let score = 0;
+  const getPasswordStrength = (password?: string | null) => {
     const checks = {
-      length: password.length >= 8,
-      lowercase: /[a-z]/.test(password),
-      uppercase: /[A-Z]/.test(password),
-      numbers: /\d/.test(password),
-      symbols: /[^A-Za-z0-9]/.test(password),
+      length: Boolean(password && password.length >= 8),
+      lowercase: Boolean(password && /[a-z]/.test(password)),
+      uppercase: Boolean(password && /[A-Z]/.test(password)),
+      numbers: Boolean(password && /\d/.test(password)),
+      symbols: Boolean(password && /[^A-Za-z0-9]/.test(password)),
     };
-
-    score = Object.values(checks).filter(Boolean).length;
-
-    const strengths = {
-      0: { label: "", color: "default" },
-      1: { label: t("users.passwordVeryWeak") || "Very Weak", color: "error" },
-      2: { label: t("users.passwordWeak") || "Weak", color: "error" },
-      3: { label: t("users.passwordMedium") || "Medium", color: "warning" },
-      4: { label: t("users.passwordStrong") || "Strong", color: "info" },
-      5: {
+    const score = Object.values(checks).filter(Boolean).length;
+    const strengths: Array<{ label: string; color: SvgIconProps["color"] }> = [
+      { label: "", color: "disabled" },
+      { label: t("users.passwordVeryWeak") || "Very Weak", color: "error" },
+      { label: t("users.passwordWeak") || "Weak", color: "error" },
+      { label: t("users.passwordMedium") || "Medium", color: "warning" },
+      { label: t("users.passwordStrong") || "Strong", color: "info" },
+      {
         label: t("users.passwordVeryStrong") || "Very Strong",
         color: "success",
       },
-    };
-
-    return { score, ...(strengths as any)[score], checks };
+    ];
+    return { score, ...strengths[score], checks };
   };
 
   const passwordStrength = getPasswordStrength(watchedPassword);
@@ -220,21 +222,21 @@ const UserForm = ({
 
   // Convert react-hook-form errors to simple error object for MyForm
   const getErrorMessages = () => {
-    const errorMessages = {};
-    Object.keys(errors).forEach((key) => {
-      if ((errors as any)[key]?.message) {
+    const errorMessages: Record<string, string> = {};
+    Object.entries(errors).forEach(([key, error]) => {
+      if (typeof error?.message === "string") {
         // ✅ FIXED: Don't show password errors if password section is hidden in edit mode
         if (isEditMode && !showPasswordSection && (key === "password" || key === "confirmPassword")) {
           return; // Skip password errors when section is hidden
         }
-        (errorMessages as any)[key] = (errors as any)[key].message;
+        errorMessages[key] = error.message;
       }
     });
     return errorMessages;
   };
 
   // Handle form submission with password logic
-  const handleFormSubmit = async (data: any) => {
+  const handleFormSubmit = async (data: UserFormData) => {
     // ✅ FIXED: Clean up password data properly
     const submitData = { ...data };
     
@@ -299,7 +301,7 @@ const UserForm = ({
       }
       submitButtonText={
         isViewMode
-          ? null
+          ? undefined
           : isEditMode
           ? t("actions.update")
           : t("actions.create")
@@ -308,7 +310,7 @@ const UserForm = ({
       isSubmitting={loading}
       isDirty={isDirty}
       hideFooter={isViewMode}
-      recordId={selectedUser?.id}
+      recordId={selectedUser?.id ?? undefined}
       focusFieldName="firstName"
       autoFocusFirst={true}
       overlayActionType={getOverlayActionType()}
