@@ -121,6 +121,14 @@ class ApiClient {
     return this.request<T>("POST", endpoint, { data, headers: getDataHeaders(data, headers) });
   }
 
+  postBlob(endpoint: string, data: unknown, contentType: string) {
+    return this.request<Blob>("POST", endpoint, {
+      data,
+      responseType: "blob",
+      headers: { Accept: contentType },
+    });
+  }
+
   put<T = any>(endpoint: string, data?: unknown, headers: Record<string, string> = {}) {
     return this.request<T>("PUT", endpoint, { data, headers: getDataHeaders(data, headers) });
   }
