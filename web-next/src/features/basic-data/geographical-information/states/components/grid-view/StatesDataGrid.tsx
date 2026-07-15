@@ -13,7 +13,7 @@ import { useStateColumns } from "./Columns";
 interface StatesDataGridProps {
   states: State[];
   loading?: boolean;
-  apiRef?: React.RefObject<GridApiCommon>;
+  apiRef?: React.RefObject<GridApiCommon | null>;
   onEdit: (state: State) => void;
   onDelete: (state: State) => void;
   onView: (state: State) => void;

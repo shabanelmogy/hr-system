@@ -1,17 +1,47 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 
-import { MySelect, TextFieldWithClear } from "@/shared/components/common/form-controls";
+import MySelect from "@/shared/components/common/form-controls/MySelect";
+import TextFieldWithClear from "@/shared/components/common/form-controls/TextFieldWithClear";
 import { ReportViewer, reportApiService } from "@/features/reporting";
 import { useTheme } from "@mui/material";
+
+interface ReportInfo {
+  Id: string;
+  ReportPath: string;
+  Title: string;
+  Subject: string;
+}
+
+type ReportSearchParams = Record<string, string | number | boolean | null | undefined>;
+type UpdateSearchParams = (params: ReportSearchParams) => void;
+
+function isReportInfo(value: unknown): value is ReportInfo {
+  if (!value || typeof value !== "object") return false;
+  const report = value as Record<string, unknown>;
+  return (
+    typeof report.Id === "string" &&
+    typeof report.ReportPath === "string" &&
+    typeof report.Title === "string" &&
+    typeof report.Subject === "string"
+  );
+}
+
+function selectionValue(value: unknown): unknown {
+  if (value && typeof value === "object" && "target" in value) {
+    const target = (value as { target?: { value?: unknown } }).target;
+    return target?.value;
+  }
+  return value;
+}
 
 const CountryReportPage = () => {
   const { t } = useTranslation();
 
-  const [reportsInfo, setReportsInfo] = useState([]);
-  const [selectedReport, setSelectedReport] = useState(null);
+  const [reportsInfo, setReportsInfo] = useState<ReportInfo[]>([]);
+  const [selectedReport, setSelectedReport] = useState<ReportInfo | null>(null);
   const reportsRequested = useRef(false);
   const theme = useTheme();
 
@@ -47,33 +77,34 @@ const CountryReportPage = () => {
         reportCategory: "Countries",
       });
 
-      const data = await response.json();
+      const data: unknown = await response.json();
+      const reports = Array.isArray(data) ? data.filter(isReportInfo) : [];
 
       // Move "Countries" to the top using sort
-      const sorted = data.sort((a: any, b: any) =>
+      const sorted = [...reports].sort((a, b) =>
         a.Id === "Countries" ? -1 : b.Id === "Countries" ? 1 : 0
       );
 
       setReportsInfo(sorted);
-      setSelectedReport((prev: any) => prev ?? sorted[0]);
+      setSelectedReport((previous) => previous ?? sorted[0] ?? null);
     } catch (error) {
       console.error("Failed to fetch country reports:", error);
     }
   };
 
-  const handleReportChange = (e: any) => {
-    const selected = reportsInfo.find((r: any) => r.Id === (e?.target?.value ?? e));
+  const handleReportChange = (value: unknown) => {
+    const selected = reportsInfo.find((report) => report.Id === selectionValue(value));
     setSelectedReport(selected ?? null);
   };
 
   return (
     <ReportViewer reportParams={reportParams}>
-      {(updateSearchParams: any, currentParams: any) => (
+      {(updateSearchParams: UpdateSearchParams, currentParams: ReportSearchParams) => (
         <>
           <TextFieldWithClear
             searchText={currentParams.CountryAr || ""}
             label={t("countries.arabicName")}
-            handleSearch={(e: any) =>
+            handleSearch={(e: ChangeEvent<HTMLInputElement>) =>
               updateSearchParams({ CountryAr: e.target.value })
             }
             handleClearSearch={() => updateSearchParams({ CountryAr: null })}
@@ -82,7 +113,7 @@ const CountryReportPage = () => {
           <TextFieldWithClear
             searchText={currentParams.CountryEn || ""}
             label={t("countries.englishName")}
-            handleSearch={(e: any) =>
+            handleSearch={(e: ChangeEvent<HTMLInputElement>) =>
               updateSearchParams({ CountryEn: e.target.value })
             }
             handleClearSearch={() => updateSearchParams({ CountryEn: null })}

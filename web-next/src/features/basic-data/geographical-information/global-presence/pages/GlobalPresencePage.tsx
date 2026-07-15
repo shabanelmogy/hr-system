@@ -8,10 +8,8 @@ import {
   BarChart,
   TreemapChart,
   AreaChart,
-  getColorPalette,
 } from "@/shared/components/charts";
 import { useTheme } from "@mui/material";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { worldData } from "../components/global-presence-row/data";
@@ -38,8 +36,6 @@ const GlobalPresencePage = () => {
   const router = useRouter();
   
   // Note: scroll restoration is handled natively by Next.js
-  const palette = getColorPalette("rainbow", theme.palette.mode) as any;
-
   return (
     <Box>
       <Section
@@ -86,7 +82,7 @@ const GlobalPresencePage = () => {
               height={360}
               xKey="name"
               yKey="offices"
-              colors={[theme.palette.primary.main] as any}
+              colors={[theme.palette.primary.main]}
               showLegend={false}
               gradient
             />
@@ -115,7 +111,7 @@ const GlobalPresencePage = () => {
               height={360}
               xKey="tz"
               yKey="employees"
-              colors={[theme.palette.info.main] as any}
+              colors={[theme.palette.info.main]}
               showLegend={false}
               orientation="horizontal"
               gradient

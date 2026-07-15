@@ -17,10 +17,16 @@ interface DistrictCodeChartProps {
   t: (key: string) => string;
 }
 
+interface NumericTooltipProps {
+  active?: boolean;
+  payload?: ReadonlyArray<{ value?: number }>;
+  label?: React.ReactNode;
+}
+
 const DistrictCodeChart: React.FC<DistrictCodeChartProps> = ({ data, t }) => {
   const colors = getChartColors();
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: NumericTooltipProps) => {
     if (active && payload && payload.length) {
       return (
         <Box

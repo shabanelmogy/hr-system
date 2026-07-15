@@ -1,5 +1,5 @@
 import { MultiViewHeader } from "@/shared/components/common";
-import { useCollectionExports } from "@/shared/hooks";
+import { useCollectionExports } from "@/shared/hooks/useCollectionExports";
 import { Box } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -21,7 +21,7 @@ interface AddressTypesMultiViewProps {
   items: AddressType[];
   loading: boolean;
   isFetching?: boolean;
-  apiRef?: React.RefObject<GridApiCommon>;
+  apiRef?: React.RefObject<GridApiCommon | null>;
   onEdit: (item: AddressType) => void;
   onDelete: (item: AddressType) => void;
   onView: (item: AddressType) => void;
@@ -72,8 +72,13 @@ const AddressTypesMultiView = ({
   });
 
   const handleViewTypeChange = useCallback(
-    (newViewType: "grid" | "cards" | "chart") => {
-      setCurrentViewType(newViewType);
+    (newViewType: string) => {
+      switch (newViewType) {
+        case "grid":
+        case "cards":
+        case "chart":
+          setCurrentViewType(newViewType);
+      }
     },
     []
   );

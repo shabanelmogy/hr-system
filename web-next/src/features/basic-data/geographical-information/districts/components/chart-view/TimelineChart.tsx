@@ -15,8 +15,14 @@ interface TimelineChartProps {
   t: (key: string) => string;
 }
 
+interface NumericTooltipProps {
+  active?: boolean;
+  payload?: ReadonlyArray<{ value?: number }>;
+  label?: React.ReactNode;
+}
+
 const TimelineChart: React.FC<TimelineChartProps> = ({ data, t }) => {
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: NumericTooltipProps) => {
     if (active && payload && payload.length) {
       return (
         <Box
@@ -50,6 +56,9 @@ const TimelineChart: React.FC<TimelineChartProps> = ({ data, t }) => {
     return `${monthNames[parseInt(month) - 1]} ${year}`;
   };
 
+  const formatTooltipLabel = (label: React.ReactNode) =>
+    typeof label === "string" ? formatXAxisLabel(label) : label;
+
   return (
     <Card sx={{ height: 400 }}>
       <CardContent>
@@ -73,7 +82,7 @@ const TimelineChart: React.FC<TimelineChartProps> = ({ data, t }) => {
               <YAxis />
               <Tooltip
                 content={<CustomTooltip />}
-                labelFormatter={formatXAxisLabel}
+                labelFormatter={formatTooltipLabel}
               />
               <Line
                 type="monotone"

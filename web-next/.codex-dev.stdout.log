@@ -168,3 +168,7 @@
 [📡 API Proxy] Backend returned status: 200
  GET /api/v1/notifications/getUnreadCount 200 in 202ms (next.js: 16ms, application-code: 186ms)
  GET /basic-data/countries 200 in 182ms (next.js: 30ms, proxy.ts: 107ms, application-code: 45ms)
+[SignalR Proxy] Backend returned 200 OK
+ GET /api/hubs/company?id=OTB5dOAlag2FUn7T9HXaPA&_=1784116453907 200 in 90s (next.js: 14ms, application-code: 90s)
+[SignalR Proxy] GET /hubs/company
+[SignalR Proxy] Authentication: present

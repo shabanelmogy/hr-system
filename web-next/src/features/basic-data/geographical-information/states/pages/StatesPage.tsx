@@ -76,7 +76,7 @@ const StatesPage = () => {
       />
 
       <StateForm
-        open={["edit", "add", "view"].includes(dialogType)}
+        open={dialogType === "edit" || dialogType === "add" || dialogType === "view"}
         dialogType={formDialogType}
         selectedState={selectedState}
         onClose={closeDialog}

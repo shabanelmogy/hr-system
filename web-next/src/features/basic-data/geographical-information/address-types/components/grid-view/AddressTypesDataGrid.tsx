@@ -12,7 +12,7 @@ import { useAddressTypeColumns } from "./Columns";
 interface AddressTypesDataGridProps {
   items: AddressType[];
   loading?: boolean;
-  apiRef?: React.RefObject<GridApiCommon>;
+  apiRef?: React.RefObject<GridApiCommon | null>;
   onEdit: (item: AddressType) => void;
   onDelete: (item: AddressType) => void;
   onView: (item: AddressType) => void;

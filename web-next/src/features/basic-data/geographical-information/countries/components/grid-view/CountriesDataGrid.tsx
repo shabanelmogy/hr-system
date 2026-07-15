@@ -13,7 +13,7 @@ interface CountriesDataGridProps {
   countries: Country[];
   loading?: boolean;
   isFetching?: boolean;
-  apiRef?: React.RefObject<GridApiCommon>;
+  apiRef?: React.RefObject<GridApiCommon | null>;
   onEdit: (country: Country) => void;
   onDelete: (country: Country) => void;
   onView: (country: Country) => void;

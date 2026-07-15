@@ -33,6 +33,12 @@ const AddressTypesPage = () => {
     lastEditedId,
     lastDeletedIndex,
   } = useAddressTypeGridLogic();
+  const formDialogType =
+    dialogType === "add" || dialogType === "edit" || dialogType === "view"
+      ? dialogType
+      : "add";
+  const isFormOpen =
+    dialogType === "add" || dialogType === "edit" || dialogType === "view";
 
   if (error) {
     return (
@@ -69,11 +75,11 @@ const AddressTypesPage = () => {
       />
 
       <AddressTypeForm
-        open={["edit", "add", "view"].includes(dialogType as any)}
-        dialogType={dialogType as any}
+        open={isFormOpen}
+        dialogType={formDialogType}
         selectedItem={selectedItem}
         onClose={closeDialog}
-        onSubmit={handleFormSubmit as any}
+        onSubmit={handleFormSubmit}
         loading={isCreating || isUpdating}
       />
 
@@ -81,7 +87,7 @@ const AddressTypesPage = () => {
         open={dialogType === "delete"}
         onClose={closeDialog}
         onConfirm={handleDelete}
-        selectedItem={selectedItem as any}
+        selectedItem={selectedItem}
         loading={isDeleting}
       />
     </>

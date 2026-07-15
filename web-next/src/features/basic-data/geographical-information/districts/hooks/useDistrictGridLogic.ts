@@ -1,8 +1,9 @@
-import { showToast } from "@/shared/components/feedback";
-import { useGridCrudController, useGridRowNavigation } from "@/shared/hooks";
-import { extractErrorMessage } from "@/shared/utils";
+import showToast from "@/shared/components/feedback/Toast";
+import { useGridCrudController } from "@/shared/hooks/useGridCrudController";
+import { useGridRowNavigation } from "@/shared/hooks/useGridRowNavigation";
+import { extractErrorMessage } from "@/shared/utils/errorUtils";
 import { useGridApiRef, type GridApi } from "@mui/x-data-grid";
-import { useCallback, useEffect, type MutableRefObject } from "react";
+import { useCallback, useEffect, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import type { CreateDistrictRequest, District } from "../types/District";
 import {
@@ -20,7 +21,7 @@ interface UseDistrictGridLogicReturn {
   selectedDistrict: District | null;
   loading: boolean;
   districts: District[];
-  apiRef: MutableRefObject<GridApi>;
+  apiRef: RefObject<GridApi | null>;
   error: Error | null;
   isFetching: boolean;
   openDialog: (type: DialogType, district?: District | null) => void;

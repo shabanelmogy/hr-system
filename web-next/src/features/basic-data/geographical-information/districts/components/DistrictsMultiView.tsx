@@ -1,5 +1,5 @@
 import { MultiViewHeader } from "@/shared/components/common";
-import { useCollectionExports } from "@/shared/hooks";
+import { useCollectionExports } from "@/shared/hooks/useCollectionExports";
 import { Box } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -23,7 +23,7 @@ interface DistrictsMultiViewProps {
   districts: District[];
   loading: boolean;
   isFetching?: boolean;
-  apiRef?: React.RefObject<GridApiCommon>;
+  apiRef?: React.RefObject<GridApiCommon | null>;
   onEdit: (district: District) => void;
   onDelete: (district: District) => void;
   onView: (district: District) => void;
@@ -76,8 +76,13 @@ const DistrictsMultiView = ({
     disabled: loading || exportRows.length === 0,
   });
 
-  const handleViewTypeChange = useCallback((newViewType: "grid" | "cards" | "chart") => {
-    setCurrentViewType(newViewType);
+  const handleViewTypeChange = useCallback((newViewType: string) => {
+    switch (newViewType) {
+      case "grid":
+      case "cards":
+      case "chart":
+        setCurrentViewType(newViewType);
+    }
   }, []);
 
   const renderView = () => {

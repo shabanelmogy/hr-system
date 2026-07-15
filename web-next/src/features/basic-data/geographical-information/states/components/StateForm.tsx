@@ -1,22 +1,19 @@
-import { MyForm, MySelectForm, MyTextField } from "@/shared/components/common";
+import MyForm from "@/shared/components/common/form/MyForm";
+import MyTextField from "@/shared/components/common/form-controls/MyTextField";
+import MySelectForm from "@/shared/components/common/select/MySelectForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Casino } from "@mui/icons-material";
 import { Box, Button, TextField } from "@mui/material";
 import { useEffect, useRef } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Resolver, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useCountries } from "../../countries/hooks/useCountryQueries";
-import { State } from "../types/State";
+import { CreateStateRequest, State } from "../types/State";
 import { states } from "../utils/fakeData";
 import { getStateValidationSchema } from "../utils/validation";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 
-interface StateFormData {
-  nameAr: string;
-  nameEn: string;
-  code: string;
-  countryId: number;
-}
+type StateFormData = CreateStateRequest;
 
 interface StateFormProps {
   open: boolean;
@@ -53,7 +50,7 @@ const StateForm = ({
     setError,
     formState: { errors, isDirty },
   } = useForm<StateFormData>({
-    resolver: zodResolver(schema) as any,
+    resolver: zodResolver(schema) as Resolver<StateFormData>,
     mode: "onChange",
     defaultValues: {
       nameAr: "",
@@ -196,12 +193,12 @@ const StateForm = ({
       }
       submitButtonText={
         isViewMode
-          ? null
+          ? undefined
           : isEditMode
             ? t("actions.update")
             : t("actions.create")
       }
-      onSubmit={isViewMode ? undefined : (handleSubmit(onSubmitHandler) as any)}
+      onSubmit={isViewMode ? undefined : handleSubmit(onSubmitHandler)}
       isSubmitting={loading}
       isDirty={isDirty}
       hideFooter={isViewMode}

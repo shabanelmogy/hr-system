@@ -1,22 +1,19 @@
 // components/DistrictForm.tsx
-import { MyForm, MyTextField, MySelectForm } from "@/shared/components/common";
+import MyForm from "@/shared/components/common/form/MyForm";
+import MyTextField from "@/shared/components/common/form-controls/MyTextField";
+import MySelectForm from "@/shared/components/common/select/MySelectForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Casino } from "@mui/icons-material";
 import { Box, TextField, Button } from "@mui/material";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Resolver, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { District } from "../types/District";
+import { CreateDistrictRequest, District } from "../types/District";
 import { useStates } from "../../states/hooks/useStateQueries";
 import { getDistrictValidationSchema } from "../utils/validation";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 
-interface DistrictFormData {
-  nameAr: string;
-  nameEn: string;
-  code: string;
-  stateId: number;
-}
+type DistrictFormData = CreateDistrictRequest;
 
 interface DistrictFormProps {
   open: boolean;
@@ -55,7 +52,7 @@ const DistrictForm = ({
     setError,
     formState: { errors, isDirty },
   } = useForm<DistrictFormData>({
-    resolver: zodResolver(schema) as any,
+    resolver: zodResolver(schema) as Resolver<DistrictFormData>,
     mode: "onChange",
     defaultValues: {
       nameAr: "",
@@ -136,6 +133,17 @@ const DistrictForm = ({
     setValue("stateId", mock.stateId, mockOptions);
   };
 
+  const onSubmitHandler: SubmitHandler<DistrictFormData> = async (data) => {
+    try {
+      await onSubmit(data);
+    } catch (error) {
+      applyApiFieldErrors(error, setError, {
+        State: "stateId",
+        "District.Duplicated": ["nameAr", "nameEn", "code"],
+      });
+    }
+  };
+
   return (
     <MyForm
       maxHeight="65vh"
@@ -151,21 +159,8 @@ const DistrictForm = ({
           ? t("districts.editSubtitle") || "Modify district information"
           : t("districts.addSubtitle") || "Add a new district to the system"
       }
-      submitButtonText={isViewMode ? null : isEditMode ? t("actions.update") : t("actions.create")}
-      onSubmit={
-        isViewMode
-          ? undefined
-          : (handleSubmit(async (data) => {
-              try {
-                await onSubmit(data);
-              } catch (error) {
-                applyApiFieldErrors(error, setError, {
-                  State: "stateId",
-                  "District.Duplicated": ["nameAr", "nameEn", "code"],
-                });
-              }
-            }) as any)
-      }
+      submitButtonText={isViewMode ? undefined : isEditMode ? t("actions.update") : t("actions.create")}
+      onSubmit={isViewMode ? undefined : handleSubmit(onSubmitHandler)}
       isSubmitting={loading}
       isDirty={isDirty}
       hideFooter={isViewMode}

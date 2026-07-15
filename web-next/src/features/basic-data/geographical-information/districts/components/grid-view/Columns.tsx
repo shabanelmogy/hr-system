@@ -64,9 +64,8 @@ export const useDistrictColumns = ({
       flex: 1.5,
       align: "center",
       headerAlign: "center",
-      valueGetter: (params: any) => {
-        const state = params;
-        if (!state || state.state) return "";
+      valueGetter: (state: District["state"]) => {
+        if (!state) return "";
         return theme.direction === "rtl" ? state.nameAr || state.nameEn || "" : state.nameEn || state.nameAr || "";
       },
       sortable: false,

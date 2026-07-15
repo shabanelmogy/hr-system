@@ -1,11 +1,11 @@
 import type { GridApi } from "@mui/x-data-grid";
-import { useEffect, type MutableRefObject } from "react";
+import { useEffect, type RefObject } from "react";
 import type { CrudItemId } from "./useGridCrudController";
 
 type IdentifiedItem = { id: CrudItemId };
 
 type UseGridRowNavigationOptions<TItem extends IdentifiedItem> = {
-  apiRef: MutableRefObject<GridApi>;
+  apiRef: RefObject<GridApi | null>;
   items: TItem[];
   isLoading: boolean;
   isFetching: boolean;
@@ -67,13 +67,16 @@ function findRowIndex<TItem extends IdentifiedItem>(items: TItem[], id: CrudItem
 }
 
 function focusRow(
-  apiRef: MutableRefObject<GridApi>,
+  apiRef: RefObject<GridApi | null>,
   rowIndex: number,
   rowId: CrudItemId,
 ) {
-  const pageSize = apiRef.current.state.pagination.paginationModel.pageSize;
-  apiRef.current.setPage(Math.floor(rowIndex / pageSize));
-  apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([rowId]) });
+  const api = apiRef.current;
+  if (!api) return;
+
+  const pageSize = api.state.pagination.paginationModel.pageSize;
+  api.setPage(Math.floor(rowIndex / pageSize));
+  api.setRowSelectionModel({ type: "include", ids: new Set([rowId]) });
   window.setTimeout(() => {
     apiRef.current?.scrollToIndexes({ rowIndex, colIndex: 0 });
   }, 300);

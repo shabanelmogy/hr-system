@@ -17,10 +17,16 @@ interface StateBarChartProps {
   t: (key: string) => string;
 }
 
+interface NumericTooltipProps {
+  active?: boolean;
+  payload?: ReadonlyArray<{ value?: number }>;
+  label?: React.ReactNode;
+}
+
 const StateBarChart: React.FC<StateBarChartProps> = ({ data, t }) => {
   const colors = getChartColors();
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: NumericTooltipProps) => {
     if (active && payload && payload.length) {
       return (
         <Box

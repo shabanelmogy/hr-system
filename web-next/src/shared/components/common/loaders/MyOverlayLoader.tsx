@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import {
   Add,
   Backup,
@@ -16,7 +15,27 @@ import {
   TableChart,
 } from "@mui/icons-material";
 import { Backdrop, Box, CircularProgress, Typography } from "@mui/material";
-import React from "react";
+import type { SxProps, Theme } from "@mui/material/styles";
+import React, { type ReactElement } from "react";
+
+type LoaderIcon = ReactElement<{ sx?: SxProps<Theme> }>;
+
+interface MyOverlayLoaderProps {
+  open?: boolean;
+  actionType?: string;
+  message?: string;
+  customIcon?: LoaderIcon | null;
+  customColor?: string | null;
+  spinnerSize?: number;
+  spinnerThickness?: number;
+  backgroundColor?: string;
+  zIndex?: number | null;
+}
+
+interface ActionConfig {
+  icon: LoaderIcon;
+  defaultMessage: string;
+}
 
 export const MyOverlayLoader = ({
   open = false,
@@ -28,7 +47,7 @@ export const MyOverlayLoader = ({
   spinnerThickness = 4,
   backgroundColor = "rgba(0, 0, 0, 0.7)",
   zIndex = null,
-}) => {
+}: MyOverlayLoaderProps) => {
   // Default action type configurations
   const actionConfigs = {
     // Export types
@@ -98,10 +117,15 @@ export const MyOverlayLoader = ({
       icon: <ExportIcon sx={{ fontSize: 48, color: "#2196f3", mb: 1 }} />,
       defaultMessage: "Processing...",
     },
-  };
+  } satisfies Record<string, ActionConfig>;
 
   // Get configuration for current action type
-  const config = actionConfigs[actionType] || actionConfigs.default;
+  const config: ActionConfig = Object.prototype.hasOwnProperty.call(
+    actionConfigs,
+    actionType,
+  )
+    ? actionConfigs[actionType as keyof typeof actionConfigs]
+    : actionConfigs.default;
 
   // Use custom icon if provided, otherwise use config icon
   const displayIcon = customIcon || config.icon;

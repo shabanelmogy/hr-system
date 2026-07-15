@@ -6,7 +6,8 @@ import {
   Cell,
   ResponsiveContainer,
   Tooltip,
-  Legend
+  Legend,
+  type PieLabelRenderProps,
 } from 'recharts';
 
 interface StatePieChartProps {
@@ -15,10 +16,23 @@ interface StatePieChartProps {
   t: (key: string) => string;
 }
 
+interface StatePieDatum {
+  name: string;
+  count: number;
+  value: number;
+  total: number;
+}
+
+interface PieTooltipProps {
+  active?: boolean;
+  payload?: ReadonlyArray<{ payload?: unknown }>;
+}
+
 const StatePieChart: React.FC<StatePieChartProps> = ({ data, colors, t }) => {
-  const CustomTooltip = ({ active, payload }: any) => {
+  const CustomTooltip = ({ active, payload }: PieTooltipProps) => {
     if (active && payload && payload.length) {
-      const data = payload[0].payload;
+      const data = payload[0].payload as StatePieDatum | undefined;
+      if (!data) return null;
       return (
         <Box
           sx={{
@@ -47,7 +61,14 @@ const StatePieChart: React.FC<StatePieChartProps> = ({ data, colors, t }) => {
     return null;
   };
 
-  const CustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
+  const renderCustomLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+  }: PieLabelRenderProps) => {
     if (percent < 0.05) return null; // Don't show labels for slices less than 5%
     
     const RADIAN = Math.PI / 180;
@@ -88,7 +109,7 @@ const StatePieChart: React.FC<StatePieChartProps> = ({ data, colors, t }) => {
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                label={<CustomLabel />}
+                label={renderCustomLabel}
                 outerRadius={80}
                 fill="#8884d8"
                 dataKey="value"

@@ -1,8 +1,9 @@
-import { showToast } from "@/shared/components/feedback";
-import { useGridCrudController, useGridRowNavigation } from "@/shared/hooks";
-import { extractErrorMessage } from "@/shared/utils";
+import showToast from "@/shared/components/feedback/Toast";
+import { useGridCrudController } from "@/shared/hooks/useGridCrudController";
+import { useGridRowNavigation } from "@/shared/hooks/useGridRowNavigation";
+import { extractErrorMessage } from "@/shared/utils/errorUtils";
 import { useGridApiRef, type GridApi } from "@mui/x-data-grid";
-import { useEffect, type MutableRefObject } from "react";
+import { useEffect, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import type {
   AddressType,
@@ -22,7 +23,7 @@ interface UseAddressTypeGridLogicReturn {
   selectedItem: AddressType | null;
   loading: boolean;
   items: AddressType[];
-  apiRef: MutableRefObject<GridApi>;
+  apiRef: RefObject<GridApi | null>;
   error: Error | null;
   isFetching: boolean;
   openDialog: (type: AddressTypeDialogType, item?: AddressType | null) => void;

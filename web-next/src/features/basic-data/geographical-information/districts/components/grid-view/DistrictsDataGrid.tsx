@@ -13,7 +13,7 @@ import { useDistrictColumns } from "./Columns";
 interface DistrictsDataGridProps {
   districts: District[];
   loading?: boolean;
-  apiRef?: React.RefObject<GridApiCommon>;
+  apiRef?: React.RefObject<GridApiCommon | null>;
   onEdit: (district: District) => void;
   onDelete: (district: District) => void;
   onView: (district: District) => void;

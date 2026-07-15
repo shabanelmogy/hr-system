@@ -34,6 +34,12 @@ const DistrictsPage = () => {
     lastEditedId,
     lastDeletedIndex,
   } = useDistrictGridLogic();
+  const formDialogType =
+    dialogType === "add" || dialogType === "edit" || dialogType === "view"
+      ? dialogType
+      : "add";
+  const isFormOpen =
+    dialogType === "add" || dialogType === "edit" || dialogType === "view";
 
   if (error) {
     return (
@@ -70,11 +76,11 @@ const DistrictsPage = () => {
       />
 
       <DistrictForm
-        open={["edit", "add", "view"].includes(dialogType as any)}
-        dialogType={dialogType as "add" | "edit" | "view"}
+        open={isFormOpen}
+        dialogType={formDialogType}
         selectedDistrict={selectedDistrict}
         onClose={closeDialog}
-        onSubmit={handleFormSubmit as any}
+        onSubmit={handleFormSubmit}
         loading={isCreating || isUpdating}
       />
 

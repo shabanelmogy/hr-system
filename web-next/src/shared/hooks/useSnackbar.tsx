@@ -1,10 +1,8 @@
 "use client";
 
 import { useCallback } from "react";
-import {
-  showErrorDialog,
-  showToast,
-} from "../components/feedback";
+import { showErrorDialog } from "../components/feedback/ErrorDialog";
+import showToast from "../components/feedback/Toast";
 
 export type NotificationSeverity = "error" | "warning" | "info" | "success";
 

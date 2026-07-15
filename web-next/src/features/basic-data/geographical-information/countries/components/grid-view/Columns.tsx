@@ -77,11 +77,11 @@ export const useCountryColumns = ({ t, permissions, getActions }: ColumnsFactory
       align: "center",
       headerAlign: "center",
       sortable: false,
-      valueGetter: (value: any) => {
+      valueGetter: (value: Country["states"]) => {
         return Array.isArray(value)
           ? value
-              .filter((state: any) => !state.isDeleted)
-              .map((state: any) =>
+              .filter((state) => !state.isDeleted)
+              .map((state) =>
                 theme.direction === "rtl" ? state.nameAr : state.nameEn
               )
           : [];

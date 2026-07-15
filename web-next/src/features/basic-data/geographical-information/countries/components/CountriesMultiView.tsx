@@ -1,5 +1,5 @@
 import { MultiViewHeader } from "@/shared/components/common";
-import { useCollectionExports } from "@/shared/hooks";
+import { useCollectionExports } from "@/shared/hooks/useCollectionExports";
 import { Box } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -28,7 +28,7 @@ interface CountriesMultiViewProps {
   countries: Country[];
   loading: boolean;
   isFetching?: boolean;
-  apiRef?: React.RefObject<GridApiCommon>;
+  apiRef?: React.RefObject<GridApiCommon | null>;
   onEdit: (country: Country) => void;
   onDelete: (country: Country) => void;
   onView: (country: Country) => void;
@@ -85,8 +85,15 @@ const CountriesMultiView = ({
     disabled: loading || exportRows.length === 0,
   });
 
-  const handleViewTypeChange = useCallback((newViewType: "grid" | "cards" | "chart" | "report" | "import") => {
-    setCurrentViewType(newViewType);
+  const handleViewTypeChange = useCallback((newViewType: string) => {
+    switch (newViewType) {
+      case "grid":
+      case "cards":
+      case "chart":
+      case "report":
+      case "import":
+        setCurrentViewType(newViewType);
+    }
   }, []);
 
   const renderView = () => {

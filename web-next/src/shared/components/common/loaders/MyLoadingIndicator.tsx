@@ -9,13 +9,21 @@ import {
   Paper,
 } from "@mui/material";
 
+interface MyLoadingIndicatorProps {
+  isLoading?: boolean;
+  onLoadingComplete?: (() => void) | null;
+  message?: string;
+  autoHide?: boolean;
+  duration?: number;
+}
+
 export const MyLoadingIndicator = ({
   isLoading = true,
   onLoadingComplete = null,
   message = "Preparing your components...",
   autoHide = false,
   duration = 6000, // Time in ms before auto-hiding (if autoHide is true)
-}) => {
+}: MyLoadingIndicatorProps) => {
   const theme = useTheme();
   const [progress, setProgress] = useState(0);
   const [dots, setDots] = useState("");
@@ -31,19 +39,21 @@ export const MyLoadingIndicator = ({
 
   // Auto-hide functionality
   useEffect(() => {
-    let hideTimer;
+    let hideTimer: ReturnType<typeof setTimeout> | undefined;
     if (autoHide && isLoading) {
       hideTimer = setTimeout(() => {
         setVisible(false);
         if (onLoadingComplete) onLoadingComplete();
       }, duration);
     }
-    return () => clearTimeout(hideTimer);
+    return () => {
+      if (hideTimer) clearTimeout(hideTimer);
+    };
   }, [autoHide, isLoading, onLoadingComplete, duration]);
 
   // Animated progress simulation
   useEffect(() => {
-    let timer;
+    let timer: ReturnType<typeof setInterval> | undefined;
     if (visible) {
       timer = setInterval(() => {
         setProgress((prevProgress) => {
@@ -51,7 +61,7 @@ export const MyLoadingIndicator = ({
 
           // If we reach 100% and not using autoHide
           if (newProgress >= 100) {
-            clearInterval(timer);
+            if (timer) clearInterval(timer);
             if (onLoadingComplete && !autoHide) {
               setTimeout(() => {
                 setVisible(false);
@@ -64,18 +74,22 @@ export const MyLoadingIndicator = ({
         });
       }, 200);
     }
-    return () => clearInterval(timer);
+    return () => {
+      if (timer) clearInterval(timer);
+    };
   }, [visible, onLoadingComplete, autoHide]);
 
   // Animated dots for loading text
   useEffect(() => {
-    let dotTimer;
+    let dotTimer: ReturnType<typeof setInterval> | undefined;
     if (visible) {
       dotTimer = setInterval(() => {
         setDots((prev) => (prev.length >= 3 ? "" : prev + "."));
       }, 500);
     }
-    return () => clearInterval(dotTimer);
+    return () => {
+      if (dotTimer) clearInterval(dotTimer);
+    };
   }, [visible]);
 
   // Don't render anything if not visible

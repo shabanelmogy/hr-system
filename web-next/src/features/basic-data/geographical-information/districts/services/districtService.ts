@@ -1,5 +1,5 @@
 import { apiRoutes } from "@/config";
-import { apiService } from "@/shared/services";
+import apiService from "@/shared/services/apiService";
 import { extractValue, extractValues } from "@/shared/utils/ApiHelper";
 import { District, CreateDistrictRequest, UpdateDistrictRequest } from "../types/District";
 

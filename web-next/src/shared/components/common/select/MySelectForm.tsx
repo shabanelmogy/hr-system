@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import { Close } from "@mui/icons-material";
 import {
   Autocomplete,
   Box,
@@ -6,26 +6,77 @@ import {
   CircularProgress,
   FormControl,
   TextField,
+  type ChipProps,
 } from "@mui/material";
-import { Controller } from "react-hook-form";
+import type { SxProps, Theme } from "@mui/material/styles";
+import type { ReactNode, SyntheticEvent } from "react";
+import {
+  Controller,
+  type Control,
+  type FieldErrors,
+  type FieldValues,
+  type Path,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Close } from "@mui/icons-material";
 
-/**
- * A reusable, form-integrated Autocomplete component using Material-UI.
- * It supports both single and multiple selections with enhanced chip styling.
- */
-const MySelectForm = ({
-  // Main props
+type OptionKey<TOption extends object> = Extract<keyof TOption, string>;
+
+interface MySelectFormProps<
+  TFormValues extends FieldValues,
+  TOption extends object,
+> {
+  control: Control<TFormValues>;
+  name: Path<TFormValues>;
+  label: ReactNode;
+  dataSource?: readonly TOption[];
+  valueMember: OptionKey<TOption>;
+  displayMember: OptionKey<TOption>;
+  colorMember?: OptionKey<TOption>;
+  multiple?: boolean;
+  loading?: boolean;
+  disabled?: boolean;
+  required?: boolean;
+  placeholder?: string;
+  showClearButton?: boolean;
+  limitTags?: number;
+  sx?: SxProps<Theme>;
+  isViewMode?: boolean;
+  filterSelectedOptions?: boolean;
+  defaultChipColor?: ChipProps["color"];
+  chipVariant?: ChipProps["variant"];
+  chipSize?: ChipProps["size"];
+  showDeleteIcon?: boolean;
+  errors?: FieldErrors<TFormValues>;
+  actualFieldName?: Path<TFormValues>;
+  onChange?: (
+    event: SyntheticEvent,
+    value: TOption | readonly TOption[] | null,
+  ) => void;
+  loadingText?: string;
+  noOptionsText?: string;
+}
+
+const chipColors: ReadonlySet<NonNullable<ChipProps["color"]>> = new Set([
+  "default",
+  "primary",
+  "secondary",
+  "error",
+  "info",
+  "success",
+  "warning",
+]);
+
+const MySelectForm = <
+  TFormValues extends FieldValues,
+  TOption extends object,
+>({
   control,
   name,
   label,
   dataSource = [],
   valueMember,
   displayMember,
-  colorMember, // New prop for chip color
-
-  // Behavior props
+  colorMember,
   multiple = false,
   loading = false,
   disabled = false,
@@ -34,108 +85,77 @@ const MySelectForm = ({
   showClearButton = false,
   limitTags = 3,
   sx = {},
-  isViewMode = false, // New prop for view mode
+  isViewMode = false,
   filterSelectedOptions = true,
-
-  // Chip styling props
   defaultChipColor = "primary",
   chipVariant = "outlined",
   chipSize = "small",
   showDeleteIcon = true,
-
-  // Error handling (same pattern as MyTextField)
   errors = {},
-  actualFieldName, // Alternative to name for error lookup
-
-  // Event handlers
-  onChange: customOnChange = null,
-
-  // Loading and empty state props
+  actualFieldName,
+  onChange: customOnChange,
   loadingText,
   noOptionsText,
-}) => {
+}: MySelectFormProps<TFormValues, TOption>) => {
   const { t } = useTranslation();
+  const errorFieldName = actualFieldName ?? name;
+  const fieldError = getFieldError(errors, errorFieldName);
 
-  // ==========================================
-  // COMPATIBILITY LAYER (same as MyTextField)
-  // ==========================================
-  const errorFieldName = actualFieldName || name;
-
-  // Validate essential props
-  if (!control || !name || !valueMember || !displayMember) {
-    console.error(
-      "MySelectForm Error: The 'control', 'name', 'valueMember', and 'displayMember' props are required."
-    );
-    return null;
-  }
+  const getChipColor = (option: TOption): ChipProps["color"] => {
+    if (!colorMember) return defaultChipColor;
+    const color = option[colorMember];
+    return typeof color === "string" &&
+      chipColors.has(color as NonNullable<ChipProps["color"]>)
+      ? (color as ChipProps["color"])
+      : defaultChipColor;
+  };
 
   return (
     <Controller
       name={name}
       control={control}
-      render={({
-        field: { onChange: fieldOnChange, value, onBlur },
-      }) => {
-        // Determines the currently selected value(s) from the dataSource.
-        const getSelectedValue = () => {
-          if (multiple) {
-            // For multi-select, 'value' is an array of IDs. Find the corresponding objects.
-            return (
-              dataSource.filter((item) => value?.includes(item[valueMember])) || []
-            );
-          }
-          // For single-select, 'value' is a single ID. Find the corresponding object.
-          return (
-            dataSource.find((item) => item[valueMember] === value) || null
-          );
-        };
-
-        // Get chip color for an option
-        const getChipColor = (option) => {
-          if (colorMember && option[colorMember]) {
-            return option[colorMember];
-          }
-          return defaultChipColor;
-        };
+      render={({ field: { onChange: fieldOnChange, value, onBlur } }) => {
+        const selectedValue = multiple
+          ? dataSource.filter(
+              (item) =>
+                Array.isArray(value) && value.includes(item[valueMember]),
+            )
+          : dataSource.find((item) => item[valueMember] === value) ?? null;
 
         return (
-          <FormControl sx={{ width: "100%", ...sx }}>
-            <Autocomplete
+          <FormControl fullWidth sx={sx}>
+            <Autocomplete<TOption, boolean, boolean, false>
               multiple={multiple}
-              options={dataSource}
+              options={[...dataSource]}
               loading={loading}
-              getOptionLabel={(option) => option?.[displayMember] || ""}
-              value={getSelectedValue()}
+              getOptionLabel={(option) => String(option[displayMember] ?? "")}
+              value={selectedValue}
               onChange={(event, newValue) => {
-                // Format the new value to be just the ID(s) for the form state.
-                const formattedValue = multiple
-                  ? newValue?.map((item) => item[valueMember]) || []
+                const formattedValue = Array.isArray(newValue)
+                  ? newValue.map((item) => item[valueMember])
                   : newValue?.[valueMember] ?? undefined;
 
-                // Update the form state.
                 fieldOnChange(formattedValue);
-                if (customOnChange) {
-                  customOnChange(event, newValue);
-                }
+                customOnChange?.(event, newValue);
               }}
               onBlur={onBlur}
               disabled={loading || disabled || isViewMode}
               disableClearable={!showClearButton}
               limitTags={limitTags}
               filterSelectedOptions={filterSelectedOptions}
-              isOptionEqualToValue={(option, val) =>
-                option?.[valueMember] === val?.[valueMember]
+              isOptionEqualToValue={(option, selected) =>
+                option[valueMember] === selected[valueMember]
               }
-              renderValue={(tagValue, getItemProps) =>
+              renderValue={(selectedOptions, getItemProps) =>
                 multiple
-                  ? tagValue.map((option, index) => (
+                  ? (selectedOptions as readonly TOption[]).map((option, index) => (
                       <Chip
                         {...getItemProps({ index })}
-                        key={option[valueMember] || index}
-                        label={option[displayMember]}
+                        key={String(option[valueMember] ?? index)}
+                        label={String(option[displayMember] ?? "")}
                         color={getChipColor(option)}
-                        variant={chipVariant as "filled" | "outlined"}
-                        size={chipSize as "small" | "medium"}
+                        variant={chipVariant}
+                        size={chipSize}
                         deleteIcon={
                           !isViewMode && showDeleteIcon ? <Close /> : undefined
                         }
@@ -144,12 +164,7 @@ const MySelectForm = ({
                             ? getItemProps({ index }).onDelete
                             : undefined
                         }
-                        sx={{
-                          margin: 0.25,
-                          "& .MuiChip-deleteIcon": {
-                            fontSize: 16,
-                          },
-                        }}
+                        sx={{ margin: 0.25, "& .MuiChip-deleteIcon": { fontSize: 16 } }}
                       />
                     ))
                   : undefined
@@ -163,25 +178,20 @@ const MySelectForm = ({
                       ? loadingText || t("loading") || "Loading..."
                       : placeholder || t("search") || "Search..."
                   }
-                  error={!!errors[errorFieldName]}
-                  helperText={errors[errorFieldName]?.message}
+                  error={Boolean(fieldError)}
+                  helperText={fieldError?.message}
                   autoComplete="off"
                   slotProps={{
                     ...params.slotProps,
-
                     htmlInput: {
                       ...params.slotProps.htmlInput,
                       "aria-required": required || undefined,
-                      "aria-invalid": !!errors[errorFieldName],
-                      "aria-describedby": errors[errorFieldName]
+                      "aria-invalid": Boolean(fieldError),
+                      "aria-describedby": fieldError
                         ? `${name}-error`
                         : undefined,
                     },
-
-                    formHelperText: {
-                      id: `${name}-error`,
-                    },
-
+                    formHelperText: { id: `${name}-error` },
                     input: {
                       ...params.slotProps.input,
                       endAdornment: (
@@ -192,18 +202,18 @@ const MySelectForm = ({
                           {params.slotProps.input.endAdornment}
                         </>
                       ),
-                    }
+                    },
                   }}
                 />
               )}
               renderOption={(props, option) => (
                 <Box component="li" {...props}>
                   <Chip
-                    label={option[displayMember]}
+                    label={String(option[displayMember] ?? "")}
                     size="small"
                     color={getChipColor(option)}
                     variant="outlined"
-                    sx={{ mr: 1 }}
+                    sx={{ marginInlineEnd: 1 }}
                   />
                 </Box>
               )}
@@ -220,5 +230,21 @@ const MySelectForm = ({
     />
   );
 };
+
+function getFieldError<TFormValues extends FieldValues>(
+  errors: FieldErrors<TFormValues>,
+  name: Path<TFormValues>,
+): { message?: string } | undefined {
+  let current: unknown = errors;
+
+  for (const segment of name.split(".")) {
+    if (!current || typeof current !== "object") return undefined;
+    current = (current as Record<string, unknown>)[segment];
+  }
+
+  if (!current || typeof current !== "object") return undefined;
+  const message = (current as Record<string, unknown>).message;
+  return { message: typeof message === "string" ? message : undefined };
+}
 
 export default MySelectForm;

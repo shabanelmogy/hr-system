@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { apiService, HandleApiError } from "@/shared/services";
-import { useSnackbar } from "@/shared/hooks";
+import HandleApiError from "@/shared/services/apiError";
+import apiService from "@/shared/services/apiService";
+import useSnackbar from "@/shared/hooks/useSnackbar";
 import { readExcelFile } from "@/shared/services/excelService";
 import { apiRoutes } from "@/config";
 import getCountryValidationSchema from "../../utils/validation";
@@ -72,8 +73,8 @@ export const useCountryImport = () => {
     // Skip the header row and map to country structure
     return jsonData
       .slice(1)
-      .filter((row: any) => Array.isArray(row) && row.length > 0)
-      .map((row: any, index: number) => ({
+      .filter((row) => row.length > 0)
+      .map((row, index) => ({
         nameAr: String(row[0] ?? "").trim(),
         nameEn: String(row[1] ?? "").trim(),
         alpha2Code: String(row[2] ?? "").trim(),
