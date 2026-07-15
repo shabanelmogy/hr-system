@@ -5,8 +5,11 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import { Avatar, Box, Tooltip, Typography, useTheme } from "@mui/material";
 import { useMemo } from "react";
-import { useUserInfo, useUserPhoto } from "../../../shared/hooks";
-import { getUserPhotoDataUrl } from "../../../shared/services/userProfileService";
+import {
+  getUserPhotoDataUrl,
+  useUserInfo,
+  useUserPhoto,
+} from "@/features/auth/profile";
 import { useSession } from "@/lib/auth/SessionContext";
 
 interface UserProfileProps {

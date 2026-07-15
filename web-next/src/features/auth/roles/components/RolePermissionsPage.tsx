@@ -1,316 +1,49 @@
 "use client";
 
-// RolePermissionsPage.jsx - Enhanced with dynamic permissions
-import { getAllPermissionModules } from "@/lib/auth/permissions";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { ContentWrapper } from "@/shared/components/layout";
-import { useNotifications } from "@/shared/hooks";
-import {
-  ArrowBack,
-  Check,
-  Clear,
-  FilterList,
-  Home,
-  SaveAlt,
-  Search,
-  Security,
-  ViewModule,
-} from "@mui/icons-material";
 import {
   Alert,
   alpha,
-  Avatar,
   Box,
-  Button,
   Card,
-  Checkbox,
-  Chip,
   CircularProgress,
   Divider,
   Fade,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  LinearProgress,
-  MenuItem,
-  Paper,
-  Select,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
   TablePagination,
-  TableRow,
-  TextField,
-  Tooltip,
   Typography,
   useTheme,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
 } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import useRoleStore from "../store/useRoleStore";
-import {
-  getRoleClaimsValidationSchema,
-  RoleClaimsFormData,
-} from "../utils/validation";
-import { applyApiFieldErrors } from "@/shared/utils/formErrors";
+import { useRolePermissions } from "../hooks/useRolePermissions";
+import DiscardRoleChangesDialog from "./role-permissions/DiscardRoleChangesDialog";
+import RolePermissionsActions from "./role-permissions/RolePermissionsActions";
+import RolePermissionsFilters from "./role-permissions/RolePermissionsFilters";
+import RolePermissionsHeader from "./role-permissions/RolePermissionsHeader";
+import RolePermissionsTable from "./role-permissions/RolePermissionsTable";
 
-// Get modules dynamically from Permissions class
-const MODULES = getAllPermissionModules();
+type RolePermissionsPageProps = { id: string };
 
-// Define permission types exactly as in Blazor
-const PERMISSION_TYPES = ["View", "Create", "Edit", "Delete"];
-
-// Permission type colors for visual enhancement - theme-aware
-const getPermissionColors = (theme: any) => ({
-  View: theme.palette.success.main,
-  Create: theme.palette.info.main,
-  Edit: theme.palette.warning.main,
-  Delete: theme.palette.error.main,
-});
-
-type RolePermissionsPageProps = {
-  id: string;
-};
-
-const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
-  const router = useRouter();
-  const { showError, showSuccess, SnackbarComponent } = useNotifications();
+export default function RolePermissionsPage({ id }: RolePermissionsPageProps) {
+  const permissions = useRolePermissions(id);
   const theme = useTheme();
-  const PERMISSION_COLORS = getPermissionColors(theme);
 
-  // State variables matching Blazor exactly
-  const [roleViewModel, setRoleViewModel] = useState(null);
-  const [selectedModule, setSelectedModule] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSaving, setIsSaving] = useState(false);
-  const [discardDialogOpen, setDiscardDialogOpen] = useState(false);
-
-  // Enhanced UI state
-  const [searchTerm, setSearchTerm] = useState("");
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [showOnlySelected, setShowOnlySelected] = useState(false);
-
-  const { getRoleWithClaims, updateRoleClaims } = useRoleStore();
-  const roleClaimsSchema = getRoleClaimsValidationSchema();
-  const {
-    handleSubmit,
-    reset,
-    setValue,
-    setError,
-    formState: { errors, isDirty },
-  } = useForm<RoleClaimsFormData>({
-    resolver: zodResolver(roleClaimsSchema),
-    defaultValues: { id: roleId, name: "", roleClaims: [] },
-    mode: "onChange",
-  });
-
-  // LoadRoleClaims - exact match to Blazor method
-  const loadRoleClaims = async () => {
-    try {
-      const result = await getRoleWithClaims(roleId);
-      if (result != null) {
-        setRoleViewModel(result);
-        reset({
-          id: result.id || roleId,
-          name: result.name || "",
-          roleClaims: result.roleClaims || [],
-        });
-      }
-      setIsLoading(false);
-    } catch (error) {
-      showError((error as Error)?.message || "Failed to load role claims");
-      setIsLoading(false);
-    }
-  };
-
-  // SelectAll - exact match to Blazor method
-  const selectAll = (suffix: string, isSelected: boolean) => {
-    if (!roleViewModel?.roleClaims) return;
-
-    const updatedRoleViewModel = {
-      ...roleViewModel,
-      roleClaims: roleViewModel.roleClaims.map((claim: any) =>
-        claim.displayValue.toLowerCase().endsWith(`:${suffix.toLowerCase()}`)
-          ? { ...claim, isSelected }
-          : claim,
-      ),
-    };
-
-    setRoleViewModel(updatedRoleViewModel);
-    setValue("roleClaims", updatedRoleViewModel.roleClaims, {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-  };
-
-  // AreAllSelected - exact match to Blazor method
-  const areAllSelected = (type: string) => {
-    if (!roleViewModel?.roleClaims) return false;
-
-    const relevantClaims = roleViewModel.roleClaims.filter((c: any) =>
-      c.displayValue.toLowerCase().endsWith(`:${type.toLowerCase()}`)
-    );
-
-    return (
-      relevantClaims.length > 0 && relevantClaims.every((c: any) => c.isSelected)
-    );
-  };
-
-  // UpdateRole - exact match to Blazor method with loading state
-  const updateRole = async (data: RoleClaimsFormData) => {
-    setIsSaving(true);
-    try {
-      await updateRoleClaims(data);
-      router.push("/administration/roles");
-      showSuccess("Role permissions updated successfully");
-    } catch (error) {
-      applyApiFieldErrors(error, setError, { Name: "name" });
-      showError((error as Error)?.message || "Failed to update role permissions");
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const handleBack = () => {
-    if (isDirty) {
-      setDiscardDialogOpen(true);
-      return;
-    }
-    router.push("/administration/roles");
-  };
-
-  const confirmBack = () => {
-    setDiscardDialogOpen(false);
-    router.push("/administration/roles");
-  };
-
-  // Handle individual checkbox change
-  const handleClaimChange = (claimIndex: number) => {
-    const updatedViewModel = {
-      ...roleViewModel,
-      roleClaims: roleViewModel.roleClaims.map((claim: any, index: number) =>
-        index === claimIndex ? { ...claim, isSelected: !claim.isSelected } : claim,
-      ),
-    };
-    setRoleViewModel(updatedViewModel);
-    setValue("roleClaims", updatedViewModel.roleClaims, {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-  };
-
-  // Enhanced filtering and pagination logic
-  const filteredModules = useMemo(() => {
-    let modules = MODULES.filter(
-      (module) =>
-        !selectedModule || module.toLowerCase() === selectedModule.toLowerCase()
-    );
-
-    if (searchTerm) {
-      modules = modules.filter((module) =>
-        module.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    if (showOnlySelected && roleViewModel?.roleClaims) {
-      modules = modules.filter((module) =>
-        PERMISSION_TYPES.some((type) => {
-          const claim = roleViewModel.roleClaims.find(
-            (c: any) =>
-              c.displayValue.toLowerCase().startsWith(module.toLowerCase()) &&
-              c.displayValue.toLowerCase().endsWith(`:${type.toLowerCase()}`)
-          );
-          return claim?.isSelected;
-        })
-      );
-    }
-
-    return modules;
-  }, [selectedModule, searchTerm, showOnlySelected, roleViewModel]);
-
-  const paginatedModules = useMemo(() => {
-    const startIndex = page * rowsPerPage;
-    return filteredModules.slice(startIndex, startIndex + rowsPerPage);
-  }, [filteredModules, page, rowsPerPage]);
-
-  // Calculate statistics
-  const statistics = useMemo(() => {
-    if (!roleViewModel?.roleClaims) return { total: 0, selected: 0 };
-
-    const total = roleViewModel.roleClaims.length;
-    const selected = roleViewModel.roleClaims.filter(
-      (c: any) => c.isSelected
-    ).length;
-
-    return {
-      total,
-      selected,
-      percentage: total > 0 ? (selected / total) * 100 : 0,
-    };
-  }, [roleViewModel]);
-
-  // Load data on component mount - exact match to Blazor lifecycle
-  useEffect(() => {
-    if (roleId) {
-      loadRoleClaims();
-    }
-  }, [roleId]);
-
-  // Reset page when filters change
-  useEffect(() => {
-    setPage(0);
-  }, [selectedModule, searchTerm, showOnlySelected]);
-
-  // Show loader exactly like Blazor
-  if (isLoading) {
+  if (permissions.isLoading) {
     return (
       <ContentWrapper>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "400px",
-            gap: 2
-          }}>
+        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: 400, gap: 2 }}>
           <CircularProgress size={60} />
-          <Typography variant="h6" sx={{
-            color: "text.secondary"
-          }}>
-            Loading role permissions...
-          </Typography>
+          <Typography variant="h6" sx={{ color: "text.secondary" }}>Loading role permissions...</Typography>
         </Box>
       </ContentWrapper>
     );
   }
 
-  if (!roleViewModel) {
+  if (!permissions.role) {
     return (
       <ContentWrapper>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "400px"
-          }}>
-          <Alert severity="warning" sx={{ maxWidth: 400 }}>
-            <Typography>Role not found</Typography>
-          </Alert>
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: 400 }}>
+          <Alert severity="warning" sx={{ maxWidth: 400 }}>Role not found</Alert>
         </Box>
+        {permissions.notifications.SnackbarComponent}
       </ContentWrapper>
     );
   }
@@ -319,464 +52,72 @@ const RolePermissionsPage = ({ id: roleId }: RolePermissionsPageProps) => {
     <ContentWrapper>
       <Fade in timeout={600}>
         <Box>
-          {/* Minimized Header with theme-aware gradient background */}
-          <Paper
-            elevation={3}
-            sx={{
-              p: 2,
-              mb: 3,
-              background:
-                theme.palette.mode === "dark"
-                  ? `linear-gradient(135deg, ${alpha(
-                    theme.palette.primary.main,
-                    0.8
-                  )} 0%, ${alpha(theme.palette.secondary.main, 0.8)} 100%)`
-                  : `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
-              color: theme.palette.primary.contrastText,
-              borderRadius: 2,
-            }}
-          >
-            <Grid container spacing={2} sx={{
-              alignItems: "center"
-            }}>
-              <Grid>
-                <Avatar
-                  sx={{
-                    bgcolor: alpha(theme.palette.common.white, 0.2),
-                    width: 40,
-                    height: 40,
-                    color: theme.palette.primary.contrastText,
-                  }}
-                >
-                  <Security />
-                </Avatar>
-              </Grid>
-              <Grid>
-                <Typography variant="h5" sx={{
-                  fontWeight: "bold"
-                }}>
-                  {roleViewModel.name}
-                </Typography>
-                <Typography variant="body2" sx={{ opacity: 0.9 }}>
-                  {statistics.selected}/{statistics.total} permissions (
-                  {statistics.percentage.toFixed(1)}%)
-                </Typography>
-              </Grid>
-              <Grid>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <LinearProgress
-                    variant="determinate"
-                    value={statistics.percentage}
-                    sx={{
-                      width: 100,
-                      height: 6,
-                      borderRadius: 3,
-                      bgcolor: alpha(theme.palette.common.white, 0.2),
-                      "& .MuiLinearProgress-bar": {
-                        bgcolor: alpha(theme.palette.common.white, 0.8),
-                      },
-                    }}
-                  />
-                  <Tooltip title="Go to Dashboard">
-                    <IconButton
-                      onClick={() => router.push("/")}
-                      sx={{
-                        color: theme.palette.primary.contrastText,
-                        bgcolor: alpha(theme.palette.common.white, 0.1),
-                        "&:hover": {
-                          bgcolor: alpha(theme.palette.common.white, 0.2),
-                          transform: "scale(1.05)",
-                        },
-                        transition: "all 0.2s ease",
-                      }}
-                      size="small"
-                    >
-                      <Home />
-                    </IconButton>
-                  </Tooltip>
-                </Box>
-              </Grid>
-            </Grid>
-          </Paper>
-
-          <Card
-            sx={{
-              borderRadius: 2,
-              boxShadow: 3,
-              bgcolor: theme.palette.background.paper,
-            }}
-          >
-            {/* Enhanced Filters Section */}
+          <RolePermissionsHeader
+            roleName={permissions.role.name}
+            {...permissions.statistics}
+            onDashboard={permissions.goDashboard}
+          />
+          <Card sx={{ borderRadius: 2, boxShadow: 3, bgcolor: "background.paper" }}>
             <Box sx={{ p: 3, borderBottom: 1, borderColor: "divider" }}>
-              <Grid container spacing={3} sx={{
-                alignItems: "center"
-              }}>
-                <Grid size={{ xs: 12, md: 4 }}>
-                  <TextField
-                    fullWidth
-                    placeholder="Search modules..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    size="small"
-                    slotProps={{
-                      input: {
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Search color="action" />
-                          </InputAdornment>
-                        ),
-                      }
-                    }}
-                  />
-                </Grid>
-
-                <Grid size={{ xs: 12, md: 3 }}>
-                  <FormControl fullWidth size="small">
-                    <InputLabel>Filter by Module</InputLabel>
-                    <Select
-                      value={selectedModule}
-                      label="Filter by Module"
-                      onChange={(e) => setSelectedModule(e.target.value)}
-                      startAdornment={
-                        <ViewModule sx={{ mr: 1, color: "action.active" }} />
-                      }
-                    >
-                      <MenuItem value="">
-                        <em>All Modules</em>
-                      </MenuItem>
-                      {MODULES.map((module) => (
-                        <MenuItem key={module} value={module}>
-                          {module}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-
-                <Grid size={{ xs: 12, md: 3 }}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={showOnlySelected}
-                        onChange={(e) => setShowOnlySelected(e.target.checked)}
-                        color="primary"
-                      />
-                    }
-                    label="Show only selected"
-                  />
-                </Grid>
-
-                <Grid size={{ xs: 12, md: 2 }}>
-                  <Chip
-                    icon={<FilterList />}
-                    label={`${filteredModules.length} modules`}
-                    color="primary"
-                    variant="outlined"
-                  />
-                </Grid>
-              </Grid>
+              <RolePermissionsFilters
+                searchTerm={permissions.searchTerm}
+                selectedModule={permissions.selectedModule}
+                showOnlySelected={permissions.showOnlySelected}
+                resultCount={permissions.filteredModules.length}
+                onSearchChange={permissions.setSearchTerm}
+                onModuleChange={permissions.setSelectedModule}
+                onShowOnlySelectedChange={permissions.setShowOnlySelected}
+              />
             </Box>
-
-            {/* Form starts here */}
-            <form onSubmit={handleSubmit(updateRole)} noValidate>
-              {Object.keys(errors).length > 0 && (
+            <form onSubmit={permissions.submit} noValidate>
+              {Object.keys(permissions.formState.errors).length > 0 && (
                 <Alert severity="error" sx={{ mb: 2 }}>
                   Please review the role permissions before saving.
                 </Alert>
               )}
-
-              {/* Enhanced Table */}
-              <TableContainer sx={{ maxHeight: 600 }}>
-                <Table stickyHeader>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell
-                        sx={{
-                          bgcolor:
-                            theme.palette.mode === "dark"
-                              ? alpha(theme.palette.background.paper, 0.8)
-                              : "grey.50",
-                          fontWeight: "bold",
-                          minWidth: 150,
-                        }}
-                      >
-                        <Box
-                          sx={{ display: "flex", alignItems: "center", gap: 1 }}
-                        >
-                          <ViewModule color="primary" />
-                          Module
-                        </Box>
-                      </TableCell>
-
-                      {/* Enhanced header checkboxes */}
-                      {PERMISSION_TYPES.map((type) => (
-                        <TableCell
-                          key={type}
-                          align="center"
-                          sx={{
-                            bgcolor:
-                              theme.palette.mode === "dark"
-                                ? alpha(theme.palette.background.paper, 0.8)
-                                : "grey.50",
-                            minWidth: 120,
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              gap: 1,
-                            }}
-                          >
-                            <Chip
-                              size="small"
-                              label={type}
-                              sx={{
-                                bgcolor: PERMISSION_COLORS[type as keyof typeof PERMISSION_COLORS],
-                                color: theme.palette.getContrastText(
-                                  PERMISSION_COLORS[type as keyof typeof PERMISSION_COLORS]
-                                ),
-                                fontWeight: "bold",
-                              }}
-                            />
-                            <Tooltip
-                              title={
-                                areAllSelected(type)
-                                  ? "Unselect All"
-                                  : "Select All"
-                              }
-                            >
-                              <IconButton
-                                size="small"
-                                onClick={() =>
-                                  selectAll(type, !areAllSelected(type))
-                                }
-                                sx={{
-                                  color: areAllSelected(type)
-                                    ? theme.palette.error.main
-                                    : theme.palette.success.main,
-                                  "&:hover": {
-                                    bgcolor: areAllSelected(type)
-                                      ? alpha(theme.palette.error.main, 0.1)
-                                      : alpha(theme.palette.success.main, 0.1),
-                                  },
-                                }}
-                              >
-                                {areAllSelected(type) ? <Clear /> : <Check />}
-                              </IconButton>
-                            </Tooltip>
-                          </Box>
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-
-                  <TableBody>
-                    {paginatedModules.map((module) => (
-                      <TableRow
-                        key={module}
-                        hover
-                        sx={{
-                          transition: "all 0.2s ease",
-                          "&:hover": {
-                            bgcolor: alpha(theme.palette.primary.main, 0.08),
-                          },
-                        }}
-                      >
-                        <TableCell>
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 2,
-                            }}
-                          >
-                            <Avatar
-                              sx={{
-                                width: 32,
-                                height: 32,
-                                bgcolor: theme.palette.primary.main,
-                                color: theme.palette.primary.contrastText,
-                                fontSize: "0.875rem",
-                              }}
-                            >
-                              {module.substring(0, 2).toUpperCase()}
-                            </Avatar>
-                            <Typography variant="body1" sx={{
-                              fontWeight: "medium"
-                            }}>
-                              {module}
-                            </Typography>
-                          </Box>
-                        </TableCell>
-
-                        {/* Enhanced permission checkboxes */}
-                        {PERMISSION_TYPES.map((type) => {
-                          const claim = roleViewModel.roleClaims.find(
-                            (c: any) =>
-                              c.displayValue
-                                .toLowerCase()
-                                .startsWith(module.toLowerCase()) &&
-                              c.displayValue
-                                .toLowerCase()
-                                .endsWith(`:${type.toLowerCase()}`)
-                          );
-
-                          const claimIndex = roleViewModel.roleClaims.findIndex(
-                            (c: any) =>
-                              c.displayValue
-                                .toLowerCase()
-                                .startsWith(module.toLowerCase()) &&
-                              c.displayValue
-                                .toLowerCase()
-                                .endsWith(`:${type.toLowerCase()}`)
-                          );
-
-                          return (
-                            <TableCell key={`${module}-${type}`} align="center">
-                              {claim && (
-                                <Tooltip
-                                  title={`${type} permission for ${module}`}
-                                >
-                                  <Box
-                                    sx={{
-                                      display: "flex",
-                                      justifyContent: "center",
-                                    }}
-                                  >
-                                    <input
-                                      type="hidden"
-                                      value={claim.displayValue}
-                                    />
-                                    <Checkbox
-                                      checked={claim.isSelected || false}
-                                      onChange={() =>
-                                        handleClaimChange(claimIndex)
-                                      }
-                                      sx={{
-                                        color: PERMISSION_COLORS[type as keyof typeof PERMISSION_COLORS],
-                                        "&.Mui-checked": {
-                                          color: PERMISSION_COLORS[type as keyof typeof PERMISSION_COLORS],
-                                        },
-                                        transform: "scale(1.1)",
-                                      }}
-                                    />
-                                  </Box>
-                                </Tooltip>
-                              )}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-
-              {/* Enhanced Pagination */}
+              <RolePermissionsTable
+                modules={permissions.paginatedModules}
+                claims={permissions.role.roleClaims}
+                areAllSelected={permissions.areAllSelected}
+                onSelectAll={permissions.selectAll}
+                onToggle={permissions.toggleClaim}
+              />
               <TablePagination
                 component="div"
-                count={filteredModules.length}
-                page={page}
-                onPageChange={(_, newPage) => setPage(newPage)}
-                rowsPerPage={rowsPerPage}
-                onRowsPerPageChange={(e) => {
-                  setRowsPerPage(parseInt(e.target.value, 10));
-                  setPage(0);
+                count={permissions.filteredModules.length}
+                page={permissions.page}
+                onPageChange={(_, page) => permissions.setPage(page)}
+                rowsPerPage={permissions.rowsPerPage}
+                onRowsPerPageChange={(event) => {
+                  permissions.setRowsPerPage(Number.parseInt(event.target.value, 10));
+                  permissions.setPage(0);
                 }}
                 rowsPerPageOptions={[5, 10, 25, 50]}
                 sx={{
                   borderTop: 1,
                   borderColor: "divider",
-                  bgcolor:
-                    theme.palette.mode === "dark"
-                      ? alpha(theme.palette.background.paper, 0.8)
-                      : "grey.50",
+                  bgcolor: theme.palette.mode === "dark"
+                    ? alpha(theme.palette.background.paper, 0.8)
+                    : "grey.50",
                 }}
               />
-
               <Divider />
-
-              {/* Enhanced Action buttons */}
-              <Box
-                sx={{
-                  p: 3,
-                  display: "flex",
-                  gap: 2,
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Typography variant="body2" sx={{
-                  color: "text.secondary"
-                }}>
-                  {statistics.selected} of {statistics.total} permissions
-                  selected
-                </Typography>
-
-                <Box sx={{ display: "flex", gap: 2 }}>
-                  <Button
-                    variant="outlined"
-                    startIcon={<ArrowBack />}
-                    onClick={handleBack}
-                    disabled={isSaving}
-                  >
-                    Back To Roles
-                  </Button>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    startIcon={
-                      isSaving ? (
-                        <CircularProgress size={20} color="inherit" />
-                      ) : (
-                        <SaveAlt />
-                      )
-                    }
-                    disabled={isSaving}
-                    sx={{
-                      minWidth: 120,
-                      boxShadow: 2,
-                      "&:hover": {
-                        boxShadow: 4,
-                        transform: "translateY(-1px)",
-                      },
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    {isSaving ? "Saving..." : "Save Changes"}
-                  </Button>
-                </Box>
-              </Box>
+              <RolePermissionsActions
+                selected={permissions.statistics.selected}
+                total={permissions.statistics.total}
+                isSaving={permissions.isSaving}
+                onBack={permissions.goBack}
+              />
             </form>
           </Card>
         </Box>
       </Fade>
-      {SnackbarComponent}
-      <Dialog
-        open={discardDialogOpen}
-        onClose={() => setDiscardDialogOpen(false)}
-        maxWidth="xs"
-        fullWidth
-      >
-        <DialogTitle>Discard unsaved changes?</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Your permission changes have not been saved. Do you want to leave this page?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDiscardDialogOpen(false)}>Keep editing</Button>
-          <Button onClick={confirmBack} color="error" variant="contained" autoFocus>
-            Discard changes
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {permissions.notifications.SnackbarComponent}
+      <DiscardRoleChangesDialog
+        open={permissions.discardDialogOpen}
+        onClose={() => permissions.setDiscardDialogOpen(false)}
+        onDiscard={permissions.confirmBack}
+      />
     </ContentWrapper>
   );
-};
-
-export default RolePermissionsPage;
+}

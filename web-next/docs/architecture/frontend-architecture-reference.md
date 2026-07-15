@@ -63,7 +63,7 @@ Allowed direction:
 
 ```text
 app -> features, layouts, shared, lib, config, theme
-layouts -> shared, lib, config, theme
+layouts -> feature public APIs, shared, lib, config, theme
 features -> shared, lib, config, theme, same-feature modules
 shared -> lib, config, theme
 lib -> config and infrastructure dependencies
@@ -75,7 +75,7 @@ Rules:
 1. `src/app` contains route adapters, metadata, loading, error, and not-found boundaries. Business UI belongs in `src/features`.
 2. `src/features` must never import from `src/app` or `src/layouts`.
 3. `src/shared` must never import a feature, layout, or route module.
-4. Cross-feature imports are allowed only through the target feature's deliberate `index.ts` public API.
+4. Cross-feature and layout-to-feature imports are allowed only through the target feature's deliberate `index.ts` public API.
 5. Shared services must remain domain-neutral. Feature registration belongs to the feature that owns it.
 6. Do not create imports through a broad root barrel when a domain barrel or direct module import is clearer.
 7. New code must not introduce circular dependencies.
@@ -94,6 +94,10 @@ Current examples:
 - Global presence is owned by geographical information.
 - Home dashboard composition lives under `src/features/home`.
 - File listing and media preview live under `src/features/file-manager`.
+- Notification API access, query state, realtime handling, and UI live under `src/features/notifications`.
+- User-profile API access and query hooks live under `src/features/auth/profile`.
+- Cross-domain report viewers and report API access live under `src/features/reporting`; domain report pages remain with their owning domain feature.
+- Generic SignalR connection infrastructure lives under `src/lib/signalr`.
 - Reusable content wrapping and sidebar context live under `src/shared`.
 
 ## App Router Rules

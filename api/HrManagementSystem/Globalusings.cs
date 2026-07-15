@@ -15,7 +15,6 @@ global using HealthChecks.UI.Client;
 
 global using Microsoft.EntityFrameworkCore.ChangeTracking;
 global using Microsoft.EntityFrameworkCore.Diagnostics;
-global using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 global using HrManagementSystem.Infrastructure.Security.Authorization.Filters;
 global using HrManagementSystem.Shared.Errors;

@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { useSession } from "@/lib/auth/SessionContext";
-import signalRService from "@/shared/services/signalRService";
+import signalRService from "./signalRService";
 
 type SignalRContextValue = {
   isConnected: boolean;

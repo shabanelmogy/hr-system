@@ -12,7 +12,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth/SessionContext";
 import { useThemeSettingsContext } from "@/theme/ThemeShell";
-import { NotificationBell } from "@/shared/notifications";
+import { NotificationBell } from "@/features/notifications";
 
 // Import sub-components
 import LanguageSelector from "./LanguageSelector";

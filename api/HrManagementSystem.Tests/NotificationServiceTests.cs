@@ -7,10 +7,10 @@ using HrManagementSystem.Features.Platform.Notifications.Services;
 using HrManagementSystem.Features.Security.Authentication.Entities;
 using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
 using HrManagementSystem.Infrastructure.Persistance;
+using HrManagementSystem.Shared.Abstractions;
 using HrManagementSystem.Shared.Consts;
 using Mapster;
 using MapsterMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -194,7 +194,7 @@ public sealed class NotificationServiceTests
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
-        return new ApplicationDbContext(options, new HttpContextAccessor());
+        return new ApplicationDbContext(options, new TestCurrentActor());
     }
 
     private static NotificationService CreateService(ApplicationDbContext context)
@@ -219,6 +219,11 @@ public sealed class NotificationServiceTests
     }
 
     private static NotificationErrors CreateErrors() => new(new TestStringLocalizer<NotificationQueryRequest>());
+
+    private sealed class TestCurrentActor : ICurrentActor
+    {
+        public string? UserId => null;
+    }
 
     private static Notification CreateNotification(
         string recipientUserId,

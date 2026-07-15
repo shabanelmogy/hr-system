@@ -6,7 +6,10 @@ import { useTranslation } from "react-i18next";
 
 import { useSession } from "@/lib/auth/SessionContext";
 import { MySimpleLoader } from "@/shared/components/common";
-import { useUpdateUserInfo, useUserInfo } from "@/shared/hooks";
+import {
+  useUpdateUserInfo,
+  useUserInfo,
+} from "@/features/auth/profile/hooks/useUserProfile";
 import { HandleApiError } from "@/shared/services";
 import PersonalInfoForm from "./components/PersonalInfoForm";
 import PersonalInfoHeader from "./components/PersonalInfoHeader";

@@ -1,4 +1,6 @@
 using System.Text.Json.Serialization;
+using HrManagementSystem.Infrastructure.Security.Authentication;
+using HrManagementSystem.Shared.Abstractions;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
@@ -18,6 +20,7 @@ public static class BasicService
 
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         services.AddHttpContextAccessor();
+        services.AddScoped<ICurrentActor, HttpCurrentActor>();
         services.AddHttpClient("Google", client =>
         {
             client.BaseAddress = new Uri("https://www.googleapis.com/");

@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 import { z } from "zod";
 import { useSession } from "@/lib/auth/SessionContext";
 import { useSignalRConnection } from "@/lib/signalr/SignalRProvider";
+import signalRService from "@/lib/signalr/signalRService";
 import { showToast } from "@/shared/components/feedback";
-import signalRService from "@/shared/services/signalRService";
 import { notificationKeys } from "./notificationQueries";
 import {
   normalizeSeverity,

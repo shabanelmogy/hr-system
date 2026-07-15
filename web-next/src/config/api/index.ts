@@ -5,7 +5,6 @@ import { exportRoutes, advancedTools, google } from './advanced';
 import { appointments } from './appointments';
 import { files } from './files';
 import { version } from './constants';
-import { notifications } from './notifications';
 
 export { version } from './constants';
 
@@ -23,7 +22,6 @@ export const apiRoutes = {
   google,
   appointments,
   files,
-  notifications,
 };
 
 export default apiRoutes;

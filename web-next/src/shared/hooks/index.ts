@@ -10,16 +10,3 @@ export { default as useSnackbar } from "./useSnackbar";
 export { default as useViewLayout } from "./useViewLayout";
 export { default as useViewLayoutEnhanced } from "./useViewLayoutEnhanced";
 export { usePageGuard } from "./usePageGuard";
-
-// User Profile hooks
-export {
-  useUserProfile,
-  useUserInfo,
-  useUserPhoto,
-  useUpdateUserInfo,
-  useUpdateUserPhoto,
-  useUserProfileWithHelpers,
-  usePrefetchUserProfile,
-  useClearUserProfile,
-  USER_PROFILE_KEYS,
-} from "./useUserProfile";

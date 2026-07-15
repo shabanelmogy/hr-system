@@ -61,14 +61,19 @@ for (const filePath of sourceFiles) {
 
     const fromLayer = layerOf(filePath);
     const targetLayer = layerOf(target);
+    const isFeaturePublicApi = targetLayer === "features" &&
+      path.basename(target) === "index.ts";
     const allowedFeatureDependency = fromLayer === "features" &&
       targetLayer === "features" &&
-      (featureGroup(filePath) === featureGroup(target) || path.basename(target) === "index.ts");
+      (featureGroup(filePath) === featureGroup(target) || isFeaturePublicApi);
+    const allowedLayoutFeatureDependency = fromLayer === "layouts" &&
+      isFeaturePublicApi;
 
     if (
       (fromLayer === "shared" && ["app", "layouts", "features"].includes(targetLayer)) ||
       (fromLayer === "features" && ["app", "layouts"].includes(targetLayer)) ||
-      (fromLayer === "layouts" && ["app", "features"].includes(targetLayer)) ||
+      (fromLayer === "layouts" && targetLayer === "app") ||
+      (fromLayer === "layouts" && targetLayer === "features" && !allowedLayoutFeatureDependency) ||
       (fromLayer === "lib" && ["app", "layouts", "features"].includes(targetLayer)) ||
       (fromLayer === "config" && ["app", "layouts", "features", "shared"].includes(targetLayer)) ||
       (fromLayer === "features" && targetLayer === "features" && !allowedFeatureDependency)

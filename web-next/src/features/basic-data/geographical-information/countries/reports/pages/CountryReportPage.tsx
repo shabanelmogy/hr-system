@@ -4,8 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { MySelect, TextFieldWithClear } from "@/shared/components/common/form-controls";
-import ReportViewer from "@/shared/components/reports/ReportViewer";
-import { reportApiService } from "@/shared/services";
+import { ReportViewer, reportApiService } from "@/features/reporting";
 import { useTheme } from "@mui/material";
 
 const CountryReportPage = () => {

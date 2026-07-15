@@ -1,62 +1,45 @@
-import React, { useCallback, useMemo, useState } from "react";
-import { Controller } from "react-hook-form";
+import { Box, InputAdornment, Typography, useTheme } from "@mui/material";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import ClearIcon from "@mui/icons-material/Clear";
+import EditableTextField from "./my-text-field/EditableTextField";
 import {
-  Box,
-  IconButton,
-  InputAdornment,
-  Stack,
-  TextField,
-  Typography,
-  alpha,
-  useTheme,
-} from "@mui/material";
+  formatCharacterCount,
+  getCharacterCount,
+} from "./my-text-field/characterCount";
+import ReadOnlyTextField from "./my-text-field/ReadOnlyTextField";
+import TextFieldEndAdornment from "./my-text-field/TextFieldEndAdornment";
+import type { MyTextFieldProps, RegisteredField } from "./my-text-field/types";
 
-const assignRef = (ref, value) => {
-  if (!ref) return;
-  if (typeof ref === "function") {
-    ref(value);
-  } else {
-    ref.current = value;
-  }
-};
-
-const mergeRefs = (...refs) => (value) => {
-  refs.forEach((ref) => assignRef(ref, value));
-};
-
-const MyTextField = ({
+export default function MyTextField({
   fieldName = "search",
   labelKey = "search",
-  label = undefined,
+  label,
   type = "text",
   margin = "normal",
   multiline = false,
   rows = 1,
   loading = false,
   hidden = false,
-  name = undefined,
-  flex = undefined,
-  register = undefined,
-  control = undefined,
-  inputRef = undefined,
+  name,
+  flex,
+  register,
+  control,
+  inputRef,
   errors = {},
-  maxLength = undefined,
+  maxLength,
   preventZero = false,
-  watch = undefined,
-  setValue = undefined,
-  startIcon = undefined,
-  endAdornment = undefined,
+  watch,
+  setValue,
+  startIcon,
+  endAdornment,
   showClearButton = true,
   showPasswordToggle = true,
-  showPassword: externalShowPassword = undefined,
-  setShowPassword: externalSetShowPassword = undefined,
+  showPassword: externalShowPassword,
+  setShowPassword: externalSetShowPassword,
   readOnly = false,
-  value = undefined,
+  value,
   showCounter = true,
-  counterLabel = undefined,
+  counterLabel,
   counterFormat = "fraction",
   warningThreshold = 70,
   errorThreshold = 90,
@@ -65,249 +48,82 @@ const MyTextField = ({
   warningColor = "warning",
   errorColor = "error",
   ...restProps
-}) => {
+}: MyTextFieldProps) {
   const { t } = useTranslation();
   const theme = useTheme();
   const actualFieldName = name || fieldName;
   const actualLabel = label || (labelKey ? t(labelKey) : "");
   const isPasswordField = type === "password";
-  const registeredField = useMemo(
-    () => (typeof register === "function" ? register(actualFieldName) : register),
+  const fieldError = errors?.[actualFieldName];
+  const registeredField = useMemo<RegisteredField | undefined>(
+    () => typeof register === "function"
+      ? (register as (fieldName: string) => RegisteredField)(actualFieldName)
+      : register as RegisteredField | undefined,
     [actualFieldName, register],
   );
-
   const [internalShowPassword, setInternalShowPassword] = useState(false);
   const [registerValue, setRegisterValue] = useState("");
-  const showPassword =
-    externalShowPassword !== undefined
-      ? externalShowPassword
-      : internalShowPassword;
-  const setShowPassword = externalSetShowPassword || setInternalShowPassword;
-  const watchedValue = watch ? watch(actualFieldName) : undefined;
-  const registerFieldValue = String(
-    value !== undefined ? value : watchedValue ?? registerValue ?? "",
-  );
+  const showPassword = externalShowPassword ?? internalShowPassword;
+  const setShowPassword = (externalSetShowPassword || setInternalShowPassword) as (
+    next: boolean | ((current: boolean) => boolean),
+  ) => void;
+  const watchedValue = typeof watch === "function"
+    ? (watch as (fieldName: string) => unknown)(actualFieldName)
+    : undefined;
+  const displayedRegisterValue = String(value !== undefined ? value : watchedValue ?? registerValue);
 
-  const getCharacterCount = useCallback(
-    (fieldValue) => {
-      const count = String(fieldValue ?? "").length;
-      if (maxLength == null) {
-        return {
-          count,
-          percentage: 0,
-          color: normalColor,
-          remaining: undefined,
-          isWarning: false,
-          isError: false,
-          isAtLimit: false,
-        };
-      }
-
-      const percentage = maxLength === 0 ? 100 : (count / maxLength) * 100;
-      let color = normalColor;
-      if (percentage > errorThreshold) color = errorColor;
-      else if (percentage > warningThreshold) color = warningColor;
-
-      return {
-        count,
-        percentage,
-        color,
-        remaining: maxLength - count,
-        isWarning: percentage > warningThreshold,
-        isError: percentage > errorThreshold,
-        isAtLimit: count >= maxLength,
-      };
-    },
+  const countOptions = useMemo(
+    () => ({ maxLength, normalColor, warningColor, errorColor, warningThreshold, errorThreshold }),
     [errorColor, errorThreshold, maxLength, normalColor, warningColor, warningThreshold],
   );
 
-  const formatCounterText = useCallback(
-    (counterData) => {
-      if (maxLength == null) return `${counterData.count}`;
-      switch (counterFormat) {
-        case "remaining":
-          return `${counterData.remaining} remaining`;
-        case "percentage":
-          return `${Math.round(counterData.percentage)}%`;
-        case "fraction":
-        default:
-          return `${counterData.count}/${maxLength}`;
-      }
-    },
-    [counterFormat, maxLength],
-  );
+  const handleClear = useCallback((controllerOnChange?: (value: string) => void) => {
+    if (controllerOnChange) controllerOnChange("");
+    else if (typeof setValue === "function") {
+      (setValue as (
+        fieldName: string,
+        value: string,
+        options: Record<string, boolean>,
+      ) => void)(actualFieldName, "", {
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true,
+      });
+    } else {
+      registeredField?.onChange?.({ target: { name: actualFieldName, value: "" }, type: "change" });
+    }
+    setRegisterValue("");
+  }, [actualFieldName, registeredField, setValue]);
 
-  const handleClear = useCallback(
-    (controllerOnChange = undefined) => {
-      if (controllerOnChange) {
-        controllerOnChange("");
-        return;
-      }
+  const handleRegisterChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const nextValue = String(event.target.value ?? "");
+    if (preventZero && nextValue === "0") return;
+    if (maxLength != null && nextValue.length > maxLength) return;
+    setRegisterValue(nextValue);
+    registeredField?.onChange?.(event);
+  }, [maxLength, preventZero, registeredField]);
 
-      if (setValue) {
-        setValue(actualFieldName, "", {
-          shouldValidate: true,
-          shouldDirty: true,
-          shouldTouch: true,
-        });
-      } else {
-        registeredField?.onChange?.({
-          target: { name: actualFieldName, value: "" },
-          type: "change",
-        });
-      }
+  const getCommonProps = useCallback((fieldValue: string, onClear: () => void) => {
+    const characterCount = getCharacterCount(fieldValue, countOptions);
+    const counterText = formatCharacterCount(characterCount, maxLength, counterFormat);
+    const { sx: customSx, onFocus, ...textFieldProps } = restProps;
+    const customStyles = customSx && typeof customSx === "object" && !Array.isArray(customSx)
+      ? customSx as Record<string, unknown>
+      : {};
 
-      setRegisterValue("");
-    },
-    [actualFieldName, registeredField, setValue],
-  );
-
-  const handleTogglePasswordVisibility = useCallback(() => {
-    setShowPassword((current) => !current);
-  }, [setShowPassword]);
-
-  const renderEndAdornment = useCallback(
-    (fieldValue, onClear) => {
-      const normalizedValue = String(fieldValue ?? "");
-      const counterData = getCharacterCount(normalizedValue);
-      const elements = [];
-
-      if (showCounter && !isPasswordField) {
-        elements.push(
-          <Typography
-            key="counter"
-            id={`${actualFieldName}-counter`}
-            variant="caption"
-            sx={{
-              fontWeight: 500,
-              px: 1,
-              py: 0.5,
-              borderRadius: 1,
-              bgcolor: `${theme.palette[counterData.color].main}15`,
-              color: counterData.color,
-              transition: "all 0.2s ease-in-out",
-              fontSize: "0.75rem",
-              mr: 1,
-              userSelect: "none",
-              pointerEvents: "none",
-            }}
-            aria-live="polite"
-            aria-label={`Character count: ${formatCounterText(counterData)}`}
-          >
-            {formatCounterText(counterData)}
-          </Typography>,
-        );
-      }
-
-      if (normalizedValue && showClearButton && type !== "date") {
-        elements.push(
-          <IconButton
-            key="clear"
-            type="button"
-            aria-label={`Clear ${actualFieldName}`}
-            onClick={onClear}
-            disabled={loading}
-            edge="end"
-            size="small"
-            sx={{
-              color: "text.secondary",
-              "&:hover": {
-                color: theme.palette.primary.main,
-                backgroundColor: alpha(theme.palette.primary.main, 0.08),
-              },
-            }}
-          >
-            <ClearIcon fontSize="small" />
-          </IconButton>,
-        );
-      }
-
-      if (isPasswordField && showPasswordToggle && normalizedValue) {
-        elements.push(
-          <IconButton
-            key="password-toggle"
-            type="button"
-            onClick={handleTogglePasswordVisibility}
-            edge="end"
-            size="small"
-            disabled={loading}
-            aria-label={
-              showPassword
-                ? t("hidePassword", { field: actualFieldName }) || "Hide password"
-                : t("showPassword", { field: actualFieldName }) || "Show password"
-            }
-            sx={{
-              color: "text.secondary",
-              "&:hover": {
-                color: theme.palette.primary.main,
-                backgroundColor: alpha(theme.palette.primary.main, 0.08),
-              },
-            }}
-          >
-            {showPassword ? <VisibilityOff /> : <Visibility />}
-          </IconButton>,
-        );
-      }
-
-      if (endAdornment) {
-        elements.push(
-          <React.Fragment key="custom-endAdornment">{endAdornment}</React.Fragment>,
-        );
-      }
-
-      return elements.length > 0 ? (
-        <InputAdornment position="end">{elements}</InputAdornment>
-      ) : null;
-    },
-    [
-      actualFieldName,
-      endAdornment,
-      formatCounterText,
-      getCharacterCount,
-      handleTogglePasswordVisibility,
-      isPasswordField,
-      loading,
-      showClearButton,
-      showCounter,
-      showPassword,
-      showPasswordToggle,
-      t,
-      theme,
-      type,
-    ],
-  );
-
-  const handleRegisterChange = useCallback(
-    (event) => {
-      const nextValue = String(event.target.value ?? "");
-      if (preventZero && nextValue === "0") return;
-      if (maxLength != null && nextValue.length > maxLength) return;
-
-      setRegisterValue(nextValue);
-      registeredField?.onChange?.(event);
-    },
-    [maxLength, preventZero, registeredField],
-  );
-
-  const handleFocus = useCallback(
-    (event) => {
-      restProps.onFocus?.(event);
-    },
-    [restProps],
-  );
-
-  const getCommonTextFieldProps = useCallback(
-    (fieldValue, onClear) => ({
+    return {
+      ...textFieldProps,
       label: actualLabel,
       required,
       type: isPasswordField ? (showPassword ? "text" : "password") : type,
-      margin: margin as "normal" | "none" | "dense",
-      variant: "outlined" as const,
+      margin,
+      variant: "outlined",
       fullWidth: true,
       multiline,
       rows,
       disabled: loading,
       autoComplete: isPasswordField ? "new-password" : "off",
+      onFocus: onFocus as ((event: React.FocusEvent<HTMLInputElement>) => void) | undefined,
       slotProps: {
         htmlInput: {
           ...(maxLength != null && { maxLength }),
@@ -315,11 +131,7 @@ const MyTextField = ({
           "aria-autocomplete": "none",
           "data-lpignore": "true",
           "data-form-type": "other",
-          ...(isPasswordField && {
-            style: {
-              WebkitTextSecurity: showPassword ? "none" : "disc",
-            },
-          }),
+          ...(isPasswordField && { style: { WebkitTextSecurity: showPassword ? "none" : "disc" } }),
           ...(required && { "aria-required": true }),
           "aria-invalid": Boolean(fieldError),
           "aria-describedby": [
@@ -328,194 +140,92 @@ const MyTextField = ({
           ].filter(Boolean).join(" ") || undefined,
         },
         input: {
-          startAdornment: startIcon ? (
-            <InputAdornment position="start">{startIcon}</InputAdornment>
-          ) : null,
-          endAdornment: renderEndAdornment(fieldValue, onClear),
+          startAdornment: startIcon ? <InputAdornment position="start">{startIcon}</InputAdornment> : null,
+          endAdornment: (
+            <TextFieldEndAdornment
+              fieldName={actualFieldName}
+              value={fieldValue}
+              type={type}
+              loading={loading}
+              isPassword={isPasswordField}
+              showPassword={showPassword}
+              showPasswordToggle={showPasswordToggle}
+              showClearButton={showClearButton}
+              showCounter={showCounter}
+              counter={characterCount}
+              counterText={counterText}
+              customAdornment={endAdornment}
+              onClear={onClear}
+              onTogglePassword={() => setShowPassword((current: boolean) => !current)}
+            />
+          ),
         },
-        inputLabel: {
-          ...(type === "date" && { shrink: true }),
-        },
-        formHelperText: {
-          id: `${actualFieldName}-error`,
-        },
+        inputLabel: type === "date" ? { shrink: true } : {},
+        formHelperText: { id: `${actualFieldName}-error` },
       },
       sx: {
         flex,
         "& .MuiOutlinedInput-root": {
           borderRadius: 2,
           transition: "all 0.2s",
-          "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.primary.main,
-            borderWidth: "1px",
-          },
+          "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: theme.palette.primary.main, borderWidth: "1px" },
         },
         ...(isPasswordField && {
           "& input:-webkit-autofill": {
-            WebkitBoxShadow: `0 0 0 100px ${
-              theme.palette.mode === "dark"
-                ? "rgb(30, 30, 30)"
-                : theme.palette.background.default
-            } inset !important`,
+            WebkitBoxShadow: `0 0 0 100px ${theme.palette.mode === "dark" ? "rgb(30, 30, 30)" : theme.palette.background.default} inset !important`,
           },
           "& input[type='password']::-ms-reveal": { display: "none" },
-          "& input[type='password']::-webkit-credentials-auto-fill-button": {
-            display: "none !important",
-          },
-          "& input[type='password']::-webkit-strong-password-auto-fill-button": {
-            display: "none !important",
-          },
+          "& input[type='password']::-webkit-credentials-auto-fill-button": { display: "none !important" },
+          "& input[type='password']::-webkit-strong-password-auto-fill-button": { display: "none !important" },
         }),
         ...(type === "date" && {
           "& input[type='date']::-webkit-calendar-picker-indicator": {
             filter: "invert(25%) sepia(100%) saturate(500%) hue-rotate(200deg)",
           },
         }),
-        ...restProps.sx,
+        ...customStyles,
       },
-      onFocus: handleFocus,
-      ...restProps,
-    }),
-    [
-      actualFieldName,
-      actualLabel,
-      flex,
-      handleFocus,
-      isPasswordField,
-      loading,
-      margin,
-      maxLength,
-      multiline,
-      renderEndAdornment,
-      restProps,
-      rows,
-      showCounter,
-      showPassword,
-      startIcon,
-      theme,
-      type,
-    ],
-  );
+    };
+  }, [actualFieldName, actualLabel, countOptions, counterFormat, endAdornment, fieldError, flex, isPasswordField, loading, margin, maxLength, multiline, required, restProps, rows, setShowPassword, showClearButton, showCounter, showPassword, showPasswordToggle, startIcon, theme, type]);
 
   if (hidden) return null;
-
   if (readOnly) {
-    const renderReadOnly = (displayValue) => (
-      <Box sx={{ width: "100%", mb: 2.5 }}>
-        <Stack direction="row" sx={{ alignItems: "center" }} spacing={2}>
-          <Typography
-            variant="subtitle2"
-            sx={{ color: "info.light", minWidth: 120, fontWeight: "bold" }}
-          >
-            {actualLabel}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              p: 1.5,
-              borderRadius: 2,
-              bgcolor: (currentTheme) =>
-                currentTheme.palette.mode === "dark"
-                  ? alpha(currentTheme.palette.primary.main, 0.08)
-                  : alpha(currentTheme.palette.info.light, 0.08),
-              color: "text.primary",
-              flexGrow: 1,
-              transition: "all 0.2s ease-in-out",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.06)",
-              border: (currentTheme) =>
-                `1px solid ${alpha(currentTheme.palette.info.light, 0.2)}`,
-            }}
-          >
-            {type === "password"
-              ? displayValue
-                ? "••••••••••"
-                : "-"
-              : displayValue ?? "-"}
-          </Typography>
-        </Stack>
-      </Box>
-    );
-
-    if (control) {
-      return (
-        <Controller
-          name={actualFieldName}
-          control={control}
-          render={({ field }) => renderReadOnly(value !== undefined ? value : field.value)}
-        />
-      );
-    }
-
-    return renderReadOnly(value !== undefined ? value : watch?.(actualFieldName));
-  }
-
-  const fieldError = errors?.[actualFieldName];
-  const helperText = fieldError?.message;
-
-  const renderTextField = () => {
-    if (control) {
-      return (
-        <Controller
-          name={actualFieldName}
-          control={control}
-          render={({ field }) => {
-            const fieldValue = String(field.value ?? "");
-            const commonProps = getCommonTextFieldProps(
-              fieldValue,
-              () => handleClear(field.onChange),
-            );
-            return (
-              <TextField
-                {...commonProps}
-                {...field}
-                inputRef={mergeRefs(field.ref, inputRef)}
-                error={!!fieldError}
-                helperText={helperText}
-                onChange={(event) => {
-                  const nextValue = String(event.target.value ?? "");
-                  if (preventZero && nextValue === "0") return;
-                  if (maxLength != null && nextValue.length > maxLength) return;
-                  field.onChange(nextValue);
-                }}
-              />
-            );
-          }}
-        />
-      );
-    }
-
-    const commonProps = getCommonTextFieldProps(
-      registerFieldValue,
-      () => handleClear(),
-    );
     return (
-      <TextField
-        {...commonProps}
-        {...registeredField}
-        inputRef={mergeRefs(registeredField?.ref, inputRef)}
-        value={value !== undefined ? value : undefined}
-        error={!!fieldError}
-        helperText={helperText}
-        onChange={handleRegisterChange}
+      <ReadOnlyTextField
+        control={control}
+        name={actualFieldName}
+        label={actualLabel}
+        type={type}
+        value={value}
+        watch={typeof watch === "function" ? watch as (fieldName: string) => unknown : undefined}
       />
     );
-  };
+  }
 
   return (
     <Box sx={{ width: "100%" }}>
-      {renderTextField()}
+      <EditableTextField
+        control={control}
+        name={actualFieldName}
+        inputRef={inputRef}
+        registeredField={registeredField}
+        registerValue={displayedRegisterValue}
+        value={value}
+        fieldError={fieldError}
+        helperText={fieldError?.message}
+        preventZero={preventZero}
+        maxLength={maxLength}
+        getCommonProps={getCommonProps}
+        onClear={handleClear}
+        onRegisterChange={handleRegisterChange}
+      />
       {showCounter && !isPasswordField && counterLabel && (
         <Box sx={{ display: "flex", justifyContent: "flex-start", mt: 0.5, px: 1 }}>
-          <Typography
-            variant="caption"
-            sx={{ color: "text.secondary", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
-          >
+          <Typography variant="caption" sx={{ color: "text.secondary", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
             {counterLabel}
           </Typography>
         </Box>
       )}
     </Box>
   );
-};
-
-export default MyTextField;
+}

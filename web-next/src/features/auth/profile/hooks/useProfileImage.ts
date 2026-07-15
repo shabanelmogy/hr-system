@@ -1,7 +1,9 @@
 import { apiRoutes } from "@/config";
-import { useNotifications, USER_PROFILE_KEYS, useUserPhoto } from "@/shared/hooks";
-import { apiService, getUserPhotoDataUrl, HandleApiError } from "@/shared/services";
+import { useNotifications } from "@/shared/hooks";
+import { apiService, HandleApiError } from "@/shared/services";
 import { createImageFileValidationSchema } from "@/shared/validation/fileValidation";
+import { USER_PROFILE_KEYS, useUserPhoto } from "./useUserProfile";
+import { getUserPhotoDataUrl } from "../services/userProfileService";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
 import { useTranslation } from "react-i18next";

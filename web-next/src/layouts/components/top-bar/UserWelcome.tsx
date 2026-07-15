@@ -4,8 +4,10 @@ import { Avatar, Box, Fade, Paper, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getUserPhotoDataUrl } from "../../../shared/services/userProfileService";
-import { useUserPhoto } from "../../../shared/hooks";
+import {
+  getUserPhotoDataUrl,
+  useUserPhoto,
+} from "@/features/auth/profile";
 import { useSession } from "@/lib/auth/SessionContext";
 
 const UserWelcome = ({ isMobile = false }: { isMobile?: boolean }) => {

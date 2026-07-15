@@ -1,6 +1,5 @@
-// src/hooks/useSignalR.js
 import { useEffect, useCallback } from "react";
-import signalRService from "../services/signalRService"; // Adjust the path to your SignalR service
+import signalRService from "./signalRService";
 
 const useSignalR = (eventName: string, onUpdateCallback: (data: any) => void) => {
   // Memoize the event handler

@@ -1,4 +1,4 @@
-import apiService from "./apiService";
+import apiService from "@/shared/services/apiService";
 import { apiRoutes } from "@/config";
 
 /**

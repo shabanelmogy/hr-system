@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSession } from "@/lib/auth/SessionContext";
-import signalRService from "../services/signalRService";
+import signalRService from "@/lib/signalr/signalRService";
 
 const useTokenRevocation = () => {
   const { logout } = useSession();

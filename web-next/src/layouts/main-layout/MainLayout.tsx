@@ -12,7 +12,7 @@ import * as React from "react";
 import { useTranslation } from "react-i18next";
 
 import { useSession } from "@/lib/auth/SessionContext";
-import useTokenRevocation from "../../shared/store/useTokenRevocation";
+import { useTokenRevocation } from "@/features/auth";
 import SideBar from "../components/sidebar/SideBar";
 import SidebarContext from "@/shared/contexts/SidebarContext";
 import TopBar from "../components/top-bar/TopBar";

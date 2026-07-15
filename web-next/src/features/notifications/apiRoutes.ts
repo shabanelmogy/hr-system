@@ -1,4 +1,4 @@
-import { version } from "./constants";
+import { version } from "@/config/api/constants";
 
 const base = `${version}/notifications`;
 

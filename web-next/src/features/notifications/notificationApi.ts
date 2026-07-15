@@ -1,5 +1,5 @@
 import apiClient from "@/lib/api/client";
-import { apiRoutes } from "@/config/api";
+import { notifications as notificationRoutes } from "./apiRoutes";
 import type {
   NotificationPageResponse,
   NotificationReadStatus,
@@ -11,7 +11,7 @@ export function getNotifications(
   pageNumber: number,
   status: NotificationReadStatus,
 ) {
-  return apiClient.get<NotificationPageResponse>(apiRoutes.notifications.list, {
+  return apiClient.get<NotificationPageResponse>(notificationRoutes.list, {
     pageNumber,
     pageSize: PAGE_SIZE,
     status,
@@ -21,29 +21,29 @@ export function getNotifications(
 }
 
 export function getUnreadNotificationCount() {
-  return apiClient.get<number>(apiRoutes.notifications.unreadCount);
+  return apiClient.get<number>(notificationRoutes.unreadCount);
 }
 
 export function markNotificationRead(id: number) {
-  return apiClient.patch<void>(apiRoutes.notifications.markRead(id));
+  return apiClient.patch<void>(notificationRoutes.markRead(id));
 }
 
 export function markAllNotificationsRead() {
-  return apiClient.patch<void>(apiRoutes.notifications.markAllRead);
+  return apiClient.patch<void>(notificationRoutes.markAllRead);
 }
 
 export function markNotificationUnread(id: number) {
-  return apiClient.patch<void>(apiRoutes.notifications.markUnread(id));
+  return apiClient.patch<void>(notificationRoutes.markUnread(id));
 }
 
 export function markAllNotificationsUnread() {
-  return apiClient.patch<void>(apiRoutes.notifications.markAllUnread);
+  return apiClient.patch<void>(notificationRoutes.markAllUnread);
 }
 
 export function dismissNotification(id: number) {
-  return apiClient.delete<void>(apiRoutes.notifications.dismiss(id));
+  return apiClient.delete<void>(notificationRoutes.dismiss(id));
 }
 
 export function dismissAllNotifications() {
-  return apiClient.delete<void>(apiRoutes.notifications.dismissAll);
+  return apiClient.delete<void>(notificationRoutes.dismissAll);
 }

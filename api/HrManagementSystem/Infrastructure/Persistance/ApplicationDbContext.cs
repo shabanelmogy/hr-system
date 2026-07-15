@@ -13,15 +13,16 @@ using HrManagementSystem.Features.Platform.EntityChangeLogs.Entities;
 using HrManagementSystem.Features.Platform.Files.Entities;
 using HrManagementSystem.Features.Security.ApiKeys.Entities;
 using HrManagementSystem.Features.Security.Authentication.Entities;
+using HrManagementSystem.Shared.Abstractions;
 
 namespace HrManagementSystem.Infrastructure.Persistance;
 
 public class ApplicationDbContext(
     DbContextOptions<ApplicationDbContext> options,
-    IHttpContextAccessor httpContextAccessor) : IdentityDbContext<ApplicationUser, ApplicationRole, string>(options)
+    ICurrentActor currentActor) : IdentityDbContext<ApplicationUser, ApplicationRole, string>(options)
 
 {
-    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    private readonly ICurrentActor _currentActor = currentActor;
 
     public DbSet<UserLogin> LoginAudits { get; set; }
     public DbSet<EntityChangeLog> EntityChangeLogs { get; set; }
@@ -65,7 +66,7 @@ public class ApplicationDbContext(
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        var currentUserId = _httpContextAccessor.HttpContext?.User.GetUserId()!;
+        var currentUserId = _currentActor.UserId;
         var currentMachineName = Environment.MachineName;
         var currentTime = DateTime.UtcNow;
 
@@ -88,43 +89,42 @@ public class ApplicationDbContext(
         return base.SaveChangesAsync(cancellationToken);
     }
 
-    private void SetCreatedValues(EntityEntry<AuditableEntity> entityEntry, string userId, string machineName)
+    private static void SetCreatedValues(
+        EntityEntry<AuditableEntity> entityEntry,
+        string? userId,
+        string machineName)
     {
-        entityEntry.Property(x => x.CreatedById).CurrentValue = userId;
+        if (!string.IsNullOrWhiteSpace(userId))
+            entityEntry.Property(x => x.CreatedById).CurrentValue = userId;
+
         entityEntry.Property(x => x.CreatedByPc).CurrentValue = machineName;
     }
 
-    private void SetUpdatedValues(EntityEntry<AuditableEntity> entityEntry, string userId, string machineName, DateTime currentTime)
+    private static void SetUpdatedValues(
+        EntityEntry<AuditableEntity> entityEntry,
+        string? userId,
+        string machineName,
+        DateTime currentTime)
     {
-        entityEntry.Property(x => x.UpdatedById).CurrentValue = userId;
+        if (!string.IsNullOrWhiteSpace(userId))
+            entityEntry.Property(x => x.UpdatedById).CurrentValue = userId;
+
         entityEntry.Property(x => x.UpdatedByPc).CurrentValue = machineName;
         entityEntry.Property(x => x.UpdatedOn).CurrentValue = currentTime;
     }
 
-    private void SetDeletedValues(EntityEntry<AuditableEntity> entityEntry, string userId, string machineName, DateTime currentTime)
+    private static void SetDeletedValues(
+        EntityEntry<AuditableEntity> entityEntry,
+        string? userId,
+        string machineName,
+        DateTime currentTime)
     {
-        entityEntry.Property(x => x.DeletedById).CurrentValue = userId;
+        if (!string.IsNullOrWhiteSpace(userId))
+            entityEntry.Property(x => x.DeletedById).CurrentValue = userId;
+
         entityEntry.Property(x => x.DeletedByPc).CurrentValue = machineName;
         entityEntry.Property(x => x.DeletedOn).CurrentValue = currentTime;
     }
-
-    //Resolve Error in Migrations Only(Not Use In Update-Database)
-    //public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
-    //{
-    //    public ApplicationDbContext CreateDbContext(string[] args)
-    //    {
-    //        var configuration = new ConfigurationBuilder()
-    //                                .SetBasePath(Directory.GetCurrentDirectory())
-    //                                .AddJsonFile("appsettings.json")
-    //                                .Build();
-
-    //        var connectionString = configuration.GetConnectionString("DefaultConnection");
-
-    //        var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-    //        optionsBuilder.UseSqlServer(connectionString);
-    //        return new ApplicationDbContext(optionsBuilder.Options, new HttpContextAccessor());
-    //    }
-    //}
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
