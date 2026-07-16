@@ -9,4 +9,4 @@ export interface Country {
 }
 
 export type ColumnConfig = MyDataTableColumn<Country>;
-import type { MyDataTableColumn } from "@/shared/components/common/datagrid/MyDataTable";
+import type { MyDataTableColumn } from "@/shared/components/data-grid/MyDataTable";

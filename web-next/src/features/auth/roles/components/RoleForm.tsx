@@ -1,5 +1,5 @@
-import MyForm from "@/shared/components/common/form/MyForm";
-import MyTextField from "@/shared/components/common/form-controls/MyTextField";
+import MyForm from "@/shared/components/forms/MyForm";
+import MyTextField from "@/shared/components/forms/MyTextField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, TextField } from "@mui/material";
 import { useEffect, useRef } from "react";

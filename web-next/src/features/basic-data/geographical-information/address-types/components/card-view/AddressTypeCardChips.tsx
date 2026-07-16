@@ -1,6 +1,6 @@
 import React from "react";
 import { Stack } from "@mui/material";
-import AppChip from "@/shared/components/common/chips/AppChip";
+import AppChip from "@/shared/components/cards/AppChip";
 import { AddressTypeCardChipsProps } from "./AddressTypeCard.types";
 
 

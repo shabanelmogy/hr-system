@@ -10,7 +10,7 @@ import {
 } from "@mui/x-data-grid";
 import { useCallback, useMemo, type ReactElement, type RefObject } from "react";
 
-import MyDataGrid from "@/shared/components/common/datagrid/MyDataGrid";
+import MyDataGrid from "@/shared/components/data-grid/MyDataGrid";
 import type { Role, Translator } from "../../types";
 
 interface RolesDataGridProps {

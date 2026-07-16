@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { permissions } from "@/lib/auth/permissions";
 import { Delete, Edit, Visibility } from "@mui/icons-material";
-import { CardActionsRow } from "@/shared/components/card-view/card-body/UnifiedCardParts";
+import { CardActionsRow } from "@/shared/components/cards/view/card-body/UnifiedCardParts";
 import type { State } from "../../types/State";
 
 interface StateCardFooterProps {

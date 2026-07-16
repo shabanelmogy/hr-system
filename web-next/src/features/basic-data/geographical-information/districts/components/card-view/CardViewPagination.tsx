@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import UnifiedCardViewPagination from "@/shared/components/card-view/UnifiedCardViewPagination";
+import UnifiedCardViewPagination from "@/shared/components/cards/view/UnifiedCardViewPagination";
 import { CardViewPaginationProps } from "./DistrictCard.types";
 
 const CardViewPagination: React.FC<CardViewPaginationProps> = ({

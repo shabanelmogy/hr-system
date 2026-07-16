@@ -1,4 +1,4 @@
-import MultiViewHeader from "@/shared/components/common/header/MultiViewHeader";
+import MultiViewHeader from "@/shared/components/navigation/header/MultiViewHeader";
 import { Box } from "@mui/material";
 import { useCallback, useState, useRef } from "react";
 import type { GridApi } from "@mui/x-data-grid";

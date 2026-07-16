@@ -1,15 +1,15 @@
-import { CardView } from "@/shared/components/card-view";
+import { CardView } from "@/shared/components/cards/view";
 import { Stack, useTheme } from "@mui/material";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
-import AppChip from "@/shared/components/common/chips/AppChip";
+import AppChip from "@/shared/components/cards/AppChip";
 import {
   BadgePercentage,
   CreatedDateRow,
   HighlightBadge,
   InfoIconText,
   QualityMeter,
-} from "@/shared/components/card-view/card-body/UnifiedCardParts";
+} from "@/shared/components/cards/view/card-body/UnifiedCardParts";
 import { QrCode2, LocationCity } from "@mui/icons-material";
 import DistrictCardFooter from "./DistrictCardFooter";
 import { getQualityScore, getQualityLevel } from "./DistrictCardUtils";

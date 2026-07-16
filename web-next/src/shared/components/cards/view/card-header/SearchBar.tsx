@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { IconButton, alpha, useTheme } from "@mui/material";
 import { Clear, Search } from "@mui/icons-material";
-import MyTextField from "@/shared/components/common/form-controls/MyTextField";
+import MyTextField from "@/shared/components/forms/MyTextField";
 
 export interface SearchBarProps {
   searchTerm: string;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { FileDownload as DownloadIcon, PictureInPicture as PipIcon, MenuOpen as SidebarIcon } from '@mui/icons-material';
-import BackButton from '@/shared/components/common/BackButton';
+import BackButton from '@/shared/components/navigation/BackButton';
 import { useTranslation } from 'react-i18next';
 
 const TopControlsOverlay = styled(Box)(({ theme }) => ({

@@ -1,5 +1,5 @@
 import { SimpleTimelineChart } from "@/shared/components/charts";
-import WorldMap from "@/shared/components/WorldMap";
+import WorldMap from "@/shared/components/maps/WorldMap";
 import { Grid, Stack, Button, Typography } from "@mui/material";
 import { hrTimeline, worldData } from "./data";
 import { useRouter } from "next/navigation";

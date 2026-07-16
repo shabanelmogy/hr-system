@@ -1,4 +1,4 @@
-import MultiViewHeader from "@/shared/components/common/header/MultiViewHeader";
+import MultiViewHeader from "@/shared/components/navigation/header/MultiViewHeader";
 import { useCollectionExports } from "@/shared/hooks/useCollectionExports";
 import { Box } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";

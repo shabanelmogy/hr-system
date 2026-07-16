@@ -1,15 +1,15 @@
-import { CardView } from "@/shared/components/card-view";
+import { CardView } from "@/shared/components/cards/view";
 import { Stack, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
-import AppChip from "@/shared/components/common/chips/AppChip";
+import AppChip from "@/shared/components/cards/AppChip";
 import {
   BadgePercentage,
   CreatedDateRow,
   QualityMeter,
   HighlightBadge,
-} from "@/shared/components/card-view/card-body/UnifiedCardParts";
+} from "@/shared/components/cards/view/card-body/UnifiedCardParts";
 import StateCodeRow from "./StateCodeRow";
 import CountryPill from "./CountryPill";
 import StateCardFooter from "./StateCardFooter";

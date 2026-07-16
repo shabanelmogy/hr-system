@@ -1,4 +1,4 @@
-import UnifiedCardViewPagination from "@/shared/components/card-view/UnifiedCardViewPagination";
+import UnifiedCardViewPagination from "@/shared/components/cards/view/UnifiedCardViewPagination";
 import { CardViewPaginationProps } from "./AddressTypeCard.types";
 import { useTranslation } from "react-i18next";
 

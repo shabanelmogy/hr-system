@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 
 // Shared components and charts
 import { appRoutes } from "@/config";
-import { MyHeader } from "@/shared/components/common";
+import { MyHeader } from "@/shared/components/navigation/header";
 import { useMediaQuery } from "@mui/material";
 import { useRouter } from "next/navigation";
 import Section from "@/shared/components/layout/Section";

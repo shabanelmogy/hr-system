@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
-import BackButton from "@/shared/components/common/BackButton";
+import BackButton from "@/shared/components/navigation/BackButton";
 import { MoreVert as MoreVertIcon } from "@mui/icons-material";
 import { t } from "i18next";
 

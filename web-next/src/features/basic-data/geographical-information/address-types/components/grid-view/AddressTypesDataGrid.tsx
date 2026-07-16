@@ -2,7 +2,7 @@
 import React, { useCallback } from "react";
 import { GridApi } from "@mui/x-data-grid";
 import { ContentWrapper } from "@/shared/components/layout";
-import MyDataGrid from "@/shared/components/common/datagrid/MyDataGrid";
+import MyDataGrid from "@/shared/components/data-grid/MyDataGrid";
 import { useModulePermissions } from "@/shared/hooks/usePermissions";
 import { useTranslation } from "react-i18next";
 import { AddressType } from "../../types/AddressType";

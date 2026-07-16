@@ -9,7 +9,7 @@ import {
   NavigateBefore,
   NavigateNext,
 } from "@mui/icons-material";
-import BackButton from "@/shared/components/common/BackButton";
+import BackButton from "@/shared/components/navigation/BackButton";
 import { useTranslation } from "react-i18next";
 
 interface ToolbarProps {

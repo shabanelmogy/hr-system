@@ -1,4 +1,4 @@
-import MyDataGrid from "@/shared/components/common/datagrid/MyDataGrid";
+import MyDataGrid from "@/shared/components/data-grid/MyDataGrid";
 import { useCallback, useMemo } from "react";
 import makeFileActions from "./grid-view/components/MakeFileActions";
 import makeFileColumns from "./grid-view/components/MakeFileColumns";

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { useSession } from "@/lib/auth/SessionContext";
-import { MySimpleLoader } from "@/shared/components/common";
+import { MySimpleLoader } from "@/shared/components/loaders";
 import {
   useUpdateUserInfo,
   useUserInfo,

@@ -1,7 +1,7 @@
 "use client";
 
 import { ContentWrapper } from "@/shared/components/layout";
-import { MyHeader } from "@/shared/components/common";
+import { MyHeader } from "@/shared/components/navigation/header";
 import { ForbiddenPage } from "@/shared/components/auth";
 import { usePageGuard } from "@/shared/hooks";
 import { permissions } from "@/lib/auth/permissions";

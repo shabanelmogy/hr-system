@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Delete, Edit, Visibility } from "@mui/icons-material";
-import { CardActionsRow } from "@/shared/components/card-view/card-body/UnifiedCardParts";
+import { CardActionsRow } from "@/shared/components/cards/view/card-body/UnifiedCardParts";
 import { permissions } from "@/lib/auth/permissions";
 import type { District } from "../../types/District";
 

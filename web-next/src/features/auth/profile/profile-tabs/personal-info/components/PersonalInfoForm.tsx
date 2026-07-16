@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import { MyTextField } from "@/shared/components/common";
+import { MyTextField } from "@/shared/components/forms";
 import { Control, FieldErrors, UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
 import type { PersonalInfoValues } from "../../../types";
 

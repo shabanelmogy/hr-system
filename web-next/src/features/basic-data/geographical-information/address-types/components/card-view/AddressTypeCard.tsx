@@ -1,4 +1,4 @@
-import { CardView } from "@/shared/components/card-view";
+import { CardView } from "@/shared/components/cards/view";
 import { useTheme } from "@mui/material";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,7 @@ import {
   CreatedDateRow,
   HighlightBadge,
   QualityMeter,
-} from "@/shared/components/card-view/card-body/UnifiedCardParts";
+} from "@/shared/components/cards/view/card-body/UnifiedCardParts";
 import AddressTypeCardFooter from "./AddressTypeCardFooter";
 import { getQualityScore, getQualityLevel } from "./AddressTypeCardUtils";
 import type { AddressTypeCardProps } from "./AddressTypeCard.types";

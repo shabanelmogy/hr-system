@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, TextField, Pagination } from "@mui/material";
 import FileTile from "./FileTile";
-import BackButton from "@/shared/components/common/BackButton";
+import BackButton from "@/shared/components/navigation/BackButton";
 import { MappedFile } from "./FileMapper";
 import { FileItem } from "./FileTypeClassifier";
 import { formatDistanceToNow } from "date-fns";

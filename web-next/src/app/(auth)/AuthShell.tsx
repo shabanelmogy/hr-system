@@ -2,7 +2,7 @@
 
 import { Suspense, type ReactNode } from "react";
 import AuthLayout from "@/layouts/auth-layout/AuthLayout";
-import { MyLoadingIndicator } from "@/shared/components/common/loaders/MyLoadingIndicator";
+import { MyLoadingIndicator } from "@/shared/components/loaders/MyLoadingIndicator";
 
 export default function AuthShell({ children }: { children: ReactNode }) {
   return (

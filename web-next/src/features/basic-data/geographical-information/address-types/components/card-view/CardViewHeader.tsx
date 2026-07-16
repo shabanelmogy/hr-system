@@ -1,4 +1,4 @@
-import UnifiedCardViewHeader from "@/shared/components/card-view/card-header/UnifiedCardViewHeader";
+import UnifiedCardViewHeader from "@/shared/components/cards/view/card-header/UnifiedCardViewHeader";
 import { useTranslation } from "react-i18next";
 import { CardViewHeaderProps } from "./AddressTypeCard.types";
 

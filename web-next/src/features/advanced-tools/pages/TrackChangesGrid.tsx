@@ -2,8 +2,8 @@
 
 import { DAYJS_DATE_FORMAT } from "@/shared/utils/dateFormats";
 import { ContentWrapper } from "@/shared/components/layout";
-import MyDataGrid from "@/shared/components/common/datagrid/MyDataGrid";
-import MyHeader from "@/shared/components/common/header/MyHeader";
+import MyDataGrid from "@/shared/components/data-grid/MyDataGrid";
+import MyHeader from "@/shared/components/navigation/header/MyHeader";
 import { useSnackbar } from "@/shared/hooks";
 import { HandleApiError } from "@/shared/services";
 import { useGridApiRef, type GridColDef } from "@mui/x-data-grid";

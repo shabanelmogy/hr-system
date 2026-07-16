@@ -17,11 +17,11 @@ import {
 } from "@mui/x-data-grid";
 import { useCallback, useMemo, type ReactElement, type RefObject } from "react";
 
-import MyDataGrid from "@/shared/components/common/datagrid/MyDataGrid";
+import MyDataGrid from "@/shared/components/data-grid/MyDataGrid";
 import {
   renderDisabledStatus,
   renderLockedStatus,
-} from "@/shared/components/common/datagrid/DataGridCellRenderers";
+} from "@/shared/components/data-grid/DataGridCellRenderers";
 import type { Translator, User } from "../../types";
 
 interface UsersDataGridProps {

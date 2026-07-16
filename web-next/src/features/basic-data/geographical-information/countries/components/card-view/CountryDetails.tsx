@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/system";
 import { AttachMoney, Phone } from "@mui/icons-material";
-import { InfoIconText } from "@/shared/components/card-view/card-body/UnifiedCardParts";
+import { InfoIconText } from "@/shared/components/cards/view/card-body/UnifiedCardParts";
 
 export interface CountryDetailsProps {
   phoneCode?: string | null;

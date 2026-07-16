@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import BackButton from "@/shared/components/common/BackButton";
+import BackButton from "@/shared/components/navigation/BackButton";
 import {
   ZoomIn as ZoomInIcon,
   ZoomOut as ZoomOutIcon,

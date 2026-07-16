@@ -14,7 +14,7 @@ import {
   NoResultsState,
 } from "./card-view";
 import { DistrictsCardViewProps } from "./card-view/DistrictCard.types";
-import UnifiedLoadingState from "@/shared/components/card-view/UnifiedLoadingState";
+import UnifiedLoadingState from "@/shared/components/cards/view/UnifiedLoadingState";
 
 const DistrictsCardView = ({
   districts,

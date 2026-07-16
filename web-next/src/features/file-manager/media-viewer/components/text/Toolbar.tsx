@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, IconButton, TextField, Toolbar as MuiToolbar, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
-import BackButton from '@/shared/components/common/BackButton';
+import BackButton from '@/shared/components/navigation/BackButton';
 import {
   Search as SearchIcon,
   TextIncrease as TextIncreaseIcon,

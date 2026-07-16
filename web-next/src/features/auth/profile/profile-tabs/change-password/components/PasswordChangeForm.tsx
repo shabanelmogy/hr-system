@@ -1,4 +1,4 @@
-import { MyTextField } from "@/shared/components/common";
+import { MyTextField } from "@/shared/components/forms";
 import { Grid } from "@mui/material";
 import { Control, FieldErrors, UseFormHandleSubmit } from "react-hook-form";
 

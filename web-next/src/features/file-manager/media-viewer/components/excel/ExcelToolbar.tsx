@@ -27,7 +27,7 @@ import {
   MoreVert as MoreVertIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
-import BackButton from "@/shared/components/common/BackButton";
+import BackButton from "@/shared/components/navigation/BackButton";
 
 const ToolbarContainer = styled(Paper)(({ theme }) => ({
   display: "flex",

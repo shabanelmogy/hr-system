@@ -1,6 +1,6 @@
 import React from "react";
 import { GridActionsCellItemProps, GridColDef } from "@mui/x-data-grid";
-import { renderAlphaCode, renderDate } from "@/shared/components/common/datagrid/DataGridCellRenderers";
+import { renderAlphaCode, renderDate } from "@/shared/components/data-grid/DataGridCellRenderers";
 import { useTranslation } from "react-i18next";
 import type { District } from "../../types/District";
 import { useTheme } from "@mui/material";

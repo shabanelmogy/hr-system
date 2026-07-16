@@ -4,7 +4,7 @@ import { Suspense, type ReactNode } from "react";
 import { NotificationRealtimeBridge } from "@/features/notifications";
 import MainLayout from "@/layouts/main-layout/MainLayout";
 import { SignalRProvider } from "@/lib/signalr/SignalRProvider";
-import { MyLoadingIndicator } from "@/shared/components/common/loaders/MyLoadingIndicator";
+import { MyLoadingIndicator } from "@/shared/components/loaders/MyLoadingIndicator";
 
 export default function MainShell({ children }: { children: ReactNode }) {
   return (
