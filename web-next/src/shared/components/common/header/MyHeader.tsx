@@ -1,8 +1,15 @@
 /* eslint-disable react/prop-types */
 import { Box, Typography, useTheme, Alert } from "@mui/material";
+import type { ReactNode } from "react";
 import ConstructionIcon from "@mui/icons-material/Construction";
 
-const MyHeader = ({ title, subTitle, isDashboard = false }) => {
+type MyHeaderProps = {
+  title: ReactNode;
+  subTitle?: ReactNode;
+  isDashboard?: boolean;
+};
+
+const MyHeader = ({ title, subTitle, isDashboard = false }: MyHeaderProps) => {
   const theme = useTheme();
   return (
     <Box sx={{

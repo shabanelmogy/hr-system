@@ -3,24 +3,34 @@
 import { useState, useEffect } from "react";
 import {
   GridActionsCellItem,
+  type GridColDef,
+  type GridRowEditStopParams,
+  type GridRowId,
+  type GridRowModesModel,
+  type GridRowParams,
   GridRowModes,
   GridRowEditStopReasons,
+  type MuiEvent,
 } from "@mui/x-data-grid";
 import { Box, CircularProgress, useTheme } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
-import { MyHeader } from "@/shared/components/common";
+import MyHeader from "@/shared/components/common/header/MyHeader";
 import ClientDataGrid from "@/shared/components/common/datagrid/ClientDataGrid";
 import { ContentWrapper } from "@/shared/components/layout";
 import { useSnackbar } from "@/shared/hooks";
 import { HandleApiError } from "@/shared/services";
-import { useLocalization, useUpdateLocalization } from "../hooks/useAdvancedToolsQueries";
+import {
+  useLocalization,
+  useUpdateLocalization,
+  type LocalizationEntry,
+} from "../hooks/useAdvancedToolsQueries";
 import { localizationEntrySchema } from "../validation/localizationValidation";
 
 const LocalizationGrid = () => {
-  const [rowModesModel, setRowModesModel] = useState<any>({});
+  const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const { showSnackbar, SnackbarComponent } = useSnackbar();
   
   const [paginationModel, setPaginationModel] = useState({
@@ -35,7 +45,7 @@ const LocalizationGrid = () => {
   const { data: rows = [], isLoading, error } = useLocalization(currentCulture);
   const updateLocalizationMutation = useUpdateLocalization(currentCulture);
 
-  const columns = [
+  const columns: GridColDef[] = [
     {
       field: "key",
       headerName: t("general.key"),
@@ -53,7 +63,7 @@ const LocalizationGrid = () => {
       headerName: t("actions.buttons"),
       width: 100,
       cellClassName: "actions",
-      getActions: ({ id }: { id: any }) => {
+      getActions: ({ id }: GridRowParams) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
         if (isInEditMode) {
@@ -91,35 +101,35 @@ const LocalizationGrid = () => {
   // React Query Error Handling
   useEffect(() => {
     if (error && !isLoading) {
-      HandleApiError(error, (updatedState: any) => {
-        showSnackbar("error", updatedState.messages, (error as any).title);
+      HandleApiError(error, (updatedState: { messages: string[]; title: string }) => {
+        showSnackbar("error", updatedState.messages, updatedState.title);
       });
     }
   }, [error, isLoading, showSnackbar]);
 
   // Row editing handlers
-  const handleEditClick = (id: any) => () => {
+  const handleEditClick = (id: GridRowId) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
-  const handleSaveClick = (id: any) => () => {
+  const handleSaveClick = (id: GridRowId) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
-  const handleCancelClick = (id: any) => () => {
+  const handleCancelClick = (id: GridRowId) => () => {
     setRowModesModel({
       ...rowModesModel,
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
   };
 
-  const handleRowEditStop = (params: any, event: any) => {
+  const handleRowEditStop = (params: GridRowEditStopParams, event: MuiEvent) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
     }
   };
 
-  const processRowUpdate = async (newRow: any, oldRow: any) => {
+  const processRowUpdate = async (newRow: LocalizationEntry, oldRow: LocalizationEntry) => {
     try {
       const validation = localizationEntrySchema.safeParse({
         Language: currentCulture,
@@ -141,15 +151,16 @@ const LocalizationGrid = () => {
       showSnackbar("success", [t("localizationApi.localizationUpdated")], t("messages.success"));
       return newRow;
     } catch (error) {
-      HandleApiError(error, (updatedState: any) => {
-        showSnackbar("error", updatedState.messages, (error as any).title);
+      HandleApiError(error, (updatedState: { messages: string[]; title: string }) => {
+        showSnackbar("error", updatedState.messages, updatedState.title);
       });
       return oldRow;
     }
   };
 
-  const handleProcessRowUpdateError = (error: any) => {
-    showSnackbar("error", [error.message], t("messages.error"));
+  const handleProcessRowUpdateError = (error: unknown) => {
+    const message = error instanceof Error ? error.message : t("messages.error");
+    showSnackbar("error", [message], t("messages.error"));
   };
 
   if (isLoading) {

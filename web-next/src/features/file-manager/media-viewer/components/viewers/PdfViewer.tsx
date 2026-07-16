@@ -59,7 +59,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ mediaUrl, onError, onBack }) => {
           const base64String = btoa(binaryString);
           
           setTimeout(() => {
-            viewerRef.current?.load(`data:application/pdf;base64,${base64String}`, null);
+            viewerRef.current?.load(`data:application/pdf;base64,${base64String}`, "");
           }, 500);
           
         } catch (error) {

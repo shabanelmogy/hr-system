@@ -27,7 +27,7 @@ const CountryPieChart: React.FC<CountryPieChartProps> = ({ data, colors, t }) =>
       showTooltip={true}
       showLabels={true}
       outerRadius={120}
-      formatValue={(value) => value.toString()}
+      formatValue={(value) => String(value)}
       formatLabel={(label) => String(label ?? '')}
       customLabel={({ name, percent = 0 }) =>
         `${String(name ?? '')} ${(percent * 100).toFixed(0)}%`

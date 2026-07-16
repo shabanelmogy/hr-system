@@ -6,10 +6,11 @@ const useTokenRevocation = () => {
   const { logout } = useSession();
 
   useEffect(() => {
-    const handleTokenRevoked = (_message: string) => {
+    const handleTokenRevoked = (...args: unknown[]) => {
+      const message = typeof args[0] === "string" ? args[0] : "";
       // Dispatch a notification event that the app's notification system can display
       window.dispatchEvent(new CustomEvent("app:notify", {
-        detail: { message: _message, severity: "warning" }
+        detail: { message, severity: "warning" }
       }));
       void logout();
     };

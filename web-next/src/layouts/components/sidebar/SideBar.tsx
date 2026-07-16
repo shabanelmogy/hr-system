@@ -25,6 +25,7 @@ import { getNavigationConfig } from "./navigationConfig";
 import NavigationSection from "./NavigationSection";
 import UserProfile from "./UserProfile";
 import { useSession } from "@/lib/auth/SessionContext";
+import type { NavigationItem, NavigationSection as NavigationSectionModel } from "./navigationTypes";
 // Drawer Sizes
 const drawerWidth = 240;
 const miniDrawerWidth = 64;
@@ -188,7 +189,7 @@ function SideBar({ open, handleDrawerClose }: { open: boolean; handleDrawerClose
 
   // Find which section contains a specific path (recursive for nested items)
   const findSectionByPath = (path: string) => {
-    const findInItems = (items: any[]) => {
+    const findInItems = (items: NavigationItem[] = []) => {
       for (const item of items) {
         if (item.path === path) {
           return true;
@@ -280,13 +281,13 @@ function SideBar({ open, handleDrawerClose }: { open: boolean; handleDrawerClose
   };
 
   // Check if section or its items match search
-  function isSectionVisible(section: any) {
+  function isSectionVisible(section: NavigationSectionModel) {
     const sectionMatches =
       searchTerm &&
       t(section.title).toLowerCase().includes(searchTerm.toLowerCase());
 
-    const itemsMatch = section.items.some(
-      (item: any) =>
+    const itemsMatch = (section.items ?? []).some(
+      (item) =>
         searchTerm &&
         t(item.title).toLowerCase().includes(searchTerm.toLowerCase())
     );

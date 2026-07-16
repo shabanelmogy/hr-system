@@ -1,4 +1,4 @@
-import { MultiViewHeader } from "@/shared/components/common";
+import MultiViewHeader from "@/shared/components/common/header/MultiViewHeader";
 import { Box } from "@mui/material";
 import { useCallback, useState, useRef } from "react";
 import type { GridApi } from "@mui/x-data-grid";
@@ -50,8 +50,10 @@ const FilesMultiView = ({
   const displayLoading = loading;
 
   const handleViewTypeChange = useCallback(
-    (newViewType: "list" | "grouped") => {
-      setCurrentViewType(newViewType);
+    (newViewType: string) => {
+      if (newViewType === "list" || newViewType === "grouped") {
+        setCurrentViewType(newViewType);
+      }
     },
     []
   );
@@ -142,7 +144,7 @@ const FilesMultiView = ({
         }
         onRefresh={onRefresh}
         onViewTypeChange={handleViewTypeChange}
-        t={(key) => t(key)}
+        t={(key: string) => t(key)}
         showActions={{
           add: true,
           refresh: true,

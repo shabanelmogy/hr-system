@@ -14,6 +14,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import NavigationItem from "./NavigationItem";
 import { alpha, useTheme } from "@mui/material/styles";
+import type { NavigationItem as NavigationItemModel, NavigationSection as NavigationSectionModel } from "./navigationTypes";
 
 // Component to highlight matched text
 const HighlightedText = ({ text, searchTerm }: { text: string; searchTerm: string }) => {
@@ -61,7 +62,7 @@ function NavigationSection({
   onToggle,
   onNavigate,
 }: {
-  section: any;
+  section: NavigationSectionModel;
   open: boolean;
   t: (key: string) => string;
   searchTerm?: string;
@@ -77,8 +78,8 @@ function NavigationSection({
     t(section.title).toLowerCase().includes(searchTerm.toLowerCase());
 
   // Check if any items match the search (recursive)
-  const findMatchingItems = (items: any[]): any[] => {
-    const matches = [];
+  const findMatchingItems = (items: NavigationItemModel[]): NavigationItemModel[] => {
+    const matches: NavigationItemModel[] = [];
     for (const item of items) {
       if (
         searchTerm &&
@@ -93,14 +94,14 @@ function NavigationSection({
     return matches;
   };
 
-  const matchingItems = findMatchingItems(section.items);
+  const matchingItems = findMatchingItems(section.items ?? []);
 
   const hasMatchingItems = matchingItems.length > 0;
 
   // Determine which items to show when expanded
   const itemsToShow =
     !searchTerm || sectionTitleMatches
-      ? section.items // Show ALL items if no search or section title matches
+      ? section.items ?? [] // Show ALL items if no search or section title matches
       : matchingItems; // Show only matching items otherwise
 
   // Section should be visible if title matches or any items match
@@ -209,7 +210,7 @@ function NavigationSection({
       {/* Section Items - Show ALL items if section header matches search */}
       <Collapse in={isExpanded && open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {itemsToShow.map((item: any) => (
+          {itemsToShow.map((item) => (
             <NavigationItem
               key={item.path || item.title}
               open={open}

@@ -111,7 +111,7 @@ export default function useMediaViewer(): UseMediaViewerReturn {
 
         if (!isMounted) return;
 
-        if (res.success) {
+        if (res.success && res.data) {
           // cleanup previous blob url if exists
           if (cleanupRef.current) {
             cleanupRef.current();

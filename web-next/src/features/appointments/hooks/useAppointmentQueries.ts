@@ -19,7 +19,7 @@ export const useCreateAppointment = () => {
   return useMutation({
     mutationFn: (data: CreateAppointmentRequest) => AppointmentService.create(data),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: appointmentKeys.all as any });
+      qc.invalidateQueries({ queryKey: appointmentKeys.all });
     },
   });
 };
@@ -29,8 +29,8 @@ export const useUpdateAppointment = () => {
   return useMutation({
     mutationFn: (data: UpdateAppointmentRequest) => AppointmentService.update(data),
     onSuccess: (data) => {
-      qc.invalidateQueries({ queryKey: appointmentKeys.all as any });
-      qc.invalidateQueries({ queryKey: appointmentKeys.detail(data.id) as any });
+      qc.invalidateQueries({ queryKey: appointmentKeys.all });
+      qc.invalidateQueries({ queryKey: appointmentKeys.detail(data.id) });
     },
   });
 };
@@ -40,7 +40,7 @@ export const useDeleteAppointment = () => {
   return useMutation({
     mutationFn: (id: number) => AppointmentService.delete(id),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: appointmentKeys.all as any });
+      qc.invalidateQueries({ queryKey: appointmentKeys.all });
     },
   });
 };

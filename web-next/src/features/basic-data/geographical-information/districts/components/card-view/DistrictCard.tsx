@@ -2,7 +2,7 @@ import { CardView } from "@/shared/components/card-view";
 import { Stack, useTheme } from "@mui/material";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
-import { AppChip } from "@/shared/components/common";
+import AppChip from "@/shared/components/common/chips/AppChip";
 import {
   BadgePercentage,
   CreatedDateRow,

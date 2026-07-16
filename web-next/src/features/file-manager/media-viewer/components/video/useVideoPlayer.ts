@@ -33,7 +33,7 @@ export const useVideoPlayer = ({
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) null;
+    if (!video) return;
 
     const handleLoadedMetadata = () => {
       setDuration(video.duration);

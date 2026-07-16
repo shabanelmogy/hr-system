@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import {
   Box,
   Button,
@@ -16,15 +16,24 @@ import {
   KeyboardArrowDown,
   KeyboardArrowUp,
 } from "@mui/icons-material";
+import type { ReportSearchParams } from "./ReportViewer";
+
+type MyReportViewerProps = {
+  children?: ReactNode | ((updateSearchParams: (params: ReportSearchParams) => void, searchParams: ReportSearchParams) => ReactNode);
+  reportApiBaseUrl: string;
+  reportParams?: ReportSearchParams;
+  onSearch?: (params?: ReportSearchParams) => void;
+  initialOpen?: boolean;
+};
 
 const MyReportViewer = ({
   children,
   reportApiBaseUrl,
   reportParams = {}, // Single object for all report parameters
-  onSearch = (_params: any) => {},
+  onSearch = () => {},
   initialOpen = true,
-}) => {
-  const [searchParams, setSearchParams] = useState({});
+}: MyReportViewerProps) => {
+  const [searchParams, setSearchParams] = useState<ReportSearchParams>({});
   const [reportUrl, setReportUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(initialOpen);
@@ -54,7 +63,7 @@ const MyReportViewer = ({
     setSidebarOpen(!sidebarOpen);
   };
 
-  const generateReportUrl = (searchParams) => {
+  const generateReportUrl = (searchParams: ReportSearchParams) => {
     // Combine default report parameters with search parameters
     const allParams = {
       Lang: lang,
@@ -90,7 +99,7 @@ const MyReportViewer = ({
   };
 
   // Function to be passed to children to update search params
-  const updateSearchParams = (newParams) => {
+  const updateSearchParams = (newParams: ReportSearchParams) => {
     setSearchParams((prev) => ({ ...prev, ...newParams }));
   };
 

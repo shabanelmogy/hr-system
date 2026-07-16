@@ -3,7 +3,7 @@ import { Stack, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
-import { AppChip } from "@/shared/components/common";
+import AppChip from "@/shared/components/common/chips/AppChip";
 import {
   BadgePercentage,
   CreatedDateRow,

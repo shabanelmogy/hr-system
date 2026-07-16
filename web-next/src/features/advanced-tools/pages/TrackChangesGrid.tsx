@@ -2,7 +2,8 @@
 
 import { DAYJS_DATE_FORMAT } from "@/shared/utils/dateFormats";
 import { ContentWrapper } from "@/shared/components/layout";
-import { MyDataGrid, MyHeader } from "@/shared/components/common";
+import MyDataGrid from "@/shared/components/common/datagrid/MyDataGrid";
+import MyHeader from "@/shared/components/common/header/MyHeader";
 import { useSnackbar } from "@/shared/hooks";
 import { HandleApiError } from "@/shared/services";
 import { useGridApiRef, type GridColDef } from "@mui/x-data-grid";
@@ -20,8 +21,8 @@ const TrackChangesGrid = () => {
 
   useEffect(() => {
     if (error) {
-      HandleApiError(error, (updatedState: any) => {
-        showSnackbar("error", updatedState.messages, (error as any).title);
+      HandleApiError(error, (updatedState: { messages: string[]; title: string }) => {
+        showSnackbar("error", updatedState.messages, updatedState.title);
       });
     }
   }, [error, showSnackbar]);
@@ -76,7 +77,7 @@ const TrackChangesGrid = () => {
         flex: 1,
         align: "center",
         headerAlign: "center",
-        valueFormatter: (params: any) => dayjs(params).format(DAYJS_DATE_FORMAT),
+        valueFormatter: (value: unknown) => dayjs(String(value)).format(DAYJS_DATE_FORMAT),
       },
       {
         field: "changedByPc",
@@ -93,7 +94,6 @@ const TrackChangesGrid = () => {
     <>
       <ContentWrapper>
         <MyHeader title={t("trackChanges.title")} subTitle={t("trackChanges.subTitle")} />
-        {/* @ts-ignore */}
         <MyDataGrid
           rows={changes}
           columns={columns}

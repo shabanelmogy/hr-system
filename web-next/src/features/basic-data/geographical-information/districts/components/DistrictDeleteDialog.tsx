@@ -1,4 +1,4 @@
-import { MyDeleteConfirmation } from "@/shared/components/common";
+import MyDeleteConfirmation from "@/shared/components/common/dialog/MyDeleteConfirmation";
 import type { District } from "../types/District";
 
 interface DistrictDeleteDialogProps {

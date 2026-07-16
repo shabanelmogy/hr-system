@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useSession } from "@/lib/auth/SessionContext";
 import { normalizeAppPath } from "@/config/routes";
 import type { PermissionString } from "@/lib/auth/permissions";
+import type { NavigationItem as NavigationItemModel, UserRoles } from "./navigationTypes";
 
 function NavigationItem({
   open,
@@ -33,9 +34,9 @@ function NavigationItem({
   path?: string;
   searchTerm: string;
   onNavigate: (path: string) => void;
-  roles?: string[];
+  roles?: UserRoles[];
   permissions?: PermissionString[];
-  items?: any[];
+  items?: NavigationItemModel[];
 }) {
   const theme = useTheme();
   const router = useRouter();

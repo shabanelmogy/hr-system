@@ -37,10 +37,10 @@ function useFileMutation<TData = unknown, TVariables = unknown>(
   return useMutation({
     mutationFn,
     ...options,
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data, variables, _onMutateResult, context) => {
       queryClient.invalidateQueries({ queryKey: fileKeys.all });
       if (options && typeof options.onSuccess === "function") {
-        options.onSuccess(data, variables, context, undefined);
+        options.onSuccess(data, variables, undefined, context);
       }
     },
   });

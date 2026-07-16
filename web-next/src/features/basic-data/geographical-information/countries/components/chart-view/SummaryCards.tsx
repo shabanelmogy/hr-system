@@ -58,7 +58,7 @@ const SummaryCards: React.FC<SummaryCardsProps> = ({
             gradient={true}
             size="medium"
             elevation={2}
-            formatValue={(value) => value.toString()}
+            formatValue={(value) => String(value)}
           />
         </Grid>
       ))}

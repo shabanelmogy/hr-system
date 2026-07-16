@@ -17,6 +17,7 @@ import PersonIcon from "@mui/icons-material/Person2";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useTranslation } from "react-i18next";
 import { StyledListItem } from "./TopBarStyles";
+import type { Theme } from "@mui/material/styles";
 
 import { languageLabels } from "@/locales/languages";
 
@@ -36,7 +37,7 @@ const MobileMenu = ({
   open: boolean;
   onClose: () => void;
   handleThemeToggle: () => void;
-  theme: any;
+  theme: Theme;
   direction: string;
   toggleLanguage: () => void;
   navigateToProfile: () => void;

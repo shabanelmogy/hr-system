@@ -69,12 +69,14 @@ const StatePieChart: React.FC<StatePieChartProps> = ({ data, colors, t }) => {
     outerRadius,
     percent,
   }: PieLabelRenderProps) => {
-    if (percent < 0.05) return null; // Don't show labels for slices less than 5%
+    const labelPercent = percent ?? 0;
+    const labelMidAngle = midAngle ?? 0;
+    if (labelPercent < 0.05) return null; // Don't show labels for slices less than 5%
     
     const RADIAN = Math.PI / 180;
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+    const x = cx + radius * Math.cos(-labelMidAngle * RADIAN);
+    const y = cy + radius * Math.sin(-labelMidAngle * RADIAN);
 
     return (
       <text
@@ -86,7 +88,7 @@ const StatePieChart: React.FC<StatePieChartProps> = ({ data, colors, t }) => {
         fontSize={12}
         fontWeight="bold"
       >
-        {`${(percent * 100).toFixed(0)}%`}
+        {`${(labelPercent * 100).toFixed(0)}%`}
       </text>
     );
   };

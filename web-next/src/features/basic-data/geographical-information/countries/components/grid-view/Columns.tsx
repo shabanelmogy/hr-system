@@ -2,7 +2,7 @@ import React from "react";
 import { LocationOn } from "@mui/icons-material";
 import { useTheme } from "@mui/material";
 import { GridColDef, GridActionsCellItemProps } from "@mui/x-data-grid";
-import { renderAlphaCode, renderCountryName, renderCurrencyCode, renderDate, renderList, renderPhoneCode } from "@/shared/components/common";
+import { renderAlphaCode, renderCountryName, renderCurrencyCode, renderDate, renderList, renderPhoneCode } from "@/shared/components/common/datagrid/DataGridCellRenderers";
 import type { Country } from "../../types/Country";
 
 export interface ColumnsFactoryProps {

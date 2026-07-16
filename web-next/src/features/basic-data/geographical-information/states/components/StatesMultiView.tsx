@@ -1,4 +1,4 @@
-import { MultiViewHeader } from "@/shared/components/common";
+import MultiViewHeader from "@/shared/components/common/header/MultiViewHeader";
 import { useCollectionExports } from "@/shared/hooks/useCollectionExports";
 import { Box } from "@mui/material";
 import type { GridApi } from "@mui/x-data-grid";

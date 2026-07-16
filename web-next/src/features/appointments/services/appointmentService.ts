@@ -23,12 +23,24 @@ export type UpdateAppointmentRequest = {
   text: string;
 };
 
-const normalizeAppointment = (x: any): Appointment => ({
-  id: x?.id ?? x?.Id ?? 0,
-  start: x?.start ?? x?.Start,
-  end: x?.end ?? x?.End,
-  text: x?.text ?? x?.Text,
-});
+const normalizeAppointment = (value: unknown): Appointment => {
+  const record = isRecord(value) ? value : {};
+  const id = record.id ?? record.Id;
+  const start = record.start ?? record.Start;
+  const end = record.end ?? record.End;
+  const text = record.text ?? record.Text;
+
+  return {
+    id: typeof id === "number" && Number.isFinite(id) ? id : Number(id ?? 0),
+    start: typeof start === "string" ? start : "",
+    end: typeof end === "string" ? end : "",
+    text: typeof text === "string" ? text : "",
+  };
+};
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
 
 export default class AppointmentService {
   static async getAll(): Promise<Appointment[]> {

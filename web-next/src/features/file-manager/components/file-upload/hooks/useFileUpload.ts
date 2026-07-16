@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { apiService } from "@/shared/services";
-import { useSnackbar } from "@/shared/hooks";
+import useSnackbar from "@/shared/hooks/useSnackbar";
 import HandleApiError from "@/shared/services/apiError";
 import {
   createFileValidationSchema,

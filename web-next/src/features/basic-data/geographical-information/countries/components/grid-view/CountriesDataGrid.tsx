@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { GridApi } from "@mui/x-data-grid";
 import { ContentWrapper } from "@/shared/components/layout";
-import { MyDataGrid } from "@/shared/components/common";
+import MyDataGrid from "@/shared/components/common/datagrid/MyDataGrid";
 import { useCountriesPermissions } from "@/shared/hooks/usePermissions";
 import { Country } from "../../types/Country";
 import { makeCountryActions } from "./GridActions";

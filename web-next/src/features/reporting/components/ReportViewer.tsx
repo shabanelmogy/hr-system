@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import {
   Box,
   Button,
@@ -21,10 +21,14 @@ import {
 import PropTypes from "prop-types";
 import reportApiService from "../services/reportApiService";
 
+export type ReportParameterValue = string | number | boolean | null | undefined;
+export type ReportSearchParams = Record<string, ReportParameterValue>;
+export type UpdateReportSearchParams = (params: ReportSearchParams) => void;
+
 interface ReportViewerProps {
-  children?: ReactNode | ((updateSearchParams: any, searchParams: any) => ReactNode);
-  reportParams?: any;
-  onSearch?: (params?: any) => void;
+  children?: ReactNode | ((updateSearchParams: UpdateReportSearchParams, searchParams: ReportSearchParams) => ReactNode);
+  reportParams?: ReportSearchParams;
+  onSearch?: (params?: ReportSearchParams) => void;
   initialOpen?: boolean;
 }
 
@@ -34,10 +38,10 @@ const ReportViewer = ({
   onSearch = () => {},
   initialOpen = true,
 }: ReportViewerProps) => {
-  const [searchParams, setSearchParams] = useState({});
+  const [searchParams, setSearchParams] = useState<ReportSearchParams>({});
   const [reportUrl, setReportUrl] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [noResults, setNoResults] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(initialOpen);
 
@@ -68,7 +72,7 @@ const ReportViewer = ({
     setSidebarOpen(!sidebarOpen);
   };
 
-  const generateReport = async (params: any) => {
+  const generateReport = async (params: ReportSearchParams) => {
     try {
       // Combine default report parameters with search parameters and language
       const allParams = {
@@ -99,8 +103,12 @@ const ReportViewer = ({
       const blobUrl = URL.createObjectURL(blob);
 
       return { url: blobUrl, hasContent: true };
-    } catch (err) {
-      return { url: null, hasContent: false, error: err.message };
+    } catch (err: unknown) {
+      return {
+        url: null,
+        hasContent: false,
+        error: err instanceof Error ? err.message : "Unknown report error",
+      };
     }
   };
 
@@ -141,7 +149,7 @@ const ReportViewer = ({
   };
 
   // Function to be passed to children to update search params
-  const updateSearchParams = (newParams) => {
+  const updateSearchParams: UpdateReportSearchParams = (newParams) => {
     setSearchParams((prev) => {
       const updated = { ...prev, ...newParams };
 

@@ -10,6 +10,20 @@ export interface UserInfo {
   lastName?: string;
   userName?: string;
   email?: string;
+  roles?: string[];
+  permissions?: string[];
+  profilePicture?: string | null;
+}
+
+export interface CompleteUserProfile extends UserInfo {
+  id: string;
+  userName: string;
+  email: string;
+  roles: string[];
+  permissions: string[];
+  firstName: string;
+  lastName: string;
+  profilePicture: string | null;
 }
 
 export interface UserPhoto {
@@ -42,7 +56,7 @@ class UserProfileService {
   /**
    * Update user information
    */
-  static async updateUserInfo(userData: any) {
+  static async updateUserInfo(userData: UserInfo) {
     return apiService.put(apiRoutes.auth.updateUserInfo, userData);
   }
 
@@ -63,13 +77,13 @@ class UserProfileService {
   /**
    * Get complete user profile
    */
-  static async getCompleteUserProfile() {
+  static async getCompleteUserProfile(): Promise<CompleteUserProfile> {
     const sessionResponse = await fetch("/api/auth/session", { cache: "no-store" });
     if (!sessionResponse.ok) {
       throw new Error("User not authenticated");
     }
     const { user } = await sessionResponse.json();
-    const profile = {
+    const profile: CompleteUserProfile = {
       id: user.userId || "",
       userName: user.userName || "",
       email: user.email || "",
@@ -98,7 +112,7 @@ class UserProfileService {
   /**
    * Helper: Get display name
    */
-  static getDisplayName(userData: any) {
+  static getDisplayName(userData?: UserInfo | null) {
     if (!userData) return "User";
     if (userData.firstName && userData.lastName) {
       return `${userData.firstName} ${userData.lastName}`;
@@ -109,7 +123,7 @@ class UserProfileService {
   /**
    * Helper: Get user initials
    */
-  static getUserInitials(userData: any) {
+  static getUserInitials(userData?: UserInfo | null) {
     if (!userData) return "U";
     if (userData.firstName && userData.lastName) {
       return `${userData.firstName.charAt(0)}${userData.lastName.charAt(0)}`.toUpperCase();
@@ -123,7 +137,7 @@ class UserProfileService {
   /**
    * Helper: Get primary role
    */
-  static getPrimaryRole(userData) {
+  static getPrimaryRole(userData?: UserInfo | null) {
     if (!userData?.roles?.length) return "User";
     const role = userData.roles[0];
     return role.charAt(0).toUpperCase() + role.slice(1).toLowerCase();

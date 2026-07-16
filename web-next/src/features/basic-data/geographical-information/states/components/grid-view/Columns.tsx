@@ -1,6 +1,6 @@
 import React from "react";
 import { GridActionsCellItemProps, GridColDef } from "@mui/x-data-grid";
-import { renderAlphaCode, renderDate, renderStateName, renderCountryInfo } from "@/shared/components/common";
+import { renderAlphaCode, renderDate, renderStateName, renderCountryInfo } from "@/shared/components/common/datagrid/DataGridCellRenderers";
 import { useTranslation } from "react-i18next";
 import type { State } from "../../types/State";
 

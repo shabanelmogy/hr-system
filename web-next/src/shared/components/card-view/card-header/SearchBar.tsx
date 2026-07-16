@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { IconButton, alpha, useTheme } from "@mui/material";
 import { Clear, Search } from "@mui/icons-material";
-import { MyTextField } from "@/shared/components/common";
+import MyTextField from "@/shared/components/common/form-controls/MyTextField";
 
 export interface SearchBarProps {
   searchTerm: string;
@@ -24,11 +24,16 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, placeholder, o
   return (
     <MyTextField
       fieldName="search"
-      labelKey={null as any}
+      labelKey={null}
       placeholder={placeholder}
       value={searchTerm}
       register={() => ({
-        onChange: (e: any) => onSearchChange(e.target.value),
+        onChange: (event: unknown) => {
+          if (event && typeof event === "object" && "target" in event) {
+            const target = (event as { target?: { value?: unknown } }).target;
+            onSearchChange(String(target?.value ?? ""));
+          }
+        },
       })}
       inputRef={inputRef}
       startIcon={<Search color="action" />}

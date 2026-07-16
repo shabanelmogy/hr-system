@@ -5,7 +5,12 @@ import { useTranslation } from "react-i18next";
 
 import MySelect from "@/shared/components/common/form-controls/MySelect";
 import TextFieldWithClear from "@/shared/components/common/form-controls/TextFieldWithClear";
-import { ReportViewer, reportApiService } from "@/features/reporting";
+import {
+  ReportViewer,
+  reportApiService,
+  type ReportSearchParams,
+  type UpdateReportSearchParams,
+} from "@/features/reporting";
 import { useTheme } from "@mui/material";
 
 interface ReportInfo {
@@ -14,9 +19,6 @@ interface ReportInfo {
   Title: string;
   Subject: string;
 }
-
-type ReportSearchParams = Record<string, string | number | boolean | null | undefined>;
-type UpdateSearchParams = (params: ReportSearchParams) => void;
 
 function isReportInfo(value: unknown): value is ReportInfo {
   if (!value || typeof value !== "object") return false;
@@ -99,12 +101,12 @@ const CountryReportPage = () => {
 
   return (
     <ReportViewer reportParams={reportParams}>
-      {(updateSearchParams: UpdateSearchParams, currentParams: ReportSearchParams) => (
+      {(updateSearchParams: UpdateReportSearchParams, currentParams: ReportSearchParams) => (
         <>
           <TextFieldWithClear
             searchText={String(currentParams.CountryAr ?? "")}
             label={t("countries.arabicName")}
-            handleSearch={(e: ChangeEvent<HTMLInputElement>) =>
+            handleSearch={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
               updateSearchParams({ CountryAr: e.target.value })
             }
             handleClearSearch={() => updateSearchParams({ CountryAr: null })}
@@ -113,7 +115,7 @@ const CountryReportPage = () => {
           <TextFieldWithClear
             searchText={String(currentParams.CountryEn ?? "")}
             label={t("countries.englishName")}
-            handleSearch={(e: ChangeEvent<HTMLInputElement>) =>
+            handleSearch={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
               updateSearchParams({ CountryEn: e.target.value })
             }
             handleClearSearch={() => updateSearchParams({ CountryEn: null })}

@@ -60,7 +60,7 @@ const GroupFilesView: React.FC<GroupFilesViewProps> = ({
     >
       <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
         <BackButton
-          onClick={onBackClick}
+          onClick={onBackClick ?? (() => undefined)}
           tooltip="Back to groups"
           ariaLabel="Back to groups"
         />

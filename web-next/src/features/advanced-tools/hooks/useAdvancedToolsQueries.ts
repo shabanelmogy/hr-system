@@ -39,9 +39,10 @@ export interface UpdateLocalizationRequest {
   value: string;
 }
 
-export const useUpdateLocalization = (culture: string, options?: UseMutationOptions<any, Error, UpdateLocalizationRequest>) => {
+export const useUpdateLocalization = (culture: string, options?: UseMutationOptions<unknown, Error, UpdateLocalizationRequest>) => {
   const queryClient = useQueryClient();
-  return useMutation({
+  return useMutation<unknown, Error, UpdateLocalizationRequest>({
+    ...options,
     mutationFn: async (data: UpdateLocalizationRequest) => {
       return await apiService.put(apiRoutes.advancedTools.updateLocalizationApi, {
         Language: data.Language || culture,
@@ -49,13 +50,10 @@ export const useUpdateLocalization = (culture: string, options?: UseMutationOpti
         Value: data.value,
       });
     },
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data, variables, context, mutationContext) => {
       queryClient.invalidateQueries({ queryKey: advancedToolsKeys.localization(culture) });
-      if (options?.onSuccess) {
-        options.onSuccess(data, variables, context, undefined as any);
-      }
+      options?.onSuccess?.(data, variables, context, mutationContext);
     },
-    ...options,
   });
 };
 
@@ -78,9 +76,36 @@ export const useTrackChanges = (options?: UseQueryOptions<TrackChangeLog[], Erro
     queryKey: advancedToolsKeys.trackChanges(),
     queryFn: async () => {
       const response = await apiService.get("/api/v1/EntityChangeLogs/GetAllChangesLogs");
-      const allChanges = response.data || response.value || response;
-      return allChanges.map((row: any) => ({ ...row, id: crypto.randomUUID() }));
+      const allChanges: unknown = response.data || response.value || response;
+      return Array.isArray(allChanges)
+        ? allChanges.map((row): TrackChangeLog => {
+            const record = isRecord(row) ? row : {};
+            return {
+              id: crypto.randomUUID(),
+              changeLogId: asStringOrNumber(record.changeLogId ?? record.ChangeLogId),
+              entityName: asString(record.entityName ?? record.EntityName),
+              key: asString(record.key ?? record.Key),
+              oldValue: asString(record.oldValue ?? record.OldValue),
+              newValue: asString(record.newValue ?? record.NewValue),
+              changedBy: asString(record.changedBy ?? record.ChangedBy),
+              changedAt: asString(record.changedAt ?? record.ChangedAt),
+              changedByPc: asString(record.changedByPc ?? record.ChangedByPc),
+            };
+          })
+        : [];
     },
     staleTime: 5 * 60 * 1000,
     ...options,
   });
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function asString(value: unknown): string {
+  return typeof value === "string" ? value : "";
+}
+
+function asStringOrNumber(value: unknown): string | number {
+  return typeof value === "number" || typeof value === "string" ? value : "";
+}

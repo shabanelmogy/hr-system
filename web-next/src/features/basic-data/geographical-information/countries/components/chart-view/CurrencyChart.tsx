@@ -25,7 +25,7 @@ const CurrencyChart: React.FC<CurrencyChartProps> = ({ data }) => {
       showTooltip={true}
       barRadius={4}
       orientation="horizontal"
-      formatValue={(value) => value.toString()}
+      formatValue={(value) => String(value)}
       formatLabel={(label) => String(label ?? '')}
       subtitle={undefined} />
   );

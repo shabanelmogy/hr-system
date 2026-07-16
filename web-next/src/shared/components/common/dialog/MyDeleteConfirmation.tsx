@@ -23,10 +23,20 @@ import {
   useTheme,
 } from "@mui/material";
 import { forwardRef, useState } from "react";
+import type { SlideProps } from "@mui/material/Slide";
 import { useTranslation } from "react-i18next";
 
 // Custom transition component
-const SlideTransition = forwardRef<HTMLDivElement, any>(function Transition(props, ref) {
+interface MyDeleteConfirmationProps {
+  open: boolean;
+  onClose: () => void;
+  deletedField: string;
+  handleDelete: () => void | Promise<void>;
+  loading?: boolean;
+  requireConfirmation?: boolean;
+}
+
+const SlideTransition = forwardRef<HTMLDivElement, SlideProps>(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props}>{props.children}</Slide>;
 });
 
@@ -37,7 +47,7 @@ const MyDeleteConfirmation = ({
   handleDelete,
   loading = false,
   requireConfirmation = true, // New prop to enable/disable confirmation
-}) => {
+}: MyDeleteConfirmationProps) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const isRTL = theme.direction === "rtl";

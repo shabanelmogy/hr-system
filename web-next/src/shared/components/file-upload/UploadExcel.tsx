@@ -56,7 +56,7 @@ interface UploadExcelProps {
   isLoading?: boolean;
   progress?: number;
   getFileInfo?: () => string;
-  icon?: React.ReactElement;
+  icon?: React.ReactElement<{ color?: string }>;
 }
 
 const UploadExcel = ({
@@ -72,7 +72,7 @@ const UploadExcel = ({
   icon = <CloudUploadIcon sx={{ fontSize: { xs: 32, sm: 40 }, mb: 1 }} />,
 }: UploadExcelProps) => {
   const [isDragActive, setIsDragActive] = useState(false);
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { t } = useTranslation();
 
   // Reset file input when selectedFile is null
@@ -130,7 +130,8 @@ const UploadExcel = ({
 
     // Default validation for accepted file types
     if (acceptedFileTypes !== "*") {
-      const fileExtension = `.${file.name.split(".").pop().toLowerCase()}`;
+      const extension = file.name.split(".").pop();
+      const fileExtension = extension ? `.${extension.toLowerCase()}` : "";
 
       const isAccepted = Array.isArray(acceptedFileTypes)
         ? acceptedFileTypes.includes(fileExtension)
@@ -158,7 +159,7 @@ const UploadExcel = ({
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
       >
-        {React.cloneElement(icon as React.ReactElement<any>, {
+        {React.cloneElement(icon, {
           color: isDragActive ? "primary" : "text.secondary",
         })}
 
