@@ -1,16 +1,19 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useSession } from "@/lib/auth/SessionContext";
+import { useAuthorization } from "@/lib/auth/useAuthorization";
+import type { PermissionMatchMode } from "@/lib/auth/authorization";
 import type { PermissionString } from "@/lib/auth/permissions";
 import ForbiddenPage from "./ForbiddenPage";
 
-type AuthorizeViewProps = {
+export type AuthorizeViewProps = {
   children: ReactNode;
   /** Roles that are allowed to see the children. An empty array means any role is allowed. */
-  allowedRoles?: string[];
+  allowedRoles?: readonly string[];
   /** One of these permissions is required (OR semantics). An empty array means no permission is required. */
-  requiredPermissions?: PermissionString[];
+  requiredPermissions?: readonly PermissionString[];
+  /** Whether any or every listed permission is required. */
+  permissionMode?: PermissionMatchMode;
   /** Rendered while the session is loading. Defaults to null. */
   fallback?: ReactNode;
   /**
@@ -24,15 +27,17 @@ export default function AuthorizeView({
   children,
   allowedRoles = [],
   requiredPermissions = [],
+  permissionMode = "any",
   fallback = null,
   showForbidden = false,
 }: AuthorizeViewProps) {
-  const { user, isLoading, hasRole, hasPermission } = useSession();
+  const { allowed, isLoading } = useAuthorization({
+    allowedRoles,
+    requiredPermissions,
+    permissionMode,
+  });
 
   if (isLoading) return <>{fallback}</>;
-  if (!user) return null;
-  if (!hasRole(allowedRoles) || !hasPermission(requiredPermissions)) {
-    return showForbidden ? <ForbiddenPage /> : null;
-  }
+  if (!allowed) return showForbidden ? <ForbiddenPage /> : null;
   return <>{children}</>;
 }

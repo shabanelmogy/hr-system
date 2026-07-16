@@ -2,9 +2,6 @@
 
 import { ContentWrapper } from "@/shared/components/layout";
 import { PageHeader } from "@/shared/components/navigation/header";
-import { ForbiddenPage } from "@/shared/components/auth";
-import { usePageGuard } from "@/shared/hooks";
-import { permissions } from "@/lib/auth/permissions";
 import { useTranslation } from "react-i18next";
 import UserForm from "./components/UserForm";
 import UsersDashboardHeader from "./components/UsersDashboardHeader";
@@ -13,7 +10,7 @@ import useUserGridLogic from "./hooks/useUserGridLogic";
 
 // ─── Content ─────────────────────────────────────────────────────────────────
 // Rendered only after the guard confirms access — hooks and API calls are safe here.
-const UsersPageContent = () => {
+const UsersPage = () => {
   const { t } = useTranslation();
 
   const {
@@ -69,20 +66,6 @@ const UsersPageContent = () => {
       {SnackbarComponent}
     </>
   );
-};
-
-// ─── Guard wrapper ────────────────────────────────────────────────────────────
-// Checks the session before mounting UsersPageContent.
-// While loading → render nothing (the shell already shows a loading indicator).
-// Not allowed   → render the Forbidden page.
-const UsersPage = () => {
-  const { isLoading, allowed } = usePageGuard({
-    requiredPermissions: [permissions.ViewUsers],
-  });
-
-  if (isLoading) return null;
-  if (!allowed) return <ForbiddenPage />;
-  return <UsersPageContent />;
 };
 
 export default UsersPage;

@@ -3,8 +3,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { isSessionClaims, type SessionClaims } from "./session";
-import { hasPermission as checkPermission } from "./permissions";
 import type { PermissionString } from "./permissions";
+import { isAuthorized } from "./authorization";
 import apiClient from "@/lib/api/client";
 import { SESSION_CHANGED_EVENT } from "./constants";
 import { SessionRequestState } from "./session-request-state";
@@ -201,15 +201,11 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
     logout,
     hasRole: (roles) => {
       if (roles.length === 0) return true;
-      if (!user) return false;
-      return roles.some((role) =>
-        user.roles.some((userRole) => userRole.toLowerCase() === role.toLowerCase())
-      );
+      return isAuthorized(user, { roles });
     },
     hasPermission: (permissions) => {
       if (permissions.length === 0) return true;
-      if (!user) return false;
-      return permissions.some((permission) => checkPermission(user.permissions, permission));
+      return isAuthorized(user, { permissions });
     }
   }), [isLoading, isLoggingOut, error, refresh, logout, user]);
 

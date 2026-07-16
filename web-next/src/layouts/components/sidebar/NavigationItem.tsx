@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-// NavigationItem.jsx
 import { ListItemIcon, ListItemText, Tooltip, Collapse, List } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import { useTheme } from "@mui/material/styles";
@@ -10,7 +8,7 @@ import { useState } from "react";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useTranslation } from "react-i18next";
-import { useSession } from "@/lib/auth/SessionContext";
+import { useAuthorization } from "@/lib/auth/useAuthorization";
 import { normalizeAppPath } from "@/config/routes";
 import type { PermissionString } from "@/lib/auth/permissions";
 import type { NavigationItem as NavigationItemModel, UserRoles } from "./navigationTypes";
@@ -43,28 +41,14 @@ function NavigationItem({
   const pathname = usePathname();
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
-  const { hasRole, hasPermission } = useSession();
   const hasChildren = items && items.length > 0;
-
-  // Check if user has access based on roles or permissions
-  const hasAccess = () => {
-    // If no roles or permissions specified, allow access
-    if (roles.length === 0 && permissions.length === 0) {
-      return true;
-    }
-
-    // Check if user has any of the specified roles
-    const matchesRole = roles.length > 0 ? hasRole(roles) : false;
-
-    // Check if user has any of the specified permissions
-    const matchesPermission = permissions.length > 0 ? hasPermission(permissions) : false;
-
-    // User can access if they have any of the roles OR any of the permissions
-    return matchesRole || matchesPermission;
-  };
+  const { allowed } = useAuthorization({
+    allowedRoles: roles,
+    requiredPermissions: permissions,
+  });
 
   // Don't render if user doesn't have access
-  if (!hasAccess()) {
+  if (!allowed) {
     return null;
   }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { IconButton, Stack, Tooltip, alpha, useTheme } from "@mui/material";
 import { AuthorizeView } from "@/shared/components/auth";
+import type { PermissionMatchMode } from "@/lib/auth/authorization";
 import type { PermissionString } from "@/lib/auth/permissions";
 
 // CardActionsRow: row of action icon buttons with common styling and optional permissions
@@ -10,7 +11,8 @@ export interface CardActionItem {
   color: "primary" | "secondary" | "success" | "info" | "warning" | "error";
   icon: React.ReactNode;
   onClick: () => void;
-  requiredPermissions?: PermissionString[];
+  requiredPermissions?: readonly PermissionString[];
+  permissionMode?: PermissionMatchMode;
 }
 
 export const CardActionsRow: React.FC<{ actions: CardActionItem[] }> = ({ actions }) => {
@@ -41,7 +43,11 @@ export const CardActionsRow: React.FC<{ actions: CardActionItem[] }> = ({ action
 
         if (action.requiredPermissions && action.requiredPermissions.length > 0) {
           return (
-            <AuthorizeView key={action.key} requiredPermissions={action.requiredPermissions}>
+            <AuthorizeView
+              key={action.key}
+              requiredPermissions={action.requiredPermissions}
+              permissionMode={action.permissionMode}
+            >
               {button}
             </AuthorizeView>
           );

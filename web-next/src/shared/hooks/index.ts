@@ -12,4 +12,3 @@ export { default as useServerExport } from "./useServerExport";
 export { default as useSnackbar } from "./useSnackbar";
 export { default as useViewLayout } from "./useViewLayout";
 export { default as useViewLayoutEnhanced } from "./useViewLayoutEnhanced";
-export { usePageGuard } from "./usePageGuard";

@@ -22,6 +22,8 @@
     "src/shared/components/loaders/**/*.tsx",
     "src/shared/components/charts/**/*.ts",
     "src/shared/components/charts/**/*.tsx",
+    "src/shared/components/auth/**/*.ts",
+    "src/shared/components/auth/**/*.tsx",
     "src/shared/hooks/useGridCrudController.ts",
     "src/shared/hooks/useGridRowNavigation.ts",
     "src/shared/hooks/useApiHandler.tsx",

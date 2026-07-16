@@ -1,6 +1,7 @@
 import { appRoutes } from "@/config/routes";
 import type { SessionClaims } from "./session";
-import { permissions, type PermissionString, hasPermission } from "./permissions";
+import { permissions, type PermissionString } from "./permissions";
+import { isAuthorized } from "./authorization";
 
 export const UNAVAILABLE_ROUTE = "/route-unavailable";
 
@@ -74,33 +75,11 @@ const matchesRoute = (pathname: string, routePath: string) =>
   pathname === routePath ||
   (routePath !== appRoutes.home && pathname.startsWith(`${routePath}/`));
 
-const includesIgnoreCase = (values: readonly string[], expected: string) => {
-  const lowerExpected = expected.toLowerCase();
-  return values.some((value) => value.toLowerCase() === lowerExpected);
-};
-
 export function canAccessRoute(pathname: string, session: SessionClaims): boolean {
   const rule = routePolicies.find(({ path }) => matchesRoute(pathname, path));
   if (!rule) return false;
-
-  // If rule has no restrictions, allow access
-  if (!rule.roles && !rule.permissions) return true;
-
-  const hasRoles = rule.roles !== undefined;
-  const hasPermissions = rule.permissions !== undefined;
-
-  const matchesRole =
-    rule.roles?.some((role) => includesIgnoreCase(session.roles, role)) ?? false;
-  
-  // Use optimized Set-based permission checker for consistency and performance
-  const matchesPermission =
-    rule.permissions?.some((permission) => hasPermission(session.permissions, permission)) ?? false;
-
-  // If both roles and permissions are defined, require BOTH (AND logic for security)
-  // If only one is defined, require that one (OR logic)
-  if (hasRoles && hasPermissions) {
-    return matchesRole && matchesPermission;
-  }
-
-  return matchesRole || matchesPermission;
+  return isAuthorized(session, {
+    roles: rule.roles,
+    permissions: rule.permissions,
+  });
 }

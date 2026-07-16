@@ -846,6 +846,13 @@
     "title": "Track Changes",
     "subTitle": "Show Track Change Of Data"
   },
+  "authorization": {
+    "forbidden": {
+      "title": "Access Denied",
+      "message": "You do not have permission to view this page. Contact your administrator if you believe this is a mistake.",
+      "dashboard": "Back to Dashboard"
+    }
+  },
   "feedback": {
     "noResults": {
       "clearSearch": "Clear Search",

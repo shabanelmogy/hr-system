@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import ColoredIcon from "./ColoredIcon";
 import { NavigationItem, NavigationSection, NavigationSectionId, NavigationTitles, UserRoles, NavigationConfig, PermissionArray, RoleArray } from "./navigationTypes";
 import type { PermissionString } from "@/lib/auth/permissions";
+import { isAuthorized } from "@/lib/auth/authorization";
 
 // Helper to create a colored icon
 export const createColoredIcon = (icon: ReactElement, color: string): ReactElement => (
@@ -45,30 +46,17 @@ export const createNavSection = (
   permissions,
 });
 
-// Simple function to check if user has role OR permission
+// Keep sidebar filtering aligned with route and component authorization.
 export const canAccess = (
   roles: RoleArray = [],
   permissions: PermissionArray = [],
   userRoles: readonly string[] = [],
   userPermissions: readonly string[] = []
 ): boolean => {
-  // If no roles or permissions specified, allow access
-  if (roles.length === 0 && permissions.length === 0) {
-    return true;
-  }
-
-  const roleStrings = roles.map(role => role.toString());
-  const permissionStrings = permissions;
-
-  // Check if user has any of the roles
-  const hasRole = roleStrings.length > 0 && roleStrings.some((role) => userRoles.includes(role));
-
-  // Check if user has any of the permissions
-  const hasPermission =
-    permissionStrings.length > 0 && permissionStrings.some((permission) => userPermissions.includes(permission));
-
-  // Return true if user has role OR permission
-  return hasRole || hasPermission;
+  return isAuthorized(
+    { roles: userRoles, permissions: userPermissions },
+    { roles, permissions },
+  );
 };
 
 // Filter out items based on roles and permissions (recursive)
