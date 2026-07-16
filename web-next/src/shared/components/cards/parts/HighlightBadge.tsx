@@ -19,6 +19,9 @@ export const HighlightBadge: React.FC<{ label: string }> = ({ label }) => {
           "40%": { transform: "translateY(-4px)" },
           "60%": { transform: "translateY(-2px)" },
         },
+        "@media (prefers-reduced-motion: reduce)": {
+          animation: "none",
+        },
       }}
     />
   );

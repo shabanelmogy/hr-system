@@ -1,8 +1,8 @@
 import React from "react";
-import UnifiedCardViewHeader from "@/shared/components/cards/view/card-header/UnifiedCardViewHeader";
+import { CardViewHeader as SharedCardViewHeader } from "@/shared/components/lists/card-view";
 import { useTranslation } from "react-i18next";
 
-interface CardViewHeaderProps {
+interface DistrictCardViewHeaderProps {
   searchTerm: string;
   sortBy: string;
   sortOrder: string;
@@ -17,7 +17,7 @@ interface CardViewHeaderProps {
   onReset: () => void;
 }
 
-const CardViewHeader: React.FC<CardViewHeaderProps> = ({
+const DistrictCardViewHeader: React.FC<DistrictCardViewHeaderProps> = ({
   searchTerm,
   sortBy,
   sortOrder,
@@ -33,7 +33,7 @@ const CardViewHeader: React.FC<CardViewHeaderProps> = ({
 }) => {
   const { t } = useTranslation();
   return (
-    <UnifiedCardViewHeader
+    <SharedCardViewHeader
       title={t("districts.viewTitle") || "Districts Management"}
       subtitle={`${t("districts.browseAndManage") || "Browse and manage"} ${processedDistrictsLength} ${t("districts.districts") || "Districts"}`}
       mainChipLabel={`${processedDistrictsLength} ${t("districts.districts") || "Districts"}`}
@@ -64,4 +64,4 @@ const CardViewHeader: React.FC<CardViewHeaderProps> = ({
   );
 };
 
-export default CardViewHeader;
+export default DistrictCardViewHeader;

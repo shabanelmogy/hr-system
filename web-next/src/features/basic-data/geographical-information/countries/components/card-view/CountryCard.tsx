@@ -1,14 +1,13 @@
-import { CardView } from "@/shared/components/cards/view";
-import { useTheme } from "@mui/material";
-import { format } from "date-fns";
-import { useTranslation } from "react-i18next";
-import CountryCardChips from "./CountryCardChips";
 import {
   BadgePercentage,
   CreatedDateRow,
+  EntityCard,
   HighlightBadge,
   QualityMeter,
-} from "@/shared/components/cards/view/card-body/UnifiedCardParts";
+} from "@/shared/components/cards";
+import { useTheme } from "@mui/material";
+import { format } from "date-fns";
+import CountryCardChips from "./CountryCardChips";
 import CountryDetails from "./CountryDetails";
 import CountryCardFooter from "./CountryCardFooter";
 import CountryStatesSection from "./CountryStatesSection";
@@ -26,13 +25,12 @@ const CountryCard = ({
   onView,
   onHover,
 }: Omit<CountryCardProps, "t">) => {
-  const { t } = useTranslation();
   const theme = useTheme();
 
   const qualityScore = getQualityScore(country);
   const qualityInfo = getQualityLevel(qualityScore, theme);
 
-  const topRightBadge = (
+  const endBadge = (
     <BadgePercentage
       value={qualityScore}
       highlighted={isHighlighted}
@@ -40,7 +38,7 @@ const CountryCard = ({
     />
   );
 
-  const leftBadge =
+  const startBadge =
     isHighlighted && highlightLabel ? (
       <HighlightBadge label={highlightLabel} />
     ) : undefined;
@@ -75,15 +73,15 @@ const CountryCard = ({
   );
 
   return (
-    <CardView
+    <EntityCard
       index={index}
       highlighted={isHighlighted}
       isHovered={isHovered}
       onMouseEnter={() => onHover(country.id)}
       onMouseLeave={() => onHover(null)}
       height={420}
-      topRightBadge={topRightBadge}
-      leftBadge={leftBadge}
+      endBadge={endBadge}
+      startBadge={startBadge}
       title={country.nameEn || "N/A"}
       subtitle={country.nameAr || undefined}
       chips={chips}

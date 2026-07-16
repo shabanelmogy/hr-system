@@ -1,14 +1,13 @@
-import { CardView } from "@/shared/components/cards/view";
-import { useTheme } from "@mui/material";
-import { format } from "date-fns";
-import { useTranslation } from "react-i18next";
-import AddressTypeCardChips from "./AddressTypeCardChips";
 import {
   BadgePercentage,
   CreatedDateRow,
+  EntityCard,
   HighlightBadge,
   QualityMeter,
-} from "@/shared/components/cards/view/card-body/UnifiedCardParts";
+} from "@/shared/components/cards";
+import { useTheme } from "@mui/material";
+import { format } from "date-fns";
+import AddressTypeCardChips from "./AddressTypeCardChips";
 import AddressTypeCardFooter from "./AddressTypeCardFooter";
 import { getQualityScore, getQualityLevel } from "./AddressTypeCardUtils";
 import type { AddressTypeCardProps } from "./AddressTypeCard.types";
@@ -24,13 +23,12 @@ const AddressTypeCard = ({
   onView,
   onHover,
 }: AddressTypeCardProps) => {
-  const { t } = useTranslation();
   const theme = useTheme();
 
   const qualityScore = getQualityScore(addressType);
   const qualityInfo = getQualityLevel(qualityScore, theme);
 
-  const topRightBadge = (
+  const endBadge = (
     <BadgePercentage
       value={qualityScore}
       highlighted={isHighlighted}
@@ -38,7 +36,7 @@ const AddressTypeCard = ({
     />
   );
 
-  const leftBadge =
+  const startBadge =
     isHighlighted && highlightLabel ? (
       <HighlightBadge label={highlightLabel} />
     ) : undefined;
@@ -66,15 +64,15 @@ const AddressTypeCard = ({
   );
 
   return (
-    <CardView
+    <EntityCard
       index={index}
       highlighted={isHighlighted}
       isHovered={isHovered}
       onMouseEnter={() => onHover(addressType.id)}
       onMouseLeave={() => onHover(null)}
       height={320}
-      topRightBadge={topRightBadge}
-      leftBadge={leftBadge}
+      endBadge={endBadge}
+      startBadge={startBadge}
       title={addressType.nameEn || "N/A"}
       subtitle={addressType.nameAr || undefined}
       chips={chips}

@@ -1,8 +1,8 @@
-import UnifiedCardViewHeader from "@/shared/components/cards/view/card-header/UnifiedCardViewHeader";
+import { CardViewHeader as SharedCardViewHeader } from "@/shared/components/lists/card-view";
 import { useTranslation } from "react-i18next";
-import { CardViewHeaderProps } from "./AddressTypeCard.types";
+import { AddressTypeCardViewHeaderProps } from "./AddressTypeCard.types";
 
-const CardViewHeader = ({
+const AddressTypeCardViewHeader = ({
   searchTerm,
   sortBy,
   sortOrder,
@@ -15,10 +15,10 @@ const CardViewHeader = ({
   onFilterByChange,
   onClearSearch,
   onReset,
-}: CardViewHeaderProps) => {
+}: AddressTypeCardViewHeaderProps) => {
   const { t } = useTranslation();
   return (
-    <UnifiedCardViewHeader
+    <SharedCardViewHeader
       title={t("addressTypes.mainTitle")}
       subtitle={`${t("addressTypes.browseAndManage")} ${processedAddressTypesLength} ${t(
         "addressTypes.browseDescription"
@@ -57,4 +57,4 @@ const CardViewHeader = ({
   );
 };
 
-export default CardViewHeader;
+export default AddressTypeCardViewHeader;

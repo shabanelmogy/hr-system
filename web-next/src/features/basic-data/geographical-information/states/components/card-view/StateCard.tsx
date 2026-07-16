@@ -1,15 +1,15 @@
-import { CardView } from "@/shared/components/cards/view";
+import {
+  AppChip,
+  BadgePercentage,
+  CreatedDateRow,
+  EntityCard,
+  HighlightBadge,
+  QualityMeter,
+} from "@/shared/components/cards";
 import { Stack, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
-import AppChip from "@/shared/components/cards/AppChip";
-import {
-  BadgePercentage,
-  CreatedDateRow,
-  QualityMeter,
-  HighlightBadge,
-} from "@/shared/components/cards/view/card-body/UnifiedCardParts";
 import StateCodeRow from "./StateCodeRow";
 import CountryPill from "./CountryPill";
 import StateCardFooter from "./StateCardFooter";
@@ -39,7 +39,7 @@ const StateCard = ({
   const primaryTitle = isRTL ? (state.nameAr || state.nameEn || "N/A") : (state.nameEn || state.nameAr || "N/A");
   const secondaryTitle = hasAr && hasEn ? (isRTL ? state.nameEn : state.nameAr) : undefined;
 
-  const topRightBadge = (
+  const endBadge = (
     <BadgePercentage
       value={qualityScore}
       highlighted={isHighlighted}
@@ -47,7 +47,7 @@ const StateCard = ({
     />
   );
 
-  const leftBadge =
+  const startBadge =
     isHighlighted && highlightLabel ? (
       <HighlightBadge label={highlightLabel} />
     ) : undefined;
@@ -106,15 +106,15 @@ const StateCard = ({
   );
 
   return (
-    <CardView
+    <EntityCard
       index={index}
       highlighted={isHighlighted}
       isHovered={isHovered}
       onMouseEnter={() => onHover(state.id)}
       onMouseLeave={() => onHover(null)}
       height={370}
-      topRightBadge={topRightBadge}
-      leftBadge={leftBadge}
+      endBadge={endBadge}
+      startBadge={startBadge}
       title={primaryTitle}
       subtitle={secondaryTitle}
       chips={chips}

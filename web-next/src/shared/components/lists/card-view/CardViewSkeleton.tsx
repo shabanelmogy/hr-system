@@ -1,18 +1,18 @@
 import { Box, Card, CardActions, CardContent, Grid, Paper, Skeleton } from "@mui/material";
 
-export interface UnifiedLoadingStateProps {
+export interface CardViewSkeletonProps {
   headerTitleWidthPct?: number; // 0-100, default 30
   headerControlHeight?: number; // default 56
   cardsCount?: number; // default 8
   cardHeight?: number; // default 320
 }
 
-const UnifiedLoadingState = ({
+const CardViewSkeleton = ({
   headerTitleWidthPct = 30,
   headerControlHeight = 56,
   cardsCount = 8,
   cardHeight = 320,
-}: UnifiedLoadingStateProps) => {
+}: CardViewSkeletonProps) => {
   return (
     <Box>
       {/* Loading Header */}
@@ -45,4 +45,4 @@ const UnifiedLoadingState = ({
   );
 };
 
-export default UnifiedLoadingState;
+export default CardViewSkeleton;

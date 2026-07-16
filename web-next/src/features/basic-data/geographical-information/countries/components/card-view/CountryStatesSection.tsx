@@ -4,7 +4,7 @@ import { Button, Stack, Tooltip, Typography, alpha, useTheme } from "@mui/materi
 import { ExpandLess, ExpandMore, LocationOn } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import type { Country } from "../../types/Country";
-import AppChip from "@/shared/components/cards/AppChip";
+import { AppChip } from "@/shared/components/cards";
 import { getActiveStates, formatStatesForDisplay } from "../../utils/statesUtils";
 
 const paletteKeys = ["primary", "secondary", "success", "info", "warning", "error"] as const;

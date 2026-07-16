@@ -1,28 +1,21 @@
 import { Paper, alpha, useTheme, Grid } from "@mui/material";
-import { TitleSection } from "./TitleSection";
-import { SearchBar } from "./SearchBar";
-import { SortBySelect } from "./SortBySelect";
-import { SortOrderToggle } from "./SortOrderToggle";
-import { FilterSelect } from "./FilterSelect";
-import { QuickActions } from "./QuickActions";
-import type { FilterOption, SortOption } from "./types";
+import { FilterSelect } from "./header-controls/FilterSelect";
+import { ResetButton } from "./header-controls/ResetButton";
+import { SearchBar } from "./header-controls/SearchBar";
+import { SortBySelect } from "./header-controls/SortBySelect";
+import { SortOrderToggle } from "./header-controls/SortOrderToggle";
+import { TitleSection } from "./header-controls/TitleSection";
+import type { FilterOption, SortOption } from "./header-controls/types";
 
-export interface UnifiedCardViewHeaderProps {
-  // Visual
+export interface CardViewHeaderProps {
   title: string;
   subtitle?: string;
-  mainChipLabel: string; // e.g. `${processedItemsLength} Countries`
-
-  // Paging
-  page: number; // zero-based
-
-  // Search
+  mainChipLabel: string;
+  page: number;
   searchTerm: string;
   searchPlaceholder: string;
   onSearchChange: (value: string) => void;
   onClearSearch: () => void;
-
-  // Sort / Filter
   sortBy: string;
   sortByOptions: SortOption[];
   onSortByChange: (value: string) => void;
@@ -33,12 +26,10 @@ export interface UnifiedCardViewHeaderProps {
   filterBy: string;
   filterOptions: FilterOption[];
   onFilterByChange: (value: string) => void;
-
-  // Actions
   onReset: () => void;
 }
 
-const UnifiedCardViewHeader = ({
+const CardViewHeader = ({
   title,
   subtitle,
   mainChipLabel,
@@ -56,11 +47,8 @@ const UnifiedCardViewHeader = ({
   filterOptions,
   onFilterByChange,
   onReset,
-}: UnifiedCardViewHeaderProps) => {
+}: CardViewHeaderProps) => {
   const theme = useTheme();
-
-  // Since SearchBar is controlled via `searchTerm`, we don't need to imperatively clear the input here
-  const clearSearchField = () => {};
 
   return (
     <Paper
@@ -101,16 +89,11 @@ const UnifiedCardViewHeader = ({
         </Grid>
 
         <Grid size={{ xs: 12, md: 2 }}>
-          <QuickActions
-            searchTerm={searchTerm}
-            onClearSearch={onClearSearch}
-            onReset={onReset}
-            clearSearchField={clearSearchField}
-          />
+          <ResetButton onReset={onReset} />
         </Grid>
       </Grid>
     </Paper>
   );
 };
 
-export default UnifiedCardViewHeader;
+export default CardViewHeader;

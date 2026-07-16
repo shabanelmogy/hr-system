@@ -1,8 +1,8 @@
-import UnifiedCardViewHeader from "@/shared/components/cards/view/card-header/UnifiedCardViewHeader";
-import { CardViewHeaderProps } from "./StateCard.types";
+import { CardViewHeader as SharedCardViewHeader } from "@/shared/components/lists/card-view";
+import { StateCardViewHeaderProps } from "./StateCard.types";
 import { useTranslation } from "react-i18next";
 
-const CardViewHeader = ({
+const StateCardViewHeader = ({
   searchTerm,
   sortBy,
   sortOrder,
@@ -15,10 +15,10 @@ const CardViewHeader = ({
   onFilterByChange,
   onClearSearch,
   onReset,
-}: CardViewHeaderProps) => {
+}: StateCardViewHeaderProps) => {
   const { t } = useTranslation();
   return (
-    <UnifiedCardViewHeader
+    <SharedCardViewHeader
       title={t("states.mainTitle")}
       subtitle={`${t("states.browseAndManage")} ${processedStatesLength} ${t(
         "states.browseDescription"
@@ -57,4 +57,4 @@ const CardViewHeader = ({
   );
 };
 
-export default CardViewHeader;
+export default StateCardViewHeader;

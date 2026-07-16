@@ -1,15 +1,15 @@
-import { CardView } from "@/shared/components/cards/view";
-import { Stack, useTheme } from "@mui/material";
-import { format } from "date-fns";
-import { useTranslation } from "react-i18next";
-import AppChip from "@/shared/components/cards/AppChip";
 import {
+  AppChip,
   BadgePercentage,
   CreatedDateRow,
+  EntityCard,
   HighlightBadge,
   InfoIconText,
   QualityMeter,
-} from "@/shared/components/cards/view/card-body/UnifiedCardParts";
+} from "@/shared/components/cards";
+import { Stack, useTheme } from "@mui/material";
+import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 import { QrCode2, LocationCity } from "@mui/icons-material";
 import DistrictCardFooter from "./DistrictCardFooter";
 import { getQualityScore, getQualityLevel } from "./DistrictCardUtils";
@@ -32,11 +32,11 @@ const DistrictCard = ({
   const qualityScore = getQualityScore(district);
   const qualityInfo = getQualityLevel(qualityScore, theme);
 
-  const topRightBadge = (
+  const endBadge = (
     <BadgePercentage value={qualityScore} highlighted={isHighlighted} color={qualityInfo.color} />
   );
 
-  const leftBadge =
+  const startBadge =
     isHighlighted && highlightLabel ? <HighlightBadge label={highlightLabel} /> : undefined;
 
   const chips = (
@@ -83,15 +83,15 @@ const DistrictCard = ({
   );
 
   return (
-    <CardView
+    <EntityCard
       index={index}
       highlighted={isHighlighted}
       isHovered={isHovered}
       onMouseEnter={() => onHover(district.id)}
       onMouseLeave={() => onHover(null)}
       height={420}
-      topRightBadge={topRightBadge}
-      leftBadge={leftBadge}
+      endBadge={endBadge}
+      startBadge={startBadge}
       title={district.nameEn || "N/A"}
       subtitle={district.nameAr || undefined}
       chips={chips}

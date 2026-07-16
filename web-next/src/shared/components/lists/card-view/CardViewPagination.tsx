@@ -11,18 +11,19 @@ import {
 } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material/Select";
 import { useTranslation } from "react-i18next";
+import { getCardPaginationState } from "./pagination";
 
-export interface UnifiedCardViewPaginationProps {
-  page: number; // zero-based page index
+export interface CardViewPaginationProps {
+  page: number;
   rowsPerPage: number;
   totalItems: number;
   itemsPerPageOptions: number[];
-  itemsLabel?: string; // e.g., "countries", "states". Defaults to "items"
+  itemsLabel?: string;
   onPageChange: (event: unknown, newPage: number) => void;
   onRowsPerPageChange: (event: SelectChangeEvent<number>) => void;
 }
 
-const UnifiedCardViewPagination = ({
+const CardViewPagination = ({
   page,
   rowsPerPage,
   totalItems,
@@ -30,15 +31,13 @@ const UnifiedCardViewPagination = ({
   itemsLabel = "items",
   onPageChange,
   onRowsPerPageChange,
-}: UnifiedCardViewPaginationProps) => {
+}: CardViewPaginationProps) => {
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down("sm"));
   const isNarrow = useMediaQuery("(max-width:724px)");
   const isCompact = useMediaQuery("(max-width:660px)");
-  const {t} = useTranslation();
-
-  const start = totalItems === 0 ? 0 : page * rowsPerPage + 1;
-  const end = Math.min((page + 1) * rowsPerPage, totalItems);
+  const { t } = useTranslation();
+  const pagination = getCardPaginationState(page, rowsPerPage, totalItems);
 
   return (
     <Paper sx={{ mt: 3, p: 3 }}>
@@ -67,7 +66,7 @@ const UnifiedCardViewPagination = ({
             }}>
             {totalItems === 0
               ? `${t("pagination.showing")} 0 of 0 ${itemsLabel}`
-              : `${t("pagination.showing")} ${start}-${end} ${t("pagination.of")} ${totalItems} ${itemsLabel}`}
+              : `${t("pagination.showing")} ${pagination.start}-${pagination.end} ${t("pagination.of")} ${totalItems} ${itemsLabel}`}
           </Typography>
 
           <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
@@ -103,8 +102,8 @@ const UnifiedCardViewPagination = ({
             }}
           >
             <Pagination
-              count={Math.max(1, Math.ceil(totalItems / rowsPerPage))}
-              page={Math.min(page + 1, Math.max(1, Math.ceil(totalItems / rowsPerPage)))}
+              count={pagination.pageCount}
+              page={pagination.page + 1}
               onChange={(event, value) => onPageChange(event, value - 1)}
               color="primary"
               showFirstButton={!isNarrow}
@@ -121,4 +120,4 @@ const UnifiedCardViewPagination = ({
   );
 };
 
-export default UnifiedCardViewPagination;
+export default CardViewPagination;

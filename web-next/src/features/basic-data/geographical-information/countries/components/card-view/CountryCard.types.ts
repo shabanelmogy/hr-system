@@ -13,7 +13,7 @@ export interface CountryCardProps {
   onHover: (id: string | number | null) => void;
 }
 
-export interface CardViewHeaderProps {
+export interface CountryCardViewHeaderProps {
   searchTerm: string;
   sortBy: string;
   sortOrder: string;
@@ -28,7 +28,7 @@ export interface CardViewHeaderProps {
   onReset: () => void;
 }
 
-export interface CardViewPaginationProps {
+export interface CountryCardViewPaginationProps {
   page: number;
   rowsPerPage: number;
   totalItems: number;

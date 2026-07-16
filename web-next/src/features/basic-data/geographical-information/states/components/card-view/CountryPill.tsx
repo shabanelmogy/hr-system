@@ -6,7 +6,6 @@ import { alpha, useTheme } from "@mui/material/styles";
 
 const paletteKeys = ["primary", "secondary", "success", "info", "warning", "error"] as const;
 type ColorKey = typeof paletteKeys[number];
-let lastUsedKey: ColorKey | null = null;
 
 const hashString = (str: string): number => {
   let h = 0;
@@ -32,12 +31,7 @@ export interface CountryPillProps {
 
 export const CountryPill: React.FC<CountryPillProps> = ({ id, nameEn, nameAr, icon }) => {
   const theme = useTheme();
-  let key = colorKeyFor(id ?? null, nameEn ?? null);
-  if (lastUsedKey && key === lastUsedKey) {
-    const currentIdx = paletteKeys.indexOf(key);
-    key = paletteKeys[(currentIdx + 1) % paletteKeys.length];
-  }
-  lastUsedKey = key;
+  const key = colorKeyFor(id ?? null, nameEn ?? null);
   const colorMain = theme.palette[key].main;
   const contrast = theme.palette.getContrastText(colorMain);
   const isRTL = theme.direction === "rtl";
@@ -54,8 +48,8 @@ export const CountryPill: React.FC<CountryPillProps> = ({ id, nameEn, nameAr, ic
             display: "inline-flex",
             alignItems: "center",
             height: 28,
-            pl: 3.5,
-            pr: 1.25,
+            paddingInlineStart: 3.5,
+            paddingInlineEnd: 1.25,
             borderRadius: 999,
             bgcolor: alpha(colorMain, 0.12),
             border: `1px solid ${alpha(colorMain, 0.35)}`,
@@ -68,7 +62,7 @@ export const CountryPill: React.FC<CountryPillProps> = ({ id, nameEn, nameAr, ic
           <Box
             sx={{
               position: "absolute",
-              left: -6,
+              insetInlineStart: -6,
               top: "50%",
               transform: "translateY(-50%)",
               width: 28,

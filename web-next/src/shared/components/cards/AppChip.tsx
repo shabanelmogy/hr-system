@@ -2,8 +2,7 @@ import React from "react";
 import Chip, { ChipProps } from "@mui/material/Chip";
 import { alpha, useTheme } from "@mui/material/styles";
 
-const paletteKeys = ["primary", "secondary", "success", "info", "warning", "error"] as const;
-export type ColorKey = typeof paletteKeys[number];
+export type ColorKey = "primary" | "secondary" | "success" | "info" | "warning" | "error";
 
 export interface AppChipProps extends Omit<ChipProps, "color" | "variant"> {
   label: React.ReactNode;
@@ -68,6 +67,10 @@ export const AppChip: React.FC<AppChipProps> = ({
     ? {
         transition: "transform 0.15s ease",
         "&:hover": { transform: "scale(1.05)" },
+        "@media (prefers-reduced-motion: reduce)": {
+          transition: "none",
+          "&:hover": { transform: "none" },
+        },
       }
     : undefined;
 

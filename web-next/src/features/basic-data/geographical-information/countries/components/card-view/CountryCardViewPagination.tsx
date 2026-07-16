@@ -1,27 +1,27 @@
-import UnifiedCardViewPagination from "@/shared/components/cards/view/UnifiedCardViewPagination";
-import { CardViewPaginationProps } from "./AddressTypeCard.types";
+import { CardViewPagination as SharedCardViewPagination } from "@/shared/components/lists/card-view";
+import { CountryCardViewPaginationProps } from "./CountryCard.types";
 import { useTranslation } from "react-i18next";
 
-const CardViewPagination = ({
+const CountryCardViewPagination = ({
   page,
   rowsPerPage,
   totalItems,
   itemsPerPageOptions,
   onPageChange,
   onRowsPerPageChange,
-}: CardViewPaginationProps) => {
+}: CountryCardViewPaginationProps) => {
   const { t } = useTranslation();
   return (
-    <UnifiedCardViewPagination
+    <SharedCardViewPagination
       page={page}
       rowsPerPage={rowsPerPage}
       totalItems={totalItems}
       itemsPerPageOptions={itemsPerPageOptions}
-      itemsLabel={t("addressTypes.addressType")}
+      itemsLabel={t("countries.country")}
       onPageChange={onPageChange}
       onRowsPerPageChange={onRowsPerPageChange}
     />
   );
 };
 
-export default CardViewPagination;
+export default CountryCardViewPagination;

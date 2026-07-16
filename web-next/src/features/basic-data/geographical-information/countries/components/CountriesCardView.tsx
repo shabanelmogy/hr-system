@@ -7,13 +7,13 @@ import { useTranslation } from "react-i18next";
 import { filterCountries } from "../hooks/useCountryQueries";
 import type { Country } from "../types/Country";
 import {
-  CardViewHeader,
-  CardViewPagination,
+  CountryCardViewHeader,
+  CountryCardViewPagination,
   CountryCard,
   EmptyState,
-  LoadingState,
   NoResultsState
 } from "./card-view";
+import { CardViewSkeleton } from "@/shared/components/lists/card-view";
 
 import { CountriesCardViewProps } from "./card-view/CountryCard.types";
 
@@ -269,7 +269,7 @@ const CountriesCardView = ({
   };
 
   if (loading) {
-    return <LoadingState />;
+    return <CardViewSkeleton />;
   }
 
   if (!countries || countries.length === 0) {
@@ -278,7 +278,7 @@ const CountriesCardView = ({
 
   return (
     <Box>
-      <CardViewHeader
+      <CountryCardViewHeader
         searchTerm={searchTerm}
         sortBy={sortBy}
         sortOrder={sortOrder}
@@ -312,7 +312,7 @@ const CountriesCardView = ({
       </Grid>
 
       {processedCountries.length > 0 && (
-        <CardViewPagination
+        <CountryCardViewPagination
           page={page}
           rowsPerPage={rowsPerPage}
           totalItems={processedCountries.length}

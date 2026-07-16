@@ -5,13 +5,13 @@ import type { SelectChangeEvent } from "@mui/material/Select";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  CardViewHeader,
-  CardViewPagination,
+  StateCardViewHeader,
+  StateCardViewPagination,
   StateCard,
   EmptyState,
-  LoadingState,
   NoResultsState
 } from "./card-view";
+import { CardViewSkeleton } from "@/shared/components/lists/card-view";
 import { StatesCardViewProps } from "./card-view/StateCard.types";
 
 const StatesCardView = ({
@@ -252,7 +252,7 @@ const StatesCardView = ({
   };
 
   if (loading) {
-    return <LoadingState />;
+    return <CardViewSkeleton />;
   }
 
   if (!states || states.length === 0) {
@@ -261,7 +261,7 @@ const StatesCardView = ({
 
   return (
     <Box>
-      <CardViewHeader
+      <StateCardViewHeader
         searchTerm={searchTerm}
         sortBy={sortBy}
         sortOrder={sortOrder}
@@ -295,7 +295,7 @@ const StatesCardView = ({
       </Grid>
 
       {processedStates.length > 0 && (
-        <CardViewPagination
+        <StateCardViewPagination
           page={page}
           rowsPerPage={rowsPerPage}
           totalItems={processedStates.length}

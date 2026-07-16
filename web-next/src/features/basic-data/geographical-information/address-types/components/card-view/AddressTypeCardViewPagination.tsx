@@ -1,29 +1,27 @@
-import React from "react";
+import { CardViewPagination as SharedCardViewPagination } from "@/shared/components/lists/card-view";
+import { AddressTypeCardViewPaginationProps } from "./AddressTypeCard.types";
 import { useTranslation } from "react-i18next";
-import UnifiedCardViewPagination from "@/shared/components/cards/view/UnifiedCardViewPagination";
-import { CardViewPaginationProps } from "./DistrictCard.types";
 
-const CardViewPagination: React.FC<CardViewPaginationProps> = ({
+const AddressTypeCardViewPagination = ({
   page,
   rowsPerPage,
   totalItems,
   itemsPerPageOptions,
   onPageChange,
   onRowsPerPageChange,
-}) => {
+}: AddressTypeCardViewPaginationProps) => {
   const { t } = useTranslation();
-
   return (
-    <UnifiedCardViewPagination
+    <SharedCardViewPagination
       page={page}
       rowsPerPage={rowsPerPage}
       totalItems={totalItems}
       itemsPerPageOptions={itemsPerPageOptions}
+      itemsLabel={t("addressTypes.addressType")}
       onPageChange={onPageChange}
       onRowsPerPageChange={onRowsPerPageChange}
-      itemsLabel={t("districts.districts") || "items"}
     />
   );
 };
 
-export default CardViewPagination;
+export default AddressTypeCardViewPagination;

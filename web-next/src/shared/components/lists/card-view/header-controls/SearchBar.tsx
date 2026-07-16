@@ -1,4 +1,3 @@
-import React, { useRef } from "react";
 import { IconButton, alpha, useTheme } from "@mui/material";
 import { Clear, Search } from "@mui/icons-material";
 import MyTextField from "@/shared/components/forms/MyTextField";
@@ -12,14 +11,6 @@ export interface SearchBarProps {
 
 export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, placeholder, onSearchChange, onClearSearch }) => {
   const theme = useTheme();
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
-  const clearSearchField = () => {
-    if (inputRef.current) {
-      inputRef.current.value = "";
-      inputRef.current.dispatchEvent(new Event("input", { bubbles: true }));
-    }
-  };
 
   return (
     <MyTextField
@@ -35,17 +26,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, placeholder, o
           }
         },
       })}
-      inputRef={inputRef}
       startIcon={<Search color="action" />}
       size="small"
       showClearButton={false}
       endAdornment={
         <IconButton
           aria-label="clear search"
-          onClick={() => {
-            clearSearchField();
-            onClearSearch();
-          }}
+          onClick={onClearSearch}
           disabled={!searchTerm}
           edge="end"
           size="small"

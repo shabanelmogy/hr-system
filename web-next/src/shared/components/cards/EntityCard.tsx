@@ -7,34 +7,31 @@ import {
   Fade,
   Typography,
   alpha,
+  useMediaQuery,
   useTheme
 } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
-import React, { ReactNode } from "react";
+import type { ReactNode } from "react";
 
-export interface CardViewProps {
-  index?: number; // for staggered Fade
+export interface EntityCardProps {
+  index?: number;
   highlighted?: boolean;
   isHovered?: boolean;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
-
-  // Visual customization
   height?: number | string;
-  barColor?: string; // top bar color when not highlighted
+  barColor?: string;
   sx?: SxProps<Theme>;
-
-  // Content slots
   title: ReactNode;
   subtitle?: ReactNode;
-  topRightBadge?: ReactNode; // e.g., quality chip
-  leftBadge?: ReactNode;      // e.g., NEW chip
-  chips?: ReactNode;          // e.g., code chips
-  content?: ReactNode;        // main body content
-  footer?: ReactNode;         // actions/footer area
+  endBadge?: ReactNode;
+  startBadge?: ReactNode;
+  chips?: ReactNode;
+  content?: ReactNode;
+  footer?: ReactNode;
 }
 
-const CardView: React.FC<CardViewProps> = ({
+const EntityCard = ({
   index = 0,
   highlighted = false,
   isHovered = false,
@@ -45,19 +42,24 @@ const CardView: React.FC<CardViewProps> = ({
   sx,
   title,
   subtitle,
-  topRightBadge,
-  leftBadge,
+  endBadge,
+  startBadge,
   chips,
   content,
   footer,
-}) => {
+}: EntityCardProps) => {
   const theme = useTheme();
+  const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
   const primary = theme.palette.primary.main;
   const success = theme.palette.success.main;
   const resolvedBar = highlighted ? success : (barColor || primary);
 
   return (
-    <Fade in={true} style={{ transitionDelay: `${index * 50}ms` }}>
+    <Fade
+      in
+      timeout={prefersReducedMotion ? 0 : undefined}
+      style={{ transitionDelay: prefersReducedMotion ? "0ms" : `${index * 50}ms` }}
+    >
       <Card
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
@@ -67,7 +69,7 @@ const CardView: React.FC<CardViewProps> = ({
           flexDirection: "column",
           position: "relative",
           overflow: "hidden",
-          transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+          transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, border-color 0.3s ease",
           background: highlighted
             ? `linear-gradient(135deg, ${alpha(success, 0.1)} 0%, ${alpha(success, 0.05)} 100%)`
             : `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${alpha(primary, 0.02)} 100%)`,
@@ -86,6 +88,14 @@ const CardView: React.FC<CardViewProps> = ({
               "100%": { boxShadow: `0 12px 32px ${alpha(success, 0.3)}` },
             },
           }),
+          "@media (prefers-reduced-motion: reduce)": {
+            animation: "none",
+            transform: "none",
+            transition: "none",
+            "&:hover": {
+              transform: "none",
+            },
+          },
           "&::before": {
             content: '""',
             position: "absolute",
@@ -102,17 +112,15 @@ const CardView: React.FC<CardViewProps> = ({
           ...sx,
         }}
       >
-        {/* Top Right Badge */}
-        {topRightBadge && (
-          <Box sx={{ position: "absolute", top: 12, right: 12, zIndex: 2 }}>
-            {topRightBadge}
+        {endBadge && (
+          <Box sx={{ position: "absolute", top: 12, insetInlineEnd: 12, zIndex: 2 }}>
+            {endBadge}
           </Box>
         )}
 
-        {/* Left Badge (e.g., NEW) */}
-        {leftBadge && (
-          <Box sx={{ position: "absolute", top: 12, left: 50, zIndex: 3 }}>
-            {leftBadge}
+        {startBadge && (
+          <Box sx={{ position: "absolute", top: 12, insetInlineStart: 50, zIndex: 3 }}>
+            {startBadge}
           </Box>
         )}
 
@@ -160,7 +168,6 @@ const CardView: React.FC<CardViewProps> = ({
 
         {footer && <Divider />}
 
-        {/* Footer/Actions */}
         {footer && (
           <CardActions sx={{ justifyContent: "end", px: 2, py: 1.5, minHeight: 64, alignItems: "center" }}>
             {footer}
@@ -171,4 +178,4 @@ const CardView: React.FC<CardViewProps> = ({
   );
 };
 
-export default CardView;
+export default EntityCard;

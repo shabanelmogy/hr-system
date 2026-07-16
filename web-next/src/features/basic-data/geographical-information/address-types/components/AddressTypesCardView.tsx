@@ -7,15 +7,15 @@ import { useTranslation } from "react-i18next";
 import { useAddressTypeSearch } from "../hooks/useAddressTypeQueries";
 import type { AddressType } from "../types/AddressType";
 import {
-  CardViewHeader,
-  CardViewPagination,
+  AddressTypeCardViewHeader,
+  AddressTypeCardViewPagination,
   AddressTypeCard,
   EmptyState,
   NoResultsState
 } from "./card-view";
 
 import { AddressTypesCardViewProps } from "./card-view/AddressTypeCard.types";
-import UnifiedLoadingState from "@/shared/components/cards/view/UnifiedLoadingState";
+import { CardViewSkeleton } from "@/shared/components/lists/card-view";
 
 const AddressTypesCardView = ({
   items,
@@ -246,7 +246,7 @@ const AddressTypesCardView = ({
   };
 
   if (loading) {
-    return <UnifiedLoadingState />;
+    return <CardViewSkeleton />;
   }
 
   if (!items || items.length === 0) {
@@ -255,7 +255,7 @@ const AddressTypesCardView = ({
 
   return (
     <Box>
-      <CardViewHeader
+      <AddressTypeCardViewHeader
         searchTerm={searchTerm}
         sortBy={sortBy}
         sortOrder={sortOrder}
@@ -289,7 +289,7 @@ const AddressTypesCardView = ({
       </Grid>
 
       {processedAddressTypes.length > 0 && (
-        <CardViewPagination
+        <AddressTypeCardViewPagination
           page={page}
           rowsPerPage={rowsPerPage}
           totalItems={processedAddressTypes.length}

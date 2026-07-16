@@ -7,14 +7,14 @@ import { useTranslation } from "react-i18next";
 import { useDistrictSearch } from "../hooks/useDistrictQueries";
 import type { District } from "../types/District";
 import {
-  CardViewHeader,
-  CardViewPagination,
+  DistrictCardViewHeader,
+  DistrictCardViewPagination,
   DistrictCard,
   EmptyState,
   NoResultsState,
 } from "./card-view";
 import { DistrictsCardViewProps } from "./card-view/DistrictCard.types";
-import UnifiedLoadingState from "@/shared/components/cards/view/UnifiedLoadingState";
+import { CardViewSkeleton } from "@/shared/components/lists/card-view";
 
 const DistrictsCardView = ({
   districts,
@@ -282,7 +282,7 @@ const DistrictsCardView = ({
   };
 
   if (loading) {
-    return <UnifiedLoadingState />;
+    return <CardViewSkeleton />;
   }
 
   if (!districts || districts.length === 0) {
@@ -291,7 +291,7 @@ const DistrictsCardView = ({
 
   return (
     <Box>
-      <CardViewHeader
+      <DistrictCardViewHeader
         searchTerm={searchTerm}
         sortBy={sortBy}
         sortOrder={sortOrder}
@@ -329,7 +329,7 @@ const DistrictsCardView = ({
       </Grid>
 
       {processedDistricts.length > 0 && (
-        <CardViewPagination
+        <DistrictCardViewPagination
           page={page}
           rowsPerPage={rowsPerPage}
           totalItems={processedDistricts.length}

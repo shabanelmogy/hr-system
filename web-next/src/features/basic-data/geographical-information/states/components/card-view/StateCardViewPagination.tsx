@@ -1,18 +1,18 @@
-import UnifiedCardViewPagination from "@/shared/components/cards/view/UnifiedCardViewPagination";
-import { CardViewPaginationProps } from "./StateCard.types";
+import { CardViewPagination as SharedCardViewPagination } from "@/shared/components/lists/card-view";
+import { StateCardViewPaginationProps } from "./StateCard.types";
 import { useTranslation } from "react-i18next";
 
-const CardViewPagination = ({
+const StateCardViewPagination = ({
   page,
   rowsPerPage,
   totalItems,
   itemsPerPageOptions,
   onPageChange,
   onRowsPerPageChange,
-}: CardViewPaginationProps) => {
+}: StateCardViewPaginationProps) => {
   const {t} = useTranslation();
   return (
-    <UnifiedCardViewPagination
+    <SharedCardViewPagination
       page={page}
       rowsPerPage={rowsPerPage}
       totalItems={totalItems}
@@ -24,4 +24,4 @@ const CardViewPagination = ({
   );
 };
 
-export default CardViewPagination;
+export default StateCardViewPagination;

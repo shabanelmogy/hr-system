@@ -1,4 +1,4 @@
-// components/AnimatedStatCard.jsx
+import type { KeyboardEvent, ReactNode } from "react";
 import {
   alpha,
   Avatar,
@@ -8,6 +8,19 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import type { CardProps } from "@mui/material/Card";
+
+export type StatCardColor = "primary" | "secondary" | "success" | "info" | "warning" | "error";
+
+export interface AnimatedStatCardProps extends Omit<CardProps, "color" | "onClick" | "title"> {
+  icon: ReactNode;
+  title: ReactNode;
+  value: ReactNode;
+  color?: StatCardColor;
+  loading?: boolean;
+  height?: number | string;
+  onClick?: () => void;
+}
 
 const AnimatedStatCard = ({
   icon,
@@ -18,11 +31,22 @@ const AnimatedStatCard = ({
   height = 120,
   onClick,
   ...cardProps
-}) => {
+}: AnimatedStatCardProps) => {
   const theme = useTheme();
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (!onClick || (event.key !== "Enter" && event.key !== " ")) return;
+    event.preventDefault();
+    onClick();
+  };
 
   return (
     <Card
+      {...cardProps}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onClick={onClick}
+      onKeyDown={handleKeyDown}
       sx={{
         height,
         position: "relative",
@@ -35,7 +59,7 @@ const AnimatedStatCard = ({
         transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
         cursor: onClick ? "pointer" : "default",
         "&:hover": {
-          transform: "translateY(-4px) scale(1.02)",
+          transform: onClick ? "translateY(-4px) scale(1.02)" : undefined,
           boxShadow: `0 12px 40px ${alpha(theme.palette[color].main, 0.15)}`,
           border: `1px solid ${alpha(theme.palette[color].main, 0.3)}`,
         },
@@ -43,15 +67,16 @@ const AnimatedStatCard = ({
           content: '""',
           position: "absolute",
           top: 0,
-          left: 0,
-          right: 0,
+          insetInline: 0,
           height: 4,
           background: `linear-gradient(90deg, ${theme.palette[color].main}, ${theme.palette[color].light})`,
         },
+        "@media (prefers-reduced-motion: reduce)": {
+          transition: "none",
+          "&:hover": { transform: "none" },
+        },
         ...cardProps.sx,
       }}
-      onClick={onClick}
-      {...cardProps}
     >
       <CardContent
         sx={{
@@ -94,6 +119,9 @@ const AnimatedStatCard = ({
                   backgroundColor: alpha(theme.palette[color].main, 0.1),
                   borderRadius: 1,
                   animation: "pulse 1.5s ease-in-out infinite",
+                  "@media (prefers-reduced-motion: reduce)": {
+                    animation: "none",
+                  },
                 }}
               />
             ) : typeof value === "number" ? (
