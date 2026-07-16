@@ -2,7 +2,7 @@
 
 import { DAYJS_DATE_FORMAT } from "@/shared/utils/dateFormats";
 import { ContentWrapper } from "@/shared/components/layout";
-import MyDataGrid from "@/shared/components/data-grid/MyDataGrid";
+import { MyDataGrid } from "@/shared/components/data-grid";
 import { PageHeader } from "@/shared/components/navigation/header";
 import { useSnackbar } from "@/shared/hooks";
 import { HandleApiError } from "@/shared/services";
@@ -99,9 +99,8 @@ const TrackChangesGrid = () => {
           columns={columns}
           loading={loading}
           apiRef={apiRef}
-          showAddButton={false}
           filterMode="client"
-          sortModel={[{ field: "id", sort: "asc" }]}
+          initialSortModel={[{ field: "changeLogId", sort: "asc" }]}
           pagination
           pageSizeOptions={[5, 10, 25]}
         />

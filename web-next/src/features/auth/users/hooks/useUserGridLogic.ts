@@ -1,6 +1,6 @@
 import type { CreateUserRequest, UpdateUserRequest, User } from "../../types";
 import useApiHandler from "@/shared/hooks/useApiHandler";
-import { useGridRowNavigation } from "@/shared/hooks/useGridRowNavigation";
+import { useGridCrudMarkerCleanup } from "@/shared/hooks/useGridCrudMarkerCleanup";
 import useNotifications from "@/shared/hooks/useNotifications";
 import { useGridApiRef } from "@mui/x-data-grid";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -109,11 +109,7 @@ const useUserGridLogic = () => {
   const clearLastAdded = useCallback(() => setLastAddedId(null), []);
   const clearLastEdited = useCallback(() => setLastEditedId(null), []);
 
-  useGridRowNavigation({
-    apiRef,
-    items: stableUsers,
-    isLoading: loading,
-    isFetching: false,
+  useGridCrudMarkerCleanup({
     lastAddedId,
     lastEditedId,
     lastDeletedIndex: null,
@@ -143,6 +139,8 @@ const useUserGridLogic = () => {
     onToggle: handleToggleUser,
     onUnlock: handleUnlockUser,
     onRevoke: handleRevokeToken,
+    lastAddedId,
+    lastEditedId,
     SnackbarComponent,
   };
 };

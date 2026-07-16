@@ -1,6 +1,6 @@
 import showToast from "@/shared/components/feedback/Toast";
 import { useGridCrudController } from "@/shared/hooks/useGridCrudController";
-import { useGridRowNavigation } from "@/shared/hooks/useGridRowNavigation";
+import { useGridCrudMarkerCleanup } from "@/shared/hooks/useGridCrudMarkerCleanup";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
 import { useGridApiRef, type GridApi } from "@mui/x-data-grid";
 import { useCallback, useEffect, type RefObject } from "react";
@@ -93,11 +93,7 @@ export default function useDistrictGridLogic(): UseDistrictGridLogicReturn {
     refresh,
   });
 
-  useGridRowNavigation({
-    apiRef,
-    items: districts,
-    isLoading: query.isLoading,
-    isFetching: query.isFetching,
+  useGridCrudMarkerCleanup({
     lastAddedId: crud.lastAddedId,
     lastEditedId: crud.lastEditedId,
     lastDeletedIndex: crud.lastDeletedIndex,

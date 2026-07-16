@@ -101,16 +101,26 @@ const StatesMultiView = ({
       lastEditedId,
       lastDeletedIndex,
     };
+    const gridProps = {
+      states,
+      loading: viewLoading,
+      onEdit,
+      onDelete,
+      onView,
+      lastAddedId,
+      lastEditedId,
+      lastDeletedIndex,
+    };
 
     switch (currentViewType) {
       case "grid":
-        return <StatesDataGrid {...commonProps} apiRef={apiRef} />;
+        return <StatesDataGrid {...gridProps} apiRef={apiRef} />;
       case "cards":
         return <StatesCardView {...commonProps} />;
       case "chart":
         return <StatesChartView {...commonProps} />;
       default:
-        return <StatesDataGrid {...commonProps} apiRef={apiRef} />;
+        return <StatesDataGrid {...gridProps} apiRef={apiRef} />;
     }
   };
 

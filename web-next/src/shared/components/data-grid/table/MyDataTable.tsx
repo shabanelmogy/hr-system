@@ -16,12 +16,21 @@ import {
   type TableCellProps,
 } from "@mui/material";
 import { styled, type SxProps, type Theme } from "@mui/material/styles";
-import React, { useState, type ChangeEvent, type ReactElement, type ReactNode } from "react";
+import {
+  cloneElement,
+  useState,
+  type ChangeEvent,
+  type Key,
+  type ReactElement,
+  type ReactNode,
+} from "react";
+import { useTranslation } from "react-i18next";
+import { clampPage } from "./pagination";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     fontWeight: 600,
   },
 }));
@@ -57,22 +66,37 @@ interface MyDataTableProps<TItem extends object> {
   stickyHeader?: boolean;
   maxHeight?: number | string | Record<string, number | string>;
   emptyMessage?: string;
+  getRowId?: (item: TItem, index: number) => Key;
 }
 
 const MyDataTable = <TItem extends object>({
   data = [],
   columns = [],
-  title = "Data",
+  title,
   icon = null,
-  countLabel = "Total Items:",
+  countLabel,
   initialRowsPerPage = 10,
   rowsPerPageOptions = [5, 10, 25, 50],
   stickyHeader = true,
   maxHeight = { xs: 400, sm: 600 },
-  emptyMessage = "No data available",
+  emptyMessage,
+  getRowId,
 }: MyDataTableProps<TItem>) => {
-  const [page, setPage] = useState(0);
+  const { t } = useTranslation();
+  const [paginationState, setPaginationState] = useState({
+    page: 0,
+    rowCount: data.length,
+  });
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
+  const resolvedTitle = title ?? t("pagination.dataTable");
+  const resolvedCountLabel = countLabel ?? t("pagination.totalItems");
+  const resolvedEmptyMessage = emptyMessage ?? t("pagination.noData");
+
+  let page = paginationState.page;
+  if (paginationState.rowCount !== data.length) {
+    page = clampPage(page, rowsPerPage, data.length);
+    setPaginationState({ page, rowCount: data.length });
+  }
 
   const renderCellContent = (
     item: TItem,
@@ -96,28 +120,32 @@ const MyDataTable = <TItem extends object>({
     return toDisplayNode(value);
   };
 
+  const visibleRows = data.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage,
+  );
+
   return (
     <Fade in>
       <Paper sx={{ overflow: "hidden" }}>
         <Box sx={{ p: 2, bgcolor: "background.paper", borderBottom: 1, borderColor: "divider" }}>
           <Typography
             variant="h6"
-            title={title}
             sx={{ color: "text.primary", display: "flex", alignItems: "center", gap: 1, fontSize: { xs: "1rem", sm: "1.25rem" } }}
           >
-            {icon && React.cloneElement(icon, { color: "primary", sx: { fontSize: { xs: 20, sm: 24 } } })}
-            {countLabel} {data.length}
+            {icon && cloneElement(icon, { color: "primary", sx: { fontSize: { xs: 20, sm: 24 } } })}
+            {resolvedCountLabel} {data.length}
           </Typography>
         </Box>
 
         <TableContainer sx={{ maxHeight }}>
-          <Table stickyHeader={stickyHeader}>
+          <Table stickyHeader={stickyHeader} aria-label={resolvedTitle}>
             <TableHead>
               <TableRow>
-                {columns.map((column, index) => (
-                  <StyledTableCell key={`header-${index}`} align={column.align ?? "left"}>
+                {columns.map((column) => (
+                  <StyledTableCell key={column.field} align={column.align ?? "left"}>
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: column.align === "right" ? "flex-end" : "flex-start" }}>
-                      {column.icon && React.cloneElement(column.icon, { sx: { display: { xs: "none", sm: "block" } } })}
+                      {column.icon && cloneElement(column.icon, { sx: { display: { xs: "none", sm: "block" } } })}
                       <Box sx={{ display: { xs: "none", sm: "block" } }}>{column.headerName}</Box>
                       {column.mobileHeader && <Box sx={{ display: { xs: "block", sm: "none" } }}>{column.mobileHeader}</Box>}
                     </Box>
@@ -127,18 +155,22 @@ const MyDataTable = <TItem extends object>({
             </TableHead>
 
             <TableBody>
-              {data.length > 0 ? (
-                data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, rowIndex) => (
-                  <TableRow key={`row-${rowIndex}`} sx={{ "&:nth-of-type(odd)": { bgcolor: "action.hover" }, "&:hover": { bgcolor: "action.selected" } }}>
-                    {columns.map((column, colIndex) => (
-                      <TableCell key={`cell-${rowIndex}-${colIndex}`} align={column.align ?? "left"} sx={[{ fontSize: { xs: "0.875rem", sm: "1rem" } }, ...(Array.isArray(column.cellSx) ? column.cellSx : [column.cellSx])]}>
-                        {renderCellContent(item, column)}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
+              {visibleRows.length > 0 ? (
+                visibleRows.map((item, rowIndex) => {
+                  const absoluteIndex = page * rowsPerPage + rowIndex;
+                  const key = getRowId?.(item, absoluteIndex) ?? getDefaultRowKey(item, absoluteIndex);
+                  return (
+                    <TableRow key={key} sx={{ "&:nth-of-type(odd)": { bgcolor: "action.hover" }, "&:hover": { bgcolor: "action.selected" } }}>
+                      {columns.map((column) => (
+                        <TableCell key={column.field} align={column.align ?? "left"} sx={[{ fontSize: { xs: "0.875rem", sm: "1rem" } }, ...(Array.isArray(column.cellSx) ? column.cellSx : [column.cellSx])]}>
+                          {renderCellContent(item, column)}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  );
+                })
               ) : (
-                <TableRow><TableCell colSpan={columns.length} align="center" sx={{ py: 3 }}><Typography variant="body1" color="text.secondary">{emptyMessage}</Typography></TableCell></TableRow>
+                <TableRow><TableCell colSpan={Math.max(1, columns.length)} align="center" sx={{ py: 3 }}><Typography variant="body1" color="text.secondary">{resolvedEmptyMessage}</Typography></TableCell></TableRow>
               )}
             </TableBody>
           </Table>
@@ -151,18 +183,28 @@ const MyDataTable = <TItem extends object>({
             count={data.length}
             rowsPerPage={rowsPerPage}
             page={page}
-            onPageChange={(_, newPage: number) => setPage(newPage)}
+            onPageChange={(_, newPage: number) => {
+              setPaginationState({ page: newPage, rowCount: data.length });
+            }}
             onRowsPerPageChange={(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
               setRowsPerPage(Number.parseInt(event.target.value, 10));
-              setPage(0);
+              setPaginationState({ page: 0, rowCount: data.length });
             }}
-            labelRowsPerPage={<Box sx={{ display: { xs: "none", sm: "block" } }}>Rows per page:</Box>}
+            labelRowsPerPage={t("pagination.rowsPerPage")}
           />
         )}
       </Paper>
     </Fade>
   );
 };
+
+function getDefaultRowKey(item: object, index: number): Key {
+  if ("id" in item) {
+    const id = item.id;
+    if (typeof id === "string" || typeof id === "number") return id;
+  }
+  return index;
+}
 
 function toDisplayNode(value: unknown): ReactNode {
   if (value == null) return "";

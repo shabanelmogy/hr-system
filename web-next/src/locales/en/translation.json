@@ -387,6 +387,7 @@
     "searchInSidebar": "Search In Sidebar"
   },
   "pagination": {
+    "dataTable": "Data table",
     "rowsPerPage": "Rows per page",
     "showing": "Showing",
     "of": "of",

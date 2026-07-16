@@ -2,7 +2,7 @@ import { appRoutes, normalizeAppPath } from "@/config/routes";
 import type { CreateRoleRequest, Role, UpdateRoleRequest } from "../../types";
 import useApiHandler from "@/shared/hooks/useApiHandler";
 import { useGridCrudController } from "@/shared/hooks/useGridCrudController";
-import { useGridRowNavigation } from "@/shared/hooks/useGridRowNavigation";
+import { useGridCrudMarkerCleanup } from "@/shared/hooks/useGridCrudMarkerCleanup";
 import useNotifications from "@/shared/hooks/useNotifications";
 import { useGridApiRef } from "@mui/x-data-grid";
 import { useRouter } from "next/navigation";
@@ -79,11 +79,7 @@ const useRoleGridLogic = () => {
     refresh,
   });
 
-  useGridRowNavigation({
-    apiRef,
-    items: activeRoles,
-    isLoading: loading,
-    isFetching: false,
+  useGridCrudMarkerCleanup({
     lastAddedId: crud.lastAddedId,
     lastEditedId: crud.lastEditedId,
     lastDeletedIndex: crud.lastDeletedIndex,
@@ -116,6 +112,9 @@ const useRoleGridLogic = () => {
     onDelete: crud.onDelete,
     onAdd: crud.onAdd,
     onManagePermissions: handleManagePermissions,
+    lastAddedId: crud.lastAddedId,
+    lastEditedId: crud.lastEditedId,
+    lastDeletedIndex: crud.lastDeletedIndex,
     SnackbarComponent,
   };
 };

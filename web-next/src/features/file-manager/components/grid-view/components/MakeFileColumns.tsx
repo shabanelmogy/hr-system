@@ -6,7 +6,7 @@ import type {
 import type { TFunction } from "i18next";
 import type { FileItem } from "../../../types/File";
 import FileTypeIcon from "./FileTypeIcon";
-import { renderDate } from "@/shared/components/data-grid/DataGridCellRenderers";
+import { renderDate } from "@/shared/components/data-grid";
 
 export default function makeFileColumns({
   t,

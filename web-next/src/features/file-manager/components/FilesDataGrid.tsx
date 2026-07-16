@@ -1,4 +1,4 @@
-import MyDataGrid from "@/shared/components/data-grid/MyDataGrid";
+import { MyDataGrid } from "@/shared/components/data-grid";
 import { useCallback, useMemo } from "react";
 import makeFileActions from "./grid-view/components/MakeFileActions";
 import makeFileColumns from "./grid-view/components/MakeFileColumns";
@@ -12,7 +12,6 @@ const FilesDataGrid = ({
   onDownload,
   onView,
   onDelete,
-  onAdd,
   t,
 }: FilesDataGridProps) => {
   const getActions = useCallback(
@@ -31,14 +30,11 @@ const FilesDataGrid = ({
         rows={files}
         columns={columns}
         loading={loading}
-        apiRef={apiRef}
+        apiRef={apiRef ?? undefined}
         filterMode="client"
-        sortModel={[{ field: "createdOn", sort: "asc" }]}
-        addNewRow={onAdd}
+        initialSortModel={[{ field: "createdOn", sort: "asc" }]}
         pagination
         pageSizeOptions={[5, 10, 25, 50]}
-        fileName="files"
-        reportPdfHeader="Files Report"
       />
     </ContentWrapper>
   );

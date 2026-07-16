@@ -1,8 +1,7 @@
-/* eslint-disable react/prop-types */
-import React, { useCallback } from "react";
+import React, { useMemo } from "react";
 import { GridApi } from "@mui/x-data-grid";
 import { ContentWrapper } from "@/shared/components/layout";
-import MyDataGrid from "@/shared/components/data-grid/MyDataGrid";
+import { MyDataGrid } from "@/shared/components/data-grid";
 import { useModulePermissions } from "@/shared/hooks/usePermissions";
 import { useTranslation } from "react-i18next";
 import { AddressType } from "../../types/AddressType";
@@ -16,11 +15,9 @@ interface AddressTypesDataGridProps {
   onEdit: (item: AddressType) => void;
   onDelete: (item: AddressType) => void;
   onView: (item: AddressType) => void;
-  onAdd: () => void;
   lastAddedId?: string | number | null;
   lastEditedId?: string | number | null;
   lastDeletedIndex?: number | null;
-  onRefresh?: () => void;
 }
 
 const AddressTypesDataGrid: React.FC<AddressTypesDataGridProps> = ({
@@ -30,27 +27,19 @@ const AddressTypesDataGrid: React.FC<AddressTypesDataGridProps> = ({
   onEdit,
   onDelete,
   onView,
-  onAdd,
   lastAddedId,
   lastEditedId,
   lastDeletedIndex,
-  onRefresh,
 }) => {
   const { t } = useTranslation();
   const permissions = useModulePermissions("AddressTypes");
 
-  const getActions = useCallback(
-    makeAddressTypeActions({ t, permissions, onView, onEdit, onDelete }),
+  const getActions = useMemo(
+    () => makeAddressTypeActions({ t, permissions, onView, onEdit, onDelete }),
     [t, permissions, onView, onEdit, onDelete]
   );
 
   const columns = useAddressTypeColumns({ permissions, getActions });
-
-  const handleAddNew = useCallback(() => {
-    if (permissions.canCreate) {
-      onAdd();
-    }
-  }, [onAdd, permissions.canCreate]);
 
   return (
     <ContentWrapper>
@@ -60,12 +49,9 @@ const AddressTypesDataGrid: React.FC<AddressTypesDataGridProps> = ({
         loading={loading}
         apiRef={apiRef}
         filterMode="client"
-        sortModel={[{ field: "id", sort: "asc" }]}
-        addNewRow={permissions.canCreate ? handleAddNew : undefined}
+        initialSortModel={[{ field: "id", sort: "asc" }]}
         pagination
         pageSizeOptions={[5, 10, 25]}
-        fileName={t("addressTypes.title")}
-        reportPdfHeader={t("addressTypes.title")}
         lastAddedId={lastAddedId}
         lastEditedId={lastEditedId}
         lastDeletedIndex={lastDeletedIndex}

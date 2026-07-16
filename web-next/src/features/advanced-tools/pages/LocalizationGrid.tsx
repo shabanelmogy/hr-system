@@ -18,7 +18,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
 import { PageHeader } from "@/shared/components/navigation/header";
-import ClientDataGrid from "@/shared/components/data-grid/ClientDataGrid";
+import { ClientDataGrid } from "@/shared/components/data-grid";
 import { ContentWrapper } from "@/shared/components/layout";
 import { useSnackbar } from "@/shared/hooks";
 import { HandleApiError } from "@/shared/services";

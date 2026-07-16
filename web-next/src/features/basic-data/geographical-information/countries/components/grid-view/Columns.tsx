@@ -2,8 +2,13 @@ import React from "react";
 import { LocationOn } from "@mui/icons-material";
 import { useTheme } from "@mui/material";
 import { GridColDef, GridActionsCellItemProps } from "@mui/x-data-grid";
-import { renderAlphaCode, renderCountryName, renderCurrencyCode, renderDate, renderList, renderPhoneCode } from "@/shared/components/data-grid/DataGridCellRenderers";
+import { renderCode, renderDate, renderList } from "@/shared/components/data-grid";
 import type { Country } from "../../types/Country";
+import {
+  renderCountryName,
+  renderCurrencyCode,
+  renderPhoneCode,
+} from "./CountryCellRenderers";
 
 export interface ColumnsFactoryProps {
   t: (key: string) => string;
@@ -44,7 +49,7 @@ export const useCountryColumns = ({ t, permissions, getActions }: ColumnsFactory
       flex: 0.8,
       align: "center",
       headerAlign: "center",
-      renderCell: renderAlphaCode,
+      renderCell: renderCode,
     },
     {
       field: "alpha3Code",
@@ -52,7 +57,7 @@ export const useCountryColumns = ({ t, permissions, getActions }: ColumnsFactory
       flex: 0.8,
       align: "center",
       headerAlign: "center",
-      renderCell: renderAlphaCode,
+      renderCell: renderCode,
     },
     {
       field: "phoneCode",

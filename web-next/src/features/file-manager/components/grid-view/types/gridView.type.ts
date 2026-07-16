@@ -10,6 +10,5 @@ export interface FilesDataGridProps {
   onDownload: (file: FileItem) => void;
   onView: (file: FileItem) => void;
   onDelete: (file: FileItem) => void;
-  onAdd: () => void;
   t: TFunction;
 }

@@ -25,6 +25,8 @@ const UsersPage = () => {
     onUnlock,
     onAdd,
     onRevoke,
+    lastAddedId,
+    lastEditedId,
     closeDialog,
     handleFormSubmit,
     SnackbarComponent,
@@ -49,6 +51,8 @@ const UsersPage = () => {
           onUnlock={onUnlock}
           onAdd={onAdd}
           onRevoke={onRevoke}
+          lastAddedId={lastAddedId}
+          lastEditedId={lastEditedId}
           t={t}
         />
 

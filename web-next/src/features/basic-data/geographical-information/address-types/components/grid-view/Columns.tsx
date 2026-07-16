@@ -1,5 +1,5 @@
 import { GridColDef, GridActionsCellItemProps } from "@mui/x-data-grid";
-import { renderDate } from "@/shared/components/data-grid/DataGridCellRenderers";
+import { renderDate } from "@/shared/components/data-grid";
 import { useTranslation } from "react-i18next";
 import type { AddressType } from "../../types/AddressType";
 

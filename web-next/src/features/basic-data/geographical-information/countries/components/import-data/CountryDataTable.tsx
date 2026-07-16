@@ -1,6 +1,6 @@
 import React from "react";
 import { Public as PublicIcon } from "@mui/icons-material";
-import MyDataTable from "@/shared/components/data-grid/MyDataTable";
+import { MyDataTable } from "@/shared/components/data-grid";
 import { useTranslation } from "react-i18next";
 import { Country, ColumnConfig } from "./types";
 

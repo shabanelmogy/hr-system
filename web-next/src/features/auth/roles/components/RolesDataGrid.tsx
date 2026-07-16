@@ -10,7 +10,7 @@ import {
 } from "@mui/x-data-grid";
 import { useCallback, useMemo, type ReactElement, type RefObject } from "react";
 
-import MyDataGrid from "@/shared/components/data-grid/MyDataGrid";
+import { MyDataGrid } from "@/shared/components/data-grid";
 import type { Role, Translator } from "../../types";
 
 interface RolesDataGridProps {
@@ -23,6 +23,9 @@ interface RolesDataGridProps {
   onManagePermissions: (row: Role) => void;
   onAdd: () => void;
   t: Translator;
+  lastAddedId?: string | number | null;
+  lastEditedId?: string | number | null;
+  lastDeletedIndex?: number | null;
 }
 
 const RolesDataGrid = ({
@@ -35,6 +38,9 @@ const RolesDataGrid = ({
   onManagePermissions,
   onAdd,
   t,
+  lastAddedId,
+  lastEditedId,
+  lastDeletedIndex,
 }: RolesDataGridProps) => {
   // Memoized action buttons
   const getActions = useCallback(
@@ -134,12 +140,13 @@ const RolesDataGrid = ({
       loading={loading}
       apiRef={apiRef}
       filterMode="client"
-      sortModel={[{ field: "id", sort: "asc" }]}
-      addNewRow={onAdd}
+      initialSortModel={[{ field: "id", sort: "asc" }]}
+      onToolbarAdd={onAdd}
       pagination
       pageSizeOptions={[5, 10, 25]}
-      fileName={t("roles.name")}
-      reportPdfHeader={t("roles.name")}
+      lastAddedId={lastAddedId}
+      lastEditedId={lastEditedId}
+      lastDeletedIndex={lastDeletedIndex}
     />
   );
 };

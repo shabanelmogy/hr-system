@@ -76,7 +76,6 @@ const FilesMultiView = ({
             onDownload={onDownload}
             onView={onView}
             onDelete={onDelete}
-            onAdd={onAdd}
             t={t}
           />
         );
@@ -102,7 +101,6 @@ const FilesMultiView = ({
             onDownload={onDownload}
             onView={onView}
             onDelete={onDelete}
-            onAdd={onAdd}
             t={t}
           />
         );

@@ -24,6 +24,9 @@ const RolesPage = () => {
     onDelete,
     onAdd,
     onManagePermissions,
+    lastAddedId,
+    lastEditedId,
+    lastDeletedIndex,
     closeDialog,
     handleFormSubmit,
     handleDelete,
@@ -49,6 +52,9 @@ const RolesPage = () => {
           onDelete={onDelete}
           onAdd={onAdd}
           onManagePermissions={onManagePermissions}
+          lastAddedId={lastAddedId}
+          lastEditedId={lastEditedId}
+          lastDeletedIndex={lastDeletedIndex}
           t={t}
         />
 

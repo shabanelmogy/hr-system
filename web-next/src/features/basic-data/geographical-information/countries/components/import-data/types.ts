@@ -1,3 +1,5 @@
+import type { MyDataTableColumn } from "@/shared/components/data-grid";
+
 export interface Country {
   nameAr: string;
   nameEn: string;
@@ -9,4 +11,3 @@ export interface Country {
 }
 
 export type ColumnConfig = MyDataTableColumn<Country>;
-import type { MyDataTableColumn } from "@/shared/components/data-grid/MyDataTable";

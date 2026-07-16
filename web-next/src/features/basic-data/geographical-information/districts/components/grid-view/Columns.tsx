@@ -1,6 +1,6 @@
 import React from "react";
 import { GridActionsCellItemProps, GridColDef } from "@mui/x-data-grid";
-import { renderAlphaCode, renderDate } from "@/shared/components/data-grid/DataGridCellRenderers";
+import { renderCode, renderDate } from "@/shared/components/data-grid";
 import { useTranslation } from "react-i18next";
 import type { District } from "../../types/District";
 import { useTheme } from "@mui/material";
@@ -56,7 +56,7 @@ export const useDistrictColumns = ({
       flex: 0.8,
       align: "center",
       headerAlign: "center",
-      renderCell: renderAlphaCode,
+      renderCell: renderCode,
     },
     {
       field: "state",

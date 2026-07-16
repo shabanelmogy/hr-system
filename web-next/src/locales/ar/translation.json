@@ -387,6 +387,7 @@
     "searchInSidebar": "البحث فى القوائم"
   },
   "pagination": {
+    "dataTable": "جدول البيانات",
     "rowsPerPage": " عدد الصفوف في الصفحة",
     "showing": "عرض",
     "of": "من",

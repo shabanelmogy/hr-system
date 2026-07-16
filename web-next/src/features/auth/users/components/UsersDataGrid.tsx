@@ -17,12 +17,12 @@ import {
 } from "@mui/x-data-grid";
 import { useCallback, useMemo, type ReactElement, type RefObject } from "react";
 
-import MyDataGrid from "@/shared/components/data-grid/MyDataGrid";
+import { MyDataGrid } from "@/shared/components/data-grid";
+import type { Translator, User } from "../../types";
 import {
   renderDisabledStatus,
   renderLockedStatus,
-} from "@/shared/components/data-grid/DataGridCellRenderers";
-import type { Translator, User } from "../../types";
+} from "./UserStatusCellRenderers";
 
 interface UsersDataGridProps {
   users: User[];
@@ -35,6 +35,8 @@ interface UsersDataGridProps {
   onUnlock: (user: User) => void;
   onRevoke: (user: User) => void;
   t: Translator;
+  lastAddedId?: string | number | null;
+  lastEditedId?: string | number | null;
 }
 
 const UsersDataGrid = ({
@@ -48,6 +50,8 @@ const UsersDataGrid = ({
   onUnlock,
   onRevoke, // Revoke function
   t,
+  lastAddedId,
+  lastEditedId,
 }: UsersDataGridProps) => {
   // Custom renderers
   const renderUserName = useCallback(
@@ -278,18 +282,12 @@ const UsersDataGrid = ({
       loading={loading}
       apiRef={apiRef}
       filterMode="client"
-      sortModel={[{ field: "id", sort: "asc" }]}
-      addNewRow={onAdd}
+      initialSortModel={[{ field: "id", sort: "asc" }]}
+      onToolbarAdd={onAdd}
       pagination
       pageSizeOptions={[5, 10, 25]}
-      fileName={t("users.title")}
-      reportPdfHeader={t("users.title")}
-      excludeColumnsFromExport={[
-        "isDisabled",
-        "isLocked",
-        "actions",
-        "password",
-      ]}
+      lastAddedId={lastAddedId}
+      lastEditedId={lastEditedId}
     />
   );
 };
