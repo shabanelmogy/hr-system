@@ -2,7 +2,7 @@
 
 // RolesPage.js
 import { ContentWrapper } from "@/shared/components/layout";
-import { MyHeader } from "@/shared/components/navigation/header";
+import { PageHeader } from "@/shared/components/navigation/header";
 import { useTranslation } from "react-i18next";
 import RoleDeleteDialog from "./components/RoleDeleteDialog";
 import RoleForm from "./components/RoleForm";
@@ -35,7 +35,7 @@ const RolesPage = () => {
   return (
     <>
       <ContentWrapper>
-        <MyHeader
+        <PageHeader
           title={t("roles.title")}
           subTitle={t("roles.subTitle")}
         />

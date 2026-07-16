@@ -19,7 +19,15 @@ export type HeaderActions = {
 
 export type HeaderExportOption = ExportMenuOption;
 
-export interface MultiViewHeaderProps {
+export interface SimplePageHeaderProps {
+  variant?: "simple";
+  title: ReactNode;
+  subTitle?: ReactNode;
+  isDashboard?: boolean;
+}
+
+export interface MultiViewPageHeaderProps {
+  variant: "multi-view";
   title: ReactNode;
   titleIcon?: ReactNode;
   onBack?: () => void;
@@ -42,3 +50,5 @@ export interface MultiViewHeaderProps {
   enableActivity?: boolean;
   t?: unknown;
 }
+
+export type PageHeaderProps = SimplePageHeaderProps | MultiViewPageHeaderProps;

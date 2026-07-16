@@ -1,4 +1,4 @@
-import MyDeleteConfirmation from "@/shared/components/dialogs/MyDeleteConfirmation";
+import { DeleteConfirmationDialog } from "@/shared/components/dialogs";
 import type { FileItem } from "../../types/File";
 
 interface FileDeleteDialogProps {
@@ -23,7 +23,7 @@ const FileDeleteDialog = ({
     : "";
 
   return (
-    <MyDeleteConfirmation
+    <DeleteConfirmationDialog
       open={open}
       onClose={onClose}
       deletedField={deletedField}

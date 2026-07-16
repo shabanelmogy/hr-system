@@ -1,4 +1,4 @@
-import MultiViewHeader from "@/shared/components/navigation/header/MultiViewHeader";
+import { PageHeader } from "@/shared/components/navigation/header";
 import { useCollectionExports } from "@/shared/hooks/useCollectionExports";
 import { Box } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
@@ -153,7 +153,8 @@ const AddressTypesMultiView = ({
         position: "relative",
       }}
     >
-      <MultiViewHeader
+      <PageHeader
+        variant="multi-view"
         title={t("addressTypes.viewTitle") || "Address Types Management"}
         storageKey="addressTypes-view-layout"
         defaultView="grid"

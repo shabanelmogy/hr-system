@@ -1,4 +1,4 @@
-import MultiViewHeader from "@/shared/components/navigation/header/MultiViewHeader";
+import { PageHeader } from "@/shared/components/navigation/header";
 import { Box } from "@mui/material";
 import { useCallback, useState, useRef } from "react";
 import type { GridApi } from "@mui/x-data-grid";
@@ -119,7 +119,8 @@ const FilesMultiView = ({
         position: "relative",
       }}
     >
-      <MultiViewHeader
+      <PageHeader
+        variant="multi-view"
         title={
           selectedGroup
             ? selectedGroup.name

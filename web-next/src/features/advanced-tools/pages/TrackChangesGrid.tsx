@@ -3,7 +3,7 @@
 import { DAYJS_DATE_FORMAT } from "@/shared/utils/dateFormats";
 import { ContentWrapper } from "@/shared/components/layout";
 import MyDataGrid from "@/shared/components/data-grid/MyDataGrid";
-import MyHeader from "@/shared/components/navigation/header/MyHeader";
+import { PageHeader } from "@/shared/components/navigation/header";
 import { useSnackbar } from "@/shared/hooks";
 import { HandleApiError } from "@/shared/services";
 import { useGridApiRef, type GridColDef } from "@mui/x-data-grid";
@@ -93,7 +93,7 @@ const TrackChangesGrid = () => {
   return (
     <>
       <ContentWrapper>
-        <MyHeader title={t("trackChanges.title")} subTitle={t("trackChanges.subTitle")} />
+        <PageHeader title={t("trackChanges.title")} subTitle={t("trackChanges.subTitle")} />
         <MyDataGrid
           rows={changes}
           columns={columns}

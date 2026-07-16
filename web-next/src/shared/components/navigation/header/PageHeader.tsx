@@ -1,20 +1,58 @@
 import useViewLayout from "@/shared/hooks/useViewLayout";
-import { Paper, useMediaQuery, useTheme } from "@mui/material";
+import ConstructionIcon from "@mui/icons-material/Construction";
+import { Alert, Box, Paper, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import DesktopHeaderLayout from "./multi-view-header/DesktopHeaderLayout";
 import MobileHeaderLayout from "./multi-view-header/MobileHeaderLayout";
-import type { MultiViewHeaderProps, ViewType } from "./multi-view-header/types";
+import type {
+  MultiViewPageHeaderProps,
+  PageHeaderProps,
+  SimplePageHeaderProps,
+  ViewType,
+} from "./multi-view-header/types";
 import ViewActivities from "./multi-view-header/ViewActivities";
 import { createViewOptions } from "./multi-view-header/viewOptions";
 
 export type {
   HeaderExportOption,
-  MultiViewHeaderProps,
+  MultiViewPageHeaderProps,
+  PageHeaderProps,
+  SimplePageHeaderProps,
   ViewType,
 } from "./multi-view-header/types";
 
-export default function MultiViewHeader({
+function SimplePageHeader({
+  title,
+  subTitle,
+  isDashboard = false,
+}: SimplePageHeaderProps) {
+  const theme = useTheme();
+
+  return (
+    <Box sx={{ mb: isDashboard ? 2 : 4 }}>
+      <Typography
+        variant="h5"
+        sx={{ color: theme.palette.info.light, fontWeight: "bold" }}
+      >
+        {title}
+      </Typography>
+      {subTitle ? <Typography variant="body1">{subTitle}</Typography> : null}
+      {isDashboard ? (
+        <Alert
+          icon={<ConstructionIcon fontSize="inherit" />}
+          severity="warning"
+          variant="outlined"
+          sx={{ mt: 1, alignItems: "center", py: 0.5, "& .MuiAlert-message": { p: 0 } }}
+        >
+          This dashboard is under construction using dummy data. Updates will roll out step by step.
+        </Alert>
+      ) : null}
+    </Box>
+  );
+}
+
+function MultiViewPageHeader({
   title,
   titleIcon,
   onBack,
@@ -34,7 +72,7 @@ export default function MultiViewHeader({
   onViewTypeChange,
   viewComponents = {},
   enableActivity = false,
-}: MultiViewHeaderProps) {
+}: MultiViewPageHeaderProps) {
   const { t } = useTranslation();
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down("sm"));
@@ -108,4 +146,12 @@ export default function MultiViewHeader({
       />
     </>
   );
+}
+
+export default function PageHeader(props: PageHeaderProps) {
+  if (props.variant === "multi-view") {
+    return <MultiViewPageHeader {...props} />;
+  }
+
+  return <SimplePageHeader {...props} />;
 }

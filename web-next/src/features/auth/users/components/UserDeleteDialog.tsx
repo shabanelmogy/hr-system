@@ -1,4 +1,4 @@
-import MyDeleteConfirmation from "@/shared/components/dialogs/MyDeleteConfirmation";
+import { DeleteConfirmationDialog } from "@/shared/components/dialogs";
 
 interface UserDeleteDialogProps {
   open: boolean;
@@ -19,7 +19,7 @@ const UserDeleteDialog = ({
     : "";
 
   return (
-    <MyDeleteConfirmation
+    <DeleteConfirmationDialog
       open={open}
       onClose={onClose}
       deletedField={deletedField}

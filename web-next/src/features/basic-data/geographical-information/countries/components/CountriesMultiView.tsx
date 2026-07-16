@@ -1,4 +1,4 @@
-import MultiViewHeader from "@/shared/components/navigation/header/MultiViewHeader";
+import { PageHeader } from "@/shared/components/navigation/header";
 import { useCollectionExports } from "@/shared/hooks/useCollectionExports";
 import { Box } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
@@ -173,7 +173,8 @@ const CountriesMultiView = ({
       }}
     >
       {/* Shared Multi-View Header */}
-      <MultiViewHeader
+      <PageHeader
+        variant="multi-view"
         title={t("countries.viewTitle") || "Countries Management"}
         titleIcon={null}
         onBack={() => {}}

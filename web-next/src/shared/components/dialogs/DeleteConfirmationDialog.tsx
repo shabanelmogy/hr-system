@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import {
   Cancel as CancelIcon,
   Close as CloseIcon,
@@ -27,7 +25,7 @@ import type { SlideProps } from "@mui/material/Slide";
 import { useTranslation } from "react-i18next";
 
 // Custom transition component
-interface MyDeleteConfirmationProps {
+interface DeleteConfirmationDialogProps {
   open: boolean;
   onClose: () => void;
   deletedField: string;
@@ -40,19 +38,19 @@ const SlideTransition = forwardRef<HTMLDivElement, SlideProps>(function Transiti
   return <Slide direction="up" ref={ref} {...props}>{props.children}</Slide>;
 });
 
-const MyDeleteConfirmation = ({
+const DeleteConfirmationDialog = ({
   open,
   onClose,
   deletedField,
   handleDelete,
   loading = false,
   requireConfirmation = true, // New prop to enable/disable confirmation
-}: MyDeleteConfirmationProps) => {
+}: DeleteConfirmationDialogProps) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const isRTL = theme.direction === "rtl";
   const [isDeleting, setIsDeleting] = useState(false);
   const [confirmationText, setConfirmationText] = useState("");
+  const isBusy = loading || isDeleting;
 
   const requiredText = "DELETE";
   const isConfirmationValid =
@@ -71,7 +69,7 @@ const MyDeleteConfirmation = ({
   };
 
   const handleClose = () => {
-    if (!isDeleting) {
+    if (!isBusy) {
       setConfirmationText(""); // Reset confirmation text
       onClose();
     }
@@ -159,8 +157,9 @@ const MyDeleteConfirmation = ({
       </Box>
       {/* Close Button */}
       <IconButton
+        aria-label={t("actions.close") || "Close"}
         onClick={handleClose}
-        disabled={isDeleting}
+        disabled={isBusy}
         sx={{
           position: "absolute",
           right: 8,
@@ -258,7 +257,7 @@ const MyDeleteConfirmation = ({
                   gap: 1,
                 }}
               >
-                <DeleteIcon sx={{ fontSize: 20 }} />"{deletedField}"
+                <DeleteIcon sx={{ fontSize: 20 }} />&quot;{deletedField}&quot;
               </Typography>
             </Box>
 
@@ -297,7 +296,7 @@ const MyDeleteConfirmation = ({
                   value={confirmationText}
                   onChange={(e) => setConfirmationText(e.target.value)}
                   placeholder={t("messages.typeDELETE") || "Type DELETE"}
-                  disabled={isDeleting}
+                  disabled={isBusy}
                   variant="outlined"
                   size="medium"
                   sx={{
@@ -337,7 +336,7 @@ const MyDeleteConfirmation = ({
                     }}
                   >
                     {t("messages.pleaseTypeExactly") || "Please type exactly"}{" "}
-                    "DELETE"
+                    &quot;DELETE&quot;
                   </Typography>
                 )}
 
@@ -375,7 +374,7 @@ const MyDeleteConfirmation = ({
         {/* Cancel Button */}
         <Button
           onClick={handleClose}
-          disabled={isDeleting}
+          disabled={isBusy}
           variant="outlined"
           size="large"
           startIcon={<CancelIcon />}
@@ -400,11 +399,11 @@ const MyDeleteConfirmation = ({
         {/* Confirm Delete Button */}
         <Button
           onClick={handleConfirmDelete}
-          disabled={isDeleting || !isConfirmationValid}
+          disabled={isBusy || !isConfirmationValid}
           variant="contained"
           size="large"
           startIcon={
-            isDeleting ? (
+            isBusy ? (
               <CircularProgress size={16} sx={{ color: "white" }} />
             ) : (
               <DeleteIcon />
@@ -433,13 +432,13 @@ const MyDeleteConfirmation = ({
             transition: "all 0.2s ease",
           }}
         >
-          {isDeleting
+          {isBusy
             ? t("actions.deleting") || "Deleting..."
             : t("actions.delete")}
         </Button>
       </DialogActions>
       {/* Loading Overlay */}
-      {isDeleting && (
+      {isBusy && (
         <Box
           sx={{
             position: "absolute",
@@ -476,4 +475,4 @@ const MyDeleteConfirmation = ({
   );
 };
 
-export default MyDeleteConfirmation;
+export default DeleteConfirmationDialog;

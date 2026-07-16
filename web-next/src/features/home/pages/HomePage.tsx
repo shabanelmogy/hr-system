@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 
 // Shared components and charts
 import { appRoutes } from "@/config";
-import { MyHeader } from "@/shared/components/navigation/header";
+import { PageHeader } from "@/shared/components/navigation/header";
 import { useMediaQuery } from "@mui/material";
 import { useRouter } from "next/navigation";
 import Section from "@/shared/components/layout/Section";
@@ -70,7 +70,7 @@ const Home = () => {
       >
         <Grid sx={{ gap: 2, display: "flex", flexDirection: "column" }}>
           {isUpLg && (
-            <MyHeader
+            <PageHeader
               isDashboard
               title={t("menu.dashboard") || "Global HR Dashboard"}
               subTitle={

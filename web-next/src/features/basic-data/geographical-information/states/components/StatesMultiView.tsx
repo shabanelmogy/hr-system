@@ -1,4 +1,4 @@
-import MultiViewHeader from "@/shared/components/navigation/header/MultiViewHeader";
+import { PageHeader } from "@/shared/components/navigation/header";
 import { useCollectionExports } from "@/shared/hooks/useCollectionExports";
 import { Box } from "@mui/material";
 import type { GridApi } from "@mui/x-data-grid";
@@ -49,7 +49,7 @@ const StatesMultiView = ({
   lastDeletedIndex,
 }: StatesMultiViewProps) => {
   const { i18n, t } = useTranslation();
-  // Initialize with default, will be updated by MultiViewHeader
+  // Initialize with default, then synchronize with PageHeader.
   const [currentViewType, setCurrentViewType] = useState<"grid" | "cards" | "chart">("grid");
   const viewLoading = loading || Boolean(isFetching);
   const culture = i18n.resolvedLanguage?.toLowerCase().startsWith("ar") ? "ar" : "en";
@@ -125,7 +125,8 @@ const StatesMultiView = ({
       }}
     >
       {/* Shared Multi-View Header */}
-      <MultiViewHeader
+      <PageHeader
+        variant="multi-view"
         title={t("states.viewTitle") || "States Management"}
         storageKey="states-view-layout"
         defaultView="grid"

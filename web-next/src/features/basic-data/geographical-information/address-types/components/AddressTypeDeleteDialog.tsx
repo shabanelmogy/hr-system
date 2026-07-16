@@ -1,4 +1,4 @@
-import MyDeleteConfirmation from "@/shared/components/dialogs/MyDeleteConfirmation";
+import { DeleteConfirmationDialog } from "@/shared/components/dialogs";
 
 interface AddressTypeModel {
   id: number;
@@ -26,7 +26,7 @@ const AddressTypeDeleteDialog = ({
     : "";
 
   return (
-    <MyDeleteConfirmation
+    <DeleteConfirmationDialog
       open={open}
       onClose={onClose}
       deletedField={deletedField}

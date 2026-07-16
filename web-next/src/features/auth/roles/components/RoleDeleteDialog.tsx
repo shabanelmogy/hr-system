@@ -1,4 +1,4 @@
-import MyDeleteConfirmation from "@/shared/components/dialogs/MyDeleteConfirmation";
+import { DeleteConfirmationDialog } from "@/shared/components/dialogs";
 
 interface RoleDeleteDialogProps {
   open: boolean;
@@ -12,7 +12,7 @@ const RoleDeleteDialog = ({ open, onClose, onConfirm, selectedRole }: RoleDelete
   const deletedField = selectedRole ? selectedRole.name : "";
 
   return (
-    <MyDeleteConfirmation
+    <DeleteConfirmationDialog
       open={open}
       onClose={onClose}
       deletedField={deletedField}

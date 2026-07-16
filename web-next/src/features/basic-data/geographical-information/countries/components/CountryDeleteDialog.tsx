@@ -1,4 +1,4 @@
-import MyDeleteConfirmation from "@/shared/components/dialogs/MyDeleteConfirmation";
+import { DeleteConfirmationDialog } from "@/shared/components/dialogs";
 import { Country } from "../types/Country";
 
 interface CountryDeleteDialogProps {
@@ -21,7 +21,7 @@ const CountryDeleteDialog = ({
     : "";
 
   return (
-    <MyDeleteConfirmation
+    <DeleteConfirmationDialog
       open={open}
       onClose={onClose}
       deletedField={deletedField}

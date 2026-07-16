@@ -1,7 +1,7 @@
 "use client";
 
 import { ContentWrapper } from "@/shared/components/layout";
-import { MyHeader } from "@/shared/components/navigation/header";
+import { PageHeader } from "@/shared/components/navigation/header";
 import { ForbiddenPage } from "@/shared/components/auth";
 import { usePageGuard } from "@/shared/hooks";
 import { permissions } from "@/lib/auth/permissions";
@@ -38,7 +38,7 @@ const UsersPageContent = () => {
   return (
     <>
       <ContentWrapper>
-        <MyHeader title={t("users.title")} subTitle={t("users.subTitle")} />
+        <PageHeader title={t("users.title")} subTitle={t("users.subTitle")} />
 
         <UsersDashboardHeader users={users} loading={loading} t={t} />
 

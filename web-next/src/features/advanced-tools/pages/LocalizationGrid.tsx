@@ -17,7 +17,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
-import MyHeader from "@/shared/components/navigation/header/MyHeader";
+import { PageHeader } from "@/shared/components/navigation/header";
 import ClientDataGrid from "@/shared/components/data-grid/ClientDataGrid";
 import { ContentWrapper } from "@/shared/components/layout";
 import { useSnackbar } from "@/shared/hooks";
@@ -181,7 +181,7 @@ const LocalizationGrid = () => {
   return (
     <>
       <ContentWrapper>
-        <MyHeader
+        <PageHeader
           title={t("localizationApi.title")}
           subTitle={t("localizationApi.subTitle")}
         />

@@ -1,8 +1,8 @@
-export { default as MyHeader } from "./MyHeader";
-export { default as MyHeaderMultiViews } from "./MyHeaderMultiViews";
-export { default as MultiViewHeader } from "./MultiViewHeader";
+export { default as PageHeader } from "./PageHeader";
 export type {
   HeaderExportOption,
-  MultiViewHeaderProps,
+  MultiViewPageHeaderProps,
+  PageHeaderProps,
+  SimplePageHeaderProps,
   ViewType,
-} from "./MultiViewHeader";
+} from "./PageHeader";

@@ -1,4 +1,4 @@
-import MultiViewHeader from "@/shared/components/navigation/header/MultiViewHeader";
+import { PageHeader } from "@/shared/components/navigation/header";
 import { useCollectionExports } from "@/shared/hooks/useCollectionExports";
 import { Box } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
@@ -147,7 +147,8 @@ const DistrictsMultiView = ({
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", position: "relative" }}>
-      <MultiViewHeader
+      <PageHeader
+        variant="multi-view"
         title={t("districts.viewTitle") || "Districts Management"}
         storageKey="districts-view-layout"
         defaultView="grid"
