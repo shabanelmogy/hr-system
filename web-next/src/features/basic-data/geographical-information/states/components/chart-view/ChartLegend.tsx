@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Chip, alpha } from '@mui/material';
-import { getColorPalette } from '@/shared/components/charts/chartUtils';
+import { getColorPalette } from '@/shared/components/charts';
 
 interface LegendItem {
   name: string;

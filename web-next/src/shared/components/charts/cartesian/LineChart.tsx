@@ -1,14 +1,15 @@
 import { ResponsiveContainer, LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useTheme } from '@mui/material';
-import { getChartTheme } from './chartThemes';
-import { formatNumber, resolveChartColors, type ChartColors } from './chartUtils';
-import ChartContainer from './ChartContainer';
-import type { ChartContainerProps } from './ChartContainer';
+import { getChartTheme } from '../core/chartTheme';
+import { formatNumber, resolveChartColors } from '../core/chartUtils';
+import ChartContainer from '../core/ChartContainer';
+import type { ChartContainerProps } from '../core/ChartContainer';
 import type {
   CartesianChartProps,
   ChartInteractionHandler,
   ChartTooltipProps,
-} from './types';
+} from '../core/types';
+import { useChartMotion } from '../core/useChartMotion';
 
 export type LineChartProps = CartesianChartProps &
   Omit<ChartContainerProps, keyof CartesianChartProps | 'children'> & {
@@ -27,7 +28,7 @@ const LineChart = ({
   title,
   subtitle,
   height = 400,
-  colors = 'primary' as ChartColors,
+  colors = 'primary',
   showGrid = true,
   showLegend = false,
   showTooltip = true,
@@ -48,6 +49,7 @@ const LineChart = ({
   const theme = useTheme();
   const chartTheme = getChartTheme(theme);
   const colorPalette = resolveChartColors(colors, theme.palette.mode);
+  const isAnimationActive = useChartMotion();
 
   const CustomTooltip = ({ active, payload, label }: ChartTooltipProps) => {
     if (!active || !payload || !payload.length) return null;
@@ -81,6 +83,7 @@ const LineChart = ({
           strokeDasharray={series.dasharray || strokeDasharray}
           dot={showDots ? { r: dotSize, fill: series.color || colorPalette[index % colorPalette.length] } : false}
           activeDot={{ r: dotSize + 2 }}
+          isAnimationActive={isAnimationActive}
           onClick={onDotClick ? (data) => handleDotClick(data, index) : undefined}
         />
       ));
@@ -95,6 +98,7 @@ const LineChart = ({
         strokeDasharray={strokeDasharray}
         dot={showDots ? { r: dotSize, fill: colorPalette[0] } : false}
         activeDot={{ r: dotSize + 2 }}
+        isAnimationActive={isAnimationActive}
         onClick={onDotClick ? (data) => handleDotClick(data, 0) : undefined}
       />
     );
@@ -104,6 +108,7 @@ const LineChart = ({
     <ResponsiveContainer width="100%" height="100%">
       <RechartsLineChart
         data={data}
+        accessibilityLayer
         margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
       >
         {showGrid && (
@@ -141,6 +146,7 @@ const LineChart = ({
       height={height}
       loading={loading}
       error={error}
+      dataCount={data.length}
       gradient={gradient}
       {...props}
     >

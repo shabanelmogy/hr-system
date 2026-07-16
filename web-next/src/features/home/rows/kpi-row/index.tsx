@@ -1,4 +1,4 @@
-import { MetricCard } from "@/shared/components/charts";
+import { MetricCard } from "@/shared/components/cards";
 import {
   AccessTime,
   Diversity3,

@@ -1,14 +1,16 @@
+import { useId } from 'react';
 import { ResponsiveContainer, AreaChart as RechartsAreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useTheme } from '@mui/material';
-import { getChartTheme } from './chartThemes';
-import { COLOR_PALETTES, formatNumber, resolveChartColors, type ChartColors } from './chartUtils';
-import ChartContainer from './ChartContainer';
-import type { ChartContainerProps } from './ChartContainer';
+import { getChartTheme } from '../core/chartTheme';
+import { COLOR_PALETTES, formatNumber, resolveChartColors } from '../core/chartUtils';
+import ChartContainer from '../core/ChartContainer';
+import type { ChartContainerProps } from '../core/ChartContainer';
 import type {
   CartesianChartProps,
   ChartInteractionHandler,
   ChartTooltipProps,
-} from './types';
+} from '../core/types';
+import { useChartMotion } from '../core/useChartMotion';
 
 export type AreaChartProps = CartesianChartProps &
   Omit<ChartContainerProps, keyof CartesianChartProps | 'children'> & {
@@ -26,7 +28,7 @@ const AreaChart = ({
   title,
   subtitle,
   height = 400,
-  colors = COLOR_PALETTES.primary as ChartColors,
+  colors = COLOR_PALETTES.primary,
   showGrid = true,
   showLegend = false,
   showTooltip = true,
@@ -46,6 +48,8 @@ const AreaChart = ({
   const theme = useTheme();
   const chartTheme = getChartTheme(theme);
   const colorPalette = resolveChartColors(colors, theme.palette.mode);
+  const isAnimationActive = useChartMotion();
+  const gradientPrefix = `area-${useId().replace(/:/g, '')}`;
 
   const CustomTooltip = ({ active, payload, label }: ChartTooltipProps) => {
     if (!active || !payload || !payload.length) return null;
@@ -70,7 +74,7 @@ const AreaChart = ({
     if (multiSeries.length > 0) {
       return multiSeries.map((series, index) => {
         const color = series.color || colorPalette[index % colorPalette.length];
-        const gradientId = `gradient-${series.key}`;
+        const gradientId = `${gradientPrefix}-${series.key}`;
         
         return (
           <Area
@@ -83,6 +87,7 @@ const AreaChart = ({
             strokeWidth={strokeWidth}
             fill={gradient ? `url(#${gradientId})` : color}
             fillOpacity={fillOpacity}
+            isAnimationActive={isAnimationActive}
             onClick={onAreaClick ? (data) => handleAreaClick(data, index) : undefined}
           />
         );
@@ -90,7 +95,7 @@ const AreaChart = ({
     }
 
     const color = colorPalette[0];
-    const gradientId = `gradient-${yKey}`;
+    const gradientId = `${gradientPrefix}-${yKey}`;
 
     return (
       <Area
@@ -100,6 +105,7 @@ const AreaChart = ({
         strokeWidth={strokeWidth}
         fill={gradient ? `url(#${gradientId})` : color}
         fillOpacity={fillOpacity}
+        isAnimationActive={isAnimationActive}
         onClick={onAreaClick ? (data) => handleAreaClick(data, 0) : undefined}
       />
     );
@@ -113,7 +119,7 @@ const AreaChart = ({
         <defs>
           {multiSeries.map((series, index) => {
             const color = series.color || colorPalette[index % colorPalette.length];
-            const gradientId = `gradient-${series.key}`;
+            const gradientId = `${gradientPrefix}-${series.key}`;
             return (
               <linearGradient key={gradientId} id={gradientId} x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={color} stopOpacity={0.8}/>
@@ -126,7 +132,7 @@ const AreaChart = ({
     }
 
     const color = colorPalette[0];
-    const gradientId = `gradient-${yKey}`;
+    const gradientId = `${gradientPrefix}-${yKey}`;
     return (
       <defs>
         <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
@@ -141,6 +147,7 @@ const AreaChart = ({
     <ResponsiveContainer width="100%" height="100%">
       <RechartsAreaChart
         data={data}
+        accessibilityLayer
         margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
       >
         {renderGradients()}
@@ -180,6 +187,7 @@ const AreaChart = ({
       height={height}
       loading={loading}
       error={error}
+      dataCount={data.length}
       gradient={false} // We handle gradient internally
       {...props}
     >

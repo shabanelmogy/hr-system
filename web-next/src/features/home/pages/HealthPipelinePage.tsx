@@ -13,16 +13,12 @@ import {
   getColorPalette,
 } from "@/shared/components/charts";
 import { useTheme } from "@mui/material";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 
 const HealthPipelinePage = () => {
   const theme = useTheme();
   const router = useRouter();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   const palette = getColorPalette("rainbow", theme.palette.mode);
 
   // Sample datasets; wire to real data later

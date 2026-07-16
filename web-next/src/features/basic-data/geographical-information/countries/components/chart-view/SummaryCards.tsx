@@ -1,4 +1,4 @@
-import { MetricCard } from '@/shared/components/charts';
+import { MetricCard } from '@/shared/components/cards';
 import { Assessment, LocationOn, Public, TrendingUp } from '@mui/icons-material';
 import { Grid } from '@mui/material';
 import React from 'react';

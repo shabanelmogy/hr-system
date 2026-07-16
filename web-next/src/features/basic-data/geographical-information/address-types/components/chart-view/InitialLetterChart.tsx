@@ -18,7 +18,7 @@ const InitialLetterChart: React.FC<InitialLetterChartProps> = ({ data, t }) => {
           title=""
           subtitle=""
           height={300}
-          colors="teal"
+          colors="info"
           showGrid={true}
           showTooltip={true}
         />

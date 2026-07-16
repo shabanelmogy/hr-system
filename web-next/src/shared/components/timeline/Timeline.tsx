@@ -1,276 +1,337 @@
-import React from 'react';
 import {
-  Timeline as MuiTimeline,
-  TimelineItem,
-  TimelineSeparator,
-  TimelineConnector,
-  TimelineContent,
-  TimelineDot,
-  TimelineOppositeContent
-} from '@mui/lab';
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  Chip,
-  useTheme,
-  alpha,
-  Fade,
-  Zoom
-} from '@mui/material';
-import {
-  Work,
-  School,
-  Star,
-  TrendingUp,
-  Assignment,
-  Event,
   CheckCircle,
-  Timeline as TimelineIcon,
-  Celebration,
-  BusinessCenter,
-  EmojiEvents,
-  LocalHospital,
-  Flight,
-  PersonAdd,
-  Update
-} from '@mui/icons-material';
+  Error as ErrorIcon,
+  Info,
+  RadioButtonUnchecked,
+  Warning,
+} from "@mui/icons-material";
+import {
+  Avatar,
+  Box,
+  Chip,
+  Paper,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import ChartContainer from "../charts/core/ChartContainer";
+import { formatNumber } from "../charts/core/chartUtils";
+import { formatDisplayDate } from "@/shared/utils/dateUtils";
+import type { ChartContainerProps } from "../charts/core/ChartContainer";
+import type { ChartInteractionHandler, TimelineChartBaseProps } from "../charts/core/types";
+import { getChartValue } from "../charts/core/types";
 
-const Timeline = ({ items = [], title, showOppositeContent = true, variant = 'default' }) => {
+export type TimelineProps = TimelineChartBaseProps &
+  Omit<ChartContainerProps, keyof TimelineChartBaseProps | "children"> & {
+    showDates?: boolean;
+  };
+
+const toDateValue = (value: unknown): string | number | Date | null =>
+  typeof value === "string" || typeof value === "number" || value instanceof Date ? value : null;
+
+const Timeline = ({
+  data = [],
+  title,
+  subtitle,
+  height = 400,
+  loading = false,
+  error,
+  gradient = false,
+  showDates = true,
+  showConnectors = true,
+  dateKey = "date",
+  titleKey = "title",
+  descriptionKey = "description",
+  statusKey = "status",
+  valueKey = "value",
+  formatValue = formatNumber,
+  formatDate = formatDisplayDate,
+  onItemClick,
+  ...props
+}: TimelineProps) => {
   const theme = useTheme();
 
-  const getEventIcon = (type) => {
-    const iconMap = {
-      'hire': <PersonAdd />,
-      'promotion': <TrendingUp />,
-      'performance': <Star />,
-      'training': <School />,
-      'project': <Assignment />,
-      'achievement': <EmojiEvents />,
-      'review': <CheckCircle />,
-      'leave': <Flight />,
-      'medical': <LocalHospital />,
-      'milestone': <Celebration />,
-      'update': <Update />,
-      'default': <Event />
-    };
-    return iconMap[type] || iconMap['default'];
-  };
-
-  const getEventColor = (type, status = 'completed') => {
-    const colorMap = {
-      'hire': theme.palette.success.main,
-      'promotion': theme.palette.primary.main,
-      'performance': theme.palette.warning.main,
-      'training': theme.palette.info.main,
-      'project': theme.palette.secondary.main,
-      'achievement': theme.palette.success.main,
-      'review': theme.palette.primary.main,
-      'leave': theme.palette.grey[500],
-      'medical': theme.palette.error.main,
-      'milestone': theme.palette.success.main,
-      'update': theme.palette.info.main,
-      'default': theme.palette.grey[400]
-    };
-
-    if (status === 'pending') {
-      return theme.palette.grey[400];
-    } else if (status === 'in-progress') {
-      return theme.palette.warning.main;
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case "completed":
+      case "success":
+        return <CheckCircle />;
+      case "warning":
+        return <Warning />;
+      case "error":
+      case "failed":
+        return <ErrorIcon />;
+      case "info":
+        return <Info />;
+      default:
+        return <RadioButtonUnchecked />;
     }
-
-    return colorMap[type] || colorMap['default'];
   };
 
-  const getStatusChip = (status) => {
-    const statusConfig = {
-      'completed': { color: 'success', label: 'Completed' },
-      'pending': { color: 'default', label: 'Pending' },
-      'in-progress': { color: 'warning', label: 'In Progress' },
-      'cancelled': { color: 'error', label: 'Cancelled' }
-    };
-
-    const config = statusConfig[status] || statusConfig['completed'];
-    return (
-      <Chip 
-        label={config.label} 
-        color={config.color} 
-        size="small" 
-        sx={{ ml: 1 }}
-      />
-    );
+  const getStatusColor = (status: string): string => {
+    switch (status) {
+      case "completed":
+      case "success":
+        return theme.palette.success.main;
+      case "warning":
+        return theme.palette.warning.main;
+      case "error":
+      case "failed":
+        return theme.palette.error.main;
+      case "info":
+        return theme.palette.info.main;
+      default:
+        return theme.palette.grey[400];
+    }
   };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
+  const handleItemClick: ChartInteractionHandler = (item, index) => {
+    onItemClick?.(item, index);
   };
 
-  if (!items || items.length === 0) {
-    return (
-      <Box sx={{ textAlign: 'center', py: 4 }}>
-        <TimelineIcon sx={{ fontSize: 48, color: 'text.secondary', mb: 2 }} />
-        <Typography variant="h6" sx={{
-          color: "text.secondary"
-        }}>
-          No timeline events available
-        </Typography>
-      </Box>
-    );
-  }
+  const chartContent = (
+    <Box
+      sx={{
+        p: 2,
+        maxHeight: height - 30, // Account for container padding and title
+        overflowY: "auto",
+        overflowX: "hidden",
+        "&::-webkit-scrollbar": {
+          width: "6px",
+        },
+        "&::-webkit-scrollbar-track": {
+          backgroundColor: theme.palette.grey[100],
+          borderRadius: "3px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: theme.palette.grey[400],
+          borderRadius: "3px",
+          "&:hover": {
+            backgroundColor: theme.palette.grey[600],
+          },
+        },
+      }}
+    >
+      <Stack spacing={2}>
+        {data.map((item, index) => {
+          const status = String(getChartValue(item, statusKey) || "default");
+          const dateValue = toDateValue(getChartValue(item, dateKey));
+          const itemValue = getChartValue(item, valueKey);
+          const category = getChartValue(item, "category");
+          const priority = getChartValue(item, "priority");
+          const statusColor = getStatusColor(status);
+          const isLast = index === data.length - 1;
 
-  return (
-    <Box>
-      {title && (
-        <Typography variant="h6" gutterBottom sx={{ mb: 3, fontWeight: 'bold' }}>
-          {title}
-        </Typography>
-      )}
-      <MuiTimeline position={showOppositeContent ? 'alternate' : 'right'}>
-        {items.map((item, index) => (
-          <Fade in timeout={300 + index * 100} key={item.id || index}>
-            <TimelineItem>
-              {showOppositeContent && (
-                <TimelineOppositeContent
-                  align={index % 2 === 0 ? 'right' : 'left'}
-                  variant="body2"
+          return (
+            <Box key={index} sx={{ position: "relative" }}>
+              {/* Timeline Item */}
+              <Box sx={{ display: "flex", alignItems: "flex-start", gap: 2 }}>
+                {/* Status Avatar */}
+                <Avatar
                   sx={{
-                    color: "text.secondary",
-                    m: 'auto 0',
-                    minWidth: 120,
-                    textAlign: index % 2 === 0 ? 'right' : 'left'
-                  }}>
-                  {formatDate(item.date)}
-                </TimelineOppositeContent>
-              )}
-              
-              <TimelineSeparator>
-                <Zoom in timeout={400 + index * 100}>
-                  <TimelineDot
-                    sx={{
-                      bgcolor: getEventColor(item.type, item.status),
-                      color: 'white',
-                      width: 48,
-                      height: 48,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: `0 4px 12px ${alpha(getEventColor(item.type, item.status), 0.3)}`,
-                      transition: 'all 0.3s ease',
-                      '&:hover': {
-                        transform: 'scale(1.1)',
-                        boxShadow: `0 6px 20px ${alpha(getEventColor(item.type, item.status), 0.4)}`
-                      }
-                    }}
-                  >
-                    {getEventIcon(item.type)}
-                  </TimelineDot>
-                </Zoom>
-                {index < items.length - 1 && (
-                  <TimelineConnector 
-                    sx={{ 
-                      bgcolor: alpha(theme.palette.primary.main, 0.2),
-                      width: 2
-                    }} 
-                  />
-                )}
-              </TimelineSeparator>
-              
-              <TimelineContent sx={{ py: '12px', px: 2 }}>
-                <Card
-                  sx={{
-                    background: `linear-gradient(135deg, ${alpha(getEventColor(item.type, item.status), 0.05)} 0%, ${alpha(getEventColor(item.type, item.status), 0.02)} 100%)`,
-                    border: `1px solid ${alpha(getEventColor(item.type, item.status), 0.1)}`,
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-2px)',
-                      boxShadow: `0 8px 25px ${alpha(getEventColor(item.type, item.status), 0.15)}`,
-                      border: `1px solid ${alpha(getEventColor(item.type, item.status), 0.2)}`
-                    }
+                    backgroundColor: statusColor,
+                    color: theme.palette.getContrastText(statusColor),
+                    width: 40,
+                    height: 40,
+                    flexShrink: 0,
+                    cursor: onItemClick ? "pointer" : "default",
+                    transition: "all 0.2s ease-in-out",
+                    "@media (prefers-reduced-motion: reduce)": { transition: "none" },
+                    "&:hover": onItemClick
+                      ? {
+                          transform: "scale(1.1)",
+                          boxShadow: `0 0 0 4px ${statusColor}20`,
+                        }
+                      : {},
                   }}
+                  onClick={onItemClick ? () => handleItemClick(item, index) : undefined}
+                  role={onItemClick ? "button" : undefined}
+                  tabIndex={onItemClick ? 0 : undefined}
+                  onKeyDown={onItemClick ? (event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      handleItemClick(item, index);
+                    }
+                  } : undefined}
                 >
-                  <CardContent sx={{ pb: '16px !important' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                      <Typography variant="h6" component="span" sx={{ fontWeight: 'bold' }}>
-                        {item.title}
-                      </Typography>
-                      {item.status && getStatusChip(item.status)}
-                    </Box>
-                    
-                    {!showOppositeContent && (
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          color: "text.secondary",
-                          display: 'block',
-                          mb: 1
-                        }}>
-                        {formatDate(item.date)}
-                      </Typography>
-                    )}
-                    
+                  {getStatusIcon(status)}
+                </Avatar>
+
+                {/* Content */}
+                <Box sx={{ flex: 1, minWidth: 0, overflow: "hidden" }}>
+                  {/* Date */}
+                  {showDates && dateValue !== null && (
                     <Typography
-                      variant="body2"
+                      variant="caption"
                       sx={{
                         color: "text.secondary",
-                        mb: 1
+                        display: "block",
+                        mb: 0.5,
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis"
                       }}>
-                      {item.description}
+                      {formatDate(dateValue)}
                     </Typography>
-                    
-                    {item.details && (
-                      <Box sx={{ mt: 2 }}>
-                        {Array.isArray(item.details) ? (
-                          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                            {item.details.map((detail, idx) => (
-                              <Chip
-                                key={idx}
-                                label={detail}
-                                size="small"
-                                variant="outlined"
-                                sx={{ 
-                                  borderColor: alpha(getEventColor(item.type, item.status), 0.3),
-                                  color: getEventColor(item.type, item.status)
-                                }}
-                              />
-                            ))}
-                          </Box>
-                        ) : (
-                          <Typography variant="caption" sx={{
-                            color: "text.secondary"
-                          }}>
-                            {item.details}
-                          </Typography>
-                        )}
+                  )}
+
+                  {/* Main Content Card */}
+                  <Paper
+                    elevation={1}
+                    sx={{
+                      p: 1.5,
+                      cursor: onItemClick ? "pointer" : "default",
+                      transition: "all 0.2s ease-in-out",
+                      "@media (prefers-reduced-motion: reduce)": { transition: "none" },
+                      border: `1px solid ${theme.palette.divider}`,
+                      borderLeft: `4px solid ${statusColor}`,
+                      overflow: "hidden",
+                      "&:hover": onItemClick
+                        ? {
+                            elevation: 3,
+                            borderColor: statusColor,
+                            transform: "translateY(-1px)",
+                          }
+                        : {},
+                    }}
+                    onClick={onItemClick ? () => handleItemClick(item, index) : undefined}
+                    role={onItemClick ? "button" : undefined}
+                    tabIndex={onItemClick ? 0 : undefined}
+                    onKeyDown={onItemClick ? (event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        handleItemClick(item, index);
+                      }
+                    } : undefined}
+                  >
+                    {/* Title */}
+                    <Typography
+                      variant="subtitle1"
+                      component="h3"
+                      sx={{
+                        color: statusColor,
+                        fontWeight: "bold",
+                        mb: 1,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {String(getChartValue(item, titleKey) ?? '')}
+                    </Typography>
+
+                    {/* Description */}
+                    {getChartValue(item, descriptionKey) != null && (
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: "text.secondary",
+                          mb: 1.5,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                          lineHeight: 1.4
+                        }}>
+                        {String(getChartValue(item, descriptionKey))}
+                      </Typography>
+                    )}
+
+                    {/* Value */}
+                    {itemValue != null && (
+                      <Box sx={{ mb: 1 }}>
+                        <Chip
+                          label={formatValue(itemValue)}
+                          size="small"
+                          color="primary"
+                          variant="outlined"
+                        />
                       </Box>
                     )}
-                    
-                    {item.impact && (
-                      <Box sx={{ 
-                        mt: 2, 
-                        p: 1, 
-                        bgcolor: alpha(getEventColor(item.type, item.status), 0.1),
-                        borderRadius: 1,
-                        borderLeft: `3px solid ${getEventColor(item.type, item.status)}`
-                      }}>
-                        <Typography variant="caption" sx={{ fontWeight: 'medium' }}>
-                          Impact: {item.impact}
-                        </Typography>
-                      </Box>
-                    )}
-                  </CardContent>
-                </Card>
-              </TimelineContent>
-            </TimelineItem>
-          </Fade>
-        ))}
-      </MuiTimeline>
+
+                    {/* Metadata */}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        gap: 0.5,
+                        flexWrap: "wrap",
+                        "& .MuiChip-root": {
+                          fontSize: "0.7rem",
+                          height: "20px",
+                        },
+                      }}
+                    >
+                      <Chip
+                        label={status.charAt(0).toUpperCase() + status.slice(1)}
+                        size="small"
+                        sx={{
+                          backgroundColor: `${statusColor}20`,
+                          color: statusColor,
+                          fontWeight: "bold",
+                        }}
+                      />
+
+                      {category != null && (
+                        <Chip
+                          label={String(category)}
+                          size="small"
+                          variant="outlined"
+                        />
+                      )}
+
+                      {priority != null && (
+                        <Chip
+                          label={String(priority)}
+                          size="small"
+                          variant="outlined"
+                          color={
+                            priority === "high"
+                              ? "error"
+                              : priority === "medium"
+                              ? "warning"
+                              : "default"
+                          }
+                        />
+                      )}
+                    </Box>
+                  </Paper>
+                </Box>
+              </Box>
+              {/* Connector Line */}
+              {showConnectors && !isLast && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    left: 19, // Center of smaller avatar
+                    top: 40,
+                    bottom: -16,
+                    width: 2,
+                    backgroundColor: theme.palette.divider,
+                    zIndex: 0,
+                  }}
+                />
+              )}
+            </Box>
+          );
+        })}
+      </Stack>
     </Box>
+  );
+
+  return (
+    <ChartContainer
+      title={title}
+      subtitle={subtitle}
+      height={height}
+      loading={loading}
+      error={error}
+      dataCount={data.length}
+      gradient={gradient}
+      {...props}
+    >
+      {chartContent}
+    </ChartContainer>
   );
 };
 

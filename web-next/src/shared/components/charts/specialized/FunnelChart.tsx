@@ -8,18 +8,21 @@ import {
 } from "recharts";
 import type { LabelProps } from "recharts";
 import { useTheme } from "@mui/material";
-import { getChartTheme } from "./chartThemes";
+import { useTranslation } from "react-i18next";
+import { getChartTheme } from "../core/chartTheme";
 import {
   COLOR_PALETTES,
   formatNumber,
   formatPercentage,
   getColorPalette,
+  resolveChartColors,
   type ChartColors,
-} from "./chartUtils";
-import ChartContainer from "./ChartContainer";
-import type { ChartContainerProps } from "./ChartContainer";
-import type { ChartData, ChartFormatter, ChartInteractionHandler, ChartTooltipProps } from "./types";
-import { getChartNumber, getChartValue } from "./types";
+} from "../core/chartUtils";
+import ChartContainer from "../core/ChartContainer";
+import type { ChartContainerProps } from "../core/ChartContainer";
+import type { ChartData, ChartFormatter, ChartInteractionHandler, ChartTooltipProps } from "../core/types";
+import { getChartNumber, getChartValue } from "../core/types";
+import { useChartMotion } from "../core/useChartMotion";
 
 interface FunnelDatum extends Record<string, unknown> {
   conversionRate: number;
@@ -43,7 +46,7 @@ const FunnelChart = ({
   title,
   subtitle,
   height = 400,
-  colors = COLOR_PALETTES.primary as ChartColors,
+  colors = COLOR_PALETTES.primary,
   showTooltip = true,
   showLabels = true,
   loading = false,
@@ -58,16 +61,12 @@ const FunnelChart = ({
   ...props
 }: FunnelChartProps) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const chartTheme = getChartTheme(theme);
+  const isAnimationActive = useChartMotion();
 
   const firstValue = data.length ? getChartNumber(data[0], dataKey) : 0;
-  const colorPalette = Array.isArray(colors)
-    ? colors
-    : typeof colors === "string"
-      ? getColorPalette(colors, theme.palette.mode)
-      : theme.palette.mode === "dark"
-        ? colors.dark
-        : colors.light;
+  const colorPalette = resolveChartColors(colors, theme.palette.mode);
   const resolvedPalette =
     colorPalette && colorPalette.length
       ? colorPalette
@@ -95,10 +94,10 @@ const FunnelChart = ({
           {formatLabel(getChartValue(tooltipData, nameKey))}
         </p>
         <p style={{ margin: "4px 0", color: payload[0].color }}>
-          Value: {formatValue(getChartValue(tooltipData, dataKey))}
+          {t("chartCommon.value")}: {formatValue(getChartValue(tooltipData, dataKey))}
         </p>
         <p style={{ margin: "4px 0", color: payload[0].color }}>
-          Conversion:{" "}
+          {t("chartCommon.conversion")}:{" "}
           {formatPercentage(
             Number(
               getChartValue(tooltipData, "conversionRate") ??
@@ -165,7 +164,7 @@ const FunnelChart = ({
         <Funnel
           dataKey={dataKey}
           data={dataWithConversion}
-          isAnimationActive
+          isAnimationActive={isAnimationActive}
           onClick={onSegmentClick ? (segment, index) => handleSegmentClick(segment, index) : undefined}
         >
           {dataWithConversion.map((entry, index) => (
@@ -174,6 +173,15 @@ const FunnelChart = ({
               fill={resolvedPalette[index % resolvedPalette.length]}
               stroke={theme.palette.background.paper}
               strokeWidth={2}
+              role={onSegmentClick ? "button" : undefined}
+              tabIndex={onSegmentClick ? 0 : undefined}
+              aria-label={`${formatLabel(getChartValue(entry, nameKey))}: ${formatValue(getChartNumber(entry, dataKey))}`}
+              onKeyDown={onSegmentClick ? (event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  onSegmentClick(entry, index);
+                }
+              } : undefined}
             />
           ))}
           {showLabels && (
@@ -199,6 +207,7 @@ const FunnelChart = ({
       height={height}
       loading={loading}
       error={error}
+      dataCount={data.length}
       gradient={gradient}
       {...props}
     >

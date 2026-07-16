@@ -1,5 +1,5 @@
 import { AreaChart } from '@/shared/components/charts';
-import { COLOR_PALETTES } from '@/shared/components/charts/chartUtils';
+import { COLOR_PALETTES } from '@/shared/components/charts';
 import React from 'react';
 
 interface TimelineData {

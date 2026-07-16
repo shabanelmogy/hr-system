@@ -72,6 +72,6 @@ export const prepareTimelineData = (states: State[]): TimelineData[] => {
     }));
 };
 
-import { getColorPalette } from '@/shared/components/charts/chartUtils';
+import { getColorPalette } from '@/shared/components/charts';
 
 export const getChartColors = (): string[] => getColorPalette('rainbow', 'light');

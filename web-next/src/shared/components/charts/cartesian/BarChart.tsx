@@ -1,18 +1,21 @@
 import { ResponsiveContainer, BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell } from 'recharts';
 import { useTheme } from '@mui/material';
-import { getChartTheme } from './chartThemes';
-import { formatNumber, resolveChartColors, type ChartColors } from './chartUtils';
-import ChartContainer from './ChartContainer';
-import type { ChartContainerProps } from './ChartContainer';
+import { getChartTheme } from '../core/chartTheme';
+import { formatNumber, resolveChartColors } from '../core/chartUtils';
+import ChartContainer from '../core/ChartContainer';
+import type { ChartContainerProps } from '../core/ChartContainer';
 import type {
   CartesianChartProps,
   ChartInteractionHandler,
   ChartTooltipProps,
-} from './types';
+} from '../core/types';
+import { getChartNumber, getChartValue } from '../core/types';
+import { useChartMotion } from '../core/useChartMotion';
+import { getBarChartLayout, type BarOrientation } from '../core/layout';
 
 export type BarChartProps = CartesianChartProps &
   Omit<ChartContainerProps, keyof CartesianChartProps | 'children'> & {
-    orientation?: 'vertical' | 'horizontal';
+    orientation?: BarOrientation;
     barRadius?: number;
     barSize?: number;
     stacked?: boolean;
@@ -26,7 +29,7 @@ const BarChart = ({
   title,
   subtitle,
   height = 400,
-  colors = 'primary' as ChartColors,
+  colors = 'primary',
   showGrid = true,
   showLegend = false,
   showTooltip = true,
@@ -47,6 +50,7 @@ const BarChart = ({
   const chartTheme = getChartTheme(theme);
   const colorPalette = resolveChartColors(colors, theme.palette.mode);
   const hoverCursor = chartTheme.tooltip.cursor;
+  const isAnimationActive = useChartMotion();
 
   const CustomTooltip = ({ active, payload, label }: ChartTooltipProps) => {
     if (!active || !payload || !payload.length) return null;
@@ -78,6 +82,7 @@ const BarChart = ({
           radius={orientation === 'vertical' ? [barRadius, barRadius, 0, 0] : [0, barRadius, barRadius, 0]}
           maxBarSize={barSize}
           stackId={stacked ? 'stack' : undefined}
+          isAnimationActive={isAnimationActive}
           onClick={onBarClick ? handleBarClick : undefined}
         />
       ));
@@ -89,10 +94,23 @@ const BarChart = ({
         fill={colorPalette[0]}
         radius={orientation === 'vertical' ? [barRadius, barRadius, 0, 0] : [0, barRadius, barRadius, 0]}
         maxBarSize={barSize}
+        isAnimationActive={isAnimationActive}
         onClick={onBarClick ? handleBarClick : undefined}
       >
         {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={colorPalette[index % colorPalette.length]} />
+          <Cell
+            key={`cell-${index}`}
+            fill={colorPalette[index % colorPalette.length]}
+            role={onBarClick ? 'button' : undefined}
+            tabIndex={onBarClick ? 0 : undefined}
+            aria-label={`${formatLabel(getChartValue(entry, xKey))}: ${formatValue(getChartNumber(entry, yKey))}`}
+            onKeyDown={onBarClick ? (event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                onBarClick(entry, index);
+              }
+            } : undefined}
+          />
         ))}
       </Bar>
     );
@@ -102,7 +120,8 @@ const BarChart = ({
     <ResponsiveContainer width="100%" height="100%">
       <RechartsBarChart
         data={data}
-        layout={orientation === 'horizontal' ? 'horizontal' : 'vertical'}
+        layout={getBarChartLayout(orientation)}
+        accessibilityLayer
         margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
       >
         {showGrid && (
@@ -160,6 +179,7 @@ const BarChart = ({
       height={height}
       loading={loading}
       error={error}
+      dataCount={data.length}
       gradient={gradient}
       {...props}
     >

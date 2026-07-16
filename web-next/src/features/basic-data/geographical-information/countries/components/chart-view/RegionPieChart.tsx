@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { PieChart } from '@/shared/components/charts';
-import { COLOR_PALETTES } from '@/shared/components/charts/chartUtils';
+import { COLOR_PALETTES } from '@/shared/components/charts';
 
 interface RegionData {
   name: string;

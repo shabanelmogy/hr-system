@@ -1,9 +1,10 @@
 import { Box, Typography, useTheme } from '@mui/material';
-import { formatNumber } from './chartUtils';
-import ChartContainer from './ChartContainer';
-import type { ChartContainerProps } from './ChartContainer';
-import type { ChartData, ChartFormatter } from './types';
-import { getChartNumber, getChartValue } from './types';
+import { formatNumber } from '../core/chartUtils';
+import ChartContainer from '../core/ChartContainer';
+import type { ChartContainerProps } from '../core/ChartContainer';
+import type { ChartData, ChartFormatter } from '../core/types';
+import { getChartNumber, getChartValue } from '../core/types';
+import { clamp, getFiniteExtent, normalizeValue } from '../core/numeric';
 
 type HeatmapAxisValue = string | number;
 
@@ -61,23 +62,24 @@ const HeatmapChart = ({
   
   // Get min and max values for color scaling
   const values = data.map(d => getChartNumber(d, valueKey));
-  const minValue = Math.min(...values);
-  const maxValue = Math.max(...values);
+  const extent = getFiniteExtent(values);
+  const minValue = extent?.min ?? 0;
+  const maxValue = extent?.max ?? 0;
 
   // Create a map for quick lookup
   const dataMap = new Map<string, object>();
   data.forEach(d => {
-    const key = `${getChartValue(d, xKey)}-${getChartValue(d, yKey)}`;
+    const key = JSON.stringify([getChartValue(d, xKey), getChartValue(d, yKey)]);
     dataMap.set(key, d);
   });
 
   // Calculate cell size
   const containerHeight = height - 40; // Account for labels
-  const calculatedCellSize = cellSize === 'auto' 
-    ? Math.min(
-        (containerHeight - 60) / yValues.length,
-        300 / xValues.length
-      )
+  const calculatedCellSize = cellSize === 'auto'
+    ? clamp(Math.min(
+        Math.max(containerHeight - 60, 1) / Math.max(yValues.length, 1),
+        480 / Math.max(xValues.length, 1)
+      ), 18, 48)
     : cellSize;
 
   // Color interpolation function
@@ -86,7 +88,7 @@ const HeatmapChart = ({
       return theme.palette.grey[100];
     }
     
-    const normalizedValue = (value - minValue) / (maxValue - minValue);
+    const normalizedValue = normalizeValue(value, minValue, maxValue);
     
     // Simple linear interpolation between two colors
     const startColor = colors[0] ?? '#ffffff';
@@ -114,12 +116,6 @@ const HeatmapChart = ({
     return `rgb(${r}, ${g}, ${b})`;
   };
 
-  // Get normalized value for a given value
-  const getNormalizedValue = (value: number | null | undefined): number => {
-    if (value === null || value === undefined) return 0;
-    return (value - minValue) / (maxValue - minValue);
-  };
-
   const handleCellClick = (cellData: object | undefined) => {
     if (onCellClick && cellData) {
       onCellClick(cellData);
@@ -127,7 +123,7 @@ const HeatmapChart = ({
   };
 
   const renderColorScale = () => {
-    if (!showColorScale) return null;
+    if (!showColorScale || !extent) return null;
     
     
     return (
@@ -159,7 +155,7 @@ const HeatmapChart = ({
   };
 
   const chartContent = (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 2 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 2, overflow: 'auto' }}>
       {/* Heatmap Grid */}
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {/* Y-axis labels and grid */}
@@ -201,7 +197,7 @@ const HeatmapChart = ({
                     variant="caption" 
                     sx={{ 
                       fontSize: '0.75rem',
-                      transform: 'rotate(-45deg)',
+                      transform: theme.direction === 'rtl' ? 'rotate(45deg)' : 'rotate(-45deg)',
                       transformOrigin: 'center'
                     }}
                   >
@@ -215,11 +211,10 @@ const HeatmapChart = ({
             {yValues.map((yValue) => (
               <Box key={yValue} sx={{ display: 'flex' }}>
                 {xValues.map((xValue) => {
-                  const cellData = dataMap.get(`${xValue}-${yValue}`);
+                  const cellData = dataMap.get(JSON.stringify([xValue, yValue]));
                   const value = cellData ? getChartNumber(cellData, valueKey) : null;
                   const cellColor = getColor(value);
-                  const normalizedValue = getNormalizedValue(value);
-                  
+
                   return (
                     <Box
                       key={`${xValue}-${yValue}`}
@@ -232,15 +227,25 @@ const HeatmapChart = ({
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        cursor: onCellClick ? 'pointer' : 'default',
+                        cursor: onCellClick && cellData ? 'pointer' : 'default',
                         transition: 'all 0.2s ease-in-out',
-                        '&:hover': onCellClick ? {
+                        '@media (prefers-reduced-motion: reduce)': { transition: 'none' },
+                        '&:hover': onCellClick && cellData ? {
                           transform: 'scale(1.05)',
                           boxShadow: theme.shadows[4],
                           zIndex: 1
                         } : {}
                       }}
-                      onClick={() => handleCellClick(cellData)}
+                      onClick={onCellClick && cellData ? () => handleCellClick(cellData) : undefined}
+                      role={onCellClick && cellData ? 'button' : undefined}
+                      tabIndex={onCellClick && cellData ? 0 : undefined}
+                      aria-label={cellData ? `${formatLabel(xValue)} - ${formatLabel(yValue)}: ${formatValue(value)}` : undefined}
+                      onKeyDown={onCellClick && cellData ? (event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          event.preventDefault();
+                          onCellClick(cellData);
+                        }
+                      } : undefined}
                       title={cellData ? `${formatLabel(xValue)} - ${formatLabel(yValue)}: ${formatValue(value)}` : ''}
                     >
                       {showLabels && value !== null && value !== undefined && (
@@ -248,7 +253,7 @@ const HeatmapChart = ({
                           variant="caption" 
                           sx={{ 
                             fontSize: '0.7rem',
-                            color: normalizedValue > 0.5 ? 'white' : 'black',
+                            color: theme.palette.getContrastText(cellColor),
                             fontWeight: 'bold'
                           }}
                         >
@@ -276,6 +281,7 @@ const HeatmapChart = ({
       height={height}
       loading={loading}
       error={error}
+      dataCount={data.length}
       gradient={gradient}
       {...props}
     >

@@ -10,9 +10,7 @@ const LoadingChartState: React.FC = () => {
       loading={true}
       height={400}
       subtitle={undefined}
-      children={undefined}
-    >
-    </ChartContainer>
+    />
   );
 };
 

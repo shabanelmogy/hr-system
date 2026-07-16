@@ -7,7 +7,6 @@ import { AreaChart, LineChart, ComposedChart } from "@/shared/components/charts"
 import { microTrends } from "../rows/attendance-trends-row/data";
 import { useRouter } from "next/navigation";
 import ArrowBack from "@mui/icons-material/ArrowBack";
-import { useEffect } from "react";
 
 const rollingWeekly = microTrends.map((d, i) => ({
   name: d.name,

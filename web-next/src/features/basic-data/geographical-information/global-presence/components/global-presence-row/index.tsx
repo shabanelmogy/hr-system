@@ -1,15 +1,13 @@
-import { SimpleTimelineChart } from "@/shared/components/charts";
+import { Timeline } from "@/shared/components/timeline";
 import WorldMap from "@/shared/components/maps/WorldMap";
 import { Grid, Stack, Button, Typography } from "@mui/material";
 import { hrTimeline, worldData } from "./data";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { appRoutes } from "@/config";
 
 type GlobalPresenceRowProps = { showViewAll?: boolean };
 
 const GlobalPresenceRow = ({ showViewAll = true }: GlobalPresenceRowProps) => {
-  const router = useRouter();
-
   return (
     <Grid container spacing={2}>
       <Grid size={{ xs: 12 }}>
@@ -20,9 +18,11 @@ const GlobalPresenceRow = ({ showViewAll = true }: GlobalPresenceRowProps) => {
           <Typography variant="subtitle1">Global Presence Overview</Typography>
           {showViewAll && (
             <Button
+              component={Link}
+              href={appRoutes.basicData.globalPresence}
+              prefetch
               size="small"
               variant="outlined"
-              onClick={() => router.push(appRoutes.basicData.globalPresence)}
             >
               View All
             </Button>
@@ -35,7 +35,7 @@ const GlobalPresenceRow = ({ showViewAll = true }: GlobalPresenceRowProps) => {
       </Grid>
 
       <Grid size={{ xs: 12, lg: 5 }}>
-        <SimpleTimelineChart
+        <Timeline
           data={hrTimeline}
           title="Recent HR Activity"
           subtitle="Latest milestones and changes"

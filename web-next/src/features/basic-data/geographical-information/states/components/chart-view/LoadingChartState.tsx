@@ -12,10 +12,7 @@ const LoadingChartState: React.FC<LoadingChartStateProps> = ({ t }) => {
       loading={true}
       height={400}
       subtitle={undefined}
-      children={undefined}
-    >
-      {/* Content will be handled by ChartContainer's loading state */}
-    </ChartContainer>
+    />
   );
 };
 

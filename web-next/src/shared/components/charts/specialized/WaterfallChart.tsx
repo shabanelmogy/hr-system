@@ -1,13 +1,16 @@
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell, ReferenceLine } from 'recharts';
 import { useTheme } from '@mui/material';
-import { getChartTheme } from './chartThemes';
-import { formatNumber } from './chartUtils';
-import ChartContainer from './ChartContainer';
-import type { ChartContainerProps } from './ChartContainer';
-import type { ChartData, ChartFormatter, ChartTooltipProps } from './types';
-import { getChartNumber, getChartValue } from './types';
+import { useTranslation } from 'react-i18next';
+import { getChartTheme } from '../core/chartTheme';
+import { formatNumber } from '../core/chartUtils';
+import ChartContainer from '../core/ChartContainer';
+import type { ChartContainerProps } from '../core/ChartContainer';
+import type { ChartData, ChartFormatter, ChartTooltipProps } from '../core/types';
+import { getChartNumber, getChartValue } from '../core/types';
+import { useChartMotion } from '../core/useChartMotion';
 
-interface WaterfallDatum extends Record<string, unknown> {
+export interface WaterfallDatum extends Record<string, unknown> {
+  range: [number, number];
   start: number;
   end: number;
   value: number;
@@ -15,14 +18,6 @@ interface WaterfallDatum extends Record<string, unknown> {
   color: string;
   isTotal: boolean;
   isNegative?: boolean;
-}
-
-interface WaterfallBarProps {
-  payload?: WaterfallDatum;
-  x?: number;
-  y?: number;
-  width?: number;
-  height?: number;
 }
 
 export type WaterfallChartProps = Omit<ChartContainerProps, 'children'> & {
@@ -60,7 +55,9 @@ const WaterfallChart = ({
   ...props
 }: WaterfallChartProps) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const chartTheme = getChartTheme(theme);
+  const isAnimationActive = useChartMotion();
 
   // Default colors
   const colors = {
@@ -82,10 +79,11 @@ const WaterfallChart = ({
       // For total bars, start from 0
       transformedData.push({
         ...(item as Record<string, unknown>),
-        start: 0,
+        range: [Math.min(0, runningTotal), Math.max(0, runningTotal)],
+        start: Math.min(0, runningTotal),
         end: runningTotal,
-        value: runningTotal,
-        displayValue: value,
+        value: Math.abs(runningTotal),
+        displayValue: runningTotal,
         color: colors.total,
         isTotal: true
       });
@@ -97,6 +95,7 @@ const WaterfallChart = ({
       
       transformedData.push({
         ...(item as Record<string, unknown>),
+        range: [Math.min(start, end), Math.max(start, end)],
         start: Math.min(start, end),
         end: Math.max(start, end),
         value: Math.abs(value),
@@ -120,43 +119,19 @@ const WaterfallChart = ({
       <div style={chartTheme.tooltip.contentStyle}>
         <p style={{ margin: 0, fontWeight: 'bold' }}>{formatLabel(label)}</p>
         <p style={{ margin: '4px 0', color }}>
-          Value: {formatValue(displayValue)}
+          {t('chartCommon.value')}: {formatValue(displayValue)}
         </p>
         {!isTotal && (
           <p style={{ margin: '4px 0', color: theme.palette.text.secondary }}>
-            Running Total: {formatValue(getChartValue(data, 'end'))}
+            {t('chartCommon.runningTotal')}: {formatValue(getChartValue(data, 'end'))}
           </p>
         )}
         {isTotal && (
           <p style={{ margin: '4px 0', color: theme.palette.text.secondary }}>
-            Total: {formatValue(getChartValue(data, 'value'))}
+            {t('chartCommon.total')}: {formatValue(displayValue)}
           </p>
         )}
       </div>
-    );
-  };
-
-  // Custom bar shape for waterfall
-  const WaterfallBar = ({ payload, x, y, width, height }: WaterfallBarProps) => {
-    if (!payload || x == null || y == null || width == null || height == null) return null;
-
-    const barHeight = height * (payload.value / (payload.end - payload.start || 1));
-    const barY = payload.isTotal ? y + height - (height * (payload.value / payload.value)) : 
-                  y + height - (height * ((payload.end - Math.min(...transformedData.map(d => d.start))) / 
-                  (Math.max(...transformedData.map(d => d.end)) - Math.min(...transformedData.map(d => d.start)))));
-
-    return (
-      <rect
-        x={x}
-        y={barY}
-        width={width}
-        height={Math.abs(barHeight)}
-        fill={payload.color}
-        stroke={theme.palette.background.paper}
-        strokeWidth={1}
-        onClick={() => onBarClick && onBarClick(payload)}
-        style={{ cursor: onBarClick ? 'pointer' : 'default' }}
-      />
     );
   };
 
@@ -164,6 +139,7 @@ const WaterfallChart = ({
     <ResponsiveContainer width="100%" height="100%">
       <BarChart
         data={transformedData}
+        accessibilityLayer
         margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
       >
         {showGrid && (
@@ -192,11 +168,29 @@ const WaterfallChart = ({
         {showTooltip && <Tooltip content={CustomTooltip} />}
         
         <Bar
-          dataKey="value"
-          shape={WaterfallBar}
+          dataKey="range"
+          isAnimationActive={isAnimationActive}
+          onClick={onBarClick ? (datum) => {
+            const payload = datum && typeof datum === 'object'
+              ? getChartValue(datum, 'payload')
+              : null;
+            if (payload && typeof payload === 'object') onBarClick(payload as WaterfallDatum);
+          } : undefined}
         >
           {transformedData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.color} />
+            <Cell
+              key={`cell-${index}`}
+              fill={entry.color}
+              role={onBarClick ? 'button' : undefined}
+              tabIndex={onBarClick ? 0 : undefined}
+              aria-label={`${formatLabel(getChartValue(entry, xKey))}: ${formatValue(entry.displayValue)}`}
+              onKeyDown={onBarClick ? (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  onBarClick(entry);
+                }
+              } : undefined}
+            />
           ))}
         </Bar>
       </BarChart>
@@ -210,6 +204,7 @@ const WaterfallChart = ({
       height={height}
       loading={loading}
       error={error}
+      dataCount={data.length}
       gradient={gradient}
       {...props}
     >

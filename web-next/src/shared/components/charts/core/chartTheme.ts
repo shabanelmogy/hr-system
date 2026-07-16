@@ -1,17 +1,13 @@
 import type { Theme } from '@mui/material/styles';
 
-// Chart theme configurations
-
 export const getChartTheme = (muiTheme: Theme) => {
   return {
-    // Grid styles
     grid: {
       stroke: muiTheme.palette.divider,
       strokeDasharray: '3 3',
       strokeOpacity: 0.4
     },
 
-    // Axis styles
     axis: {
       tick: {
         fontSize: 12,
@@ -28,7 +24,6 @@ export const getChartTheme = (muiTheme: Theme) => {
       }
     },
 
-    // Tooltip styles
     tooltip: {
       contentStyle: {
         backgroundColor: muiTheme.palette.background.paper,
@@ -44,7 +39,6 @@ export const getChartTheme = (muiTheme: Theme) => {
       }
     },
 
-    // Legend styles
     legend: {
       wrapperStyle: {
         fontSize: 12,
@@ -53,7 +47,6 @@ export const getChartTheme = (muiTheme: Theme) => {
       }
     },
 
-    // Colors based on theme
     colors: {
       primary: muiTheme.palette.primary.main,
       secondary: muiTheme.palette.secondary.main,
@@ -63,28 +56,4 @@ export const getChartTheme = (muiTheme: Theme) => {
       info: muiTheme.palette.info.main
     }
   };
-};
-
-
-// Chart-specific themes
-export const CHART_THEMES = {
-  default: {
-    grid: true,
-    legend: true,
-    animation: true
-  },
-
-  minimal: {
-    grid: false,
-    axis: {
-      axisLine: false,
-      tickLine: false
-    }
-  },
-
-  clean: {
-    grid: false,
-    border: false,
-    minimal: true
-  }
 };

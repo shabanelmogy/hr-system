@@ -1,9 +1,11 @@
 import { Box, Typography, useTheme } from '@mui/material';
-import { formatNumber } from './chartUtils';
-import ChartContainer from './ChartContainer';
-import type { ChartContainerProps } from './ChartContainer';
-import type { ChartData, ChartFormatter, ChartInteractionHandler } from './types';
-import { getChartNumber, getChartValue } from './types';
+import { useTranslation } from 'react-i18next';
+import { formatNumber } from '../core/chartUtils';
+import ChartContainer from '../core/ChartContainer';
+import type { ChartContainerProps } from '../core/ChartContainer';
+import type { ChartData, ChartFormatter, ChartInteractionHandler } from '../core/types';
+import { getChartNumber, getChartValue } from '../core/types';
+import { getSafeScaleMax, safePercentage } from '../core/numeric';
 
 interface BulletRange {
   value: number;
@@ -66,16 +68,20 @@ const BulletChart = ({
   ...props
 }: BulletChartProps) => {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   const renderHorizontalBullet = (item: object, index: number) => {
     const value = getChartNumber(item, valueKey);
     const target = getChartNumber(item, targetKey);
-    const max = getChartNumber(item, maxKey) || Math.max(value, target) * 1.2;
+    const configuredMax = getChartNumber(item, maxKey);
+    const max = configuredMax > 0
+      ? configuredMax
+      : getSafeScaleMax(Math.abs(value), Math.abs(target)) * 1.2;
     const ranges = getRanges(item, rangesKey);
     const name = getChartValue(item, nameKey) || `Item ${index + 1}`;
 
-    const valuePercent = (value / max) * 100;
-    const targetPercent = (target / max) * 100;
+    const valuePercent = safePercentage(value, 0, max);
+    const targetPercent = safePercentage(target, 0, max);
 
     return (
       <Box key={index} sx={{ mb: 3 }}>
@@ -97,7 +103,7 @@ const BulletChart = ({
           {/* Background ranges */}
           <Box sx={{ position: 'absolute', width: '100%', height: '100%', display: 'flex' }}>
             {ranges.map((range, rangeIndex) => {
-              const rangePercent = (range.value / max) * 100;
+              const rangePercent = safePercentage(range.value, 0, max);
               return (
                 <Box
                   key={rangeIndex}
@@ -132,12 +138,22 @@ const BulletChart = ({
               borderRadius: 1,
               cursor: onBarClick ? 'pointer' : 'default',
               transition: 'all 0.2s ease-in-out',
+              '@media (prefers-reduced-motion: reduce)': { transition: 'none' },
               '&:hover': onBarClick ? {
                 backgroundColor: theme.palette.primary.dark,
                 transform: 'scaleY(1.1)'
               } : {}
             }}
-            onClick={() => onBarClick && onBarClick(item, index)}
+            onClick={onBarClick ? () => onBarClick(item, index) : undefined}
+            role={onBarClick ? 'button' : undefined}
+            tabIndex={onBarClick ? 0 : undefined}
+            aria-label={`${formatLabel(name)}: ${formatValue(value)}`}
+            onKeyDown={onBarClick ? (event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                onBarClick(item, index);
+              }
+            } : undefined}
           />
           
           {/* Target line */}
@@ -162,7 +178,7 @@ const BulletChart = ({
                   transform: 'rotate(45deg)'
                 }
               }}
-              title={`Target: ${formatValue(target)}`}
+              title={`${t('chartCommon.target')}: ${formatValue(target)}`}
             />
           )}
         </Box>
@@ -171,13 +187,13 @@ const BulletChart = ({
           <Typography variant="caption" sx={{
             color: "text.secondary"
           }}>
-            Current: {formatValue(value)}
+            {t('chartCommon.current')}: {formatValue(value)}
           </Typography>
           {showTarget && (
             <Typography variant="caption" sx={{
               color: "error.main"
             }}>
-              Target: {formatValue(target)}
+              {t('chartCommon.target')}: {formatValue(target)}
             </Typography>
           )}
         </Box>
@@ -188,12 +204,15 @@ const BulletChart = ({
   const renderVerticalBullet = (item: object, index: number) => {
     const value = getChartNumber(item, valueKey);
     const target = getChartNumber(item, targetKey);
-    const max = getChartNumber(item, maxKey) || Math.max(value, target) * 1.2;
+    const configuredMax = getChartNumber(item, maxKey);
+    const max = configuredMax > 0
+      ? configuredMax
+      : getSafeScaleMax(Math.abs(value), Math.abs(target)) * 1.2;
     const ranges = getRanges(item, rangesKey);
     const name = getChartValue(item, nameKey) || `Item ${index + 1}`;
 
-    const valuePercent = (value / max) * 100;
-    const targetPercent = (target / max) * 100;
+    const valuePercent = safePercentage(value, 0, max);
+    const targetPercent = safePercentage(target, 0, max);
 
     return (
       <Box key={index} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mx: 2 }}>
@@ -202,7 +221,7 @@ const BulletChart = ({
           {/* Background ranges */}
           <Box sx={{ position: 'absolute', width: '100%', height: '100%', display: 'flex', flexDirection: 'column-reverse' }}>
             {ranges.map((range, rangeIndex) => {
-              const rangePercent = (range.value / max) * 100;
+              const rangePercent = safePercentage(range.value, 0, max);
               return (
                 <Box
                   key={rangeIndex}
@@ -245,12 +264,22 @@ const BulletChart = ({
               borderRadius: 1,
               cursor: onBarClick ? 'pointer' : 'default',
               transition: 'all 0.2s ease-in-out',
+              '@media (prefers-reduced-motion: reduce)': { transition: 'none' },
               '&:hover': onBarClick ? {
                 backgroundColor: theme.palette.primary.dark,
                 transform: 'scaleX(1.1)'
               } : {}
             }}
-            onClick={() => onBarClick && onBarClick(item, index)}
+            onClick={onBarClick ? () => onBarClick(item, index) : undefined}
+            role={onBarClick ? 'button' : undefined}
+            tabIndex={onBarClick ? 0 : undefined}
+            aria-label={`${formatLabel(name)}: ${formatValue(value)}`}
+            onKeyDown={onBarClick ? (event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                onBarClick(item, index);
+              }
+            } : undefined}
           />
           
           {/* Target line */}
@@ -275,7 +304,7 @@ const BulletChart = ({
                   transform: 'rotate(45deg)'
                 }
               }}
-              title={`Target: ${formatValue(target)}`}
+              title={`${t('chartCommon.target')}: ${formatValue(target)}`}
             />
           )}
         </Box>
@@ -302,7 +331,7 @@ const BulletChart = ({
                   color: "error.main",
                   display: 'block'
                 }}>
-                Target: {formatValue(target)}
+                {t('chartCommon.target')}: {formatValue(target)}
               </Typography>
             )}
           </Box>
@@ -332,6 +361,7 @@ const BulletChart = ({
       height={height}
       loading={loading}
       error={error}
+      dataCount={data.length}
       gradient={gradient}
       {...props}
     >

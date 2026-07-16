@@ -407,6 +407,25 @@
     "goToLastRecord": "Go to last record",
     "pages": "Pages"
   },
+  "chartCommon": {
+    "label": "Data chart",
+    "dataPointCount_one": "Chart contains {{count}} data point.",
+    "dataPointCount_other": "Chart contains {{count}} data points.",
+    "errorTitle": "Unable to load chart",
+    "errorMessage": "Chart data is temporarily unavailable.",
+    "emptyTitle": "No chart data",
+    "emptyMessage": "There is no data to display.",
+    "value": "Value",
+    "percentage": "Percentage",
+    "current": "Current",
+    "target": "Target",
+    "total": "Total",
+    "runningTotal": "Running total",
+    "size": "Size",
+    "category": "Category",
+    "conversion": "Conversion",
+    "dataPoints": "Data points"
+  },
   "addressTypes": {
     "dashboard": {
       "totalAddressTypes": "Total Address Types",

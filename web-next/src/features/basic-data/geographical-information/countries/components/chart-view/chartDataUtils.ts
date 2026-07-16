@@ -1,6 +1,6 @@
 import { Country } from "../../types/Country";
-import { getActiveStates, getStatesCount } from "../../utils/statesUtils";
-import { getColorPalette } from '@/shared/components/charts/chartUtils';
+import { getStatesCount } from "../../utils/statesUtils";
+import { getColorPalette } from '@/shared/components/charts';
 
 export interface RegionData {
   name: string;

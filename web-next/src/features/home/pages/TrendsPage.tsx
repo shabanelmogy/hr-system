@@ -5,13 +5,9 @@ import Section from "@/shared/components/layout/Section";
 import TrendsRow from "../rows/trends-row";
 import { useRouter } from "next/navigation";
 import ArrowBack from "@mui/icons-material/ArrowBack";
-import { useEffect } from "react";
 
 const TrendsPage = () => {
   const router = useRouter();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   return (
     <Box>
       <Section

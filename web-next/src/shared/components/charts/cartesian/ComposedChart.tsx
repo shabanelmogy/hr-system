@@ -1,12 +1,13 @@
 import { ResponsiveContainer, ComposedChart as RechartsComposedChart, Bar, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useTheme } from '@mui/material';
-import { getChartTheme } from './chartThemes';
-import { COLOR_PALETTES, formatNumber, resolveChartColors, type ChartColors } from './chartUtils';
-import ChartContainer from './ChartContainer';
-import type { ChartContainerProps } from './ChartContainer';
-import type { CartesianChartProps, ChartInteractionHandler, ChartTooltipProps } from './types';
+import { getChartTheme } from '../core/chartTheme';
+import { COLOR_PALETTES, formatNumber, resolveChartColors } from '../core/chartUtils';
+import ChartContainer from '../core/ChartContainer';
+import type { ChartContainerProps } from '../core/ChartContainer';
+import type { CartesianChartProps, ChartInteractionHandler, ChartTooltipProps } from '../core/types';
+import { useChartMotion } from '../core/useChartMotion';
 
-interface ComposedSeries {
+export interface ComposedSeries {
   type: 'bar' | 'line' | 'area';
   key: string;
   name?: string;
@@ -29,7 +30,7 @@ const ComposedChart = ({
   title,
   subtitle,
   height = 400,
-  colors = COLOR_PALETTES.primary as ChartColors,
+  colors = COLOR_PALETTES.primary,
   showGrid = true,
   showLegend = true,
   showTooltip = true,
@@ -45,6 +46,7 @@ const ComposedChart = ({
   const theme = useTheme();
   const chartTheme = getChartTheme(theme);
   const colorPalette = resolveChartColors(colors, theme.palette.mode);
+  const isAnimationActive = useChartMotion();
 
   const CustomTooltip = ({ active, payload, label }: ChartTooltipProps) => {
     if (!active || !payload || !payload.length) return null;
@@ -83,6 +85,7 @@ const ComposedChart = ({
               fill={color}
               radius={[4, 4, 0, 0]}
               maxBarSize={seriesConfig.barSize}
+              isAnimationActive={isAnimationActive}
               onClick={onElementClick ? (datum, elementIndex) => handleElementClick(datum, elementIndex) : undefined}
             />
           );
@@ -97,6 +100,7 @@ const ComposedChart = ({
               strokeWidth={seriesConfig.strokeWidth || 2}
               dot={{ r: 4, fill: color }}
               activeDot={{ r: 6 }}
+              isAnimationActive={isAnimationActive}
               onClick={onElementClick ? (datum) => handleElementClick(datum, index) : undefined}
             />
           );
@@ -111,6 +115,7 @@ const ComposedChart = ({
               strokeWidth={seriesConfig.strokeWidth || 2}
               fill={color}
               fillOpacity={seriesConfig.fillOpacity || 0.6}
+              isAnimationActive={isAnimationActive}
               onClick={onElementClick ? (datum) => handleElementClick(datum, index) : undefined}
             />
           );
@@ -127,6 +132,7 @@ const ComposedChart = ({
     <ResponsiveContainer width="100%" height="100%">
       <RechartsComposedChart
         data={data}
+        accessibilityLayer
         margin={{ top: 20, right: hasRightAxis ? 30 : 20, left: 20, bottom: 5 }}
       >
         {showGrid && (
@@ -176,6 +182,7 @@ const ComposedChart = ({
       height={height}
       loading={loading}
       error={error}
+      dataCount={data.length}
       gradient={gradient}
       {...props}
     >

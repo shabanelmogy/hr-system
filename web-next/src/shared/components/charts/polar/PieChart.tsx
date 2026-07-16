@@ -1,15 +1,18 @@
 import type { ReactElement, ReactNode } from 'react';
 
 import { ResponsiveContainer, PieChart as RechartsPieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
-import { useTheme } from '@mui/material';
-import { getChartTheme } from './chartThemes';
-import { formatNumber, formatPercentage, resolveChartColors, type ChartColors } from './chartUtils';
-import ChartContainer from './ChartContainer';
-import type { ChartContainerProps } from './ChartContainer';
-import type { ChartData, ChartFormatter, ChartInteractionHandler, ChartTooltipProps } from './types';
-import { getChartNumber } from './types';
+import { Box, useTheme } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { getChartTheme } from '../core/chartTheme';
+import { formatNumber, formatPercentage, resolveChartColors, type ChartColors } from '../core/chartUtils';
+import ChartContainer from '../core/ChartContainer';
+import type { ChartContainerProps } from '../core/ChartContainer';
+import type { ChartData, ChartFormatter, ChartInteractionHandler, ChartTooltipProps } from '../core/types';
+import { getChartNumber } from '../core/types';
+import { safePercentage } from '../core/numeric';
+import { useChartMotion } from '../core/useChartMotion';
 
-interface PieLabelData {
+export interface PieLabelData {
   name?: unknown;
   value?: unknown;
   percent?: number;
@@ -33,6 +36,7 @@ export type PieChartProps = Omit<ChartContainerProps, 'children'> & {
   formatPercent?: (value: number, total: number) => string;
   onSliceClick?: ChartInteractionHandler;
   customLabel?: (data: PieLabelData) => ReactElement | string | number;
+  centerContent?: ReactNode;
 };
 
 const PieChart = ({
@@ -42,28 +46,31 @@ const PieChart = ({
   title,
   subtitle,
   height = 400,
-  colors = 'primary' as ChartColors,
+  colors = 'primary',
   showLegend = true,
   showTooltip = true,
   showLabels = true,
   loading = false,
   error,
   innerRadius = 0, // Set > 0 for donut chart
-  outerRadius = 120,
+  outerRadius = '75%',
   startAngle = 90,
   endAngle = 450,
   gradient = false,
   labelLine = true,
   formatValue = formatNumber,
   formatLabel = (label) => String(label ?? ''),
-  formatPercent = (value, total) => formatPercentage((value / total) * 100),
+  formatPercent = (value, total) => formatPercentage(safePercentage(value, 0, total)),
   onSliceClick,
   customLabel,
+  centerContent,
   ...props
 }: PieChartProps) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const chartTheme = getChartTheme(theme);
   const colorPalette = resolveChartColors(colors, theme.palette.mode);
+  const isAnimationActive = useChartMotion();
 
   const total = data.reduce((sum, item) => sum + getChartNumber(item, valueKey), 0);
 
@@ -77,10 +84,10 @@ const PieChart = ({
       <div style={chartTheme.tooltip.contentStyle}>
         <p style={{ margin: 0, fontWeight: 'bold' }}>{formatLabel(data.name)}</p>
         <p style={{ margin: '4px 0', color: data.color }}>
-          Value: {formatValue(data.value)}
+          {t('chartCommon.value')}: {formatValue(data.value)}
         </p>
         <p style={{ margin: '4px 0', color: data.color }}>
-          Percentage: {percentage}
+          {t('chartCommon.percentage')}: {percentage}
         </p>
       </div>
     );
@@ -97,8 +104,9 @@ const PieChart = ({
   };
 
   const chartContent = (
-    <ResponsiveContainer width="100%" height="100%">
-      <RechartsPieChart>
+    <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
+      <ResponsiveContainer width="100%" height="100%">
+      <RechartsPieChart accessibilityLayer>
         <Pie
           data={data}
           cx="50%"
@@ -112,7 +120,8 @@ const PieChart = ({
           fill="#8884d8"
           dataKey={valueKey}
           nameKey={nameKey}
-          onClick={handleSliceClick}
+          isAnimationActive={isAnimationActive}
+          onClick={onSliceClick ? handleSliceClick : undefined}
         >
           {data.map((entry, index) => (
             <Cell
@@ -120,6 +129,15 @@ const PieChart = ({
               fill={colorPalette[index % colorPalette.length]}
               stroke={theme.palette.background.paper}
               strokeWidth={2}
+              role={onSliceClick ? 'button' : undefined}
+              tabIndex={onSliceClick ? 0 : undefined}
+              aria-label={`${formatLabel(data[index] ? (data[index] as Record<string, unknown>)[nameKey] : '')}: ${formatValue(data[index] ? getChartNumber(data[index], valueKey) : 0)}`}
+              onKeyDown={onSliceClick ? (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  onSliceClick(data[index], index);
+                }
+              } : undefined}
             />
           ))}
         </Pie>
@@ -132,7 +150,9 @@ const PieChart = ({
           />
         )}
       </RechartsPieChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+      {centerContent}
+    </Box>
   );
 
   return (
@@ -142,6 +162,7 @@ const PieChart = ({
       height={height}
       loading={loading}
       error={error}
+      dataCount={data.length}
       gradient={gradient}
       {...props}
     >

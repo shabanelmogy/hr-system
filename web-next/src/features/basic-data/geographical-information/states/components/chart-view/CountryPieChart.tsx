@@ -1,6 +1,6 @@
 import React from 'react';
 import { PieChart } from '@/shared/components/charts';
-import { COLOR_PALETTES } from '@/shared/components/charts/chartUtils';
+import { COLOR_PALETTES } from '@/shared/components/charts';
 
 interface CountryData {
   name: string;

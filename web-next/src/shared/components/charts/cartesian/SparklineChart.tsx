@@ -2,9 +2,11 @@ import { useId } from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
 import type { BoxProps } from '@mui/material';
 import { ResponsiveContainer, LineChart, Line, Area, AreaChart, BarChart, Bar } from 'recharts';
-import { formatNumber } from './chartUtils';
-import type { ChartData, ChartFormatter } from './types';
-import { getChartNumber } from './types';
+import { useTranslation } from 'react-i18next';
+import { formatNumber } from '../core/chartUtils';
+import type { ChartData, ChartFormatter } from '../core/types';
+import { getChartNumber } from '../core/types';
+import { useChartMotion } from '../core/useChartMotion';
 
 export type SparklineChartProps = Omit<BoxProps, 'height' | 'width'> & {
   data?: ChartData;
@@ -17,6 +19,7 @@ export type SparklineChartProps = Omit<BoxProps, 'height' | 'width'> & {
   showTrend?: boolean;
   valueKey?: string;
   formatValue?: ChartFormatter;
+  ariaLabel?: string;
 };
 
 const SparklineChart = ({
@@ -30,10 +33,13 @@ const SparklineChart = ({
   showTrend = false,
   valueKey = 'value',
   formatValue = formatNumber,
+  ariaLabel,
   sx,
   ...boxProps
 }: SparklineChartProps) => {
   const theme = useTheme();
+  const { t } = useTranslation();
+  const isAnimationActive = useChartMotion();
   
   const chartColor = color || theme.palette.primary.main;
   const currentValue = data.length > 0 ? getChartNumber(data[data.length - 1], valueKey) : 0;
@@ -69,6 +75,7 @@ const SparklineChart = ({
               fill={`url(#${gradientId})`}
               dot={false}
               activeDot={false}
+              isAnimationActive={isAnimationActive}
             />
           </AreaChart>
         );
@@ -80,6 +87,7 @@ const SparklineChart = ({
               dataKey={valueKey}
               fill={chartColor}
               radius={[1, 1, 0, 0]}
+              isAnimationActive={isAnimationActive}
             />
           </BarChart>
         );
@@ -95,6 +103,7 @@ const SparklineChart = ({
               strokeWidth={strokeWidth}
               dot={false}
               activeDot={false}
+              isAnimationActive={isAnimationActive}
             />
           </LineChart>
         );
@@ -104,6 +113,8 @@ const SparklineChart = ({
   return (
     <Box 
       {...boxProps}
+      role="img"
+      aria-label={ariaLabel ?? `${formatValue(currentValue)}, ${data.length} ${t('chartCommon.dataPoints')}`}
       sx={[{
         display: 'flex', 
         alignItems: 'center', 

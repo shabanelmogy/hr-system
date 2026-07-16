@@ -1,13 +1,15 @@
 import { ResponsiveContainer, ScatterChart as RechartsScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell } from 'recharts';
 import { useTheme } from '@mui/material';
-import { getChartTheme } from './chartThemes';
-import { COLOR_PALETTES, formatNumber, resolveChartColors, type ChartColors } from './chartUtils';
-import ChartContainer from './ChartContainer';
-import type { ChartContainerProps } from './ChartContainer';
-import type { CartesianChartProps, ChartData, ChartInteractionHandler, ChartTooltipProps } from './types';
-import { getChartValue } from './types';
+import { useTranslation } from 'react-i18next';
+import { getChartTheme } from '../core/chartTheme';
+import { COLOR_PALETTES, formatNumber, resolveChartColors } from '../core/chartUtils';
+import ChartContainer from '../core/ChartContainer';
+import type { ChartContainerProps } from '../core/ChartContainer';
+import type { CartesianChartProps, ChartData, ChartInteractionHandler, ChartTooltipProps } from '../core/types';
+import { getChartValue } from '../core/types';
+import { useChartMotion } from '../core/useChartMotion';
 
-interface ScatterSeries {
+export interface ScatterSeries {
   name: string;
   data: ChartData;
   color?: string;
@@ -29,7 +31,7 @@ const ScatterChart = ({
   title,
   subtitle,
   height = 400,
-  colors = COLOR_PALETTES.primary as ChartColors,
+  colors = COLOR_PALETTES.primary,
   showGrid = true,
   showLegend = false,
   showTooltip = true,
@@ -43,8 +45,13 @@ const ScatterChart = ({
   ...props
 }: ScatterChartProps) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const chartTheme = getChartTheme(theme);
   const colorPalette = resolveChartColors(colors, theme.palette.mode);
+  const isAnimationActive = useChartMotion();
+  const dataCount = multiSeries.length > 0
+    ? multiSeries.reduce((count, series) => count + series.data.length, 0)
+    : data.length;
 
   const CustomTooltip = ({ active, payload }: ChartTooltipProps) => {
     if (!active || !payload || !payload.length) return null;
@@ -64,7 +71,7 @@ const ScatterChart = ({
         </p>
         {zKey && (
           <p style={{ margin: '4px 0', color: payload[0].color }}>
-            Size: {formatValue(getChartValue(data, zKey))}
+            {t('chartCommon.size')}: {formatValue(getChartValue(data, zKey))}
           </p>
         )}
       </div>
@@ -85,17 +92,19 @@ const ScatterChart = ({
           fill={series.color || colorPalette[index % colorPalette.length]}
           onClick={onDotClick ? handleDotClick : undefined}
           shape={{ r: dotSize }}
+          isAnimationActive={isAnimationActive}
         />
       ));
     }
 
     return (
       <Scatter
-        name="Data Points"
+        name={t('chartCommon.dataPoints')}
         data={data}
         fill={colorPalette[0]}
         onClick={onDotClick ? handleDotClick : undefined}
         shape={{ r: dotSize }}
+        isAnimationActive={isAnimationActive}
       >
         {data.map((entry, index) => (
           <Cell 
@@ -110,6 +119,7 @@ const ScatterChart = ({
   const chartContent = (
     <ResponsiveContainer width="100%" height="100%">
       <RechartsScatterChart
+        accessibilityLayer
         margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
       >
         {showGrid && (
@@ -152,6 +162,7 @@ const ScatterChart = ({
       height={height}
       loading={loading}
       error={error}
+      dataCount={dataCount}
       gradient={gradient}
       {...props}
     >

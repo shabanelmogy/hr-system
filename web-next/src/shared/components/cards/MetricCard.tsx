@@ -1,4 +1,4 @@
-import type { ElementType, MouseEventHandler, ReactNode } from "react";
+import type { ElementType, KeyboardEvent, MouseEventHandler, ReactNode } from "react";
 
 import { East, North, South } from "@mui/icons-material";
 import {
@@ -16,12 +16,13 @@ import {
   useTheme,
 } from "@mui/material";
 import type { CardProps, SvgIconProps, TypographyProps } from "@mui/material";
-import { formatNumber, formatPercentage } from "./chartUtils";
-import type { ChartFormatter } from "./types";
+import { formatNumber, formatPercentage } from "../charts/core/chartUtils";
+import type { ChartFormatter } from "../charts/core/types";
+import { safePercentage } from "../charts/core/numeric";
 
 export type MetricColor = "primary" | "secondary" | "success" | "warning" | "error" | "info";
-type MetricSize = "small" | "medium" | "large";
-type MetricVariant = "default" | "elevated" | "outlined" | "glassmorphism";
+export type MetricSize = "small" | "medium" | "large";
+export type MetricVariant = "default" | "elevated" | "outlined" | "glassmorphism";
 
 interface MetricSizeConfig {
   padding: number;
@@ -129,7 +130,15 @@ const MetricCard = ({
       : 0;
 
   // Calculate progress towards target
-  const progress = target !== null ? Math.min((value / target) * 100, 100) : 0;
+  const progress = target !== null && target > 0 ? safePercentage(value, 0, target) : 0;
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    cardProps.onKeyDown?.(event);
+    if (!event.defaultPrevented && onClick && (event.key === "Enter" || event.key === " ")) {
+      event.preventDefault();
+      event.currentTarget.click();
+    }
+  };
 
   // Get trend icon and color
   const getTrendIcon = () => {
@@ -183,6 +192,7 @@ const MetricCard = ({
     const baseStyles = {
       cursor: onClick ? "pointer" : "default",
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      "@media (prefers-reduced-motion: reduce)": { transition: "none" },
       borderRadius: 3,
       position: "relative",
       overflow: "hidden",
@@ -267,6 +277,9 @@ const MetricCard = ({
       elevation={variant === "elevated" ? elevation + 2 : elevation}
       sx={[getVariantStyles(), ...(Array.isArray(sx) ? sx : [sx])]}
       onClick={onClick}
+      onKeyDown={handleKeyDown}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
     >
       <CardContent sx={{ p: config.padding, position: "relative" }}>
         {/* Badge indicator */}
@@ -347,6 +360,10 @@ const MetricCard = ({
                     transform: "scale(1.05)",
                     boxShadow: `0 6px 20px ${alpha(themeColor.main, 0.25)}`,
                   },
+                  "@media (prefers-reduced-motion: reduce)": {
+                    transition: "none",
+                    "&:hover": { transform: "none" },
+                  },
                 }}
               >
                 <Icon sx={{ fontSize: config.iconSize * 0.6 }} />
@@ -367,6 +384,7 @@ const MetricCard = ({
                     }, ${alpha(themeColor.main, 0.3)})`,
                     opacity: 0.3,
                     animation: "pulse 2s infinite",
+                    "@media (prefers-reduced-motion: reduce)": { animation: "none" },
                     "@keyframes pulse": {
                       "0%": { transform: "scale(1)", opacity: 0.3 },
                       "50%": { transform: "scale(1.1)", opacity: 0.1 },
@@ -469,6 +487,7 @@ const MetricCard = ({
                 px: 1.5,
                 py: 0.75,
                 transition: "all 0.2s ease",
+                "@media (prefers-reduced-motion: reduce)": { transition: "none" },
                 "&:hover": {
                   backgroundColor: alpha(getTrendColor(), 0.12),
                   transform: "scale(1.02)",

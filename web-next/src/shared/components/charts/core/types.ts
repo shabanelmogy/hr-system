@@ -3,9 +3,12 @@ import type { ReactNode } from "react";
 import type { ChartColors } from "./chartUtils";
 
 export type ChartDatum = object;
-export type ChartData = ChartDatum[];
+export type ChartData<TDatum extends ChartDatum = ChartDatum> = readonly TDatum[];
 export type ChartFormatter = (value: unknown) => string;
-export type ChartInteractionHandler = (data: unknown, index: number) => void;
+export type ChartInteractionHandler<TDatum extends ChartDatum = ChartDatum> = (
+  data: TDatum,
+  index: number,
+) => void;
 
 export interface ChartSeries {
   key: string;

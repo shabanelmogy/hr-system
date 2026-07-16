@@ -8,16 +8,15 @@ import {
   Grid,
   Stack,
   Typography,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import Link from "next/link";
 
 // Shared components and charts
 import { appRoutes } from "@/config";
 import { PageHeader } from "@/shared/components/navigation/header";
-import { useMediaQuery } from "@mui/material";
-import { useRouter } from "next/navigation";
 import Section from "@/shared/components/layout/Section";
 import QuickInsights from "../quick-insights";
 import KpiRow from "../rows/kpi-row";
@@ -29,23 +28,11 @@ import AttendanceTrendsRow from "../rows/attendance-trends-row";
 const Home = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const router = useRouter();
-  const [isVisible, setIsVisible] = useState(false);
 
   const isUpLg = useMediaQuery(theme.breakpoints.up("lg"));
 
-  useEffect(() => {
-    // Trigger the fade-in effect on mount
-    setIsVisible(true);
-  }, []);
-
   return (
-    <Box
-      sx={{
-        opacity: isVisible ? 1 : 0,
-        transition: "opacity 600ms ease-in-out",
-      }}
-    >
+    <Box>
       {/* HERO SECTION */}
       <Box
         sx={{
@@ -91,11 +78,13 @@ const Home = () => {
           sx={{ alignItems: "center", justifyContent: "flex-end", mb: 1 }}
         >
           <Button
+            component={Link}
+            href={appRoutes.kpis}
+            prefetch
             size="small"
             variant="outlined"
-            onClick={() => router.push(appRoutes.kpis)}
           >
-             VIEW ALL
+            VIEW ALL
           </Button>
         </Stack>
         <KpiRow showAll={false} />
@@ -114,9 +103,11 @@ const Home = () => {
         >
           <Typography variant="h6">Trends Overview</Typography>
           <Button
+            component={Link}
+            href={appRoutes.trends}
+            prefetch
             size="small"
             variant="outlined"
-            onClick={() => router.push(appRoutes.trends)}
           >
             VIEW ALL
           </Button>
@@ -147,9 +138,11 @@ const Home = () => {
         >
           <Typography variant="h6">Health & Pipeline Overview</Typography>
           <Button
+            component={Link}
+            href={appRoutes.healthPipeline}
+            prefetch
             size="small"
             variant="outlined"
-            onClick={() => router.push(appRoutes.healthPipeline)}
           >
             VIEW ALL
           </Button>
@@ -170,9 +163,11 @@ const Home = () => {
         >
           <Typography variant="h6">Attendance Overview</Typography>
           <Button
+            component={Link}
+            href={appRoutes.attendanceTrends}
+            prefetch
             size="small"
             variant="outlined"
-            onClick={() => router.push(appRoutes.attendanceTrends)}
           >
             VIEW ALL
           </Button>

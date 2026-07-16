@@ -18,7 +18,7 @@ const TimelineChart: React.FC<TimelineChartProps> = ({ data, t }) => {
           title=""
           subtitle=""
           height={300}
-          colors="blue"
+          colors="primary"
           showGrid={true}
           showTooltip={true}
         />

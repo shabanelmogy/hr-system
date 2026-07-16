@@ -1,12 +1,14 @@
 import { ResponsiveContainer, Treemap, Tooltip } from 'recharts';
 import type { TreemapNode } from 'recharts';
 import { useTheme } from '@mui/material';
-import { getChartTheme } from './chartThemes';
-import { COLOR_PALETTES, formatNumber, resolveChartColors, type ChartColors } from './chartUtils';
-import ChartContainer from './ChartContainer';
-import type { ChartContainerProps } from './ChartContainer';
-import type { ChartFormatter, ChartInteractionHandler, ChartTooltipProps } from './types';
-import { getChartValue } from './types';
+import { useTranslation } from 'react-i18next';
+import { getChartTheme } from '../core/chartTheme';
+import { COLOR_PALETTES, formatNumber, resolveChartColors, type ChartColors } from '../core/chartUtils';
+import ChartContainer from '../core/ChartContainer';
+import type { ChartContainerProps } from '../core/ChartContainer';
+import type { ChartFormatter, ChartInteractionHandler, ChartTooltipProps } from '../core/types';
+import { getChartValue } from '../core/types';
+import { useChartMotion } from '../core/useChartMotion';
 
 export interface TreemapDataItem {
   children?: readonly TreemapDataItem[];
@@ -30,7 +32,7 @@ const TreemapChart = ({
   title,
   subtitle,
   height = 400,
-  colors = COLOR_PALETTES.primary as ChartColors,
+  colors = COLOR_PALETTES.primary,
   showTooltip = true,
   loading = false,
   error,
@@ -44,8 +46,10 @@ const TreemapChart = ({
   ...props
 }: TreemapChartProps) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const chartTheme = getChartTheme(theme);
   const colorPalette = resolveChartColors(colors, theme.palette.mode);
+  const isAnimationActive = useChartMotion();
 
   const CustomTooltip = ({ active, payload }: ChartTooltipProps) => {
     if (!active || !payload || !payload.length) return null;
@@ -57,11 +61,11 @@ const TreemapChart = ({
       <div style={chartTheme.tooltip.contentStyle}>
         <p style={{ margin: 0, fontWeight: 'bold' }}>{formatLabel(getChartValue(tooltipData, nameKey))}</p>
         <p style={{ margin: '4px 0', color: payload[0].color }}>
-          Size: {formatValue(getChartValue(tooltipData, dataKey))}
+          {t('chartCommon.size')}: {formatValue(getChartValue(tooltipData, dataKey))}
         </p>
         {category != null && (
           <p style={{ margin: '4px 0', color: payload[0].color }}>
-            Category: {String(category)}
+            {t('chartCommon.category')}: {String(category)}
           </p>
         )}
       </div>
@@ -83,7 +87,16 @@ const TreemapChart = ({
             strokeWidth: strokeWidth,
             strokeOpacity: 1,
           }}
-          onClick={() => onRectClick?.(node, index)}
+          onClick={onRectClick ? () => onRectClick(node, index) : undefined}
+          role={onRectClick ? 'button' : undefined}
+          tabIndex={onRectClick ? 0 : undefined}
+          aria-label={nodeName}
+          onKeyDown={onRectClick ? (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              onRectClick(node, index);
+            }
+          } : undefined}
         />
         {depth === 1 ? (
           <text
@@ -122,6 +135,7 @@ const TreemapChart = ({
         stroke={theme.palette.background.paper}
         fill={colorPalette[0]}
         content={CustomizedContent}
+        isAnimationActive={isAnimationActive}
       >
         {showTooltip && <Tooltip content={CustomTooltip} />}
       </Treemap>
@@ -135,6 +149,7 @@ const TreemapChart = ({
       height={height}
       loading={loading}
       error={error}
+      dataCount={data.length}
       gradient={gradient}
       {...props}
     >

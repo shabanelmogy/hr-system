@@ -407,6 +407,29 @@
     "goToLastRecord": "الذهاب للسجل الاخير",
     "pages": "الصفحات"
   },
+  "chartCommon": {
+    "label": "مخطط بيانات",
+    "dataPointCount_zero": "لا يحتوي المخطط على نقاط بيانات.",
+    "dataPointCount_one": "يحتوي المخطط على نقطة بيانات واحدة.",
+    "dataPointCount_two": "يحتوي المخطط على نقطتي بيانات.",
+    "dataPointCount_few": "يحتوي المخطط على {{count}} نقاط بيانات.",
+    "dataPointCount_many": "يحتوي المخطط على {{count}} نقطة بيانات.",
+    "dataPointCount_other": "يحتوي المخطط على {{count}} نقطة بيانات.",
+    "errorTitle": "تعذر تحميل المخطط",
+    "errorMessage": "بيانات المخطط غير متاحة مؤقتاً.",
+    "emptyTitle": "لا توجد بيانات للمخطط",
+    "emptyMessage": "لا توجد بيانات لعرضها.",
+    "value": "القيمة",
+    "percentage": "النسبة المئوية",
+    "current": "الحالي",
+    "target": "المستهدف",
+    "total": "الإجمالي",
+    "runningTotal": "الإجمالي التراكمي",
+    "size": "الحجم",
+    "category": "الفئة",
+    "conversion": "التحويل",
+    "dataPoints": "نقاط البيانات"
+  },
   "addressTypes": {
     "dashboard": {
       "totalAddressTypes": "إجمالي أنواع العناوين",

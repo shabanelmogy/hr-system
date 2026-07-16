@@ -18,7 +18,7 @@ const NameLengthChart: React.FC<NameLengthChartProps> = ({ data, t }) => {
           title=""
           subtitle=""
           height={300}
-          colors="purple"
+          colors="secondary"
           showGrid={true}
           showTooltip={true}
         />

@@ -1,9 +1,13 @@
+import { useId } from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
 import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { formatNumber, formatPercentage } from './chartUtils';
-import ChartContainer from './ChartContainer';
-import type { ChartContainerProps } from './ChartContainer';
-import type { ChartFormatter } from './types';
+import { useTranslation } from 'react-i18next';
+import { formatNumber, formatPercentage } from '../core/chartUtils';
+import ChartContainer from '../core/ChartContainer';
+import type { ChartContainerProps } from '../core/ChartContainer';
+import type { ChartFormatter } from '../core/types';
+import { clamp, safePercentage } from '../core/numeric';
+import { useChartMotion } from '../core/useChartMotion';
 
 export type GaugeChartProps = Omit<ChartContainerProps, 'children'> & {
   value?: number;
@@ -42,9 +46,11 @@ const GaugeChart = ({
   ...props
 }: GaugeChartProps) => {
   const theme = useTheme();
+  const { t } = useTranslation();
+  const isAnimationActive = useChartMotion();
 
   // Calculate percentage
-  const percentage = ((value - minValue) / (maxValue - minValue)) * 100;
+  const percentage = safePercentage(value, minValue, maxValue);
   
   // Determine color based on percentage and thresholds
   const getColor = () => {
@@ -54,7 +60,7 @@ const GaugeChart = ({
   };
 
   const activeColor = getColor();
-  const gradId = `gaugeGrad-${(title || 'gauge').toString().replace(/[^a-zA-Z0-9_-]+/g, '-')}`;
+  const gradId = `gauge-${useId().replace(/:/g, '')}`;
   const trackFill = trackColor || (theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.grey[200]);
 
   // Create data for the gauge (semicircle)
@@ -94,7 +100,7 @@ const GaugeChart = ({
       <Typography variant="body2" sx={{
         color: "text.secondary"
       }}>
-        of {formatValue(maxValue)}
+        {t('pagination.of')} {formatValue(maxValue)}
       </Typography>
     </Box>
   );
@@ -102,7 +108,7 @@ const GaugeChart = ({
   const chartContent = (
     <Box sx={{ position: 'relative', height: '100%' }}>
       <ResponsiveContainer width="100%" height="100%">
-        <PieChart>
+        <PieChart accessibilityLayer>
           {arcGradient && (
             <defs>
               <linearGradient id={gradId} x1="1" y1="0" x2="0" y2="0">
@@ -117,10 +123,11 @@ const GaugeChart = ({
             cy="72%"
             startAngle={180}
             endAngle={0}
-            innerRadius={60}
-            outerRadius={60 + thickness}
+            innerRadius="50%"
+            outerRadius={`${clamp(50 + thickness, 58, 82)}%`}
             dataKey="value"
             stroke="none"
+            isAnimationActive={isAnimationActive}
           >
             {gaugeData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.fill} />
@@ -139,6 +146,7 @@ const GaugeChart = ({
       height={height}
       loading={loading}
       error={error}
+      summary={`${formatValue(value)} ${t('pagination.of')} ${formatValue(maxValue)}`}
       gradient={gradient}
       {...props}
     >
