@@ -14,23 +14,33 @@ export const TitleSection: React.FC<TitleSectionProps> = ({ title, subtitle, mai
   const theme = useTheme();
   const { t } = useTranslation();
   return (
-    <Stack direction="row" spacing={2} sx={{ alignItems: "center", mb: 3 }}>
+    <Stack
+      direction={{ xs: "column", sm: "row" }}
+      spacing={2}
+      sx={{
+        alignItems: { xs: "stretch", sm: "center" },
+        mb: 3,
+        minWidth: 0,
+      }}
+    >
       <Avatar
         sx={{
           bgcolor: theme.palette.primary.main,
           width: 48,
           height: 48,
+          alignSelf: { xs: "flex-start", sm: "center" },
           boxShadow: `0 4px 12px ${alpha(theme.palette.primary.main, 0.3)}`,
         }}
       >
         <ViewModule sx={{ fontSize: 24 }} />
       </Avatar>
-      <Box sx={{ flex: 1 }}>
+      <Box sx={{ flex: 1, minWidth: 0 }}>
         <Typography
           variant="h4"
           sx={{
             color: "primary.main",
-            fontWeight: "bold"
+            fontWeight: "bold",
+            overflowWrap: "anywhere",
           }}>
           {title}
         </Typography>
@@ -42,7 +52,11 @@ export const TitleSection: React.FC<TitleSectionProps> = ({ title, subtitle, mai
           </Typography>
         )}
       </Box>
-      <Stack direction="row" spacing={1}>
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{ flexWrap: "wrap", rowGap: 1, flexShrink: 0 }}
+      >
         <Chip label={mainChipLabel} color="primary" variant="outlined" />
         <Chip label={`${t("general.page")}: ${page + 1}`} color="warning" variant="outlined" size="small" />
       </Stack>

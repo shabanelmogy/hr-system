@@ -1,7 +1,19 @@
+import { Add, Edit, Save } from "@mui/icons-material";
 import React from "react";
 import { DialogContent, Box, useTheme, alpha } from "@mui/material";
 import { MyOverlayLoader } from "@/shared/components/loaders";
 import { useFormContext } from "./FormContext";
+
+const getFormOverlayIcon = (actionType?: string | null) => {
+  switch (actionType) {
+    case "create":
+      return <Add sx={{ fontSize: 48, color: "#2196f3", mb: 1 }} />;
+    case "update":
+      return <Edit sx={{ fontSize: 48, color: "#ff9800", mb: 1 }} />;
+    default:
+      return <Save sx={{ fontSize: 48, color: "#4caf50", mb: 1 }} />;
+  }
+};
 
 export const FormContent: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   const theme = useTheme();
@@ -17,6 +29,7 @@ export const FormContent: React.FC<{ children?: React.ReactNode }> = ({ children
   return (
     <DialogContent
       ref={dialogContentRef}
+      aria-busy={isSubmitting}
       sx={{
         minHeight: 0,
         overflowY: "auto",
@@ -93,8 +106,8 @@ export const FormContent: React.FC<{ children?: React.ReactNode }> = ({ children
       {isSubmitting && (
         <MyOverlayLoader
           open={true}
-          actionType={overlayActionType || "saving"}
-          message={overlayMessage || undefined}
+          customIcon={getFormOverlayIcon(overlayActionType)}
+          message={overlayMessage || "Saving..."}
         />
       )}
 

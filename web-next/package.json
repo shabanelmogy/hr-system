@@ -19,8 +19,8 @@
     "check": "npm run check:architecture && npm run lint && npm run type-check && npm run type-check:strict"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
     "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@faker-js/faker": "^10.5.0",
     "@fontsource/roboto": "^5.2.10",
@@ -55,6 +55,7 @@
     "@tanstack/react-query-devtools": "^5.101.1",
     "axios": "^1.18.1",
     "chart.js": "^4.5.1",
+    "country-code-lookup": "^0.1.5",
     "crypto-js": "^4.2.0",
     "date-fns": "^4.4.0",
     "dayjs": "^1.11.21",

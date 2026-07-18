@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getCardPaginationState } from "./pagination";
+import { getCardPageCorrection, getCardPaginationState } from "./pagination";
 
 describe("getCardPaginationState", () => {
   it("returns an empty range when no items exist", () => {
@@ -27,5 +27,10 @@ describe("getCardPaginationState", () => {
       start: 0,
       end: 0,
     });
+  });
+
+  it("identifies when the parent page must be corrected", () => {
+    expect(getCardPageCorrection(8, 2)).toBe(2);
+    expect(getCardPageCorrection(2, 2)).toBeNull();
   });
 });

@@ -5,6 +5,13 @@ export interface CardPaginationState {
   end: number;
 }
 
+export function getCardPageCorrection(
+  requestedPage: number,
+  normalizedPage: number,
+): number | null {
+  return requestedPage === normalizedPage ? null : normalizedPage;
+}
+
 export function getCardPaginationState(
   requestedPage: number,
   rowsPerPage: number,

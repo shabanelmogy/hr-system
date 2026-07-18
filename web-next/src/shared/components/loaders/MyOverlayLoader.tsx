@@ -1,28 +1,12 @@
-import {
-  Add,
-  Backup,
-  CloudDownload,
-  CloudUpload,
-  Delete,
-  Edit,
-  SaveAlt as ExportIcon,
-  FileDownload,
-  GridOn,
-  PictureAsPdf,
-  Print,
-  Save,
-  Sync,
-  TableChart,
-} from "@mui/icons-material";
+import { Sync } from "@mui/icons-material";
 import { Backdrop, Box, CircularProgress, Typography } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 import React, { type ReactElement } from "react";
 
-type LoaderIcon = ReactElement<{ sx?: SxProps<Theme> }>;
+export type LoaderIcon = ReactElement<{ sx?: SxProps<Theme> }>;
 
-interface MyOverlayLoaderProps {
+export interface MyOverlayLoaderProps {
   open?: boolean;
-  actionType?: string;
   message?: string;
   customIcon?: LoaderIcon | null;
   customColor?: string | null;
@@ -32,14 +16,8 @@ interface MyOverlayLoaderProps {
   zIndex?: number | null;
 }
 
-interface ActionConfig {
-  icon: LoaderIcon;
-  defaultMessage: string;
-}
-
 export const MyOverlayLoader = ({
   open = false,
-  actionType = "default",
   message = "",
   customIcon = null,
   customColor = null,
@@ -48,122 +26,47 @@ export const MyOverlayLoader = ({
   backgroundColor = "rgba(0, 0, 0, 0.7)",
   zIndex = null,
 }: MyOverlayLoaderProps) => {
-  // Default action type configurations
-  const actionConfigs = {
-    // Export types
-    pdf: {
-      icon: <PictureAsPdf sx={{ fontSize: 48, color: "#f44336", mb: 1 }} />,
-      defaultMessage: "Exporting PDF...",
-    },
-    excel: {
-      icon: <GridOn sx={{ fontSize: 48, color: "#4caf50", mb: 1 }} />,
-      defaultMessage: "Exporting Excel...",
-    },
-    csv: {
-      icon: <TableChart sx={{ fontSize: 48, color: "#ff9800", mb: 1 }} />,
-      defaultMessage: "Exporting CSV...",
-    },
-    print: {
-      icon: <Print sx={{ fontSize: 48, color: "#9c27b0", mb: 1 }} />,
-      defaultMessage: "Preparing Print...",
-    },
-    download: {
-      icon: <FileDownload sx={{ fontSize: 48, color: "#607d8b", mb: 1 }} />,
-      defaultMessage: "Downloading...",
-    },
-    export: {
-      icon: <ExportIcon sx={{ fontSize: 48, color: "#2196f3", mb: 1 }} />,
-      defaultMessage: "Exporting...",
-    },
-
-    // CRUD operations
-    save: {
-      icon: <Save sx={{ fontSize: 48, color: "#4caf50", mb: 1 }} />,
-      defaultMessage: "Saving...",
-    },
-    update: {
-      icon: <Edit sx={{ fontSize: 48, color: "#ff9800", mb: 1 }} />,
-      defaultMessage: "Updating...",
-    },
-    delete: {
-      icon: <Delete sx={{ fontSize: 48, color: "#f44336", mb: 1 }} />,
-      defaultMessage: "Deleting...",
-    },
-    create: {
-      icon: <Add sx={{ fontSize: 48, color: "#2196f3", mb: 1 }} />,
-      defaultMessage: "Creating...",
-    },
-
-    // Upload/Sync operations
-    upload: {
-      icon: <CloudUpload sx={{ fontSize: 48, color: "#3f51b5", mb: 1 }} />,
-      defaultMessage: "Uploading...",
-    },
-    sync: {
-      icon: <Sync sx={{ fontSize: 48, color: "#00bcd4", mb: 1 }} />,
-      defaultMessage: "Synchronizing...",
-    },
-    backup: {
-      icon: <Backup sx={{ fontSize: 48, color: "#795548", mb: 1 }} />,
-      defaultMessage: "Creating Backup...",
-    },
-    restore: {
-      icon: <CloudDownload sx={{ fontSize: 48, color: "#009688", mb: 1 }} />,
-      defaultMessage: "Restoring...",
-    },
-
-    // Default
-    default: {
-      icon: <ExportIcon sx={{ fontSize: 48, color: "#2196f3", mb: 1 }} />,
-      defaultMessage: "Processing...",
-    },
-  } satisfies Record<string, ActionConfig>;
-
-  // Get configuration for current action type
-  const config: ActionConfig = Object.prototype.hasOwnProperty.call(
-    actionConfigs,
-    actionType,
-  )
-    ? actionConfigs[actionType as keyof typeof actionConfigs]
-    : actionConfigs.default;
-
-  // Use custom icon if provided, otherwise use config icon
-  const displayIcon = customIcon || config.icon;
-
-  // Use provided message or default message for action type
-  const displayMessage = message || config.defaultMessage;
-
-  // Apply custom color to icon if provided
-  const finalIcon =
-    customColor && !customIcon
-      ? React.cloneElement(config.icon, {
-          sx: { ...config.icon.props.sx, color: customColor },
+  const displayMessage = message || "Processing...";
+  const defaultIcon = (
+    <Sync sx={{ fontSize: 48, color: customColor || "primary.main", mb: 1 }} />
+  );
+  const finalIcon = customIcon
+    ? customColor
+      ? React.cloneElement(customIcon, {
+        sx: customIcon.props.sx
+            ? ([customIcon.props.sx, { color: customColor }] as SxProps<Theme>)
+            : { color: customColor },
         })
-      : displayIcon;
+      : customIcon
+    : defaultIcon;
 
   return (
     <Backdrop
+      open={open}
+      role="status"
+      aria-live="polite"
+      aria-label={displayMessage}
       sx={{
         color: "#fff",
-        zIndex: zIndex || ((theme) => theme.zIndex.drawer + 1),
-        backgroundColor: backgroundColor,
+        zIndex: zIndex ?? ((theme) => theme.zIndex.modal + 1),
+        backgroundColor,
       }}
-      open={open}
     >
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 2
-        }}>
-        {/* Action Type Icon */}
+          gap: 2,
+        }}
+      >
         {finalIcon}
 
         <CircularProgress
           color="primary"
           size={spinnerSize}
           thickness={spinnerThickness}
+          aria-hidden="true"
         />
 
         <Typography

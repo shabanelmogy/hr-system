@@ -6,12 +6,11 @@ import {
   Select,
   Stack,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material/Select";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { getCardPaginationState } from "./pagination";
+import { getCardPageCorrection, getCardPaginationState } from "./pagination";
 
 export interface CardViewPaginationProps {
   page: number;
@@ -28,41 +27,55 @@ const CardViewPagination = ({
   rowsPerPage,
   totalItems,
   itemsPerPageOptions,
-  itemsLabel = "items",
+  itemsLabel: itemsLabelProp,
   onPageChange,
   onRowsPerPageChange,
 }: CardViewPaginationProps) => {
-  const theme = useTheme();
-  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
-  const isNarrow = useMediaQuery("(max-width:724px)");
-  const isCompact = useMediaQuery("(max-width:660px)");
   const { t } = useTranslation();
   const pagination = getCardPaginationState(page, rowsPerPage, totalItems);
+  const itemsLabel = itemsLabelProp ?? t("pagination.items", { defaultValue: "items" });
+
+  useEffect(() => {
+    const correctedPage = getCardPageCorrection(page, pagination.page);
+    if (correctedPage !== null) {
+      onPageChange(undefined, correctedPage);
+    }
+  }, [onPageChange, page, pagination.page]);
 
   return (
-    <Paper sx={{ mt: 3, p: 3 }}>
+    <Paper sx={{ mt: 3, p: { xs: 2, sm: 3 } }}>
       <Stack
-        direction={isCompact ? "column" : "row"}
+        direction="row"
         spacing={2}
-        sx={{ justifyContent: "space-between", alignItems: "center" }}
+        sx={{
+          justifyContent: "space-between",
+          alignItems: "center",
+          "@media (max-width:660px)": {
+            flexDirection: "column",
+          },
+        }}
       >
         {/* Left side - Showing info and items per page */}
         <Stack
-          direction={{ xs: "column", sm: "row" }}
+          direction="row"
           spacing={2}
           sx={{
             alignItems: "center",
-            order: isCompact ? 1 : 1,
-            flexDirection: isCompact ? "row" : undefined,
-            justifyContent: isXs ? "center" : isCompact ? "space-between" : undefined,
-            width: isCompact ? "100%" : undefined,
+            order: 1,
+            "@media (max-width:660px)": {
+              justifyContent: "space-between",
+              width: "100%",
+            },
+            "@media (max-width:599.95px)": {
+              justifyContent: "center",
+            },
           }}
         >
           <Typography
             variant="body2"
             sx={{
               color: "text.secondary",
-              textAlign: isXs ? "center" : "inherit"
+              textAlign: "center",
             }}>
             {totalItems === 0
               ? `${t("pagination.showing")} 0 of 0 ${itemsLabel}`
@@ -92,13 +105,22 @@ const CardViewPagination = ({
         {totalItems > 0 && (
           <Box
             sx={{
-              order: isCompact ? 2 : 2,
+              order: 2,
               maxWidth: "100%",
               display: "flex",
-              justifyContent: isXs ? "center" : "flex-start",
-              overflowX: isNarrow ? "auto" : "visible",
-              whiteSpace: isNarrow ? "nowrap" : "normal",
+              justifyContent: "flex-start",
+              overflowX: "visible",
+              whiteSpace: "normal",
               "& .MuiPagination-ul": { flexWrap: "nowrap" },
+              "@media (max-width:724px)": {
+                justifyContent: "center",
+                overflowX: "auto",
+                whiteSpace: "nowrap",
+                width: "100%",
+                "& .MuiPaginationItem-firstLast": {
+                  display: "none",
+                },
+              },
             }}
           >
             <Pagination
@@ -106,11 +128,11 @@ const CardViewPagination = ({
               page={pagination.page + 1}
               onChange={(event, value) => onPageChange(event, value - 1)}
               color="primary"
-              showFirstButton={!isNarrow}
-              showLastButton={!isNarrow}
-              siblingCount={isNarrow ? 0 : 1}
-              boundaryCount={isNarrow ? 0 : 1}
-              size={isXs || isNarrow ? "small" : "medium"}
+              showFirstButton
+              showLastButton
+              siblingCount={1}
+              boundaryCount={1}
+              size="medium"
               sx={{ display: "inline-flex", "& .MuiPagination-ul": { flexWrap: "nowrap" } }}
             />
           </Box>

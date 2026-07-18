@@ -1,5 +1,5 @@
 import { alpha, Box, Typography, useTheme } from "@mui/material";
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 
 type SectionProps = {
   title?: ReactNode;
@@ -10,8 +10,15 @@ type SectionProps = {
 
 const Section = ({ children, title, subtitle, actions }: SectionProps) => {
   const theme = useTheme();
+  const headingId = useId();
+  const hasTitle = Boolean(title);
+  const hasHeader = hasTitle || Boolean(subtitle) || Boolean(actions);
+
   return (
     <Box
+      component="section"
+      dir={theme.direction}
+      aria-labelledby={hasTitle ? headingId : undefined}
       sx={{
         p: { xs: 1.5, md: 2 },
         borderRadius: 3,
@@ -28,24 +35,42 @@ const Section = ({ children, title, subtitle, actions }: SectionProps) => {
         overflow: "hidden",
       }}
     >
-      {actions && (
-        <Box sx={{ position: "absolute", top: 8, right: 8, display: "flex", gap: 1 }}>
-          {actions}
-        </Box>
-      )}
-      {(title || subtitle) && (
-        <Box sx={{ mb: 1.5 }}>
-          {title && (
-            <Typography variant="h6" sx={{ fontWeight: 800 }}>
-              {title}
-            </Typography>
+      {hasHeader && (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            gap: 2,
+            minWidth: 0,
+            mb: title || subtitle ? 1.5 : 0,
+          }}
+        >
+          {(title || subtitle) && (
+            <Box sx={{ minWidth: 0, flex: 1 }}>
+              {title && (
+                <Typography id={headingId} component="h2" variant="h6" sx={{ fontWeight: 800 }}>
+                  {title}
+                </Typography>
+              )}
+              {subtitle && (
+                <Typography component="p" variant="body2" sx={{ color: "text.secondary" }}>
+                  {subtitle}
+                </Typography>
+              )}
+            </Box>
           )}
-          {subtitle && (
-            <Typography variant="body2" sx={{
-              color: "text.secondary"
-            }}>
-              {subtitle}
-            </Typography>
+          {actions && (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                flexShrink: 0,
+              }}
+            >
+              {actions}
+            </Box>
           )}
         </Box>
       )}

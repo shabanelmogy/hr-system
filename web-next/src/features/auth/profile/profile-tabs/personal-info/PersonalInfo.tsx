@@ -171,10 +171,12 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
   };
 
   if (isSessionLoading && !user) {
-    return <MySimpleLoader />;
+    return <MySimpleLoader label={t("general.loading")} />;
   }
 
-  if (isUserInfoLoading && !user) return <MySimpleLoader />;
+  if (isUserInfoLoading && !user) {
+    return <MySimpleLoader label={t("general.loading")} />;
+  }
 
   return (
     <Fade in={true} timeout={300}>

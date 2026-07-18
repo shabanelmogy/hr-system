@@ -1,9 +1,19 @@
 import { Box, CircularProgress } from "@mui/material";
+import type { ReactNode } from "react";
 
-const MySimpleLoader = () => {
+export interface MySimpleLoaderProps {
+  label?: ReactNode;
+}
+
+const MySimpleLoader = ({ label = "Loading..." }: MySimpleLoaderProps) => {
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", p: 5 }}>
-      <CircularProgress />
+    <Box
+      role="status"
+      aria-live="polite"
+      aria-label={typeof label === "string" ? label : undefined}
+      sx={{ display: "flex", justifyContent: "center", p: 5 }}
+    >
+      <CircularProgress aria-hidden="true" />
     </Box>
   );
 };

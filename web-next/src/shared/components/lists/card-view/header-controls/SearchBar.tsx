@@ -1,6 +1,7 @@
 import { IconButton, alpha, useTheme } from "@mui/material";
 import { Clear, Search } from "@mui/icons-material";
 import { MyTextField } from "@/shared/components/forms";
+import { useTranslation } from "react-i18next";
 
 export interface SearchBarProps {
   searchTerm: string;
@@ -11,6 +12,7 @@ export interface SearchBarProps {
 
 export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, placeholder, onSearchChange, onClearSearch }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <MyTextField
@@ -31,7 +33,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, placeholder, o
       showClearButton={false}
       endAdornment={
         <IconButton
-          aria-label="clear search"
+          aria-label={t("general.clearSearch")}
           onClick={onClearSearch}
           disabled={!searchTerm}
           edge="end"

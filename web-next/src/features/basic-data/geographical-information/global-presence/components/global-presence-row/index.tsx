@@ -1,7 +1,7 @@
 import { Timeline } from "@/shared/components/timeline";
-import WorldMap from "@/shared/components/maps/WorldMap";
 import { Grid, Stack, Button, Typography } from "@mui/material";
 import { hrTimeline, worldData } from "./data";
+import GlobalPresenceMap from "./GlobalPresenceMap";
 import Link from "next/link";
 import { appRoutes } from "@/config";
 
@@ -31,7 +31,7 @@ const GlobalPresenceRow = ({ showViewAll = true }: GlobalPresenceRowProps) => {
       </Grid>
 
       <Grid size={{ xs: 12, lg: 7 }}>
-        <WorldMap data={worldData} height={460} showStats />
+        <GlobalPresenceMap data={worldData} height={460} />
       </Grid>
 
       <Grid size={{ xs: 12, lg: 5 }}>
