@@ -1,8 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { showErrorDialog } from "../components/feedback/ErrorDialog";
-import showToast from "../components/feedback/Toast";
+import { showErrorDialog, showToast } from "../components/feedback/transient";
 
 export type NotificationSeverity = "error" | "warning" | "info" | "success";
 

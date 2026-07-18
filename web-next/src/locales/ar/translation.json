@@ -56,9 +56,11 @@
     "traceId": "معرف التتبع",
     "copy": "نسخ الخطأ",
     "copied": "تم النسخ",
+    "copyFailed": "تعذر النسخ",
     "whatsApp": "مشاركة",
     "close": "إغلاق",
-    "errorReport": "تقرير خطأ نظام إدارة الموارد البشرية"
+    "errorReport": "تقرير خطأ نظام إدارة الموارد البشرية",
+    "unknownMessage": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى."
   },
   "notifications": {
     "title": "الإشعارات",
@@ -352,16 +354,14 @@
     "unsavedChangesTitle": "تغييرات غير محفوظة",
     "unsavedChangesConfirm": "لديك تغييرات غير محفوظة. هل تريد تجاهلها؟",
     "discardChanges": "تجاهل التغييرات",
-    "delete": " هل أنت متأكد أنك تريد حذف",
     "confirmDeletion": "تأكيد الحذف",
-    "areYouSureDelete": " هل أنت متأكد أنك تريد حذف",
-    "thisActionCannotBeUndone": "لا يمكن التراجع عن هذه العملية",
-    "processingDelete": "جارى المعالجة",
-    "confirmationVerified": "تم التحقق من التاكيد بنجاح",
-    "pleaseTypeExactly": "يرجى كتابة الكلمة بطريقة صحيحة",
-    "inTheBoxBelow": "فى المربع التالى لتأكيد الحذف",
-    "typeDELETE": "أكتب DELETE",
-    "typeDeleteToConfirm": " يرجى كتابة"
+    "areYouSureDelete": "أنت على وشك حذف العنصر التالي نهائيًا:",
+    "thisActionCannotBeUndone": "لا يمكن التراجع عن هذه العملية.",
+    "confirmationVerified": "تم تأكيد العبارة.",
+    "pleaseTypeExactly": "أدخل {{keyword}} كما هي تمامًا.",
+    "inTheBoxBelow": "أدناه للتأكيد.",
+    "typeDELETE": "اكتب {{keyword}}",
+    "typeDeleteToConfirm": "اكتب"
   },
   "dashboard": {
     "title": "لوحة التحكم",
@@ -845,10 +845,25 @@
       "clearSearch": "مسح البحث",
       "clearFilters": "مسح الفلاتر",
       "refresh": "تحديث",
-      "messageWithTerm": "لا توجد نتنائج للبحث",
+      "message": "لا توجد نتائج",
+      "messageWithTerm": "لا توجد نتائج لـ \"{{term}}\"",
       "noDistrictsFound": "لا توجد أحياء",
       "noMatchWithTerm": "لا توجد أحياء مطابقة لـ \"{{term}}\". حاول تعديل البحث.",
       "noAvailableWithFilters": "لا توجد أحياء متاحة مع عوامل التصفية الحالية."
+    },
+    "emptyChart": {
+      "title": "لا توجد بيانات للرسم البياني",
+      "description": "أضف بيانات لعرض التحليلات والاتجاهات."
+    },
+    "routes": {
+      "notFoundTitle": "الصفحة غير موجودة",
+      "notFoundDescription": "الصفحة المطلوبة غير موجودة أو ربما تم نقلها.",
+      "serviceTitle": "الخدمة غير متاحة مؤقتًا",
+      "serviceDescription": "الخدمة قيد التشغيل أو غير متاحة مؤقتًا. يرجى المحاولة مرة أخرى.",
+      "errorTitle": "تعذر تحميل الصفحة",
+      "errorDescription": "حاول تحميل الصفحة مرة أخرى. يمكنك عرض تفاصيل الخطأ إذا استمرت المشكلة.",
+      "retry": "إعادة المحاولة",
+      "details": "عرض التفاصيل"
     }
   },
   "reports": {
@@ -868,7 +883,14 @@
     "selectFiles": "اختر ملفات",
     "dragAndDropFiles": "اسحب وافلت الملفات هنا او انقر للاختيار",
     "orClick": "او انقر للاختيار",
+    "maxFileSize": "الحد الأقصى لحجم الملف: {{size}} ميجابايت",
     "selectedFiles": "الملفات المختارة",
+    "uploadStatus": {
+      "pending": "قيد الانتظار",
+      "uploading": "جارى الرفع",
+      "success": "تم الرفع",
+      "error": "فشل"
+    },
     "removeFiles": "إزالة الملفات",
     "Uploading": "جارى الرفع ...",
     "close": "إغلاق",
@@ -955,7 +977,10 @@
   },
   "imports": {
     "dragDropText": "اسحب وافلت الملفات هنا او انقر للاختيار",
-    "supportedFormats": "الصيغ المدعومة ( xls - xlsx )",
+    "supportedFormats": "الصيغة المدعومة (.xlsx)",
+    "selectSpreadsheet": "اختر ملف اكسل",
+    "countryRows": "{{count}} صفوف دول",
+    "uploadProgress": "تقدم الرفع: {{progress}}٪",
     "uploadData": "رفع البيانات",
     "clearData": "افراغ بيانات الجدول",
     "retryFailed": "إعادة محاولة الفاشل",

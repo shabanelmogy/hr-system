@@ -28,13 +28,14 @@ import {
   type LocalizationEntry,
 } from "../hooks/useAdvancedToolsQueries";
 import { localizationEntrySchema } from "../validation/localizationValidation";
+import { DEFAULT_ROWS_PER_PAGE } from "@/shared/constants/pagination";
 
 const LocalizationGrid = () => {
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const { showSnackbar, SnackbarComponent } = useSnackbar();
   
   const [paginationModel, setPaginationModel] = useState({
-    pageSize: 5,
+    pageSize: DEFAULT_ROWS_PER_PAGE,
     page: 0,
   });
 

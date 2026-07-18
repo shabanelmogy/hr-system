@@ -1,4 +1,4 @@
-import showToast from "@/shared/components/feedback/Toast";
+import { showToast } from "@/shared/components/feedback/transient";
 import { useGridCrudController } from "@/shared/hooks/useGridCrudController";
 import { useGridCrudMarkerCleanup } from "@/shared/hooks/useGridCrudMarkerCleanup";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";

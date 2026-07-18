@@ -1,4 +1,4 @@
-import { NoResultsState as ReusableNoResultsState } from "@/shared/components/feedback";
+import { NoResultsState as ReusableNoResultsState } from "@/shared/components/feedback/states";
 
 interface NoResultsStateProps {
   searchTerm: string;

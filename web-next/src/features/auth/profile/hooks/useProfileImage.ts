@@ -31,11 +31,11 @@ function describeProfileError(error: unknown) {
 
 const useProfileImage = () => {
   const { showError, showSuccess, SnackbarComponent } = useNotifications();
-  const [originalImageUrl, setOriginalImageUrl] = useState(null);
+  const [originalImageUrl, setOriginalImageUrl] = useState<string | null>(null);
   const [isImageLoading, setIsImageLoading] = useState(true);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
-  const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const {
@@ -89,20 +89,21 @@ const useProfileImage = () => {
 
     if (validation.success) {
       try {
+        const validatedFile = validation.data.file;
         setIsImageLoading(true);
         // Set preview immediately
         const reader = new FileReader();
         reader.onloadend = () => {
-          setImageUrl(reader.result);
+          setImageUrl(typeof reader.result === "string" ? reader.result : null);
           // Short delay to ensure the loading animation is visible
           setTimeout(() => {
             setIsImageLoading(false);
           }, 800);
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(validatedFile);
 
         // Store the file for upload
-        setSelectedFile(file);
+        setSelectedFile(validatedFile);
       } catch {
         setIsImageLoading(false);
         showError(t("auth.failedLoadImage"), t("messages.error"));

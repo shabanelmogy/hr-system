@@ -1,4 +1,4 @@
-import PageUnavailable from "@/shared/components/feedback/PageUnavailable";
+import { PageUnavailable } from "@/shared/components/feedback/routes";
 
 type UnavailableRouteProps = {
   searchParams: Promise<{

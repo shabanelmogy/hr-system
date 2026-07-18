@@ -4,7 +4,7 @@ import type { District } from "../types/District";
 interface DistrictDeleteDialogProps {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: () => void | Promise<void>;
   selectedDistrict: District | null;
   loading?: boolean;
 }
@@ -16,7 +16,7 @@ const DistrictDeleteDialog = ({
   selectedDistrict,
   loading = false,
 }: DistrictDeleteDialogProps) => {
-  const deletedField: string = selectedDistrict
+  const itemLabel = selectedDistrict
     ? `${selectedDistrict.nameEn} (${selectedDistrict.nameAr || selectedDistrict.nameEn})`
     : "";
 
@@ -24,8 +24,8 @@ const DistrictDeleteDialog = ({
     <DeleteConfirmationDialog
       open={open}
       onClose={onClose}
-      deletedField={deletedField}
-      handleDelete={onConfirm}
+      itemLabel={itemLabel}
+      onConfirm={onConfirm}
       loading={loading}
     />
   );

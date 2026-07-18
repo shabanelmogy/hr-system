@@ -7,7 +7,7 @@ import { z } from "zod";
 import { useSession } from "@/lib/auth/SessionContext";
 import { useSignalRConnection } from "@/lib/signalr/SignalRProvider";
 import signalRService from "@/lib/signalr/signalRService";
-import { showToast } from "@/shared/components/feedback";
+import { showToast } from "@/shared/components/feedback/transient";
 import { notificationKeys } from "./notificationQueries";
 import {
   normalizeSeverity,

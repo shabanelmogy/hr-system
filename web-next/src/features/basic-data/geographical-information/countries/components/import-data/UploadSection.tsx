@@ -5,7 +5,7 @@ import {
   Cancel as CancelIcon,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
-import UploadExcel from "@/shared/components/file-upload/UploadExcel";
+import SpreadsheetFilePicker from "./SpreadsheetFilePicker";
 
 interface UploadSectionProps {
   selectedFile: File | null;
@@ -38,21 +38,13 @@ const UploadSection: React.FC<UploadSectionProps> = ({
 
   return (
     <Card sx={{ mb: { xs: 3, sm: 4 }, overflow: "visible" }}>
-      <UploadExcel
-        title={
-          t("imports.dragDropText") ||
-          "Drag and drop your file here or click to browse"
-        }
-        description={t("imports.supportedFormats") || "Supported format: .xlsx"}
-        acceptedFileTypes=".xlsx"
+      <SpreadsheetFilePicker
+        selectedFile={selectedFile}
+        loading={loading && loadingText !== ""}
+        progress={uploadProgress}
+        rowCount={countriesCount}
         onFileSelect={onFileSelect}
         validateFile={validateFile}
-        selectedFile={selectedFile}
-        isLoading={loading && loadingText !== ""}
-        progress={uploadProgress}
-        getFileInfo={() =>
-          `${countriesCount} ${t("countries.title") || "Countries"}`
-        }
       />
 
       <Divider />

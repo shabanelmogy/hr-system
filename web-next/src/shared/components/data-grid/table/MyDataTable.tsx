@@ -26,6 +26,10 @@ import {
 } from "react";
 import { useTranslation } from "react-i18next";
 import { clampPage } from "./pagination";
+import {
+  DEFAULT_ROWS_PER_PAGE,
+  DEFAULT_ROWS_PER_PAGE_OPTIONS,
+} from "@/shared/constants/pagination";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -75,8 +79,8 @@ const MyDataTable = <TItem extends object>({
   title,
   icon = null,
   countLabel,
-  initialRowsPerPage = 10,
-  rowsPerPageOptions = [5, 10, 25, 50],
+  initialRowsPerPage = DEFAULT_ROWS_PER_PAGE,
+  rowsPerPageOptions = DEFAULT_ROWS_PER_PAGE_OPTIONS,
   stickyHeader = true,
   maxHeight = { xs: 400, sm: 600 },
   emptyMessage,

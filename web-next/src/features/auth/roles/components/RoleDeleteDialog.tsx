@@ -3,20 +3,19 @@ import { DeleteConfirmationDialog } from "@/shared/components/dialogs";
 interface RoleDeleteDialogProps {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: () => void | Promise<void>;
   selectedRole: { name: string } | null;
 }
 
 const RoleDeleteDialog = ({ open, onClose, onConfirm, selectedRole }: RoleDeleteDialogProps) => {
-  // Create the display name for the role being deleted
-  const deletedField = selectedRole ? selectedRole.name : "";
+  const itemLabel = selectedRole ? selectedRole.name : "";
 
   return (
     <DeleteConfirmationDialog
       open={open}
       onClose={onClose}
-      deletedField={deletedField}
-      handleDelete={onConfirm}
+      itemLabel={itemLabel}
+      onConfirm={onConfirm}
     />
   );
 };

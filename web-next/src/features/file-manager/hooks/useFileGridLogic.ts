@@ -1,5 +1,5 @@
 // hooks/useFileGridLogic.ts - TanStack Query Implementation
-import { showToast } from "@/shared/components/feedback";
+import { showToast } from "@/shared/components/feedback/transient";
 import { extractErrorMessage } from "@/shared/utils";
 import {
   useGridApiRef,

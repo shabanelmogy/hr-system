@@ -80,7 +80,6 @@ const FilesPage = () => {
           onConfirm={handleDelete}
           selectedFile={selectedFile}
           loading={loading}
-          t={t}
         />
       </ContentsWrapper>
       {SnackbarComponent}

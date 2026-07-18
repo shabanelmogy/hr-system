@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Public } from '@mui/icons-material';
-import { EmptyChartState as ReusableEmptyChartState } from '@/shared/components/feedback';
+import { EmptyChartState as ReusableEmptyChartState } from '@/shared/components/feedback/states';
 
 interface EmptyChartStateProps {
   onAdd?: () => void;
@@ -18,7 +18,6 @@ const EmptyChartState: React.FC<EmptyChartStateProps> = ({ onAdd }) => {
       emptyIcon={Public}
       actionText={onAdd ? (t("countries.addFirst") || "Add Your First Country") : undefined}
       onAction={onAdd}
-      showRefresh={false}
       height={400}
     />
   );

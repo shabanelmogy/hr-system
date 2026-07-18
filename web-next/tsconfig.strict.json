@@ -18,6 +18,12 @@
     "src/shared/components/forms/**/*.tsx",
     "src/shared/components/data-grid/**/*.ts",
     "src/shared/components/data-grid/**/*.tsx",
+    "src/shared/components/dialogs/**/*.ts",
+    "src/shared/components/dialogs/**/*.tsx",
+    "src/shared/components/feedback/**/*.ts",
+    "src/shared/components/feedback/**/*.tsx",
+    "src/shared/components/file-upload/**/*.ts",
+    "src/shared/components/file-upload/**/*.tsx",
     "src/shared/components/loaders/**/*.ts",
     "src/shared/components/loaders/**/*.tsx",
     "src/shared/components/charts/**/*.ts",
@@ -87,6 +93,10 @@
     "src/features/auth/roles/hooks/useRolePermissions.ts",
     "src/features/auth/roles/components/RoleForm.tsx",
     "src/features/auth/roles/components/RolesDataGrid.tsx",
+    "src/features/auth/profile/hooks/useProfileImage.ts",
+    "src/features/auth/profile/profile-header/ProfileAvatar.tsx",
+    "src/features/auth/profile/profile-header/ProfileHeader.tsx",
+    "src/features/auth/profile/profile-header/ProfileImageDropZone.tsx",
     "src/features/file-manager/types/File.ts",
     "src/features/file-manager/services/fileService.ts",
     "src/features/file-manager/hooks/useFileGridLogic.ts",
@@ -94,7 +104,8 @@
     "src/features/file-manager/components/FilesMultiView.tsx",
     "src/features/file-manager/components/FilesDataGrid.tsx",
     "src/features/file-manager/components/dialog/FileUploadDialog.tsx",
-    "src/features/file-manager/components/file-upload/hooks/useFileUpload.ts",
+    "src/features/file-manager/components/file-upload/**/*.ts",
+    "src/features/file-manager/components/file-upload/**/*.tsx",
     "src/features/file-manager/components/grid-view/types/gridView.type.ts",
     "src/features/file-manager/components/grid-view/components/MakeFileColumns.tsx",
     "src/features/file-manager/components/grid-view/components/MakeFileActions.tsx",
@@ -127,8 +138,5 @@
     "src/app/(main)/(platform)/advanced-tools/**/*.tsx",
     "src/app/(main)/basic-data/(geographical-information)/country-report/**/*.tsx"
   ],
-  "exclude": [
-    "node_modules",
-    "src/shared/components/file-upload/UploadExcel.tsx"
-  ]
+  "exclude": ["node_modules"]
 }

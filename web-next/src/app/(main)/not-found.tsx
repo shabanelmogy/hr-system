@@ -1,1 +1,1 @@
-export { default } from "@/shared/components/feedback/PageUnavailable";
+export { PageUnavailable as default } from "@/shared/components/feedback/routes";

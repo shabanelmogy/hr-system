@@ -1,11 +1,6 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@mui/material";
+import { WarningAmberRounded as WarningIcon } from "@mui/icons-material";
+import { ConfirmationDialog } from "@/shared/components/dialogs";
+import { useTranslation } from "react-i18next";
 
 type DiscardRoleChangesDialogProps = {
   open: boolean;
@@ -14,20 +9,19 @@ type DiscardRoleChangesDialogProps = {
 };
 
 export default function DiscardRoleChangesDialog(props: DiscardRoleChangesDialogProps) {
+  const { t } = useTranslation();
+
   return (
-    <Dialog open={props.open} onClose={props.onClose} maxWidth="xs" fullWidth>
-      <DialogTitle>Discard unsaved changes?</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Your permission changes have not been saved. Do you want to leave this page?
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={props.onClose}>Keep editing</Button>
-        <Button onClick={props.onDiscard} color="error" variant="contained" autoFocus>
-          Discard changes
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <ConfirmationDialog
+      open={props.open}
+      onClose={props.onClose}
+      onConfirm={props.onDiscard}
+      title={t("messages.unsavedChangesTitle")}
+      description={t("messages.unsavedChangesConfirm")}
+      cancelLabel={t("actions.cancel")}
+      confirmLabel={t("messages.discardChanges")}
+      confirmColor="warning"
+      icon={<WarningIcon color="warning" />}
+    />
   );
 }

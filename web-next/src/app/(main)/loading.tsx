@@ -1,1 +1,1 @@
-export { default } from "@/shared/components/feedback/RouteLoading";
+export { RouteLoading as default } from "@/shared/components/feedback/routes";

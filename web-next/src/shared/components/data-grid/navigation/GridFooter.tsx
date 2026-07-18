@@ -1,10 +1,9 @@
 import {
-  GRID_CHECKBOX_SELECTION_FIELD,
   GridFooterContainer,
   GridPagination,
   gridFilteredSortedRowIdsSelector,
-  gridFocusCellSelector,
   gridPaginationModelSelector,
+  gridRowSelectionIdsSelector,
   useGridApiContext,
   useGridRootProps,
   useGridSelector,
@@ -23,7 +22,7 @@ export function GridFooter() {
   const apiRef = useGridApiContext();
   const rootProps = useGridRootProps();
   const orderedIds = useGridSelector(apiRef, gridFilteredSortedRowIdsSelector);
-  const focusedCell = useGridSelector(apiRef, gridFocusCellSelector);
+  const selectedRows = useGridSelector(apiRef, gridRowSelectionIdsSelector);
   const paginationModel = useGridSelector(apiRef, gridPaginationModelSelector);
   const { showRecordNavigation } = useDataGridShell();
   const { t } = useTranslation();
@@ -32,34 +31,41 @@ export function GridFooter() {
   const isRtl = theme.direction === "rtl";
   const recordNavigationEnabled =
     showRecordNavigation && rootProps.paginationMode !== "server";
+  const selectedId = selectedRows.keys().next().value;
   const activeIndex = getActiveRecordIndex(
     orderedIds,
-    focusedCell?.id,
+    selectedId,
     paginationModel.page,
     paginationModel.pageSize,
   );
   const recordNumber = activeIndex < 0 ? 0 : activeIndex + 1;
+  const totalRowCount =
+    rootProps.paginationMode === "server"
+      ? (rootProps.rowCount ?? orderedIds.length)
+      : orderedIds.length;
+  const totalPages = Math.max(
+    1,
+    Math.ceil(totalRowCount / Math.max(1, paginationModel.pageSize)),
+  );
+  const currentPage = Math.min(paginationModel.page + 1, totalPages);
 
   const navigateToIndex = (targetIndex: number) => {
     if (targetIndex < 0 || targetIndex >= orderedIds.length) return;
 
     const targetId = orderedIds[targetIndex];
-    const visibleColumns = apiRef.current.getVisibleColumns();
-    const targetColumnIndex = visibleColumns.findIndex(
-      (column) =>
-        column.field !== GRID_CHECKBOX_SELECTION_FIELD &&
-        column.field !== "actions",
-    );
-    const columnIndex = targetColumnIndex >= 0 ? targetColumnIndex : 0;
-    const targetColumn = visibleColumns[columnIndex];
-
     apiRef.current.setPage(
       getPageForRecord(targetIndex, paginationModel.pageSize),
     );
-    if (targetColumn) {
-      apiRef.current.setCellFocus(targetId, targetColumn.field);
-    }
-    apiRef.current.scrollToIndexes({ rowIndex: targetIndex, colIndex: columnIndex });
+    apiRef.current.setRowSelectionModel({
+      type: "include",
+      ids: new Set([targetId]),
+    });
+
+    setTimeout(() => {
+      apiRef.current.scrollToIndexes({
+        rowIndex: targetIndex % Math.max(1, paginationModel.pageSize),
+      });
+    }, 150);
   };
 
   const labels = {
@@ -76,84 +82,132 @@ export function GridFooter() {
   return (
     <GridFooterContainer
       sx={{
-        display: "flex",
-        flexWrap: "wrap",
-        alignItems: "center",
-        justifyContent: recordNavigationEnabled ? "space-between" : "flex-end",
-        gap: 1,
+        borderTop: `1px solid ${theme.palette.divider}`,
+        backgroundColor: theme.palette.background.paper,
         minHeight: 52,
-        px: { xs: 0.5, sm: 1.5 },
-        py: { xs: 0.5, sm: 0 },
+        paddingLeft: 2,
+        paddingRight: 2,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
       }}
     >
+      <Box aria-hidden="true" sx={{ flex: "0 0 150px" }} />
+
       {recordNavigationEnabled ? (
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: { xs: 0.25, sm: 0.5 },
-            minWidth: 0,
+            gap: 1,
+            flex: 1,
           }}
         >
           <RecordNavigationButton
             label={labels.first}
             disabled={activeIndex <= 0}
             onClick={() => navigateToIndex(0)}
-            icon={<FirstIcon fontSize="small" />}
+            icon={<FirstIcon />}
           />
           <RecordNavigationButton
             label={labels.previous}
             disabled={activeIndex <= 0}
             onClick={() => navigateToIndex(activeIndex - 1)}
-            icon={<PreviousIcon fontSize="small" />}
+            icon={<PreviousIcon />}
           />
-          <Typography
-            variant="body2"
-            aria-live="polite"
+          <Box
             sx={{
-              minWidth: { xs: 64, sm: 88 },
-              px: { xs: 0.75, sm: 1.5 },
-              py: 0.5,
+              display: "flex",
+              alignItems: "center",
+              minWidth: "120px",
+              justifyContent: "center",
+              backgroundColor: theme.palette.action.hover,
               borderRadius: 1,
-              bgcolor: "action.hover",
-              textAlign: "center",
-              direction: "ltr",
-              fontVariantNumeric: "tabular-nums",
+              px: 2,
+              py: 0.5,
+              mx: 1,
             }}
           >
-            {recordNumber} / {orderedIds.length}
-          </Typography>
+            <Typography
+              variant="body2"
+              aria-live="polite"
+              sx={{
+                color: theme.palette.text.primary,
+                fontWeight: 500,
+                fontSize: "0.875rem",
+                direction: "ltr",
+                fontVariantNumeric: "tabular-nums",
+              }}
+            >
+              {recordNumber} / {orderedIds.length}
+            </Typography>
+          </Box>
           <RecordNavigationButton
             label={labels.next}
             disabled={activeIndex < 0 || activeIndex >= orderedIds.length - 1}
             onClick={() => navigateToIndex(activeIndex + 1)}
-            icon={<NextIcon fontSize="small" />}
+            icon={<NextIcon />}
           />
           <RecordNavigationButton
             label={labels.last}
             disabled={activeIndex < 0 || activeIndex >= orderedIds.length - 1}
             onClick={() => navigateToIndex(orderedIds.length - 1)}
-            icon={<LastIcon fontSize="small" />}
+            icon={<LastIcon />}
           />
         </Box>
       ) : null}
 
       <Box
         sx={{
-          minWidth: 0,
-          maxWidth: "100%",
-          ml: recordNavigationEnabled ? { xs: 0, sm: "auto" } : "auto",
-          "& .MuiTablePagination-toolbar": {
-            minHeight: 44,
-            px: { xs: 0, sm: 1 },
-          },
-          "& .MuiTablePagination-selectLabel": {
-            display: { xs: "none", sm: "block" },
-          },
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          gap: 2,
+          flex: "0 0 300px",
         }}
       >
-        <GridPagination />
+        <Typography
+          variant="body2"
+          sx={{
+            color: "text.secondary",
+            fontSize: "0.875rem",
+            whiteSpace: "nowrap",
+            minWidth: "80px",
+            direction: "ltr",
+            fontVariantNumeric: "tabular-nums",
+          }}
+        >
+          {t("pagination.page")} {currentPage} {t("pagination.of")} {totalPages}
+        </Typography>
+
+        <Box
+          sx={{
+            minWidth: "180px",
+            "& .MuiTablePagination-root": {
+              borderTop: "none",
+              overflow: "visible",
+            },
+            "& .MuiTablePagination-toolbar": {
+              minHeight: 52,
+              px: 0,
+              overflow: "visible",
+            },
+            "& .MuiTablePagination-displayedRows": { display: "none" },
+            "& .MuiTablePagination-actions": { display: "none" },
+            "& .MuiTablePagination-select": { minWidth: 60 },
+            "& .MuiSelect-select": { paddingRight: "32px !important" },
+            "& .MuiInputBase-root": {
+              bgcolor: "background.paper",
+              border: 1,
+              borderColor: "divider",
+              borderRadius: 1,
+              "&:hover": { borderColor: "primary.main" },
+            },
+          }}
+        >
+          <GridPagination />
+        </Box>
       </Box>
     </GridFooterContainer>
   );
@@ -180,6 +234,15 @@ function RecordNavigationButton({
           disabled={disabled}
           onClick={onClick}
           size="small"
+          sx={{
+            p: "6px",
+            color: "text.secondary",
+            "&:hover": {
+              bgcolor: "action.hover",
+              color: "primary.main",
+            },
+            "&.Mui-disabled": { color: "action.disabled" },
+          }}
         >
           {icon}
         </IconButton>

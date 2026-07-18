@@ -1,5 +1,10 @@
 import { Box } from "@mui/material";
-import { type SxProps, type Theme, useTheme } from "@mui/material/styles";
+import {
+  alpha,
+  type SxProps,
+  type Theme,
+  useTheme,
+} from "@mui/material/styles";
 import {
   gridFilteredSortedRowIdsSelector,
   type GridRowClassNameParams,
@@ -14,21 +19,46 @@ import { DataGridShellContext } from "./context";
 import type { MyDataGridProps } from "./types";
 import { GridFooter } from "../navigation/GridFooter";
 import { DataGridToolbar } from "../toolbar/DataGridToolbar";
+import {
+  DEFAULT_ROWS_PER_PAGE,
+  DEFAULT_ROWS_PER_PAGE_OPTIONS,
+} from "@/shared/constants/pagination";
 
 const dataGridStyles: SxProps<Theme> = {
-  width: "100%",
-  minWidth: 0,
   "& .highlighted-row": {
-    bgcolor: "action.selected",
-    fontWeight: 600,
+    backgroundColor: "#ffe0b2 !important",
+    fontWeight: "bold",
+  },
+  "& .edited-row": {
+    backgroundColor: (theme: Theme) =>
+      `${alpha(theme.palette.info.main, theme.palette.mode === "dark" ? 0.2 : 0.12)} !important`,
+    "&:hover": {
+      backgroundColor: (theme: Theme) =>
+        `${alpha(theme.palette.info.main, theme.palette.mode === "dark" ? 0.3 : 0.2)} !important`,
+    },
   },
   "& .MuiDataGrid-footerContainer": {
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    minHeight: 52,
+    borderTop: "1px solid",
     borderColor: "divider",
+    padding: 0,
+  },
+  "& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows": {
+    my: "auto",
+  },
+  "&.no-navigation .MuiDataGrid-footerContainer": {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "0 16px",
   },
   "& .MuiDataGrid-row.Mui-selected": {
-    bgcolor: "action.selected",
+    backgroundColor: (theme: Theme) => `${theme.palette.primary.light}30`,
     "&:hover": {
-      bgcolor: "action.hover",
+      backgroundColor: (theme: Theme) => `${theme.palette.primary.light}40`,
     },
   },
 };
@@ -47,10 +77,11 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   getRowId,
   getRowClassName,
   localeText,
-  pageSizeOptions = [5, 10, 25, 50],
+  pageSizeOptions = DEFAULT_ROWS_PER_PAGE_OPTIONS,
   pagination = true,
   paginationMode = "client",
   rowCount,
+  checkboxSelection = true,
   showToolbar,
   slots,
   sx,
@@ -60,6 +91,7 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   const internalApiRef = useGridApiRef();
   const resolvedApiRef = apiRef ?? internalApiRef;
   const handledOperationRef = useRef<string | null>(null);
+  const initialSelectionDoneRef = useRef(false);
 
   const resolvedInitialState = useMemo(
     () => ({
@@ -67,6 +99,15 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
       sorting: {
         ...initialState?.sorting,
         sortModel: initialState?.sorting?.sortModel ?? initialSortModel,
+      },
+      pagination: {
+        ...initialState?.pagination,
+        paginationModel: {
+          page: initialState?.pagination?.paginationModel?.page ?? 0,
+          pageSize:
+            initialState?.pagination?.paginationModel?.pageSize ??
+            DEFAULT_ROWS_PER_PAGE,
+        },
       },
     }),
     [initialSortModel, initialState],
@@ -84,10 +125,10 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   const resolvedSlots = useMemo(
     () => ({
       toolbar: DataGridToolbar,
-      footer: GridFooter,
+      ...(showNavigationButtons ? { footer: GridFooter } : {}),
       ...slots,
     }),
-    [slots],
+    [showNavigationButtons, slots],
   );
 
   const shellContext = useMemo(
@@ -111,11 +152,11 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   const resolvedGetRowClassName = useCallback(
     (params: GridRowClassNameParams<TRow>) => {
       const classes = [getRowClassName?.(params) ?? ""];
-      if (
-        idsEqual(params.id, lastAddedId) ||
-        idsEqual(params.id, lastEditedId)
-      ) {
+      if (idsEqual(params.id, lastAddedId)) {
         classes.push("highlighted-row");
+      }
+      if (idsEqual(params.id, lastEditedId)) {
+        classes.push("edited-row");
       }
       return classes.filter(Boolean).join(" ");
     },
@@ -169,19 +210,18 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
 
     const targetId = orderedIds[targetIndex];
     const pageSize = api.state.pagination.paginationModel.pageSize;
-    const visibleColumns = api.getVisibleColumns();
-    const columnIndex = Math.max(
-      0,
-      visibleColumns.findIndex(
-        (column) => column.field !== "__check__" && column.field !== "actions",
-      ),
-    );
-    const targetColumn = visibleColumns[columnIndex];
-
     api.setPage(Math.floor(targetIndex / Math.max(1, pageSize)));
-    if (targetColumn) api.setCellFocus(targetId, targetColumn.field);
-    api.scrollToIndexes({ rowIndex: targetIndex, colIndex: columnIndex });
+    api.setRowSelectionModel({ type: "include", ids: new Set([targetId]) });
+
+    const scrollTimer = setTimeout(() => {
+      api.scrollToIndexes({
+        rowIndex: targetIndex % Math.max(1, pageSize),
+      });
+    }, 150);
+
     handledOperationRef.current = operation.key;
+
+    return () => clearTimeout(scrollTimer);
   }, [
     lastAddedId,
     lastDeletedIndex,
@@ -192,9 +232,49 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
     rows,
   ]);
 
+  useEffect(() => {
+    if (rows.length === 0) {
+      initialSelectionDoneRef.current = false;
+      return;
+    }
+    if (
+      initialSelectionDoneRef.current ||
+      lastAddedId != null ||
+      lastEditedId != null ||
+      lastDeletedIndex != null
+    ) {
+      return;
+    }
+
+    const api = resolvedApiRef.current;
+    if (!api) return;
+
+    const selectionTimer = setTimeout(() => {
+      if (api.getSelectedRows().size > 0) {
+        initialSelectionDoneRef.current = true;
+        return;
+      }
+
+      const orderedIds = gridFilteredSortedRowIdsSelector(resolvedApiRef);
+      const firstId = orderedIds[0] ?? resolveRowId(rows[0]);
+      api.setRowSelectionModel({ type: "include", ids: new Set([firstId]) });
+      api.scrollToIndexes({ rowIndex: 0 });
+      initialSelectionDoneRef.current = true;
+    }, 150);
+
+    return () => clearTimeout(selectionTimer);
+  }, [
+    lastAddedId,
+    lastDeletedIndex,
+    lastEditedId,
+    resolveRowId,
+    resolvedApiRef,
+    rows,
+  ]);
+
   return (
     <DataGridShellContext.Provider value={shellContext}>
-      <Box sx={{ width: "100%", minWidth: 0, overflowX: "auto" }}>
+      <Box sx={{ minWidth: "1200px" }}>
         <ClientDataGrid
           {...dataGridProps}
           rows={rows}
@@ -208,7 +288,9 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
           pagination={pagination}
           paginationMode={paginationMode}
           rowCount={rowCount}
+          checkboxSelection={checkboxSelection}
           showToolbar={showToolbar ?? Boolean(onToolbarAdd)}
+          className={showNavigationButtons ? "" : "no-navigation"}
           slots={resolvedSlots}
           sx={resolvedSx}
         />

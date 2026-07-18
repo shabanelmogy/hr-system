@@ -1,6 +1,6 @@
 import React from 'react';
 import { LocationOn } from '@mui/icons-material';
-import { EmptyChartState as ReusableEmptyChartState } from '@/shared/components/feedback';
+import { EmptyChartState as ReusableEmptyChartState } from '@/shared/components/feedback/states';
 
 interface EmptyChartStateProps {
   t: (key: string) => string;
@@ -17,7 +17,6 @@ const EmptyChartState: React.FC<EmptyChartStateProps> = ({ t, onAdd }) => {
       emptyIcon={LocationOn}
       actionText={onAdd ? (t("states.addFirst") || "Add Your First State") : undefined}
       onAction={onAdd}
-      showRefresh={false}
       height={400}
     />
   );

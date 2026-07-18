@@ -9,7 +9,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { showErrorDialog } from "@/shared/components/feedback";
+import { showErrorDialog } from "@/shared/components/feedback/transient";
 import {
   dismissAllNotifications,
   dismissNotification,

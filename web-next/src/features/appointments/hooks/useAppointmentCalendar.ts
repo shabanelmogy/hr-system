@@ -1,7 +1,7 @@
 import type { DateSelectArg, EventChangeArg, EventClickArg } from "@fullcalendar/core";
 import dayjs from "dayjs";
 import { useMemo, useState } from "react";
-import { showToast } from "@/shared/components/feedback/Toast";
+import { showToast } from "@/shared/components/feedback/transient";
 import type { AppointmentFormData } from "../validation/appointmentValidation";
 import {
   useAppointments,

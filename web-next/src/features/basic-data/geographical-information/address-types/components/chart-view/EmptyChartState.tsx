@@ -1,33 +1,20 @@
-import { EmptyState } from '@/shared/components/feedback';
-import { Add, BarChart } from '@mui/icons-material';
-import {Button, Card, CardContent } from '@mui/material';
-import React from 'react';
-import { EmptyChartStateProps } from './AddressTypeChart.types';
+import { BarChart } from "@mui/icons-material";
+import { EmptyChartState as ReusableEmptyChartState } from "@/shared/components/feedback/states";
+import type { EmptyChartStateProps } from "./AddressTypeChart.types";
 
 
-const EmptyChartState: React.FC<EmptyChartStateProps> = ({ t, onAdd }) => {
+const EmptyChartState = ({ t, onAdd }: EmptyChartStateProps) => {
   return (
-    <Card elevation={2} sx={{ minHeight: 400, display: 'flex', alignItems: 'center' }}>
-      <CardContent sx={{ width: '100%' }}>
-        <EmptyState
-          icon={BarChart}
-          title={t("addressTypes.noData") || "No Address Types Available"}
-          subtitle={t("addressTypes.noDataDescription") || "Start by adding your first address type to see analytics"}
-          action={
-            onAdd ? (
-              <Button
-                variant="contained"
-                startIcon={<Add />}
-                onClick={onAdd}
-                size="large"
-              >
-                {t("addressTypes.add") || "Add Address Type"}
-              </Button>
-            ) : undefined
-          }
-        />
-      </CardContent>
-    </Card>
+    <ReusableEmptyChartState
+      title={t("addressTypes.title")}
+      message={t("addressTypes.noData")}
+      subtitle={t("addressTypes.noDataDescription")}
+      chartIcon={BarChart}
+      emptyIcon={BarChart}
+      actionText={onAdd ? t("addressTypes.add") : undefined}
+      onAction={onAdd}
+      height={400}
+    />
   );
 };
 

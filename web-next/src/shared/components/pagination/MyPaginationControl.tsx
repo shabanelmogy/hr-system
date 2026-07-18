@@ -10,15 +10,19 @@ import {
   useTheme,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import {
+  DEFAULT_ROWS_PER_PAGE,
+  DEFAULT_ROWS_PER_PAGE_OPTIONS,
+} from "@/shared/constants/pagination";
 import { useEffect } from "react";
 
 const MyPaginationControl = ({
   page = 1,
   setPage,
-  rowsPerPage = 10,
+  rowsPerPage = DEFAULT_ROWS_PER_PAGE,
   setRowsPerPage,
   totalItems = 0,
-  rowsPerPageOptions = [5, 10, 25], // Add this prop with default values
+  rowsPerPageOptions = DEFAULT_ROWS_PER_PAGE_OPTIONS,
 }) => {
   const { t } = useTranslation();
   const theme = useTheme();
@@ -27,7 +31,11 @@ const MyPaginationControl = ({
   // Ensure we have valid initial values
   useEffect(() => {
     if (!rowsPerPage || !rowsPerPageOptions.includes(rowsPerPage)) {
-      setRowsPerPage(rowsPerPageOptions[0] || 10);
+      setRowsPerPage(
+        rowsPerPageOptions.includes(DEFAULT_ROWS_PER_PAGE)
+          ? DEFAULT_ROWS_PER_PAGE
+          : rowsPerPageOptions[0] || DEFAULT_ROWS_PER_PAGE,
+      );
     }
     if (!page || page < 1) {
       setPage(1);

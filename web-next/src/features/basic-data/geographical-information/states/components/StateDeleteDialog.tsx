@@ -4,7 +4,7 @@ import type { State } from "../types/State";
 interface StateDeleteDialogProps {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: () => void | Promise<void>;
   selectedState: State | null;
   loading?: boolean;
 }
@@ -16,19 +16,16 @@ const StateDeleteDialog = ({
   selectedState,
   loading = false,
 }: StateDeleteDialogProps) => {
-  // Create the display name for the state being deleted
-  const deletedField: string = selectedState
-    ? `${selectedState.nameEn} (${
-        selectedState.nameAr || selectedState.nameEn
-      })`
+  const itemLabel = selectedState
+    ? `${selectedState.nameEn} (${selectedState.nameAr || selectedState.nameEn})`
     : "";
 
   return (
     <DeleteConfirmationDialog
       open={open}
       onClose={onClose}
-      deletedField={deletedField}
-      handleDelete={onConfirm}
+      itemLabel={itemLabel}
+      onConfirm={onConfirm}
       loading={loading}
     />
   );

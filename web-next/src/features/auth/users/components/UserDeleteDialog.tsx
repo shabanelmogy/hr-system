@@ -3,7 +3,7 @@ import { DeleteConfirmationDialog } from "@/shared/components/dialogs";
 interface UserDeleteDialogProps {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: () => void | Promise<void>;
   selectedUser: { firstName: string; lastName: string; email: string } | null;
 }
 
@@ -13,8 +13,7 @@ const UserDeleteDialog = ({
   onConfirm,
   selectedUser,
 }: UserDeleteDialogProps) => {
-  // Create the display name for the user being deleted
-  const deletedField = selectedUser
+  const itemLabel = selectedUser
     ? `${selectedUser.firstName} ${selectedUser.lastName} (${selectedUser.email})`
     : "";
 
@@ -22,8 +21,8 @@ const UserDeleteDialog = ({
     <DeleteConfirmationDialog
       open={open}
       onClose={onClose}
-      deletedField={deletedField}
-      handleDelete={onConfirm}
+      itemLabel={itemLabel}
+      onConfirm={onConfirm}
     />
   );
 };

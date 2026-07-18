@@ -17,7 +17,6 @@ export default function useFileUpload({
 }: UseFileUploadArgs) {
   const [files, setFiles] = useState<FileUploadItem[]>([]);
   const [isUploading, setIsUploading] = useState(false);
-  const [dragActive, setDragActive] = useState(false);
   const [globalError, setGlobalError] = useState<string | null>(null);
   const { showSnackbar, SnackbarComponent } = useSnackbar();
   const { t } = useTranslation();
@@ -45,30 +44,8 @@ export default function useFileUpload({
     return { validFiles, validationErrors };
   };
 
-  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
-    }
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFiles(e.dataTransfer.files);
-    }
-  };
-
-  const handleFiles = (fileList: FileList) => {
-    const fileArray = Array.from(fileList);
-
-    const { validFiles, validationErrors } = validateFiles(fileArray);
+  const selectFiles = (selectedFiles: File[]) => {
+    const { validFiles, validationErrors } = validateFiles(selectedFiles);
     if (validFiles.length === 0) {
       if (validationErrors.length > 0) setGlobalError(validationErrors.join("\n"));
       return;
@@ -106,12 +83,8 @@ export default function useFileUpload({
       // Keep invalid-selection feedback visible even when valid files from
       // the same selection are accepted.
       setGlobalError(validationErrors.join("\n"));
-    }
-  };
-
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      handleFiles(e.target.files);
+    } else {
+      setGlobalError(null);
     }
   };
 
@@ -186,12 +159,9 @@ export default function useFileUpload({
   return {
     files,
     isUploading,
-    dragActive,
     globalError,
     setGlobalError,
-    handleDrag,
-    handleDrop,
-    handleFileInput,
+    selectFiles,
     removeFile,
     uploadFiles,
     SnackbarComponent,

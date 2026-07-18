@@ -1,9 +1,10 @@
 // usePagination.js
 import { useState, useEffect } from "react";
+import { DEFAULT_ROWS_PER_PAGE } from "@/shared/constants/pagination";
 
 const usePaginationV2 = (
   initialPage = 1,
-  initialRowsPerPage = 5,
+  initialRowsPerPage = DEFAULT_ROWS_PER_PAGE,
   totalItems: number,
   onItemsChange = false
 ) => {

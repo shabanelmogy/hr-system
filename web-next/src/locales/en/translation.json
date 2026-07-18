@@ -56,9 +56,11 @@
     "traceId": "Trace ID",
     "copy": "Copy error",
     "copied": "Copied",
+    "copyFailed": "Copy failed",
     "whatsApp": "Share",
     "close": "Close",
-    "errorReport": "HR Management System error report"
+    "errorReport": "HR Management System error report",
+    "unknownMessage": "An unexpected error occurred. Please try again."
   },
   "notifications": {
     "title": "Notifications",
@@ -352,16 +354,14 @@
     "unsavedChangesTitle": "Unsaved changes",
     "unsavedChangesConfirm": "You have unsaved changes. Do you want to discard them?",
     "discardChanges": "Discard changes",
-    "delete": "Are you sure you want to delete ",
     "confirmDeletion": "Confirm Deletion",
-    "areYouSureDelete": "Are you sure you want to delete ",
-    "thisActionCannotBeUndone": "This action cannot be undone",
-    "processingDelete": "Processing delete",
-    "confirmationVerified": "Confirmation verified successfully",
-    "pleaseTypeExactly": "Please type the exact word",
-    "inTheBoxBelow": "In the box below to confirm delete",
-    "typeDELETE": "Type DELETE",
-    "typeDeleteToConfirm": "Please type "
+    "areYouSureDelete": "You are about to permanently delete:",
+    "thisActionCannotBeUndone": "This action cannot be undone.",
+    "confirmationVerified": "Confirmation matches.",
+    "pleaseTypeExactly": "Enter {{keyword}} exactly.",
+    "inTheBoxBelow": "below to confirm.",
+    "typeDELETE": "Type {{keyword}}",
+    "typeDeleteToConfirm": "Type"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -878,10 +878,25 @@
       "clearSearch": "Clear Search",
       "clearFilters": "Clear Filters",
       "refresh": "Refresh",
-      "messageWithTerm": "No results found",
+      "message": "No results found",
+      "messageWithTerm": "No results found for \"{{term}}\"",
       "noDistrictsFound": "No districts found",
       "noMatchWithTerm": "No districts match \"{{term}}\". Try adjusting your search.",
       "noAvailableWithFilters": "No districts available with the current filters."
+    },
+    "emptyChart": {
+      "title": "No chart data available",
+      "description": "Add data to view analytics and trends."
+    },
+    "routes": {
+      "notFoundTitle": "Page not found",
+      "notFoundDescription": "The requested page does not exist or may have moved.",
+      "serviceTitle": "Service temporarily unavailable",
+      "serviceDescription": "The application service is starting or temporarily unavailable. Please try again.",
+      "errorTitle": "This page could not be loaded",
+      "errorDescription": "Try loading the page again. Error details are available if the problem continues.",
+      "retry": "Try again",
+      "details": "View details"
     }
   },
   "reports": {
@@ -901,7 +916,14 @@
     "selectFiles": "Select Files",
     "dragAndDropFiles": "Drag and drop files here",
     "orClick": "or click to select",
+    "maxFileSize": "Maximum file size: {{size}} MB",
     "selectedFiles": "Selected Files",
+    "uploadStatus": {
+      "pending": "Pending",
+      "uploading": "Uploading",
+      "success": "Uploaded",
+      "error": "Failed"
+    },
     "removeFiles": "Remove Files",
     "Uploading": "Uploading...",
     "close": "Close",
@@ -992,7 +1014,10 @@
   },
   "imports": {
     "dragDropText": "Drag and drop your file here or click to browse",
-    "supportedFormats": "Supported formats ( xls - xlsx )",
+    "supportedFormats": "Supported format (.xlsx)",
+    "selectSpreadsheet": "Select an Excel spreadsheet",
+    "countryRows": "{{count}} country rows",
+    "uploadProgress": "Upload progress: {{progress}}%",
     "uploadData": "Upload Data",
     "clearData": "Clear Data Table",
     "retryFailed": "Retry Failed",

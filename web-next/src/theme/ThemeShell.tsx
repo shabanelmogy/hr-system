@@ -8,7 +8,7 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
-import { ToastProvider } from "@/shared/components/feedback/Toast";
+import { ToastProvider } from "@/shared/components/feedback/transient";
 import {
   useThemeSettings,
   type ThemeSettings,

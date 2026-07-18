@@ -4,10 +4,9 @@ import type { FileItem } from "../../types/File";
 interface FileDeleteDialogProps {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: () => void | Promise<void>;
   selectedFile: FileItem | null;
   loading?: boolean;
-  t: (key: string) => string;
 }
 
 const FileDeleteDialog = ({
@@ -18,7 +17,7 @@ const FileDeleteDialog = ({
   loading = false,
 }: FileDeleteDialogProps) => {
 
-  const deletedField: string = selectedFile
+  const itemLabel = selectedFile
     ? `${selectedFile.fileName}${selectedFile.fileExtension || ""}`
     : "";
 
@@ -26,8 +25,8 @@ const FileDeleteDialog = ({
     <DeleteConfirmationDialog
       open={open}
       onClose={onClose}
-      deletedField={deletedField}
-      handleDelete={onConfirm}
+      itemLabel={itemLabel}
+      onConfirm={onConfirm}
       loading={loading}
     />
   );

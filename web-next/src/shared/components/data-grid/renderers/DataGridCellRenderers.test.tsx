@@ -1,6 +1,12 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { renderDate, renderNumber, renderProgress, renderUrl } from "./DataGridCellRenderers";
+import {
+  renderDate,
+  renderList,
+  renderNumber,
+  renderProgress,
+  renderUrl,
+} from "./DataGridCellRenderers";
 
 describe("generic data-grid renderers", () => {
   it("does not expose invalid dates or numbers", () => {
@@ -18,5 +24,18 @@ describe("generic data-grid renderers", () => {
 
     expect(html).toContain('role="progressbar"');
     expect(html).toContain('aria-valuenow="65"');
+  });
+
+  it("makes the overflow count focusable and exposes the complete list", () => {
+    const ListCell = renderList({ maxItems: 2, showCount: true });
+    const html = renderToStaticMarkup(
+      <>{ListCell({ value: ["California", "Karnataka", "Abu Dhabi"] })}</>,
+    );
+
+    expect(html).toContain("+1");
+    expect(html).toContain('tabindex="0"');
+    expect(html).toContain(
+      'aria-label="California, Karnataka, Abu Dhabi"',
+    );
   });
 });

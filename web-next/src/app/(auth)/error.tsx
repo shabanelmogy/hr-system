@@ -1,3 +1,3 @@
 "use client";
 
-export { default } from "@/shared/components/feedback/RouteError";
+export { RouteError as default } from "@/shared/components/feedback/routes";

@@ -1,4 +1,4 @@
-import { NoResultsState as ReusableNoResultsState } from "@/shared/components/feedback";
+import { NoResultsState as ReusableNoResultsState } from "@/shared/components/feedback/states";
 import { NoResultsStateProps } from "./AddressTypeCard.types";
 
 const NoResultsState = ({ 

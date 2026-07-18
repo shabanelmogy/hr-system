@@ -1,9 +1,10 @@
 import React from "react";
+import { LocationOn } from "@mui/icons-material";
+import { useTheme } from "@mui/material";
 import { GridActionsCellItemProps, GridColDef } from "@mui/x-data-grid";
-import { renderCode, renderDate } from "@/shared/components/data-grid";
+import { renderCode, renderDate, renderList } from "@/shared/components/data-grid";
 import { useTranslation } from "react-i18next";
 import type { State } from "../../types/State";
-import { renderCountryInfo } from "../../../countries/components/grid-view/CountryCellRenderers";
 import { renderStateName } from "./StateCellRenderers";
 
 export interface ColumnsFactoryProps {
@@ -13,6 +14,7 @@ export interface ColumnsFactoryProps {
 
 export const useStateColumns = ({ permissions, getActions }: ColumnsFactoryProps): GridColDef[] => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const baseColumns: GridColDef[] = [
     {
       field: "id",
@@ -51,8 +53,26 @@ export const useStateColumns = ({ permissions, getActions }: ColumnsFactoryProps
       flex: 1.5,
       align: "center",
       headerAlign: "center",
-      renderCell: renderCountryInfo,
       sortable: false,
+      valueGetter: (value: State["country"]) => {
+        if (!value) return [];
+        const name = theme.direction === "rtl"
+          ? value.nameAr || value.nameEn
+          : value.nameEn || value.nameAr;
+        return name ? [name] : [];
+      },
+      renderCell: renderList({
+        displayType: "chips",
+        maxItems: 1,
+        defaultColor: "primary",
+        variant: "outlined",
+        size: "small",
+        showCount: false,
+        chipProps: {
+          icon: <LocationOn sx={{ fontSize: 14 }} />,
+          sx: { fontSize: "0.75rem" },
+        },
+      }),
     },
     {
       field: "createdOn",

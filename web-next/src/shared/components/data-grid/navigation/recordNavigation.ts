@@ -2,7 +2,7 @@ import type { GridRowId } from "@mui/x-data-grid";
 
 export function getActiveRecordIndex(
   orderedIds: readonly GridRowId[],
-  focusedId: GridRowId | undefined,
+  selectedId: GridRowId | undefined,
   page: number,
   pageSize: number,
 ) {
@@ -10,10 +10,11 @@ export function getActiveRecordIndex(
 
   const pageStart = Math.min(page * pageSize, orderedIds.length - 1);
   const pageEnd = Math.min(pageStart + pageSize, orderedIds.length);
-  const focusedIndex = focusedId == null ? -1 : orderedIds.indexOf(focusedId);
+  const selectedIndex =
+    selectedId == null ? -1 : orderedIds.indexOf(selectedId);
 
-  return focusedIndex >= pageStart && focusedIndex < pageEnd
-    ? focusedIndex
+  return selectedIndex >= pageStart && selectedIndex < pageEnd
+    ? selectedIndex
     : pageStart;
 }
 

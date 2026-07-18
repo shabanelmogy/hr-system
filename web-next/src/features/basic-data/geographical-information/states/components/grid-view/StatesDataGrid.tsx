@@ -58,6 +58,26 @@ const StatesDataGrid: React.FC<StatesDataGridProps> = ({
         lastAddedId={lastAddedId}
         lastEditedId={lastEditedId}
         lastDeletedIndex={lastDeletedIndex}
+        sx={{
+          "& .MuiDataGrid-cell": {
+            alignItems: "center",
+          },
+          "& .MuiDataGrid-cell--textCenter": {
+            justifyContent: "center",
+          },
+          "& .MuiDataGrid-cellContent": {
+            display: "flex",
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          "& .MuiDataGrid-actionsCell": {
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+        }}
       />
     </ContentWrapper>
   );

@@ -19,7 +19,7 @@ interface ProfileAvatarProps {
   isEditing: boolean;
   isDragging: boolean;
   isImageLoading: boolean;
-  fileInputRef: React.RefObject<HTMLInputElement>;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
   setSelectedFile: (file: File | null) => void;
   setImageUrl: (url: string | null) => void;
   handleDragOver: (e: React.DragEvent) => void;
@@ -144,7 +144,7 @@ const ProfileAvatar = ({
         <Fade in={true}>
           <Avatar
             ref={avatarRef}
-            src={imageUrl}
+            src={imageUrl ?? undefined}
             alt={userData.userName || t("auth.profilePictureAlt")}
             onLoad={handleImageLoad}
             sx={{

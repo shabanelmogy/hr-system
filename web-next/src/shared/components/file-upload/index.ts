@@ -1,9 +1,2 @@
-export { default as DropZone } from "./DropZone";
-export { default as FileList } from "./FileList";
-export { default as FileListItem } from "./FileListItem";
-export { default as FileStatusIcon } from "./FileStatusIcon";
-export { default as FileUploadActions } from "./FileUploadActions";
-export { default as FileUploadHeader } from "./FileUploadHeader";
-export { default as StyledComponents } from "./StyledComponents";
-export { default as UploadExcel } from "./UploadExcel";
-export { default as DragDropUploader } from "./DragDropUploader";
+export { FileDropZone } from "./FileDropZone";
+export type { FileDropZoneProps } from "./FileDropZone";

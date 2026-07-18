@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { getActiveRecordIndex, getPageForRecord } from "./recordNavigation";
 
 describe("record navigation", () => {
-  it("uses only the ordered IDs supplied by the filtered grid", () => {
+  it("tracks the selected row in the filtered grid", () => {
     const filteredIds = [2, 4, 8];
 
     expect(getActiveRecordIndex(filteredIds, 4, 0, 5)).toBe(1);

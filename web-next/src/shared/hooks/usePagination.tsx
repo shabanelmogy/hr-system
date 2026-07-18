@@ -1,10 +1,14 @@
 import { useState, useEffect, useMemo } from "react";
+import {
+  DEFAULT_ROWS_PER_PAGE,
+  DEFAULT_ROWS_PER_PAGE_OPTIONS,
+} from "@/shared/constants/pagination";
 
 const usePagination = (items: any[] = [], options: any = {}) => {
   const {
     initialPage = 1,
-    initialRowsPerPage = 10,
-    rowsPerPageOptions = [5, 10, 25],
+    initialRowsPerPage = DEFAULT_ROWS_PER_PAGE,
+    rowsPerPageOptions = DEFAULT_ROWS_PER_PAGE_OPTIONS,
   } = options;
 
   const [page, setPage] = useState(initialPage);

@@ -1,10 +1,10 @@
-import { DragDropUploader } from "@/shared/components/file-upload";
 import { alpha, Card, CardContent, Stack, useTheme } from "@mui/material";
 import { useState } from "react";
 import useProfileImage from "../hooks/useProfileImage";
 import type { ProfileUserData } from "../types";
 import EditControls from "./EditControls";
 import ProfileAvatar from "./ProfileAvatar";
+import ProfileImageDropZone from "./ProfileImageDropZone";
 import UserInfoDisplay from "./UserInfoDisplay";
 
 interface ProfileHeaderProps {
@@ -86,12 +86,6 @@ const ProfileHeader = ({ userData }: ProfileHeaderProps) => {
     }
   };
 
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      handleFileSelect(e.target.files[0]);
-    }
-  };
-
   return (
     <>
       <Card
@@ -156,16 +150,12 @@ const ProfileHeader = ({ userData }: ProfileHeaderProps) => {
               />
             </Stack>
 
-            {/* Drag & Drop Uploader - only show when editing */}
             {isEditing && (
-              <DragDropUploader
+              <ProfileImageDropZone
                 isDragging={isDragging}
-                handleDragOver={handleDragOver}
-                handleDragLeave={handleDragLeave}
-                handleDrop={handleDrop}
-                handleClick={() => fileInputRef.current?.click()}
                 fileInputRef={fileInputRef}
-                handleFileInputChange={handleFileInputChange}
+                onDragActiveChange={setIsDragging}
+                onFileSelect={handleFileSelect}
               />
             )}
           </Stack>

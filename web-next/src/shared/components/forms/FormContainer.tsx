@@ -1,18 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
-  Button,
   Box,
   Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Slide,
   useTheme,
   alpha,
 } from "@mui/material";
+import { WarningAmberRounded as WarningIcon } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import type { TransitionProps } from "@mui/material/transitions";
+import { ConfirmationDialog } from "@/shared/components/dialogs";
 import { FormProvider } from "./FormContext";
 import type { MyFormProps } from "./types";
 
@@ -321,39 +318,17 @@ export const FormContainer: React.FC<MyFormProps> = ({
         </Box>
       </Dialog>
 
-      <Dialog
+      <ConfirmationDialog
         open={open && discardDialogOpen}
         onClose={cancelDiscard}
-        maxWidth="xs"
-        fullWidth
-        aria-labelledby="discard-changes-dialog-title"
-        aria-describedby="discard-changes-dialog-description"
-        sx={{
-          "& .MuiDialog-paper": {
-            borderRadius: 3,
-            border: `1px solid ${alpha(theme.palette.warning.main, 0.35)}`,
-            boxShadow: theme.shadows[18],
-          },
-        }}
-      >
-        <DialogTitle id="discard-changes-dialog-title" sx={{ fontWeight: 700 }}>
-          {t("messages.unsavedChangesTitle") || "Unsaved changes"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="discard-changes-dialog-description">
-            {t("messages.unsavedChangesConfirm") ||
-              "You have unsaved changes. Discard them?"}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 2.5, gap: 1 }}>
-          <Button onClick={cancelDiscard} variant="outlined" autoFocus>
-            {t("actions.cancel")}
-          </Button>
-          <Button onClick={confirmDiscard} variant="contained" color="warning">
-            {t("messages.discardChanges") || "Discard changes"}
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onConfirm={confirmDiscard}
+        title={t("messages.unsavedChangesTitle")}
+        description={t("messages.unsavedChangesConfirm")}
+        cancelLabel={t("actions.cancel")}
+        confirmLabel={t("messages.discardChanges")}
+        confirmColor="warning"
+        icon={<WarningIcon color="warning" />}
+      />
     </FormProvider>
   );
 };

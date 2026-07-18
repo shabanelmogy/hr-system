@@ -4,7 +4,7 @@ import { Country } from "../types/Country";
 interface CountryDeleteDialogProps {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: () => void | Promise<void>;
   selectedCountry: Country | null;
   loading?: boolean;
 }
@@ -16,7 +16,7 @@ const CountryDeleteDialog = ({
   selectedCountry,
   loading = false,
 }: CountryDeleteDialogProps) => {
-  const deletedField: string = selectedCountry
+  const itemLabel = selectedCountry
     ? `${selectedCountry.nameEn} (${selectedCountry.nameAr || selectedCountry.nameEn})`
     : "";
 
@@ -24,8 +24,8 @@ const CountryDeleteDialog = ({
     <DeleteConfirmationDialog
       open={open}
       onClose={onClose}
-      deletedField={deletedField}
-      handleDelete={onConfirm}
+      itemLabel={itemLabel}
+      onConfirm={onConfirm}
       loading={loading}
     />
   );

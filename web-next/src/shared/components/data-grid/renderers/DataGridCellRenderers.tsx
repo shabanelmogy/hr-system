@@ -1,6 +1,13 @@
-import { Avatar, Box, Chip, Typography, type ChipProps } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Chip,
+  Tooltip,
+  Typography,
+  type ChipProps,
+} from "@mui/material";
 import dayjs from "dayjs";
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 
 interface CellParams<TValue = unknown> {
   value?: TValue;
@@ -74,7 +81,19 @@ export const renderList =
 
     if (displayType === "chips" || displayType === "badges") {
       return (
-        <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", alignItems: "center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            height: "100%",
+            minWidth: 0,
+            gap: 0.5,
+            flexWrap: "wrap",
+            alignItems: "center",
+            alignContent: "center",
+            justifyContent: "center",
+          }}
+        >
           {visibleItems.map((item) => (
             <Chip
               {...chipProps}
@@ -87,7 +106,17 @@ export const renderList =
             />
           ))}
           {remainingCount > 0 && showCount ? (
-            <Chip label={`+${remainingCount}`} size={size} variant="outlined" color="default" sx={{ fontWeight: 700 }} />
+            <ListOverflowTooltip items={value}>
+              <Chip
+                label={`+${remainingCount}`}
+                size={size}
+                variant="outlined"
+                color="default"
+                tabIndex={0}
+                aria-label={value.map(String).join(", ")}
+                sx={{ fontWeight: 700, cursor: "help" }}
+              />
+            </ListOverflowTooltip>
           ) : null}
         </Box>
       );
@@ -95,7 +124,19 @@ export const renderList =
 
     if (displayType === "tags") {
       return (
-        <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", alignItems: "center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            height: "100%",
+            minWidth: 0,
+            gap: 0.5,
+            flexWrap: "wrap",
+            alignItems: "center",
+            alignContent: "center",
+            justifyContent: "center",
+          }}
+        >
           {visibleItems.map((item) => (
             <Chip
               key={String(item)}
@@ -234,6 +275,79 @@ function asRecord(value: unknown): Record<string, unknown> | undefined {
 
 function asSxRecord(value: unknown): Record<string, unknown> {
   return asRecord(value) ?? {};
+}
+
+function ListOverflowTooltip({
+  items,
+  children,
+}: {
+  items: readonly ListItem[];
+  children: ReactElement;
+}) {
+  return (
+    <Tooltip
+      arrow
+      placement="top"
+      enterDelay={250}
+      title={
+        <Box
+          role="list"
+          sx={{
+            minWidth: 120,
+            maxWidth: 300,
+            maxHeight: 220,
+            overflowY: "auto",
+            py: 0.25,
+            pr: 0.5,
+          }}
+        >
+          {items.map((item, index) => (
+            <Box
+              key={`${String(item)}-${index}`}
+              role="listitem"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.75,
+                py: 0.35,
+              }}
+            >
+              <Box
+                aria-hidden="true"
+                sx={{
+                  width: 5,
+                  height: 5,
+                  borderRadius: "50%",
+                  bgcolor: "primary.light",
+                  flexShrink: 0,
+                }}
+              />
+              <Typography
+                variant="caption"
+                sx={{
+                  color: "inherit",
+                  lineHeight: 1.4,
+                  overflowWrap: "anywhere",
+                }}
+              >
+                {String(item)}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+      }
+      slotProps={{
+        tooltip: {
+          sx: {
+            p: 1,
+            maxWidth: 320,
+          },
+        },
+      }}
+    >
+      {children}
+    </Tooltip>
+  );
 }
 
 function toText(value: unknown): string {

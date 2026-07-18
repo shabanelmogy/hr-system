@@ -9,7 +9,7 @@ interface AddressTypeModel {
 interface AddressTypeDeleteDialogProps {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: () => void | Promise<void>;
   selectedItem: AddressTypeModel | null;
   loading?: boolean;
 }
@@ -21,7 +21,7 @@ const AddressTypeDeleteDialog = ({
   selectedItem,
   loading = false,
 }: AddressTypeDeleteDialogProps) => {
-  const deletedField: string = selectedItem
+  const itemLabel = selectedItem
     ? `${selectedItem.nameEn} (${selectedItem.nameAr || selectedItem.nameEn})`
     : "";
 
@@ -29,8 +29,8 @@ const AddressTypeDeleteDialog = ({
     <DeleteConfirmationDialog
       open={open}
       onClose={onClose}
-      deletedField={deletedField}
-      handleDelete={onConfirm}
+      itemLabel={itemLabel}
+      onConfirm={onConfirm}
       loading={loading}
     />
   );
