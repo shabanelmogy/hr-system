@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, DialogActions, Button, CircularProgress, useTheme, alpha } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { Edit as EditIcon, Add as AddIcon } from "@mui/icons-material";
 import { useFormContext } from "./FormContext";
+import { getFormModeIcon } from "./formModeIcon";
 
 export const FormFooter: React.FC = () => {
   const theme = useTheme();
@@ -19,12 +19,6 @@ export const FormFooter: React.FC = () => {
   } = useFormContext();
 
   if (hideFooter) return null;
-
-  const getTitleIcon = () => {
-    if (icon) return icon;
-    if (isViewMode) return <EditIcon />;
-    return <AddIcon />;
-  };
 
   return (
     <Box
@@ -72,7 +66,7 @@ export const FormFooter: React.FC = () => {
               isSubmitting ? (
                 <CircularProgress size={18} color="inherit" />
               ) : (
-                getTitleIcon()
+                getFormModeIcon(icon, Boolean(isViewMode))
               )
             }
             sx={{

@@ -18,6 +18,7 @@ import {
   type Path,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { getFormFieldError } from "../text-fields/formFieldError";
 
 type OptionKey<TOption extends object> = Extract<keyof TOption, string>;
 
@@ -99,7 +100,7 @@ const MySelectForm = <
 }: MySelectFormProps<TFormValues, TOption>) => {
   const { t } = useTranslation();
   const errorFieldName = actualFieldName ?? name;
-  const fieldError = getFieldError(errors, errorFieldName);
+  const suppliedFieldError = getFormFieldError(errors, errorFieldName);
 
   const getChipColor = (option: TOption): ChipProps["color"] => {
     if (!colorMember) return defaultChipColor;
@@ -114,7 +115,11 @@ const MySelectForm = <
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange: fieldOnChange, value, onBlur } }) => {
+      render={({
+        field: { onChange: fieldOnChange, value, onBlur },
+        fieldState,
+      }) => {
+        const fieldError = suppliedFieldError ?? fieldState.error;
         const selectedValue = multiple
           ? dataSource.filter(
               (item) =>
@@ -148,25 +153,28 @@ const MySelectForm = <
               }
               renderValue={(selectedOptions, getItemProps) =>
                 multiple
-                  ? (selectedOptions as readonly TOption[]).map((option, index) => (
-                      <Chip
-                        {...getItemProps({ index })}
-                        key={String(option[valueMember] ?? index)}
-                        label={String(option[displayMember] ?? "")}
-                        color={getChipColor(option)}
-                        variant={chipVariant}
-                        size={chipSize}
-                        deleteIcon={
-                          !isViewMode && showDeleteIcon ? <Close /> : undefined
-                        }
-                        onDelete={
-                          !isViewMode && showDeleteIcon
-                            ? getItemProps({ index }).onDelete
-                            : undefined
-                        }
-                        sx={{ margin: 0.25, "& .MuiChip-deleteIcon": { fontSize: 16 } }}
-                      />
-                    ))
+                  ? (selectedOptions as readonly TOption[]).map((option, index) => {
+                      const itemProps = getItemProps({ index });
+                      return (
+                        <Chip
+                          {...itemProps}
+                          key={String(option[valueMember] ?? index)}
+                          label={String(option[displayMember] ?? "")}
+                          color={getChipColor(option)}
+                          variant={chipVariant}
+                          size={chipSize}
+                          deleteIcon={
+                            !isViewMode && showDeleteIcon ? <Close /> : undefined
+                          }
+                          onDelete={
+                            !isViewMode && showDeleteIcon
+                              ? itemProps.onDelete
+                              : undefined
+                          }
+                          sx={{ margin: 0.25, "& .MuiChip-deleteIcon": { fontSize: 16 } }}
+                        />
+                      );
+                    })
                   : undefined
               }
               renderInput={(params) => (
@@ -230,21 +238,5 @@ const MySelectForm = <
     />
   );
 };
-
-function getFieldError<TFormValues extends FieldValues>(
-  errors: FieldErrors<TFormValues>,
-  name: Path<TFormValues>,
-): { message?: string } | undefined {
-  let current: unknown = errors;
-
-  for (const segment of name.split(".")) {
-    if (!current || typeof current !== "object") return undefined;
-    current = (current as Record<string, unknown>)[segment];
-  }
-
-  if (!current || typeof current !== "object") return undefined;
-  const message = (current as Record<string, unknown>).message;
-  return { message: typeof message === "string" ? message : undefined };
-}
 
 export default MySelectForm;

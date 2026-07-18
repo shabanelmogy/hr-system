@@ -1,6 +1,5 @@
 // components/CountryForm.tsx
-import MyForm from "@/shared/components/forms/MyForm";
-import MyTextField from "@/shared/components/forms/MyTextField";
+import { MyForm, MyTextField } from "@/shared/components/forms";
 import { faker } from '@faker-js/faker';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Casino } from "@mui/icons-material";

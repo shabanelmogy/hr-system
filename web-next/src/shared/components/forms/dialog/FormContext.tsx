@@ -1,8 +1,7 @@
 import { createContext, useContext } from "react";
 import type { MyFormProps } from "./types";
 
-export interface FormContextType extends Omit<MyFormProps, 'children' | 'onSubmit'> {
-  onClose: () => void;
+export interface FormContextType extends Omit<MyFormProps, "children" | "onSubmit"> {
   dialogContentRef?: React.RefObject<HTMLDivElement | null>;
 }
 

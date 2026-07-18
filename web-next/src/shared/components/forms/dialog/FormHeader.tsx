@@ -1,17 +1,13 @@
 import React from "react";
 import { DialogTitle, Box, Typography, IconButton, useTheme, alpha } from "@mui/material";
-import { Close as CloseIcon, Edit as EditIcon, Add as AddIcon } from "@mui/icons-material";
+import { Close as CloseIcon } from "@mui/icons-material";
 import { useFormContext } from "./FormContext";
+import { getFormModeIcon } from "./formModeIcon";
 
 export const FormHeader: React.FC = () => {
   const theme = useTheme();
   const { title, subtitle, variant, icon, recordId, errors, onClose, isSubmitting, isViewMode } = useFormContext();
-
-  const getTitleIcon = () => {
-    if (icon) return icon;
-    if (isViewMode) return <EditIcon />;
-    return <AddIcon />;
-  };
+  const errorCount = Object.keys(errors || {}).length;
 
   return (
     <DialogTitle
@@ -50,7 +46,7 @@ export const FormHeader: React.FC = () => {
             )}`,
           }}
         >
-          {getTitleIcon()}
+          {getFormModeIcon(icon, Boolean(isViewMode))}
         </Box>
         <Box>
           <Typography
@@ -86,7 +82,7 @@ export const FormHeader: React.FC = () => {
           alignItems: "center",
           gap: 1.5
         }}>
-        {recordId && (
+        {recordId != null && (
           <Box
             sx={{
               display: "flex",
@@ -137,7 +133,7 @@ export const FormHeader: React.FC = () => {
           </Box>
         )}
 
-        {Object.keys(errors || {}).length > 0 && (
+        {errorCount > 0 && (
           <Box
             sx={{
               display: "flex",
@@ -158,8 +154,8 @@ export const FormHeader: React.FC = () => {
                 fontWeight: 600,
               }}
             >
-              {Object.keys(errors || {}).length}{" "}
-              {Object.keys(errors || {}).length === 1 ? "error" : "errors"}
+              {errorCount}{" "}
+              {errorCount === 1 ? "error" : "errors"}
             </Typography>
           </Box>
         )}

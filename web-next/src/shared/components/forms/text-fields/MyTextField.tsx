@@ -1,14 +1,15 @@
 import { Box, InputAdornment, Typography, useTheme } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import EditableTextField from "./my-text-field/EditableTextField";
+import EditableTextField from "./internals/EditableTextField";
 import {
   formatCharacterCount,
   getCharacterCount,
-} from "./my-text-field/characterCount";
-import ReadOnlyTextField from "./my-text-field/ReadOnlyTextField";
-import TextFieldEndAdornment from "./my-text-field/TextFieldEndAdornment";
-import type { MyTextFieldProps, RegisteredField } from "./my-text-field/types";
+} from "./internals/characterCount";
+import ReadOnlyTextField from "./internals/ReadOnlyTextField";
+import TextFieldEndAdornment from "./internals/TextFieldEndAdornment";
+import type { MyTextFieldProps, RegisteredField } from "./internals/types";
+import { getFormFieldError } from "./formFieldError";
 
 export default function MyTextField({
   fieldName = "search",
@@ -54,7 +55,12 @@ export default function MyTextField({
   const actualFieldName = name || fieldName;
   const actualLabel = label || (labelKey ? t(labelKey) : "");
   const isPasswordField = type === "password";
-  const fieldError = errors?.[actualFieldName];
+  const fieldError = getFormFieldError(errors, actualFieldName);
+  const externalOnChange = restProps.onChange as
+    | ((
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+      ) => void)
+    | undefined;
   const registeredField = useMemo<RegisteredField | undefined>(
     () => typeof register === "function"
       ? (register as (fieldName: string) => RegisteredField)(actualFieldName)
@@ -93,15 +99,17 @@ export default function MyTextField({
       registeredField?.onChange?.({ target: { name: actualFieldName, value: "" }, type: "change" });
     }
     setRegisterValue("");
-  }, [actualFieldName, registeredField, setValue]);
+    externalOnChange?.(createChangeEvent(actualFieldName, ""));
+  }, [actualFieldName, externalOnChange, registeredField, setValue]);
 
-  const handleRegisterChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRegisterChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const nextValue = String(event.target.value ?? "");
     if (preventZero && nextValue === "0") return;
     if (maxLength != null && nextValue.length > maxLength) return;
     setRegisterValue(nextValue);
     registeredField?.onChange?.(event);
-  }, [maxLength, preventZero, registeredField]);
+    externalOnChange?.(event);
+  }, [externalOnChange, maxLength, preventZero, registeredField]);
 
   const getCommonProps = useCallback((fieldValue: string, onClear: () => void) => {
     const characterCount = getCharacterCount(fieldValue, countOptions);
@@ -218,6 +226,7 @@ export default function MyTextField({
         getCommonProps={getCommonProps}
         onClear={handleClear}
         onRegisterChange={handleRegisterChange}
+        onChange={externalOnChange}
       />
       {showCounter && !isPasswordField && counterLabel && (
         <Box sx={{ display: "flex", justifyContent: "flex-start", mt: 0.5, px: 1 }}>
@@ -228,4 +237,12 @@ export default function MyTextField({
       )}
     </Box>
   );
+}
+
+function createChangeEvent(name: string, value: string) {
+  return {
+    target: { name, value },
+    currentTarget: { name, value },
+    type: "change",
+  } as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 }

@@ -1,6 +1,4 @@
-import MyForm from "@/shared/components/forms/MyForm";
-import MyTextField from "@/shared/components/forms/MyTextField";
-import MySelectForm from "@/shared/components/forms/MySelectForm";
+import { MyForm, MySelectForm, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Casino } from "@mui/icons-material";
 import { Box, Button, TextField } from "@mui/material";

@@ -1,9 +1,9 @@
-import ClearIcon from "@mui/icons-material/Clear";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { alpha, IconButton, InputAdornment, Typography, useTheme } from "@mui/material";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import type { CharacterCount } from "./characterCount";
+import ClearFieldButton from "./ClearFieldButton";
 
 type TextFieldEndAdornmentProps = {
   fieldName: string;
@@ -63,17 +63,16 @@ export default function TextFieldEndAdornment(props: TextFieldEndAdornmentProps)
         </Typography>
       )}
       {Boolean(value) && props.showClearButton && props.type !== "date" && (
-        <IconButton
+        <ClearFieldButton
           type="button"
-          aria-label={`Clear ${props.fieldName}`}
+          ariaLabel={`Clear ${props.fieldName}`}
           onClick={props.onClear}
           disabled={props.loading}
           edge="end"
           size="small"
+          iconSize="small"
           sx={{ color: "text.secondary", "&:hover": { color: "primary.main", bgcolor: alpha(theme.palette.primary.main, 0.08) } }}
-        >
-          <ClearIcon fontSize="small" />
-        </IconButton>
+        />
       )}
       {props.isPassword && props.showPasswordToggle && Boolean(value) && (
         <IconButton

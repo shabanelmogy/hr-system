@@ -1,6 +1,6 @@
 import { IconButton, alpha, useTheme } from "@mui/material";
 import { Clear, Search } from "@mui/icons-material";
-import MyTextField from "@/shared/components/forms/MyTextField";
+import { MyTextField } from "@/shared/components/forms";
 
 export interface SearchBarProps {
   searchTerm: string;

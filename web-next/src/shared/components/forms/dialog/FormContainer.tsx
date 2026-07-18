@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Box,
   Dialog,
@@ -12,6 +12,8 @@ import type { TransitionProps } from "@mui/material/transitions";
 import { ConfirmationDialog } from "@/shared/components/dialogs";
 import { FormProvider } from "./FormContext";
 import type { MyFormProps } from "./types";
+import { useFormDialogFocus } from "./useFormDialogFocus";
+import { useFormDialogState } from "./useFormDialogState";
 
 const DialogTransition = React.forwardRef<
   unknown,
@@ -50,30 +52,21 @@ export const FormContainer: React.FC<MyFormProps> = ({
   const theme = useTheme();
   const { t } = useTranslation();
   const dialogContentRef = useRef<HTMLDivElement>(null);
-  const hasScrolledToError = useRef(false);
-  const [discardDialogOpen, setDiscardDialogOpen] = useState(false);
-  const [internalSubmitting, setInternalSubmitting] = useState(false);
-  const submissionPending = isSubmitting || internalSubmitting;
-
-  const handleClose = useCallback(() => {
-    if (submissionPending) return;
-
-    if (isDirty) {
-      setDiscardDialogOpen(true);
-      return;
-    }
-
-    onClose();
-  }, [isDirty, onClose, submissionPending]);
-
-  const cancelDiscard = useCallback(() => {
-    setDiscardDialogOpen(false);
-  }, []);
-
-  const confirmDiscard = useCallback(() => {
-    setDiscardDialogOpen(false);
-    onClose();
-  }, [onClose]);
+  const formRef = useRef<HTMLFormElement>(null);
+  const {
+    cancelDiscard,
+    confirmDiscard,
+    discardDialogOpen,
+    requestClose,
+    resetDiscardDialog,
+    submissionPending,
+    submit,
+  } = useFormDialogState({
+    isDirty,
+    isSubmitting,
+    onClose,
+    onSubmit,
+  });
 
   const getDialogStyles = () => {
     const baseStyles = {
@@ -128,107 +121,16 @@ export const FormContainer: React.FC<MyFormProps> = ({
     }
   };
 
-  const scrollToError = useCallback(() => {
-    if (Object.keys(errors).length === 0 || hasScrolledToError.current) return;
-
-    setTimeout(() => {
-      const errorFields = Object.keys(errors)
-        .map((key) => {
-          const element = document.querySelector(`[name="${key}"]`);
-          return element ? { name: key, element } : null;
-        })
-        .filter(Boolean) as { name: string; element: HTMLElement }[];
-
-      if (errorFields.length > 0) {
-        hasScrolledToError.current = true;
-        const firstErrorField = errorFields[0].element;
-        
-        firstErrorField.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-
-        // Add shake and focus
-        if (document.activeElement !== firstErrorField) {
-          setTimeout(() => {
-            firstErrorField.focus();
-            const errorParent = firstErrorField.closest(".MuiFormControl-root") as HTMLElement;
-            if (errorParent) {
-              errorParent.style.transition = "all 0.3s ease";
-              errorParent.style.transform = "scale(1.02)";
-              errorParent.style.boxShadow = `0 0 0 2px ${theme.palette.error.main}`;
-              errorParent.style.animation = "errorShake 0.5s ease-in-out";
-
-              setTimeout(() => {
-                errorParent.style.transform = "scale(1)";
-                errorParent.style.boxShadow = "";
-                errorParent.style.animation = "";
-              }, 600);
-            }
-          }, 300);
-        } else {
-          firstErrorField.focus();
-        }
-
-        if (onErrorFound) {
-          onErrorFound(errorFields[0].name, firstErrorField);
-        }
-      }
-    }, 100);
-  }, [errors, onErrorFound, theme]);
-
-  const handleFocusAndScroll = () => {
-    if (!isViewMode) {
-      if (Object.keys(errors).length > 0) {
-        scrollToError();
-      } else if (autoFocusFirst) {
-        setTimeout(() => {
-          let fieldToFocus: HTMLElement | null = null;
-          if (focusFieldName) {
-            fieldToFocus = document.querySelector(`[name="${focusFieldName}"]`);
-          }
-          if (!fieldToFocus) {
-            const formElements = document.querySelectorAll(
-              'form input:not([type="hidden"]):not([disabled]), form textarea:not([disabled]), form select:not([disabled])'
-            );
-            if (formElements.length > 0) {
-              fieldToFocus = formElements[0] as HTMLElement;
-            }
-          }
-          if (fieldToFocus) {
-            fieldToFocus.focus();
-          }
-        }, 100);
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (!open) {
-      hasScrolledToError.current = false;
-    }
-  }, [open]);
-
-  useEffect(() => {
-    if (open && Object.keys(errors).length > 0) {
-      scrollToError();
-    }
-  }, [errors, open, scrollToError]);
-
-  const handleFormSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      if (!onSubmit || submissionPending) return;
-
-      setInternalSubmitting(true);
-      try {
-        await onSubmit(e);
-      } finally {
-        setInternalSubmitting(false);
-      }
-    },
-    [onSubmit, submissionPending]
-  );
+  const handleDialogEntered = useFormDialogFocus({
+    open,
+    isViewMode,
+    autoFocusFirst,
+    focusFieldName,
+    errors,
+    formRef,
+    errorColor: theme.palette.error.main,
+    onErrorFound,
+  });
 
   useEffect(() => {
     if (open && dialogContentRef.current) {
@@ -255,12 +157,12 @@ export const FormContainer: React.FC<MyFormProps> = ({
     document.head.appendChild(style);
 
     return () => { document.head.removeChild(style); };
-  }, [theme]);
+  }, []);
 
   // The context value provides everything children might need
   const contextValue = {
     open,
-    onClose: handleClose,
+    onClose: requestClose,
     title,
     subtitle,
     submitButtonText,
@@ -280,17 +182,14 @@ export const FormContainer: React.FC<MyFormProps> = ({
     errors,
     onErrorFound,
     footerLeft,
-    dialogContentRef // pass ref for content scroll
+    dialogContentRef,
   };
 
   return (
     <FormProvider value={contextValue}>
       <Dialog
         open={open}
-        onClose={() => {
-          if (submissionPending) return;
-          handleClose();
-        }}
+        onClose={requestClose}
         maxWidth={maxWidth}
         fullWidth
         disableScrollLock
@@ -299,14 +198,17 @@ export const FormContainer: React.FC<MyFormProps> = ({
         }}
         slotProps={{
           transition: {
-            onEntered: handleFocusAndScroll,
+            onEnter: resetDiscardDialog,
+            onEntered: handleDialogEntered,
+            onExited: resetDiscardDialog,
           },
         }}
         sx={getDialogStyles()}
       >
         <Box
           component="form"
-          onSubmit={handleFormSubmit}
+          ref={formRef}
+          onSubmit={submit}
           sx={{
             flex: 1,
             display: "grid",

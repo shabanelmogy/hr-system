@@ -1,12 +1,11 @@
-import ClearIcon from "@mui/icons-material/Clear";
 import {
-  IconButton,
   InputAdornment,
   TextField,
   type TextFieldProps,
 } from "@mui/material";
 import { useRef, useState, type ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
+import ClearFieldButton from "./internals/ClearFieldButton";
 
 interface TextFieldWithClearProps
   extends Omit<TextFieldProps, "value" | "onChange" | "label" | "inputRef"> {
@@ -46,21 +45,25 @@ const TextFieldWithClear = ({
       sx={{ width: "100%", ...props.sx }}
       autoComplete="off"
       inputRef={inputRef}
-      onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
+      onFocus={(event) => {
+        setFocused(true);
+        props.onFocus?.(event);
+      }}
+      onBlur={(event) => {
+        setFocused(false);
+        props.onBlur?.(event);
+      }}
       slotProps={{
         inputLabel: { shrink: Boolean(searchText) || focused },
         input: {
           endAdornment: searchText ? (
             <InputAdornment position="end">
-              <IconButton
-                aria-label="clear search"
+              <ClearFieldButton
+                ariaLabel="clear search"
                 onClick={onClearClick}
                 disabled={loading}
                 edge="end"
-              >
-                <ClearIcon />
-              </IconButton>
+              />
             </InputAdornment>
           ) : null,
         },

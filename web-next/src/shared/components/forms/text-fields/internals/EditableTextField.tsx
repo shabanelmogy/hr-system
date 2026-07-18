@@ -17,7 +17,12 @@ type EditableTextFieldProps = {
   maxLength?: number;
   getCommonProps: (value: string, onClear: () => void) => Record<string, unknown>;
   onClear: (controllerOnChange?: (value: string) => void) => void;
-  onRegisterChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onRegisterChange: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
+  onChange?: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
 };
 
 export default function EditableTextField(props: EditableTextFieldProps) {
@@ -40,6 +45,7 @@ export default function EditableTextField(props: EditableTextFieldProps) {
                 if (props.preventZero && value === "0") return;
                 if (props.maxLength != null && value.length > props.maxLength) return;
                 field.onChange(value);
+                props.onChange?.(event);
               }}
             />
           );

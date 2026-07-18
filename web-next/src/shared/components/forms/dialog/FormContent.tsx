@@ -1,6 +1,6 @@
 import React from "react";
 import { DialogContent, Box, useTheme, alpha } from "@mui/material";
-import { MyOverlayLoader } from "../loaders";
+import { MyOverlayLoader } from "@/shared/components/loaders";
 import { useFormContext } from "./FormContext";
 
 export const FormContent: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
@@ -13,16 +13,6 @@ export const FormContent: React.FC<{ children?: React.ReactNode }> = ({ children
     overlayMessage,
     dialogContentRef 
   } = useFormContext();
-
-  const getOverlayActionType = () => {
-    if (overlayActionType) return overlayActionType;
-    return "saving";
-  };
-
-  const getOverlayMessage = () => {
-    if (overlayMessage) return overlayMessage;
-    return undefined;
-  };
 
   return (
     <DialogContent
@@ -100,12 +90,11 @@ export const FormContent: React.FC<{ children?: React.ReactNode }> = ({ children
         },
       }}
     >
-      {/* Simple Overlay - Your Way! */}
       {isSubmitting && (
         <MyOverlayLoader
           open={true}
-          actionType={getOverlayActionType()}
-          message={getOverlayMessage()}
+          actionType={overlayActionType || "saving"}
+          message={overlayMessage || undefined}
         />
       )}
 

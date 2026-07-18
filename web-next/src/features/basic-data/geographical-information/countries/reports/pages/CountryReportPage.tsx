@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 
-import MySelect from "@/shared/components/forms/MySelect";
-import TextFieldWithClear from "@/shared/components/forms/TextFieldWithClear";
+import { MySelect, TextFieldWithClear } from "@/shared/components/forms";
 import {
   ReportViewer,
   reportApiService,
