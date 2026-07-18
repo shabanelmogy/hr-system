@@ -1,6 +1,7 @@
 import {
   Add,
   Description,
+  FilterAlt,
   PictureAsPdf,
   Print,
   Refresh,
@@ -16,9 +17,10 @@ import {
   Menu,
   MenuItem,
   Tooltip,
+  alpha,
   useTheme,
 } from "@mui/material";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type {
   HeaderActions as HeaderActionsConfig,
@@ -31,6 +33,7 @@ type HeaderActionsProps = {
   iconOnlyAdd?: boolean;
   onAdd?: () => void;
   onRefresh: () => void;
+  onFilter?: () => void;
   exportOptions: HeaderExportOption[];
 };
 
@@ -52,6 +55,7 @@ function exportIcon(format: HeaderExportOption["format"]) {
 export default function HeaderActions(props: HeaderActionsProps) {
   const { t } = useTranslation();
   const theme = useTheme();
+  const exportMenuId = useId();
   const [exportAnchor, setExportAnchor] = useState<HTMLElement | null>(null);
   const isExporting = props.exportOptions.some((option) => option.loading);
   const hasAvailableExport = props.exportOptions.some((option) => !option.disabled);
@@ -78,17 +82,20 @@ export default function HeaderActions(props: HeaderActionsProps) {
               fontSize: props.compact ? { xs: "0.7rem", sm: "0.75rem" } : undefined,
               minWidth: props.compact ? "auto" : undefined,
               px: props.compact ? { xs: 1, sm: 1.25 } : 2,
-              boxShadow: `0 4px 12px ${theme.palette.primary.main}40`,
+              boxShadow: `0 4px 12px ${alpha(theme.palette.primary.main, 0.25)}`,
               background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
               color: theme.palette.primary.contrastText,
               transition: "transform 0.15s ease, box-shadow 0.15s ease, filter 0.2s ease",
               "&:hover": {
                 transform: "translateY(-1px)",
-                boxShadow: `0 6px 16px ${theme.palette.primary.main}50`,
+                boxShadow: `0 6px 16px ${alpha(theme.palette.primary.main, 0.31)}`,
                 background: `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.secondary.dark} 100%)`,
               },
               "&:active": { transform: "translateY(0)" },
-              "& .MuiButton-startIcon": { mr: props.iconOnlyAdd ? 0 : props.compact ? 0.5 : 1 },
+              "& .MuiButton-startIcon": {
+                marginInlineEnd: props.iconOnlyAdd ? 0 : props.compact ? 0.5 : 1,
+                marginInlineStart: 0,
+              },
             }}
           >
             {props.iconOnlyAdd ? "" : t("actions.add") || "Add"}
@@ -96,11 +103,11 @@ export default function HeaderActions(props: HeaderActionsProps) {
         </Tooltip>
       )}
       {props.actions.refresh && (
-        <Tooltip title={t("actions.refresh") || "Refresh"} arrow>
+        <Tooltip title={t("navigation.refresh")} arrow>
           <IconButton
             size="small"
             onClick={props.onRefresh}
-            aria-label={t("actions.refresh") || "Refresh"}
+            aria-label={t("navigation.refresh")}
             sx={{
               backgroundColor: theme.palette.action.hover,
               width: props.compact ? 32 : undefined,
@@ -109,6 +116,23 @@ export default function HeaderActions(props: HeaderActionsProps) {
             }}
           >
             <Refresh fontSize={props.compact ? "small" : "medium"} />
+          </IconButton>
+        </Tooltip>
+      )}
+      {props.actions.filter && props.onFilter && (
+        <Tooltip title={t("navigation.filter")} arrow>
+          <IconButton
+            size="small"
+            onClick={props.onFilter}
+            aria-label={t("navigation.filter")}
+            sx={{
+              backgroundColor: theme.palette.action.hover,
+              width: props.compact ? 32 : undefined,
+              height: props.compact ? 32 : undefined,
+              "&:hover": { backgroundColor: theme.palette.action.selected },
+            }}
+          >
+            <FilterAlt fontSize={props.compact ? "small" : "medium"} />
           </IconButton>
         </Tooltip>
       )}
@@ -121,7 +145,7 @@ export default function HeaderActions(props: HeaderActionsProps) {
                 onClick={(event) => setExportAnchor(event.currentTarget)}
                 disabled={isExporting || !hasAvailableExport}
                 aria-label={t("actions.export") || "Export"}
-                aria-controls={exportAnchor ? "multi-view-export-menu" : undefined}
+                aria-controls={exportAnchor ? exportMenuId : undefined}
                 aria-haspopup="menu"
                 aria-expanded={exportAnchor ? "true" : undefined}
                 sx={{
@@ -136,7 +160,7 @@ export default function HeaderActions(props: HeaderActionsProps) {
             </span>
           </Tooltip>
           <Menu
-            id="multi-view-export-menu"
+            id={exportMenuId}
             anchorEl={exportAnchor}
             open={Boolean(exportAnchor)}
             onClose={() => setExportAnchor(null)}

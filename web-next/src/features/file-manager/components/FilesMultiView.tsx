@@ -143,14 +143,12 @@ const FilesMultiView = ({
         }
         onRefresh={onRefresh}
         onViewTypeChange={handleViewTypeChange}
-        t={(key: string) => t(key)}
         showActions={{
           add: true,
           refresh: true,
           export: false,
           filter: false,
         }}
-        onFilter={undefined}
       />
 
       <Box

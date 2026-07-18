@@ -1,5 +1,6 @@
 import { Box, ToggleButton, ToggleButtonGroup, Tooltip, useTheme } from "@mui/material";
-import { cloneElement } from "react";
+import { cloneElement, type MouseEvent } from "react";
+import { useTranslation } from "react-i18next";
 import type { ViewOption, ViewType } from "./types";
 
 type ViewToggleProps = {
@@ -7,17 +8,18 @@ type ViewToggleProps = {
   options: ViewOption[];
   compact?: boolean;
   showLabels?: boolean;
-  onChange: (event: React.MouseEvent<HTMLElement> | null, value: ViewType | null) => void;
+  onChange: (event: MouseEvent<HTMLElement> | null, value: ViewType | null) => void;
 };
 
 export default function ViewToggle(props: ViewToggleProps) {
   const theme = useTheme();
+  const { t } = useTranslation();
   return (
     <ToggleButtonGroup
       value={props.value}
       exclusive
       onChange={props.onChange}
-      aria-label="view type"
+      aria-label={t("navigation.viewType")}
       size="small"
       sx={{
         backgroundColor: theme.palette.background.paper,
@@ -54,7 +56,12 @@ export default function ViewToggle(props: ViewToggleProps) {
             <Box sx={{ display: "flex", alignItems: "center" }}>
               {props.compact ? cloneElement(option.icon, { fontSize: "small" }) : option.icon}
               {props.showLabels && (
-                <Box sx={{ ml: 1, display: { md: "none", lg: "block" } }}>
+                <Box
+                  sx={{
+                    marginInlineStart: 1,
+                    display: { md: "none", lg: "block" },
+                  }}
+                >
                   {option.label}
                 </Box>
               )}

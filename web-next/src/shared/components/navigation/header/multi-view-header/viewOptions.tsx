@@ -8,6 +8,9 @@ const defaultLabels: Record<string, string> = {
   chart: "Chart",
   list: "List",
   smallList: "Small List",
+  report: "Report",
+  import: "Import",
+  grouped: "Grouped",
 };
 
 function getViewIcon(view: ViewType) {
@@ -26,9 +29,13 @@ export function createViewOptions(
   labels: Record<string, string>,
   t: TFunction,
 ): ViewOption[] {
-  return views.map((view) => ({
-    value: view,
-    label: labels[view] || t(`views.${view}`) || defaultLabels[view] || view,
-    icon: getViewIcon(view),
-  }));
+  return views.map((view) => {
+    const translatedLabel = t(`views.${view}`, { defaultValue: "" });
+
+    return {
+      value: view,
+      label: labels[view] || translatedLabel || defaultLabels[view] || view,
+      icon: getViewIcon(view),
+    };
+  });
 }

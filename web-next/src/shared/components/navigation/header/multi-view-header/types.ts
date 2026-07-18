@@ -48,7 +48,6 @@ export interface MultiViewPageHeaderProps {
   onViewTypeChange?: (viewType: ViewType) => void;
   viewComponents?: Record<string, ComponentType>;
   enableActivity?: boolean;
-  t?: unknown;
 }
 
 export type PageHeaderProps = SimplePageHeaderProps | MultiViewPageHeaderProps;

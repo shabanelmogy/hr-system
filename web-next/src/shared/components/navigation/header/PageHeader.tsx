@@ -1,7 +1,7 @@
 import useViewLayout from "@/shared/hooks/useViewLayout";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import { Alert, Box, Paper, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, type MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 import DesktopHeaderLayout from "./multi-view-header/DesktopHeaderLayout";
 import MobileHeaderLayout from "./multi-view-header/MobileHeaderLayout";
@@ -28,6 +28,7 @@ function SimplePageHeader({
   isDashboard = false,
 }: SimplePageHeaderProps) {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Box sx={{ mb: isDashboard ? 2 : 4 }}>
@@ -45,7 +46,7 @@ function SimplePageHeader({
           variant="outlined"
           sx={{ mt: 1, alignItems: "center", py: 0.5, "& .MuiAlert-message": { p: 0 } }}
         >
-          This dashboard is under construction using dummy data. Updates will roll out step by step.
+          {t("navigation.dashboardNotice")}
         </Alert>
       ) : null}
     </Box>
@@ -63,9 +64,10 @@ function MultiViewPageHeader({
   availableViews = ["grid", "cards", "chart", "report", "import"],
   viewLabels = {},
   dataCount = 0,
-  totalLabel = "Total",
+  totalLabel = "",
   onRefresh,
   exportOptions = [],
+  onFilter,
   showActions = { add: true, refresh: true, export: false, filter: false },
   additionalChips = [],
   sx = {},
@@ -75,6 +77,7 @@ function MultiViewPageHeader({
 }: MultiViewPageHeaderProps) {
   const { t } = useTranslation();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const isXs = useMediaQuery(theme.breakpoints.down("sm"));
   const [viewType, changeView] = useViewLayout(storageKey, defaultView, availableViews);
   const viewOptions = useMemo(
@@ -83,11 +86,10 @@ function MultiViewPageHeader({
   );
 
   const handleViewChange = (
-    event: React.MouseEvent<HTMLElement> | null,
+    event: MouseEvent<HTMLElement> | null,
     nextView: ViewType | null,
   ) => {
     changeView(event, nextView);
-    if (nextView) onViewTypeChange?.(nextView);
   };
 
   useEffect(() => {
@@ -107,6 +109,7 @@ function MultiViewPageHeader({
     actions: showActions,
     onAdd,
     onRefresh: handleRefresh,
+    onFilter,
     exportOptions,
     viewType,
     viewOptions,
@@ -130,13 +133,16 @@ function MultiViewPageHeader({
           ...sx,
         }}
       >
-        <DesktopHeaderLayout {...layoutProps} />
-        <MobileHeaderLayout
-          {...layoutProps}
-          isXs={isXs}
-          dataCount={dataCount}
-          totalLabel={totalLabel}
-        />
+        {isMobile ? (
+          <MobileHeaderLayout
+            {...layoutProps}
+            isXs={isXs}
+            dataCount={dataCount}
+            totalLabel={totalLabel || t("navigation.total")}
+          />
+        ) : (
+          <DesktopHeaderLayout {...layoutProps} />
+        )}
       </Paper>
       <ViewActivities
         enabled={enableActivity}

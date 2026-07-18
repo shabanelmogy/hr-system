@@ -1,6 +1,7 @@
 // Global Presence Row data
 export const hrTimeline = [
   {
+    id: "leadership-training",
     date: "2025-10-28",
     title: "Leadership Training Completed",
     description: "Completed Q4 leadership development program across EMEA",
@@ -10,6 +11,7 @@ export const hrTimeline = [
     priority: "medium",
   },
   {
+    id: "campus-hiring",
     date: "2025-10-25",
     title: "Campus Hiring Drive",
     description: "Closed 12 graduate hires in North America",
@@ -19,6 +21,7 @@ export const hrTimeline = [
     priority: "low",
   },
   {
+    id: "remote-work-policy",
     date: "2025-10-19",
     title: "Policy Update: Remote Work",
     description: "Updated remote work policy with flexible hours guidance",
@@ -28,6 +31,7 @@ export const hrTimeline = [
     priority: "high",
   },
   {
+    id: "attrition-analysis",
     date: "2025-10-10",
     title: "Attrition Spike Analysis",
     description: "Completed root-cause analysis for APAC attrition spike",

@@ -58,6 +58,47 @@
     "selectCountry": "تحديد {{country}}",
     "unknownCountry": "دولة غير معروفة"
   },
+  "navigation": {
+    "dashboardNotice": "لوحة التحكم قيد الإنشاء باستخدام بيانات تجريبية، وسيتم طرح التحديثات تدريجيا.",
+    "total": "الإجمالي",
+    "refresh": "تحديث",
+    "filter": "تصفية",
+    "moreViews": "المزيد من طرق العرض",
+    "viewType": "نوع العرض"
+  },
+  "views": {
+    "grid": "شبكة",
+    "cards": "بطاقات",
+    "chart": "مخطط",
+    "list": "قائمة",
+    "smallList": "قائمة مختصرة",
+    "report": "تقرير",
+    "import": "استيراد",
+    "grouped": "مجمعة"
+  },
+  "timeline": {
+    "untitled": "عنصر زمني",
+    "status": {
+      "completed": "مكتمل",
+      "success": "ناجح",
+      "warning": "تحذير",
+      "error": "خطأ",
+      "failed": "فشل",
+      "info": "معلومات",
+      "default": "الحالة"
+    },
+    "priority": {
+      "high": "مرتفع",
+      "medium": "متوسط",
+      "low": "منخفض"
+    }
+  },
+  "globalPresence": {
+    "overview": "نظرة عامة على الانتشار العالمي",
+    "viewAll": "عرض الكل",
+    "recentActivity": "أحدث أنشطة الموارد البشرية",
+    "latestMilestones": "أحدث الإنجازات والتغييرات"
+  },
   "displayDebugger": {
     "title": "معلومات العرض",
     "viewport": "مساحة العرض",

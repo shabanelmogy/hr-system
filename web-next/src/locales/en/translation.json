@@ -58,6 +58,47 @@
     "selectCountry": "Select {{country}}",
     "unknownCountry": "Unknown country"
   },
+  "navigation": {
+    "dashboardNotice": "This dashboard is under construction using dummy data. Updates will roll out step by step.",
+    "total": "Total",
+    "refresh": "Refresh",
+    "filter": "Filter",
+    "moreViews": "More views",
+    "viewType": "View type"
+  },
+  "views": {
+    "grid": "Grid",
+    "cards": "Cards",
+    "chart": "Chart",
+    "list": "List",
+    "smallList": "Small List",
+    "report": "Report",
+    "import": "Import",
+    "grouped": "Grouped"
+  },
+  "timeline": {
+    "untitled": "Timeline item",
+    "status": {
+      "completed": "Completed",
+      "success": "Success",
+      "warning": "Warning",
+      "error": "Error",
+      "failed": "Failed",
+      "info": "Information",
+      "default": "Status"
+    },
+    "priority": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    }
+  },
+  "globalPresence": {
+    "overview": "Global Presence Overview",
+    "viewAll": "View All",
+    "recentActivity": "Recent HR Activity",
+    "latestMilestones": "Latest milestones and changes"
+  },
   "displayDebugger": {
     "title": "Display",
     "viewport": "Viewport",

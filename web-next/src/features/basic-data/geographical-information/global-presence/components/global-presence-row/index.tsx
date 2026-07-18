@@ -4,10 +4,13 @@ import { hrTimeline, worldData } from "./data";
 import GlobalPresenceMap from "./GlobalPresenceMap";
 import Link from "next/link";
 import { appRoutes } from "@/config";
+import { useTranslation } from "react-i18next";
 
 type GlobalPresenceRowProps = { showViewAll?: boolean };
 
 const GlobalPresenceRow = ({ showViewAll = true }: GlobalPresenceRowProps) => {
+  const { t } = useTranslation();
+
   return (
     <Grid container spacing={2}>
       <Grid size={{ xs: 12 }}>
@@ -15,7 +18,7 @@ const GlobalPresenceRow = ({ showViewAll = true }: GlobalPresenceRowProps) => {
           direction="row"
           sx={{ alignItems: "center", justifyContent: "space-between", mb: 1 }}
         >
-          <Typography variant="subtitle1">Global Presence Overview</Typography>
+          <Typography variant="subtitle1">{t("globalPresence.overview")}</Typography>
           {showViewAll && (
             <Button
               component={Link}
@@ -24,7 +27,7 @@ const GlobalPresenceRow = ({ showViewAll = true }: GlobalPresenceRowProps) => {
               size="small"
               variant="outlined"
             >
-              View All
+              {t("globalPresence.viewAll")}
             </Button>
           )}
         </Stack>
@@ -37,8 +40,8 @@ const GlobalPresenceRow = ({ showViewAll = true }: GlobalPresenceRowProps) => {
       <Grid size={{ xs: 12, lg: 5 }}>
         <Timeline
           data={hrTimeline}
-          title="Recent HR Activity"
-          subtitle="Latest milestones and changes"
+          title={t("globalPresence.recentActivity")}
+          subtitle={t("globalPresence.latestMilestones")}
           height={507}
           gradient
         />
