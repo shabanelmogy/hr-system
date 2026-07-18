@@ -1,4 +1,4 @@
-import { MyForm, MySelectForm, MyTextField } from "@/shared/components/forms";
+import { MyForm, MySelect, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Casino } from "@mui/icons-material";
 import { Box, Button, TextField } from "@mui/material";
@@ -116,7 +116,7 @@ const StateForm = ({
     console.log(`Validation error in field: ${fieldName}`, fieldElement);
   };
 
-  // Prepare countries data for MySelectForm
+  // Prepare countries data for MySelect
   const countriesData = countries.map((country) => ({
     id: Number(country.id), // Ensure ID is a number to match countryId type
     nameEn: country.nameEn,
@@ -282,7 +282,7 @@ const StateForm = ({
       />
 
       {/* Required: Country */}
-      <MySelectForm
+      <MySelect
         name="countryId"
         label={t("general.country")}
         control={control}

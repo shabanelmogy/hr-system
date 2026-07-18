@@ -1,4 +1,4 @@
-import { MyForm, MySelectForm, MyTextField } from "@/shared/components/forms";
+import { MyForm, MySelect, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
@@ -380,7 +380,7 @@ const UserForm = ({
       />
       {/* Roles Multi-Select with API Data */}
       <Box sx={{ mt: 2 }}>
-        <MySelectForm
+        <MySelect
           control={control}
           name="roles"
           label={t("users.roles")}

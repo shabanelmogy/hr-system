@@ -18,6 +18,8 @@ type TextFieldEndAdornmentProps = {
   counter: CharacterCount;
   counterText: string;
   customAdornment?: ReactNode;
+  appearance: "enhanced" | "plain";
+  clearButtonAriaLabel?: string;
   onClear: () => void;
   onTogglePassword: () => void;
 };
@@ -65,13 +67,15 @@ export default function TextFieldEndAdornment(props: TextFieldEndAdornmentProps)
       {Boolean(value) && props.showClearButton && props.type !== "date" && (
         <ClearFieldButton
           type="button"
-          ariaLabel={`Clear ${props.fieldName}`}
+          ariaLabel={props.clearButtonAriaLabel ?? `Clear ${props.fieldName}`}
           onClick={props.onClear}
           disabled={props.loading}
           edge="end"
-          size="small"
-          iconSize="small"
-          sx={{ color: "text.secondary", "&:hover": { color: "primary.main", bgcolor: alpha(theme.palette.primary.main, 0.08) } }}
+          size={props.appearance === "plain" ? undefined : "small"}
+          iconSize={props.appearance === "plain" ? "medium" : "small"}
+          sx={props.appearance === "plain"
+            ? undefined
+            : { color: "text.secondary", "&:hover": { color: "primary.main", bgcolor: alpha(theme.palette.primary.main, 0.08) } }}
         />
       )}
       {props.isPassword && props.showPasswordToggle && Boolean(value) && (

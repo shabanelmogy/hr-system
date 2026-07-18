@@ -1,5 +1,5 @@
 import { Box, InputAdornment, Typography, useTheme } from "@mui/material";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import EditableTextField from "./internals/EditableTextField";
 import {
@@ -8,6 +8,7 @@ import {
 } from "./internals/characterCount";
 import ReadOnlyTextField from "./internals/ReadOnlyTextField";
 import TextFieldEndAdornment from "./internals/TextFieldEndAdornment";
+import { mergeRefs } from "./internals/refUtils";
 import type { MyTextFieldProps, RegisteredField } from "./internals/types";
 import { getFormFieldError } from "./formFieldError";
 
@@ -48,6 +49,9 @@ export default function MyTextField({
   normalColor = "primary",
   warningColor = "warning",
   errorColor = "error",
+  appearance = "enhanced",
+  clearButtonAriaLabel,
+  onClear: externalOnClear,
   ...restProps
 }: MyTextFieldProps) {
   const { t } = useTranslation();
@@ -69,6 +73,14 @@ export default function MyTextField({
   );
   const [internalShowPassword, setInternalShowPassword] = useState(false);
   const [registerValue, setRegisterValue] = useState("");
+  const [inputFocused, setInputFocused] = useState(false);
+  const localInputRef = useRef<HTMLInputElement>(null);
+  const combinedInputRef = useCallback(
+    (element: HTMLInputElement | null) => {
+      mergeRefs(localInputRef, inputRef)(element);
+    },
+    [inputRef],
+  );
   const showPassword = externalShowPassword ?? internalShowPassword;
   const setShowPassword = (externalSetShowPassword || setInternalShowPassword) as (
     next: boolean | ((current: boolean) => boolean),
@@ -99,8 +111,10 @@ export default function MyTextField({
       registeredField?.onChange?.({ target: { name: actualFieldName, value: "" }, type: "change" });
     }
     setRegisterValue("");
-    externalOnChange?.(createChangeEvent(actualFieldName, ""));
-  }, [actualFieldName, externalOnChange, registeredField, setValue]);
+    if (externalOnClear) externalOnClear();
+    else externalOnChange?.(createChangeEvent(actualFieldName, ""));
+    localInputRef.current?.focus();
+  }, [actualFieldName, externalOnChange, externalOnClear, registeredField, setValue]);
 
   const handleRegisterChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const nextValue = String(event.target.value ?? "");
@@ -114,7 +128,9 @@ export default function MyTextField({
   const getCommonProps = useCallback((fieldValue: string, onClear: () => void) => {
     const characterCount = getCharacterCount(fieldValue, countOptions);
     const counterText = formatCharacterCount(characterCount, maxLength, counterFormat);
-    const { sx: customSx, onFocus, ...textFieldProps } = restProps;
+    const { sx: customSx, onBlur, onFocus, ...textFieldProps } = restProps;
+    const externalOnFocus = onFocus as React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
+    const externalOnBlur = onBlur as React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
     const customStyles = customSx && typeof customSx === "object" && !Array.isArray(customSx)
       ? customSx as Record<string, unknown>
       : {};
@@ -131,7 +147,14 @@ export default function MyTextField({
       rows,
       disabled: loading,
       autoComplete: isPasswordField ? "new-password" : "off",
-      onFocus: onFocus as ((event: React.FocusEvent<HTMLInputElement>) => void) | undefined,
+      onFocus: (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (appearance === "plain") setInputFocused(true);
+        externalOnFocus?.(event);
+      },
+      onBlur: (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (appearance === "plain") setInputFocused(false);
+        externalOnBlur?.(event);
+      },
       slotProps: {
         htmlInput: {
           ...(maxLength != null && { maxLength }),
@@ -163,22 +186,32 @@ export default function MyTextField({
               counter={characterCount}
               counterText={counterText}
               customAdornment={endAdornment}
+              appearance={appearance}
+              clearButtonAriaLabel={clearButtonAriaLabel}
               onClear={onClear}
               onTogglePassword={() => setShowPassword((current: boolean) => !current)}
             />
           ),
         },
-        inputLabel: type === "date" ? { shrink: true } : {},
+        inputLabel:
+          type === "date" ||
+          (appearance === "plain" && (Boolean(fieldValue) || inputFocused))
+            ? { shrink: true }
+            : {},
         formHelperText: { id: `${actualFieldName}-error` },
       },
       sx: {
         flex,
-        "& .MuiOutlinedInput-root": {
-          borderRadius: 2,
-          transition: "all 0.2s",
-          "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: theme.palette.primary.main, borderWidth: "1px" },
-        },
-        ...(isPasswordField && {
+        ...(appearance === "plain"
+          ? { width: "100%" }
+          : {
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 2,
+                transition: "all 0.2s",
+                "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: theme.palette.primary.main, borderWidth: "1px" },
+              },
+            }),
+        ...(appearance !== "plain" && isPasswordField && {
           "& input:-webkit-autofill": {
             WebkitBoxShadow: `0 0 0 100px ${theme.palette.mode === "dark" ? "rgb(30, 30, 30)" : theme.palette.background.default} inset !important`,
           },
@@ -186,7 +219,7 @@ export default function MyTextField({
           "& input[type='password']::-webkit-credentials-auto-fill-button": { display: "none !important" },
           "& input[type='password']::-webkit-strong-password-auto-fill-button": { display: "none !important" },
         }),
-        ...(type === "date" && {
+        ...(appearance !== "plain" && type === "date" && {
           "& input[type='date']::-webkit-calendar-picker-indicator": {
             filter: "invert(25%) sepia(100%) saturate(500%) hue-rotate(200deg)",
           },
@@ -194,7 +227,7 @@ export default function MyTextField({
         ...customStyles,
       },
     };
-  }, [actualFieldName, actualLabel, countOptions, counterFormat, endAdornment, fieldError, flex, isPasswordField, loading, margin, maxLength, multiline, required, restProps, rows, setShowPassword, showClearButton, showCounter, showPassword, showPasswordToggle, startIcon, theme, type]);
+  }, [actualFieldName, actualLabel, appearance, clearButtonAriaLabel, countOptions, counterFormat, endAdornment, fieldError, flex, inputFocused, isPasswordField, loading, margin, maxLength, multiline, required, restProps, rows, setShowPassword, showClearButton, showCounter, showPassword, showPasswordToggle, startIcon, theme, type]);
 
   if (hidden) return null;
   if (readOnly) {
@@ -215,7 +248,7 @@ export default function MyTextField({
       <EditableTextField
         control={control}
         name={actualFieldName}
-        inputRef={inputRef}
+        inputRef={combinedInputRef}
         registeredField={registeredField}
         registerValue={displayedRegisterValue}
         value={value}

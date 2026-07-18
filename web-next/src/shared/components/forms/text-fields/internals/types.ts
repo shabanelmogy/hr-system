@@ -1,4 +1,4 @@
-import type { ReactNode, Ref } from "react";
+import type { ChangeEventHandler, ReactNode, Ref } from "react";
 
 export type RegisteredField = {
   name?: string;
@@ -49,5 +49,9 @@ export type MyTextFieldProps = {
   normalColor?: string;
   warningColor?: string;
   errorColor?: string;
+  appearance?: "enhanced" | "plain";
+  clearButtonAriaLabel?: string;
+  onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onClear?: () => void;
   [key: string]: unknown;
 };

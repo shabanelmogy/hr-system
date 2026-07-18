@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { MySelect, TextFieldWithClear } from "@/shared/components/forms";
+import { MySelect, MyTextField } from "@/shared/components/forms";
 import {
   ReportViewer,
   reportApiService,
@@ -65,12 +65,6 @@ const CountryReportPage = () => {
       ReportFileName: "Countries",
     };
 
-  useEffect(() => {
-    if (reportsRequested.current) return;
-    reportsRequested.current = true;
-    void fetchCountriesReports();
-  }, []);
-
   const fetchCountriesReports = async () => {
     try {
       const response = await reportApiService.post("report/info", {
@@ -93,6 +87,12 @@ const CountryReportPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (reportsRequested.current) return;
+    reportsRequested.current = true;
+    void fetchCountriesReports();
+  }, []);
+
   const handleReportChange = (value: unknown) => {
     const selected = reportsInfo.find((report) => report.Id === selectionValue(value));
     setSelectedReport(selected ?? null);
@@ -102,22 +102,32 @@ const CountryReportPage = () => {
     <ReportViewer reportParams={reportParams}>
       {(updateSearchParams: UpdateReportSearchParams, currentParams: ReportSearchParams) => (
         <>
-          <TextFieldWithClear
-            searchText={String(currentParams.CountryAr ?? "")}
+          <MyTextField
+            fieldName="CountryAr"
+            value={String(currentParams.CountryAr ?? "")}
             label={t("countries.arabicName")}
-            handleSearch={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-              updateSearchParams({ CountryAr: e.target.value })
+            onChange={(event) =>
+              updateSearchParams({ CountryAr: event.target.value })
             }
-            handleClearSearch={() => updateSearchParams({ CountryAr: null })}
+            onClear={() => updateSearchParams({ CountryAr: null })}
+            appearance="plain"
+            margin="none"
+            showCounter={false}
+            clearButtonAriaLabel="clear search"
           />
 
-          <TextFieldWithClear
-            searchText={String(currentParams.CountryEn ?? "")}
+          <MyTextField
+            fieldName="CountryEn"
+            value={String(currentParams.CountryEn ?? "")}
             label={t("countries.englishName")}
-            handleSearch={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-              updateSearchParams({ CountryEn: e.target.value })
+            onChange={(event) =>
+              updateSearchParams({ CountryEn: event.target.value })
             }
-            handleClearSearch={() => updateSearchParams({ CountryEn: null })}
+            onClear={() => updateSearchParams({ CountryEn: null })}
+            appearance="plain"
+            margin="none"
+            showCounter={false}
+            clearButtonAriaLabel="clear search"
           />
 
           <MySelect
@@ -126,7 +136,7 @@ const CountryReportPage = () => {
             handleSelectionChange={handleReportChange}
             loading={false}
             label={t("reports.reportForms")}
-            displayValue="Id"
+            valueMember="Id"
             displayMember={lang === "ar" ? "Title" : "Subject"}
             all={false}
             showClearButton={true}

@@ -1,5 +1,5 @@
 // components/DistrictForm.tsx
-import { MyForm, MySelectForm, MyTextField } from "@/shared/components/forms";
+import { MyForm, MySelect, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Casino } from "@mui/icons-material";
 import { Box, TextField, Button } from "@mui/material";
@@ -102,7 +102,7 @@ const DistrictForm = ({
     console.log(`Validation error in field: ${fieldName}`, fieldElement);
   };
 
-  // Prepare states data for MySelectForm
+  // Prepare states data for MySelect
   const statesData = states.map((state) => ({
     id: Number(state.id),
     nameEn: state.nameEn,
@@ -242,7 +242,7 @@ const DistrictForm = ({
       />
 
       {/* Required: State */}
-      <MySelectForm
+      <MySelect
         name="stateId"
         label={t("general.state") || "State"}
         control={control}
