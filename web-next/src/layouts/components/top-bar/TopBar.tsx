@@ -1,5 +1,6 @@
 import { Box, IconButton, Tooltip, Typography, alpha, useTheme } from "@mui/material";
 import { useState } from "react";
+import { useMemo } from "react";
 
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
@@ -13,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth/SessionContext";
 import { useThemeSettingsContext } from "@/theme/ThemeShell";
 import { NotificationBell } from "@/features/notifications";
+import { GlobalSearchButton } from "@/features/global-search";
 
 // Import sub-components
 import LanguageSelector from "./LanguageSelector";
@@ -24,6 +26,7 @@ import DisplayDebugger from "./DisplayDebugger";
 // Import styled components
 import { AppBar, StyledToolbar } from "./TopBarStyles";
 import UserWelcome from "./UserWelcome";
+import { getNavigationConfig } from "../sidebar/navigationConfig";
 
 const TopBar = ({
   open,
@@ -38,6 +41,10 @@ const TopBar = ({
   const { direction, setMode } = useThemeSettingsContext();
   const { user, logout: sessionLogout } = useSession();
   const isAuthenticated = user !== null;
+  const searchNavigation = useMemo(
+    () => getNavigationConfig(user?.roles, user?.permissions),
+    [user?.permissions, user?.roles],
+  );
 
   const router = useRouter();
 
@@ -183,6 +190,8 @@ const TopBar = ({
               <UserWelcome isMobile={true} />
             </Box>
           )}
+
+          {isAuthenticated && <GlobalSearchButton navigation={searchNavigation} />}
 
           {isAuthenticated && <NotificationBell />}
 

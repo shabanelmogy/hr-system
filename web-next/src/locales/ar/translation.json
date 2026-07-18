@@ -386,6 +386,22 @@
     "searchField": "حقل البحث",
     "searchInSidebar": "البحث فى القوائم"
   },
+  "globalSearch": {
+    "title": "بحث",
+    "open": "فتح البحث",
+    "close": "إغلاق البحث",
+    "placeholder": "ابحث في الصفحات والوحدات...",
+    "clear": "مسح البحث",
+    "all": "الكل",
+    "filterLabel": "تصفية نتائج البحث",
+    "results": "نتائج البحث",
+    "recent": "عمليات البحث الأخيرة",
+    "clearRecent": "مسح الأخيرة",
+    "removeRecent": "إزالة {{title}} من عمليات البحث الأخيرة",
+    "minimumCharacters": "أدخل {{count}} أحرف على الأقل",
+    "noResults": "لم يتم العثور على صفحات مطابقة",
+    "resultCount": "{{count}} من نتائج البحث"
+  },
   "pagination": {
     "dataTable": "جدول البيانات",
     "rowsPerPage": " عدد الصفوف في الصفحة",

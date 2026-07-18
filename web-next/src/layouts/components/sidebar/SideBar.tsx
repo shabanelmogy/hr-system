@@ -18,7 +18,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import DrawerHeader from "./DrawerHeader";
 import { getNavigationConfig } from "./navigationConfig";
@@ -232,12 +232,20 @@ function SideBar({ open, handleDrawerClose }: { open: boolean; handleDrawerClose
   );
 
   // Handle toggle of a single section
-  const handleSectionToggle = (sectionId: string, forceState: boolean | null = null) => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [sectionId]: forceState !== null ? forceState : !prev[sectionId],
-    }));
-  };
+  const handleSectionToggle = useCallback(
+    (sectionId: string, forceState?: boolean) => {
+      setExpandedSections((prev) => {
+        const nextState = forceState ?? !prev[sectionId];
+        if (prev[sectionId] === nextState) return prev;
+
+        return {
+          ...prev,
+          [sectionId]: nextState,
+        };
+      });
+    },
+    [],
+  );
 
   // Toggle all sections
   const toggleAllSections = () => {

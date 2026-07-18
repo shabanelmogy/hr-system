@@ -128,6 +128,8 @@
     "src/features/reporting/**/*.tsx",
     "src/features/advanced-tools/**/*.ts",
     "src/features/advanced-tools/**/*.tsx",
+    "src/features/global-search/**/*.ts",
+    "src/features/global-search/**/*.tsx",
     "src/layouts/**/*.ts",
     "src/layouts/**/*.tsx",
     "src/app/layout.tsx",

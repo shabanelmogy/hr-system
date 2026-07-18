@@ -386,6 +386,22 @@
     "searchField": "Search Field",
     "searchInSidebar": "Search In Sidebar"
   },
+  "globalSearch": {
+    "title": "Search",
+    "open": "Open search",
+    "close": "Close search",
+    "placeholder": "Search pages and modules...",
+    "clear": "Clear search",
+    "all": "All",
+    "filterLabel": "Filter search results",
+    "results": "Search results",
+    "recent": "Recent searches",
+    "clearRecent": "Clear recent",
+    "removeRecent": "Remove {{title}} from recent searches",
+    "minimumCharacters": "Enter at least {{count}} characters",
+    "noResults": "No matching pages found",
+    "resultCount": "{{count}} search results"
+  },
   "pagination": {
     "dataTable": "Data table",
     "rowsPerPage": "Rows per page",
