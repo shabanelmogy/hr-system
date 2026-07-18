@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "HR Management System page for Advanced Tools Localization Api."
 };
 
-import PageComponent from "@/features/advanced-tools/pages/LocalizationGrid";
+import PageComponent from "@/features/advanced-tools/localization/pages/LocalizationPage";
 
 export default function Page() {
   return <PageComponent />;

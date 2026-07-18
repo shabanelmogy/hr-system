@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "HR Management System page for Advanced Tools Api Endpoints."
 };
 
-import PageComponent from "@/features/advanced-tools/pages/ApiEndpoints";
+import PageComponent from "@/features/advanced-tools/external-tools/pages/ApiEndpointsPage";
 
 export default function Page() {
   return <PageComponent />;

@@ -932,6 +932,34 @@
     "localizationApi": "Localization API",
     "hangfireDashboard": "Hangfire Dashboard"
   },
+  "healthCheck": {
+    "title": "System Health",
+    "subTitle": "Live status of the system services and dependencies",
+    "overallStatus": "Overall status",
+    "totalDuration": "Total duration: {{duration}}",
+    "refresh": "Refresh",
+    "component": "Component",
+    "status": "Status",
+    "duration": "Duration",
+    "details": "Details",
+    "noIssuesReported": "No issues reported",
+    "lastChecked": "Last checked: {{time}}",
+    "loading": "Checking system health",
+    "retry": "Retry",
+    "loadError": "Unable to load the system health report.",
+    "tableLabel": "System health checks",
+    "statuses": {
+      "healthy": "Healthy",
+      "degraded": "Degraded",
+      "unhealthy": "Unhealthy",
+      "unknown": "Unknown"
+    }
+  },
+  "hangfireDashboard": {
+    "loading": "Loading the Hangfire dashboard",
+    "loadError": "The Hangfire dashboard could not be loaded. Verify your permission and the backend connection.",
+    "retry": "Retry"
+  },
   "trackChanges": {
     "changeLogId": "ID",
     "entityName": "Entity Name",

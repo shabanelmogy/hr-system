@@ -94,6 +94,7 @@ Current examples:
 - Global presence is owned by geographical information.
 - Home dashboard composition lives under `src/features/home`.
 - File listing and media preview live under `src/features/file-manager`.
+- Advanced tools are split by capability into `external-tools`, `localization`, and `track-changes`; reusable code stays inside the owning subfeature unless it is domain-neutral and used elsewhere.
 - Notification API access, query state, realtime handling, and UI live under `src/features/notifications`.
 - User-profile API access and query hooks live under `src/features/auth/profile`.
 - Cross-domain report viewers and report API access live under `src/features/reporting`; domain report pages remain with their owning domain feature.

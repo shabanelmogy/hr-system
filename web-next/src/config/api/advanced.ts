@@ -10,6 +10,7 @@ export const advancedTools: AdvancedToolsRoutes = {
   getLocalizationApi: `${version}/localization/getLocalization`,
   updateLocalizationApi: `${version}/localization/updateLocalizationKey`,
   trackChanges: `${version}/entityChangeLogs/getAllChangesLogs`,
+  healthCheck: "/api/health",
 };
 
 export const google: GoogleRoutes = {

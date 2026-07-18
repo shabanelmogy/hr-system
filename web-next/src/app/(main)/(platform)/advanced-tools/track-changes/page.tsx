@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "HR Management System page for Advanced Tools Track Changes."
 };
 
-import PageComponent from "@/features/advanced-tools/pages/TrackChangesGrid";
+import PageComponent from "@/features/advanced-tools/track-changes/pages/TrackChangesPage";
 
 export default function Page() {
   return <PageComponent />;

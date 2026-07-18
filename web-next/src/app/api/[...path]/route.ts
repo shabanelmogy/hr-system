@@ -41,9 +41,7 @@ async function requestBody(request: NextRequest) {
 }
 
 async function callBackend(request: NextRequest, path: string[], token?: string, body?: ArrayBuffer) {
-  const backendPath = path[0] === "account-info"
-    ? `AccountInfo/${path.slice(1).join("/")}`
-    : `api/${path.join("/")}`;
+  const backendPath = resolveBackendPath(path);
   const url = new URL(`${getBackendUrl()}/${backendPath}`);
   url.search = request.nextUrl.search;
 
@@ -54,6 +52,14 @@ async function callBackend(request: NextRequest, path: string[], token?: string,
     cache: "no-store",
     redirect: "manual"
   });
+}
+
+function resolveBackendPath(path: string[]) {
+  if (path.length === 1 && path[0] === "health") return "health";
+  if (path[0] === "account-info") {
+    return `AccountInfo/${path.slice(1).join("/")}`;
+  }
+  return `api/${path.join("/")}`;
 }
 
 async function toNextResponse(backendResponse: Response, authPayload?: AuthPayload | null) {

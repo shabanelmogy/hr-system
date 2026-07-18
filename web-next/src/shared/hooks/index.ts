@@ -5,6 +5,7 @@ export { default as useNotifications } from "./useNotifications";
 export { default as usePagination } from "./usePagination";
 export { default as usePaginationV2 } from "./usePaginationV2";
 export { default as usePdfExport } from "./usePdfExport";
+export { default as useQueryErrorNotification } from "./useQueryErrorNotification";
 export { useGridCrudController } from "./useGridCrudController";
 export { useGridCrudMarkerCleanup } from "./useGridCrudMarkerCleanup";
 export { default as useServerExport } from "./useServerExport";

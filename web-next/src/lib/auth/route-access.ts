@@ -4,6 +4,7 @@ import { permissions, type PermissionString } from "./permissions";
 import { isAuthorized } from "./authorization";
 
 export const UNAVAILABLE_ROUTE = "/route-unavailable";
+export const HANGFIRE_PROXY_ROUTE = "/hangfire";
 
 export type RoutePolicy = {
   path: string;
@@ -63,7 +64,14 @@ export const routePolicies: readonly RoutePolicy[] = [
   },
   { path: appRoutes.advancedTools.healthCheck, roles: [adminRole] },
   { path: appRoutes.advancedTools.apiEndpoints, roles: [adminRole] },
-  { path: appRoutes.advancedTools.hangfireDashboard, roles: [adminRole] },
+  {
+    path: appRoutes.advancedTools.hangfireDashboard,
+    permissions: [permissions.ViewHangfireDashboard],
+  },
+  {
+    path: HANGFIRE_PROXY_ROUTE,
+    permissions: [permissions.ViewHangfireDashboard],
+  },
   { path: appRoutes.kpis },
   { path: appRoutes.trends },
   { path: appRoutes.healthPipeline },

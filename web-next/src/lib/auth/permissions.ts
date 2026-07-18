@@ -29,6 +29,7 @@ export const permissions = {
   EditDistricts: "Districts:Edit",
   DeleteDistricts: "Districts:Delete",
   ViewChangeLogs: "ChangeLogs:View",
+  ViewHangfireDashboard: "Hangfire:View",
   ManageDatabaseViews: "DatabaseViews:Manage",
   ViewLocalizations: "Localizations:View",
   CreateLocalizations: "Localizations:Create",
@@ -124,6 +125,7 @@ export type PermissionModule =
   | "Countries"
   | "Districts"
   | "ChangeLogs"
+  | "Hangfire"
   | "DatabaseViews"
   | "Localizations"
   | "ReportsCategories"

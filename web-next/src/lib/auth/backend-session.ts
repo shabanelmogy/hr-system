@@ -119,7 +119,11 @@ async function fetchVerifiedSession(accessToken: string): Promise<SessionLookup>
     return valid
       ? { status: "authenticated", session: payload }
       : { status: "unavailable" };
-  } catch {
+  } catch (error) {
+    if (isTimeoutError(error)) {
+      console.warn(`${TAG} Session validation timed out after ${sessionValidationTimeoutMs}ms`);
+      return { status: "unauthenticated" };
+    }
     return { status: "unavailable" };
   }
 }
@@ -141,7 +145,11 @@ async function fetchValidatedClaimsFromCheckAuth(accessToken: string): Promise<S
     return session
       ? { status: "authenticated", session }
       : { status: "unavailable" };
-  } catch {
+  } catch (error) {
+    if (isTimeoutError(error)) {
+      console.warn(`${TAG} Check-auth validation timed out after ${sessionValidationTimeoutMs}ms`);
+      return { status: "unauthenticated" };
+    }
     return { status: "unavailable" };
   }
 }
@@ -237,8 +245,20 @@ async function requestTokenRefresh(
 
     console.warn(`${TAG} ❌ Refresh response is not a valid auth payload`);
     return { status: "unavailable" };
-  } catch (err) {
-    console.error(`${TAG} ❌ Refresh fetch error:`, err);
+  } catch (error) {
+    if (isTimeoutError(error)) {
+      console.warn(`${TAG} Refresh request timed out after ${tokenRefreshTimeoutMs}ms`);
+      return { status: "rejected" };
+    }
+
+    console.warn(`${TAG} Refresh request failed; authentication service unavailable`);
     return { status: "unavailable" };
   }
+}
+
+function isTimeoutError(error: unknown): boolean {
+  return (
+    error instanceof DOMException &&
+    (error.name === "TimeoutError" || error.name === "AbortError")
+  );
 }

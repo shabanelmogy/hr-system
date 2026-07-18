@@ -124,6 +124,19 @@ describe("resolveSession", () => {
       status: "unavailable",
     });
   });
+
+  it("fails closed when session validation times out", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockRejectedValue(
+        new DOMException("The operation was aborted due to timeout", "TimeoutError"),
+      ),
+    );
+
+    await expect(resolveSession("access-token")).resolves.toEqual({
+      status: "unauthenticated",
+    });
+  });
 });
 
 describe("refreshAuthTokens", () => {
@@ -148,6 +161,19 @@ describe("refreshAuthTokens", () => {
       ).resolves.toEqual({ status: "unavailable" });
     },
   );
+
+  it("treats a refresh timeout as an expired session instead of a service outage", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockRejectedValue(
+        new DOMException("The operation was aborted due to timeout", "TimeoutError"),
+      ),
+    );
+
+    await expect(
+      refreshAuthTokens("access-token", "timed-out-refresh"),
+    ).resolves.toEqual({ status: "rejected" });
+  });
 });
 
 function createRefreshFlowMock(delayMs = 0) {

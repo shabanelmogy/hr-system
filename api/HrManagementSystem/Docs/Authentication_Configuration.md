@@ -16,11 +16,15 @@ dotnet user-secrets set "ConnectionStrings:DefaultConnection" "<sql-connection-s
 dotnet user-secrets set "ConnectionStrings:HangfireConnection" "<hangfire-connection-string>"
 dotnet user-secrets set "MailSettings:Mail" "<smtp-account>"
 dotnet user-secrets set "MailSettings:Password" "<smtp-password>"
-dotnet user-secrets set "HangfireSettings:Username" "<dashboard-user>"
-dotnet user-secrets set "HangfireSettings:Password" "<dashboard-password>"
 dotnet user-secrets set "ExternalLogin:Google:ClientId" "<google-client-id>"
 dotnet user-secrets set "Syncfusion:LicenseKey" "<syncfusion-license>"
 ```
+
+The Hangfire dashboard uses application permissions rather than a separate
+username and password. Assign `Hangfire:View` to a role from the role
+permissions page. Configure `HangfireSettings:AllowedHosts` for every backend
+host that is allowed to serve the dashboard; local development defaults to
+`localhost`.
 
 Bootstrap accounts are optional. To create an initial administrator on an empty database, configure `BootstrapUsers:Admin:UserName`, `Email`, `FirstName`, `LastName`, and `Password` through user secrets or environment variables. No default account or password is created when those values are absent.
 

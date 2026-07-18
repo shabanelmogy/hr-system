@@ -81,7 +81,6 @@ app.UseAuthorization();
 app.UseHangfireDashboard("/hangfire", new DashboardOptions
 {
     Authorization = new[] { app.Services.GetRequiredService<HangfireAuthorizationFilter>() },
-    IgnoreAntiforgeryToken = true,
     AppPath = null,
     DisplayStorageConnectionString = false
 });
@@ -110,10 +109,10 @@ app.UseMiddleware<CultureMiddleware>();
 app.UseStaticFiles();
 app.MapControllers();
 
-app.MapHealthChecks("health", new HealthCheckOptions
+app.MapHealthChecks("/health", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
+}).RequireAuthorization();
 
 app.MapHub<GeneralHub>("/hubs/company").RequireCors("AllowReactApp");
 

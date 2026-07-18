@@ -13,9 +13,16 @@ public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
 
     public bool Authorize(DashboardContext context)
     {
-        var httpContext = context.GetHttpContext();
+        return Authorize(context.GetHttpContext());
+    }
+
+    public bool Authorize(HttpContext httpContext)
+    {
+        var user = httpContext.User;
         var currentHost = httpContext.Request.Host.Host;
 
-        return _settings.AllowedHosts.Contains(currentHost, StringComparer.OrdinalIgnoreCase);
+        return user.Identity?.IsAuthenticated == true &&
+            user.HasClaim(Permissions.Type, Permissions.ViewHangfireDashboard) &&
+            _settings.AllowedHosts.Contains(currentHost, StringComparer.OrdinalIgnoreCase);
     }
 }

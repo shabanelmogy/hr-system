@@ -37,6 +37,18 @@ describe("route access policies", () => {
     })).toBe(true);
   });
 
+  it("allows Hangfire access through an assignable permission", () => {
+    expect(canAccessRoute(appRoutes.advancedTools.hangfireDashboard, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.advancedTools.hangfireDashboard, {
+      ...session,
+      permissions: [permissions.ViewHangfireDashboard],
+    })).toBe(true);
+    expect(canAccessRoute("/hangfire/jobs/enqueued", {
+      ...session,
+      permissions: [permissions.ViewHangfireDashboard],
+    })).toBe(true);
+  });
+
   it("covers every registered page policy", () => {
     for (const policy of routePolicies) {
       const authorizedSession = {

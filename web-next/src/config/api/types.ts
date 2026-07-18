@@ -41,6 +41,7 @@ export interface AdvancedToolsRoutes {
   getLocalizationApi: string;
   updateLocalizationApi: string;
   trackChanges: string;
+  healthCheck: string;
 }
 
 export interface GoogleRoutes {

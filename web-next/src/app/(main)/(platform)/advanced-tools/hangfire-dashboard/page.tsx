@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "HR Management System page for Advanced Tools Hangfire Dashboard."
 };
 
-import PageComponent from "@/features/advanced-tools/pages/HangfireDashboard";
+import PageComponent from "@/features/advanced-tools/hangfire-dashboard/pages/HangfireDashboardPage";
 
 export default function Page() {
   return <PageComponent />;

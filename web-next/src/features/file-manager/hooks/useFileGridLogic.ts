@@ -1,5 +1,6 @@
 // hooks/useFileGridLogic.ts - TanStack Query Implementation
 import { showToast } from "@/shared/components/feedback/transient";
+import { useQueryErrorNotification } from "@/shared/hooks";
 import { extractErrorMessage } from "@/shared/utils";
 import {
   useGridApiRef,
@@ -35,13 +36,15 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
     isFetching,
   } = useFiles();
 
-  // Handle query error separately using useEffect
-  useEffect(() => {
-    if (error) {
-      const errorMessage = extractErrorMessage(error);
+  const notifyFileQueryError = useCallback(
+    (queryError: unknown) => {
+      const errorMessage = extractErrorMessage(queryError);
       showToast.error(errorMessage || t("files.fetchError"));
-    }
-  }, [error, t]);
+    },
+    [t],
+  );
+
+  useQueryErrorNotification(error, { notify: notifyFileQueryError });
 
   const deleteFileMutation = useDeleteFile({
     onSuccess: () => {

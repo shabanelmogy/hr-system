@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "HR Management System page for Advanced Tools Health Check."
 };
 
-import PageComponent from "@/features/advanced-tools/pages/HealthCheck";
+import PageComponent from "@/features/advanced-tools/health-check/pages/HealthCheckPage";
 
 export default function Page() {
   return <PageComponent />;

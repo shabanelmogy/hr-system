@@ -40,6 +40,7 @@ public static class Permissions
     public const string DeleteDistricts = "Districts:Delete";
 
     public const string ViewChangeLogs = "ChangeLogs:View";
+    public const string ViewHangfireDashboard = "Hangfire:View";
     public const string ManageDatabaseViews = "DatabaseViews:Manage";
 
     public const string ViewLocalizations = "Localizations:View";
