@@ -3,7 +3,7 @@ using HrManagementSystem.Features.GeographicalInformation.Addresses.Entities;
 using HrManagementSystem.Features.Employees.Entities;
 
 namespace HrManagementSystem.Features.OrganizationalStructure.Entities;
-public class Branch : AuditableEntity
+public class Branch : CompanyAuditableEntity
 {
     public int Id { get; set; }
 
@@ -13,7 +13,6 @@ public class Branch : AuditableEntity
     public string BranchCode { get; set; } = string.Empty;
 
     // Company Relationship
-    public int CompanyId { get; set; }
     public Company Company { get; set; } = null!;
 
     // Address (using your existing Address entity)

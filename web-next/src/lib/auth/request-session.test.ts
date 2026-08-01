@@ -6,6 +6,8 @@ import { decodeRequestSession, encodeRequestSession } from "./request-session";
 
 const session = {
   userId: "user-id",
+  tenantId: "tenant-id",
+  companyId: 7,
   userName: "مستخدم",
   email: "user@example.com",
   firstName: "Test",

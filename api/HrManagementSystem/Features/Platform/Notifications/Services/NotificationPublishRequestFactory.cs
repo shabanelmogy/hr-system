@@ -15,7 +15,9 @@ public static class NotificationPublishRequestFactory
         string? entityId,
         string? actionUrl,
         string? actorUserId,
-        Guid operationId)
+        Guid operationId,
+        string? tenantId = null,
+        int? companyId = null)
     {
         var actionName = GetActionName(action);
         var eventActionName = action == "BulkAdd" ? "BulkCreated" : actionName;
@@ -36,7 +38,9 @@ public static class NotificationPublishRequestFactory
             entityId,
             actionUrl,
             actorUserId,
-            $"{eventType}:{entityId ?? "bulk"}:{operationId:N}");
+            $"{eventType}:{entityId ?? "bulk"}:{operationId:N}",
+            TenantId: tenantId,
+            CompanyId: companyId);
     }
 
     private static string GetActionName(string action) => action switch

@@ -219,5 +219,7 @@
     "UserUpdatedNotificationMessage": "تم تحديث المستخدم {UserName}",
     "UserDisabledNotificationMessage": "تم تعطيل المستخدم {UserName}",
     "UserEnabledNotificationMessage": "تم تفعيل المستخدم {UserName}",
-    "UserUnlockedNotificationMessage": "تم إلغاء قفل المستخدم {UserName}"
+    "UserUnlockedNotificationMessage": "تم إلغاء قفل المستخدم {UserName}",
+    "NoCompanyAccess": "لا يملك حسابك صلاحية الوصول إلى شركة نشطة",
+    "InvalidCompanySelection": "اختيار الشركة غير صالح أو انتهت صلاحيته"
 }

@@ -2,7 +2,7 @@ using HrManagementSystem.Features.Catalog.Categories.Entities;
 
 namespace HrManagementSystem.Features.Catalog.SubCategories.Entities
 {
-    public class SubCategory : AuditableEntity
+    public class SubCategory : CompanyAuditableEntity
     {
         public int Id { get; set; }
         public string NameAr { get; set; } = string.Empty;

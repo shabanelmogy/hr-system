@@ -1,6 +1,12 @@
 .git/
 graphify-out/
+
+# The canonical application graph is api/HrManagementSystem + web-next.
+# Keep the legacy Vite frontend available as source reference without indexing it.
 web/
+
+api/CrystalReportGeneratorApi/
+api/Crystal Reports Backup Files/
 
 **/node_modules/
 **/.next/

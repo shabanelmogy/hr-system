@@ -23,6 +23,17 @@ public class AuthController(IAuthService authService, IJwtProvider jwtProvider) 
             request.Password,
             cancellationToken);
 
+        return result.IsSuccess ? Ok(result.Value.Payload) : result.ToProblem();
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    [EnableRateLimiting("authentication")]
+    public async Task<IActionResult> SelectCompany(
+        [FromBody] SelectCompanyRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await _authService.SelectCompanyAsync(request, cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
@@ -77,6 +88,10 @@ public class AuthController(IAuthService authService, IJwtProvider jwtProvider) 
 
         var response = new SessionResponse(
             User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty,
+            User.FindFirstValue(JwtClaimNames.TenantId) ?? string.Empty,
+            int.TryParse(User.FindFirstValue(JwtClaimNames.CompanyId), out var companyId)
+                ? companyId
+                : 0,
             User.FindFirstValue(ClaimTypes.Name) ?? string.Empty,
             User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
             User.FindFirstValue(MyClaims.firstname) ?? string.Empty,

@@ -6,6 +6,8 @@ import type { SessionClaims } from "./session";
 
 const session: SessionClaims = {
   userId: "user-id",
+  tenantId: "tenant-id",
+  companyId: 7,
   userName: "user",
   email: "user@example.com",
   firstName: "Test",
@@ -27,6 +29,18 @@ describe("route access policies", () => {
       ...session,
       permissions: [permissions.ViewCountries],
     })).toBe(true);
+  });
+
+  it("allows the Basic Data workspace for any Basic Data view permission", () => {
+    expect(canAccessRoute(appRoutes.basicData.index, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.basicData.index, {
+      ...session,
+      permissions: [permissions.ViewStates],
+    })).toBe(true);
+    expect(canAccessRoute(appRoutes.basicData.countries, {
+      ...session,
+      permissions: [permissions.ViewStates],
+    })).toBe(false);
   });
 
   it("enforces administrator-only routes case-insensitively", () => {

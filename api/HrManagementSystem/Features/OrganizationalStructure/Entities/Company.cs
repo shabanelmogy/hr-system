@@ -1,10 +1,11 @@
 using HrManagementSystem.Features.GeographicalInformation.Addresses.Entities;
 
 using HrManagementSystem.Features.Employees.Entities;
+using HrManagementSystem.Features.Security.Authentication.Entities;
 
 namespace HrManagementSystem.Features.OrganizationalStructure.Entities;
 
-public class Company : AuditableEntity
+public class Company : TenantAuditableEntity
 {
     public int Id { get; set; }
 
@@ -37,4 +38,5 @@ public class Company : AuditableEntity
     // Navigation Properties
     public virtual ICollection<Branch> Branches { get; set; } = [];
     public virtual ICollection<Employee> Employees { get; set; } = [];
+    public ICollection<UserCompanyAccess> UserAccesses { get; set; } = [];
 }

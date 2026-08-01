@@ -7,6 +7,7 @@ public static class RefreshTokenProtector
     public static IssuedRefreshToken Issue(
         string sessionId,
         string jwtId,
+        int companyId,
         DateTime expiresOn,
         string? ipAddress,
         string? userAgent)
@@ -17,6 +18,7 @@ public static class RefreshTokenProtector
             TokenHash = Hash(rawToken),
             SessionId = sessionId,
             JwtId = jwtId,
+            CompanyId = companyId,
             ExpiresOn = expiresOn,
             CreatedByIp = Truncate(ipAddress, 45),
             CreatedByUserAgent = Truncate(userAgent, 256)
@@ -37,11 +39,12 @@ public static class RefreshTokenProtector
         var replacement = Issue(
             currentToken.SessionId,
             jwtId,
+            currentToken.CompanyId,
             currentToken.ExpiresOn,
             ipAddress,
             userAgent);
 
-        currentToken.Revoke("Rotated", replacement.Token.TokenHash);
+        currentToken.Revoke("Rotated");
         return replacement;
     }
 

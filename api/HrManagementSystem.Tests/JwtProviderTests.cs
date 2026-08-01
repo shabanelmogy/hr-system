@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using HrManagementSystem.Infrastructure.Security.Authentication;
+using HrManagementSystem.Features.Security.Authentication.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -23,6 +24,8 @@ public sealed class JwtProviderTests
         Assert.Equal("user-id", result.UserId);
         Assert.Equal("jwt-id", result.JwtId);
         Assert.Equal("session-id", result.SessionId);
+        Assert.Equal("tenant-id", result.TenantId);
+        Assert.Equal(7, result.CompanyId);
     }
 
     [Theory]
@@ -36,6 +39,28 @@ public sealed class JwtProviderTests
         var token = CreateToken(issuer, audience);
 
         Assert.Null(provider.ValidateExpiredAccessToken(token));
+    }
+
+    [Fact]
+    public void CompanySelectionToken_RoundTripsUserAndTenantWithoutCompanyClaim()
+    {
+        var provider = CreateProvider();
+        var user = new ApplicationUser
+        {
+            Id = "user-id",
+            TenantId = "tenant-id",
+            SecurityStamp = "security-stamp"
+        };
+
+        var issued = provider.GenerateCompanySelectionToken(user);
+        var validated = provider.ValidateCompanySelectionToken(issued.Token);
+        var jwt = new JwtSecurityTokenHandler().ReadJwtToken(issued.Token);
+
+        Assert.NotNull(validated);
+        Assert.Equal(user.Id, validated.UserId);
+        Assert.Equal(user.TenantId, validated.TenantId);
+        Assert.DoesNotContain(jwt.Claims, claim => claim.Type == JwtClaimNames.CompanyId);
+        Assert.True(issued.ExpiresAt > DateTime.UtcNow);
     }
 
     private static JwtProvider CreateProvider()
@@ -59,7 +84,9 @@ public sealed class JwtProviderTests
             new Claim(ClaimTypes.NameIdentifier, "user-id"),
             new Claim(JwtRegisteredClaimNames.Jti, "jwt-id"),
             new Claim(JwtClaimNames.SessionId, "session-id"),
-            new Claim(JwtClaimNames.SecurityStamp, "security-stamp")
+            new Claim(JwtClaimNames.SecurityStamp, "security-stamp"),
+            new Claim(JwtClaimNames.TenantId, "tenant-id"),
+            new Claim(JwtClaimNames.CompanyId, "7")
         };
 
         var token = new JwtSecurityToken(

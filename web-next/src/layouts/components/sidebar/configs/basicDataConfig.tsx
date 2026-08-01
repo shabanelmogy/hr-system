@@ -52,6 +52,20 @@ export const getBasicDataConfig = () => {
       undefined,
       [permissions.ViewDistricts]
     ),
+    createNavItem(
+      NavigationTitles.COUNTRY_REPORT,
+      secondaryIcon(<CategoryIcon />),
+      appRoutes.basicData.countryReport,
+      undefined,
+      [permissions.ViewCountries]
+    ),
+    createNavItem(
+      NavigationTitles.GLOBAL_PRESENCE,
+      secondaryIcon(<LocationCityIcon />),
+      appRoutes.basicData.globalPresence,
+      undefined,
+      [permissions.ViewCountries]
+    ),
   ];
 
   const geographicDataItem = createNavItem(
@@ -63,10 +77,13 @@ export const getBasicDataConfig = () => {
     geographicItems
   );
 
-  return createNavSection(
+  return {
+    ...createNavSection(
     NavigationSectionId.Basic_DATA,
     NavigationTitles.BASIC_DATA,
     sectionIcon,
     [geographicDataItem]
-  );
+    ),
+    path: appRoutes.basicData.index,
+  };
 };

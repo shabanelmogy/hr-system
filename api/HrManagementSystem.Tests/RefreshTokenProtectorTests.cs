@@ -10,6 +10,7 @@ public sealed class RefreshTokenProtectorTests
         var issued = RefreshTokenProtector.Issue(
             "session-id",
             "jwt-id",
+            7,
             DateTime.UtcNow.AddDays(14),
             "127.0.0.1",
             "test-agent");
@@ -18,6 +19,7 @@ public sealed class RefreshTokenProtectorTests
         Assert.Equal(64, issued.Token.TokenHash.Length);
         Assert.Equal(RefreshTokenProtector.Hash(issued.RawToken), issued.Token.TokenHash);
         Assert.True(issued.Token.IsActive);
+        Assert.Equal(7, issued.Token.CompanyId);
         Assert.DoesNotContain("=", issued.RawToken);
     }
 
@@ -28,6 +30,7 @@ public sealed class RefreshTokenProtectorTests
         var current = RefreshTokenProtector.Issue(
             "session-id",
             "old-jwt-id",
+            7,
             expiresOn,
             null,
             null);
@@ -40,8 +43,8 @@ public sealed class RefreshTokenProtectorTests
 
         Assert.False(current.Token.IsActive);
         Assert.Equal("Rotated", current.Token.RevocationReason);
-        Assert.Equal(replacement.Token.TokenHash, current.Token.ReplacedByTokenHash);
         Assert.Equal(current.Token.SessionId, replacement.Token.SessionId);
+        Assert.Equal(current.Token.CompanyId, replacement.Token.CompanyId);
         Assert.Equal(expiresOn, replacement.Token.ExpiresOn);
         Assert.NotEqual(current.RawToken, replacement.RawToken);
         Assert.True(replacement.Token.IsActive);

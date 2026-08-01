@@ -8,6 +8,8 @@ public sealed record UserChangedJobRequest(
     UserResponse User,
     string Action,
     string? ActorUserId,
+    string TenantId,
+    int CompanyId,
     Guid OperationId);
 
 [AutomaticRetry(Attempts = 5, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
@@ -32,14 +34,17 @@ public sealed class UserChangedJob(
             request.User.Id,
             "/administration/users",
             request.ActorUserId,
-            request.OperationId);
+            request.OperationId,
+            request.TenantId,
+            request.CompanyId);
 
         var result = await notificationPublisher.PublishToPermissionAsync(notification, cancellationToken);
         if (result.IsFailure)
             throw new InvalidOperationException($"User notification failed: {result.Error.Code}");
 
-        var count = await context.Users.AsNoTracking().CountAsync(cancellationToken);
-        await hubContext.Clients.All.ReceiveUserUpdate(
+        var count = await context.Users.AsNoTracking()
+            .CountAsync(user => user.TenantId == request.TenantId, cancellationToken);
+        await hubContext.Clients.Group(GeneralHubGroups.ForCompany(request.TenantId, request.CompanyId)).ReceiveUserUpdate(
             Result.Success(new UserChangedResponse(count, request.User, request.Action)));
     }
 }

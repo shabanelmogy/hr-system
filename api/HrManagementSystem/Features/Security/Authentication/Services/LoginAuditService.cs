@@ -6,10 +6,20 @@ public class LoginAuditService(ApplicationDbContext context) : ILoginAuditServic
 {
     private readonly ApplicationDbContext _context = context;
 
-    public async Task RecordLoginAsync(string userId, CancellationToken cancellationToken)
+    public async Task RecordLoginAsync(
+        string userId,
+        int companyId,
+        CancellationToken cancellationToken)
     {
+        var tenantId = await _context.Users
+            .Where(user => user.Id == userId)
+            .Select(user => user.TenantId)
+            .SingleAsync(cancellationToken);
+
         _context.Add(new UserLogin
         {
+            TenantId = tenantId,
+            CompanyId = companyId,
             Id = Guid.NewGuid().ToString(),
             UserId = userId,
             LoginDate = DateTime.UtcNow
@@ -18,10 +28,26 @@ public class LoginAuditService(ApplicationDbContext context) : ILoginAuditServic
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task RecordLogoutAsync(string userId, CancellationToken cancellationToken)
+    public async Task RecordLogoutAsync(
+        string userId,
+        int companyId,
+        CancellationToken cancellationToken)
     {
+        var tenantId = await _context.Users
+            .Where(user => user.Id == userId)
+            .Select(user => user.TenantId)
+            .SingleOrDefaultAsync(cancellationToken);
+
+        if (string.IsNullOrWhiteSpace(tenantId))
+            return;
+
         var currentLogin = await _context.LoginAudits
-            .Where(login => login.UserId == userId && login.LogOutDate == null)
+            .IgnoreQueryFilters()
+            .Where(login =>
+                login.TenantId == tenantId &&
+                login.CompanyId == companyId &&
+                login.UserId == userId &&
+                login.LogOutDate == null)
             .OrderByDescending(login => login.LoginDate)
             .FirstOrDefaultAsync(cancellationToken);
 

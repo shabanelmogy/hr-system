@@ -5,6 +5,8 @@ namespace HrManagementSystem.Features.Security.Authentication.Contracts
         string UserName,
         string FirstName,
         string LastName,
+        string TenantId,
+        int CompanyId,
         string Token,
         DateTime TokenExpiration,
         string RefreshToken,

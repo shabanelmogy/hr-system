@@ -216,5 +216,7 @@
     "UserUpdatedNotificationMessage": "User {UserName} was updated",
     "UserDisabledNotificationMessage": "User {UserName} was disabled",
     "UserEnabledNotificationMessage": "User {UserName} was enabled",
-    "UserUnlockedNotificationMessage": "User {UserName} was unlocked"
+    "UserUnlockedNotificationMessage": "User {UserName} was unlocked",
+    "NoCompanyAccess": "Your account does not have access to an active company",
+    "InvalidCompanySelection": "The company selection is invalid or has expired"
 }

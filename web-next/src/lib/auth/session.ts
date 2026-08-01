@@ -1,5 +1,7 @@
 export type SessionClaims = {
   userId: string;
+  tenantId: string;
+  companyId: number;
   userName: string;
   email: string;
   firstName: string;
@@ -17,6 +19,11 @@ export function isSessionClaims(value: unknown): value is SessionClaims {
     // Critical fields must be non-empty strings
     typeof candidate.userId === "string" &&
     candidate.userId.length > 0 &&
+    typeof candidate.tenantId === "string" &&
+    candidate.tenantId.length > 0 &&
+    typeof candidate.companyId === "number" &&
+    Number.isInteger(candidate.companyId) &&
+    candidate.companyId > 0 &&
     typeof candidate.userName === "string" &&
     candidate.userName.length > 0 &&
     typeof candidate.email === "string" &&

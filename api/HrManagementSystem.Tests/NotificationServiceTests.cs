@@ -4,6 +4,7 @@ using HrManagementSystem.Features.Platform.Notifications.Entities;
 using HrManagementSystem.Features.Platform.Notifications.Errors;
 using HrManagementSystem.Features.Platform.Notifications.Mapping;
 using HrManagementSystem.Features.Platform.Notifications.Services;
+using HrManagementSystem.Features.OrganizationalStructure.Entities;
 using HrManagementSystem.Features.Security.Authentication.Entities;
 using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
 using HrManagementSystem.Infrastructure.Persistance;
@@ -152,6 +153,17 @@ public sealed class NotificationServiceTests
 
         context.Roles.AddRange(viewRole, otherRole);
         context.Users.AddRange(allowedUser, deniedUser, disabledUser);
+        context.Companies.Add(new Company
+        {
+            Id = 1,
+            NameAr = "Test Company",
+            NameEn = "Test Company",
+            CreatedById = allowedUser.Id
+        });
+        context.UserCompanyAccesses.AddRange(
+            CreateCompanyAccess(allowedUser.Id),
+            CreateCompanyAccess(deniedUser.Id),
+            CreateCompanyAccess(disabledUser.Id));
         context.UserRoles.AddRange(
             new IdentityUserRole<string> { UserId = allowedUser.Id, RoleId = viewRole.Id },
             new IdentityUserRole<string> { UserId = deniedUser.Id, RoleId = otherRole.Id },
@@ -223,6 +235,8 @@ public sealed class NotificationServiceTests
     private sealed class TestCurrentActor : ICurrentActor
     {
         public string? UserId => null;
+        public string? TenantId => "tenant-1";
+        public int? CompanyId => 1;
     }
 
     private static Notification CreateNotification(
@@ -251,6 +265,13 @@ public sealed class NotificationServiceTests
         FirstName = id,
         LastName = "User",
         IsDisabled = isDisabled
+    };
+
+    private static UserCompanyAccess CreateCompanyAccess(string userId) => new()
+    {
+        TenantId = "tenant-1",
+        CompanyId = 1,
+        UserId = userId
     };
 
     private static void GrantPermission(ApplicationDbContext context, string userId)

@@ -3,6 +3,8 @@ import { isSessionClaims } from "./session";
 
 const validSession = {
   userId: "user-id",
+  tenantId: "tenant-id",
+  companyId: 7,
   userName: "user",
   email: "user@example.com",
   firstName: "Test",

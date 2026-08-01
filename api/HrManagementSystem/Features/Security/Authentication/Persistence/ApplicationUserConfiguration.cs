@@ -6,6 +6,7 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
 {
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
+        builder.Property(x => x.TenantId).HasMaxLength(32).IsRequired();
         builder.Property(x => x.FirstName).HasMaxLength(100);
         builder.Property(x => x.LastName).HasMaxLength(100);
 
@@ -14,7 +15,7 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
             token.Property(x => x.TokenHash).HasMaxLength(64).IsRequired();
             token.Property(x => x.SessionId).HasMaxLength(32).IsRequired();
             token.Property(x => x.JwtId).HasMaxLength(36).IsRequired();
-            token.Property(x => x.ReplacedByTokenHash).HasMaxLength(64);
+            token.Property(x => x.CompanyId).IsRequired();
             token.Property(x => x.RevocationReason).HasMaxLength(100);
             token.Property(x => x.CreatedByIp).HasMaxLength(45);
             token.Property(x => x.CreatedByUserAgent).HasMaxLength(256);

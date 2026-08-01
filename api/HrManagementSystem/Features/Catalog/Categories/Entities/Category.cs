@@ -1,6 +1,6 @@
 namespace HrManagementSystem.Features.Catalog.Categories.Entities
 {
-    public class Category : AuditableEntity
+    public class Category : CompanyAuditableEntity
     {
         public int Id { get; set; }
         public string NameAr { get; set; } = string.Empty;

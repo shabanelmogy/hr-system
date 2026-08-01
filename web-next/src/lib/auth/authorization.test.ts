@@ -5,6 +5,8 @@ import { getAuthorizationState, isAuthorized } from "./authorization";
 
 const session: SessionClaims = {
   userId: "user-id",
+  tenantId: "tenant-id",
+  companyId: 7,
   userName: "user",
   email: "user@example.com",
   firstName: "Test",

@@ -49,6 +49,15 @@ export const routePolicies: readonly RoutePolicy[] = [
     path: appRoutes.basicData.districts,
     permissions: [permissions.ViewDistricts],
   },
+  {
+    path: appRoutes.basicData.index,
+    permissions: [
+      permissions.ViewCountries,
+      permissions.ViewStates,
+      permissions.ViewDistricts,
+      permissions.ViewAddressTypes,
+    ],
+  },
   { path: appRoutes.extras.filesManager, roles: [adminRole] },
   {
     path: appRoutes.extras.appointments,

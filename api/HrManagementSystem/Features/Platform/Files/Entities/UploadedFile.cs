@@ -1,6 +1,6 @@
 namespace HrManagementSystem.Features.Platform.Files.Entities
 {
-    public sealed class UploadedFile : AuditableEntity
+    public sealed class UploadedFile : CompanyAuditableEntity
     {
         public Guid Id { get; set; } = Guid.CreateVersion7();
         public string FileName { get; set; } = string.Empty;

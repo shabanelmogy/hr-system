@@ -8,7 +8,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import type { LoginResponse, SocialLoginHandler } from "../types";
+import type {
+  CompanySelectionResponse,
+  LoginResponse,
+  SocialLoginHandler,
+} from "../types";
 import {
   createLoginValidationSchema,
   type LoginFormData,
@@ -26,6 +30,8 @@ const useLoginForm = () => {
   const { showError, showSuccess, SnackbarComponent } = useNotifications();
   const submittingRef = useRef(false);
   const [isSubmittingState, setIsSubmittingState] = useState(false);
+  const [companySelection, setCompanySelection] = useState<CompanySelectionResponse | null>(null);
+  const [isSelectingCompany, setIsSelectingCompany] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const userNameRef = useRef<HTMLInputElement>(null);
   const validationSchema = createLoginValidationSchema(t);
@@ -57,6 +63,18 @@ const useLoginForm = () => {
     return true;
   };
 
+  const handleLoginResult = (data: unknown): boolean => {
+    if (handleAuthSuccess(data)) {
+      setCompanySelection(null);
+      return true;
+    }
+    if (isCompanySelectionResponse(data)) {
+      setCompanySelection(data);
+      return true;
+    }
+    return false;
+  };
+
   const submitCredentials = async (username: string, password: string) => {
     if (submittingRef.current) return;
     submittingRef.current = true;
@@ -66,7 +84,7 @@ const useLoginForm = () => {
         username,
         password,
       });
-      if (!handleAuthSuccess(data)) {
+      if (!handleLoginResult(data)) {
         showError(t("googleAuth.invalidCredentials"), t("messages.error"));
       }
     } catch (error) {
@@ -99,7 +117,7 @@ const useLoginForm = () => {
       const data = await apiService.post<unknown>(apiRoutes.google.auth, {
         credential: token,
       });
-      if (!handleAuthSuccess(data)) {
+      if (!handleLoginResult(data)) {
         showError(t("googleAuth.googleLoginFailed"), t("messages.error"));
       }
     } catch (error) {
@@ -122,6 +140,30 @@ const useLoginForm = () => {
     showError(t("googleAuth.missingCredentials"), t("messages.error"));
   };
 
+  const selectCompany = async (companyId: number) => {
+    if (!companySelection || isSelectingCompany) return;
+    setIsSelectingCompany(true);
+    try {
+      const data = await apiService.post<unknown>(apiRoutes.auth.selectCompany, {
+        companySelectionToken: companySelection.companySelectionToken,
+        companyId,
+      });
+      if (!handleAuthSuccess(data)) {
+        showError(t("auth.invalidCompanySelection"), t("messages.error"));
+      } else {
+        setCompanySelection(null);
+      }
+    } catch (error) {
+      showHandledError(error, showError, t("messages.error"));
+    } finally {
+      setIsSelectingCompany(false);
+    }
+  };
+
+  const cancelCompanySelection = () => {
+    if (!isSelectingCompany) setCompanySelection(null);
+  };
+
   return {
     t,
     isFormSubmitting,
@@ -138,6 +180,10 @@ const useLoginForm = () => {
     errors,
     handleSocialLogin,
     SnackbarComponent,
+    companySelection,
+    isSelectingCompany,
+    selectCompany,
+    cancelCompanySelection,
   };
 };
 
@@ -147,6 +193,24 @@ function isLoginResponse(value: unknown): value is LoginResponse {
   return value !== null
     && typeof value === "object"
     && typeof (value as Record<string, unknown>).isAuthenticated === "boolean";
+}
+
+function isCompanySelectionResponse(value: unknown): value is CompanySelectionResponse {
+  if (value === null || typeof value !== "object") return false;
+  const candidate = value as Partial<CompanySelectionResponse>;
+  return candidate.isAuthenticated === false
+    && candidate.requiresCompanySelection === true
+    && typeof candidate.companySelectionToken === "string"
+    && candidate.companySelectionToken.length > 0
+    && Array.isArray(candidate.companies)
+    && candidate.companies.length > 1
+    && candidate.companies.every((company) =>
+      company !== null
+      && typeof company === "object"
+      && typeof company.id === "number"
+      && company.id > 0
+      && typeof company.nameAr === "string"
+      && typeof company.nameEn === "string");
 }
 
 function getGoogleToken(value: unknown): string | null {

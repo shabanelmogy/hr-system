@@ -2,7 +2,7 @@ using HrManagementSystem.Features.Employees.Entities;
 
 namespace HrManagementSystem.Features.OrganizationalStructure.Entities;
 
-public class Divsion : AuditableEntity
+public class Divsion : CompanyAuditableEntity
 {
     public int Id { get; set; }
 

@@ -3,7 +3,7 @@ using HrManagementSystem.Features.GeographicalInformation.Districts.Entities;
 
 namespace HrManagementSystem.Features.GeographicalInformation.Addresses.Entities;
 
-public class Address : AuditableEntity
+public class Address : CompanyAuditableEntity
 {
     public int Id { get; set; }
     public string BuildingNumber { get; set; } = string.Empty;

@@ -23,6 +23,7 @@ export interface AdvancedToolsRoutes {
 }
 
 export interface BasicDataRoutes {
+  index: AppPath;
   countries: AppPath;
   addressTypes: AppPath;
   states: AppPath;
@@ -84,6 +85,7 @@ export const appRoutes: AppRoutes = {
   },
 
   basicData: {
+    index: toAppPath("/basic-data"),
     countries: "/basic-data/countries",
     addressTypes: "/basic-data/address-types",
     states: "/basic-data/states",

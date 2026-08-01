@@ -11,12 +11,15 @@ public static class SeedsRequest
 
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
+        await DefaultTenants.SeedAsync(context);
         await DefaultRoles.SeedRolesAsync(roleManager);
         await DefaultUsers.SeedAdminPermissionsAsync(roleManager);
         await DefaultUsers.SeedViewerUserAsync(userManager, configuration);
         await DefaultUsers.SeedAdminUserAsync(userManager, configuration);
+        await DefaultCompanies.SeedAsync(context);
 
         return webApplication;
     }

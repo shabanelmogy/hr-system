@@ -1,6 +1,6 @@
 namespace HrManagementSystem.Features.Appointments.Entities;
 
-public class Appointment : AuditableEntity
+public class Appointment : CompanyAuditableEntity
 {
     public int Id { get; set; }
     public DateTimeOffset Start { get; set; }

@@ -3,6 +3,7 @@ using HrManagementSystem.Features.Security.Authentication.Jobs;
 
 using HrManagementSystem.Features.Security.Authentication.Entities;
 using HrManagementSystem.Features.Security.Users.Errors;
+using HrManagementSystem.Shared.Abstractions;
 
 namespace HrManagementSystem.Features.Security.Authentication.Services;
 
@@ -12,7 +13,9 @@ public sealed class AuthService(
     IJwtProvider jwtProvider,
     UserErrors userErrors,
     IAuthEmailService emailService,
-    ILoginAuditService loginAudit) : IAuthService
+    ILoginAuditService loginAudit,
+    ICurrentActor currentActor,
+    ApplicationDbContext context) : IAuthService
 {
     private const int RefreshTokenLifetimeDays = 14;
     private static readonly TimeSpan RevokedTokenRetention = TimeSpan.FromDays(30);
@@ -21,7 +24,7 @@ public sealed class AuthService(
     // Login
     // -------------------------------------------------------------------------
 
-    public async Task<Result<AuthResponse>> GetTokenAsync(
+    public async Task<Result<LoginResult>> GetTokenAsync(
         string userName,
         string password,
         CancellationToken cancellationToken)
@@ -34,10 +37,10 @@ public sealed class AuthService(
                 cancellationToken);
 
         if (user is null)
-            return Result.Failure<AuthResponse>(userErrors.InvalidCredentials);
+            return Result.Failure<LoginResult>(userErrors.InvalidCredentials);
 
         if (user.IsDisabled)
-            return Result.Failure<AuthResponse>(userErrors.DisabledUser);
+            return Result.Failure<LoginResult>(userErrors.DisabledUser);
 
         var signInResult = await signInManager.PasswordSignInAsync(
             user,
@@ -53,18 +56,17 @@ public sealed class AuthService(
                     ? userErrors.LockedUser
                     : userErrors.InvalidCredentials;
 
-            return Result.Failure<AuthResponse>(error);
+            return Result.Failure<LoginResult>(error);
         }
 
-        await loginAudit.RecordLoginAsync(user.Id, cancellationToken);
-        return await IssueSessionAsync(user, cancellationToken);
+        return await CreateLoginResultAsync(user, cancellationToken);
     }
 
     // -------------------------------------------------------------------------
     // Google Login
     // -------------------------------------------------------------------------
 
-    public async Task<Result<AuthResponse>> LoginWithGoogleAsync(
+    public async Task<Result<LoginResult>> LoginWithGoogleAsync(
         ClaimsPrincipal? claimsPrincipal,
         CancellationToken cancellationToken = default)
     {
@@ -72,21 +74,58 @@ public sealed class AuthService(
         var providerKey = claimsPrincipal?.FindFirstValue(ClaimTypes.NameIdentifier);
 
         if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(providerKey))
-            return Result.Failure<AuthResponse>(userErrors.InvalidCredentials);
+            return Result.Failure<LoginResult>(userErrors.InvalidCredentials);
 
         var user = await FindOrCreateGoogleUserAsync(claimsPrincipal!, email, cancellationToken);
         if (user is null)
-            return Result.Failure<AuthResponse>(userErrors.InvalidCredentials);
+            return Result.Failure<LoginResult>(userErrors.InvalidCredentials);
 
         if (user.IsDisabled)
-            return Result.Failure<AuthResponse>(userErrors.DisabledUser);
+            return Result.Failure<LoginResult>(userErrors.DisabledUser);
 
         var linkResult = await EnsureGoogleLoginLinkedAsync(user, providerKey);
         if (!linkResult)
-            return Result.Failure<AuthResponse>(userErrors.InvalidCredentials);
+            return Result.Failure<LoginResult>(userErrors.InvalidCredentials);
 
-        await loginAudit.RecordLoginAsync(user.Id, cancellationToken);
-        return await IssueSessionAsync(user, cancellationToken);
+        return await CreateLoginResultAsync(user, cancellationToken);
+    }
+
+    public async Task<Result<AuthResponse>> SelectCompanyAsync(
+        SelectCompanyRequest request,
+        CancellationToken cancellationToken)
+    {
+        var selection = jwtProvider.ValidateCompanySelectionToken(request.CompanySelectionToken);
+        if (selection is null)
+            return Result.Failure<AuthResponse>(userErrors.InvalidCompanySelection);
+
+        var user = await userManager.Users
+            .Include(candidate => candidate.RefreshTokens)
+            .SingleOrDefaultAsync(candidate => candidate.Id == selection.UserId, cancellationToken);
+
+        if (user is null ||
+            user.IsDisabled ||
+            user.LockoutEnd > DateTimeOffset.UtcNow ||
+            !string.Equals(user.TenantId, selection.TenantId, StringComparison.Ordinal) ||
+            !string.Equals(user.SecurityStamp, selection.SecurityStamp, StringComparison.Ordinal))
+        {
+            return Result.Failure<AuthResponse>(userErrors.InvalidCompanySelection);
+        }
+
+        if (!await IsTenantActiveAsync(user.TenantId, cancellationToken))
+            return Result.Failure<AuthResponse>(userErrors.InvalidCompanySelection);
+
+        var canAccess = await context.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .AnyAsync(access =>
+                access.UserId == user.Id &&
+                access.TenantId == user.TenantId &&
+                access.CompanyId == request.CompanyId &&
+                access.Company.IsActive,
+                cancellationToken);
+
+        return canAccess
+            ? await IssueSessionAsync(user, request.CompanyId, cancellationToken)
+            : Result.Failure<AuthResponse>(userErrors.InvalidCompanySelection);
     }
 
     // -------------------------------------------------------------------------
@@ -113,11 +152,9 @@ public sealed class AuthService(
         var storedToken = user.RefreshTokens.Single(t => t.TokenHash == tokenHash);
         if (storedToken.IsActive)
             storedToken.Revoke("Signed out");
-        else
-            RevokeSessionFamily(user, storedToken.SessionId, "Signed out");
 
         await userManager.UpdateAsync(user);
-        await loginAudit.RecordLogoutAsync(user.Id, cancellationToken);
+        await loginAudit.RecordLogoutAsync(user.Id, storedToken.CompanyId, cancellationToken);
 
         return Result.Success();
     }
@@ -155,11 +192,13 @@ public sealed class AuthService(
         var claimsMatchSession =
             string.Equals(storedToken.SessionId, validatedAccessToken.SessionId, StringComparison.Ordinal) &&
             string.Equals(storedToken.JwtId, validatedAccessToken.JwtId, StringComparison.Ordinal) &&
-            string.Equals(user.SecurityStamp, validatedAccessToken.SecurityStamp, StringComparison.Ordinal);
+            storedToken.CompanyId == validatedAccessToken.CompanyId &&
+            string.Equals(user.SecurityStamp, validatedAccessToken.SecurityStamp, StringComparison.Ordinal) &&
+            string.Equals(user.TenantId, validatedAccessToken.TenantId, StringComparison.Ordinal);
 
         if (!claimsMatchSession)
         {
-            RevokeSessionFamily(user, storedToken.SessionId, "Token claims mismatch");
+            storedToken.Revoke("Token claims mismatch");
             await userManager.UpdateAsync(user);
             QueueSessionRevoked(user.Id, "Your session was revoked due to security validation failure.");
             return Result.Failure<AuthResponse>(userErrors.InvalidRefreshToken);
@@ -176,7 +215,18 @@ public sealed class AuthService(
             return Result.Failure<AuthResponse>(userErrors.InvalidRefreshToken);
         }
 
-        var accessToken = await jwtProvider.GenerateAccessTokenAsync(user, storedToken.SessionId);
+        var hasCompanyAccess = await HasCompanyAccessAsync(
+            user.Id,
+            user.TenantId,
+            storedToken.CompanyId,
+            cancellationToken);
+        if (!hasCompanyAccess)
+            return Result.Failure<AuthResponse>(userErrors.InvalidRefreshToken);
+
+        var accessToken = await jwtProvider.GenerateAccessTokenAsync(
+            user,
+            storedToken.SessionId,
+            storedToken.CompanyId);
         var replacement = RefreshTokenProtector.Rotate(
             storedToken,
             accessToken.JwtId,
@@ -190,7 +240,12 @@ public sealed class AuthService(
         if (!updateResult.Succeeded)
             return Result.Failure<AuthResponse>(userErrors.UpdateFailed);
 
-        return Result.Success(CreateAuthResponse(user, accessToken, replacement.RawToken, replacement.Token.ExpiresOn));
+        return Result.Success(CreateAuthResponse(
+            user,
+            storedToken.CompanyId,
+            accessToken,
+            replacement.RawToken,
+            replacement.Token.ExpiresOn));
     }
 
     // -------------------------------------------------------------------------
@@ -201,7 +256,15 @@ public sealed class AuthService(
         string userId,
         CancellationToken cancellationToken = default)
     {
-        var user = await FindUserWithTokensAsync(userId, cancellationToken);
+        var tenantId = currentActor.TenantId;
+        var user = string.IsNullOrWhiteSpace(tenantId)
+            ? null
+            : await userManager.Users
+                .Include(candidate => candidate.RefreshTokens)
+                .SingleOrDefaultAsync(
+                    candidate => candidate.Id == userId && candidate.TenantId == tenantId,
+                    cancellationToken);
+
         if (user is null)
             return Result.Failure(userErrors.UserNotFound);
 
@@ -225,10 +288,13 @@ public sealed class AuthService(
         CancellationToken cancellationToken = default)
     {
         var user = request.Adapt<ApplicationUser>();
+        user.TenantId = TenantDefaults.DefaultId;
         var result = await userManager.CreateAsync(user, request.Password);
 
         if (!result.Succeeded)
             return Result.Failure(IdentityFailure(result));
+
+        await AssignDefaultCompanyAsync(user, cancellationToken);
 
         var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -358,6 +424,7 @@ public sealed class AuthService(
 
         user = new ApplicationUser
         {
+            TenantId = TenantDefaults.DefaultId,
             UserName = email,
             Email = email,
             FirstName = principal.FindFirstValue(ClaimTypes.GivenName) ?? string.Empty,
@@ -368,6 +435,8 @@ public sealed class AuthService(
         var createResult = await userManager.CreateAsync(user);
         if (!createResult.Succeeded)
             return null;
+
+        await AssignDefaultCompanyAsync(user, cancellationToken);
 
         var roleResult = await userManager.AddToRoleAsync(user, AppRoles.user);
         return roleResult.Succeeded ? user : null;
@@ -385,13 +454,15 @@ public sealed class AuthService(
 
     private async Task<Result<AuthResponse>> IssueSessionAsync(
         ApplicationUser user,
+        int companyId,
         CancellationToken cancellationToken)
     {
         var sessionId = Guid.NewGuid().ToString("N");
-        var accessToken = await jwtProvider.GenerateAccessTokenAsync(user, sessionId);
+        var accessToken = await jwtProvider.GenerateAccessTokenAsync(user, sessionId, companyId);
         var refreshToken = RefreshTokenProtector.Issue(
             sessionId,
             accessToken.JwtId,
+            companyId,
             DateTime.UtcNow.AddDays(RefreshTokenLifetimeDays),
             CurrentIpAddress,
             CurrentUserAgent);
@@ -403,7 +474,106 @@ public sealed class AuthService(
         if (!updateResult.Succeeded)
             return Result.Failure<AuthResponse>(userErrors.UpdateFailed);
 
-        return Result.Success(CreateAuthResponse(user, accessToken, refreshToken.RawToken, refreshToken.Token.ExpiresOn));
+        await loginAudit.RecordLoginAsync(user.Id, companyId, cancellationToken);
+        return Result.Success(CreateAuthResponse(
+            user,
+            companyId,
+            accessToken,
+            refreshToken.RawToken,
+            refreshToken.Token.ExpiresOn));
+    }
+
+    private async Task<Result<LoginResult>> CreateLoginResultAsync(
+        ApplicationUser user,
+        CancellationToken cancellationToken)
+    {
+        var companies = await context.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .Where(access =>
+                access.UserId == user.Id &&
+                access.TenantId == user.TenantId &&
+                access.Company.IsActive)
+            .OrderByDescending(access => access.IsDefault)
+            .ThenBy(access => access.Company.NameEn)
+            .Select(access => new CompanyOptionResponse(
+                access.CompanyId,
+                access.Company.NameAr,
+                access.Company.NameEn))
+            .ToListAsync(cancellationToken);
+
+        if (!await IsTenantActiveAsync(user.TenantId, cancellationToken))
+            return Result.Failure<LoginResult>(userErrors.NoCompanyAccess);
+
+        if (companies.Count == 0)
+            return Result.Failure<LoginResult>(userErrors.NoCompanyAccess);
+
+        if (companies.Count == 1)
+        {
+            var session = await IssueSessionAsync(user, companies[0].Id, cancellationToken);
+            return session.IsSuccess
+                ? Result.Success<LoginResult>(new AuthenticatedLoginResult(session.Value))
+                : Result.Failure<LoginResult>(session.Error);
+        }
+
+        var selectionToken = jwtProvider.GenerateCompanySelectionToken(user);
+        var response = new CompanySelectionRequiredResponse(
+            IsAuthenticated: false,
+            RequiresCompanySelection: true,
+            selectionToken.Token,
+            selectionToken.ExpiresAt,
+            companies);
+
+        return Result.Success<LoginResult>(new CompanySelectionLoginResult(response));
+    }
+
+    private async Task<bool> HasCompanyAccessAsync(
+        string userId,
+        string tenantId,
+        int companyId,
+        CancellationToken cancellationToken)
+    {
+        if (!await IsTenantActiveAsync(tenantId, cancellationToken))
+            return false;
+
+        return await context.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .AnyAsync(access =>
+                access.UserId == userId &&
+                access.TenantId == tenantId &&
+                access.CompanyId == companyId &&
+                access.Company.IsActive,
+                cancellationToken);
+    }
+
+    private Task<bool> IsTenantActiveAsync(
+        string tenantId,
+        CancellationToken cancellationToken) =>
+        context.Tenants
+            .AsNoTracking()
+            .AnyAsync(tenant => tenant.Id == tenantId && tenant.IsActive, cancellationToken);
+
+    private async Task AssignDefaultCompanyAsync(
+        ApplicationUser user,
+        CancellationToken cancellationToken)
+    {
+        var companyId = await context.Companies
+            .IgnoreQueryFilters()
+            .Where(company => company.TenantId == user.TenantId && company.IsActive)
+            .OrderBy(company => company.Id)
+            .Select(company => (int?)company.Id)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (!companyId.HasValue)
+            return;
+
+        context.UserCompanyAccesses.Add(new UserCompanyAccess
+        {
+            TenantId = user.TenantId,
+            CompanyId = companyId.Value,
+            UserId = user.Id,
+            IsDefault = true
+        });
+        await context.SaveChangesAsync(cancellationToken);
     }
 
     private async Task<ApplicationUser?> FindUserWithTokensAsync(string userId, CancellationToken cancellationToken) =>
@@ -413,6 +583,7 @@ public sealed class AuthService(
 
     private static AuthResponse CreateAuthResponse(
         ApplicationUser user,
+        int companyId,
         AccessTokenResult accessToken,
         string refreshToken,
         DateTime refreshTokenExpiration) =>
@@ -420,16 +591,12 @@ public sealed class AuthService(
             user.UserName ?? string.Empty,
             user.FirstName,
             user.LastName,
+            user.TenantId,
+            companyId,
             accessToken.Token,
             accessToken.ExpiresAt,
             refreshToken,
             refreshTokenExpiration);
-
-    private static void RevokeSessionFamily(ApplicationUser user, string sessionId, string reason)
-    {
-        foreach (var token in user.RefreshTokens.Where(t => t.SessionId == sessionId && t.IsActive))
-            token.Revoke(reason);
-    }
 
     private static void RevokeAllSessions(ApplicationUser user, string reason)
     {

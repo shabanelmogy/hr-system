@@ -35,15 +35,19 @@ public sealed class NotificationConfiguration : IEntityTypeConfiguration<Notific
 
         builder.HasIndex(notification => new
         {
+            notification.TenantId,
+            notification.CompanyId,
             notification.RecipientUserId,
             notification.CreatedOn,
             notification.Id
         });
 
-        builder.HasIndex(notification => new { notification.RecipientUserId, notification.ReadOn })
+        builder.HasIndex(notification => new
+            { notification.TenantId, notification.CompanyId, notification.RecipientUserId, notification.ReadOn })
             .HasFilter("[DismissedOn] IS NULL AND [ReadOn] IS NULL");
 
-        builder.HasIndex(notification => new { notification.RecipientUserId, notification.DeduplicationKey })
+        builder.HasIndex(notification => new
+            { notification.TenantId, notification.CompanyId, notification.RecipientUserId, notification.DeduplicationKey })
             .IsUnique()
             .HasFilter("[DeduplicationKey] IS NOT NULL");
     }

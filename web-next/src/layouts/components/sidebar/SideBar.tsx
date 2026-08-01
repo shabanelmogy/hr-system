@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-// SideBar.jsx
 import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
 import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
@@ -158,7 +156,15 @@ const ToggleButton = styled(Button, {
   },
 }));
 
-function SideBar({ open, handleDrawerClose }: { open: boolean; handleDrawerClose: () => void }) {
+function SideBar({
+  open,
+  hideWhenClosed = false,
+  handleDrawerClose,
+}: {
+  open: boolean;
+  hideWhenClosed?: boolean;
+  handleDrawerClose: () => void;
+}) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   const { t } = useTranslation();
@@ -168,7 +174,10 @@ function SideBar({ open, handleDrawerClose }: { open: boolean; handleDrawerClose
     ? drawerWidth
     : open
       ? drawerWidth
-      : miniDrawerWidth;
+      : hideWhenClosed
+        ? 0
+        : miniDrawerWidth;
+  const hidden = hideWhenClosed && !open && !isSmallScreen;
   const widthTransition = theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: open
@@ -185,6 +194,22 @@ function SideBar({ open, handleDrawerClose }: { open: boolean; handleDrawerClose
     [user?.permissions, user?.roles]
   );
 
+  const isSectionVisible = useCallback(
+    (section: NavigationSectionModel) => {
+      const sectionMatches =
+        searchTerm &&
+        t(section.title).toLowerCase().includes(searchTerm.toLowerCase());
+
+      const itemsMatch = (section.items ?? []).some(
+        (item) =>
+          searchTerm &&
+          t(item.title).toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+
+      return sectionMatches || itemsMatch;
+    },
+    [searchTerm, t],
+  );
 
 
   // Find which section contains a specific path (recursive for nested items)
@@ -215,7 +240,7 @@ function SideBar({ open, handleDrawerClose }: { open: boolean; handleDrawerClose
   const visibleSections = useMemo(() => {
     if (!searchTerm) return navigationSections;
     return navigationSections.filter((section) => isSectionVisible(section));
-  }, [navigationSections, searchTerm]);
+  }, [isSectionVisible, navigationSections, searchTerm]);
 
   // Determine if all sections are currently expanded
   const areAllSectionsExpanded = useMemo(() => {
@@ -288,21 +313,6 @@ function SideBar({ open, handleDrawerClose }: { open: boolean; handleDrawerClose
     setSearchTerm("");
   };
 
-  // Check if section or its items match search
-  function isSectionVisible(section: NavigationSectionModel) {
-    const sectionMatches =
-      searchTerm &&
-      t(section.title).toLowerCase().includes(searchTerm.toLowerCase());
-
-    const itemsMatch = (section.items ?? []).some(
-      (item) =>
-        searchTerm &&
-        t(item.title).toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    return sectionMatches || itemsMatch;
-  }
-
   // Check if there are any matches for the search term
   const hasSearchMatches = () => {
     if (!searchTerm) return true;
@@ -325,9 +335,11 @@ function SideBar({ open, handleDrawerClose }: { open: boolean; handleDrawerClose
       sx={{
         width: currentDrawerWidth,
         flexShrink: 0,
+        pointerEvents: hidden ? "none" : "auto",
         transition: isSmallScreen ? undefined : widthTransition,
         "& .MuiDrawer-paper": {
           width: currentDrawerWidth,
+          border: hidden ? 0 : undefined,
           boxSizing: "border-box",
           overflowX: "hidden",
           whiteSpace: "nowrap",

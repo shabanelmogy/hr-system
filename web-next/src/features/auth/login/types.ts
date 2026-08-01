@@ -8,3 +8,17 @@ export type SocialLoginHandler = (
 export interface LoginResponse {
   isAuthenticated: boolean;
 }
+
+export interface CompanyOption {
+  id: number;
+  nameAr: string;
+  nameEn: string;
+}
+
+export interface CompanySelectionResponse {
+  isAuthenticated: false;
+  requiresCompanySelection: true;
+  companySelectionToken: string;
+  companySelectionTokenExpiration: string;
+  companies: CompanyOption[];
+}

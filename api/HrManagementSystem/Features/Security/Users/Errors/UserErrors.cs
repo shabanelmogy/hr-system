@@ -19,6 +19,12 @@ namespace HrManagementSystem.Features.Security.Users.Errors
         public Error InvalidRefreshToken =>
             new("User.InvalidRefreshToken", _localizer[nameof(InvalidRefreshToken)], StatusCodes.Status400BadRequest);
 
+        public Error NoCompanyAccess =>
+            new("User.NoCompanyAccess", _localizer[nameof(NoCompanyAccess)], StatusCodes.Status403Forbidden);
+
+        public Error InvalidCompanySelection =>
+            new("User.InvalidCompanySelection", _localizer[nameof(InvalidCompanySelection)], StatusCodes.Status400BadRequest);
+
         public Error DuplicatedEmail =>
             new("User.DuplicatedEmail", _localizer[nameof(DuplicatedEmail)], StatusCodes.Status409Conflict);
 

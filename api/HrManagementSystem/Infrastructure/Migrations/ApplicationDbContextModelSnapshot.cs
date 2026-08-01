@@ -78,7 +78,7 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("ReportsCategories", null, t =>
+                    b.ToTable("ReportsCategories", t =>
                         {
                             t.HasCheckConstraint("CHK_ReportCategory_Name_EnglishWithSpaces", "[Name] NOT LIKE '%[^A-Za-z ]%'");
                         });
@@ -147,7 +147,7 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("ReportsDetails", null, t =>
+                    b.ToTable("ReportsDetails", t =>
                         {
                             t.HasCheckConstraint("CHK_ReportDetail_ColumnName_EnglishOnly", "[ColumnName] NOT LIKE '%[^A-Za-z ]%'");
 
@@ -239,7 +239,7 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("ReportsMasters", null, t =>
+                    b.ToTable("ReportsMasters", t =>
                         {
                             t.HasCheckConstraint("CHK_ReportMaster_ExportedName_EnglishOnly", "[ExportedName] NOT LIKE '%[^A-Za-z ]%'");
 
@@ -260,6 +260,9 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -293,6 +296,11 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("Start")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -313,9 +321,13 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasIndex("DeletedById");
 
+                    b.HasIndex("TenantId");
+
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("Appointments", (string)null);
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.ToTable("Appointments");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Features.Catalog.Categories.Entities.Category", b =>
@@ -325,6 +337,9 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -359,6 +374,11 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.Property<string>("UpdatedById")
                         .HasColumnType("nvarchar(450)");
 
@@ -374,15 +394,19 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasIndex("DeletedById");
 
-                    b.HasIndex("NameAr")
-                        .IsUnique();
-
-                    b.HasIndex("NameEn")
-                        .IsUnique();
+                    b.HasIndex("TenantId");
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("Categories", null, t =>
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "NameAr")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "NameEn")
+                        .IsUnique();
+
+                    b.ToTable("Categories", t =>
                         {
                             t.HasCheckConstraint("CHK_Category_NameAr_ArabicOnly", "[NameAr] NOT LIKE N'%[^�-� ]%' COLLATE Arabic_CI_AS");
 
@@ -398,11 +422,23 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Property<int>("SubCategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.HasKey("CategoryId", "SubCategoryId");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("SubCategoryId");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("TenantId", "CompanyId");
 
                     b.ToTable("CategorySubcategories", (string)null);
                 });
@@ -414,6 +450,9 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -448,6 +487,11 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.Property<string>("UpdatedById")
                         .HasColumnType("nvarchar(450)");
 
@@ -463,15 +507,19 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasIndex("DeletedById");
 
-                    b.HasIndex("NameAr")
-                        .IsUnique();
-
-                    b.HasIndex("NameEn")
-                        .IsUnique();
+                    b.HasIndex("TenantId");
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("SubCategories", null, t =>
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "NameAr")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "NameEn")
+                        .IsUnique();
+
+                    b.ToTable("SubCategories", t =>
                         {
                             t.HasCheckConstraint("CHK_SubCategory_NameAr_ArabicOnly", "[NameAr] NOT LIKE N'%[^�-� ]%' COLLATE Arabic_CI_AS");
 
@@ -543,7 +591,7 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("AddressTypes", null, t =>
+                    b.ToTable("AddressTypes", t =>
                         {
                             t.HasCheckConstraint("CHK_AddressType_NameAr_ArabicOnly", "[NameAr] NOT LIKE N'%[^�-� ]%' COLLATE Arabic_CI_AS");
 
@@ -576,6 +624,9 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -626,6 +677,11 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.Property<string>("UpdatedById")
                         .HasColumnType("nvarchar(450)");
 
@@ -645,11 +701,15 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasIndex("DistrictId");
 
+                    b.HasIndex("TenantId");
+
                     b.HasIndex("UpdatedById");
 
                     b.HasIndex("Latitude", "Longitude");
 
-                    b.ToTable("Addresses", null, t =>
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.ToTable("Addresses", t =>
                         {
                             t.HasCheckConstraint("CHK_Address_Latitude_Range", "[Latitude] >= -90 AND [Latitude] <= 90");
 
@@ -745,7 +805,7 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Features.GeographicalInformation.Districts.Entities.District", b =>
@@ -825,7 +885,7 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.HasIndex("NameEn", "StateId")
                         .IsUnique();
 
-                    b.ToTable("Districts", null, t =>
+                    b.ToTable("Districts", t =>
                         {
                             t.HasCheckConstraint("CHK_District_NameAr_ArabicOnly", "[NameAr] NOT LIKE N'%[^�-� ]%' COLLATE Arabic_CI_AS");
 
@@ -910,10 +970,121 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.HasIndex("NameEn", "CountryId")
                         .IsUnique();
 
-                    b.ToTable("States", null, t =>
+                    b.ToTable("States", t =>
                         {
                             t.HasCheckConstraint("CHK_State_NameEn_EnglishOnly", "[NameEn] NOT LIKE '%[^A-Za-z ]%'");
                         });
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Features.OrganizationalStructure.Entities.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Background")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(254)
+                        .HasColumnType("nvarchar(254)");
+
+                    b.Property<int>("EmployeeCountExists")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmployeeCountNeeded")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmployeeCountTarget")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LegalName")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameAr")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "NameAr")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "NameEn")
+                        .IsUnique();
+
+                    b.ToTable("Companies", (string)null);
                 });
 
             modelBuilder.Entity("HrManagementSystem.Features.Platform.EntityChangeLogs.Entities.EntityChangeLog", b =>
@@ -935,6 +1106,9 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
                     b.Property<int>("EntityId")
                         .HasColumnType("int");
 
@@ -947,9 +1121,18 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Property<string>("JsonOldValues")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("EntityChangeLogs", (string)null);
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.ToTable("EntityChangeLogs");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Features.Platform.Files.Entities.UploadedFile", b =>
@@ -957,6 +1140,9 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ContentType")
                         .IsRequired()
@@ -1001,6 +1187,11 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.Property<string>("UpdatedById")
                         .HasColumnType("nvarchar(450)");
 
@@ -1016,9 +1207,13 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasIndex("DeletedById");
 
+                    b.HasIndex("TenantId");
+
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("Files", (string)null);
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.ToTable("Files");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Features.Platform.Notifications.Entities.Notification", b =>
@@ -1041,6 +1236,9 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("CorrelationId")
                         .HasColumnType("uniqueidentifier");
@@ -1099,6 +1297,11 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.Property<string>("TitleKey")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -1108,16 +1311,52 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasIndex("ActorUserId");
 
-                    b.HasIndex("RecipientUserId", "DeduplicationKey")
+                    b.HasIndex("RecipientUserId");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "RecipientUserId", "DeduplicationKey")
                         .IsUnique()
                         .HasFilter("[DeduplicationKey] IS NOT NULL");
 
-                    b.HasIndex("RecipientUserId", "ReadOn")
+                    b.HasIndex("TenantId", "CompanyId", "RecipientUserId", "ReadOn")
                         .HasFilter("[DismissedOn] IS NULL AND [ReadOn] IS NULL");
 
-                    b.HasIndex("RecipientUserId", "CreatedOn", "Id");
+                    b.HasIndex("TenantId", "CompanyId", "RecipientUserId", "CreatedOn", "Id");
 
                     b.ToTable("Notifications", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Features.Platform.Tenancy.Entities.Tenant", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Identifier")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Identifier")
+                        .IsUnique();
+
+                    b.ToTable("Tenants", (string)null);
                 });
 
             modelBuilder.Entity("HrManagementSystem.Features.Security.ApiKeys.Entities.ApiKey", b =>
@@ -1132,6 +1371,9 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -1156,14 +1398,23 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClientUri");
 
-                    b.HasIndex("Key")
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "Key")
                         .IsUnique();
 
-                    b.ToTable("ApiKeys", (string)null);
+                    b.ToTable("ApiKeys");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationRole", b =>
@@ -1263,6 +1514,11 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -1280,7 +1536,37 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("TenantId");
+
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Features.Security.Authentication.Entities.UserCompanyAccess", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.HasKey("UserId", "CompanyId");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.ToTable("UserCompanyAccesses", (string)null);
                 });
 
             modelBuilder.Entity("HrManagementSystem.Features.Security.Authentication.Entities.UserLogin", b =>
@@ -1288,20 +1574,32 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("LogOutDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("LoginDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TenantId");
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("LoginAudits", (string)null);
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.ToTable("LoginAudits");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1507,9 +1805,22 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("DeletedById");
 
+                    b.HasOne("HrManagementSystem.Features.Platform.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", "UpdatedBy")
                         .WithMany()
                         .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Features.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("CreatedBy");
 
@@ -1530,9 +1841,22 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("DeletedById");
 
+                    b.HasOne("HrManagementSystem.Features.Platform.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", "UpdatedBy")
                         .WithMany()
                         .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Features.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("CreatedBy");
 
@@ -1555,6 +1879,19 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("HrManagementSystem.Features.Platform.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Features.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Category");
 
                     b.Navigation("SubCategory");
@@ -1572,9 +1909,22 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("DeletedById");
 
+                    b.HasOne("HrManagementSystem.Features.Platform.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", "UpdatedBy")
                         .WithMany()
                         .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Features.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("CreatedBy");
 
@@ -1628,9 +1978,22 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .WithMany("Addresses")
                         .HasForeignKey("DistrictId");
 
+                    b.HasOne("HrManagementSystem.Features.Platform.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", "UpdatedBy")
                         .WithMany()
                         .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Features.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("AddressType");
 
@@ -1726,6 +2089,51 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Navigation("UpdatedBy");
                 });
 
+            modelBuilder.Entity("HrManagementSystem.Features.OrganizationalStructure.Entities.Company", b =>
+                {
+                    b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", "DeletedBy")
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Features.Platform.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("DeletedBy");
+
+                    b.Navigation("UpdatedBy");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Features.Platform.EntityChangeLogs.Entities.EntityChangeLog", b =>
+                {
+                    b.HasOne("HrManagementSystem.Features.Platform.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Features.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HrManagementSystem.Features.Platform.Files.Entities.UploadedFile", b =>
                 {
                     b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", "CreatedBy")
@@ -1738,9 +2146,22 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("DeletedById");
 
+                    b.HasOne("HrManagementSystem.Features.Platform.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", "UpdatedBy")
                         .WithMany()
                         .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Features.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("CreatedBy");
 
@@ -1762,13 +2183,48 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("HrManagementSystem.Features.Platform.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Features.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("ActorUser");
 
                     b.Navigation("RecipientUser");
                 });
 
+            modelBuilder.Entity("HrManagementSystem.Features.Security.ApiKeys.Entities.ApiKey", b =>
+                {
+                    b.HasOne("HrManagementSystem.Features.Platform.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Features.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", b =>
                 {
+                    b.HasOne("HrManagementSystem.Features.Platform.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.OwnsMany("HrManagementSystem.Features.Security.Authentication.Entities.RefreshToken", "RefreshTokens", b1 =>
                         {
                             b1.Property<string>("ApplicationUserId")
@@ -1779,6 +2235,9 @@ namespace HrManagementSystem.Infrastructure.Migrations
                                 .HasColumnType("int");
 
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<int>("CompanyId")
+                                .HasColumnType("int");
 
                             b1.Property<string>("CreatedByIp")
                                 .HasMaxLength(45)
@@ -1798,10 +2257,6 @@ namespace HrManagementSystem.Infrastructure.Migrations
                                 .IsRequired()
                                 .HasMaxLength(36)
                                 .HasColumnType("nvarchar(36)");
-
-                            b1.Property<string>("ReplacedByTokenHash")
-                                .HasMaxLength(64)
-                                .HasColumnType("nvarchar(64)");
 
                             b1.Property<string>("RevocationReason")
                                 .HasMaxLength(100)
@@ -1827,7 +2282,7 @@ namespace HrManagementSystem.Infrastructure.Migrations
                             b1.HasIndex("TokenHash")
                                 .IsUnique();
 
-                            b1.ToTable("RefreshToken", (string)null);
+                            b1.ToTable("RefreshToken");
 
                             b1.WithOwner()
                                 .HasForeignKey("ApplicationUserId");
@@ -1836,11 +2291,50 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Navigation("RefreshTokens");
                 });
 
+            modelBuilder.Entity("HrManagementSystem.Features.Security.Authentication.Entities.UserCompanyAccess", b =>
+                {
+                    b.HasOne("HrManagementSystem.Features.Platform.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", "User")
+                        .WithMany("CompanyAccesses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Features.OrganizationalStructure.Entities.Company", "Company")
+                        .WithMany("UserAccesses")
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("HrManagementSystem.Features.Security.Authentication.Entities.UserLogin", b =>
                 {
+                    b.HasOne("HrManagementSystem.Features.Platform.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.HasOne("HrManagementSystem.Features.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -1850,7 +2344,7 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -1859,7 +2353,7 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -1868,7 +2362,7 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -1877,13 +2371,13 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -1892,7 +2386,7 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.HasOne("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -1934,6 +2428,16 @@ namespace HrManagementSystem.Infrastructure.Migrations
             modelBuilder.Entity("HrManagementSystem.Features.GeographicalInformation.States.Entities.State", b =>
                 {
                     b.Navigation("Districts");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Features.OrganizationalStructure.Entities.Company", b =>
+                {
+                    b.Navigation("UserAccesses");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Features.Security.Authentication.Entities.ApplicationUser", b =>
+                {
+                    b.Navigation("CompanyAccesses");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,6 +9,8 @@ import { refreshAuthTokens, resolveSession } from "./backend-session";
 
 const session = {
   userId: "user-id",
+  tenantId: "tenant-id",
+  companyId: 7,
   userName: "user",
   email: "user@example.com",
   firstName: "Test",
@@ -205,6 +207,8 @@ function jsonResponse(body: unknown, status = 200) {
 function createValidatedToken(value: typeof session) {
   const payload = {
     sub: value.userId,
+    tenant_id: value.tenantId,
+    company_id: value.companyId,
     name: value.userName,
     email: value.email,
     firstName: value.firstName,

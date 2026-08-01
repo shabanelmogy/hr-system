@@ -44,6 +44,12 @@ namespace HrManagementSystem.Features.Security.Users.Contracts
                 .Must(x => x.Distinct().Count() == x.Count)
                 .WithMessage(_localizer[Strings.DuplicatedValue])
                 .When(x => x.Roles != null);
+
+            RuleFor(x => x.CompanyIds)
+                .Must(companyIds => companyIds is null ||
+                    companyIds.All(companyId => companyId > 0) &&
+                    companyIds.Distinct().Count() == companyIds.Count)
+                .WithMessage(_localizer[Strings.InvalidValues]);
         }
     }
 }

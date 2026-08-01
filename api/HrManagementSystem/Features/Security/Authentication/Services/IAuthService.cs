@@ -4,8 +4,9 @@ namespace HrManagementSystem.Features.Security.Authentication.Services;
 
 public interface IAuthService
 {
-    Task<Result<AuthResponse>> GetTokenAsync(string userName, string password, CancellationToken cancellationToken);
-    Task<Result<AuthResponse>> LoginWithGoogleAsync(ClaimsPrincipal? claimsPrincipal, CancellationToken cancellationToken = default);
+    Task<Result<LoginResult>> GetTokenAsync(string userName, string password, CancellationToken cancellationToken);
+    Task<Result<LoginResult>> LoginWithGoogleAsync(ClaimsPrincipal? claimsPrincipal, CancellationToken cancellationToken = default);
+    Task<Result<AuthResponse>> SelectCompanyAsync(SelectCompanyRequest request, CancellationToken cancellationToken);
     Task<Result> RegisterAsync(RegisterRequest request, CancellationToken cancellationToken);
     Task<Result> LogOutAsync(string refreshToken, CancellationToken cancellationToken);
     Task<Result<AuthResponse>> GetRefreshTokenAsync(RefreshTokenRequest refreshTokenRequest, CancellationToken cancellationToken);

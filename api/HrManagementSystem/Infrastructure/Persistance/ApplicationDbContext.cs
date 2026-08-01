@@ -2,12 +2,15 @@ using HrManagementSystem.Features.GeographicalInformation.Addresses.Entities;
 using HrManagementSystem.Features.GeographicalInformation.AddressTypes.Entities;
 using HrManagementSystem.Features.GeographicalInformation.Countries.Entities;
 using HrManagementSystem.Features.GeographicalInformation.Districts.Entities;
+using HrManagementSystem.Features.OrganizationalStructure.Entities;
 using HrManagementSystem.Features.Platform.Notifications.Entities;
+using HrManagementSystem.Features.Platform.Tenancy.Entities;
 
 using HrManagementSystem.Features.Analytics.Reports.Entities;
 using HrManagementSystem.Features.Appointments.Entities;
 using HrManagementSystem.Features.Catalog.Categories.Entities;
 using HrManagementSystem.Features.Catalog.SubCategories.Entities;
+using HrManagementSystem.Features.Employees.Entities;
 using HrManagementSystem.Features.GeographicalInformation.States.Entities;
 using HrManagementSystem.Features.Platform.EntityChangeLogs.Entities;
 using HrManagementSystem.Features.Platform.Files.Entities;
@@ -23,6 +26,8 @@ public class ApplicationDbContext(
 
 {
     private readonly ICurrentActor _currentActor = currentActor;
+    private string? CurrentTenantId => _currentActor.TenantId;
+    private int? CurrentCompanyId => _currentActor.CompanyId;
 
     public DbSet<UserLogin> LoginAudits { get; set; }
     public DbSet<EntityChangeLog> EntityChangeLogs { get; set; }
@@ -41,12 +46,92 @@ public class ApplicationDbContext(
     public DbSet<AddressType> AddressTypes { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<Notification> Notifications { get; set; }
+    public DbSet<Tenant> Tenants { get; set; }
+    public DbSet<Company> Companies { get; set; }
+    public DbSet<UserCompanyAccess> UserCompanyAccesses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        IgnoreUnpersistedOrganizationalEntities(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        RestrictCascadeDelete(modelBuilder);
         base.OnModelCreating(modelBuilder);
+        ConfigureTenantIsolation(modelBuilder);
+        RestrictCascadeDelete(modelBuilder);
+    }
+
+    private static void IgnoreUnpersistedOrganizationalEntities(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Ignore<Branch>();
+        modelBuilder.Ignore<Department>();
+        modelBuilder.Ignore<Divsion>();
+        modelBuilder.Ignore<Job>();
+        modelBuilder.Ignore<JobDescription>();
+        modelBuilder.Ignore<JobLevel>();
+        modelBuilder.Ignore<Employee>();
+    }
+
+    private void ConfigureTenantIsolation(ModelBuilder modelBuilder)
+    {
+        var tenantEntityTypes = modelBuilder.Model
+            .GetEntityTypes()
+            .Where(entityType =>
+                !entityType.IsOwned() &&
+                typeof(ITenantScoped).IsAssignableFrom(entityType.ClrType))
+            .Select(entityType => entityType.ClrType)
+            .Distinct()
+            .ToList();
+
+        var configureMethod = typeof(ApplicationDbContext)
+            .GetMethod(nameof(ConfigureTenantEntity), BindingFlags.Instance | BindingFlags.NonPublic)!;
+
+        foreach (var entityType in tenantEntityTypes)
+            configureMethod.MakeGenericMethod(entityType).Invoke(this, [modelBuilder]);
+    }
+
+    private void ConfigureTenantEntity<TEntity>(ModelBuilder modelBuilder)
+        where TEntity : class, ITenantScoped
+    {
+        var builder = modelBuilder.Entity<TEntity>();
+        builder.Property(entity => entity.TenantId).HasMaxLength(32).IsRequired();
+        builder.HasIndex(entity => entity.TenantId);
+        builder.HasOne<Tenant>()
+            .WithMany()
+            .HasForeignKey(entity => entity.TenantId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Identity must remain queryable before authentication so login can resolve the user.
+        if (typeof(TEntity) != typeof(ApplicationUser))
+        {
+            builder.HasQueryFilter(
+                "TenantFilter",
+                entity => CurrentTenantId != null && entity.TenantId == CurrentTenantId);
+        }
+
+        if (typeof(ICompanyScoped).IsAssignableFrom(typeof(TEntity)))
+        {
+            var configureCompanyMethod = typeof(ApplicationDbContext)
+                .GetMethod(nameof(ConfigureCompanyEntity), BindingFlags.Instance | BindingFlags.NonPublic)!;
+            configureCompanyMethod.MakeGenericMethod(typeof(TEntity)).Invoke(this, [modelBuilder]);
+        }
+    }
+
+    private void ConfigureCompanyEntity<TEntity>(ModelBuilder modelBuilder)
+        where TEntity : class, ICompanyScoped
+    {
+        var builder = modelBuilder.Entity<TEntity>();
+        builder.Property(entity => entity.CompanyId).IsRequired();
+        builder.HasIndex(entity => new { entity.TenantId, entity.CompanyId });
+        if (typeof(TEntity) != typeof(UserCompanyAccess))
+        {
+            builder.HasOne<Company>()
+                .WithMany()
+                .HasForeignKey(entity => new { entity.TenantId, entity.CompanyId })
+                .HasPrincipalKey(company => new { company.TenantId, company.Id })
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+        builder.HasQueryFilter(
+            "CompanyFilter",
+            entity => CurrentCompanyId != null && entity.CompanyId == CurrentCompanyId);
     }
 
     private static void RestrictCascadeDelete(ModelBuilder modelBuilder)
@@ -64,8 +149,24 @@ public class ApplicationDbContext(
         }
     }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
+        PrepareChanges();
+        return base.SaveChanges(acceptAllChangesOnSuccess);
+    }
+
+    public override Task<int> SaveChangesAsync(
+        bool acceptAllChangesOnSuccess,
+        CancellationToken cancellationToken = default)
+    {
+        PrepareChanges();
+        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+    }
+
+    private void PrepareChanges()
+    {
+        ApplyTenantIsolation();
+
         var currentUserId = _currentActor.UserId;
         var currentMachineName = Environment.MachineName;
         var currentTime = DateTime.UtcNow;
@@ -86,7 +187,71 @@ public class ApplicationDbContext(
             }
         }
 
-        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    private void ApplyTenantIsolation()
+    {
+        var currentTenantId = CurrentTenantId;
+
+        foreach (var entityEntry in ChangeTracker.Entries<ITenantScoped>()
+                     .Where(entry => entry.State is EntityState.Added or EntityState.Modified or EntityState.Deleted))
+        {
+            var tenantProperty = entityEntry.Property(entity => entity.TenantId);
+            var entityTenantId = tenantProperty.CurrentValue;
+
+            if (entityEntry.State == EntityState.Added && string.IsNullOrWhiteSpace(entityTenantId))
+            {
+                if (string.IsNullOrWhiteSpace(currentTenantId))
+                    throw new InvalidOperationException("A tenant is required to create tenant-owned data.");
+
+                tenantProperty.CurrentValue = currentTenantId;
+                entityTenantId = currentTenantId;
+            }
+
+            if (string.IsNullOrWhiteSpace(entityTenantId))
+                throw new InvalidOperationException("Tenant-owned data must have a tenant identifier.");
+
+            if (!string.IsNullOrWhiteSpace(currentTenantId) &&
+                !string.Equals(entityTenantId, currentTenantId, StringComparison.Ordinal))
+            {
+                throw new InvalidOperationException("Cross-tenant data changes are not allowed.");
+            }
+
+            if (entityEntry.State == EntityState.Modified && tenantProperty.IsModified &&
+                !string.Equals(tenantProperty.OriginalValue, tenantProperty.CurrentValue, StringComparison.Ordinal))
+            {
+                throw new InvalidOperationException("Changing an entity tenant is not allowed.");
+            }
+        }
+
+        foreach (var entityEntry in ChangeTracker.Entries<ICompanyScoped>()
+                     .Where(entry => entry.State is EntityState.Added or EntityState.Modified or EntityState.Deleted))
+        {
+            var companyProperty = entityEntry.Property(entity => entity.CompanyId);
+            var entityCompanyId = companyProperty.CurrentValue;
+            var currentCompanyId = CurrentCompanyId;
+
+            if (entityEntry.State == EntityState.Added && entityCompanyId <= 0)
+            {
+                if (!currentCompanyId.HasValue)
+                    throw new InvalidOperationException("A company is required to create company-owned data.");
+
+                companyProperty.CurrentValue = currentCompanyId.Value;
+                entityCompanyId = currentCompanyId.Value;
+            }
+
+            if (entityCompanyId <= 0)
+                throw new InvalidOperationException("Company-owned data must have a company identifier.");
+
+            if (currentCompanyId.HasValue && entityCompanyId != currentCompanyId.Value)
+                throw new InvalidOperationException("Cross-company data changes are not allowed.");
+
+            if (entityEntry.State == EntityState.Modified && companyProperty.IsModified &&
+                !Equals(companyProperty.OriginalValue, companyProperty.CurrentValue))
+            {
+                throw new InvalidOperationException("Changing an entity company is not allowed.");
+            }
+        }
     }
 
     private static void SetCreatedValues(

@@ -6,10 +6,10 @@ public class RefreshToken
     public string TokenHash { get; set; } = string.Empty;
     public string SessionId { get; set; } = string.Empty;
     public string JwtId { get; set; } = string.Empty;
+    public int CompanyId { get; set; }
     public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
     public DateTime ExpiresOn { get; set; }
     public DateTime? RevokedOn { get; set; }
-    public string? ReplacedByTokenHash { get; set; }
     public string? RevocationReason { get; set; }
     public string? CreatedByIp { get; set; }
     public string? CreatedByUserAgent { get; set; }
@@ -17,13 +17,12 @@ public class RefreshToken
     public bool IsExpired => DateTime.UtcNow >= ExpiresOn;
     public bool IsActive => RevokedOn is null && !IsExpired;
 
-    public void Revoke(string reason, string? replacedByTokenHash = null)
+    public void Revoke(string reason)
     {
         if (RevokedOn is not null)
             return;
 
         RevokedOn = DateTime.UtcNow;
         RevocationReason = reason;
-        ReplacedByTokenHash = replacedByTokenHash;
     }
 }

@@ -12,6 +12,7 @@ import { useEffect } from "react";
 // Components
 import LeftPanel from "./components/LeftPanel";
 import LoginForm from "./components/LoginForm";
+import CompanySelectionDialog from "./components/CompanySelectionDialog";
 
 import useLoginForm from "./hooks/useLoginForm";
 
@@ -45,6 +46,10 @@ const Login = () => {
     errors,
     handleSocialLogin,
     SnackbarComponent,
+    companySelection,
+    isSelectingCompany,
+    selectCompany,
+    cancelCompanySelection,
   } = useLoginForm();
 
   return (
@@ -99,6 +104,12 @@ const Login = () => {
           />
         </Paper>
       </Container>
+      <CompanySelectionDialog
+        selection={companySelection}
+        loading={isSelectingCompany}
+        onSelect={selectCompany}
+        onCancel={cancelCompanySelection}
+      />
       {SnackbarComponent}
     </>
   );

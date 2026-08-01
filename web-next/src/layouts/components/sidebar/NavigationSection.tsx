@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-// NavigationSection.jsx
 import { useEffect } from "react";
 import {
   List,
@@ -14,6 +12,8 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import NavigationItem from "./NavigationItem";
 import { alpha, useTheme } from "@mui/material/styles";
+import { useRouter } from "next/navigation";
+import { normalizeAppPath } from "@/config/routes";
 import type { NavigationItem as NavigationItemModel, NavigationSection as NavigationSectionModel } from "./navigationTypes";
 
 // Component to highlight matched text
@@ -71,6 +71,7 @@ function NavigationSection({
   onNavigate: (path: string) => void;
 }) {
   const theme = useTheme();
+  const router = useRouter();
 
   // Check if section title matches the search
   const sectionTitleMatches =
@@ -108,6 +109,16 @@ function NavigationSection({
   const shouldShowSection =
     !searchTerm || sectionTitleMatches || hasMatchingItems;
 
+  const handleSectionClick = () => {
+    if (section.path) {
+      onNavigate(section.path);
+      router.push(normalizeAppPath(section.path));
+      return;
+    }
+
+    onToggle(section.id);
+  };
+
   // Auto-expand section when searching
   useEffect(() => {
     if (searchTerm && (sectionTitleMatches || hasMatchingItems) && onToggle) {
@@ -128,7 +139,7 @@ function NavigationSection({
         placement={theme.direction === "rtl" ? "left" : "right"}
       >
         <ListItemButton
-          onClick={() => onToggle && onToggle(section.id)}
+          onClick={handleSectionClick}
           sx={[
             {
               minHeight: 48,
@@ -203,7 +214,7 @@ function NavigationSection({
               },
             }}
           />
-          {open && (isExpanded ? <ExpandLess /> : <ExpandMore />)}
+          {open && !section.path && (isExpanded ? <ExpandLess /> : <ExpandMore />)}
         </ListItemButton>
       </Tooltip>
 

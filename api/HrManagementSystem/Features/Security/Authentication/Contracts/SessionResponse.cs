@@ -2,6 +2,8 @@ namespace HrManagementSystem.Features.Security.Authentication.Contracts;
 
 public sealed record SessionResponse(
     string UserId,
+    string TenantId,
+    int CompanyId,
     string UserName,
     string Email,
     string FirstName,

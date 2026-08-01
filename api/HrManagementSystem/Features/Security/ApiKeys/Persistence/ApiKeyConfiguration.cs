@@ -31,7 +31,7 @@ public class ApiKeyConfiguration : IEntityTypeConfiguration<ApiKey>
               .HasDefaultValueSql("GETUTCDATE()");
 
         // Indexes
-        builder.HasIndex(e => e.Key)
+        builder.HasIndex(e => new { e.TenantId, e.CompanyId, e.Key })
               .IsUnique();
 
         builder.HasIndex(e => e.ClientUri);

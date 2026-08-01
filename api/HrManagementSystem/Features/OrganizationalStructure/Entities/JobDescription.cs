@@ -2,7 +2,7 @@ using HrManagementSystem.Features.Employees.Entities;
 
 namespace HrManagementSystem.Features.OrganizationalStructure.Entities;
 
-public class JobDescription : AuditableEntity
+public class JobDescription : CompanyAuditableEntity
 {
     public int Id { get; set; }
 

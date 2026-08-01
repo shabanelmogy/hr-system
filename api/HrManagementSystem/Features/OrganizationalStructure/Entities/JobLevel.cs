@@ -1,6 +1,6 @@
 namespace HrManagementSystem.Features.OrganizationalStructure.Entities;
 
-public class JobLevel : AuditableEntity
+public class JobLevel : CompanyAuditableEntity
 {
     public int Id { get; set; }
 

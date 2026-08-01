@@ -17,5 +17,8 @@ public sealed class JwtOptions
     [Range(1, 5)]
     public int RealtimeExpireInMinutes { get; set; } = 2;
 
+    [Range(1, 10)]
+    public int CompanySelectionExpireInMinutes { get; set; } = 5;
+
     public string RealtimeAudience => $"{Audience}:realtime";
 }

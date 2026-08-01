@@ -10,7 +10,9 @@ import {
 import { useTheme } from "@mui/material/styles";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
+import { usePathname } from "next/navigation";
 
+import { appRoutes } from "@/config/routes";
 import { useSession } from "@/lib/auth/SessionContext";
 import { useTokenRevocation } from "@/features/auth";
 import SideBar from "../components/sidebar/SideBar";
@@ -22,7 +24,27 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { isLoggingOut } = useSession();
-  const [open, setOpen] = React.useState(false);
+  const pathname = usePathname();
+  const dedicatedLayoutRoute =
+    pathname === appRoutes.basicData.index ||
+    pathname.startsWith(`${appRoutes.basicData.index}/`);
+  const sidebarScope = dedicatedLayoutRoute ? appRoutes.basicData.index : "main";
+  const [sidebarState, setSidebarState] = React.useState({
+    scope: "main",
+    open: false,
+  });
+  const open = sidebarState.scope === sidebarScope && sidebarState.open;
+  const setOpen = React.useCallback<React.Dispatch<React.SetStateAction<boolean>>>(
+    (value) => {
+      setSidebarState((current) => {
+        const currentOpen = current.scope === sidebarScope && current.open;
+        const nextOpen = typeof value === "function" ? value(currentOpen) : value;
+
+        return { scope: sidebarScope, open: nextOpen };
+      });
+    },
+    [sidebarScope],
+  );
 
   const handleDrawerClose = () => setOpen(false);
   const handleDrawerToggle = () => setOpen((current) => !current);
@@ -53,7 +75,11 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
       >
         <TopBar open={open} handleDrawerToggle={handleDrawerToggle} />
 
-        <SideBar open={open} handleDrawerClose={handleDrawerClose} />
+        <SideBar
+          open={open}
+          hideWhenClosed={dedicatedLayoutRoute}
+          handleDrawerClose={handleDrawerClose}
+        />
 
         <Box
           component="main"

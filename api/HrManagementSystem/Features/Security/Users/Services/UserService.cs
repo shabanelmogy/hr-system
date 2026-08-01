@@ -5,6 +5,7 @@ using HrManagementSystem.Features.Security.Authentication.Entities;
 using HrManagementSystem.Features.Security.Authorization.Services;
 using HrManagementSystem.Features.Security.Users.Contracts;
 using HrManagementSystem.Features.Security.Users.Errors;
+using HrManagementSystem.Shared.Abstractions;
 
 namespace HrManagementSystem.Features.Security.Users.Services;
 
@@ -13,6 +14,7 @@ public class UserService(
     IRoleService roleService,
     UserErrors userErrors,
     ApplicationDbContext context,
+    ICurrentActor currentActor,
     IHttpContextAccessor httpContextAccessor,
     IWebHostEnvironment webHostEnvironment) : IUserService
 {
@@ -20,6 +22,7 @@ public class UserService(
     private readonly IRoleService _roleService = roleService;
     private readonly UserErrors _userErrors = userErrors;
     private readonly ApplicationDbContext _context = context;
+    private readonly ICurrentActor _currentActor = currentActor;
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
     private readonly string _profilePicturesPath = Path.Combine(
         webHostEnvironment.WebRootPath ?? Path.Combine(webHostEnvironment.ContentRootPath, "wwwroot"),
@@ -27,6 +30,7 @@ public class UserService(
 
     public async Task<IEnumerable<UserResponse>> GetAllAsync(CancellationToken cancellationToken = default) =>
         await (from u in _context.Users
+               where u.TenantId == _currentActor.TenantId
                join ur in _context.UserRoles
                on u.Id equals ur.UserId
                join r in _context.Roles
@@ -58,7 +62,8 @@ public class UserService(
 
     public async Task<Result<UserResponse>> GetAsync(string id)
     {
-        if (await _userManager.FindByIdAsync(id) is not { } user)
+        if (await _userManager.Users.SingleOrDefaultAsync(
+                candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId) is not { } user)
             return Result.Failure<UserResponse>(_userErrors.UserNotFound);
 
         var userRoles = await _userManager.GetRolesAsync(user);
@@ -70,6 +75,16 @@ public class UserService(
 
     public async Task<Result<UserResponse>> AddAsync(CreateUserRequest request, CancellationToken cancellationToken = default)
     {
+        if (string.IsNullOrWhiteSpace(_currentActor.TenantId) || !_currentActor.CompanyId.HasValue)
+            return Result.Failure<UserResponse>(_userErrors.InvalidCompanySelection);
+
+        var companyIds = await ResolveCompanyIdsAsync(
+            request.CompanyIds,
+            preserveExisting: false,
+            cancellationToken: cancellationToken);
+        if (companyIds is null)
+            return Result.Failure<UserResponse>(_userErrors.InvalidCompanySelection);
+
         var emailIsExists = await _userManager.Users.AnyAsync(x => x.Email == request.Email, cancellationToken);
 
         if (emailIsExists)
@@ -86,12 +101,25 @@ public class UserService(
             return Result.Failure<UserResponse>(_userErrors.InvalidRoles);
 
         var user = request.Adapt<ApplicationUser>();
+        user.TenantId = _currentActor.TenantId;
 
         var result = await _userManager.CreateAsync(user, request.Password);
 
         if (result.Succeeded)
         {
             await _userManager.AddToRolesAsync(user, request.Roles);
+
+            foreach (var companyId in companyIds)
+            {
+                _context.UserCompanyAccesses.Add(new UserCompanyAccess
+                {
+                    TenantId = user.TenantId,
+                    CompanyId = companyId,
+                    UserId = user.Id,
+                    IsDefault = companyId == companyIds.First()
+                });
+            }
+            await _context.SaveChangesAsync(cancellationToken);
 
             var response = (user, request.Roles).Adapt<UserResponse>();
 
@@ -122,9 +150,18 @@ public class UserService(
         if (request.Roles.Except(allowedRoles.Select(x => x.Name)).Any())
             return Result.Failure(_userErrors.InvalidRoles);
 
+        var companyIds = await ResolveCompanyIdsAsync(
+            request.CompanyIds,
+            preserveExisting: true,
+            cancellationToken: cancellationToken);
+        if (companyIds is null)
+            return Result.Failure(_userErrors.InvalidCompanySelection);
+
         if (await _userManager.Users
                 .Include(candidate => candidate.RefreshTokens)
-                .SingleOrDefaultAsync(candidate => candidate.Id == id, cancellationToken) is not { } user)
+                .SingleOrDefaultAsync(
+                    candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId,
+                    cancellationToken) is not { } user)
             return Result.Failure(_userErrors.UserNotFound);
 
         user = request.Adapt(user);
@@ -138,6 +175,8 @@ public class UserService(
                 .ExecuteDeleteAsync(cancellationToken);
 
             await _userManager.AddToRolesAsync(user, request.Roles);
+
+            await SynchronizeCompanyAccessesAsync(user, companyIds, cancellationToken);
 
             await _userManager.UpdateSecurityStampAsync(user);
             RevokeActiveSessions(user, "Account permissions changed");
@@ -162,7 +201,9 @@ public class UserService(
     {
         if (await _userManager.Users
                 .Include(candidate => candidate.RefreshTokens)
-                .SingleOrDefaultAsync(candidate => candidate.Id == id, cancellationToken) is not { } user)
+                .SingleOrDefaultAsync(
+                    candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId,
+                    cancellationToken) is not { } user)
             return Result.Failure(_userErrors.UserNotFound);
 
         var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -184,7 +225,8 @@ public class UserService(
     {
         if (await _userManager.Users
                 .Include(candidate => candidate.RefreshTokens)
-                .SingleOrDefaultAsync(candidate => candidate.Id == id) is not { } user)
+                .SingleOrDefaultAsync(
+                    candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId) is not { } user)
             return Result.Failure(_userErrors.UserNotFound);
 
         user.IsDisabled = !user.IsDisabled;
@@ -215,7 +257,8 @@ public class UserService(
 
     public async Task<Result> Unlock(string id)
     {
-        if (await _userManager.FindByIdAsync(id) is not { } user)
+        if (await _userManager.Users.SingleOrDefaultAsync(
+                candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId) is not { } user)
             return Result.Failure(_userErrors.UserNotFound);
 
         // Clear the lockout end date
@@ -362,6 +405,81 @@ public class UserService(
             token.Revoke(reason);
     }
 
+    private async Task<IReadOnlyCollection<int>?> ResolveCompanyIdsAsync(
+        IReadOnlyCollection<int>? requestedCompanyIds,
+        bool preserveExisting,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(_currentActor.TenantId) || !_currentActor.CompanyId.HasValue)
+            return null;
+
+        var existingCompanyIds = preserveExisting && requestedCompanyIds is null
+            ? await _context.UserCompanyAccesses
+                .IgnoreQueryFilters()
+                .Where(access =>
+                    access.TenantId == _currentActor.TenantId &&
+                    access.UserId == _currentActor.UserId)
+                .Select(access => access.CompanyId)
+                .ToListAsync(cancellationToken)
+            : [];
+
+        var companyIds = (requestedCompanyIds is { Count: > 0 }
+                ? requestedCompanyIds
+                : existingCompanyIds.Count > 0
+                    ? existingCompanyIds
+                    : [_currentActor.CompanyId.Value])
+            .Distinct()
+            .ToArray();
+
+        var activeCompanyIds = await _context.Companies
+            .IgnoreQueryFilters()
+            .Where(company =>
+                company.TenantId == _currentActor.TenantId &&
+                company.IsActive &&
+                companyIds.Contains(company.Id))
+            .Select(company => company.Id)
+            .ToListAsync(cancellationToken);
+
+        return activeCompanyIds.Count == companyIds.Length
+            ? companyIds
+            : null;
+    }
+
+    private async Task SynchronizeCompanyAccessesAsync(
+        ApplicationUser user,
+        IReadOnlyCollection<int> companyIds,
+        CancellationToken cancellationToken)
+    {
+        var existing = await _context.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .Where(access => access.UserId == user.Id && access.TenantId == user.TenantId)
+            .ToListAsync(cancellationToken);
+
+        var requestedIds = companyIds.ToHashSet();
+        _context.UserCompanyAccesses.RemoveRange(
+            existing.Where(access => !requestedIds.Contains(access.CompanyId)));
+
+        foreach (var companyId in companyIds)
+        {
+            var existingAccess = existing.FirstOrDefault(access => access.CompanyId == companyId);
+            if (existingAccess is not null)
+            {
+                existingAccess.IsDefault = companyId == companyIds.First();
+                continue;
+            }
+
+            _context.UserCompanyAccesses.Add(new UserCompanyAccess
+            {
+                TenantId = user.TenantId,
+                CompanyId = companyId,
+                UserId = user.Id,
+                IsDefault = companyId == companyIds.First()
+            });
+        }
+
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
     private static void QueueSessionRevoked(string userId, string message)
     {
         BackgroundJob.Enqueue<SessionRevokedJob>(
@@ -374,6 +492,8 @@ public class UserService(
             user,
             action,
             _httpContextAccessor.HttpContext?.User.GetUserId(),
+            _currentActor.TenantId ?? throw new InvalidOperationException("A tenant is required to publish user changes."),
+            _currentActor.CompanyId ?? throw new InvalidOperationException("A company is required to publish user changes."),
             Guid.NewGuid());
 
         BackgroundJob.Enqueue<UserChangedJob>(

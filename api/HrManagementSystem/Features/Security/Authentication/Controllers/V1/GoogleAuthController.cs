@@ -76,7 +76,7 @@ public sealed class GoogleAuthController(
 
         var principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "Google"));
         var result = await _authService.LoginWithGoogleAsync(principal, cancellationToken);
-        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+        return result.IsSuccess ? Ok(result.Value.Payload) : result.ToProblem();
     }
 
     private static async Task<HttpResponseMessage> SendWithTransientRetryAsync(

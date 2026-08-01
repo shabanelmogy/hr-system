@@ -67,4 +67,6 @@ public sealed record NotificationPublishRequest(
     string? ActorUserId = null,
     string? DeduplicationKey = null,
     Guid? CorrelationId = null,
-    DateTime? ExpiresOn = null);
+    DateTime? ExpiresOn = null,
+    string? TenantId = null,
+    int? CompanyId = null);

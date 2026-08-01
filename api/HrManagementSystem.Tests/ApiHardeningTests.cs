@@ -21,7 +21,9 @@ public sealed class ApiHardeningTests
     {
         var methods = typeof(GeneralHub)
             .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-            .Where(method => !method.IsSpecialName)
+            .Where(method =>
+                !method.IsSpecialName &&
+                method.GetBaseDefinition().DeclaringType == typeof(GeneralHub))
             .ToArray();
 
         Assert.Empty(methods);

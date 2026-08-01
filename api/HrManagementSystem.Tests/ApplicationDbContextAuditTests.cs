@@ -51,5 +51,7 @@ public sealed class ApplicationDbContextAuditTests
     private sealed class TestCurrentActor(string? userId) : ICurrentActor
     {
         public string? UserId { get; } = userId;
+        public string? TenantId => null;
+        public int? CompanyId => null;
     }
 }

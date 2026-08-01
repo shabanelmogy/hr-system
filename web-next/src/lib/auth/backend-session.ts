@@ -174,6 +174,8 @@ function decodeApiValidatedClaims(token: string): SessionClaims | null {
 
     const session: SessionClaims = {
       userId: asString(payload[nameIdentifier] ?? payload.sub),
+      tenantId: asString(payload.tenant_id ?? payload.tenantId),
+      companyId: asPositiveInteger(payload.company_id ?? payload.companyId),
       userName: asString(payload[name] ?? payload.name),
       email: asString(payload[email] ?? payload.email),
       firstName: asString(payload.firstname ?? payload.firstName),
@@ -194,6 +196,15 @@ function decodeApiValidatedClaims(token: string): SessionClaims | null {
 
 function asString(value: unknown) {
   return typeof value === "string" ? value : "";
+}
+
+function asPositiveInteger(value: unknown): number {
+  if (typeof value === "number" && Number.isInteger(value) && value > 0) return value;
+  if (typeof value === "string") {
+    const parsed = Number(value);
+    if (Number.isInteger(parsed) && parsed > 0) return parsed;
+  }
+  return 0;
 }
 
 function asStringArray(value: unknown): string[] {

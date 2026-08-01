@@ -19,36 +19,71 @@ public sealed class NotificationPublisher(
         if (!IsValid(request))
             return Result.Failure<int>(errors.InvalidNotificationRequest);
 
-        var recipientIds = await (
-                from user in context.Users.AsNoTracking()
+        var recipients = await (
+                from access in context.UserCompanyAccesses.IgnoreQueryFilters().AsNoTracking()
+                join company in context.Companies.IgnoreQueryFilters().AsNoTracking()
+                    on new { access.TenantId, access.CompanyId }
+                    equals new { company.TenantId, CompanyId = company.Id }
+                join user in context.Users.AsNoTracking() on access.UserId equals user.Id
                 join userRole in context.UserRoles.AsNoTracking() on user.Id equals userRole.UserId
                 join role in context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
                 join roleClaim in context.RoleClaims.AsNoTracking() on role.Id equals roleClaim.RoleId
                 where !user.IsDisabled &&
                       !user.IsLocked &&
+                      company.IsActive &&
+                      user.TenantId == access.TenantId &&
                       !role.IsDeleted &&
                       roleClaim.ClaimType == Permissions.Type &&
-                      roleClaim.ClaimValue == request.RequiredPermission
-                select user.Id)
+                      roleClaim.ClaimValue == request.RequiredPermission &&
+                      (request.TenantId == null || access.TenantId == request.TenantId) &&
+                      (request.CompanyId == null || access.CompanyId == request.CompanyId)
+                select new
+                {
+                    access.TenantId,
+                    access.CompanyId,
+                    RecipientUserId = user.Id
+                })
             .Distinct()
             .ToListAsync(cancellationToken);
 
-        if (recipientIds.Count == 0)
+        if (recipients.Count == 0)
             return Result.Success(0);
 
         var notificationsToPublish = new List<Notification>();
         if (!string.IsNullOrWhiteSpace(request.DeduplicationKey))
         {
+            var recipientUserIds = recipients.Select(recipient => recipient.RecipientUserId).Distinct().ToList();
             var existingNotifications = await context.Set<Notification>()
+                .IgnoreQueryFilters()
                 .AsNoTracking()
                 .Where(notification =>
-                    recipientIds.Contains(notification.RecipientUserId) &&
+                    recipientUserIds.Contains(notification.RecipientUserId) &&
                     notification.DeduplicationKey == request.DeduplicationKey)
                 .ToListAsync(cancellationToken);
 
-            notificationsToPublish.AddRange(existingNotifications);
-            recipientIds = recipientIds
-                .Except(existingNotifications.Select(notification => notification.RecipientUserId))
+            var recipientKeys = recipients
+                .Select(recipient => RecipientKey(
+                    recipient.TenantId,
+                    recipient.CompanyId,
+                    recipient.RecipientUserId))
+                .ToHashSet(StringComparer.Ordinal);
+            notificationsToPublish.AddRange(existingNotifications.Where(notification =>
+                recipientKeys.Contains(RecipientKey(
+                    notification.TenantId,
+                    notification.CompanyId,
+                    notification.RecipientUserId))));
+
+            var existingKeys = existingNotifications
+                .Select(notification => RecipientKey(
+                    notification.TenantId,
+                    notification.CompanyId,
+                    notification.RecipientUserId))
+                .ToHashSet(StringComparer.Ordinal);
+            recipients = recipients
+                .Where(recipient => !existingKeys.Contains(RecipientKey(
+                    recipient.TenantId,
+                    recipient.CompanyId,
+                    recipient.RecipientUserId)))
                 .ToList();
         }
 
@@ -59,9 +94,11 @@ public sealed class NotificationPublisher(
         if (parametersJson.Length > 2000)
             return Result.Failure<int>(errors.InvalidNotificationRequest);
 
-        var newNotifications = recipientIds.Select(recipientId => new Notification
+        var newNotifications = recipients.Select(recipient => new Notification
         {
-            RecipientUserId = recipientId,
+            TenantId = recipient.TenantId,
+            CompanyId = recipient.CompanyId,
+            RecipientUserId = recipient.RecipientUserId,
             ActorUserId = request.ActorUserId,
             RequiredPermission = request.RequiredPermission,
             Category = request.Category,
@@ -101,7 +138,10 @@ public sealed class NotificationPublisher(
 
         foreach (var notification in notificationsToPublish)
         {
-            await hubContext.Clients.User(notification.RecipientUserId)
+            await hubContext.Clients.Group(GeneralHubGroups.ForUserCompany(
+                    notification.TenantId,
+                    notification.CompanyId,
+                    notification.RecipientUserId))
                 .ReceiveNotification(mapper.Map<NotificationRealtimeResponse>(notification));
         }
 
@@ -118,6 +158,9 @@ public sealed class NotificationPublisher(
                IsOptionalWithinLength(request.EntityType, 100) &&
                IsOptionalWithinLength(request.EntityId, 100) &&
                IsOptionalWithinLength(request.DeduplicationKey, 250) &&
+               IsOptionalWithinLength(request.TenantId, 32) &&
+               (!request.CompanyId.HasValue ||
+                request.CompanyId.Value > 0 && !string.IsNullOrWhiteSpace(request.TenantId)) &&
                IsSafeActionUrl(request.ActionUrl) &&
                (!request.ExpiresOn.HasValue || request.ExpiresOn.Value > DateTime.UtcNow);
     }
@@ -131,4 +174,7 @@ public sealed class NotificationPublisher(
     private static bool IsSafeActionUrl(string? actionUrl) =>
         string.IsNullOrWhiteSpace(actionUrl) ||
         actionUrl.Length <= 500 && actionUrl.StartsWith('/') && !actionUrl.StartsWith("//", StringComparison.Ordinal);
+
+    private static string RecipientKey(string tenantId, int companyId, string userId) =>
+        $"{tenantId}\u001f{companyId}\u001f{userId}";
 }

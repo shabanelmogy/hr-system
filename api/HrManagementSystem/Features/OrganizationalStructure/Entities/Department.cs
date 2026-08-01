@@ -1,7 +1,7 @@
 using HrManagementSystem.Features.Employees.Entities;
 
 namespace HrManagementSystem.Features.OrganizationalStructure.Entities;
-public class Department : AuditableEntity
+public class Department : CompanyAuditableEntity
 {
     public int Id { get; set; }
 

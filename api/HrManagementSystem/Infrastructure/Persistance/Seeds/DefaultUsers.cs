@@ -64,6 +64,7 @@ public static class DefaultUsers
 
         var user = new ApplicationUser
         {
+            TenantId = TenantDefaults.DefaultId,
             UserName = userName,
             Email = email,
             FirstName = section["FirstName"] ?? userName,

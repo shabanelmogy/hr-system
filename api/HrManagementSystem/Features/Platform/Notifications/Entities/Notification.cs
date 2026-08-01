@@ -1,4 +1,5 @@
 using HrManagementSystem.Features.Security.Authentication.Entities;
+using HrManagementSystem.Shared.Abstractions;
 
 namespace HrManagementSystem.Features.Platform.Notifications.Entities;
 
@@ -10,8 +11,10 @@ public enum NotificationSeverity
     Critical = 4
 }
 
-public sealed class Notification
+public sealed class Notification : ICompanyScoped
 {
+    public string TenantId { get; set; } = string.Empty;
+    public int CompanyId { get; set; }
     public long Id { get; set; }
     public string RecipientUserId { get; set; } = string.Empty;
     public string? ActorUserId { get; set; }

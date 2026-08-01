@@ -105,10 +105,15 @@ public static class AuthenticationService
         var userId = principal?.FindFirstValue(ClaimTypes.NameIdentifier);
         var sessionId = principal?.FindFirstValue(JwtClaimNames.SessionId);
         var securityStamp = principal?.FindFirstValue(JwtClaimNames.SecurityStamp);
+        var tenantId = principal?.FindFirstValue(JwtClaimNames.TenantId);
+        var companyIdValue = principal?.FindFirstValue(JwtClaimNames.CompanyId);
 
         if (string.IsNullOrWhiteSpace(userId) ||
             string.IsNullOrWhiteSpace(sessionId) ||
-            string.IsNullOrWhiteSpace(securityStamp))
+            string.IsNullOrWhiteSpace(securityStamp) ||
+            string.IsNullOrWhiteSpace(tenantId) ||
+            !int.TryParse(companyIdValue, out var companyId) ||
+            companyId <= 0)
         {
             context.Fail("The token is missing required session claims.");
             return;
@@ -124,17 +129,37 @@ public static class AuthenticationService
                 user.IsDisabled,
                 user.LockoutEnd,
                 user.SecurityStamp,
+                user.TenantId,
                 HasActiveSession = user.RefreshTokens.Any(token =>
                     token.SessionId == sessionId &&
+                    token.CompanyId == companyId &&
                     token.RevokedOn == null &&
                     token.ExpiresOn > now)
             })
             .SingleOrDefaultAsync(context.HttpContext.RequestAborted);
 
+        var hasCompanyAccess = state is not null && await database.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .AnyAsync(access =>
+                access.UserId == userId &&
+                access.TenantId == tenantId &&
+                access.CompanyId == companyId &&
+                access.Company.IsActive,
+                context.HttpContext.RequestAborted);
+
+        var isTenantActive = state is not null && await database.Tenants
+            .AsNoTracking()
+            .AnyAsync(
+                tenant => tenant.Id == tenantId && tenant.IsActive,
+                context.HttpContext.RequestAborted);
+
         if (state is null ||
             state.IsDisabled ||
             state.LockoutEnd > DateTimeOffset.UtcNow ||
             !string.Equals(state.SecurityStamp, securityStamp, StringComparison.Ordinal) ||
+            !string.Equals(state.TenantId, tenantId, StringComparison.Ordinal) ||
+            !isTenantActive ||
+            !hasCompanyAccess ||
             !state.HasActiveSession)
         {
             context.Fail("The session is no longer active.");
