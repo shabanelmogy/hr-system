@@ -17,9 +17,16 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAll(
+        [FromQuery] DateTimeOffset? rangeStart,
+        [FromQuery] DateTimeOffset? rangeEnd,
+        CancellationToken cancellationToken)
     {
-        var appointments = await _appointmentService.GetAllAsync(User.GetUserId()!, cancellationToken);
+        var appointments = await _appointmentService.GetAllAsync(
+            User.GetUserId()!,
+            rangeStart,
+            rangeEnd,
+            cancellationToken);
         return Ok(appointments);
     }
 
@@ -33,14 +40,14 @@ public class AppointmentsController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> Update(AppointmentRequest request, CancellationToken cancellationToken)
     {
-        var result = await _appointmentService.UpdateAsync(request, cancellationToken);
+        var result = await _appointmentService.UpdateAsync(request, User.GetUserId()!, cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
-        var result = await _appointmentService.DeleteAsync(id, cancellationToken);
+        var result = await _appointmentService.DeleteAsync(id, User.GetUserId()!, cancellationToken);
         return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 }

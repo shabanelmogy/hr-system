@@ -10,6 +10,8 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
 
         builder.Property(x => x.End).IsRequired();
 
-        builder.Property(x => x.Text).IsRequired().HasMaxLength(400);
+        builder.Property(x => x.IsAllDay).IsRequired();
+
+        builder.Property(x => x.Text).IsRequired().HasMaxLength(200);
     }
 }

@@ -4,3 +4,4 @@ export {
   EmptyChartState,
   type EmptyChartStateProps,
 } from "./EmptyChartState";
+export { FeedbackState } from "./FeedbackState";

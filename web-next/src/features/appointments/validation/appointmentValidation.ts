@@ -1,33 +1,68 @@
+import type { TFunction } from "i18next";
 import dayjs from "dayjs";
 import { z } from "zod";
 
-export const appointmentValidationSchema = z
-  .object({
-    text: z
-      .string()
-      .trim()
-      .min(1, "Title is required")
-      .min(3, "Title must be at least 3 characters")
-      .max(200, "Title must be 200 characters or fewer"),
-    start: z.string().min(1, "Start and End are required"),
-    end: z.string().min(1, "Start and End are required"),
-  })
-  .superRefine((data, ctx) => {
-    const start = dayjs(data.start);
-    const end = dayjs(data.end);
+export function getAppointmentValidationSchema(
+  t: TFunction,
+  options: { allowPastStart: boolean },
+) {
+  return z
+    .object({
+      text: z
+        .string()
+        .trim()
+        .min(1, t("appointments.validation.titleRequired"))
+        .min(3, t("appointments.validation.titleMin"))
+        .max(200, t("appointments.validation.titleMax")),
+      start: z.string().min(1, t("appointments.validation.startRequired")),
+      end: z.string().min(1, t("appointments.validation.endRequired")),
+      isAllDay: z.boolean(),
+    })
+    .superRefine((data, context) => {
+      const start = dayjs(data.start);
+      const end = dayjs(data.end);
 
-    if (!start.isValid() || !end.isValid()) {
-      ctx.addIssue({ code: "custom", path: ["time"], message: "Start and End are required" });
-      return;
-    }
+      if (!start.isValid()) {
+        context.addIssue({
+          code: "custom",
+          path: ["start"],
+          message: t("appointments.validation.invalidDate"),
+        });
+      }
 
-    if (!end.isAfter(start)) {
-      ctx.addIssue({ code: "custom", path: ["time"], message: "End must be after Start" });
-    }
+      if (!end.isValid()) {
+        context.addIssue({
+          code: "custom",
+          path: ["end"],
+          message: t("appointments.validation.invalidDate"),
+        });
+      }
 
-    if (start.startOf("day").isBefore(dayjs().startOf("day"))) {
-      ctx.addIssue({ code: "custom", path: ["time"], message: "Cannot create in past days" });
-    }
-  });
+      if (!start.isValid() || !end.isValid()) return;
 
-export type AppointmentFormData = z.infer<typeof appointmentValidationSchema>;
+      const invalidEnd = data.isAllDay
+        ? end.startOf("day").isBefore(start.startOf("day"))
+        : !end.isAfter(start);
+
+      if (invalidEnd) {
+        context.addIssue({
+          code: "custom",
+          path: ["end"],
+          message: data.isAllDay
+            ? t("appointments.validation.allDayEnd")
+            : t("appointments.validation.endAfterStart"),
+        });
+      }
+
+      if (
+        !options.allowPastStart &&
+        start.startOf("day").isBefore(dayjs().startOf("day"))
+      ) {
+        context.addIssue({
+          code: "custom",
+          path: ["start"],
+          message: t("appointments.validation.pastStart"),
+        });
+      }
+    });
+}

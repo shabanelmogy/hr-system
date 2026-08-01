@@ -1,77 +1,54 @@
-import apiService from "@/shared/services/apiService";
 import { apiRoutes } from "@/config";
-import { extractValue, extractValues } from "@/shared/utils/ApiHelper";
-
-// Types
-export type Appointment = {
-  id: number;
-  start: string; // ISO string
-  end: string;   // ISO string
-  text: string;
-};
-
-export type CreateAppointmentRequest = {
-  start: string; // ISO string
-  end: string;   // ISO string
-  text: string;
-};
-
-export type UpdateAppointmentRequest = {
-  id: number;
-  start: string; // ISO string
-  end: string;   // ISO string
-  text: string;
-};
-
-const normalizeAppointment = (value: unknown): Appointment => {
-  const record = isRecord(value) ? value : {};
-  const id = record.id ?? record.Id;
-  const start = record.start ?? record.Start;
-  const end = record.end ?? record.End;
-  const text = record.text ?? record.Text;
-
-  return {
-    id: typeof id === "number" && Number.isFinite(id) ? id : Number(id ?? 0),
-    start: typeof start === "string" ? start : "",
-    end: typeof end === "string" ? end : "",
-    text: typeof text === "string" ? text : "",
-  };
-};
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
+import apiService from "@/shared/services/apiService";
+import type {
+  Appointment,
+  AppointmentRange,
+  CreateAppointmentRequest,
+  UpdateAppointmentRequest,
+} from "../types/appointment";
+import { parseAppointment } from "../validation/appointmentApiSchema";
 
 export default class AppointmentService {
-  static async getAll(): Promise<Appointment[]> {
-    const response = await apiService.get(apiRoutes.appointments.getAll);
-    const list = extractValues<Appointment>(response);
-    return (list || []).map(normalizeAppointment);
+  static async getAll(range: AppointmentRange): Promise<Appointment[]> {
+    const response = await apiService.get<unknown>(apiRoutes.appointments.getAll, {
+      rangeStart: range.start,
+      rangeEnd: range.end,
+    });
+    return extractList(response).map(parseAppointment);
   }
 
   static async create(data: CreateAppointmentRequest): Promise<Appointment> {
-    const response = await apiService.post(apiRoutes.appointments.add, {
+    const response = await apiService.post<unknown>(apiRoutes.appointments.add, {
       id: 0,
-      start: data.start,
-      end: data.end,
-      text: data.text,
+      ...data,
     });
-    return normalizeAppointment(extractValue<Appointment>(response));
+    return parseAppointment(extractValue(response));
   }
 
   static async update(data: UpdateAppointmentRequest): Promise<Appointment> {
-    const response = await apiService.put(apiRoutes.appointments.update, {
-      id: data.id,
-      start: data.start,
-      end: data.end,
-      text: data.text,
-    });
-    const updated = extractValue<Appointment>(response);
-    return normalizeAppointment({ ...data, ...updated });
+    const response = await apiService.put<unknown>(apiRoutes.appointments.update, data);
+    return parseAppointment(extractValue(response));
   }
 
   static async delete(id: number): Promise<number> {
     await apiService.delete(apiRoutes.appointments.delete(id));
     return id;
   }
+}
+
+function extractValue(response: unknown): unknown {
+  if (!isRecord(response)) return response;
+  if (response.isSuccess === true && "value" in response) return response.value;
+  if ("data" in response) return response.data;
+  return response;
+}
+
+function extractList(response: unknown): unknown[] {
+  const value = extractValue(response);
+  if (!Array.isArray(value)) return [];
+  return value.map(extractValue);
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
 }

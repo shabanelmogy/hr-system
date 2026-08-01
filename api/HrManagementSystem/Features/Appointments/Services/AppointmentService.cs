@@ -1,41 +1,45 @@
 using HrManagementSystem.Features.Appointments.Contracts;
 using HrManagementSystem.Features.Appointments.Errors;
-
-using HrManagementSystem.Features.Platform.EntityChangeLogs.Services;
-
 using HrManagementSystem.Features.Appointments.Entities;
 
 namespace HrManagementSystem.Features.Appointments.Services;
 
 public class AppointmentService(
     ApplicationDbContext context,
-    IHttpContextAccessor httpContextAccessor,
-    IEntityChangeLogService entityChangeLogService,
     AppointmentErrors serverErrors,
-    IStringLocalizer<AppointmentRequest> localizer,
     IMapper mapper) : IAppointmentService
 {
     private readonly ApplicationDbContext _context = context;
     private readonly IMapper _mapper = mapper;
-    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
-    private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
     private readonly AppointmentErrors _appointmentErrors = serverErrors;
-    private readonly IStringLocalizer<AppointmentRequest> _localizer = localizer;
 
-    public async Task<IEnumerable<AppointmentResponse>> GetAllAsync(string userId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<AppointmentResponse>> GetAllAsync(
+        string userId,
+        DateTimeOffset? rangeStart,
+        DateTimeOffset? rangeEnd,
+        CancellationToken cancellationToken = default)
     {
-        var appointments = await _context.Appointments
-                                          .Where(a => a.CreatedById == userId)
-                                          .AsNoTracking()
-                                          .ProjectToType<AppointmentResponse>()
-                                          .ToListAsync(cancellationToken);
+        var query = _context.Appointments
+            .Where(appointment => appointment.CreatedById == userId)
+            .AsNoTracking();
+
+        if (rangeStart.HasValue)
+            query = query.Where(appointment => appointment.End > rangeStart.Value);
+
+        if (rangeEnd.HasValue)
+            query = query.Where(appointment => appointment.Start < rangeEnd.Value);
+
+        var appointments = await query
+            .OrderBy(appointment => appointment.Start)
+            .ProjectToType<AppointmentResponse>()
+            .ToListAsync(cancellationToken);
 
         return appointments;
     }
 
     public async Task<Result<AppointmentResponse>> AddAsync(AppointmentRequest appointmentRequest, CancellationToken cancellationToken = default)
     {
-        var appointment = _mapper.Map<Appointment>(appointmentRequest);
+        var appointment = _mapper.Map<Appointment>(NormalizeDateTimes(appointmentRequest));
 
         await _context.Appointments.AddAsync(appointment, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
@@ -44,40 +48,50 @@ public class AppointmentService(
         return Result.Success(response);
     }
 
-    public async Task<Result<AppointmentResponse>> UpdateAsync(AppointmentRequest request,CancellationToken cancellationToken = default)
+    public async Task<Result<AppointmentResponse>> UpdateAsync(
+        AppointmentRequest request,
+        string userId,
+        CancellationToken cancellationToken = default)
     {
-        var currentAppointment = await _context.Appointments.FirstOrDefaultAsync(a => a.Id == request.Id, cancellationToken);
+        var currentAppointment = await _context.Appointments.FirstOrDefaultAsync(
+            appointment => appointment.Id == request.Id && appointment.CreatedById == userId,
+            cancellationToken);
 
         if (currentAppointment is null)
             return Result.Failure<AppointmentResponse>(_appointmentErrors.AppointmentNotFound);
 
-         _mapper.Map(request, currentAppointment);
+        _mapper.Map(NormalizeDateTimes(request), currentAppointment);
 
         _context.Appointments.Update(currentAppointment);
         await _context.SaveChangesAsync(cancellationToken);
 
-        var respone = currentAppointment.Adapt<AppointmentResponse>();
+        var response = currentAppointment.Adapt<AppointmentResponse>();
 
-        return Result.Success(respone);
+        return Result.Success(response);
     }
 
-    public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Result> DeleteAsync(
+        int id,
+        string userId,
+        CancellationToken cancellationToken = default)
     {
-        //get current appointment
-        var currentAppointment = await _context.Appointments.FirstOrDefaultAsync(a => a.Id == id);
-        
-        //check if it exists
+        var currentAppointment = await _context.Appointments.FirstOrDefaultAsync(
+            appointment => appointment.Id == id && appointment.CreatedById == userId,
+            cancellationToken);
+
         if (currentAppointment is null)
             return Result.Failure(_appointmentErrors.AppointmentNotFound);
 
-        //delete it
         _context.Appointments.Remove(currentAppointment);
-
-        //save changes
         await _context.SaveChangesAsync(cancellationToken);
-
-        //return response
         return Result.Success();
     }
+
+    private static AppointmentRequest NormalizeDateTimes(AppointmentRequest request) =>
+        request with
+        {
+            Start = request.Start.ToUniversalTime(),
+            End = request.End.ToUniversalTime(),
+        };
 }
 

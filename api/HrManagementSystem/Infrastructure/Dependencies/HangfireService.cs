@@ -6,7 +6,11 @@ public static class HangfireService
     {
         var connectionString = configuration.GetConnectionString("HangfireConnection");
         if (string.IsNullOrWhiteSpace(connectionString))
-            throw new InvalidOperationException("ConnectionStrings:HangfireConnection is required.");
+            connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        if (string.IsNullOrWhiteSpace(connectionString))
+            throw new InvalidOperationException(
+                "ConnectionStrings:HangfireConnection or ConnectionStrings:DefaultConnection is required.");
 
         services.AddHangfire(config => config
           .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)

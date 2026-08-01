@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
-import AppointmentCalendar from "../components/AppointmentCalendar";
+import { Box } from "@mui/material";
+import AppointmentCalendar from "../components/calendar/AppointmentCalendar";
 
-const AppointmentsPage: React.FC = () => {
+const AppointmentsPage = () => {
   return (
-    <div style={{ background: "#fff", borderRadius: 8, padding: 8 }}>
+    <Box sx={{ bgcolor: "background.paper", borderRadius: 1, p: 1 }}>
       <AppointmentCalendar />
-    </div>
+    </Box>
   );
 };
 

@@ -1,7 +1,7 @@
 import { alpha, type Theme } from "@mui/material/styles";
 
 export const appointmentCalendarStyles = (theme: Theme) => ({
-  p: 2,
+  p: { xs: 1, sm: 2 },
   bgcolor:
     theme.palette.mode === "dark"
       ? alpha(theme.palette.background.paper, 0.9)
@@ -30,7 +30,8 @@ export const appointmentCalendarStyles = (theme: Theme) => ({
     "--fc-button-active-bg-color": theme.palette.primary.dark,
     fontFamily: theme.typography.fontFamily,
   },
-  "& .fc .fc-toolbar": { gap: 8 },
+  "& .fc .fc-toolbar": { gap: 1, flexWrap: "wrap" },
+  "& .fc .fc-toolbar-chunk": { display: "flex", flexWrap: "wrap", gap: 0.25 },
   "& .fc .fc-toolbar-title": { color: theme.palette.text.primary, fontWeight: 700 },
   "& .fc .fc-button": {
     textTransform: "none",
@@ -39,7 +40,7 @@ export const appointmentCalendarStyles = (theme: Theme) => ({
     backgroundColor: "transparent",
     color: theme.palette.text.secondary,
     border: `1px solid ${alpha(theme.palette.divider, 0.6)}`,
-    transition: "all .2s ease",
+    transition: theme.transitions.create(["background-color", "border-color", "color"]),
     fontWeight: 600,
   },
   "& .fc .fc-button:hover": {
@@ -63,7 +64,7 @@ export const appointmentCalendarStyles = (theme: Theme) => ({
   },
   "& .fc .fc-button.fc-button-disabled, & .fc .fc-today-button.fc-button-disabled": {
     opacity: 0.6,
-    backgroundColor: alpha(theme.palette.action.disabledBackground || theme.palette.divider, 0.08),
+    backgroundColor: alpha(theme.palette.action.disabledBackground, 0.08),
     color: theme.palette.text.disabled,
     borderColor: alpha(theme.palette.divider, 0.4),
   },
@@ -93,4 +94,16 @@ export const appointmentCalendarStyles = (theme: Theme) => ({
   "& .fc .fc-timegrid-slot": { borderColor: theme.palette.divider },
   "& .fc .fc-day-today": { backgroundColor: alpha(theme.palette.primary.main, 0.12) },
   "& .fc .fc-list": { backgroundColor: "transparent" },
+  [theme.breakpoints.down("md")]: {
+    "& .fc .fc-toolbar": { alignItems: "stretch" },
+    "& .fc .fc-toolbar-title": { fontSize: theme.typography.h6.fontSize },
+    "& .fc .fc-button": { paddingInline: 1, fontSize: theme.typography.caption.fontSize },
+  },
+  [theme.breakpoints.down("sm")]: {
+    "& .fc .fc-toolbar": { flexDirection: "column", alignItems: "center" },
+    "& .fc .fc-toolbar-chunk": { justifyContent: "center" },
+  },
+  "@media (prefers-reduced-motion: reduce)": {
+    "& .fc .fc-button": { transition: "none" },
+  },
 });

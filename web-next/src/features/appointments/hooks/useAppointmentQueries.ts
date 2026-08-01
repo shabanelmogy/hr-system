@@ -1,16 +1,20 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import AppointmentService, { Appointment, CreateAppointmentRequest, UpdateAppointmentRequest } from "../services/appointmentService";
+import AppointmentService from "../services/appointmentService";
+import type {
+  AppointmentRange,
+  CreateAppointmentRequest,
+  UpdateAppointmentRequest,
+} from "../types/appointment";
 
 export const appointmentKeys = {
   all: ["appointments"] as const,
-  list: () => [...appointmentKeys.all, "list"] as const,
-  detail: (id: number) => [...appointmentKeys.all, "detail", id] as const,
+  list: (range: AppointmentRange) => [...appointmentKeys.all, "list", range] as const,
 };
 
-export const useAppointments = () =>
-  useQuery<Appointment[]>({
-    queryKey: appointmentKeys.list(),
-    queryFn: AppointmentService.getAll,
+export const useAppointments = (range: AppointmentRange) =>
+  useQuery({
+    queryKey: appointmentKeys.list(range),
+    queryFn: () => AppointmentService.getAll(range),
     staleTime: 5 * 60 * 1000,
   });
 
@@ -28,9 +32,8 @@ export const useUpdateAppointment = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: UpdateAppointmentRequest) => AppointmentService.update(data),
-    onSuccess: (data) => {
+    onSuccess: () => {
       qc.invalidateQueries({ queryKey: appointmentKeys.all });
-      qc.invalidateQueries({ queryKey: appointmentKeys.detail(data.id) });
     },
   });
 };

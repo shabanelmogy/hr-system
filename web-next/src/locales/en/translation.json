@@ -231,6 +231,36 @@
     "markAllAsUnread": "Mark All As Unread",
     "clearAll": "Clear All"
   },
+  "appointments": {
+    "loading": "Loading appointments...",
+    "loadErrorTitle": "Appointments could not be loaded",
+    "loadErrorDescription": "The appointment service is temporarily unavailable.",
+    "retry": "Retry",
+    "addTitle": "New Appointment",
+    "editTitle": "Edit Appointment",
+    "addSubtitle": "Schedule a new appointment",
+    "editSubtitle": "Update appointment details",
+    "titleLabel": "Title",
+    "titlePlaceholder": "What is this about?",
+    "start": "Start",
+    "end": "End",
+    "allDay": "All day",
+    "addAppointment": "Add Appointment",
+    "saveChanges": "Save Changes",
+    "creating": "Creating appointment...",
+    "updating": "Updating appointment...",
+    "validation": {
+      "titleRequired": "Title is required",
+      "titleMin": "Title must be at least 3 characters",
+      "titleMax": "Title must be 200 characters or fewer",
+      "startRequired": "Start is required",
+      "endRequired": "End is required",
+      "invalidDate": "Enter a valid date",
+      "endAfterStart": "End must be after Start",
+      "allDayEnd": "End day must be on or after Start day",
+      "pastStart": "Appointments cannot start in a previous day"
+    }
+  },
   "actions": {
     "buttons": "Actions",
     "save": "Save Changes",

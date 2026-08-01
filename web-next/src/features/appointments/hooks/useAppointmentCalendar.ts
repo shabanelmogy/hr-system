@@ -1,8 +1,19 @@
-import type { DateSelectArg, EventChangeArg, EventClickArg } from "@fullcalendar/core";
+import type { DateSelectArg, DatesSetArg, EventDropArg, EventClickArg } from "@fullcalendar/core";
+import type { EventResizeDoneArg } from "@fullcalendar/interaction";
 import dayjs from "dayjs";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { showToast } from "@/shared/components/feedback/transient";
-import type { AppointmentFormData } from "../validation/appointmentValidation";
+import {
+  appointmentFormToCreateRequest,
+  appointmentFormToUpdateRequest,
+  appointmentToCalendarEvent,
+  calendarEventToAppointmentForm,
+  calendarEventToUpdateRequest,
+  getInitialAppointmentRange,
+  selectionToAppointmentForm,
+} from "../adapters/appointmentCalendarAdapter";
+import type { AppointmentFormData, AppointmentRange } from "../types/appointment";
 import {
   useAppointments,
   useCreateAppointment,
@@ -10,223 +21,127 @@ import {
   useUpdateAppointment,
 } from "./useAppointmentQueries";
 
-const monthView = "dayGridMonth";
-const todayStart = dayjs().startOf("day");
-
-function errorMessage(error: unknown, fallback: string) {
-  return error instanceof Error ? error.message : fallback;
-}
+const emptyAppointment = (): AppointmentFormData => ({
+  text: "",
+  start: dayjs().toISOString(),
+  end: dayjs().add(1, "hour").toISOString(),
+  isAllDay: false,
+});
 
 export function useAppointmentCalendar() {
-  const { data: appointments = [], isLoading } = useAppointments();
+  const { t } = useTranslation();
+  const [range, setRange] = useState<AppointmentRange>(getInitialAppointmentRange);
+  const appointmentsQuery = useAppointments(range);
   const createMutation = useCreateAppointment();
   const updateMutation = useUpdateAppointment();
   const deleteMutation = useDeleteAppointment();
 
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [defaultStart, setDefaultStart] = useState(() => dayjs().toISOString());
-  const [defaultEnd, setDefaultEnd] = useState(() => dayjs().add(1, "hour").toISOString());
-  const [defaultTitle, setDefaultTitle] = useState("");
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [currentView, setCurrentView] = useState(monthView);
+  const [formDefaults, setFormDefaults] = useState<AppointmentFormData>(emptyAppointment);
 
-  const events = useMemo(() => {
-    if (currentView === monthView) {
-      return appointments.map((appointment) => {
-        const startUtc = new Date(appointment.start).toISOString().slice(0, 10);
-        const endUtc = new Date(appointment.end || appointment.start).toISOString().slice(0, 10);
-        const startDay = dayjs(startUtc);
-        const endDay = dayjs(endUtc);
-
-        return {
-          id: String(appointment.id),
-          title: appointment.text,
-          start: startUtc,
-          end: endDay.isAfter(startDay)
-            ? endDay.format("YYYY-MM-DD")
-            : startDay.add(1, "day").format("YYYY-MM-DD"),
-          allDay: true,
-        };
-      });
-    }
-
-    return appointments.map((appointment) => ({
-      id: String(appointment.id),
-      title: appointment.text,
-      start: appointment.start,
-      end: appointment.end,
-    }));
-  }, [appointments, currentView]);
+  const events = useMemo(
+    () => (appointmentsQuery.data ?? []).map(appointmentToCalendarEvent),
+    [appointmentsQuery.data],
+  );
 
   const closeDialog = () => {
     setDialogOpen(false);
     setEditingId(null);
   };
 
-  const onSelect = (selectInfo: DateSelectArg) => {
-    selectInfo.view.calendar.unselect();
+  const onSelect = (selection: DateSelectArg) => {
+    selection.view.calendar.unselect();
 
-    if (dayjs(selectInfo.start).startOf("day").isBefore(todayStart)) {
-      showToast.warning("You cannot add appointments in previous days");
+    if (dayjs(selection.start).startOf("day").isBefore(dayjs().startOf("day"))) {
+      showToast.warning(t("appointments.validation.pastStart"));
       return;
     }
 
-    const end =
-      selectInfo.endStr ||
-      new Date(selectInfo.start.getTime() + 60 * 60 * 1000).toISOString();
-
     setEditingId(null);
-    setDefaultTitle("");
-    setDefaultStart(selectInfo.startStr);
-    setDefaultEnd(
-      currentView === monthView
-        ? dayjs(end).subtract(1, "day").format("YYYY-MM-DD")
-        : end,
-    );
+    setFormDefaults(selectionToAppointmentForm(selection));
     setDialogOpen(true);
   };
 
-  const createAppointment = (data: AppointmentFormData) => {
-    const payload =
-      currentView === monthView
-        ? {
-            start: `${dayjs(data.start).format("YYYY-MM-DD")}T12:00:00Z`,
-            end: `${dayjs(data.end).add(1, "day").format("YYYY-MM-DD")}T12:00:00Z`,
-            text: data.text,
-          }
-        : {
-            start: dayjs(data.start).format("YYYY-MM-DDTHH:mm:ss"),
-            end: dayjs(data.end).format("YYYY-MM-DDTHH:mm:ss"),
-            text: data.text,
-          };
-
-    createMutation.mutate(payload, {
-      onSuccess: closeDialog,
-      onError: (error) => showToast.error(errorMessage(error, "Failed to create appointment")),
-    });
+  const submitAppointment = async (data: AppointmentFormData) => {
+    try {
+      if (editingId == null) {
+        await createMutation.mutateAsync(appointmentFormToCreateRequest(data));
+      } else {
+        await updateMutation.mutateAsync(appointmentFormToUpdateRequest(editingId, data));
+      }
+      closeDialog();
+    } catch (error) {
+      showToast.error(error);
+    }
   };
 
-  const updateAppointment = (data: AppointmentFormData) => {
+  const deleteAppointment = async () => {
     if (editingId == null) return;
 
-    const payload =
-      currentView === monthView
-        ? {
-            id: editingId,
-            start: `${dayjs(data.start).format("YYYY-MM-DD")}T12:00:00Z`,
-            end: `${dayjs(data.end).add(1, "day").format("YYYY-MM-DD")}T12:00:00Z`,
-            text: data.text,
-          }
-        : {
-            id: editingId,
-            start: dayjs(data.start).format("YYYY-MM-DDTHH:mm:ss"),
-            end: dayjs(data.end).format("YYYY-MM-DDTHH:mm:ss"),
-            text: data.text,
-          };
-
-    updateMutation.mutate(payload, {
-      onSuccess: closeDialog,
-      onError: (error) => showToast.error(errorMessage(error, "Failed to update appointment")),
-    });
+    try {
+      await deleteMutation.mutateAsync(editingId);
+      closeDialog();
+    } catch (error) {
+      showToast.error(error);
+    }
   };
 
-  const submitAppointment = (data: AppointmentFormData) => {
-    if (editingId == null) createAppointment(data);
-    else updateAppointment(data);
-  };
+  const persistCalendarEvent = async ({ event, revert }: EventDropArg | EventResizeDoneArg) => {
+    const payload = calendarEventToUpdateRequest(event);
 
-  const deleteAppointment = () => {
-    if (editingId == null) return;
-
-    deleteMutation.mutate(editingId, {
-      onSuccess: closeDialog,
-      onError: (error) => showToast.error(errorMessage(error, "Failed to delete appointment")),
-    });
-  };
-
-  const onEventChange = (changeInfo: EventChangeArg) => {
-    const event = changeInfo.event;
-    const id = Number(event.id);
-    const revertWithError = (error: unknown, fallback: string) => {
-      changeInfo.revert();
-      showToast.error(errorMessage(error, fallback));
-    };
-
-    if (event.allDay || currentView === monthView) {
-      const start = event.startStr;
-      const end = event.endStr || event.startStr;
-      const lastIncludedDay = dayjs(end).subtract(1, "day");
-
-      if (dayjs(start).isBefore(todayStart) || lastIncludedDay.isBefore(todayStart)) {
-        revertWithError(undefined, "Appointments cannot be moved to a previous day");
-        return;
-      }
-
-      if (!dayjs(end).isAfter(dayjs(start))) {
-        revertWithError(undefined, "End must be after Start");
-        return;
-      }
-
-      updateMutation.mutate(
-        { id, start: `${start}T12:00:00Z`, end: `${end}T12:00:00Z`, text: event.title },
-        { onError: (error) => revertWithError(error, "Failed to update appointment") },
-      );
+    if (!payload || !dayjs(payload.end).isAfter(dayjs(payload.start))) {
+      revert();
+      showToast.warning(t("appointments.validation.endAfterStart"));
       return;
     }
 
-    const start = event.start ? dayjs(event.start) : dayjs();
-    const end = event.end ? dayjs(event.end) : start;
-
-    if (start.startOf("day").isBefore(todayStart) || end.startOf("day").isBefore(todayStart)) {
-      revertWithError(undefined, "Appointments cannot be moved to a previous day");
-      return;
+    try {
+      await updateMutation.mutateAsync(payload);
+    } catch (error) {
+      revert();
+      showToast.error(error);
     }
-
-    if (!end.isAfter(start)) {
-      revertWithError(undefined, "End must be after Start");
-      return;
-    }
-
-    updateMutation.mutate(
-      { id, start: start.toISOString(), end: end.toISOString(), text: event.title },
-      { onError: (error) => revertWithError(error, "Failed to update appointment") },
-    );
   };
 
   const onEventClick = (clickInfo: EventClickArg) => {
-    const event = clickInfo.event;
-    const isAllDay = event.allDay || currentView === monthView;
-    const start = isAllDay
-      ? event.startStr
-      : event.start?.toISOString() || new Date().toISOString();
-    const end = isAllDay
-      ? event.endStr || event.startStr
-      : event.end?.toISOString() || start;
+    const id = Number(clickInfo.event.id);
+    if (!Number.isInteger(id) || id <= 0) return;
 
-    setEditingId(Number(event.id));
-    setDefaultTitle(event.title);
-    setDefaultStart(start);
-    setDefaultEnd(isAllDay ? dayjs(end).subtract(1, "day").format("YYYY-MM-DD") : end);
+    setEditingId(id);
+    setFormDefaults(calendarEventToAppointmentForm(clickInfo.event));
     setDialogOpen(true);
   };
 
+  const onDatesSet = (dates: DatesSetArg) => {
+    const nextRange = {
+      start: dates.start.toISOString(),
+      end: dates.end.toISOString(),
+    };
+    setRange((current) =>
+      current.start === nextRange.start && current.end === nextRange.end
+        ? current
+        : nextRange,
+    );
+  };
+
   return {
-    currentView,
-    defaultEnd,
-    defaultStart,
-    defaultTitle,
+    closeDialog,
     deleteAppointment,
     dialogOpen,
     editingId,
     events,
-    isLoading,
+    formDefaults,
+    isError: appointmentsQuery.isError,
+    isLoading: appointmentsQuery.isLoading,
     isMutationPending:
       createMutation.isPending || updateMutation.isPending || deleteMutation.isPending,
-    closeDialog,
-    onEventChange,
+    onDatesSet,
+    onEventDrop: persistCalendarEvent,
+    onEventResize: persistCalendarEvent,
     onEventClick,
     onSelect,
-    setCurrentView,
+    refetch: appointmentsQuery.refetch,
     submitAppointment,
   };
 }
