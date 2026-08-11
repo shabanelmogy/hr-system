@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { asHref, ROUTES } from '@/src/core/constants/routes';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
+import { useAuth, useCanAccessRoute } from '@/src/features/auth';
 import {
   AppCard,
   AppDivider,
@@ -46,7 +47,22 @@ export function HomeScreen() {
   const { width } = useWindowDimensions();
   const { theme } = useAppTheme();
   const { direction, isRTL } = useLocalization();
+  const { session } = useAuth();
   const compact = width < 560;
+  const canViewBasicData = useCanAccessRoute(ROUTES.basicData.root);
+  const canManageTenants = useCanAccessRoute(ROUTES.tenantManagement);
+  const userDisplayName =
+    [session?.firstName, session?.lastName].filter(Boolean).join(' ') ||
+    session?.userName ||
+    '';
+  const userInitials =
+    userDisplayName
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part.charAt(0))
+      .join('')
+      .toUpperCase() || 'U';
 
   const metricColor = {
     primary: theme.colors.primary,
@@ -56,7 +72,7 @@ export function HomeScreen() {
   };
 
   return (
-    <AppScreen edges={['top', 'left', 'right']}>
+    <AppScreen edges={['left', 'right']}>
       <View style={[styles.header, { direction }]}>
         <View style={styles.headerText}>
           <AppText color="muted" variant="bodySmall">
@@ -68,13 +84,13 @@ export function HomeScreen() {
           </AppText>
         </View>
         <View
-          accessibilityLabel="Admin"
+          accessibilityLabel={userDisplayName}
           style={[
             styles.avatar,
             { backgroundColor: theme.colors.primary, borderRadius: theme.radius.full },
           ]}>
           <AppText align="center" style={{ color: theme.colors.onPrimary }} variant="label">
-            AA
+            {userInitials}
           </AppText>
         </View>
       </View>
@@ -104,34 +120,65 @@ export function HomeScreen() {
         ))}
       </View>
 
-      <View style={styles.section}>
-        <AppText variant="titleSmall">{t('home.modules')}</AppText>
-        <AppCard
-          accessibilityLabel={t('navigation.basicData')}
-          onPress={() => router.push(asHref(ROUTES.basicData.root))}
-          style={styles.moduleCard}>
-          <View style={[styles.moduleRow, { direction }]}>
-            <View
-              style={[
-                styles.moduleIcon,
-                { backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radius.sm },
-              ]}>
-              <AppIcon color={theme.colors.primary} name="server-outline" size={25} />
-            </View>
-            <View style={styles.activityText}>
-              <AppText variant="label">{t('navigation.basicData')}</AppText>
-              <AppText color="muted" variant="bodySmall">
-                {t('home.basicDataDescription')}
-              </AppText>
-            </View>
-            <AppIcon
-              color={theme.colors.textMuted}
-              name={isRTL ? 'chevron-back' : 'chevron-forward'}
-              size={20}
-            />
-          </View>
-        </AppCard>
-      </View>
+      {canViewBasicData || canManageTenants ? (
+        <View style={styles.section}>
+          <AppText variant="titleSmall">{t('home.modules')}</AppText>
+          {canManageTenants ? (
+            <AppCard
+              accessibilityLabel={t('navigation.tenantManagement')}
+              onPress={() => router.push(asHref(ROUTES.tenantManagement))}
+              style={styles.moduleCard}>
+              <View style={[styles.moduleRow, { direction }]}>
+                <View
+                  style={[
+                    styles.moduleIcon,
+                    { backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radius.sm },
+                  ]}>
+                  <AppIcon color={theme.colors.accent} name="business-outline" size={25} />
+                </View>
+                <View style={styles.activityText}>
+                  <AppText variant="label">{t('navigation.tenantManagement')}</AppText>
+                  <AppText color="muted" variant="bodySmall">
+                    {t('tenantManagement.description')}
+                  </AppText>
+                </View>
+                <AppIcon
+                  color={theme.colors.textMuted}
+                  name={isRTL ? 'chevron-back' : 'chevron-forward'}
+                  size={20}
+                />
+              </View>
+            </AppCard>
+          ) : null}
+          {canViewBasicData ? (
+            <AppCard
+              accessibilityLabel={t('navigation.basicData')}
+              onPress={() => router.push(asHref(ROUTES.basicData.root))}
+              style={styles.moduleCard}>
+              <View style={[styles.moduleRow, { direction }]}>
+                <View
+                  style={[
+                    styles.moduleIcon,
+                    { backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radius.sm },
+                  ]}>
+                  <AppIcon color={theme.colors.primary} name="server-outline" size={25} />
+                </View>
+                <View style={styles.activityText}>
+                  <AppText variant="label">{t('navigation.basicData')}</AppText>
+                  <AppText color="muted" variant="bodySmall">
+                    {t('home.basicDataDescription')}
+                  </AppText>
+                </View>
+                <AppIcon
+                  color={theme.colors.textMuted}
+                  name={isRTL ? 'chevron-back' : 'chevron-forward'}
+                  size={20}
+                />
+              </View>
+            </AppCard>
+          ) : null}
+        </View>
+      ) : null}
 
       <View style={styles.section}>
         <AppText variant="titleSmall">{t('home.quickActions')}</AppText>

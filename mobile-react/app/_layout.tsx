@@ -10,7 +10,7 @@ import { AuthProvider, useAuth } from '@/src/features/auth/context/AuthProvider'
 import { AppScreen, AppStateView } from '@/src/shared/components';
 
 export const unstable_settings = {
-  initialRouteName: '(main)',
+  initialRouteName: '(auth)',
 };
 
 export default function RootLayout() {
@@ -44,11 +44,11 @@ function RootNavigator() {
       </AppScreen>
     ) : (
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Protected guard={status === 'authenticated'}>
-          <Stack.Screen name="(main)" />
-        </Stack.Protected>
         <Stack.Protected guard={status === 'unauthenticated'}>
           <Stack.Screen name="(auth)" />
+        </Stack.Protected>
+        <Stack.Protected guard={status === 'authenticated'}>
+          <Stack.Screen name="(main)" />
         </Stack.Protected>
       </Stack>
     );

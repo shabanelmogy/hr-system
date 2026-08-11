@@ -1,4 +1,4 @@
-import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Modal, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,32 +8,41 @@ import { useAppTheme } from '@/src/core/theme';
 import type { CompanySelectionResponse } from '@/src/features/auth/types/auth';
 import { AppButton, AppIcon, AppText } from '@/src/shared/components';
 
-interface CompanySelectionModalProps {
+interface CompanySelectionDialogProps {
   selection: CompanySelectionResponse | null;
   error?: string | null;
-  onClose: () => void;
+  onCancel: () => void;
   onSelect: (companyId: number) => Promise<void>;
 }
 
-export function CompanySelectionModal({
+export function CompanySelectionDialog({
   selection,
   error,
-  onClose,
+  onCancel,
   onSelect,
-}: CompanySelectionModalProps) {
+}: CompanySelectionDialogProps) {
   const { t } = useTranslation();
   const { language, direction, isRTL } = useLocalization();
   const { theme } = useAppTheme();
   const [selectingCompanyId, setSelectingCompanyId] = useState<number | null>(null);
+  const [selectedCompany, setSelectedCompany] = useState<{ token: string; id: number | null }>({
+    token: '',
+    id: null,
+  });
+  const selectionToken = selection?.companySelectionToken ?? '';
+  const selectedCompanyId =
+    selectedCompany.token === selectionToken
+      ? selectedCompany.id
+      : (selection?.companies[0]?.id ?? null);
 
-  const handleSelect = async (companyId: number) => {
-    if (selectingCompanyId !== null) {
+  const handleContinue = async () => {
+    if (selectingCompanyId !== null || selectedCompanyId === null) {
       return;
     }
 
-    setSelectingCompanyId(companyId);
+    setSelectingCompanyId(selectedCompanyId);
     try {
-      await onSelect(companyId);
+      await onSelect(selectedCompanyId);
     } finally {
       setSelectingCompanyId(null);
     }
@@ -42,7 +51,7 @@ export function CompanySelectionModal({
   return (
     <Modal
       animationType="fade"
-      onRequestClose={selectingCompanyId === null ? onClose : undefined}
+      onRequestClose={selectingCompanyId === null ? onCancel : undefined}
       transparent
       visible={selection !== null}>
       <SafeAreaView style={[styles.overlay, { backgroundColor: theme.colors.overlay }]}>
@@ -82,25 +91,27 @@ export function CompanySelectionModal({
             {selection?.companies.map((company) => {
               const primaryName = language === 'ar' ? company.nameAr : company.nameEn;
               const secondaryName = language === 'ar' ? company.nameEn : company.nameAr;
-              const loading = selectingCompanyId === company.id;
+              const selected = selectedCompanyId === company.id;
 
               return (
                 <Pressable
                   accessibilityLabel={primaryName}
                   accessibilityRole="button"
+                  accessibilityState={{ selected, disabled: selectingCompanyId !== null }}
                   disabled={selectingCompanyId !== null}
                   key={company.id}
-                  onPress={() => void handleSelect(company.id)}
+                  onPress={() => setSelectedCompany({ token: selectionToken, id: company.id })}
                   style={({ pressed }) => [
                     styles.company,
                     {
                       direction,
-                      backgroundColor: pressed
+                      backgroundColor: selected || pressed
                         ? theme.colors.surfaceMuted
                         : theme.colors.background,
-                      borderColor: theme.colors.border,
+                      borderColor: selected ? theme.colors.primary : theme.colors.border,
                       borderRadius: theme.radius.sm,
-                      opacity: selectingCompanyId !== null && !loading ? 0.55 : 1,
+                      opacity:
+                        selectingCompanyId !== null && selectingCompanyId !== company.id ? 0.55 : 1,
                     },
                   ]}>
                   <View
@@ -118,8 +129,8 @@ export function CompanySelectionModal({
                       </AppText>
                     ) : null}
                   </View>
-                  {loading ? (
-                    <ActivityIndicator color={theme.colors.primary} />
+                  {selected ? (
+                    <AppIcon color={theme.colors.primary} name="checkmark-circle" size={21} />
                   ) : (
                     <AppIcon
                       color={theme.colors.textMuted}
@@ -132,13 +143,23 @@ export function CompanySelectionModal({
             })}
           </ScrollView>
 
-          <AppButton
-            disabled={selectingCompanyId !== null}
-            fullWidth
-            onPress={onClose}
-            variant="ghost">
-            {t('auth.cancelSelection')}
-          </AppButton>
+          <View style={[styles.actions, { direction }]}>
+            <AppButton
+              disabled={selectingCompanyId !== null}
+              onPress={onCancel}
+              style={styles.action}
+              variant="ghost">
+              {t('common.cancel')}
+            </AppButton>
+            <AppButton
+              disabled={selectedCompanyId === null}
+              icon={isRTL ? 'arrow-back-circle-outline' : 'arrow-forward-circle-outline'}
+              loading={selectingCompanyId !== null}
+              onPress={() => void handleContinue()}
+              style={styles.action}>
+              {t('auth.continueToCompany')}
+            </AppButton>
+          </View>
         </View>
       </SafeAreaView>
     </Modal>
@@ -191,5 +212,13 @@ const styles = StyleSheet.create({
     gap: 8,
     borderStartWidth: 3,
     padding: 9,
+  },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: 8,
+  },
+  action: {
+    minWidth: 120,
   },
 });

@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-08-11T16:42:44.137051+00:00",
+  "nodes": {
+    "mobile_react_app_android_softwarekeyboardlayoutmode": {
+      "code_fingerprint": "3bd4aa045be6bc05d262e07060aa24c5b578491a5bdaa357e625b478418afee4",
+      "label": "softwareKeyboardLayoutMode",
+      "last": "2026-08-11T16:37:30.882471+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T16:37:30.882471+00:00",
+          "outcome": "useful",
+          "q": "when focus input keyboard cover input"
+        }
+      ],
+      "score": 0.999916234,
+      "source_file": "mobile-react/app.json",
+      "status": "tentative",
+      "uses": 1
+    }
+  },
+  "version": 1
+}

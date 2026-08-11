@@ -2,11 +2,20 @@ import { StyleSheet, View } from 'react-native';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
+import {
+  isAuthorized,
+  type PermissionMatchMode,
+  type PermissionString,
+  useAuth,
+} from '@/src/features/auth';
 import { AppCard, AppIcon, type AppIconName, AppScreen, AppText } from '@/src/shared/components';
 
 export interface ReferenceSectionItem {
   label: string;
   icon: AppIconName;
+  roles?: readonly string[];
+  permissions?: readonly PermissionString[];
+  permissionMode?: PermissionMatchMode;
 }
 
 interface ReferenceSectionScreenProps {
@@ -22,6 +31,14 @@ export function ReferenceSectionScreen({
 }: ReferenceSectionScreenProps) {
   const { direction, isRTL } = useLocalization();
   const { theme } = useAppTheme();
+  const { session } = useAuth();
+  const visibleItems = items.filter((item) =>
+    isAuthorized(session, {
+      roles: item.roles,
+      permissions: item.permissions,
+      permissionMode: item.permissionMode,
+    }),
+  );
 
   return (
     <AppScreen edges={['left', 'right', 'bottom']}>
@@ -32,7 +49,7 @@ export function ReferenceSectionScreen({
         </AppText>
       </View>
       <AppCard style={styles.list}>
-        {items.map((item) => (
+        {visibleItems.map((item) => (
           <View
             key={item.label}
             style={[

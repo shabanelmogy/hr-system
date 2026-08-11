@@ -117,6 +117,8 @@
     "UserNotFound": "إسم المستخدم غير موجود",
     "ProfilePictureRequired": "صورة الملف الشخصي مطلوبة",
     "InvalidProfilePicture": "صورة الملف الشخصي غير صالحة",
+    "AdminSeatLimitReached": "وصل المستأجر إلى الحد الأقصى لحسابات المديرين.",
+    "UserSeatLimitReached": "وصل المستأجر إلى الحد الأقصى لحسابات المستخدمين.",
 
     "LocalizationFileNotFound": "ملف الترجمة غير موجود",
     "InvalidLanguage": "اللغة المطلوبة غير مدعومة",

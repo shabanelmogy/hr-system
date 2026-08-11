@@ -61,6 +61,12 @@ namespace HrManagementSystem.Application.Features.Security.Users.Errors
         public Error InvalidRoles =>
             new("Role.InvalidRoles", _localizer[nameof(InvalidRoles)], ErrorType.Validation);
 
+        public Error AdminSeatLimitReached =>
+            new("Tenant.AdminSeatLimitReached", _localizer[nameof(AdminSeatLimitReached)], ErrorType.Conflict);
+
+        public Error UserSeatLimitReached =>
+            new("Tenant.UserSeatLimitReached", _localizer[nameof(UserSeatLimitReached)], ErrorType.Conflict);
+
         public Error NoActiveRefreshTokens =>
             new("Role.InvalidRoles", _localizer[nameof(NoActiveRefreshTokens)], ErrorType.Validation);
 

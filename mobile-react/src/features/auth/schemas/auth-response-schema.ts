@@ -8,6 +8,7 @@ import type {
 } from '@/src/features/auth/types/auth';
 
 const dateString = z.string().refine((value) => !Number.isNaN(Date.parse(value)));
+const claimString = z.string().trim().min(1);
 
 const authResponseSchema: z.ZodType<AuthResponse> = z.object({
   id: z.string().min(1),
@@ -56,8 +57,8 @@ const sessionResponseSchema: z.ZodType<SessionResponse> = z.object({
   email: z.string(),
   firstName: z.string(),
   lastName: z.string(),
-  roles: z.array(z.string()),
-  permissions: z.array(z.string()),
+  roles: z.array(claimString),
+  permissions: z.array(claimString),
   expiresAt: z.number().positive(),
 });
 

@@ -2,6 +2,9 @@ namespace HrManagementSystem.Infrastructure.Hubs.GeneralHub;
 
 public static class GeneralHubGroups
 {
+    public static string ForRole(string role) =>
+        $"role:{role.Trim().ToLowerInvariant()}";
+
     public static string ForPermission(string permission) =>
         $"permission:{permission}";
 

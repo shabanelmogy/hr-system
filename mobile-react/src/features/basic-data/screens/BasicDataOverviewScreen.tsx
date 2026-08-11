@@ -5,12 +5,14 @@ import { useTranslation } from 'react-i18next';
 import { asHref, ROUTES } from '@/src/core/constants/routes';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
+import { canAccessRoute, useAuth } from '@/src/features/auth';
 import { AppCard, AppIcon, AppScreen, AppText } from '@/src/shared/components';
 
 export function BasicDataOverviewScreen() {
   const { t } = useTranslation();
   const { direction, isRTL } = useLocalization();
   const { theme } = useAppTheme();
+  const { session } = useAuth();
 
   const sections = [
     {
@@ -25,7 +27,7 @@ export function BasicDataOverviewScreen() {
       icon: 'business-outline' as const,
       route: ROUTES.basicData.organizationalStructure,
     },
-  ];
+  ].filter((section) => canAccessRoute(section.route, session));
 
   return (
     <AppScreen edges={['left', 'right', 'bottom']}>

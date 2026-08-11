@@ -32,7 +32,7 @@ public class UserService(
     public async Task<IEnumerable<UserResponse>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var now = timeProvider.GetUtcNow();
-        return await (from u in _context.Users
+        var users = await (from u in _context.Users
                       where u.TenantId == _currentActor.TenantId
                       join ur in _context.UserRoles
                       on u.Id equals ur.UserId
@@ -62,6 +62,9 @@ public class UserService(
                     u.Key.ProfilePicture,
                     u.SelectMany(x => x.Roles)
                 )).ToListAsync(cancellationToken);
+
+        return users.Where(user =>
+            !user.Roles.Contains(AppRoles.super_admin, StringComparer.OrdinalIgnoreCase));
     }
 
     public async Task<Result<UserResponse>> GetAsync(string id)
@@ -71,6 +74,8 @@ public class UserService(
             return Result.Failure<UserResponse>(_userErrors.UserNotFound);
 
         var userRoles = await _userManager.GetRolesAsync(user);
+        if (userRoles.Contains(AppRoles.super_admin, StringComparer.OrdinalIgnoreCase))
+            return Result.Failure<UserResponse>(_userErrors.UserNotFound);
 
         var response = (user, userRoles).Adapt<UserResponse>();
 
@@ -103,6 +108,9 @@ public class UserService(
 
         if (request.Roles.Except(allowedRoles.Select(x => x.Name)).Any())
             return Result.Failure<UserResponse>(_userErrors.InvalidRoles);
+
+        if (await GetSeatLimitErrorAsync(request.Roles, cancellationToken) is { } seatLimitError)
+            return Result.Failure<UserResponse>(seatLimitError);
 
         var user = request.Adapt<ApplicationUser>();
         user.TenantId = _currentActor.TenantId;
@@ -165,8 +173,18 @@ public class UserService(
                 .Include(candidate => candidate.RefreshTokens)
                 .SingleOrDefaultAsync(
                     candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId,
-                    cancellationToken) is not { } user)
+                cancellationToken) is not { } user)
             return Result.Failure(_userErrors.UserNotFound);
+
+        var existingRoles = await _userManager.GetRolesAsync(user);
+        if (existingRoles.Contains(AppRoles.super_admin, StringComparer.OrdinalIgnoreCase))
+            return Result.Failure(_userErrors.UserNotFound);
+
+        var addedRoles = request.Roles
+            .Except(existingRoles, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        if (await GetSeatLimitErrorAsync(addedRoles, cancellationToken) is { } seatLimitError)
+            return Result.Failure(seatLimitError);
 
         user = request.Adapt(user);
 
@@ -207,7 +225,10 @@ public class UserService(
                 .Include(candidate => candidate.RefreshTokens)
                 .SingleOrDefaultAsync(
                     candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId,
-                    cancellationToken) is not { } user)
+                cancellationToken) is not { } user)
+            return Result.Failure(_userErrors.UserNotFound);
+
+        if (await _userManager.IsInRoleAsync(user, AppRoles.super_admin))
             return Result.Failure(_userErrors.UserNotFound);
 
         var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -235,6 +256,9 @@ public class UserService(
                 .Include(candidate => candidate.RefreshTokens)
                 .SingleOrDefaultAsync(
                     candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId) is not { } user)
+            return Result.Failure(_userErrors.UserNotFound);
+
+        if (await _userManager.IsInRoleAsync(user, AppRoles.super_admin))
             return Result.Failure(_userErrors.UserNotFound);
 
         if (user.IsDisabled)
@@ -270,6 +294,9 @@ public class UserService(
     {
         if (await _userManager.Users.SingleOrDefaultAsync(
                 candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId) is not { } user)
+            return Result.Failure(_userErrors.UserNotFound);
+
+        if (await _userManager.IsInRoleAsync(user, AppRoles.super_admin))
             return Result.Failure(_userErrors.UserNotFound);
 
         // Clear the lockout end date
@@ -482,6 +509,57 @@ public class UserService(
         }
 
         await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    private async Task<Error?> GetSeatLimitErrorAsync(
+        IReadOnlyCollection<string> roles,
+        CancellationToken cancellationToken)
+    {
+        var needsAdminSeat = roles.Contains(AppRoles.admin, StringComparer.OrdinalIgnoreCase);
+        var needsUserSeat = roles.Contains(AppRoles.user, StringComparer.OrdinalIgnoreCase);
+        if (!needsAdminSeat && !needsUserSeat)
+            return null;
+
+        var tenantId = _currentActor.TenantId;
+        if (string.IsNullOrWhiteSpace(tenantId))
+            return _userErrors.InvalidCompanySelection;
+
+        var limits = await _context.Tenants
+            .AsNoTracking()
+            .Where(tenant => tenant.Id == tenantId)
+            .Select(tenant => new { tenant.MaxAdmins, tenant.MaxUsers })
+            .SingleOrDefaultAsync(cancellationToken);
+        if (limits is null)
+            return _userErrors.InvalidCompanySelection;
+
+        var counts = await (
+            from user in _context.Users.AsNoTracking()
+            join userRole in _context.UserRoles.AsNoTracking() on user.Id equals userRole.UserId
+            join role in _context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
+            where user.TenantId == tenantId &&
+                  (role.NormalizedName == AppRoles.admin.ToUpper() ||
+                   role.NormalizedName == AppRoles.user.ToUpper())
+            group user by role.NormalizedName
+            into group
+            select new
+            {
+                Role = group.Key,
+                Count = group.Select(user => user.Id).Distinct().Count()
+            }).ToDictionaryAsync(item => item.Role!, item => item.Count, cancellationToken);
+
+        if (needsAdminSeat &&
+            counts.GetValueOrDefault(AppRoles.admin.ToUpper()) >= limits.MaxAdmins)
+        {
+            return _userErrors.AdminSeatLimitReached;
+        }
+
+        if (needsUserSeat &&
+            counts.GetValueOrDefault(AppRoles.user.ToUpper()) >= limits.MaxUsers)
+        {
+            return _userErrors.UserSeatLimitReached;
+        }
+
+        return null;
     }
 
     private static void QueueSessionRevoked(string userId, string message)

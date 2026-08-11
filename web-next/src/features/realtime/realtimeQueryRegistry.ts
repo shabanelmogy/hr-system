@@ -1,4 +1,5 @@
 import { appointmentKeys } from "@/features/appointments";
+import { tenantKeys } from "@/features/tenants/tenantApi";
 import { addressTypeKeys } from "@/features/basic-data/geographical-information/address-types";
 import { countryKeys } from "@/features/basic-data/geographical-information/countries";
 import { districtKeys } from "@/features/basic-data/geographical-information/districts";
@@ -14,6 +15,7 @@ export const realtimeResources = {
   addresses: "addresses",
   users: "users",
   appointments: "appointments",
+  tenants: "tenants",
 } as const;
 
 const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
@@ -24,6 +26,7 @@ const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
   [realtimeResources.addresses]: [],
   [realtimeResources.users]: [],
   [realtimeResources.appointments]: [appointmentKeys.all],
+  [realtimeResources.tenants]: [tenantKeys.all],
 };
 
 export function getRealtimeQueryKeys(resource: string): readonly QueryKey[] {

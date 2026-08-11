@@ -2,6 +2,7 @@
 import { getAdvancedToolsConfig } from "./configs/advancedToolsConfig";
 import { getBasicDataConfig } from "./configs/basicDataConfig";
 import { getUsersAndRolesConfig } from "./configs/usersAndRolesConfig";
+import { getSuperAdminConfig } from "./configs/superAdminConfig";
 import { filterNavigationConfig } from "./navigationUtils";
 
 // Import types and enums from separate file
@@ -16,6 +17,7 @@ export const getNavigationConfig = (
 ): NavigationConfig => {
   // Full navigation configuration
   const fullConfig: NavigationConfig = [
+    getSuperAdminConfig(),
     getBasicDataConfig(),
     getExtrasConfig(),
     getUsersAndRolesConfig(),

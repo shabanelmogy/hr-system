@@ -4,6 +4,7 @@ import React from "react";
 
 // Enums for better type safety
 export enum NavigationSectionId {
+  SUPER_ADMIN = "superAdmin",
   Basic_DATA = "basic-data",
   USERS_AND_ROLES = "usersAndRoles",
   CHAT = "chat",
@@ -32,6 +33,7 @@ export enum NavigationColors {
 }
 
 export enum UserRoles {
+  SUPER_ADMIN = "super_admin",
   ADMIN = "admin",
   USER = "user",
   MANAGER = "manager",
@@ -39,6 +41,8 @@ export enum UserRoles {
 
 export enum NavigationTitles {
   // Menu keys
+  SUPER_ADMIN = "menu.superAdmin",
+  TENANT_MANAGEMENT = "menu.tenantManagement",
   BASIC_DATA = "menu.basicData",
   GEOGRAPHIC_DATA = "menu.geographicData",
   COUNTRIES = "menu.countries",

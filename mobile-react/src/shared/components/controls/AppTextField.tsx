@@ -4,13 +4,14 @@ import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
-import { AppIcon } from '@/src/shared/components/icons/AppIcon';
+import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon';
 import { AppText } from '@/src/shared/components/typography/AppText';
 
 export interface AppTextFieldProps extends TextInputProps {
   label: string;
   error?: string;
   helperText?: string;
+  leadingIcon?: AppIconName;
   required?: boolean;
 }
 
@@ -19,6 +20,7 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
     label,
     error,
     helperText,
+    leadingIcon,
     required = false,
     secureTextEntry = false,
     editable = true,
@@ -50,6 +52,11 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
             borderRadius: theme.radius.sm,
           },
         ]}>
+        {leadingIcon ? (
+          <View style={styles.leadingIcon}>
+            <AppIcon color={theme.colors.primary} name={leadingIcon} size={21} />
+          </View>
+        ) : null}
         <TextInput
           {...props}
           accessibilityHint={supportingText}
@@ -108,6 +115,12 @@ const styles = StyleSheet.create({
     minHeight: 46,
     paddingHorizontal: 12,
     fontSize: 16,
+  },
+  leadingIcon: {
+    width: 42,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   passwordButton: {
     width: 44,

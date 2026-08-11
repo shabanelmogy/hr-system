@@ -27,7 +27,7 @@ export function SettingsScreen() {
   ] as const;
 
   return (
-    <AppScreen edges={['top', 'left', 'right']}>
+    <AppScreen edges={['left', 'right']}>
       <View style={styles.heading}>
         <AppText variant="title">{t('settings.title')}</AppText>
         <AppText color="muted" variant="bodySmall">
@@ -82,6 +82,7 @@ export function SettingsScreen() {
           value={mode}
         />
       </AppCard>
+
     </AppScreen>
   );
 }

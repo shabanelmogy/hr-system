@@ -13,12 +13,14 @@ export type RoutePolicy = {
 };
 
 const adminRole = "admin";
+const superAdminRole = "super_admin";
 const rolePermissionsBase = appRoutes.auth.rolePermissionsPage("").replace(/\/$/, "");
 
 export const routePolicies: readonly RoutePolicy[] = [
   { path: appRoutes.home },
   { path: appRoutes.profile },
   { path: appRoutes.changePassword },
+  { path: appRoutes.superAdmin.tenants, roles: [superAdminRole] },
   {
     path: rolePermissionsBase,
     permissions: [permissions.EditRoles],
