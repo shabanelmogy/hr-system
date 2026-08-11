@@ -14,6 +14,10 @@ appsettings.Local.json
 *.userosscache
 *.sln.docstates
 
+# Runtime-generated application data
+**/App_Data/
+**/wwwroot/profile-pictures/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

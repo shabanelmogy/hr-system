@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using HrManagementSystem.Infrastructure.Hangfire.Filters;
-using HrManagementSystem.Shared.Consts;
-using HrManagementSystem.Shared.Settings;
+using HrManagementSystem.Application.Common.Consts;
+using HrManagementSystem.Infrastructure.Common.Settings;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 

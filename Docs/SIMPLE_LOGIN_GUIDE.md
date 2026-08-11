@@ -8,7 +8,7 @@
 - **Status:** ✅ Complete — Your backend should compile now
 
 ### 2. **Database Indexes** (READY TO RUN)
-- **File:** `api/HrManagementSystem/Database_Performance_Indexes.sql`
+- **File:** `api/Docs/Database/Database_Performance_Indexes.sql`
 - **Action:** Just run this SQL script
 - **Impact:** 5-10 seconds faster login
 
@@ -20,7 +20,7 @@
 ```
 1. Open SQL Server Management Studio
 2. Connect to your database
-3. Open file: api/HrManagementSystem/Database_Performance_Indexes.sql
+3. Open file: api/Docs/Database/Database_Performance_Indexes.sql
 4. Click Execute
 5. Done!
 ```

@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { permissions } from "./permissions";
 
 const backendPermissionsPath = new URL(
-  "../../../../api/HrManagementSystem/Shared/Consts/Permissions.cs",
+  "../../../../api/HrManagementSystem.Application/Common/Consts/Permissions.cs",
   import.meta.url,
 );
 

@@ -158,8 +158,8 @@ Test the following scenarios:
 - 📄 `web-next/src/layouts/components/topBar/topBar.tsx` — Logout button (unchanged)
 
 ### Backend
-- 📄 `api/HrManagementSystem/Features/Security/Authentication/Controllers/V1/AuthController.cs` — LogOut endpoint (unchanged)
-- 📄 `api/HrManagementSystem/Features/Security/Authentication/Services/AuthService.cs` — Logout logic (unchanged)
+- 📄 `api/HrManagementSystem.Api/Features/Security/Authentication/V1/AuthController.cs` — LogOut endpoint (unchanged)
+- 📄 `api/HrManagementSystem.Infrastructure/Features/Security/Authentication/Services/AuthService.cs` — Logout logic (unchanged)
 
 ---
 

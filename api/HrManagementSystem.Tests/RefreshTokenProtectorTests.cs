@@ -49,4 +49,31 @@ public sealed class RefreshTokenProtectorTests
         Assert.NotEqual(current.RawToken, replacement.RawToken);
         Assert.True(replacement.Token.IsActive);
     }
+
+    [Fact]
+    public void RotatedToken_DistinguishesConcurrentRefreshGraceFromLaterReuse()
+    {
+        var current = RefreshTokenProtector.Issue(
+            "session-id",
+            "old-jwt-id",
+            7,
+            DateTime.UtcNow.AddDays(14),
+            null,
+            null);
+
+        _ = RefreshTokenProtector.Rotate(
+            current.Token,
+            "new-jwt-id",
+            null,
+            null);
+
+        var rotatedOn = Assert.IsType<DateTime>(current.Token.RevokedOn);
+        Assert.True(current.Token.WasRotated);
+        Assert.True(current.Token.WasRotatedWithin(
+            TimeSpan.FromSeconds(30),
+            rotatedOn.AddSeconds(10)));
+        Assert.False(current.Token.WasRotatedWithin(
+            TimeSpan.FromSeconds(30),
+            rotatedOn.AddSeconds(31)));
+    }
 }

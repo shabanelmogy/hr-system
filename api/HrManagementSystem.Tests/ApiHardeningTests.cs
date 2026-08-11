@@ -1,13 +1,14 @@
 using System.Reflection;
-using HrManagementSystem.Features.Analytics.Views.Controllers.V1;
-using HrManagementSystem.Features.GeographicalInformation.Addresses.Services;
-using HrManagementSystem.Features.GeographicalInformation.AddressTypes.Services;
-using HrManagementSystem.Features.GeographicalInformation.Districts.Services;
-using HrManagementSystem.Features.Platform.Files.Controllers.V1;
+using HrManagementSystem.Api.Common.Errors;
+using HrManagementSystem.Api.Features.Analytics.Views.V1;
+using HrManagementSystem.Application.Features.GeographicalInformation.Addresses.Services;
+using HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Services;
+using HrManagementSystem.Application.Features.GeographicalInformation.Districts.Services;
+using HrManagementSystem.Api.Features.Platform.Files.V1;
 using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
 using HrManagementSystem.Infrastructure.Security.Authorization.Filters;
-using HrManagementSystem.Shared.Consts;
-using HrManagementSystem.Shared.Errors;
+using HrManagementSystem.Application.Common.Consts;
+using HrManagementSystem.Application.Common.Errors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Newtonsoft.Json;
@@ -48,9 +49,9 @@ public sealed class ApiHardeningTests
     }
 
     [Fact]
-    public void ResultProblem_PreservesHttpStatusCode()
+    public void ResultProblem_MapsApplicationErrorTypeToHttpStatusCode()
     {
-        var result = Result.Failure(new Error("Test.NotFound", "Not found", 404));
+        var result = Result.Failure(new Error("Test.NotFound", "Not found", ErrorType.NotFound));
 
         var response = result.ToProblem();
 
@@ -83,8 +84,7 @@ public sealed class ApiHardeningTests
         Assert.NotNull(directory);
         var path = Path.Combine(
             directory!.FullName,
-            "HrManagementSystem",
-            "Infrastructure",
+            "HrManagementSystem.Infrastructure",
             "Localization",
             "Resources",
             fileName);

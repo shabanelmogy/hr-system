@@ -18,6 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HrManagementSystem\HrManagementSystem.csproj" />
+    <ProjectReference Include="..\HrManagementSystem.Application\HrManagementSystem.Application.csproj" />
+    <ProjectReference Include="..\HrManagementSystem.Domain\HrManagementSystem.Domain.csproj" />
+    <ProjectReference Include="..\HrManagementSystem.Api\HrManagementSystem.Api.csproj" />
   </ItemGroup>
 </Project>

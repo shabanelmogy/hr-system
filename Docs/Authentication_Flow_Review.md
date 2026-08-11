@@ -2,7 +2,7 @@
 
 **Date:** January 2025  
 **Frontend:** Next.js (App Router) - `web-next/`  
-**Backend:** ASP.NET Core Web API - `api/HrManagementSystem/`
+**Backend:** ASP.NET Core Web API - `api/HrManagementSystem.Api/`
 
 > **Frontend ownership:** `web-next/` is the canonical frontend and deployment target. The Vite application in `web/` is legacy, frozen except for migration/removal work, and scheduled for removal after migration validation.
 
@@ -484,11 +484,11 @@ export const config = {
 - `web-next/src/features/auth/login/hooks/useLoginForm.ts` — Login logic
 
 ### Backend Files
-- `api/HrManagementSystem/Features/Security/Authentication/Controllers/V1/AuthController.cs`
-- `api/HrManagementSystem/Features/Security/Authentication/Services/AuthService.cs`
-- `api/HrManagementSystem/Infrastructure/Security/Authentication/JwtProvider.cs`
-- `api/HrManagementSystem/Features/Security/Authentication/Contracts/AuthResponse.cs`
-- `api/HrManagementSystem/Features/Security/Authentication/Contracts/LoginRequest.cs`
+- `api/HrManagementSystem.Api/Features/Security/Authentication/V1/AuthController.cs`
+- `api/HrManagementSystem.Infrastructure/Features/Security/Authentication/Services/AuthService.cs`
+- `api/HrManagementSystem.Infrastructure/Security/Authentication/JwtProvider.cs`
+- `api/HrManagementSystem.Application/Features/Security/Authentication/Contracts/AuthResponse.cs`
+- `api/HrManagementSystem.Application/Features/Security/Authentication/Contracts/LoginRequest.cs`
 
 ---
 

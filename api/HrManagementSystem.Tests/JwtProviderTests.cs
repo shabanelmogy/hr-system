@@ -2,9 +2,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using HrManagementSystem.Infrastructure.Security.Authentication;
-using HrManagementSystem.Features.Security.Authentication.Entities;
+using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using HrManagementSystem.Application.Common.Consts;
 
 namespace HrManagementSystem.Tests;
 
@@ -61,6 +62,35 @@ public sealed class JwtProviderTests
         Assert.Equal(user.TenantId, validated.TenantId);
         Assert.DoesNotContain(jwt.Claims, claim => claim.Type == JwtClaimNames.CompanyId);
         Assert.True(issued.ExpiresAt > DateTime.UtcNow);
+    }
+
+    [Fact]
+    public void RealtimeToken_PreservesPermissionClaimsForHubAudienceAssignment()
+    {
+        var provider = CreateProvider();
+        var principal = new ClaimsPrincipal(new ClaimsIdentity(
+        [
+            new Claim(ClaimTypes.NameIdentifier, "user-id"),
+            new Claim(ClaimTypes.Name, "user"),
+            new Claim(ClaimTypes.Email, "user@example.com"),
+            new Claim(JwtClaimNames.SessionId, "session-id"),
+            new Claim(JwtClaimNames.SecurityStamp, "security-stamp"),
+            new Claim(JwtClaimNames.TenantId, "tenant-id"),
+            new Claim(JwtClaimNames.CompanyId, "7"),
+            new Claim(Permissions.Type, Permissions.ViewCountries),
+            new Claim(Permissions.Type, Permissions.ViewStates)
+        ], "Bearer"));
+
+        var jwt = new JwtSecurityTokenHandler().ReadJwtToken(
+            provider.GenerateRealtimeToken(principal));
+        var permissions = jwt.Claims
+            .Where(claim => claim.Type == Permissions.Type)
+            .Select(claim => claim.Value)
+            .ToHashSet(StringComparer.Ordinal);
+
+        Assert.Equal(
+            new HashSet<string>([Permissions.ViewCountries, Permissions.ViewStates]),
+            permissions);
     }
 
     private static JwtProvider CreateProvider()

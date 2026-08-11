@@ -136,6 +136,8 @@
     "src/features/file-manager/media-viewer/components/viewers/VideoPlayer.tsx",
     "src/features/notifications/**/*.ts",
     "src/features/notifications/**/*.tsx",
+    "src/features/realtime/**/*.ts",
+    "src/features/realtime/**/*.tsx",
     "src/features/appointments/**/*.ts",
     "src/features/appointments/**/*.tsx",
     "src/features/reporting/**/*.ts",

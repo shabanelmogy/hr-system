@@ -1,6 +1,6 @@
-using HrManagementSystem.Features.GeographicalInformation.Countries.Entities;
-using HrManagementSystem.Infrastructure.Persistance;
-using HrManagementSystem.Shared.Abstractions;
+using HrManagementSystem.Application.Abstractions.Authentication;
+using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
+using HrManagementSystem.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace HrManagementSystem.Tests;

@@ -6,7 +6,7 @@ This repository contains the ASP.NET Core API and the supported Next.js frontend
 
 | Application | Status | Purpose |
 | --- | --- | --- |
-| `api/HrManagementSystem/` | Active | Backend API |
+| `api/HrManagementSystem.Api/` | Active | Backend API host |
 | `web-next/` | Canonical | Supported frontend and deployment target |
 | `web/` | Legacy | Temporary migration/reference copy; scheduled for removal |
 
@@ -29,6 +29,6 @@ flowchart LR
 
 ## Main Projects
 
-- Backend: `api/HrManagementSystem/`
+- Backend: `api/HrManagementSystem.Api/`
 - Frontend: `web-next/`
 - Shared project documentation: `Docs/`

@@ -2,6 +2,7 @@
 
 import { Suspense, type ReactNode } from "react";
 import { NotificationRealtimeBridge } from "@/features/notifications";
+import { RealtimeEntityBridge } from "@/features/realtime";
 import MainLayout from "@/layouts/main-layout/MainLayout";
 import { SignalRProvider } from "@/lib/signalr/SignalRProvider";
 import { RouteAuthorizationGuard } from "@/shared/components/auth";
@@ -11,6 +12,7 @@ export default function MainShell({ children }: { children: ReactNode }) {
   return (
     <SignalRProvider>
       <NotificationRealtimeBridge />
+      <RealtimeEntityBridge />
       <MainLayout>
         <RouteAuthorizationGuard fallback={<RouteLoading />}>
           <Suspense fallback={<RouteLoading />}>{children}</Suspense>

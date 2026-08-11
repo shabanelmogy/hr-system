@@ -1,0 +1,10 @@
+global using System.Globalization;
+global using System.Text;
+global using FluentValidation;
+global using HrManagementSystem.Application.Abstractions.Persistence;
+global using HrManagementSystem.Application.Common.Consts;
+global using HrManagementSystem.Application.Common.Errors;
+global using HrManagementSystem.Application.Common.Extensions;
+global using HrManagementSystem.Application.Common.Files;
+global using HrManagementSystem.Application.Common.Settings;
+global using Microsoft.Extensions.Localization;

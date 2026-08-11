@@ -57,7 +57,7 @@
 
 **Run this SQL script:**
 ```sql
--- File: api/HrManagementSystem/Database_Performance_Indexes.sql
+-- File: api/Docs/Database/Database_Performance_Indexes.sql
 -- Just execute the file in SQL Server Management Studio
 ```
 

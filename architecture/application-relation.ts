@@ -3,9 +3,9 @@
  * This file is not imported by either application at runtime.
  */
 export class HrManagementSystemApi {
-  readonly path = "api/HrManagementSystem";
+  readonly path = "api/HrManagementSystem.Api";
   readonly routeDefinitions =
-    "api/HrManagementSystem/Shared/Consts/ApiRoutes.cs";
+    "api/HrManagementSystem.Application/Common/Consts/ApiRoutes.cs";
 
   handleHttpRequest(): string {
     return this.path;

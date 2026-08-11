@@ -122,7 +122,7 @@ async function fetchVerifiedSession(accessToken: string): Promise<SessionLookup>
   } catch (error) {
     if (isTimeoutError(error)) {
       console.warn(`${TAG} Session validation timed out after ${sessionValidationTimeoutMs}ms`);
-      return { status: "unauthenticated" };
+      return { status: "unavailable" };
     }
     return { status: "unavailable" };
   }
@@ -148,7 +148,7 @@ async function fetchValidatedClaimsFromCheckAuth(accessToken: string): Promise<S
   } catch (error) {
     if (isTimeoutError(error)) {
       console.warn(`${TAG} Check-auth validation timed out after ${sessionValidationTimeoutMs}ms`);
-      return { status: "unauthenticated" };
+      return { status: "unavailable" };
     }
     return { status: "unavailable" };
   }
@@ -259,7 +259,7 @@ async function requestTokenRefresh(
   } catch (error) {
     if (isTimeoutError(error)) {
       console.warn(`${TAG} Refresh request timed out after ${tokenRefreshTimeoutMs}ms`);
-      return { status: "rejected" };
+      return { status: "unavailable" };
     }
 
     console.warn(`${TAG} Refresh request failed; authentication service unavailable`);

@@ -15,6 +15,7 @@ import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
 export interface UserStore {
   users: User[];
+  hasLoaded: boolean;
   fetchUsers: () => Promise<User[]>;
   addUser: (request: CreateUserRequest) => Promise<User>;
   updateUser: (request: UpdateUserRequest) => Promise<User>;
@@ -30,11 +31,12 @@ const useUserStore = create<UserStore>()(
     persist(
       (set, get) => ({
         users: [],
+        hasLoaded: false,
 
         fetchUsers: async () => {
           const response = await apiService.get<unknown>(apiRoutes.users.getAll);
           const users = parseUsersResponse(response);
-          set({ users });
+          set({ users, hasLoaded: true });
           return users;
         },
 
@@ -101,7 +103,7 @@ const useUserStore = create<UserStore>()(
           await apiService.put<void>(apiRoutes.users.revoke(userId));
         },
 
-        resetUserData: () => set({ users: [] }),
+        resetUserData: () => set({ users: [], hasLoaded: false }),
       }),
       {
         name: "user-storage",

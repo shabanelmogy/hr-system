@@ -127,7 +127,7 @@ describe("resolveSession", () => {
     });
   });
 
-  it("fails closed when session validation times out", async () => {
+  it("preserves credentials when session validation times out", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockRejectedValue(
@@ -136,7 +136,7 @@ describe("resolveSession", () => {
     );
 
     await expect(resolveSession("access-token")).resolves.toEqual({
-      status: "unauthenticated",
+      status: "unavailable",
     });
   });
 });
@@ -164,7 +164,7 @@ describe("refreshAuthTokens", () => {
     },
   );
 
-  it("treats a refresh timeout as an expired session instead of a service outage", async () => {
+  it("treats a refresh timeout as a temporary service outage", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockRejectedValue(
@@ -174,7 +174,7 @@ describe("refreshAuthTokens", () => {
 
     await expect(
       refreshAuthTokens("access-token", "timed-out-refresh"),
-    ).resolves.toEqual({ status: "rejected" });
+    ).resolves.toEqual({ status: "unavailable" });
   });
 });
 

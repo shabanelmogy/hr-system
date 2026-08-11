@@ -1,7 +1,7 @@
 using System.Reflection;
-using HrManagementSystem.Features.Security.Authentication.Controllers.V1;
+using HrManagementSystem.Api.Features.Security.Authentication.V1;
 using HrManagementSystem.Infrastructure.Security.Authorization.Filters;
-using HrManagementSystem.Shared.Consts;
+using HrManagementSystem.Application.Common.Consts;
 using Microsoft.AspNetCore.Authorization;
 
 namespace HrManagementSystem.Tests;

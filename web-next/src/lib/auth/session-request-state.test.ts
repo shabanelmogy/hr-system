@@ -42,4 +42,29 @@ describe("SessionRequestState", () => {
 
     expect(state.isCurrent(requestGeneration)).toBe(false);
   });
+
+  it("starts a new request after invalidation while the old request is pending", async () => {
+    const state = new SessionRequestState();
+    let release!: () => void;
+    const pending = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const generations: number[] = [];
+
+    const staleRequest = state.run(async (generation) => {
+      generations.push(generation);
+      await pending;
+    });
+
+    state.invalidate();
+    const currentRequest = state.run(async (generation) => {
+      generations.push(generation);
+    });
+
+    expect(currentRequest).not.toBe(staleRequest);
+    await currentRequest;
+    release();
+    await staleRequest;
+    expect(generations).toEqual([0, 1]);
+  });
 });

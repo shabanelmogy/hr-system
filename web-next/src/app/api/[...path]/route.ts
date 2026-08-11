@@ -13,6 +13,7 @@ import { refreshAuthTokens } from "@/lib/auth/backend-session";
 import { getBackendUrl } from "@/lib/env/server";
 
 const TAG = "[📡 API Proxy]";
+const backendRequestTimeoutMs = 30_000;
 
 type RouteParameters = { params: Promise<{ path: string[] }> };
 
@@ -50,7 +51,8 @@ async function callBackend(request: NextRequest, path: string[], token?: string,
     headers: createBackendHeaders(request, token),
     body,
     cache: "no-store",
-    redirect: "manual"
+    redirect: "manual",
+    signal: AbortSignal.timeout(backendRequestTimeoutMs),
   });
 }
 
@@ -142,7 +144,7 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
     backendResponse = await callBackend(request, path, accessToken, body);
   } catch (error) {
     console.error(`${TAG} Error calling backend:`, error);
-    return NextResponse.json({ title: "Backend service unavailable", details: String(error) }, { status: 502 });
+    return backendFailureResponse(error);
   }
 
   let refreshedAuth: AuthPayload | null = null;
@@ -164,11 +166,8 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
       try {
         backendResponse = await callBackend(request, path, refreshedAuth.token, body);
         console.log(`${TAG} ✅ Retry successful: ${backendResponse.status} for /api/${route}`);
-      } catch {
-        const response = NextResponse.json(
-          { title: "Backend service unavailable" },
-          { status: 502 },
-        );
+      } catch (error) {
+        const response = backendFailureResponse(error);
         applyAuthPayload(response, refreshedAuth);
         return response;
       }
@@ -196,6 +195,16 @@ function isCrossSiteMutation(request: NextRequest) {
 
   const origin = request.headers.get("origin");
   return Boolean(origin && origin !== request.nextUrl.origin);
+}
+
+function backendFailureResponse(error: unknown) {
+  const timedOut = error instanceof DOMException &&
+    (error.name === "TimeoutError" || error.name === "AbortError");
+
+  return NextResponse.json(
+    { title: timedOut ? "Backend request timed out" : "Backend service unavailable" },
+    { status: timedOut ? 504 : 502 },
+  );
 }
 
 export const dynamic = "force-dynamic";
