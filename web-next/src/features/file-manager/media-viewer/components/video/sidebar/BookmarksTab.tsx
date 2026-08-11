@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, TextField, Button, Chip, List, Accordion, AccordionSummary, AccordionDetails, Typography, IconButton } from '@mui/material';
+import { Box, Button, Chip, List, Accordion, AccordionSummary, AccordionDetails, Typography, IconButton } from '@mui/material';
+import { MyTextField } from '@/shared/components/forms';
 import { Add as AddIcon, Delete as DeleteIcon, Edit as EditIcon, PlayArrow as PlayIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import { formatTime } from '../utils';
 import { Bookmark, BookmarkNote } from './useVideoSidebar';
@@ -59,12 +60,14 @@ export const BookmarksTab: React.FC<BookmarksTabProps> = ({
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, p: 1.5, borderBottom: 1, borderColor: 'divider' }}>
-        <TextField
-          fullWidth
+        <MyTextField
+          counter
+          fieldName="newBookmarkTitle"
+          margin="none"
+          maxValue={200}
           placeholder="Enter bookmark title..."
           value={newBookmarkTitle}
           onChange={(e) => setNewBookmarkTitle(e.target.value)}
-          variant="outlined"
           size="small"
           label="Title"
         />
@@ -138,8 +141,12 @@ export const BookmarksTab: React.FC<BookmarksTabProps> = ({
                         ⚠️ Under Construction: Notes are not saved to database yet
                       </Typography>
                     </Box>
-                    <TextField
-                      fullWidth
+                    <MyTextField
+                      counter
+                      fieldName={`newBookmarkNote-${bookmark.id}`}
+                      labelKey={null}
+                      margin="none"
+                      maxValue={2000}
                       multiline
                       rows={2}
                       placeholder="Add note to bookmark..."
@@ -208,8 +215,12 @@ const BookmarkNoteItem: React.FC<BookmarkNoteItemProps> = ({
     <Box sx={{ border: 1, borderColor: 'divider', borderRadius: 1, p: 1.5, mb: 1, backgroundColor: 'background.default' }}>
       {editingNote?.bookmarkId === bookmark.id && editingNote?.noteId === note.id ? (
         <Box>
-          <TextField
-            fullWidth
+          <MyTextField
+            counter
+            fieldName={`bookmarkNote-${bookmark.id}-${note.id}`}
+            labelKey={null}
+            margin="none"
+            maxValue={2000}
             multiline
             rows={3}
             value={editNoteContent}

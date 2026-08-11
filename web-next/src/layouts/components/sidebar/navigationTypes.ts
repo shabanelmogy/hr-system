@@ -42,6 +42,7 @@ export enum UserRoles {
 export enum NavigationTitles {
   // Menu keys
   SUPER_ADMIN = "menu.superAdmin",
+  SUPER_ADMIN_DASHBOARD = "menu.superAdminDashboard",
   TENANT_MANAGEMENT = "menu.tenantManagement",
   BASIC_DATA = "menu.basicData",
   GEOGRAPHIC_DATA = "menu.geographicData",

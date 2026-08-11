@@ -5,7 +5,7 @@ import {
   type AuthorizationRequirement,
 } from '@/src/features/auth/rbac/authorization';
 import { permissions, type PermissionString } from '@/src/features/auth/rbac/permissions';
-import { appRoles } from '@/src/features/auth/rbac/roles';
+import { appRoles, hasAnyRole } from '@/src/features/auth/rbac/roles';
 
 export interface RoutePolicy {
   path: string;
@@ -23,6 +23,10 @@ export const BASIC_DATA_VIEW_PERMISSIONS = [
 
 // More-specific routes must precede their parent route.
 export const routePolicies: readonly RoutePolicy[] = [
+  {
+    path: ROUTES.superAdminDashboard,
+    roles: [appRoles.superAdmin],
+  },
   {
     path: ROUTES.tenantManagement,
     roles: [appRoles.superAdmin],
@@ -47,6 +51,13 @@ export const routePolicies: readonly RoutePolicy[] = [
   { path: ROUTES.modal },
 ];
 
+const superAdminAllowedRoutes = [
+  ROUTES.home,
+  ROUTES.settings,
+  ROUTES.superAdminDashboard,
+  ROUTES.tenantManagement,
+] as const;
+
 function matchesRoute(pathname: string, routePath: string): boolean {
   return (
     pathname === routePath ||
@@ -62,6 +73,14 @@ export function canAccessRoute(
   pathname: string,
   session: AuthorizationClaims | null,
 ): boolean {
+  if (
+    session &&
+    hasAnyRole(session.roles, [appRoles.superAdmin]) &&
+    !superAdminAllowedRoutes.some((path) => matchesRoute(pathname, path))
+  ) {
+    return false;
+  }
+
   const policy = getRoutePolicy(pathname);
   if (!policy) return false;
 

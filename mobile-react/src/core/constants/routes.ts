@@ -4,6 +4,7 @@ export const ROUTES = {
   home: '/',
   login: '/login',
   settings: '/settings',
+  superAdminDashboard: '/super-admin-dashboard',
   tenantManagement: '/tenant-management',
   modal: '/modal',
   basicData: {
@@ -17,6 +18,7 @@ export type AppRoute =
   | typeof ROUTES.home
   | typeof ROUTES.login
   | typeof ROUTES.settings
+  | typeof ROUTES.superAdminDashboard
   | typeof ROUTES.tenantManagement
   | typeof ROUTES.modal
   | (typeof ROUTES.basicData)[keyof typeof ROUTES.basicData];

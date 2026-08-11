@@ -6,6 +6,7 @@ namespace HrManagementSystem.Api.Features.Security.ApiKeys.V1
     [ApiVersion("1.0")]
     [Route(ApiRoutes.BaseRoute)]
     [ApiController]
+    [TenantMember]
     public class ApiKeysController(IApiKeyService apiKeyService) : ControllerBase
     {
         private readonly IApiKeyService _apiKeyService = apiKeyService;

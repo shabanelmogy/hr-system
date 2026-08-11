@@ -7,6 +7,7 @@ namespace HrManagementSystem.Api.Features.Finance.Invoicing.V1;
 [ApiController]
 [Route("api/[controller]")]
 [Route("api/v{version:apiVersion}/[controller]")]
+[TenantMember]
 public sealed class InvoiceController(IInvoiceQrCodeService invoiceQrCodeService) : ControllerBase
 {
     [HttpPost("generate-qr")]

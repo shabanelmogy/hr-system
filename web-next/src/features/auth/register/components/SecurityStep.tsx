@@ -2,13 +2,11 @@
 import {
   alpha,
   Box,
-  IconButton,
-  InputAdornment,
   Stack,
-  TextField,
   Typography,
   useTheme,
 } from "@mui/material";
+import { MyTextField } from "@/shared/components/forms";
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
 import type { RegistrationFormData } from "../types";
 
@@ -17,8 +15,6 @@ import CheckIcon from "@mui/icons-material/Check";
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 interface SecurityStepProps {
   register: UseFormRegister<RegistrationFormData>;
@@ -78,66 +74,33 @@ const SecurityStep = ({
       >
         {t("auth.accountSecurity") || "Account Security"}
       </Typography>
-      <TextField
-        fullWidth
-        label={t("auth.email") || "Email"}
-        variant="outlined"
-        type="email"
-        error={!!errors.email}
-        helperText={errors.email?.message}
-        {...register("email")}
+      <MyTextField
+        counter
+        errors={errors}
+        fieldName="email"
         inputRef={emailRef}
+        label={t("auth.email") || "Email"}
+        maxValue={254}
+        register={register("email")}
+        required
+        startIcon={<EmailIcon color="primary" />}
         sx={textFieldStyles}
-        slotProps={{
-          htmlInput: {
-            "aria-required": true,
-            "aria-invalid": !!errors.email,
-          },
-          input: {
-            startAdornment: (
-              <InputAdornment position="start">
-                <EmailIcon color="primary" />
-              </InputAdornment>
-            ),
-          }
-        }}
+        type="email"
       />
       <Box>
-        <TextField
-          fullWidth
+        <MyTextField
+          counter={false}
+          errors={errors}
+          fieldName="password"
           label={t("auth.password") || "Password"}
-          variant="outlined"
-          type={showPassword ? "text" : "password"}
-          error={!!errors.password}
-          helperText={errors.password?.message}
-          {...register("password")}
+          maxValue={128}
+          register={register("password")}
+          required
+          setShowPassword={setShowPassword}
+          showPassword={showPassword}
+          startIcon={<LockIcon color="primary" />}
           sx={textFieldStyles}
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LockIcon color="primary" />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    type="button"
-                    aria-label="toggle password visibility"
-                    onClick={() => setShowPassword(!showPassword)}
-                    edge="end"
-                    size="small"
-                  >
-                    {showPassword ? (
-                      <VisibilityOffIcon fontSize="small" />
-                    ) : (
-                      <VisibilityIcon fontSize="small" />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }
-          }}
+          type="password"
         />
 
         {/* Password strength indicator */}
@@ -176,24 +139,19 @@ const SecurityStep = ({
           </Box>
         </Box>
       </Box>
-      <TextField
-        fullWidth
+      <MyTextField
+        counter={false}
+        errors={errors}
+        fieldName="confirmPassword"
         label={t("auth.confirmPassword") || "Confirm Password"}
-        variant="outlined"
-        type={showPassword ? "text" : "password"}
-        error={!!errors.confirmPassword}
-        helperText={errors.confirmPassword?.message}
-        {...register("confirmPassword")}
+        maxValue={128}
+        register={register("confirmPassword")}
+        required
+        setShowPassword={setShowPassword}
+        showPassword={showPassword}
+        startIcon={<LockIcon color="primary" />}
         sx={textFieldStyles}
-        slotProps={{
-          input: {
-            startAdornment: (
-              <InputAdornment position="start">
-                <LockIcon color="primary" />
-              </InputAdornment>
-            ),
-          }
-        }}
+        type="password"
       />
       <Box
         sx={{

@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { asHref, ROUTES } from '@/src/core/constants/routes';
@@ -11,6 +11,7 @@ import {
   AppDivider,
   AppIcon,
   type AppIconName,
+  AppMetricCard,
   AppScreen,
   AppText,
 } from '@/src/shared/components';
@@ -50,6 +51,7 @@ export function HomeScreen() {
   const { session } = useAuth();
   const compact = width < 560;
   const canViewBasicData = useCanAccessRoute(ROUTES.basicData.root);
+  const canViewSuperAdminDashboard = useCanAccessRoute(ROUTES.superAdminDashboard);
   const canManageTenants = useCanAccessRoute(ROUTES.tenantManagement);
   const userDisplayName =
     [session?.firstName, session?.lastName].filter(Boolean).join(' ') ||
@@ -97,32 +99,47 @@ export function HomeScreen() {
 
       <View style={[styles.metricGrid, { gap: theme.spacing.md }]}>
         {metrics.map((metric) => (
-          <AppCard
+          <AppMetricCard
+            color={metricColor[metric.color]}
+            icon={metric.icon}
             key={metric.key}
-            style={[styles.metricCard, { width: compact ? '100%' : '48.8%' }]}>
-            <View style={[styles.metricTop, { direction }]}>
-              <View
-                style={[
-                  styles.metricIcon,
-                  {
-                    backgroundColor: theme.colors.surfaceMuted,
-                    borderRadius: theme.radius.sm,
-                  },
-                ]}>
-                <AppIcon color={metricColor[metric.color]} name={metric.icon} size={22} />
-              </View>
-              <AppText color="muted" variant="bodySmall">
-                {t(`home.${metric.key}`)}
-              </AppText>
-            </View>
-            <AppText variant="display">{metric.value}</AppText>
-          </AppCard>
+            label={t(`home.${metric.key}`)}
+            style={{ width: compact ? '100%' : '48.8%' }}
+            value={metric.value}
+          />
         ))}
       </View>
 
-      {canViewBasicData || canManageTenants ? (
+      {canViewBasicData || canViewSuperAdminDashboard || canManageTenants ? (
         <View style={styles.section}>
           <AppText variant="titleSmall">{t('home.modules')}</AppText>
+          {canViewSuperAdminDashboard ? (
+            <AppCard
+              accessibilityLabel={t('navigation.superAdminDashboard')}
+              onPress={() => router.push(asHref(ROUTES.superAdminDashboard))}
+              style={styles.moduleCard}>
+              <View style={[styles.moduleRow, { direction }]}>
+                <View
+                  style={[
+                    styles.moduleIcon,
+                    { backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radius.sm },
+                  ]}>
+                  <AppIcon color={theme.colors.primary} name="speedometer-outline" size={25} />
+                </View>
+                <View style={styles.activityText}>
+                  <AppText variant="label">{t('navigation.superAdminDashboard')}</AppText>
+                  <AppText color="muted" variant="bodySmall">
+                    {t('superAdminDashboard.description')}
+                  </AppText>
+                </View>
+                <AppIcon
+                  color={theme.colors.textMuted}
+                  name={isRTL ? 'chevron-back' : 'chevron-forward'}
+                  size={20}
+                />
+              </View>
+            </AppCard>
+          ) : null}
           {canManageTenants ? (
             <AppCard
               accessibilityLabel={t('navigation.tenantManagement')}
@@ -184,22 +201,16 @@ export function HomeScreen() {
         <AppText variant="titleSmall">{t('home.quickActions')}</AppText>
         <View style={[styles.actions, { direction }]}>
           {quickActions.map((action) => (
-            <Pressable
-              accessibilityRole="button"
+            <AppCard
               key={action.key}
-              style={({ pressed }) => [
-                styles.action,
-                {
-                  backgroundColor: pressed ? theme.colors.surfaceMuted : theme.colors.surface,
-                  borderColor: theme.colors.border,
-                  borderRadius: theme.radius.md,
-                },
-              ]}>
+              padding="md"
+              style={styles.action}
+              variant="filled">
               <AppIcon color={theme.colors.primary} name={action.icon} size={24} />
               <AppText align="center" variant="bodySmall" weight="600">
                 {t(`home.${action.key}`)}
               </AppText>
-            </Pressable>
+            </AppCard>
           ))}
         </View>
       </View>
@@ -266,23 +277,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-  },
-  metricCard: {
-    minHeight: 128,
-    justifyContent: 'space-between',
-    gap: 12,
-  },
-  metricTop: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 8,
-  },
-  metricIcon: {
-    width: 38,
-    height: 38,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   section: {
     gap: 12,

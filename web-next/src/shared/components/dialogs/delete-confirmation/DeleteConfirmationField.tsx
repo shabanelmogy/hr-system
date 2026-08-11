@@ -1,6 +1,7 @@
 import type { Ref } from "react";
 import { CheckCircleOutlined as VerifiedIcon } from "@mui/icons-material";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { MyTextField } from "@/shared/components/forms";
 import { useTranslation } from "react-i18next";
 
 interface DeleteConfirmationFieldProps {
@@ -50,14 +51,18 @@ export function DeleteConfirmationField({
         {t("messages.inTheBoxBelow")}
       </Typography>
 
-      <TextField
-        fullWidth
+      <MyTextField
+        counter
+        fieldName="deleteConfirmation"
         inputRef={inputRef}
+        maxValue={keyword.length}
+        minValue={keyword.length}
         value={value}
         onChange={(event) => onChange(event.target.value)}
         label={t("messages.typeDELETE", { keyword })}
         error={showError}
         disabled={disabled}
+        required
         autoFocus
         autoComplete="off"
         slotProps={{

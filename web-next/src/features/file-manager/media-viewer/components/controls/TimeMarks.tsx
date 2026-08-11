@@ -5,7 +5,6 @@ import {
   ListItem,
   ListItemText,
   IconButton,
-  TextField,
   Button,
   Typography,
   Drawer,
@@ -15,6 +14,7 @@ import {
   DialogActions,
   Chip,
 } from '@mui/material';
+import { MyTextField } from '@/shared/components/forms';
 import {
   Bookmark as BookmarkIcon,
   Delete as DeleteIcon,
@@ -81,13 +81,17 @@ const TimeMarks: React.FC<TimeMarksProps> = ({ currentTime, onSeek, isOpen, onCl
         <Typography variant="h6" sx={{ mb: 2 }}>Time Marks</Typography>
         
         <Box sx={{ mb: 2 }}>
-          <TextField
-            fullWidth
+          <MyTextField
+            counter
+            fieldName="timeMarkLabel"
+            labelKey={null}
+            margin="none"
+            maxValue={100}
             size="small"
             placeholder="Mark label"
             value={newMarkLabel}
             onChange={(e) => setNewMarkLabel(e.target.value)}
-            sx={{ mb: 1 }}
+            containerSx={{ mb: 1 }}
           />
           <Button
             fullWidth
@@ -141,8 +145,11 @@ const TimeMarks: React.FC<TimeMarksProps> = ({ currentTime, onSeek, isOpen, onCl
         <Dialog open={noteDialog.open} onClose={() => setNoteDialog({ open: false, markId: '', note: '' })} maxWidth="sm" fullWidth>
           <DialogTitle>Add Note to Bookmark</DialogTitle>
           <DialogContent>
-            <TextField
-              fullWidth
+            <MyTextField
+              counter
+              fieldName="timeMarkNote"
+              labelKey={null}
+              maxValue={2000}
               multiline
               rows={4}
               placeholder="Add your note here..."

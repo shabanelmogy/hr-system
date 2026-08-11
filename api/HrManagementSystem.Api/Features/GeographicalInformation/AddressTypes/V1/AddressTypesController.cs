@@ -6,7 +6,7 @@ namespace HrManagementSystem.Api.Features.GeographicalInformation.AddressTypes.V
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute)]
 [ApiController]
-[Authorize]
+[TenantMember]
 public class AddressTypesController(IAddressTypeService addressTypeService) : ControllerBase
 {
     private readonly IAddressTypeService _addressTypeService = addressTypeService;

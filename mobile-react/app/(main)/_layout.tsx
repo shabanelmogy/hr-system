@@ -15,6 +15,7 @@ export default function ProtectedRouteLayout() {
   const { isRTL } = useLocalization();
   const { theme } = useAppTheme();
   const canViewBasicData = useCanAccessRoute(ROUTES.basicData.root);
+  const canViewSuperAdminDashboard = useCanAccessRoute(ROUTES.superAdminDashboard);
   const canManageTenants = useCanAccessRoute(ROUTES.tenantManagement);
 
   return (
@@ -63,6 +64,16 @@ export default function ProtectedRouteLayout() {
             title: t('navigation.basicData'),
             drawerIcon: ({ color, size }) => (
               <AppIcon color={color} name="server-outline" size={size} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="super-admin-dashboard"
+          options={{
+            drawerItemStyle: canViewSuperAdminDashboard ? undefined : { display: 'none' },
+            title: t('navigation.superAdminDashboard'),
+            drawerIcon: ({ color, size }) => (
+              <AppIcon color={color} name="speedometer-outline" size={size} />
             ),
           }}
         />

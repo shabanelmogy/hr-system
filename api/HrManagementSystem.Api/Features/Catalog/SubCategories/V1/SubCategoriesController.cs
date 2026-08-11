@@ -8,7 +8,7 @@ namespace HrManagementSystem.Api.Features.Catalog.SubCategories.V1;
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute)]
 [ApiController]
-[Authorize]
+[TenantMember]
 public class SubcategoriesController(ISubCategoryService subcategoryService) : ControllerBase
 {
     private readonly ISubCategoryService _subcategoryService = subcategoryService;

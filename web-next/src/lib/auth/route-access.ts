@@ -15,12 +15,21 @@ export type RoutePolicy = {
 const adminRole = "admin";
 const superAdminRole = "super_admin";
 const rolePermissionsBase = appRoutes.auth.rolePermissionsPage("").replace(/\/$/, "");
+const superAdminAllowedRoutes = [
+  appRoutes.home,
+  appRoutes.profile,
+  appRoutes.changePassword,
+  appRoutes.superAdmin.dashboard,
+  appRoutes.superAdmin.tenants,
+  UNAVAILABLE_ROUTE,
+] as const;
 
 export const routePolicies: readonly RoutePolicy[] = [
   { path: appRoutes.home },
   { path: appRoutes.profile },
   { path: appRoutes.changePassword },
   { path: appRoutes.superAdmin.tenants, roles: [superAdminRole] },
+  { path: appRoutes.superAdmin.dashboard, roles: [superAdminRole] },
   {
     path: rolePermissionsBase,
     permissions: [permissions.EditRoles],
@@ -95,6 +104,16 @@ const matchesRoute = (pathname: string, routePath: string) =>
   (routePath !== appRoutes.home && pathname.startsWith(`${routePath}/`));
 
 export function canAccessRoute(pathname: string, session: SessionClaims): boolean {
+  const isSuperAdmin = session.roles.some(
+    (role) => role.trim().toLowerCase() === superAdminRole,
+  );
+  if (
+    isSuperAdmin &&
+    !superAdminAllowedRoutes.some((path) => matchesRoute(pathname, path))
+  ) {
+    return false;
+  }
+
   const rule = routePolicies.find(({ path }) => matchesRoute(pathname, path));
   if (!rule) return false;
   return isAuthorized(session, {

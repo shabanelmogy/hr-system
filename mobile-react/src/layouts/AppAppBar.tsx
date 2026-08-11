@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
+import { useAuth } from '@/src/features/auth/context/AuthProvider';
 import { useLogout } from '@/src/features/auth/hooks/useLogout';
 import { AppIcon, AppIconButton, AppText } from '@/src/shared/components';
 
@@ -21,9 +22,12 @@ export function AppAppBar({
   const { t } = useTranslation();
   const { direction, language, setLanguage } = useLocalization();
   const { theme, resolvedMode, setMode } = useAppTheme();
+  const { session } = useAuth();
   const { isLoggingOut, logout } = useLogout();
   const { width } = useWindowDimensions();
   const compactAuthenticatedBar = width < 520 && (showDrawer || showLogout);
+  const developmentRoleLabel =
+    __DEV__ && session?.roles.length ? session.roles.join(', ') : null;
 
   return (
     <SafeAreaView edges={['top']} style={{ backgroundColor: theme.colors.primary }}>
@@ -54,6 +58,22 @@ export function AppAppBar({
               <AppText style={{ color: theme.colors.onPrimary }} variant="label" weight="800">
                 {t('common.appName')}
               </AppText>
+            ) : null}
+            {developmentRoleLabel ? (
+              <View
+                accessibilityLabel={`Development role: ${developmentRoleLabel}`}
+                style={[
+                  styles.roleBadge,
+                  { borderColor: theme.colors.onPrimary },
+                ]}>
+                <AppText
+                  numberOfLines={1}
+                  style={{ color: theme.colors.onPrimary }}
+                  variant="caption"
+                  weight="800">
+                  DEV · {developmentRoleLabel}
+                </AppText>
+              </View>
             ) : null}
           </View>
 
@@ -138,5 +158,14 @@ const styles = StyleSheet.create({
   languageAction: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  roleBadge: {
+    maxWidth: 132,
+    minHeight: 26,
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderRadius: 999,
+    backgroundColor: 'rgba(255, 255, 255, 0.14)',
+    paddingHorizontal: 8,
   },
 });

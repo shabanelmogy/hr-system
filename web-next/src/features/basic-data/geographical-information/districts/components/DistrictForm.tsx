@@ -2,7 +2,7 @@
 import { MyForm, MySelect, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Casino } from "@mui/icons-material";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useEffect } from "react";
 import { Resolver, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -186,15 +186,7 @@ const DistrictForm = ({
       }
     >
       {(isEditMode || isViewMode) && (
-        <TextField
-          margin="dense"
-          label="Id"
-          fullWidth
-          disabled
-          autoComplete="off"
-          value={selectedDistrict?.id || ""}
-          sx={{ display: "none" }}
-        />
+        <input type="hidden" value={selectedDistrict?.id || ""} readOnly />
       )}
 
       {/* Required: Arabic Name */}

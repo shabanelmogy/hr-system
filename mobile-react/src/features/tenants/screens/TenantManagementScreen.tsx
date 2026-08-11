@@ -9,18 +9,32 @@ import { TenantFormModal } from '@/src/features/tenants/components/TenantFormMod
 import { useSaveTenant, useTenants } from '@/src/features/tenants/hooks/useTenants';
 import type {
   SubscriptionStatus,
+  TenantFormErrors,
   TenantFormState,
   TenantManagementRequest,
   TenantManagementResponse,
 } from '@/src/features/tenants/types/tenant';
 import {
+  AppAlert,
   AppButton,
   AppCard,
   AppIcon,
+  type AppIconName,
   AppScreen,
   AppStateView,
+  AppStatusBadge,
   AppText,
 } from '@/src/shared/components';
+
+const statusIcons = {
+  free: 'gift-outline',
+  trial: 'flask-outline',
+  active: 'checkmark-circle-outline',
+  pastDue: 'time-outline',
+  suspended: 'pause-circle-outline',
+  expired: 'hourglass-outline',
+  cancelled: 'close-circle-outline',
+} as const satisfies Record<SubscriptionStatus, AppIconName>;
 
 export function TenantManagementScreen() {
   const { t } = useTranslation();
@@ -31,12 +45,14 @@ export function TenantManagementScreen() {
   const [editing, setEditing] = useState<TenantManagementResponse | null>(null);
   const [form, setForm] = useState<TenantFormState | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<TenantFormErrors>({});
 
   const openCreate = () => {
     saveMutation.reset();
     setEditing(null);
     setForm(createEmptyForm());
     setFormError(null);
+    setFieldErrors({});
   };
 
   const openEdit = (tenant: TenantManagementResponse) => {
@@ -44,6 +60,7 @@ export function TenantManagementScreen() {
     setEditing(tenant);
     setForm(toForm(tenant));
     setFormError(null);
+    setFieldErrors({});
   };
 
   const closeForm = () => {
@@ -51,22 +68,37 @@ export function TenantManagementScreen() {
     setEditing(null);
     setForm(null);
     setFormError(null);
+    setFieldErrors({});
     saveMutation.reset();
+  };
+
+  const clearFieldError = (field: keyof TenantFormState) => {
+    setFieldErrors((current) => {
+      if (!current[field]) return current;
+      const next = { ...current };
+      delete next[field];
+      return next;
+    });
   };
 
   const save = async () => {
     if (!form) return;
 
-    const validationError = validateForm(form, {
-      required: t('tenantManagement.requiredFields'),
-      limits: t('tenantManagement.invalidLimits'),
-      dates: t('tenantManagement.invalidDates'),
+    const validationErrors = validateForm(form, {
+      required: t('common.required'),
+      adminLimit: t('tenantManagement.adminLimitError'),
+      userLimit: t('tenantManagement.userLimitError'),
+      startDate: t('tenantManagement.invalidStartDate'),
+      endDate: t('tenantManagement.invalidEndDate'),
+      billingEmail: t('tenantManagement.invalidBillingEmail'),
     });
-    if (validationError) {
-      setFormError(validationError);
+    if (Object.keys(validationErrors).length > 0) {
+      setFieldErrors(validationErrors);
+      setFormError(null);
       return;
     }
 
+    setFieldErrors({});
     setFormError(null);
     try {
       await saveMutation.mutateAsync({ id: editing?.id ?? null, request: toRequest(form) });
@@ -100,20 +132,9 @@ export function TenantManagementScreen() {
         </AppButton>
       </View>
 
-      <View
-        style={[
-          styles.syncHint,
-          {
-            direction,
-            backgroundColor: theme.colors.surfaceMuted,
-            borderRadius: theme.radius.md,
-          },
-        ]}>
-        <AppIcon color={theme.colors.primary} name="sync-outline" size={19} />
-        <AppText color="muted" style={styles.syncText} variant="bodySmall">
-          {t('tenantManagement.refreshHint')}
-        </AppText>
-      </View>
+      <AppAlert icon="sync-outline" severity="info" style={styles.syncHint}>
+        {t('tenantManagement.refreshHint')}
+      </AppAlert>
 
       {tenantsQuery.isLoading ? (
         <AppStateView state="loading" />
@@ -135,12 +156,14 @@ export function TenantManagementScreen() {
 
       <TenantFormModal
         error={formError}
+        errors={fieldErrors}
         form={form}
         isEdit={Boolean(editing)}
         loading={saveMutation.isPending}
         onChange={setForm}
+        onClearFieldError={clearFieldError}
         onClose={closeForm}
-        onSave={() => void save()}
+        onSave={save}
       />
     </AppScreen>
   );
@@ -176,15 +199,11 @@ function TenantCard({
             {tenant.identifier}
           </AppText>
         </View>
-        <View
-          style={[
-            styles.badge,
-            { backgroundColor: `${statusColor}1A`, borderColor: statusColor },
-          ]}>
-          <AppText style={{ color: statusColor }} variant="caption" weight="700">
-            {t(`tenantManagement.statuses.${tenant.subscriptionStatus}`)}
-          </AppText>
-        </View>
+        <AppStatusBadge
+          color={statusColor}
+          icon={statusIcons[tenant.subscriptionStatus]}
+          label={t(`tenantManagement.statuses.${tenant.subscriptionStatus}`)}
+        />
       </View>
 
       <View style={[styles.metrics, { direction }]}>
@@ -213,27 +232,11 @@ function TenantCard({
       </View>
 
       <View style={[styles.cardFooter, { direction, borderTopColor: theme.colors.border }]}>
-        <View
-          style={[
-            styles.availability,
-            {
-              backgroundColor: tenant.isActive
-                ? `${theme.colors.success}1A`
-                : theme.colors.surfaceMuted,
-            },
-          ]}>
-          <AppIcon
-            color={tenant.isActive ? theme.colors.success : theme.colors.textMuted}
-            name={tenant.isActive ? 'checkmark-circle-outline' : 'pause-circle-outline'}
-            size={17}
-          />
-          <AppText
-            color={tenant.isActive ? 'success' : 'muted'}
-            variant="caption"
-            weight="600">
-            {t(tenant.isActive ? 'tenantManagement.enabled' : 'tenantManagement.disabled')}
-          </AppText>
-        </View>
+        <AppStatusBadge
+          color={tenant.isActive ? theme.colors.success : theme.colors.textMuted}
+          icon={tenant.isActive ? 'checkmark-circle-outline' : 'pause-circle-outline'}
+          label={t(tenant.isActive ? 'tenantManagement.enabled' : 'tenantManagement.disabled')}
+        />
         <AppButton icon="create-outline" onPress={onEdit} variant="ghost">
           {t('tenantManagement.edit')}
         </AppButton>
@@ -262,8 +265,8 @@ function createEmptyForm(): TenantFormState {
     subscriptionStartedOn: new Date().toISOString().slice(0, 10),
     subscriptionEndsOn: '',
     planName: 'Free',
-    maxAdmins: '1',
-    maxUsers: '5',
+    maxAdmins: '0',
+    maxUsers: '0',
     billingEmail: '',
     contactName: '',
     contactPhone: '',
@@ -312,26 +315,45 @@ function toRequest(form: TenantFormState): TenantManagementRequest {
 
 function validateForm(
   form: TenantFormState,
-  messages: { required: string; limits: string; dates: string },
-): string | null {
-  if (!form.identifier.trim() || !form.name.trim() || !isDate(form.subscriptionStartedOn)) {
-    return messages.required;
+  messages: {
+    required: string;
+    adminLimit: string;
+    userLimit: string;
+    startDate: string;
+    endDate: string;
+    billingEmail: string;
+  },
+): TenantFormErrors {
+  const errors: TenantFormErrors = {};
+
+  if (!form.identifier.trim()) errors.identifier = messages.required;
+  if (!form.name.trim()) errors.name = messages.required;
+  if (!form.subscriptionStartedOn) errors.subscriptionStartedOn = messages.required;
+  else if (!isDate(form.subscriptionStartedOn)) {
+    errors.subscriptionStartedOn = messages.startDate;
   }
 
   const maxAdmins = Number(form.maxAdmins);
   const maxUsers = Number(form.maxUsers);
-  if (!Number.isInteger(maxAdmins) || maxAdmins < 1 || !Number.isInteger(maxUsers) || maxUsers < 0) {
-    return messages.limits;
+  if (!form.maxAdmins.trim() || !Number.isInteger(maxAdmins) || maxAdmins < 0) {
+    errors.maxAdmins = messages.adminLimit;
+  }
+  if (!form.maxUsers.trim() || !Number.isInteger(maxUsers) || maxUsers < 0) {
+    errors.maxUsers = messages.userLimit;
   }
 
   if (
     form.subscriptionEndsOn &&
     (!isDate(form.subscriptionEndsOn) || form.subscriptionEndsOn < form.subscriptionStartedOn)
   ) {
-    return messages.dates;
+    errors.subscriptionEndsOn = messages.endDate;
   }
 
-  return null;
+  if (form.billingEmail.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.billingEmail.trim())) {
+    errors.billingEmail = messages.billingEmail;
+  }
+
+  return errors;
 }
 
 function isDate(value: string): boolean {
@@ -382,14 +404,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   syncHint: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    padding: 12,
     marginBottom: 16,
-  },
-  syncText: {
-    flex: 1,
   },
   list: {
     gap: 14,
@@ -412,13 +427,6 @@ const styles = StyleSheet.create({
     flex: 1,
     minWidth: 0,
   },
-  badge: {
-    minHeight: 30,
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderRadius: 999,
-    paddingHorizontal: 10,
-  },
   metrics: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -438,13 +446,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderTopWidth: StyleSheet.hairlineWidth,
     paddingTop: 10,
-  },
-  availability: {
-    minHeight: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    borderRadius: 999,
-    paddingHorizontal: 10,
   },
 });

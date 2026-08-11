@@ -5,7 +5,7 @@ namespace HrManagementSystem.Api.Features.Analytics.Dashboard.V1;
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute)]
 [ApiController]
-[Authorize]
+[TenantMember]
 
 public class DashboardController(IDashboardService dashboardService) : ControllerBase
 {

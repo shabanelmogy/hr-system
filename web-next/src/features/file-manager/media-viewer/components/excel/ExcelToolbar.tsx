@@ -3,7 +3,6 @@ import {
   Box,
   IconButton,
   Paper,
-  TextField,
   Tooltip,
   Typography,
   Select,
@@ -28,6 +27,7 @@ import {
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import BackButton from "@/shared/components/navigation/BackButton";
+import { MyTextField } from "@/shared/components/forms";
 
 const ToolbarContainer = styled(Paper)(({ theme }) => ({
   display: "flex",
@@ -158,19 +158,18 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
                     ))}
                   </Select>
                 </FormControl>
-                <TextField
+                <MyTextField
+                  containerSx={{ width: "100%", maxWidth: 200 }}
+                  counter={false}
+                  fieldName="excelSheetSearch"
+                  labelKey={null}
+                  margin="none"
+                  maxValue={200}
                   size="small"
                   placeholder={t("files.search")}
                   value={searchTerm}
                   onChange={(e) => onSearch(e.target.value)}
-                  slotProps={{
-                    input: {
-                      startAdornment: (
-                        <SearchIcon sx={{ mr: 1, color: "text.secondary" }} />
-                      ),
-                    }
-                  }}
-                  sx={{ width: "100%", maxWidth: 200 }}
+                  startIcon={<SearchIcon sx={{ color: "text.secondary" }} />}
                 />
                 <Typography
                   variant="caption"
@@ -270,19 +269,18 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
                 ))}
               </Select>
             </FormControl>
-            <TextField
+            <MyTextField
+              containerSx={{ width: "100%", maxWidth: 300 }}
+              counter={false}
+              fieldName="excelSheetSearch"
+              labelKey={null}
+              margin="none"
+              maxValue={200}
               size="small"
               placeholder={t("files.searchInSheet")}
               value={searchTerm}
               onChange={(e) => onSearch(e.target.value)}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <SearchIcon sx={{ mr: 1, color: "text.secondary" }} />
-                  ),
-                }
-              }}
-              sx={{ width: "100%", maxWidth: 300 }}
+              startIcon={<SearchIcon sx={{ color: "text.secondary" }} />}
             />
             <Typography
               variant="caption"

@@ -210,6 +210,8 @@ cause
 causes
 cell
 center
+cert
+certificates
 change
 changed
 changes
@@ -302,6 +304,7 @@ considerations
 consistent
 constants
 constrained
+constraint
 constraints
 constructor
 consts
@@ -335,6 +338,7 @@ cost
 count
 countries
 country
+counts
 cover
 coverage
 covered
@@ -361,6 +365,7 @@ cycles
 daily
 dark
 dashboard
+dashborad
 data
 database
 databaseservice
@@ -397,6 +402,7 @@ deleted
 deleting
 deletion
 delivery
+denied
 denies
 department
 dependencies
@@ -423,6 +429,7 @@ developer
 development
 device
 devtools
+diagnose
 diagnostic
 dialog
 dialogs
@@ -573,6 +580,7 @@ extras
 fact
 factory
 fade
+failing
 fails
 failure
 fake
@@ -663,6 +671,7 @@ git
 github
 given
 global
+globally
 globals
 globalusings
 glow
@@ -775,6 +784,7 @@ inputs
 inserted
 inside
 insights
+install
 installed
 instance
 instant
@@ -832,6 +842,7 @@ kpis
 lab
 label
 labels
+landing
 language
 languages
 last
@@ -1087,6 +1098,7 @@ palette
 palettes
 panel
 pangea
+panic
 parallel
 parameter
 parameters
@@ -1229,6 +1241,7 @@ range
 ranges
 rate
 ratio
+rbac
 react
 read
 reader
@@ -1245,6 +1258,7 @@ receive
 recent
 recharts
 recipient
+recognized
 recommendation
 recommendations
 recommended
@@ -1252,6 +1266,7 @@ reconcile
 record
 recovery
 recruitment
+recurring
 redirect
 redirecting
 reduction
@@ -1314,6 +1329,7 @@ resolvers
 resource
 resources
 response
+responses
 responsive
 restart
 restore
@@ -1385,11 +1401,13 @@ scrollable
 scrutor
 sdk
 search
+seat
 secret
 secrets
 section
 secure
 security
+see
 seed
 seeds
 segmented
@@ -1523,9 +1541,13 @@ subcategory
 subcommands
 submit
 subscribe
+subscription
+subscriptions
 success
 successful
+summarize
 summary
+super
 support
 supported
 supports
@@ -1556,6 +1578,7 @@ temporary
 tenancy
 tenant
 tenants
+tenetamanagement
 terminate
 terms
 test
@@ -1625,6 +1648,7 @@ truncate
 try
 tsconfig
 tsx
+turbopack
 txt
 type
 typecheck
@@ -1645,6 +1669,7 @@ unread
 unsafe
 unset
 unstable
+until
 unused
 unwrap
 update
@@ -1704,6 +1729,7 @@ volume
 vowel
 wait
 walk
+warning
 was
 watch
 waterfall
@@ -1715,8 +1741,11 @@ weekly
 welcome
 what
 when
+while
 why
+width
 wiki
+will
 window
 windows
 wins

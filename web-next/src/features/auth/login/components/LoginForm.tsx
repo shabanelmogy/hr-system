@@ -141,7 +141,8 @@ const LoginForm = ({
           register={register}
           fullWidth
           sx={{ mb: 1.5 }}
-          showCounter={false}
+          maxValue={50}
+          counter
           startIcon={<PersonIcon sx={{ ...gradientIconStyle }} />}
         />
         <MyTextField

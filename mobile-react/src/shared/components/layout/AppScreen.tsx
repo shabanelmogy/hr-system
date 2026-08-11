@@ -2,6 +2,7 @@ import type { PropsWithChildren, ReactNode } from 'react';
 import {
   Platform,
   type ScrollViewProps,
+  type StyleProp,
   StyleSheet,
   View,
   type ViewStyle,
@@ -20,8 +21,8 @@ export interface AppScreenProps {
   edges?: Edge[];
   padded?: boolean;
   keyboardAware?: boolean;
-  style?: ViewStyle;
-  contentContainerStyle?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
+  contentContainerStyle?: StyleProp<ViewStyle>;
   refreshControl?: ScrollViewProps['refreshControl'];
   header?: ReactNode;
 }
@@ -40,11 +41,11 @@ export function AppScreen({
   const { theme } = useAppTheme();
   const { direction } = useLocalization();
 
-  const contentStyle: ViewStyle[] = [
+  const contentStyle: StyleProp<ViewStyle> = [
     styles.content,
     { direction },
     padded ? { padding: theme.spacing.lg } : {},
-    contentContainerStyle ?? {},
+    contentContainerStyle,
   ];
 
   const content = scroll ? (

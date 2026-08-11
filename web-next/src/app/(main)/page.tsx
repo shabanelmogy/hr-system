@@ -5,8 +5,8 @@ export const metadata: Metadata = {
   description: "HR management dashboard overview."
 };
 
-import PageComponent from "@/features/home/pages/HomePage";
+import DashboardLanding from "./DashboardLanding";
 
 export default function Page() {
-  return <PageComponent />;
+  return <DashboardLanding />;
 }

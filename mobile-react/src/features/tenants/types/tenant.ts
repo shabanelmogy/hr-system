@@ -64,3 +64,5 @@ export interface TenantFormState {
   contactPhone: string;
   notes: string;
 }
+
+export type TenantFormErrors = Partial<Record<keyof TenantFormState, string>>;

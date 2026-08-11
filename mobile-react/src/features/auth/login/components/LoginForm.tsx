@@ -1,9 +1,16 @@
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { Controller } from 'react-hook-form';
 
 import { useAppTheme } from '@/src/core/theme';
 import type { useLoginForm } from '@/src/features/auth/login/hooks/useLoginForm';
-import { AppButton, AppIcon, AppText, FormTextField } from '@/src/shared/components';
+import {
+  AppButton,
+  AppForm,
+  AppIcon,
+  AppText,
+  AppTextField,
+} from '@/src/shared/components';
 
 interface LoginFormProps {
   compact: boolean;
@@ -35,42 +42,51 @@ export function LoginForm({ compact, form }: LoginFormProps) {
         ) : null}
       </View>
 
-      {form.serverError && !form.companySelection ? (
-        <View
-          accessibilityLiveRegion="assertive"
-          style={[
-            styles.error,
-            { backgroundColor: theme.colors.surfaceMuted, borderColor: theme.colors.danger },
-          ]}>
-          <AppIcon color={theme.colors.danger} name="alert-circle-outline" size={20} />
-          <AppText color="danger" style={styles.errorText} variant="bodySmall">
-            {form.serverError}
-          </AppText>
-        </View>
-      ) : null}
-
-      <View style={styles.form}>
-        <FormTextField
-          autoCapitalize="none"
-          autoComplete="username"
-          autoFocus
+      <AppForm
+        serverError={form.serverError && !form.companySelection ? form.serverError : null}
+        style={styles.form}>
+        <Controller
           control={form.control}
-          label={t('auth.userName')}
-          leadingIcon="person-outline"
           name="userName"
-          required
-          returnKeyType="next"
+          render={({ field, fieldState }) => (
+            <AppTextField
+              autoCapitalize="none"
+              autoComplete="username"
+              error={fieldState.error?.message}
+              label={t('auth.userName')}
+              leadingIcon="person-outline"
+              maxLength={50}
+              name="userName"
+              onBlur={field.onBlur}
+              onChangeText={field.onChange}
+              ref={field.ref}
+              required
+              returnKeyType="next"
+              value={field.value}
+            />
+          )}
         />
-        <FormTextField
-          autoCapitalize="none"
-          autoComplete="current-password"
+        <Controller
           control={form.control}
-          label={t('auth.password')}
-          leadingIcon="lock-closed-outline"
           name="password"
-          onSubmitEditing={() => void submitForm()}
-          required
-          secureTextEntry
+          render={({ field, fieldState }) => (
+            <AppTextField
+              autoCapitalize="none"
+              autoComplete="current-password"
+              error={fieldState.error?.message}
+              label={t('auth.password')}
+              leadingIcon="lock-closed-outline"
+              maxLength={50}
+              name="password"
+              onBlur={field.onBlur}
+              onChangeText={field.onChange}
+              onSubmitEditing={() => void submitForm()}
+              ref={field.ref}
+              required
+              secureTextEntry
+              value={field.value}
+            />
+          )}
         />
         <AppButton
           disabled={form.isAnySubmitting}
@@ -143,7 +159,7 @@ export function LoginForm({ compact, form }: LoginFormProps) {
             </AppButton>
           </View>
         </View>
-      </View>
+      </AppForm>
     </View>
   );
 }
@@ -221,16 +237,5 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 8,
     paddingHorizontal: 12,
-  },
-  error: {
-    minHeight: 46,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    borderStartWidth: 3,
-    padding: 10,
-  },
-  errorText: {
-    flex: 1,
   },
 });

@@ -512,7 +512,7 @@ public class UserService(
     }
 
     private async Task<Error?> GetSeatLimitErrorAsync(
-        IReadOnlyCollection<string> roles,
+        IEnumerable<string> roles,
         CancellationToken cancellationToken)
     {
         var needsAdminSeat = roles.Contains(AppRoles.admin, StringComparer.OrdinalIgnoreCase);
@@ -540,11 +540,11 @@ public class UserService(
                   (role.NormalizedName == AppRoles.admin.ToUpper() ||
                    role.NormalizedName == AppRoles.user.ToUpper())
             group user by role.NormalizedName
-            into group
+            into roleGroup
             select new
             {
-                Role = group.Key,
-                Count = group.Select(user => user.Id).Distinct().Count()
+                Role = roleGroup.Key,
+                Count = roleGroup.Select(user => user.Id).Distinct().Count()
             }).ToDictionaryAsync(item => item.Role!, item => item.Count, cancellationToken);
 
         if (needsAdminSeat &&

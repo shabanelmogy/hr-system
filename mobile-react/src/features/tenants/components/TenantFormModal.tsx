@@ -1,71 +1,90 @@
-import { Modal, Pressable, StyleSheet, Switch, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
-import { useAppTheme } from '@/src/core/theme';
 import {
   subscriptionStatuses,
+  type SubscriptionStatus,
+  type TenantFormErrors,
   type TenantFormState,
 } from '@/src/features/tenants/types/tenant';
-import { AppButton, AppIcon, AppScreen, AppText, AppTextField } from '@/src/shared/components';
+import {
+  AppDateTimeField,
+  AppForm,
+  type AppIconName,
+  AppSelectField,
+  AppSwitchField,
+  AppTextField,
+} from '@/src/shared/components';
+
+const statusIcons = {
+  free: 'gift-outline',
+  trial: 'flask-outline',
+  active: 'checkmark-circle-outline',
+  pastDue: 'time-outline',
+  suspended: 'pause-circle-outline',
+  expired: 'hourglass-outline',
+  cancelled: 'close-circle-outline',
+} as const satisfies Record<SubscriptionStatus, AppIconName>;
 
 interface TenantFormModalProps {
   form: TenantFormState | null;
+  errors: TenantFormErrors;
   isEdit: boolean;
   error: string | null;
   loading: boolean;
   onChange: (form: TenantFormState) => void;
+  onClearFieldError: (field: keyof TenantFormState) => void;
   onClose: () => void;
-  onSave: () => void;
+  onSave: () => void | Promise<void>;
 }
 
 export function TenantFormModal({
   form,
+  errors,
   isEdit,
   error,
   loading,
   onChange,
+  onClearFieldError,
   onClose,
   onSave,
 }: TenantFormModalProps) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
-  const { theme } = useAppTheme();
 
   if (!form) return null;
 
-  const set = <Key extends keyof TenantFormState>(key: Key, value: TenantFormState[Key]) =>
+  const set = <Key extends keyof TenantFormState>(key: Key, value: TenantFormState[Key]) => {
     onChange({ ...form, [key]: value });
+  };
 
   return (
-    <Modal
-      animationType="slide"
-      onRequestClose={onClose}
-      presentationStyle="fullScreen"
+    <AppForm
+      contentContainerStyle={styles.content}
+      errors={errors}
+      icon={isEdit ? 'create-outline' : 'business-outline'}
+      onCancel={onClose}
+      onClearFieldError={(name) => onClearFieldError(name as keyof TenantFormState)}
+      onSubmit={onSave}
+      presentation="fullScreen"
+      serverError={error}
+      style={styles.form}
+      submitting={loading}
+      subtitle={t(
+        isEdit
+          ? 'tenantManagement.editTenantDescription'
+          : 'tenantManagement.addTenantDescription',
+      )}
+      title={t(isEdit ? 'tenantManagement.editTenant' : 'tenantManagement.addTenant')}
       visible>
-      <AppScreen contentContainerStyle={styles.content}>
-        <View style={[styles.header, { direction, borderBottomColor: theme.colors.border }]}>
-          <View style={styles.headerTitle}>
-            <AppText variant="titleSmall">
-              {t(isEdit ? 'tenantManagement.editTenant' : 'tenantManagement.addTenant')}
-            </AppText>
-          </View>
-          <Pressable
-            accessibilityLabel={t('common.cancel')}
-            accessibilityRole="button"
-            disabled={loading}
-            hitSlop={8}
-            onPress={onClose}
-            style={styles.closeButton}>
-            <AppIcon color={theme.colors.textMuted} name="close-outline" size={26} />
-          </Pressable>
-        </View>
-
-        <View style={styles.form}>
           <AppTextField
             autoCapitalize="none"
             editable={!loading}
             label={t('tenantManagement.identifier')}
+            leadingIcon="key-outline"
+            maxLength={100}
+            name="identifier"
             onChangeText={(value) => set('identifier', value)}
             required
             value={form.identifier}
@@ -73,86 +92,105 @@ export function TenantFormModal({
           <AppTextField
             editable={!loading}
             label={t('tenantManagement.name')}
+            leadingIcon="business-outline"
+            maxLength={200}
+            name="name"
             onChangeText={(value) => set('name', value)}
             required
             value={form.name}
           />
-          <AppTextField
-            editable={!loading}
+          <AppSelectField
+            disabled={loading}
             label={t('tenantManagement.plan')}
-            onChangeText={(value) => set('planName', value)}
+            leadingIcon="layers-outline"
+            name="planName"
+            onChange={(value) => set('planName', value)}
+            options={[
+              { value: 'Free', label: t('tenantManagement.plans.free'), icon: 'gift-outline' },
+              { value: 'Basic', label: t('tenantManagement.plans.basic'), icon: 'rocket-outline' },
+              {
+                value: 'Professional',
+                label: t('tenantManagement.plans.professional'),
+                icon: 'briefcase-outline',
+              },
+              {
+                value: 'Enterprise',
+                label: t('tenantManagement.plans.enterprise'),
+                icon: 'business-outline',
+              },
+            ]}
             value={form.planName}
           />
 
-          <View style={styles.fieldGroup}>
-            <AppText variant="label">{t('tenantManagement.status')}</AppText>
-            <View style={[styles.statuses, { direction }]}>
-              {subscriptionStatuses.map((status) => {
-                const selected = status === form.subscriptionStatus;
-                return (
-                  <Pressable
-                    accessibilityRole="radio"
-                    accessibilityState={{ checked: selected, disabled: loading }}
-                    disabled={loading}
-                    key={status}
-                    onPress={() => set('subscriptionStatus', status)}
-                    style={[
-                      styles.status,
-                      {
-                        backgroundColor: selected
-                          ? theme.colors.primary
-                          : theme.colors.surface,
-                        borderColor: selected ? theme.colors.primary : theme.colors.border,
-                        borderRadius: theme.radius.full,
-                      },
-                    ]}>
-                    <AppText
-                      style={{ color: selected ? theme.colors.onPrimary : theme.colors.text }}
-                      variant="caption"
-                      weight="600">
-                      {t(`tenantManagement.statuses.${status}`)}
-                    </AppText>
-                  </Pressable>
-                );
-              })}
+          <AppSelectField
+            disabled={loading}
+            label={t('tenantManagement.status')}
+            name="subscriptionStatus"
+            onChange={(value) => set('subscriptionStatus', value)}
+            options={subscriptionStatuses.map((status) => ({
+              value: status,
+              label: t(`tenantManagement.statuses.${status}`),
+              icon: statusIcons[status],
+            }))}
+            required
+            value={form.subscriptionStatus}
+          />
+
+          <View style={[styles.twoColumns, { direction }]}>
+            <View style={styles.columnField}>
+              <AppDateTimeField
+                disabled={loading}
+                label={t('tenantManagement.startsOn')}
+                name="subscriptionStartedOn"
+                onChangeValue={(value) => set('subscriptionStartedOn', value)}
+                required
+                showClearButton={false}
+                value={form.subscriptionStartedOn}
+              />
+            </View>
+            <View style={styles.columnField}>
+              <AppDateTimeField
+                disabled={loading}
+                label={t('tenantManagement.endsOn')}
+                minimumDate={form.subscriptionStartedOn
+                  ? new Date(`${form.subscriptionStartedOn}T12:00:00`)
+                  : undefined}
+                onChangeValue={(value) => set('subscriptionEndsOn', value)}
+                name="subscriptionEndsOn"
+                value={form.subscriptionEndsOn}
+              />
             </View>
           </View>
 
           <View style={[styles.twoColumns, { direction }]}>
-            <AppTextField
-              editable={!loading}
-              label={t('tenantManagement.startsOn')}
-              onChangeText={(value) => set('subscriptionStartedOn', value)}
-              placeholder="YYYY-MM-DD"
-              required
-              style={styles.ltrInput}
-              value={form.subscriptionStartedOn}
-            />
-            <AppTextField
-              editable={!loading}
-              label={t('tenantManagement.endsOn')}
-              onChangeText={(value) => set('subscriptionEndsOn', value)}
-              placeholder="YYYY-MM-DD"
-              style={styles.ltrInput}
-              value={form.subscriptionEndsOn}
-            />
-          </View>
-
-          <View style={[styles.twoColumns, { direction }]}>
-            <AppTextField
-              editable={!loading}
-              keyboardType="number-pad"
-              label={t('tenantManagement.maxAdmins')}
-              onChangeText={(value) => set('maxAdmins', value)}
-              value={form.maxAdmins}
-            />
-            <AppTextField
-              editable={!loading}
-              keyboardType="number-pad"
-              label={t('tenantManagement.maxUsers')}
-              onChangeText={(value) => set('maxUsers', value)}
-              value={form.maxUsers}
-            />
+            <View style={styles.columnField}>
+              <AppTextField
+                editable={!loading}
+                label={t('tenantManagement.maxAdmins')}
+                leadingIcon="shield-checkmark-outline"
+                maxLength={10}
+                minValue={0}
+                numeric
+                name="maxAdmins"
+                onChangeText={(value) => set('maxAdmins', value)}
+                required
+                value={form.maxAdmins}
+              />
+            </View>
+            <View style={styles.columnField}>
+              <AppTextField
+                editable={!loading}
+                label={t('tenantManagement.maxUsers')}
+                leadingIcon="people-outline"
+                maxLength={10}
+                minValue={0}
+                numeric
+                name="maxUsers"
+                onChangeText={(value) => set('maxUsers', value)}
+                required
+                value={form.maxUsers}
+              />
+            </View>
           </View>
 
           <AppTextField
@@ -160,12 +198,18 @@ export function TenantFormModal({
             editable={!loading}
             keyboardType="email-address"
             label={t('tenantManagement.billingEmail')}
+            leadingIcon="mail-outline"
+            maxLength={256}
+            name="billingEmail"
             onChangeText={(value) => set('billingEmail', value)}
             value={form.billingEmail}
           />
           <AppTextField
             editable={!loading}
             label={t('tenantManagement.contactName')}
+            leadingIcon="person-outline"
+            maxLength={200}
+            name="contactName"
             onChangeText={(value) => set('contactName', value)}
             value={form.contactName}
           />
@@ -173,13 +217,19 @@ export function TenantFormModal({
             editable={!loading}
             keyboardType="phone-pad"
             label={t('tenantManagement.contactPhone')}
+            leadingIcon="call-outline"
+            maxLength={32}
+            name="contactPhone"
             onChangeText={(value) => set('contactPhone', value)}
             value={form.contactPhone}
           />
           <AppTextField
             editable={!loading}
             label={t('tenantManagement.notes')}
+            leadingIcon="document-text-outline"
+            maxLength={2000}
             multiline
+            name="notes"
             numberOfLines={4}
             onChangeText={(value) => set('notes', value)}
             style={styles.notesInput}
@@ -187,134 +237,38 @@ export function TenantFormModal({
             value={form.notes}
           />
 
-          <View
-            style={[
-              styles.switchRow,
-              {
-                direction,
-                backgroundColor: theme.colors.surfaceMuted,
-                borderRadius: theme.radius.md,
-              },
-            ]}>
-            <View style={styles.switchLabel}>
-              <AppText variant="label">{t('tenantManagement.tenantEnabled')}</AppText>
-              <AppText color="muted" variant="caption">
-                {t(form.isActive ? 'tenantManagement.enabled' : 'tenantManagement.disabled')}
-              </AppText>
-            </View>
-            <Switch
-              disabled={loading}
-              onValueChange={(value) => set('isActive', value)}
-              trackColor={{ false: theme.colors.disabled, true: theme.colors.primary }}
-              value={form.isActive}
-            />
-          </View>
+          <AppSwitchField
+            description={t(form.isActive ? 'tenantManagement.enabled' : 'tenantManagement.disabled')}
+            disabled={loading}
+            icon="power-outline"
+            label={t('tenantManagement.tenantEnabled')}
+            name="isActive"
+            onValueChange={(value) => set('isActive', value)}
+            value={form.isActive}
+          />
 
-          {error ? (
-            <View
-              accessibilityLiveRegion="assertive"
-              style={[
-                styles.error,
-                { backgroundColor: theme.colors.surfaceMuted, borderColor: theme.colors.danger },
-              ]}>
-              <AppIcon color={theme.colors.danger} name="alert-circle-outline" size={20} />
-              <AppText color="danger" style={styles.errorText} variant="bodySmall">
-                {error}
-              </AppText>
-            </View>
-          ) : null}
-
-          <View style={[styles.actions, { direction }]}>
-            <AppButton disabled={loading} onPress={onClose} style={styles.action} variant="outline">
-              {t('common.cancel')}
-            </AppButton>
-            <AppButton loading={loading} onPress={onSave} style={styles.action}>
-              {t('common.save')}
-            </AppButton>
-          </View>
-        </View>
-      </AppScreen>
-    </Modal>
+    </AppForm>
   );
 }
 
 const styles = StyleSheet.create({
   content: {
-    paddingBottom: 40,
-  },
-  header: {
-    minHeight: 58,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    marginBottom: 20,
-  },
-  headerTitle: {
-    flex: 1,
-  },
-  closeButton: {
-    width: 44,
-    height: 44,
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingBottom: 24,
   },
   form: {
     gap: 16,
-  },
-  fieldGroup: {
-    gap: 8,
-  },
-  statuses: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  status: {
-    minHeight: 34,
-    justifyContent: 'center',
-    borderWidth: 1,
-    paddingHorizontal: 12,
   },
   twoColumns: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 12,
   },
-  ltrInput: {
-    textAlign: 'left',
-    writingDirection: 'ltr',
+  columnField: {
+    flex: 1,
+    minWidth: 240,
   },
   notesInput: {
     minHeight: 96,
     paddingTop: 12,
-  },
-  switchRow: {
-    minHeight: 64,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 14,
-    gap: 12,
-  },
-  switchLabel: {
-    flex: 1,
-  },
-  error: {
-    minHeight: 48,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    borderStartWidth: 3,
-    padding: 10,
-  },
-  errorText: {
-    flex: 1,
-  },
-  actions: {
-    flexDirection: 'row',
-    gap: 12,
-    paddingTop: 4,
-  },
-  action: {
-    flex: 1,
   },
 });

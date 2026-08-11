@@ -197,12 +197,12 @@ public sealed class TenantManagementService(
                   (role.NormalizedName == AppRoles.admin.ToUpper() ||
                    role.NormalizedName == AppRoles.user.ToUpper())
             group user by new { user.TenantId, role.NormalizedName }
-            into group
+            into roleGroup
             select new
             {
-                group.Key.TenantId,
-                group.Key.NormalizedName,
-                Count = group.Select(user => user.Id).Distinct().Count()
+                roleGroup.Key.TenantId,
+                roleGroup.Key.NormalizedName,
+                Count = roleGroup.Select(user => user.Id).Distinct().Count()
             }).ToListAsync(cancellationToken);
 
         return rows

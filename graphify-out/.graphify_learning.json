@@ -1,6 +1,22 @@
 {
-  "generated_at": "2026-08-11T16:42:44.137051+00:00",
+  "generated_at": "2026-08-11T20:09:43.581149+00:00",
   "nodes": {
+    "api_hrmanagementsystem_infrastructure_security_authorization_filters_tenantmemberattribute_hrmanagementsystem_infrastructure_security_authorization_filters_tenantmemberattribute": {
+      "code_fingerprint": "002a0bd10e70acb38277f3af0ce313af14d29ecff62dc4d0318f6b5e15818867",
+      "label": "TenantMemberAttribute",
+      "last": "2026-08-11T18:26:28.622140+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T18:26:28.622140+00:00",
+          "outcome": "useful",
+          "q": "super admin will not see other tenant details it will be to admin tenant only"
+        }
+      ],
+      "score": 0.998344729,
+      "source_file": "api/HrManagementSystem.Infrastructure/Security/Authorization/Filters/TenantMemberAttribute.cs",
+      "status": "tentative",
+      "uses": 1
+    },
     "mobile_react_app_android_softwarekeyboardlayoutmode": {
       "code_fingerprint": "3bd4aa045be6bc05d262e07060aa24c5b578491a5bdaa357e625b478418afee4",
       "label": "softwareKeyboardLayoutMode",
@@ -12,10 +28,298 @@
           "q": "when focus input keyboard cover input"
         }
       ],
-      "score": 0.999916234,
+      "score": 0.996600839,
       "source_file": "mobile-react/app.json",
       "status": "tentative",
       "uses": 1
+    },
+    "mobile_react_src_features_auth_login_components_loginform": {
+      "code_fingerprint": "722619ae766bd922ba803011057d06c75cff81e4ba9f5ca42db12f4fc5074ccd",
+      "label": "mobile-react/src/features/auth/login/components/LoginForm.tsx",
+      "last": "2026-08-11T19:46:05.613774+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T19:46:05.613774+00:00",
+          "outcome": "useful",
+          "q": "How should the mobile app globally focus the first input in each form?"
+        }
+      ],
+      "score": 0.999620882,
+      "source_file": "mobile-react/src/features/auth/login/components/LoginForm.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "mobile_react_src_features_tenants_screens_tenantdashboardscreen_tenantdashboardscreen": {
+      "code_fingerprint": "7f36f13cf3c091c6bb4e3ef265c60e6c4337a1dbda72f935aabac5d2e4d01fb4",
+      "label": "TenantDashboardScreen()",
+      "last": "2026-08-11T18:16:55.686631+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T18:16:55.686631+00:00",
+          "outcome": "useful",
+          "q": "create dashborad and tenetamanagement in web-next and mobile"
+        }
+      ],
+      "score": 0.998191781,
+      "source_file": "mobile-react/src/features/tenants/screens/TenantDashboardScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "next": {
+      "code_fingerprint": "a47dcfb63082005a5040137a00546f7118d2b51a3a2c4df469f459471903f3b4",
+      "label": "next",
+      "last": "2026-08-11T18:57:00.761650+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T18:57:00.761650+00:00",
+          "outcome": "useful",
+          "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
+        }
+      ],
+      "score": 0.998833984,
+      "source_file": "web-next/package.json",
+      "status": "tentative",
+      "uses": 1
+    },
+    "web_next_readme_development": {
+      "code_fingerprint": "c326efd6c4994a1279f9ba9b846fb2c9dadad7055baafa74667819cdc5e07e9a",
+      "label": "Development",
+      "last": "2026-08-11T18:39:48.685616+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T18:39:48.685616+00:00",
+          "outcome": "useful",
+          "q": "mkcert is not recognized while creating localhost certificates"
+        }
+      ],
+      "score": 0.998558349,
+      "source_file": "web-next/README.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "web_next_scripts_setup_local_https": {
+      "code_fingerprint": "76a8f8f757188a87806ac74ae9555538ba729196125477f79f276b410b5a364c",
+      "label": "setup-local-https.ps1",
+      "last": "2026-08-11T18:39:48.685616+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T18:39:48.685616+00:00",
+          "outcome": "useful",
+          "q": "mkcert is not recognized while creating localhost certificates"
+        }
+      ],
+      "score": 0.998558349,
+      "source_file": "web-next/scripts/setup-local-https.ps1",
+      "status": "tentative",
+      "uses": 1
+    },
+    "web_next_src_app_auth_login_page": {
+      "code_fingerprint": "4149bb8a91c19a1b0f9033244c6c947e10d86552b524abd019fe728850ab65c9",
+      "label": "login/page.tsx",
+      "last": "2026-08-11T18:57:00.761650+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T18:57:00.761650+00:00",
+          "outcome": "useful",
+          "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
+        }
+      ],
+      "score": 0.998833984,
+      "source_file": "web-next/src/app/(auth)/login/page.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "web_next_src_features_auth_login_components_loginform_adminloginbutton": {
+      "code_fingerprint": "8a07ba821338e053e8bd0fb6804422ef7500eb125dac9ca92eae0807f4ed0d7e",
+      "label": "AdminLoginButton()",
+      "last": "2026-08-11T16:46:00.039569+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T16:46:00.039569+00:00",
+          "outcome": "useful",
+          "q": "fix style for buton : login as admin"
+        }
+      ],
+      "score": 0.996736543,
+      "source_file": "web-next/src/features/auth/login/components/LoginForm.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "web_next_src_features_auth_login_components_loginform_superadminloginbutton": {
+      "code_fingerprint": "8a07ba821338e053e8bd0fb6804422ef7500eb125dac9ca92eae0807f4ed0d7e",
+      "label": "SuperAdminLoginButton()",
+      "last": "2026-08-11T19:22:49.132059+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T19:22:49.132059+00:00",
+          "outcome": "useful",
+          "q": "Fix web super-admin login failing with HTTP 307 and React minWidth DOM warning on the tenant dashboard."
+        }
+      ],
+      "score": 0.999247649,
+      "source_file": "web-next/src/features/auth/login/components/LoginForm.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "web_next_src_features_tenants_tenantdashboardpage_tenantdashboardpage": {
+      "code_fingerprint": "3b22e9f9fa15880153572dc9ae83c8de69577a74f51cc70635d60a13369855fd",
+      "label": "TenantDashboardPage()",
+      "last": "2026-08-11T19:22:49.132059+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T19:22:49.132059+00:00",
+          "outcome": "useful",
+          "q": "Fix web super-admin login failing with HTTP 307 and React minWidth DOM warning on the tenant dashboard."
+        },
+        {
+          "date": "2026-08-11T18:16:55.686631+00:00",
+          "outcome": "useful",
+          "q": "create dashborad and tenetamanagement in web-next and mobile"
+        }
+      ],
+      "score": 1.99743943,
+      "source_file": "web-next/src/features/tenants/TenantDashboardPage.tsx",
+      "status": "preferred",
+      "uses": 2
+    },
+    "web_next_src_layouts_components_sidebar_navigationconfig_getnavigationconfig": {
+      "code_fingerprint": "5408c1d7c9e26cf32e4e1bb06926cee9b3bd7254f7fa293b0a71e7464e4f2316",
+      "label": "getNavigationConfig()",
+      "last": "2026-08-11T18:26:28.622140+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T18:26:28.622140+00:00",
+          "outcome": "useful",
+          "q": "super admin will not see other tenant details it will be to admin tenant only"
+        }
+      ],
+      "score": 0.998344729,
+      "source_file": "web-next/src/layouts/components/sidebar/navigationConfig.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "web_next_src_proxy_proxy": {
+      "code_fingerprint": "0ee6c0025c6ee93e25d76969c3a8167f0e0cdc15713e02439b40d663cff91356",
+      "label": "proxy()",
+      "last": "2026-08-11T19:22:49.132059+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T19:22:49.132059+00:00",
+          "outcome": "useful",
+          "q": "Fix web super-admin login failing with HTTP 307 and React minWidth DOM warning on the tenant dashboard."
+        },
+        {
+          "date": "2026-08-11T18:57:00.761650+00:00",
+          "outcome": "useful",
+          "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
+        }
+      ],
+      "score": 1.998081633,
+      "source_file": "web-next/src/proxy.ts",
+      "status": "preferred",
+      "uses": 2
+    },
+    "web_next_src_shared_components_forms_text_fields_internals_charactercount": {
+      "code_fingerprint": "884cf14653772dedf885858f0510f48198ee65bbce5a75965951a0a86166d262",
+      "label": "characterCount.ts",
+      "last": "2026-08-11T20:03:38.693723+00:00",
+      "neg": 1,
+      "provenance": [
+        {
+          "date": "2026-08-11T20:03:38.693723+00:00",
+          "outcome": "corrected",
+          "q": "i want show badge inputs characatre / max"
+        },
+        {
+          "date": "2026-08-11T19:57:02.715396+00:00",
+          "outcome": "useful",
+          "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
+        }
+      ],
+      "score": -0.000105876,
+      "source_file": "web-next/src/shared/components/forms/text-fields/internals/characterCount.ts",
+      "status": "contested",
+      "uses": 1,
+      "verdict": "dead end"
+    },
+    "web_next_src_shared_components_forms_text_fields_internals_inputconstraints": {
+      "code_fingerprint": "872038d80a8949c9567b2681dab71445da5e0751660d88f1da3e715a73b21a1b",
+      "label": "inputConstraints.ts",
+      "last": "2026-08-11T20:03:38.693723+00:00",
+      "neg": 1,
+      "provenance": [
+        {
+          "date": "2026-08-11T20:03:38.693723+00:00",
+          "outcome": "corrected",
+          "q": "i want show badge inputs characatre / max"
+        },
+        {
+          "date": "2026-08-11T19:57:02.715396+00:00",
+          "outcome": "useful",
+          "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
+        }
+      ],
+      "score": -0.000105876,
+      "source_file": "web-next/src/shared/components/forms/text-fields/internals/inputConstraints.ts",
+      "status": "contested",
+      "uses": 1,
+      "verdict": "dead end"
+    },
+    "web_next_src_shared_components_forms_text_fields_internals_textfieldendadornment": {
+      "code_fingerprint": "6e3d7cc441bbaf2c45214db157fee1c0d8f41ba4be85feefa58931eeba92f526",
+      "label": "TextFieldEndAdornment.tsx",
+      "last": "2026-08-11T20:08:00.701332+00:00",
+      "neg": 1,
+      "provenance": [
+        {
+          "date": "2026-08-11T20:08:00.701332+00:00",
+          "outcome": "useful",
+          "q": "i want like attach screen"
+        },
+        {
+          "date": "2026-08-11T20:03:38.693723+00:00",
+          "outcome": "corrected",
+          "q": "i want show badge inputs characatre / max"
+        },
+        {
+          "date": "2026-08-11T19:57:02.715396+00:00",
+          "outcome": "useful",
+          "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
+        }
+      ],
+      "score": 0.999866613,
+      "source_file": "web-next/src/shared/components/forms/text-fields/internals/TextFieldEndAdornment.tsx",
+      "status": "contested",
+      "uses": 2,
+      "verdict": "useful"
+    },
+    "web_next_src_shared_components_forms_text_fields_mytextfield": {
+      "code_fingerprint": "5a6e50f75f09907b5fe856b427ac83c35bb40df0e715075f20014089f59978c2",
+      "label": "MyTextField.tsx",
+      "last": "2026-08-11T20:08:00.701332+00:00",
+      "neg": 1,
+      "provenance": [
+        {
+          "date": "2026-08-11T20:08:00.701332+00:00",
+          "outcome": "useful",
+          "q": "i want like attach screen"
+        },
+        {
+          "date": "2026-08-11T20:03:38.693723+00:00",
+          "outcome": "corrected",
+          "q": "i want show badge inputs characatre / max"
+        },
+        {
+          "date": "2026-08-11T19:57:02.715396+00:00",
+          "outcome": "useful",
+          "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
+        }
+      ],
+      "score": 0.999866613,
+      "source_file": "web-next/src/shared/components/forms/text-fields/MyTextField.tsx",
+      "status": "contested",
+      "uses": 2,
+      "verdict": "useful"
     }
   },
   "version": 1

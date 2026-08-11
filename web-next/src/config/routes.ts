@@ -39,6 +39,7 @@ export interface AuthRoutes {
 }
 
 export interface SuperAdminRoutes {
+  dashboard: AppPath;
   tenants: AppPath;
 }
 
@@ -107,6 +108,7 @@ export const appRoutes: AppRoutes = {
   },
 
   superAdmin: {
+    dashboard: "/super-admin",
     tenants: "/super-admin/tenants",
   },
 

@@ -17,19 +17,19 @@ import {
   DialogContent,
   DialogTitle,
   FormControlLabel,
-  MenuItem,
   Stack,
   Switch,
-  TextField,
   Typography,
 } from "@mui/material";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { MySelect, MyTextField } from "@/shared/components/forms";
 import { ContentWrapper } from "@/shared/components/layout";
 import { PageHeader } from "@/shared/components/navigation/header";
 import { tenantApi, tenantKeys } from "./tenantApi";
+import { useTenantsQuery } from "./useTenantsQuery";
 import {
   subscriptionStatuses,
   type SubscriptionStatus,
@@ -59,10 +59,7 @@ export default function TenantManagementPage() {
   const [editing, setEditing] = useState<TenantManagementResponse | null>(null);
   const [form, setForm] = useState<TenantFormState | null>(null);
 
-  const tenantsQuery = useQuery({
-    queryKey: tenantKeys.all,
-    queryFn: tenantApi.getAll,
-  });
+  const tenantsQuery = useTenantsQuery();
 
   const saveMutation = useMutation({
     mutationFn: ({ id, request }: { id: string | null; request: TenantManagementRequest }) =>
@@ -154,10 +151,13 @@ function TenantCard({
   return (
     <Card variant="outlined" sx={{ minWidth: 0 }}>
       <CardContent>
-        <Stack direction="row" justifyContent="space-between" gap={2} alignItems="flex-start">
-          <Stack direction="row" gap={1.5} alignItems="center" minWidth={0}>
+        <Stack
+          direction="row"
+          sx={{ alignItems: "flex-start", gap: 2, justifyContent: "space-between" }}
+        >
+          <Stack direction="row" sx={{ alignItems: "center", gap: 1.5, minWidth: 0 }}>
             <ApartmentIcon color="primary" />
-            <Box minWidth={0}>
+            <Box sx={{ minWidth: 0 }}>
               <Typography variant="h6" noWrap>{tenant.name}</Typography>
               <Typography variant="body2" color="text.secondary" noWrap>
                 {tenant.identifier}
@@ -178,7 +178,7 @@ function TenantCard({
           <Metric label={t("tenantManagement.totalAccounts")} value={tenant.totalUserCount} />
         </Box>
 
-        <Stack mt={2} gap={0.5}>
+        <Stack spacing={0.5} sx={{ mt: 2 }}>
           <Typography variant="body2">
             {t("tenantManagement.plan")}: {tenant.planName || t("tenantManagement.noPlan")}
           </Typography>
@@ -243,21 +243,129 @@ function TenantDialog({
       </DialogTitle>
       <DialogContent>
         <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, gap: 2, pt: 1 }}>
-          <TextField required label={t("tenantManagement.identifier")} value={form.identifier} onChange={(event) => set("identifier", event.target.value)} />
-          <TextField required label={t("tenantManagement.name")} value={form.name} onChange={(event) => set("name", event.target.value)} />
-          <TextField label={t("tenantManagement.plan")} value={form.planName} onChange={(event) => set("planName", event.target.value)} />
-          <TextField select label={t("tenantManagement.status")} value={form.subscriptionStatus} onChange={(event) => set("subscriptionStatus", event.target.value as SubscriptionStatus)}>
-            {subscriptionStatuses.map((status) => <MenuItem key={status} value={status}>{t(`tenantManagement.statuses.${status}`)}</MenuItem>)}
-          </TextField>
-          <TextField type="date" slotProps={{ inputLabel: { shrink: true } }} label={t("tenantManagement.startsOn")} value={form.subscriptionStartedOn} onChange={(event) => set("subscriptionStartedOn", event.target.value)} />
-          <TextField type="date" slotProps={{ inputLabel: { shrink: true } }} label={t("tenantManagement.endsOn")} value={form.subscriptionEndsOn} onChange={(event) => set("subscriptionEndsOn", event.target.value)} />
-          <TextField type="number" label={t("tenantManagement.maxAdmins")} value={form.maxAdmins} onChange={(event) => set("maxAdmins", event.target.value)} />
-          <TextField type="number" label={t("tenantManagement.maxUsers")} value={form.maxUsers} onChange={(event) => set("maxUsers", event.target.value)} />
-          <TextField type="email" label={t("tenantManagement.billingEmail")} value={form.billingEmail} onChange={(event) => set("billingEmail", event.target.value)} />
-          <TextField label={t("tenantManagement.contactName")} value={form.contactName} onChange={(event) => set("contactName", event.target.value)} />
-          <TextField label={t("tenantManagement.contactPhone")} value={form.contactPhone} onChange={(event) => set("contactPhone", event.target.value)} />
+          <MyTextField
+            counter
+            fieldName="identifier"
+            label={t("tenantManagement.identifier")}
+            margin="none"
+            maxValue={100}
+            onChange={(event) => set("identifier", event.target.value)}
+            required
+            value={form.identifier}
+          />
+          <MyTextField
+            counter
+            fieldName="name"
+            label={t("tenantManagement.name")}
+            margin="none"
+            maxValue={200}
+            onChange={(event) => set("name", event.target.value)}
+            required
+            value={form.name}
+          />
+          <MyTextField
+            counter
+            fieldName="planName"
+            label={t("tenantManagement.plan")}
+            margin="none"
+            maxValue={100}
+            onChange={(event) => set("planName", event.target.value)}
+            value={form.planName}
+          />
+          <MySelect
+            all={false}
+            dataSource={subscriptionStatuses.map((status) => ({
+              label: t(`tenantManagement.statuses.${status}`),
+              value: status,
+            }))}
+            displayMember="label"
+            handleSelectionChange={(event) => set("subscriptionStatus", event.target.value as SubscriptionStatus)}
+            label={t("tenantManagement.status")}
+            selectedItem={form.subscriptionStatus}
+            showClearButton={false}
+            valueMember="value"
+          />
+          <MyTextField
+            counter={false}
+            fieldName="subscriptionStartedOn"
+            label={t("tenantManagement.startsOn")}
+            margin="none"
+            onChange={(event) => set("subscriptionStartedOn", event.target.value)}
+            type="date"
+            value={form.subscriptionStartedOn}
+          />
+          <MyTextField
+            counter={false}
+            fieldName="subscriptionEndsOn"
+            label={t("tenantManagement.endsOn")}
+            margin="none"
+            onChange={(event) => set("subscriptionEndsOn", event.target.value)}
+            type="date"
+            value={form.subscriptionEndsOn}
+          />
+          <MyTextField
+            counter={false}
+            fieldName="maxAdmins"
+            label={t("tenantManagement.maxAdmins")}
+            margin="none"
+            minValue={0}
+            onChange={(event) => set("maxAdmins", event.target.value)}
+            type="number"
+            value={form.maxAdmins}
+          />
+          <MyTextField
+            counter={false}
+            fieldName="maxUsers"
+            label={t("tenantManagement.maxUsers")}
+            margin="none"
+            minValue={0}
+            onChange={(event) => set("maxUsers", event.target.value)}
+            type="number"
+            value={form.maxUsers}
+          />
+          <MyTextField
+            counter
+            fieldName="billingEmail"
+            label={t("tenantManagement.billingEmail")}
+            margin="none"
+            maxValue={256}
+            onChange={(event) => set("billingEmail", event.target.value)}
+            type="email"
+            value={form.billingEmail}
+          />
+          <MyTextField
+            counter
+            fieldName="contactName"
+            label={t("tenantManagement.contactName")}
+            margin="none"
+            maxValue={200}
+            onChange={(event) => set("contactName", event.target.value)}
+            value={form.contactName}
+          />
+          <MyTextField
+            counter
+            fieldName="contactPhone"
+            label={t("tenantManagement.contactPhone")}
+            margin="none"
+            maxValue={32}
+            onChange={(event) => set("contactPhone", event.target.value)}
+            type="tel"
+            value={form.contactPhone}
+          />
           <FormControlLabel control={<Switch checked={form.isActive} onChange={(_, checked) => set("isActive", checked)} />} label={t("tenantManagement.tenantEnabled")} />
-          <TextField multiline minRows={3} sx={{ gridColumn: { sm: "1 / -1" } }} label={t("tenantManagement.notes")} value={form.notes} onChange={(event) => set("notes", event.target.value)} />
+          <Box sx={{ gridColumn: { sm: "1 / -1" } }}>
+            <MyTextField
+              counter
+              fieldName="notes"
+              label={t("tenantManagement.notes")}
+              margin="none"
+              maxValue={2000}
+              multiline
+              onChange={(event) => set("notes", event.target.value)}
+              rows={3}
+              value={form.notes}
+            />
+          </Box>
         </Box>
         {error ? <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert> : null}
       </DialogContent>

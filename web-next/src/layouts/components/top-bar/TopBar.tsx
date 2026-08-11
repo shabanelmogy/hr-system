@@ -55,6 +55,9 @@ const TopBar = ({
   const { theme, t, direction, changeLanguage, toggleTheme } = useTopBarPreferences();
   const { user, logout: sessionLogout } = useSession();
   const isAuthenticated = user !== null;
+  const isSuperAdmin = user?.roles.some(
+    (role) => role.trim().toLowerCase() === "super_admin",
+  );
   const searchNavigation = useMemo(
     () => getNavigationConfig(user?.roles, user?.permissions),
     [user?.permissions, user?.roles],
@@ -200,7 +203,7 @@ const TopBar = ({
 
           {isAuthenticated && <GlobalSearchButton navigation={searchNavigation} />}
 
-          {isAuthenticated && <NotificationBell />}
+          {isAuthenticated && !isSuperAdmin && <NotificationBell />}
 
           {process.env.NODE_ENV === "development" && <DisplayDebugger />}
 

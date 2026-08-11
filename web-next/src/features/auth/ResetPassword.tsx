@@ -2,9 +2,9 @@
 
 import { apiRoutes } from "@/config";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { MyTextField } from "@/shared/components/forms";
 import { useSnackbar } from "@/shared/hooks";
 import { apiService, HandleApiError } from "@/shared/services";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import LockIcon from "@mui/icons-material/Lock";
 import {
   Button,
@@ -12,12 +12,9 @@ import {
   CardContent,
   Container,
   Alert,
-  IconButton,
-  InputAdornment,
-  TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
@@ -77,29 +74,6 @@ const ResetPassword = () => {
     inputRef.current?.focus();
   }, [codeFromLink, emailFromLink, reset, setError, t]);
 
-  const passwordInputProps = useMemo(
-    () => ({
-      startAdornment: (
-        <InputAdornment position="start">
-          <LockIcon />
-        </InputAdornment>
-      ),
-      endAdornment: (
-        <InputAdornment position="end">
-          <IconButton
-            type="button"
-            aria-label={showPassword ? t("actions.hidePassword") : t("actions.showPassword")}
-            onClick={() => setShowPassword((prev) => !prev)}
-            edge="end"
-          >
-            {showPassword ? <VisibilityOff /> : <Visibility />}
-          </IconButton>
-        </InputAdornment>
-      ),
-    }),
-    [showPassword, t]
-  ); // Only update when showPassword changes
-
   const onSubmit = async (data: ResetPasswordFormData) => {
     const linkValidation = getResetPasswordLinkSchema(t).safeParse({
       email: data.email,
@@ -140,22 +114,21 @@ const ResetPassword = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <input type="hidden" {...register("email")} />
             <input type="hidden" {...register("code")} />
-            <TextField
-              {...register("newPassword")}
+            <MyTextField
+              counter={false}
+              errors={errors}
+              fieldName="newPassword"
               label={t("auth.newPassword")}
-              type={showPassword ? "text" : "password"}
-              fullWidth
+              loading={loading}
               margin="normal"
+              maxValue={128}
               inputRef={inputRef}
-              error={!!errors.newPassword}
-              helperText={errors.newPassword?.message as string}
-              slotProps={{
-                htmlInput: {
-                  "aria-required": true,
-                  "aria-invalid": !!errors.newPassword,
-                },
-                input: passwordInputProps
-              }}
+              register={register("newPassword")}
+              required
+              setShowPassword={setShowPassword}
+              showPassword={showPassword}
+              startIcon={<LockIcon />}
+              type="password"
             />
             <Button
               type="submit"

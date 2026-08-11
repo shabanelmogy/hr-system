@@ -1,4 +1,5 @@
 import type { ChangeEventHandler, ReactNode, Ref } from "react";
+import type { InputConstraintValue } from "./inputConstraints";
 
 export type RegisteredField = {
   name?: string;
@@ -24,10 +25,13 @@ export type MyTextFieldProps = {
   hidden?: boolean;
   name?: string;
   flex?: unknown;
+  containerSx?: Record<string, unknown>;
   register?: unknown;
   control?: unknown;
   inputRef?: Ref<HTMLInputElement>;
   errors?: Record<string, FieldErrorLike | undefined>;
+  minValue?: InputConstraintValue;
+  maxValue?: InputConstraintValue;
   maxLength?: number;
   preventZero?: boolean;
   watch?: unknown;
@@ -40,6 +44,7 @@ export type MyTextFieldProps = {
   setShowPassword?: unknown;
   readOnly?: boolean;
   value?: unknown;
+  counter?: boolean;
   showCounter?: boolean;
   counterLabel?: ReactNode;
   counterFormat?: "remaining" | "percentage" | "fraction";

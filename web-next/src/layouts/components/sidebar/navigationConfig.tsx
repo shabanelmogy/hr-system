@@ -15,14 +15,19 @@ export const getNavigationConfig = (
   userRoles: readonly string[] = [],
   userPermissions: readonly string[] = []
 ): NavigationConfig => {
+  const isSuperAdmin = userRoles.some(
+    (role) => role.trim().toLowerCase() === "super_admin",
+  );
+
   // Full navigation configuration
-  const fullConfig: NavigationConfig = [
-    getSuperAdminConfig(),
-    getBasicDataConfig(),
-    getExtrasConfig(),
-    getUsersAndRolesConfig(),
-    getAdvancedToolsConfig(),
-  ];
+  const fullConfig: NavigationConfig = isSuperAdmin
+    ? [getSuperAdminConfig()]
+    : [
+        getBasicDataConfig(),
+        getExtrasConfig(),
+        getUsersAndRolesConfig(),
+        getAdvancedToolsConfig(),
+      ];
 
   // Filter the configuration based on user permissions
   return filterNavigationConfig(fullConfig, userRoles, userPermissions);
