@@ -189,6 +189,7 @@ export default apiClient;
 function isPublicAuthenticationRequest(url: string) {
   return [
     "/auth/login",
+    "/auth/selectCompany",
     "/auth/register",
     "/auth/forgetPassword",
     "/auth/resetPassword",

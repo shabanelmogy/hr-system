@@ -1,3 +1,5 @@
+using HrManagementSystem.Application.Features.Analytics.Reports.Abstractions;
+
 namespace HrManagementSystem.Application.Features.Analytics.Reports.Contracts
 {
     public class ReportDetailRequestValidator : AbstractValidator<ReportDetailRequest>

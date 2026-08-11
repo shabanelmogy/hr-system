@@ -1,9 +1,9 @@
-import GoogleIcon from "@mui/icons-material/Google";
-import { Box, Button, useTheme } from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import { useGoogleLogin } from "@react-oauth/google";
-import { useTranslation } from "react-i18next";
+import { Box } from "@mui/material";
+import { lazy, Suspense } from "react";
 import type { SocialLoginHandler } from "../types";
+import GoogleLoginButton from "./GoogleLoginButton";
+
+const GoogleSocialLoginControl = lazy(() => import("./GoogleSocialLoginControl"));
 
 interface SocialLoginButtonsProps {
   handleSocialLogin: SocialLoginHandler;
@@ -18,49 +18,22 @@ const SocialLoginButtons = ({
   loading,
   disabled,
 }: SocialLoginButtonsProps) => {
-  const theme = useTheme();
-  const { t } = useTranslation();
-
-  // Set up Google login
-  const googleLogin = useGoogleLogin({
-    onSuccess: (credentialResponse) => {
-      void handleSocialLogin("google", credentialResponse);
-    },
-    onError: () => { },
-  });
-
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-      {/* Google Login Button */}
-      <Button
-        variant="outlined"
-        fullWidth
-        onClick={() => googleLogin()}
-        disabled={loading || disabled}
-        startIcon={<GoogleIcon />}
-        sx={{
-          textTransform: "none",
-          py: 1,
-          borderColor: theme.palette.divider,
-          color: theme.palette.text.primary,
-          backgroundColor: isDarkMode
-            ? alpha(theme.palette.grey[800], 0.3)
-            : alpha(theme.palette.common.white, 0.9),
-          "&:hover": {
-            backgroundColor: isDarkMode
-              ? alpha(theme.palette.grey[800], 0.5)
-              : alpha(theme.palette.grey[100], 0.8),
-            borderColor: theme.palette.divider,
-          },
-          "& .MuiButton-startIcon": {
-            color: "#DB4437", // Google red color
-          },
-        }}
+      <Suspense
+        fallback={(
+          <GoogleLoginButton
+            isDarkMode={isDarkMode}
+            disabled
+          />
+        )}
       >
-        {t("googleAuth.googleLogin")}
-      </Button>
-
-      {/* Add your Facebook and Twitter buttons */}
+        <GoogleSocialLoginControl
+          handleSocialLogin={handleSocialLogin}
+          isDarkMode={isDarkMode}
+          disabled={loading || disabled}
+        />
+      </Suspense>
     </Box>
   );
 };

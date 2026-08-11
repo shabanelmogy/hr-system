@@ -1,4 +1,4 @@
-import { Box, IconButton, Tooltip, Typography, alpha, useTheme } from "@mui/material";
+import { Box, IconButton, Tooltip, Typography, alpha } from "@mui/material";
 import { useState } from "react";
 import { useMemo } from "react";
 
@@ -7,26 +7,42 @@ import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import MenuOpenRoundedIcon from "@mui/icons-material/MenuOpenRounded";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-import cookies from "js-cookie";
-import { useTranslation } from "react-i18next";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth/SessionContext";
-import { useThemeSettingsContext } from "@/theme/ThemeShell";
-import { NotificationBell } from "@/features/notifications";
-import { GlobalSearchButton } from "@/features/global-search";
 
 // Import sub-components
 import LanguageSelector from "./LanguageSelector";
 import MobileMenu from "./MobileMenu";
 import SettingsSystem from "./SettingsSystem";
 import ThemeToggler from "./ThemeToggler";
-import DisplayDebugger from "./DisplayDebugger";
 
 // Import styled components
 import { AppBar, StyledToolbar } from "./TopBarStyles";
 import UserWelcome from "./UserWelcome";
 import { getNavigationConfig } from "../sidebar/navigationConfig";
+import { useTopBarPreferences } from "./useTopBarPreferences";
+
+const DisplayDebugger = dynamic(() => import("./DisplayDebugger"), { ssr: false });
+const GlobalSearchButton = dynamic(
+  () =>
+    import("@/features/global-search/components/GlobalSearchButton").then(
+      (module) => module.GlobalSearchButton,
+    ),
+  { ssr: false, loading: TopBarActionPlaceholder },
+);
+const NotificationBell = dynamic(
+  () =>
+    import("@/features/notifications/NotificationBell").then(
+      (module) => module.NotificationBell,
+    ),
+  { ssr: false, loading: TopBarActionPlaceholder },
+);
+
+function TopBarActionPlaceholder() {
+  return <Box aria-hidden sx={{ width: 40, height: 40, flexShrink: 0 }} />;
+}
 
 const TopBar = ({
   open,
@@ -35,10 +51,8 @@ const TopBar = ({
   open: boolean;
   handleDrawerToggle: () => void;
 }) => {
-  const theme = useTheme();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<HTMLElement | null>(null);
-  const { t, i18n } = useTranslation();
-  const { direction, setMode } = useThemeSettingsContext();
+  const { theme, t, direction, changeLanguage, toggleTheme } = useTopBarPreferences();
   const { user, logout: sessionLogout } = useSession();
   const isAuthenticated = user !== null;
   const searchNavigation = useMemo(
@@ -57,19 +71,12 @@ const TopBar = ({
   };
 
   const handleLanguageChange = (value: string) => {
-    const language = value === "ltr" ? "en" : "ar";
-    cookies.set("i18next", language, { expires: 365, sameSite: "lax" });
-    void i18n.changeLanguage(language);
+    changeLanguage(value);
     handleMobileMenuClose();
   };
 
   const handleThemeToggle = () => {
-    const newMode = theme.palette.mode === "dark" ? "light" : "dark";
-
-    localStorage.setItem("currentMode", newMode);
-    cookies.set("currentMode", newMode, { expires: 365, sameSite: "lax" });
-    setMode(newMode);
-
+    toggleTheme();
     handleMobileMenuClose();
   };
 

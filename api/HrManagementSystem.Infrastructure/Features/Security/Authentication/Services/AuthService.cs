@@ -483,8 +483,12 @@ public sealed class AuthService(
         ApplicationUser user,
         CancellationToken cancellationToken)
     {
+        if (!await IsTenantActiveAsync(user.TenantId, cancellationToken))
+            return Result.Failure<LoginResult>(userErrors.NoCompanyAccess);
+
         var companies = await context.UserCompanyAccesses
             .IgnoreQueryFilters()
+            .AsNoTracking()
             .Where(access =>
                 access.UserId == user.Id &&
                 access.TenantId == user.TenantId &&
@@ -496,9 +500,6 @@ public sealed class AuthService(
                 access.Company.NameAr,
                 access.Company.NameEn))
             .ToListAsync(cancellationToken);
-
-        if (!await IsTenantActiveAsync(user.TenantId, cancellationToken))
-            return Result.Failure<LoginResult>(userErrors.NoCompanyAccess);
 
         if (companies.Count == 0)
             return Result.Failure<LoginResult>(userErrors.NoCompanyAccess);

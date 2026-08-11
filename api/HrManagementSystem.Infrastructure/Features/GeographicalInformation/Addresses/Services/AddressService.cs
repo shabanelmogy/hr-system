@@ -12,7 +12,6 @@ namespace HrManagementSystem.Infrastructure.Features.GeographicalInformation.Add
 public class AddressService(
     ApplicationDbContext context,
     ICurrentActor currentActor,
-    IHttpContextAccessor httpContextAccessor,
     IEntityChangeLogService entityChangeLogService,
     AddressErrors addressErrors,
     IMapper mapper) : IAddressService
@@ -20,7 +19,6 @@ public class AddressService(
     private readonly ApplicationDbContext _context = context;
     private readonly ICurrentActor _currentActor = currentActor;
     private readonly IMapper _mapper = mapper;
-    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
     private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
     private readonly AddressErrors _addressErrors = addressErrors;
 
@@ -113,7 +111,7 @@ public class AddressService(
             return Result.Failure(_addressErrors.DefaultAddressCannotBeDeleted);        
 
         address.IsDeleted = !address.IsDeleted;
-        address.DeletedById = _httpContextAccessor.HttpContext!.User.GetUserId()!;
+        address.DeletedById = _currentActor.UserId;
         address.DeletedByPc = Environment.MachineName;
         address.DeletedOn = DateTime.UtcNow;
 
@@ -141,7 +139,7 @@ public class AddressService(
         var request = new AddressChangedJobRequest(
             address,
             action,
-            _httpContextAccessor.HttpContext?.User.GetUserId(),
+            _currentActor.UserId,
             _currentActor.TenantId ?? throw new InvalidOperationException(
                 "A tenant is required to publish address changes."),
             _currentActor.CompanyId ?? throw new InvalidOperationException(

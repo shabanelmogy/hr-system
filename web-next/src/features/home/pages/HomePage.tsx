@@ -1,16 +1,19 @@
 "use client";
 
 import { TrendingUp } from "@mui/icons-material";
+import dynamic from "next/dynamic";
 import {
   alpha,
   Box,
   Button,
   Grid,
+  Skeleton,
   Stack,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
 
@@ -18,12 +21,40 @@ import Link from "next/link";
 import { appRoutes } from "@/config";
 import { PageHeader } from "@/shared/components/navigation/header";
 import Section from "@/shared/components/layout/Section";
-import QuickInsights from "../quick-insights";
-import KpiRow from "../rows/kpi-row";
-import TrendsRow from "../rows/trends-row";
-import { GlobalPresenceRow } from "@/features/basic-data/geographical-information/global-presence";
-import HealthPipelineRow from "../rows/health-pipeline-row";
-import AttendanceTrendsRow from "../rows/attendance-trends-row";
+
+const QuickInsights = dynamic(() => import("../quick-insights"), {
+  ssr: false,
+  loading: () => <DashboardContentSkeleton minHeight={150} />,
+});
+const KpiRow = dynamic(() => import("../rows/kpi-row"), {
+  ssr: false,
+  loading: () => <DashboardContentSkeleton minHeight={280} />,
+});
+const TrendsRow = dynamic(() => import("../rows/trends-row"), {
+  ssr: false,
+  loading: () => <DashboardContentSkeleton minHeight={320} />,
+});
+const GlobalPresenceRow = dynamic(
+  () =>
+    import(
+      "@/features/basic-data/geographical-information/global-presence/components/global-presence-row"
+    ),
+  {
+    ssr: false,
+    loading: () => <DashboardContentSkeleton minHeight={360} />,
+  },
+);
+const HealthPipelineRow = dynamic(() => import("../rows/health-pipeline-row"), {
+  ssr: false,
+  loading: () => <DashboardContentSkeleton minHeight={320} />,
+});
+const AttendanceTrendsRow = dynamic(
+  () => import("../rows/attendance-trends-row"),
+  {
+    ssr: false,
+    loading: () => <DashboardContentSkeleton minHeight={360} />,
+  },
+);
 
 const Home = () => {
   const { t } = useTranslation();
@@ -112,7 +143,9 @@ const Home = () => {
             VIEW ALL
           </Button>
         </Stack>
-        <TrendsRow />
+        <DeferredDashboardContent minHeight={320}>
+          <TrendsRow />
+        </DeferredDashboardContent>
       </Section>
 
       <Box sx={{ height: 16 }} />
@@ -122,7 +155,9 @@ const Home = () => {
         title="Global Presence & Activity"
         subtitle="World-wide footprint and the latest HR updates"
       >
-        <GlobalPresenceRow />
+        <DeferredDashboardContent minHeight={360}>
+          <GlobalPresenceRow />
+        </DeferredDashboardContent>
       </Section>
 
       <Box sx={{ height: 16 }} />
@@ -147,7 +182,9 @@ const Home = () => {
             VIEW ALL
           </Button>
         </Stack>
-        <HealthPipelineRow />
+        <DeferredDashboardContent minHeight={320}>
+          <HealthPipelineRow />
+        </DeferredDashboardContent>
       </Section>
 
       <Box sx={{ height: 16 }} />
@@ -172,7 +209,9 @@ const Home = () => {
             VIEW ALL
           </Button>
         </Stack>
-        <AttendanceTrendsRow />
+        <DeferredDashboardContent minHeight={360}>
+          <AttendanceTrendsRow />
+        </DeferredDashboardContent>
       </Section>
 
       {/* Bottom highlight strip */}
@@ -206,3 +245,46 @@ const Home = () => {
 };
 
 export default Home;
+
+function DashboardContentSkeleton({ minHeight }: { minHeight: number }) {
+  return (
+    <Box role="status" aria-label="Loading dashboard content" sx={{ minHeight }}>
+      <Skeleton variant="rounded" height={minHeight} animation="wave" />
+    </Box>
+  );
+}
+
+function DeferredDashboardContent({
+  children,
+  minHeight,
+}: {
+  children: ReactNode;
+  minHeight: number;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element || visible) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [visible]);
+
+  return (
+    <Box ref={containerRef} sx={{ minHeight }}>
+      {visible ? children : <DashboardContentSkeleton minHeight={minHeight} />}
+    </Box>
+  );
+}

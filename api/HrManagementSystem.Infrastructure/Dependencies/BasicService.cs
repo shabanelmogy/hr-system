@@ -20,7 +20,11 @@ public static class BasicService
 
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         services.AddHttpContextAccessor();
-        services.AddScoped<ICurrentActor, HttpCurrentActor>();
+        services.AddScoped<CurrentActor>();
+        services.AddScoped<ICurrentActor>(serviceProvider =>
+            serviceProvider.GetRequiredService<CurrentActor>());
+        services.AddScoped<ICurrentActorScope>(serviceProvider =>
+            serviceProvider.GetRequiredService<CurrentActor>());
         services.AddHttpClient("Google", client =>
         {
             client.BaseAddress = new Uri("https://www.googleapis.com/");

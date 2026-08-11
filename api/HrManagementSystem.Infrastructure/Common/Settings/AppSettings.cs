@@ -7,5 +7,6 @@ public class AppSettings
     /// Used to build links in confirmation and password-reset emails.
     /// Never trust Request.Headers["Origin"] for this purpose.
     /// </summary>
+    [Required, Url]
     public string FrontendUrl { get; set; } = string.Empty;
 }

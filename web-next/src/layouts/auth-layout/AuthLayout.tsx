@@ -1,5 +1,5 @@
 import { Container, Box, useTheme } from "@mui/material";
-import TopBar from "../components/top-bar/TopBar";
+import AuthTopBar from "../components/top-bar/AuthTopBar";
 import type { ReactNode } from "react";
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
@@ -17,7 +17,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
       }}
     >
       <Container maxWidth="md">
-        <TopBar open={false} handleDrawerToggle={() => {}} />
+        <AuthTopBar />
         {children}
       </Container>
     </Box>

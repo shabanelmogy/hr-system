@@ -1,4 +1,4 @@
-import { SparklineChart } from "@/shared/components/charts";
+import SparklineChart from "@/shared/components/charts/cartesian/SparklineChart";
 import { GroupAdd, Schedule } from "@mui/icons-material";
 import {
   alpha,

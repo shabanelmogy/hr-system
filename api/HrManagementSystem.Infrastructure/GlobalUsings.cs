@@ -10,6 +10,7 @@ global using Asp.Versioning;
 global using Asp.Versioning.ApiExplorer;
 global using FluentValidation;
 global using Hangfire;
+global using HrManagementSystem.Application.Abstractions.Authentication;
 global using HrManagementSystem.Application.Common.Consts;
 global using HrManagementSystem.Application.Common.Errors;
 global using HrManagementSystem.Application.Common.Services;

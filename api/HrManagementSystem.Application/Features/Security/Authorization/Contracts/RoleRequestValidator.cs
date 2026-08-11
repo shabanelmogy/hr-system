@@ -1,3 +1,5 @@
+using HrManagementSystem.Application.Features.Security.Authorization.Abstractions;
+
 namespace HrManagementSystem.Application.Features.Security.Authorization.Contracts;
 
 public class RoleRequestValidator : AbstractValidator<RoleRequest>

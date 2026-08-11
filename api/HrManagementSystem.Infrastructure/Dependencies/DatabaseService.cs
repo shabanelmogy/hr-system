@@ -1,4 +1,6 @@
 using HrManagementSystem.Application.Abstractions.Persistence;
+using HrManagementSystem.Application.Abstractions.Validation;
+using Scrutor;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
@@ -11,21 +13,18 @@ public static class DatabaseService
                throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
         services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+        services.AddOptions<DatabaseSettings>()
+            .BindConfiguration(DatabaseSettings.SectionName)
+            .ValidateOnStart();
         services.AddScoped<IUnitOfWork>(serviceProvider =>
             serviceProvider.GetRequiredService<ApplicationDbContext>());
-        services.AddScoped<ICategoryValidationQueries>(GetValidationQueries);
-        services.AddScoped<ISubCategoryValidationQueries>(GetValidationQueries);
-        services.AddScoped<IReportValidationQueries>(GetValidationQueries);
-        services.AddScoped<ICountryValidationQueries>(GetValidationQueries);
-        services.AddScoped<IStateValidationQueries>(GetValidationQueries);
-        services.AddScoped<IDistrictValidationQueries>(GetValidationQueries);
-        services.AddScoped<IAddressTypeValidationQueries>(GetValidationQueries);
-        services.AddScoped<IUserValidationQueries>(GetValidationQueries);
-        services.AddScoped<IRoleValidationQueries>(GetValidationQueries);
+        services.Scan(scan => scan
+            .FromAssemblyOf<ApplicationDbContext>()
+            .AddClasses(classes => classes.AssignableTo<IValidationQuery>())
+            .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+            .AsImplementedInterfaces()
+            .WithScopedLifetime());
 
         return services;
     }
-
-    private static ApplicationDbContext GetValidationQueries(IServiceProvider serviceProvider) =>
-        serviceProvider.GetRequiredService<ApplicationDbContext>();
 }

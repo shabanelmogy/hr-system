@@ -1,4 +1,5 @@
-import { MyButton, MyTextField } from "@/shared/components/forms";
+import MyButton from "@/shared/components/forms/buttons/MyButton";
+import MyTextField from "@/shared/components/forms/text-fields/MyTextField";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonIcon from "@mui/icons-material/Person";

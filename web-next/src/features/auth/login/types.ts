@@ -5,8 +5,9 @@ export type SocialLoginHandler = (
   credentialResponse?: unknown,
 ) => Promise<void>;
 
-export interface LoginResponse {
-  isAuthenticated: boolean;
+export interface AuthenticatedLoginResponse {
+  isAuthenticated: true;
+  companyId: number;
 }
 
 export interface CompanyOption {

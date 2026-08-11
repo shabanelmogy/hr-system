@@ -27,17 +27,7 @@ public class ApplicationDbContext(
     DbContextOptions<ApplicationDbContext> options,
     ICurrentActor currentActor,
     TimeProvider timeProvider) : IdentityDbContext<ApplicationUser, ApplicationRole, string>(options),
-    IUnitOfWork,
-    ICategoryValidationQueries,
-    ISubCategoryValidationQueries,
-    IReportValidationQueries,
-    ICountryValidationQueries,
-    IStateValidationQueries,
-    IDistrictValidationQueries,
-    IAddressTypeValidationQueries,
-    IUserValidationQueries,
-    IRoleValidationQueries
-
+    IUnitOfWork
 {
     private readonly ICurrentActor _currentActor = currentActor;
     private readonly TimeProvider _timeProvider = timeProvider;
@@ -64,232 +54,6 @@ public class ApplicationDbContext(
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<Company> Companies { get; set; }
     public DbSet<UserCompanyAccess> UserCompanyAccesses { get; set; }
-
-    public Task<bool> CategoryNameArExistsAsync(
-        string name,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        Categories.AnyAsync(
-            category => category.NameAr == name &&
-                        (!excludedId.HasValue || category.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> CategoryNameEnExistsAsync(
-        string name,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        Categories.AnyAsync(
-            category => category.NameEn == name &&
-                        (!excludedId.HasValue || category.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> SubCategoryNameArExistsAsync(
-        string name,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        SubCategories.AnyAsync(
-            subCategory => subCategory.NameAr == name &&
-                           (!excludedId.HasValue || subCategory.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> SubCategoryNameEnExistsAsync(
-        string name,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        SubCategories.AnyAsync(
-            subCategory => subCategory.NameEn == name &&
-                           (!excludedId.HasValue || subCategory.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<int> CountActiveCategoriesAsync(
-        IReadOnlyCollection<int> ids,
-        CancellationToken cancellationToken) =>
-        Categories.CountAsync(
-            category => ids.Contains(category.Id) && !category.IsDeleted,
-            cancellationToken);
-
-    public Task<bool> ReportCategoryNameExistsAsync(
-        string name,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        ReportsCategories.AnyAsync(
-            category => category.Name == name &&
-                        (!excludedId.HasValue || category.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> ReportDetailPropertyNameExistsAsync(
-        string propertyName,
-        int reportMasterId,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        ReportsDetails.AnyAsync(
-            detail => detail.PropertyName == propertyName &&
-                      detail.ReportMasterId == reportMasterId &&
-                      (!excludedId.HasValue || detail.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> ReportDetailColumnNameExistsAsync(
-        string columnName,
-        int reportMasterId,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        ReportsDetails.AnyAsync(
-            detail => detail.ColumnName == columnName &&
-                      detail.ReportMasterId == reportMasterId &&
-                      (!excludedId.HasValue || detail.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> CountryNameEnExistsAsync(
-        string name,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        Countries.AnyAsync(
-            country => country.NameEn == name &&
-                       (!excludedId.HasValue || country.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> CountryNameArExistsAsync(
-        string name,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        Countries.AnyAsync(
-            country => country.NameAr == name &&
-                       (!excludedId.HasValue || country.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> CountryAlpha2CodeExistsAsync(
-        string code,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        Countries.AnyAsync(
-            country => country.Alpha2Code == code &&
-                       (!excludedId.HasValue || country.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> CountryAlpha3CodeExistsAsync(
-        string code,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        Countries.AnyAsync(
-            country => country.Alpha3Code == code &&
-                       (!excludedId.HasValue || country.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> CountryExistsAsync(int id, CancellationToken cancellationToken) =>
-        Countries.AnyAsync(country => country.Id == id && !country.IsDeleted, cancellationToken);
-
-    public Task<bool> StateNameEnExistsAsync(
-        string name,
-        int countryId,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        States.AnyAsync(
-            state => state.NameEn == name &&
-                     state.CountryId == countryId &&
-                     (!excludedId.HasValue || state.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> StateNameArExistsAsync(
-        string name,
-        int countryId,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        States.AnyAsync(
-            state => state.NameAr == name &&
-                     state.CountryId == countryId &&
-                     (!excludedId.HasValue || state.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> StateCodeExistsAsync(
-        string code,
-        int countryId,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        States.AnyAsync(
-            state => state.Code == code &&
-                     state.CountryId == countryId &&
-                     (!excludedId.HasValue || state.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> StateExistsAsync(int id, CancellationToken cancellationToken) =>
-        States.AnyAsync(state => state.Id == id && !state.IsDeleted, cancellationToken);
-
-    public Task<bool> DistrictNameEnExistsAsync(
-        string name,
-        int stateId,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        Districts.AnyAsync(
-            district => district.NameEn == name &&
-                        district.StateId == stateId &&
-                        (!excludedId.HasValue || district.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> DistrictNameArExistsAsync(
-        string name,
-        int stateId,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        Districts.AnyAsync(
-            district => district.NameAr == name &&
-                        district.StateId == stateId &&
-                        (!excludedId.HasValue || district.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> DistrictCodeExistsAsync(
-        string code,
-        int stateId,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        Districts.AnyAsync(
-            district => district.Code == code &&
-                        district.StateId == stateId &&
-                        (!excludedId.HasValue || district.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> DistrictExistsAsync(int id, CancellationToken cancellationToken) =>
-        Districts.AnyAsync(district => district.Id == id && !district.IsDeleted, cancellationToken);
-
-    public Task<bool> AddressTypeNameEnExistsAsync(
-        string name,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        AddressTypes.AnyAsync(
-            addressType => addressType.NameEn == name &&
-                           (!excludedId.HasValue || addressType.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> AddressTypeNameArExistsAsync(
-        string name,
-        int? excludedId,
-        CancellationToken cancellationToken) =>
-        AddressTypes.AnyAsync(
-            addressType => addressType.NameAr == name &&
-                           (!excludedId.HasValue || addressType.Id != excludedId.Value),
-            cancellationToken);
-
-    public Task<bool> AddressTypeExistsAsync(int id, CancellationToken cancellationToken) =>
-        AddressTypes.AnyAsync(
-            addressType => addressType.Id == id && !addressType.IsDeleted,
-            cancellationToken);
-
-    public Task<bool> UserNameExistsAsync(
-        string userName,
-        string? excludedUserId,
-        CancellationToken cancellationToken) =>
-        Users.AnyAsync(
-            user => user.UserName == userName &&
-                    (excludedUserId == null || user.Id != excludedUserId),
-            cancellationToken);
-
-    public Task<bool> RoleNameExistsAsync(
-        string roleName,
-        string? excludedRoleId,
-        CancellationToken cancellationToken) =>
-        Roles.AnyAsync(
-            role => role.Name == roleName &&
-                    (excludedRoleId == null || role.Id != excludedRoleId),
-            cancellationToken);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -336,6 +100,7 @@ public class ApplicationDbContext(
         where TEntity : AuditableEntity
     {
         var builder = modelBuilder.Entity<TEntity>();
+        builder.Property(entity => entity.RowVersion).IsRowVersion();
 
         builder.HasOne<ApplicationUser>()
             .WithMany()
@@ -451,14 +216,14 @@ public class ApplicationDbContext(
 
         var currentUserId = _currentActor.UserId;
         var currentMachineName = Environment.MachineName;
-        var currentTime = DateTime.UtcNow;
+        var currentTime = _timeProvider.GetUtcNow().UtcDateTime;
 
         foreach (var entityEntry in ChangeTracker.Entries<AuditableEntity>())
         {
             switch (entityEntry.State)
             {
                 case EntityState.Added:
-                    SetCreatedValues(entityEntry, currentUserId, currentMachineName);
+                    SetCreatedValues(entityEntry, currentUserId, currentMachineName, currentTime);
                     break;
                 case EntityState.Modified:
                     SetUpdatedValues(entityEntry, currentUserId, currentMachineName, currentTime);
@@ -539,12 +304,21 @@ public class ApplicationDbContext(
     private static void SetCreatedValues(
         EntityEntry<AuditableEntity> entityEntry,
         string? userId,
-        string machineName)
+        string machineName,
+        DateTime currentTime)
     {
         if (!string.IsNullOrWhiteSpace(userId))
             entityEntry.Property(x => x.CreatedById).CurrentValue = userId;
 
+        if (string.IsNullOrWhiteSpace(entityEntry.Property(x => x.CreatedById).CurrentValue))
+        {
+            throw new InvalidOperationException(
+                "An actor user is required to create auditable data. " +
+                "Background operations must establish an ICurrentActorScope.");
+        }
+
         entityEntry.Property(x => x.CreatedByPc).CurrentValue = machineName;
+        entityEntry.Property(x => x.CreatedOn).CurrentValue = currentTime;
     }
 
     private static void SetUpdatedValues(

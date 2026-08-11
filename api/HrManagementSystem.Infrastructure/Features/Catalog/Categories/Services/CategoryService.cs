@@ -12,14 +12,14 @@ public class CategoryService(
     IMapper mapper,
     ApplicationDbContext context,
     IEntityChangeLogService entityChangeLogService,
-    IHttpContextAccessor httpContextAccessor,
+    ICurrentActor currentActor,
     CategoryErrors categoryErrors,
     HybridCache hybridCache) : ICategoryService
 {
     private readonly IMapper _mapper = mapper;
     private readonly ApplicationDbContext _context = context;
     private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
-    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    private readonly ICurrentActor _currentActor = currentActor;
     private readonly CategoryErrors _categoryErrors = categoryErrors;
     private readonly HybridCache _hybridCache = hybridCache;
 
@@ -132,7 +132,7 @@ public class CategoryService(
 
         // Cascade delete will handle CategorySubcategories
         category.IsDeleted = !category.IsDeleted;
-        category.DeletedById = _httpContextAccessor.HttpContext!.User.GetUserId();
+        category.DeletedById = _currentActor.UserId;
         category.DeletedOn = DateTime.UtcNow;
         category.DeletedByPc = Environment.MachineName;
 

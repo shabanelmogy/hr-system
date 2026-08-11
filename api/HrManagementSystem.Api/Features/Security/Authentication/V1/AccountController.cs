@@ -40,12 +40,14 @@ public class AccountController(
     }
 
     [HttpPut]
+    [Consumes("multipart/form-data")]
     public async Task<IActionResult> UpdateUserPicture(
-        [FromForm(Name = "ProfilePicture")] IFormFile? profilePicture,
-        [FromForm(Name = "Remove")] bool remove,
+        [FromForm] ProfilePictureUploadForm form,
         CancellationToken cancellationToken)
     {
-        var request = new UpdateProfilePictureRequest(profilePicture?.ToFileUpload(), remove);
+        var request = new UpdateProfilePictureRequest(
+            form.ProfilePicture?.ToFileUpload(),
+            form.Remove);
         await _profilePictureValidator.ValidateAndThrowAsync(request, cancellationToken);
         var result = await _userService.UpdateProfilePictureAsync(User.GetUserId()!, request, cancellationToken);
 

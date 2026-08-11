@@ -1,3 +1,4 @@
+using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Features.Platform.EntityChangeLogs.Services;
 using System.Collections;
 using HrManagementSystem.Application.Features.Platform.EntityChangeLogs.Contracts;
@@ -10,12 +11,17 @@ namespace HrManagementSystem.Infrastructure.Features.Platform.EntityChangeLogs.S
 public class EntityChangeLogService : IEntityChangeLogService
 {
     private readonly ApplicationDbContext _context;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ICurrentActor _currentActor;
+    private readonly TimeProvider _timeProvider;
 
-    public EntityChangeLogService(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+    public EntityChangeLogService(
+        ApplicationDbContext context,
+        ICurrentActor currentActor,
+        TimeProvider timeProvider)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
-        _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+        _currentActor = currentActor ?? throw new ArgumentNullException(nameof(currentActor));
+        _timeProvider = timeProvider ?? throw new ArgumentNullException(nameof(timeProvider));
     }
 
     public async Task<EntityChangeLogsRequest?> CreateChangeLogAsync<TEntity>(int entityId, TEntity existingEntity, TEntity updatedEntity) where TEntity : class
@@ -41,12 +47,13 @@ public class EntityChangeLogService : IEntityChangeLogService
             EntityName = entityName,
             JsonOldValues = oldValuesJson,
             JsonNewValues = newValuesJson,
-            ChangedById = _httpContextAccessor.HttpContext?.User.GetUserId()
+            ChangedById = _currentActor.UserId
                 ?? throw new InvalidOperationException("User is not authenticated"),
             ChangedByPc = Environment.MachineName
         };
 
         var changeLogResponse = changeLog.Adapt<EntityChangeLog>();
+        changeLogResponse.ChangedAt = _timeProvider.GetUtcNow().UtcDateTime;
         _context.Set<EntityChangeLog>().Add(changeLogResponse);
         await _context.SaveChangesAsync();
 

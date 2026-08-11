@@ -1,3 +1,6 @@
+using HrManagementSystem.Application.Features.GeographicalInformation.Districts.Abstractions;
+using HrManagementSystem.Application.Features.GeographicalInformation.States.Abstractions;
+
 namespace HrManagementSystem.Application.Features.GeographicalInformation.Districts.Contracts;
 
 public class DistrictRequestValidator : AbstractValidator<DistrictRequest>

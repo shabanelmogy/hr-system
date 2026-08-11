@@ -12,14 +12,14 @@ public class SubcategoryService(
     IMapper mapper,
     ApplicationDbContext context,
     IEntityChangeLogService entityChangeLogService,
-    IHttpContextAccessor httpContextAccessor,
+    ICurrentActor currentActor,
     SubCategoryErrors subcategoryErrors,
     HybridCache hybridCache) : ISubCategoryService
 {
     private readonly IMapper _mapper = mapper;
     private readonly ApplicationDbContext _context = context;
     private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
-    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    private readonly ICurrentActor _currentActor = currentActor;
     private readonly SubCategoryErrors _subcategoryErrors = subcategoryErrors;
     private readonly HybridCache _hybridCache = hybridCache;
 
@@ -146,7 +146,7 @@ public class SubcategoryService(
         // No need to check Contents since it only references CategoryId
         // Cascade delete will handle CategorySubcategories
         subcategory.IsDeleted = !subcategory.IsDeleted;
-        subcategory.DeletedById = _httpContextAccessor.HttpContext!.User.GetUserId();
+        subcategory.DeletedById = _currentActor.UserId;
         subcategory.DeletedOn = DateTime.UtcNow;
         subcategory.DeletedByPc = Environment.MachineName;
 

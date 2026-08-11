@@ -11,14 +11,14 @@ namespace HrManagementSystem.Infrastructure.Features.GeographicalInformation.Sta
 
 public class StateService(
     ApplicationDbContext context,
-    IHttpContextAccessor httpContextAccessor,
+    ICurrentActor currentActor,
     IEntityChangeLogService entityChangeLogService,
     StateErrors stateErrors,
     IMapper mapper) : IStateService
 {
     private readonly ApplicationDbContext _context = context;
     private readonly IMapper _mapper = mapper;
-    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    private readonly ICurrentActor _currentActor = currentActor;
     private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
     private readonly StateErrors _stateErrors = stateErrors;
 
@@ -141,7 +141,7 @@ public class StateService(
             return Result.Failure(_stateErrors.StateInUseByDistrict);
 
         state.IsDeleted = !state.IsDeleted;
-        state.DeletedById = state.IsDeleted ? _httpContextAccessor.HttpContext?.User.GetUserId() : null;
+        state.DeletedById = state.IsDeleted ? _currentActor.UserId : null;
         state.DeletedByPc = state.IsDeleted ? Environment.MachineName : null;
         state.DeletedOn = state.IsDeleted ? DateTime.UtcNow : null;
 
@@ -179,7 +179,7 @@ public class StateService(
         var request = new StateChangedJobRequest(
             state,
             action,
-            _httpContextAccessor.HttpContext?.User.GetUserId(),
+            _currentActor.UserId,
             Guid.NewGuid());
 
         BackgroundJob.Enqueue<StateChangedJob>(

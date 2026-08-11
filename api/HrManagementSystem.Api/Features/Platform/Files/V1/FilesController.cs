@@ -26,11 +26,12 @@ public class FilesController(
     }
 
     [HttpPost]
+    [Consumes("multipart/form-data")]
     public async Task<IActionResult> Upload(
-        [FromForm(Name = "File")] IFormFile file,
+        [FromForm] SingleFileUploadForm form,
         CancellationToken cancellationToken)
     {
-        var request = new UploadFileRequest(file.ToFileUpload());
+        var request = new UploadFileRequest(form.File.ToFileUpload());
         await _uploadFileValidator.ValidateAndThrowAsync(request, cancellationToken);
         var storedFileName = await _fileService.UploadAsync(request.File, cancellationToken);
 
@@ -38,11 +39,13 @@ public class FilesController(
     }
 
     [HttpPost]
+    [Consumes("multipart/form-data")]
     public async Task<IActionResult> UploadMany(
-        [FromForm(Name = "Files")] List<IFormFile> files,
+        [FromForm] MultipleFilesUploadForm form,
         CancellationToken cancellationToken)
     {
-        var request = new UploadManyFilesRequest(files.Select(file => file.ToFileUpload()).ToArray());
+        var request = new UploadManyFilesRequest(
+            form.Files.Select(file => file.ToFileUpload()).ToArray());
         await _uploadManyFilesValidator.ValidateAndThrowAsync(request, cancellationToken);
         var filesIds = await _fileService.UploadManyAsync(request.Files, cancellationToken);
 
@@ -50,11 +53,12 @@ public class FilesController(
     }
 
     [HttpPost]
+    [Consumes("multipart/form-data")]
     public async Task<IActionResult> UploadImage(
-        [FromForm(Name = "Image")] IFormFile image,
+        [FromForm] ImageUploadForm form,
         CancellationToken cancellationToken)
     {
-        var request = new UploadImageRequest(image.ToFileUpload());
+        var request = new UploadImageRequest(form.Image.ToFileUpload());
         await _uploadImageValidator.ValidateAndThrowAsync(request, cancellationToken);
         await _fileService.UploadImageAsync(request.Image, cancellationToken);
 

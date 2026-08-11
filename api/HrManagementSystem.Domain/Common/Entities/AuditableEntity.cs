@@ -1,14 +1,11 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace HrManagementSystem.Domain.Common.Entities;
 
 public class AuditableEntity
 {
-    [Timestamp]
     public byte[] RowVersion { get; set; } = [];
 
     public string CreatedById { get; set; } = string.Empty;
-    public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedOn { get; set; }
     public string CreatedByPc { get; set; } = string.Empty;
     public string? UpdatedById { get; set; }
     public DateTime? UpdatedOn { get; set; }

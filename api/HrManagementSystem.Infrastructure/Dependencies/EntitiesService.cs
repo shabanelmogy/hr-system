@@ -28,7 +28,7 @@ public static class EntitiesService
         services.AddScoped<SessionRevokedJob>();
 
         services.Scan(scan => scan
-            .FromAssemblies(typeof(AllDependencies).Assembly)
+            .FromAssemblies(HrManagementSystem.Infrastructure.AssemblyReference.Assembly)
             .AddClasses(classes => classes.Where(type =>
                 type is { IsAbstract: false, IsGenericTypeDefinition: false } &&
                 type.Name.EndsWith("Service", StringComparison.Ordinal) &&

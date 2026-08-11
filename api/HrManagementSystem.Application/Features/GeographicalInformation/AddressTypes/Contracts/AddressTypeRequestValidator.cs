@@ -1,3 +1,5 @@
+using HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Abstractions;
+
 namespace HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Contracts;
 
 public class AddressTypeRequestValidator : AbstractValidator<AddressTypeRequest>

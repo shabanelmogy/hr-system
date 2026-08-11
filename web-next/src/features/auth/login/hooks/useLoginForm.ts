@@ -1,18 +1,18 @@
-import { apiRoutes } from "@/config";
+import { auth as authRoutes } from "@/config/api/auth";
+import { google as googleRoutes } from "@/config/api/advanced";
 import { useSession } from "@/lib/auth/SessionContext";
 import useNotifications from "@/shared/hooks/useNotifications";
-import { apiService, HandleApiError } from "@/shared/services";
+import apiService from "@/shared/services/apiService";
+import HandleApiError from "@/shared/services/apiError";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Route } from "next";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import type {
   CompanySelectionResponse,
-  LoginResponse,
   SocialLoginHandler,
 } from "../types";
+import { parseLoginResult } from "../loginResult";
 import {
   createLoginValidationSchema,
   type LoginFormData,
@@ -24,7 +24,6 @@ const DEV_CREDENTIALS = {
 } as const;
 
 const useLoginForm = () => {
-  const router = useRouter();
   const { refresh } = useSession();
   const { t } = useTranslation();
   const { showError, showSuccess, SnackbarComponent } = useNotifications();
@@ -53,23 +52,22 @@ const useLoginForm = () => {
     userNameRef.current?.focus();
   }, []);
 
-  const handleAuthSuccess = (data: unknown): boolean => {
-    if (!isLoginResponse(data) || !data.isAuthenticated) return false;
-
+  const completeAuthentication = async () => {
+    const returnTo = getSafeReturnTo();
+    setCompanySelection(null);
     showSuccess(t("messages.loginSuccessful"), t("messages.success"));
-    reset();
-    router.replace(getSafeReturnTo() as Route);
-    void refresh().catch(() => undefined);
-    return true;
+    await refresh();
+    window.location.replace(returnTo);
   };
 
-  const handleLoginResult = (data: unknown): boolean => {
-    if (handleAuthSuccess(data)) {
-      setCompanySelection(null);
+  const handleLoginResult = async (data: unknown): Promise<boolean> => {
+    const result = parseLoginResult(data);
+    if (result?.kind === "authenticated") {
+      await completeAuthentication();
       return true;
     }
-    if (isCompanySelectionResponse(data)) {
-      setCompanySelection(data);
+    if (result?.kind === "company-selection") {
+      setCompanySelection(result.response);
       return true;
     }
     return false;
@@ -80,11 +78,11 @@ const useLoginForm = () => {
     submittingRef.current = true;
     setIsSubmittingState(true);
     try {
-      const data = await apiService.post<unknown>(apiRoutes.auth.login, {
+      const data = await apiService.post<unknown>(authRoutes.login, {
         username,
         password,
       });
-      if (!handleLoginResult(data)) {
+      if (!await handleLoginResult(data)) {
         showError(t("googleAuth.invalidCredentials"), t("messages.error"));
       }
     } catch (error) {
@@ -114,10 +112,10 @@ const useLoginForm = () => {
       const token = getGoogleToken(credentialResponse);
       if (!token) throw new Error("Invalid credential response");
 
-      const data = await apiService.post<unknown>(apiRoutes.google.auth, {
+      const data = await apiService.post<unknown>(googleRoutes.auth, {
         credential: token,
       });
-      if (!handleLoginResult(data)) {
+      if (!await handleLoginResult(data)) {
         showError(t("googleAuth.googleLoginFailed"), t("messages.error"));
       }
     } catch (error) {
@@ -144,14 +142,15 @@ const useLoginForm = () => {
     if (!companySelection || isSelectingCompany) return;
     setIsSelectingCompany(true);
     try {
-      const data = await apiService.post<unknown>(apiRoutes.auth.selectCompany, {
+      const data = await apiService.post<unknown>(authRoutes.selectCompany, {
         companySelectionToken: companySelection.companySelectionToken,
         companyId,
       });
-      if (!handleAuthSuccess(data)) {
+      const result = parseLoginResult(data);
+      if (result?.kind !== "authenticated") {
         showError(t("auth.invalidCompanySelection"), t("messages.error"));
       } else {
-        setCompanySelection(null);
+        await completeAuthentication();
       }
     } catch (error) {
       showHandledError(error, showError, t("messages.error"));
@@ -188,30 +187,6 @@ const useLoginForm = () => {
 };
 
 export default useLoginForm;
-
-function isLoginResponse(value: unknown): value is LoginResponse {
-  return value !== null
-    && typeof value === "object"
-    && typeof (value as Record<string, unknown>).isAuthenticated === "boolean";
-}
-
-function isCompanySelectionResponse(value: unknown): value is CompanySelectionResponse {
-  if (value === null || typeof value !== "object") return false;
-  const candidate = value as Partial<CompanySelectionResponse>;
-  return candidate.isAuthenticated === false
-    && candidate.requiresCompanySelection === true
-    && typeof candidate.companySelectionToken === "string"
-    && candidate.companySelectionToken.length > 0
-    && Array.isArray(candidate.companies)
-    && candidate.companies.length > 1
-    && candidate.companies.every((company) =>
-      company !== null
-      && typeof company === "object"
-      && typeof company.id === "number"
-      && company.id > 0
-      && typeof company.nameAr === "string"
-      && typeof company.nameEn === "string");
-}
 
 function getGoogleToken(value: unknown): string | null {
   if (value === null || typeof value !== "object") return null;

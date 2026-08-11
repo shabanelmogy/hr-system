@@ -207,7 +207,7 @@ public sealed class NotificationServiceTests
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
-        return new ApplicationDbContext(options, new TestCurrentActor());
+        return new ApplicationDbContext(options, new TestCurrentActor(), TimeProvider.System);
     }
 
     private static NotificationService CreateService(ApplicationDbContext context)

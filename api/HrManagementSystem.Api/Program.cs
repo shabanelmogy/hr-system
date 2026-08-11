@@ -1,6 +1,8 @@
 
 using HrManagementSystem.Application;
 using HrManagementSystem.Infrastructure;
+using HrManagementSystem.Infrastructure.Common.Settings;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,23 +18,29 @@ var app = builder.Build();
 
 ProtectedFileStorage.MigrateLegacyFiles(app.Environment);
 app.UseExceptionHandler();
+app.UseMiddleware<CorrelationIdMiddleware>();
 
-using (var scope = app.Services.CreateScope())
+var databaseSettings = app.Services
+    .GetRequiredService<IOptions<DatabaseSettings>>()
+    .Value;
+
+if (databaseSettings.ApplyMigrationsOnStartup)
 {
+    using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     db.Database.Migrate();
 }
 
 #region "serilog"
 
-app.UseSerilogRequestLogging();
-
-app.Use(async (context, next) =>
+app.UseSerilogRequestLogging(options =>
 {
-    using var userId = LogContext.PushProperty("UserId", context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-    using var userName = LogContext.PushProperty("UserName", context.User.FindFirst(ClaimTypes.Name)?.Value);
-
-    await next();
+    options.EnrichDiagnosticContext = (diagnosticContext, context) =>
+    {
+        diagnosticContext.Set("UserId", context.User.FindFirstValue(ClaimTypes.NameIdentifier));
+        diagnosticContext.Set("UserName", context.User.FindFirstValue(ClaimTypes.Name));
+        diagnosticContext.Set("CorrelationId", context.GetCorrelationId());
+    };
 });
 
 #endregion
@@ -60,7 +68,7 @@ if (app.Environment.IsDevelopment())
             options.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/{description.GroupName}/swagger.json", description.ApiVersion.ToString());
         }
         options.DisplayRequestDuration();
-        options.DocumentTitle = "Technical Support Api";
+        options.DocumentTitle = "HR Management System API";
         options.EnablePersistAuthorization();
         options.EnableFilter();
     });
@@ -75,6 +83,19 @@ if (app.Environment.IsDevelopment())
 #region "Authentication And Authorization"
 
 app.UseAuthentication();
+
+app.Use(async (context, next) =>
+{
+    using var userId = LogContext.PushProperty(
+        "UserId",
+        context.User.FindFirstValue(ClaimTypes.NameIdentifier));
+    using var userName = LogContext.PushProperty(
+        "UserName",
+        context.User.FindFirstValue(ClaimTypes.Name));
+
+    await next();
+});
+
 app.UseRateLimiter();
 app.UseAuthorization();
 
@@ -105,7 +126,8 @@ app.UseRequestLocalization(localizationOptions);
 
 #region "Seeding"
 
-app.AddSeedsRequest().GetAwaiter().GetResult();
+if (databaseSettings.SeedOnStartup)
+    await app.AddSeedsRequest();
 
 #endregion
 
@@ -115,8 +137,19 @@ app.MapControllers();
 
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
+    Predicate = registration => registration.Tags.Contains("ready"),
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 }).RequireAuthorization();
+
+app.MapHealthChecks("/health/live", new HealthCheckOptions
+{
+    Predicate = _ => false
+}).AllowAnonymous();
+
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
+    Predicate = registration => registration.Tags.Contains("ready")
+}).AllowAnonymous();
 
 app.MapHub<GeneralHub>("/hubs/company").RequireCors("AllowReactApp");
 

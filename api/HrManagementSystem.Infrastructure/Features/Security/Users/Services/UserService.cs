@@ -17,7 +17,6 @@ public class UserService(
     UserErrors userErrors,
     ApplicationDbContext context,
     ICurrentActor currentActor,
-    IHttpContextAccessor httpContextAccessor,
     IWebHostEnvironment webHostEnvironment) : IUserService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
@@ -25,7 +24,6 @@ public class UserService(
     private readonly UserErrors _userErrors = userErrors;
     private readonly ApplicationDbContext _context = context;
     private readonly ICurrentActor _currentActor = currentActor;
-    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
     private readonly string _profilePicturesPath = Path.Combine(
         webHostEnvironment.WebRootPath ?? Path.Combine(webHostEnvironment.ContentRootPath, "wwwroot"),
         "profile-pictures");
@@ -498,7 +496,7 @@ public class UserService(
         var request = new UserChangedJobRequest(
             user,
             action,
-            _httpContextAccessor.HttpContext?.User.GetUserId(),
+            _currentActor.UserId,
             _currentActor.TenantId ?? throw new InvalidOperationException("A tenant is required to publish user changes."),
             _currentActor.CompanyId ?? throw new InvalidOperationException("A company is required to publish user changes."),
             Guid.NewGuid());

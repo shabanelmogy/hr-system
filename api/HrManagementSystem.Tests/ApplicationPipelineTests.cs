@@ -20,6 +20,7 @@ public sealed class ApplicationPipelineTests
         using var provider = services.BuildServiceProvider();
 
         Assert.NotNull(provider.GetRequiredService<ISender>());
+        Assert.Same(TimeProvider.System, provider.GetRequiredService<TimeProvider>());
         Assert.Equal(
             2,
             provider.GetServices<IPipelineBehavior<TestCommand, string>>().Count());

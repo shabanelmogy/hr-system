@@ -10,14 +10,14 @@ namespace HrManagementSystem.Infrastructure.Features.GeographicalInformation.Dis
 
 public class DistrictService(
     ApplicationDbContext context,
-    IHttpContextAccessor httpContextAccessor,
+    ICurrentActor currentActor,
     IEntityChangeLogService entityChangeLogService,
     DistrictErrors districtErrors,
     IMapper mapper) : IDistrictService
 {
     private readonly ApplicationDbContext _context = context;
     private readonly IMapper _mapper = mapper;
-    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    private readonly ICurrentActor _currentActor = currentActor;
     private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
     private readonly DistrictErrors _districtErrors = districtErrors;
 
@@ -128,7 +128,7 @@ public class DistrictService(
             return Result.Failure(_districtErrors.DistrictInUseByAddress);
 
         district.IsDeleted = !district.IsDeleted;
-        district.DeletedById = _httpContextAccessor.HttpContext!.User.GetUserId()!;
+        district.DeletedById = _currentActor.UserId;
         district.DeletedByPc = Environment.MachineName;
         district.DeletedOn = DateTime.UtcNow;
 
@@ -156,11 +156,10 @@ public class DistrictService(
         var request = new DistrictChangedJobRequest(
             district,
             action,
-            _httpContextAccessor.HttpContext?.User.GetUserId(),
+            _currentActor.UserId,
             Guid.NewGuid());
 
         BackgroundJob.Enqueue<DistrictChangedJob>(
             job => job.ExecuteAsync(request, CancellationToken.None));
     }
 }
-

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc.Filters;
+using HrManagementSystem.Infrastructure.Common.Observability;
 
 namespace HrManagementSystem.Infrastructure.Validation;
 
@@ -40,7 +41,11 @@ public sealed class AsyncValidationFilter(IServiceProvider serviceProvider) : IA
             Status = StatusCodes.Status400BadRequest,
             Title = "One or more validation errors occurred.",
             Type = "https://tools.ietf.org/html/rfc9110#section-15.5.1",
-            Extensions = { ["traceId"] = context.HttpContext.TraceIdentifier }
+            Extensions =
+            {
+                ["traceId"] = context.HttpContext.TraceIdentifier,
+                ["correlationId"] = context.HttpContext.GetCorrelationId()
+            }
         });
     }
 }

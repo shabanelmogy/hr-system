@@ -1,3 +1,6 @@
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Abstractions;
+using HrManagementSystem.Application.Features.GeographicalInformation.States.Abstractions;
+
 namespace HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts;
 
 public class StateRequestValidator : AbstractValidator<StateRequest>

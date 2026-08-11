@@ -1,3 +1,5 @@
+using HrManagementSystem.Application.Features.Catalog.Categories.Abstractions;
+
 namespace HrManagementSystem.Application.Features.Catalog.Categories.Contracts
 {
     public class CategoryRequestValidator : AbstractValidator<CategoryRequest>

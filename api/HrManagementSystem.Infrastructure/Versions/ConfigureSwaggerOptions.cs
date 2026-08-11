@@ -11,10 +11,13 @@ public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) : 
             options.SwaggerDoc(description.GroupName, CreateVersioninfo(description));
         }
 
-        // Set the comments path for the Swagger JSON and UI.
-        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-        options.IncludeXmlComments(xmlPath); // Include XML comments for Swagger
+        foreach (var xmlPath in Directory.EnumerateFiles(
+                     AppContext.BaseDirectory,
+                     "HrManagementSystem*.xml",
+                     SearchOption.TopDirectoryOnly))
+        {
+            options.IncludeXmlComments(xmlPath);
+        }
 
         AddSecurity(options);
     }
@@ -44,25 +47,14 @@ public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) : 
     {
         var info = new OpenApiInfo
         {
-            Title = "TechnicalSupport", //Title Of Api
-            Version = description.ApiVersion.ToString(), //Show beside Title On Top Left
-            Description = "API To TechnicalSupport",
-            TermsOfService = new Uri("https://example.com/terms"),
-            Contact = new OpenApiContact
-            {
-                Name = "TechnicalSupport",
-                Url = new Uri("https://dotnetmastery.com")
-            },
-            License = new OpenApiLicense
-            {
-                Name = "Example License",
-                Url = new Uri("https://example.com/license")
-            }
+            Title = "HR Management System API",
+            Version = description.ApiVersion.ToString(),
+            Description = "API for the HR Management System."
         };
 
         if (description.IsDeprecated)
         {
-            info.Description = "This is api has been deprecated";
+            info.Description = "This API version has been deprecated.";
         }
 
         return info;

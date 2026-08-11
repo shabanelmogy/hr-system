@@ -1,3 +1,4 @@
+using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Services;
 using EFCore.BulkExtensions;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts;
@@ -11,14 +12,14 @@ namespace HrManagementSystem.Infrastructure.Features.GeographicalInformation.Cou
 
 public class CountryService(
     ApplicationDbContext context,
-    IHttpContextAccessor httpContextAccessor,
+    ICurrentActor currentActor,
     IEntityChangeLogService entityChangeLogService,
     CountryErrors countryErrors,
     IMapper mapper) : ICountryService
 {
     private readonly ApplicationDbContext _context = context;
     private readonly IMapper _mapper = mapper;
-    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    private readonly ICurrentActor _currentActor = currentActor;
     private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
     private readonly CountryErrors _countryErrors = countryErrors;
 
@@ -112,7 +113,7 @@ public class CountryService(
         if (countryExists)
             return Result.Failure(_countryErrors.CountryExists);
 
-        var currentUserId = _httpContextAccessor.HttpContext?.User.GetUserId();
+        var currentUserId = _currentActor.UserId;
         var newCountries = countryRequests
             .Select(countryRequest =>
             {
@@ -168,7 +169,7 @@ public class CountryService(
 
         country.IsDeleted = !country.IsDeleted;
         var action = country.IsDeleted ? "Delete" : "Restore";
-        country.DeletedById = country.IsDeleted ? _httpContextAccessor.HttpContext?.User.GetUserId() : null;
+        country.DeletedById = country.IsDeleted ? _currentActor.UserId : null;
         country.DeletedByPc = country.IsDeleted ? Environment.MachineName : null;
         country.DeletedOn = country.IsDeleted ? DateTime.UtcNow : null;
 
@@ -233,7 +234,7 @@ public class CountryService(
             country,
             action,
             bulkCount,
-            _httpContextAccessor.HttpContext?.User.GetUserId(),
+            _currentActor.UserId,
             Guid.NewGuid());
 
         BackgroundJob.Enqueue<CountryChangedJob>(

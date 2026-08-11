@@ -6,6 +6,7 @@ public static class DefaultTenants
 {
     public static async Task SeedAsync(
         ApplicationDbContext context,
+        TimeProvider timeProvider,
         CancellationToken cancellationToken = default)
     {
         if (await context.Tenants.AnyAsync(
@@ -19,7 +20,8 @@ public static class DefaultTenants
         {
             Id = TenantDefaults.DefaultId,
             Identifier = TenantDefaults.DefaultIdentifier,
-            Name = TenantDefaults.DefaultName
+            Name = TenantDefaults.DefaultName,
+            CreatedOn = timeProvider.GetUtcNow().UtcDateTime
         });
 
         await context.SaveChangesAsync(cancellationToken);

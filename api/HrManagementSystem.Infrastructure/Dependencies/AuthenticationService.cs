@@ -14,7 +14,10 @@ public static class AuthenticationService
         services.AddScoped<IJwtProvider, JwtProvider>();
         services.AddScoped<IAuthEmailService, AuthEmailService>();
         services.AddScoped<ILoginAuditService, LoginAuditService>();
-        services.Configure<AppSettings>(configuration.GetSection(nameof(AppSettings)));
+        services.AddOptions<AppSettings>()
+            .BindConfiguration(nameof(AppSettings))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
         services.AddTransient<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
         services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
 

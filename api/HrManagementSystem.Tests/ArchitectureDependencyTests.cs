@@ -12,6 +12,7 @@ public sealed class ArchitectureDependencyTests
         Assert.DoesNotContain("HrManagementSystem.Application", references);
         Assert.DoesNotContain("HrManagementSystem.Infrastructure", references);
         Assert.DoesNotContain("HrManagementSystem.Api", references);
+        Assert.DoesNotContain("System.ComponentModel.Annotations", references);
     }
 
     [Fact]

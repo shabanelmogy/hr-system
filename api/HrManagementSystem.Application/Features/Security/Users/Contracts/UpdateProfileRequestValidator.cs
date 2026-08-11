@@ -1,3 +1,5 @@
+using HrManagementSystem.Application.Features.Security.Users.Abstractions;
+
 namespace HrManagementSystem.Application.Features.Security.Users.Contracts
 {
     public class UpdateProfileRequestValidator : AbstractValidator<UpdateProfileRequest>

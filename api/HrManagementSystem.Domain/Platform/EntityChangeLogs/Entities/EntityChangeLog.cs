@@ -12,7 +12,7 @@ namespace HrManagementSystem.Domain.Platform.EntityChangeLogs.Entities
         public string? JsonOldValues { get; set; }
         public string? JsonNewValues { get; set; }
         public string ChangedById { get; set; } = string.Empty;
-        public DateTime ChangedAt { get; set; } = DateTime.UtcNow;
+        public DateTime ChangedAt { get; set; }
         public string ChangedByPc { get; set; } = string.Empty;
     }
 }

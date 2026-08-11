@@ -11,6 +11,7 @@ global using HrManagementSystem.Api.Common.Routes;
 global using HrManagementSystem.Application.Common.Consts;
 global using HrManagementSystem.Application.Common.Errors;
 global using HrManagementSystem.Infrastructure.Common.Storage;
+global using HrManagementSystem.Infrastructure.Common.Observability;
 global using HrManagementSystem.Infrastructure.Dependencies;
 global using HrManagementSystem.Infrastructure.Hangfire.Filters;
 global using HrManagementSystem.Infrastructure.Hubs.GeneralHub;

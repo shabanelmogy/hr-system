@@ -10,14 +10,14 @@ namespace HrManagementSystem.Infrastructure.Features.GeographicalInformation.Add
 
 public class AddressTypeService(
     ApplicationDbContext context,
-    IHttpContextAccessor httpContextAccessor,
+    ICurrentActor currentActor,
     IEntityChangeLogService entityChangeLogService,
     AddressTypeErrors addressTypeErrors,
     IMapper mapper) : IAddressTypeService
 {
     private readonly ApplicationDbContext _context = context;
     private readonly IMapper _mapper = mapper;
-    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    private readonly ICurrentActor _currentActor = currentActor;
     private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
     private readonly AddressTypeErrors _addressTypeErrors = addressTypeErrors;
 
@@ -98,7 +98,7 @@ public class AddressTypeService(
             return Result.Failure(_addressTypeErrors.AddressTypeNotFound);
 
         addressType.IsDeleted = !addressType.IsDeleted;
-        addressType.DeletedById = _httpContextAccessor.HttpContext!.User.GetUserId()!;
+        addressType.DeletedById = _currentActor.UserId;
         addressType.DeletedByPc = Environment.MachineName;
         addressType.DeletedOn = DateTime.UtcNow;
 
@@ -126,7 +126,7 @@ public class AddressTypeService(
         var request = new AddressTypeChangedJobRequest(
             addressType,
             action,
-            _httpContextAccessor.HttpContext?.User.GetUserId(),
+            _currentActor.UserId,
             Guid.NewGuid());
 
         BackgroundJob.Enqueue<AddressTypeChangedJob>(

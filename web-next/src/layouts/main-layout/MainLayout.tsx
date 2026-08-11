@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 
 import { appRoutes } from "@/config/routes";
 import { useSession } from "@/lib/auth/SessionContext";
-import { useTokenRevocation } from "@/features/auth";
+import useTokenRevocation from "@/features/auth/hooks/useTokenRevocation";
 import SideBar from "../components/sidebar/SideBar";
 import SidebarContext from "@/shared/contexts/SidebarContext";
 import TopBar from "../components/top-bar/TopBar";
