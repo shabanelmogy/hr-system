@@ -6,20 +6,22 @@ public class ApiKeyConfiguration : IEntityTypeConfiguration<ApiKey>
 {
     public void Configure(EntityTypeBuilder<ApiKey> builder)
     {
-        ;
-        // Primary key
         builder.HasKey(e => e.Id);
 
-        // Properties
-        builder.Property(e => e.Key)
+        builder.Property(e => e.KeyHash)
               .IsRequired()
-              .HasMaxLength(100);
+              .HasMaxLength(64);
+
+        builder.Property(e => e.KeyPrefix)
+              .IsRequired()
+              .HasMaxLength(16);
 
         builder.Property(e => e.ClientUri)
               .IsRequired()
               .HasMaxLength(100);
 
         builder.Property(e => e.Description)
+              .IsRequired()
               .HasMaxLength(100);
 
         builder.Property(e => e.IsActive)
@@ -30,8 +32,10 @@ public class ApiKeyConfiguration : IEntityTypeConfiguration<ApiKey>
               .IsRequired()
               .HasDefaultValueSql("GETUTCDATE()");
 
-        // Indexes
-        builder.HasIndex(e => new { e.TenantId, e.CompanyId, e.Key })
+        builder.Property(e => e.RevocationReason)
+              .HasMaxLength(100);
+
+        builder.HasIndex(e => e.KeyHash)
               .IsUnique();
 
         builder.HasIndex(e => e.ClientUri);

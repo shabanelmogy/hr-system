@@ -8,21 +8,21 @@ public static class RefreshTokenProtector
         string sessionId,
         string jwtId,
         int companyId,
+        DateTime createdOn,
         DateTime expiresOn,
         string? ipAddress,
         string? userAgent)
     {
         var rawToken = WebEncoders.Base64UrlEncode(RandomNumberGenerator.GetBytes(64));
-        var token = new RefreshToken
-        {
-            TokenHash = Hash(rawToken),
-            SessionId = sessionId,
-            JwtId = jwtId,
-            CompanyId = companyId,
-            ExpiresOn = expiresOn,
-            CreatedByIp = Truncate(ipAddress, 45),
-            CreatedByUserAgent = Truncate(userAgent, 256)
-        };
+        var token = RefreshToken.Create(
+            Hash(rawToken),
+            sessionId,
+            jwtId,
+            companyId,
+            createdOn,
+            expiresOn,
+            Truncate(ipAddress, 45),
+            Truncate(userAgent, 256));
 
         return new IssuedRefreshToken(rawToken, token);
     }
@@ -30,21 +30,23 @@ public static class RefreshTokenProtector
     public static IssuedRefreshToken Rotate(
         RefreshToken currentToken,
         string jwtId,
+        DateTime utcNow,
         string? ipAddress,
         string? userAgent)
     {
-        if (!currentToken.IsActive)
+        if (!currentToken.IsActiveAt(utcNow))
             throw new InvalidOperationException("Only an active refresh token can be rotated.");
 
         var replacement = Issue(
             currentToken.SessionId,
             jwtId,
             currentToken.CompanyId,
+            utcNow,
             currentToken.ExpiresOn,
             ipAddress,
             userAgent);
 
-        currentToken.Revoke(RefreshToken.RotationReason);
+        currentToken.Revoke(RefreshToken.RotationReason, utcNow);
         return replacement;
     }
 

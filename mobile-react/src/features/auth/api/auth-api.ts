@@ -1,0 +1,100 @@
+import { ApiError, apiService, toApiError } from '@/src/core/api';
+import { secureSession } from '@/src/core/storage/secure-storage';
+import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth-endpoints';
+import {
+  parseAuthResponse,
+  parseLoginOutcome,
+  parseSessionResponse,
+} from '@/src/features/auth/schemas/auth-response-schema';
+import type {
+  AuthResponse,
+  LoginOutcome,
+  LoginRequest,
+  SessionResponse,
+} from '@/src/features/auth/types/auth';
+
+let refreshInFlight: Promise<string | null> | null = null;
+
+export const authApi = {
+  async login(request: LoginRequest): Promise<LoginOutcome> {
+    const response = await apiService.post<unknown, LoginRequest>(AUTH_ENDPOINTS.login, request, {
+      skipAuth: true,
+      skipAuthRefresh: true,
+    });
+    return parseLoginOutcome(response);
+  },
+
+  async selectCompany(companySelectionToken: string, companyId: number): Promise<AuthResponse> {
+    const response = await apiService.post<unknown, {
+      companySelectionToken: string;
+      companyId: number;
+    }>(
+      AUTH_ENDPOINTS.selectCompany,
+      { companySelectionToken, companyId },
+      { skipAuth: true, skipAuthRefresh: true },
+    );
+    return parseAuthResponse(response);
+  },
+
+  async session(): Promise<SessionResponse> {
+    const response = await apiService.get<unknown>(AUTH_ENDPOINTS.session);
+    return parseSessionResponse(response);
+  },
+
+  async logout(): Promise<void> {
+    const refreshToken = await secureSession.getRefreshToken();
+    if (!refreshToken) {
+      return;
+    }
+
+    await apiService.post<void, { refreshToken: string }>(
+      AUTH_ENDPOINTS.logout,
+      { refreshToken },
+      { skipAuthRefresh: true },
+    );
+  },
+
+  refreshSession(): Promise<string | null> {
+    if (!refreshInFlight) {
+      refreshInFlight = performRefresh().finally(() => {
+        refreshInFlight = null;
+      });
+    }
+
+    return refreshInFlight;
+  },
+};
+
+async function performRefresh(): Promise<string | null> {
+  const [token, refreshToken] = await Promise.all([
+    secureSession.getAccessToken(),
+    secureSession.getRefreshToken(),
+  ]);
+
+  if (!token || !refreshToken) {
+    return null;
+  }
+
+  try {
+    const response = await apiService.post<unknown, { token: string; refreshToken: string }>(
+      AUTH_ENDPOINTS.refreshToken,
+      { token, refreshToken },
+      { skipAuth: true, skipAuthRefresh: true },
+    );
+    const authResponse = parseAuthResponse(response);
+    await secureSession.setTokens(authResponse.token, authResponse.refreshToken);
+    return authResponse.token;
+  } catch (error) {
+    const apiError = toApiError(error);
+    if (isDefinitiveAuthenticationFailure(apiError)) {
+      await secureSession.clear();
+      return null;
+    }
+
+    throw apiError;
+  }
+}
+
+function isDefinitiveAuthenticationFailure(error: ApiError): boolean {
+  return error.status === 400 || error.status === 401 || error.status === 403;
+}

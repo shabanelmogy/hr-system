@@ -1,87 +1,118 @@
-using HrManagementSystem.Application.Features.Security.ApiKeys.Services;
 using HrManagementSystem.Application.Features.Security.ApiKeys.Contracts;
-
 using HrManagementSystem.Application.Features.Security.ApiKeys.Errors;
-
+using HrManagementSystem.Application.Features.Security.ApiKeys.Services;
+using HrManagementSystem.Domain.Common.Exceptions;
 using HrManagementSystem.Domain.Security.ApiKeys.Entities;
 
 namespace HrManagementSystem.Infrastructure.Features.Security.ApiKeys.Services;
 
-public class ApiKeyService : IApiKeyService
+public sealed class ApiKeyService(
+    ApplicationDbContext context,
+    ApiKeyErrors apiKeyErrors,
+    TimeProvider timeProvider) : IApiKeyService
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IMapper _mapper;
-    private readonly ApiKeyErrors _apiKeyErrors;
+    public async Task<IReadOnlyCollection<ApiKeyResponse>> GetAllApiKeysAsync(
+        CancellationToken cancellationToken = default) =>
+        await context.ApiKeys
+            .AsNoTracking()
+            .OrderByDescending(apiKey => apiKey.CreatedAt)
+            .Select(apiKey => new ApiKeyResponse(
+                apiKey.Id,
+                apiKey.KeyPrefix,
+                apiKey.ClientUri,
+                apiKey.Description,
+                apiKey.IsActive,
+                apiKey.CreatedAt,
+                apiKey.ExpiresAt,
+                apiKey.RevokedAt))
+            .ToListAsync(cancellationToken);
 
-    public ApiKeyService(ApplicationDbContext context, IMapper mapper, ApiKeyErrors apiKeyErrors)
+    public async Task<Result<ApiKeyResponse>> GetApiKeyAsync(
+        int id,
+        CancellationToken cancellationToken = default)
     {
-        _context = context;
-        _mapper = mapper;
-        _apiKeyErrors = apiKeyErrors;
-    }
-    public async Task<IEnumerable<ApiKeyResponse>> GetAllApiKeysAsync()
-    {
-        return await _context.ApiKeys
-            .Select(apiKey => _mapper.Map<ApiKeyResponse>(apiKey))
-            .ToListAsync();
-    }
-    public async Task<Result<ApiKeyResponse>> GetApiKeyAsync(int id)
-    {
-        var response = await _context.ApiKeys.FindAsync(id);
+        var apiKey = await context.ApiKeys
+            .AsNoTracking()
+            .FirstOrDefaultAsync(key => key.Id == id, cancellationToken);
 
-        return response is not null
-          ? Result.Success(response.Adapt<ApiKeyResponse>())
-              : Result.Failure<ApiKeyResponse>(_apiKeyErrors.ApiKeyNotFound);
-    }
-    public async Task<Result<ApiKeyResponse>> AddAsync(ApiKeyRequest apiKeyRequest)
-    {
-        var newApiKey = _mapper.Map<ApiKey>(apiKeyRequest);
-
-        _context.ApiKeys.Add(newApiKey);
-        await _context.SaveChangesAsync();
-
-        var response = newApiKey.Adapt<ApiKeyResponse>();
-
-        return Result.Success(_mapper.Map<ApiKeyResponse>(response));
+        return apiKey is not null
+            ? Result.Success(ToResponse(apiKey))
+            : Result.Failure<ApiKeyResponse>(apiKeyErrors.ApiKeyNotFound);
     }
 
-    public async Task<Result<ApiKeyResponse>> UpdateAync(ApiKeyRequest updatedRequest)
+    public async Task<Result<CreatedApiKeyResponse>> AddAsync(
+        CreateApiKeyRequest request,
+        CancellationToken cancellationToken = default)
     {
-        // Try to find the existing API key
-        var existingApiKey = await _context.ApiKeys.FindAsync(updatedRequest.Id);
+        var secret = $"hrk_{WebEncoders.Base64UrlEncode(RandomNumberGenerator.GetBytes(32))}";
+        var now = timeProvider.GetUtcNow().UtcDateTime;
+        var apiKey = ApiKey.Create(
+            Hash(secret),
+            secret[..Math.Min(secret.Length, 12)],
+            request.ClientUri,
+            request.Description,
+            now,
+            request.ExpiresAt);
 
-        // If not found, return failure
-        if (existingApiKey is null)
-            return Result.Failure<ApiKeyResponse>(_apiKeyErrors.ApiKeyNotFound);
+        await context.ApiKeys.AddAsync(apiKey, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        // Update the properties using Mapster or manually
-        _mapper.Map(updatedRequest, existingApiKey);
-
-        // Save the changes to the database
-        await _context.SaveChangesAsync();
-
-        // Map the updated entity to the response DTO
-        var response = existingApiKey.Adapt<ApiKeyResponse>();
-        return Result.Success(response);
+        return Result.Success(new CreatedApiKeyResponse(ToResponse(apiKey), secret));
     }
 
-
-    public async Task<Result> RevokeApiKeyAsync(int id)
+    public async Task<Result<ApiKeyResponse>> UpdateAsync(
+        UpdateApiKeyRequest request,
+        CancellationToken cancellationToken = default)
     {
-        // Find the API key by ID
-        var apiKey = await _context.ApiKeys.FindAsync(id);
+        var apiKey = await context.ApiKeys
+            .FirstOrDefaultAsync(key => key.Id == request.Id, cancellationToken);
 
-        // Check if the API key exists
-        if (apiKey == null)
-            return Result.Failure(_apiKeyErrors.ApiKeyNotFound);
+        if (apiKey is null)
+            return Result.Failure<ApiKeyResponse>(apiKeyErrors.ApiKeyNotFound);
 
-        // Revoke the API key by setting IsActive to false
-        apiKey.IsActive = false;
+        try
+        {
+            apiKey.UpdateDetails(
+                request.ClientUri,
+                request.Description,
+                request.ExpiresAt,
+                timeProvider.GetUtcNow().UtcDateTime);
+        }
+        catch (DomainRuleException exception) when (exception.Code == "ApiKey.Revoked")
+        {
+            return Result.Failure<ApiKeyResponse>(apiKeyErrors.ApiKeyRevoked);
+        }
 
-        // Save the changes to the database
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync(cancellationToken);
+        return Result.Success(ToResponse(apiKey));
+    }
 
-        // Return success result
+    public async Task<Result> RevokeApiKeyAsync(
+        int id,
+        CancellationToken cancellationToken = default)
+    {
+        var apiKey = await context.ApiKeys
+            .FirstOrDefaultAsync(key => key.Id == id, cancellationToken);
+
+        if (apiKey is null)
+            return Result.Failure(apiKeyErrors.ApiKeyNotFound);
+
+        apiKey.Revoke("Revoked by an administrator", timeProvider.GetUtcNow().UtcDateTime);
+        await context.SaveChangesAsync(cancellationToken);
         return Result.Success();
     }
+
+    private static ApiKeyResponse ToResponse(ApiKey apiKey) =>
+        new(
+            apiKey.Id,
+            apiKey.KeyPrefix,
+            apiKey.ClientUri,
+            apiKey.Description,
+            apiKey.IsActive,
+            apiKey.CreatedAt,
+            apiKey.ExpiresAt,
+            apiKey.RevokedAt);
+
+    private static string Hash(string secret) =>
+        Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(secret)));
 }

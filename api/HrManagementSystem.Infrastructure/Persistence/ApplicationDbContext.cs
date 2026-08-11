@@ -72,10 +72,13 @@ public class ApplicationDbContext(
         modelBuilder.Ignore<Branch>();
         modelBuilder.Ignore<Department>();
         modelBuilder.Ignore<Division>();
-        modelBuilder.Ignore<Job>();
+        modelBuilder.Ignore<JobTitle>();
+        modelBuilder.Ignore<Position>();
         modelBuilder.Ignore<JobDescription>();
         modelBuilder.Ignore<JobLevel>();
         modelBuilder.Ignore<Employee>();
+        modelBuilder.Ignore<EmployeeAssignment>();
+        modelBuilder.Ignore<EmployeeContract>();
     }
 
     private static void ConfigureAuditRelationships(ModelBuilder modelBuilder)
@@ -340,11 +343,24 @@ public class ApplicationDbContext(
         string machineName,
         DateTime currentTime)
     {
+        entityEntry.State = EntityState.Modified;
+
         if (!string.IsNullOrWhiteSpace(userId))
             entityEntry.Property(x => x.DeletedById).CurrentValue = userId;
 
+        if (string.IsNullOrWhiteSpace(entityEntry.Property(x => x.DeletedById).CurrentValue))
+        {
+            throw new InvalidOperationException(
+                "An actor user is required to delete auditable data. " +
+                "Background operations must establish an ICurrentActorScope.");
+        }
+
+        entityEntry.Property(x => x.IsDeleted).CurrentValue = true;
         entityEntry.Property(x => x.DeletedByPc).CurrentValue = machineName;
         entityEntry.Property(x => x.DeletedOn).CurrentValue = currentTime;
+        entityEntry.Property(x => x.UpdatedById).CurrentValue = userId;
+        entityEntry.Property(x => x.UpdatedByPc).CurrentValue = machineName;
+        entityEntry.Property(x => x.UpdatedOn).CurrentValue = currentTime;
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

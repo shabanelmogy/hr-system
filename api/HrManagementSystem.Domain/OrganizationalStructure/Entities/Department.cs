@@ -19,9 +19,6 @@ public class Department : CompanyAuditableEntity
     public Branch Branch { get; set; } = null!;
     public int? ManagerId { get; set; }
     public Employee? Manager { get; set; }
-    public int EmployeeCountTarget { get; set; }
-    public int EmployeeCountExists { get; set; }
-    public int EmployeeCountNeeded { get; set; }
     public bool IsActive { get; set; } = true;
 
     public ICollection<Division> Divisions { get; set; } = [];

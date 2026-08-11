@@ -49,17 +49,22 @@ namespace CrystalReportGeneratorApi.Filters
             {
                 connection.Open();
 
-                // استعلام للتحقق من الـ API Key و الـ ClientUri و الـ IsActive
+                var apiKeyHash = BitConverter.ToString(
+                        SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(apiKey)))
+                    .Replace("-", string.Empty);
+
                 var query = @"
             SELECT COUNT(*) 
             FROM ApiKeys 
-            WHERE [Key] = @ApiKey 
+            WHERE KeyHash = @ApiKeyHash
               AND ClientUri = @Origin 
-              AND IsActive = 1";
+              AND IsActive = 1
+              AND RevokedAt IS NULL
+              AND (ExpiresAt IS NULL OR ExpiresAt > GETUTCDATE())";
 
                 using (var command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@ApiKey", apiKey);
+                    command.Parameters.AddWithValue("@ApiKeyHash", apiKeyHash);
                     command.Parameters.AddWithValue("@Origin", origin);
 
                     var result = (int)command.ExecuteScalar();

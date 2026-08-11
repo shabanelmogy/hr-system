@@ -18,5 +18,5 @@ public class JobLevel : CompanyAuditableEntity
     public bool IsManagementLevel { get; set; }
     public bool IsActive { get; set; } = true;
 
-    public ICollection<Job> Jobs { get; set; } = [];
+    public ICollection<Position> Positions { get; set; } = [];
 }

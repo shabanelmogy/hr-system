@@ -151,24 +151,30 @@ public sealed class NotificationServiceTests
         var allowedUser = CreateUser("allowed");
         var deniedUser = CreateUser("denied");
         var disabledUser = CreateUser("disabled", isDisabled: true);
+        var lockedUser = CreateUser("locked");
+        lockedUser.LockoutEnd = DateTimeOffset.UtcNow.AddHours(1);
 
         context.Roles.AddRange(viewRole, otherRole);
-        context.Users.AddRange(allowedUser, deniedUser, disabledUser);
-        context.Companies.Add(new Company
+        context.Users.AddRange(allowedUser, deniedUser, disabledUser, lockedUser);
+        context.Companies.Add(new Company(
+            "TEST",
+            "Test Company",
+            "Test Company",
+            "EGP",
+            "Africa/Cairo")
         {
-            Id = 1,
-            NameAr = "Test Company",
-            NameEn = "Test Company",
             CreatedById = allowedUser.Id
         });
         context.UserCompanyAccesses.AddRange(
             CreateCompanyAccess(allowedUser.Id),
             CreateCompanyAccess(deniedUser.Id),
-            CreateCompanyAccess(disabledUser.Id));
+            CreateCompanyAccess(disabledUser.Id),
+            CreateCompanyAccess(lockedUser.Id));
         context.UserRoles.AddRange(
             new IdentityUserRole<string> { UserId = allowedUser.Id, RoleId = viewRole.Id },
             new IdentityUserRole<string> { UserId = deniedUser.Id, RoleId = otherRole.Id },
-            new IdentityUserRole<string> { UserId = disabledUser.Id, RoleId = viewRole.Id });
+            new IdentityUserRole<string> { UserId = disabledUser.Id, RoleId = viewRole.Id },
+            new IdentityUserRole<string> { UserId = lockedUser.Id, RoleId = viewRole.Id });
         context.RoleClaims.Add(new IdentityRoleClaim<string>
         {
             RoleId = viewRole.Id,
@@ -228,7 +234,8 @@ public sealed class NotificationServiceTests
             CreateErrors(),
             new TestHubContext(hubClient),
             new Mapper(config),
-            NullLogger<NotificationPublisher>.Instance);
+            NullLogger<NotificationPublisher>.Instance,
+            TimeProvider.System);
     }
 
     private static NotificationErrors CreateErrors() => new(new TestStringLocalizer<NotificationQueryRequest>());
@@ -245,28 +252,34 @@ public sealed class NotificationServiceTests
         DateTime createdOn,
         DateTime? dismissedOn = null,
         DateTime? expiresOn = null) => new()
-    {
-        RecipientUserId = recipientUserId,
-        RequiredPermission = Permissions.ViewCountries,
-        Category = "GeographicalInformation",
-        EventType = "Countries.Created",
-        Severity = NotificationSeverity.Success,
-        TitleKey = "CountryNotificationTitle",
-        MessageKey = "CountryCreatedNotificationMessage",
-        CorrelationId = Guid.NewGuid(),
-        CreatedOn = createdOn,
-        DismissedOn = dismissedOn,
-        ExpiresOn = expiresOn
-    };
+        {
+            RecipientUserId = recipientUserId,
+            RequiredPermission = Permissions.ViewCountries,
+            Category = "GeographicalInformation",
+            EventType = "Countries.Created",
+            Severity = NotificationSeverity.Success,
+            TitleKey = "CountryNotificationTitle",
+            MessageKey = "CountryCreatedNotificationMessage",
+            CorrelationId = Guid.NewGuid(),
+            CreatedOn = createdOn,
+            DismissedOn = dismissedOn,
+            ExpiresOn = expiresOn
+        };
 
-    private static ApplicationUser CreateUser(string id, bool isDisabled = false) => new()
+    private static ApplicationUser CreateUser(string id, bool isDisabled = false)
     {
-        Id = id,
-        UserName = id,
-        FirstName = id,
-        LastName = "User",
-        IsDisabled = isDisabled
-    };
+        var user = new ApplicationUser
+        {
+            Id = id,
+            UserName = id,
+            FirstName = id,
+            LastName = "User"
+        };
+        if (isDisabled)
+            user.Disable();
+
+        return user;
+    }
 
     private static UserCompanyAccess CreateCompanyAccess(string userId) => new()
     {

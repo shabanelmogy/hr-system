@@ -25,14 +25,14 @@ public static class DefaultCompanies
 
         if (company is null)
         {
-            company = new Company
+            company = new Company(
+                "DEFAULT",
+                "Default Company",
+                "Default Company",
+                "EGP",
+                "Africa/Cairo")
             {
                 TenantId = TenantDefaults.DefaultId,
-                CompanyCode = "DEFAULT",
-                NameEn = "Default Company",
-                NameAr = "Default Company",
-                DefaultCurrencyCode = "EGP",
-                TimeZoneId = "Africa/Cairo",
                 CreatedById = tenantUsers[0],
                 CreatedByPc = Environment.MachineName
             };

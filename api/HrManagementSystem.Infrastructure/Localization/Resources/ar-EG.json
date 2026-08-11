@@ -126,6 +126,9 @@
 
     "ApiKeyExists": "توكن موجود مسبقاً",
     "ApiKeyNotFound": "توكن غير موجود",
+    "ApiKeyRevoked": "لا يمكن تعديل مفتاح API تم إلغاؤه",
+    "InvalidClientUri": "أدخل رابط عميل HTTP أو HTTPS صالحاً",
+    "ApiKeyExpiryMustBeFuture": "يجب أن يكون تاريخ انتهاء مفتاح API في المستقبل",
 
     "BackupNotFound": "لم يتم العثور على النسخة الاحتياطية.",
     "BackupExists": "توجد نسخة احتياطية بهذا الاسم بالفعل.",

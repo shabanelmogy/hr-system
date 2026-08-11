@@ -1,0 +1,80 @@
+import { z } from 'zod';
+
+import type {
+  AuthResponse,
+  CompanySelectionResponse,
+  LoginOutcome,
+  SessionResponse,
+} from '@/src/features/auth/types/auth';
+
+const dateString = z.string().refine((value) => !Number.isNaN(Date.parse(value)));
+
+const authResponseSchema: z.ZodType<AuthResponse> = z.object({
+  id: z.string().min(1),
+  userName: z.string().min(1),
+  firstName: z.string(),
+  lastName: z.string(),
+  tenantId: z.string().min(1),
+  companyId: z.number().int().positive(),
+  token: z.string().min(1),
+  tokenExpiration: dateString,
+  refreshToken: z.string().min(1),
+  refreshTokenExpiration: dateString,
+});
+
+const companySelectionSchema: z.ZodType<CompanySelectionResponse> = z
+  .object({
+    isAuthenticated: z.literal(false),
+    requiresCompanySelection: z.literal(true),
+    companySelectionToken: z.string().min(1),
+    companySelectionTokenExpiration: dateString,
+    companies: z
+      .array(
+        z.object({
+          id: z.number().int().positive(),
+          nameAr: z.string(),
+          nameEn: z.string(),
+        }),
+      )
+      .min(2),
+  })
+  .superRefine((value, context) => {
+    if (new Set(value.companies.map((company) => company.id)).size !== value.companies.length) {
+      context.addIssue({
+        code: 'custom',
+        path: ['companies'],
+        message: 'Company identifiers must be unique.',
+      });
+    }
+  });
+
+const sessionResponseSchema: z.ZodType<SessionResponse> = z.object({
+  userId: z.string().min(1),
+  tenantId: z.string().min(1),
+  companyId: z.number().int().positive(),
+  userName: z.string().min(1),
+  email: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
+  roles: z.array(z.string()),
+  permissions: z.array(z.string()),
+  expiresAt: z.number().positive(),
+});
+
+export function parseLoginOutcome(value: unknown): LoginOutcome {
+  const authenticated = authResponseSchema.safeParse(value);
+  if (authenticated.success) {
+    return { kind: 'authenticated', response: authenticated.data };
+  }
+
+  const selection = companySelectionSchema.safeParse(value);
+  if (selection.success) {
+    return { kind: 'company-selection', response: selection.data };
+  }
+
+  throw new Error('The login response does not match the API contract.');
+}
+
+export const parseAuthResponse = (value: unknown): AuthResponse => authResponseSchema.parse(value);
+export const parseSessionResponse = (value: unknown): SessionResponse =>
+  sessionResponseSchema.parse(value);

@@ -16,11 +16,8 @@ public class Division : CompanyAuditableEntity
     public Department Department { get; set; } = null!;
     public int? ManagerId { get; set; }
     public Employee? Manager { get; set; }
-    public int EmployeeCountTarget { get; set; }
-    public int EmployeeCountExists { get; set; }
-    public int EmployeeCountNeeded { get; set; }
     public bool IsActive { get; set; } = true;
 
-    public ICollection<Job> Jobs { get; set; } = [];
+    public ICollection<Position> Positions { get; set; } = [];
     public ICollection<Employee> Employees { get; set; } = [];
 }

@@ -67,6 +67,25 @@ public sealed class ApplicationDbContextAuditTests
         Assert.Equal("system", country.CreatedById);
     }
 
+    [Fact]
+    public async Task SaveChangesAsync_ConvertsAuditableDeleteToSoftDelete()
+    {
+        var utcNow = new DateTimeOffset(2026, 8, 11, 10, 0, 0, TimeSpan.Zero);
+        await using var context = CreateContext("actor-1", new FixedTimeProvider(utcNow));
+        var country = CreateCountry();
+        context.Countries.Add(country);
+        await context.SaveChangesAsync();
+
+        context.Countries.Remove(country);
+        await context.SaveChangesAsync();
+
+        Assert.True(country.IsDeleted);
+        Assert.Equal("actor-1", country.DeletedById);
+        Assert.Equal(utcNow.UtcDateTime, country.DeletedOn);
+        Assert.Equal(EntityState.Unchanged, context.Entry(country).State);
+        Assert.Same(country, await context.Countries.SingleAsync());
+    }
+
     private static ApplicationDbContext CreateContext(
         string? actorUserId,
         TimeProvider? timeProvider = null)

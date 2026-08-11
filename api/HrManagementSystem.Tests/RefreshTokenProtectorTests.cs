@@ -4,6 +4,8 @@ namespace HrManagementSystem.Tests;
 
 public sealed class RefreshTokenProtectorTests
 {
+    private static readonly DateTime Now = new(2026, 8, 11, 10, 0, 0, DateTimeKind.Utc);
+
     [Fact]
     public void Issue_StoresOnlyHashAndCreatesActiveSessionToken()
     {
@@ -11,14 +13,16 @@ public sealed class RefreshTokenProtectorTests
             "session-id",
             "jwt-id",
             7,
-            DateTime.UtcNow.AddDays(14),
+            Now,
+            Now.AddDays(14),
             "127.0.0.1",
             "test-agent");
 
         Assert.NotEqual(issued.RawToken, issued.Token.TokenHash);
         Assert.Equal(64, issued.Token.TokenHash.Length);
         Assert.Equal(RefreshTokenProtector.Hash(issued.RawToken), issued.Token.TokenHash);
-        Assert.True(issued.Token.IsActive);
+        Assert.True(issued.Token.IsActiveAt(Now));
+        Assert.Equal(Now, issued.Token.CreatedOn);
         Assert.Equal(7, issued.Token.CompanyId);
         Assert.DoesNotContain("=", issued.RawToken);
     }
@@ -26,11 +30,12 @@ public sealed class RefreshTokenProtectorTests
     [Fact]
     public void Rotate_RevokesCurrentTokenAndPreservesSessionAndAbsoluteExpiry()
     {
-        var expiresOn = DateTime.UtcNow.AddDays(14);
+        var expiresOn = Now.AddDays(14);
         var current = RefreshTokenProtector.Issue(
             "session-id",
             "old-jwt-id",
             7,
+            Now,
             expiresOn,
             null,
             null);
@@ -38,16 +43,17 @@ public sealed class RefreshTokenProtectorTests
         var replacement = RefreshTokenProtector.Rotate(
             current.Token,
             "new-jwt-id",
+            Now.AddMinutes(1),
             "127.0.0.1",
             "test-agent");
 
-        Assert.False(current.Token.IsActive);
+        Assert.False(current.Token.IsActiveAt(Now.AddMinutes(1)));
         Assert.Equal("Rotated", current.Token.RevocationReason);
         Assert.Equal(current.Token.SessionId, replacement.Token.SessionId);
         Assert.Equal(current.Token.CompanyId, replacement.Token.CompanyId);
         Assert.Equal(expiresOn, replacement.Token.ExpiresOn);
         Assert.NotEqual(current.RawToken, replacement.RawToken);
-        Assert.True(replacement.Token.IsActive);
+        Assert.True(replacement.Token.IsActiveAt(Now.AddMinutes(1)));
     }
 
     [Fact]
@@ -57,13 +63,15 @@ public sealed class RefreshTokenProtectorTests
             "session-id",
             "old-jwt-id",
             7,
-            DateTime.UtcNow.AddDays(14),
+            Now,
+            Now.AddDays(14),
             null,
             null);
 
         _ = RefreshTokenProtector.Rotate(
             current.Token,
             "new-jwt-id",
+            Now.AddMinutes(1),
             null,
             null);
 

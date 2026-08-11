@@ -10,11 +10,9 @@ namespace HrManagementSystem.Infrastructure.Features.Appointments.Services;
 public class AppointmentService(
     ApplicationDbContext context,
     AppointmentErrors serverErrors,
-    ICurrentActor currentActor,
-    IMapper mapper) : IAppointmentService
+    ICurrentActor currentActor) : IAppointmentService
 {
     private readonly ApplicationDbContext _context = context;
-    private readonly IMapper _mapper = mapper;
     private readonly AppointmentErrors _appointmentErrors = serverErrors;
     private readonly ICurrentActor _currentActor = currentActor;
 
@@ -25,7 +23,7 @@ public class AppointmentService(
         CancellationToken cancellationToken = default)
     {
         var query = _context.Appointments
-            .Where(appointment => appointment.CreatedById == userId)
+            .Where(appointment => appointment.CreatedById == userId && !appointment.IsDeleted)
             .AsNoTracking();
 
         if (rangeStart.HasValue)
@@ -44,7 +42,12 @@ public class AppointmentService(
 
     public async Task<Result<AppointmentResponse>> AddAsync(AppointmentRequest appointmentRequest, CancellationToken cancellationToken = default)
     {
-        var appointment = _mapper.Map<Appointment>(NormalizeDateTimes(appointmentRequest));
+        var normalizedRequest = NormalizeDateTimes(appointmentRequest);
+        var appointment = new Appointment(
+            normalizedRequest.Start,
+            normalizedRequest.End,
+            normalizedRequest.Text,
+            normalizedRequest.IsAllDay);
 
         await _context.Appointments.AddAsync(appointment, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
@@ -60,15 +63,21 @@ public class AppointmentService(
         CancellationToken cancellationToken = default)
     {
         var currentAppointment = await _context.Appointments.FirstOrDefaultAsync(
-            appointment => appointment.Id == request.Id && appointment.CreatedById == userId,
+            appointment =>
+                appointment.Id == request.Id &&
+                appointment.CreatedById == userId &&
+                !appointment.IsDeleted,
             cancellationToken);
 
         if (currentAppointment is null)
             return Result.Failure<AppointmentResponse>(_appointmentErrors.AppointmentNotFound);
 
-        _mapper.Map(NormalizeDateTimes(request), currentAppointment);
-
-        _context.Appointments.Update(currentAppointment);
+        var normalizedRequest = NormalizeDateTimes(request);
+        currentAppointment.UpdateText(normalizedRequest.Text);
+        currentAppointment.Reschedule(
+            normalizedRequest.Start,
+            normalizedRequest.End,
+            normalizedRequest.IsAllDay);
         await _context.SaveChangesAsync(cancellationToken);
 
         var response = currentAppointment.Adapt<AppointmentResponse>();
@@ -83,7 +92,10 @@ public class AppointmentService(
         CancellationToken cancellationToken = default)
     {
         var currentAppointment = await _context.Appointments.FirstOrDefaultAsync(
-            appointment => appointment.Id == id && appointment.CreatedById == userId,
+            appointment =>
+                appointment.Id == id &&
+                appointment.CreatedById == userId &&
+                !appointment.IsDeleted,
             cancellationToken);
 
         if (currentAppointment is null)

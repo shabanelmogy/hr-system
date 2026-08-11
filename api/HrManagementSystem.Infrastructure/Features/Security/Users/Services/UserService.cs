@@ -17,7 +17,8 @@ public class UserService(
     UserErrors userErrors,
     ApplicationDbContext context,
     ICurrentActor currentActor,
-    IWebHostEnvironment webHostEnvironment) : IUserService
+    IWebHostEnvironment webHostEnvironment,
+    TimeProvider timeProvider) : IUserService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly IRoleService _roleService = roleService;
@@ -28,25 +29,27 @@ public class UserService(
         webHostEnvironment.WebRootPath ?? Path.Combine(webHostEnvironment.ContentRootPath, "wwwroot"),
         "profile-pictures");
 
-    public async Task<IEnumerable<UserResponse>> GetAllAsync(CancellationToken cancellationToken = default) =>
-        await (from u in _context.Users
-               where u.TenantId == _currentActor.TenantId
-               join ur in _context.UserRoles
-               on u.Id equals ur.UserId
-               join r in _context.Roles
-               on ur.RoleId equals r.Id into roles
-               select new
-               {
-                   u.Id,
-                   u.FirstName,
-                   u.LastName,
-                   u.UserName,
-                   u.Email,
-                   u.IsDisabled,
-                   IsLocked = u.LockoutEnd.HasValue && u.LockoutEnd > DateTimeOffset.UtcNow,
-                   u.ProfilePicture,
-                   Roles = roles.Select(x => x.Name!).ToList()
-               }
+    public async Task<IEnumerable<UserResponse>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        var now = timeProvider.GetUtcNow();
+        return await (from u in _context.Users
+                      where u.TenantId == _currentActor.TenantId
+                      join ur in _context.UserRoles
+                      on u.Id equals ur.UserId
+                      join r in _context.Roles
+                      on ur.RoleId equals r.Id into roles
+                      select new
+                      {
+                          u.Id,
+                          u.FirstName,
+                          u.LastName,
+                          u.UserName,
+                          u.Email,
+                          u.IsDisabled,
+                          IsLocked = u.LockoutEnd.HasValue && u.LockoutEnd > now,
+                          u.ProfilePicture,
+                          Roles = roles.Select(x => x.Name!).ToList()
+                      }
                ).GroupBy(u => new { u.Id, u.FirstName, u.LastName, u.UserName, u.Email, u.IsDisabled, u.IsLocked, u.ProfilePicture })
                 .Select(u => new UserResponse(
                     u.Key.Id,
@@ -59,6 +62,7 @@ public class UserService(
                     u.Key.ProfilePicture,
                     u.SelectMany(x => x.Roles)
                 )).ToListAsync(cancellationToken);
+    }
 
     public async Task<Result<UserResponse>> GetAsync(string id)
     {
@@ -233,7 +237,10 @@ public class UserService(
                     candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId) is not { } user)
             return Result.Failure(_userErrors.UserNotFound);
 
-        user.IsDisabled = !user.IsDisabled;
+        if (user.IsDisabled)
+            user.Enable();
+        else
+            user.Disable();
 
         if (user.IsDisabled)
             RevokeActiveSessions(user, "Account disabled");
@@ -270,15 +277,6 @@ public class UserService(
         if (!lockoutResult.Succeeded)
         {
             var error = lockoutResult.Errors.First();
-            return Result.Failure(new Error(error.Code, error.Description, ErrorType.Validation));
-        }
-
-        // Set IsLocked to false
-        user.IsLocked = false;
-        var updateResult = await _userManager.UpdateAsync(user);
-        if (!updateResult.Succeeded)
-        {
-            var error = updateResult.Errors.First();
             return Result.Failure(new Error(error.Code, error.Description, ErrorType.Validation));
         }
 
@@ -404,10 +402,11 @@ public class UserService(
         return Result.Failure(new Error(error.Code, error.Description, ErrorType.Validation));
     }
 
-    private static void RevokeActiveSessions(ApplicationUser user, string reason)
+    private void RevokeActiveSessions(ApplicationUser user, string reason)
     {
-        foreach (var token in user.RefreshTokens.Where(token => token.IsActive))
-            token.Revoke(reason);
+        var now = timeProvider.GetUtcNow().UtcDateTime;
+        foreach (var token in user.RefreshTokens.Where(token => token.IsActiveAt(now)))
+            token.Revoke(reason, now);
     }
 
     private async Task<IReadOnlyCollection<int>?> ResolveCompanyIdsAsync(

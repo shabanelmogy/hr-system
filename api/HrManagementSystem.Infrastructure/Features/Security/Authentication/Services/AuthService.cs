@@ -16,7 +16,8 @@ public sealed class AuthService(
     IAuthEmailService emailService,
     ILoginAuditService loginAudit,
     ICurrentActor currentActor,
-    ApplicationDbContext context) : IAuthService
+    ApplicationDbContext context,
+    TimeProvider timeProvider) : IAuthService
 {
     private const int RefreshTokenLifetimeDays = 14;
     private const int MaxInactiveTokenHistory = 50;
@@ -104,7 +105,7 @@ public sealed class AuthService(
 
         if (user is null ||
             user.IsDisabled ||
-            user.LockoutEnd > DateTimeOffset.UtcNow ||
+            user.LockoutEnd > timeProvider.GetUtcNow() ||
             !string.Equals(user.TenantId, selection.TenantId, StringComparison.Ordinal) ||
             !string.Equals(user.SecurityStamp, selection.SecurityStamp, StringComparison.Ordinal))
         {
@@ -150,8 +151,9 @@ public sealed class AuthService(
             return Result.Success();
 
         var storedToken = user.RefreshTokens.Single(t => t.TokenHash == tokenHash);
-        if (storedToken.IsActive)
-            storedToken.Revoke("Signed out");
+        var now = timeProvider.GetUtcNow().UtcDateTime;
+        if (storedToken.IsActiveAt(now))
+            storedToken.Revoke("Signed out", now);
 
         var updateResult = await userManager.UpdateAsync(user);
         if (!updateResult.Succeeded)
@@ -184,7 +186,8 @@ public sealed class AuthService(
         if (user.IsDisabled)
             return Result.Failure<AuthResponse>(userErrors.DisabledUser);
 
-        if (user.LockoutEnd > DateTimeOffset.UtcNow)
+        var now = timeProvider.GetUtcNow().UtcDateTime;
+        if (user.LockoutEnd > new DateTimeOffset(now, TimeSpan.Zero))
             return Result.Failure<AuthResponse>(userErrors.LockedUser);
 
         var tokenHash = RefreshTokenProtector.Hash(request.RefreshToken);
@@ -201,13 +204,13 @@ public sealed class AuthService(
 
         if (!claimsMatchSession)
         {
-            storedToken.Revoke("Token claims mismatch");
+            storedToken.Revoke("Token claims mismatch", now);
             await userManager.UpdateAsync(user);
             QueueSessionRevoked(user.Id, "Your session was revoked due to security validation failure.");
             return Result.Failure<AuthResponse>(userErrors.InvalidRefreshToken);
         }
 
-        if (!storedToken.IsActive)
+        if (!storedToken.IsActiveAt(now))
             return await HandleInactiveRefreshTokenAsync(user, storedToken);
 
         var hasCompanyAccess = await HasCompanyAccessAsync(
@@ -225,6 +228,7 @@ public sealed class AuthService(
         var replacement = RefreshTokenProtector.Rotate(
             storedToken,
             accessToken.JwtId,
+            now,
             CurrentIpAddress,
             CurrentUserAgent);
 
@@ -263,8 +267,9 @@ public sealed class AuthService(
         if (user is null)
             return Result.Failure(userErrors.UserNotFound);
 
-        foreach (var token in user.RefreshTokens.Where(t => t.IsActive))
-            token.Revoke("Revoked by an administrator");
+        var now = timeProvider.GetUtcNow().UtcDateTime;
+        foreach (var token in user.RefreshTokens.Where(token => token.IsActiveAt(now)))
+            token.Revoke("Revoked by an administrator", now);
 
         var result = await userManager.UpdateAsync(user);
         if (!result.Succeeded)
@@ -455,11 +460,13 @@ public sealed class AuthService(
     {
         var sessionId = Guid.NewGuid().ToString("N");
         var accessToken = await jwtProvider.GenerateAccessTokenAsync(user, sessionId, companyId);
+        var now = timeProvider.GetUtcNow().UtcDateTime;
         var refreshToken = RefreshTokenProtector.Issue(
             sessionId,
             accessToken.JwtId,
             companyId,
-            DateTime.UtcNow.AddDays(RefreshTokenLifetimeDays),
+            now,
+            now.AddDays(RefreshTokenLifetimeDays),
             CurrentIpAddress,
             CurrentUserAgent);
 
@@ -585,15 +592,16 @@ public sealed class AuthService(
         if (!storedToken.WasRotated)
             return Result.Failure<AuthResponse>(userErrors.InvalidRefreshToken);
 
-        if (storedToken.WasRotatedWithin(RotatedTokenReuseGracePeriod, DateTime.UtcNow))
+        var now = timeProvider.GetUtcNow().UtcDateTime;
+        if (storedToken.WasRotatedWithin(RotatedTokenReuseGracePeriod, now))
             return Result.Failure<AuthResponse>(userErrors.RefreshTokenAlreadyRotated);
 
         var revokedAny = false;
         foreach (var token in user.RefreshTokens.Where(token =>
-                     token.IsActive &&
+                     token.IsActiveAt(now) &&
                      string.Equals(token.SessionId, storedToken.SessionId, StringComparison.Ordinal)))
         {
-            token.Revoke("Refresh token reuse detected");
+            token.Revoke("Refresh token reuse detected", now);
             revokedAny = true;
         }
 
@@ -629,20 +637,22 @@ public sealed class AuthService(
             refreshToken,
             refreshTokenExpiration);
 
-    private static void RevokeAllSessions(ApplicationUser user, string reason)
+    private void RevokeAllSessions(ApplicationUser user, string reason)
     {
-        foreach (var token in user.RefreshTokens.Where(t => t.IsActive))
-            token.Revoke(reason);
+        var now = timeProvider.GetUtcNow().UtcDateTime;
+        foreach (var token in user.RefreshTokens.Where(token => token.IsActiveAt(now)))
+            token.Revoke(reason, now);
     }
 
-    private static void PruneOldTokens(ApplicationUser user)
+    private void PruneOldTokens(ApplicationUser user)
     {
-        var removeBefore = DateTime.UtcNow.Subtract(InactiveTokenRetention);
+        var now = timeProvider.GetUtcNow().UtcDateTime;
+        var removeBefore = now.Subtract(InactiveTokenRetention);
         user.RefreshTokens.RemoveAll(token =>
-            !token.IsActive && (token.RevokedOn ?? token.ExpiresOn) < removeBefore);
+            !token.IsActiveAt(now) && (token.RevokedOn ?? token.ExpiresOn) < removeBefore);
 
         var excessTokens = user.RefreshTokens
-            .Where(token => !token.IsActive)
+            .Where(token => !token.IsActiveAt(now))
             .OrderByDescending(token => token.RevokedOn ?? token.ExpiresOn)
             .Skip(MaxInactiveTokenHistory)
             .ToHashSet();

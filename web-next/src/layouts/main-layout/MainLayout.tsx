@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 
 import { appRoutes } from "@/config/routes";
 import { useSession } from "@/lib/auth/SessionContext";
-import useTokenRevocation from "@/features/auth/hooks/useTokenRevocation";
+import { useTokenRevocation } from "@/features/auth";
 import SideBar from "../components/sidebar/SideBar";
 import SidebarContext from "@/shared/contexts/SidebarContext";
 import TopBar from "../components/top-bar/TopBar";
@@ -87,7 +87,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
           sx={{
             flexGrow: 1,
             minWidth: 0,
-            m: 3,
+            m: { xs: 1.5, sm: 2, md: 3 },
           }}
         >
           <ToolbarSpacer />

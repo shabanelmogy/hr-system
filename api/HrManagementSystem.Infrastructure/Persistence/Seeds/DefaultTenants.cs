@@ -16,13 +16,11 @@ public static class DefaultTenants
             return;
         }
 
-        context.Tenants.Add(new Tenant
-        {
-            Id = TenantDefaults.DefaultId,
-            Identifier = TenantDefaults.DefaultIdentifier,
-            Name = TenantDefaults.DefaultName,
-            CreatedOn = timeProvider.GetUtcNow().UtcDateTime
-        });
+        context.Tenants.Add(new Tenant(
+            TenantDefaults.DefaultId,
+            TenantDefaults.DefaultIdentifier,
+            TenantDefaults.DefaultName,
+            timeProvider.GetUtcNow().UtcDateTime));
 
         await context.SaveChangesAsync(cancellationToken);
     }

@@ -126,6 +126,9 @@
 
     "ApiKeyExists": "Token already exists",
     "ApiKeyNotFound": "Token not found",
+    "ApiKeyRevoked": "A revoked API key cannot be updated",
+    "InvalidClientUri": "Enter a valid HTTP or HTTPS client URL",
+    "ApiKeyExpiryMustBeFuture": "The API key expiry must be in the future",
 
     "BackupNotFound": "Backup not found.",
     "BackupExists": "A backup with this name already exists.",

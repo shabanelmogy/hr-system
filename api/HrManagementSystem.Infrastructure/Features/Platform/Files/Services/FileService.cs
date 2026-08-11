@@ -13,6 +13,7 @@ public class FileService(IWebHostEnvironment webHostEnvironment, ApplicationDbCo
 
     public async Task<IEnumerable<UploadFileResponse>> GetAllAsync(CancellationToken cancellationToken = default) =>
         await _context.Files
+            .Where(file => !file.IsDeleted)
             .AsNoTracking()
             .ProjectToType<UploadFileResponse>()
             .ToListAsync(cancellationToken);
@@ -80,7 +81,9 @@ public class FileService(IWebHostEnvironment webHostEnvironment, ApplicationDbCo
     {
         var file = await _context.Files
             .AsNoTracking()
-            .FirstOrDefaultAsync(candidate => candidate.StoredFileName == storedFilename, cancellationToken);
+            .FirstOrDefaultAsync(
+                candidate => candidate.StoredFileName == storedFilename && !candidate.IsDeleted,
+                cancellationToken);
 
         if (file is null)
             return (null, string.Empty, string.Empty);
@@ -95,7 +98,9 @@ public class FileService(IWebHostEnvironment webHostEnvironment, ApplicationDbCo
         Guid id,
         CancellationToken cancellationToken = default)
     {
-        var file = await _context.Files.FindAsync([id], cancellationToken);
+        var file = await _context.Files
+            .AsNoTracking()
+            .FirstOrDefaultAsync(candidate => candidate.Id == id && !candidate.IsDeleted, cancellationToken);
         if (file is null)
             return (null, string.Empty, string.Empty);
 
@@ -110,7 +115,7 @@ public class FileService(IWebHostEnvironment webHostEnvironment, ApplicationDbCo
         CancellationToken cancellationToken = default)
     {
         var file = await _context.Files.FirstOrDefaultAsync(
-            candidate => candidate.StoredFileName == storedFilename,
+            candidate => candidate.StoredFileName == storedFilename && !candidate.IsDeleted,
             cancellationToken);
 
         if (file is null)

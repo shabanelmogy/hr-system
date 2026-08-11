@@ -11,13 +11,15 @@ public sealed class NotificationPublisher(
     NotificationErrors errors,
     IHubContext<GeneralHub, IGeneralHubClient> hubContext,
     IMapper mapper,
-    ILogger<NotificationPublisher> logger) : INotificationPublisher
+    ILogger<NotificationPublisher> logger,
+    TimeProvider timeProvider) : INotificationPublisher
 {
     public async Task<Result<int>> PublishToPermissionAsync(
         NotificationPublishRequest request,
         CancellationToken cancellationToken = default)
     {
-        if (!IsValid(request))
+        var now = timeProvider.GetUtcNow();
+        if (!IsValid(request, now.UtcDateTime))
             return Result.Failure<int>(errors.InvalidNotificationRequest);
 
         var recipients = await (
@@ -30,7 +32,7 @@ public sealed class NotificationPublisher(
                 join role in context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
                 join roleClaim in context.RoleClaims.AsNoTracking() on role.Id equals roleClaim.RoleId
                 where !user.IsDisabled &&
-                      !user.IsLocked &&
+                      (!user.LockoutEnd.HasValue || user.LockoutEnd <= now) &&
                       company.IsActive &&
                       user.TenantId == access.TenantId &&
                       !role.IsDeleted &&
@@ -88,7 +90,6 @@ public sealed class NotificationPublisher(
                 .ToList();
         }
 
-        var now = DateTime.UtcNow;
         var correlationId = request.CorrelationId ?? Guid.NewGuid();
         var parametersJson = NotificationParameters.Serialize(request.Parameters);
 
@@ -113,7 +114,7 @@ public sealed class NotificationPublisher(
             ActionUrl = request.ActionUrl,
             CorrelationId = correlationId,
             DeduplicationKey = request.DeduplicationKey,
-            CreatedOn = now,
+            CreatedOn = now.UtcDateTime,
             ExpiresOn = request.ExpiresOn
         }).ToList();
 
@@ -149,7 +150,7 @@ public sealed class NotificationPublisher(
         return Result.Success(newNotifications.Count);
     }
 
-    private static bool IsValid(NotificationPublishRequest request)
+    private static bool IsValid(NotificationPublishRequest request, DateTime utcNow)
     {
         return Permissions.GetAllPermissions().Contains(request.RequiredPermission, StringComparer.Ordinal) &&
                IsWithinLength(request.Category, 100) &&
@@ -163,7 +164,7 @@ public sealed class NotificationPublisher(
                (!request.CompanyId.HasValue ||
                 request.CompanyId.Value > 0 && !string.IsNullOrWhiteSpace(request.TenantId)) &&
                IsSafeActionUrl(request.ActionUrl) &&
-               (!request.ExpiresOn.HasValue || request.ExpiresOn.Value > DateTime.UtcNow);
+               (!request.ExpiresOn.HasValue || request.ExpiresOn.Value > utcNow);
     }
 
     private static bool IsWithinLength(string value, int maxLength) =>

@@ -55,7 +55,10 @@ app.UseCors("AllowReactApp");
 
 #region "Swagger"
 
-if (app.Environment.IsDevelopment())
+var swaggerEnabled = app.Environment.IsDevelopment() ||
+    builder.Configuration.GetValue<bool>("SwaggerSettings:Enabled");
+
+if (swaggerEnabled)
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
@@ -153,8 +156,8 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions
 
 app.MapHub<GeneralHub>("/hubs/company").RequireCors("AllowReactApp");
 
-//To Run Swagger Ui In Browser
-if (app.Environment.IsDevelopment())
+// Run Swagger UI from the application root when Swagger is enabled.
+if (swaggerEnabled)
     app.MapGet("/", () => Results.Redirect("/swagger/index.html")).AllowAnonymous();
 
 app.Run();

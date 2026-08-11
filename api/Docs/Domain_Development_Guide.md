@@ -2,6 +2,26 @@
 
 This guide defines the baseline for rebuilding HR features on the Clean Architecture solution. Organizational entities that are currently ignored by EF Core remain intentionally unpersisted until their individual domain reviews are complete.
 
+## Pragmatic Hybrid DDD classification
+
+Classify an entity before designing its API, persistence, or methods:
+
+| Classification | Use when | Default shape |
+| --- | --- | --- |
+| Rich business entity | It owns meaningful invariants, workflow, approvals, state transitions, money, capacity, or effective dates. | Private business setters, explicit methods, focused domain tests. |
+| Simple CRUD/reference entity | It stores labels, codes, metadata, or relationships without an independent workflow. | Plain properties and Application-layer validation. |
+| Overengineered entity | Methods, events, value objects, or abstractions add ceremony without protecting a current rule. | Remove the ceremony and keep the model direct. |
+| Too-anemic entity | Callers can bypass a real lifecycle or create invalid business state through public setters. | Add only the methods needed to protect those rules. |
+
+Current guidance:
+
+- Keep Candidate, Recruitment workflow roots, Employee, EmployeeContract, JobDescription, Appointment, Tenant, Company, Branch, and security credentials rich where their methods protect a lifecycle.
+- Keep countries, states, districts, address types, departments, divisions, job titles, job levels, report metadata, uploaded-file metadata, and other lookups simple.
+- Position owns planned headcount. Occupied and available headcount are query results and must not be stored as independently editable counters.
+- A job title describes a kind of work. A position is a company slot for that job title in the organization. Recruitment references PositionId.
+- Do not add a method for every property. Use a method only when setting the property directly could violate a meaningful rule.
+- Reclassify an entity when requirements change. Classification is a design decision, not inheritance metadata.
+
 ## Dependency flow
 
 New use cases follow this direction:
@@ -49,6 +69,8 @@ Features/OrganizationalStructure/Branches/
 - Domain methods enforce business invariants and valid state transitions.
 - Database constraints remain the final protection for uniqueness and relationships.
 - Reference data may remain a simple CRUD model. Rule-heavy HR concepts such as employment, leave, payroll, and termination use domain methods with focused unit tests.
+- Domain entities never query a database, read claims, send notifications, enqueue jobs, or call the current clock.
+- Database existence, uniqueness, authorization scope, tenant ownership, and related-record validation stay in Application.
 
 Database-backed validation is separated by feature:
 
@@ -90,8 +112,20 @@ New relationships between company-owned entities must enforce tenant and company
 - Audit stamping is owned by `ApplicationDbContext`.
 - Row-version configuration is owned by Infrastructure, not Domain annotations.
 - A stale row version returns `409 Conflict` with code `ConcurrencyConflict`.
+- Calling EF Core Remove for an AuditableEntity is converted by ApplicationDbContext into a soft delete.
+- Normal reads of auditable entities must explicitly exclude IsDeleted; restore use cases query deleted rows deliberately.
 - Define restore behavior before adding soft deletion to a feature.
 - Decide whether a deleted record still reserves its business key, then match FluentValidation and the database unique index to that decision.
+
+Do not set audit properties, actor identifiers, machine names, or current timestamps in feature services. ApplicationDbContext, ICurrentActor, and TimeProvider own those infrastructure concerns.
+
+## Security credentials
+
+- Never persist or log raw API keys or refresh tokens.
+- Return a newly generated API-key secret once; subsequent responses expose only a non-sensitive prefix.
+- Hash presented credentials with the same algorithm before lookup.
+- Lockout is owned by ASP.NET Core Identity's LockoutEnd; do not add a second lock flag.
+- Stateful token methods receive the current UTC time explicitly. Application and Infrastructure obtain it from TimeProvider.
 
 ## Events and realtime
 

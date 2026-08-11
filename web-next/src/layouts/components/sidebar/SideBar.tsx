@@ -331,7 +331,13 @@ function SideBar({
         enter: theme.transitions.duration.enteringScreen,
         exit: theme.transitions.duration.leavingScreen,
       }}
-      slotProps={{ paper: { dir: theme.direction } }}
+      slotProps={{
+        paper: {
+          dir: theme.direction,
+          "aria-hidden": hidden || undefined,
+          inert: hidden || undefined,
+        },
+      }}
       sx={{
         width: currentDrawerWidth,
         flexShrink: 0,
@@ -339,6 +345,7 @@ function SideBar({
         transition: isSmallScreen ? undefined : widthTransition,
         "& .MuiDrawer-paper": {
           width: currentDrawerWidth,
+          visibility: hidden ? "hidden" : "visible",
           border: hidden ? 0 : undefined,
           boxSizing: "border-box",
           overflowX: "hidden",
