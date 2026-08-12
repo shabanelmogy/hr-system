@@ -23,6 +23,7 @@ export interface AppDataTableProps<Row> {
   pageSizeOptions?: readonly number[];
   emptyMessage?: string;
   showPagination?: boolean;
+  compactHeader?: boolean;
 }
 
 export function AppDataTable<Row>({
@@ -33,6 +34,7 @@ export function AppDataTable<Row>({
   pageSizeOptions = [5, 10, 25],
   emptyMessage,
   showPagination = true,
+  compactHeader = true,
 }: AppDataTableProps<Row>) {
   const { t } = useTranslation();
   const { direction, isRTL } = useLocalization();
@@ -67,12 +69,17 @@ export function AppDataTable<Row>({
         <View style={{ minWidth: tableWidth }}>
           <View
             accessibilityRole="header"
-            style={[styles.row, { direction, backgroundColor: theme.colors.surfaceMuted }]}>
+            style={[
+              styles.row,
+              compactHeader && styles.compactHeaderRow,
+              { direction, backgroundColor: theme.colors.surfaceMuted },
+            ]}>
             {columns.map((column) => (
               <View
                 key={column.id}
                 style={[
                   styles.cell,
+                  compactHeader && styles.compactHeaderCell,
                   {
                     width: column.width ?? 150,
                     borderColor: theme.colors.border,
@@ -174,6 +181,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: 12,
     paddingVertical: 8,
+  },
+  compactHeaderRow: { minHeight: 36 },
+  compactHeaderCell: {
+    minHeight: 36,
+    paddingVertical: 4,
   },
   empty: { minHeight: 140, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
   pagination: {

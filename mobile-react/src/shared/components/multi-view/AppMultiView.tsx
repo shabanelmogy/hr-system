@@ -32,6 +32,7 @@ export interface AppMultiViewProps<Item, ViewId extends string> {
   pageSizeOptions?: readonly number[];
   resetKey?: string | number;
   toolbarContent?: ReactNode;
+  compactToolbar?: boolean;
 }
 
 const carouselPageSizeOptions = [1] as const;
@@ -45,6 +46,7 @@ export function AppMultiView<Item, ViewId extends string>({
   pageSizeOptions = [5, 10, 25],
   resetKey,
   toolbarContent,
+  compactToolbar = true,
 }: AppMultiViewProps<Item, ViewId>) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
@@ -140,6 +142,7 @@ export function AppMultiView<Item, ViewId extends string>({
       <View
         style={[
           styles.toolbar,
+          compactToolbar && styles.compactToolbar,
           {
             direction,
             backgroundColor: theme.colors.surface,
@@ -158,7 +161,10 @@ export function AppMultiView<Item, ViewId extends string>({
           </View>
         )}
         <AppSegmentedControl
-          containerStyle={styles.viewOptions}
+          containerStyle={[
+            styles.viewOptions,
+            compactToolbar && styles.compactViewOptions,
+          ]}
           label={t('multiView.chooseView')}
           layout="wrap"
           onChange={(nextView) => {
@@ -171,7 +177,7 @@ export function AppMultiView<Item, ViewId extends string>({
           }}
           options={views}
           showOptionLabels={false}
-          style={styles.viewSelector}
+          style={[styles.viewSelector, compactToolbar && styles.compactViewSelector]}
           value={activeView.value}
         />
       </View>
@@ -205,9 +211,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 8,
   },
+  compactToolbar: {
+    minHeight: 58,
+    padding: 4,
+  },
   toolbarContent: { flex: 1, minWidth: 0 },
   resultCount: { flexDirection: 'row', alignItems: 'baseline', gap: 5, paddingHorizontal: 6 },
   viewSelector: { width: 'auto', flexGrow: 0, paddingTop: 7 },
   viewOptions: { width: 'auto', height: 54 },
+  compactViewSelector: { paddingTop: 6 },
+  compactViewOptions: { height: 50 },
   scrollContent: { width: '100%', paddingBottom: 2 },
 });

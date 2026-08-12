@@ -39,6 +39,7 @@ type RegisterField = (
 interface AppFormContextValue {
   clearError?: (name: string) => void;
   errors: Partial<Record<string, string>>;
+  focusNextField: (field: FocusableField) => boolean;
   registerField: RegisterField;
 }
 
@@ -154,6 +155,17 @@ export function AppForm({
     [scheduleInitialFocus],
   );
 
+  const focusNextField = useCallback((currentField: FocusableField) => {
+    if (!activeRef.current) return false;
+
+    const currentIndex = fieldsRef.current.findIndex(({ field }) => field === currentField);
+    const nextField = currentIndex >= 0 ? fieldsRef.current[currentIndex + 1] : undefined;
+    if (!nextField) return false;
+
+    nextField.field.focus();
+    return true;
+  }, []);
+
   useEffect(() => {
     if (!active) {
       hasFocusedRef.current = false;
@@ -198,8 +210,8 @@ export function AppForm({
   );
 
   const contextValue = useMemo<AppFormContextValue>(
-    () => ({ clearError: onClearFieldError, errors, registerField }),
-    [errors, onClearFieldError, registerField],
+    () => ({ clearError: onClearFieldError, errors, focusNextField, registerField }),
+    [errors, focusNextField, onClearFieldError, registerField],
   );
 
   const actionFooter = footer ?? (onCancel || onSubmit ? (
@@ -271,6 +283,7 @@ export function useAppFormField(
   const context = useContext(AppFormContext);
   const registerField = context?.registerField;
   const clearFieldError = context?.clearError;
+  const focusNextField = context?.focusNextField;
   const focusRef = useRef(focus);
   focusRef.current = focus;
   const field = useMemo<FocusableField>(() => ({ focus: () => focusRef.current() }), []);
@@ -285,9 +298,15 @@ export function useAppFormField(
     if (name) clearFieldError?.(name);
   }, [clearFieldError, name]);
 
+  const focusNext = useCallback(
+    () => focusNextField?.(field) ?? false,
+    [field, focusNextField],
+  );
+
   return {
     clearError,
     error: name ? context?.errors[name] : undefined,
+    focusNext,
   };
 }
 

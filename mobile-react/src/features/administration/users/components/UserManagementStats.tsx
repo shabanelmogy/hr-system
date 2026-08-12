@@ -95,14 +95,14 @@ export function UserManagementStats({ users }: UserManagementStatsProps) {
       horizontal
       showsHorizontalScrollIndicator={false}>
       {cards.map((card) => (
-        <AppCard key={card.key} padding="sm" style={styles.card} variant="filled">
+        <AppCard key={card.key} padding="none" style={styles.card} variant="filled">
           <View style={[styles.cardContent, { direction }]}>
             <View
               style={[
                 styles.icon,
                 { backgroundColor: `${card.color}1A`, borderRadius: theme.radius.sm },
               ]}>
-              <AppIcon color={card.color} name={card.icon} size={20} />
+              <AppIcon color={card.color} name={card.icon} size={18} />
             </View>
             <View style={styles.cardText}>
               <AppText numberOfLines={1} variant="titleSmall" weight="800">
@@ -120,9 +120,15 @@ export function UserManagementStats({ users }: UserManagementStatsProps) {
 }
 
 const styles = StyleSheet.create({
-  content: { flexDirection: 'row', gap: 8, paddingBottom: 2 },
-  card: { width: 145, minHeight: 68 },
-  cardContent: { flexDirection: 'row', alignItems: 'center', gap: 9 },
-  icon: { width: 34, height: 34, alignItems: 'center', justifyContent: 'center' },
+  content: { flexDirection: 'row', gap: 6, paddingBottom: 2 },
+  card: {
+    width: 136,
+    minHeight: 54,
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+  },
+  cardContent: { flexDirection: 'row', alignItems: 'center', gap: 7 },
+  icon: { width: 30, height: 30, alignItems: 'center', justifyContent: 'center' },
   cardText: { flex: 1, minWidth: 0 },
 });

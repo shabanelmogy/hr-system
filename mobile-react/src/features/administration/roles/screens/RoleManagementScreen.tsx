@@ -200,6 +200,7 @@ export function RoleManagementScreen() {
           resetKey={search}
           toolbarContent={(
             <AppTextField
+              compact
               label={t('roleManagement.search')}
               leadingIcon="search-outline"
               onChangeText={setSearch}

@@ -279,6 +279,7 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
         <View style={[styles.searchRow, { direction }]}>
           <View style={styles.searchField}>
             <AppTextField
+              compact
               label={t('roleManagement.searchPermissions')}
               leadingIcon="search-outline"
               onChangeText={setSearch}
@@ -483,9 +484,9 @@ const styles = StyleSheet.create({
   },
   searchField: { flex: 1, minWidth: 0 },
   searchAction: {
-    width: 54,
-    height: 54,
-    marginTop: 7,
+    width: 44,
+    height: 44,
+    marginTop: 6,
     borderWidth: 1,
     borderRadius: 8,
   },

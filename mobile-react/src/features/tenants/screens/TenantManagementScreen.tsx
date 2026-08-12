@@ -231,6 +231,7 @@ export function TenantManagementScreen() {
           resetKey={search}
           toolbarContent={(
             <AppTextField
+              compact
               label={t('tenantManagement.search')}
               leadingIcon="search-outline"
               onChangeText={setSearch}

@@ -40,6 +40,7 @@ export interface AppTextFieldProps extends TextInputProps {
   showNumericStepper?: boolean;
   minValue?: number;
   maxValue?: number;
+  compact?: boolean;
 }
 
 export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function AppTextField(
@@ -66,6 +67,7 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
     showNumericStepper = true,
     minValue,
     maxValue,
+    compact = false,
     secureTextEntry = false,
     autoFocus,
     editable = true,
@@ -78,6 +80,8 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
     onBlur,
     onChangeText,
     onFocus,
+    onSubmitEditing,
+    submitBehavior,
     style,
     value,
     ...props
@@ -96,7 +100,7 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
   const currentValue = String(value ?? uncontrolledValue);
   const currentLength = currentValue.length;
   const effectiveEditable = editable && !loading && !readOnly && !appIsReadOnly;
-  const { clearError, error: formError } = useAppFormField(
+  const { clearError, error: formError, focusNext } = useAppFormField(
     name,
     () => inputRef.current?.focus(),
     { autoFocus, enabled: effectiveEditable && focusable },
@@ -214,12 +218,33 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
     inputRef.current?.focus();
   }, [clearError, effectiveEditable, onChangeText, onClear, value]);
 
+  const handleSubmitEditing = useCallback<NonNullable<TextInputProps['onSubmitEditing']>>(
+    (event) => {
+      if (onSubmitEditing) {
+        onSubmitEditing(event);
+        return;
+      }
+
+      if (!focusNext()) {
+        inputRef.current?.blur();
+      }
+    },
+    [focusNext, onSubmitEditing],
+  );
+
   return (
-    <View style={[styles.field, { direction }, focused && styles.focusedField]}>
-      <View style={styles.outlineWrapper}>
+    <View
+      style={[
+        styles.field,
+        { direction },
+        focused && styles.focusedField,
+        focused && compact && styles.compactFocusedField,
+      ]}>
+      <View style={[styles.outlineWrapper, compact && styles.compactOutlineWrapper]}>
         <View
           style={[
             styles.inputContainer,
+            compact && styles.compactInputContainer,
             {
               direction,
               backgroundColor: effectiveEditable
@@ -231,8 +256,8 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
             },
           ]}>
           {leadingIcon ? (
-            <View style={styles.leadingIcon}>
-              <AppIcon color={theme.colors.primary} name={leadingIcon} size={21} />
+            <View style={[styles.leadingIcon, compact && styles.compactLeadingIcon]}>
+              <AppIcon color={theme.colors.primary} name={leadingIcon} size={compact ? 19 : 21} />
             </View>
           ) : null}
 
@@ -260,10 +285,12 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
               setFocused(true);
               onFocus?.(event);
             }}
+            onSubmitEditing={multiline && !onSubmitEditing ? undefined : handleSubmitEditing}
             ref={setInputRef}
             secureTextEntry={secureTextEntry && !passwordVisible}
             style={[
               styles.input,
+              compact && styles.compactInput,
               multiline && styles.multilineInput,
               {
                 color: theme.colors.text,
@@ -272,6 +299,9 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
               },
               style,
             ]}
+            submitBehavior={
+              submitBehavior ?? (!multiline && !onSubmitEditing ? 'submit' : undefined)
+            }
             value={value}
           />
 
@@ -303,7 +333,7 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
               accessibilityRole="button"
               hitSlop={8}
               onPress={handleClear}
-              style={styles.actionButton}>
+              style={[styles.actionButton, compact && styles.compactActionButton]}>
               <AppIcon color={theme.colors.textMuted} name="close-outline" size={21} />
             </Pressable>
           ) : null}
@@ -315,7 +345,7 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
               disabled={!effectiveEditable}
               hitSlop={8}
               onPress={() => setPasswordVisible((visible) => !visible)}
-              style={styles.actionButton}>
+              style={[styles.actionButton, compact && styles.compactActionButton]}>
               <AppIcon
                 color={theme.colors.textMuted}
                 name={passwordVisible ? 'eye-off-outline' : 'eye-outline'}
@@ -407,14 +437,23 @@ const styles = StyleSheet.create({
   focusedField: {
     paddingTop: 8,
   },
+  compactFocusedField: {
+    paddingTop: 0,
+  },
   outlineWrapper: {
     position: 'relative',
     paddingTop: 7,
+  },
+  compactOutlineWrapper: {
+    paddingTop: 6,
   },
   inputContainer: {
     minHeight: 54,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  compactInputContainer: {
+    minHeight: 44,
   },
   input: {
     flex: 1,
@@ -423,6 +462,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 16,
+  },
+  compactInput: {
+    minHeight: 40,
+    paddingVertical: 6,
+    fontSize: 15,
   },
   multilineInput: {
     alignSelf: 'stretch',
@@ -449,6 +493,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  compactLeadingIcon: {
+    width: 36,
+    minHeight: 40,
+  },
   counterBadge: {
     minWidth: 48,
     alignItems: 'center',
@@ -466,6 +514,10 @@ const styles = StyleSheet.create({
     minHeight: 48,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  compactActionButton: {
+    width: 36,
+    minHeight: 40,
   },
   numericStepper: {
     width: 34,

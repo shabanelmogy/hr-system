@@ -338,6 +338,7 @@ export function UserManagementScreen() {
         />
       ) : (
         <AppMultiView<ManagedUser, UserView>
+          compactToolbar
           defaultView="table"
           emptyContent={(
             <AppStateView message={t('userManagement.empty')} state="empty" />
@@ -346,6 +347,7 @@ export function UserManagementScreen() {
           resetKey={search}
           toolbarContent={(
             <AppTextField
+              compact
               label={t('userManagement.search')}
               leadingIcon="search-outline"
               onChangeText={setSearch}
@@ -362,6 +364,7 @@ export function UserManagementScreen() {
               pageSizeOptions: [5, 10, 25],
               render: (pageUsers) => (
                 <AppDataTable
+                  compactHeader
                   columns={columns}
                   emptyMessage={t('userManagement.empty')}
                   getRowKey={(user) => user.id}
