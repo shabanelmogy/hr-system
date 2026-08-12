@@ -216,6 +216,7 @@ public class ApplicationDbContext(
     private void PrepareChanges()
     {
         ApplyTenantIsolation();
+        GrantCompanyCreatorAccess();
 
         var currentUserId = _currentActor.UserId;
         var currentMachineName = Environment.MachineName;
@@ -237,6 +238,40 @@ public class ApplicationDbContext(
             }
         }
 
+    }
+
+    private void GrantCompanyCreatorAccess()
+    {
+        var currentUserId = _currentActor.UserId;
+        var currentTenantId = CurrentTenantId;
+        if (string.IsNullOrWhiteSpace(currentUserId) || string.IsNullOrWhiteSpace(currentTenantId))
+            return;
+
+        var addedCompanies = ChangeTracker.Entries<Company>()
+            .Where(entry => entry.State == EntityState.Added)
+            .Select(entry => entry.Entity)
+            .ToArray();
+
+        foreach (var company in addedCompanies)
+        {
+            var alreadyTracked = ChangeTracker.Entries<UserCompanyAccess>()
+                .Any(entry =>
+                    entry.State != EntityState.Deleted &&
+                    entry.Entity.UserId == currentUserId &&
+                    (ReferenceEquals(entry.Entity.Company, company) ||
+                     (company.Id > 0 && entry.Entity.CompanyId == company.Id)));
+
+            if (alreadyTracked)
+                continue;
+
+            UserCompanyAccesses.Add(new UserCompanyAccess
+            {
+                TenantId = currentTenantId,
+                UserId = currentUserId,
+                Company = company,
+                IsDefault = false
+            });
+        }
     }
 
     private void ApplyTenantIsolation()
@@ -277,6 +312,7 @@ public class ApplicationDbContext(
         foreach (var entityEntry in ChangeTracker.Entries<ICompanyScoped>()
                      .Where(entry => entry.State is EntityState.Added or EntityState.Modified or EntityState.Deleted))
         {
+            var isUserCompanyAccess = entityEntry.Entity is UserCompanyAccess;
             var companyProperty = entityEntry.Property(entity => entity.CompanyId);
             var entityCompanyId = companyProperty.CurrentValue;
             var currentCompanyId = CurrentCompanyId;
@@ -293,10 +329,15 @@ public class ApplicationDbContext(
             if (entityCompanyId <= 0)
                 throw new InvalidOperationException("Company-owned data must have a company identifier.");
 
-            if (currentCompanyId.HasValue && entityCompanyId != currentCompanyId.Value)
+            if (!isUserCompanyAccess &&
+                currentCompanyId.HasValue &&
+                entityCompanyId != currentCompanyId.Value)
+            {
                 throw new InvalidOperationException("Cross-company data changes are not allowed.");
+            }
 
-            if (entityEntry.State == EntityState.Modified && companyProperty.IsModified &&
+            if (!isUserCompanyAccess &&
+                entityEntry.State == EntityState.Modified && companyProperty.IsModified &&
                 !Equals(companyProperty.OriginalValue, companyProperty.CurrentValue))
             {
                 throw new InvalidOperationException("Changing an entity company is not allowed.");

@@ -38,7 +38,7 @@ export function ModuleDrawerContent({
           style={[
             styles.moduleIcon,
             { backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radius.sm },
-          ]}>
+        ]}>
           <AppIcon color={theme.colors.primary} name={icon} size={24} />
         </View>
         <View style={styles.moduleText}>

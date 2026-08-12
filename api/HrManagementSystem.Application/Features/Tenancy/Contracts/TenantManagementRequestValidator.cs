@@ -4,7 +4,7 @@ namespace HrManagementSystem.Application.Features.Tenancy.Contracts;
 
 public sealed class TenantManagementRequestValidator : AbstractValidator<TenantManagementRequest>
 {
-    public TenantManagementRequestValidator()
+    public TenantManagementRequestValidator(IStringLocalizer<TenantManagementRequest> localizer)
     {
         RuleFor(request => request.Identifier)
             .NotEmpty()
@@ -23,8 +23,10 @@ public sealed class TenantManagementRequestValidator : AbstractValidator<TenantM
             .NotEmpty();
 
         RuleFor(request => request.SubscriptionEndsOn)
+            .NotNull()
+            .WithMessage(localizer[Strings.Required])
             .GreaterThanOrEqualTo(request => request.SubscriptionStartedOn)
-            .When(request => request.SubscriptionEndsOn.HasValue);
+            .WithMessage(localizer[Strings.InvalidDate]);
 
         RuleFor(request => request.MaxAdmins)
             .GreaterThanOrEqualTo(1);

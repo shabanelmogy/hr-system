@@ -13,6 +13,7 @@ export const roles: RolesRoutes = {
 
 export const users: UsersRoutes = {
   getAll: `${version}/users/getAll`,
+  getCompanyOptions: `${version}/users/getCompanyOptions`,
   add: `${version}/users/add`,
   update: (id: Id) => `${version}/users/update/${id}`,
   changePassword: (id: Id) => `${version}/users/changePassword/${id}`,

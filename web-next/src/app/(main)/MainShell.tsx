@@ -8,6 +8,7 @@ import { SignalRProvider } from "@/lib/signalr/SignalRProvider";
 import { RouteAuthorizationGuard } from "@/shared/components/auth";
 import { RouteLoading } from "@/shared/components/feedback/routes";
 import { createQueryClient } from "@/shared/config/queryClient";
+import { TenantAccessBoundary } from "@/features/tenant-access";
 
 const ReactQueryDevtools = dynamic(
   () => import("@tanstack/react-query-devtools").then((module) => module.ReactQueryDevtools),
@@ -36,13 +37,15 @@ export default function MainShell({ children }: { children: ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <SignalRProvider>
-        <NotificationRealtimeBridge />
-        <RealtimeEntityBridge />
-        <MainLayout>
-          <RouteAuthorizationGuard fallback={<RouteLoading />}>
-            <Suspense fallback={<RouteLoading />}>{children}</Suspense>
-          </RouteAuthorizationGuard>
-        </MainLayout>
+        <TenantAccessBoundary>
+          <NotificationRealtimeBridge />
+          <RealtimeEntityBridge />
+          <MainLayout>
+            <RouteAuthorizationGuard fallback={<RouteLoading />}>
+              <Suspense fallback={<RouteLoading />}>{children}</Suspense>
+            </RouteAuthorizationGuard>
+          </MainLayout>
+        </TenantAccessBoundary>
       </SignalRProvider>
       {process.env.NODE_ENV === "development" && (
         <ReactQueryDevtools initialIsOpen={false} />

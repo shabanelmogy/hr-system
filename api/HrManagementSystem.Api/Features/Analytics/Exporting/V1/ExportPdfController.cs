@@ -6,6 +6,7 @@ namespace HrManagementSystem.Api.Features.Analytics.Exporting.V1
     [Route(ApiRoutes.BaseRoute)]
     [ApiController]
     [TenantMember]
+    [AllowTenantReadOnly]
     public class ExportPdfController(IExportPdfFileService pdfService) : ControllerBase
     {
         private readonly IExportPdfFileService _pdfService = pdfService;

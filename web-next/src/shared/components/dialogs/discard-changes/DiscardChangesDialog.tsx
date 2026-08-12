@@ -1,21 +1,28 @@
 import { WarningAmberRounded as WarningIcon } from "@mui/icons-material";
-import { ConfirmationDialog } from "@/shared/components/dialogs";
 import { useTranslation } from "react-i18next";
+import { ConfirmationDialog } from "../confirmation/ConfirmationDialog";
 
-type DiscardRoleChangesDialogProps = {
+export interface DiscardChangesDialogProps {
   open: boolean;
   onClose: () => void;
   onDiscard: () => void;
-};
+  busy?: boolean;
+}
 
-export default function DiscardRoleChangesDialog(props: DiscardRoleChangesDialogProps) {
+export function DiscardChangesDialog({
+  open,
+  onClose,
+  onDiscard,
+  busy = false,
+}: DiscardChangesDialogProps) {
   const { t } = useTranslation();
 
   return (
     <ConfirmationDialog
-      open={props.open}
-      onClose={props.onClose}
-      onConfirm={props.onDiscard}
+      open={open}
+      busy={busy}
+      onClose={onClose}
+      onConfirm={onDiscard}
       title={t("messages.unsavedChangesTitle")}
       description={t("messages.unsavedChangesConfirm")}
       cancelLabel={t("actions.cancel")}

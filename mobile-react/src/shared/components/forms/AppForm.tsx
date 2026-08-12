@@ -13,9 +13,12 @@ import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
 import { AppButton } from '@/src/shared/components/controls/AppButton';
+import { DiscardChangesDialog } from '@/src/shared/components/dialogs/discard-changes/DiscardChangesDialog';
+import { useDiscardChanges } from '@/src/shared/components/dialogs/discard-changes/useDiscardChanges';
 import { AppAlert } from '@/src/shared/components/feedback/AppAlert';
 import type { AppIconName } from '@/src/shared/components/icons/AppIcon';
 import { AppModal } from '@/src/shared/components/surfaces/AppModal';
+import { useAppReadOnly } from '@/src/shared/contexts/AppReadOnlyContext';
 
 interface FocusableField {
   focus: () => void;
@@ -57,6 +60,7 @@ export interface AppFormProps extends PropsWithChildren<Omit<ViewProps, 'childre
   submitLabel?: string;
   submitting?: boolean;
   submitDisabled?: boolean;
+  isDirty?: boolean;
   serverError?: string | null;
   contentContainerStyle?: StyleProp<ViewStyle>;
   footer?: ReactNode;
@@ -80,6 +84,7 @@ export function AppForm({
   submitLabel,
   submitting = false,
   submitDisabled = false,
+  isDirty = false,
   serverError,
   contentContainerStyle,
   footer,
@@ -88,6 +93,7 @@ export function AppForm({
 }: AppFormProps) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
+  const { isReadOnly } = useAppReadOnly();
   const fieldsRef = useRef<RegisteredField[]>([]);
   const errorsRef = useRef(errors);
   const focusFrameRef = useRef<number | null>(null);
@@ -97,6 +103,17 @@ export function AppForm({
   const activeRef = useRef(active);
   errorsRef.current = errors;
   activeRef.current = active;
+  const {
+    dialogVisible: discardDialogVisible,
+    discard,
+    keepEditing,
+    requestClose,
+  } = useDiscardChanges({
+    active,
+    busy: submitting,
+    isDirty,
+    onDiscard: onCancel,
+  });
 
   const scheduleInitialFocus = useCallback(() => {
     if (
@@ -120,7 +137,12 @@ export function AppForm({
   const registerField = useCallback<RegisterField>(
     (field, options) => {
       const registrationId = Symbol('form-field');
-      fieldsRef.current.push({ field, registrationId, ...options });
+      fieldsRef.current.push({
+        autoFocus: options.autoFocus,
+        field,
+        name: options.name,
+        registrationId,
+      });
       scheduleInitialFocus();
 
       return () => {
@@ -185,7 +207,7 @@ export function AppForm({
       {onCancel ? (
         <AppButton
           disabled={submitting}
-          onPress={onCancel}
+          onPress={requestClose}
           style={styles.action}
           variant="outline">
           {cancelLabel ?? t('common.cancel')}
@@ -193,7 +215,7 @@ export function AppForm({
       ) : null}
       {onSubmit ? (
         <AppButton
-          disabled={submitDisabled || submitting}
+          disabled={submitDisabled || submitting || isReadOnly}
           loading={submitting}
           onPress={() => void handleSubmit()}
           style={styles.action}>
@@ -216,20 +238,28 @@ export function AppForm({
   if (presentation === 'inline') return formContent;
 
   return (
-    <AppModal
-      closeDisabled={submitting}
-      closeLabel={cancelLabel ?? t('common.cancel')}
-      contentContainerStyle={contentContainerStyle}
-      footer={actionFooter}
-      icon={icon}
-      onClose={onCancel}
-      showCloseButton={Boolean(onCancel)}
-      subtitle={subtitle}
-      title={title ?? ''}
-      variant={presentation}
-      visible={visible}>
-      {formContent}
-    </AppModal>
+    <>
+      <AppModal
+        closeDisabled={submitting}
+        closeLabel={cancelLabel ?? t('common.cancel')}
+        contentContainerStyle={contentContainerStyle}
+        footer={actionFooter}
+        icon={icon}
+        onClose={onCancel ? requestClose : undefined}
+        showCloseButton={Boolean(onCancel)}
+        subtitle={subtitle}
+        title={title ?? ''}
+        variant={presentation}
+        visible={visible}>
+        {formContent}
+      </AppModal>
+      <DiscardChangesDialog
+        loading={submitting}
+        onCancel={keepEditing}
+        onDiscard={discard}
+        visible={visible && discardDialogVisible}
+      />
+    </>
   );
 }
 

@@ -9,6 +9,8 @@ export interface AuthResponse {
   firstName: string;
   lastName: string;
   tenantId: string;
+  tenantName: string;
+  tenantPlanName: string;
   companyId: number;
   token: string;
   tokenExpiration: string;
@@ -33,6 +35,8 @@ export interface CompanySelectionResponse {
 export interface SessionResponse {
   userId: string;
   tenantId: string;
+  tenantName: string;
+  tenantPlanName: string;
   companyId: number;
   userName: string;
   email: string;
@@ -40,7 +44,15 @@ export interface SessionResponse {
   lastName: string;
   readonly roles: readonly string[];
   readonly permissions: readonly string[];
+  tenantSubscriptionStatus: string;
+  tenantSubscriptionEndsOn: string | null;
+  tenantReadOnly: boolean;
   expiresAt: number;
+}
+
+export interface UserPhoto {
+  profilePicture: string | null;
+  contentType: string | null;
 }
 
 export type LoginOutcome =

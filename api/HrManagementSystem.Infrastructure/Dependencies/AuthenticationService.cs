@@ -1,6 +1,7 @@
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Services;
 using HrManagementSystem.Application.Features.Security.Authentication.Services;
+using HrManagementSystem.Domain.Tenancy.Enums;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
@@ -154,8 +155,11 @@ public static class AuthenticationService
                         access.TenantId == tenantId &&
                         access.CompanyId == companyId &&
                         access.Company.IsActive),
-                IsTenantActive = database.Tenants
-                    .Any(tenant => tenant.Id == tenantId && tenant.IsActive)
+                IsTenantActive = database.Tenants.Any(tenant =>
+                    tenant.Id == tenantId &&
+                    tenant.IsActive &&
+                    tenant.SubscriptionStatus != SubscriptionStatus.Suspended &&
+                    tenant.SubscriptionStatus != SubscriptionStatus.Cancelled)
             })
             .SingleOrDefaultAsync(context.HttpContext.RequestAborted);
 

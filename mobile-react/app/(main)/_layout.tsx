@@ -6,7 +6,9 @@ import { ROUTES } from '@/src/core/constants/routes';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { useCanAccessRoute } from '@/src/features/auth';
+import { TenantAccessProvider } from '@/src/features/tenant-access';
 import { AppAppBar } from '@/src/layouts/AppAppBar';
+import { AppDrawerContent } from '@/src/layouts/drawer';
 import { MainLayout } from '@/src/layouts/main/MainLayout';
 import { AppIcon } from '@/src/shared/components';
 
@@ -17,11 +19,14 @@ export default function ProtectedRouteLayout() {
   const canViewBasicData = useCanAccessRoute(ROUTES.basicData.root);
   const canViewSuperAdminDashboard = useCanAccessRoute(ROUTES.superAdminDashboard);
   const canManageTenants = useCanAccessRoute(ROUTES.tenantManagement);
+  const canViewAdministration = useCanAccessRoute(ROUTES.administration.root);
 
   return (
-    <MainLayout>
-      <Drawer
-        screenOptions={({ navigation }) => ({
+    <TenantAccessProvider>
+      <MainLayout>
+        <Drawer
+          drawerContent={(props) => <AppDrawerContent {...props} />}
+          screenOptions={({ navigation }) => ({
           drawerPosition: isRTL ? 'right' : 'left',
           drawerType: 'front',
           drawerStyle: {
@@ -46,7 +51,7 @@ export default function ProtectedRouteLayout() {
           sceneStyle: {
             backgroundColor: theme.colors.background,
           },
-        })}>
+          })}>
         <Drawer.Screen
           name="(tabs)"
           options={{
@@ -64,6 +69,17 @@ export default function ProtectedRouteLayout() {
             title: t('navigation.basicData'),
             drawerIcon: ({ color, size }) => (
               <AppIcon color={color} name="server-outline" size={size} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="administration"
+          options={{
+            drawerItemStyle: canViewAdministration ? undefined : { display: 'none' },
+            headerShown: false,
+            title: t('navigation.administration'),
+            drawerIcon: ({ color, size }) => (
+              <AppIcon color={color} name="people-outline" size={size} />
             ),
           }}
         />
@@ -94,7 +110,8 @@ export default function ProtectedRouteLayout() {
             title: t('modal.title'),
           }}
         />
-      </Drawer>
-    </MainLayout>
+        </Drawer>
+      </MainLayout>
+    </TenantAccessProvider>
   );
 }

@@ -13,6 +13,7 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
+import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 
 export interface FileDropZoneProps {
   title: string;
@@ -57,6 +58,8 @@ export const FileDropZone = forwardRef<HTMLInputElement, FileDropZoneProps>(
     },
     forwardedRef,
   ) {
+    const { isReadOnly } = useAppReadOnly();
+    const effectiveDisabled = disabled || isReadOnly;
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [isDragActive, setIsDragActive] = useState(false);
 
@@ -74,13 +77,13 @@ export const FileDropZone = forwardRef<HTMLInputElement, FileDropZoneProps>(
     };
 
     const openFilePicker = () => {
-      if (disabled || !inputRef.current) return;
+      if (effectiveDisabled || !inputRef.current) return;
       inputRef.current.value = "";
       inputRef.current.click();
     };
 
     const selectFiles = (files: File[]) => {
-      if (disabled || files.length === 0) return;
+      if (effectiveDisabled || files.length === 0) return;
       onFilesSelected(multiple ? files : files.slice(0, 1));
     };
 
@@ -92,7 +95,7 @@ export const FileDropZone = forwardRef<HTMLInputElement, FileDropZoneProps>(
     const handleDragEnter = (event: DragEvent<HTMLDivElement>) => {
       event.preventDefault();
       event.stopPropagation();
-      if (!disabled) updateDragActive(true);
+      if (!effectiveDisabled) updateDragActive(true);
     };
 
     const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
@@ -108,7 +111,7 @@ export const FileDropZone = forwardRef<HTMLInputElement, FileDropZoneProps>(
     const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
       event.preventDefault();
       event.stopPropagation();
-      if (!disabled) event.dataTransfer.dropEffect = "copy";
+      if (!effectiveDisabled) event.dataTransfer.dropEffect = "copy";
     };
 
     const handleDrop = (event: DragEvent<HTMLDivElement>) => {
@@ -131,8 +134,8 @@ export const FileDropZone = forwardRef<HTMLInputElement, FileDropZoneProps>(
         <ButtonBase
           component="div"
           role="button"
-          tabIndex={disabled ? -1 : 0}
-          aria-disabled={disabled}
+          tabIndex={effectiveDisabled ? -1 : 0}
+          aria-disabled={effectiveDisabled}
           aria-label={ariaLabel}
           onClick={openFilePicker}
           onKeyDown={handleKeyDown}
@@ -150,12 +153,12 @@ export const FileDropZone = forwardRef<HTMLInputElement, FileDropZoneProps>(
             borderColor: isDragActive ? "primary.main" : "divider",
             borderRadius: 1,
             bgcolor: isDragActive ? "action.hover" : "background.paper",
-            color: disabled ? "text.disabled" : "text.primary",
-            cursor: disabled ? "not-allowed" : "pointer",
-            opacity: disabled ? 0.65 : 1,
+            color: effectiveDisabled ? "text.disabled" : "text.primary",
+            cursor: effectiveDisabled ? "not-allowed" : "pointer",
+            opacity: effectiveDisabled ? 0.65 : 1,
             transition: (theme) =>
               theme.transitions.create(["border-color", "background-color", "opacity"]),
-            "&:hover": disabled
+            "&:hover": effectiveDisabled
               ? undefined
               : {
                   borderColor: "primary.main",
@@ -210,7 +213,7 @@ export const FileDropZone = forwardRef<HTMLInputElement, FileDropZoneProps>(
           type="file"
           accept={normalizeAccept(accept)}
           multiple={multiple}
-          disabled={disabled}
+          disabled={effectiveDisabled}
           onChange={handleInputChange}
           aria-label={ariaLabel}
           tabIndex={-1}

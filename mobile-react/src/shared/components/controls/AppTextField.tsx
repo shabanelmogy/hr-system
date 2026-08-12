@@ -12,8 +12,10 @@ import { useTranslation } from 'react-i18next';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { useAppFormField } from '@/src/shared/components/forms/AppForm';
+import { AppFieldMessage } from '@/src/shared/components/forms/AppFieldMessage';
 import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon';
 import { AppText } from '@/src/shared/components/typography/AppText';
+import { useAppReadOnly } from '@/src/shared/contexts/AppReadOnlyContext';
 
 export interface AppTextFieldProps extends TextInputProps {
   name?: string;
@@ -84,6 +86,7 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
 ) {
   const { t } = useTranslation();
   const { theme } = useAppTheme();
+  const { isReadOnly: appIsReadOnly } = useAppReadOnly();
   const { isRTL, direction } = useLocalization();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -92,13 +95,13 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
   const inputRef = useRef<TextInput | null>(null);
   const currentValue = String(value ?? uncontrolledValue);
   const currentLength = currentValue.length;
-  const effectiveEditable = editable && !loading && !readOnly;
-  const formField = useAppFormField(
+  const effectiveEditable = editable && !loading && !readOnly && !appIsReadOnly;
+  const { clearError, error: formError } = useAppFormField(
     name,
     () => inputRef.current?.focus(),
     { autoFocus, enabled: effectiveEditable && focusable },
   );
-  const error = suppliedError ?? formField.error;
+  const error = suppliedError ?? formError;
   const supportingText = error ?? helperText;
   const counterVisible = focused && (counter ?? true) && maxLength != null && !secureTextEntry;
   const counterPercentage = maxLength ? (currentLength / maxLength) * 100 : 0;
@@ -155,10 +158,10 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
       }
 
       if (value === undefined) setUncontrolledValue(normalizedValue);
-      formField.clearError();
+      clearError();
       onChangeText?.(normalizedValue);
     },
-    [formField.clearError, maxValue, numeric, onChangeText, value],
+    [clearError, maxValue, numeric, onChangeText, value],
   );
 
   const enforceMinimumValue = useCallback(() => {
@@ -166,9 +169,9 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
 
     const nextValue = String(minValue);
     if (value === undefined) setUncontrolledValue(nextValue);
-    formField.clearError();
+    clearError();
     onChangeText?.(nextValue);
-  }, [currentValue, formField.clearError, minValue, numeric, onChangeText, value]);
+  }, [clearError, currentValue, minValue, numeric, onChangeText, value]);
 
   const changeNumericValue = useCallback(
     (direction: -1 | 1) => {
@@ -205,11 +208,11 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
   const handleClear = useCallback(() => {
     if (!effectiveEditable) return;
     if (value === undefined) setUncontrolledValue('');
-    formField.clearError();
+    clearError();
     onChangeText?.('');
     onClear?.();
     inputRef.current?.focus();
-  }, [effectiveEditable, formField.clearError, onChangeText, onClear, value]);
+  }, [clearError, effectiveEditable, onChangeText, onClear, value]);
 
   return (
     <View style={[styles.field, { direction }, focused && styles.focusedField]}>
@@ -388,9 +391,9 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
       </View>
 
       {supportingText ? (
-        <AppText color={error ? 'danger' : 'muted'} style={styles.supportingText} variant="caption">
+        <AppFieldMessage error={Boolean(error)}>
           {supportingText}
-        </AppText>
+        </AppFieldMessage>
       ) : null}
     </View>
   );
@@ -481,8 +484,5 @@ const styles = StyleSheet.create({
   },
   numericStepButtonDisabled: {
     opacity: 0.35,
-  },
-  supportingText: {
-    paddingHorizontal: 12,
   },
 });

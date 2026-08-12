@@ -14,16 +14,19 @@ export function showErrorDialog(error: unknown, fallbackTitle?: string): void {
     reportId: createReportId(),
     occurredAt: new Date().toISOString(),
     path: `${window.location.origin}${window.location.pathname}`,
-    environment: getErrorEnvironment(),
+    environment:
+      process.env.NODE_ENV === "development" ? getErrorEnvironment() : undefined,
   });
   const signature = JSON.stringify([
     details.title,
     details.messages,
     details.status,
     details.traceId,
+    details.correlationId,
     details.errorType,
     details.errorCodes,
     details.detail,
+    details.stack,
   ]);
   const now = Date.now();
   if (signature === lastErrorSignature && now - lastErrorTime < DUPLICATE_WINDOW_MS) {

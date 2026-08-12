@@ -7,11 +7,22 @@ import UserForm from "./components/UserForm";
 import UsersDashboardHeader from "./components/UsersDashboardHeader";
 import UsersDataGrid from "./components/UsersDataGrid";
 import useUserGridLogic from "./hooks/useUserGridLogic";
+import { usePermissions } from "@/shared/hooks/usePermissions";
+import { permissions } from "@/lib/auth/permissions";
 
 // ─── Content ─────────────────────────────────────────────────────────────────
 // Rendered only after the guard confirms access — hooks and API calls are safe here.
 const UsersPage = () => {
   const { t } = useTranslation();
+  const { hasAllPermissions, isReadOnly } = usePermissions();
+  const canCreate = !isReadOnly && hasAllPermissions([
+    permissions.CreateUsers,
+    permissions.ViewRoles,
+  ]);
+  const canEdit = !isReadOnly && hasAllPermissions([
+    permissions.EditUsers,
+    permissions.ViewRoles,
+  ]);
 
   const {
     dialogType,
@@ -53,6 +64,8 @@ const UsersPage = () => {
           onRevoke={onRevoke}
           lastAddedId={lastAddedId}
           lastEditedId={lastEditedId}
+          canCreate={canCreate}
+          canEdit={canEdit}
           t={t}
         />
 

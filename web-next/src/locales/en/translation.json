@@ -115,10 +115,15 @@
     "reportId": "Report ID",
     "status": "Status",
     "traceId": "Trace ID",
+    "correlationId": "Correlation ID",
     "copy": "Copy error",
     "copied": "Copied",
     "copyFailed": "Copy failed",
-    "whatsApp": "Share",
+    "share": "Share",
+    "shared": "Shared",
+    "shareFailed": "Share failed",
+    "whatsApp": "WhatsApp",
+    "technicalDetails": "Technical details (development only)",
     "close": "Close",
     "errorReport": "HR Management System error report",
     "unknownMessage": "An unexpected error occurred. Please try again."
@@ -141,6 +146,7 @@
     "dismissAllTitle": "Dismiss all notifications?",
     "dismissAllDescription": "This removes every notification from your inbox. This action cannot be undone.",
     "cancel": "Cancel",
+    "close": "Close",
     "confirm": "Dismiss all",
     "loadMore": "Load more",
     "retry": "Retry",
@@ -976,7 +982,20 @@
     "confirmPasswordPlaceholder": "Enter password again",
     "maxRoles": "Max Roles",
     "maxRolesError": "Max roles exceeded",
-    "atLeastOneRole": "At least one role must be selected"
+    "atLeastOneRole": "At least one role must be selected",
+    "companyAccessSection": "Company access",
+    "companies": "Allowed companies",
+    "companiesPlaceholder": "Select the companies this user can access",
+    "loadingCompanies": "Loading companies",
+    "noCompaniesFound": "No available companies found",
+    "defaultCompany": "Default company",
+    "defaultCompanyPlaceholder": "Select the default company",
+    "selectCompaniesFirst": "Select at least one allowed company first",
+    "atLeastOneCompany": "At least one company must be selected",
+    "defaultCompanyRequired": "Select a default company",
+    "defaultCompanyMustBeSelected": "The default company must be included in the allowed companies",
+    "companyAccessHint": "The user can sign in only to the selected companies. When several companies are selected, the user chooses one during sign-in.",
+    "noDefaultCompany": "No default company"
   },
   "advancedTools": {
     "title": "Advanced Tools",
@@ -1172,6 +1191,13 @@
     "flipVertical": "Flip Vertical",
     "flipHorizontal": "Flip Horizontal"
   },
+  "tenantAccess": {
+    "title": "Subscription expired",
+    "description": "Your tenant subscription has expired. The application is now available in read-only mode.",
+    "readOnlyExplanation": "You can continue viewing and exporting data, but creating, editing, deleting, and uploading are disabled until the subscription is renewed.",
+    "readOnlyBadge": "Read-only",
+    "endedOn": "Subscription ended on {{date}}"
+  },
   "superAdminDashboard": {
     "title": "Super Admin Dashboard",
     "subtitle": "Monitor tenants, subscriptions, companies, and account capacity from one place.",
@@ -1219,6 +1245,13 @@
     "tenantEnabled": "Tenant login enabled",
     "enabled": "Enabled",
     "disabled": "Disabled",
+    "validation": {
+      "invalidIdentifier": "Start with a letter or number and use only English letters, numbers, and hyphens.",
+      "invalidOption": "Select a valid option.",
+      "invalidDate": "Enter a valid date.",
+      "endDateBeforeStart": "The end date cannot be before the start date.",
+      "wholeNumberMin": "Enter a whole number of at least {{minimum}}."
+    },
     "statuses": {
       "free": "Free",
       "trial": "Trial",

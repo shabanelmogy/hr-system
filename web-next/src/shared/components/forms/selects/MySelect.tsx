@@ -20,6 +20,7 @@ import {
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { getFormFieldError } from "../text-fields/formFieldError";
+import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 
 type OptionKey<TOption extends object> = Extract<keyof TOption, string>;
 
@@ -118,7 +119,9 @@ const MySelect = <
 >(props: MySelectProps<TOption, TFormValues>) => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const { isReadOnly: appIsReadOnly } = useAppReadOnly();
   const formMode = isFormSelect(props);
+  const appDisablesSelect = appIsReadOnly && formMode;
   const {
     dataSource = [],
     label,
@@ -211,7 +214,7 @@ const MySelect = <
             commit({ event, formattedValue, selected });
           }}
           onBlur={onBlur}
-          disabled={loading || disabled || isViewMode}
+          disabled={loading || disabled || isViewMode || appDisablesSelect}
           disableClearable={!showClearButton}
           limitTags={multiple ? limitTags : undefined}
           filterSelectedOptions={formMode ? filterSelectedOptions : undefined}
@@ -233,12 +236,12 @@ const MySelect = <
                           color={formMode ? getChipColor(option) : undefined}
                           variant={formMode ? chipVariant : undefined}
                           deleteIcon={
-                            formMode && !isViewMode && showDeleteIcon
+                            formMode && !isViewMode && !appDisablesSelect && showDeleteIcon
                               ? <Close />
                               : undefined
                           }
                           onDelete={
-                            !formMode || (!isViewMode && showDeleteIcon)
+                            !formMode || (!isViewMode && !appDisablesSelect && showDeleteIcon)
                               ? itemProps.onDelete
                               : undefined
                           }

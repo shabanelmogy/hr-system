@@ -4,6 +4,8 @@ import { isSessionClaims } from "./session";
 const validSession = {
   userId: "user-id",
   tenantId: "tenant-id",
+  tenantName: "Test Tenant",
+  tenantPlanName: "Professional",
   companyId: 7,
   userName: "user",
   email: "user@example.com",
@@ -11,6 +13,9 @@ const validSession = {
   lastName: "User",
   roles: ["admin"],
   permissions: ["Users:View"],
+  tenantSubscriptionStatus: "active",
+  tenantSubscriptionEndsOn: null,
+  tenantReadOnly: false,
   expiresAt: Date.now() + 60_000,
 };
 

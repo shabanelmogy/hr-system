@@ -6,6 +6,7 @@ namespace HrManagementSystem.Application.Features.Security.Users.Contracts
         string UserName,
         string Email,
         IList<string> Roles,
-        IReadOnlyCollection<int>? CompanyIds = null
+        IReadOnlyCollection<int> CompanyIds,
+        int DefaultCompanyId
     );
 }

@@ -15,6 +15,7 @@ declare module 'axios' {
   interface AxiosRequestConfig {
     skipAuth?: boolean;
     skipAuthRefresh?: boolean;
+    allowWhenReadOnly?: boolean;
   }
 }
 
@@ -24,6 +25,7 @@ type RetriableRequestConfig = InternalAxiosRequestConfig & { _retry?: boolean };
 
 let refreshHandler: RefreshHandler | null = null;
 let authFailureHandler: AuthFailureHandler | null = null;
+let readOnlyGuard: { isReadOnly: () => boolean; onBlocked: () => void } | null = null;
 
 export function configureAxiosAuthentication(options: {
   refresh: RefreshHandler;
@@ -35,6 +37,17 @@ export function configureAxiosAuthentication(options: {
   return () => {
     refreshHandler = null;
     authFailureHandler = null;
+  };
+}
+
+export function configureAxiosReadOnlyAccess(guard: {
+  isReadOnly: () => boolean;
+  onBlocked: () => void;
+}): () => void {
+  readOnlyGuard = guard;
+
+  return () => {
+    if (readOnlyGuard === guard) readOnlyGuard = null;
   };
 }
 
@@ -58,6 +71,19 @@ axiosClient.interceptors.request.use(async (config) => {
     }
   }
 
+  if (
+    isWriteMethod(config.method) &&
+    !config.allowWhenReadOnly &&
+    readOnlyGuard?.isReadOnly()
+  ) {
+    readOnlyGuard.onBlocked();
+    throw new ApiError(
+      423,
+      'This tenant is in read-only mode because its subscription has expired.',
+      { type: 'Tenant.SubscriptionReadOnly' },
+    );
+  }
+
   return config;
 });
 
@@ -69,6 +95,9 @@ axiosClient.interceptors.response.use(
     }
 
     const config = error.config as RetriableRequestConfig | undefined;
+    if (error.response?.status === 423) {
+      readOnlyGuard?.onBlocked();
+    }
     const runRefresh = refreshHandler;
     const canRefresh =
       error.response?.status === 401 &&
@@ -127,3 +156,7 @@ export function toApiError(error: unknown): ApiError {
 }
 
 export type ApiRequestConfig = AxiosRequestConfig;
+
+function isWriteMethod(method: string | undefined): boolean {
+  return ['post', 'put', 'patch', 'delete'].includes(method?.toLowerCase() ?? '');
+}

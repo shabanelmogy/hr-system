@@ -18,9 +18,11 @@ export interface ErrorDialogDetails {
   messages: string[];
   status?: number;
   traceId?: string;
+  correlationId?: string;
   errorType?: string;
   errorCodes?: string[];
   detail?: string;
+  stack?: string;
   occurredAt?: string;
   path?: string;
   environment?: ErrorEnvironment;

@@ -5,6 +5,7 @@ import type {
   CompanySelectionResponse,
   LoginOutcome,
   SessionResponse,
+  UserPhoto,
 } from '@/src/features/auth/types/auth';
 
 const dateString = z.string().refine((value) => !Number.isNaN(Date.parse(value)));
@@ -16,6 +17,8 @@ const authResponseSchema: z.ZodType<AuthResponse> = z.object({
   firstName: z.string(),
   lastName: z.string(),
   tenantId: z.string().min(1),
+  tenantName: z.string().trim().min(1),
+  tenantPlanName: z.string().trim().min(1),
   companyId: z.number().int().positive(),
   token: z.string().min(1),
   tokenExpiration: dateString,
@@ -52,6 +55,8 @@ const companySelectionSchema: z.ZodType<CompanySelectionResponse> = z
 const sessionResponseSchema: z.ZodType<SessionResponse> = z.object({
   userId: z.string().min(1),
   tenantId: z.string().min(1),
+  tenantName: z.string().trim().min(1),
+  tenantPlanName: z.string().trim().min(1),
   companyId: z.number().int().positive(),
   userName: z.string().min(1),
   email: z.string(),
@@ -59,7 +64,15 @@ const sessionResponseSchema: z.ZodType<SessionResponse> = z.object({
   lastName: z.string(),
   roles: z.array(claimString),
   permissions: z.array(claimString),
+  tenantSubscriptionStatus: z.string().min(1),
+  tenantSubscriptionEndsOn: dateString.nullable(),
+  tenantReadOnly: z.boolean(),
   expiresAt: z.number().positive(),
+});
+
+const userPhotoSchema = z.object({
+  profilePicture: z.string().nullable().optional(),
+  contentType: z.string().nullable().optional(),
 });
 
 export function parseLoginOutcome(value: unknown): LoginOutcome {
@@ -79,3 +92,11 @@ export function parseLoginOutcome(value: unknown): LoginOutcome {
 export const parseAuthResponse = (value: unknown): AuthResponse => authResponseSchema.parse(value);
 export const parseSessionResponse = (value: unknown): SessionResponse =>
   sessionResponseSchema.parse(value);
+export function parseUserPhoto(value: unknown): UserPhoto {
+  const photo = userPhotoSchema.parse(value);
+
+  return {
+    profilePicture: photo.profilePicture ?? null,
+    contentType: photo.contentType ?? null,
+  };
+}

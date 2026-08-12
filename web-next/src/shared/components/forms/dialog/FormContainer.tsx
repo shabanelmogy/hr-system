@@ -6,10 +6,8 @@ import {
   useTheme,
   alpha,
 } from "@mui/material";
-import { WarningAmberRounded as WarningIcon } from "@mui/icons-material";
-import { useTranslation } from "react-i18next";
 import type { TransitionProps } from "@mui/material/transitions";
-import { ConfirmationDialog } from "@/shared/components/dialogs";
+import { DiscardChangesDialog } from "@/shared/components/dialogs";
 import { FormProvider } from "./FormContext";
 import type { MyFormProps } from "./types";
 import { useFormDialogFocus } from "./useFormDialogFocus";
@@ -50,7 +48,6 @@ export const FormContainer: React.FC<MyFormProps> = ({
   footerLeft = null,
 }) => {
   const theme = useTheme();
-  const { t } = useTranslation();
   const dialogContentRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const {
@@ -220,16 +217,10 @@ export const FormContainer: React.FC<MyFormProps> = ({
         </Box>
       </Dialog>
 
-      <ConfirmationDialog
+      <DiscardChangesDialog
         open={open && discardDialogOpen}
         onClose={cancelDiscard}
-        onConfirm={confirmDiscard}
-        title={t("messages.unsavedChangesTitle")}
-        description={t("messages.unsavedChangesConfirm")}
-        cancelLabel={t("actions.cancel")}
-        confirmLabel={t("messages.discardChanges")}
-        confirmColor="warning"
-        icon={<WarningIcon color="warning" />}
+        onDiscard={confirmDiscard}
       />
     </FormProvider>
   );

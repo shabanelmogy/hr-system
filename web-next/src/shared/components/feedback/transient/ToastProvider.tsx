@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties, ReactNode } from "react";
-import { alpha, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import { Toaster } from "react-hot-toast";
 import type { DefaultToastOptions, ToastPosition } from "react-hot-toast";
 import { ErrorDialogHost } from "./error-dialog/ErrorDialogHost";
@@ -27,6 +27,9 @@ export function ToastProvider({
 }: ToastProviderProps) {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
+  const invertedBackground = isDark ? "#FFFFFF" : "#181C20";
+  const invertedText = isDark ? "#172026" : "#F5F7F8";
+  const invertedBorder = isDark ? "#D9E0E4" : "#333B40";
   const baseStyle: CSSProperties = {
     borderRadius: 8,
     minWidth: 280,
@@ -35,9 +38,9 @@ export function ToastProvider({
     fontSize: 14,
     fontWeight: 600,
     lineHeight: 1.45,
-    background: theme.palette.background.paper,
-    color: theme.palette.text.primary,
-    border: `1px solid ${alpha(theme.palette.divider, isDark ? 0.7 : 0.85)}`,
+    background: invertedBackground,
+    color: invertedText,
+    border: `1px solid ${invertedBorder}`,
     boxShadow: isDark
       ? "0 12px 30px rgba(0,0,0,0.5)"
       : "0 12px 30px rgba(15,23,42,0.14)",

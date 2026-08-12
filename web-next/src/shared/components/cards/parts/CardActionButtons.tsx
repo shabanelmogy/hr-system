@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { IconButton, Stack, Tooltip, alpha, useTheme } from "@mui/material";
+import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 
 export interface CardActionItem {
   key: string;
@@ -16,6 +17,7 @@ export interface CardActionButtonsProps {
 
 export const CardActionButtons = ({ actions }: CardActionButtonsProps) => {
   const theme = useTheme();
+  const { isReadOnly } = useAppReadOnly();
 
   return (
     <Stack direction="row" spacing={1}>
@@ -26,7 +28,7 @@ export const CardActionButtons = ({ actions }: CardActionButtonsProps) => {
               aria-label={action.title}
               size="small"
               color={action.color}
-              disabled={action.disabled}
+              disabled={action.disabled || (isReadOnly && isWriteAction(action.key))}
               onClick={action.onClick}
               sx={{
                 bgcolor: alpha(theme.palette[action.color].main, 0.1),
@@ -50,3 +52,9 @@ export const CardActionButtons = ({ actions }: CardActionButtonsProps) => {
     </Stack>
   );
 };
+
+function isWriteAction(key: string) {
+  return ["add", "create", "edit", "update", "delete", "remove", "save"].some(
+    (action) => key.toLowerCase().includes(action),
+  );
+}

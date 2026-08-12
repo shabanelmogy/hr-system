@@ -164,7 +164,14 @@ const TopBar = ({
 
           {/* User Welcome - Desktop */}
           {isAuthenticated && (
-            <Box sx={{ display: { xs: "none", md: "flex" }, marginInlineEnd: 2 }}>
+            <Box
+              sx={{
+                display: { xs: "none", md: "flex" },
+                alignItems: "center",
+                marginInlineEnd: 2,
+                minWidth: 0,
+              }}
+            >
               <UserWelcome />
             </Box>
           )}
@@ -196,7 +203,14 @@ const TopBar = ({
 
           {/* Mobile User Welcome */}
           {isAuthenticated && (
-            <Box sx={{ display: { xs: "flex", md: "none" }, marginInlineEnd: 1 }}>
+            <Box
+              sx={{
+                display: { xs: "flex", md: "none" },
+                alignItems: "center",
+                marginInlineEnd: 1,
+                minWidth: 0,
+              }}
+            >
               <UserWelcome isMobile={true} />
             </Box>
           )}
@@ -243,7 +257,9 @@ const TopBar = ({
             handleLogout={handleLogout}
           />
         </StyledToolbar>
+
       </AppBar>
+
     </>
   );
 };

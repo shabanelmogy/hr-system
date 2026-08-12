@@ -15,6 +15,8 @@ const user = {
   isLocked: false,
   profilePicture: null,
   roles: ["Admin"],
+  companyIds: [1, 2],
+  defaultCompanyId: 1,
 };
 
 const role = {

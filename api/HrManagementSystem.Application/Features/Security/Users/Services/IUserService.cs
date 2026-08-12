@@ -6,6 +6,9 @@ public interface IUserService
 {
     Task<IEnumerable<UserResponse>> GetAllAsync(CancellationToken cancellationToken = default);
 
+    Task<IReadOnlyCollection<UserCompanyOptionResponse>> GetCompanyOptionsAsync(
+        CancellationToken cancellationToken = default);
+
     Task<Result<UserResponse>> GetAsync(string id);
 
     Task<Result<UserResponse>> AddAsync(CreateUserRequest request, CancellationToken cancellationToken = default);

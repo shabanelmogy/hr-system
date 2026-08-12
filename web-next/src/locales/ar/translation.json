@@ -115,10 +115,15 @@
     "reportId": "معرف التقرير",
     "status": "الحالة",
     "traceId": "معرف التتبع",
+    "correlationId": "معرف الارتباط",
     "copy": "نسخ الخطأ",
     "copied": "تم النسخ",
     "copyFailed": "تعذر النسخ",
-    "whatsApp": "مشاركة",
+    "share": "مشاركة",
+    "shared": "تمت المشاركة",
+    "shareFailed": "تعذرت المشاركة",
+    "whatsApp": "واتساب",
+    "technicalDetails": "التفاصيل التقنية (بيئة التطوير فقط)",
     "close": "إغلاق",
     "errorReport": "تقرير خطأ نظام إدارة الموارد البشرية",
     "unknownMessage": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى."
@@ -293,6 +298,7 @@
     "deleted": "تم الحذف",
     "deleting": " ... حذف",
     "cancel": "الغاء",
+    "close": "إغلاق",
     "preview": "معاينة",
     "browse": "تصفح",
     "export": "تصدير",
@@ -937,7 +943,20 @@
     "confirmPasswordPlaceholder": "ادخل كلمة المرور مرة اخرى",
     "maxRoles": "الحد الاقصى للتصنيفات",
     "maxRolesError": "لقد تجاوزت الحد الاقصى للتصنيفات",
-    "atLeastOneRole": "يجب اختيار على الاقل تصنيف صلاحية"
+    "atLeastOneRole": "يجب اختيار تصنيف صلاحية واحد على الأقل",
+    "companyAccessSection": "صلاحيات الشركات",
+    "companies": "الشركات المسموح بها",
+    "companiesPlaceholder": "اختر الشركات التي يستطيع المستخدم الوصول إليها",
+    "loadingCompanies": "جارٍ تحميل الشركات",
+    "noCompaniesFound": "لا توجد شركات متاحة",
+    "defaultCompany": "الشركة الافتراضية",
+    "defaultCompanyPlaceholder": "اختر الشركة الافتراضية",
+    "selectCompaniesFirst": "اختر شركة مسموحًا بها أولًا",
+    "atLeastOneCompany": "يجب اختيار شركة واحدة على الأقل",
+    "defaultCompanyRequired": "يجب اختيار الشركة الافتراضية",
+    "defaultCompanyMustBeSelected": "يجب أن تكون الشركة الافتراضية ضمن الشركات المسموح بها",
+    "companyAccessHint": "يمكن للمستخدم تسجيل الدخول إلى الشركات المحددة فقط، وعند اختيار أكثر من شركة سيحدد الشركة عند تسجيل الدخول.",
+    "noDefaultCompany": "لا توجد شركة افتراضية"
   },
   "advancedTools": {
     "title": "أدوات متقدمة",
@@ -1135,6 +1154,13 @@
     "flipVertical": "عكس الرأسى",
     "flipHorizontal": "عكس الأفقى"
   },
+  "tenantAccess": {
+    "title": "انتهى الاشتراك",
+    "description": "انتهى اشتراك المستأجر، لذلك أصبح التطبيق متاحاً في وضع القراءة فقط.",
+    "readOnlyExplanation": "يمكنك عرض البيانات وتصديرها، لكن الإضافة والتعديل والحذف ورفع الملفات متوقفة حتى تجديد الاشتراك.",
+    "readOnlyBadge": "للقراءة فقط",
+    "endedOn": "انتهى الاشتراك في {{date}}"
+  },
   "superAdminDashboard": {
     "title": "لوحة تحكم مدير النظام",
     "subtitle": "متابعة المستأجرين والاشتراكات والشركات وسعة الحسابات من مكان واحد.",
@@ -1186,6 +1212,13 @@
     "tenantEnabled": "السماح بتسجيل دخول المستأجر",
     "enabled": "مفعّل",
     "disabled": "معطّل",
+    "validation": {
+      "invalidIdentifier": "ابدأ بحرف أو رقم واستخدم الحروف الإنجليزية والأرقام والشرطات فقط.",
+      "invalidOption": "اختر قيمة صحيحة.",
+      "invalidDate": "أدخل تاريخًا صحيحًا.",
+      "endDateBeforeStart": "لا يمكن أن يسبق تاريخ النهاية تاريخ البداية.",
+      "wholeNumberMin": "أدخل عددًا صحيحًا لا يقل عن {{minimum}}."
+    },
     "statuses": {
       "free": "مجاني",
       "trial": "تجريبي",

@@ -7,10 +7,12 @@ import {
 } from "@mui/x-data-grid";
 import { useTranslation } from "react-i18next";
 import { useDataGridShell } from "../core/context";
+import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 
 export function DataGridToolbar() {
   const { onToolbarAdd } = useDataGridShell();
   const { t } = useTranslation();
+  const { isReadOnly } = useAppReadOnly();
 
   return (
     <Stack
@@ -22,6 +24,7 @@ export function DataGridToolbar() {
         <>
           <Button
             onClick={onToolbarAdd}
+            disabled={isReadOnly}
             startIcon={<AddIcon />}
             size="small"
           >

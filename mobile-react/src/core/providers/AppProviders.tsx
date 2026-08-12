@@ -1,4 +1,5 @@
 import { QueryClientProvider } from '@tanstack/react-query';
+import { LocaleDirContext } from '@react-navigation/native';
 import type { PropsWithChildren } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -8,14 +9,17 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { LocalizationProvider, useLocalization } from '@/src/core/localization';
 import { queryClient } from '@/src/core/query/query-client';
 import { AppThemeProvider } from '@/src/core/theme';
+import { AppFeedbackHost } from '@/src/shared/components/feedback/transient';
 
 function DirectionRoot({ children }: PropsWithChildren) {
   const { direction } = useLocalization();
 
   return (
-    <View style={[styles.root, { direction }]}>
-      {children}
-    </View>
+    <LocaleDirContext.Provider value={direction}>
+      <View style={[styles.root, { direction }]}>
+        {children}
+      </View>
+    </LocaleDirContext.Provider>
   );
 }
 
@@ -27,7 +31,10 @@ export function AppProviders({ children }: PropsWithChildren) {
           <QueryClientProvider client={queryClient}>
             <LocalizationProvider>
               <AppThemeProvider>
-                <DirectionRoot>{children}</DirectionRoot>
+                <DirectionRoot>
+                  {children}
+                  <AppFeedbackHost />
+                </DirectionRoot>
               </AppThemeProvider>
             </LocalizationProvider>
           </QueryClientProvider>

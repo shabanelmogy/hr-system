@@ -1,15 +1,20 @@
 using HrManagementSystem.Application.Features.Security.Authentication.Contracts;
 using HrManagementSystem.Application.Features.Security.Authentication.Services;
+using HrManagementSystem.Application.Features.Tenancy.Services;
 
 namespace HrManagementSystem.Api.Features.Security.Authentication.V1;
 
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute)]
 [ApiController]
-public class AuthController(IAuthService authService, IJwtProvider jwtProvider) : ControllerBase
+public class AuthController(
+    IAuthService authService,
+    IJwtProvider jwtProvider,
+    ITenantAccessService tenantAccessService) : ControllerBase
 {
     private readonly IAuthService _authService = authService;
     private readonly IJwtProvider _jwtProvider = jwtProvider;
+    private readonly ITenantAccessService _tenantAccessService = tenantAccessService;
 
     [HttpPost]
     [AllowAnonymous]
@@ -81,14 +86,21 @@ public class AuthController(IAuthService authService, IJwtProvider jwtProvider) 
 
     [HttpGet]
     [Authorize]
-    public IActionResult Session()
+    public async Task<IActionResult> Session(CancellationToken cancellationToken)
     {
         var expiration = User.FindFirstValue(JwtRegisteredClaimNames.Exp);
         _ = long.TryParse(expiration, out var expiresAtSeconds);
+        var tenantId = User.FindFirstValue(JwtClaimNames.TenantId) ?? string.Empty;
+        var tenantAccess = await _tenantAccessService.GetAsync(tenantId, cancellationToken);
+
+        if (tenantAccess is null)
+            return Unauthorized();
 
         var response = new SessionResponse(
             User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty,
-            User.FindFirstValue(JwtClaimNames.TenantId) ?? string.Empty,
+            tenantId,
+            tenantAccess.TenantName,
+            tenantAccess.PlanName,
             int.TryParse(User.FindFirstValue(JwtClaimNames.CompanyId), out var companyId)
                 ? companyId
                 : 0,
@@ -98,6 +110,9 @@ public class AuthController(IAuthService authService, IJwtProvider jwtProvider) 
             User.FindFirstValue(MyClaims.lastname) ?? string.Empty,
             User.FindAll(ClaimTypes.Role).Select(claim => claim.Value).Distinct().ToArray(),
             User.FindAll(Permissions.Type).Select(claim => claim.Value).Distinct().ToArray(),
+            tenantAccess.SubscriptionStatus,
+            tenantAccess.SubscriptionEndsOn,
+            tenantAccess.IsReadOnly,
             expiresAtSeconds * 1000);
 
         return Ok(response);

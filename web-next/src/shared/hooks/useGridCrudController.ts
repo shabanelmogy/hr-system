@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 
 export type CrudDialogType = "add" | "edit" | "view" | "delete" | null;
 export type CrudItemId = string | number;
@@ -20,6 +21,7 @@ export function useGridCrudController<TItem extends IdentifiedItem, TForm>({
   remove,
   refresh,
 }: UseGridCrudControllerOptions<TItem, TForm>) {
+  const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
   const [dialogType, setDialogType] = useState<CrudDialogType>(null);
   const [selectedItem, setSelectedItem] = useState<TItem | null>(null);
   const [lastAddedId, setLastAddedId] = useState<CrudItemId | null>(null);
@@ -37,6 +39,10 @@ export function useGridCrudController<TItem extends IdentifiedItem, TForm>({
   }, []);
 
   const handleFormSubmit = useCallback(async (form: TForm) => {
+    if (isReadOnly) {
+      notifyBlockedAction();
+      return;
+    }
     if (dialogType === "add") {
       const created = await create(form);
       setLastAddedId(created.id);
@@ -49,9 +55,13 @@ export function useGridCrudController<TItem extends IdentifiedItem, TForm>({
       setLastEditedId(updated.id);
       closeDialog();
     }
-  }, [closeDialog, create, dialogType, selectedItem, update]);
+  }, [closeDialog, create, dialogType, isReadOnly, notifyBlockedAction, selectedItem, update]);
 
   const handleDelete = useCallback(async () => {
+    if (isReadOnly) {
+      notifyBlockedAction();
+      return;
+    }
     if (!selectedItem) return;
     const deletedIndex = items.findIndex(
       (item) => String(item.id) === String(selectedItem.id),
@@ -64,14 +74,23 @@ export function useGridCrudController<TItem extends IdentifiedItem, TForm>({
     } catch {
       // Feature mutation callbacks own user-facing API errors.
     }
-  }, [closeDialog, items, remove, selectedItem]);
+  }, [closeDialog, isReadOnly, items, notifyBlockedAction, remove, selectedItem]);
 
   const handleRefresh = useCallback(() => {
     void refresh();
   }, [refresh]);
-  const onAdd = useCallback(() => openDialog("add"), [openDialog]);
-  const onDelete = useCallback((item: TItem) => openDialog("delete", item), [openDialog]);
-  const onEdit = useCallback((item: TItem) => openDialog("edit", item), [openDialog]);
+  const onAdd = useCallback(() => {
+    if (isReadOnly) notifyBlockedAction();
+    else openDialog("add");
+  }, [isReadOnly, notifyBlockedAction, openDialog]);
+  const onDelete = useCallback((item: TItem) => {
+    if (isReadOnly) notifyBlockedAction();
+    else openDialog("delete", item);
+  }, [isReadOnly, notifyBlockedAction, openDialog]);
+  const onEdit = useCallback((item: TItem) => {
+    if (isReadOnly) notifyBlockedAction();
+    else openDialog("edit", item);
+  }, [isReadOnly, notifyBlockedAction, openDialog]);
   const onView = useCallback((item: TItem) => openDialog("view", item), [openDialog]);
   const clearLastAdded = useCallback(() => setLastAddedId(null), []);
   const clearLastEdited = useCallback(() => setLastEditedId(null), []);

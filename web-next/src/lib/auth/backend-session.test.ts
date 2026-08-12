@@ -10,6 +10,8 @@ import { refreshAuthTokens, resolveSession } from "./backend-session";
 const session = {
   userId: "user-id",
   tenantId: "tenant-id",
+  tenantName: "Test Tenant",
+  tenantPlanName: "Professional",
   companyId: 7,
   userName: "user",
   email: "user@example.com",
@@ -17,6 +19,9 @@ const session = {
   lastName: "User",
   roles: ["admin"],
   permissions: ["Users:View"],
+  tenantSubscriptionStatus: "active",
+  tenantSubscriptionEndsOn: null,
+  tenantReadOnly: false,
   expiresAt: Date.now() + 60_000,
 };
 
@@ -208,6 +213,8 @@ function createValidatedToken(value: typeof session) {
   const payload = {
     sub: value.userId,
     tenant_id: value.tenantId,
+    tenant_name: value.tenantName,
+    tenant_plan: value.tenantPlanName,
     company_id: value.companyId,
     name: value.userName,
     email: value.email,

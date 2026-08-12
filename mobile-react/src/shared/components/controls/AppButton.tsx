@@ -14,7 +14,7 @@ import { useAppTheme } from '@/src/core/theme';
 import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon';
 import { AppText } from '@/src/shared/components/typography/AppText';
 
-type AppButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
+type AppButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'warning' | 'danger';
 type GradientColors = readonly [ColorValue, ColorValue, ...ColorValue[]];
 
 export interface AppButtonProps extends Omit<PressableProps, 'children'> {
@@ -47,6 +47,7 @@ export function AppButton({
     secondary: theme.colors.secondary,
     outline: 'transparent',
     ghost: 'transparent',
+    warning: theme.colors.warning,
     danger: theme.colors.danger,
   };
   const foregroundMap: Record<AppButtonVariant, string> = {
@@ -54,6 +55,7 @@ export function AppButton({
     secondary: '#FFFFFF',
     outline: theme.colors.primary,
     ghost: theme.colors.primary,
+    warning: '#FFFFFF',
     danger: '#FFFFFF',
   };
 

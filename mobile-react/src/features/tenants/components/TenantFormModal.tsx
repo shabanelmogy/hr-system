@@ -1,13 +1,16 @@
+import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
+import { toFormErrorMap, useZodForm } from '@/src/core/validation';
 import {
   subscriptionStatuses,
   type SubscriptionStatus,
-  type TenantFormErrors,
   type TenantFormState,
 } from '@/src/features/tenants/types/tenant';
+import { createTenantValidationSchema } from '@/src/features/tenants/validation/tenantValidation';
 import {
   AppDateTimeField,
   AppForm,
@@ -28,49 +31,61 @@ const statusIcons = {
 } as const satisfies Record<SubscriptionStatus, AppIconName>;
 
 interface TenantFormModalProps {
-  form: TenantFormState | null;
-  errors: TenantFormErrors;
+  form: TenantFormState;
   isEdit: boolean;
-  error: string | null;
   loading: boolean;
-  onChange: (form: TenantFormState) => void;
-  onClearFieldError: (field: keyof TenantFormState) => void;
   onClose: () => void;
-  onSave: () => void | Promise<void>;
+  onSave: (form: TenantFormState) => void | Promise<void>;
 }
 
 export function TenantFormModal({
   form,
-  errors,
   isEdit,
-  error,
   loading,
-  onChange,
-  onClearFieldError,
   onClose,
   onSave,
 }: TenantFormModalProps) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
+  const validationSchema = useMemo(
+    () =>
+      createTenantValidationSchema({
+        required: t('validation.required'),
+        maxLength: (count) => t('validation.maxLength', { count }),
+        invalidIdentifier: t('validation.invalidIdentifier'),
+        invalidOption: t('validation.invalidOption'),
+        invalidDate: t('validation.invalidDate'),
+        endDateBeforeStart: t('validation.endDateBeforeStart'),
+        wholeNumberMin: (minimum) => t('validation.wholeNumberMin', { minimum }),
+        invalidEmail: t('validation.invalidEmail'),
+      }),
+    [t],
+  );
+  const {
+    clearErrors,
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors, isDirty, isSubmitting },
+  } = useZodForm(validationSchema, { defaultValues: form });
 
-  if (!form) return null;
-
-  const set = <Key extends keyof TenantFormState>(key: Key, value: TenantFormState[Key]) => {
-    onChange({ ...form, [key]: value });
-  };
+  const fieldErrors = useMemo(() => toFormErrorMap<TenantFormState>(errors), [errors]);
+  const subscriptionStartedOn = watch('subscriptionStartedOn');
+  const submitting = loading || isSubmitting;
+  const submitForm = handleSubmit(onSave);
 
   return (
     <AppForm
       contentContainerStyle={styles.content}
-      errors={errors}
+      errors={fieldErrors}
       icon={isEdit ? 'create-outline' : 'business-outline'}
+      isDirty={isDirty}
       onCancel={onClose}
-      onClearFieldError={(name) => onClearFieldError(name as keyof TenantFormState)}
-      onSubmit={onSave}
+      onClearFieldError={(name) => clearErrors(name as keyof TenantFormState)}
+      onSubmit={submitForm}
       presentation="fullScreen"
-      serverError={error}
       style={styles.form}
-      submitting={loading}
+      submitting={submitting}
       subtitle={t(
         isEdit
           ? 'tenantManagement.editTenantDescription'
@@ -78,33 +93,53 @@ export function TenantFormModal({
       )}
       title={t(isEdit ? 'tenantManagement.editTenant' : 'tenantManagement.addTenant')}
       visible>
+      <Controller
+        control={control}
+        name="identifier"
+        render={({ field }) => (
           <AppTextField
             autoCapitalize="none"
-            editable={!loading}
+            editable={!submitting}
             label={t('tenantManagement.identifier')}
             leadingIcon="key-outline"
             maxLength={100}
-            name="identifier"
-            onChangeText={(value) => set('identifier', value)}
+            name={field.name}
+            onBlur={field.onBlur}
+            onChangeText={field.onChange}
+            ref={field.ref}
             required
-            value={form.identifier}
+            value={field.value}
           />
+        )}
+      />
+      <Controller
+        control={control}
+        name="name"
+        render={({ field }) => (
           <AppTextField
-            editable={!loading}
+            editable={!submitting}
             label={t('tenantManagement.name')}
             leadingIcon="business-outline"
             maxLength={200}
-            name="name"
-            onChangeText={(value) => set('name', value)}
+            name={field.name}
+            onBlur={field.onBlur}
+            onChangeText={field.onChange}
+            ref={field.ref}
             required
-            value={form.name}
+            value={field.value}
           />
+        )}
+      />
+      <Controller
+        control={control}
+        name="planName"
+        render={({ field }) => (
           <AppSelectField
-            disabled={loading}
+            disabled={submitting}
             label={t('tenantManagement.plan')}
             leadingIcon="layers-outline"
-            name="planName"
-            onChange={(value) => set('planName', value)}
+            name={field.name}
+            onChange={field.onChange}
             options={[
               { value: 'Free', label: t('tenantManagement.plans.free'), icon: 'gift-outline' },
               { value: 'Basic', label: t('tenantManagement.plans.basic'), icon: 'rocket-outline' },
@@ -119,134 +154,208 @@ export function TenantFormModal({
                 icon: 'business-outline',
               },
             ]}
-            value={form.planName}
+            value={field.value}
           />
+        )}
+      />
 
+      <Controller
+        control={control}
+        name="subscriptionStatus"
+        render={({ field }) => (
           <AppSelectField
-            disabled={loading}
+            disabled={submitting}
             label={t('tenantManagement.status')}
-            name="subscriptionStatus"
-            onChange={(value) => set('subscriptionStatus', value)}
+            name={field.name}
+            onChange={field.onChange}
             options={subscriptionStatuses.map((status) => ({
               value: status,
               label: t(`tenantManagement.statuses.${status}`),
               icon: statusIcons[status],
             }))}
             required
-            value={form.subscriptionStatus}
+            value={field.value}
           />
+        )}
+      />
 
-          <View style={[styles.twoColumns, { direction }]}>
-            <View style={styles.columnField}>
+      <View style={[styles.twoColumns, { direction }]}>
+        <View style={styles.columnField}>
+          <Controller
+            control={control}
+            name="subscriptionStartedOn"
+            render={({ field }) => (
               <AppDateTimeField
-                disabled={loading}
+                disabled={submitting}
                 label={t('tenantManagement.startsOn')}
-                name="subscriptionStartedOn"
-                onChangeValue={(value) => set('subscriptionStartedOn', value)}
+                name={field.name}
+                onChangeValue={field.onChange}
                 required
                 showClearButton={false}
-                value={form.subscriptionStartedOn}
+                value={field.value}
               />
-            </View>
-            <View style={styles.columnField}>
+            )}
+          />
+        </View>
+        <View style={styles.columnField}>
+          <Controller
+            control={control}
+            name="subscriptionEndsOn"
+            render={({ field }) => (
               <AppDateTimeField
-                disabled={loading}
+                disabled={submitting}
                 label={t('tenantManagement.endsOn')}
-                minimumDate={form.subscriptionStartedOn
-                  ? new Date(`${form.subscriptionStartedOn}T12:00:00`)
+                minimumDate={subscriptionStartedOn
+                  ? new Date(`${subscriptionStartedOn}T12:00:00`)
                   : undefined}
-                onChangeValue={(value) => set('subscriptionEndsOn', value)}
-                name="subscriptionEndsOn"
-                value={form.subscriptionEndsOn}
+                name={field.name}
+                onChangeValue={field.onChange}
+                required
+                value={field.value}
               />
-            </View>
-          </View>
+            )}
+          />
+        </View>
+      </View>
 
-          <View style={[styles.twoColumns, { direction }]}>
-            <View style={styles.columnField}>
+      <View style={[styles.twoColumns, { direction }]}>
+        <View style={styles.columnField}>
+          <Controller
+            control={control}
+            name="maxAdmins"
+            render={({ field }) => (
               <AppTextField
-                editable={!loading}
+                editable={!submitting}
                 label={t('tenantManagement.maxAdmins')}
                 leadingIcon="shield-checkmark-outline"
                 maxLength={10}
-                minValue={0}
+                minValue={1}
+                name={field.name}
                 numeric
-                name="maxAdmins"
-                onChangeText={(value) => set('maxAdmins', value)}
+                onBlur={field.onBlur}
+                onChangeText={field.onChange}
+                ref={field.ref}
                 required
-                value={form.maxAdmins}
+                value={field.value}
               />
-            </View>
-            <View style={styles.columnField}>
+            )}
+          />
+        </View>
+        <View style={styles.columnField}>
+          <Controller
+            control={control}
+            name="maxUsers"
+            render={({ field }) => (
               <AppTextField
-                editable={!loading}
+                editable={!submitting}
                 label={t('tenantManagement.maxUsers')}
                 leadingIcon="people-outline"
                 maxLength={10}
                 minValue={0}
+                name={field.name}
                 numeric
-                name="maxUsers"
-                onChangeText={(value) => set('maxUsers', value)}
+                onBlur={field.onBlur}
+                onChangeText={field.onChange}
+                ref={field.ref}
                 required
-                value={form.maxUsers}
+                value={field.value}
               />
-            </View>
-          </View>
+            )}
+          />
+        </View>
+      </View>
 
+      <Controller
+        control={control}
+        name="billingEmail"
+        render={({ field }) => (
           <AppTextField
             autoCapitalize="none"
-            editable={!loading}
+            editable={!submitting}
             keyboardType="email-address"
             label={t('tenantManagement.billingEmail')}
             leadingIcon="mail-outline"
             maxLength={256}
-            name="billingEmail"
-            onChangeText={(value) => set('billingEmail', value)}
-            value={form.billingEmail}
+            name={field.name}
+            onBlur={field.onBlur}
+            onChangeText={field.onChange}
+            ref={field.ref}
+            value={field.value}
           />
+        )}
+      />
+      <Controller
+        control={control}
+        name="contactName"
+        render={({ field }) => (
           <AppTextField
-            editable={!loading}
+            editable={!submitting}
             label={t('tenantManagement.contactName')}
             leadingIcon="person-outline"
             maxLength={200}
-            name="contactName"
-            onChangeText={(value) => set('contactName', value)}
-            value={form.contactName}
+            name={field.name}
+            onBlur={field.onBlur}
+            onChangeText={field.onChange}
+            ref={field.ref}
+            value={field.value}
           />
+        )}
+      />
+      <Controller
+        control={control}
+        name="contactPhone"
+        render={({ field }) => (
           <AppTextField
-            editable={!loading}
+            editable={!submitting}
             keyboardType="phone-pad"
             label={t('tenantManagement.contactPhone')}
             leadingIcon="call-outline"
             maxLength={32}
-            name="contactPhone"
-            onChangeText={(value) => set('contactPhone', value)}
-            value={form.contactPhone}
+            name={field.name}
+            onBlur={field.onBlur}
+            onChangeText={field.onChange}
+            ref={field.ref}
+            value={field.value}
           />
+        )}
+      />
+      <Controller
+        control={control}
+        name="notes"
+        render={({ field }) => (
           <AppTextField
-            editable={!loading}
+            editable={!submitting}
             label={t('tenantManagement.notes')}
             leadingIcon="document-text-outline"
             maxLength={2000}
             multiline
-            name="notes"
+            name={field.name}
             numberOfLines={4}
-            onChangeText={(value) => set('notes', value)}
+            onBlur={field.onBlur}
+            onChangeText={field.onChange}
+            ref={field.ref}
             style={styles.notesInput}
             textAlignVertical="top"
-            value={form.notes}
+            value={field.value}
           />
+        )}
+      />
 
+      <Controller
+        control={control}
+        name="isActive"
+        render={({ field }) => (
           <AppSwitchField
-            description={t(form.isActive ? 'tenantManagement.enabled' : 'tenantManagement.disabled')}
-            disabled={loading}
+            description={t(field.value ? 'tenantManagement.enabled' : 'tenantManagement.disabled')}
+            disabled={submitting}
             icon="power-outline"
             label={t('tenantManagement.tenantEnabled')}
-            name="isActive"
-            onValueChange={(value) => set('isActive', value)}
-            value={form.isActive}
+            name={field.name}
+            onValueChange={field.onChange}
+            value={field.value}
           />
-
+        )}
+      />
     </AppForm>
   );
 }

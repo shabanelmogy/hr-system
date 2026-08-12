@@ -5,12 +5,14 @@ import { useTranslation } from 'react-i18next';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { useAppFormField } from '@/src/shared/components/forms/AppForm';
+import { AppFieldMessage } from '@/src/shared/components/forms/AppFieldMessage';
 import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon';
 import { AppCard } from '@/src/shared/components/surfaces/AppCard';
 import { AppModal } from '@/src/shared/components/surfaces/AppModal';
 import { AppText } from '@/src/shared/components/typography/AppText';
+import { useAppReadOnly } from '@/src/shared/contexts/AppReadOnlyContext';
 
-export interface AppSelectOption<Value extends string> {
+export interface AppSelectOption<Value extends string | number> {
   value: Value;
   label: string;
   icon: AppIconName;
@@ -18,7 +20,7 @@ export interface AppSelectOption<Value extends string> {
   disabled?: boolean;
 }
 
-export interface AppSelectFieldProps<Value extends string> {
+export interface AppSelectFieldProps<Value extends string | number> {
   name?: string;
   label: string;
   options: readonly AppSelectOption<Value>[];
@@ -33,7 +35,7 @@ export interface AppSelectFieldProps<Value extends string> {
   style?: StyleProp<ViewStyle>;
 }
 
-export function AppSelectField<Value extends string>({
+export function AppSelectField<Value extends string | number>({
   name,
   label,
   options,
@@ -50,13 +52,15 @@ export function AppSelectField<Value extends string>({
   const { t } = useTranslation();
   const { direction, isRTL } = useLocalization();
   const { theme } = useAppTheme();
+  const { isReadOnly } = useAppReadOnly();
+  const effectiveDisabled = disabled || isReadOnly;
   const [open, setOpen] = useState(false);
   const formField = useAppFormField(
     name,
     () => {
-      if (!disabled) setOpen(true);
+      if (!effectiveDisabled) setOpen(true);
     },
-    { autoFocus: false, enabled: !disabled },
+    { autoFocus: false, enabled: !effectiveDisabled },
   );
   const error = suppliedError ?? formField.error;
   const selectedOption = useMemo(
@@ -72,14 +76,14 @@ export function AppSelectField<Value extends string>({
         <Pressable
           accessibilityLabel={label}
           accessibilityRole="button"
-          accessibilityState={{ disabled, expanded: open }}
-          disabled={disabled}
+          accessibilityState={{ disabled: effectiveDisabled, expanded: open }}
+          disabled={effectiveDisabled}
           onPress={() => setOpen(true)}
           style={[
             styles.control,
             {
               direction,
-              backgroundColor: disabled ? theme.colors.surfaceMuted : theme.colors.surface,
+              backgroundColor: effectiveDisabled ? theme.colors.surfaceMuted : theme.colors.surface,
               borderColor: error
                 ? theme.colors.danger
                 : open
@@ -87,7 +91,7 @@ export function AppSelectField<Value extends string>({
                   : theme.colors.border,
               borderRadius: theme.radius.md,
               borderWidth: open ? 2 : 1,
-              opacity: disabled ? 0.55 : 1,
+              opacity: effectiveDisabled ? 0.55 : 1,
             },
           ]}>
           {selectedIcon ? (
@@ -113,7 +117,7 @@ export function AppSelectField<Value extends string>({
           style={[
             styles.floatingLabel,
             isRTL ? styles.floatingLabelRtl : styles.floatingLabelLtr,
-            { backgroundColor: disabled ? theme.colors.surfaceMuted : theme.colors.surface },
+            { backgroundColor: effectiveDisabled ? theme.colors.surfaceMuted : theme.colors.surface },
           ]}>
           <AppText
             color={error ? 'danger' : open ? 'primary' : 'default'}
@@ -125,9 +129,9 @@ export function AppSelectField<Value extends string>({
         </View>
       </View>
       {supportingText ? (
-        <AppText color={error ? 'danger' : 'muted'} style={styles.supportingText} variant="caption">
+        <AppFieldMessage error={Boolean(error)}>
           {supportingText}
-        </AppText>
+        </AppFieldMessage>
       ) : null}
 
       <AppModal
@@ -142,7 +146,7 @@ export function AppSelectField<Value extends string>({
               <AppCard
                 accessibilityLabel={option.label}
                 disabled={option.disabled}
-                key={option.value}
+                key={String(option.value)}
                 onPress={() => {
                   formField.clearError();
                   onChange(option.value);
@@ -218,7 +222,6 @@ const styles = StyleSheet.create({
   },
   floatingLabelLtr: { left: 12 },
   floatingLabelRtl: { right: 12 },
-  supportingText: { paddingHorizontal: 12 },
   options: { gap: 10 },
   option: { minHeight: 64 },
   optionContent: {

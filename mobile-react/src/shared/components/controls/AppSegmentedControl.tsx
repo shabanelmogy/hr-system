@@ -3,6 +3,7 @@ import { Pressable, type StyleProp, StyleSheet, View, type ViewStyle } from 'rea
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon';
+import { AppFieldMessage } from '@/src/shared/components/forms/AppFieldMessage';
 import { AppText } from '@/src/shared/components/typography/AppText';
 
 export interface SegmentedOption<Value extends string> {
@@ -123,9 +124,9 @@ export function AppSegmentedControl<Value extends string>({
         })}
       </View>
       {supportingText ? (
-        <AppText color={error ? 'danger' : 'muted'} variant="caption">
+        <AppFieldMessage error={Boolean(error)}>
           {supportingText}
-        </AppText>
+        </AppFieldMessage>
       ) : null}
     </View>
   );

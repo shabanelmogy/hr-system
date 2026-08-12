@@ -9,9 +9,11 @@ import {
   type PermissionString,
 } from "@/lib/auth/permissions";
 import { useSession } from "@/lib/auth/SessionContext";
+import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 
 export const usePermissions = () => {
   const { user } = useSession();
+  const { isReadOnly } = useAppReadOnly();
   const userPermissions = user?.permissions ?? [];
   const userRoles = user?.roles ?? [];
   const isAuthenticated = user !== null;
@@ -44,43 +46,44 @@ export const usePermissions = () => {
     userPermissions,
     userRoles,
     isAuthenticated,
+    isReadOnly,
   };
 };
 
 // Simplified Countries permissions hook
 export const useCountriesPermissions = () => {
-  const { hasPermission } = usePermissions();
+  const { hasPermission, isReadOnly } = usePermissions();
   
   return useMemo(() => ({
     canView: hasPermission("Countries:View"),
-    canCreate: hasPermission("Countries:Create"),
-    canEdit: hasPermission("Countries:Edit"),
-    canDelete: hasPermission("Countries:Delete"),
-  }), [hasPermission]);
+    canCreate: !isReadOnly && hasPermission("Countries:Create"),
+    canEdit: !isReadOnly && hasPermission("Countries:Edit"),
+    canDelete: !isReadOnly && hasPermission("Countries:Delete"),
+  }), [hasPermission, isReadOnly]);
 };
 
 // Simplified States permissions hook
 export const useStatesPermissions = () => {
-  const { hasPermission } = usePermissions();
+  const { hasPermission, isReadOnly } = usePermissions();
   
   return useMemo(() => ({
     canView: hasPermission("States:View"),
-    canCreate: hasPermission("States:Create"),
-    canEdit: hasPermission("States:Edit"),
-    canDelete: hasPermission("States:Delete"),
-  }), [hasPermission]);
+    canCreate: !isReadOnly && hasPermission("States:Create"),
+    canEdit: !isReadOnly && hasPermission("States:Edit"),
+    canDelete: !isReadOnly && hasPermission("States:Delete"),
+  }), [hasPermission, isReadOnly]);
 };
 
 // Generic module permissions hook
 export const useModulePermissions = (module: PermissionModule) => {
-  const { hasPermission } = usePermissions();
+  const { hasPermission, isReadOnly } = usePermissions();
   
   return useMemo(() => ({
     canView: hasPermission(`${module}:View` as PermissionString),
-    canCreate: hasPermission(`${module}:Create` as PermissionString),
-    canEdit: hasPermission(`${module}:Edit` as PermissionString),
-    canDelete: hasPermission(`${module}:Delete` as PermissionString),
-  }), [hasPermission, module]);
+    canCreate: !isReadOnly && hasPermission(`${module}:Create` as PermissionString),
+    canEdit: !isReadOnly && hasPermission(`${module}:Edit` as PermissionString),
+    canDelete: !isReadOnly && hasPermission(`${module}:Delete` as PermissionString),
+  }), [hasPermission, isReadOnly, module]);
 };
 
 export default usePermissions;

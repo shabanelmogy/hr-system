@@ -24,6 +24,7 @@ export interface RolesRoutes extends Omit<CrudRoutes, 'delete'> {
 
 export interface UsersRoutes {
   getAll: string;
+  getCompanyOptions: string;
   add: string;
   update: (id: Id) => string;
   changePassword: (id: Id) => string;

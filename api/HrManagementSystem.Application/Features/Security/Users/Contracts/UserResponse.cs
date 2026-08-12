@@ -9,6 +9,8 @@ namespace HrManagementSystem.Application.Features.Security.Users.Contracts
         bool IsDisabled,
         bool IsLocked,
         string? ProfilePicture,
-        IEnumerable<string> Roles
+        IReadOnlyCollection<string> Roles,
+        IReadOnlyCollection<int> CompanyIds,
+        int? DefaultCompanyId
     );
 }

@@ -5,6 +5,7 @@ import {
   Close as CloseIcon,
   ContentCopyOutlined as CopyIcon,
   ErrorOutlineRounded as ErrorIcon,
+  ShareOutlined as ShareIcon,
   WhatsApp as WhatsAppIcon,
 } from "@mui/icons-material";
 import {
@@ -47,7 +48,9 @@ export function ErrorDialogHost() {
 
 function ErrorDialogView({ details }: { details: ErrorDialogDetails }) {
   const { t } = useTranslation();
+  const isDevelopment = process.env.NODE_ENV === "development";
   const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
+  const [shareState, setShareState] = useState<"idle" | "shared" | "failed">("idle");
   const visibleMessages = useMemo(
     () =>
       details.messages.length
@@ -60,8 +63,15 @@ function ErrorDialogView({ details }: { details: ErrorDialogDetails }) {
     [details, visibleMessages],
   );
   const formattedError = useMemo(
-    () => formatErrorReport(reportDetails, t("errorDialog.errorReport")),
-    [reportDetails, t],
+    () =>
+      formatErrorReport(reportDetails, t("errorDialog.errorReport"), {
+        includeTechnical: isDevelopment,
+      }),
+    [isDevelopment, reportDetails, t],
+  );
+  const technicalDetails = useMemo(
+    () => formatTechnicalDetails(details),
+    [details],
   );
   const close = () => dismissErrorDialog(details.reportId);
 
@@ -77,6 +87,26 @@ function ErrorDialogView({ details }: { details: ErrorDialogDetails }) {
   const shareOnWhatsApp = () => {
     const shareUrl = `https://wa.me/?text=${encodeURIComponent(formattedError)}`;
     window.open(shareUrl, "_blank", "noopener,noreferrer");
+  };
+
+  const shareError = async () => {
+    setShareState("idle");
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: t("errorDialog.errorReport"),
+          text: formattedError,
+        });
+        setShareState("shared");
+        return;
+      }
+
+      await copyText(formattedError);
+      setShareState("shared");
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return;
+      setShareState("failed");
+    }
   };
 
   return (
@@ -145,7 +175,10 @@ function ErrorDialogView({ details }: { details: ErrorDialogDetails }) {
           ))}
         </List>
 
-        {(details.reportId || details.status != null || details.traceId) && (
+        {(details.reportId ||
+          details.status != null ||
+          details.traceId ||
+          details.correlationId) && (
           <Box
             sx={{
               mt: 2,
@@ -171,6 +204,36 @@ function ErrorDialogView({ details }: { details: ErrorDialogDetails }) {
                 {t("errorDialog.traceId")}: {details.traceId}
               </Typography>
             )}
+            {details.correlationId && (
+              <Typography variant="caption" color="text.secondary" sx={{ overflowWrap: "anywhere" }}>
+                {t("errorDialog.correlationId")}: {details.correlationId}
+              </Typography>
+            )}
+          </Box>
+        )}
+
+        {isDevelopment && technicalDetails && (
+          <Box
+            sx={{
+              mt: 2,
+              p: 1.5,
+              border: "1px solid",
+              borderColor: "warning.main",
+              borderRadius: 1,
+              bgcolor: "action.hover",
+            }}
+          >
+            <Typography variant="subtitle2" color="warning.main" sx={{ mb: 0.75 }}>
+              {t("errorDialog.technicalDetails")}
+            </Typography>
+            <Typography
+              component="pre"
+              variant="caption"
+              color="text.secondary"
+              sx={{ m: 0, whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}
+            >
+              {technicalDetails}
+            </Typography>
           </Box>
         )}
       </DialogContent>
@@ -188,6 +251,13 @@ function ErrorDialogView({ details }: { details: ErrorDialogDetails }) {
             : copyState === "failed"
               ? t("errorDialog.copyFailed")
               : t("errorDialog.copy")}
+        </Button>
+        <Button onClick={() => void shareError()} variant="outlined" startIcon={<ShareIcon />}>
+          {shareState === "shared"
+            ? t("errorDialog.shared")
+            : shareState === "failed"
+              ? t("errorDialog.shareFailed")
+              : t("errorDialog.share")}
         </Button>
         <Button
           onClick={shareOnWhatsApp}
@@ -217,4 +287,28 @@ async function copyText(value: string): Promise<void> {
   const copied = document.execCommand("copy");
   textarea.remove();
   if (!copied) throw new Error("Clipboard copy failed");
+}
+
+function formatTechnicalDetails(details: ErrorDialogDetails): string {
+  const lines: string[] = [];
+  if (details.errorType) lines.push(`Type: ${details.errorType}`);
+  if (details.errorCodes?.length) lines.push(`Codes: ${details.errorCodes.join(", ")}`);
+  if (details.detail && !details.messages.includes(details.detail)) {
+    lines.push(`Detail: ${details.detail}`);
+  }
+  if (details.stack) lines.push(`Stack: ${details.stack}`);
+  if (details.environment) {
+    lines.push(
+      `App version: ${details.environment.appVersion}`,
+      `Platform: ${details.environment.platform}`,
+      `Browser: ${details.environment.browser}`,
+      `Viewport: ${details.environment.viewport}`,
+      `Screen: ${details.environment.screen}`,
+      `Language: ${details.environment.appLanguage}`,
+      `Direction: ${details.environment.direction}`,
+      `Theme: ${details.environment.theme}`,
+      `Online: ${details.environment.online ? "Yes" : "No"}`,
+    );
+  }
+  return lines.join("\n");
 }

@@ -8,6 +8,15 @@ export interface User {
   isLocked: boolean;
   profilePicture: string | null;
   roles: string[];
+  companyIds: number[];
+  defaultCompanyId: number | null;
+}
+
+export interface UserCompanyOption {
+  id: number;
+  nameAr: string;
+  nameEn: string;
+  isActive: boolean;
 }
 
 export interface CreateUserRequest {
@@ -17,6 +26,8 @@ export interface CreateUserRequest {
   email: string;
   password: string;
   roles: string[];
+  companyIds: number[];
+  defaultCompanyId: number;
 }
 
 export interface UpdateUserRequest {
@@ -26,6 +37,8 @@ export interface UpdateUserRequest {
   userName: string;
   email: string;
   roles: string[];
+  companyIds: number[];
+  defaultCompanyId: number;
 }
 
 export interface ChangeUserPasswordRequest {

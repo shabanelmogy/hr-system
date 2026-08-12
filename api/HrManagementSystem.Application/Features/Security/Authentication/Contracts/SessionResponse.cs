@@ -3,6 +3,8 @@ namespace HrManagementSystem.Application.Features.Security.Authentication.Contra
 public sealed record SessionResponse(
     string UserId,
     string TenantId,
+    string TenantName,
+    string TenantPlanName,
     int CompanyId,
     string UserName,
     string Email,
@@ -10,4 +12,7 @@ public sealed record SessionResponse(
     string LastName,
     IReadOnlyCollection<string> Roles,
     IReadOnlyCollection<string> Permissions,
+    string TenantSubscriptionStatus,
+    DateTime? TenantSubscriptionEndsOn,
+    bool TenantReadOnly,
     long ExpiresAt);

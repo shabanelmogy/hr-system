@@ -18,6 +18,13 @@ public class UsersController(IUserService userService) : ControllerBase
         return Ok(await _userService.GetAllAsync(cancellationToken));
     }
 
+    [HttpGet]
+    [HasPermission(Permissions.ViewUsers)]
+    public async Task<IActionResult> GetCompanyOptions(CancellationToken cancellationToken)
+    {
+        return Ok(await _userService.GetCompanyOptionsAsync(cancellationToken));
+    }
+
     [HttpGet("{id}")]
     [HasPermission(Permissions.ViewUsers)]
     public async Task<IActionResult> Get([FromRoute] string id)

@@ -1,12 +1,11 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useMemo, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { ApiError } from '@/src/core/api';
+import { useZodForm } from '@/src/core/validation';
 import { useAuth } from '@/src/features/auth/context/AuthProvider';
 import type { LoginAction, QuickLoginRole } from '@/src/features/auth/login/types';
 import type { CompanySelectionResponse } from '@/src/features/auth/types/auth';
+import { showToast } from '@/src/shared/components/feedback/transient';
 import {
   createLoginValidationSchema,
   type LoginFormData,
@@ -23,7 +22,6 @@ export function useLoginForm() {
   const { signIn, selectCompany: completeCompanySelection } = useAuth();
   const submittingRef = useRef(false);
   const [companySelection, setCompanySelection] = useState<CompanySelectionResponse | null>(null);
-  const [serverError, setServerError] = useState<string | null>(null);
   const [activeAction, setActiveAction] = useState<LoginAction | null>(null);
   const validationSchema = useMemo(
     () =>
@@ -40,9 +38,8 @@ export function useLoginForm() {
     handleSubmit,
     setValue,
     formState: { isSubmitting: isFormSubmitting },
-  } = useForm<LoginFormData>({
+  } = useZodForm<LoginFormData>(validationSchema, {
     defaultValues: { userName: '', password: '' },
-    resolver: zodResolver(validationSchema),
     mode: 'onChange',
   });
 
@@ -53,14 +50,13 @@ export function useLoginForm() {
 
     submittingRef.current = true;
     setActiveAction(action);
-    setServerError(null);
     try {
       const result = await signIn(credentials);
       if (result.kind === 'company-selection') {
         setCompanySelection(result.response);
       }
     } catch (error) {
-      setServerError(getLoginErrorMessage(error, t('auth.loginFailed')));
+      showToast.error(error, t('auth.loginFailed'));
     } finally {
       submittingRef.current = false;
       setActiveAction(null);
@@ -85,18 +81,16 @@ export function useLoginForm() {
       return;
     }
 
-    setServerError(null);
     try {
       await completeCompanySelection(companySelection.companySelectionToken, companyId);
       setCompanySelection(null);
     } catch (error) {
-      setServerError(getLoginErrorMessage(error, t('auth.loginFailed')));
+      showToast.error(error, t('auth.loginFailed'));
     }
   };
 
   const cancelCompanySelection = () => {
     setCompanySelection(null);
-    setServerError(null);
   };
 
   return {
@@ -110,13 +104,6 @@ export function useLoginForm() {
     loginAs,
     onSubmit,
     selectCompany,
-    serverError,
+    serverError: null,
   };
-}
-
-function getLoginErrorMessage(error: unknown, fallback: string): string {
-  if (error instanceof ApiError) {
-    return error.message || fallback;
-  }
-  return fallback;
 }

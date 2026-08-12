@@ -6,6 +6,8 @@ import { getAuthorizationState, isAuthorized } from "./authorization";
 const session: SessionClaims = {
   userId: "user-id",
   tenantId: "tenant-id",
+  tenantName: "Test Tenant",
+  tenantPlanName: "Professional",
   companyId: 7,
   userName: "user",
   email: "user@example.com",
@@ -13,6 +15,9 @@ const session: SessionClaims = {
   lastName: "User",
   roles: ["Manager"],
   permissions: [permissions.ViewUsers, permissions.EditUsers],
+  tenantSubscriptionStatus: "active",
+  tenantSubscriptionEndsOn: null,
+  tenantReadOnly: false,
   expiresAt: Date.now() + 60_000,
 };
 

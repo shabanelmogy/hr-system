@@ -12,6 +12,14 @@ export const ROUTES = {
     geographicalInformation: '/basic-data/geographical-information',
     organizationalStructure: '/basic-data/organizational-structure',
   },
+  administration: {
+    root: '/administration',
+    roles: '/administration/roles',
+    rolePermissionsRoot: '/administration/role-permissions',
+    rolePermissions: (roleId: string) =>
+      `/administration/role-permissions/${encodeURIComponent(roleId)}` as
+        `/administration/role-permissions/${string}`,
+  },
 } as const;
 
 export type AppRoute =
@@ -21,7 +29,11 @@ export type AppRoute =
   | typeof ROUTES.superAdminDashboard
   | typeof ROUTES.tenantManagement
   | typeof ROUTES.modal
-  | (typeof ROUTES.basicData)[keyof typeof ROUTES.basicData];
+  | (typeof ROUTES.basicData)[keyof typeof ROUTES.basicData]
+  | typeof ROUTES.administration.root
+  | typeof ROUTES.administration.roles
+  | typeof ROUTES.administration.rolePermissionsRoot
+  | ReturnType<typeof ROUTES.administration.rolePermissions>;
 
 // Expo regenerates typed route declarations after route files change.
 export const asHref = (route: AppRoute): Href => route as Href;

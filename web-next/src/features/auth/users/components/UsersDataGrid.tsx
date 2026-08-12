@@ -6,7 +6,7 @@ import {
   RemoveCircle,
   Visibility
 } from "@mui/icons-material";
-import { Avatar, Chip, Tooltip } from "@mui/material";
+import { Avatar, Box, Chip, Tooltip, Typography } from "@mui/material";
 import {
   GridActionsCellItem,
   type GridActionsCellItemProps,
@@ -16,6 +16,7 @@ import {
   type GridRowParams,
 } from "@mui/x-data-grid";
 import { useCallback, useMemo, type ReactElement, type RefObject } from "react";
+import { useTranslation } from "react-i18next";
 
 import { MyDataGrid } from "@/shared/components/data-grid";
 import type { Translator, User } from "../../types";
@@ -23,6 +24,8 @@ import {
   renderDisabledStatus,
   renderLockedStatus,
 } from "./UserStatusCellRenderers";
+import useUserStore from "../store/useUserStore";
+import { useSession } from "@/lib/auth/SessionContext";
 
 interface UsersDataGridProps {
   users: User[];
@@ -37,6 +40,8 @@ interface UsersDataGridProps {
   t: Translator;
   lastAddedId?: string | number | null;
   lastEditedId?: string | number | null;
+  canCreate: boolean;
+  canEdit: boolean;
 }
 
 const UsersDataGrid = ({
@@ -52,7 +57,19 @@ const UsersDataGrid = ({
   t,
   lastAddedId,
   lastEditedId,
+  canCreate,
+  canEdit,
 }: UsersDataGridProps) => {
+  const { i18n } = useTranslation();
+  const { user: currentUser } = useSession();
+  const companyOptions = useUserStore((state) => state.companyOptions);
+  const companyNames = useMemo(
+    () => new Map(companyOptions.map((company) => [
+      company.id,
+      i18n.language.startsWith("ar") ? company.nameAr : company.nameEn,
+    ])),
+    [companyOptions, i18n.language],
+  );
   // Custom renderers
   const renderUserName = useCallback(
     (params: GridRenderCellParams<User, string>) => (
@@ -97,6 +114,32 @@ const UsersDataGrid = ({
     []
   );
 
+  const renderCompanies = useCallback(
+    (params: GridRenderCellParams<User, number[]>) => {
+      const companyIds = params.value ?? [];
+      const defaultCompanyName = params.row.defaultCompanyId
+        ? companyNames.get(params.row.defaultCompanyId)
+        : null;
+      const allCompanyNames = companyIds
+        .map((companyId) => companyNames.get(companyId))
+        .filter((name): name is string => Boolean(name));
+
+      return (
+        <Tooltip title={allCompanyNames.join(", ")} arrow disableHoverListener={allCompanyNames.length === 0}>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0.75, width: "100%" }}>
+            <Typography variant="body2" noWrap sx={{ maxWidth: 130 }}>
+              {defaultCompanyName ?? t("users.noDefaultCompany")}
+            </Typography>
+            {companyIds.length > 1 ? (
+              <Chip label={`+${companyIds.length - 1}`} size="small" variant="outlined" color="info" />
+            ) : null}
+          </Box>
+        </Tooltip>
+      );
+    },
+    [companyNames, t],
+  );
+
   // Memoized action buttons
   const getActions = useCallback(
     (params: GridRowParams<User>): ReactElement<GridActionsCellItemProps>[] => {
@@ -112,7 +155,11 @@ const UsersDataGrid = ({
           />
         </Tooltip>,
 
-        // Edit button - always available
+      ];
+
+      if (!canEdit || params.row.id === currentUser?.userId) return actions;
+
+      actions.push(
         <Tooltip title={t("actions.edit")} key={`edit-${params.row.id}`} arrow>
           <GridActionsCellItem
             icon={<Edit sx={{ fontSize: 20 }} />}
@@ -121,7 +168,7 @@ const UsersDataGrid = ({
             onClick={() => onEdit(params.row)}
           />
         </Tooltip>,
-      ];
+      );
 
       // Enable/Disable toggle button - changes based on current status
       if (isDisabled) {
@@ -196,7 +243,7 @@ const UsersDataGrid = ({
 
       return actions;
     },
-    [t, onEdit, onView, onToggle, onUnlock, onRevoke]
+    [canEdit, currentUser?.userId, t, onEdit, onView, onToggle, onUnlock, onRevoke]
   );
 
   // Memoized columns with separate status renderers
@@ -239,6 +286,15 @@ const UsersDataGrid = ({
         headerAlign: "center",
         renderCell: renderRoles,
       },
+      {
+        field: "companyIds",
+        headerName: t("users.companies"),
+        flex: 1.2,
+        minWidth: 170,
+        align: "center",
+        headerAlign: "center",
+        renderCell: renderCompanies,
+      },
 
       // OPTION 1: Separate columns for disabled and locked status
       {
@@ -272,6 +328,7 @@ const UsersDataGrid = ({
       getActions,
       renderUserName,
       renderRoles,
+      renderCompanies,
     ]
   );
 
@@ -283,7 +340,7 @@ const UsersDataGrid = ({
       apiRef={apiRef}
       filterMode="client"
       initialSortModel={[{ field: "id", sort: "asc" }]}
-      onToolbarAdd={onAdd}
+      onToolbarAdd={canCreate ? onAdd : undefined}
       pagination
       pageSizeOptions={[5, 10, 25]}
       lastAddedId={lastAddedId}

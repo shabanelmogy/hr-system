@@ -18,7 +18,8 @@ public class UserService(
     ApplicationDbContext context,
     ICurrentActor currentActor,
     IWebHostEnvironment webHostEnvironment,
-    TimeProvider timeProvider) : IUserService
+    TimeProvider timeProvider,
+    ILogger<UserService> logger) : IUserService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly IRoleService _roleService = roleService;
@@ -32,39 +33,101 @@ public class UserService(
     public async Task<IEnumerable<UserResponse>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var now = timeProvider.GetUtcNow();
-        var users = await (from u in _context.Users
-                      where u.TenantId == _currentActor.TenantId
-                      join ur in _context.UserRoles
-                      on u.Id equals ur.UserId
-                      join r in _context.Roles
-                      on ur.RoleId equals r.Id into roles
-                      select new
-                      {
-                          u.Id,
-                          u.FirstName,
-                          u.LastName,
-                          u.UserName,
-                          u.Email,
-                          u.IsDisabled,
-                          IsLocked = u.LockoutEnd.HasValue && u.LockoutEnd > now,
-                          u.ProfilePicture,
-                          Roles = roles.Select(x => x.Name!).ToList()
-                      }
-               ).GroupBy(u => new { u.Id, u.FirstName, u.LastName, u.UserName, u.Email, u.IsDisabled, u.IsLocked, u.ProfilePicture })
-                .Select(u => new UserResponse(
-                    u.Key.Id,
-                    u.Key.FirstName,
-                    u.Key.LastName,
-                    u.Key.UserName,
-                    u.Key.Email,
-                    u.Key.IsDisabled,
-                    u.Key.IsLocked,
-                    u.Key.ProfilePicture,
-                    u.SelectMany(x => x.Roles)
-                )).ToListAsync(cancellationToken);
+        var tenantId = _currentActor.TenantId;
+        if (string.IsNullOrWhiteSpace(tenantId))
+            return [];
 
-        return users.Where(user =>
-            !user.Roles.Contains(AppRoles.super_admin, StringComparer.OrdinalIgnoreCase));
+        var actorCompanyIds = await GetActorCompanyIdsAsync(cancellationToken);
+        if (actorCompanyIds.Count == 0)
+            return [];
+
+        var users = await _context.Users
+            .AsNoTracking()
+            .Where(user => user.TenantId == tenantId)
+            .Select(user => new
+            {
+                user.Id,
+                user.FirstName,
+                user.LastName,
+                UserName = user.UserName ?? string.Empty,
+                Email = user.Email ?? string.Empty,
+                user.IsDisabled,
+                IsLocked = user.LockoutEnd.HasValue && user.LockoutEnd > now,
+                user.ProfilePicture
+            })
+            .ToListAsync(cancellationToken);
+
+        if (users.Count == 0)
+            return [];
+
+        var userIds = users.Select(user => user.Id).ToArray();
+        var roleRows = await (
+                from userRole in _context.UserRoles
+                join role in _context.Roles on userRole.RoleId equals role.Id
+                where userIds.Contains(userRole.UserId)
+                select new { userRole.UserId, RoleName = role.Name! })
+            .ToListAsync(cancellationToken);
+        var accessRows = await _context.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Where(access => access.TenantId == tenantId && userIds.Contains(access.UserId))
+            .Select(access => new { access.UserId, access.CompanyId, access.IsDefault })
+            .ToListAsync(cancellationToken);
+
+        var rolesByUser = roleRows
+            .GroupBy(row => row.UserId)
+            .ToDictionary(group => group.Key, group => group.Select(row => row.RoleName).ToArray());
+        var accessByUser = accessRows
+            .GroupBy(row => row.UserId)
+            .ToDictionary(group => group.Key, group => group.ToArray());
+
+        return users
+            .Select(user =>
+            {
+                var roles = rolesByUser.GetValueOrDefault(user.Id) ?? [];
+                var accesses = accessByUser.GetValueOrDefault(user.Id) ?? [];
+                return new UserResponse(
+                    user.Id,
+                    user.FirstName,
+                    user.LastName,
+                    user.UserName,
+                    user.Email,
+                    user.IsDisabled,
+                    user.IsLocked,
+                    user.ProfilePicture,
+                    roles,
+                    accesses.Select(access => access.CompanyId).ToArray(),
+                    accesses.FirstOrDefault(access => access.IsDefault)?.CompanyId);
+            })
+            .Where(user =>
+                !user.Roles.Contains(AppRoles.super_admin, StringComparer.OrdinalIgnoreCase) &&
+                IsWithinCompanyScope(user.CompanyIds, actorCompanyIds))
+            .ToArray();
+    }
+
+    public async Task<IReadOnlyCollection<UserCompanyOptionResponse>> GetCompanyOptionsAsync(
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(_currentActor.TenantId) ||
+            string.IsNullOrWhiteSpace(_currentActor.UserId))
+        {
+            return [];
+        }
+
+        return await _context.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Where(access =>
+                access.TenantId == _currentActor.TenantId &&
+                access.UserId == _currentActor.UserId)
+            .OrderByDescending(access => access.IsDefault)
+            .ThenBy(access => access.Company.NameEn)
+            .Select(access => new UserCompanyOptionResponse(
+                access.CompanyId,
+                access.Company.NameAr,
+                access.Company.NameEn,
+                access.Company.IsActive))
+            .ToArrayAsync(cancellationToken);
     }
 
     public async Task<Result<UserResponse>> GetAsync(string id)
@@ -77,7 +140,16 @@ public class UserService(
         if (userRoles.Contains(AppRoles.super_admin, StringComparer.OrdinalIgnoreCase))
             return Result.Failure<UserResponse>(_userErrors.UserNotFound);
 
-        var response = (user, userRoles).Adapt<UserResponse>();
+        var accesses = await GetUserCompanyAccessesAsync(user.Id, user.TenantId);
+        var actorCompanyIds = await GetActorCompanyIdsAsync();
+        if (!IsWithinCompanyScope(
+                accesses.Select(access => access.CompanyId),
+                actorCompanyIds))
+        {
+            return Result.Failure<UserResponse>(_userErrors.UserNotFound);
+        }
+
+        var response = CreateUserResponse(user, userRoles, accesses);
 
         return Result.Success(response);
     }
@@ -89,7 +161,7 @@ public class UserService(
 
         var companyIds = await ResolveCompanyIdsAsync(
             request.CompanyIds,
-            preserveExisting: false,
+            request.DefaultCompanyId,
             cancellationToken: cancellationToken);
         if (companyIds is null)
             return Result.Failure<UserResponse>(_userErrors.InvalidCompanySelection);
@@ -115,11 +187,18 @@ public class UserService(
         var user = request.Adapt<ApplicationUser>();
         user.TenantId = _currentActor.TenantId;
 
+        await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         var result = await _userManager.CreateAsync(user, request.Password);
 
         if (result.Succeeded)
         {
-            await _userManager.AddToRolesAsync(user, request.Roles);
+            var roleResult = await _userManager.AddToRolesAsync(user, request.Roles);
+            if (!roleResult.Succeeded)
+            {
+                var roleError = roleResult.Errors.First();
+                return Result.Failure<UserResponse>(
+                    new Error(roleError.Code, roleError.Description, ErrorType.Validation));
+            }
 
             foreach (var companyId in companyIds)
             {
@@ -128,12 +207,22 @@ public class UserService(
                     TenantId = user.TenantId,
                     CompanyId = companyId,
                     UserId = user.Id,
-                    IsDefault = companyId == companyIds.First()
+                    IsDefault = companyId == request.DefaultCompanyId
                 });
             }
             await _context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
 
-            var response = (user, request.Roles).Adapt<UserResponse>();
+            var response = CreateUserResponse(
+                user,
+                request.Roles,
+                companyIds.Select(companyId => new UserCompanyAccess
+                {
+                    TenantId = user.TenantId,
+                    CompanyId = companyId,
+                    UserId = user.Id,
+                    IsDefault = companyId == request.DefaultCompanyId
+                }));
 
             QueueUserChanged(response, "Add");
 
@@ -147,6 +236,25 @@ public class UserService(
 
     public async Task<Result> UpdateAsync(string id, UpdateUserRequest request, CancellationToken cancellationToken = default)
     {
+        if (string.Equals(id, _currentActor.UserId, StringComparison.Ordinal))
+            return Result.Failure(_userErrors.CannotManageOwnAccount);
+
+        if (await _userManager.Users
+                .Include(candidate => candidate.RefreshTokens)
+                .SingleOrDefaultAsync(
+                    candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId,
+                    cancellationToken) is not { } user)
+        {
+            return Result.Failure(_userErrors.UserNotFound);
+        }
+
+        var existingRoles = await _userManager.GetRolesAsync(user);
+        if (existingRoles.Contains(AppRoles.super_admin, StringComparer.OrdinalIgnoreCase) ||
+            !await IsUserWithinActorCompanyScopeAsync(user.Id, user.TenantId, cancellationToken))
+        {
+            return Result.Failure(_userErrors.UserNotFound);
+        }
+
         var emailIsExists = await _userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != id, cancellationToken);
 
         if (emailIsExists)
@@ -164,21 +272,10 @@ public class UserService(
 
         var companyIds = await ResolveCompanyIdsAsync(
             request.CompanyIds,
-            preserveExisting: true,
+            request.DefaultCompanyId,
             cancellationToken: cancellationToken);
         if (companyIds is null)
             return Result.Failure(_userErrors.InvalidCompanySelection);
-
-        if (await _userManager.Users
-                .Include(candidate => candidate.RefreshTokens)
-                .SingleOrDefaultAsync(
-                    candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId,
-                cancellationToken) is not { } user)
-            return Result.Failure(_userErrors.UserNotFound);
-
-        var existingRoles = await _userManager.GetRolesAsync(user);
-        if (existingRoles.Contains(AppRoles.super_admin, StringComparer.OrdinalIgnoreCase))
-            return Result.Failure(_userErrors.UserNotFound);
 
         var addedRoles = request.Roles
             .Except(existingRoles, StringComparer.OrdinalIgnoreCase)
@@ -188,6 +285,7 @@ public class UserService(
 
         user = request.Adapt(user);
 
+        await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         var result = await _userManager.UpdateAsync(user);
 
         if (result.Succeeded)
@@ -196,17 +294,51 @@ public class UserService(
                 .Where(x => x.UserId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
-            await _userManager.AddToRolesAsync(user, request.Roles);
+            var roleResult = await _userManager.AddToRolesAsync(user, request.Roles);
+            if (!roleResult.Succeeded)
+            {
+                var roleError = roleResult.Errors.First();
+                return Result.Failure(
+                    new Error(roleError.Code, roleError.Description, ErrorType.Validation));
+            }
 
-            await SynchronizeCompanyAccessesAsync(user, companyIds, cancellationToken);
+            await SynchronizeCompanyAccessesAsync(
+                user,
+                companyIds,
+                request.DefaultCompanyId,
+                cancellationToken);
 
-            await _userManager.UpdateSecurityStampAsync(user);
+            var stampResult = await _userManager.UpdateSecurityStampAsync(user);
+            if (!stampResult.Succeeded)
+            {
+                var stampError = stampResult.Errors.First();
+                return Result.Failure(
+                    new Error(stampError.Code, stampError.Description, ErrorType.Validation));
+            }
+
             RevokeActiveSessions(user, "Account permissions changed");
-            await _userManager.UpdateAsync(user);
+            var revokeResult = await _userManager.UpdateAsync(user);
+            if (!revokeResult.Succeeded)
+            {
+                var revokeError = revokeResult.Errors.First();
+                return Result.Failure(
+                    new Error(revokeError.Code, revokeError.Description, ErrorType.Validation));
+            }
+
+            await transaction.CommitAsync(cancellationToken);
             QueueSessionRevoked(
                 user.Id,
                 "Your account permissions changed. Please sign in again.");
-            QueueUserChanged((user, request.Roles).Adapt<UserResponse>(), "Update");
+            QueueUserChanged(CreateUserResponse(
+                user,
+                request.Roles,
+                companyIds.Select(companyId => new UserCompanyAccess
+                {
+                    TenantId = user.TenantId,
+                    CompanyId = companyId,
+                    UserId = user.Id,
+                    IsDefault = companyId == request.DefaultCompanyId
+                })), "Update");
 
             return Result.Success();
         }
@@ -221,6 +353,9 @@ public class UserService(
         ChangeUserPasswordRequest request,
         CancellationToken cancellationToken = default)
     {
+        if (string.Equals(id, _currentActor.UserId, StringComparison.Ordinal))
+            return Result.Failure(_userErrors.CannotManageOwnAccount);
+
         if (await _userManager.Users
                 .Include(candidate => candidate.RefreshTokens)
                 .SingleOrDefaultAsync(
@@ -229,6 +364,9 @@ public class UserService(
             return Result.Failure(_userErrors.UserNotFound);
 
         if (await _userManager.IsInRoleAsync(user, AppRoles.super_admin))
+            return Result.Failure(_userErrors.UserNotFound);
+
+        if (!await IsUserWithinActorCompanyScopeAsync(user.Id, user.TenantId, cancellationToken))
             return Result.Failure(_userErrors.UserNotFound);
 
         var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -252,6 +390,9 @@ public class UserService(
 
     public async Task<Result> ToggleStatus(string id)
     {
+        if (string.Equals(id, _currentActor.UserId, StringComparison.Ordinal))
+            return Result.Failure(_userErrors.CannotManageOwnAccount);
+
         if (await _userManager.Users
                 .Include(candidate => candidate.RefreshTokens)
                 .SingleOrDefaultAsync(
@@ -259,6 +400,9 @@ public class UserService(
             return Result.Failure(_userErrors.UserNotFound);
 
         if (await _userManager.IsInRoleAsync(user, AppRoles.super_admin))
+            return Result.Failure(_userErrors.UserNotFound);
+
+        if (!await IsUserWithinActorCompanyScopeAsync(user.Id, user.TenantId))
             return Result.Failure(_userErrors.UserNotFound);
 
         if (user.IsDisabled)
@@ -279,8 +423,9 @@ public class UserService(
             }
 
             var roles = await _userManager.GetRolesAsync(user);
+            var accesses = await GetUserCompanyAccessesAsync(user.Id, user.TenantId);
             QueueUserChanged(
-                (user, roles).Adapt<UserResponse>(),
+                CreateUserResponse(user, roles, accesses),
                 user.IsDisabled ? "Disable" : "Enable");
 
             return Result.Success();
@@ -292,11 +437,17 @@ public class UserService(
 
     public async Task<Result> Unlock(string id)
     {
+        if (string.Equals(id, _currentActor.UserId, StringComparison.Ordinal))
+            return Result.Failure(_userErrors.CannotManageOwnAccount);
+
         if (await _userManager.Users.SingleOrDefaultAsync(
                 candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId) is not { } user)
             return Result.Failure(_userErrors.UserNotFound);
 
         if (await _userManager.IsInRoleAsync(user, AppRoles.super_admin))
+            return Result.Failure(_userErrors.UserNotFound);
+
+        if (!await IsUserWithinActorCompanyScopeAsync(user.Id, user.TenantId))
             return Result.Failure(_userErrors.UserNotFound);
 
         // Clear the lockout end date
@@ -308,7 +459,8 @@ public class UserService(
         }
 
         var roles = await _userManager.GetRolesAsync(user);
-        QueueUserChanged((user, roles).Adapt<UserResponse>(), "Unlock");
+        var accesses = await GetUserCompanyAccessesAsync(user.Id, user.TenantId);
+        QueueUserChanged(CreateUserResponse(user, roles, accesses), "Unlock");
 
         return Result.Success();
     }
@@ -437,41 +589,31 @@ public class UserService(
     }
 
     private async Task<IReadOnlyCollection<int>?> ResolveCompanyIdsAsync(
-        IReadOnlyCollection<int>? requestedCompanyIds,
-        bool preserveExisting,
+        IReadOnlyCollection<int> requestedCompanyIds,
+        int defaultCompanyId,
         CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(_currentActor.TenantId) || !_currentActor.CompanyId.HasValue)
+        if (string.IsNullOrWhiteSpace(_currentActor.TenantId) ||
+            string.IsNullOrWhiteSpace(_currentActor.UserId) ||
+            requestedCompanyIds.Count == 0 ||
+            !requestedCompanyIds.Contains(defaultCompanyId))
+        {
             return null;
+        }
 
-        var existingCompanyIds = preserveExisting && requestedCompanyIds is null
-            ? await _context.UserCompanyAccesses
-                .IgnoreQueryFilters()
-                .Where(access =>
-                    access.TenantId == _currentActor.TenantId &&
-                    access.UserId == _currentActor.UserId)
-                .Select(access => access.CompanyId)
-                .ToListAsync(cancellationToken)
-            : [];
-
-        var companyIds = (requestedCompanyIds is { Count: > 0 }
-                ? requestedCompanyIds
-                : existingCompanyIds.Count > 0
-                    ? existingCompanyIds
-                    : [_currentActor.CompanyId.Value])
-            .Distinct()
-            .ToArray();
-
-        var activeCompanyIds = await _context.Companies
+        var companyIds = requestedCompanyIds.Distinct().ToArray();
+        var assignableCompanyIds = await _context.UserCompanyAccesses
             .IgnoreQueryFilters()
-            .Where(company =>
-                company.TenantId == _currentActor.TenantId &&
-                company.IsActive &&
-                companyIds.Contains(company.Id))
-            .Select(company => company.Id)
+            .AsNoTracking()
+            .Where(access =>
+                access.TenantId == _currentActor.TenantId &&
+                access.UserId == _currentActor.UserId &&
+                access.Company.IsActive &&
+                companyIds.Contains(access.CompanyId))
+            .Select(access => access.CompanyId)
             .ToListAsync(cancellationToken);
 
-        return activeCompanyIds.Count == companyIds.Length
+        return assignableCompanyIds.Distinct().Count() == companyIds.Length
             ? companyIds
             : null;
     }
@@ -479,6 +621,7 @@ public class UserService(
     private async Task SynchronizeCompanyAccessesAsync(
         ApplicationUser user,
         IReadOnlyCollection<int> companyIds,
+        int defaultCompanyId,
         CancellationToken cancellationToken)
     {
         var existing = await _context.UserCompanyAccesses
@@ -495,7 +638,7 @@ public class UserService(
             var existingAccess = existing.FirstOrDefault(access => access.CompanyId == companyId);
             if (existingAccess is not null)
             {
-                existingAccess.IsDefault = companyId == companyIds.First();
+                existingAccess.IsDefault = companyId == defaultCompanyId;
                 continue;
             }
 
@@ -504,11 +647,84 @@ public class UserService(
                 TenantId = user.TenantId,
                 CompanyId = companyId,
                 UserId = user.Id,
-                IsDefault = companyId == companyIds.First()
+                IsDefault = companyId == defaultCompanyId
             });
         }
 
         await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    private async Task<IReadOnlyCollection<UserCompanyAccess>> GetUserCompanyAccessesAsync(
+        string userId,
+        string tenantId,
+        CancellationToken cancellationToken = default) =>
+        await _context.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Where(access => access.UserId == userId && access.TenantId == tenantId)
+            .ToArrayAsync(cancellationToken);
+
+    private async Task<HashSet<int>> GetActorCompanyIdsAsync(
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(_currentActor.TenantId) ||
+            string.IsNullOrWhiteSpace(_currentActor.UserId))
+        {
+            return [];
+        }
+
+        return await _context.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Where(access =>
+                access.TenantId == _currentActor.TenantId &&
+                access.UserId == _currentActor.UserId)
+            .Select(access => access.CompanyId)
+            .ToHashSetAsync(cancellationToken);
+    }
+
+    private async Task<bool> IsUserWithinActorCompanyScopeAsync(
+        string userId,
+        string tenantId,
+        CancellationToken cancellationToken = default)
+    {
+        var actorCompanyIds = await GetActorCompanyIdsAsync(cancellationToken);
+        var userCompanyIds = await _context.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Where(access => access.UserId == userId && access.TenantId == tenantId)
+            .Select(access => access.CompanyId)
+            .ToArrayAsync(cancellationToken);
+
+        return IsWithinCompanyScope(userCompanyIds, actorCompanyIds);
+    }
+
+    private static bool IsWithinCompanyScope(
+        IEnumerable<int> userCompanyIds,
+        IReadOnlySet<int> actorCompanyIds)
+    {
+        var companyIds = userCompanyIds.Distinct().ToArray();
+        return companyIds.Length > 0 && companyIds.All(actorCompanyIds.Contains);
+    }
+
+    private static UserResponse CreateUserResponse(
+        ApplicationUser user,
+        IEnumerable<string> roles,
+        IEnumerable<UserCompanyAccess> accesses)
+    {
+        var companyAccesses = accesses.ToArray();
+        return new UserResponse(
+            user.Id,
+            user.FirstName,
+            user.LastName,
+            user.UserName ?? string.Empty,
+            user.Email ?? string.Empty,
+            user.IsDisabled,
+            user.LockoutEnd.HasValue && user.LockoutEnd > DateTimeOffset.UtcNow,
+            user.ProfilePicture,
+            roles.Distinct(StringComparer.OrdinalIgnoreCase).ToArray(),
+            companyAccesses.Select(access => access.CompanyId).Distinct().ToArray(),
+            companyAccesses.FirstOrDefault(access => access.IsDefault)?.CompanyId);
     }
 
     private async Task<Error?> GetSeatLimitErrorAsync(
@@ -562,10 +778,20 @@ public class UserService(
         return null;
     }
 
-    private static void QueueSessionRevoked(string userId, string message)
+    private void QueueSessionRevoked(string userId, string message)
     {
-        BackgroundJob.Enqueue<SessionRevokedJob>(
-            job => job.ExecuteAsync(userId, message));
+        try
+        {
+            BackgroundJob.Enqueue<SessionRevokedJob>(
+                job => job.ExecuteAsync(userId, message));
+        }
+        catch (Exception exception)
+        {
+            logger.LogError(
+                exception,
+                "Unable to enqueue session revocation for user {UserId}.",
+                userId);
+        }
     }
 
     private void QueueUserChanged(UserResponse user, string action)
@@ -578,8 +804,18 @@ public class UserService(
             _currentActor.CompanyId ?? throw new InvalidOperationException("A company is required to publish user changes."),
             Guid.NewGuid());
 
-        BackgroundJob.Enqueue<UserChangedJob>(
-            job => job.ExecuteAsync(request, CancellationToken.None));
+        try
+        {
+            BackgroundJob.Enqueue<UserChangedJob>(
+                job => job.ExecuteAsync(request, CancellationToken.None));
+        }
+        catch (Exception exception)
+        {
+            logger.LogError(
+                exception,
+                "Unable to enqueue user change notification for user {UserId}.",
+                user.Id);
+        }
     }
 
     private string? GetProfilePicturePath(string? fileName)

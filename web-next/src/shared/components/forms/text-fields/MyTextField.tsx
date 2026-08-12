@@ -15,6 +15,7 @@ import {
 import { mergeRefs } from "./internals/refUtils";
 import type { MyTextFieldProps, RegisteredField } from "./internals/types";
 import { getFormFieldError } from "./formFieldError";
+import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 
 export default function MyTextField({
   fieldName = "search",
@@ -64,6 +65,10 @@ export default function MyTextField({
 }: MyTextFieldProps) {
   const { t } = useTranslation();
   const theme = useTheme();
+  const { isReadOnly: appIsReadOnly } = useAppReadOnly();
+  const effectiveReadOnly = readOnly || (
+    appIsReadOnly && (Boolean(control) || required || Boolean(name))
+  );
   const actualFieldName = name || fieldName;
   const actualLabel = label || (labelKey ? t(labelKey) : "");
   const isPasswordField = type === "password";
@@ -284,7 +289,7 @@ export default function MyTextField({
   }, [actualFieldName, actualLabel, appearance, characterLimit, clearButtonAriaLabel, countOptions, counterFormat, endAdornment, externalError, externalHelperText, fieldError, flex, inputConstraints, inputFocused, isPasswordField, loading, margin, multiline, required, restProps, rows, setShowPassword, showClearButton, showCounter, showPassword, showPasswordToggle, startIcon, theme, type]);
 
   if (hidden) return null;
-  if (readOnly) {
+  if (effectiveReadOnly) {
     return (
       <ReadOnlyTextField
         control={control}

@@ -1,6 +1,7 @@
 "use client";
 
 import { ContentWrapper } from "@/shared/components/layout";
+import { DiscardChangesDialog } from "@/shared/components/dialogs";
 import {
   Alert,
   alpha,
@@ -14,7 +15,6 @@ import {
   useTheme,
 } from "@mui/material";
 import { useRolePermissions } from "../hooks/useRolePermissions";
-import DiscardRoleChangesDialog from "./role-permissions/DiscardRoleChangesDialog";
 import RolePermissionsActions from "./role-permissions/RolePermissionsActions";
 import RolePermissionsFilters from "./role-permissions/RolePermissionsFilters";
 import RolePermissionsHeader from "./role-permissions/RolePermissionsHeader";
@@ -113,7 +113,7 @@ export default function RolePermissionsPage({ id }: RolePermissionsPageProps) {
         </Box>
       </Fade>
       {permissions.notifications.SnackbarComponent}
-      <DiscardRoleChangesDialog
+      <DiscardChangesDialog
         open={permissions.discardDialogOpen}
         onClose={() => permissions.setDiscardDialogOpen(false)}
         onDiscard={permissions.confirmBack}

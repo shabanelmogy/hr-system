@@ -6,6 +6,7 @@ namespace HrManagementSystem.Api.Features.Analytics.Exporting.V1;
 [Route(ApiRoutes.BaseRoute)]
 [ApiController]
 [TenantMember]
+[AllowTenantReadOnly]
 public class ExportController(IExportExcelService excelService) : ControllerBase
 {
     private readonly IExportExcelService _excelService = excelService;

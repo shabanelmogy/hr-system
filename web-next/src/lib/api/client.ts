@@ -19,9 +19,19 @@ export type ApiError = {
   errors: string[] | null;
 };
 
+type ReadOnlyGuard = {
+  isReadOnly: () => boolean;
+  onBlocked: () => void;
+};
+
+type AppRequestConfig = AxiosRequestConfig & {
+  allowWhenReadOnly?: boolean;
+};
+
 class ApiClient {
   private readonly api: AxiosInstance;
   private navigatingToLogin = false;
+  private readOnlyGuard: ReadOnlyGuard | null = null;
 
   constructor() {
     this.api = axios.create({
@@ -51,6 +61,9 @@ class ApiClient {
           error.response?.headers[SESSION_REFRESHED_HEADER],
         );
         const url = error.config?.url ?? "";
+        if (error.response?.status === 423) {
+          this.readOnlyGuard?.onBlocked();
+        }
         if (
           error.response?.status === 401 &&
           !isPublicAuthenticationRequest(url) &&
@@ -105,9 +118,28 @@ class ApiClient {
     };
   }
 
-  private async request<T = any>(method: Method, endpoint: string, config: AxiosRequestConfig = {}) {
+  configureReadOnlyGuard(guard: ReadOnlyGuard) {
+    this.readOnlyGuard = guard;
+
+    return () => {
+      if (this.readOnlyGuard === guard) this.readOnlyGuard = null;
+    };
+  }
+
+  private async request<T = any>(method: Method, endpoint: string, config: AppRequestConfig = {}) {
+    if (
+      isWriteMethod(method) &&
+      !config.allowWhenReadOnly &&
+      this.readOnlyGuard?.isReadOnly()
+    ) {
+      this.readOnlyGuard.onBlocked();
+      throw createReadOnlyError();
+    }
+
+    const axiosConfig = { ...config };
+    delete axiosConfig.allowWhenReadOnly;
     try {
-      const response = await this.api.request<T>({ method, url: endpoint, ...config });
+      const response = await this.api.request<T>({ method, url: endpoint, ...axiosConfig });
       return response.data;
     } catch (error) {
       throw this.processError(error);
@@ -127,6 +159,7 @@ class ApiClient {
       data,
       responseType: "blob",
       headers: { Accept: contentType },
+      allowWhenReadOnly: true,
     });
   }
 
@@ -164,6 +197,22 @@ class ApiClient {
   externalAuth<T = any>(endpoint: string, data: unknown) {
     return this.post<T>(endpoint, data);
   }
+}
+
+function isWriteMethod(method: Method) {
+  return ["post", "put", "patch", "delete"].includes(method.toLowerCase());
+}
+
+function createReadOnlyError(): ApiError {
+  return {
+    status: 423,
+    title: i18n.t("tenantAccess.title"),
+    message: i18n.t("tenantAccess.readOnlyExplanation"),
+    detail: i18n.t("tenantAccess.description"),
+    type: "Tenant.SubscriptionReadOnly",
+    fieldErrors: null,
+    errors: null,
+  };
 }
 
 function getDataHeaders(data: unknown, headers: Record<string, string>) {

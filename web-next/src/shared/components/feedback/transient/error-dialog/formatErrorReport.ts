@@ -3,6 +3,7 @@ import type { ErrorDialogDetails } from "./types";
 export function formatErrorReport(
   details: ErrorDialogDetails,
   heading: string,
+  options: { includeTechnical?: boolean } = {},
 ): string {
   const lines = [heading];
   if (details.reportId) lines.push(`Report ID: ${details.reportId}`);
@@ -13,13 +14,7 @@ export function formatErrorReport(
 
   if (details.status != null) lines.push("", `Status: ${details.status}`);
   if (details.traceId) lines.push(`Trace ID: ${details.traceId}`);
-  if (details.errorType) lines.push(`Error type: ${details.errorType}`);
-  if (details.errorCodes?.length) {
-    lines.push(`Error codes: ${details.errorCodes.join(", ")}`);
-  }
-  if (details.detail && !details.messages.includes(details.detail)) {
-    lines.push(`Detail: ${details.detail}`);
-  }
+  if (details.correlationId) lines.push(`Correlation ID: ${details.correlationId}`);
   if (details.path) lines.push(`Page: ${details.path}`);
   if (details.occurredAt) {
     const occurredAt = new Date(details.occurredAt);
@@ -27,10 +22,21 @@ export function formatErrorReport(
     lines.push(`UTC time: ${details.occurredAt}`);
   }
 
-  if (details.environment) {
+  if (options.includeTechnical) {
+    lines.push("", "Technical details");
+    if (details.errorType) lines.push(`Error type: ${details.errorType}`);
+    if (details.errorCodes?.length) {
+      lines.push(`Error codes: ${details.errorCodes.join(", ")}`);
+    }
+    if (details.detail && !details.messages.includes(details.detail)) {
+      lines.push(`Detail: ${details.detail}`);
+    }
+    if (details.stack) lines.push(`Stack: ${details.stack}`);
+  }
+
+  if (options.includeTechnical && details.environment) {
     const environment = details.environment;
     lines.push(
-      "",
       "Technical context",
       `App version: ${environment.appVersion}`,
       `App language: ${environment.appLanguage}`,

@@ -1,0 +1,128 @@
+import { useMemo } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+
+import { useLocalization } from '@/src/core/localization';
+import { useAppTheme } from '@/src/core/theme';
+import type { ManagedUser } from '../../types/administration';
+import { AppCard, AppIcon, AppText } from '@/src/shared/components';
+
+interface UserManagementStatsProps {
+  users: readonly ManagedUser[];
+}
+
+export function UserManagementStats({ users }: UserManagementStatsProps) {
+  const { t } = useTranslation();
+  const { direction } = useLocalization();
+  const { theme } = useAppTheme();
+  const stats = useMemo(() => {
+    const completedProfiles = users.filter((user) =>
+      Boolean(
+        user.firstName &&
+        user.lastName &&
+        user.userName &&
+        user.email &&
+        user.roles.length > 0,
+      )
+    ).length;
+
+    return {
+      total: users.length,
+      active: users.filter((user) => !user.isDisabled).length,
+      disabled: users.filter((user) => user.isDisabled).length,
+      locked: users.filter((user) => user.isLocked).length,
+      admins: users.filter((user) =>
+        user.roles.some((role) => role.toLowerCase().includes('admin'))
+      ).length,
+      completion: users.length === 0
+        ? 0
+        : Math.round((completedProfiles / users.length) * 100),
+    };
+  }, [users]);
+
+  const cards = [
+    {
+      key: 'total',
+      icon: 'people-outline' as const,
+      label: t('userManagement.dashboard.totalUsers'),
+      value: stats.total,
+      color: theme.colors.primary,
+    },
+    {
+      key: 'active',
+      icon: 'checkmark-circle-outline' as const,
+      label: t('userManagement.dashboard.activeUsers'),
+      value: stats.active,
+      color: theme.colors.success,
+    },
+    {
+      key: 'disabled',
+      icon: 'pause-circle-outline' as const,
+      label: t('userManagement.dashboard.disabledUsers'),
+      value: stats.disabled,
+      color: theme.colors.warning,
+    },
+    {
+      key: 'locked',
+      icon: 'lock-closed-outline' as const,
+      label: t('userManagement.dashboard.lockedUsers'),
+      value: stats.locked,
+      color: theme.colors.danger,
+    },
+    {
+      key: 'admins',
+      icon: 'shield-checkmark-outline' as const,
+      label: t('userManagement.dashboard.adminUsers'),
+      value: stats.admins,
+      color: theme.colors.accent,
+    },
+    {
+      key: 'completion',
+      icon: 'speedometer-outline' as const,
+      label: t('userManagement.dashboard.profileCompletion'),
+      value: `${stats.completion}%`,
+      color: stats.completion >= 80
+        ? theme.colors.success
+        : stats.completion >= 50
+          ? theme.colors.warning
+          : theme.colors.danger,
+    },
+  ];
+
+  return (
+    <ScrollView
+      contentContainerStyle={[styles.content, { direction }]}
+      horizontal
+      showsHorizontalScrollIndicator={false}>
+      {cards.map((card) => (
+        <AppCard key={card.key} padding="sm" style={styles.card} variant="filled">
+          <View style={[styles.cardContent, { direction }]}>
+            <View
+              style={[
+                styles.icon,
+                { backgroundColor: `${card.color}1A`, borderRadius: theme.radius.sm },
+              ]}>
+              <AppIcon color={card.color} name={card.icon} size={20} />
+            </View>
+            <View style={styles.cardText}>
+              <AppText numberOfLines={1} variant="titleSmall" weight="800">
+                {card.value}
+              </AppText>
+              <AppText color="muted" numberOfLines={1} variant="caption">
+                {card.label}
+              </AppText>
+            </View>
+          </View>
+        </AppCard>
+      ))}
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  content: { flexDirection: 'row', gap: 8, paddingBottom: 2 },
+  card: { width: 145, minHeight: 68 },
+  cardContent: { flexDirection: 'row', alignItems: 'center', gap: 9 },
+  icon: { width: 34, height: 34, alignItems: 'center', justifyContent: 'center' },
+  cardText: { flex: 1, minWidth: 0 },
+});

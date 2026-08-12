@@ -1,0 +1,150 @@
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+
+import { useLocalization } from '@/src/core/localization';
+import { useAppTheme } from '@/src/core/theme';
+import { AppSegmentedControl } from '@/src/shared/components/controls/AppSegmentedControl';
+import type { AppIconName } from '@/src/shared/components/icons/AppIcon';
+import { AppText } from '@/src/shared/components/typography/AppText';
+import { AppCollectionPagination } from './AppCollectionPagination';
+
+export interface AppMultiViewDefinition<Item, ViewId extends string> {
+  defaultPageSize?: number;
+  icon: AppIconName;
+  label: string;
+  pageSizeOptions?: readonly number[];
+  render: (items: readonly Item[]) => ReactNode;
+  scrollable?: boolean;
+  value: ViewId;
+}
+
+export interface AppMultiViewProps<Item, ViewId extends string> {
+  items: readonly Item[];
+  views: readonly AppMultiViewDefinition<Item, ViewId>[];
+  defaultPageSize?: number;
+  defaultView?: ViewId;
+  emptyContent?: ReactNode;
+  pageSizeOptions?: readonly number[];
+  resetKey?: string | number;
+}
+
+export function AppMultiView<Item, ViewId extends string>({
+  items,
+  views,
+  defaultPageSize = 5,
+  defaultView,
+  emptyContent,
+  pageSizeOptions = [5, 10, 25],
+  resetKey,
+}: AppMultiViewProps<Item, ViewId>) {
+  const { t } = useTranslation();
+  const { direction } = useLocalization();
+  const { theme } = useAppTheme();
+  const { height: viewportHeight } = useWindowDimensions();
+  const initialView = defaultView ?? views[0]?.value;
+  const initialDefinition = views.find((candidate) => candidate.value === initialView) ?? views[0];
+  const [view, setView] = useState<ViewId | undefined>(initialView);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(
+    initialDefinition?.defaultPageSize ?? defaultPageSize,
+  );
+  const pageCount = Math.max(1, Math.ceil(items.length / pageSize));
+  const safePage = Math.min(page, pageCount - 1);
+  const activeView = views.find((candidate) => candidate.value === view) ?? views[0];
+  const activePageSizeOptions = activeView?.pageSizeOptions ?? pageSizeOptions;
+  const pageItems = useMemo(
+    () => items.slice(safePage * pageSize, safePage * pageSize + pageSize),
+    [items, pageSize, safePage],
+  );
+
+  useEffect(() => {
+    if (page !== safePage) setPage(safePage);
+  }, [page, safePage]);
+
+  useEffect(() => {
+    setPage(0);
+  }, [resetKey]);
+
+  if (!activeView) return emptyContent ?? null;
+
+  const content = items.length === 0 ? emptyContent : activeView.render(pageItems);
+
+  return (
+    <View style={styles.root}>
+      <View
+        style={[
+          styles.toolbar,
+          {
+            direction,
+            backgroundColor: theme.colors.surface,
+            borderColor: theme.colors.border,
+            borderRadius: theme.radius.md,
+          },
+        ]}>
+        <View style={styles.resultCount}>
+          <AppText variant="label" weight="800">{items.length}</AppText>
+          <AppText color="muted" variant="caption">
+            {t('multiView.results')}
+          </AppText>
+        </View>
+        <AppSegmentedControl
+          containerStyle={styles.viewOptions}
+          label={t('multiView.chooseView')}
+          layout="wrap"
+          onChange={(nextView) => {
+            const nextDefinition = views.find((candidate) => candidate.value === nextView);
+            setView(nextView);
+            setPage(0);
+            setPageSize(nextDefinition?.defaultPageSize ?? defaultPageSize);
+          }}
+          options={views}
+          style={styles.viewSelector}
+          value={activeView.value}
+        />
+      </View>
+
+      {activeView.scrollable && items.length > 0 ? (
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          nestedScrollEnabled
+          showsVerticalScrollIndicator
+          style={{ maxHeight: Math.max(360, Math.min(viewportHeight * 0.68, 680)) }}>
+          {content}
+        </ScrollView>
+      ) : content}
+
+      {items.length > 0 ? (
+        <AppCollectionPagination
+          onPageChange={setPage}
+          onPageSizeChange={(nextPageSize) => {
+            setPageSize(nextPageSize);
+            setPage(0);
+          }}
+          page={safePage}
+          pageSize={pageSize}
+          pageSizeOptions={activePageSizeOptions}
+          totalItems={items.length}
+        />
+      ) : null}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  root: { width: '100%', gap: 10 },
+  toolbar: {
+    minHeight: 56,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    gap: 10,
+    borderWidth: 1,
+    padding: 8,
+  },
+  resultCount: { flexDirection: 'row', alignItems: 'baseline', gap: 5, paddingHorizontal: 6 },
+  viewSelector: { width: 'auto', flexGrow: 0 },
+  viewOptions: { width: 'auto' },
+  scrollContent: { width: '100%', paddingBottom: 2 },
+});

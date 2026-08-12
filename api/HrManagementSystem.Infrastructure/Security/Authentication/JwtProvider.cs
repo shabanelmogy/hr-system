@@ -20,13 +20,30 @@ public sealed class JwtProvider(
     {
         var jwtId = Guid.NewGuid().ToString("N");
         var expiresAt = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpireInMinutes);
-        var claims = await GetAccessClaimsAsync(user, sessionId, jwtId, companyId);
+        var tenant = await _context.Tenants
+            .AsNoTracking()
+            .Where(tenant => tenant.Id == user.TenantId)
+            .Select(tenant => new { tenant.Name, tenant.PlanName })
+            .SingleOrDefaultAsync();
+        var tenantName = tenant?.Name ?? user.TenantId;
+        var tenantPlanName = string.IsNullOrWhiteSpace(tenant?.PlanName)
+            ? "Free"
+            : tenant.PlanName.Trim();
+        var claims = await GetAccessClaimsAsync(
+            user,
+            sessionId,
+            jwtId,
+            companyId,
+            tenantName,
+            tenantPlanName);
         var token = CreateToken(claims, _jwtSettings.Audience, expiresAt);
 
         return new AccessTokenResult(
             new JwtSecurityTokenHandler().WriteToken(token),
             expiresAt,
-            jwtId);
+            jwtId,
+            tenantName,
+            tenantPlanName);
     }
 
     public string GenerateRealtimeToken(ClaimsPrincipal principal)
@@ -39,6 +56,8 @@ public sealed class JwtProvider(
             JwtClaimNames.SessionId,
             JwtClaimNames.SecurityStamp,
             JwtClaimNames.TenantId,
+            JwtClaimNames.TenantName,
+            JwtClaimNames.TenantPlanName,
             JwtClaimNames.CompanyId
         };
 
@@ -172,7 +191,9 @@ public sealed class JwtProvider(
         ApplicationUser user,
         string sessionId,
         string jwtId,
-        int companyId)
+        int companyId,
+        string tenantName,
+        string tenantPlanName)
     {
         var roles = await _userManager.GetRolesAsync(user);
         var claims = new List<Claim>
@@ -186,6 +207,8 @@ public sealed class JwtProvider(
             new(JwtClaimNames.SessionId, sessionId),
             new(JwtClaimNames.SecurityStamp, user.SecurityStamp ?? string.Empty),
             new(JwtClaimNames.TenantId, user.TenantId),
+            new(JwtClaimNames.TenantName, tenantName),
+            new(JwtClaimNames.TenantPlanName, tenantPlanName),
             new(JwtClaimNames.CompanyId, companyId.ToString(CultureInfo.InvariantCulture))
         };
 

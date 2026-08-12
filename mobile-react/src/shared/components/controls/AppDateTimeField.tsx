@@ -18,9 +18,11 @@ import { useAppTheme } from '@/src/core/theme';
 import { AppButton } from '@/src/shared/components/controls/AppButton';
 import { AppIconButton } from '@/src/shared/components/controls/AppIconButton';
 import { useAppFormField } from '@/src/shared/components/forms/AppForm';
+import { AppFieldMessage } from '@/src/shared/components/forms/AppFieldMessage';
 import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon';
 import { AppModal } from '@/src/shared/components/surfaces/AppModal';
 import { AppText } from '@/src/shared/components/typography/AppText';
+import { useAppReadOnly } from '@/src/shared/contexts/AppReadOnlyContext';
 
 export type AppDateTimeMode = 'date' | 'time' | 'datetime';
 
@@ -62,12 +64,14 @@ export function AppDateTimeField({
   const { t, i18n } = useTranslation();
   const { direction, isRTL } = useLocalization();
   const { theme } = useAppTheme();
+  const { isReadOnly } = useAppReadOnly();
+  const effectiveDisabled = disabled || isReadOnly;
   const selectedDate = useMemo(() => parseDateTime(value, mode), [mode, value]);
   const [draftDate, setDraftDate] = useState(selectedDate ?? new Date());
   const [open, setOpen] = useState(false);
   const formField = useAppFormField(name, openPicker, {
     autoFocus: false,
-    enabled: !disabled,
+    enabled: !effectiveDisabled,
   });
   const error = suppliedError ?? formField.error;
   const supportingText = error ?? helperText;
@@ -78,7 +82,7 @@ export function AppDateTimeField({
   };
 
   function openPicker() {
-    if (disabled) return;
+    if (effectiveDisabled) return;
     const initialDate = selectedDate ?? new Date();
 
     if (Platform.OS === 'android') {
@@ -125,14 +129,14 @@ export function AppDateTimeField({
         <Pressable
           accessibilityLabel={label}
           accessibilityRole="button"
-          accessibilityState={{ disabled, expanded: open }}
-          disabled={disabled}
+          accessibilityState={{ disabled: effectiveDisabled, expanded: open }}
+          disabled={effectiveDisabled}
           onPress={openPicker}
           style={[
             styles.control,
             {
               direction,
-              backgroundColor: disabled ? theme.colors.surfaceMuted : theme.colors.surface,
+              backgroundColor: effectiveDisabled ? theme.colors.surfaceMuted : theme.colors.surface,
               borderColor: error
                 ? theme.colors.danger
                 : open
@@ -140,7 +144,7 @@ export function AppDateTimeField({
                   : theme.colors.border,
               borderRadius: theme.radius.md,
               borderWidth: open ? 2 : 1,
-              opacity: disabled ? 0.55 : 1,
+              opacity: effectiveDisabled ? 0.55 : 1,
             },
           ]}>
           <View style={styles.leadingIcon}>
@@ -151,7 +155,7 @@ export function AppDateTimeField({
               ? formatDisplayDate(selectedDate, mode, i18n.language)
               : placeholder ?? label}
           </AppText>
-          {showClearButton && value && !disabled ? (
+          {showClearButton && value && !effectiveDisabled ? (
             <AppIconButton
               icon="close-outline"
               label={`${t('common.clear')} ${label}`}
@@ -174,7 +178,7 @@ export function AppDateTimeField({
           style={[
             styles.floatingLabel,
             isRTL ? styles.floatingLabelRtl : styles.floatingLabelLtr,
-            { backgroundColor: disabled ? theme.colors.surfaceMuted : theme.colors.surface },
+            { backgroundColor: effectiveDisabled ? theme.colors.surfaceMuted : theme.colors.surface },
           ]}>
           <AppText
             color={error ? 'danger' : open ? 'primary' : 'default'}
@@ -186,9 +190,9 @@ export function AppDateTimeField({
         </View>
       </View>
       {supportingText ? (
-        <AppText color={error ? 'danger' : 'muted'} style={styles.supportingText} variant="caption">
+        <AppFieldMessage error={Boolean(error)}>
           {supportingText}
-        </AppText>
+        </AppFieldMessage>
       ) : null}
 
       {Platform.OS !== 'android' ? (
@@ -278,7 +282,6 @@ const styles = StyleSheet.create({
   },
   floatingLabelLtr: { left: 12 },
   floatingLabelRtl: { right: 12 },
-  supportingText: { paddingHorizontal: 12 },
   actions: {
     flexDirection: 'row',
     justifyContent: 'flex-end',

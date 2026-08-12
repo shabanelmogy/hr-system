@@ -10,6 +10,12 @@ import {
   useUserInfo,
   useUserPhoto,
 } from "@/features/auth/profile";
+import {
+  TenantNameBadge,
+  TenantPlanBadge,
+  TenantReadOnlyBadge,
+  TenantSubscriptionStatusBadge,
+} from "@/features/tenant-access";
 import { useSession } from "@/lib/auth/SessionContext";
 
 interface UserProfileProps {
@@ -177,7 +183,7 @@ const UserProfile = ({ open }: UserProfileProps) => {
       <Box
         aria-hidden={!open}
         sx={{
-          maxHeight: open ? 72 : 0,
+          maxHeight: open ? 150 : 0,
           opacity: open ? 1 : 0,
           overflow: "hidden",
           pointerEvents: open ? "auto" : "none",
@@ -222,6 +228,22 @@ const UserProfile = ({ open }: UserProfileProps) => {
             >
               {userRole}
             </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexWrap: "wrap",
+              gap: 0.5,
+              mt: 1,
+              minWidth: 0,
+            }}
+          >
+            <TenantNameBadge compact />
+            <TenantPlanBadge compact />
+            <TenantSubscriptionStatusBadge compact />
+            <TenantReadOnlyBadge compact />
           </Box>
       </Box>
     </Box>

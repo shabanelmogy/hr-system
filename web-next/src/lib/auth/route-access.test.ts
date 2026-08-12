@@ -7,6 +7,8 @@ import type { SessionClaims } from "./session";
 const session: SessionClaims = {
   userId: "user-id",
   tenantId: "tenant-id",
+  tenantName: "Test Tenant",
+  tenantPlanName: "Professional",
   companyId: 7,
   userName: "user",
   email: "user@example.com",
@@ -14,6 +16,9 @@ const session: SessionClaims = {
   lastName: "User",
   roles: [],
   permissions: [],
+  tenantSubscriptionStatus: "active",
+  tenantSubscriptionEndsOn: null,
+  tenantReadOnly: false,
   expiresAt: Date.now() + 60_000,
 };
 

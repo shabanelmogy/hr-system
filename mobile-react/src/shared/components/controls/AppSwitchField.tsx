@@ -10,8 +10,10 @@ import {
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { useAppFormField } from '@/src/shared/components/forms/AppForm';
+import { AppFieldMessage } from '@/src/shared/components/forms/AppFieldMessage';
 import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon';
 import { AppText } from '@/src/shared/components/typography/AppText';
+import { useAppReadOnly } from '@/src/shared/contexts/AppReadOnlyContext';
 
 export interface AppSwitchFieldProps extends Omit<SwitchProps, 'style'> {
   name?: string;
@@ -38,6 +40,8 @@ export function AppSwitchField({
 }: AppSwitchFieldProps) {
   const { direction } = useLocalization();
   const { theme } = useAppTheme();
+  const { isReadOnly } = useAppReadOnly();
+  const effectiveDisabled = Boolean(disabled) || isReadOnly;
   const formField = useAppFormField(name, () => {}, { autoFocus: false, enabled: false });
   const error = suppliedError ?? formField.error;
 
@@ -51,7 +55,7 @@ export function AppSwitchField({
             backgroundColor: theme.colors.surfaceMuted,
             borderColor: error ? theme.colors.danger : theme.colors.border,
             borderRadius: theme.radius.md,
-            opacity: disabled ? 0.55 : 1,
+            opacity: effectiveDisabled ? 0.55 : 1,
           },
           style,
         ]}>
@@ -74,7 +78,7 @@ export function AppSwitchField({
         <Switch
           {...switchProps}
           accessibilityLabel={label}
-          disabled={disabled}
+          disabled={effectiveDisabled}
           onValueChange={(nextValue) => {
             formField.clearError();
             onValueChange?.(nextValue);
@@ -86,9 +90,7 @@ export function AppSwitchField({
         />
       </View>
       {error ? (
-        <AppText color="danger" style={styles.errorText} variant="caption">
-          {error}
-        </AppText>
+        <AppFieldMessage error>{error}</AppFieldMessage>
       ) : null}
     </View>
   );
@@ -116,8 +118,5 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  errorText: {
-    paddingHorizontal: 12,
   },
 });

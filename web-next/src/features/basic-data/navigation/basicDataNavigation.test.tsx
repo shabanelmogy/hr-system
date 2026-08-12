@@ -7,6 +7,8 @@ function sessionWithPermissions(userPermissions: readonly string[]): SessionClai
   return {
     userId: "1",
     tenantId: "tenant-1",
+    tenantName: "Test Tenant",
+    tenantPlanName: "Professional",
     companyId: 1,
     userName: "tester",
     email: "tester@example.com",
@@ -14,6 +16,9 @@ function sessionWithPermissions(userPermissions: readonly string[]): SessionClai
     lastName: "User",
     roles: [],
     permissions: [...userPermissions],
+    tenantSubscriptionStatus: "active",
+    tenantSubscriptionEndsOn: null,
+    tenantReadOnly: false,
     expiresAt: Date.now() + 60_000,
   };
 }

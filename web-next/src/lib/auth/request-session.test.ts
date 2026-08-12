@@ -7,6 +7,8 @@ import { decodeRequestSession, encodeRequestSession } from "./request-session";
 const session = {
   userId: "user-id",
   tenantId: "tenant-id",
+  tenantName: "Test Tenant",
+  tenantPlanName: "Professional",
   companyId: 7,
   userName: "مستخدم",
   email: "user@example.com",
@@ -14,6 +16,9 @@ const session = {
   lastName: "User",
   roles: ["admin"],
   permissions: ["Users:View"],
+  tenantSubscriptionStatus: "active",
+  tenantSubscriptionEndsOn: null,
+  tenantReadOnly: false,
   expiresAt: Date.now() + 60_000,
 };
 

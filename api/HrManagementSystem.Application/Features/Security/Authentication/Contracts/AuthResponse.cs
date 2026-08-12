@@ -6,6 +6,8 @@ namespace HrManagementSystem.Application.Features.Security.Authentication.Contra
         string FirstName,
         string LastName,
         string TenantId,
+        string TenantName,
+        string TenantPlanName,
         int CompanyId,
         string Token,
         DateTime TokenExpiration,

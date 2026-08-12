@@ -138,6 +138,7 @@ if (databaseSettings.SeedOnStartup)
 #endregion
 
 app.UseMiddleware<CultureMiddleware>();
+app.UseMiddleware<TenantReadOnlyMiddleware>();
 app.UseStaticFiles();
 app.MapControllers();
 

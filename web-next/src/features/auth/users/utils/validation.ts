@@ -32,12 +32,22 @@ export const getUserValidationSchema = (t: Translator, isAddMode = false) =>
       password: z.string().nullable().optional(),
       confirmPassword: z.string().nullable().optional(),
       roles: z.array(z.string()).min(1, t("users.atLeastOneRole")).max(10, t("users.maxRoles", { count: 10 })),
+      companyIds: z.array(z.number().int().positive()).min(1, t("users.atLeastOneCompany")),
+      defaultCompanyId: z.number().int().positive(t("users.defaultCompanyRequired")),
       isDisabled: z.boolean(),
       profilePicture: z.string().optional(),
     })
     .superRefine((data, ctx) => {
       const password = data.password ?? "";
       const confirmPassword = data.confirmPassword ?? "";
+
+      if (!data.companyIds.includes(data.defaultCompanyId)) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["defaultCompanyId"],
+          message: t("users.defaultCompanyMustBeSelected"),
+        });
+      }
 
       if (isAddMode && !password) {
         ctx.addIssue({ code: "custom", path: ["password"], message: t("validation.required") });

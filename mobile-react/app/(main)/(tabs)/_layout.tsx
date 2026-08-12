@@ -1,5 +1,6 @@
 import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ROUTES } from '@/src/core/constants/routes';
 import { useAppTheme } from '@/src/core/theme';
@@ -9,7 +10,9 @@ import { AppIcon } from '@/src/shared/components';
 export default function TabLayout() {
   const { t } = useTranslation();
   const { theme } = useAppTheme();
+  const insets = useSafeAreaInsets();
   const canViewSettings = useCanAccessRoute(ROUTES.settings);
+  const bottomSpacing = Math.max(insets.bottom, 10);
 
   return (
     <Tabs
@@ -19,9 +22,9 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: theme.colors.surface,
           borderTopColor: theme.colors.border,
-          minHeight: 62,
+          height: 56 + bottomSpacing,
           paddingTop: 6,
-          paddingBottom: 6,
+          paddingBottom: bottomSpacing,
         },
         tabBarLabelStyle: {
           fontSize: 12,

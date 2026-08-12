@@ -22,6 +22,7 @@ const useUserGridLogic = () => {
   const apiRef = useGridApiRef();
 
   const fetchUsers = useUserStore((state) => state.fetchUsers);
+  const fetchCompanyOptions = useUserStore((state) => state.fetchCompanyOptions);
   const users = useUserStore((state) => state.users);
   const addUser = useUserStore((state) => state.addUser);
   const updateUser = useUserStore((state) => state.updateUser);
@@ -121,8 +122,14 @@ const useUserGridLogic = () => {
   useEffect(() => {
     if (fetchStartedRef.current) return;
     fetchStartedRef.current = true;
-    void handleApiCall(() => fetchUsers(), null);
-  }, [fetchUsers, handleApiCall]);
+    void handleApiCall(
+      async () => {
+        const [result] = await Promise.all([fetchUsers(), fetchCompanyOptions()]);
+        return result;
+      },
+      null,
+    );
+  }, [fetchCompanyOptions, fetchUsers, handleApiCall]);
 
   return {
     dialogType,
@@ -155,6 +162,8 @@ function toCreateUserRequest(formData: UserFormData): CreateUserRequest {
     email: formData.email,
     password,
     roles: formData.roles,
+    companyIds: formData.companyIds,
+    defaultCompanyId: formData.defaultCompanyId,
   };
 }
 
@@ -169,6 +178,8 @@ function toUpdateUserRequest(
     userName: formData.userName,
     email: formData.email,
     roles: formData.roles,
+    companyIds: formData.companyIds,
+    defaultCompanyId: formData.defaultCompanyId,
   };
 }
 

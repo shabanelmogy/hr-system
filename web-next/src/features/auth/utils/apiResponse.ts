@@ -1,4 +1,10 @@
-import type { Role, RoleClaim, RoleWithClaims, User } from "../types";
+import type {
+  Role,
+  RoleClaim,
+  RoleWithClaims,
+  User,
+  UserCompanyOption,
+} from "../types";
 
 type UnknownRecord = Record<string, unknown>;
 
@@ -8,6 +14,10 @@ export function parseUsersResponse(response: unknown): User[] {
 
 export function parseUserResponse(response: unknown): User {
   return parseUser(unwrapApiValue(response));
+}
+
+export function parseUserCompanyOptionsResponse(response: unknown): UserCompanyOption[] {
+  return parseArray(response, parseUserCompanyOption, "user company options");
 }
 
 export function parseRolesResponse(response: unknown): Role[] {
@@ -47,6 +57,18 @@ function parseUser(value: unknown): User {
     isLocked: requireBoolean(record.isLocked, "user.isLocked"),
     profilePicture: optionalString(record.profilePicture),
     roles: parseStringArray(record.roles, "user.roles"),
+    companyIds: parseNumberArray(record.companyIds, "user.companyIds"),
+    defaultCompanyId: optionalNumber(record.defaultCompanyId, "user.defaultCompanyId"),
+  };
+}
+
+function parseUserCompanyOption(value: unknown): UserCompanyOption {
+  const record = requireRecord(value, "user company option");
+  return {
+    id: requireNumber(record.id, "userCompanyOption.id"),
+    nameAr: requireString(record.nameAr, "userCompanyOption.nameAr"),
+    nameEn: requireString(record.nameEn, "userCompanyOption.nameEn"),
+    isActive: requireBoolean(record.isActive, "userCompanyOption.isActive"),
   };
 }
 
@@ -111,6 +133,24 @@ function requireBoolean(value: unknown, label: string): boolean {
     throw new Error(`Invalid ${label} response: expected a boolean.`);
   }
   return value;
+}
+
+function requireNumber(value: unknown, label: string): number {
+  if (typeof value !== "number" || !Number.isInteger(value) || value <= 0) {
+    throw new Error(`Invalid ${label}: expected a positive integer.`);
+  }
+  return value;
+}
+
+function optionalNumber(value: unknown, label: string): number | null {
+  return value == null ? null : requireNumber(value, label);
+}
+
+function parseNumberArray(value: unknown, label: string): number[] {
+  if (!Array.isArray(value)) {
+    throw new Error(`Invalid ${label}: expected a number array.`);
+  }
+  return value.map((item, index) => requireNumber(item, `${label}[${index}]`));
 }
 
 function parseStringArray(value: unknown, label: string): string[] {

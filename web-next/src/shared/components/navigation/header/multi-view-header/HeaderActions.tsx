@@ -26,6 +26,7 @@ import type {
   HeaderActions as HeaderActionsConfig,
   HeaderExportOption,
 } from "./types";
+import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 
 type HeaderActionsProps = {
   actions: HeaderActionsConfig;
@@ -55,6 +56,7 @@ function exportIcon(format: HeaderExportOption["format"]) {
 export default function HeaderActions(props: HeaderActionsProps) {
   const { t } = useTranslation();
   const theme = useTheme();
+  const { isReadOnly } = useAppReadOnly();
   const exportMenuId = useId();
   const [exportAnchor, setExportAnchor] = useState<HTMLElement | null>(null);
   const isExporting = props.exportOptions.some((option) => option.loading);
@@ -73,6 +75,7 @@ export default function HeaderActions(props: HeaderActionsProps) {
             variant="contained"
             startIcon={<Add />}
             onClick={props.onAdd}
+            disabled={isReadOnly}
             size="small"
             aria-label={props.iconOnlyAdd ? t("actions.add") || "Add" : undefined}
             sx={{

@@ -1,5 +1,6 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import AddIcon from "@mui/icons-material/Add";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import EditIcon from "@mui/icons-material/Edit";
@@ -22,13 +23,18 @@ import {
   Typography,
 } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { MySelect, MyTextField } from "@/shared/components/forms";
 import { ContentWrapper } from "@/shared/components/layout";
 import { PageHeader } from "@/shared/components/navigation/header";
 import { tenantApi, tenantKeys } from "./tenantApi";
+import {
+  createTenantValidationSchema,
+  type TenantFormState,
+} from "./tenantValidation";
 import { useTenantsQuery } from "./useTenantsQuery";
 import {
   subscriptionStatuses,
@@ -36,22 +42,6 @@ import {
   type TenantManagementRequest,
   type TenantManagementResponse,
 } from "./types";
-
-interface TenantFormState {
-  identifier: string;
-  name: string;
-  isActive: boolean;
-  subscriptionStatus: SubscriptionStatus;
-  subscriptionStartedOn: string;
-  subscriptionEndsOn: string;
-  planName: string;
-  maxAdmins: string;
-  maxUsers: string;
-  billingEmail: string;
-  contactName: string;
-  contactPhone: string;
-  notes: string;
-}
 
 export default function TenantManagementPage() {
   const { t } = useTranslation();
@@ -88,9 +78,8 @@ export default function TenantManagementPage() {
     saveMutation.reset();
   };
 
-  const save = () => {
-    if (!form || !form.identifier.trim() || !form.name.trim() || !form.subscriptionStartedOn) return;
-    saveMutation.mutate({ id: editing?.id ?? null, request: toRequest(form) });
+  const save = (values: TenantFormState) => {
+    saveMutation.mutate({ id: editing?.id ?? null, request: toRequest(values) });
   };
 
   return (
@@ -127,15 +116,16 @@ export default function TenantManagementPage() {
         </Box>
       )}
 
-      <TenantDialog
-        form={form}
-        isEdit={Boolean(editing)}
-        error={saveMutation.isError ? getErrorMessage(saveMutation.error) : null}
-        loading={saveMutation.isPending}
-        onChange={setForm}
-        onClose={closeDialog}
-        onSave={save}
-      />
+      {form ? (
+        <TenantDialog
+          form={form}
+          isEdit={Boolean(editing)}
+          error={saveMutation.isError ? getErrorMessage(saveMutation.error) : null}
+          loading={saveMutation.isPending}
+          onClose={closeDialog}
+          onSave={save}
+        />
+      ) : null}
     </ContentWrapper>
   );
 }
@@ -218,163 +208,207 @@ function TenantDialog({
   isEdit,
   error,
   loading,
-  onChange,
   onClose,
   onSave,
 }: {
-  form: TenantFormState | null;
+  form: TenantFormState;
   isEdit: boolean;
   error: string | null;
   loading: boolean;
-  onChange: (form: TenantFormState) => void;
   onClose: () => void;
-  onSave: () => void;
+  onSave: (form: TenantFormState) => void;
 }) {
   const { t } = useTranslation();
-  if (!form) return null;
-
-  const set = <K extends keyof TenantFormState>(key: K, value: TenantFormState[K]) =>
-    onChange({ ...form, [key]: value });
+  const schema = useMemo(
+    () => createTenantValidationSchema({
+      required: t("validation.required"),
+      maxLength: (count) => t("validation.maxLength", { count }),
+      invalidIdentifier: t("tenantManagement.validation.invalidIdentifier"),
+      invalidOption: t("tenantManagement.validation.invalidOption"),
+      invalidDate: t("tenantManagement.validation.invalidDate"),
+      endDateBeforeStart: t("tenantManagement.validation.endDateBeforeStart"),
+      wholeNumberMin: (minimum) =>
+        t("tenantManagement.validation.wholeNumberMin", { minimum }),
+      invalidEmail: t("validation.invalidEmail"),
+    }),
+    [t],
+  );
+  const {
+    control,
+    handleSubmit,
+    register,
+    watch,
+    formState: { errors },
+  } = useForm<TenantFormState>({
+    defaultValues: form,
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    resolver: zodResolver(schema),
+  });
+  const subscriptionStartedOn = watch("subscriptionStartedOn");
 
   return (
     <Dialog open fullWidth maxWidth="md" onClose={onClose}>
-      <DialogTitle>
-        {isEdit ? t("tenantManagement.editTenant") : t("tenantManagement.addTenant")}
-      </DialogTitle>
-      <DialogContent>
-        <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, gap: 2, pt: 1 }}>
+      <Box component="form" onSubmit={(event) => void handleSubmit(onSave)(event)}>
+        <DialogTitle>
+          {isEdit ? t("tenantManagement.editTenant") : t("tenantManagement.addTenant")}
+        </DialogTitle>
+        <DialogContent>
+          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, gap: 2, pt: 1 }}>
           <MyTextField
             counter
+            errors={errors}
             fieldName="identifier"
             label={t("tenantManagement.identifier")}
             margin="none"
             maxValue={100}
-            onChange={(event) => set("identifier", event.target.value)}
+            register={register}
             required
-            value={form.identifier}
           />
           <MyTextField
             counter
+            errors={errors}
             fieldName="name"
             label={t("tenantManagement.name")}
             margin="none"
             maxValue={200}
-            onChange={(event) => set("name", event.target.value)}
+            register={register}
             required
-            value={form.name}
           />
           <MyTextField
             counter
+            errors={errors}
             fieldName="planName"
             label={t("tenantManagement.plan")}
             margin="none"
             maxValue={100}
-            onChange={(event) => set("planName", event.target.value)}
-            value={form.planName}
+            register={register}
           />
           <MySelect
             all={false}
+            control={control}
             dataSource={subscriptionStatuses.map((status) => ({
               label: t(`tenantManagement.statuses.${status}`),
               value: status,
             }))}
             displayMember="label"
-            handleSelectionChange={(event) => set("subscriptionStatus", event.target.value as SubscriptionStatus)}
+            errors={errors}
             label={t("tenantManagement.status")}
-            selectedItem={form.subscriptionStatus}
+            name="subscriptionStatus"
+            required
             showClearButton={false}
             valueMember="value"
           />
           <MyTextField
             counter={false}
+            errors={errors}
             fieldName="subscriptionStartedOn"
             label={t("tenantManagement.startsOn")}
             margin="none"
-            onChange={(event) => set("subscriptionStartedOn", event.target.value)}
+            register={register}
+            required
             type="date"
-            value={form.subscriptionStartedOn}
           />
           <MyTextField
             counter={false}
+            errors={errors}
             fieldName="subscriptionEndsOn"
             label={t("tenantManagement.endsOn")}
             margin="none"
-            onChange={(event) => set("subscriptionEndsOn", event.target.value)}
+            register={register}
+            required
+            slotProps={{ htmlInput: { min: subscriptionStartedOn || undefined } }}
             type="date"
-            value={form.subscriptionEndsOn}
           />
           <MyTextField
             counter={false}
+            errors={errors}
             fieldName="maxAdmins"
             label={t("tenantManagement.maxAdmins")}
             margin="none"
-            minValue={0}
-            onChange={(event) => set("maxAdmins", event.target.value)}
+            minValue={1}
+            register={register}
+            required
             type="number"
-            value={form.maxAdmins}
           />
           <MyTextField
             counter={false}
+            errors={errors}
             fieldName="maxUsers"
             label={t("tenantManagement.maxUsers")}
             margin="none"
             minValue={0}
-            onChange={(event) => set("maxUsers", event.target.value)}
+            register={register}
+            required
             type="number"
-            value={form.maxUsers}
           />
           <MyTextField
             counter
+            errors={errors}
             fieldName="billingEmail"
             label={t("tenantManagement.billingEmail")}
             margin="none"
             maxValue={256}
-            onChange={(event) => set("billingEmail", event.target.value)}
+            register={register}
             type="email"
-            value={form.billingEmail}
           />
           <MyTextField
             counter
+            errors={errors}
             fieldName="contactName"
             label={t("tenantManagement.contactName")}
             margin="none"
             maxValue={200}
-            onChange={(event) => set("contactName", event.target.value)}
-            value={form.contactName}
+            register={register}
           />
           <MyTextField
             counter
+            errors={errors}
             fieldName="contactPhone"
             label={t("tenantManagement.contactPhone")}
             margin="none"
             maxValue={32}
-            onChange={(event) => set("contactPhone", event.target.value)}
+            register={register}
             type="tel"
-            value={form.contactPhone}
           />
-          <FormControlLabel control={<Switch checked={form.isActive} onChange={(_, checked) => set("isActive", checked)} />} label={t("tenantManagement.tenantEnabled")} />
+          <Controller
+            control={control}
+            name="isActive"
+            render={({ field }) => (
+              <FormControlLabel
+                control={(
+                  <Switch
+                    checked={field.value}
+                    onChange={(_, checked) => field.onChange(checked)}
+                  />
+                )}
+                label={t("tenantManagement.tenantEnabled")}
+              />
+            )}
+          />
           <Box sx={{ gridColumn: { sm: "1 / -1" } }}>
             <MyTextField
               counter
+              errors={errors}
               fieldName="notes"
               label={t("tenantManagement.notes")}
               margin="none"
               maxValue={2000}
               multiline
-              onChange={(event) => set("notes", event.target.value)}
+              register={register}
               rows={3}
-              value={form.notes}
             />
           </Box>
-        </Box>
-        {error ? <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert> : null}
-      </DialogContent>
-      <DialogActions>
-        <Button disabled={loading} onClick={onClose}>{t("actions.cancel")}</Button>
-        <Button disabled={loading || !form.identifier.trim() || !form.name.trim() || !form.subscriptionStartedOn} variant="contained" onClick={onSave}>
-          {loading ? <CircularProgress size={20} /> : t("actions.save")}
-        </Button>
-      </DialogActions>
+          </Box>
+          {error ? <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert> : null}
+        </DialogContent>
+        <DialogActions>
+          <Button disabled={loading} onClick={onClose}>{t("actions.cancel")}</Button>
+          <Button disabled={loading} type="submit" variant="contained">
+            {loading ? <CircularProgress size={20} /> : t("actions.save")}
+          </Button>
+        </DialogActions>
+      </Box>
     </Dialog>
   );
 }
@@ -423,7 +457,7 @@ function toRequest(form: TenantFormState): TenantManagementRequest {
     isActive: form.isActive,
     subscriptionStatus: form.subscriptionStatus,
     subscriptionStartedOn: new Date(`${form.subscriptionStartedOn}T00:00:00Z`).toISOString(),
-    subscriptionEndsOn: form.subscriptionEndsOn ? new Date(`${form.subscriptionEndsOn}T23:59:59Z`).toISOString() : null,
+    subscriptionEndsOn: new Date(`${form.subscriptionEndsOn}T23:59:59Z`).toISOString(),
     planName: optional(form.planName),
     maxAdmins: Math.max(1, Number.parseInt(form.maxAdmins, 10) || 1),
     maxUsers: Math.max(0, Number.parseInt(form.maxUsers, 10) || 0),

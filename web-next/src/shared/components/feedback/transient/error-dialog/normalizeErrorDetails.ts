@@ -8,7 +8,7 @@ export function normalizeErrorDetails(
   if (isErrorDialogDetails(error)) {
     return {
       ...error,
-      title: cleanString(error.title) ?? cleanString(fallbackTitle),
+      title: cleanString(fallbackTitle) ?? cleanString(error.title),
       messages: uniqueMessages(error.messages),
       errorCodes: uniqueMessages(error.errorCodes),
       reportId: error.reportId ?? runtime.reportId,
@@ -47,13 +47,16 @@ function normalizePayload(
   const messages = toMessages(errors);
 
   return {
-    title: cleanString(source.title) ?? cleanString(value.title) ?? title,
+    title: title ?? cleanString(source.title) ?? cleanString(value.title),
     messages: messages.length > 0 ? messages : uniqueMessages([detail, message]),
     status: finiteNumber(source.status) ?? finiteNumber(value.status),
     traceId: cleanString(source.traceId) ?? cleanString(value.traceId),
+    correlationId:
+      cleanString(source.correlationId) ?? cleanString(value.correlationId),
     errorType: cleanString(source.type) ?? cleanString(value.type),
     errorCodes: toMessages(source.errorCodes ?? value.errorCodes),
     detail,
+    stack: cleanString(value.stack),
   };
 }
 

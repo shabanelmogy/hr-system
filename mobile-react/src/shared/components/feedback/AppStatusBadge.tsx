@@ -2,6 +2,7 @@ import { type StyleProp, StyleSheet, View, type ViewStyle } from 'react-native';
 
 import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon';
 import { AppText } from '@/src/shared/components/typography/AppText';
+import { useLocalization } from '@/src/core/localization';
 
 export interface AppStatusBadgeProps {
   label: string;
@@ -18,6 +19,7 @@ export function AppStatusBadge({
   variant = 'soft',
   style,
 }: AppStatusBadgeProps) {
+  const { direction } = useLocalization();
   const solid = variant === 'solid';
 
   return (
@@ -26,6 +28,7 @@ export function AppStatusBadge({
       style={[
         styles.badge,
         {
+          direction,
           backgroundColor: solid ? color : variant === 'soft' ? `${color}1A` : 'transparent',
           borderColor: color,
         },

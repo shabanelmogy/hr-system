@@ -23,6 +23,7 @@ export interface AppModalProps extends PropsWithChildren {
   title: string;
   subtitle?: string;
   icon?: AppIconName;
+  iconColor?: string;
   onClose?: () => void;
   closeDisabled?: boolean;
   closeLabel?: string;
@@ -40,6 +41,7 @@ export function AppModal({
   title,
   subtitle,
   icon,
+  iconColor,
   onClose,
   closeDisabled = false,
   closeLabel = 'Close',
@@ -69,7 +71,7 @@ export function AppModal({
             styles.headerIcon,
             { backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radius.md },
           ]}>
-          <AppIcon color={theme.colors.primary} name={icon} size={25} />
+          <AppIcon color={iconColor ?? theme.colors.primary} name={icon} size={25} />
         </View>
       ) : null}
       <View style={styles.heading}>

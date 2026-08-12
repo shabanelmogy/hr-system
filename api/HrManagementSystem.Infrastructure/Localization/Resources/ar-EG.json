@@ -11,6 +11,8 @@
     "Create": "إضافة",
     "Save": "حفظ",
     "Name": "الاسم",
+    "TenantReadOnlyTitle": "انتهى الاشتراك",
+    "TenantReadOnlyDetail": "هذا المستأجر في وضع القراءة فقط بسبب انتهاء الاشتراك. جدّد الاشتراك للسماح بالتعديلات.",
 
     //Validation Keys
     "Required": "{PropertyName} حقل مطلوب حالاً",
@@ -229,5 +231,6 @@
     "UserEnabledNotificationMessage": "تم تفعيل المستخدم {UserName}",
     "UserUnlockedNotificationMessage": "تم إلغاء قفل المستخدم {UserName}",
     "NoCompanyAccess": "لا يملك حسابك صلاحية الوصول إلى شركة نشطة",
-    "InvalidCompanySelection": "اختيار الشركة غير صالح أو انتهت صلاحيته"
+    "InvalidCompanySelection": "اختيار الشركة غير صالح أو انتهت صلاحيته",
+    "CannotManageOwnAccount": "استخدم إعدادات الملف الشخصي لحسابك. لا يمكن من إدارة المستخدمين تغيير أدوارك أو صلاحيات الشركات أو حالة حسابك الحالي"
 }

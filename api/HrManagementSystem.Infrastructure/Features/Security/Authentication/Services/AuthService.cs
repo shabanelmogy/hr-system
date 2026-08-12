@@ -113,7 +113,7 @@ public sealed class AuthService(
             return Result.Failure<AuthResponse>(userErrors.InvalidCompanySelection);
         }
 
-        if (!await IsTenantActiveAsync(user.TenantId, cancellationToken))
+        if (!await CanTenantSignInAsync(user.TenantId, cancellationToken))
             return Result.Failure<AuthResponse>(userErrors.InvalidCompanySelection);
 
         var canAccess = await context.UserCompanyAccesses
@@ -256,6 +256,9 @@ public sealed class AuthService(
         string userId,
         CancellationToken cancellationToken = default)
     {
+        if (string.Equals(userId, currentActor.UserId, StringComparison.Ordinal))
+            return Result.Failure(userErrors.CannotManageOwnAccount);
+
         var tenantId = currentActor.TenantId;
         var user = string.IsNullOrWhiteSpace(tenantId)
             ? null
@@ -268,6 +271,12 @@ public sealed class AuthService(
         if (user is null)
             return Result.Failure(userErrors.UserNotFound);
 
+        if (await userManager.IsInRoleAsync(user, AppRoles.super_admin))
+            return Result.Failure(userErrors.UserNotFound);
+
+        if (!await IsUserWithinActorCompanyScopeAsync(user.Id, tenantId!, cancellationToken))
+            return Result.Failure(userErrors.UserNotFound);
+
         var now = timeProvider.GetUtcNow().UtcDateTime;
         foreach (var token in user.RefreshTokens.Where(token => token.IsActiveAt(now)))
             token.Revoke("Revoked by an administrator", now);
@@ -278,6 +287,33 @@ public sealed class AuthService(
 
         QueueSessionRevoked(user.Id, "Your session has been revoked by an administrator.");
         return Result.Success();
+    }
+
+    private async Task<bool> IsUserWithinActorCompanyScopeAsync(
+        string userId,
+        string tenantId,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(currentActor.UserId))
+            return false;
+
+        var actorCompanyIds = await context.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Where(access =>
+                access.TenantId == tenantId &&
+                access.UserId == currentActor.UserId)
+            .Select(access => access.CompanyId)
+            .ToHashSetAsync(cancellationToken);
+        var userCompanyIds = await context.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Where(access => access.TenantId == tenantId && access.UserId == userId)
+            .Select(access => access.CompanyId)
+            .Distinct()
+            .ToArrayAsync(cancellationToken);
+
+        return userCompanyIds.Length > 0 && userCompanyIds.All(actorCompanyIds.Contains);
     }
 
     // -------------------------------------------------------------------------
@@ -491,7 +527,7 @@ public sealed class AuthService(
         ApplicationUser user,
         CancellationToken cancellationToken)
     {
-        if (!await IsTenantActiveAsync(user.TenantId, cancellationToken))
+        if (!await CanTenantSignInAsync(user.TenantId, cancellationToken))
             return Result.Failure<LoginResult>(userErrors.NoCompanyAccess);
 
         var companies = await context.UserCompanyAccesses
@@ -537,7 +573,7 @@ public sealed class AuthService(
         int companyId,
         CancellationToken cancellationToken)
     {
-        if (!await IsTenantActiveAsync(tenantId, cancellationToken))
+        if (!await CanTenantSignInAsync(tenantId, cancellationToken))
             return false;
 
         return await context.UserCompanyAccesses
@@ -550,11 +586,10 @@ public sealed class AuthService(
                 cancellationToken);
     }
 
-    private Task<bool> IsTenantActiveAsync(
+    private Task<bool> CanTenantSignInAsync(
         string tenantId,
         CancellationToken cancellationToken)
     {
-        var now = timeProvider.GetUtcNow().UtcDateTime;
         return context.Tenants
             .AsNoTracking()
             .AnyAsync(
@@ -562,9 +597,7 @@ public sealed class AuthService(
                     tenant.Id == tenantId &&
                     tenant.IsActive &&
                     tenant.SubscriptionStatus != SubscriptionStatus.Suspended &&
-                    tenant.SubscriptionStatus != SubscriptionStatus.Expired &&
-                    tenant.SubscriptionStatus != SubscriptionStatus.Cancelled &&
-                    (!tenant.SubscriptionEndsOn.HasValue || tenant.SubscriptionEndsOn >= now),
+                    tenant.SubscriptionStatus != SubscriptionStatus.Cancelled,
                 cancellationToken);
     }
 
@@ -643,6 +676,8 @@ public sealed class AuthService(
             user.FirstName,
             user.LastName,
             user.TenantId,
+            accessToken.TenantName,
+            accessToken.TenantPlanName,
             companyId,
             accessToken.Token,
             accessToken.ExpiresAt,

@@ -12,6 +12,8 @@ namespace HrManagementSystem.Application.Common.Consts
 
         public const string StartEndDateValidation = nameof(StartEndDateValidation);
 
+        public const string InvalidDate = nameof(InvalidDate);
+
         public const string InvalidPassword = nameof(InvalidPassword);
 
         public const string InvalidNewPassword = nameof(InvalidNewPassword);

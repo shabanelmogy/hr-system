@@ -5,12 +5,14 @@ import {
   parseAuthResponse,
   parseLoginOutcome,
   parseSessionResponse,
+  parseUserPhoto,
 } from '@/src/features/auth/schemas/auth-response-schema';
 import type {
   AuthResponse,
   LoginOutcome,
   LoginRequest,
   SessionResponse,
+  UserPhoto,
 } from '@/src/features/auth/types/auth';
 
 let refreshInFlight: Promise<string | null> | null = null;
@@ -41,6 +43,11 @@ export const authApi = {
     return parseSessionResponse(response);
   },
 
+  async getUserPhoto(): Promise<UserPhoto> {
+    const response = await apiService.get<unknown>(AUTH_ENDPOINTS.userPhoto);
+    return parseUserPhoto(response);
+  },
+
   async logout(): Promise<void> {
     const refreshToken = await secureSession.getRefreshToken();
     if (!refreshToken) {
@@ -50,7 +57,7 @@ export const authApi = {
     await apiService.post<void, { refreshToken: string }>(
       AUTH_ENDPOINTS.logout,
       { refreshToken },
-      { skipAuthRefresh: true },
+      { skipAuthRefresh: true, allowWhenReadOnly: true },
     );
   },
 
@@ -79,7 +86,7 @@ async function performRefresh(): Promise<string | null> {
     const response = await apiService.post<unknown, { token: string; refreshToken: string }>(
       AUTH_ENDPOINTS.refreshToken,
       { token, refreshToken },
-      { skipAuth: true, skipAuthRefresh: true },
+      { skipAuth: true, skipAuthRefresh: true, allowWhenReadOnly: true },
     );
     const authResponse = parseAuthResponse(response);
     await secureSession.setTokens(authResponse.token, authResponse.refreshToken);

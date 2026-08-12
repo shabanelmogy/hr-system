@@ -175,6 +175,8 @@ function decodeApiValidatedClaims(token: string): SessionClaims | null {
     const session: SessionClaims = {
       userId: asString(payload[nameIdentifier] ?? payload.sub),
       tenantId: asString(payload.tenant_id ?? payload.tenantId),
+      tenantName: asString(payload.tenant_name ?? payload.tenantName),
+      tenantPlanName: asString(payload.tenant_plan ?? payload.tenantPlanName),
       companyId: asPositiveInteger(payload.company_id ?? payload.companyId),
       userName: asString(payload[name] ?? payload.name),
       email: asString(payload[email] ?? payload.email),
@@ -182,6 +184,9 @@ function decodeApiValidatedClaims(token: string): SessionClaims | null {
       lastName: asString(payload.lastname ?? payload.lastName),
       roles: asStringArray(payload[role] ?? payload.roles ?? payload.role),
       permissions: asStringArray(payload.Permissions ?? payload.permissions),
+      tenantSubscriptionStatus: "active",
+      tenantSubscriptionEndsOn: null,
+      tenantReadOnly: false,
       expiresAt,
     };
 

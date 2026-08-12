@@ -27,6 +27,7 @@ interface AuthContextValue {
   selectCompany: (token: string, companyId: number) => Promise<void>;
   signOut: () => Promise<void>;
   retry: () => Promise<void>;
+  refreshSession: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -99,6 +100,12 @@ export function AuthProvider({ children }: PropsWithChildren) {
     setStatus('authenticated');
   };
 
+  const refreshSession = useCallback(async () => {
+    const refreshedSession = await authApi.session();
+    setSession(refreshedSession);
+    setStatus('authenticated');
+  }, []);
+
   const signIn = async (request: LoginRequest): Promise<LoginOutcome> => {
     const result = await authApi.login(request);
     if (result.kind === 'authenticated') {
@@ -129,6 +136,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     selectCompany,
     signOut,
     retry: bootstrap,
+    refreshSession,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
@@ -153,6 +161,8 @@ function createProvisionalSession(response: AuthResponse): SessionResponse {
   return {
     userId: response.id,
     tenantId: response.tenantId,
+    tenantName: response.tenantName,
+    tenantPlanName: response.tenantPlanName,
     companyId: response.companyId,
     userName: response.userName,
     email: '',
@@ -160,6 +170,9 @@ function createProvisionalSession(response: AuthResponse): SessionResponse {
     lastName: response.lastName,
     roles: [],
     permissions: [],
+    tenantSubscriptionStatus: 'active',
+    tenantSubscriptionEndsOn: null,
+    tenantReadOnly: false,
     expiresAt: Date.parse(response.tokenExpiration),
   };
 }

@@ -11,6 +11,8 @@
     "Create": "Create",
     "Save": "Save",
     "Name": "Name",
+    "TenantReadOnlyTitle": "Subscription expired",
+    "TenantReadOnlyDetail": "This tenant is in read-only mode because its subscription has expired. Renew the subscription to make changes.",
 
     //Validation Keys
     "Required": "{PropertyName} is required field",
@@ -226,5 +228,6 @@
     "UserEnabledNotificationMessage": "User {UserName} was enabled",
     "UserUnlockedNotificationMessage": "User {UserName} was unlocked",
     "NoCompanyAccess": "Your account does not have access to an active company",
-    "InvalidCompanySelection": "The company selection is invalid or has expired"
+    "InvalidCompanySelection": "The company selection is invalid or has expired",
+    "CannotManageOwnAccount": "Use your profile settings for your own account. User Management cannot change your own roles, company access, or status"
 }

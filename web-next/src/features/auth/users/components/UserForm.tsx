@@ -9,6 +9,7 @@ import {
   type SvgIconProps,
 } from "@mui/material";
 import {
+  Business,
   VpnKey,
   Security,
 } from "@mui/icons-material";
@@ -22,6 +23,9 @@ import useRoleStore from "../../roles/store/useRoleStore";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import type { Translator, User } from "../../types";
 import useApiHandler from "@/shared/hooks/useApiHandler";
+import { useSession } from "@/lib/auth/SessionContext";
+import { useTranslation } from "react-i18next";
+import useUserStore from "../store/useUserStore";
 
 interface UserFormProps {
   open: boolean;
@@ -42,6 +46,8 @@ const UserForm = ({
   loading,
   t,
 }: UserFormProps) => {
+  const { i18n } = useTranslation();
+  const { user: currentUser } = useSession();
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const userNameRef = useRef<HTMLInputElement>(null);
@@ -59,6 +65,8 @@ const UserForm = ({
 
   const roles = useRoleStore((state) => state.roles);
   const fetchRoles = useRoleStore((state) => state.fetchRoles);
+  const companyOptions = useUserStore((state) => state.companyOptions);
+  const fetchCompanyOptions = useUserStore((state) => state.fetchCompanyOptions);
 
   const isViewMode = dialogType === "view";
   const isEditMode = dialogType === "edit";
@@ -70,6 +78,7 @@ const UserForm = ({
   const {
     handleSubmit,
     reset,
+    getValues,
     setValue,
     control,
     clearErrors,
@@ -87,18 +96,23 @@ const UserForm = ({
       confirmPassword: "",
       isDisabled: false,
       roles: [],
+      companyIds: [],
+      defaultCompanyId: 0,
     },
   });
 
   // Watch password for strength indicator
   const watchedPassword = useWatch({ control, name: "password" });
+  const watchedCompanyIds = useWatch({ control, name: "companyIds" }) ?? [];
 
   // Fetch roles when form opens
   useEffect(() => {
     if (open) {
-      void handleRolesApiCall(() => fetchRoles());
+      void handleRolesApiCall(async () => {
+        await Promise.all([fetchRoles(), fetchCompanyOptions()]);
+      });
     }
-  }, [open, fetchRoles, handleRolesApiCall]);
+  }, [open, fetchCompanyOptions, fetchRoles, handleRolesApiCall]);
 
   // Reset password section state when dialog opens/closes
   useEffect(() => {
@@ -146,6 +160,16 @@ const UserForm = ({
       color: getRandomRoleColor(role.name),
       ...role,
     }));
+  const localizedCompanyOptions = companyOptions
+    .filter((company) => company.isActive)
+    .map((company) => ({
+      ...company,
+      label: i18n.language.startsWith("ar") ? company.nameAr : company.nameEn,
+      value: company.id,
+    }));
+  const selectedDefaultCompanyOptions = localizedCompanyOptions.filter((company) =>
+    watchedCompanyIds.includes(company.id),
+  );
 
   // Password strength checker
   const getPasswordStrength = (password?: string | null) => {
@@ -189,6 +213,16 @@ const UserForm = ({
         profilePicture:
           isEditMode || isViewMode ? selectedUser?.profilePicture || "" : "",
         roles: isEditMode || isViewMode ? selectedUser?.roles || [] : [],
+        companyIds:
+          isEditMode || isViewMode
+            ? selectedUser?.companyIds || []
+            : currentUser?.companyId
+              ? [currentUser.companyId]
+              : [],
+        defaultCompanyId:
+          isEditMode || isViewMode
+            ? selectedUser?.defaultCompanyId ?? selectedUser?.companyIds[0] ?? 0
+            : currentUser?.companyId ?? 0,
       };
 
       reset(userData);
@@ -201,7 +235,16 @@ const UserForm = ({
         }, 100);
       }
     }
-  }, [open, dialogType, selectedUser, reset, isEditMode, isViewMode, clearErrors]);
+  }, [
+    open,
+    dialogType,
+    selectedUser,
+    reset,
+    isEditMode,
+    isViewMode,
+    clearErrors,
+    currentUser?.companyId,
+  ]);
 
   // Get appropriate action type for overlay
   const getOverlayActionType = () => {
@@ -258,6 +301,8 @@ const UserForm = ({
         UserName: "userName",
         Email: "email",
         Roles: "roles",
+        CompanyIds: "companyIds",
+        DefaultCompanyId: "defaultCompanyId",
         "User.DuplicatedUserName": "userName",
         "User.DuplicatedEmail": "email",
         "Role.InvalidRoles": "roles",
@@ -402,6 +447,70 @@ const UserForm = ({
           errors={errors}
           actualFieldName="roles"
         />
+      </Box>
+      <Box sx={{ mt: 2 }}>
+        <Divider sx={{ mb: 2 }}>
+          <Typography variant="body2" color="text.secondary">
+            {t("users.companyAccessSection")}
+          </Typography>
+        </Divider>
+
+        <MySelect
+          control={control}
+          name="companyIds"
+          label={t("users.companies")}
+          dataSource={localizedCompanyOptions}
+          valueMember="value"
+          displayMember="label"
+          multiple
+          required
+          loading={rolesLoading}
+          disabled={isViewMode || loading}
+          placeholder={t("users.companiesPlaceholder")}
+          loadingText={t("users.loadingCompanies")}
+          noOptionsText={t("users.noCompaniesFound")}
+          isViewMode={isViewMode}
+          errors={errors}
+          actualFieldName="companyIds"
+          defaultChipColor="info"
+          onChange={(_event, selected) => {
+            const selectedCompanies = Array.isArray(selected) ? selected : [];
+            const selectedIds = selectedCompanies.map((company) => company.id);
+            const currentDefault = getValues("defaultCompanyId");
+            if (!selectedIds.includes(currentDefault)) {
+              setValue("defaultCompanyId", selectedIds[0] ?? 0, {
+                shouldDirty: true,
+                shouldValidate: true,
+              });
+            }
+          }}
+        />
+
+        <Box sx={{ mt: 2 }}>
+          <MySelect
+            control={control}
+            name="defaultCompanyId"
+            label={t("users.defaultCompany")}
+            dataSource={selectedDefaultCompanyOptions}
+            valueMember="value"
+            displayMember="label"
+            required
+            loading={rolesLoading}
+            disabled={isViewMode || loading || watchedCompanyIds.length === 0}
+            placeholder={t("users.defaultCompanyPlaceholder")}
+            loadingText={t("users.loadingCompanies")}
+            noOptionsText={t("users.selectCompaniesFirst")}
+            isViewMode={isViewMode}
+            errors={errors}
+            actualFieldName="defaultCompanyId"
+          />
+        </Box>
+
+        {!isViewMode ? (
+          <Alert severity="info" icon={<Business />} sx={{ mt: 2 }}>
+            {t("users.companyAccessHint")}
+          </Alert>
+        ) : null}
       </Box>
       {/* Password Section */}
       {!isViewMode && (

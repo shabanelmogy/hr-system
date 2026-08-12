@@ -9,7 +9,6 @@ import { TenantFormModal } from '@/src/features/tenants/components/TenantFormMod
 import { useSaveTenant, useTenants } from '@/src/features/tenants/hooks/useTenants';
 import type {
   SubscriptionStatus,
-  TenantFormErrors,
   TenantFormState,
   TenantManagementRequest,
   TenantManagementResponse,
@@ -18,12 +17,17 @@ import {
   AppAlert,
   AppButton,
   AppCard,
+  AppDataTable,
+  type AppDataTableColumn,
   AppIcon,
+  AppIconButton,
   type AppIconName,
+  AppMultiView,
   AppScreen,
   AppStateView,
   AppStatusBadge,
   AppText,
+  showToast,
 } from '@/src/shared/components';
 
 const statusIcons = {
@@ -36,78 +40,133 @@ const statusIcons = {
   cancelled: 'close-circle-outline',
 } as const satisfies Record<SubscriptionStatus, AppIconName>;
 
+type TenantView = 'table' | 'cards';
+
 export function TenantManagementScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { direction } = useLocalization();
   const { theme } = useAppTheme();
   const tenantsQuery = useTenants();
   const saveMutation = useSaveTenant();
   const [editing, setEditing] = useState<TenantManagementResponse | null>(null);
   const [form, setForm] = useState<TenantFormState | null>(null);
-  const [formError, setFormError] = useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = useState<TenantFormErrors>({});
+  const tenants = tenantsQuery.data ?? [];
 
   const openCreate = () => {
     saveMutation.reset();
     setEditing(null);
     setForm(createEmptyForm());
-    setFormError(null);
-    setFieldErrors({});
   };
 
   const openEdit = (tenant: TenantManagementResponse) => {
     saveMutation.reset();
     setEditing(tenant);
     setForm(toForm(tenant));
-    setFormError(null);
-    setFieldErrors({});
   };
 
   const closeForm = () => {
     if (saveMutation.isPending) return;
     setEditing(null);
     setForm(null);
-    setFormError(null);
-    setFieldErrors({});
     saveMutation.reset();
   };
 
-  const clearFieldError = (field: keyof TenantFormState) => {
-    setFieldErrors((current) => {
-      if (!current[field]) return current;
-      const next = { ...current };
-      delete next[field];
-      return next;
-    });
-  };
-
-  const save = async () => {
-    if (!form) return;
-
-    const validationErrors = validateForm(form, {
-      required: t('common.required'),
-      adminLimit: t('tenantManagement.adminLimitError'),
-      userLimit: t('tenantManagement.userLimitError'),
-      startDate: t('tenantManagement.invalidStartDate'),
-      endDate: t('tenantManagement.invalidEndDate'),
-      billingEmail: t('tenantManagement.invalidBillingEmail'),
-    });
-    if (Object.keys(validationErrors).length > 0) {
-      setFieldErrors(validationErrors);
-      setFormError(null);
-      return;
-    }
-
-    setFieldErrors({});
-    setFormError(null);
+  const save = async (values: TenantFormState) => {
     try {
-      await saveMutation.mutateAsync({ id: editing?.id ?? null, request: toRequest(form) });
+      await saveMutation.mutateAsync({ id: editing?.id ?? null, request: toRequest(values) });
       setEditing(null);
       setForm(null);
+      showToast.success(t('tenantManagement.savedSuccessfully'));
     } catch (error) {
-      setFormError(getErrorMessage(error, t('tenantManagement.saveFailed')));
+      showToast.error(error, t('tenantManagement.saveFailed'));
     }
   };
+
+  const columns: AppDataTableColumn<TenantManagementResponse>[] = [
+    {
+      id: 'tenant',
+      header: t('tenantManagement.name'),
+      width: 210,
+      render: (tenant) => (
+        <View style={styles.primaryCell}>
+          <AppText numberOfLines={1} variant="bodySmall" weight="700">{tenant.name}</AppText>
+          <AppText color="muted" numberOfLines={1} variant="caption">
+            {tenant.identifier}
+          </AppText>
+        </View>
+      ),
+    },
+    {
+      id: 'plan',
+      header: t('tenantManagement.plan'),
+      width: 130,
+      render: (tenant) => (
+        <AppText numberOfLines={1} variant="bodySmall">
+          {tenant.planName || t('tenantManagement.noPlan')}
+        </AppText>
+      ),
+    },
+    {
+      id: 'subscription',
+      header: t('tenantManagement.status'),
+      width: 145,
+      align: 'center',
+      render: (tenant) => (
+        <AppStatusBadge
+          color={getStatusColor(tenant.subscriptionStatus, theme.colors)}
+          icon={statusIcons[tenant.subscriptionStatus]}
+          label={t(`tenantManagement.statuses.${tenant.subscriptionStatus}`)}
+        />
+      ),
+    },
+    {
+      id: 'accounts',
+      header: t('tenantManagement.totalAccounts'),
+      width: 120,
+      align: 'center',
+      render: (tenant) => <AppText variant="bodySmall">{tenant.totalUserCount}</AppText>,
+    },
+    {
+      id: 'endsOn',
+      header: t('tenantManagement.endsOn'),
+      width: 150,
+      align: 'center',
+      render: (tenant) => (
+        <AppText variant="bodySmall">
+          {tenant.subscriptionEndsOn
+            ? formatDate(tenant.subscriptionEndsOn, i18n.language)
+            : t('tenantManagement.noEndDate')}
+        </AppText>
+      ),
+    },
+    {
+      id: 'status',
+      header: t('tenantManagement.tenantEnabled'),
+      width: 115,
+      align: 'center',
+      render: (tenant) => (
+        <AppStatusBadge
+          color={tenant.isActive ? theme.colors.success : theme.colors.textMuted}
+          icon={tenant.isActive ? 'checkmark-circle-outline' : 'pause-circle-outline'}
+          label={t(tenant.isActive ? 'tenantManagement.enabled' : 'tenantManagement.disabled')}
+        />
+      ),
+    },
+    {
+      id: 'actions',
+      header: t('tenantManagement.actions'),
+      width: 90,
+      align: 'center',
+      render: (tenant) => (
+        <AppIconButton
+          color={theme.colors.primary}
+          icon="create-outline"
+          label={t('tenantManagement.edit')}
+          onPress={() => openEdit(tenant)}
+        />
+      ),
+    },
+  ];
 
   return (
     <AppScreen
@@ -144,27 +203,62 @@ export function TenantManagementScreen() {
           onRetry={() => void tenantsQuery.refetch()}
           state="error"
         />
-      ) : !tenantsQuery.data?.length ? (
-        <AppStateView message={t('tenantManagement.emptyMessage')} state="empty" />
       ) : (
-        <View style={styles.list}>
-          {tenantsQuery.data.map((tenant) => (
-            <TenantCard key={tenant.id} onEdit={() => openEdit(tenant)} tenant={tenant} />
-          ))}
-        </View>
+        <AppMultiView<TenantManagementResponse, TenantView>
+          defaultView="cards"
+          emptyContent={(
+            <AppStateView message={t('tenantManagement.emptyMessage')} state="empty" />
+          )}
+          items={tenants}
+          views={[
+            {
+              value: 'table',
+              defaultPageSize: 5,
+              label: t('multiView.table'),
+              icon: 'grid-outline',
+              pageSizeOptions: [5, 10, 25],
+              render: (pageTenants) => (
+                <AppDataTable
+                  columns={columns}
+                  emptyMessage={t('tenantManagement.emptyMessage')}
+                  getRowKey={(tenant) => tenant.id}
+                  rows={pageTenants}
+                  showPagination={false}
+                />
+              ),
+            },
+            {
+              value: 'cards',
+              defaultPageSize: 2,
+              label: t('multiView.cards'),
+              icon: 'albums-outline',
+              pageSizeOptions: [2, 5, 10],
+              scrollable: true,
+              render: (pageTenants) => (
+                <View style={styles.list}>
+                  {pageTenants.map((tenant) => (
+                    <TenantCard
+                      key={tenant.id}
+                      onEdit={() => openEdit(tenant)}
+                      tenant={tenant}
+                    />
+                  ))}
+                </View>
+              ),
+            },
+          ]}
+        />
       )}
 
-      <TenantFormModal
-        error={formError}
-        errors={fieldErrors}
-        form={form}
-        isEdit={Boolean(editing)}
-        loading={saveMutation.isPending}
-        onChange={setForm}
-        onClearFieldError={clearFieldError}
-        onClose={closeForm}
-        onSave={save}
-      />
+      {form ? (
+        <TenantFormModal
+          form={form}
+          isEdit={Boolean(editing)}
+          loading={saveMutation.isPending}
+          onClose={closeForm}
+          onSave={save}
+        />
+      ) : null}
     </AppScreen>
   );
 }
@@ -265,7 +359,7 @@ function createEmptyForm(): TenantFormState {
     subscriptionStartedOn: new Date().toISOString().slice(0, 10),
     subscriptionEndsOn: '',
     planName: 'Free',
-    maxAdmins: '0',
+    maxAdmins: '1',
     maxUsers: '0',
     billingEmail: '',
     contactName: '',
@@ -300,9 +394,7 @@ function toRequest(form: TenantFormState): TenantManagementRequest {
     isActive: form.isActive,
     subscriptionStatus: form.subscriptionStatus,
     subscriptionStartedOn: new Date(`${form.subscriptionStartedOn}T00:00:00Z`).toISOString(),
-    subscriptionEndsOn: form.subscriptionEndsOn
-      ? new Date(`${form.subscriptionEndsOn}T23:59:59Z`).toISOString()
-      : null,
+    subscriptionEndsOn: new Date(`${form.subscriptionEndsOn}T23:59:59Z`).toISOString(),
     planName: optional(form.planName),
     maxAdmins: Number.parseInt(form.maxAdmins, 10),
     maxUsers: Number.parseInt(form.maxUsers, 10),
@@ -311,53 +403,6 @@ function toRequest(form: TenantFormState): TenantManagementRequest {
     contactPhone: optional(form.contactPhone),
     notes: optional(form.notes),
   };
-}
-
-function validateForm(
-  form: TenantFormState,
-  messages: {
-    required: string;
-    adminLimit: string;
-    userLimit: string;
-    startDate: string;
-    endDate: string;
-    billingEmail: string;
-  },
-): TenantFormErrors {
-  const errors: TenantFormErrors = {};
-
-  if (!form.identifier.trim()) errors.identifier = messages.required;
-  if (!form.name.trim()) errors.name = messages.required;
-  if (!form.subscriptionStartedOn) errors.subscriptionStartedOn = messages.required;
-  else if (!isDate(form.subscriptionStartedOn)) {
-    errors.subscriptionStartedOn = messages.startDate;
-  }
-
-  const maxAdmins = Number(form.maxAdmins);
-  const maxUsers = Number(form.maxUsers);
-  if (!form.maxAdmins.trim() || !Number.isInteger(maxAdmins) || maxAdmins < 0) {
-    errors.maxAdmins = messages.adminLimit;
-  }
-  if (!form.maxUsers.trim() || !Number.isInteger(maxUsers) || maxUsers < 0) {
-    errors.maxUsers = messages.userLimit;
-  }
-
-  if (
-    form.subscriptionEndsOn &&
-    (!isDate(form.subscriptionEndsOn) || form.subscriptionEndsOn < form.subscriptionStartedOn)
-  ) {
-    errors.subscriptionEndsOn = messages.endDate;
-  }
-
-  if (form.billingEmail.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.billingEmail.trim())) {
-    errors.billingEmail = messages.billingEmail;
-  }
-
-  return errors;
-}
-
-function isDate(value: string): boolean {
-  return /^\d{4}-\d{2}-\d{2}$/.test(value) && !Number.isNaN(Date.parse(`${value}T00:00:00Z`));
 }
 
 function formatDate(value: string, locale: string): string {
@@ -407,11 +452,17 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   list: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    flexWrap: 'wrap',
     gap: 14,
   },
   card: {
+    flexGrow: 1,
+    flexBasis: 320,
     gap: 16,
   },
+  primaryCell: { width: '100%', gap: 2 },
   cardHeader: {
     flexDirection: 'row',
     alignItems: 'center',

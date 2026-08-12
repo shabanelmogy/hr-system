@@ -39,7 +39,7 @@ export interface TenantManagementRequest {
   isActive: boolean;
   subscriptionStatus: SubscriptionStatus;
   subscriptionStartedOn: string;
-  subscriptionEndsOn: string | null;
+  subscriptionEndsOn: string;
   planName: string | null;
   maxAdmins: number;
   maxUsers: number;
@@ -64,5 +64,3 @@ export interface TenantFormState {
   contactPhone: string;
   notes: string;
 }
-
-export type TenantFormErrors = Partial<Record<keyof TenantFormState, string>>;

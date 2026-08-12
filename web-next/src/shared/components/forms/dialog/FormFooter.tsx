@@ -3,10 +3,12 @@ import { Box, DialogActions, Button, CircularProgress, useTheme, alpha } from "@
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "./FormContext";
 import { getFormModeIcon } from "./formModeIcon";
+import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 
 export const FormFooter: React.FC = () => {
   const theme = useTheme();
   const { t } = useTranslation();
+  const { isReadOnly } = useAppReadOnly();
   const { 
     hideFooter, 
     variant, 
@@ -61,7 +63,7 @@ export const FormFooter: React.FC = () => {
           <Button
             type="submit"
             variant="contained"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isReadOnly}
             startIcon={
               isSubmitting ? (
                 <CircularProgress size={18} color="inherit" />

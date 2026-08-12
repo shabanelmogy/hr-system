@@ -8,6 +8,7 @@ global using HealthChecks.UI.Client;
 global using HrManagementSystem.Api.Common.Errors;
 global using HrManagementSystem.Api.Common.Files;
 global using HrManagementSystem.Api.Common.Routes;
+global using HrManagementSystem.Api.Common.Tenancy;
 global using HrManagementSystem.Application.Common.Consts;
 global using HrManagementSystem.Application.Common.Errors;
 global using HrManagementSystem.Infrastructure.Common.Storage;

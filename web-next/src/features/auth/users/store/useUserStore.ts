@@ -5,9 +5,11 @@ import type {
   CreateUserRequest,
   UpdateUserRequest,
   User,
+  UserCompanyOption,
 } from "../../types";
 import {
   parseUserResponse,
+  parseUserCompanyOptionsResponse,
   parseUsersResponse,
 } from "../../utils/apiResponse";
 import { create } from "zustand";
@@ -15,8 +17,10 @@ import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
 export interface UserStore {
   users: User[];
+  companyOptions: UserCompanyOption[];
   hasLoaded: boolean;
   fetchUsers: () => Promise<User[]>;
+  fetchCompanyOptions: () => Promise<UserCompanyOption[]>;
   addUser: (request: CreateUserRequest) => Promise<User>;
   updateUser: (request: UpdateUserRequest) => Promise<User>;
   changeUserPassword: (request: ChangeUserPasswordRequest) => Promise<void>;
@@ -31,6 +35,7 @@ const useUserStore = create<UserStore>()(
     persist(
       (set, get) => ({
         users: [],
+        companyOptions: [],
         hasLoaded: false,
 
         fetchUsers: async () => {
@@ -38,6 +43,13 @@ const useUserStore = create<UserStore>()(
           const users = parseUsersResponse(response);
           set({ users, hasLoaded: true });
           return users;
+        },
+
+        fetchCompanyOptions: async () => {
+          const response = await apiService.get<unknown>(apiRoutes.users.getCompanyOptions);
+          const companyOptions = parseUserCompanyOptionsResponse(response);
+          set({ companyOptions });
+          return companyOptions;
         },
 
         addUser: async (request) => {
@@ -54,6 +66,8 @@ const useUserStore = create<UserStore>()(
             userName: request.userName,
             email: request.email,
             roles: request.roles,
+            companyIds: request.companyIds,
+            defaultCompanyId: request.defaultCompanyId,
           });
 
           const current = get().users.find((user) => user.id === request.id);
@@ -103,7 +117,7 @@ const useUserStore = create<UserStore>()(
           await apiService.put<void>(apiRoutes.users.revoke(userId));
         },
 
-        resetUserData: () => set({ users: [], hasLoaded: false }),
+        resetUserData: () => set({ users: [], companyOptions: [], hasLoaded: false }),
       }),
       {
         name: "user-storage",

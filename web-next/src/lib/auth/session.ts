@@ -1,6 +1,8 @@
 export type SessionClaims = {
   userId: string;
   tenantId: string;
+  tenantName: string;
+  tenantPlanName: string;
   companyId: number;
   userName: string;
   email: string;
@@ -8,6 +10,9 @@ export type SessionClaims = {
   lastName: string;
   roles: string[];
   permissions: string[];
+  tenantSubscriptionStatus: string;
+  tenantSubscriptionEndsOn: string | null;
+  tenantReadOnly: boolean;
   expiresAt: number;
 };
 
@@ -21,6 +26,10 @@ export function isSessionClaims(value: unknown): value is SessionClaims {
     candidate.userId.length > 0 &&
     typeof candidate.tenantId === "string" &&
     candidate.tenantId.length > 0 &&
+    typeof candidate.tenantName === "string" &&
+    candidate.tenantName.length > 0 &&
+    typeof candidate.tenantPlanName === "string" &&
+    candidate.tenantPlanName.length > 0 &&
     typeof candidate.companyId === "number" &&
     Number.isInteger(candidate.companyId) &&
     candidate.companyId > 0 &&
@@ -37,6 +46,12 @@ export function isSessionClaims(value: unknown): value is SessionClaims {
     // Permissions array with non-empty strings
     Array.isArray(candidate.permissions) &&
     candidate.permissions.every((permission) => typeof permission === "string" && permission.length > 0) &&
+    typeof candidate.tenantSubscriptionStatus === "string" &&
+    candidate.tenantSubscriptionStatus.length > 0 &&
+    (candidate.tenantSubscriptionEndsOn === null ||
+      (typeof candidate.tenantSubscriptionEndsOn === "string" &&
+        Number.isFinite(Date.parse(candidate.tenantSubscriptionEndsOn)))) &&
+    typeof candidate.tenantReadOnly === "boolean" &&
     // Expiration must be a valid future timestamp.
     typeof candidate.expiresAt === "number" &&
     !Number.isNaN(candidate.expiresAt) &&

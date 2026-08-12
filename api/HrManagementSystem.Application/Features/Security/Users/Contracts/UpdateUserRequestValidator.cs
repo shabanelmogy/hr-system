@@ -46,9 +46,20 @@ namespace HrManagementSystem.Application.Features.Security.Users.Contracts
                 .When(x => x.Roles != null);
 
             RuleFor(x => x.CompanyIds)
-                .Must(companyIds => companyIds is null ||
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(_localizer[Strings.Required])
+                .Must(companyIds =>
                     companyIds.All(companyId => companyId > 0) &&
                     companyIds.Distinct().Count() == companyIds.Count)
+                .WithMessage(_localizer[Strings.InvalidValues]);
+
+            RuleFor(x => x.DefaultCompanyId)
+                .GreaterThan(0)
+                .WithMessage(_localizer[Strings.InvalidValues])
+                .Must((request, defaultCompanyId) =>
+                    request.CompanyIds?.Contains(defaultCompanyId) == true)
                 .WithMessage(_localizer[Strings.InvalidValues]);
         }
     }
