@@ -19,11 +19,13 @@ export function Login() {
   return (
     <View style={styles.screen}>
       <KeyboardAwareScrollView
-        bottomOffset={24}
+        alwaysBounceVertical={false}
+        bottomOffset={16}
         contentContainerStyle={[styles.body, { direction }]}
-        extraKeyboardSpace={16}
+        extraKeyboardSpace={12}
         keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
         keyboardShouldPersistTaps="handled"
+        overScrollMode="never"
         showsVerticalScrollIndicator={false}>
         <AppCard
           style={[
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
   body: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: 20,
+    padding: 16,
   },
   shell: {
     width: '100%',

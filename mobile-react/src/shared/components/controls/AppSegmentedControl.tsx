@@ -23,6 +23,7 @@ export interface AppSegmentedControlProps<Value extends string> {
   error?: string;
   helperText?: string;
   showLabel?: boolean;
+  showOptionLabels?: boolean;
   layout?: 'equal' | 'wrap';
   variant?: 'segment' | 'pill';
   style?: StyleProp<ViewStyle>;
@@ -39,6 +40,7 @@ export function AppSegmentedControl<Value extends string>({
   error,
   helperText,
   showLabel = false,
+  showOptionLabels = true,
   layout = 'equal',
   variant = 'segment',
   style,
@@ -87,6 +89,7 @@ export function AppSegmentedControl<Value extends string>({
               style={({ pressed }) => [
                 styles.option,
                 layout === 'equal' ? styles.equalOption : styles.wrappedOption,
+                !showOptionLabels && styles.iconOnlyOption,
                 {
                   backgroundColor: selected
                     ? variant === 'pill'
@@ -112,12 +115,14 @@ export function AppSegmentedControl<Value extends string>({
                     size={17}
                   />
                 ) : null}
-                <AppText
-                  align="center"
-                  color={selected && variant === 'pill' ? 'inverse' : selected ? 'primary' : 'muted'}
-                  variant="label">
-                  {option.label}
-                </AppText>
+                {showOptionLabels ? (
+                  <AppText
+                    align="center"
+                    color={selected && variant === 'pill' ? 'inverse' : selected ? 'primary' : 'muted'}
+                    variant="label">
+                    {option.label}
+                  </AppText>
+                ) : null}
               </View>
             </Pressable>
           );
@@ -159,6 +164,10 @@ const styles = StyleSheet.create({
   },
   wrappedOption: {
     flexGrow: 0,
+  },
+  iconOnlyOption: {
+    width: 42,
+    paddingHorizontal: 0,
   },
   optionContent: {
     flexDirection: 'row',

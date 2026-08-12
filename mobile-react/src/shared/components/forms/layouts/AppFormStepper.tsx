@@ -32,6 +32,7 @@ export interface AppFormStepperProps {
   activeStep: number;
   onStepChange?: (step: number) => void;
   keepMounted?: boolean;
+  compact?: boolean;
   style?: StyleProp<ViewStyle>;
   panelStyle?: StyleProp<ViewStyle>;
 }
@@ -42,6 +43,7 @@ export function AppFormStepper({
   activeStep,
   onStepChange,
   keepMounted = true,
+  compact = false,
   style,
   panelStyle,
 }: AppFormStepperProps) {
@@ -50,11 +52,11 @@ export function AppFormStepper({
   const normalizedStep = Math.min(Math.max(activeStep, 0), Math.max(steps.length - 1, 0));
 
   return (
-    <View style={[styles.root, style]}>
+    <View style={[styles.root, compact && styles.compactRoot, style]}>
       <ScrollView
         accessibilityLabel={label}
         accessibilityRole="tablist"
-        contentContainerStyle={[styles.stepList, { direction }]}
+        contentContainerStyle={[styles.stepList, compact && styles.compactStepList, { direction }]}
         horizontal
         showsHorizontalScrollIndicator={false}>
         {steps.map((step, index) => {
@@ -79,10 +81,15 @@ export function AppFormStepper({
                 accessibilityState={{ disabled: step.disabled, selected: active }}
                 disabled={step.disabled || !onStepChange}
                 onPress={() => onStepChange?.(index)}
-                style={({ pressed }) => [styles.step, { opacity: step.disabled ? 0.45 : pressed ? 0.72 : 1 }]}>
+                style={({ pressed }) => [
+                  styles.step,
+                  compact && styles.compactStep,
+                  { opacity: step.disabled ? 0.45 : pressed ? 0.72 : 1 },
+                ]}>
                 <View
                   style={[
                     styles.stepIcon,
+                    compact && styles.compactStepIcon,
                     {
                       backgroundColor: active ? color : theme.colors.surface,
                       borderColor: color,
@@ -90,9 +97,9 @@ export function AppFormStepper({
                     },
                   ]}>
                   {completed ? (
-                    <AppIcon color={active ? theme.colors.onPrimary : color} name="checkmark" size={18} />
+                    <AppIcon color={active ? theme.colors.onPrimary : color} name="checkmark" size={compact ? 16 : 18} />
                   ) : step.icon ? (
-                    <AppIcon color={active ? theme.colors.onPrimary : color} name={step.icon} size={18} />
+                    <AppIcon color={active ? theme.colors.onPrimary : color} name={step.icon} size={compact ? 16 : 18} />
                   ) : (
                     <AppText
                       align="center"
@@ -105,11 +112,11 @@ export function AppFormStepper({
                 <AppText
                   align="center"
                   color={step.hasError ? 'danger' : active ? 'primary' : completed ? 'success' : 'muted'}
-                  numberOfLines={2}
+                  numberOfLines={compact ? 1 : 2}
                   variant="caption">
                   {step.label}
                 </AppText>
-                {step.optionalLabel ? (
+                {step.optionalLabel && !compact ? (
                   <AppText align="center" color="muted" numberOfLines={1} variant="caption">
                     {step.optionalLabel}
                   </AppText>
@@ -120,6 +127,7 @@ export function AppFormStepper({
                   accessibilityElementsHidden
                   style={[
                     styles.connector,
+                    compact && styles.compactConnector,
                     { backgroundColor: completed ? theme.colors.success : theme.colors.border },
                   ]}
                 />
@@ -130,7 +138,7 @@ export function AppFormStepper({
       </ScrollView>
 
       {steps[normalizedStep]?.description ? (
-        <AppText color="muted" variant="bodySmall">
+        <AppText color="muted" numberOfLines={compact ? 2 : undefined} variant={compact ? 'caption' : 'bodySmall'}>
           {steps[normalizedStep].description}
         </AppText>
       ) : null}
@@ -159,10 +167,17 @@ const styles = StyleSheet.create({
     width: '100%',
     gap: 16,
   },
+  compactRoot: {
+    gap: 10,
+  },
   stepList: {
     minWidth: '100%',
     alignItems: 'flex-start',
     paddingVertical: 4,
+  },
+  compactStepList: {
+    justifyContent: 'center',
+    paddingVertical: 0,
   },
   stepGroup: {
     flexDirection: 'row',
@@ -173,6 +188,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 7,
   },
+  compactStep: {
+    width: 78,
+    gap: 4,
+  },
   stepIcon: {
     width: 38,
     height: 38,
@@ -180,10 +199,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 2,
   },
+  compactStepIcon: {
+    width: 32,
+    height: 32,
+  },
   connector: {
     width: 28,
     height: 2,
     marginTop: 18,
+  },
+  compactConnector: {
+    width: 18,
+    marginTop: 15,
   },
   panels: {
     width: '100%',

@@ -328,18 +328,6 @@ export function UserManagementScreen() {
 
       {!loading && !queryError ? <UserManagementStats users={users} /> : null}
 
-      {!loading && !queryError ? (
-        <View style={styles.search}>
-          <AppTextField
-            label={t('userManagement.search')}
-            leadingIcon="search-outline"
-            onChangeText={setSearch}
-            showClearButton
-            value={search}
-          />
-        </View>
-      ) : null}
-
       {loading ? (
         <AppStateView state="loading" />
       ) : queryError ? (
@@ -356,6 +344,15 @@ export function UserManagementScreen() {
           )}
           items={filteredUsers}
           resetKey={search}
+          toolbarContent={(
+            <AppTextField
+              label={t('userManagement.search')}
+              leadingIcon="search-outline"
+              onChangeText={setSearch}
+              showClearButton
+              value={search}
+            />
+          )}
           views={[
             {
               value: 'table',
@@ -456,7 +453,6 @@ function getErrorMessage(error: unknown, fallback: string): string {
 
 const styles = StyleSheet.create({
   addButton: { flexShrink: 0 },
-  search: { marginTop: 14, marginBottom: 12 },
   primaryCell: { width: '100%', gap: 2 },
   nameCell: { width: '100%', flexDirection: 'row', alignItems: 'center', gap: 8 },
   cards: {

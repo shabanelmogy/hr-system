@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -28,6 +28,7 @@ import {
   AppStateView,
   AppStatusBadge,
   AppText,
+  AppTextField,
   showToast,
 } from '@/src/shared/components';
 
@@ -50,7 +51,21 @@ export function TenantManagementScreen() {
   const saveMutation = useSaveTenant();
   const [editing, setEditing] = useState<TenantManagementResponse | null>(null);
   const [form, setForm] = useState<TenantFormState | null>(null);
-  const tenants = tenantsQuery.data ?? [];
+  const [search, setSearch] = useState('');
+  const filteredTenants = useMemo(() => {
+    const query = search.trim().toLocaleLowerCase(i18n.language);
+    const tenants = tenantsQuery.data ?? [];
+    if (!query) return tenants;
+
+    return tenants.filter((tenant) => [
+      tenant.name,
+      tenant.identifier,
+      tenant.planName ?? '',
+      tenant.billingEmail ?? '',
+      tenant.contactName ?? '',
+      t(`tenantManagement.statuses.${tenant.subscriptionStatus}`),
+    ].some((value) => value.toLocaleLowerCase(i18n.language).includes(query)));
+  }, [i18n.language, search, t, tenantsQuery.data]);
 
   const openCreate = () => {
     saveMutation.reset();
@@ -212,7 +227,17 @@ export function TenantManagementScreen() {
           emptyContent={(
             <AppStateView message={t('tenantManagement.emptyMessage')} state="empty" />
           )}
-          items={tenants}
+          items={filteredTenants}
+          resetKey={search}
+          toolbarContent={(
+            <AppTextField
+              label={t('tenantManagement.search')}
+              leadingIcon="search-outline"
+              onChangeText={setSearch}
+              showClearButton
+              value={search}
+            />
+          )}
           views={[
             {
               value: 'table',

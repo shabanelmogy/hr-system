@@ -182,18 +182,6 @@ export function RoleManagementScreen() {
         ) : null}
       </View>
 
-      {!rolesQuery.isLoading && !rolesQuery.isError ? (
-        <View style={styles.search}>
-          <AppTextField
-            label={t('roleManagement.search')}
-            leadingIcon="search-outline"
-            onChangeText={setSearch}
-            showClearButton
-            value={search}
-          />
-        </View>
-      ) : null}
-
       {rolesQuery.isLoading ? (
         <AppStateView state="loading" />
       ) : rolesQuery.isError ? (
@@ -210,6 +198,15 @@ export function RoleManagementScreen() {
           )}
           items={filteredRoles}
           resetKey={search}
+          toolbarContent={(
+            <AppTextField
+              label={t('roleManagement.search')}
+              leadingIcon="search-outline"
+              onChangeText={setSearch}
+              showClearButton
+              value={search}
+            />
+          )}
           views={[
             {
               value: 'table',
@@ -290,7 +287,6 @@ const styles = StyleSheet.create({
   },
   headingText: { flex: 1, minWidth: 0, gap: 2 },
   addButton: { flexShrink: 0 },
-  search: { marginBottom: 12 },
   cards: {
     flexDirection: 'row',
     alignItems: 'stretch',

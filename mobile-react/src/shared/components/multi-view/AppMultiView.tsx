@@ -31,6 +31,7 @@ export interface AppMultiViewProps<Item, ViewId extends string> {
   emptyContent?: ReactNode;
   pageSizeOptions?: readonly number[];
   resetKey?: string | number;
+  toolbarContent?: ReactNode;
 }
 
 const carouselPageSizeOptions = [1] as const;
@@ -43,6 +44,7 @@ export function AppMultiView<Item, ViewId extends string>({
   emptyContent,
   pageSizeOptions = [5, 10, 25],
   resetKey,
+  toolbarContent,
 }: AppMultiViewProps<Item, ViewId>) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
@@ -108,9 +110,14 @@ export function AppMultiView<Item, ViewId extends string>({
     if (!footerHost) return;
 
     const owner = footerOwner.current;
+    if (!activeView?.carousel) {
+      footerHost.unregisterFooter(owner);
+      return;
+    }
+
     footerHost.registerFooter(owner, pagination);
     return () => footerHost.unregisterFooter(owner);
-  }, [footerHost, pagination]);
+  }, [activeView?.carousel, footerHost, pagination]);
 
   if (!activeView) return emptyContent ?? null;
 
@@ -140,12 +147,16 @@ export function AppMultiView<Item, ViewId extends string>({
             borderRadius: theme.radius.md,
           },
         ]}>
-        <View style={styles.resultCount}>
-          <AppText variant="label" weight="800">{items.length}</AppText>
-          <AppText color="muted" variant="caption">
-            {t('multiView.results')}
-          </AppText>
-        </View>
+        {toolbarContent ? (
+          <View style={styles.toolbarContent}>{toolbarContent}</View>
+        ) : (
+          <View style={styles.resultCount}>
+            <AppText variant="label" weight="800">{items.length}</AppText>
+            <AppText color="muted" variant="caption">
+              {t('multiView.results')}
+            </AppText>
+          </View>
+        )}
         <AppSegmentedControl
           containerStyle={styles.viewOptions}
           label={t('multiView.chooseView')}
@@ -159,40 +170,44 @@ export function AppMultiView<Item, ViewId extends string>({
             );
           }}
           options={views}
+          showOptionLabels={false}
           style={styles.viewSelector}
           value={activeView.value}
         />
       </View>
 
-      {activeView.scrollable && !activeView.carousel && items.length > 0 ? (
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          nestedScrollEnabled
-          showsVerticalScrollIndicator
-          style={{ maxHeight: Math.max(360, Math.min(viewportHeight * 0.68, 680)) }}>
-          {content}
-        </ScrollView>
-      ) : content}
+      <View style={styles.collection}>
+        {activeView.scrollable && !activeView.carousel && items.length > 0 ? (
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            nestedScrollEnabled
+            showsVerticalScrollIndicator
+            style={{ maxHeight: Math.max(360, Math.min(viewportHeight * 0.68, 680)) }}>
+            {content}
+          </ScrollView>
+        ) : content}
 
-      {!footerHost ? pagination : null}
+        {!footerHost || !activeView.carousel ? pagination : null}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   root: { width: '100%', gap: 10 },
+  collection: { width: '100%', gap: 4 },
   toolbar: {
     minHeight: 56,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    flexWrap: 'wrap',
     gap: 10,
     borderWidth: 1,
     padding: 8,
   },
+  toolbarContent: { flex: 1, minWidth: 0 },
   resultCount: { flexDirection: 'row', alignItems: 'baseline', gap: 5, paddingHorizontal: 6 },
-  viewSelector: { width: 'auto', flexGrow: 0 },
-  viewOptions: { width: 'auto' },
+  viewSelector: { width: 'auto', flexGrow: 0, paddingTop: 7 },
+  viewOptions: { width: 'auto', height: 54 },
   scrollContent: { width: '100%', paddingBottom: 2 },
 });

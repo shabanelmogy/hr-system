@@ -11,6 +11,7 @@ import type {
   AuthResponse,
   LoginOutcome,
   LoginRequest,
+  RegisterRequest,
   SessionResponse,
   UserPhoto,
 } from '@/src/features/auth/types/auth';
@@ -18,6 +19,13 @@ import type {
 let refreshInFlight: Promise<string | null> | null = null;
 
 export const authApi = {
+  async register(request: RegisterRequest): Promise<void> {
+    await apiService.post<void, RegisterRequest>(AUTH_ENDPOINTS.register, request, {
+      skipAuth: true,
+      skipAuthRefresh: true,
+    });
+  },
+
   async login(request: LoginRequest): Promise<LoginOutcome> {
     const response = await apiService.post<unknown, LoginRequest>(AUTH_ENDPOINTS.login, request, {
       skipAuth: true,

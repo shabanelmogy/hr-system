@@ -1,7 +1,10 @@
 import { StyleSheet, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Controller } from 'react-hook-form';
 
+import { asHref, ROUTES } from '@/src/core/constants/routes';
+import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import type { useLoginForm } from '@/src/features/auth/login/hooks/useLoginForm';
 import {
@@ -19,32 +22,41 @@ interface LoginFormProps {
 
 export function LoginForm({ compact, form }: LoginFormProps) {
   const { t } = useTranslation();
+  const { direction } = useLocalization();
   const { theme } = useAppTheme();
+  const router = useRouter();
   const submitForm = form.handleSubmit(form.onSubmit);
 
   return (
-    <View style={[styles.card, { padding: compact ? 24 : 32 }]}>
-      <View style={styles.heading}>
+    <View style={[styles.card, compact && styles.cardCompact, { padding: compact ? 20 : 32 }]}>
+      <View style={[styles.heading, compact && styles.headingCompact, { direction }]}>
         <View
           style={[
             styles.icon,
+            compact && styles.iconCompact,
             { backgroundColor: theme.colors.primary, borderRadius: theme.radius.full },
           ]}>
-          <AppIcon color={theme.colors.onPrimary} name="lock-closed-outline" size={27} />
+          <AppIcon
+            color={theme.colors.onPrimary}
+            name="lock-closed-outline"
+            size={compact ? 21 : 27}
+          />
         </View>
-        <AppText align="center" variant="title">
-          {t('auth.signIn')}
-        </AppText>
-        {compact ? (
-          <AppText align="center" color="muted" variant="bodySmall">
-            {t('auth.loginToAccessYourAccount')}
+        <View style={[styles.headingCopy, !compact && styles.headingCopyWide]}>
+          <AppText align={compact ? undefined : 'center'} variant={compact ? 'titleSmall' : 'title'}>
+            {t('auth.signIn')}
           </AppText>
-        ) : null}
+          {compact ? (
+            <AppText color="muted" numberOfLines={1} variant="caption">
+              {t('auth.loginToAccessYourAccount')}
+            </AppText>
+          ) : null}
+        </View>
       </View>
 
       <AppForm
         serverError={form.serverError && !form.companySelection ? form.serverError : null}
-        style={styles.form}>
+        style={[styles.form, compact && styles.formCompact]}>
         <Controller
           control={form.control}
           name="userName"
@@ -96,6 +108,19 @@ export function LoginForm({ compact, form }: LoginFormProps) {
           onPress={() => void submitForm()}>
           {t('auth.login')}
         </AppButton>
+
+        <View style={[styles.registerPrompt, compact && styles.registerPromptCompact, { direction }]}>
+          <AppText align="center" color="muted" numberOfLines={1} variant="bodySmall">
+            {t('auth.noAccount')}
+          </AppText>
+          <AppButton
+            disabled={form.isAnySubmitting}
+            onPress={() => router.push(asHref(ROUTES.register))}
+            style={[styles.registerButton, compact && styles.registerButtonCompact]}
+            variant="ghost">
+            {t('auth.createAccount')}
+          </AppButton>
+        </View>
 
         <View style={styles.quickAccessHeading}>
           <View style={[styles.divider, { backgroundColor: theme.colors.border }]} />
@@ -170,9 +195,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 20,
   },
+  cardCompact: {
+    gap: 16,
+  },
   heading: {
     alignItems: 'center',
     gap: 5,
+  },
+  headingCompact: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  headingCopy: {
+    flex: 1,
+    minWidth: 0,
+    gap: 1,
+  },
+  headingCopyWide: {
+    alignItems: 'center',
   },
   icon: {
     width: 52,
@@ -181,14 +222,38 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 4,
   },
+  iconCompact: {
+    width: 44,
+    height: 44,
+    marginBottom: 0,
+  },
   form: {
     gap: 16,
+  },
+  formCompact: {
+    gap: 12,
   },
   quickAccessHeading: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
     marginTop: 2,
+  },
+  registerPrompt: {
+    alignItems: 'center',
+    gap: 2,
+  },
+  registerPromptCompact: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 4,
+  },
+  registerButton: {
+    minHeight: 36,
+  },
+  registerButtonCompact: {
+    minHeight: 34,
+    paddingHorizontal: 8,
   },
   divider: {
     flex: 1,
@@ -199,6 +264,7 @@ const styles = StyleSheet.create({
   },
   quickActionsCompact: {
     flexDirection: 'column',
+    gap: 10,
   },
   quickActionsWide: {
     flexDirection: 'row',

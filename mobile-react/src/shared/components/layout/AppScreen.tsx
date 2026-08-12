@@ -31,6 +31,7 @@ export interface AppScreenProps {
   contentContainerStyle?: StyleProp<ViewStyle>;
   refreshControl?: ScrollViewProps['refreshControl'];
   header?: ReactNode;
+  footer?: ReactNode;
 }
 
 export function AppScreen({
@@ -43,6 +44,7 @@ export function AppScreen({
   contentContainerStyle,
   refreshControl,
   header,
+  footer,
 }: PropsWithChildren<AppScreenProps>) {
   const { theme } = useAppTheme();
   const { direction } = useLocalization();
@@ -58,6 +60,7 @@ export function AppScreen({
     () => ({ registerFooter, unregisterFooter }),
     [registerFooter, unregisterFooter],
   );
+  const footerContent = footer ?? registeredFooter?.content;
 
   const contentStyle: StyleProp<ViewStyle> = [
     styles.content,
@@ -98,14 +101,14 @@ export function AppScreen({
         ) : (
           content
         )}
-        {registeredFooter?.content ? (
+        {footerContent ? (
           <View style={[styles.footer, { backgroundColor: theme.colors.background }]}>
             <View
               style={[
                 styles.footerContent,
                 padded ? { paddingHorizontal: theme.spacing.lg } : {},
               ]}>
-              {registeredFooter.content}
+              {footerContent}
             </View>
           </View>
         ) : null}
@@ -134,6 +137,7 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 960,
     alignSelf: 'center',
+    paddingTop: 4,
     paddingBottom: 4,
   },
 });

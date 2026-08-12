@@ -3,6 +3,7 @@ import type { Href } from 'expo-router';
 export const ROUTES = {
   home: '/',
   login: '/login',
+  register: '/register',
   settings: '/settings',
   superAdminDashboard: '/super-admin-dashboard',
   tenantManagement: '/tenant-management',
@@ -25,6 +26,7 @@ export const ROUTES = {
 export type AppRoute =
   | typeof ROUTES.home
   | typeof ROUTES.login
+  | typeof ROUTES.register
   | typeof ROUTES.settings
   | typeof ROUTES.superAdminDashboard
   | typeof ROUTES.tenantManagement
