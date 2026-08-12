@@ -229,11 +229,10 @@ export function RoleManagementScreen() {
             },
             {
               value: 'cards',
-              defaultPageSize: 2,
+              carousel: true,
+              getItemKey: (role) => role.id,
               label: t('multiView.cards'),
               icon: 'albums-outline',
-              pageSizeOptions: [2, 5, 10],
-              scrollable: true,
               render: (pageRoles) => (
                 <View style={styles.cards}>
                   {pageRoles.map((role) => (

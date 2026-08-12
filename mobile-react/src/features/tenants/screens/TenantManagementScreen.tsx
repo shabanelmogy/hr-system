@@ -23,6 +23,7 @@ import {
   AppIconButton,
   type AppIconName,
   AppMultiView,
+  AppPageHeader,
   AppScreen,
   AppStateView,
   AppStatusBadge,
@@ -44,7 +45,6 @@ type TenantView = 'table' | 'cards';
 
 export function TenantManagementScreen() {
   const { t, i18n } = useTranslation();
-  const { direction } = useLocalization();
   const { theme } = useAppTheme();
   const tenantsQuery = useTenants();
   const saveMutation = useSaveTenant();
@@ -179,17 +179,20 @@ export function TenantManagementScreen() {
           tintColor={theme.colors.primary}
         />
       }>
-      <View style={[styles.heading, { direction }]}>
-        <View style={styles.headingText}>
-          <AppText variant="title">{t('tenantManagement.title')}</AppText>
-          <AppText color="muted" variant="bodySmall">
-            {t('tenantManagement.subtitle')}
-          </AppText>
-        </View>
-        <AppButton icon="add-outline" onPress={openCreate}>
-          {t('tenantManagement.addTenant')}
-        </AppButton>
-      </View>
+      <AppPageHeader
+        action={(
+          <AppIconButton
+            color={theme.colors.onPrimary}
+            icon="add-outline"
+            label={t('tenantManagement.addTenant')}
+            onPress={openCreate}
+            pressedBackgroundColor={theme.colors.secondary}
+            style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
+          />
+        )}
+        subtitle={t('tenantManagement.subtitle')}
+        title={t('tenantManagement.title')}
+      />
 
       <AppAlert icon="sync-outline" severity="info" style={styles.syncHint}>
         {t('tenantManagement.refreshHint')}
@@ -229,11 +232,10 @@ export function TenantManagementScreen() {
             },
             {
               value: 'cards',
-              defaultPageSize: 2,
+              carousel: true,
+              getItemKey: (tenant) => tenant.id,
               label: t('multiView.cards'),
               icon: 'albums-outline',
-              pageSizeOptions: [2, 5, 10],
-              scrollable: true,
               render: (pageTenants) => (
                 <View style={styles.list}>
                   {pageTenants.map((tenant) => (
@@ -435,19 +437,7 @@ function getErrorMessage(error: unknown, fallback: string): string {
 }
 
 const styles = StyleSheet.create({
-  heading: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 16,
-    marginBottom: 16,
-  },
-  headingText: {
-    flex: 1,
-    minWidth: 220,
-    gap: 4,
-  },
+  addButton: { flexShrink: 0 },
   syncHint: {
     marginBottom: 16,
   },

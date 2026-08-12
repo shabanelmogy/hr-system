@@ -1,16 +1,20 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
+import { AppCarousel } from '@/src/shared/components/carousel/AppCarousel';
 import { AppSegmentedControl } from '@/src/shared/components/controls/AppSegmentedControl';
 import type { AppIconName } from '@/src/shared/components/icons/AppIcon';
+import { AppScreenFooterContext } from '@/src/shared/components/layout/AppScreenFooterContext';
 import { AppText } from '@/src/shared/components/typography/AppText';
 import { AppCollectionPagination } from './AppCollectionPagination';
 
 export interface AppMultiViewDefinition<Item, ViewId extends string> {
+  carousel?: boolean;
   defaultPageSize?: number;
+  getItemKey?: (item: Item, index: number) => string | number;
   icon: AppIconName;
   label: string;
   pageSizeOptions?: readonly number[];
@@ -29,6 +33,8 @@ export interface AppMultiViewProps<Item, ViewId extends string> {
   resetKey?: string | number;
 }
 
+const carouselPageSizeOptions = [1] as const;
+
 export function AppMultiView<Item, ViewId extends string>({
   items,
   views,
@@ -42,20 +48,33 @@ export function AppMultiView<Item, ViewId extends string>({
   const { direction } = useLocalization();
   const { theme } = useAppTheme();
   const { height: viewportHeight } = useWindowDimensions();
+  const footerHost = useContext(AppScreenFooterContext);
+  const footerOwner = useRef(Symbol('AppMultiView pagination'));
   const initialView = defaultView ?? views[0]?.value;
   const initialDefinition = views.find((candidate) => candidate.value === initialView) ?? views[0];
   const [view, setView] = useState<ViewId | undefined>(initialView);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(
-    initialDefinition?.defaultPageSize ?? defaultPageSize,
+    initialDefinition?.carousel ? 1 : initialDefinition?.defaultPageSize ?? defaultPageSize,
   );
-  const pageCount = Math.max(1, Math.ceil(items.length / pageSize));
-  const safePage = Math.min(page, pageCount - 1);
   const activeView = views.find((candidate) => candidate.value === view) ?? views[0];
-  const activePageSizeOptions = activeView?.pageSizeOptions ?? pageSizeOptions;
+  const activePageSize = activeView?.carousel ? 1 : pageSize;
+  const pageCount = Math.max(1, Math.ceil(items.length / activePageSize));
+  const safePage = Math.min(page, pageCount - 1);
+  const activePageSizeOptions = activeView?.carousel
+    ? carouselPageSizeOptions
+    : activeView?.pageSizeOptions ?? pageSizeOptions;
+  const pageSizeOptionsKey = activePageSizeOptions.join(',');
+  const stablePageSizeOptions = useMemo(
+    () => pageSizeOptionsKey.split(',').filter(Boolean).map(Number),
+    [pageSizeOptionsKey],
+  );
   const pageItems = useMemo(
-    () => items.slice(safePage * pageSize, safePage * pageSize + pageSize),
-    [items, pageSize, safePage],
+    () => items.slice(
+      safePage * activePageSize,
+      safePage * activePageSize + activePageSize,
+    ),
+    [activePageSize, items, safePage],
   );
 
   useEffect(() => {
@@ -66,9 +85,48 @@ export function AppMultiView<Item, ViewId extends string>({
     setPage(0);
   }, [resetKey]);
 
+  const handlePageSizeChange = useCallback((nextPageSize: number) => {
+    setPageSize(nextPageSize);
+    setPage(0);
+  }, []);
+
+  const pagination = useMemo(
+    () => items.length > 0 ? (
+      <AppCollectionPagination
+        onPageChange={setPage}
+        onPageSizeChange={handlePageSizeChange}
+        page={safePage}
+        pageSize={activePageSize}
+        pageSizeOptions={stablePageSizeOptions}
+        totalItems={items.length}
+      />
+    ) : null,
+    [activePageSize, handlePageSizeChange, items.length, safePage, stablePageSizeOptions],
+  );
+
+  useEffect(() => {
+    if (!footerHost) return;
+
+    const owner = footerOwner.current;
+    footerHost.registerFooter(owner, pagination);
+    return () => footerHost.unregisterFooter(owner);
+  }, [footerHost, pagination]);
+
   if (!activeView) return emptyContent ?? null;
 
-  const content = items.length === 0 ? emptyContent : activeView.render(pageItems);
+  const content = items.length === 0
+    ? emptyContent
+    : activeView.carousel
+      ? (
+        <AppCarousel
+          items={items}
+          keyExtractor={(item, index) => String(activeView.getItemKey?.(item, index) ?? index)}
+          onIndexChange={setPage}
+          renderItem={(item) => activeView.render([item])}
+          selectedIndex={safePage}
+        />
+      )
+      : activeView.render(pageItems);
 
   return (
     <View style={styles.root}>
@@ -96,7 +154,9 @@ export function AppMultiView<Item, ViewId extends string>({
             const nextDefinition = views.find((candidate) => candidate.value === nextView);
             setView(nextView);
             setPage(0);
-            setPageSize(nextDefinition?.defaultPageSize ?? defaultPageSize);
+            setPageSize(
+              nextDefinition?.carousel ? 1 : nextDefinition?.defaultPageSize ?? defaultPageSize,
+            );
           }}
           options={views}
           style={styles.viewSelector}
@@ -104,7 +164,7 @@ export function AppMultiView<Item, ViewId extends string>({
         />
       </View>
 
-      {activeView.scrollable && items.length > 0 ? (
+      {activeView.scrollable && !activeView.carousel && items.length > 0 ? (
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           nestedScrollEnabled
@@ -114,19 +174,7 @@ export function AppMultiView<Item, ViewId extends string>({
         </ScrollView>
       ) : content}
 
-      {items.length > 0 ? (
-        <AppCollectionPagination
-          onPageChange={setPage}
-          onPageSizeChange={(nextPageSize) => {
-            setPageSize(nextPageSize);
-            setPage(0);
-          }}
-          page={safePage}
-          pageSize={pageSize}
-          pageSizeOptions={activePageSizeOptions}
-          totalItems={items.length}
-        />
-      ) : null}
+      {!footerHost ? pagination : null}
     </View>
   );
 }

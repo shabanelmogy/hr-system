@@ -1,4 +1,4 @@
-import type { PropsWithChildren, ReactNode } from 'react';
+import { useCallback, useMemo, useState, type PropsWithChildren, type ReactNode } from 'react';
 import {
   Platform,
   type ScrollViewProps,
@@ -15,6 +15,12 @@ import { SafeAreaView, type Edge } from 'react-native-safe-area-context';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
+import { AppScreenFooterContext, type AppScreenFooterHost } from './AppScreenFooterContext';
+
+interface RegisteredFooter {
+  content: ReactNode;
+  owner: symbol;
+}
 
 export interface AppScreenProps {
   scroll?: boolean;
@@ -40,6 +46,18 @@ export function AppScreen({
 }: PropsWithChildren<AppScreenProps>) {
   const { theme } = useAppTheme();
   const { direction } = useLocalization();
+  const [registeredFooter, setRegisteredFooter] = useState<RegisteredFooter | null>(null);
+
+  const registerFooter = useCallback((owner: symbol, footerContent: ReactNode) => {
+    setRegisteredFooter({ content: footerContent, owner });
+  }, []);
+  const unregisterFooter = useCallback((owner: symbol) => {
+    setRegisteredFooter((current) => current?.owner === owner ? null : current);
+  }, []);
+  const footerHost = useMemo<AppScreenFooterHost>(
+    () => ({ registerFooter, unregisterFooter }),
+    [registerFooter, unregisterFooter],
+  );
 
   const contentStyle: StyleProp<ViewStyle> = [
     styles.content,
@@ -57,7 +75,8 @@ export function AppScreen({
       keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
       keyboardShouldPersistTaps="handled"
       refreshControl={refreshControl}
-      showsVerticalScrollIndicator={false}>
+      showsVerticalScrollIndicator={false}
+      style={styles.scrollArea}>
       {children}
     </KeyboardAwareScrollView>
   ) : (
@@ -65,20 +84,33 @@ export function AppScreen({
   );
 
   return (
-    <SafeAreaView
-      edges={edges}
-      style={[styles.safeArea, { backgroundColor: theme.colors.background }, style]}>
-      {header}
-      {keyboardAware && !scroll ? (
-        <KeyboardAvoidingView
-          behavior="padding"
-          style={styles.safeArea}>
-          {content}
-        </KeyboardAvoidingView>
-      ) : (
-        content
-      )}
-    </SafeAreaView>
+    <AppScreenFooterContext.Provider value={footerHost}>
+      <SafeAreaView
+        edges={edges}
+        style={[styles.safeArea, { backgroundColor: theme.colors.background }, style]}>
+        {header}
+        {keyboardAware && !scroll ? (
+          <KeyboardAvoidingView
+            behavior="padding"
+            style={styles.safeArea}>
+            {content}
+          </KeyboardAvoidingView>
+        ) : (
+          content
+        )}
+        {registeredFooter?.content ? (
+          <View style={[styles.footer, { backgroundColor: theme.colors.background }]}>
+            <View
+              style={[
+                styles.footerContent,
+                padded ? { paddingHorizontal: theme.spacing.lg } : {},
+              ]}>
+              {registeredFooter.content}
+            </View>
+          </View>
+        ) : null}
+      </SafeAreaView>
+    </AppScreenFooterContext.Provider>
   );
 }
 
@@ -86,9 +118,22 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
   },
+  scrollArea: {
+    flex: 1,
+  },
   content: {
     width: '100%',
     maxWidth: 960,
     alignSelf: 'center',
+  },
+  footer: {
+    flexShrink: 0,
+    width: '100%',
+  },
+  footerContent: {
+    width: '100%',
+    maxWidth: 960,
+    alignSelf: 'center',
+    paddingBottom: 4,
   },
 });

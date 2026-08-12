@@ -30,6 +30,7 @@ import {
   type AppDataTableColumn,
   AppIconButton,
   AppMultiView,
+  AppPageHeader,
   AppScreen,
   AppStateView,
   AppStatusBadge,
@@ -310,14 +311,8 @@ export function UserManagementScreen() {
           tintColor={theme.colors.primary}
         />
       }>
-      <View style={styles.heading}>
-        <View style={styles.headingText}>
-          <AppText numberOfLines={1} variant="titleSmall">{t('userManagement.title')}</AppText>
-          <AppText color="muted" numberOfLines={1} variant="caption">
-            {t('userManagement.subtitle')}
-          </AppText>
-        </View>
-        {canCreate ? (
+      <AppPageHeader
+        action={canCreate ? (
           <AppIconButton
             color={theme.colors.onPrimary}
             icon="person-add-outline"
@@ -327,7 +322,9 @@ export function UserManagementScreen() {
             style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
           />
         ) : null}
-      </View>
+        subtitle={t('userManagement.subtitle')}
+        title={t('userManagement.title')}
+      />
 
       {!loading && !queryError ? <UserManagementStats users={users} /> : null}
 
@@ -378,11 +375,10 @@ export function UserManagementScreen() {
             },
             {
               value: 'cards',
-              defaultPageSize: 2,
+              carousel: true,
+              getItemKey: (user) => user.id,
               label: t('multiView.cards'),
               icon: 'albums-outline',
-              pageSizeOptions: [2, 5, 10],
-              scrollable: true,
               render: (pageUsers) => (
                 <View style={styles.cards}>
                   {pageUsers.map((user) => (
@@ -459,14 +455,6 @@ function getErrorMessage(error: unknown, fallback: string): string {
 }
 
 const styles = StyleSheet.create({
-  heading: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 10,
-    marginBottom: 16,
-  },
-  headingText: { flex: 1, minWidth: 0, gap: 2 },
   addButton: { flexShrink: 0 },
   search: { marginTop: 14, marginBottom: 12 },
   primaryCell: { width: '100%', gap: 2 },
