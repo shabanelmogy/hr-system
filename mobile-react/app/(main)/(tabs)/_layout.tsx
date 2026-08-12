@@ -1,12 +1,15 @@
 import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
+import { ROUTES } from '@/src/core/constants/routes';
 import { useAppTheme } from '@/src/core/theme';
+import { useCanAccessRoute } from '@/src/features/auth';
 import { AppIcon } from '@/src/shared/components';
 
 export default function TabLayout() {
   const { t } = useTranslation();
   const { theme } = useAppTheme();
+  const canViewSettings = useCanAccessRoute(ROUTES.settings);
 
   return (
     <Tabs
@@ -39,6 +42,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="settings"
         options={{
+          href: canViewSettings ? undefined : null,
           title: t('navigation.settings'),
           tabBarIcon: ({ color, size }) => (
             <AppIcon color={color} name="settings-outline" size={size} />

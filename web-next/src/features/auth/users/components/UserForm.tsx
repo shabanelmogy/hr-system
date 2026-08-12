@@ -2,7 +2,6 @@ import { MyForm, MySelect, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
-  TextField,
   Typography,
   Button,
   Alert,
@@ -316,15 +315,7 @@ const UserForm = ({
       errors={getErrorMessages()}
     >
       {(isEditMode || isViewMode) && (
-        <TextField
-          margin="dense"
-          label="Id"
-          fullWidth
-          disabled
-          autoComplete="off"
-          value={selectedUser?.id || ""}
-          sx={{ display: "none" }}
-        />
+        <input type="hidden" value={selectedUser?.id || ""} readOnly />
       )}
       {/* Required: First Name */}
       <Box sx={{ mt: 2 }}>
@@ -335,6 +326,7 @@ const UserForm = ({
           loading={loading}
           errors={errors}
           control={control}
+          maxValue={50}
           placeholder={t("users.firstNamePlaceholder")}
           showCounter={!isViewMode}
           readOnly={isViewMode}
@@ -349,6 +341,7 @@ const UserForm = ({
         loading={loading}
         errors={errors}
         control={control}
+        maxValue={50}
         placeholder={t("users.lastNamePlaceholder")}
         showCounter={!isViewMode}
         readOnly={isViewMode}
@@ -362,6 +355,7 @@ const UserForm = ({
         loading={loading}
         errors={errors}
         control={control}
+        maxValue={50}
         placeholder={t("users.userNamePlaceholder")}
         showCounter={!isViewMode}
         readOnly={isViewMode}
@@ -374,6 +368,7 @@ const UserForm = ({
         loading={loading}
         errors={errors}
         control={control}
+        maxValue={100}
         placeholder={t("users.emailPlaceholder")}
         showCounter={!isViewMode}
         readOnly={isViewMode}
@@ -452,6 +447,7 @@ const UserForm = ({
                 loading={loading}
                 errors={errors}
                 control={control}
+                maxValue={50}
                 placeholder={t("users.passwordPlaceholder") || "Enter password"}
                 showCounter={false}
                 readOnly={false}
@@ -525,6 +521,7 @@ const UserForm = ({
                 loading={loading}
                 errors={errors}
                 control={control}
+                maxValue={50}
                 placeholder={
                   t("users.confirmPasswordPlaceholder") || "Confirm password"
                 }

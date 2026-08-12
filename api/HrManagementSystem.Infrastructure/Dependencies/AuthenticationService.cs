@@ -80,6 +80,14 @@ public static class AuthenticationService
         });
 
         services.AddAuthorizationBuilder()
+            .AddPolicy(
+                TenantMemberAttribute.PolicyName,
+                policy => policy
+                    .RequireAuthenticatedUser()
+                    .RequireAssertion(context =>
+                        !context.User.IsInRole(AppRoles.super_admin) &&
+                        (context.User.IsInRole(AppRoles.admin) ||
+                         context.User.IsInRole(AppRoles.user))))
             .SetFallbackPolicy(new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .Build());

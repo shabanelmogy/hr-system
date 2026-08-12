@@ -117,6 +117,8 @@
     "UserNotFound": "User is not found",
     "ProfilePictureRequired": "A profile picture is required",
     "InvalidProfilePicture": "The profile picture is invalid",
+    "AdminSeatLimitReached": "The tenant has reached its administrator account limit.",
+    "UserSeatLimitReached": "The tenant has reached its user account limit.",
 
     "LocalizationFileNotFound": "Localization File Not Found",
     "InvalidLanguage": "The requested language is not supported",

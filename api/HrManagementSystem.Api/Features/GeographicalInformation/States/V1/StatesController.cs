@@ -7,7 +7,7 @@ namespace HrManagementSystem.Api.Features.GeographicalInformation.States.V1;
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute)]
 [ApiController]
-[Authorize]
+[TenantMember]
 public class StatesController(IStateService stateService) : ControllerBase
 {
     private readonly IStateService _stateService = stateService;

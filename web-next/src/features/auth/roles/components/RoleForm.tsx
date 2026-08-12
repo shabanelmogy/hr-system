@@ -1,6 +1,6 @@
 import { MyForm, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -146,15 +146,7 @@ const RoleForm = ({
       onErrorFound={handleErrorFound} // Optional callback when error is found
     >
       {(isEditMode || isViewMode) && (
-        <TextField
-          margin="dense"
-          label="Id"
-          fullWidth
-          disabled
-          autoComplete="off"
-          value={selectedRole?.id || ""}
-          sx={{ display: "none" }}
-        />
+        <input type="hidden" value={selectedRole?.id || ""} readOnly />
       )}
 
       {/* Required: Role Name */}
@@ -166,6 +158,7 @@ const RoleForm = ({
           loading={loading}
           errors={errors}
           control={control}
+          maxValue={50}
           placeholder={t("roles.namePlaceholder")}
           showCounter={!isViewMode}
           readOnly={isViewMode}

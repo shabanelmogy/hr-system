@@ -1,12 +1,6 @@
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import {
-  CircularProgress,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Tooltip,
-} from "@mui/material";
+import { CircularProgress } from "@mui/material";
+import { MyTextField } from "@/shared/components/forms";
 import type { KeyboardEvent, Ref } from "react";
 
 interface SearchFieldProps {
@@ -37,39 +31,23 @@ export function SearchField({
   onKeyDown,
 }: SearchFieldProps) {
   return (
-    <TextField
-      fullWidth
+    <MyTextField
+      counter={false}
+      clearButtonAriaLabel={clearLabel}
+      endAdornment={isSearching ? <CircularProgress size={18} thickness={5} /> : null}
+      fieldName="globalSearch"
+      labelKey={null}
+      maxValue={200}
       value={value}
       inputRef={inputRef}
       autoFocus={autoFocus}
       placeholder={placeholder}
       onChange={(event) => onChange(event.target.value)}
+      onClear={onClear}
       onKeyDown={onKeyDown}
+      showClearButton
+      startIcon={<SearchRoundedIcon color="action" />}
       slotProps={{
-        input: {
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchRoundedIcon color="action" />
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment position="end">
-              {isSearching && <CircularProgress size={18} thickness={5} />}
-              {value && (
-                <Tooltip title={clearLabel}>
-                  <IconButton
-                    size="small"
-                    onClick={onClear}
-                    aria-label={clearLabel}
-                    edge="end"
-                  >
-                    <CloseRoundedIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
-              )}
-            </InputAdornment>
-          ),
-        },
         htmlInput: {
           role: "combobox",
           "aria-label": placeholder,

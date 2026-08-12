@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, TextField, Pagination } from "@mui/material";
+import { Box, Pagination } from "@mui/material";
+import { MyTextField } from "@/shared/components/forms";
 import FileTile from "./FileTile";
 import BackButton from "@/shared/components/navigation/BackButton";
 import { MappedFile } from "./FileMapper";
@@ -64,12 +65,16 @@ const GroupFilesView: React.FC<GroupFilesViewProps> = ({
           tooltip="Back to groups"
           ariaLabel="Back to groups"
         />
-        <TextField
+        <MyTextField
+          containerSx={{ width: 300 }}
+          counter
+          fieldName="groupFilesSearch"
+          margin="none"
+          maxValue={200}
           size="small"
           label="Search in group"
           value={query}
           onChange={(e) => handleQueryChange(e.target.value)}
-          sx={{ width: 300 }}
         />
       </Box>
 

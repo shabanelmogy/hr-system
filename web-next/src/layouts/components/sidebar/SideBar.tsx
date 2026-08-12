@@ -1,4 +1,3 @@
-import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
 import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
@@ -8,8 +7,6 @@ import {
   Button,
   Collapse,
   Divider,
-  IconButton,
-  InputBase,
   Drawer as MuiDrawer,
   styled,
   Typography,
@@ -23,6 +20,7 @@ import { getNavigationConfig } from "./navigationConfig";
 import NavigationSection from "./NavigationSection";
 import UserProfile from "./UserProfile";
 import { useSession } from "@/lib/auth/SessionContext";
+import { MyTextField } from "@/shared/components/forms";
 import type { NavigationItem, NavigationSection as NavigationSectionModel } from "./navigationTypes";
 // Drawer Sizes
 const drawerWidth = 240;
@@ -58,35 +56,6 @@ const SearchContainer = styled("div")<{ open: boolean }>(({ theme, open }) => ({
         : theme.transitions.duration.leavingScreen,
     },
   ),
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 1),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  color: theme.palette.text.secondary,
-  insetInlineStart: 0,
-}));
-
-const ClearButton = styled(IconButton)(({ theme }) => ({
-  padding: theme.spacing(0.5),
-  position: "absolute",
-  insetInlineEnd: 0,
-  color: theme.palette.text.secondary,
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  width: "100%",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 4, 1, 4),
-    width: "100%",
-    fontSize: "0.875rem",
-  },
 }));
 
 // Main drawer content container with scrolling
@@ -383,20 +352,27 @@ function SideBar({
 
         {/* Search Input */}
         <SearchContainer open={open}>
-          <SearchIconWrapper>
-            <SearchIcon fontSize="small" />
-          </SearchIconWrapper>
-          <StyledInputBase
+          <MyTextField
+            appearance="plain"
+            counter={false}
+            fieldName="sidebarSearch"
+            labelKey={null}
+            margin="none"
+            maxValue={100}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            onClear={handleClearSearch}
             placeholder={t("search.searchInSidebar")}
-            inputProps={{ "aria-label": "search" }}
+            showClearButton
+            size="small"
+            slotProps={{ htmlInput: { "aria-label": "search" } }}
+            startIcon={<SearchIcon fontSize="small" />}
+            sx={{
+              "& .MuiOutlinedInput-root": { minHeight: 40 },
+              "& .MuiOutlinedInput-notchedOutline": { border: "none" },
+              "& .MuiInputBase-input": { fontSize: "0.875rem" },
+            }}
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
           />
-          {searchTerm && (
-            <ClearButton size="small" onClick={handleClearSearch}>
-              <ClearIcon fontSize="small" />
-            </ClearButton>
-          )}
         </SearchContainer>
 
         <ScrollableContent>

@@ -26,8 +26,13 @@ public class GeneralHub : Hub<IGeneralHubClient>
             .Where(KnownPermissions.Contains)
             .Distinct(StringComparer.Ordinal)
             .ToArray() ?? [];
+        var roles = Context.User?.FindAll(ClaimTypes.Role)
+            .Select(claim => claim.Value)
+            .Where(role => !string.IsNullOrWhiteSpace(role))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray() ?? [];
 
-        var groupTasks = new List<Task>(2 + permissions.Length * 2)
+        var groupTasks = new List<Task>(2 + permissions.Length * 2 + roles.Length)
         {
             Groups.AddToGroupAsync(
                 Context.ConnectionId,
@@ -45,6 +50,13 @@ public class GeneralHub : Hub<IGeneralHubClient>
             groupTasks.Add(Groups.AddToGroupAsync(
                 Context.ConnectionId,
                 GeneralHubGroups.ForCompanyPermission(tenantId, companyId, permission)));
+        }
+
+        foreach (var role in roles)
+        {
+            groupTasks.Add(Groups.AddToGroupAsync(
+                Context.ConnectionId,
+                GeneralHubGroups.ForRole(role)));
         }
 
         await Task.WhenAll(groupTasks);

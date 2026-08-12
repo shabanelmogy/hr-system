@@ -1,6 +1,6 @@
 import { MyForm, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -180,15 +180,7 @@ const AddressTypeForm = ({
       }
     >
       {(isEditMode || isViewMode) && (
-        <TextField
-          margin="dense"
-          label="Id"
-          fullWidth
-          disabled
-          autoComplete="off"
-          value={selectedItem?.id || ""}
-          sx={{ display: "none" }}
-        />
+        <input type="hidden" value={selectedItem?.id || ""} readOnly />
       )}
 
       <Box sx={{ mt: 2 }}>

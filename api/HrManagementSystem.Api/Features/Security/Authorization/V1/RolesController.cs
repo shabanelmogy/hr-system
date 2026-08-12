@@ -6,7 +6,7 @@ namespace HrManagementSystem.Api.Features.Security.Authorization.V1;
 [Route(ApiRoutes.BaseRoute)]
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize]
+[TenantMember]
 
 public class RolesController(IRoleService roleService) : ControllerBase
 {

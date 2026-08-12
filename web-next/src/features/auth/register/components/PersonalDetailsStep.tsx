@@ -1,11 +1,6 @@
 /* eslint-disable react/prop-types */
-import {
-  InputAdornment,
-  Stack,
-  TextField,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Stack, Typography, useTheme } from "@mui/material";
+import { MyTextField } from "@/shared/components/forms";
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
 import type { RegistrationFormData } from "../types";
 
@@ -59,62 +54,44 @@ const PersonalDetailsStep = ({
       >
         {t("auth.personalDetails") || "Personal Details"}
       </Typography>
-      <TextField
-        fullWidth
-        label={t("auth.firstName") || "First Name"}
-        variant="outlined"
-        error={!!errors.firstName}
-        helperText={errors.firstName?.message}
-        {...register("firstName")}
+      <MyTextField
+        counter
+        errors={errors}
+        fieldName="firstName"
         inputRef={firstNameRef}
+        label={t("auth.firstName") || "First Name"}
+        maxValue={50}
+        minValue={3}
+        register={register("firstName")}
+        required
+        startIcon={<Person2Icon color="primary" />}
         sx={textFieldStyles}
-        slotProps={{
-          input: {
-            startAdornment: (
-              <InputAdornment position="start">
-                <Person2Icon color="primary" />
-              </InputAdornment>
-            ),
-          }
-        }}
       />
-      <TextField
-        fullWidth
-        label={t("auth.lastName") || "Last Name"}
-        variant="outlined"
-        error={!!errors.lastName}
-        helperText={errors.lastName?.message}
-        {...register("lastName")}
+      <MyTextField
+        counter
+        errors={errors}
+        fieldName="lastName"
         inputRef={lastNameRef}
+        label={t("auth.lastName") || "Last Name"}
+        maxValue={50}
+        minValue={3}
+        register={register("lastName")}
+        required
+        startIcon={<Person2Icon color="primary" />}
         sx={textFieldStyles}
-        slotProps={{
-          input: {
-            startAdornment: (
-              <InputAdornment position="start">
-                <Person2Icon color="primary" />
-              </InputAdornment>
-            ),
-          }
-        }}
       />
-      <TextField
-        fullWidth
-        label={t("auth.userName") || "Username"}
-        variant="outlined"
-        error={!!errors.userName}
-        helperText={errors.userName?.message}
-        {...register("userName")}
+      <MyTextField
+        counter
+        errors={errors}
+        fieldName="userName"
         inputRef={userNameRef}
+        label={t("auth.userName") || "Username"}
+        maxValue={50}
+        minValue={3}
+        register={register("userName")}
+        required
+        startIcon={<BadgeIcon color="primary" />}
         sx={textFieldStyles}
-        slotProps={{
-          input: {
-            startAdornment: (
-              <InputAdornment position="start">
-                <BadgeIcon color="primary" />
-              </InputAdornment>
-            ),
-          }
-        }}
       />
     </Stack>
   );

@@ -7,7 +7,7 @@ namespace HrManagementSystem.Api.Features.GeographicalInformation.Addresses.V1;
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute)]
 [ApiController]
-[Authorize]
+[TenantMember]
 public class AddressesController(IAddressService addressService) : ControllerBase
 {
     private readonly IAddressService _addressService = addressService;

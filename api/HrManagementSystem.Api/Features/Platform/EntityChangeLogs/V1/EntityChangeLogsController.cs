@@ -5,6 +5,7 @@ namespace HrManagementSystem.Api.Features.Platform.EntityChangeLogs.V1;
 [ApiVersion("1.0", Deprecated = true)]
 [Route(ApiRoutes.BaseRoute)]
 [ApiController]
+[TenantMember]
 
 public class EntityChangeLogsController(IEntityChangeLogService entityChangeLogService) : ControllerBase
 {

@@ -1,13 +1,16 @@
 import type { PropsWithChildren, ReactNode } from 'react';
 import {
-  KeyboardAvoidingView,
   Platform,
-  ScrollView,
   type ScrollViewProps,
+  type StyleProp,
   StyleSheet,
   View,
   type ViewStyle,
 } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  KeyboardAwareScrollView,
+} from 'react-native-keyboard-controller';
 import { SafeAreaView, type Edge } from 'react-native-safe-area-context';
 
 import { useLocalization } from '@/src/core/localization';
@@ -18,8 +21,8 @@ export interface AppScreenProps {
   edges?: Edge[];
   padded?: boolean;
   keyboardAware?: boolean;
-  style?: ViewStyle;
-  contentContainerStyle?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
+  contentContainerStyle?: StyleProp<ViewStyle>;
   refreshControl?: ScrollViewProps['refreshControl'];
   header?: ReactNode;
 }
@@ -29,7 +32,7 @@ export function AppScreen({
   scroll = true,
   edges = ['top', 'right', 'bottom', 'left'],
   padded = true,
-  keyboardAware = false,
+  keyboardAware = true,
   style,
   contentContainerStyle,
   refreshControl,
@@ -38,21 +41,25 @@ export function AppScreen({
   const { theme } = useAppTheme();
   const { direction } = useLocalization();
 
-  const contentStyle: ViewStyle[] = [
+  const contentStyle: StyleProp<ViewStyle> = [
     styles.content,
     { direction },
     padded ? { padding: theme.spacing.lg } : {},
-    contentContainerStyle ?? {},
+    contentContainerStyle,
   ];
 
   const content = scroll ? (
-    <ScrollView
+    <KeyboardAwareScrollView
+      bottomOffset={theme.spacing.xxl}
       contentContainerStyle={contentStyle}
+      enabled={keyboardAware}
+      extraKeyboardSpace={theme.spacing.lg}
+      keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
       keyboardShouldPersistTaps="handled"
       refreshControl={refreshControl}
       showsVerticalScrollIndicator={false}>
       {children}
-    </ScrollView>
+    </KeyboardAwareScrollView>
   ) : (
     <View style={contentStyle}>{children}</View>
   );
@@ -62,9 +69,9 @@ export function AppScreen({
       edges={edges}
       style={[styles.safeArea, { backgroundColor: theme.colors.background }, style]}>
       {header}
-      {keyboardAware ? (
+      {keyboardAware && !scroll ? (
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          behavior="padding"
           style={styles.safeArea}>
           {content}
         </KeyboardAvoidingView>

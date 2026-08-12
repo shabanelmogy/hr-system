@@ -45,7 +45,10 @@ app.UseSerilogRequestLogging(options =>
 
 #endregion
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 #region "Cors"
 

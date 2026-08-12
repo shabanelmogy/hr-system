@@ -6,6 +6,11 @@ public static class DefaultRoles
 {
     public static async Task SeedRolesAsync(RoleManager<ApplicationRole> roleManager)
     {
+        if (!await roleManager.RoleExistsAsync(AppRoles.super_admin))
+        {
+            await roleManager.CreateAsync(new ApplicationRole(AppRoles.super_admin));
+        }
+
         if (!await roleManager.RoleExistsAsync(AppRoles.admin))
         {
             await roleManager.CreateAsync(new ApplicationRole(AppRoles.admin));

@@ -6,7 +6,7 @@ namespace HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1;
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute)]
 [ApiController]
-[Authorize]
+[TenantMember]
 public class CountriesController(ICountryService countryService) : ControllerBase
 {
     private readonly ICountryService _countryService = countryService;

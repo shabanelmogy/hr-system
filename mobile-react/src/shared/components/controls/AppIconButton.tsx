@@ -4,12 +4,23 @@ import { useAppTheme } from '@/src/core/theme';
 import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon';
 
 interface AppIconButtonProps extends Omit<PressableProps, 'children'> {
+  color?: string;
   icon: AppIconName;
   label: string;
+  pressedBackgroundColor?: string;
   size?: number;
 }
 
-export function AppIconButton({ icon, label, size = 20, disabled, style, ...props }: AppIconButtonProps) {
+export function AppIconButton({
+  color,
+  icon,
+  label,
+  pressedBackgroundColor,
+  size = 20,
+  disabled,
+  style,
+  ...props
+}: AppIconButtonProps) {
   const { theme } = useAppTheme();
 
   return (
@@ -23,13 +34,15 @@ export function AppIconButton({ icon, label, size = 20, disabled, style, ...prop
       style={(state) => [
         styles.button,
         {
-          backgroundColor: state.pressed ? theme.colors.surfaceMuted : 'transparent',
+          backgroundColor: state.pressed
+            ? (pressedBackgroundColor ?? theme.colors.surfaceMuted)
+            : 'transparent',
           borderRadius: theme.radius.full,
           opacity: disabled ? 0.5 : 1,
         },
         typeof style === 'function' ? style(state) : style,
       ]}>
-      <AppIcon color={theme.colors.text} name={icon} size={size} />
+      <AppIcon color={color ?? theme.colors.text} name={icon} size={size} />
     </Pressable>
   );
 }

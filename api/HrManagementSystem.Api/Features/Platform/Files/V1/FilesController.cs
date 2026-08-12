@@ -6,6 +6,7 @@ namespace HrManagementSystem.Api.Features.Platform.Files.V1;
 [Route(ApiRoutes.BaseRoute)]
 [ApiVersion("1.0")]
 [ApiController]
+[TenantMember]
 [EnableRateLimiting("fileOperations")]
 public class FilesController(
     IFileService fileService,

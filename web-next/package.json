@@ -8,7 +8,9 @@
     "npm": ">=10.0.0"
   },
   "scripts": {
-    "dev": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 next dev --experimental-https",
+    "dev": "next dev",
+    "dev:https": "next dev --experimental-https --experimental-https-key ./certificates/localhost-key.pem --experimental-https-cert ./certificates/localhost.pem",
+    "cert:install": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/setup-local-https.ps1",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",

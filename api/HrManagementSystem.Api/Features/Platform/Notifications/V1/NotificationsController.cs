@@ -6,7 +6,7 @@ namespace HrManagementSystem.Api.Features.Platform.Notifications.V1;
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute2)]
 [ApiController]
-[Authorize]
+[TenantMember]
 public sealed class NotificationsController(INotificationService notificationService) : ControllerBase
 {
     [HttpGet("getAll")]

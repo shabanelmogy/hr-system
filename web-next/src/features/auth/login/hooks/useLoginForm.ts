@@ -21,6 +21,7 @@ import {
 const DEV_CREDENTIALS = {
   user: { username: "user", password: "P@ssword123" },
   admin: { username: "admin", password: "P@ssword123" },
+  superAdmin: { username: "superadmin", password: "P@ssword123" },
 } as const;
 
 const useLoginForm = () => {

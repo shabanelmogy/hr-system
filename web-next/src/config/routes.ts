@@ -38,6 +38,11 @@ export interface AuthRoutes {
   rolePermissionsPage: (id: string) => AppPath;
 }
 
+export interface SuperAdminRoutes {
+  dashboard: AppPath;
+  tenants: AppPath;
+}
+
 export interface AppRoutes {
   login: "/login";
   register: "/register";
@@ -52,6 +57,7 @@ export interface AppRoutes {
   advancedTools: AdvancedToolsRoutes;
   basicData: BasicDataRoutes;
   auth: AuthRoutes;
+  superAdmin: SuperAdminRoutes;
   kpis: AppPath;
   trends: AppPath;
   healthPipeline: AppPath;
@@ -99,6 +105,11 @@ export const appRoutes: AppRoutes = {
     usersPage: "/administration/users",
     rolePermissionsPage: (id) =>
       toAppPath(`/administration/manage-role-permissions/${id}`),
+  },
+
+  superAdmin: {
+    dashboard: "/super-admin",
+    tenants: "/super-admin/tenants",
   },
 
   kpis: "/kpis",

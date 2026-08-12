@@ -1,0 +1,23 @@
+namespace HrManagementSystem.Application.Features.Tenancy.Contracts;
+
+public sealed record TenantManagementResponse(
+    string Id,
+    string Identifier,
+    string Name,
+    bool IsActive,
+    string SubscriptionStatus,
+    DateTime SubscriptionStartedOn,
+    DateTime? SubscriptionEndsOn,
+    string? PlanName,
+    int MaxAdmins,
+    int MaxUsers,
+    int AdminCount,
+    int UserCount,
+    int TotalUserCount,
+    int CompanyCount,
+    string? BillingEmail,
+    string? ContactName,
+    string? ContactPhone,
+    string? Notes,
+    DateTime CreatedOn,
+    DateTime? UpdatedOn);

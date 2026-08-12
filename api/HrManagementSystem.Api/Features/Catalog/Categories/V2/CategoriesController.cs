@@ -5,7 +5,7 @@ namespace HrManagementSystem.Api.Features.Catalog.Categories.V2
     [ApiVersion("2.0")]
     [Route(ApiRoutes.BaseRoute)]
     [ApiController]
-    [Authorize]
+    [TenantMember]
     public class CategoriesController(ICategoryService categoryService) : ControllerBase
     {
         private readonly ICategoryService _categoryService = categoryService;

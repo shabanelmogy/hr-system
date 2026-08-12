@@ -5,6 +5,7 @@ using HrManagementSystem.Infrastructure.Features.Security.Authentication.Jobs;
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
 using HrManagementSystem.Application.Features.Security.Users.Errors;
 using HrManagementSystem.Application.Abstractions.Authentication;
+using HrManagementSystem.Domain.Tenancy.Enums;
 
 namespace HrManagementSystem.Infrastructure.Features.Security.Authentication.Services;
 
@@ -551,10 +552,21 @@ public sealed class AuthService(
 
     private Task<bool> IsTenantActiveAsync(
         string tenantId,
-        CancellationToken cancellationToken) =>
-        context.Tenants
+        CancellationToken cancellationToken)
+    {
+        var now = timeProvider.GetUtcNow().UtcDateTime;
+        return context.Tenants
             .AsNoTracking()
-            .AnyAsync(tenant => tenant.Id == tenantId && tenant.IsActive, cancellationToken);
+            .AnyAsync(
+                tenant =>
+                    tenant.Id == tenantId &&
+                    tenant.IsActive &&
+                    tenant.SubscriptionStatus != SubscriptionStatus.Suspended &&
+                    tenant.SubscriptionStatus != SubscriptionStatus.Expired &&
+                    tenant.SubscriptionStatus != SubscriptionStatus.Cancelled &&
+                    (!tenant.SubscriptionEndsOn.HasValue || tenant.SubscriptionEndsOn >= now),
+                cancellationToken);
+    }
 
     private async Task AssignDefaultCompanyAsync(
         ApplicationUser user,

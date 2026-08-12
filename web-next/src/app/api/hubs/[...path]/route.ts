@@ -14,8 +14,8 @@ const TAG = "[SignalR Proxy]";
  *  - A `?access_token=<token>` query parameter on WebSocket upgrade requests.
  *
  * We forward both so the backend can authenticate via either mechanism.
- * Running this server-side lets Node.js handle TLS with the self-signed
- * localhost cert (NODE_TLS_REJECT_UNAUTHORIZED=0).
+ * Running this server-side keeps the browser on the same origin. Local
+ * development uses the backend HTTP launch URL, avoiding untrusted certificates.
  */
 async function handle(request: NextRequest, parameters: RouteParameters) {
   const { path } = await parameters.params;

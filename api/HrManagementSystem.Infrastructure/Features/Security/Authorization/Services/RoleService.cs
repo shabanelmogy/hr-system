@@ -20,6 +20,7 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
             var rolesQuery = _roleManager.Roles;
 
             var roles = await rolesQuery
+                .Where(role => role.NormalizedName != AppRoles.super_admin.ToUpper())
                 .ProjectToType<RoleResponse>()
                 .ToListAsync(cancellationToken);
             return roles;
@@ -31,7 +32,7 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
             if (string.IsNullOrWhiteSpace(id))
                 return Result.Failure<RoleDetailResponse>(_roleErrors.RoleNotFound);
 
-            if (await _roleManager.FindByIdAsync(id) is not { } role)
+            if (await _roleManager.FindByIdAsync(id) is not { } role || IsPlatformRole(role))
                 return Result.Failure<RoleDetailResponse>(_roleErrors.RoleNotFound);
 
             var permissions = await _roleManager.GetClaimsAsync(role);
@@ -69,7 +70,7 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
 
             cancellationToken.ThrowIfCancellationRequested();
             var currentRole = await _roleManager.FindByIdAsync(roleRequest.Id);
-            if (currentRole is null)
+            if (currentRole is null || IsPlatformRole(currentRole))
                 return Result.Failure(_roleErrors.RoleNotFound);
 
             currentRole.Name = roleRequest.Name;
@@ -87,7 +88,7 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
 
         public async Task<Result> ToggleStatusAsync(string id, CancellationToken cancellationToken)
         {
-            if (await _roleManager.FindByIdAsync(id) is not { } role)
+            if (await _roleManager.FindByIdAsync(id) is not { } role || IsPlatformRole(role))
                 return Result.Failure<RoleDetailResponse>(_roleErrors.RoleNotFound);
 
             role.IsDeleted = !role.IsDeleted;
@@ -101,7 +102,7 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
         {
             var role = await _roleManager.FindByIdAsync(roleId);
 
-            if (role == null)
+            if (role == null || IsPlatformRole(role))
                 return Result.Failure<RoleResponse>(_roleErrors.RoleNotFound);
 
             cancellationToken.ThrowIfCancellationRequested();
@@ -128,7 +129,7 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
             cancellationToken.ThrowIfCancellationRequested();
             var role = await _roleManager.FindByIdAsync(rolerequest.Id);
 
-            if (role == null)
+            if (role == null || IsPlatformRole(role))
                 return Result.Failure(_roleErrors.RoleNotFound);
 
             var roleClaims = await _roleManager.GetClaimsAsync(role);
@@ -149,5 +150,8 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
 
             return Result.Success();
         }
+
+        private static bool IsPlatformRole(ApplicationRole role) =>
+            string.Equals(role.Name, AppRoles.super_admin, StringComparison.OrdinalIgnoreCase);
     }
 }

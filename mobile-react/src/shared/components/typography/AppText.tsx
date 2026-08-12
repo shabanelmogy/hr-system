@@ -13,7 +13,15 @@ export type AppTextVariant =
   | 'title'
   | 'display';
 
-type AppTextColor = 'default' | 'muted' | 'primary' | 'secondary' | 'danger' | 'success';
+export type AppTextColor =
+  | 'default'
+  | 'muted'
+  | 'primary'
+  | 'secondary'
+  | 'danger'
+  | 'success'
+  | 'warning'
+  | 'inverse';
 
 export interface AppTextProps extends TextProps {
   variant?: AppTextVariant;
@@ -51,6 +59,8 @@ export function AppText({
     secondary: theme.colors.secondary,
     danger: theme.colors.danger,
     success: theme.colors.success,
+    warning: theme.colors.warning,
+    inverse: theme.colors.onPrimary,
   };
 
   return (

@@ -6,7 +6,7 @@ namespace HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1;
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute)]
 [ApiController]
-[Authorize]
+[TenantMember]
 public class DistrictsController(IDistrictService districtService) : ControllerBase
 {
     private readonly IDistrictService _districtService = districtService;

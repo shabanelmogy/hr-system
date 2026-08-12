@@ -4,6 +4,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonIcon from "@mui/icons-material/Person";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import { alpha, Avatar, Box, Divider, Typography, type Theme } from "@mui/material";
 import { useState, type Dispatch, type RefObject, type SetStateAction } from "react";
 import Link from "next/link";
@@ -31,7 +32,7 @@ interface LoginFormProps {
   loading: boolean;
   handleSubmit: UseFormHandleSubmit<LoginFormData>;
   onSubmit: (data: LoginFormData) => Promise<void>;
-  loginAs: (role: "user" | "admin") => Promise<void>;
+  loginAs: (role: "user" | "admin" | "superAdmin") => Promise<void>;
   control: Control<LoginFormData>;
   errors: FieldErrors<LoginFormData>;
   register: UseFormRegister<LoginFormData>;
@@ -60,7 +61,7 @@ const LoginForm = ({
   appRoutes,
   isFormSubmitting,
 }: LoginFormProps) => {
-  const [activeButton, setActiveButton] = useState<"main" | "user" | "admin" | null>(null);
+  const [activeButton, setActiveButton] = useState<"main" | "user" | "admin" | "superAdmin" | null>(null);
 
   const isAnySubmitting = loading || isFormSubmitting || activeButton !== null;
 
@@ -88,6 +89,16 @@ const LoginForm = ({
     setActiveButton("admin");
     try {
       await loginAs("admin");
+    } finally {
+      setActiveButton(null);
+    }
+  };
+
+  const handleSuperAdminLogin = async () => {
+    if (isAnySubmitting) return;
+    setActiveButton("superAdmin");
+    try {
+      await loginAs("superAdmin");
     } finally {
       setActiveButton(null);
     }
@@ -130,7 +141,8 @@ const LoginForm = ({
           register={register}
           fullWidth
           sx={{ mb: 1.5 }}
-          showCounter={false}
+          maxValue={50}
+          counter
           startIcon={<PersonIcon sx={{ ...gradientIconStyle }} />}
         />
         <MyTextField
@@ -151,12 +163,25 @@ const LoginForm = ({
         <LoginButton t={t} loading={activeButton === "main"} disabled={isAnySubmitting} />
         
         {/* Quick login buttons in a row */}
-        <Box sx={{ display: "flex", gap: 2, mt: 2, mb: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            gap: 2,
+            mt: 2,
+            mb: 2,
+          }}>
           <UserLoginButton t={t} loading={activeButton === "user"} onClick={handleUserLogin} disabled={isAnySubmitting} />
           <AdminLoginButton
             t={t}
             loading={activeButton === "admin"}
             onClick={handleAdminLogin}
+            disabled={isAnySubmitting}
+          />
+          <SuperAdminLoginButton
+            t={t}
+            loading={activeButton === "superAdmin"}
+            onClick={handleSuperAdminLogin}
             disabled={isAnySubmitting}
           />
         </Box>
@@ -311,6 +336,32 @@ const AdminLoginButton = ({
     disabled={disabled}
   >
     {t("auth.loginAsAdmin")}
+  </MyButton>
+);
+
+const SuperAdminLoginButton = ({
+  t,
+  loading,
+  onClick,
+  disabled,
+}: {
+  t: Translator;
+  loading: boolean;
+  onClick: () => Promise<void>;
+  disabled: boolean;
+}) => (
+  <MyButton
+    type="button"
+    fullWidth
+    loading={loading}
+    onClick={onClick}
+    gradientColors={["#673ab7", "#3f51b5"]}
+    hoverColors={["#512da8", "#303f9f"]}
+    size="medium"
+    startIcon={<WorkspacePremiumIcon />}
+    disabled={disabled}
+  >
+    {t("auth.loginAsSuperAdmin")}
   </MyButton>
 );
 

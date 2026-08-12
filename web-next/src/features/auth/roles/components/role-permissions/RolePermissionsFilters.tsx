@@ -5,12 +5,11 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
-  InputAdornment,
   InputLabel,
   MenuItem,
   Select,
-  TextField,
 } from "@mui/material";
+import { MyTextField } from "@/shared/components/forms";
 import { ROLE_MODULES } from "./constants";
 
 type RolePermissionsFiltersProps = {
@@ -27,21 +26,18 @@ export default function RolePermissionsFilters(props: RolePermissionsFiltersProp
   return (
     <Grid container spacing={3} sx={{ alignItems: "center" }}>
       <Grid size={{ xs: 12, md: 4 }}>
-        <TextField
-          fullWidth
+        <MyTextField
+          counter={false}
+          fieldName="rolePermissionsSearch"
+          labelKey={null}
+          margin="none"
+          maxValue={100}
           placeholder="Search modules..."
           value={props.searchTerm}
           onChange={(event) => props.onSearchChange(event.target.value)}
+          showClearButton
           size="small"
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search color="action" />
-                </InputAdornment>
-              ),
-            },
-          }}
+          startIcon={<Search color="action" />}
         />
       </Grid>
       <Grid size={{ xs: 12, md: 3 }}>

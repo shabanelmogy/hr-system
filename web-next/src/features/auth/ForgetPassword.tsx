@@ -2,6 +2,7 @@
 
 import { useSnackbar } from "@/shared/hooks";
 import { apiService, HandleApiError } from "@/shared/services";
+import { MyTextField } from "@/shared/components/forms";
 import EmailIcon from "@mui/icons-material/Email";
 import LockResetIcon from "@mui/icons-material/LockReset";
 import SendIcon from "@mui/icons-material/Send";
@@ -13,10 +14,8 @@ import {
   CardContent,
   Divider,
   Fade,
-  InputAdornment,
   Paper,
   Stack,
-  TextField,
   Typography,
   useMediaQuery,
   useTheme,
@@ -255,15 +254,17 @@ const ForgetPassword = () => {
               <Stack spacing={3} sx={{
                 alignItems: "center"
               }}>
-                <TextField
+                <MyTextField
+                  counter
+                  errors={errors}
+                  fieldName="email"
                   inputRef={inputRef}
                   label={t("auth.email")}
-                  variant="outlined"
-                  fullWidth
+                  maxValue={254}
                   autoComplete="off"
-                  {...register("email")}
-                  error={!!errors.email}
-                  helperText={errors.email?.message}
+                  register={register("email")}
+                  required
+                  startIcon={<EmailIcon color="primary" />}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 2,
@@ -285,19 +286,6 @@ const ForgetPassword = () => {
                     "& .MuiOutlinedInput-input": {
                       color: theme.palette.text.primary,
                     },
-                  }}
-                  slotProps={{
-                    htmlInput: {
-                      "aria-required": true,
-                      "aria-invalid": !!errors.email,
-                    },
-                    input: {
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <EmailIcon color="primary" />
-                        </InputAdornment>
-                      ),
-                    }
                   }}
                 />
 

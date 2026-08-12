@@ -1,6 +1,8 @@
 import type { PropsWithChildren } from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   ActivityIndicator,
+  type ColorValue,
   Pressable,
   type PressableProps,
   StyleSheet,
@@ -13,12 +15,15 @@ import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon
 import { AppText } from '@/src/shared/components/typography/AppText';
 
 type AppButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
+type GradientColors = readonly [ColorValue, ColorValue, ...ColorValue[]];
 
 export interface AppButtonProps extends Omit<PressableProps, 'children'> {
   variant?: AppButtonVariant;
   icon?: AppIconName;
   loading?: boolean;
   fullWidth?: boolean;
+  gradientColors?: GradientColors;
+  pressedGradientColors?: GradientColors;
 }
 
 export function AppButton({
@@ -27,6 +32,8 @@ export function AppButton({
   icon,
   loading = false,
   fullWidth = false,
+  gradientColors,
+  pressedGradientColors,
   disabled,
   style,
   ...props
@@ -60,24 +67,46 @@ export function AppButton({
         styles.button,
         {
           direction,
-          backgroundColor: backgroundMap[variant],
+          backgroundColor: gradientColors ? 'transparent' : backgroundMap[variant],
           borderColor: variant === 'outline' ? theme.colors.primary : 'transparent',
           borderRadius: theme.radius.sm,
-          opacity: isDisabled ? 0.55 : state.pressed ? 0.82 : 1,
+          overflow: gradientColors ? 'hidden' : undefined,
+          opacity:
+            isDisabled
+              ? 0.55
+              : state.pressed && !(gradientColors && pressedGradientColors)
+                ? 0.82
+                : 1,
           width: fullWidth ? '100%' : undefined,
         },
         typeof style === 'function' ? style(state) : style,
       ]}>
-      <View style={[styles.content, { direction }]}>
-        {loading ? (
-          <ActivityIndicator color={foregroundMap[variant]} size="small" />
-        ) : icon ? (
-          <AppIcon color={foregroundMap[variant]} name={icon} size={19} />
-        ) : null}
-        <AppText align="center" color="default" style={{ color: foregroundMap[variant] }} weight="700">
-          {children}
-        </AppText>
-      </View>
+      {(state) => (
+        <>
+          {gradientColors ? (
+            <LinearGradient
+              colors={state.pressed && pressedGradientColors ? pressedGradientColors : gradientColors}
+              end={{ x: 1, y: 0 }}
+              start={{ x: 0, y: 1 }}
+              style={StyleSheet.absoluteFill}
+            />
+          ) : null}
+          <View style={[styles.content, { direction }]}>
+            {loading ? (
+              <ActivityIndicator color={foregroundMap[variant]} size="small" />
+            ) : icon ? (
+              <AppIcon color={foregroundMap[variant]} name={icon} size={19} />
+            ) : null}
+            <AppText
+              align="center"
+              color="default"
+              style={{ color: foregroundMap[variant] }}
+              weight="700">
+              {children}
+            </AppText>
+          </View>
+        </>
+      )}
     </Pressable>
   );
 }

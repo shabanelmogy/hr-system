@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, TextField, Button, Chip, Divider, List, ListItem, Typography, IconButton } from '@mui/material';
+import { Box, Button, Chip, Divider, List, ListItem, Typography, IconButton } from '@mui/material';
+import { MyTextField } from '@/shared/components/forms';
 import { Add as AddIcon, Delete as DeleteIcon, Edit as EditIcon, PlayArrow as PlayIcon } from '@mui/icons-material';
 import { formatTime } from '../utils';
 import { Note } from './useVideoSidebar';
@@ -51,14 +52,17 @@ export const NotesTab: React.FC<NotesTabProps> = ({
         </Typography>
       </Box>
       <Box sx={{ mb: 2 }}>
-        <TextField
-          fullWidth
+        <MyTextField
+          counter
+          fieldName="newVideoNote"
+          labelKey={null}
+          margin="none"
+          maxValue={2000}
           multiline
           rows={3}
           placeholder="Add a note at current time..."
           value={newNote}
           onChange={(e) => setNewNote(e.target.value)}
-          variant="outlined"
           size="small"
         />
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
@@ -98,8 +102,12 @@ export const NotesTab: React.FC<NotesTabProps> = ({
               >
                 {editingGlobalNote === note.id ? (
                   <Box sx={{ width: '100%' }}>
-                    <TextField
-                      fullWidth
+                    <MyTextField
+                      counter
+                      fieldName={`videoNote-${note.id}`}
+                      labelKey={null}
+                      margin="none"
+                      maxValue={2000}
                       multiline
                       rows={3}
                       value={editGlobalNoteContent}

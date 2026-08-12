@@ -6,6 +6,7 @@ namespace HrManagementSystem.Api.Features.Analytics.Views.V1;
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute2)]
 [ApiController]
+[TenantMember]
 [HasPermission(Permissions.ManageDatabaseViews)]
 public class ViewsController(IViewService viewService, IWebHostEnvironment environment) : ControllerBase
 {

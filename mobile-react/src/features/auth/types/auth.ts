@@ -38,8 +38,8 @@ export interface SessionResponse {
   email: string;
   firstName: string;
   lastName: string;
-  roles: string[];
-  permissions: string[];
+  readonly roles: readonly string[];
+  readonly permissions: readonly string[];
   expiresAt: number;
 }
 

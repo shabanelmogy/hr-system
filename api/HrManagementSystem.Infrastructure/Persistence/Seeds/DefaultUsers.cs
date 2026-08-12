@@ -4,6 +4,14 @@ namespace HrManagementSystem.Infrastructure.Persistence.Seeds;
 
 public static class DefaultUsers
 {
+    public static Task SeedSuperAdminUserAsync(
+        UserManager<ApplicationUser> userManager,
+        IConfiguration configuration) =>
+        SeedUserAsync(
+            userManager,
+            configuration.GetSection("BootstrapUsers:SuperAdmin"),
+            AppRoles.super_admin);
+
     public static Task SeedViewerUserAsync(
         UserManager<ApplicationUser> userManager,
         IConfiguration configuration) =>

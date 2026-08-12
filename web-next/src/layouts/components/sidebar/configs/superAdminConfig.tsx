@@ -1,0 +1,34 @@
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+
+import { appRoutes } from "@/config/routes";
+import {
+  NavigationColors,
+  NavigationSectionId,
+  NavigationTitles,
+  UserRoles,
+} from "../navigationTypes";
+import { createColoredIcon, createNavItem, createNavSection } from "../navigationUtils";
+
+export const getSuperAdminConfig = () =>
+  createNavSection(
+    NavigationSectionId.SUPER_ADMIN,
+    NavigationTitles.SUPER_ADMIN,
+    createColoredIcon(<AdminPanelSettingsIcon />, NavigationColors.PURPLE),
+    [
+      createNavItem(
+        NavigationTitles.SUPER_ADMIN_DASHBOARD,
+        createColoredIcon(<DashboardIcon />, NavigationColors.PURPLE),
+        appRoutes.superAdmin.dashboard,
+        [UserRoles.SUPER_ADMIN],
+      ),
+      createNavItem(
+        NavigationTitles.TENANT_MANAGEMENT,
+        createColoredIcon(<ApartmentIcon />, NavigationColors.LIGHT_PURPLE),
+        appRoutes.superAdmin.tenants,
+        [UserRoles.SUPER_ADMIN],
+      ),
+    ],
+    [UserRoles.SUPER_ADMIN],
+  );

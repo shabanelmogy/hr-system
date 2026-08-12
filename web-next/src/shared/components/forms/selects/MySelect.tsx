@@ -192,7 +192,7 @@ const MySelect = <
         ) ?? null;
 
     const select = (
-      <FormControl fullWidth sx={formMode ? sx : undefined}>
+      <FormControl fullWidth sx={sx}>
         <Autocomplete<NormalizedOption<TOption>, boolean, boolean, false>
           multiple={multiple}
           options={availableOptions}

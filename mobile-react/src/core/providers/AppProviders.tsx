@@ -2,6 +2,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import type { PropsWithChildren } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { LocalizationProvider, useLocalization } from '@/src/core/localization';
@@ -21,15 +22,17 @@ function DirectionRoot({ children }: PropsWithChildren) {
 export function AppProviders({ children }: PropsWithChildren) {
   return (
     <GestureHandlerRootView style={styles.root}>
-      <SafeAreaProvider>
-        <QueryClientProvider client={queryClient}>
-          <LocalizationProvider>
-            <AppThemeProvider>
-              <DirectionRoot>{children}</DirectionRoot>
-            </AppThemeProvider>
-          </LocalizationProvider>
-        </QueryClientProvider>
-      </SafeAreaProvider>
+      <KeyboardProvider preserveEdgeToEdge>
+        <SafeAreaProvider>
+          <QueryClientProvider client={queryClient}>
+            <LocalizationProvider>
+              <AppThemeProvider>
+                <DirectionRoot>{children}</DirectionRoot>
+              </AppThemeProvider>
+            </LocalizationProvider>
+          </QueryClientProvider>
+        </SafeAreaProvider>
+      </KeyboardProvider>
     </GestureHandlerRootView>
   );
 }

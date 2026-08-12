@@ -6,6 +6,7 @@ namespace HrManagementSystem.Api.Features.Security.Users.V1;
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute)]
 [ApiController]
+[TenantMember]
 public class UsersController(IUserService userService) : ControllerBase
 {
     private readonly IUserService _userService = userService;

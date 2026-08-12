@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, IconButton, TextField, Toolbar as MuiToolbar, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, IconButton, Toolbar as MuiToolbar, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { MyTextField } from '@/shared/components/forms';
 import BackButton from '@/shared/components/navigation/BackButton';
 import {
   Search as SearchIcon,
@@ -89,12 +90,17 @@ const TextToolbar: React.FC<TextToolbarProps> = (props) => {
           {fileName}
         </Typography>
         {showSearch && (
-          <TextField
+          <MyTextField
+            containerSx={{ ml: 2, width: 250 }}
+            counter={false}
+            fieldName="textViewerSearch"
+            labelKey={null}
+            margin="none"
+            maxValue={200}
             size="small"
             placeholder="Search in text..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            sx={{ ml: 2, width: 250 }}
           />
         )}
       </Box>

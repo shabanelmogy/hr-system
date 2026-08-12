@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import type { ReactNode, Ref } from "react";
 import { Controller, type Control, type FieldValues } from "react-hook-form";
 import { mergeRefs } from "./refUtils";
-import type { FieldErrorLike, RegisteredField } from "./types";
+import type { RegisteredField } from "./types";
 
 type EditableTextFieldProps = {
   control?: unknown;
@@ -11,7 +11,7 @@ type EditableTextFieldProps = {
   registeredField?: RegisteredField;
   registerValue: string;
   value?: unknown;
-  fieldError?: FieldErrorLike;
+  error?: boolean;
   helperText?: ReactNode;
   preventZero: boolean;
   maxLength?: number;
@@ -38,7 +38,7 @@ export default function EditableTextField(props: EditableTextFieldProps) {
               {...props.getCommonProps(fieldValue, () => props.onClear(field.onChange))}
               {...field}
               inputRef={mergeRefs(field.ref, props.inputRef)}
-              error={Boolean(props.fieldError)}
+              error={props.error}
               helperText={props.helperText}
               onChange={(event) => {
                 const value = String(event.target.value ?? "");
@@ -60,7 +60,7 @@ export default function EditableTextField(props: EditableTextFieldProps) {
       {...props.registeredField}
       inputRef={mergeRefs(props.registeredField?.ref, props.inputRef)}
       value={props.value !== undefined ? props.value : undefined}
-      error={Boolean(props.fieldError)}
+      error={props.error}
       helperText={props.helperText}
       onChange={props.onRegisterChange}
     />

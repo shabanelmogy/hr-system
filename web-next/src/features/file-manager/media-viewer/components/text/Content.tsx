@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, CircularProgress, TextField, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import { MyTextField } from '@/shared/components/forms';
 
 export interface TextContentProps {
   loading: boolean;
@@ -31,12 +32,15 @@ const TextContent: React.FC<TextContentProps> = ({ loading, error, content, sear
   }
 
   return (
-    <TextField
-      fullWidth
+    <MyTextField
+      containerSx={{ height: '100%' }}
+      counter={false}
+      fieldName="textViewerContent"
+      labelKey={null}
       multiline
+      showClearButton={false}
       value={searchTerm && content ? content.replace(new RegExp(searchTerm, 'gi'), (m) => `🔍${m}🔍`) : content}
       slotProps={{ input: { readOnly: true } }}
-      variant="outlined"
       sx={{
         height: '100%',
         '& .MuiOutlinedInput-root': {

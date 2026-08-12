@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Grid, TextField, MenuItem } from "@mui/material";
+import { Box, Grid } from "@mui/material";
+import { MySelect, MyTextField } from "@/shared/components/forms";
 import GroupFolderCard from "./GroupFolderCard";
 import { MappedFile } from "./FileMapper";
 import { SortKey } from "./FileSorter";
@@ -28,25 +29,33 @@ const GroupsOverview: React.FC<GroupsOverviewProps> = ({
   return (
     <Box sx={{ p: 2, pt: 1, display: "flex", flexDirection: "column", gap: 2 }}>
       <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-        <TextField
+        <MyTextField
+          containerSx={{ width: 300 }}
+          counter
+          fieldName="allFilesSearch"
+          margin="none"
+          maxValue={200}
           size="small"
           label={t("files.searchAll")}
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
-          sx={{ width: 300 }}
         />
-        <TextField
-          size="small"
-          label={t("files.sortedBy")}
-          select
-          value={sortKey}
-          onChange={(e) => onSortKeyChange(e.target.value as SortKey)}
-          sx={{ width: 180 }}
-        >
-          <MenuItem value="name">{t("files.name")}</MenuItem>
-          <MenuItem value="size">{t("files.size")}</MenuItem>
-          <MenuItem value="updated">{t("files.lastUpdated")}</MenuItem>
-        </TextField>
+        <Box sx={{ width: 180 }}>
+          <MySelect
+            all={false}
+            dataSource={[
+              { label: t("files.name"), value: "name" },
+              { label: t("files.size"), value: "size" },
+              { label: t("files.lastUpdated"), value: "updated" },
+            ]}
+            displayMember="label"
+            handleSelectionChange={(event) => onSortKeyChange(event.target.value as SortKey)}
+            label={t("files.sortedBy")}
+            selectedItem={sortKey}
+            showClearButton={false}
+            valueMember="value"
+          />
+        </Box>
       </Box>
 
       {/* Folders grid */}

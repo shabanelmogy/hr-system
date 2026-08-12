@@ -3,6 +3,7 @@ using HrManagementSystem.Application.Common.Realtime;
 
 using HrManagementSystem.Application.Features.Security.Users.Contracts;
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
+using HrManagementSystem.Domain.Tenancy.Entities;
 
 namespace HrManagementSystem.Infrastructure.Features.Security.Users.Jobs;
 
@@ -44,12 +45,15 @@ public sealed class UserChangedJob(
         if (result.IsFailure)
             throw new InvalidOperationException($"User notification failed: {result.Error.Code}");
 
-        var count = await context.Users.AsNoTracking()
+        var count = await context.Users.IgnoreQueryFilters().AsNoTracking()
             .CountAsync(user => user.TenantId == request.TenantId, cancellationToken);
         var clients = hubContext.Clients.Group(GeneralHubGroups.ForCompanyPermission(
             request.TenantId,
             request.CompanyId,
             Permissions.ViewUsers));
+
+        var superAdminClients = hubContext.Clients.Group(
+            GeneralHubGroups.ForRole(AppRoles.super_admin));
 
         await Task.WhenAll(
             clients.ReceiveUserUpdate(
@@ -59,6 +63,12 @@ public sealed class UserChangedJob(
                 DateTime.UtcNow,
                 RealtimeResource.For<ApplicationUser>(),
                 request.Action,
-                request.User.Id)));
+                request.User.Id)),
+            superAdminClients.ReceiveEntityChanged(new RealtimeEntityChanged(
+                Guid.NewGuid(),
+                DateTime.UtcNow,
+                RealtimeResource.For<Tenant>(),
+                "UserCountChanged",
+                request.TenantId)));
     }
 }
