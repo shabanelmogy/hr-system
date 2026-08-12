@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-08-11T20:09:43.581149+00:00",
+  "generated_at": "2026-08-12T06:39:24.156912+00:00",
   "nodes": {
     "api_hrmanagementsystem_infrastructure_security_authorization_filters_tenantmemberattribute_hrmanagementsystem_infrastructure_security_authorization_filters_tenantmemberattribute": {
-      "code_fingerprint": "002a0bd10e70acb38277f3af0ce313af14d29ecff62dc4d0318f6b5e15818867",
+      "code_fingerprint": "c688d01f21cf802ce06e8127e0616e83d139f1db2d949b03d8890a7fb4da571d",
       "label": "TenantMemberAttribute",
       "last": "2026-08-11T18:26:28.622140+00:00",
       "provenance": [
@@ -12,13 +12,13 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.998344729,
+      "score": 0.988309032,
       "source_file": "api/HrManagementSystem.Infrastructure/Security/Authorization/Filters/TenantMemberAttribute.cs",
       "status": "tentative",
       "uses": 1
     },
     "mobile_react_app_android_softwarekeyboardlayoutmode": {
-      "code_fingerprint": "3bd4aa045be6bc05d262e07060aa24c5b578491a5bdaa357e625b478418afee4",
+      "code_fingerprint": "517fe2fbb8d08a82662fbdebb61c80334f8db0670a25d89326b4c8dfb3555683",
       "label": "softwareKeyboardLayoutMode",
       "last": "2026-08-11T16:37:30.882471+00:00",
       "provenance": [
@@ -28,13 +28,13 @@
           "q": "when focus input keyboard cover input"
         }
       ],
-      "score": 0.996600839,
+      "score": 0.986582672,
       "source_file": "mobile-react/app.json",
       "status": "tentative",
       "uses": 1
     },
     "mobile_react_src_features_auth_login_components_loginform": {
-      "code_fingerprint": "722619ae766bd922ba803011057d06c75cff81e4ba9f5ca42db12f4fc5074ccd",
+      "code_fingerprint": "4fd8b88ebdff831d077a085ca9334de4b362cc919d49ecedae5874d8a16d0781",
       "label": "mobile-react/src/features/auth/login/components/LoginForm.tsx",
       "last": "2026-08-11T19:46:05.613774+00:00",
       "provenance": [
@@ -44,13 +44,13 @@
           "q": "How should the mobile app globally focus the first input in each form?"
         }
       ],
-      "score": 0.999620882,
+      "score": 0.989572357,
       "source_file": "mobile-react/src/features/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
     },
     "mobile_react_src_features_tenants_screens_tenantdashboardscreen_tenantdashboardscreen": {
-      "code_fingerprint": "7f36f13cf3c091c6bb4e3ef265c60e6c4337a1dbda72f935aabac5d2e4d01fb4",
+      "code_fingerprint": "c50b098ce0a5ebe89f8ab1000da20dd0459b91b274fc68358b373b0a244aef97",
       "label": "TenantDashboardScreen()",
       "last": "2026-08-11T18:16:55.686631+00:00",
       "provenance": [
@@ -60,13 +60,13 @@
           "q": "create dashborad and tenetamanagement in web-next and mobile"
         }
       ],
-      "score": 0.998191781,
+      "score": 0.988157621,
       "source_file": "mobile-react/src/features/tenants/screens/TenantDashboardScreen.tsx",
       "status": "tentative",
       "uses": 1
     },
     "next": {
-      "code_fingerprint": "a47dcfb63082005a5040137a00546f7118d2b51a3a2c4df469f459471903f3b4",
+      "code_fingerprint": "a1f8c7605ea470ee7220e698ee8ad802427a44fa90c623fee403eab9df762730",
       "label": "next",
       "last": "2026-08-11T18:57:00.761650+00:00",
       "provenance": [
@@ -76,13 +76,13 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.998833984,
+      "score": 0.988793369,
       "source_file": "web-next/package.json",
       "status": "tentative",
       "uses": 1
     },
     "web_next_readme_development": {
-      "code_fingerprint": "c326efd6c4994a1279f9ba9b846fb2c9dadad7055baafa74667819cdc5e07e9a",
+      "code_fingerprint": "fc152834058f01d2c873f8e8c248e803745c50f5068472e6476ed43d3849d4d6",
       "label": "Development",
       "last": "2026-08-11T18:39:48.685616+00:00",
       "provenance": [
@@ -92,13 +92,13 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.998558349,
+      "score": 0.988520504,
       "source_file": "web-next/README.md",
       "status": "tentative",
       "uses": 1
     },
     "web_next_scripts_setup_local_https": {
-      "code_fingerprint": "76a8f8f757188a87806ac74ae9555538ba729196125477f79f276b410b5a364c",
+      "code_fingerprint": "6266c0738a946ae6534fa6580424c556696856d847fd0451c155da0badedd884",
       "label": "setup-local-https.ps1",
       "last": "2026-08-11T18:39:48.685616+00:00",
       "provenance": [
@@ -108,7 +108,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.998558349,
+      "score": 0.988520504,
       "source_file": "web-next/scripts/setup-local-https.ps1",
       "status": "tentative",
       "uses": 1
@@ -124,13 +124,13 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.998833984,
+      "score": 0.988793369,
       "source_file": "web-next/src/app/(auth)/login/page.tsx",
       "status": "tentative",
       "uses": 1
     },
     "web_next_src_features_auth_login_components_loginform_adminloginbutton": {
-      "code_fingerprint": "8a07ba821338e053e8bd0fb6804422ef7500eb125dac9ca92eae0807f4ed0d7e",
+      "code_fingerprint": "deee3512aeba679e8aa30c711f35fa9abc10b98fc1918ab2df15a2718c32889d",
       "label": "AdminLoginButton()",
       "last": "2026-08-11T16:46:00.039569+00:00",
       "provenance": [
@@ -140,13 +140,13 @@
           "q": "fix style for buton : login as admin"
         }
       ],
-      "score": 0.996736543,
+      "score": 0.986717012,
       "source_file": "web-next/src/features/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
     },
     "web_next_src_features_auth_login_components_loginform_superadminloginbutton": {
-      "code_fingerprint": "8a07ba821338e053e8bd0fb6804422ef7500eb125dac9ca92eae0807f4ed0d7e",
+      "code_fingerprint": "deee3512aeba679e8aa30c711f35fa9abc10b98fc1918ab2df15a2718c32889d",
       "label": "SuperAdminLoginButton()",
       "last": "2026-08-11T19:22:49.132059+00:00",
       "provenance": [
@@ -156,13 +156,13 @@
           "q": "Fix web super-admin login failing with HTTP 307 and React minWidth DOM warning on the tenant dashboard."
         }
       ],
-      "score": 0.999247649,
+      "score": 0.989202876,
       "source_file": "web-next/src/features/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
     },
     "web_next_src_features_tenants_tenantdashboardpage_tenantdashboardpage": {
-      "code_fingerprint": "3b22e9f9fa15880153572dc9ae83c8de69577a74f51cc70635d60a13369855fd",
+      "code_fingerprint": "4bb8c9617a6009ec10b4b4b1818a5702160d53f95dcd9aa721713dbc7813de4e",
       "label": "TenantDashboardPage()",
       "last": "2026-08-11T19:22:49.132059+00:00",
       "provenance": [
@@ -177,13 +177,13 @@
           "q": "create dashborad and tenetamanagement in web-next and mobile"
         }
       ],
-      "score": 1.99743943,
+      "score": 1.977360497,
       "source_file": "web-next/src/features/tenants/TenantDashboardPage.tsx",
       "status": "preferred",
       "uses": 2
     },
     "web_next_src_layouts_components_sidebar_navigationconfig_getnavigationconfig": {
-      "code_fingerprint": "5408c1d7c9e26cf32e4e1bb06926cee9b3bd7254f7fa293b0a71e7464e4f2316",
+      "code_fingerprint": "81438c75b3a671fc77b1399c3a4effd0e5758192785c04d1a2b581bd607f79b9",
       "label": "getNavigationConfig()",
       "last": "2026-08-11T18:26:28.622140+00:00",
       "provenance": [
@@ -193,13 +193,13 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.998344729,
+      "score": 0.988309032,
       "source_file": "web-next/src/layouts/components/sidebar/navigationConfig.tsx",
       "status": "tentative",
       "uses": 1
     },
     "web_next_src_proxy_proxy": {
-      "code_fingerprint": "0ee6c0025c6ee93e25d76969c3a8167f0e0cdc15713e02439b40d663cff91356",
+      "code_fingerprint": "e0d128b630f50a0d41eead4b1f0fafe494587a6ef22104c1cb57bb6c4cfb5fd7",
       "label": "proxy()",
       "last": "2026-08-11T19:22:49.132059+00:00",
       "provenance": [
@@ -214,13 +214,13 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 1.998081633,
+      "score": 1.977996245,
       "source_file": "web-next/src/proxy.ts",
       "status": "preferred",
       "uses": 2
     },
     "web_next_src_shared_components_forms_text_fields_internals_charactercount": {
-      "code_fingerprint": "884cf14653772dedf885858f0510f48198ee65bbce5a75965951a0a86166d262",
+      "code_fingerprint": "c4822e34ecf0b32737d1406a2d2eddcd0ae3a238302ecc2a5865dcd2c27dcf90",
       "label": "characterCount.ts",
       "last": "2026-08-11T20:03:38.693723+00:00",
       "neg": 1,
@@ -236,14 +236,14 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": -0.000105876,
+      "score": -0.000104811,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/characterCount.ts",
       "status": "contested",
       "uses": 1,
       "verdict": "dead end"
     },
     "web_next_src_shared_components_forms_text_fields_internals_inputconstraints": {
-      "code_fingerprint": "872038d80a8949c9567b2681dab71445da5e0751660d88f1da3e715a73b21a1b",
+      "code_fingerprint": "7f9d40c211d45d7136081fae185f8271d06cb8e2c1b6462945466cb693591e65",
       "label": "inputConstraints.ts",
       "last": "2026-08-11T20:03:38.693723+00:00",
       "neg": 1,
@@ -259,14 +259,14 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": -0.000105876,
+      "score": -0.000104811,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/inputConstraints.ts",
       "status": "contested",
       "uses": 1,
       "verdict": "dead end"
     },
     "web_next_src_shared_components_forms_text_fields_internals_textfieldendadornment": {
-      "code_fingerprint": "6e3d7cc441bbaf2c45214db157fee1c0d8f41ba4be85feefa58931eeba92f526",
+      "code_fingerprint": "48934222edcc5daf4941e7a8468573fc37a3505207951108f504912c1e14880c",
       "label": "TextFieldEndAdornment.tsx",
       "last": "2026-08-11T20:08:00.701332+00:00",
       "neg": 1,
@@ -287,14 +287,14 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": 0.999866613,
+      "score": 0.989815617,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/TextFieldEndAdornment.tsx",
       "status": "contested",
       "uses": 2,
       "verdict": "useful"
     },
     "web_next_src_shared_components_forms_text_fields_mytextfield": {
-      "code_fingerprint": "5a6e50f75f09907b5fe856b427ac83c35bb40df0e715075f20014089f59978c2",
+      "code_fingerprint": "81a534240f57c517435efdb18a180d36a652bc1320bf80bf86e253eca3a75162",
       "label": "MyTextField.tsx",
       "last": "2026-08-11T20:08:00.701332+00:00",
       "neg": 1,
@@ -315,7 +315,7 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": 0.999866613,
+      "score": 0.989815617,
       "source_file": "web-next/src/shared/components/forms/text-fields/MyTextField.tsx",
       "status": "contested",
       "uses": 2,
