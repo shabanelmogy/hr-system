@@ -1,4 +1,3 @@
-using HrManagementSystem.Domain.Common.Entities;
 using HrManagementSystem.Domain.Common.Exceptions;
 using HrManagementSystem.Domain.Employees.Enums;
 using static HrManagementSystem.Domain.Common.Guards.DomainGuard;

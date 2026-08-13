@@ -20,6 +20,7 @@ type GradientColors = readonly [ColorValue, ColorValue, ...ColorValue[]];
 export interface AppButtonProps extends Omit<PressableProps, 'children'> {
   variant?: AppButtonVariant;
   icon?: AppIconName;
+  iconPosition?: 'start' | 'end';
   loading?: boolean;
   fullWidth?: boolean;
   gradientColors?: GradientColors;
@@ -30,6 +31,7 @@ export function AppButton({
   children,
   variant = 'primary',
   icon,
+  iconPosition = 'start',
   loading = false,
   fullWidth = false,
   gradientColors,
@@ -96,7 +98,7 @@ export function AppButton({
           <View style={[styles.content, { direction }]}>
             {loading ? (
               <ActivityIndicator color={foregroundMap[variant]} size="small" />
-            ) : icon ? (
+            ) : icon && iconPosition === 'start' ? (
               <AppIcon color={foregroundMap[variant]} name={icon} size={19} />
             ) : null}
             <AppText
@@ -106,6 +108,9 @@ export function AppButton({
               weight="700">
               {children}
             </AppText>
+            {!loading && icon && iconPosition === 'end' ? (
+              <AppIcon color={foregroundMap[variant]} name={icon} size={19} />
+            ) : null}
           </View>
         </>
       )}

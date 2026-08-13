@@ -40,7 +40,8 @@ export function AppFormStepActions({
     <View style={[styles.actions, { direction }]}>
       <AppButton
         disabled={isFirst || backDisabled || submitting}
-        icon={isRTL ? 'chevron-forward-outline' : 'chevron-back-outline'}
+        icon={isRTL ? 'arrow-forward-outline' : 'arrow-back-outline'}
+        iconPosition="start"
         onPress={onBack}
         style={styles.action}
         variant="outline">
@@ -48,7 +49,8 @@ export function AppFormStepActions({
       </AppButton>
       <AppButton
         disabled={nextDisabled || submitting}
-        icon={isLast ? 'checkmark-outline' : isRTL ? 'chevron-back-outline' : 'chevron-forward-outline'}
+        icon={isLast ? 'checkmark-outline' : isRTL ? 'arrow-back-outline' : 'arrow-forward-outline'}
+        iconPosition="end"
         loading={submitting}
         onPress={() => void (isLast ? onSubmit() : onNext())}
         style={styles.action}>
