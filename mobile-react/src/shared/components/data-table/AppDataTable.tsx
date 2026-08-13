@@ -5,7 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { AppIconButton } from '@/src/shared/components/controls/AppIconButton';
+import { AppIcon } from '@/src/shared/components/icons/AppIcon';
 import { AppText } from '@/src/shared/components/typography/AppText';
+
+export type AppDataTableSortValue = string | number | boolean | Date | null | undefined;
 
 export interface AppDataTableColumn<Row> {
   id: string;
@@ -13,6 +16,14 @@ export interface AppDataTableColumn<Row> {
   width?: number;
   align?: 'start' | 'center' | 'end';
   render: (row: Row) => ReactNode;
+  sortValue?: (row: Row) => AppDataTableSortValue;
+}
+
+type SortDirection = 'ascending' | 'descending';
+
+interface SortState {
+  columnId: string;
+  direction: SortDirection;
 }
 
 export interface AppDataTableProps<Row> {
@@ -24,6 +35,7 @@ export interface AppDataTableProps<Row> {
   emptyMessage?: string;
   showPagination?: boolean;
   compactHeader?: boolean;
+  resetKey?: string | number;
 }
 
 export function AppDataTable<Row>({
@@ -35,21 +47,55 @@ export function AppDataTable<Row>({
   emptyMessage,
   showPagination = true,
   compactHeader = true,
+  resetKey,
 }: AppDataTableProps<Row>) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { direction, isRTL } = useLocalization();
   const { theme } = useAppTheme();
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(defaultPageSize);
+  const [sort, setSort] = useState<SortState | null>(null);
   const pageCount = Math.max(1, Math.ceil(rows.length / pageSize));
+
+  const collator = useMemo(
+    () => new Intl.Collator(i18n.language, { numeric: true, sensitivity: 'base' }),
+    [i18n.language],
+  );
+
+  const sortedRows = useMemo(() => {
+    if (!sort) return rows;
+
+    const column = columns.find((candidate) => candidate.id === sort.columnId);
+    if (!column?.sortValue) return rows;
+
+    return rows
+      .map((row, naturalIndex) => ({ row, naturalIndex }))
+      .sort((left, right) => {
+        const comparison = compareSortValues(
+          column.sortValue?.(left.row),
+          column.sortValue?.(right.row),
+          collator,
+        );
+
+        if (comparison === 0) return left.naturalIndex - right.naturalIndex;
+        return sort.direction === 'ascending' ? comparison : -comparison;
+      })
+      .map(({ row }) => row);
+  }, [collator, columns, rows, sort]);
 
   useEffect(() => {
     setPage((current) => Math.min(current, pageCount - 1));
   }, [pageCount]);
 
+  useEffect(() => {
+    setPage(0);
+  }, [resetKey]);
+
   const pageRows = useMemo(
-    () => showPagination ? rows.slice(page * pageSize, page * pageSize + pageSize) : rows,
-    [page, pageSize, rows, showPagination],
+    () => showPagination
+      ? sortedRows.slice(page * pageSize, page * pageSize + pageSize)
+      : sortedRows,
+    [page, pageSize, showPagination, sortedRows],
   );
   const tableWidth = columns.reduce((total, column) => total + (column.width ?? 150), 0);
 
@@ -74,23 +120,76 @@ export function AppDataTable<Row>({
               compactHeader && styles.compactHeaderRow,
               { direction, backgroundColor: theme.colors.surfaceMuted },
             ]}>
-            {columns.map((column) => (
-              <View
-                key={column.id}
-                style={[
-                  styles.cell,
-                  compactHeader && styles.compactHeaderCell,
-                  {
-                    width: column.width ?? 150,
-                    borderColor: theme.colors.border,
-                    alignItems: getCellAlignment(column.align, isRTL),
-                  },
-                ]}>
-                <AppText align={getTextAlignment(column.align, isRTL)} variant="caption" weight="800">
-                  {column.header}
-                </AppText>
-              </View>
-            ))}
+            {columns.map((column) => {
+              const sortable = Boolean(column.sortValue);
+              const activeDirection = sort?.columnId === column.id ? sort.direction : null;
+              const nextDirection = activeDirection === 'ascending'
+                ? 'descending'
+                : activeDirection === 'descending'
+                  ? null
+                  : 'ascending';
+              const sortLabel = nextDirection === 'ascending'
+                ? t('dataTable.sortAscending', { column: column.header })
+                : nextDirection === 'descending'
+                  ? t('dataTable.sortDescending', { column: column.header })
+                  : t('dataTable.clearSort', { column: column.header });
+
+              return (
+                <View
+                  key={column.id}
+                  style={[
+                    styles.cell,
+                    compactHeader && styles.compactHeaderCell,
+                    {
+                      width: column.width ?? 150,
+                      borderColor: theme.colors.border,
+                      alignItems: getCellAlignment(column.align, isRTL),
+                    },
+                  ]}>
+                  {sortable ? (
+                    <Pressable
+                      accessibilityLabel={sortLabel}
+                      accessibilityRole="button"
+                      accessibilityState={{ selected: Boolean(activeDirection) }}
+                      hitSlop={4}
+                      onPress={() => {
+                        setSort(nextDirection ? { columnId: column.id, direction: nextDirection } : null);
+                        setPage(0);
+                      }}
+                      style={({ pressed }) => [
+                        styles.sortHeader,
+                        {
+                          justifyContent: getCellAlignment(column.align, isRTL),
+                          opacity: pressed ? 0.65 : 1,
+                        },
+                      ]}>
+                      <AppText
+                        align={getTextAlignment(column.align, isRTL)}
+                        variant="caption"
+                        weight="800">
+                        {column.header}
+                      </AppText>
+                      <AppIcon
+                        color={activeDirection ? theme.colors.primary : theme.colors.textMuted}
+                        name={activeDirection === 'ascending'
+                          ? 'arrow-up-outline'
+                          : activeDirection === 'descending'
+                            ? 'arrow-down-outline'
+                            : 'swap-vertical-outline'}
+                        size={15}
+                      />
+                    </Pressable>
+                  ) : (
+                    <AppText
+                      align={getTextAlignment(column.align, isRTL)}
+                      variant="caption"
+                      weight="800">
+                      {column.header}
+                    </AppText>
+                  )}
+                </View>
+              );
+            })}
           </View>
 
           {pageRows.map((row) => (
@@ -187,6 +286,13 @@ const styles = StyleSheet.create({
     minHeight: 36,
     paddingVertical: 4,
   },
+  sortHeader: {
+    width: '100%',
+    minHeight: 28,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
   empty: { minHeight: 140, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
   pagination: {
     minHeight: 58,
@@ -220,4 +326,30 @@ function getCellAlignment(
   if (align === 'center') return 'center';
   if (align === 'end') return isRTL ? 'flex-start' : 'flex-end';
   return isRTL ? 'flex-end' : 'flex-start';
+}
+
+function compareSortValues(
+  left: AppDataTableSortValue,
+  right: AppDataTableSortValue,
+  collator: Intl.Collator,
+): number {
+  const leftEmpty = left === null || left === undefined;
+  const rightEmpty = right === null || right === undefined;
+
+  if (leftEmpty && rightEmpty) return 0;
+  if (leftEmpty) return 1;
+  if (rightEmpty) return -1;
+
+  const leftValue = left instanceof Date ? left.getTime() : left;
+  const rightValue = right instanceof Date ? right.getTime() : right;
+
+  if (typeof leftValue === 'number' && typeof rightValue === 'number') {
+    return leftValue - rightValue;
+  }
+
+  if (typeof leftValue === 'boolean' && typeof rightValue === 'boolean') {
+    return Number(leftValue) - Number(rightValue);
+  }
+
+  return collator.compare(String(leftValue), String(rightValue));
 }

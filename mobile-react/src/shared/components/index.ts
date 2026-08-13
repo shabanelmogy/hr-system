@@ -6,6 +6,7 @@ export * from './controls/AppSegmentedControl';
 export * from './controls/AppSelectField';
 export * from './controls/AppSwitchField';
 export * from './controls/AppTextField';
+export * from './controls/AppThemePalettePicker';
 export * from './carousel';
 export * from './dialogs';
 export * from './data-table';

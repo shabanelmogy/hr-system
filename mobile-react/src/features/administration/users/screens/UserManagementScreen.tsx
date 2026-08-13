@@ -140,6 +140,7 @@ export function UserManagementScreen() {
       id: 'firstName',
       header: t('userManagement.firstName'),
       width: 170,
+      sortValue: (user) => user.firstName,
       render: (user) => (
         <View style={styles.nameCell}>
           <ManagedUserAvatar
@@ -157,24 +158,28 @@ export function UserManagementScreen() {
       id: 'lastName',
       header: t('userManagement.lastName'),
       width: 145,
+      sortValue: (user) => user.lastName,
       render: (user) => <AppText variant="bodySmall">{user.lastName}</AppText>,
     },
     {
       id: 'userName',
       header: t('userManagement.userName'),
       width: 145,
+      sortValue: (user) => user.userName,
       render: (user) => <AppText variant="bodySmall">{user.userName}</AppText>,
     },
     {
       id: 'email',
       header: t('userManagement.email'),
       width: 215,
+      sortValue: (user) => user.email,
       render: (user) => <AppText variant="bodySmall">{user.email}</AppText>,
     },
     {
       id: 'roles',
       header: t('userManagement.roles'),
       width: 170,
+      sortValue: (user) => user.roles.join(', '),
       render: (user) => (
         <AppText numberOfLines={2} variant="bodySmall">
           {user.roles.join(', ') || t('userManagement.none')}
@@ -185,6 +190,9 @@ export function UserManagementScreen() {
       id: 'companies',
       header: t('userManagement.companies'),
       width: 190,
+      sortValue: (user) => user.defaultCompanyId === null
+        ? null
+        : companyNames.get(user.defaultCompanyId),
       render: (user) => {
         const defaultName = user.defaultCompanyId
           ? companyNames.get(user.defaultCompanyId)
@@ -206,6 +214,7 @@ export function UserManagementScreen() {
       header: t('userManagement.disabledStatus'),
       width: 125,
       align: 'center',
+      sortValue: (user) => user.isDisabled,
       render: (user) => (
         <AppStatusBadge
           color={user.isDisabled ? theme.colors.danger : theme.colors.success}
@@ -219,6 +228,7 @@ export function UserManagementScreen() {
       header: t('userManagement.lockedStatus'),
       width: 125,
       align: 'center',
+      sortValue: (user) => user.isLocked,
       render: (user) => (
         <AppStatusBadge
           color={user.isLocked ? theme.colors.danger : theme.colors.success}
@@ -361,15 +371,18 @@ export function UserManagementScreen() {
               defaultPageSize: 5,
               label: t('multiView.table'),
               icon: 'grid-outline',
+              paginate: false,
               pageSizeOptions: [5, 10, 25],
-              render: (pageUsers) => (
+              render: (users) => (
                 <AppDataTable
                   compactHeader
                   columns={columns}
+                  defaultPageSize={5}
                   emptyMessage={t('userManagement.empty')}
                   getRowKey={(user) => user.id}
-                  rows={pageUsers}
-                  showPagination={false}
+                  pageSizeOptions={[5, 10, 25]}
+                  resetKey={search}
+                  rows={users}
                 />
               ),
             },
@@ -379,6 +392,7 @@ export function UserManagementScreen() {
               getItemKey: (user) => user.id,
               label: t('multiView.cards'),
               icon: 'albums-outline',
+              scrollable: true,
               render: (pageUsers) => (
                 <View style={styles.cards}>
                   {pageUsers.map((user) => (

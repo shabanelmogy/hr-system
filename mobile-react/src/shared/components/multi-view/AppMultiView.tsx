@@ -17,6 +17,7 @@ export interface AppMultiViewDefinition<Item, ViewId extends string> {
   getItemKey?: (item: Item, index: number) => string | number;
   icon: AppIconName;
   label: string;
+  paginate?: boolean;
   pageSizeOptions?: readonly number[];
   render: (items: readonly Item[]) => ReactNode;
   scrollable?: boolean;
@@ -62,8 +63,11 @@ export function AppMultiView<Item, ViewId extends string>({
     initialDefinition?.carousel ? 1 : initialDefinition?.defaultPageSize ?? defaultPageSize,
   );
   const activeView = views.find((candidate) => candidate.value === view) ?? views[0];
+  const usesCollectionPagination = activeView?.carousel || activeView?.paginate !== false;
   const activePageSize = activeView?.carousel ? 1 : pageSize;
-  const pageCount = Math.max(1, Math.ceil(items.length / activePageSize));
+  const pageCount = usesCollectionPagination
+    ? Math.max(1, Math.ceil(items.length / activePageSize))
+    : 1;
   const safePage = Math.min(page, pageCount - 1);
   const activePageSizeOptions = activeView?.carousel
     ? carouselPageSizeOptions
@@ -74,11 +78,13 @@ export function AppMultiView<Item, ViewId extends string>({
     [pageSizeOptionsKey],
   );
   const pageItems = useMemo(
-    () => items.slice(
-      safePage * activePageSize,
-      safePage * activePageSize + activePageSize,
-    ),
-    [activePageSize, items, safePage],
+    () => usesCollectionPagination
+      ? items.slice(
+        safePage * activePageSize,
+        safePage * activePageSize + activePageSize,
+      )
+      : items,
+    [activePageSize, items, safePage, usesCollectionPagination],
   );
 
   useEffect(() => {
@@ -95,8 +101,9 @@ export function AppMultiView<Item, ViewId extends string>({
   }, []);
 
   const pagination = useMemo(
-    () => items.length > 0 ? (
+    () => usesCollectionPagination && items.length > 0 ? (
       <AppCollectionPagination
+        attached={!footerHost && Boolean(activeView?.carousel)}
         onPageChange={setPage}
         onPageSizeChange={handlePageSizeChange}
         page={safePage}
@@ -105,7 +112,16 @@ export function AppMultiView<Item, ViewId extends string>({
         totalItems={items.length}
       />
     ) : null,
-    [activePageSize, handlePageSizeChange, items.length, safePage, stablePageSizeOptions],
+    [
+      activePageSize,
+      activeView?.carousel,
+      footerHost,
+      handlePageSizeChange,
+      items.length,
+      safePage,
+      stablePageSizeOptions,
+      usesCollectionPagination,
+    ],
   );
 
   useEffect(() => {
@@ -182,10 +198,15 @@ export function AppMultiView<Item, ViewId extends string>({
         />
       </View>
 
-      <View style={styles.collection}>
-        {activeView.scrollable && !activeView.carousel && items.length > 0 ? (
+      <View
+        style={[
+          styles.collection,
+          activeView.carousel && !footerHost && styles.attachedCollection,
+        ]}>
+        {activeView.scrollable && items.length > 0 ? (
           <ScrollView
             contentContainerStyle={styles.scrollContent}
+            directionalLockEnabled
             nestedScrollEnabled
             showsVerticalScrollIndicator
             style={{ maxHeight: Math.max(360, Math.min(viewportHeight * 0.68, 680)) }}>
@@ -202,6 +223,7 @@ export function AppMultiView<Item, ViewId extends string>({
 const styles = StyleSheet.create({
   root: { width: '100%', gap: 10 },
   collection: { width: '100%', gap: 4 },
+  attachedCollection: { gap: 0 },
   toolbar: {
     minHeight: 56,
     flexDirection: 'row',

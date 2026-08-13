@@ -102,6 +102,7 @@ export function TenantManagementScreen() {
       id: 'tenant',
       header: t('tenantManagement.name'),
       width: 210,
+      sortValue: (tenant) => tenant.name,
       render: (tenant) => (
         <View style={styles.primaryCell}>
           <AppText numberOfLines={1} variant="bodySmall" weight="700">{tenant.name}</AppText>
@@ -115,6 +116,7 @@ export function TenantManagementScreen() {
       id: 'plan',
       header: t('tenantManagement.plan'),
       width: 130,
+      sortValue: (tenant) => tenant.planName,
       render: (tenant) => (
         <AppText numberOfLines={1} variant="bodySmall">
           {tenant.planName || t('tenantManagement.noPlan')}
@@ -126,6 +128,7 @@ export function TenantManagementScreen() {
       header: t('tenantManagement.status'),
       width: 145,
       align: 'center',
+      sortValue: (tenant) => t(`tenantManagement.statuses.${tenant.subscriptionStatus}`),
       render: (tenant) => (
         <AppStatusBadge
           color={getStatusColor(tenant.subscriptionStatus, theme.colors)}
@@ -139,6 +142,7 @@ export function TenantManagementScreen() {
       header: t('tenantManagement.totalAccounts'),
       width: 120,
       align: 'center',
+      sortValue: (tenant) => tenant.totalUserCount,
       render: (tenant) => <AppText variant="bodySmall">{tenant.totalUserCount}</AppText>,
     },
     {
@@ -146,6 +150,9 @@ export function TenantManagementScreen() {
       header: t('tenantManagement.endsOn'),
       width: 150,
       align: 'center',
+      sortValue: (tenant) => tenant.subscriptionEndsOn
+        ? new Date(tenant.subscriptionEndsOn)
+        : null,
       render: (tenant) => (
         <AppText variant="bodySmall">
           {tenant.subscriptionEndsOn
@@ -159,6 +166,7 @@ export function TenantManagementScreen() {
       header: t('tenantManagement.tenantEnabled'),
       width: 115,
       align: 'center',
+      sortValue: (tenant) => tenant.isActive,
       render: (tenant) => (
         <AppStatusBadge
           color={tenant.isActive ? theme.colors.success : theme.colors.textMuted}
@@ -245,14 +253,17 @@ export function TenantManagementScreen() {
               defaultPageSize: 5,
               label: t('multiView.table'),
               icon: 'grid-outline',
+              paginate: false,
               pageSizeOptions: [5, 10, 25],
-              render: (pageTenants) => (
+              render: (tenants) => (
                 <AppDataTable
                   columns={columns}
+                  defaultPageSize={5}
                   emptyMessage={t('tenantManagement.emptyMessage')}
                   getRowKey={(tenant) => tenant.id}
-                  rows={pageTenants}
-                  showPagination={false}
+                  pageSizeOptions={[5, 10, 25]}
+                  resetKey={search}
+                  rows={tenants}
                 />
               ),
             },
@@ -262,6 +273,7 @@ export function TenantManagementScreen() {
               getItemKey: (tenant) => tenant.id,
               label: t('multiView.cards'),
               icon: 'albums-outline',
+              scrollable: true,
               render: (pageTenants) => (
                 <View style={styles.list}>
                   {pageTenants.map((tenant) => (

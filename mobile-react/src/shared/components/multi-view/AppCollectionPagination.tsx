@@ -7,6 +7,7 @@ import { AppIconButton } from '@/src/shared/components/controls/AppIconButton';
 import { AppText } from '@/src/shared/components/typography/AppText';
 
 interface AppCollectionPaginationProps {
+  attached?: boolean;
   page: number;
   pageSize: number;
   pageSizeOptions?: readonly number[];
@@ -16,6 +17,7 @@ interface AppCollectionPaginationProps {
 }
 
 export function AppCollectionPagination({
+  attached = false,
   page,
   pageSize,
   pageSizeOptions = [5, 10, 25],
@@ -38,6 +40,7 @@ export function AppCollectionPagination({
           borderColor: theme.colors.border,
           borderRadius: theme.radius.md,
         },
+        attached ? styles.attached : null,
       ]}>
       <View style={[styles.pageSizes, { direction }]}>
         <AppText color="muted" variant="caption">
@@ -102,6 +105,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 10,
     paddingVertical: 6,
+  },
+  attached: {
+    marginTop: -1,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
   },
   pageSizes: { flexDirection: 'row', alignItems: 'center', gap: 5 },
   pageSize: { minWidth: 30, minHeight: 30, alignItems: 'center', justifyContent: 'center' },

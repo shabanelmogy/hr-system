@@ -2,6 +2,7 @@ import type { Href } from 'expo-router';
 
 export const ROUTES = {
   home: '/',
+  onboarding: '/onboarding',
   login: '/login',
   register: '/register',
   settings: '/settings',
@@ -25,6 +26,7 @@ export const ROUTES = {
 
 export type AppRoute =
   | typeof ROUTES.home
+  | typeof ROUTES.onboarding
   | typeof ROUTES.login
   | typeof ROUTES.register
   | typeof ROUTES.settings

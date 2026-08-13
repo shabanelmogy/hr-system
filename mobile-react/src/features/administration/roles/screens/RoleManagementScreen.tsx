@@ -93,6 +93,7 @@ export function RoleManagementScreen() {
       id: 'name',
       header: t('roleManagement.name'),
       width: 90,
+      sortValue: (role) => role.name,
       render: (role) => <AppText variant="bodySmall" weight="700">{role.name}</AppText>,
     },
     {
@@ -100,6 +101,7 @@ export function RoleManagementScreen() {
       header: t('roleManagement.status'),
       width: 80,
       align: 'center',
+      sortValue: (role) => role.isDeleted,
       render: (role) => (
         <AppStatusBadge
           color={role.isDeleted ? theme.colors.danger : theme.colors.success}
@@ -214,14 +216,17 @@ export function RoleManagementScreen() {
               defaultPageSize: 5,
               label: t('multiView.table'),
               icon: 'grid-outline',
+              paginate: false,
               pageSizeOptions: [5, 10, 25],
-              render: (pageRoles) => (
+              render: (roles) => (
                 <AppDataTable
                   columns={columns}
+                  defaultPageSize={5}
                   emptyMessage={t('roleManagement.empty')}
                   getRowKey={(role) => role.id}
-                  rows={pageRoles}
-                  showPagination={false}
+                  pageSizeOptions={[5, 10, 25]}
+                  resetKey={search}
+                  rows={roles}
                 />
               ),
             },
@@ -231,6 +236,7 @@ export function RoleManagementScreen() {
               getItemKey: (role) => role.id,
               label: t('multiView.cards'),
               icon: 'albums-outline',
+              scrollable: true,
               render: (pageRoles) => (
                 <View style={styles.cards}>
                   {pageRoles.map((role) => (

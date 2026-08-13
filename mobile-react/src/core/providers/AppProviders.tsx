@@ -7,6 +7,7 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { LocalizationProvider, useLocalization } from '@/src/core/localization';
+import { OnboardingProvider } from '@/src/core/onboarding';
 import { queryClient } from '@/src/core/query/query-client';
 import { AppThemeProvider } from '@/src/core/theme';
 import { AppFeedbackHost } from '@/src/shared/components/feedback/transient';
@@ -31,10 +32,12 @@ export function AppProviders({ children }: PropsWithChildren) {
           <QueryClientProvider client={queryClient}>
             <LocalizationProvider>
               <AppThemeProvider>
-                <DirectionRoot>
-                  {children}
-                  <AppFeedbackHost />
-                </DirectionRoot>
+                <OnboardingProvider>
+                  <DirectionRoot>
+                    {children}
+                    <AppFeedbackHost />
+                  </DirectionRoot>
+                </OnboardingProvider>
               </AppThemeProvider>
             </LocalizationProvider>
           </QueryClientProvider>

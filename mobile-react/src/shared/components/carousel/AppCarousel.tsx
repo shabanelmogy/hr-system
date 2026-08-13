@@ -7,8 +7,6 @@ import {
   type LayoutChangeEvent,
 } from 'react-native';
 
-import { useLocalization } from '@/src/core/localization';
-
 export interface AppCarouselProps<Item> {
   items: readonly Item[];
   keyExtractor: (item: Item, index: number) => string;
@@ -24,7 +22,6 @@ export function AppCarousel<Item>({
   renderItem,
   selectedIndex = 0,
 }: AppCarouselProps<Item>) {
-  const { isRTL } = useLocalization();
   const listRef = useRef<FlatList<Item>>(null);
   const onIndexChangeRef = useRef(onIndexChange);
   const [viewportWidth, setViewportWidth] = useState(0);
@@ -81,7 +78,7 @@ export function AppCarousel<Item>({
           offset: viewportWidth * index,
         })}
         horizontal
-        inverted={isRTL}
+        initialScrollIndex={safeSelectedIndex}
         keyExtractor={keyExtractor}
         nestedScrollEnabled
         onMomentumScrollEnd={handleMomentumScrollEnd}
@@ -100,6 +97,7 @@ export function AppCarousel<Item>({
           </View>
         )}
         showsHorizontalScrollIndicator={false}
+        style={styles.list}
         viewabilityConfig={viewabilityConfig}
       />
     </View>
@@ -108,5 +106,6 @@ export function AppCarousel<Item>({
 
 const styles = StyleSheet.create({
   root: { width: '100%' },
+  list: { direction: 'ltr' },
   slide: { width: '100%' },
 });

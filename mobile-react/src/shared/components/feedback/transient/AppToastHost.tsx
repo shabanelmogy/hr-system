@@ -3,7 +3,7 @@ import Toast, { type ToastConfig, type ToastConfigParams } from 'react-native-to
 import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
-import { themes, useAppTheme } from '@/src/core/theme';
+import { getAppTheme, useAppTheme } from '@/src/core/theme';
 import { AppIconButton } from '@/src/shared/components/controls/AppIconButton';
 import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon';
 import { AppText } from '@/src/shared/components/typography/AppText';
@@ -37,8 +37,8 @@ function AppToast({
 }: ToastConfigParams<unknown> & { kind: ToastKind }) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
-  const { theme } = useAppTheme();
-  const toastTheme = theme.isDark ? themes.light : themes.dark;
+  const { palette, theme } = useAppTheme();
+  const toastTheme = getAppTheme(palette, theme.isDark ? 'light' : 'dark');
   const accent = getAccent(kind, toastTheme.colors);
 
   return (
