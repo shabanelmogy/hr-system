@@ -7,6 +7,6 @@ namespace HrManagementSystem.Application.Features.Security.Authentication.Contra
          string UserName,
          string Email,
          string Password,
-         byte[]? ProfilePicture
+         string? ProfilePicture
         );
 }

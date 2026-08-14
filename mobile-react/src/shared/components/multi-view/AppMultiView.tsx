@@ -10,6 +10,7 @@ import type { AppIconName } from '@/src/shared/components/icons/AppIcon';
 import { AppScreenFooterContext } from '@/src/shared/components/layout/AppScreenFooterContext';
 import { AppText } from '@/src/shared/components/typography/AppText';
 import { AppCollectionPagination } from './AppCollectionPagination';
+import { shouldPinPagination } from './paginationPlacement';
 
 export interface AppMultiViewDefinition<Item, ViewId extends string> {
   carousel?: boolean;
@@ -86,6 +87,13 @@ export function AppMultiView<Item, ViewId extends string>({
       : items,
     [activePageSize, items, safePage, usesCollectionPagination],
   );
+  const paginationItemCount = pageItems.length;
+  const pinPagination = !activeView?.carousel
+    && Boolean(usesCollectionPagination)
+    && shouldPinPagination(
+      paginationItemCount,
+      Boolean(footerHost),
+    );
 
   useEffect(() => {
     if (page !== safePage) setPage(safePage);
@@ -103,7 +111,7 @@ export function AppMultiView<Item, ViewId extends string>({
   const pagination = useMemo(
     () => usesCollectionPagination && items.length > 0 ? (
       <AppCollectionPagination
-        attached={!footerHost && Boolean(activeView?.carousel)}
+        attached={Boolean(activeView?.carousel) && !pinPagination}
         onPageChange={setPage}
         onPageSizeChange={handlePageSizeChange}
         page={safePage}
@@ -115,9 +123,9 @@ export function AppMultiView<Item, ViewId extends string>({
     [
       activePageSize,
       activeView?.carousel,
-      footerHost,
       handlePageSizeChange,
       items.length,
+      pinPagination,
       safePage,
       stablePageSizeOptions,
       usesCollectionPagination,
@@ -128,14 +136,14 @@ export function AppMultiView<Item, ViewId extends string>({
     if (!footerHost) return;
 
     const owner = footerOwner.current;
-    if (!activeView?.carousel) {
+    if (!pinPagination) {
       footerHost.unregisterFooter(owner);
       return;
     }
 
     footerHost.registerFooter(owner, pagination);
     return () => footerHost.unregisterFooter(owner);
-  }, [activeView?.carousel, footerHost, pagination]);
+  }, [footerHost, pagination, pinPagination]);
 
   if (!activeView) return emptyContent ?? null;
 
@@ -201,9 +209,9 @@ export function AppMultiView<Item, ViewId extends string>({
       <View
         style={[
           styles.collection,
-          activeView.carousel && !footerHost && styles.attachedCollection,
+          activeView.carousel && !pinPagination && styles.attachedCollection,
         ]}>
-        {activeView.scrollable && items.length > 0 ? (
+        {activeView.scrollable && !activeView.carousel && items.length > 0 ? (
           <ScrollView
             contentContainerStyle={styles.scrollContent}
             directionalLockEnabled
@@ -214,7 +222,7 @@ export function AppMultiView<Item, ViewId extends string>({
           </ScrollView>
         ) : content}
 
-        {!footerHost || !activeView.carousel ? pagination : null}
+        {!pinPagination ? pagination : null}
       </View>
     </View>
   );

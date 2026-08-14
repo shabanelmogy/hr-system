@@ -19,7 +19,8 @@ public sealed record AddressChangedJobRequest(
 public sealed class AddressChangedJob(
     ApplicationDbContext context,
     INotificationPublisher notificationPublisher,
-    IHubContext<GeneralHub, IGeneralHubClient> hubContext)
+    IHubContext<GeneralHub, IGeneralHubClient> hubContext,
+    IRealtimeEntityPublisher realtimePublisher)
 {
     public async Task ExecuteAsync(AddressChangedJobRequest request, CancellationToken cancellationToken)
     {
@@ -62,11 +63,13 @@ public sealed class AddressChangedJob(
         await Task.WhenAll(
             clients.ReceiveAddressUpdate(
                 Result.Success(new AddressesCountResponse(count, request.Address, request.Action))),
-            clients.ReceiveEntityChanged(new RealtimeEntityChanged(
-                request.OperationId,
-                DateTime.UtcNow,
-                RealtimeResource.For<Address>(),
+            realtimePublisher.PublishAsync(RealtimeChangeRequest.For<Address>(
+                RealtimeAudience.ForCompanyPermission(
+                    request.TenantId,
+                    request.CompanyId,
+                    Permissions.ViewAddresses),
                 request.Action,
-                request.Address.Id.ToString(CultureInfo.InvariantCulture))));
+                request.Address.Id.ToString(CultureInfo.InvariantCulture),
+                request.OperationId), cancellationToken));
     }
 }

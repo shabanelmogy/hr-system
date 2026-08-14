@@ -2,10 +2,14 @@ using HrManagementSystem.Application.Features.Platform.Files.Services;
 using HrManagementSystem.Application.Features.Platform.Files.Contracts;
 using HrManagementSystem.Application.Common.Files;
 using HrManagementSystem.Domain.Platform.Files.Entities;
+using HrManagementSystem.Application.Common.Realtime;
 
 namespace HrManagementSystem.Infrastructure.Features.Platform.Files.Services;
 
-public class FileService(IWebHostEnvironment webHostEnvironment, ApplicationDbContext context) : IFileService
+public class FileService(
+    IWebHostEnvironment webHostEnvironment,
+    ApplicationDbContext context,
+    IRealtimeChangeDispatcher realtimeChanges) : IFileService
 {
     private readonly string _filesPath = ProtectedFileStorage.GetUploadsPath(webHostEnvironment);
     private readonly string _imagesPath = ProtectedFileStorage.GetImagesPath(webHostEnvironment);
@@ -32,6 +36,8 @@ public class FileService(IWebHostEnvironment webHostEnvironment, ApplicationDbCo
             DeletePhysicalFile(uploadedFile.StoredFileName);
             throw;
         }
+
+        DispatchChange("Create", uploadedFile, uploadedFile.Id.ToString());
 
         return uploadedFile.StoredFileName;
     }
@@ -60,6 +66,9 @@ public class FileService(IWebHostEnvironment webHostEnvironment, ApplicationDbCo
 
             throw;
         }
+
+        if (uploadedFiles.Count > 0)
+            DispatchChange("BulkCreate", uploadedFiles[0], entityId: null);
 
         return uploadedFiles.Select(file => file.Id).ToList();
     }
@@ -124,7 +133,22 @@ public class FileService(IWebHostEnvironment webHostEnvironment, ApplicationDbCo
         _context.Files.Remove(file);
         await _context.SaveChangesAsync(cancellationToken);
         DeletePhysicalFile(file.StoredFileName);
+        DispatchChange("Delete", file, file.Id.ToString());
         return true;
+    }
+
+    private void DispatchChange(
+        string action,
+        UploadedFile file,
+        string? entityId)
+    {
+        if (string.IsNullOrWhiteSpace(file.TenantId) || file.CompanyId <= 0)
+            throw new InvalidOperationException("A tenant and company are required for file realtime updates.");
+
+        realtimeChanges.Dispatch(RealtimeChangeRequest.For<UploadedFile>(
+            RealtimeAudience.ForCompany(file.TenantId, file.CompanyId),
+            action,
+            entityId));
     }
 
     private async Task<UploadedFile> SaveFile(

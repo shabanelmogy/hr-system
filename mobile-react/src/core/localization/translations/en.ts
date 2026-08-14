@@ -25,6 +25,7 @@ export const en = {
     info: 'Information',
     warning: 'Attention',
     loading: 'Please wait',
+    liveUpdate: 'Data was updated by another user.',
     close: 'Close',
     share: 'Share',
     shareError: 'Share error report',

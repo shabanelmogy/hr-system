@@ -24,8 +24,13 @@ export function AppCarousel<Item>({
 }: AppCarouselProps<Item>) {
   const listRef = useRef<FlatList<Item>>(null);
   const onIndexChangeRef = useRef(onIndexChange);
+  const [itemHeights, setItemHeights] = useState<Record<string, number>>({});
   const [viewportWidth, setViewportWidth] = useState(0);
   const safeSelectedIndex = Math.min(Math.max(0, selectedIndex), Math.max(0, items.length - 1));
+  const selectedItemKey = items.length > 0
+    ? keyExtractor(items[safeSelectedIndex] as Item, safeSelectedIndex)
+    : undefined;
+  const selectedItemHeight = selectedItemKey ? itemHeights[selectedItemKey] : undefined;
   const visibleIndexRef = useRef(safeSelectedIndex);
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
   const onViewableItemsChanged = useRef<
@@ -64,14 +69,30 @@ export function AppCarousel<Item>({
     if (nextIndex !== safeSelectedIndex) onIndexChangeRef.current?.(nextIndex);
   }, [items.length, safeSelectedIndex]);
 
+  const handleItemLayout = useCallback((itemKey: string, event: LayoutChangeEvent) => {
+    const nextHeight = Math.ceil(event.nativeEvent.layout.height);
+    setItemHeights((currentHeights) => currentHeights[itemKey] === nextHeight
+      ? currentHeights
+      : { ...currentHeights, [itemKey]: nextHeight });
+  }, []);
+
+  if (items.length === 1) {
+    return (
+      <View onLayout={handleLayout} style={styles.root}>
+        <View style={styles.slide}>{renderItem(items[0] as Item, 0)}</View>
+      </View>
+    );
+  }
+
   return (
     <View onLayout={handleLayout} style={styles.root}>
       <FlatList
         bounces={false}
+        contentContainerStyle={styles.listContent}
         data={items}
         decelerationRate="fast"
         disableIntervalMomentum
-        extraData={viewportWidth}
+        extraData={`${viewportWidth}:${selectedItemHeight ?? 0}`}
         getItemLayout={(_data, index) => ({
           index,
           length: viewportWidth,
@@ -91,13 +112,23 @@ export function AppCarousel<Item>({
         onViewableItemsChanged={onViewableItemsChanged}
         pagingEnabled
         ref={listRef}
-        renderItem={({ item, index }) => (
-          <View style={[styles.slide, viewportWidth > 0 ? { width: viewportWidth } : null]}>
-            {renderItem(item, index)}
-          </View>
-        )}
+        renderItem={({ item, index }) => {
+          const itemKey = keyExtractor(item, index);
+          return (
+            <View style={[styles.slide, viewportWidth > 0 ? { width: viewportWidth } : null]}>
+              <View
+                onLayout={(event) => handleItemLayout(itemKey, event)}
+                style={styles.slideContent}>
+                {renderItem(item, index)}
+              </View>
+            </View>
+          );
+        }}
         showsHorizontalScrollIndicator={false}
-        style={styles.list}
+        style={[
+          styles.list,
+          selectedItemHeight ? { height: selectedItemHeight } : null,
+        ]}
         viewabilityConfig={viewabilityConfig}
       />
     </View>
@@ -106,6 +137,8 @@ export function AppCarousel<Item>({
 
 const styles = StyleSheet.create({
   root: { width: '100%' },
-  list: { direction: 'ltr' },
-  slide: { width: '100%' },
+  list: { width: '100%', direction: 'ltr', flexGrow: 0 },
+  listContent: { alignItems: 'flex-start' },
+  slide: { width: '100%', alignSelf: 'flex-start' },
+  slideContent: { width: '100%' },
 });

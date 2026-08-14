@@ -17,7 +17,8 @@ public sealed record AddressTypeChangedJobRequest(
 public sealed class AddressTypeChangedJob(
     ApplicationDbContext context,
     INotificationPublisher notificationPublisher,
-    IHubContext<GeneralHub, IGeneralHubClient> hubContext)
+    IHubContext<GeneralHub, IGeneralHubClient> hubContext,
+    IRealtimeEntityPublisher realtimePublisher)
 {
     public async Task ExecuteAsync(AddressTypeChangedJobRequest request, CancellationToken cancellationToken)
     {
@@ -50,11 +51,10 @@ public sealed class AddressTypeChangedJob(
         await Task.WhenAll(
             clients.ReceiveAddressTypeUpdate(
                 Result.Success(new AddressTypesCountResponse(count, request.AddressType, request.Action))),
-            clients.ReceiveEntityChanged(new RealtimeEntityChanged(
-                request.OperationId,
-                DateTime.UtcNow,
-                RealtimeResource.For<AddressType>(),
+            realtimePublisher.PublishAsync(RealtimeChangeRequest.For<AddressType>(
+                RealtimeAudience.ForPermission(Permissions.ViewAddressTypes),
                 request.Action,
-                request.AddressType.Id.ToString(CultureInfo.InvariantCulture))));
+                request.AddressType.Id.ToString(CultureInfo.InvariantCulture),
+                request.OperationId), cancellationToken));
     }
 }

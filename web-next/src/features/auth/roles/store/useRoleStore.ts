@@ -16,6 +16,7 @@ import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
 export interface RoleStore {
   roles: Role[];
+  hasLoaded: boolean;
   fetchRoles: () => Promise<Role[]>;
   getRoleById: (id: string) => Promise<Role>;
   getRoleWithClaims: (id: string) => Promise<RoleWithClaims>;
@@ -31,11 +32,12 @@ const useRoleStore = create<RoleStore>()(
     persist(
       (set, get) => ({
         roles: [],
+        hasLoaded: false,
 
         fetchRoles: async () => {
           const response = await apiService.get<unknown>(apiRoutes.roles.getAll);
           const roles = parseRolesResponse(response);
-          set({ roles });
+          set({ roles, hasLoaded: true });
           return roles;
         },
 
@@ -104,7 +106,7 @@ const useRoleStore = create<RoleStore>()(
           return updatedRole;
         },
 
-        resetRoleData: () => set({ roles: [] }),
+        resetRoleData: () => set({ roles: [], hasLoaded: false }),
       }),
       {
         name: "role-storage",

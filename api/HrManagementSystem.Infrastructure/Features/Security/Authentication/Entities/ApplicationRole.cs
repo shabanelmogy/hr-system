@@ -1,5 +1,6 @@
 namespace HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities
 {
+    [HrManagementSystem.Application.Common.Realtime.RealtimeResourceName("roles")]
     public class ApplicationRole : IdentityRole
     {
         public ApplicationRole() { }

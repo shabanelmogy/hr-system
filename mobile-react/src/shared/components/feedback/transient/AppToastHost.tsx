@@ -58,8 +58,7 @@ function AppToast({
       ]}>
       <AppIcon color={accent} name={icons[kind]} size={24} />
       <Pressable
-        accessibilityRole={onPress ? 'button' : undefined}
-        disabled={!onPress}
+        accessibilityRole="button"
         onPress={onPress}
         style={styles.content}>
         <AppText style={{ color: toastTheme.colors.text }} variant="label">

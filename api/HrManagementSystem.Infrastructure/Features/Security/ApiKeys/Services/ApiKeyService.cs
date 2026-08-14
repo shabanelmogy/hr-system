@@ -3,13 +3,15 @@ using HrManagementSystem.Application.Features.Security.ApiKeys.Errors;
 using HrManagementSystem.Application.Features.Security.ApiKeys.Services;
 using HrManagementSystem.Domain.Common.Exceptions;
 using HrManagementSystem.Domain.Security.ApiKeys.Entities;
+using HrManagementSystem.Application.Common.Realtime;
 
 namespace HrManagementSystem.Infrastructure.Features.Security.ApiKeys.Services;
 
 public sealed class ApiKeyService(
     ApplicationDbContext context,
     ApiKeyErrors apiKeyErrors,
-    TimeProvider timeProvider) : IApiKeyService
+    TimeProvider timeProvider,
+    IRealtimeChangeDispatcher realtimeChanges) : IApiKeyService
 {
     public async Task<IReadOnlyCollection<ApiKeyResponse>> GetAllApiKeysAsync(
         CancellationToken cancellationToken = default) =>
@@ -57,6 +59,8 @@ public sealed class ApiKeyService(
         await context.ApiKeys.AddAsync(apiKey, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
 
+        DispatchChange("Create", apiKey.Id);
+
         return Result.Success(new CreatedApiKeyResponse(ToResponse(apiKey), secret));
     }
 
@@ -84,6 +88,7 @@ public sealed class ApiKeyService(
         }
 
         await context.SaveChangesAsync(cancellationToken);
+        DispatchChange("Update", apiKey.Id);
         return Result.Success(ToResponse(apiKey));
     }
 
@@ -99,7 +104,22 @@ public sealed class ApiKeyService(
 
         apiKey.Revoke("Revoked by an administrator", timeProvider.GetUtcNow().UtcDateTime);
         await context.SaveChangesAsync(cancellationToken);
+        DispatchChange("Revoke", apiKey.Id);
         return Result.Success();
+    }
+
+    private void DispatchChange(string action, int entityId)
+    {
+        var apiKey = context.ApiKeys.Local.Single(key => key.Id == entityId);
+        if (string.IsNullOrWhiteSpace(apiKey.TenantId) || apiKey.CompanyId <= 0)
+        {
+            throw new InvalidOperationException("A tenant and company are required for API key realtime updates.");
+        }
+
+        realtimeChanges.Dispatch(RealtimeChangeRequest.For<ApiKey>(
+            RealtimeAudience.ForCompanyPermission(apiKey.TenantId, apiKey.CompanyId, Permissions.ViewApiKeys),
+            action,
+            entityId.ToString(CultureInfo.InvariantCulture)));
     }
 
     private static ApiKeyResponse ToResponse(ApiKey apiKey) =>

@@ -24,12 +24,6 @@ class SignalRService {
       withCredentials: false,
     };
 
-    // The Next.js route handler cannot proxy WebSocket upgrades, so same-origin
-    // hub requests use long polling and receive a fresh token for each request.
-    if (hubUrl.startsWith("/api/hubs/")) {
-      options.transport = signalR.HttpTransportType.LongPolling;
-    }
-
     this.connection = new signalR.HubConnectionBuilder()
       .withUrl(hubUrl, options)
       .withAutomaticReconnect([0, 2_000, 5_000, 10_000, 30_000])
@@ -228,8 +222,8 @@ class SignalRLogger implements signalR.ILogger {
   log(logLevel: signalR.LogLevel, message: string): void {
     if (logLevel < signalR.LogLevel.Warning) return;
 
-    // Authentication expiry during long polling is recoverable. Keep it visible
-    // for diagnostics without turning it into a Next.js console-error overlay.
+    // Keep recoverable connection warnings visible without turning them into a
+    // Next.js console-error overlay.
     console.warn(`${SIGNALR_TAG} ${message}`);
   }
 }

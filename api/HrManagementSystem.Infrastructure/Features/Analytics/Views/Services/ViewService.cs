@@ -1,9 +1,12 @@
 using HrManagementSystem.Application.Features.Analytics.Views.Services;
 using HrManagementSystem.Application.Features.Analytics.Views.Contracts;
+using HrManagementSystem.Application.Common.Realtime;
 
 namespace HrManagementSystem.Infrastructure.Features.Analytics.Views.Services
 {
-    public class ViewService(ApplicationDbContext context) : IViewService
+    public class ViewService(
+        ApplicationDbContext context,
+        IRealtimeChangeDispatcher realtimeChanges) : IViewService
     {
         private readonly ApplicationDbContext _context = context;
 
@@ -15,6 +18,7 @@ namespace HrManagementSystem.Infrastructure.Features.Analytics.Views.Services
             var sql = $@"CREATE OR ALTER VIEW [{view.ViewName}] AS {view.ViewQuery}";
 
             await _context.Database.ExecuteSqlRawAsync(sql, cancellationToken);
+            DispatchChange("CreateOrUpdate", view.ViewName);
         }
 
         public async Task<List<ViewResponse>> GetAllViewsAsync(CancellationToken cancellationToken = default)
@@ -37,6 +41,7 @@ namespace HrManagementSystem.Infrastructure.Features.Analytics.Views.Services
 
             var sql = $"DROP VIEW IF EXISTS [{viewName}]";
             await _context.Database.ExecuteSqlRawAsync(sql, cancellationToken);
+            DispatchChange("Delete", viewName);
         }
 
         public async Task<List<string>> GetAllTablesAsync(CancellationToken cancellationToken = default)
@@ -88,5 +93,13 @@ namespace HrManagementSystem.Infrastructure.Features.Analytics.Views.Services
                 throw new ArgumentException("Only a single SELECT statement is allowed.", nameof(query));
             }
         }
+
+        private void DispatchChange(string action, string viewName) =>
+            realtimeChanges.Dispatch(new RealtimeChangeRequest(
+                RealtimeAudience.ForPermission(Permissions.ManageDatabaseViews),
+                "database-views",
+                action,
+                viewName,
+                Guid.NewGuid()));
     }
 }

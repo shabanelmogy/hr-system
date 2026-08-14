@@ -4,10 +4,12 @@ namespace HrManagementSystem.Infrastructure.Common.Helpers
     {
         public static string GenerateEmailBody(string template, Dictionary<string, string> templateModel)
         {
-            var templatePath = $"{Directory.GetCurrentDirectory()}/Templates/{template}.html";
-            var streamReader = new StreamReader(templatePath);
-            var body = streamReader.ReadToEnd();
-            streamReader.Close();
+            var templatePath = Path.Combine(AppContext.BaseDirectory, "Templates", $"{template}.html");
+            string body;
+            using (var streamReader = new StreamReader(templatePath))
+            {
+                body = streamReader.ReadToEnd();
+            }
 
             foreach (var item in templateModel)
                 body = body.Replace(item.Key, item.Value);

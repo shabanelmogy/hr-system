@@ -9,6 +9,7 @@ using HrManagementSystem.Infrastructure.Features.Platform.Notifications.Services
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Jobs;
 using HrManagementSystem.Infrastructure.Features.Security.Users.Jobs;
 using HrManagementSystem.Infrastructure.Features.Appointments.Jobs;
+using HrManagementSystem.Application.Common.Realtime;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
@@ -18,6 +19,9 @@ public static class EntitiesService
     {
         services.AddScoped<IEmailSender, EmailService>();
         services.AddScoped<INotificationPublisher, NotificationPublisher>();
+        services.AddScoped<IRealtimeEntityPublisher, SignalRRealtimeEntityPublisher>();
+        services.AddScoped<IRealtimeChangeDispatcher, HangfireRealtimeChangeDispatcher>();
+        services.AddScoped<RealtimeEntityChangedJob>();
         services.AddScoped<CountryChangedJob>();
         services.AddScoped<StateChangedJob>();
         services.AddScoped<DistrictChangedJob>();

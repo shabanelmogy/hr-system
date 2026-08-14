@@ -5,6 +5,7 @@ using HrManagementSystem.Application.Features.Platform.EntityChangeLogs.Services
 
 using HrManagementSystem.Domain.Catalog.Categories.Entities;
 using HrManagementSystem.Application.Features.Catalog.SubCategories.Contracts;
+using HrManagementSystem.Application.Common.Realtime;
 
 namespace HrManagementSystem.Infrastructure.Features.Catalog.Categories.Services;
 
@@ -14,7 +15,8 @@ public class CategoryService(
     IEntityChangeLogService entityChangeLogService,
     ICurrentActor currentActor,
     CategoryErrors categoryErrors,
-    HybridCache hybridCache) : ICategoryService
+    HybridCache hybridCache,
+    IRealtimeChangeDispatcher realtimeChanges) : ICategoryService
 {
     private readonly IMapper _mapper = mapper;
     private readonly ApplicationDbContext _context = context;
@@ -83,6 +85,8 @@ public class CategoryService(
         // Map the result to a response object
         var response = _mapper.Map<CategoryResponse>(newCategory);
 
+        DispatchChange("Create", newCategory);
+
         return Result.Success(response);
     }
 
@@ -112,6 +116,8 @@ public class CategoryService(
             .ProjectToType<CategoryResponse>()
             .SingleAsync(cancellationToken);
 
+        DispatchChange("Update", currentCategory);
+
         return Result.Success(response);
     }
 
@@ -139,6 +145,21 @@ public class CategoryService(
         await _context.SaveChangesAsync(cancellationToken);
         await _hybridCache.RemoveAsync(_cacheKey, cancellationToken);
 
+        DispatchChange(category.IsDeleted ? "Delete" : "Restore", category);
+
         return Result.Success();
+    }
+
+    private void DispatchChange(string action, Category category)
+    {
+        if (string.IsNullOrWhiteSpace(category.TenantId) || category.CompanyId <= 0)
+        {
+            throw new InvalidOperationException("A tenant and company are required for category realtime updates.");
+        }
+
+        realtimeChanges.Dispatch(RealtimeChangeRequest.For<Category>(
+            RealtimeAudience.ForCompanyPermission(category.TenantId, category.CompanyId, Permissions.ViewCategories),
+            action,
+            category.Id.ToString(CultureInfo.InvariantCulture)));
     }
 }

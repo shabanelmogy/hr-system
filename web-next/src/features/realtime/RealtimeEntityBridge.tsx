@@ -2,13 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUserStore } from "@/features/auth";
+import { useRoleStore, useUserStore } from "@/features/auth";
 import { useSignalRConnection } from "@/lib/signalr/SignalRProvider";
 import signalRService from "@/lib/signalr/signalRService";
 import { parseRealtimeEntityChanged } from "./realtimeEvent";
 import {
-  getAllRealtimeQueryKeys,
   getRealtimeQueryKeys,
+  isKnownRealtimeResource,
   realtimeResources,
 } from "./realtimeQueryRegistry";
 
@@ -34,6 +34,24 @@ export function RealtimeEntityBridge() {
       });
     };
 
+    const refreshRolesIfLoaded = () => {
+      const roleStore = useRoleStore.getState();
+      if (!roleStore.hasLoaded) return;
+
+      void roleStore.fetchRoles().catch((error: unknown) => {
+        console.warn("[Realtime] Role refresh delayed", error);
+      });
+    };
+
+    const refreshCompanyOptionsIfLoaded = () => {
+      const userStore = useUserStore.getState();
+      if (!userStore.hasLoaded) return;
+
+      void userStore.fetchCompanyOptions().catch((error: unknown) => {
+        console.warn("[Realtime] Company-option refresh delayed", error);
+      });
+    };
+
     const flush = () => {
       flushTimer = null;
 
@@ -43,6 +61,19 @@ export function RealtimeEntityBridge() {
         }
 
         if (resource === realtimeResources.users) refreshUsersIfLoaded();
+        if (
+          resource === realtimeResources.roles ||
+          resource === realtimeResources.roleClaims
+        ) {
+          refreshRolesIfLoaded();
+        }
+        if (resource === realtimeResources.companies) {
+          refreshCompanyOptionsIfLoaded();
+        }
+
+        if (!isKnownRealtimeResource(resource)) {
+          void queryClient.invalidateQueries({ refetchType: "active" });
+        }
       }
 
       pendingResources.clear();
@@ -75,14 +106,21 @@ export function RealtimeEntityBridge() {
 
   useEffect(() => {
     if (isConnected && !wasConnected.current) {
-      for (const queryKey of getAllRealtimeQueryKeys()) {
-        void queryClient.invalidateQueries({ queryKey, refetchType: "active" });
-      }
+      void queryClient.invalidateQueries({ refetchType: "active" });
 
       const userStore = useUserStore.getState();
       if (userStore.hasLoaded) {
-        void userStore.fetchUsers().catch((error: unknown) => {
-          console.warn("[Realtime] User reconnect refresh delayed", error);
+        void Promise.all([userStore.fetchUsers(), userStore.fetchCompanyOptions()]).catch(
+          (error: unknown) => {
+            console.warn("[Realtime] User reconnect refresh delayed", error);
+          },
+        );
+      }
+
+      const roleStore = useRoleStore.getState();
+      if (roleStore.hasLoaded) {
+        void roleStore.fetchRoles().catch((error: unknown) => {
+          console.warn("[Realtime] Role reconnect refresh delayed", error);
         });
       }
     }

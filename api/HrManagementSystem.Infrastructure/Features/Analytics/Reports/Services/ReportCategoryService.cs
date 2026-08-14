@@ -4,6 +4,7 @@ using HrManagementSystem.Application.Features.Analytics.Reports.Errors;
 using HrManagementSystem.Application.Features.Platform.EntityChangeLogs.Services;
 
 using HrManagementSystem.Domain.Analytics.Reports.Entities;
+using HrManagementSystem.Application.Common.Realtime;
 
 namespace HrManagementSystem.Infrastructure.Features.Analytics.Reports.Services;
 
@@ -12,7 +13,8 @@ public class ReportCategoryService(
     IEntityChangeLogService entityChangeLogService,
     ReportCategoryErrors reportCategoryErrors,
     HybridCache hybridCache,
-    IMapper mapper) : IReportCategoryService
+    IMapper mapper,
+    IRealtimeChangeDispatcher realtimeChanges) : IReportCategoryService
 {
     private readonly ApplicationDbContext _context = context;
     private readonly IMapper _mapper = mapper;
@@ -56,6 +58,8 @@ public class ReportCategoryService(
 
         await _hybridCache.RemoveAsync(cacheKey, cancellationToken);
 
+        DispatchChange("Create", newReportCategory.Id);
+
         return Result.Success(response);
     }
 
@@ -81,6 +85,8 @@ public class ReportCategoryService(
 
         var response = _mapper.Map<ReportCategoryResponse>(currentReportCategory);
 
+        DispatchChange("Update", currentReportCategory.Id);
+
         return Result.Success(response);
     }
 
@@ -99,6 +105,14 @@ public class ReportCategoryService(
 
         await _hybridCache.RemoveAsync(cacheKey, cancellationToken);
 
+        DispatchChange(reportCategory.IsDeleted ? "Delete" : "Restore", reportCategory.Id);
+
         return Result.Success();
     }
+
+    private void DispatchChange(string action, int entityId) =>
+        realtimeChanges.Dispatch(RealtimeChangeRequest.For<ReportCategory>(
+            RealtimeAudience.ForPermission(Permissions.ViewReportsCategories),
+            action,
+            entityId.ToString(CultureInfo.InvariantCulture)));
 }

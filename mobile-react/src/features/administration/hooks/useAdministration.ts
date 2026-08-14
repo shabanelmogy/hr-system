@@ -57,9 +57,14 @@ export function useSaveRole() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (input: SaveRoleInput) => input.id === null
-      ? administrationApi.createRole(input.request)
-      : administrationApi.updateRole(input.request),
+    mutationFn: async (input: SaveRoleInput) => {
+      if (input.id === null) {
+        await administrationApi.createRole(input.request);
+        return;
+      }
+
+      await administrationApi.updateRole(input.request);
+    },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: administrationKeys.roles });
     },

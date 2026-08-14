@@ -3,13 +3,15 @@ using HrManagementSystem.Application.Features.Security.Authorization.Contracts;
 
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
 using HrManagementSystem.Application.Features.Security.Authorization.Errors;
+using HrManagementSystem.Application.Common.Realtime;
 
 namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Services
 {
     public class RoleService(
         RoleManager<ApplicationRole> roleManager,
         IStringLocalizer<RoleRequest> localizer,
-        RoleErrors roleErrors) : IRoleService
+        RoleErrors roleErrors,
+        IRealtimeChangeDispatcher realtimeChanges) : IRoleService
     {
         private readonly RoleManager<ApplicationRole> _roleManager = roleManager;
         private readonly IStringLocalizer<RoleRequest> _localizer = localizer;
@@ -55,6 +57,7 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
             if (result.Succeeded)
             {
                 var response = new RoleResponse(role.Id, role.Name ?? string.Empty, role.IsDeleted, null);
+                DispatchChange("Create", role.Id);
                 return Result.Success(response);
             }
 
@@ -78,6 +81,7 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
             var result = await _roleManager.UpdateAsync(currentRole);
             if (result.Succeeded)
             {
+                DispatchChange("Update", currentRole.Id);
                 return Result.Success();
             }
 
@@ -93,7 +97,14 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
 
             role.IsDeleted = !role.IsDeleted;
 
-            await _roleManager.UpdateAsync(role);
+            var result = await _roleManager.UpdateAsync(role);
+            if (!result.Succeeded)
+            {
+                var error = result.Errors.First();
+                return Result.Failure(new Error(error.Code, error.Description, ErrorType.Validation));
+            }
+
+            DispatchChange(role.IsDeleted ? "Delete" : "Restore", role.Id);
 
             return Result.Success();
         }
@@ -148,8 +159,22 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
                 await _roleManager.AddClaimAsync(role, new Claim(Permissions.Type, claim.DisplayValue));
             }
 
+            DispatchChange("PermissionsChanged", role.Id);
+            realtimeChanges.Dispatch(new RealtimeChangeRequest(
+                RealtimeAudience.ForPermission(Permissions.ViewRoles),
+                "role-claims",
+                "Update",
+                role.Id,
+                Guid.NewGuid()));
+
             return Result.Success();
         }
+
+        private void DispatchChange(string action, string roleId) =>
+            realtimeChanges.Dispatch(RealtimeChangeRequest.For<ApplicationRole>(
+                RealtimeAudience.ForPermission(Permissions.ViewRoles),
+                action,
+                roleId));
 
         private static bool IsPlatformRole(ApplicationRole role) =>
             string.Equals(role.Name, AppRoles.super_admin, StringComparison.OrdinalIgnoreCase);

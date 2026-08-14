@@ -3,6 +3,7 @@ using HrManagementSystem.Domain.Catalog.Categories.Entities;
 using HrManagementSystem.Application.Features.Catalog.SubCategories.Contracts;
 using HrManagementSystem.Domain.Catalog.SubCategories.Entities;
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
+using HrManagementSystem.Application.Features.Security.Authentication.Contracts;
 using HrManagementSystem.Application.Features.Security.Users.Contracts;
 
 namespace HrManagementSystem.Infrastructure.Mapping;
@@ -17,6 +18,9 @@ public class MappingConfigurations : IRegister
 
         config.NewConfig<CreateUserRequest, ApplicationUser>()
             .Map(dest => dest.EmailConfirmed, src => true);
+
+        config.NewConfig<RegisterRequest, ApplicationUser>()
+            .Ignore(dest => dest.ProfilePicture);
 
         config.NewConfig<Category, CategoryResponse>()
               .Map(dest => dest.SubCategories, src => src.CategorySubcategories.Select(cs => cs.SubCategory));

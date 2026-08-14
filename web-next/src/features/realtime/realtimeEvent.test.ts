@@ -3,6 +3,7 @@ import { parseRealtimeEntityChanged } from "./realtimeEvent";
 import {
   getAllRealtimeQueryKeys,
   getRealtimeQueryKeys,
+  isKnownRealtimeResource,
 } from "./realtimeQueryRegistry";
 
 describe("realtime entity changes", () => {
@@ -31,5 +32,15 @@ describe("realtime entity changes", () => {
   it("returns unique query roots for reconnect catch-up", () => {
     const serialized = getAllRealtimeQueryKeys().map((key) => JSON.stringify(key));
     expect(new Set(serialized).size).toBe(serialized.length);
+  });
+
+  it("refreshes profile and notification caches across clients", () => {
+    expect(getRealtimeQueryKeys("users")).toContainEqual(["userProfile"]);
+    expect(getRealtimeQueryKeys("notifications")).toEqual([["notifications"]]);
+  });
+
+  it("distinguishes targeted resources from generic fallback resources", () => {
+    expect(isKnownRealtimeResource("roles")).toBe(true);
+    expect(isKnownRealtimeResource("uploaded-files")).toBe(false);
   });
 });

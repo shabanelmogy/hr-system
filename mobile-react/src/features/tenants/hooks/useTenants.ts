@@ -11,7 +11,6 @@ export function useTenants() {
   return useQuery({
     queryKey: tenantKeys.all,
     queryFn: tenantApi.getAll,
-    refetchInterval: 10_000,
   });
 }
 

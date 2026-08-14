@@ -17,7 +17,8 @@ public sealed record DistrictChangedJobRequest(
 public sealed class DistrictChangedJob(
     ApplicationDbContext context,
     INotificationPublisher notificationPublisher,
-    IHubContext<GeneralHub, IGeneralHubClient> hubContext)
+    IHubContext<GeneralHub, IGeneralHubClient> hubContext,
+    IRealtimeEntityPublisher realtimePublisher)
 {
     public async Task ExecuteAsync(DistrictChangedJobRequest request, CancellationToken cancellationToken)
     {
@@ -51,11 +52,10 @@ public sealed class DistrictChangedJob(
         await Task.WhenAll(
             clients.ReceiveDistrictUpdate(
                 Result.Success(new DistrictsCountResponse(count, request.District, request.Action))),
-            clients.ReceiveEntityChanged(new RealtimeEntityChanged(
-                request.OperationId,
-                DateTime.UtcNow,
-                RealtimeResource.For<District>(),
+            realtimePublisher.PublishAsync(RealtimeChangeRequest.For<District>(
+                RealtimeAudience.ForPermission(Permissions.ViewDistricts),
                 request.Action,
-                request.District.Id.ToString(CultureInfo.InvariantCulture))));
+                request.District.Id.ToString(CultureInfo.InvariantCulture),
+                request.OperationId), cancellationToken));
     }
 }

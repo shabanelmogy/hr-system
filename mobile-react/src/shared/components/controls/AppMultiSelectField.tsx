@@ -118,7 +118,7 @@ export function AppMultiSelectField<Value extends string | number>({
       </Pressable>
 
       {error || helperText ? (
-        <AppFieldMessage error={Boolean(error)}>{error ?? helperText}</AppFieldMessage>
+        <AppFieldMessage error={Boolean(error)}>{error ?? helperText ?? ''}</AppFieldMessage>
       ) : null}
 
       <AppModal

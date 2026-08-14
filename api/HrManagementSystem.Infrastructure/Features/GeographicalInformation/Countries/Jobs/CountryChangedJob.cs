@@ -18,7 +18,8 @@ public sealed record CountryChangedJobRequest(
 public sealed class CountryChangedJob(
     ApplicationDbContext context,
     INotificationPublisher notificationPublisher,
-    IHubContext<GeneralHub, IGeneralHubClient> hubContext)
+    IHubContext<GeneralHub, IGeneralHubClient> hubContext,
+    IRealtimeEntityPublisher realtimePublisher)
 {
     public async Task ExecuteAsync(CountryChangedJobRequest request, CancellationToken cancellationToken)
     {
@@ -59,11 +60,10 @@ public sealed class CountryChangedJob(
         await Task.WhenAll(
             clients.ReceiveCountryUpdate(
                 new CountriesCountResponse(count, request.Country, request.Action)),
-            clients.ReceiveEntityChanged(new RealtimeEntityChanged(
-                request.OperationId,
-                DateTime.UtcNow,
-                RealtimeResource.For<Country>(),
+            realtimePublisher.PublishAsync(RealtimeChangeRequest.For<Country>(
+                RealtimeAudience.ForPermission(Permissions.ViewCountries),
                 request.Action,
-                entityId)));
+                entityId,
+                request.OperationId), cancellationToken));
     }
 }

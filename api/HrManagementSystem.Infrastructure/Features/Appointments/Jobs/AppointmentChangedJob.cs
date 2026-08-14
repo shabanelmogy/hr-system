@@ -13,7 +13,7 @@ public sealed record AppointmentChangedJobRequest(
 
 [AutomaticRetry(Attempts = 5, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
 public sealed class AppointmentChangedJob(
-    IHubContext<GeneralHub, IGeneralHubClient> hubContext)
+    IRealtimeEntityPublisher realtimePublisher)
 {
     public Task ExecuteAsync(
         AppointmentChangedJobRequest request,
@@ -21,15 +21,15 @@ public sealed class AppointmentChangedJob(
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        return hubContext.Clients.Group(GeneralHubGroups.ForUserCompany(
-                request.TenantId,
-                request.CompanyId,
-                request.ActorUserId))
-            .ReceiveEntityChanged(new RealtimeEntityChanged(
-                request.OperationId,
-                DateTime.UtcNow,
-                RealtimeResource.For<Appointment>(),
+        return realtimePublisher.PublishAsync(
+            RealtimeChangeRequest.For<Appointment>(
+                RealtimeAudience.ForUserCompany(
+                    request.TenantId,
+                    request.CompanyId,
+                    request.ActorUserId),
                 request.Action,
-                request.AppointmentId.ToString(CultureInfo.InvariantCulture)));
+                request.AppointmentId.ToString(CultureInfo.InvariantCulture),
+                request.OperationId),
+            cancellationToken);
     }
 }

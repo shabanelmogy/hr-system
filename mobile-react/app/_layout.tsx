@@ -8,6 +8,7 @@ import { AppProviders } from '@/src/core/providers/AppProviders';
 import { useOnboarding } from '@/src/core/onboarding';
 import { useAppTheme } from '@/src/core/theme';
 import { AuthProvider, useAuth } from '@/src/features/auth/context/AuthProvider';
+import { RealtimeProvider } from '@/src/features/realtime';
 import { AppScreen, AppStateView } from '@/src/shared/components';
 
 export const unstable_settings = {
@@ -18,7 +19,9 @@ export default function RootLayout() {
   return (
     <AppProviders>
       <AuthProvider>
-        <RootNavigator />
+        <RealtimeProvider>
+          <RootNavigator />
+        </RealtimeProvider>
       </AuthProvider>
     </AppProviders>
   );

@@ -64,6 +64,7 @@ public sealed class JwtProvider(
         var claims = principal.Claims
             .Where(claim =>
                 requiredClaims.Contains(claim.Type) ||
+                claim.Type == ClaimTypes.Role ||
                 claim.Type == Permissions.Type)
             .Select(claim => new Claim(claim.Type, claim.Value))
             .ToList();

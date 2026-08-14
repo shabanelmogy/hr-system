@@ -17,7 +17,8 @@ public sealed record StateChangedJobRequest(
 public sealed class StateChangedJob(
     ApplicationDbContext context,
     INotificationPublisher notificationPublisher,
-    IHubContext<GeneralHub, IGeneralHubClient> hubContext)
+    IHubContext<GeneralHub, IGeneralHubClient> hubContext,
+    IRealtimeEntityPublisher realtimePublisher)
 {
     public async Task ExecuteAsync(StateChangedJobRequest request, CancellationToken cancellationToken)
     {
@@ -50,11 +51,10 @@ public sealed class StateChangedJob(
         await Task.WhenAll(
             clients.ReceiveStateUpdate(
                 new StatesCountResponse(count, request.State, request.Action)),
-            clients.ReceiveEntityChanged(new RealtimeEntityChanged(
-                request.OperationId,
-                DateTime.UtcNow,
-                RealtimeResource.For<State>(),
+            realtimePublisher.PublishAsync(RealtimeChangeRequest.For<State>(
+                RealtimeAudience.ForPermission(Permissions.ViewStates),
                 request.Action,
-                request.State.Id.ToString(CultureInfo.InvariantCulture))));
+                request.State.Id.ToString(CultureInfo.InvariantCulture),
+                request.OperationId), cancellationToken));
     }
 }

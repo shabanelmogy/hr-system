@@ -9,7 +9,7 @@ namespace HrManagementSystem.Infrastructure.Features.Tenancy.Services;
 
 public sealed class TenantManagementService(
     ApplicationDbContext context,
-    IHubContext<GeneralHub, IGeneralHubClient> hubContext,
+    IRealtimeChangeDispatcher realtimeChanges,
     TimeProvider timeProvider) : ITenantManagementService
 {
     public async Task<IReadOnlyList<TenantManagementResponse>> GetAllAsync(
@@ -77,7 +77,7 @@ public sealed class TenantManagementService(
 
         context.Tenants.Add(tenant);
         await context.SaveChangesAsync(cancellationToken);
-        await PublishChangeAsync("Create", tenant.Id);
+        DispatchChange("Create", tenant.Id);
 
         var responses = await BuildResponsesAsync([tenant], cancellationToken);
         return Result.Success(responses[0]);
@@ -126,7 +126,7 @@ public sealed class TenantManagementService(
             timeProvider.GetUtcNow().UtcDateTime);
 
         await context.SaveChangesAsync(cancellationToken);
-        await PublishChangeAsync("Update", tenant.Id);
+        DispatchChange("Update", tenant.Id);
 
         var responses = await BuildResponsesAsync([tenant], cancellationToken);
         return Result.Success(responses[0]);
@@ -214,15 +214,11 @@ public sealed class TenantManagementService(
                     group.FirstOrDefault(row => row.NormalizedName == AppRoles.user.ToUpper())?.Count ?? 0));
     }
 
-    private Task PublishChangeAsync(string action, string tenantId) =>
-        hubContext.Clients
-            .Group(GeneralHubGroups.ForRole(AppRoles.super_admin))
-            .ReceiveEntityChanged(new RealtimeEntityChanged(
-                Guid.NewGuid(),
-                timeProvider.GetUtcNow().UtcDateTime,
-                RealtimeResource.For<Tenant>(),
-                action,
-                tenantId));
+    private void DispatchChange(string action, string tenantId) =>
+        realtimeChanges.Dispatch(RealtimeChangeRequest.For<Tenant>(
+            RealtimeAudience.ForRole(AppRoles.super_admin),
+            action,
+            tenantId));
 
     private static bool TryParseStatus(string value, out SubscriptionStatus status) =>
         Enum.TryParse(value, true, out status) && Enum.IsDefined(status);

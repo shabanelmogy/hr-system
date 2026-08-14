@@ -25,6 +25,7 @@ export const ar = {
     info: 'معلومة',
     warning: 'تنبيه',
     loading: 'يرجى الانتظار',
+    liveUpdate: 'تم تحديث البيانات بواسطة مستخدم آخر.',
     close: 'إغلاق',
     share: 'مشاركة',
     shareError: 'مشاركة تقرير الخطأ',

@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Globalization;
 using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Domain.OrganizationalStructure.Entities;
 using HrManagementSystem.Application.Features.Platform.Notifications.Contracts;
@@ -18,6 +19,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging.Abstractions;
+using HrManagementSystem.Application.Common.Realtime;
 
 namespace HrManagementSystem.Tests;
 
@@ -70,7 +72,8 @@ public sealed class NotificationServiceTests
         context.Notifications.Add(notification);
         await context.SaveChangesAsync();
 
-        var service = CreateService(context);
+        var dispatcher = new RecordingRealtimeDispatcher();
+        var service = CreateService(context, dispatcher);
         var first = await service.MarkReadAsync("user-1", notification.Id);
         var readOn = await context.Notifications
             .Where(item => item.Id == notification.Id)
@@ -86,6 +89,78 @@ public sealed class NotificationServiceTests
         Assert.True(second.IsSuccess);
         Assert.NotNull(readOn);
         Assert.Equal(readOn, readOnAfterSecondCall);
+        var change = Assert.Single(dispatcher.Requests);
+        Assert.Equal("notifications", change.Resource);
+        Assert.Equal("MarkRead", change.Action);
+        Assert.Equal(notification.Id.ToString(CultureInfo.InvariantCulture), change.EntityId);
+        Assert.Equal(RealtimeAudienceKind.UserCompany, change.Audience.Kind);
+        Assert.Equal("tenant-1", change.Audience.TenantId);
+        Assert.Equal(1, change.Audience.CompanyId);
+        Assert.Equal("user-1", change.Audience.UserId);
+    }
+
+    [Fact]
+    public async Task IndividualNotificationStateChanges_DispatchOnlyAfterRowsChange()
+    {
+        await using var context = CreateContext();
+        var first = CreateNotification("user-1", DateTime.UtcNow.AddMinutes(-1));
+        GrantPermission(context, "user-1");
+        context.Notifications.Add(first);
+        await context.SaveChangesAsync();
+
+        var dispatcher = new RecordingRealtimeDispatcher();
+        var service = CreateService(context, dispatcher);
+
+        Assert.True((await service.MarkReadAsync("user-1", first.Id)).IsSuccess);
+        Assert.True((await service.DismissAsync("user-1", first.Id)).IsSuccess);
+        Assert.True((await service.DismissAsync("user-1", first.Id)).IsSuccess);
+
+        Assert.Collection(
+            dispatcher.Requests,
+            change =>
+            {
+                Assert.Equal("MarkRead", change.Action);
+                Assert.Equal(first.Id.ToString(CultureInfo.InvariantCulture), change.EntityId);
+            },
+            change =>
+            {
+                Assert.Equal("Dismiss", change.Action);
+                Assert.Equal(first.Id.ToString(CultureInfo.InvariantCulture), change.EntityId);
+            });
+        Assert.All(dispatcher.Requests, change =>
+        {
+            Assert.Equal("notifications", change.Resource);
+            Assert.Equal(RealtimeAudienceKind.UserCompany, change.Audience.Kind);
+            Assert.Equal("tenant-1", change.Audience.TenantId);
+            Assert.Equal(1, change.Audience.CompanyId);
+            Assert.Equal("user-1", change.Audience.UserId);
+        });
+    }
+
+    [Theory]
+    [InlineData("MarkAllRead")]
+    [InlineData("MarkAllUnread")]
+    [InlineData("DismissAll")]
+    public void BulkNotificationStateChanges_UseNotificationsUserCompanyContract(string action)
+    {
+        using var context = CreateContext();
+        var dispatcher = new RecordingRealtimeDispatcher();
+        var service = CreateService(context, dispatcher);
+        var dispatch = typeof(NotificationService).GetMethod(
+            "DispatchChange",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+        Assert.NotNull(dispatch);
+        dispatch.Invoke(service, ["user-1", action, null]);
+
+        var change = Assert.Single(dispatcher.Requests);
+        Assert.Equal("notifications", change.Resource);
+        Assert.Equal(action, change.Action);
+        Assert.Null(change.EntityId);
+        Assert.Equal(RealtimeAudienceKind.UserCompany, change.Audience.Kind);
+        Assert.Equal("tenant-1", change.Audience.TenantId);
+        Assert.Equal(1, change.Audience.CompanyId);
+        Assert.Equal("user-1", change.Audience.UserId);
     }
 
     [Fact]
@@ -98,13 +173,22 @@ public sealed class NotificationServiceTests
         context.Notifications.Add(notification);
         await context.SaveChangesAsync();
 
-        var service = CreateService(context);
+        var dispatcher = new RecordingRealtimeDispatcher();
+        var service = CreateService(context, dispatcher);
         var first = await service.MarkUnreadAsync("user-1", notification.Id);
         var second = await service.MarkUnreadAsync("user-1", notification.Id);
 
         Assert.True(first.IsSuccess);
         Assert.True(second.IsSuccess);
         Assert.Null((await context.Notifications.SingleAsync(item => item.Id == notification.Id)).ReadOn);
+        var change = Assert.Single(dispatcher.Requests);
+        Assert.Equal("notifications", change.Resource);
+        Assert.Equal("MarkUnread", change.Action);
+        Assert.Equal(notification.Id.ToString(CultureInfo.InvariantCulture), change.EntityId);
+        Assert.Equal(RealtimeAudienceKind.UserCompany, change.Audience.Kind);
+        Assert.Equal("tenant-1", change.Audience.TenantId);
+        Assert.Equal(1, change.Audience.CompanyId);
+        Assert.Equal("user-1", change.Audience.UserId);
     }
 
     [Fact]
@@ -216,11 +300,18 @@ public sealed class NotificationServiceTests
         return new ApplicationDbContext(options, new TestCurrentActor(), TimeProvider.System);
     }
 
-    private static NotificationService CreateService(ApplicationDbContext context)
+    private static NotificationService CreateService(
+        ApplicationDbContext context,
+        RecordingRealtimeDispatcher? dispatcher = null)
     {
         var config = new TypeAdapterConfig();
         new NotificationMappingConfig().Register(config);
-        return new NotificationService(context, CreateErrors(), new Mapper(config));
+        return new NotificationService(
+            context,
+            CreateErrors(),
+            new Mapper(config),
+            new TestCurrentActor(),
+            dispatcher ?? new RecordingRealtimeDispatcher());
     }
 
     private static NotificationPublisher CreatePublisher(ApplicationDbContext context)
@@ -245,6 +336,13 @@ public sealed class NotificationServiceTests
         public string? UserId => null;
         public string? TenantId => "tenant-1";
         public int? CompanyId => 1;
+    }
+
+    private sealed class RecordingRealtimeDispatcher : IRealtimeChangeDispatcher
+    {
+        public List<RealtimeChangeRequest> Requests { get; } = [];
+
+        public void Dispatch(RealtimeChangeRequest request) => Requests.Add(request);
     }
 
     private static Notification CreateNotification(

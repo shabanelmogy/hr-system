@@ -8,6 +8,7 @@ using HrManagementSystem.Application.Features.Security.Users.Contracts;
 using HrManagementSystem.Application.Features.Security.Users.Errors;
 using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Common.Files;
+using HrManagementSystem.Application.Common.Realtime;
 
 namespace HrManagementSystem.Infrastructure.Features.Security.Users.Services;
 
@@ -19,7 +20,8 @@ public class UserService(
     ICurrentActor currentActor,
     IWebHostEnvironment webHostEnvironment,
     TimeProvider timeProvider,
-    ILogger<UserService> logger) : IUserService
+    ILogger<UserService> logger,
+    IRealtimeChangeDispatcher realtimeChanges) : IUserService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly IRoleService _roleService = roleService;
@@ -504,6 +506,8 @@ public class UserService(
                     .SetProperty(x => x.FirstName, request.FirstName)
                     .SetProperty(x => x.LastName, request.LastName), cancellationToken);
 
+        DispatchOwnUserChange(userId, "ProfileUpdated");
+
         return Result.Success();
     }
 
@@ -522,6 +526,7 @@ public class UserService(
                 .ExecuteUpdateAsync(s => s.SetProperty(u => u.ProfilePicture, (string?)null), cancellationToken);
 
             DeleteFileIfExists(oldPath);
+            DispatchOwnUserChange(userId, "ProfilePictureUpdated");
             return Result.Success();
         }
 
@@ -553,6 +558,8 @@ public class UserService(
         }
 
         DeleteFileIfExists(oldPath);
+
+        DispatchOwnUserChange(userId, "ProfilePictureUpdated");
 
         return Result.Success();
     }
@@ -816,6 +823,26 @@ public class UserService(
                 "Unable to enqueue user change notification for user {UserId}.",
                 user.Id);
         }
+    }
+
+    private void DispatchOwnUserChange(string userId, string action)
+    {
+        var tenantId = _currentActor.TenantId
+            ?? throw new InvalidOperationException("A tenant is required to publish user changes.");
+        var companyId = _currentActor.CompanyId
+            ?? throw new InvalidOperationException("A company is required to publish user changes.");
+        var eventId = Guid.NewGuid();
+
+        realtimeChanges.Dispatch(RealtimeChangeRequest.For<ApplicationUser>(
+            RealtimeAudience.ForUserCompany(tenantId, companyId, userId),
+            action,
+            userId,
+            eventId));
+        realtimeChanges.Dispatch(RealtimeChangeRequest.For<ApplicationUser>(
+            RealtimeAudience.ForCompanyPermission(tenantId, companyId, Permissions.ViewUsers),
+            action,
+            userId,
+            eventId));
     }
 
     private string? GetProfilePicturePath(string? fileName)

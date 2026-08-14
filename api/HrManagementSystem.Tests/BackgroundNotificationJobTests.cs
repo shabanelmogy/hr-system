@@ -31,6 +31,16 @@ using HrManagementSystem.Application.Common.Realtime;
 using HrManagementSystem.Domain.GeographicalInformation.AddressTypes.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
+using HrManagementSystem.Infrastructure.Features.Catalog.Categories.Services;
+using HrManagementSystem.Infrastructure.Features.Catalog.SubCategories.Services;
+using HrManagementSystem.Infrastructure.Features.Analytics.Reports.Services;
+using HrManagementSystem.Infrastructure.Features.Analytics.Views.Services;
+using HrManagementSystem.Infrastructure.Features.Security.ApiKeys.Services;
+using HrManagementSystem.Infrastructure.Features.Security.Authorization.Services;
+using HrManagementSystem.Infrastructure.Features.Platform.Localization.Services;
+using HrManagementSystem.Infrastructure.Features.Tenancy.Services;
+using HrManagementSystem.Infrastructure.Features.Platform.Files.Services;
+using HrManagementSystem.Infrastructure.Features.Platform.Notifications.Services;
 
 namespace HrManagementSystem.Tests;
 
@@ -65,6 +75,7 @@ public sealed class BackgroundNotificationJobTests
     [InlineData(typeof(UserChangedJob))]
     [InlineData(typeof(SessionRevokedJob))]
     [InlineData(typeof(AppointmentChangedJob))]
+    [InlineData(typeof(RealtimeEntityChangedJob))]
     public void FeatureJobs_UseHangfireAutomaticRetries(Type jobType)
     {
         var retry = Assert.Single(
@@ -135,9 +146,53 @@ public sealed class BackgroundNotificationJobTests
     }
 
     [Theory]
+    [InlineData(typeof(CategoryService))]
+    [InlineData(typeof(SubcategoryService))]
+    [InlineData(typeof(ReportCategoryService))]
+    [InlineData(typeof(ViewService))]
+    [InlineData(typeof(ApiKeyService))]
+    [InlineData(typeof(RoleService))]
+    [InlineData(typeof(LocalizationService))]
+    [InlineData(typeof(TenantManagementService))]
+    [InlineData(typeof(FileService))]
+    [InlineData(typeof(UserService))]
+    [InlineData(typeof(NotificationService))]
+    public void NewlyCoveredMutationServices_UseDispatcherInsteadOfSignalR(Type serviceType)
+    {
+        var parameterTypes = serviceType.GetConstructors().Single()
+            .GetParameters()
+            .Select(parameter => parameter.ParameterType)
+            .ToList();
+
+        Assert.Contains(typeof(IRealtimeChangeDispatcher), parameterTypes);
+        Assert.DoesNotContain(parameterTypes, type =>
+            type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IHubContext<,>));
+    }
+
+    [Fact]
+    public void RealtimeAudience_RequiresCompleteCompanyIsolationScope()
+    {
+        Assert.Throws<ArgumentException>(() =>
+            RealtimeAudience.ForCompanyPermission("", 7, Permissions.ViewCategories));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            RealtimeAudience.ForCompanyPermission("tenant-1", 0, Permissions.ViewCategories));
+
+        var audience = RealtimeAudience.ForCompanyPermission(
+            "tenant-1",
+            7,
+            Permissions.ViewCategories);
+
+        Assert.Equal(RealtimeAudienceKind.CompanyPermission, audience.Kind);
+        Assert.Equal("tenant-1", audience.TenantId);
+        Assert.Equal(7, audience.CompanyId);
+        Assert.Equal(Permissions.ViewCategories, audience.Permission);
+    }
+
+    [Theory]
     [InlineData(typeof(Country), "countries")]
     [InlineData(typeof(AddressType), "address-types")]
     [InlineData(typeof(ApplicationUser), "users")]
+    [InlineData(typeof(ApplicationRole), "roles")]
     public void RealtimeResources_AreDerivedFromEntityTypes(Type entityType, string expected)
     {
         Assert.Equal(expected, RealtimeResource.For(entityType));

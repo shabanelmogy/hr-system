@@ -16,6 +16,10 @@ export const realtimeResources = {
   users: "users",
   appointments: "appointments",
   tenants: "tenants",
+  roles: "roles",
+  roleClaims: "role-claims",
+  companies: "companies",
+  notifications: "notifications",
 } as const;
 
 const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
@@ -24,13 +28,21 @@ const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
   [realtimeResources.districts]: [districtKeys.all, stateKeys.all],
   [realtimeResources.addressTypes]: [addressTypeKeys.all],
   [realtimeResources.addresses]: [],
-  [realtimeResources.users]: [],
+  [realtimeResources.users]: [["userProfile"]],
   [realtimeResources.appointments]: [appointmentKeys.all],
   [realtimeResources.tenants]: [tenantKeys.all],
+  [realtimeResources.roles]: [],
+  [realtimeResources.roleClaims]: [],
+  [realtimeResources.companies]: [],
+  [realtimeResources.notifications]: [["notifications"]],
 };
 
 export function getRealtimeQueryKeys(resource: string): readonly QueryKey[] {
   return queryKeysByResource[resource] ?? [];
+}
+
+export function isKnownRealtimeResource(resource: string): boolean {
+  return Object.hasOwn(queryKeysByResource, resource);
 }
 
 export function getAllRealtimeQueryKeys(): readonly QueryKey[] {

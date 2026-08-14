@@ -18,12 +18,16 @@ public sealed class AuthService(
     ILoginAuditService loginAudit,
     ICurrentActor currentActor,
     ApplicationDbContext context,
-    TimeProvider timeProvider) : IAuthService
+    TimeProvider timeProvider,
+    IWebHostEnvironment webHostEnvironment) : IAuthService
 {
     private const int RefreshTokenLifetimeDays = 14;
     private const int MaxInactiveTokenHistory = 50;
     private static readonly TimeSpan InactiveTokenRetention = TimeSpan.FromHours(1);
     private static readonly TimeSpan RotatedTokenReuseGracePeriod = TimeSpan.FromSeconds(30);
+    private readonly string _profilePicturesPath = Path.Combine(
+        webHostEnvironment.WebRootPath ?? Path.Combine(webHostEnvironment.ContentRootPath, "wwwroot"),
+        "profile-pictures");
 
     // -------------------------------------------------------------------------
     // Login
@@ -332,6 +336,9 @@ public sealed class AuthService(
             return Result.Failure(IdentityFailure(result));
 
         await AssignDefaultCompanyAsync(user, cancellationToken);
+
+        if (!string.IsNullOrEmpty(request.ProfilePicture))
+            await SaveProfilePictureAsync(user, request.ProfilePicture, cancellationToken);
 
         var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -711,6 +718,52 @@ public sealed class AuthService(
     {
         BackgroundJob.Enqueue<SessionRevokedJob>(
             job => job.ExecuteAsync(userId, message));
+    }
+
+    private async Task SaveProfilePictureAsync(
+        ApplicationUser user,
+        string base64Image,
+        CancellationToken cancellationToken)
+    {
+        byte[] imageBytes;
+        try
+        {
+            imageBytes = Convert.FromBase64String(base64Image);
+        }
+        catch (FormatException)
+        {
+            return;
+        }
+
+        var extension = DetectImageExtension(imageBytes);
+        Directory.CreateDirectory(_profilePicturesPath);
+        var fileName = $"{Guid.NewGuid():N}{extension}";
+        var filePath = Path.Combine(_profilePicturesPath, fileName);
+
+        try
+        {
+            await File.WriteAllBytesAsync(filePath, imageBytes, cancellationToken);
+
+            await context.Users
+                .Where(u => u.Id == user.Id)
+                .ExecuteUpdateAsync(
+                    s => s.SetProperty(u => u.ProfilePicture, fileName),
+                    cancellationToken);
+        }
+        catch
+        {
+            if (File.Exists(filePath))
+                File.Delete(filePath);
+        }
+    }
+
+    private static string DetectImageExtension(byte[] bytes)
+    {
+        if (bytes.Length >= 3 && bytes[0] == 0xFF && bytes[1] == 0xD8 && bytes[2] == 0xFF)
+            return ".jpg";
+        if (bytes.Length >= 4 && bytes[0] == 0x89 && bytes[1] == 0x50 && bytes[2] == 0x4E && bytes[3] == 0x47)
+            return ".png";
+        return ".jpg";
     }
 
     private static Error IdentityFailure(IdentityResult result)

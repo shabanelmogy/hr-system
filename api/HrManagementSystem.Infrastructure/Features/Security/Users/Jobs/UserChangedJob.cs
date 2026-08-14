@@ -19,7 +19,8 @@ public sealed record UserChangedJobRequest(
 public sealed class UserChangedJob(
     ApplicationDbContext context,
     INotificationPublisher notificationPublisher,
-    IHubContext<GeneralHub, IGeneralHubClient> hubContext)
+    IHubContext<GeneralHub, IGeneralHubClient> hubContext,
+    IRealtimeEntityPublisher realtimePublisher)
 {
     public async Task ExecuteAsync(UserChangedJobRequest request, CancellationToken cancellationToken)
     {
@@ -52,23 +53,20 @@ public sealed class UserChangedJob(
             request.CompanyId,
             Permissions.ViewUsers));
 
-        var superAdminClients = hubContext.Clients.Group(
-            GeneralHubGroups.ForRole(AppRoles.super_admin));
-
         await Task.WhenAll(
             clients.ReceiveUserUpdate(
                 Result.Success(new UserChangedResponse(count, request.User, request.Action))),
-            clients.ReceiveEntityChanged(new RealtimeEntityChanged(
-                request.OperationId,
-                DateTime.UtcNow,
-                RealtimeResource.For<ApplicationUser>(),
+            realtimePublisher.PublishAsync(RealtimeChangeRequest.For<ApplicationUser>(
+                RealtimeAudience.ForCompanyPermission(
+                    request.TenantId,
+                    request.CompanyId,
+                    Permissions.ViewUsers),
                 request.Action,
-                request.User.Id)),
-            superAdminClients.ReceiveEntityChanged(new RealtimeEntityChanged(
-                Guid.NewGuid(),
-                DateTime.UtcNow,
-                RealtimeResource.For<Tenant>(),
+                request.User.Id,
+                request.OperationId), cancellationToken),
+            realtimePublisher.PublishAsync(RealtimeChangeRequest.For<Tenant>(
+                RealtimeAudience.ForRole(AppRoles.super_admin),
                 "UserCountChanged",
-                request.TenantId)));
+                request.TenantId), cancellationToken));
     }
 }

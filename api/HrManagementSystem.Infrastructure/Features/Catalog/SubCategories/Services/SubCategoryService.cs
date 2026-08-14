@@ -5,6 +5,7 @@ using HrManagementSystem.Application.Features.Platform.EntityChangeLogs.Services
 
 using HrManagementSystem.Domain.Catalog.Categories.Entities;
 using HrManagementSystem.Domain.Catalog.SubCategories.Entities;
+using HrManagementSystem.Application.Common.Realtime;
 
 namespace HrManagementSystem.Infrastructure.Features.Catalog.SubCategories.Services;
 
@@ -14,7 +15,8 @@ public class SubcategoryService(
     IEntityChangeLogService entityChangeLogService,
     ICurrentActor currentActor,
     SubCategoryErrors subcategoryErrors,
-    HybridCache hybridCache) : ISubCategoryService
+    HybridCache hybridCache,
+    IRealtimeChangeDispatcher realtimeChanges) : ISubCategoryService
 {
     private readonly IMapper _mapper = mapper;
     private readonly ApplicationDbContext _context = context;
@@ -80,6 +82,8 @@ public class SubcategoryService(
             .SingleAsync(cancellationToken);
         await _hybridCache.RemoveAsync(_cacheKey, cancellationToken);
 
+        DispatchChange("Create", newSubcategory);
+
         return Result.Success(response);
     }
 
@@ -132,6 +136,8 @@ public class SubcategoryService(
             .SingleAsync(cancellationToken);
         await _hybridCache.RemoveAsync(_cacheKey, cancellationToken);
 
+        DispatchChange("Update", currentSubcategory);
+
         return Result.Success(response);
     }
 
@@ -153,6 +159,21 @@ public class SubcategoryService(
         await _context.SaveChangesAsync(cancellationToken);
         await _hybridCache.RemoveAsync(_cacheKey, cancellationToken);
 
+        DispatchChange(subcategory.IsDeleted ? "Delete" : "Restore", subcategory);
+
         return Result.Success();
+    }
+
+    private void DispatchChange(string action, SubCategory subcategory)
+    {
+        if (string.IsNullOrWhiteSpace(subcategory.TenantId) || subcategory.CompanyId <= 0)
+        {
+            throw new InvalidOperationException("A tenant and company are required for subcategory realtime updates.");
+        }
+
+        realtimeChanges.Dispatch(RealtimeChangeRequest.For<SubCategory>(
+            RealtimeAudience.ForCompanyPermission(subcategory.TenantId, subcategory.CompanyId, Permissions.ViewSubCategories),
+            action,
+            subcategory.Id.ToString(CultureInfo.InvariantCulture)));
     }
 }

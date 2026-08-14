@@ -3,13 +3,17 @@ using HrManagementSystem.Application.Features.Platform.Notifications.Contracts;
 using HrManagementSystem.Infrastructure.Features.Platform.Notifications.Entities;
 using HrManagementSystem.Application.Features.Platform.Notifications.Errors;
 using HrManagementSystem.Application.Common.Paginations;
+using HrManagementSystem.Application.Abstractions.Authentication;
+using HrManagementSystem.Application.Common.Realtime;
 
 namespace HrManagementSystem.Infrastructure.Features.Platform.Notifications.Services;
 
 public sealed class NotificationService(
     ApplicationDbContext context,
     NotificationErrors errors,
-    IMapper mapper) : INotificationService
+    IMapper mapper,
+    ICurrentActor currentActor,
+    IRealtimeChangeDispatcher realtimeChanges) : INotificationService
 {
     public async Task<Result<NotificationPageResponse>> GetAsync(
         string userId,
@@ -86,8 +90,13 @@ public sealed class NotificationService(
         var notification = await context.Set<Notification>()
             .FirstAsync(item => item.Id == id && item.RecipientUserId == userId, cancellationToken);
 
+        var changed = notification.ReadOn is null;
         notification.ReadOn ??= DateTime.UtcNow;
         await context.SaveChangesAsync(cancellationToken);
+
+        if (changed)
+            DispatchChange(userId, "MarkRead", id.ToString(CultureInfo.InvariantCulture));
+
         return Result.Success();
     }
 
@@ -96,7 +105,7 @@ public sealed class NotificationService(
         CancellationToken cancellationToken = default)
     {
         var now = DateTime.UtcNow;
-        await GetAccessibleNotifications(userId)
+        var changedCount = await GetAccessibleNotifications(userId)
             .Where(notification =>
                 notification.ReadOn == null &&
                 notification.DismissedOn == null &&
@@ -104,6 +113,9 @@ public sealed class NotificationService(
             .ExecuteUpdateAsync(
                 setters => setters.SetProperty(notification => notification.ReadOn, now),
                 cancellationToken);
+
+        if (changedCount > 0)
+            DispatchChange(userId, "MarkAllRead", entityId: null);
 
         return Result.Success();
     }
@@ -122,8 +134,13 @@ public sealed class NotificationService(
         var notification = await context.Set<Notification>()
             .FirstAsync(item => item.Id == id && item.RecipientUserId == userId, cancellationToken);
 
+        var changed = notification.ReadOn is not null;
         notification.ReadOn = null;
         await context.SaveChangesAsync(cancellationToken);
+
+        if (changed)
+            DispatchChange(userId, "MarkUnread", id.ToString(CultureInfo.InvariantCulture));
+
         return Result.Success();
     }
 
@@ -132,7 +149,7 @@ public sealed class NotificationService(
         CancellationToken cancellationToken = default)
     {
         var now = DateTime.UtcNow;
-        await GetAccessibleNotifications(userId)
+        var changedCount = await GetAccessibleNotifications(userId)
             .Where(notification =>
                 notification.ReadOn != null &&
                 notification.DismissedOn == null &&
@@ -140,6 +157,9 @@ public sealed class NotificationService(
             .ExecuteUpdateAsync(
                 setters => setters.SetProperty(notification => notification.ReadOn, (DateTime?)null),
                 cancellationToken);
+
+        if (changedCount > 0)
+            DispatchChange(userId, "MarkAllUnread", entityId: null);
 
         return Result.Success();
     }
@@ -158,8 +178,13 @@ public sealed class NotificationService(
         var notification = await context.Set<Notification>()
             .FirstAsync(item => item.Id == id && item.RecipientUserId == userId, cancellationToken);
 
+        var changed = notification.DismissedOn is null;
         notification.DismissedOn ??= DateTime.UtcNow;
         await context.SaveChangesAsync(cancellationToken);
+
+        if (changed)
+            DispatchChange(userId, "Dismiss", id.ToString(CultureInfo.InvariantCulture));
+
         return Result.Success();
     }
 
@@ -168,13 +193,29 @@ public sealed class NotificationService(
         CancellationToken cancellationToken = default)
     {
         var now = DateTime.UtcNow;
-        await GetAccessibleNotifications(userId)
+        var changedCount = await GetAccessibleNotifications(userId)
             .Where(notification => notification.DismissedOn == null)
             .ExecuteUpdateAsync(
                 setters => setters.SetProperty(notification => notification.DismissedOn, now),
                 cancellationToken);
 
+        if (changedCount > 0)
+            DispatchChange(userId, "DismissAll", entityId: null);
+
         return Result.Success();
+    }
+
+    private void DispatchChange(string userId, string action, string? entityId)
+    {
+        var tenantId = currentActor.TenantId
+            ?? throw new InvalidOperationException("A tenant is required to publish notification changes.");
+        var companyId = currentActor.CompanyId
+            ?? throw new InvalidOperationException("A company is required to publish notification changes.");
+
+        realtimeChanges.Dispatch(RealtimeChangeRequest.For<Notification>(
+            RealtimeAudience.ForUserCompany(tenantId, companyId, userId),
+            action,
+            entityId));
     }
 
     private IQueryable<Notification> GetAccessibleNotifications(string userId)

@@ -1,4 +1,11 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import {
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -6,6 +13,8 @@ import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { AppIconButton } from '@/src/shared/components/controls/AppIconButton';
 import { AppIcon } from '@/src/shared/components/icons/AppIcon';
+import { AppScreenFooterContext } from '@/src/shared/components/layout/AppScreenFooterContext';
+import { shouldPinPagination } from '@/src/shared/components/multi-view/paginationPlacement';
 import { AppText } from '@/src/shared/components/typography/AppText';
 
 export type AppDataTableSortValue = string | number | boolean | Date | null | undefined;
@@ -52,10 +61,17 @@ export function AppDataTable<Row>({
   const { t, i18n } = useTranslation();
   const { direction, isRTL } = useLocalization();
   const { theme } = useAppTheme();
+  const footerHost = useContext(AppScreenFooterContext);
+  const footerOwner = useRef(Symbol('AppDataTable pagination'));
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(defaultPageSize);
   const [sort, setSort] = useState<SortState | null>(null);
   const pageCount = Math.max(1, Math.ceil(rows.length / pageSize));
+  const pageSizeOptionsKey = pageSizeOptions.join(',');
+  const stablePageSizeOptions = useMemo(
+    () => pageSizeOptionsKey.split(',').filter(Boolean).map(Number),
+    [pageSizeOptionsKey],
+  );
 
   const collator = useMemo(
     () => new Intl.Collator(i18n.language, { numeric: true, sensitivity: 'base' }),
@@ -97,7 +113,105 @@ export function AppDataTable<Row>({
       : sortedRows,
     [page, pageSize, showPagination, sortedRows],
   );
+  const pinPagination = showPagination && shouldPinPagination(
+    pageRows.length,
+    Boolean(footerHost),
+  );
   const tableWidth = columns.reduce((total, column) => total + (column.width ?? 150), 0);
+  const pagination = useMemo(() => showPagination && rows.length > 0 ? (
+    <View
+      style={[
+        styles.pagination,
+        pinPagination && styles.pinnedPagination,
+        {
+          direction,
+          backgroundColor: theme.colors.surface,
+          borderColor: theme.colors.border,
+          borderRadius: pinPagination ? theme.radius.md : 0,
+        },
+      ]}>
+      <View style={[styles.pageSizes, { direction }]}>
+        <AppText color="muted" variant="caption">{t('dataTable.rowsPerPage')}</AppText>
+        {stablePageSizeOptions.map((option) => (
+          <Pressable
+            accessibilityLabel={t('dataTable.usePageSize', { count: option })}
+            accessibilityRole="button"
+            accessibilityState={{ selected: option === pageSize }}
+            key={option}
+            onPress={() => {
+              setPageSize(option);
+              setPage(0);
+            }}
+            style={[
+              styles.pageSize,
+              {
+                backgroundColor: option === pageSize
+                  ? theme.colors.primary
+                  : theme.colors.surfaceMuted,
+                borderRadius: theme.radius.sm,
+              },
+            ]}>
+            <AppText
+              style={{ color: option === pageSize ? theme.colors.onPrimary : theme.colors.text }}
+              variant="caption"
+              weight="700">
+              {option}
+            </AppText>
+          </Pressable>
+        ))}
+      </View>
+
+      <View style={[styles.pageNavigation, { direction }]}>
+        <AppIconButton
+          disabled={page === 0}
+          icon={isRTL ? 'chevron-forward' : 'chevron-back'}
+          label={t('dataTable.previous')}
+          onPress={() => setPage((current) => Math.max(0, current - 1))}
+        />
+        <AppText variant="caption" weight="700">
+          {t('dataTable.pageOf', { page: page + 1, count: pageCount })}
+        </AppText>
+        <AppIconButton
+          disabled={page >= pageCount - 1}
+          icon={isRTL ? 'chevron-back' : 'chevron-forward'}
+          label={t('dataTable.next')}
+          onPress={() => setPage((current) => Math.min(pageCount - 1, current + 1))}
+        />
+      </View>
+    </View>
+  ) : null, [
+    direction,
+    isRTL,
+    page,
+    pageCount,
+    pageSize,
+    pinPagination,
+    rows.length,
+    showPagination,
+    stablePageSizeOptions,
+    t,
+    theme.colors.border,
+    theme.colors.onPrimary,
+    theme.colors.primary,
+    theme.colors.surface,
+    theme.colors.surfaceMuted,
+    theme.colors.text,
+    theme.radius.md,
+    theme.radius.sm,
+  ]);
+
+  useEffect(() => {
+    if (!footerHost) return;
+
+    const owner = footerOwner.current;
+    if (!pinPagination) {
+      footerHost.unregisterFooter(owner);
+      return;
+    }
+
+    footerHost.registerFooter(owner, pagination);
+    return () => footerHost.unregisterFooter(owner);
+  }, [footerHost, pagination, pinPagination]);
 
   if (rows.length === 0) {
     return (
@@ -215,58 +329,7 @@ export function AppDataTable<Row>({
         </View>
       </ScrollView>
 
-      {showPagination ? (
-        <View style={[styles.pagination, { direction, borderColor: theme.colors.border }]}>
-          <View style={[styles.pageSizes, { direction }]}>
-            <AppText color="muted" variant="caption">{t('dataTable.rowsPerPage')}</AppText>
-            {pageSizeOptions.map((option) => (
-              <Pressable
-                accessibilityLabel={t('dataTable.usePageSize', { count: option })}
-                accessibilityRole="button"
-                accessibilityState={{ selected: option === pageSize }}
-                key={option}
-                onPress={() => {
-                  setPageSize(option);
-                  setPage(0);
-                }}
-                style={[
-                  styles.pageSize,
-                  {
-                    backgroundColor: option === pageSize
-                      ? theme.colors.primary
-                      : theme.colors.surfaceMuted,
-                    borderRadius: theme.radius.sm,
-                  },
-                ]}>
-                <AppText
-                  style={{ color: option === pageSize ? theme.colors.onPrimary : theme.colors.text }}
-                  variant="caption"
-                  weight="700">
-                  {option}
-                </AppText>
-              </Pressable>
-            ))}
-          </View>
-
-          <View style={[styles.pageNavigation, { direction }]}>
-            <AppIconButton
-              disabled={page === 0}
-              icon={isRTL ? 'chevron-forward' : 'chevron-back'}
-              label={t('dataTable.previous')}
-              onPress={() => setPage((current) => Math.max(0, current - 1))}
-            />
-            <AppText variant="caption" weight="700">
-              {t('dataTable.pageOf', { page: page + 1, count: pageCount })}
-            </AppText>
-            <AppIconButton
-              disabled={page >= pageCount - 1}
-              icon={isRTL ? 'chevron-back' : 'chevron-forward'}
-              label={t('dataTable.next')}
-              onPress={() => setPage((current) => Math.min(pageCount - 1, current + 1))}
-            />
-          </View>
-        </View>
-      ) : null}
+      {!pinPagination ? pagination : null}
     </View>
   );
 }
@@ -305,6 +368,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
   },
+  pinnedPagination: { borderWidth: 1 },
   pageSizes: { flexDirection: 'row', alignItems: 'center', gap: 5 },
   pageSize: { minWidth: 30, minHeight: 30, alignItems: 'center', justifyContent: 'center' },
   pageNavigation: { flexDirection: 'row', alignItems: 'center', gap: 4 },

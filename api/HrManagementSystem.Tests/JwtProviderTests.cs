@@ -65,7 +65,7 @@ public sealed class JwtProviderTests
     }
 
     [Fact]
-    public void RealtimeToken_PreservesPermissionClaimsForHubAudienceAssignment()
+    public void RealtimeToken_PreservesPermissionAndRoleClaimsForHubAudienceAssignment()
     {
         var provider = CreateProvider();
         var principal = new ClaimsPrincipal(new ClaimsIdentity(
@@ -77,6 +77,7 @@ public sealed class JwtProviderTests
             new Claim(JwtClaimNames.SecurityStamp, "security-stamp"),
             new Claim(JwtClaimNames.TenantId, "tenant-id"),
             new Claim(JwtClaimNames.CompanyId, "7"),
+            new Claim(ClaimTypes.Role, AppRoles.super_admin),
             new Claim(Permissions.Type, Permissions.ViewCountries),
             new Claim(Permissions.Type, Permissions.ViewStates)
         ], "Bearer"));
@@ -91,6 +92,8 @@ public sealed class JwtProviderTests
         Assert.Equal(
             new HashSet<string>([Permissions.ViewCountries, Permissions.ViewStates]),
             permissions);
+        Assert.Contains(jwt.Claims, claim =>
+            claim.Type == ClaimTypes.Role && claim.Value == AppRoles.super_admin);
     }
 
     private static JwtProvider CreateProvider()

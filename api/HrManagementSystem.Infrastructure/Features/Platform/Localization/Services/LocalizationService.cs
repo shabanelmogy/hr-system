@@ -3,6 +3,7 @@ using HrManagementSystem.Application.Features.Platform.Localization.Contracts;
 using Newtonsoft.Json;
 
 using HrManagementSystem.Application.Features.Platform.Localization.Errors;
+using HrManagementSystem.Application.Common.Realtime;
 
 namespace HrManagementSystem.Infrastructure.Features.Platform.Localization.Services
 {
@@ -17,10 +18,16 @@ namespace HrManagementSystem.Infrastructure.Features.Platform.Localization.Servi
 
         private readonly IDistributedCache _cache;
 
-        public LocalizationService(LocalizationError localizationError, IDistributedCache cache)
+        private readonly IRealtimeChangeDispatcher _realtimeChanges;
+
+        public LocalizationService(
+            LocalizationError localizationError,
+            IDistributedCache cache,
+            IRealtimeChangeDispatcher realtimeChanges)
         {
             _localizationError = localizationError;
             _cache = cache;
+            _realtimeChanges = realtimeChanges;
         }
 
         private string GetFilePath(string language) =>
@@ -65,6 +72,8 @@ namespace HrManagementSystem.Infrastructure.Features.Platform.Localization.Servi
             var json = JsonConvert.SerializeObject(existingData, Formatting.Indented);
             await File.WriteAllTextAsync(filePath, json, cancellationToken);
 
+            DispatchChange("Update", language);
+
             return Result.Success();
         }
 
@@ -95,6 +104,8 @@ namespace HrManagementSystem.Infrastructure.Features.Platform.Localization.Servi
 
             await _cache.RemoveAsync(cacheKey, cancellationToken);
 
+            DispatchChange("Update", $"{request.Language}:{request.Key}");
+
             return Result.Success();
         }
 
@@ -119,7 +130,17 @@ namespace HrManagementSystem.Infrastructure.Features.Platform.Localization.Servi
             var json = JsonConvert.SerializeObject(existingData, Formatting.Indented);
             await File.WriteAllTextAsync(filePath, json, cancellationToken);
 
+            DispatchChange("Delete", $"{language}:{key}");
+
             return Result.Success();
         }
+
+        private void DispatchChange(string action, string entityId) =>
+            _realtimeChanges.Dispatch(new RealtimeChangeRequest(
+                RealtimeAudience.ForPermission(Permissions.ViewLocalizations),
+                "localizations",
+                action,
+                entityId,
+                Guid.NewGuid()));
     }
 }

@@ -24,3 +24,9 @@ Rules:
 - Give each subagent a narrow, self-contained prompt and request a concise result with exact files and symbols.
 - Prefer `fork_turns: "none"` or the smallest useful recent-turn window when spawning an agent.
 - Keep Fast mode disabled for routine work.
+
+## Research after a failed implementation
+
+- If an implementation or fix does not satisfy the user on the first attempt, stop iterative guessing and research the issue on the web before making another implementation attempt.
+- Prefer current official documentation and primary sources for the relevant framework, library, or platform.
+- Base the next change on the documented behavior, and cite the sources used when reporting the result.
