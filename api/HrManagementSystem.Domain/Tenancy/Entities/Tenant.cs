@@ -16,6 +16,7 @@ public sealed class Tenant
         Name = Required(name, nameof(name));
         CreatedOn = createdOn;
         IsActive = true;
+        LifecycleStatus = TenantLifecycleStatus.Active;
         SubscriptionStatus = HrManagementSystem.Domain.Tenancy.Enums.SubscriptionStatus.Free;
         SubscriptionStartedOn = createdOn;
         MaxAdmins = 1;
@@ -26,6 +27,11 @@ public sealed class Tenant
     public string Identifier { get; private set; } = string.Empty;
     public string Name { get; private set; } = string.Empty;
     public bool IsActive { get; private set; }
+    public TenantLifecycleStatus LifecycleStatus { get; private set; }
+    public DateTime? ArchivedOn { get; private set; }
+    public string? ArchiveReason { get; private set; }
+    public DateTime? PurgeScheduledOn { get; private set; }
+    public byte[] RowVersion { get; private set; } = [];
     public DateTime CreatedOn { get; private set; }
     public SubscriptionStatus SubscriptionStatus { get; private set; }
     public DateTime SubscriptionStartedOn { get; private set; }
@@ -47,6 +53,38 @@ public sealed class Tenant
     public void Activate() => IsActive = true;
 
     public void Deactivate() => IsActive = false;
+
+    public void Archive(string reason, DateTime archivedOn, DateTime? purgeScheduledOn = null)
+    {
+        if (LifecycleStatus != TenantLifecycleStatus.Active)
+            throw new InvalidOperationException("Only active tenants can be archived.");
+        if (string.IsNullOrWhiteSpace(reason))
+            throw new ArgumentException("An archive reason is required.", nameof(reason));
+        if (purgeScheduledOn.HasValue && purgeScheduledOn.Value <= archivedOn)
+            throw new ArgumentException("A purge date must be later than the archive date.", nameof(purgeScheduledOn));
+
+        LifecycleStatus = purgeScheduledOn.HasValue
+            ? TenantLifecycleStatus.PurgeScheduled
+            : TenantLifecycleStatus.Archived;
+        IsActive = false;
+        ArchivedOn = archivedOn;
+        ArchiveReason = reason.Trim();
+        PurgeScheduledOn = purgeScheduledOn;
+        UpdatedOn = archivedOn;
+    }
+
+    public void Restore(DateTime restoredOn)
+    {
+        if (LifecycleStatus == TenantLifecycleStatus.Active)
+            return;
+
+        LifecycleStatus = TenantLifecycleStatus.Active;
+        IsActive = true;
+        ArchivedOn = null;
+        ArchiveReason = null;
+        PurgeScheduledOn = null;
+        UpdatedOn = restoredOn;
+    }
 
     public void UpdateSubscription(
         string name,

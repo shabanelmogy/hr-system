@@ -21,6 +21,7 @@ const superAdminAllowedRoutes = [
   appRoutes.changePassword,
   appRoutes.superAdmin.dashboard,
   appRoutes.superAdmin.tenants,
+  appRoutes.superAdmin.tenantAdmins,
   UNAVAILABLE_ROUTE,
 ] as const;
 
@@ -29,6 +30,7 @@ export const routePolicies: readonly RoutePolicy[] = [
   { path: appRoutes.profile },
   { path: appRoutes.changePassword },
   { path: appRoutes.superAdmin.tenants, roles: [superAdminRole] },
+  { path: appRoutes.superAdmin.tenantAdmins, roles: [superAdminRole] },
   { path: appRoutes.superAdmin.dashboard, roles: [superAdminRole] },
   {
     path: rolePermissionsBase,

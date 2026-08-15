@@ -3,6 +3,7 @@ import {
   parseRoleWithClaimsResponse,
   parseRolesResponse,
   parseUsersResponse,
+  parseUsersPageResponse,
 } from "./apiResponse";
 
 const user = {
@@ -17,6 +18,9 @@ const user = {
   roles: ["Admin"],
   companyIds: [1, 2],
   defaultCompanyId: 1,
+  lifecycleStatus: "active",
+  archivedOn: null,
+  archiveReason: null,
 };
 
 const role = {
@@ -29,6 +33,24 @@ const role = {
 describe("authentication API response parsing", () => {
   it("parses direct user arrays", () => {
     expect(parseUsersResponse([user])).toEqual([user]);
+  });
+
+  it("parses paged user responses", () => {
+    const page = parseUsersPageResponse({
+      items: [user],
+      metaData: {
+        currentPage: 1,
+        totalPages: 1,
+        pageSize: 5,
+        pageNumber: 1,
+        totalCount: 1,
+        hasPrev: false,
+        hasNext: false,
+      },
+    });
+
+    expect(page.items).toEqual([user]);
+    expect(page.metaData.totalCount).toBe(1);
   });
 
   it("unwraps result envelopes and wrapped collection items", () => {

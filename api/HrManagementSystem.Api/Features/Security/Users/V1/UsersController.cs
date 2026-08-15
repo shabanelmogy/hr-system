@@ -13,6 +13,15 @@ public class UsersController(IUserService userService) : ControllerBase
 
     [HttpGet]
     [HasPermission(Permissions.ViewUsers)]
+    public async Task<IActionResult> GetPage(
+        [FromQuery] UserManagementQuery request,
+        CancellationToken cancellationToken)
+    {
+        return Ok(await _userService.GetPageAsync(request, cancellationToken));
+    }
+
+    [HttpGet]
+    [HasPermission(Permissions.ViewUsers)]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         return Ok(await _userService.GetAllAsync(cancellationToken));
@@ -75,6 +84,27 @@ public class UsersController(IUserService userService) : ControllerBase
     public async Task<IActionResult> Unlock([FromRoute] string id)
     {
         var result = await _userService.Unlock(id);
+        return result.IsSuccess ? NoContent() : result.ToProblem();
+    }
+
+    [HttpPost("~/api/v{version:apiVersion}/users/archive/{id}")]
+    [HasPermission(Permissions.DeleteUsers)]
+    public async Task<IActionResult> Archive(
+        [FromRoute] string id,
+        [FromBody] ArchiveUserRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await _userService.ArchiveAsync(id, request, cancellationToken);
+        return result.IsSuccess ? NoContent() : result.ToProblem();
+    }
+
+    [HttpPost("~/api/v{version:apiVersion}/users/restore/{id}")]
+    [HasPermission(Permissions.DeleteUsers)]
+    public async Task<IActionResult> Restore(
+        [FromRoute] string id,
+        CancellationToken cancellationToken)
+    {
+        var result = await _userService.RestoreAsync(id, cancellationToken);
         return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 

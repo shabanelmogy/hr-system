@@ -20,4 +20,9 @@ public sealed record TenantManagementResponse(
     string? ContactPhone,
     string? Notes,
     DateTime CreatedOn,
-    DateTime? UpdatedOn);
+    DateTime? UpdatedOn,
+    string LifecycleStatus,
+    DateTime? ArchivedOn,
+    string? ArchiveReason,
+    DateTime? PurgeScheduledOn,
+    string RowVersion);

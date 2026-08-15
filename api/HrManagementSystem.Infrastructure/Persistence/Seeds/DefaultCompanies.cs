@@ -16,6 +16,23 @@ public static class DefaultCompanies
 
         if (tenantUsers.Count == 0)
             return;
+        var tenantAccessUserIds = await context.UserTenantAccesses
+            .IgnoreQueryFilters()
+            .Where(access => access.TenantId == TenantDefaults.DefaultId)
+            .Select(access => access.UserId)
+            .ToListAsync(cancellationToken);
+
+        context.UserTenantAccesses.AddRange(
+            tenantUsers
+                .Except(tenantAccessUserIds)
+                .Select(userId => new UserTenantAccess
+                {
+                    TenantId = TenantDefaults.DefaultId,
+                    UserId = userId,
+                    IsDefault = true
+                }));
+        await context.SaveChangesAsync(cancellationToken);
+
 
         var company = await context.Companies
             .IgnoreQueryFilters()

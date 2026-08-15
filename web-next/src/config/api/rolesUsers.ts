@@ -13,6 +13,7 @@ export const roles: RolesRoutes = {
 
 export const users: UsersRoutes = {
   getAll: `${version}/users/getAll`,
+  getPage: `${version}/users/getPage`,
   getCompanyOptions: `${version}/users/getCompanyOptions`,
   add: `${version}/users/add`,
   update: (id: Id) => `${version}/users/update/${id}`,
@@ -20,4 +21,6 @@ export const users: UsersRoutes = {
   toggle: (id: Id) => `${version}/users/toggle/${id}`,
   unlock: (id: Id) => `${version}/users/unlock/${id}`,
   revoke: (userId: Id) => `${version}/auth/revokeRefreshTokenByUserId?userId=${userId}`,
+  archive: (id: Id) => `${version}/users/archive/${id}`,
+  restore: (id: Id) => `${version}/users/restore/${id}`,
 };

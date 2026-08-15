@@ -214,6 +214,7 @@ export function AppDateTimeField({
             </View>
           }
           onClose={() => setOpen(false)}
+          scrollable={false}
           title={label}
           visible={open}>
           <DateTimePicker

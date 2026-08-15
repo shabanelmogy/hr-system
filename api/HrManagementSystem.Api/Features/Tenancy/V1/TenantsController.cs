@@ -11,6 +11,12 @@ public sealed class TenantsController(ITenantManagementService tenantManagementS
     : ControllerBase
 {
     [HttpGet]
+    public async Task<IActionResult> GetPage(
+        [FromQuery] TenantManagementQuery request,
+        CancellationToken cancellationToken) =>
+        Ok(await tenantManagementService.GetPageAsync(request, cancellationToken));
+
+    [HttpGet]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken) =>
         Ok(await tenantManagementService.GetAllAsync(cancellationToken));
 
@@ -41,6 +47,26 @@ public sealed class TenantsController(ITenantManagementService tenantManagementS
         CancellationToken cancellationToken)
     {
         var result = await tenantManagementService.UpdateAsync(id, request, cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
+    [HttpPost("~/api/v{version:apiVersion}/tenants/archive/{id}")]
+    public async Task<IActionResult> Archive(
+        [FromRoute] string id,
+        [FromBody] ArchiveTenantRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await tenantManagementService.ArchiveAsync(id, request, cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
+    [HttpPost("~/api/v{version:apiVersion}/tenants/restore/{id}")]
+    public async Task<IActionResult> Restore(
+        [FromRoute] string id,
+        [FromBody] RestoreTenantRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await tenantManagementService.RestoreAsync(id, request, cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 }

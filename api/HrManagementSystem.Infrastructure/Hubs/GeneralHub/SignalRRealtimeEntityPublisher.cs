@@ -51,6 +51,8 @@ public sealed class SignalRRealtimeEntityPublisher(
                     Required(audience.UserId, nameof(audience.UserId))),
             RealtimeAudienceKind.Role =>
                 GeneralHubGroups.ForRole(Required(audience.Role, nameof(audience.Role))),
+            RealtimeAudienceKind.Tenant =>
+                GeneralHubGroups.ForTenant(Required(audience.TenantId, nameof(audience.TenantId))),
             _ => throw new ArgumentOutOfRangeException(
                 nameof(audience), audience.Kind, "Unsupported realtime audience kind.")
         };

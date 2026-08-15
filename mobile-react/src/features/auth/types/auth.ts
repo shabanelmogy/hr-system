@@ -12,6 +12,17 @@ export interface RegisterRequest {
   profilePicture: string | null;
 }
 
+export interface ResetPasswordRequest {
+  email: string;
+  code: string;
+  newPassword: string;
+}
+
+export interface ConfirmEmailRequest {
+  userId: string;
+  code: string;
+}
+
 export interface AuthResponse {
   id: string;
   userName: string;
@@ -25,6 +36,20 @@ export interface AuthResponse {
   tokenExpiration: string;
   refreshToken: string;
   refreshTokenExpiration: string;
+}
+
+export interface TenantOption {
+  id: string;
+  identifier: string;
+  name: string;
+}
+
+export interface TenantSelectionResponse {
+  isAuthenticated: false;
+  requiresTenantSelection: true;
+  tenantSelectionToken: string;
+  tenantSelectionTokenExpiration: string;
+  tenants: TenantOption[];
 }
 
 export interface CompanyOption {
@@ -66,4 +91,5 @@ export interface UserPhoto {
 
 export type LoginOutcome =
   | { kind: 'authenticated'; response: AuthResponse }
-  | { kind: 'company-selection'; response: CompanySelectionResponse };
+  | { kind: 'company-selection'; response: CompanySelectionResponse }
+  | { kind: 'tenant-selection'; response: TenantSelectionResponse };

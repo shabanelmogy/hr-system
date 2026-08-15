@@ -6,6 +6,7 @@ import { appointments } from './appointments';
 import { files } from './files';
 import { version } from './constants';
 import { tenants } from './tenants';
+import { tenantAdmins } from './tenantAdmins';
 
 export { version } from './constants';
 
@@ -24,6 +25,7 @@ export const apiRoutes = {
   appointments,
   files,
   tenants,
+  tenantAdmins,
 };
 
 export default apiRoutes;

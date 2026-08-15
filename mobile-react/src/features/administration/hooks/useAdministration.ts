@@ -9,6 +9,7 @@ import type {
   UpdateRoleRequest,
   UpdateManagedUserRequest,
 } from '../types/administration';
+import type { PageQuery } from '@/src/core/api';
 
 export const administrationKeys = {
   users: ['administration', 'users'] as const,
@@ -29,6 +30,13 @@ export function useManagedUsers() {
   return useQuery({
     queryKey: administrationKeys.users,
     queryFn: administrationApi.getUsers,
+  });
+}
+
+export function useManagedUsersPage(query: PageQuery) {
+  return useQuery({
+    queryKey: [...administrationKeys.users, 'page', query] as const,
+    queryFn: () => administrationApi.getUsersPage(query),
   });
 }
 

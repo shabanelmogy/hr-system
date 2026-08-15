@@ -11,4 +11,5 @@ public static class JwtClaimNames
     public const string Scope = "scope";
     public const string RealtimeScope = "signalr";
     public const string CompanySelectionScope = "company_selection";
+    public const string TenantSelectionScope = "tenant_selection";
 }

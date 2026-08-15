@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { tenantApi } from '@/src/features/tenants/api/tenant-api';
 import type { TenantManagementRequest } from '@/src/features/tenants/types/tenant';
+import type { PageQuery } from '@/src/core/api';
 
 export const tenantKeys = {
   all: ['tenants'] as const,
@@ -11,6 +12,13 @@ export function useTenants() {
   return useQuery({
     queryKey: tenantKeys.all,
     queryFn: tenantApi.getAll,
+  });
+}
+
+export function useTenantPage(query: PageQuery) {
+  return useQuery({
+    queryKey: [...tenantKeys.all, 'page', query] as const,
+    queryFn: () => tenantApi.getPage(query),
   });
 }
 

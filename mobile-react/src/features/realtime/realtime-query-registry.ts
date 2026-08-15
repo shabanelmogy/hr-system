@@ -1,4 +1,5 @@
 import { administrationKeys } from '@/src/features/administration/hooks/useAdministration';
+import { tenantAdminKeys } from '@/src/features/tenant-admins/hooks/useTenantAdmins';
 import { tenantKeys } from '@/src/features/tenants/hooks/useTenants';
 
 type QueryKey = readonly unknown[];
@@ -11,7 +12,7 @@ const administrationQueryKeys: readonly QueryKey[] = [
 
 const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
   tenants: [tenantKeys.all],
-  users: [administrationKeys.users, ['auth', 'current-user-photo']],
+  users: [administrationKeys.users, tenantAdminKeys.all, ['auth', 'current-user-photo']],
   roles: [administrationKeys.roles],
   'role-claims': [administrationKeys.roles],
   companies: [administrationKeys.companyOptions],
@@ -36,6 +37,7 @@ export function getAllRealtimeQueryKeys(): readonly QueryKey[] {
   const keys = new Map<string, QueryKey>();
   [
     tenantKeys.all,
+    tenantAdminKeys.all,
     ['auth', 'current-user-photo'],
     ['notifications'],
     ...administrationQueryKeys,

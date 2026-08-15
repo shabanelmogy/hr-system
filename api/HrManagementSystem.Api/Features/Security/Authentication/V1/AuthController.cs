@@ -34,6 +34,17 @@ public class AuthController(
     [HttpPost]
     [AllowAnonymous]
     [EnableRateLimiting("authentication")]
+    public async Task<IActionResult> SelectTenant(
+        [FromBody] SelectTenantRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await _authService.SelectTenantAsync(request, cancellationToken);
+        return result.IsSuccess ? Ok(result.Value.Payload) : result.ToProblem();
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    [EnableRateLimiting("authentication")]
     public async Task<IActionResult> SelectCompany(
         [FromBody] SelectCompanyRequest request,
         CancellationToken cancellationToken)

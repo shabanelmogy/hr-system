@@ -88,7 +88,10 @@ export function TenantManagementScreen() {
 
   const save = async (values: TenantFormState) => {
     try {
-      await saveMutation.mutateAsync({ id: editing?.id ?? null, request: toRequest(values) });
+      await saveMutation.mutateAsync({
+        id: editing?.id ?? null,
+        request: toRequest(values, editing?.rowVersion),
+      });
       setEditing(null);
       setForm(null);
       showToast.success(t('tenantManagement.savedSuccessfully'));
@@ -426,7 +429,7 @@ function toForm(tenant: TenantManagementResponse): TenantFormState {
   };
 }
 
-function toRequest(form: TenantFormState): TenantManagementRequest {
+function toRequest(form: TenantFormState, rowVersion?: string): TenantManagementRequest {
   const optional = (value: string) => value.trim() || null;
   return {
     identifier: form.identifier.trim(),
@@ -442,6 +445,7 @@ function toRequest(form: TenantFormState): TenantManagementRequest {
     contactName: optional(form.contactName),
     contactPhone: optional(form.contactPhone),
     notes: optional(form.notes),
+    rowVersion: rowVersion ?? null,
   };
 }
 

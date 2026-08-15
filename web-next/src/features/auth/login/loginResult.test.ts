@@ -8,6 +8,24 @@ describe("parseLoginResult", () => {
       response: { isAuthenticated: true, companyId: 12 },
     });
   });
+  it("accepts a tenant-selection challenge for multiple tenants", () => {
+    const response = {
+      isAuthenticated: false,
+      requiresTenantSelection: true,
+      tenantSelectionToken: "tenant-token",
+      tenantSelectionTokenExpiration: "2026-08-14T12:00:00Z",
+      tenants: [
+        { id: "tenant-a", identifier: "A", name: "Tenant A" },
+        { id: "tenant-b", identifier: "B", name: "Tenant B" },
+      ],
+    };
+
+    expect(parseLoginResult(response)).toEqual({
+      kind: "tenant-selection",
+      response,
+    });
+  });
+
 
   it("accepts a company-selection challenge for multiple companies", () => {
     const response = {

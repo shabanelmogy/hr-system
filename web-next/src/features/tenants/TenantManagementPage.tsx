@@ -79,7 +79,10 @@ export default function TenantManagementPage() {
   };
 
   const save = (values: TenantFormState) => {
-    saveMutation.mutate({ id: editing?.id ?? null, request: toRequest(values) });
+    saveMutation.mutate({
+      id: editing?.id ?? null,
+      request: toRequest(values, editing?.rowVersion),
+    });
   };
 
   return (
@@ -449,7 +452,7 @@ function toForm(tenant: TenantManagementResponse): TenantFormState {
   };
 }
 
-function toRequest(form: TenantFormState): TenantManagementRequest {
+function toRequest(form: TenantFormState, rowVersion?: string): TenantManagementRequest {
   const optional = (value: string) => value.trim() || null;
   return {
     identifier: form.identifier.trim(),
@@ -465,6 +468,7 @@ function toRequest(form: TenantFormState): TenantManagementRequest {
     contactName: optional(form.contactName),
     contactPhone: optional(form.contactPhone),
     notes: optional(form.notes),
+    rowVersion: rowVersion ?? null,
   };
 }
 

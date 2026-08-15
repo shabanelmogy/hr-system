@@ -3,6 +3,7 @@ import { z } from 'zod';
 import type {
   AuthResponse,
   CompanySelectionResponse,
+  TenantSelectionResponse,
   LoginOutcome,
   SessionResponse,
   UserPhoto,
@@ -24,6 +25,18 @@ const authResponseSchema: z.ZodType<AuthResponse> = z.object({
   tokenExpiration: dateString,
   refreshToken: z.string().min(1),
   refreshTokenExpiration: dateString,
+});
+
+const tenantSelectionSchema: z.ZodType<TenantSelectionResponse> = z.object({
+  isAuthenticated: z.literal(false),
+  requiresTenantSelection: z.literal(true),
+  tenantSelectionToken: z.string().min(1),
+  tenantSelectionTokenExpiration: dateString,
+  tenants: z.array(z.object({
+    id: z.string().min(1),
+    identifier: z.string().min(1),
+    name: z.string().min(1),
+  })).min(2),
 });
 
 const companySelectionSchema: z.ZodType<CompanySelectionResponse> = z
@@ -80,6 +93,11 @@ export function parseLoginOutcome(value: unknown): LoginOutcome {
   if (authenticated.success) {
     return { kind: 'authenticated', response: authenticated.data };
   }
+  const tenantSelection = tenantSelectionSchema.safeParse(value);
+  if (tenantSelection.success) {
+    return { kind: 'tenant-selection', response: tenantSelection.data };
+  }
+
 
   const selection = companySelectionSchema.safeParse(value);
   if (selection.success) {

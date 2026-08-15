@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
-import { apiService } from '@/src/core/api';
+import { apiService, pageMetadataSchema, toPageQuery } from '@/src/core/api';
+import type { PageQuery, PageResponse } from '@/src/core/api';
 import type {
   ChangeManagedUserPasswordRequest,
   CreateRoleRequest,
@@ -25,6 +26,9 @@ const managedUserSchema = z.object({
   roles: z.array(z.string()),
   companyIds: z.array(z.number().int().positive()),
   defaultCompanyId: z.number().int().positive().nullable(),
+  lifecycleStatus: z.enum(['active', 'archived']),
+  archivedOn: z.string().nullable(),
+  archiveReason: z.string().nullable(),
 });
 
 const companyOptionSchema = z.object({
@@ -52,12 +56,15 @@ const roleWithClaimsSchema = roleOptionSchema.extend({
 
 const endpoints = {
   users: 'users/getAll',
+  usersPage: 'users/getPage',
   companyOptions: 'users/getCompanyOptions',
   createUser: 'users/add',
   updateUser: (id: string) => `users/update/${id}`,
   changePassword: (id: string) => `users/changePassword/${id}`,
   toggleUser: (id: string) => `users/toggle/${id}`,
   unlockUser: (id: string) => `users/unlock/${id}`,
+  archiveUser: (id: string) => `users/archive/${id}`,
+  restoreUser: (id: string) => `users/restore/${id}`,
   revokeSessions: (userId: string) =>
     `auth/revokeRefreshTokenByUserId?userId=${encodeURIComponent(userId)}`,
   roles: 'roles/getAll',
@@ -69,6 +76,16 @@ const endpoints = {
 } as const;
 
 export const administrationApi = {
+  async getUsersPage(query: PageQuery): Promise<PageResponse<ManagedUser>> {
+    const queryString = toPageQuery(query);
+    return z.object({
+      items: z.array(managedUserSchema),
+      metaData: pageMetadataSchema,
+    }).parse(await apiService.get<unknown>(
+      `${endpoints.usersPage}${queryString ? `?${queryString}` : ''}`,
+    ));
+  },
+
   async getUsers(): Promise<ManagedUser[]> {
     return z.array(managedUserSchema).parse(
       await apiService.get<unknown>(endpoints.users),
@@ -137,6 +154,14 @@ export const administrationApi = {
 
   async unlockUser(id: string): Promise<void> {
     await apiService.put<void, undefined>(endpoints.unlockUser(id), undefined);
+  },
+
+  async archiveUser(id: string, reason: string): Promise<void> {
+    await apiService.post<void, { reason: string }>(endpoints.archiveUser(id), { reason });
+  },
+
+  async restoreUser(id: string): Promise<void> {
+    await apiService.post<void, undefined>(endpoints.restoreUser(id), undefined);
   },
 
   async revokeUserSessions(userId: string): Promise<void> {

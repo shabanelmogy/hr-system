@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import type {
   CompanySelectionResponse,
+  TenantSelectionResponse,
   SocialLoginHandler,
 } from "../types";
 import { parseLoginResult } from "../loginResult";
@@ -31,6 +32,8 @@ const useLoginForm = () => {
   const submittingRef = useRef(false);
   const [isSubmittingState, setIsSubmittingState] = useState(false);
   const [companySelection, setCompanySelection] = useState<CompanySelectionResponse | null>(null);
+  const [tenantSelection, setTenantSelection] = useState<TenantSelectionResponse | null>(null);
+  const [isSelectingTenant, setIsSelectingTenant] = useState(false);
   const [isSelectingCompany, setIsSelectingCompany] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const userNameRef = useRef<HTMLInputElement>(null);
@@ -57,6 +60,7 @@ const useLoginForm = () => {
     const returnTo = getSafeReturnTo();
     setCompanySelection(null);
     showSuccess(t("messages.loginSuccessful"), t("messages.success"));
+    setTenantSelection(null);
     await refresh();
     window.location.replace(returnTo);
   };
@@ -65,6 +69,10 @@ const useLoginForm = () => {
     const result = parseLoginResult(data);
     if (result?.kind === "authenticated") {
       await completeAuthentication();
+      return true;
+    }
+    if (result?.kind === "tenant-selection") {
+      setTenantSelection(result.response);
       return true;
     }
     if (result?.kind === "company-selection") {
@@ -139,8 +147,36 @@ const useLoginForm = () => {
     showError(t("googleAuth.missingCredentials"), t("messages.error"));
   };
 
+  const selectTenant = async (tenantId: string) => {
+    if (!tenantSelection || isSelectingTenant) return;
+    setIsSelectingTenant(true);
+    try {
+      const data = await apiService.post<unknown>(authRoutes.selectTenant, {
+        tenantSelectionToken: tenantSelection.tenantSelectionToken,
+        tenantId,
+      });
+      const result = parseLoginResult(data);
+      if (result?.kind === "authenticated") {
+        await completeAuthentication();
+      } else if (result?.kind === "company-selection") {
+        setTenantSelection(null);
+        setCompanySelection(result.response);
+      } else {
+        showError(t("auth.invalidTenantSelection"), t("messages.error"));
+      }
+    } catch (error) {
+      showHandledError(error, showError, t("messages.error"));
+    } finally {
+      setIsSelectingTenant(false);
+    }
+  };
+
+  const cancelTenantSelection = () => {
+    if (!isSelectingTenant) setTenantSelection(null);
+  };
   const selectCompany = async (companyId: number) => {
     if (!companySelection || isSelectingCompany) return;
+
     setIsSelectingCompany(true);
     try {
       const data = await apiService.post<unknown>(authRoutes.selectCompany, {
@@ -183,6 +219,10 @@ const useLoginForm = () => {
     companySelection,
     isSelectingCompany,
     selectCompany,
+    tenantSelection,
+    isSelectingTenant,
+    selectTenant,
+    cancelTenantSelection,
     cancelCompanySelection,
   };
 };

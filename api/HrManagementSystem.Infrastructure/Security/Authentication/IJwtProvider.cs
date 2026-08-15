@@ -7,9 +7,14 @@ public interface IJwtProvider
     Task<AccessTokenResult> GenerateAccessTokenAsync(
         ApplicationUser user,
         string sessionId,
-        int companyId);
+        int companyId,
+        string tenantId);
 
-    CompanySelectionTokenResult GenerateCompanySelectionToken(ApplicationUser user);
+    TenantSelectionTokenResult GenerateTenantSelectionToken(ApplicationUser user);
+
+    ValidatedTenantSelectionToken? ValidateTenantSelectionToken(string token);
+
+    CompanySelectionTokenResult GenerateCompanySelectionToken(ApplicationUser user, string tenantId);
 
     ValidatedCompanySelectionToken? ValidateCompanySelectionToken(string token);
 

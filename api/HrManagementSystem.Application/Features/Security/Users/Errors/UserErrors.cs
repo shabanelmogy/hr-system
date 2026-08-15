@@ -33,6 +33,9 @@ namespace HrManagementSystem.Application.Features.Security.Users.Errors
 
         public Error InvalidCompanySelection =>
             new("User.InvalidCompanySelection", _localizer[nameof(InvalidCompanySelection)], ErrorType.Validation);
+        public Error InvalidTenantSelection =>
+            new("User.InvalidTenantSelection", _localizer[nameof(InvalidTenantSelection)], ErrorType.Validation);
+
 
         public Error CannotManageOwnAccount =>
             new("User.CannotManageOwnAccount", _localizer[nameof(CannotManageOwnAccount)], ErrorType.Validation);

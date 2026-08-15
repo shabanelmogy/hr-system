@@ -100,6 +100,15 @@ export function LoginForm({ compact, form }: LoginFormProps) {
             />
           )}
         />
+        <View style={[styles.forgotPasswordRow, { direction }]}>
+          <AppButton
+            disabled={form.isAnySubmitting}
+            onPress={() => router.push(asHref(ROUTES.forgotPassword))}
+            style={styles.forgotPasswordButton}
+            variant="ghost">
+            {t('auth.forgotPassword')}
+          </AppButton>
+        </View>
         <AppButton
           disabled={form.isAnySubmitting}
           fullWidth
@@ -232,6 +241,14 @@ const styles = StyleSheet.create({
   },
   formCompact: {
     gap: 12,
+  },
+  forgotPasswordRow: {
+    alignItems: 'flex-end',
+    marginTop: -6,
+  },
+  forgotPasswordButton: {
+    minHeight: 32,
+    paddingHorizontal: 4,
   },
   quickAccessHeading: {
     flexDirection: 'row',

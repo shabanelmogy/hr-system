@@ -31,6 +31,11 @@ export interface TenantManagementResponse {
   notes: string | null;
   createdOn: string;
   updatedOn: string | null;
+  lifecycleStatus: 'active' | 'archived' | 'purgeScheduled';
+  archivedOn: string | null;
+  archiveReason: string | null;
+  purgeScheduledOn: string | null;
+  rowVersion: string;
 }
 
 export interface TenantManagementRequest {
@@ -47,6 +52,7 @@ export interface TenantManagementRequest {
   contactName: string | null;
   contactPhone: string | null;
   notes: string | null;
+  rowVersion?: string | null;
 }
 
 export interface TenantFormState {

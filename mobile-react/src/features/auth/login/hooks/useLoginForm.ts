@@ -4,7 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useZodForm } from '@/src/core/validation';
 import { useAuth } from '@/src/features/auth/context/AuthProvider';
 import type { LoginAction, QuickLoginRole } from '@/src/features/auth/login/types';
-import type { CompanySelectionResponse } from '@/src/features/auth/types/auth';
+import type {
+  CompanySelectionResponse,
+  TenantSelectionResponse,
+} from '@/src/features/auth/types/auth';
 import { showToast } from '@/src/shared/components/feedback/transient';
 import {
   createLoginValidationSchema,
@@ -19,9 +22,14 @@ const DEV_CREDENTIALS = {
 
 export function useLoginForm() {
   const { t } = useTranslation();
-  const { signIn, selectCompany: completeCompanySelection } = useAuth();
+  const {
+    signIn,
+    selectCompany: completeCompanySelection,
+    selectTenant: completeTenantSelection,
+  } = useAuth();
   const submittingRef = useRef(false);
   const [companySelection, setCompanySelection] = useState<CompanySelectionResponse | null>(null);
+  const [tenantSelection, setTenantSelection] = useState<TenantSelectionResponse | null>(null);
   const [activeAction, setActiveAction] = useState<LoginAction | null>(null);
   const validationSchema = useMemo(
     () =>
@@ -52,6 +60,9 @@ export function useLoginForm() {
     setActiveAction(action);
     try {
       const result = await signIn(credentials);
+      if (result.kind === 'tenant-selection') {
+        setTenantSelection(result.response);
+      }
       if (result.kind === 'company-selection') {
         setCompanySelection(result.response);
       }
@@ -76,6 +87,25 @@ export function useLoginForm() {
     await submitCredentials(credentials, role);
   };
 
+  const selectTenant = async (tenantId: string) => {
+    if (!tenantSelection) {
+      return;
+    }
+
+    try {
+      const result = await completeTenantSelection(
+        tenantSelection.tenantSelectionToken,
+        tenantId,
+      );
+      setTenantSelection(null);
+      if (result.kind === 'company-selection') {
+        setCompanySelection(result.response);
+      }
+    } catch (error) {
+      showToast.error(error, t('auth.loginFailed'));
+    }
+  };
+
   const selectCompany = async (companyId: number) => {
     if (!companySelection) {
       return;
@@ -89,6 +119,10 @@ export function useLoginForm() {
     }
   };
 
+  const cancelTenantSelection = () => {
+    setTenantSelection(null);
+  };
+
   const cancelCompanySelection = () => {
     setCompanySelection(null);
   };
@@ -97,6 +131,8 @@ export function useLoginForm() {
     activeAction,
     cancelCompanySelection,
     companySelection,
+    cancelTenantSelection,
+    tenantSelection,
     control,
     handleSubmit,
     isAnySubmitting: activeAction !== null || isFormSubmitting,
@@ -105,5 +141,6 @@ export function useLoginForm() {
     onSubmit,
     selectCompany,
     serverError: null,
+    selectTenant,
   };
 }

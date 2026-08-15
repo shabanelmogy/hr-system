@@ -11,10 +11,10 @@ import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
-import { AppIconButton } from '@/src/shared/components/controls/AppIconButton';
 import { AppIcon } from '@/src/shared/components/icons/AppIcon';
 import { AppScreenFooterContext } from '@/src/shared/components/layout/AppScreenFooterContext';
 import { shouldPinPagination } from '@/src/shared/components/multi-view/paginationPlacement';
+import { AppPaginationNavigation } from '@/src/shared/components/pagination';
 import { AppText } from '@/src/shared/components/typography/AppText';
 
 export type AppDataTableSortValue = string | number | boolean | Date | null | undefined;
@@ -131,7 +131,13 @@ export function AppDataTable<Row>({
         },
       ]}>
       <View style={[styles.pageSizes, { direction }]}>
-        <AppText color="muted" variant="caption">{t('dataTable.rowsPerPage')}</AppText>
+        <AppText
+          color="muted"
+          numberOfLines={1}
+          style={styles.pageSizeLabel}
+          variant="caption">
+          {t('dataTable.rowsPerPage')}
+        </AppText>
         {stablePageSizeOptions.map((option) => (
           <Pressable
             accessibilityLabel={t('dataTable.usePageSize', { count: option })}
@@ -161,27 +167,14 @@ export function AppDataTable<Row>({
         ))}
       </View>
 
-      <View style={[styles.pageNavigation, { direction }]}>
-        <AppIconButton
-          disabled={page === 0}
-          icon={isRTL ? 'chevron-forward' : 'chevron-back'}
-          label={t('dataTable.previous')}
-          onPress={() => setPage((current) => Math.max(0, current - 1))}
-        />
-        <AppText variant="caption" weight="700">
-          {t('dataTable.pageOf', { page: page + 1, count: pageCount })}
-        </AppText>
-        <AppIconButton
-          disabled={page >= pageCount - 1}
-          icon={isRTL ? 'chevron-back' : 'chevron-forward'}
-          label={t('dataTable.next')}
-          onPress={() => setPage((current) => Math.min(pageCount - 1, current + 1))}
-        />
-      </View>
+      <AppPaginationNavigation
+        page={page}
+        pageCount={pageCount}
+        onPageChange={setPage}
+      />
     </View>
   ) : null, [
     direction,
-    isRTL,
     page,
     pageCount,
     pageSize,
@@ -358,20 +351,20 @@ const styles = StyleSheet.create({
   },
   empty: { minHeight: 140, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
   pagination: {
-    minHeight: 58,
+    minHeight: 50,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    gap: 8,
+    flexWrap: 'nowrap',
+    gap: 2,
     borderTopWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+    paddingHorizontal: 4,
+    paddingVertical: 4,
   },
   pinnedPagination: { borderWidth: 1 },
-  pageSizes: { flexDirection: 'row', alignItems: 'center', gap: 5 },
-  pageSize: { minWidth: 30, minHeight: 30, alignItems: 'center', justifyContent: 'center' },
-  pageNavigation: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  pageSizes: { flexDirection: 'row', alignItems: 'center', flexShrink: 1, gap: 3 },
+  pageSizeLabel: { flexShrink: 1 },
+  pageSize: { minWidth: 26, minHeight: 28, alignItems: 'center', justifyContent: 'center' },
 });
 
 function getTextAlignment(

@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import LeftPanel from "./components/LeftPanel";
 import LoginForm from "./components/LoginForm";
 import CompanySelectionDialog from "./components/CompanySelectionDialog";
+import TenantSelectionDialog from "./components/TenantSelectionDialog";
 
 import useLoginForm from "./hooks/useLoginForm";
 
@@ -50,6 +51,10 @@ const Login = () => {
     isSelectingCompany,
     selectCompany,
     cancelCompanySelection,
+    tenantSelection,
+    isSelectingTenant,
+    selectTenant,
+    cancelTenantSelection,
   } = useLoginForm();
 
   return (
@@ -104,6 +109,12 @@ const Login = () => {
           />
         </Paper>
       </Container>
+      <TenantSelectionDialog
+        selection={tenantSelection}
+        loading={isSelectingTenant}
+        onSelect={selectTenant}
+        onCancel={cancelTenantSelection}
+      />
       <CompanySelectionDialog
         selection={companySelection}
         loading={isSelectingCompany}

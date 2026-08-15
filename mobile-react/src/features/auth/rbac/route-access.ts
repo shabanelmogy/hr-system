@@ -32,6 +32,10 @@ export const routePolicies: readonly RoutePolicy[] = [
     roles: [appRoles.superAdmin],
   },
   {
+    path: ROUTES.tenantAdminManagement,
+    roles: [appRoles.superAdmin],
+  },
+  {
     path: ROUTES.administration.rolePermissionsRoot,
     permissions: [permissions.ViewRoles],
   },
@@ -71,6 +75,7 @@ const superAdminAllowedRoutes = [
   ROUTES.settings,
   ROUTES.superAdminDashboard,
   ROUTES.tenantManagement,
+  ROUTES.tenantAdminManagement,
 ] as const;
 
 function matchesRoute(pathname: string, routePath: string): boolean {

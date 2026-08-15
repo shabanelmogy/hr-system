@@ -10,6 +10,9 @@ export interface User {
   roles: string[];
   companyIds: number[];
   defaultCompanyId: number | null;
+  lifecycleStatus: "active" | "archived";
+  archivedOn: string | null;
+  archiveReason: string | null;
 }
 
 export interface UserCompanyOption {

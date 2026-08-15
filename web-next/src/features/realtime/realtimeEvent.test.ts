@@ -36,6 +36,7 @@ describe("realtime entity changes", () => {
 
   it("refreshes profile and notification caches across clients", () => {
     expect(getRealtimeQueryKeys("users")).toContainEqual(["userProfile"]);
+    expect(getRealtimeQueryKeys("users")).toContainEqual(["tenant-admins"]);
     expect(getRealtimeQueryKeys("notifications")).toEqual([["notifications"]]);
   });
 

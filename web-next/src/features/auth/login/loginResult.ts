@@ -2,11 +2,24 @@ import { z } from "zod";
 import type {
   AuthenticatedLoginResponse,
   CompanySelectionResponse,
+  TenantSelectionResponse,
 } from "./types";
 
 const authenticatedLoginSchema = z.object({
   isAuthenticated: z.literal(true),
   companyId: z.number().int().positive(),
+});
+
+const tenantSelectionSchema = z.object({
+  isAuthenticated: z.literal(false),
+  requiresTenantSelection: z.literal(true),
+  tenantSelectionToken: z.string().trim().min(1),
+  tenantSelectionTokenExpiration: z.string().refine((value) => !Number.isNaN(Date.parse(value))),
+  tenants: z.array(z.object({
+    id: z.string().trim().min(1),
+    identifier: z.string().trim().min(1),
+    name: z.string().trim().min(1),
+  })).min(2),
 });
 
 const companySchema = z.object({
@@ -37,12 +50,18 @@ const companySelectionSchema = z.object({
 
 export type LoginResult =
   | { kind: "authenticated"; response: AuthenticatedLoginResponse }
-  | { kind: "company-selection"; response: CompanySelectionResponse };
+  | { kind: "company-selection"; response: CompanySelectionResponse }
+  | { kind: "tenant-selection"; response: TenantSelectionResponse };
 
 export function parseLoginResult(value: unknown): LoginResult | null {
   const authenticated = authenticatedLoginSchema.safeParse(value);
   if (authenticated.success) {
     return { kind: "authenticated", response: authenticated.data };
+  }
+
+  const tenantSelection = tenantSelectionSchema.safeParse(value);
+  if (tenantSelection.success) {
+    return { kind: "tenant-selection", response: tenantSelection.data };
   }
 
   const companySelection = companySelectionSchema.safeParse(value);

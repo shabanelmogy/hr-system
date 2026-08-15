@@ -53,13 +53,36 @@ public sealed class JwtProviderTests
             SecurityStamp = "security-stamp"
         };
 
-        var issued = provider.GenerateCompanySelectionToken(user);
+        var issued = provider.GenerateCompanySelectionToken(user, user.TenantId);
         var validated = provider.ValidateCompanySelectionToken(issued.Token);
         var jwt = new JwtSecurityTokenHandler().ReadJwtToken(issued.Token);
 
         Assert.NotNull(validated);
         Assert.Equal(user.Id, validated.UserId);
         Assert.Equal(user.TenantId, validated.TenantId);
+        Assert.DoesNotContain(jwt.Claims, claim => claim.Type == JwtClaimNames.CompanyId);
+        Assert.True(issued.ExpiresAt > DateTime.UtcNow);
+    }
+
+    [Fact]
+    public void TenantSelectionToken_RoundTripsUserWithoutTenantOrCompanyClaim()
+    {
+        var provider = CreateProvider();
+        var user = new ApplicationUser
+        {
+            Id = "user-id",
+            TenantId = "legacy-default-tenant",
+            SecurityStamp = "security-stamp"
+        };
+
+        var issued = provider.GenerateTenantSelectionToken(user);
+        var validated = provider.ValidateTenantSelectionToken(issued.Token);
+        var jwt = new JwtSecurityTokenHandler().ReadJwtToken(issued.Token);
+
+        Assert.NotNull(validated);
+        Assert.Equal(user.Id, validated.UserId);
+        Assert.Equal(user.SecurityStamp, validated.SecurityStamp);
+        Assert.DoesNotContain(jwt.Claims, claim => claim.Type == JwtClaimNames.TenantId);
         Assert.DoesNotContain(jwt.Claims, claim => claim.Type == JwtClaimNames.CompanyId);
         Assert.True(issued.ExpiresAt > DateTime.UtcNow);
     }

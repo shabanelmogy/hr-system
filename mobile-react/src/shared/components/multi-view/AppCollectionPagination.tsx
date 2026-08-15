@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
-import { AppIconButton } from '@/src/shared/components/controls/AppIconButton';
+import { AppPaginationNavigation } from '@/src/shared/components/pagination';
 import { AppText } from '@/src/shared/components/typography/AppText';
 
 interface AppCollectionPaginationProps {
@@ -26,7 +26,7 @@ export function AppCollectionPagination({
   onPageSizeChange,
 }: AppCollectionPaginationProps) {
   const { t } = useTranslation();
-  const { direction, isRTL } = useLocalization();
+  const { direction } = useLocalization();
   const { theme } = useAppTheme();
   const pageCount = Math.max(1, Math.ceil(totalItems / pageSize));
 
@@ -43,7 +43,11 @@ export function AppCollectionPagination({
         attached ? styles.attached : null,
       ]}>
       <View style={[styles.pageSizes, { direction }]}>
-        <AppText color="muted" variant="caption">
+        <AppText
+          color="muted"
+          numberOfLines={1}
+          style={styles.pageSizeLabel}
+          variant="caption">
           {t('multiView.itemsPerPage')}
         </AppText>
         {pageSizeOptions.map((option) => (
@@ -73,45 +77,33 @@ export function AppCollectionPagination({
         ))}
       </View>
 
-      <View style={[styles.pageNavigation, { direction }]}>
-        <AppIconButton
-          disabled={page === 0}
-          icon={isRTL ? 'chevron-forward' : 'chevron-back'}
-          label={t('dataTable.previous')}
-          onPress={() => onPageChange(Math.max(0, page - 1))}
-        />
-        <AppText variant="caption" weight="700">
-          {t('dataTable.pageOf', { page: page + 1, count: pageCount })}
-        </AppText>
-        <AppIconButton
-          disabled={page >= pageCount - 1}
-          icon={isRTL ? 'chevron-back' : 'chevron-forward'}
-          label={t('dataTable.next')}
-          onPress={() => onPageChange(Math.min(pageCount - 1, page + 1))}
-        />
-      </View>
+      <AppPaginationNavigation
+        page={page}
+        pageCount={pageCount}
+        onPageChange={onPageChange}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   root: {
-    minHeight: 58,
+    minHeight: 50,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    gap: 8,
+    flexWrap: 'nowrap',
+    gap: 2,
     borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+    paddingHorizontal: 4,
+    paddingVertical: 4,
   },
   attached: {
     marginTop: -1,
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
   },
-  pageSizes: { flexDirection: 'row', alignItems: 'center', gap: 5 },
-  pageSize: { minWidth: 30, minHeight: 30, alignItems: 'center', justifyContent: 'center' },
-  pageNavigation: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  pageSizes: { flexDirection: 'row', alignItems: 'center', flexShrink: 1, gap: 3 },
+  pageSizeLabel: { flexShrink: 1 },
+  pageSize: { minWidth: 26, minHeight: 28, alignItems: 'center', justifyContent: 'center' },
 });

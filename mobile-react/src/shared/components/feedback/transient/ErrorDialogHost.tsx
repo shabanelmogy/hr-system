@@ -1,6 +1,6 @@
 import Constants from 'expo-constants';
 import { useMemo, useState, useSyncExternalStore } from 'react';
-import { Platform, ScrollView, Share, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Platform, Share, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
@@ -98,9 +98,7 @@ function ErrorDialogView({ details }: { details: ErrorDialogDetails }) {
       subtitle={t('feedback.errorSubtitle')}
       title={details.title || t('feedback.errorTitle')}
       visible>
-      <ScrollView
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}>
+      <View style={styles.content}>
         <View style={styles.messages} accessibilityLiveRegion="assertive">
           {messages.map((message, index) => (
             <View key={`${index}-${message}`} style={[styles.messageRow, { direction }]}>
@@ -142,7 +140,7 @@ function ErrorDialogView({ details }: { details: ErrorDialogDetails }) {
             {t('feedback.shareFailed')}
           </AppText>
         ) : null}
-      </ScrollView>
+      </View>
     </AppModal>
   );
 }

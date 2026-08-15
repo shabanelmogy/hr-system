@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
-import { useRouter } from 'expo-router';
+import { useRouter, type Href } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import type { FieldErrors, FieldPath } from 'react-hook-form';
 
 import { authApi } from '@/src/features/auth/api/auth-api';
-import { asHref, ROUTES } from '@/src/core/constants/routes';
+import { ROUTES } from '@/src/core/constants/routes';
 import { toFormErrorMap, useZodForm } from '@/src/core/validation';
 import {
   createRegisterValidationSchema,
@@ -93,7 +93,10 @@ export function useRegisterForm() {
       form.reset();
       setProfileImage(null);
       showToast.success(t('auth.registrationSuccessful'));
-      router.replace(asHref(ROUTES.login));
+      router.replace({
+        pathname: ROUTES.resendConfirmation,
+        params: { email: values.email },
+      } as Href);
     } catch (error) {
       showToast.error(error, t('auth.registrationFailed'));
     }

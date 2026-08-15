@@ -12,9 +12,10 @@ public class LoginAuditService(ApplicationDbContext context) : ILoginAuditServic
         int companyId,
         CancellationToken cancellationToken)
     {
-        var tenantId = await _context.Users
-            .Where(user => user.Id == userId)
-            .Select(user => user.TenantId)
+        var tenantId = await _context.Companies
+            .IgnoreQueryFilters()
+            .Where(company => company.Id == companyId)
+            .Select(company => company.TenantId)
             .SingleAsync(cancellationToken);
 
         _context.Add(new UserLogin
@@ -34,9 +35,10 @@ public class LoginAuditService(ApplicationDbContext context) : ILoginAuditServic
         int companyId,
         CancellationToken cancellationToken)
     {
-        var tenantId = await _context.Users
-            .Where(user => user.Id == userId)
-            .Select(user => user.TenantId)
+        var tenantId = await _context.Companies
+            .IgnoreQueryFilters()
+            .Where(company => company.Id == companyId)
+            .Select(company => company.TenantId)
             .SingleOrDefaultAsync(cancellationToken);
 
         if (string.IsNullOrWhiteSpace(tenantId))

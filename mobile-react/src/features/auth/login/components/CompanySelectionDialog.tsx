@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -83,7 +83,7 @@ export function CompanySelectionDialog({
       visible={selection !== null}>
       {error ? <AppAlert severity="error">{error}</AppAlert> : null}
 
-      <ScrollView contentContainerStyle={styles.companyList}>
+      <View style={styles.companyList}>
         {selection?.companies.map((company) => {
           const primaryName = language === 'ar' ? company.nameAr : company.nameEn;
           const secondaryName = language === 'ar' ? company.nameEn : company.nameAr;
@@ -131,7 +131,7 @@ export function CompanySelectionDialog({
             </AppCard>
           );
         })}
-      </ScrollView>
+      </View>
     </AppModal>
   );
 }

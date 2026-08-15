@@ -154,8 +154,10 @@ public sealed class BackgroundNotificationJobTests
     [InlineData(typeof(RoleService))]
     [InlineData(typeof(LocalizationService))]
     [InlineData(typeof(TenantManagementService))]
+    [InlineData(typeof(TenantAdminService))]
     [InlineData(typeof(FileService))]
     [InlineData(typeof(UserService))]
+    [InlineData(typeof(AuthService))]
     [InlineData(typeof(NotificationService))]
     public void NewlyCoveredMutationServices_UseDispatcherInsteadOfSignalR(Type serviceType)
     {
@@ -186,6 +188,10 @@ public sealed class BackgroundNotificationJobTests
         Assert.Equal("tenant-1", audience.TenantId);
         Assert.Equal(7, audience.CompanyId);
         Assert.Equal(Permissions.ViewCategories, audience.Permission);
+
+        var tenantAudience = RealtimeAudience.ForTenant("tenant-1");
+        Assert.Equal(RealtimeAudienceKind.Tenant, tenantAudience.Kind);
+        Assert.Equal("tenant-1", tenantAudience.TenantId);
     }
 
     [Theory]

@@ -11,7 +11,9 @@ import {
   parseUserResponse,
   parseUserCompanyOptionsResponse,
   parseUsersResponse,
+  parseUsersPageResponse,
 } from "../../utils/apiResponse";
+import type { ManagementPageQuery, ManagementPageResponse } from "@/lib/api/pagination";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
@@ -20,6 +22,7 @@ export interface UserStore {
   companyOptions: UserCompanyOption[];
   hasLoaded: boolean;
   fetchUsers: () => Promise<User[]>;
+  fetchUsersPage: (query: ManagementPageQuery) => Promise<ManagementPageResponse<User>>;
   fetchCompanyOptions: () => Promise<UserCompanyOption[]>;
   addUser: (request: CreateUserRequest) => Promise<User>;
   updateUser: (request: UpdateUserRequest) => Promise<User>;
@@ -43,6 +46,13 @@ const useUserStore = create<UserStore>()(
           const users = parseUsersResponse(response);
           set({ users, hasLoaded: true });
           return users;
+        },
+
+        fetchUsersPage: async (query) => {
+          const response = await apiService.get<unknown>(apiRoutes.users.getPage, { ...query });
+          const page = parseUsersPageResponse(response);
+          set({ users: page.items, hasLoaded: true });
+          return page;
         },
 
         fetchCompanyOptions: async () => {

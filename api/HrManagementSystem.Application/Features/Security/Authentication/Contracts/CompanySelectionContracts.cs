@@ -45,3 +45,9 @@ public sealed record CompanySelectionLoginResult(
 {
     public override object Payload => Response;
 }
+
+public sealed record TenantSelectionLoginResult(
+    TenantSelectionRequiredResponse Response) : LoginResult
+{
+    public override object Payload => Response;
+}

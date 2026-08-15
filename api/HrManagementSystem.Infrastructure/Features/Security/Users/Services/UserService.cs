@@ -9,6 +9,11 @@ using HrManagementSystem.Application.Features.Security.Users.Errors;
 using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Common.Files;
 using HrManagementSystem.Application.Common.Realtime;
+using HrManagementSystem.Application.Common.Paginations;
+using HrManagementSystem.Application.Features.Platform.SecurityAudits.Contracts;
+using HrManagementSystem.Application.Features.Platform.SecurityAudits.Services;
+using HrManagementSystem.Domain.Security.Users.Enums;
+using System.Data;
 
 namespace HrManagementSystem.Infrastructure.Features.Security.Users.Services;
 
@@ -21,6 +26,7 @@ public class UserService(
     IWebHostEnvironment webHostEnvironment,
     TimeProvider timeProvider,
     ILogger<UserService> logger,
+    ISecurityAuditService securityAudit,
     IRealtimeChangeDispatcher realtimeChanges) : IUserService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
@@ -31,6 +37,59 @@ public class UserService(
     private readonly string _profilePicturesPath = Path.Combine(
         webHostEnvironment.WebRootPath ?? Path.Combine(webHostEnvironment.ContentRootPath, "wwwroot"),
         "profile-pictures");
+
+    public async Task<PageResponse<UserResponse>> GetPageAsync(
+        UserManagementQuery request,
+        CancellationToken cancellationToken = default)
+    {
+        var tenantId = _currentActor.TenantId;
+        var actorCompanyIds = await GetActorCompanyIdsAsync(cancellationToken);
+        if (string.IsNullOrWhiteSpace(tenantId) || actorCompanyIds.Count == 0)
+            return EmptyPage<UserResponse>(request);
+
+        var companyAccesses = _context.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Where(access => access.TenantId == tenantId);
+        var superAdminRoleName = AppRoles.super_admin.ToUpper();
+        var query = _context.Users
+            .AsNoTracking()
+            .Where(user =>
+                user.TenantId == tenantId &&
+                (request.IncludeArchived || user.LifecycleStatus == UserLifecycleStatus.Active) &&
+                companyAccesses.Any(access => access.UserId == user.Id) &&
+                !companyAccesses.Any(access =>
+                    access.UserId == user.Id && !actorCompanyIds.Contains(access.CompanyId)) &&
+                !(from userRole in _context.UserRoles.AsNoTracking()
+                  join role in _context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
+                  where userRole.UserId == user.Id && role.NormalizedName == superAdminRoleName
+                  select userRole).Any());
+
+        if (!string.IsNullOrWhiteSpace(request.SearchValue))
+        {
+            var search = request.SearchValue.Trim();
+            query = query.Where(user =>
+                user.FirstName.Contains(search) ||
+                user.LastName.Contains(search) ||
+                (user.UserName != null && user.UserName.Contains(search)) ||
+                (user.Email != null && user.Email.Contains(search)));
+        }
+
+        query = ApplyUserOrdering(query, request.ColumnName, request.SortDirection);
+        var totalCount = await query.CountAsync(cancellationToken);
+        var users = await query
+            .Skip((request.PageNumber - 1) * request.PageSize)
+            .Take(request.PageSize)
+            .ToArrayAsync(cancellationToken);
+        var items = await BuildUserResponsesAsync(users, cancellationToken);
+        var page = new PagedList<UserResponse>(
+            items.ToList(),
+            totalCount,
+            request.PageNumber,
+            request.PageSize);
+
+        return new PageResponse<UserResponse>(page, page.MetaData);
+    }
 
     public async Task<IEnumerable<UserResponse>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -45,7 +104,9 @@ public class UserService(
 
         var users = await _context.Users
             .AsNoTracking()
-            .Where(user => user.TenantId == tenantId)
+            .Where(user =>
+                user.TenantId == tenantId &&
+                user.LifecycleStatus == UserLifecycleStatus.Active)
             .Select(user => new
             {
                 user.Id,
@@ -55,7 +116,10 @@ public class UserService(
                 Email = user.Email ?? string.Empty,
                 user.IsDisabled,
                 IsLocked = user.LockoutEnd.HasValue && user.LockoutEnd > now,
-                user.ProfilePicture
+                user.ProfilePicture,
+                user.LifecycleStatus,
+                user.ArchivedOn,
+                user.ArchiveReason
             })
             .ToListAsync(cancellationToken);
 
@@ -99,7 +163,10 @@ public class UserService(
                     user.ProfilePicture,
                     roles,
                     accesses.Select(access => access.CompanyId).ToArray(),
-                    accesses.FirstOrDefault(access => access.IsDefault)?.CompanyId);
+                    accesses.FirstOrDefault(access => access.IsDefault)?.CompanyId,
+                    user.LifecycleStatus.ToString().ToLowerInvariant(),
+                    user.ArchivedOn,
+                    user.ArchiveReason);
             })
             .Where(user =>
                 !user.Roles.Contains(AppRoles.super_admin, StringComparer.OrdinalIgnoreCase) &&
@@ -135,7 +202,9 @@ public class UserService(
     public async Task<Result<UserResponse>> GetAsync(string id)
     {
         if (await _userManager.Users.SingleOrDefaultAsync(
-                candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId) is not { } user)
+                candidate => candidate.Id == id &&
+                    candidate.TenantId == _currentActor.TenantId &&
+                    candidate.LifecycleStatus == UserLifecycleStatus.Active) is not { } user)
             return Result.Failure<UserResponse>(_userErrors.UserNotFound);
 
         var userRoles = await _userManager.GetRolesAsync(user);
@@ -183,13 +252,15 @@ public class UserService(
         if (request.Roles.Except(allowedRoles.Select(x => x.Name)).Any())
             return Result.Failure<UserResponse>(_userErrors.InvalidRoles);
 
+        await using var transaction = await _context.Database.BeginTransactionAsync(
+            IsolationLevel.Serializable,
+            cancellationToken);
         if (await GetSeatLimitErrorAsync(request.Roles, cancellationToken) is { } seatLimitError)
             return Result.Failure<UserResponse>(seatLimitError);
 
         var user = request.Adapt<ApplicationUser>();
         user.TenantId = _currentActor.TenantId;
 
-        await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         var result = await _userManager.CreateAsync(user, request.Password);
 
         if (result.Succeeded)
@@ -202,6 +273,13 @@ public class UserService(
                     new Error(roleError.Code, roleError.Description, ErrorType.Validation));
             }
 
+            _context.UserTenantAccesses.Add(new UserTenantAccess
+            {
+                TenantId = user.TenantId,
+                UserId = user.Id,
+                IsDefault = true
+            });
+
             foreach (var companyId in companyIds)
             {
                 _context.UserCompanyAccesses.Add(new UserCompanyAccess
@@ -212,6 +290,18 @@ public class UserService(
                     IsDefault = companyId == request.DefaultCompanyId
                 });
             }
+            securityAudit.Add(new SecurityAuditRequest(
+                "UserCreated",
+                "ApplicationUser",
+                user.Id,
+                TenantId: user.TenantId,
+                CompanyId: request.DefaultCompanyId,
+                Metadata: new Dictionary<string, string?>
+                {
+                    ["UserName"] = user.UserName,
+                    ["Roles"] = string.Join(',', request.Roles.OrderBy(role => role, StringComparer.OrdinalIgnoreCase)),
+                    ["CompanyIds"] = string.Join(',', companyIds.OrderBy(companyId => companyId))
+                }));
             await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
 
@@ -244,7 +334,9 @@ public class UserService(
         if (await _userManager.Users
                 .Include(candidate => candidate.RefreshTokens)
                 .SingleOrDefaultAsync(
-                    candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId,
+                    candidate => candidate.Id == id &&
+                        candidate.TenantId == _currentActor.TenantId &&
+                        candidate.LifecycleStatus == UserLifecycleStatus.Active,
                     cancellationToken) is not { } user)
         {
             return Result.Failure(_userErrors.UserNotFound);
@@ -282,12 +374,14 @@ public class UserService(
         var addedRoles = request.Roles
             .Except(existingRoles, StringComparer.OrdinalIgnoreCase)
             .ToArray();
+        await using var transaction = await _context.Database.BeginTransactionAsync(
+            IsolationLevel.Serializable,
+            cancellationToken);
         if (await GetSeatLimitErrorAsync(addedRoles, cancellationToken) is { } seatLimitError)
             return Result.Failure(seatLimitError);
 
         user = request.Adapt(user);
 
-        await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         var result = await _userManager.UpdateAsync(user);
 
         if (result.Succeeded)
@@ -327,6 +421,19 @@ public class UserService(
                     new Error(revokeError.Code, revokeError.Description, ErrorType.Validation));
             }
 
+            await securityAudit.RecordAsync(new SecurityAuditRequest(
+                "UserUpdated",
+                "ApplicationUser",
+                user.Id,
+                TenantId: user.TenantId,
+                CompanyId: request.DefaultCompanyId,
+                Metadata: new Dictionary<string, string?>
+                {
+                    ["UserName"] = user.UserName,
+                    ["PreviousRoles"] = string.Join(',', existingRoles.OrderBy(role => role, StringComparer.OrdinalIgnoreCase)),
+                    ["Roles"] = string.Join(',', request.Roles.OrderBy(role => role, StringComparer.OrdinalIgnoreCase)),
+                    ["CompanyIds"] = string.Join(',', companyIds.OrderBy(companyId => companyId))
+                }), cancellationToken);
             await transaction.CommitAsync(cancellationToken);
             QueueSessionRevoked(
                 user.Id,
@@ -361,7 +468,9 @@ public class UserService(
         if (await _userManager.Users
                 .Include(candidate => candidate.RefreshTokens)
                 .SingleOrDefaultAsync(
-                    candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId,
+                    candidate => candidate.Id == id &&
+                        candidate.TenantId == _currentActor.TenantId &&
+                        candidate.LifecycleStatus == UserLifecycleStatus.Active,
                 cancellationToken) is not { } user)
             return Result.Failure(_userErrors.UserNotFound);
 
@@ -385,6 +494,11 @@ public class UserService(
         if (!revokeResult.Succeeded)
             return Result.Failure(_userErrors.SessionRevocationFailed);
 
+        await securityAudit.RecordAsync(new SecurityAuditRequest(
+            "UserPasswordChangedByAdministrator",
+            "ApplicationUser",
+            user.Id,
+            TenantId: user.TenantId), cancellationToken);
         QueueSessionRevoked(user.Id, "Your password was changed. Please sign in again.");
 
         return Result.Success();
@@ -398,7 +512,9 @@ public class UserService(
         if (await _userManager.Users
                 .Include(candidate => candidate.RefreshTokens)
                 .SingleOrDefaultAsync(
-                    candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId) is not { } user)
+                    candidate => candidate.Id == id &&
+                        candidate.TenantId == _currentActor.TenantId &&
+                        candidate.LifecycleStatus == UserLifecycleStatus.Active) is not { } user)
             return Result.Failure(_userErrors.UserNotFound);
 
         if (await _userManager.IsInRoleAsync(user, AppRoles.super_admin))
@@ -419,6 +535,11 @@ public class UserService(
 
         if (result.Succeeded)
         {
+            await securityAudit.RecordAsync(new SecurityAuditRequest(
+                user.IsDisabled ? "UserDisabled" : "UserEnabled",
+                "ApplicationUser",
+                user.Id,
+                TenantId: user.TenantId));
             if (user.IsDisabled)
             {
                 QueueSessionRevoked(user.Id, "Your account has been disabled.");
@@ -443,7 +564,9 @@ public class UserService(
             return Result.Failure(_userErrors.CannotManageOwnAccount);
 
         if (await _userManager.Users.SingleOrDefaultAsync(
-                candidate => candidate.Id == id && candidate.TenantId == _currentActor.TenantId) is not { } user)
+                candidate => candidate.Id == id &&
+                    candidate.TenantId == _currentActor.TenantId &&
+                    candidate.LifecycleStatus == UserLifecycleStatus.Active) is not { } user)
             return Result.Failure(_userErrors.UserNotFound);
 
         if (await _userManager.IsInRoleAsync(user, AppRoles.super_admin))
@@ -462,8 +585,105 @@ public class UserService(
 
         var roles = await _userManager.GetRolesAsync(user);
         var accesses = await GetUserCompanyAccessesAsync(user.Id, user.TenantId);
+        await securityAudit.RecordAsync(new SecurityAuditRequest(
+            "UserUnlocked",
+            "ApplicationUser",
+            user.Id,
+            TenantId: user.TenantId));
         QueueUserChanged(CreateUserResponse(user, roles, accesses), "Unlock");
 
+        return Result.Success();
+    }
+
+    public async Task<Result> ArchiveAsync(
+        string id,
+        ArchiveUserRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.Equals(id, _currentActor.UserId, StringComparison.Ordinal))
+            return Result.Failure(_userErrors.CannotManageOwnAccount);
+
+        var user = await _userManager.Users
+            .Include(candidate => candidate.RefreshTokens)
+            .SingleOrDefaultAsync(
+                candidate => candidate.Id == id &&
+                    candidate.TenantId == _currentActor.TenantId &&
+                    candidate.LifecycleStatus == UserLifecycleStatus.Active,
+                cancellationToken);
+        if (user is null ||
+            await _userManager.IsInRoleAsync(user, AppRoles.super_admin) ||
+            !await IsUserWithinActorCompanyScopeAsync(user.Id, user.TenantId, cancellationToken))
+        {
+            return Result.Failure(_userErrors.UserNotFound);
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+        var accesses = await GetUserCompanyAccessesAsync(user.Id, user.TenantId, cancellationToken);
+        user.Archive(request.Reason, timeProvider.GetUtcNow().UtcDateTime);
+        RevokeActiveSessions(user, "Account archived");
+
+        var stampResult = await _userManager.UpdateSecurityStampAsync(user);
+        if (!stampResult.Succeeded)
+            return Result.Failure(_userErrors.SessionRevocationFailed);
+        var updateResult = await _userManager.UpdateAsync(user);
+        if (!updateResult.Succeeded)
+            return Result.Failure(_userErrors.UpdateFailed);
+
+        await securityAudit.RecordAsync(new SecurityAuditRequest(
+            "UserArchived",
+            "ApplicationUser",
+            user.Id,
+            TenantId: user.TenantId,
+            Metadata: new Dictionary<string, string?>
+            {
+                ["Reason"] = request.Reason
+            }), cancellationToken);
+        QueueSessionRevoked(user.Id, "Your account has been archived.");
+        QueueUserChanged(CreateUserResponse(user, roles, accesses), "Archive");
+        return Result.Success();
+    }
+
+    public async Task<Result> RestoreAsync(
+        string id,
+        CancellationToken cancellationToken = default)
+    {
+        var user = await _userManager.Users
+            .SingleOrDefaultAsync(
+                candidate => candidate.Id == id &&
+                    candidate.TenantId == _currentActor.TenantId &&
+                    candidate.LifecycleStatus == UserLifecycleStatus.Archived,
+                cancellationToken);
+        if (user is null ||
+            await _userManager.IsInRoleAsync(user, AppRoles.super_admin) ||
+            !await IsUserWithinActorCompanyScopeAsync(user.Id, user.TenantId, cancellationToken))
+        {
+            return Result.Failure(_userErrors.UserNotFound);
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+        await using var transaction = await _context.Database.BeginTransactionAsync(
+            IsolationLevel.Serializable,
+            cancellationToken);
+        if (await GetSeatLimitErrorAsync(roles, cancellationToken) is { } seatLimitError)
+            return Result.Failure(seatLimitError);
+
+        user.Restore();
+        var stampResult = await _userManager.UpdateSecurityStampAsync(user);
+        if (!stampResult.Succeeded)
+            return Result.Failure(_userErrors.SessionRevocationFailed);
+        var updateResult = await _userManager.UpdateAsync(user);
+        if (!updateResult.Succeeded)
+            return Result.Failure(_userErrors.UpdateFailed);
+
+        await securityAudit.RecordAsync(new SecurityAuditRequest(
+            "UserRestored",
+            "ApplicationUser",
+            user.Id,
+            TenantId: user.TenantId), cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+
+        var accesses = await GetUserCompanyAccessesAsync(user.Id, user.TenantId, cancellationToken);
+        QueueUserChanged(CreateUserResponse(user, roles, accesses), "Restore");
         return Result.Success();
     }
 
@@ -671,6 +891,39 @@ public class UserService(
             .Where(access => access.UserId == userId && access.TenantId == tenantId)
             .ToArrayAsync(cancellationToken);
 
+    private async Task<IReadOnlyList<UserResponse>> BuildUserResponsesAsync(
+        IReadOnlyCollection<ApplicationUser> users,
+        CancellationToken cancellationToken)
+    {
+        if (users.Count == 0)
+            return [];
+
+        var userIds = users.Select(user => user.Id).ToArray();
+        var roleRows = await (
+                from userRole in _context.UserRoles.AsNoTracking()
+                join role in _context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
+                where userIds.Contains(userRole.UserId)
+                select new { userRole.UserId, RoleName = role.Name! })
+            .ToArrayAsync(cancellationToken);
+        var accessRows = await _context.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Where(access => userIds.Contains(access.UserId))
+            .ToArrayAsync(cancellationToken);
+
+        var rolesByUser = roleRows
+            .GroupBy(row => row.UserId)
+            .ToDictionary(group => group.Key, group => group.Select(row => row.RoleName).ToArray());
+        var accessesByUser = accessRows
+            .GroupBy(access => access.UserId)
+            .ToDictionary(group => group.Key, group => group.ToArray());
+
+        return users.Select(user => CreateUserResponse(
+            user,
+            rolesByUser.GetValueOrDefault(user.Id) ?? [],
+            accessesByUser.GetValueOrDefault(user.Id) ?? [])).ToArray();
+    }
+
     private async Task<HashSet<int>> GetActorCompanyIdsAsync(
         CancellationToken cancellationToken = default)
     {
@@ -714,6 +967,33 @@ public class UserService(
         return companyIds.Length > 0 && companyIds.All(actorCompanyIds.Contains);
     }
 
+    private static IQueryable<ApplicationUser> ApplyUserOrdering(
+        IQueryable<ApplicationUser> query,
+        string? columnName,
+        string? sortDirection)
+    {
+        var descending = string.Equals(sortDirection, "DESC", StringComparison.OrdinalIgnoreCase);
+        return (columnName?.ToUpperInvariant(), descending) switch
+        {
+            ("EMAIL", false) => query.OrderBy(user => user.Email).ThenBy(user => user.Id),
+            ("EMAIL", true) => query.OrderByDescending(user => user.Email).ThenByDescending(user => user.Id),
+            ("USERNAME", false) => query.OrderBy(user => user.UserName).ThenBy(user => user.Id),
+            ("USERNAME", true) => query.OrderByDescending(user => user.UserName).ThenByDescending(user => user.Id),
+            ("NAME", true) => query.OrderByDescending(user => user.FirstName)
+                .ThenByDescending(user => user.LastName)
+                .ThenByDescending(user => user.Id),
+            _ => query.OrderBy(user => user.FirstName)
+                .ThenBy(user => user.LastName)
+                .ThenBy(user => user.Id)
+        };
+    }
+
+    private static PageResponse<T> EmptyPage<T>(PaginationRequest request)
+    {
+        var page = new PagedList<T>([], 0, request.PageNumber, request.PageSize);
+        return new PageResponse<T>(page, page.MetaData);
+    }
+
     private static UserResponse CreateUserResponse(
         ApplicationUser user,
         IEnumerable<string> roles,
@@ -731,7 +1011,10 @@ public class UserService(
             user.ProfilePicture,
             roles.Distinct(StringComparer.OrdinalIgnoreCase).ToArray(),
             companyAccesses.Select(access => access.CompanyId).Distinct().ToArray(),
-            companyAccesses.FirstOrDefault(access => access.IsDefault)?.CompanyId);
+            companyAccesses.FirstOrDefault(access => access.IsDefault)?.CompanyId,
+            user.LifecycleStatus.ToString().ToLowerInvariant(),
+            user.ArchivedOn,
+            user.ArchiveReason);
     }
 
     private async Task<Error?> GetSeatLimitErrorAsync(
@@ -756,18 +1039,20 @@ public class UserService(
             return _userErrors.InvalidCompanySelection;
 
         var counts = await (
-            from user in _context.Users.AsNoTracking()
-            join userRole in _context.UserRoles.AsNoTracking() on user.Id equals userRole.UserId
+            from tenantAccess in _context.UserTenantAccesses.IgnoreQueryFilters().AsNoTracking()
+            join user in _context.Users.IgnoreQueryFilters().AsNoTracking() on tenantAccess.UserId equals user.Id
+            join userRole in _context.UserRoles.AsNoTracking() on tenantAccess.UserId equals userRole.UserId
             join role in _context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
-            where user.TenantId == tenantId &&
+            where tenantAccess.TenantId == tenantId &&
+                  user.LifecycleStatus == UserLifecycleStatus.Active &&
                   (role.NormalizedName == AppRoles.admin.ToUpper() ||
                    role.NormalizedName == AppRoles.user.ToUpper())
-            group user by role.NormalizedName
+            group tenantAccess by role.NormalizedName
             into roleGroup
             select new
             {
                 Role = roleGroup.Key,
-                Count = roleGroup.Select(user => user.Id).Distinct().Count()
+                Count = roleGroup.Select(access => access.UserId).Distinct().Count()
             }).ToDictionaryAsync(item => item.Role!, item => item.Count, cancellationToken);
 
         if (needsAdminSeat &&

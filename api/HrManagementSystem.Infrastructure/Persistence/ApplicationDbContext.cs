@@ -18,7 +18,9 @@ using HrManagementSystem.Domain.Catalog.SubCategories.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.States.Entities;
 using HrManagementSystem.Domain.Platform.EntityChangeLogs.Entities;
 using HrManagementSystem.Domain.Platform.Files.Entities;
+using HrManagementSystem.Domain.Platform.SecurityAudits.Entities;
 using HrManagementSystem.Domain.Security.ApiKeys.Entities;
+using HrManagementSystem.Domain.Security.Users.Enums;
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
 
 namespace HrManagementSystem.Infrastructure.Persistence;
@@ -53,7 +55,9 @@ public class ApplicationDbContext(
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<Company> Companies { get; set; }
+    public DbSet<UserTenantAccess> UserTenantAccesses { get; set; }
     public DbSet<UserCompanyAccess> UserCompanyAccesses { get; set; }
+    public DbSet<SecurityAuditEvent> SecurityAuditEvents { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -144,10 +148,13 @@ public class ApplicationDbContext(
         var builder = modelBuilder.Entity<TEntity>();
         builder.Property(entity => entity.TenantId).HasMaxLength(32).IsRequired();
         builder.HasIndex(entity => entity.TenantId);
-        builder.HasOne<Tenant>()
-            .WithMany()
-            .HasForeignKey(entity => entity.TenantId)
-            .OnDelete(DeleteBehavior.Restrict);
+        if (typeof(TEntity) != typeof(UserTenantAccess))
+        {
+            builder.HasOne<Tenant>()
+                .WithMany()
+                .HasForeignKey(entity => entity.TenantId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
 
         // Identity must remain queryable before authentication so login can resolve the user.
         if (typeof(TEntity) != typeof(ApplicationUser))
@@ -201,22 +208,24 @@ public class ApplicationDbContext(
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
+        GrantNewCompanyAccesses();
         PrepareChanges();
         return base.SaveChanges(acceptAllChangesOnSuccess);
     }
 
-    public override Task<int> SaveChangesAsync(
+    public override async Task<int> SaveChangesAsync(
         bool acceptAllChangesOnSuccess,
         CancellationToken cancellationToken = default)
     {
+        await GrantNewCompanyAccessesAsync(cancellationToken);
         PrepareChanges();
-        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
 
     private void PrepareChanges()
     {
+        EnforceAppendOnlySecurityAudit();
         ApplyTenantIsolation();
-        GrantCompanyCreatorAccess();
 
         var currentUserId = _currentActor.UserId;
         var currentMachineName = Environment.MachineName;
@@ -240,39 +249,116 @@ public class ApplicationDbContext(
 
     }
 
-    private void GrantCompanyCreatorAccess()
+    private void EnforceAppendOnlySecurityAudit()
     {
-        var currentUserId = _currentActor.UserId;
-        var currentTenantId = CurrentTenantId;
-        if (string.IsNullOrWhiteSpace(currentUserId) || string.IsNullOrWhiteSpace(currentTenantId))
+        var invalidEntry = ChangeTracker.Entries<SecurityAuditEvent>()
+            .FirstOrDefault(entry => entry.State is EntityState.Modified or EntityState.Deleted);
+
+        if (invalidEntry is not null)
+            throw new InvalidOperationException("Security audit events are append-only.");
+    }
+
+    private void GrantNewCompanyAccesses()
+    {
+        var addedCompanies = GetAddedCompanies();
+        if (addedCompanies.Length == 0)
             return;
 
-        var addedCompanies = ChangeTracker.Entries<Company>()
+        var tenantIds = addedCompanies.Select(company => company.TenantId).Distinct().ToArray();
+        var tenantAdmins = GetActiveTenantAdministratorAccesses(tenantIds).ToArray();
+        GrantNewCompanyAccesses(addedCompanies, tenantAdmins);
+    }
+
+    private async Task GrantNewCompanyAccessesAsync(CancellationToken cancellationToken)
+    {
+        var addedCompanies = GetAddedCompanies();
+        if (addedCompanies.Length == 0)
+            return;
+
+        var tenantIds = addedCompanies.Select(company => company.TenantId).Distinct().ToArray();
+        var tenantAdmins = await GetActiveTenantAdministratorAccesses(tenantIds)
+            .ToArrayAsync(cancellationToken);
+        GrantNewCompanyAccesses(addedCompanies, tenantAdmins);
+    }
+
+    private Company[] GetAddedCompanies()
+    {
+        var currentTenantId = CurrentTenantId;
+        var companies = ChangeTracker.Entries<Company>()
             .Where(entry => entry.State == EntityState.Added)
             .Select(entry => entry.Entity)
             .ToArray();
 
-        foreach (var company in addedCompanies)
+        foreach (var company in companies.Where(company => string.IsNullOrWhiteSpace(company.TenantId)))
         {
-            var alreadyTracked = ChangeTracker.Entries<UserCompanyAccess>()
-                .Any(entry =>
-                    entry.State != EntityState.Deleted &&
-                    entry.Entity.UserId == currentUserId &&
-                    (ReferenceEquals(entry.Entity.Company, company) ||
-                     (company.Id > 0 && entry.Entity.CompanyId == company.Id)));
+            if (string.IsNullOrWhiteSpace(currentTenantId))
+                throw new InvalidOperationException("A tenant is required to create a company.");
 
-            if (alreadyTracked)
-                continue;
+            company.TenantId = currentTenantId;
+        }
 
-            UserCompanyAccesses.Add(new UserCompanyAccess
+        return companies;
+    }
+
+    private IQueryable<TenantAdministratorAccess> GetActiveTenantAdministratorAccesses(
+        IReadOnlyCollection<string> tenantIds) =>
+        (from tenantAccess in UserTenantAccesses.IgnoreQueryFilters().AsNoTracking()
+         join user in Users.IgnoreQueryFilters().AsNoTracking()
+             on tenantAccess.UserId equals user.Id
+         join userRole in UserRoles.AsNoTracking()
+             on tenantAccess.UserId equals userRole.UserId
+         join role in Roles.AsNoTracking()
+             on userRole.RoleId equals role.Id
+         where tenantIds.Contains(tenantAccess.TenantId) &&
+               user.LifecycleStatus == UserLifecycleStatus.Active &&
+               role.NormalizedName == AppRoles.admin.ToUpper()
+         select new TenantAdministratorAccess(tenantAccess.TenantId, tenantAccess.UserId))
+        .Distinct();
+
+    private void GrantNewCompanyAccesses(
+        IReadOnlyCollection<Company> companies,
+        IReadOnlyCollection<TenantAdministratorAccess> tenantAdministrators)
+    {
+        var currentUserId = _currentActor.UserId;
+        var currentTenantId = CurrentTenantId;
+
+        foreach (var company in companies)
+        {
+            var userIds = tenantAdministrators
+                .Where(access => access.TenantId == company.TenantId)
+                .Select(access => access.UserId)
+                .ToHashSet(StringComparer.Ordinal);
+
+            if (!string.IsNullOrWhiteSpace(currentUserId) &&
+                string.Equals(currentTenantId, company.TenantId, StringComparison.Ordinal))
             {
-                TenantId = currentTenantId,
-                UserId = currentUserId,
-                Company = company,
-                IsDefault = false
-            });
+                userIds.Add(currentUserId);
+            }
+
+            foreach (var userId in userIds)
+            {
+                var alreadyTracked = ChangeTracker.Entries<UserCompanyAccess>()
+                    .Any(entry =>
+                        entry.State != EntityState.Deleted &&
+                        entry.Entity.UserId == userId &&
+                        (ReferenceEquals(entry.Entity.Company, company) ||
+                         (company.Id > 0 && entry.Entity.CompanyId == company.Id)));
+
+                if (alreadyTracked)
+                    continue;
+
+                UserCompanyAccesses.Add(new UserCompanyAccess
+                {
+                    TenantId = company.TenantId,
+                    UserId = userId,
+                    Company = company,
+                    IsDefault = false
+                });
+            }
         }
     }
+
+    private sealed record TenantAdministratorAccess(string TenantId, string UserId);
 
     private void ApplyTenantIsolation()
     {
@@ -313,11 +399,14 @@ public class ApplicationDbContext(
                      .Where(entry => entry.State is EntityState.Added or EntityState.Modified or EntityState.Deleted))
         {
             var isUserCompanyAccess = entityEntry.Entity is UserCompanyAccess;
+            var linksToAddedCompany = entityEntry.Entity is UserCompanyAccess userCompanyAccess &&
+                userCompanyAccess.Company is not null &&
+                Entry(userCompanyAccess.Company).State == EntityState.Added;
             var companyProperty = entityEntry.Property(entity => entity.CompanyId);
             var entityCompanyId = companyProperty.CurrentValue;
             var currentCompanyId = CurrentCompanyId;
 
-            if (entityEntry.State == EntityState.Added && entityCompanyId <= 0)
+            if (entityEntry.State == EntityState.Added && entityCompanyId <= 0 && !linksToAddedCompany)
             {
                 if (!currentCompanyId.HasValue)
                     throw new InvalidOperationException("A company is required to create company-owned data.");
@@ -326,7 +415,7 @@ public class ApplicationDbContext(
                 entityCompanyId = currentCompanyId.Value;
             }
 
-            if (entityCompanyId <= 0)
+            if (entityCompanyId <= 0 && !linksToAddedCompany)
                 throw new InvalidOperationException("Company-owned data must have a company identifier.");
 
             if (!isUserCompanyAccess &&
@@ -411,5 +500,3 @@ public class ApplicationDbContext(
     }
 
 }
-
-

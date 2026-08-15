@@ -9,6 +9,20 @@ export interface AuthenticatedLoginResponse {
   isAuthenticated: true;
   companyId: number;
 }
+export interface TenantOption {
+  id: string;
+  identifier: string;
+  name: string;
+}
+
+export interface TenantSelectionResponse {
+  isAuthenticated: false;
+  requiresTenantSelection: true;
+  tenantSelectionToken: string;
+  tenantSelectionTokenExpiration: string;
+  tenants: TenantOption[];
+}
+
 
 export interface CompanyOption {
   id: number;

@@ -5,9 +5,14 @@ export const ROUTES = {
   onboarding: '/onboarding',
   login: '/login',
   register: '/register',
+  forgotPassword: '/forgot-password',
+  resetPassword: '/reset-password',
+  confirmEmail: '/confirm-email',
+  resendConfirmation: '/resend-confirmation',
   settings: '/settings',
   superAdminDashboard: '/super-admin-dashboard',
   tenantManagement: '/tenant-management',
+  tenantAdminManagement: '/tenant-admin-management',
   modal: '/modal',
   basicData: {
     root: '/basic-data',
@@ -29,9 +34,14 @@ export type AppRoute =
   | typeof ROUTES.onboarding
   | typeof ROUTES.login
   | typeof ROUTES.register
+  | typeof ROUTES.forgotPassword
+  | typeof ROUTES.resetPassword
+  | typeof ROUTES.confirmEmail
+  | typeof ROUTES.resendConfirmation
   | typeof ROUTES.settings
   | typeof ROUTES.superAdminDashboard
   | typeof ROUTES.tenantManagement
+  | typeof ROUTES.tenantAdminManagement
   | typeof ROUTES.modal
   | (typeof ROUTES.basicData)[keyof typeof ROUTES.basicData]
   | typeof ROUTES.administration.root

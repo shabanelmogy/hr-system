@@ -44,6 +44,7 @@ export enum NavigationTitles {
   SUPER_ADMIN = "menu.superAdmin",
   SUPER_ADMIN_DASHBOARD = "menu.superAdminDashboard",
   TENANT_MANAGEMENT = "menu.tenantManagement",
+  TENANT_ADMIN_MANAGEMENT = "menu.tenantAdminManagement",
   BASIC_DATA = "menu.basicData",
   GEOGRAPHIC_DATA = "menu.geographicData",
   COUNTRIES = "menu.countries",

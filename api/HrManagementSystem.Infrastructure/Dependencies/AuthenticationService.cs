@@ -142,7 +142,11 @@ public static class AuthenticationService
                 user.IsDisabled,
                 user.LockoutEnd,
                 user.SecurityStamp,
-                user.TenantId,
+                HasTenantAccess = database.UserTenantAccesses
+                    .IgnoreQueryFilters()
+                    .Any(access =>
+                        access.UserId == userId &&
+                        access.TenantId == tenantId),
                 HasActiveSession = user.RefreshTokens.Any(token =>
                     token.SessionId == sessionId &&
                     token.CompanyId == companyId &&
@@ -167,7 +171,7 @@ public static class AuthenticationService
             state.IsDisabled ||
             state.LockoutEnd > DateTimeOffset.UtcNow ||
             !string.Equals(state.SecurityStamp, securityStamp, StringComparison.Ordinal) ||
-            !string.Equals(state.TenantId, tenantId, StringComparison.Ordinal) ||
+            !state.HasTenantAccess ||
             !state.IsTenantActive ||
             !state.HasCompanyAccess ||
             !state.HasActiveSession)

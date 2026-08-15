@@ -40,5 +40,15 @@ public sealed class TenantManagementRequestValidator : AbstractValidator<TenantM
         RuleFor(request => request.ContactName).MaximumLength(200);
         RuleFor(request => request.ContactPhone).MaximumLength(32);
         RuleFor(request => request.Notes).MaximumLength(2000);
+        RuleFor(request => request.RowVersion)
+            .MaximumLength(64)
+            .Must(value => string.IsNullOrWhiteSpace(value) || IsBase64(value))
+            .WithMessage("Row version is invalid.");
+    }
+
+    private static bool IsBase64(string value)
+    {
+        Span<byte> buffer = stackalloc byte[value.Length];
+        return Convert.TryFromBase64String(value, buffer, out _);
     }
 }

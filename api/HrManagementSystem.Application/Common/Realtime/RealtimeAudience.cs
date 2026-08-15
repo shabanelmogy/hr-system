@@ -6,7 +6,8 @@ public enum RealtimeAudienceKind
     Company,
     CompanyPermission,
     UserCompany,
-    Role
+    Role,
+    Tenant
 }
 
 public sealed record RealtimeAudience(
@@ -48,6 +49,9 @@ public sealed record RealtimeAudience(
 
     public static RealtimeAudience ForRole(string role) =>
         new(RealtimeAudienceKind.Role, Role: Required(role, nameof(role)));
+
+    public static RealtimeAudience ForTenant(string tenantId) =>
+        new(RealtimeAudienceKind.Tenant, TenantId: Required(tenantId, nameof(tenantId)));
 
     private static string Required(string value, string parameterName) =>
         string.IsNullOrWhiteSpace(value)

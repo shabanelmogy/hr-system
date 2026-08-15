@@ -1,9 +1,14 @@
+using HrManagementSystem.Application.Common.Paginations;
 using HrManagementSystem.Application.Features.Security.Users.Contracts;
 
 namespace HrManagementSystem.Application.Features.Security.Users.Services;
 
 public interface IUserService
 {
+    Task<PageResponse<UserResponse>> GetPageAsync(
+        UserManagementQuery request,
+        CancellationToken cancellationToken = default);
+
     Task<IEnumerable<UserResponse>> GetAllAsync(CancellationToken cancellationToken = default);
 
     Task<IReadOnlyCollection<UserCompanyOptionResponse>> GetCompanyOptionsAsync(
@@ -22,6 +27,15 @@ public interface IUserService
     Task<Result> ToggleStatus(string id);
 
     Task<Result> Unlock(string id);
+
+    Task<Result> ArchiveAsync(
+        string id,
+        ArchiveUserRequest request,
+        CancellationToken cancellationToken = default);
+
+    Task<Result> RestoreAsync(
+        string id,
+        CancellationToken cancellationToken = default);
 
     Task<Result<UserProfileResponse>> GetProfileAsync(string userId, CancellationToken cancellationToken);
 

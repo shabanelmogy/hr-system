@@ -5,6 +5,7 @@ import type {
   User,
   UserCompanyOption,
 } from "../types";
+import type { ManagementPageResponse } from "@/lib/api/pagination";
 
 type UnknownRecord = Record<string, unknown>;
 
@@ -59,7 +60,32 @@ function parseUser(value: unknown): User {
     roles: parseStringArray(record.roles, "user.roles"),
     companyIds: parseNumberArray(record.companyIds, "user.companyIds"),
     defaultCompanyId: optionalNumber(record.defaultCompanyId, "user.defaultCompanyId"),
+    lifecycleStatus: requireLifecycleStatus(record.lifecycleStatus, "user.lifecycleStatus"),
+    archivedOn: optionalString(record.archivedOn),
+    archiveReason: optionalString(record.archiveReason),
   };
+}
+
+export function parseUsersPageResponse(response: unknown): ManagementPageResponse<User> {
+  const page = requireRecord(unwrapApiValue(response), "users page");
+  const metadata = requireRecord(page.metaData, "users page metadata");
+  return {
+    items: parseArray(page.items, parseUser, "users"),
+    metaData: {
+      currentPage: requireNumber(metadata.currentPage, "users page.currentPage"),
+      totalPages: requireNonNegativeInteger(metadata.totalPages, "users page.totalPages"),
+      pageSize: requireNumber(metadata.pageSize, "users page.pageSize"),
+      pageNumber: requireNumber(metadata.pageNumber, "users page.pageNumber"),
+      totalCount: requireNonNegativeInteger(metadata.totalCount, "users page.totalCount"),
+      hasPrev: requireBoolean(metadata.hasPrev, "users page.hasPrev"),
+      hasNext: requireBoolean(metadata.hasNext, "users page.hasNext"),
+    },
+  };
+}
+
+function requireLifecycleStatus(value: unknown, label: string): "active" | "archived" {
+  if (value === "active" || value === "archived") return value;
+  throw new Error(`Invalid ${label}: expected active or archived.`);
 }
 
 function parseUserCompanyOption(value: unknown): UserCompanyOption {
@@ -138,6 +164,13 @@ function requireBoolean(value: unknown, label: string): boolean {
 function requireNumber(value: unknown, label: string): number {
   if (typeof value !== "number" || !Number.isInteger(value) || value <= 0) {
     throw new Error(`Invalid ${label}: expected a positive integer.`);
+  }
+  return value;
+}
+
+function requireNonNegativeInteger(value: unknown, label: string): number {
+  if (typeof value !== "number" || !Number.isInteger(value) || value < 0) {
+    throw new Error(`Invalid ${label}: expected a non-negative integer.`);
   }
   return value;
 }

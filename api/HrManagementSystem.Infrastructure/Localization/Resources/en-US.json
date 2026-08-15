@@ -229,5 +229,6 @@
     "UserUnlockedNotificationMessage": "User {UserName} was unlocked",
     "NoCompanyAccess": "Your account does not have access to an active company",
     "InvalidCompanySelection": "The company selection is invalid or has expired",
+    "InvalidTenantSelection": "The tenant selection is invalid or has expired",
     "CannotManageOwnAccount": "Use your profile settings for your own account. User Management cannot change your own roles, company access, or status"
 }

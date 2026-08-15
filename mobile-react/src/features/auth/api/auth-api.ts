@@ -9,9 +9,11 @@ import {
 } from '@/src/features/auth/schemas/auth-response-schema';
 import type {
   AuthResponse,
+  ConfirmEmailRequest,
   LoginOutcome,
   LoginRequest,
   RegisterRequest,
+  ResetPasswordRequest,
   SessionResponse,
   UserPhoto,
 } from '@/src/features/auth/types/auth';
@@ -26,11 +28,55 @@ export const authApi = {
     });
   },
 
+  async forgetPassword(email: string): Promise<void> {
+    await apiService.post<void, { email: string }>(
+      AUTH_ENDPOINTS.forgetPassword,
+      { email },
+      { skipAuth: true, skipAuthRefresh: true },
+    );
+  },
+
+  async resetPassword(request: ResetPasswordRequest): Promise<void> {
+    await apiService.post<void, ResetPasswordRequest>(
+      AUTH_ENDPOINTS.resetPassword,
+      request,
+      { skipAuth: true, skipAuthRefresh: true },
+    );
+  },
+
+  async confirmEmail(request: ConfirmEmailRequest): Promise<void> {
+    await apiService.post<void, ConfirmEmailRequest>(
+      AUTH_ENDPOINTS.confirmEmail,
+      request,
+      { skipAuth: true, skipAuthRefresh: true },
+    );
+  },
+
+  async resendConfirmationEmail(email: string): Promise<void> {
+    await apiService.post<void, { email: string }>(
+      AUTH_ENDPOINTS.resendConfirmationEmail,
+      { email },
+      { skipAuth: true, skipAuthRefresh: true },
+    );
+  },
+
   async login(request: LoginRequest): Promise<LoginOutcome> {
     const response = await apiService.post<unknown, LoginRequest>(AUTH_ENDPOINTS.login, request, {
       skipAuth: true,
       skipAuthRefresh: true,
     });
+    return parseLoginOutcome(response);
+  },
+
+  async selectTenant(tenantSelectionToken: string, tenantId: string): Promise<LoginOutcome> {
+    const response = await apiService.post<unknown, {
+      tenantSelectionToken: string;
+      tenantId: string;
+    }>(
+      AUTH_ENDPOINTS.selectTenant,
+      { tenantSelectionToken, tenantId },
+      { skipAuth: true, skipAuthRefresh: true },
+    );
     return parseLoginOutcome(response);
   },
 

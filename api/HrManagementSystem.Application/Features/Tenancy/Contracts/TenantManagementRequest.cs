@@ -13,4 +13,5 @@ public sealed record TenantManagementRequest(
     string? BillingEmail,
     string? ContactName,
     string? ContactPhone,
-    string? Notes);
+    string? Notes,
+    string? RowVersion = null);

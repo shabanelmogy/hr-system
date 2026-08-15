@@ -24,6 +24,7 @@ export interface RolesRoutes extends Omit<CrudRoutes, 'delete'> {
 
 export interface UsersRoutes {
   getAll: string;
+  getPage: string;
   getCompanyOptions: string;
   add: string;
   update: (id: Id) => string;
@@ -31,6 +32,8 @@ export interface UsersRoutes {
   toggle: (id: Id) => string;
   unlock: (id: Id) => string;
   revoke: (userId: Id) => string;
+  archive: (id: Id) => string;
+  restore: (id: Id) => string;
 }
 
 export interface ExportRoutes {

@@ -1,4 +1,5 @@
 import { appointmentKeys } from "@/features/appointments";
+import { tenantAdminKeys } from "@/features/tenant-admins/tenantAdminApi";
 import { tenantKeys } from "@/features/tenants/tenantApi";
 import { addressTypeKeys } from "@/features/basic-data/geographical-information/address-types";
 import { countryKeys } from "@/features/basic-data/geographical-information/countries";
@@ -28,7 +29,7 @@ const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
   [realtimeResources.districts]: [districtKeys.all, stateKeys.all],
   [realtimeResources.addressTypes]: [addressTypeKeys.all],
   [realtimeResources.addresses]: [],
-  [realtimeResources.users]: [["userProfile"]],
+  [realtimeResources.users]: [["userProfile"], tenantAdminKeys.all],
   [realtimeResources.appointments]: [appointmentKeys.all],
   [realtimeResources.tenants]: [tenantKeys.all],
   [realtimeResources.roles]: [],

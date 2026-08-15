@@ -9,6 +9,7 @@ using HrManagementSystem.Application.Features.GeographicalInformation.States.Con
 using HrManagementSystem.Application.Features.Platform.Notifications.Contracts;
 using HrManagementSystem.Application.Features.Security.Users.Contracts;
 using HrManagementSystem.Domain.Catalog.Categories.Entities;
+using HrManagementSystem.Domain.Tenancy.Entities;
 using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
 using Microsoft.AspNetCore.SignalR;
 
@@ -59,6 +60,24 @@ public sealed class RealtimeEntityPublisherTests
             Guid.NewGuid());
 
         await Assert.ThrowsAsync<ArgumentException>(() => publisher.PublishAsync(request));
+    }
+
+    [Fact]
+    public async Task PublishAsync_MapsTenantAudienceWithoutCrossTenantBroadcast()
+    {
+        var client = new RecordingClient();
+        var clients = new RecordingHubClients(client);
+        var publisher = new SignalRRealtimeEntityPublisher(
+            new TestHubContext(clients),
+            TimeProvider.System);
+
+        await publisher.PublishAsync(RealtimeChangeRequest.For<Tenant>(
+            RealtimeAudience.ForTenant("tenant-1"),
+            "Archive",
+            "tenant-1"));
+
+        Assert.Equal("tenant:tenant-1", clients.SelectedGroup);
+        Assert.Equal("tenants", Assert.Single(client.EntityChanges).Resource);
     }
 
     private sealed class TestHubContext(IHubClients<IGeneralHubClient> clients)

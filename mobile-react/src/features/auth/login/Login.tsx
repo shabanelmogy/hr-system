@@ -4,6 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { CompanySelectionDialog } from '@/src/features/auth/login/components/CompanySelectionDialog';
+import { TenantSelectionDialog } from '@/src/features/auth/login/components/TenantSelectionDialog';
 import { LeftPanel } from '@/src/features/auth/login/components/LeftPanel';
 import { LoginForm } from '@/src/features/auth/login/components/LoginForm';
 import { useLoginForm } from '@/src/features/auth/login/hooks/useLoginForm';
@@ -41,6 +42,12 @@ export function Login() {
         </AppCard>
       </KeyboardAwareScrollView>
 
+      <TenantSelectionDialog
+        error={form.serverError}
+        onCancel={form.cancelTenantSelection}
+        onSelect={form.selectTenant}
+        selection={form.tenantSelection}
+      />
       <CompanySelectionDialog
         error={form.serverError}
         onCancel={form.cancelCompanySelection}

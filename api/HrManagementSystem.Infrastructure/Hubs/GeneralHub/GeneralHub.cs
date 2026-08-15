@@ -32,8 +32,11 @@ public class GeneralHub : Hub<IGeneralHubClient>
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToArray() ?? [];
 
-        var groupTasks = new List<Task>(2 + permissions.Length * 2 + roles.Length)
+        var groupTasks = new List<Task>(3 + permissions.Length * 2 + roles.Length)
         {
+            Groups.AddToGroupAsync(
+                Context.ConnectionId,
+                GeneralHubGroups.ForTenant(tenantId)),
             Groups.AddToGroupAsync(
                 Context.ConnectionId,
                 GeneralHubGroups.ForCompany(tenantId, companyId)),

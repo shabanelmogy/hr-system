@@ -19,6 +19,7 @@ export default function ProtectedRouteLayout() {
   const canViewBasicData = useCanAccessRoute(ROUTES.basicData.root);
   const canViewSuperAdminDashboard = useCanAccessRoute(ROUTES.superAdminDashboard);
   const canManageTenants = useCanAccessRoute(ROUTES.tenantManagement);
+  const canManageTenantAdmins = useCanAccessRoute(ROUTES.tenantAdminManagement);
   const canViewAdministration = useCanAccessRoute(ROUTES.administration.root);
 
   return (
@@ -100,6 +101,16 @@ export default function ProtectedRouteLayout() {
             title: t('navigation.tenantManagement'),
             drawerIcon: ({ color, size }) => (
               <AppIcon color={color} name="business-outline" size={size} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="tenant-admin-management"
+          options={{
+            drawerItemStyle: canManageTenantAdmins ? undefined : { display: 'none' },
+            title: t('navigation.tenantAdminManagement'),
+            drawerIcon: ({ color, size }) => (
+              <AppIcon color={color} name="shield-checkmark-outline" size={size} />
             ),
           }}
         />

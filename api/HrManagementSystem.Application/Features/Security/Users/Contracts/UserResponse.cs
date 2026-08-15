@@ -11,6 +11,9 @@ namespace HrManagementSystem.Application.Features.Security.Users.Contracts
         string? ProfilePicture,
         IReadOnlyCollection<string> Roles,
         IReadOnlyCollection<int> CompanyIds,
-        int? DefaultCompanyId
+        int? DefaultCompanyId,
+        string LifecycleStatus,
+        DateTime? ArchivedOn,
+        string? ArchiveReason
     );
 }

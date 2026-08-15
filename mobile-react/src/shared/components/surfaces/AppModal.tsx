@@ -4,6 +4,7 @@ import {
   Modal,
   type ModalProps,
   Platform,
+  ScrollView,
   type StyleProp,
   StyleSheet,
   View,
@@ -31,6 +32,7 @@ export interface AppModalProps extends PropsWithChildren {
   variant?: 'dialog' | 'fullScreen';
   animationType?: ModalProps['animationType'];
   footer?: ReactNode;
+  scrollable?: boolean;
   contentContainerStyle?: StyleProp<ViewStyle>;
   sheetStyle?: StyleProp<ViewStyle>;
 }
@@ -49,6 +51,7 @@ export function AppModal({
   variant = 'dialog',
   animationType = variant === 'fullScreen' ? 'slide' : 'fade',
   footer,
+  scrollable = true,
   contentContainerStyle,
   sheetStyle,
 }: AppModalProps) {
@@ -147,7 +150,19 @@ export function AppModal({
             sheetStyle,
           ]}>
           {header}
-          <View style={[styles.dialogContent, contentContainerStyle]}>{children}</View>
+          {scrollable ? (
+            <ScrollView
+              contentContainerStyle={[styles.dialogContent, contentContainerStyle]}
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}
+              style={styles.dialogViewport}>
+              {children}
+            </ScrollView>
+          ) : (
+            <View style={[styles.dialogViewport, styles.dialogContent, contentContainerStyle]}>
+              {children}
+            </View>
+          )}
           {footer}
         </View>
       </SafeAreaView>
@@ -167,6 +182,7 @@ const styles = StyleSheet.create({
     maxHeight: '82%',
     alignSelf: 'center',
     borderWidth: 1,
+    overflow: 'hidden',
     padding: 16,
     gap: 16,
   },
@@ -196,9 +212,11 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 4,
   },
-  dialogContent: {
+  dialogViewport: {
     minHeight: 0,
     flexShrink: 1,
+  },
+  dialogContent: {
     gap: 16,
   },
   fullScreenContent: {

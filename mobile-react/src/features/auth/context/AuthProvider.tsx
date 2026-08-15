@@ -25,6 +25,7 @@ interface AuthContextValue {
   session: SessionResponse | null;
   signIn: (request: LoginRequest) => Promise<LoginOutcome>;
   selectCompany: (token: string, companyId: number) => Promise<void>;
+  selectTenant: (token: string, tenantId: string) => Promise<LoginOutcome>;
   signOut: () => Promise<void>;
   retry: () => Promise<void>;
   refreshSession: () => Promise<void>;
@@ -114,6 +115,14 @@ export function AuthProvider({ children }: PropsWithChildren) {
     return result;
   };
 
+  const selectTenant = async (token: string, tenantId: string): Promise<LoginOutcome> => {
+    const result = await authApi.selectTenant(token, tenantId);
+    if (result.kind === 'authenticated') {
+      await completeAuthentication(result.response);
+    }
+    return result;
+  };
+
   const selectCompany = async (token: string, companyId: number) => {
     await completeAuthentication(await authApi.selectCompany(token, companyId));
   };
@@ -134,6 +143,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     session,
     signIn,
     selectCompany,
+    selectTenant,
     signOut,
     retry: bootstrap,
     refreshSession,

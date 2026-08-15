@@ -5,6 +5,11 @@ const apiRootUrl = ENV.apiUrl.replace(/\/api\/v\d+$/i, '');
 export const AUTH_ENDPOINTS = {
   login: 'auth/login',
   register: 'auth/register',
+  forgetPassword: 'auth/forgetPassword',
+  resetPassword: 'auth/resetPassword',
+  confirmEmail: 'auth/confirmEmail',
+  resendConfirmationEmail: 'auth/resendConfirmationEmail',
+  selectTenant: 'auth/selectTenant',
   selectCompany: 'auth/selectCompany',
   refreshToken: 'auth/refreshToken',
   logout: 'auth/logOut',
