@@ -78,8 +78,11 @@ public sealed class ApiHardeningTests
     public void LocalizationResources_ParseWithApplicationJsonReader(string fileName)
     {
         var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null && !Directory.Exists(Path.Combine(directory.FullName, "HrManagementSystem")))
+        while (directory is not null &&
+               !Directory.Exists(Path.Combine(directory.FullName, "HrManagementSystem.Infrastructure")))
+        {
             directory = directory.Parent;
+        }
 
         Assert.NotNull(directory);
         var path = Path.Combine(

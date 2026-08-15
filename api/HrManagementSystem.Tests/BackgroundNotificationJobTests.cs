@@ -157,7 +157,8 @@ public sealed class BackgroundNotificationJobTests
     [InlineData(typeof(TenantAdminService))]
     [InlineData(typeof(FileService))]
     [InlineData(typeof(UserService))]
-    [InlineData(typeof(AuthService))]
+    [InlineData(typeof(AuthLoginService))]
+    [InlineData(typeof(AuthAccountService))]
     [InlineData(typeof(NotificationService))]
     public void NewlyCoveredMutationServices_UseDispatcherInsteadOfSignalR(Type serviceType)
     {
