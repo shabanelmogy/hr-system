@@ -16,7 +16,8 @@ export const PUBLIC_ROUTES = [
   "/forget-password",
   "/reset-password",
   "/resend-email-confirmation",
-  "/email-confirmation",
+  "/confirm-email",
+  "/.well-known",
   
   // Static assets (Next.js)
   "/_next",

@@ -6,7 +6,14 @@ export const metadata: Metadata = {
 };
 
 import PageComponent from "@/features/auth/ResendEmailConfirmation";
+import { publicSelfRegistrationEnabled } from "@/config/publicEnv";
+import { appRoutes } from "@/config/routes";
+import { redirect } from "next/navigation";
 
 export default function Page() {
+  if (!publicSelfRegistrationEnabled) {
+    redirect(appRoutes.login);
+  }
+
   return <PageComponent />;
 }

@@ -6,8 +6,9 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/resetpassword", destination: "/reset-password", permanent: true },
-      { source: "/auth/emailConfirmation", destination: "/email-confirmation", permanent: true },
-      { source: "/auth/email-confirmation", destination: "/email-confirmation", permanent: true },
+      { source: "/email-confirmation", destination: "/confirm-email", permanent: true },
+      { source: "/auth/emailConfirmation", destination: "/confirm-email", permanent: true },
+      { source: "/auth/email-confirmation", destination: "/confirm-email", permanent: true },
       { source: "/auth/users", destination: "/administration/users", permanent: true },
       { source: "/auth/roles", destination: "/administration/roles", permanent: true },
       {

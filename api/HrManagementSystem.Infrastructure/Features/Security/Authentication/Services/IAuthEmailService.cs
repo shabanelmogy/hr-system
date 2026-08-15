@@ -5,6 +5,6 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authentication.Ser
 
 public interface IAuthEmailService
 {
-    void SendConfirmationEmail(ApplicationUser user, string code, string? returnUrl = null);
-    void SendResetPasswordEmail(ApplicationUser user, string code, string? returnUrl = null);
+    void SendConfirmationEmail(ApplicationUser user, string code);
+    void SendResetPasswordEmail(ApplicationUser user, string code);
 }

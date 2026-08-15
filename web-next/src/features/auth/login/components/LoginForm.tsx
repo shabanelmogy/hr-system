@@ -9,6 +9,7 @@ import { alpha, Avatar, Box, Divider, Typography, type Theme } from "@mui/materi
 import { useState, type Dispatch, type RefObject, type SetStateAction } from "react";
 import Link from "next/link";
 import { gradientIconStyle } from "@/theme/componentStyles";
+import { publicSelfRegistrationEnabled } from "@/config/publicEnv";
 import type { AppRoutes } from "@/config/routes";
 import type { Translator } from "../../types";
 import type { SocialLoginHandler } from "../types";
@@ -18,7 +19,6 @@ import type {
   FieldErrors,
   UseFormHandleSubmit,
   UseFormRegister,
-  UseFormReset,
 } from "react-hook-form";
 import SocialLoginButtons from "./SocialLoginButtons";
 
@@ -37,7 +37,6 @@ interface LoginFormProps {
   errors: FieldErrors<LoginFormData>;
   register: UseFormRegister<LoginFormData>;
   handleSocialLogin: SocialLoginHandler;
-  reset: UseFormReset<LoginFormData>;
   appRoutes: AppRoutes;
   isFormSubmitting: boolean;
 }
@@ -57,7 +56,6 @@ const LoginForm = ({
   errors,
   register,
   handleSocialLogin,
-  reset,
   appRoutes,
   isFormSubmitting,
 }: LoginFormProps) => {
@@ -194,10 +192,11 @@ const LoginForm = ({
         loading={false}
         disabled={isAnySubmitting}
       />
-      <Box sx={{ position: "relative", display: "flex", justifyContent: "center", alignItems: "center", mt: 2, pb: 1 }}>
-        {/* Register Link */}
-        <RegisterLink t={t} theme={theme} reset={reset} appRoutes={appRoutes} />
-      </Box>
+      {publicSelfRegistrationEnabled && (
+        <Box sx={{ position: "relative", display: "flex", justifyContent: "center", alignItems: "center", mt: 2, pb: 1 }}>
+          <RegisterLink t={t} theme={theme} appRoutes={appRoutes} />
+        </Box>
+      )}
     </Box>
   );
 };
@@ -386,21 +385,16 @@ const DividerWithText = ({ t }: { t: Translator }) => (
 const RegisterLink = ({
   t,
   theme,
-  reset,
   appRoutes,
 }: {
   t: Translator;
   theme: Theme;
-  reset: UseFormReset<LoginFormData>;
   appRoutes: AppRoutes;
 }) => (
   <Typography variant="body2">
     {t("auth.dontHaveAccount")}{" "}
     <Link
       href={appRoutes.register}
-      onClick={() => {
-        reset();
-      }}
       style={{
         textDecoration: "none",
         color: theme.palette.primary.main,

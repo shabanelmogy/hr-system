@@ -2,6 +2,7 @@ using HrManagementSystem.Application.Common.Realtime;
 using HrManagementSystem.Application.Features.Platform.SecurityAudits.Contracts;
 using HrManagementSystem.Application.Features.Platform.SecurityAudits.Services;
 using HrManagementSystem.Application.Features.Security.Authentication.Contracts;
+using HrManagementSystem.Application.Features.Security.Authentication.Services;
 using HrManagementSystem.Application.Features.Security.Users.Errors;
 using HrManagementSystem.Domain.Platform.SecurityAudits.Enums;
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
@@ -18,7 +19,7 @@ public sealed class AuthLoginService(
     ISecurityAuditService securityAudit,
     IRealtimeChangeDispatcher realtimeChanges,
     ApplicationDbContext context,
-    TimeProvider timeProvider)
+    TimeProvider timeProvider) : IAuthLoginService
 {
     public async Task<Result<LoginResult>> GetTokenAsync(
         string userName,

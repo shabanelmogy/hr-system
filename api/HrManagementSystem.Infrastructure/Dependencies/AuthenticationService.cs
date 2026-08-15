@@ -11,11 +11,13 @@ public static class AuthenticationService
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<AuthLoginService>();
+        services.AddScoped<IAuthLoginService, AuthLoginService>();
         services.AddScoped<AuthSessionService>();
-        services.AddScoped<AuthAccountService>();
+        services.AddScoped<IAuthSessionService>(provider =>
+            provider.GetRequiredService<AuthSessionService>());
+        services.AddScoped<IAuthAccountService, AuthAccountService>();
         services.AddScoped<AuthCompanyAccessService>();
+        services.AddScoped<AuthEmailLinkBuilder>();
         services.AddScoped<RegistrationProfilePictureStore>();
         services.AddScoped<SessionRevocationNotifier>();
         services.AddScoped<IJwtProvider, JwtProvider>();

@@ -48,7 +48,7 @@ export interface AppRoutes {
   login: "/login";
   register: "/register";
   resendEmailConfirmation: "/resend-email-confirmation";
-  emailConfirmed: "/email-confirmation";
+  emailConfirmed: "/confirm-email";
   forgetPassword: "/forget-password";
   resetPassword: "/reset-password";
   changePassword: "/change-password";
@@ -69,7 +69,7 @@ export const appRoutes: AppRoutes = {
   login: "/login",
   register: "/register",
   resendEmailConfirmation: "/resend-email-confirmation",
-  emailConfirmed: "/email-confirmation",
+  emailConfirmed: "/confirm-email",
   forgetPassword: "/forget-password",
   resetPassword: "/reset-password",
   changePassword: "/change-password",

@@ -7,3 +7,8 @@ export const publicApiUrl = trimTrailingSlashes(
 export const publicReportApiUrl = trimTrailingSlashes(
   process.env.NEXT_PUBLIC_REPORT_API_URL ?? ""
 );
+
+// Public account creation is disabled for the HR application by default.
+// Keep this flag so another business can opt in without restoring removed UI.
+export const publicSelfRegistrationEnabled =
+  process.env.NEXT_PUBLIC_ENABLE_SELF_REGISTRATION === "true";

@@ -8,11 +8,15 @@ namespace HrManagementSystem.Api.Features.Security.Authentication.V1;
 [Route(ApiRoutes.BaseRoute)]
 [ApiController]
 public class AuthController(
-    IAuthService authService,
+    IAuthLoginService loginService,
+    IAuthSessionService sessionService,
+    IAuthAccountService accountService,
     IJwtProvider jwtProvider,
     ITenantAccessService tenantAccessService) : ControllerBase
 {
-    private readonly IAuthService _authService = authService;
+    private readonly IAuthLoginService _loginService = loginService;
+    private readonly IAuthSessionService _sessionService = sessionService;
+    private readonly IAuthAccountService _accountService = accountService;
     private readonly IJwtProvider _jwtProvider = jwtProvider;
     private readonly ITenantAccessService _tenantAccessService = tenantAccessService;
 
@@ -23,7 +27,7 @@ public class AuthController(
         [FromBody] LoginRequest request,
         CancellationToken cancellationToken)
     {
-        var result = await _authService.GetTokenAsync(
+        var result = await _loginService.GetTokenAsync(
             request.UserName,
             request.Password,
             cancellationToken);
@@ -38,7 +42,7 @@ public class AuthController(
         [FromBody] SelectTenantRequest request,
         CancellationToken cancellationToken)
     {
-        var result = await _authService.SelectTenantAsync(request, cancellationToken);
+        var result = await _loginService.SelectTenantAsync(request, cancellationToken);
         return result.IsSuccess ? Ok(result.Value.Payload) : result.ToProblem();
     }
 
@@ -49,7 +53,7 @@ public class AuthController(
         [FromBody] SelectCompanyRequest request,
         CancellationToken cancellationToken)
     {
-        var result = await _authService.SelectCompanyAsync(request, cancellationToken);
+        var result = await _loginService.SelectCompanyAsync(request, cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
@@ -60,7 +64,7 @@ public class AuthController(
         [FromBody] RegisterRequest request,
         CancellationToken cancellationToken)
     {
-        var result = await _authService.RegisterAsync(request, cancellationToken);
+        var result = await _accountService.RegisterAsync(request, cancellationToken);
         return result.IsSuccess ? Ok() : result.ToProblem();
     }
 
@@ -70,7 +74,7 @@ public class AuthController(
         [FromBody] LogoutRequest request,
         CancellationToken cancellationToken)
     {
-        var result = await _authService.LogOutAsync(request.RefreshToken, cancellationToken);
+        var result = await _sessionService.LogOutAsync(request.RefreshToken, cancellationToken);
         return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 
@@ -81,7 +85,7 @@ public class AuthController(
         [FromBody] RefreshTokenRequest request,
         CancellationToken cancellationToken)
     {
-        var result = await _authService.GetRefreshTokenAsync(request, cancellationToken);
+        var result = await _sessionService.GetRefreshTokenAsync(request, cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
@@ -91,7 +95,7 @@ public class AuthController(
         [FromQuery] RevokeUserSessionsRequest request,
         CancellationToken cancellationToken)
     {
-        var result = await _authService.RevokeRefreshTokenByUserIdAsync(request.UserId, cancellationToken);
+        var result = await _sessionService.RevokeRefreshTokenByUserIdAsync(request.UserId, cancellationToken);
         return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 
@@ -141,7 +145,7 @@ public class AuthController(
         [FromBody] ConfirmEmailRequest request,
         CancellationToken cancellationToken)
     {
-        var result = await _authService.ConfirmEmailAsync(request, cancellationToken);
+        var result = await _accountService.ConfirmEmailAsync(request, cancellationToken);
         return result.IsSuccess ? Ok() : result.ToProblem();
     }
 
@@ -152,7 +156,7 @@ public class AuthController(
         [FromBody] ResendConfirmationEmailRequest request,
         CancellationToken cancellationToken)
     {
-        var result = await _authService.ResendConfirmationEmailAsync(request, cancellationToken);
+        var result = await _accountService.ResendConfirmationEmailAsync(request, cancellationToken);
         return result.IsSuccess ? Ok() : result.ToProblem();
     }
 
@@ -163,7 +167,7 @@ public class AuthController(
         [FromBody] ForgetPasswordRequest request,
         CancellationToken cancellationToken)
     {
-        var result = await _authService.SendResetPasswordCodeAsync(request.Email, cancellationToken);
+        var result = await _accountService.SendResetPasswordCodeAsync(request.Email, cancellationToken);
         return result.IsSuccess ? Ok() : result.ToProblem();
     }
 
@@ -174,7 +178,7 @@ public class AuthController(
         [FromBody] ResetPasswordRequest request,
         CancellationToken cancellationToken)
     {
-        var result = await _authService.ResetPasswordAsync(request, cancellationToken);
+        var result = await _accountService.ResetPasswordAsync(request, cancellationToken);
         return result.IsSuccess ? Ok() : result.ToProblem();
     }
 }

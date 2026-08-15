@@ -6830,13 +6830,13 @@
     "semantic_hash": ""
   },
   "mobile-react/src/core/localization/translations/ar.ts": {
-    "mtime": 1786610015.9381392,
-    "ast_hash": "d435ebacd18e55dbbdcbf0e03e8bd732",
+    "mtime": 1786612453.1058686,
+    "ast_hash": "ef392ec6610cb0788ad716a069233670",
     "semantic_hash": ""
   },
   "mobile-react/src/core/localization/translations/en.ts": {
-    "mtime": 1786610015.9381392,
-    "ast_hash": "42eeefc87d57fb3c4db80e72cc0d4ae3",
+    "mtime": 1786612453.1048818,
+    "ast_hash": "382dfeede2f8c6926e43f92f88498424",
     "semantic_hash": ""
   },
   "mobile-react/src/core/providers/AppProviders.tsx": {
@@ -7695,13 +7695,13 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/onboarding/components/LanguageSelector.tsx": {
-    "mtime": 1786604906.1787548,
-    "ast_hash": "90afcd1360271a65f589b748904981f3",
+    "mtime": 1786612433.6241436,
+    "ast_hash": "4f7cf81b2a60dc02865dad196cf7fc63",
     "semantic_hash": ""
   },
   "mobile-react/src/features/onboarding/components/OnboardingVisual.tsx": {
-    "mtime": 1786612251.349789,
-    "ast_hash": "2e6f769a6eb5f2f724b4459a04ebc715",
+    "mtime": 1786612473.2992358,
+    "ast_hash": "802c671bec3220deae7f975f36266de2",
     "semantic_hash": ""
   },
   "mobile-react/src/features/onboarding/index.ts": {
@@ -7710,8 +7710,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/onboarding/screens/OnboardingScreen.tsx": {
-    "mtime": 1786612290.749641,
-    "ast_hash": "2934b3b07f05ada0c5cf13a7de73f587",
+    "mtime": 1786612826.1942625,
+    "ast_hash": "4ae46eeae219899a9188b6a82ac1e9ef",
     "semantic_hash": ""
   },
   "mobile-react/src/features/tenant-access/TenantAccessProvider.tsx": {
@@ -7775,8 +7775,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/controls/AppThemePalettePicker.tsx": {
-    "mtime": 1786612251.3507864,
-    "ast_hash": "3df02ffd97ef3c2e49ed15f05052a654",
+    "mtime": 1786612433.6261458,
+    "ast_hash": "d3136273da1240efe8c9528223235eb3",
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/data-table/AppDataTable.tsx": {

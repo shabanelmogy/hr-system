@@ -53,7 +53,9 @@ public sealed class BackgroundNotificationJobTests
     [InlineData(typeof(AddressTypeService))]
     [InlineData(typeof(AddressService))]
     [InlineData(typeof(UserService))]
-    [InlineData(typeof(AuthService))]
+    [InlineData(typeof(AuthLoginService))]
+    [InlineData(typeof(AuthSessionService))]
+    [InlineData(typeof(AuthAccountService))]
     public void EntityServices_QueueJobsWithoutDependingOnNotificationTransports(Type serviceType)
     {
         var parameterTypes = serviceType.GetConstructors().Single()

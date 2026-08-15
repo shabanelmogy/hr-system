@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Controller } from 'react-hook-form';
 
 import { asHref, ROUTES } from '@/src/core/constants/routes';
+import { ENV } from '@/src/core/config/env';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import type { useLoginForm } from '@/src/features/auth/login/hooks/useLoginForm';
@@ -118,18 +119,21 @@ export function LoginForm({ compact, form }: LoginFormProps) {
           {t('auth.login')}
         </AppButton>
 
-        <View style={[styles.registerPrompt, compact && styles.registerPromptCompact, { direction }]}>
-          <AppText align="center" color="muted" numberOfLines={1} variant="bodySmall">
-            {t('auth.noAccount')}
-          </AppText>
-          <AppButton
-            disabled={form.isAnySubmitting}
-            onPress={() => router.push(asHref(ROUTES.register))}
-            style={[styles.registerButton, compact && styles.registerButtonCompact]}
-            variant="ghost">
-            {t('auth.createAccount')}
-          </AppButton>
-        </View>
+        {ENV.publicSelfRegistrationEnabled ? (
+          <View
+            style={[styles.registerPrompt, compact && styles.registerPromptCompact, { direction }]}>
+            <AppText align="center" color="muted" numberOfLines={1} variant="bodySmall">
+              {t('auth.noAccount')}
+            </AppText>
+            <AppButton
+              disabled={form.isAnySubmitting}
+              onPress={() => router.push(asHref(ROUTES.register))}
+              style={[styles.registerButton, compact && styles.registerButtonCompact]}
+              variant="ghost">
+              {t('auth.createAccount')}
+            </AppButton>
+          </View>
+        ) : null}
 
         <View style={styles.quickAccessHeading}>
           <View style={[styles.divider, { backgroundColor: theme.colors.border }]} />

@@ -11,11 +11,11 @@ namespace HrManagementSystem.Api.Features.Security.Authentication.V1;
 [AllowAnonymous]
 [EnableRateLimiting("authentication")]
 public sealed class GoogleAuthController(
-    IAuthService authService,
+    IAuthLoginService loginService,
     IHttpClientFactory httpClientFactory,
     IConfiguration configuration) : ControllerBase
 {
-    private readonly IAuthService _authService = authService;
+    private readonly IAuthLoginService _loginService = loginService;
     private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
     private readonly string _googleClientId =
         configuration["ExternalLogin:Google:ClientId"] ?? string.Empty;
@@ -72,7 +72,7 @@ public sealed class GoogleAuthController(
             userInfo.Email,
             userInfo.GivenName ?? string.Empty,
             userInfo.FamilyName ?? string.Empty);
-        var result = await _authService.LoginWithGoogleAsync(externalUser, cancellationToken);
+        var result = await _loginService.LoginWithGoogleAsync(externalUser, cancellationToken);
         return result.IsSuccess ? Ok(result.Value.Payload) : result.ToProblem();
     }
 

@@ -42,7 +42,6 @@ const Login = () => {
     onSubmit,
     loginAs,
     control,
-    reset,
     register,
     errors,
     handleSocialLogin,
@@ -104,7 +103,6 @@ const Login = () => {
             errors={errors}
             register={register}
             handleSocialLogin={handleSocialLogin}
-            reset={reset}
             appRoutes={appRoutes}
           />
         </Paper>

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-12T06:41:01.498789+00:00",
+  "generated_at": "2026-08-13T13:31:41.565985+00:00",
   "nodes": {
     "api_hrmanagementsystem_infrastructure_security_authorization_filters_tenantmemberattribute_hrmanagementsystem_infrastructure_security_authorization_filters_tenantmemberattribute": {
       "code_fingerprint": "c688d01f21cf802ce06e8127e0616e83d139f1db2d949b03d8890a7fb4da571d",
@@ -12,13 +12,13 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.988283306,
+      "score": 0.959368545,
       "source_file": "api/HrManagementSystem.Infrastructure/Security/Authorization/Filters/TenantMemberAttribute.cs",
       "status": "tentative",
       "uses": 1
     },
     "mobile_react_app_android_softwarekeyboardlayoutmode": {
-      "code_fingerprint": "517fe2fbb8d08a82662fbdebb61c80334f8db0670a25d89326b4c8dfb3555683",
+      "code_fingerprint": "6a8c8869ea606550a3bb136eb1a549f857340ac050427c4057f11c271fde362e",
       "label": "softwareKeyboardLayoutMode",
       "last": "2026-08-11T16:37:30.882471+00:00",
       "provenance": [
@@ -28,13 +28,13 @@
           "q": "when focus input keyboard cover input"
         }
       ],
-      "score": 0.986556991,
+      "score": 0.957692738,
       "source_file": "mobile-react/app.json",
       "status": "tentative",
       "uses": 1
     },
     "mobile_react_src_features_auth_login_components_loginform": {
-      "code_fingerprint": "4fd8b88ebdff831d077a085ca9334de4b362cc919d49ecedae5874d8a16d0781",
+      "code_fingerprint": "3a3db7b05e54dd604b986683255f01fd181252b4cd4e6674f4c6554aa631c09d",
       "label": "mobile-react/src/features/auth/login/components/LoginForm.tsx",
       "last": "2026-08-11T19:46:05.613774+00:00",
       "provenance": [
@@ -44,7 +44,7 @@
           "q": "How should the mobile app globally focus the first input in each form?"
         }
       ],
-      "score": 0.989546598,
+      "score": 0.960594876,
       "source_file": "mobile-react/src/features/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
@@ -60,7 +60,7 @@
           "q": "create dashborad and tenetamanagement in web-next and mobile"
         }
       ],
-      "score": 0.988131899,
+      "score": 0.959221568,
       "source_file": "mobile-react/src/features/tenants/screens/TenantDashboardScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -76,7 +76,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.988767631,
+      "score": 0.9598387,
       "source_file": "web-next/package.json",
       "status": "tentative",
       "uses": 1
@@ -92,7 +92,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.988494773,
+      "score": 0.959573825,
       "source_file": "web-next/README.md",
       "status": "tentative",
       "uses": 1
@@ -108,7 +108,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.988494773,
+      "score": 0.959573825,
       "source_file": "web-next/scripts/setup-local-https.ps1",
       "status": "tentative",
       "uses": 1
@@ -124,7 +124,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.988767631,
+      "score": 0.9598387,
       "source_file": "web-next/src/app/(auth)/login/page.tsx",
       "status": "tentative",
       "uses": 1
@@ -140,7 +140,7 @@
           "q": "fix style for buton : login as admin"
         }
       ],
-      "score": 0.986691327,
+      "score": 0.957823144,
       "source_file": "web-next/src/features/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
@@ -156,7 +156,7 @@
           "q": "Fix web super-admin login failing with HTTP 307 and React minWidth DOM warning on the tenant dashboard."
         }
       ],
-      "score": 0.989177126,
+      "score": 0.960236215,
       "source_file": "web-next/src/features/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
@@ -177,7 +177,7 @@
           "q": "create dashborad and tenetamanagement in web-next and mobile"
         }
       ],
-      "score": 1.977309025,
+      "score": 1.919457783,
       "source_file": "web-next/src/features/tenants/TenantDashboardPage.tsx",
       "status": "preferred",
       "uses": 2
@@ -193,7 +193,7 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.988283306,
+      "score": 0.959368545,
       "source_file": "web-next/src/layouts/components/sidebar/navigationConfig.tsx",
       "status": "tentative",
       "uses": 1
@@ -214,7 +214,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 1.977944757,
+      "score": 1.920074914,
       "source_file": "web-next/src/proxy.ts",
       "status": "preferred",
       "uses": 2
@@ -236,7 +236,7 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": -0.000104809,
+      "score": -0.000101742,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/characterCount.ts",
       "status": "contested",
       "uses": 1,
@@ -259,7 +259,7 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": -0.000104809,
+      "score": -0.000101742,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/inputConstraints.ts",
       "status": "contested",
       "uses": 1,
@@ -287,14 +287,14 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": 0.989789852,
+      "score": 0.960831013,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/TextFieldEndAdornment.tsx",
       "status": "contested",
       "uses": 2,
       "verdict": "useful"
     },
     "web_next_src_shared_components_forms_text_fields_mytextfield": {
-      "code_fingerprint": "81a534240f57c517435efdb18a180d36a652bc1320bf80bf86e253eca3a75162",
+      "code_fingerprint": "eed2b4fa6dbe4bdb31c545d051347ab9df291aef7b4374e279fe0f1b863440f0",
       "label": "MyTextField.tsx",
       "last": "2026-08-11T20:08:00.701332+00:00",
       "neg": 1,
@@ -315,7 +315,7 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": 0.989789852,
+      "score": 0.960831013,
       "source_file": "web-next/src/shared/components/forms/text-fields/MyTextField.tsx",
       "status": "contested",
       "uses": 2,

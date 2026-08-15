@@ -2,6 +2,7 @@ using HrManagementSystem.Application.Common.Realtime;
 using HrManagementSystem.Application.Features.Platform.SecurityAudits.Contracts;
 using HrManagementSystem.Application.Features.Platform.SecurityAudits.Services;
 using HrManagementSystem.Application.Features.Security.Authentication.Contracts;
+using HrManagementSystem.Application.Features.Security.Authentication.Services;
 using HrManagementSystem.Application.Features.Security.Users.Errors;
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
 
@@ -16,7 +17,7 @@ public sealed class AuthAccountService(
     AuthSessionService sessions,
     ISecurityAuditService securityAudit,
     IRealtimeChangeDispatcher realtimeChanges,
-    ApplicationDbContext context)
+    ApplicationDbContext context) : IAuthAccountService
 {
     public async Task<Result> RegisterAsync(
         RegisterRequest request,

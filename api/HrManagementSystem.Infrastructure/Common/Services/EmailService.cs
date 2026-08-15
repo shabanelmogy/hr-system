@@ -10,11 +10,8 @@ public class EmailService(IOptions<MailSettings> mailsettings) : IEmailSender
 
     public async Task SendEmailAsync(string email, string subject, string htmlMessage)
     {
-        var message = new MimeMessage
-        {
-            Sender = MailboxAddress.Parse(_mailsettings.Mail),
-            Subject = subject
-        };
+        var message = new MimeMessage { Subject = subject };
+        message.From.Add(new MailboxAddress(_mailsettings.DisplayName, _mailsettings.Mail));
 
         message.To.Add(MailboxAddress.Parse(email));
 
@@ -26,14 +23,12 @@ public class EmailService(IOptions<MailSettings> mailsettings) : IEmailSender
         message.Body = builder.ToMessageBody();
 
         using var smtp = new SmtpClient();
-
-
-        smtp.Connect(_mailsettings.Host, _mailsettings.Port, SecureSocketOptions.SslOnConnect);
-
-        smtp.Authenticate(_mailsettings.Mail, _mailsettings.Password);
-
+        await smtp.ConnectAsync(
+            _mailsettings.Host,
+            _mailsettings.Port,
+            SecureSocketOptions.SslOnConnect);
+        await smtp.AuthenticateAsync(_mailsettings.Mail, _mailsettings.Password);
         await smtp.SendAsync(message);
-
-        smtp.Disconnect(true);
+        await smtp.DisconnectAsync(true);
     }
 }

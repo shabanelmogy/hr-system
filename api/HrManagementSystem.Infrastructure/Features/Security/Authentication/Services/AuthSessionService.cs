@@ -1,4 +1,3 @@
-using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Features.Platform.SecurityAudits.Contracts;
 using HrManagementSystem.Application.Features.Platform.SecurityAudits.Services;
 using HrManagementSystem.Application.Features.Security.Authentication.Contracts;
@@ -18,7 +17,7 @@ public sealed class AuthSessionService(
     AuthCompanyAccessService companyAccess,
     SessionRevocationNotifier revocationNotifier,
     IHttpContextAccessor httpContextAccessor,
-    TimeProvider timeProvider)
+    TimeProvider timeProvider) : IAuthSessionService
 {
     public async Task<Result<AuthResponse>> IssueSessionAsync(
         ApplicationUser user,

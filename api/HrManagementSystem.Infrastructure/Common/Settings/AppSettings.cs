@@ -3,8 +3,8 @@ namespace HrManagementSystem.Infrastructure.Common.Settings;
 public class AppSettings
 {
     /// <summary>
-    /// The base URL of the frontend application.
-    /// Used to build links in confirmation and password-reset emails.
+    /// The public HTTPS URL shared by the web app and mobile universal links.
+    /// Used to build confirmation and password-reset links with a web fallback.
     /// Never trust Request.Headers["Origin"] for this purpose.
     /// </summary>
     [Required, Url]
