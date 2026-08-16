@@ -49,7 +49,7 @@ export function ManagedUserForm({
   const { t, i18n } = useTranslation();
   const isEdit = mode === 'edit';
   const isView = mode === 'view';
-  const [showPasswordSection, setShowPasswordSection] = useState(mode === 'add');
+  const [showPasswordSection, setShowPasswordSection] = useState(false);
   const [focusErrorRequestId, setFocusErrorRequestId] = useState(0);
   const schema = useMemo(() => createManagedUserSchema(t, isEdit), [isEdit, t]);
   const defaults = useMemo<ManagedUserFormValues>(() => createDefaults(user, currentCompanyId), [
@@ -291,7 +291,7 @@ export function ManagedUserForm({
         />
       </AppFormSection>
 
-      {!isView ? (
+      {isEdit ? (
         <AppFormSection
           description={t(isEdit
             ? 'userManagement.passwordChangeDescription'

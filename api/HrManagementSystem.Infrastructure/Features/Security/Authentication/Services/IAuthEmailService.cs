@@ -7,4 +7,5 @@ public interface IAuthEmailService
 {
     void SendConfirmationEmail(ApplicationUser user, string code);
     void SendResetPasswordEmail(ApplicationUser user, string code);
+    void SendInvitationEmail(string email, string firstName, Guid invitationId, string token);
 }

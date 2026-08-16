@@ -228,6 +228,7 @@
     "rolesAndUsersManagement": "المستخدمين و الصلاحيات",
     "rolesManagement": "ادارة الصلاحيات",
     "usersManagement": "ادارة المستخدمين",
+    "invitationsManagement": "إدارة الدعوات",
     "superAdmin": "مدير النظام",
     "superAdminDashboard": "لوحة التحكم",
     "tenantManagement": "إدارة المستأجرين",
@@ -242,7 +243,7 @@
     "notifications": "الإشعارات",
     "kanban": "كانبان",
     "kanbanBoards": "اللوحات",
-    "extras": "الاضافات",
+    "extras": "الإضافات",
     "filemanager": "مدير الملفات",
     "appointments": "المواعيد",
     "collapseAllSections": "غلق كل الأقسام",
@@ -429,7 +430,12 @@
     "pleaseVerifyUsername": "الرجاء التحقق من اسم المستخدم",
     "pleaseVerifyEmail": "الرجاء التحقق من البريد الالكتروني",
     "registerSuccess": "تم التسجيل بنجاح, يرجى التحقق من بريدك الالكتروني للتفعيل",
-    "confirmationEmailSent": "تم ارسال تاكيد البريد الالكتروني"
+    "confirmationEmailSent": "تم ارسال تاكيد البريد الالكتروني",
+    "acceptInvitation": "تفعيل الحساب",
+    "acceptInvitationDescription": "عيّن كلمة مرور لتفعيل حسابك المدعو.",
+    "invalidInvitationLink": "رابط الدعوة مفقود أو غير صالح.",
+    "activateAccount": "تفعيل الحساب",
+    "invitationAccepted": "تم تفعيل حسابك ويمكنك تسجيل الدخول الآن."
   },
   "googleAuth": {
     "orContinueWithGoogle": "أو تابع مع",
@@ -878,6 +884,8 @@
     "status": "حالة التصنيف",
     "namePlaceholder": "اسم  تصنيف الصلاحية | manager , user , accountant",
     "managePermissions": "ادارة الصلاحيات",
+    "viewPermissions": "عرض الصلاحيات",
+    "systemRoleReadOnly": "هذا دور نظام للعرض فقط. يمكنك مراجعة صلاحياته دون تعديلها.",
     "fetched": "تم تحميل قائمة الصلاحيات بنجاح",
     "updated": "تم تحديث بيانات تصنيف الصلاحية بنجاح",
     "created": "تم انشاء تصنيف الصلاحية بنجاح",
@@ -962,15 +970,32 @@
     "defaultCompanyRequired": "يجب اختيار الشركة الافتراضية",
     "defaultCompanyMustBeSelected": "يجب أن تكون الشركة الافتراضية ضمن الشركات المسموح بها",
     "companyAccessHint": "يمكن للمستخدم تسجيل الدخول إلى الشركات المحددة فقط، وعند اختيار أكثر من شركة سيحدد الشركة عند تسجيل الدخول.",
-    "noDefaultCompany": "لا توجد شركة افتراضية"
+    "noDefaultCompany": "لا توجد شركة افتراضية",
+    "sendingInvitation": "جارٍ إرسال الدعوة",
+    "sendInvitation": "إرسال دعوة",
+    "inviteSubtitle": "أرسل دعوة للحساب؛ وسيقوم المستلم بتعيين كلمة المرور الخاصة به.",
+    "invitationSent": "تم إرسال الدعوة بنجاح",
+    "pendingInvitations": "الدعوات المعلّقة",
+    "noPendingInvitations": "لا توجد دعوات معلّقة.",
+    "invitationPending": "معلّقة",
+    "invitationExpired": "منتهية",
+    "resendInvitation": "إعادة الإرسال",
+    "revokeInvitation": "إلغاء",
+    "invitationResent": "تمت إعادة إرسال الدعوة بنجاح",
+    "invitationRevoked": "تم إلغاء الدعوة بنجاح",
+    "expiresOn": "تنتهي في {{date}}"
+  },
+  "invitations": {
+    "title": "الدعوات",
+    "subTitle": "ادعُ المستخدمين وأدر روابط تفعيل الحسابات المعلّقة."
   },
   "advancedTools": {
     "title": "أدوات متقدمة",
     "trackChanges": "تتبع التغييرات",
-    "healthCheck": "تحقق من صحة النظام",
-    "apiEndPoints": "نقاط الاتصال",
-    "localizationApi": "ترجمة الرسائل",
-    "hangfireDashboard": "الوظائف الغير مرئية"
+    "healthCheck": "حالة النظام",
+    "apiEndPoints": "واجهات API",
+    "localizationApi": "إدارة الترجمات",
+    "hangfireDashboard": "لوحة مهام الخلفية"
   },
   "healthCheck": {
     "title": "صحة النظام",

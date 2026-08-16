@@ -38,16 +38,8 @@ export function createManagedUserSchema(t: TFunction, isEdit: boolean) {
       });
     }
 
-    if (isEdit && !values.password) return;
-
-    if (!values.password) {
-      context.addIssue({
-        code: 'custom',
-        path: ['password'],
-        message: t('validation.required'),
-      });
-      return;
-    }
+    // New managed accounts are activated through an invitation; only edits can change a password.
+    if (!isEdit || !values.password) return;
 
     if (!passwordPattern.test(values.password) || values.password.length < 8) {
       context.addIssue({

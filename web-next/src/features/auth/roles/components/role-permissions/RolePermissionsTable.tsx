@@ -23,6 +23,7 @@ type RolePermissionsTableProps = {
   areAllSelected: (type: string) => boolean;
   onSelectAll: (type: string, selected: boolean) => void;
   onToggle: (claimIndex: number) => void;
+  readOnly: boolean;
 };
 
 export default function RolePermissionsTable(props: RolePermissionsTableProps) {
@@ -56,7 +57,7 @@ export default function RolePermissionsTable(props: RolePermissionsTableProps) {
                         fontWeight: "bold",
                       }}
                     />
-                    <Tooltip title={allSelected ? "Unselect All" : "Select All"}>
+                    {!props.readOnly && <Tooltip title={allSelected ? "Unselect All" : "Select All"}>
                       <IconButton
                         size="small"
                         onClick={() => props.onSelectAll(type, !allSelected)}
@@ -72,7 +73,7 @@ export default function RolePermissionsTable(props: RolePermissionsTableProps) {
                       >
                         {allSelected ? <Clear /> : <Check />}
                       </IconButton>
-                    </Tooltip>
+                    </Tooltip>}
                   </Box>
                 </TableCell>
               );
@@ -88,6 +89,7 @@ export default function RolePermissionsTable(props: RolePermissionsTableProps) {
               colors={colors}
               theme={theme}
               onToggle={props.onToggle}
+              readOnly={props.readOnly}
             />
           ))}
         </TableBody>

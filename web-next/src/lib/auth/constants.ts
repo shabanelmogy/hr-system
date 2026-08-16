@@ -15,6 +15,7 @@ export const PUBLIC_ROUTES = [
   "/register",
   "/forget-password",
   "/reset-password",
+  "/accept-invitation",
   "/resend-email-confirmation",
   "/confirm-email",
   "/.well-known",

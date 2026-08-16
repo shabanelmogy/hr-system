@@ -36,6 +36,7 @@ public sealed class NotificationPublisher(
                       company.IsActive &&
                       user.TenantId == access.TenantId &&
                       !role.IsDeleted &&
+                      (role.IsSystem || role.TenantId == access.TenantId) &&
                       roleClaim.ClaimType == Permissions.Type &&
                       roleClaim.ClaimValue == request.RequiredPermission &&
                       (request.TenantId == null || access.TenantId == request.TenantId) &&

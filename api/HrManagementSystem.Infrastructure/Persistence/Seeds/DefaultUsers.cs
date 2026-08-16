@@ -24,7 +24,9 @@ public static class DefaultUsers
 
     public static async Task SeedAdminPermissionsAsync(RoleManager<ApplicationRole> roleManager)
     {
-        var adminRole = await roleManager.FindByNameAsync(AppRoles.admin);
+        var normalizedAdminName = roleManager.NormalizeKey(AppRoles.admin);
+        var adminRole = await roleManager.Roles.SingleOrDefaultAsync(role =>
+            role.IsSystem && role.NormalizedName == normalizedAdminName);
         if (adminRole is null)
             throw new InvalidOperationException("The administrator role was not created.");
 

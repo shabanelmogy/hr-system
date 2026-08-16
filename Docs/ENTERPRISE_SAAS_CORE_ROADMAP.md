@@ -6,6 +6,22 @@
 
 هذه الوثيقة تفصل التعديلات المطلوبة حسب الأولوية. البنود المصنفة `P0` تمنع إطلاق Enterprise Pilot خارجي قبل إغلاقها.
 
+## حالة التنفيذ
+
+آخر تحديث: 2026-08-16
+
+الحزم الثلاث الأولى من المرحلة 0 اكتملت واختُبرت:
+
+- [x] إضافة `AuthenticationFeatureSettings` بسياسة default-deny.
+- [x] إغلاق public self-registration داخل خدمة الـ backend افتراضيًا.
+- [x] إغلاق Google auto-provision افتراضيًا مع السماح للمستخدم الموجود مسبقًا.
+- [x] الحفاظ على opt-in configuration لاستخدام السلوكين مستقبلًا في منتج آخر.
+- [x] إضافة اختبارات policy وarchitecture وinvitation وtenant-role/notification/realtime؛ جميع اختبارات الـ API ناجحة: `174/174`.
+- [ ] إضافة service-level tests تستدعي تدفقات التسجيل وGoogle باستخدام dependencies فعلية أو test doubles.
+- [x] تنفيذ Invitation / Account Activation Flow للمستخدمين المُدارين في الـ backend والويب والموبايل.
+- [ ] تحويل إنشاء أول Tenant Admin إلى invitation ضمن Atomic Tenant Provisioning.
+- [x] تنفيذ tenant-scoped roles migration وعزل JWT وnotifications وrealtime.
+
 ## الحالة الحالية المختصرة
 
 الأساس الموجود جيد ويشمل:
@@ -31,7 +47,7 @@
 
 ### 1. إغلاق التسجيل العام من الخادم
 
-التسجيل مخفي حاليًا من واجهتي الويب والموبايل، لكن الـ API ما زال يسمح بالتسجيل المجهول، كما أن Google login يستطيع إنشاء مستخدم جديد تلقائيًا في الـ default tenant.
+تم إغلاق التسجيل المجهول وGoogle auto-provision افتراضيًا من الخادم، مع إبقاء opt-in flags صريحة لاستخدام السلوكين مستقبلًا في منتج آخر.
 
 الأماكن الحالية:
 
@@ -41,10 +57,10 @@
 
 التعديلات المطلوبة:
 
-- [ ] إضافة إعداد Backend واضح مثل `AuthenticationFeatures:PublicSelfRegistrationEnabled` وقيمته الافتراضية `false`.
-- [ ] منع `RegisterAsync` من إنشاء حساب عندما تكون الخاصية مغلقة، وإرجاع business error ثابت مثل `Authentication.SelfRegistrationDisabled`.
-- [ ] إضافة `AuthenticationFeatures:GoogleAutoProvisionEnabled` بقيمة افتراضية `false`.
-- [ ] السماح لـ Google login بالدخول لمستخدم موجود ومسموح فقط، بدون إنشاء مستخدم أو إسناده إلى default tenant تلقائيًا.
+- [x] إضافة إعداد Backend واضح باسم `AuthenticationFeatureSettings:PublicSelfRegistrationEnabled` وقيمته الافتراضية `false`.
+- [x] منع `RegisterAsync` من إنشاء حساب عندما تكون الخاصية مغلقة، وإرجاع business error ثابت باسم `Authentication.SelfRegistrationDisabled`.
+- [x] إضافة `AuthenticationFeatureSettings:GoogleAutoProvisionEnabled` بقيمة افتراضية `false`.
+- [x] السماح لـ Google login بالدخول لمستخدم موجود ومسموح فقط، بدون إنشاء مستخدم أو إسناده إلى default tenant تلقائيًا.
 - [ ] عدم كشف ما إذا كان البريد مسجلًا أو مؤكدًا من خلال resend/forgot responses.
 - [ ] إضافة اختبارات تؤكد أن تعطيل التسجيل يعمل حتى عند استدعاء الـ API مباشرة.
 - [ ] إضافة اختبارات تؤكد أن Google user غير الموجود لا يتم إنشاؤه تلقائيًا.
@@ -59,15 +75,23 @@
 
 التعديلات المطلوبة:
 
-- [ ] إضافة كيان `UserInvitation` يحتوي على TenantId، البريد، الأدوار، الشركات، inviter، تاريخ الانتهاء والحالة.
-- [ ] تخزين hash للـ invitation token فقط وعدم تخزين القيمة الخام.
-- [ ] جعل invitation token قصير العمر، one-time use، وقابلًا للإلغاء وإعادة الإرسال.
-- [ ] إضافة endpoints للإدارة: create، resend، revoke، get status.
-- [ ] إضافة endpoint مجهول لقبول الدعوة وتعيين كلمة المرور وتأكيد البريد.
+- [x] إضافة كيان `UserInvitation` يحتوي على TenantId، البريد، الأدوار، الشركات، inviter، تاريخ الانتهاء والحالة.
+- [x] تخزين hash للـ invitation token فقط وعدم تخزين القيمة الخام.
+- [x] جعل invitation token قصير العمر، one-time use، وقابلًا للإلغاء وإعادة الإرسال.
+- [x] إضافة endpoints للإدارة: create، resend، revoke، get status.
+- [x] إضافة endpoint مجهول لقبول الدعوة وتعيين كلمة المرور وتأكيد البريد.
 - [ ] إلغاء الدعوات السابقة عند تغيير البريد أو حذف/أرشفة المستخدم.
-- [ ] تسجيل create/resend/revoke/accept في `SecurityAuditEvent`.
-- [ ] إضافة صفحة قبول الدعوة في `web-next` ومسار App/Universal Link في `mobile-react`.
-- [ ] إضافة شاشة لإظهار pending/expired invitations للإدارة.
+- [x] تسجيل create/resend/revoke/accept في `SecurityAuditEvent`.
+- [x] إضافة migration معزولة لجدول الدعوات وفهارسه وعلاقاته.
+- [x] إضافة صفحة قبول الدعوة في `web-next` ومسار App/Universal Link في `mobile-react`.
+- [x] إضافة شاشة لإظهار pending/expired invitations وإعادة الإرسال والإلغاء للإدارة.
+
+فجوات الإغلاق قبل الـPilot:
+
+- [ ] تعطيل أو إزالة مسار `Users/Add` القديم الذي يسمح للمسؤول بتحديد كلمة مرور مباشرة، بعد التأكد من عدم وجود عميل قديم يعتمد عليه.
+- [ ] نقل إنشاء أول Tenant Admin إلى invitation بدل استقبال كلمة مرور من Super Admin.
+- [ ] إضافة اختبارات integration على SQL Server تغطي create/resend/revoke/accept والتزامن وحدود المقاعد.
+- [ ] ضبط متغيرات App Links ونشر `assetlinks.json` و`apple-app-site-association` بالقيم الإنتاجية الفعلية.
 
 معيار القبول:
 
@@ -75,7 +99,7 @@
 
 ### 3. عزل الأدوار والصلاحيات بين الـ Tenants
 
-`ApplicationRole` الحالي لا يحتوي على `TenantId`، لذلك الأدوار غير معزولة بين العملاء. تعديل claims لدور مشترك قد يؤثر على مستخدمين في أكثر من Tenant.
+تم تحويل `ApplicationRole` إلى نموذج system/global أو custom/tenant-owned، وعُزلت التعيينات وJWT والإشعارات والـrealtime. البنود غير المكتملة أدناه تخص session invalidation وsecurity audit والتحقق التكاملـي على SQL Server.
 
 الأماكن الحالية:
 
@@ -85,19 +109,34 @@
 
 التصميم المقترح:
 
-- إبقاء platform roles مثل `super_admin` ثابتة وغير قابلة للتعديل من Tenant Admin.
-- إنشاء tenant-scoped custom roles وrole-permission assignments منفصلة عن platform roles.
+- إبقاء `super_admin` و`admin` و`user` كـ platform roles ثابتة، `TenantId = null`، وغير قابلة للتعديل من Tenant Admin.
+- جعل كل custom role مملوكًا لـ Tenant واحد، وليس Company واحدة، مع منع استخدام أسماء platform roles.
+- الاحتفاظ بجداول Identity الحالية، مع جعل ملكية `AspNetUserRoles` و`AspNetRoleClaims` مشتقة من `RoleId`.
+- استخدام role IDs في user assignments وJWT بدل الاعتماد على أسماء الأدوار عالميًا.
 
 التعديلات المطلوبة:
 
-- [ ] تحديد قائمة platform roles غير القابلة للتعديل.
-- [ ] إضافة Tenant ownership للأدوار المخصصة والصلاحيات المرتبطة بها.
-- [ ] فرض tenant filter على القراءة والإنشاء والتعديل والحذف.
-- [ ] منع Tenant Admin من تعديل platform roles أو أدوار Tenant آخر.
+- [x] تحديد `super_admin` و`admin` و`user` كـ platform roles غير قابلة للتعديل.
+- [x] إضافة Tenant ownership للأدوار المخصصة والصلاحيات المرتبطة بها.
+- [x] فرض tenant filter على القراءة والإنشاء والتعديل والحذف.
+- [x] منع Tenant Admin من تعديل platform roles أو أدوار Tenant آخر.
 - [ ] إلغاء الجلسات المتأثرة بعد تغيير صلاحيات role.
 - [ ] تسجيل كل role/permission mutation في Security Audit.
-- [ ] إضافة migration آمنة لتحويل الأدوار الحالية.
-- [ ] إضافة اختبارات عدائية تثبت عدم وجود cross-tenant role access.
+- [x] إضافة migration آمنة لتحويل الأدوار الحالية مع fail-fast عند تعذر استنتاج الملكية.
+- [x] إضافة اختبارات عدائية تثبت عدم وجود cross-tenant role access.
+
+متطلبات الـ migration:
+
+- [x] إضافة `TenantId nullable` و`IsSystem` إلى `ApplicationRole`.
+- [x] استبدال `RoleNameIndex` العالمي بفهرس فريد لأسماء system roles وفهرس فريد مركب `(TenantId, NormalizedName)` للأدوار المخصصة.
+- [x] نسخ كل legacy custom role وclaims الخاصة به إلى كل Tenant كان يستخدمه، ثم تحويل user-role assignments إلى النسخة الصحيحة.
+- [x] إيقاف migration إذا تعذر تحديد Tenant لدور مخصص أو لأي assignment.
+- [ ] إضافة SQL Server integration fixture يتحقق من أعداد النسخ والـ claims والتعيينات على بيانات legacy متعددة الـtenants.
+- [ ] تشغيل migration داخل maintenance window وبعد backup مجرب، لأنها لا تملك `Down` يعيد دمج نسخ اختلفت بعد التشغيل بشكل lossless.
+- [x] تحديث JWT، notifications وrealtime queries لتقيد الدور بالـ selected Tenant وتتجاهل الدور المخصص المعطل.
+- [x] تحديث الويب والموبايل بعقد `isSystem` إلزامي، وجعل system roles للعرض فقط، وإزالة role cache المستمر بين جلسات الويب.
+- [ ] إلغاء جلسات المستخدمين المتأثرين وتحديث security stamps بعد تغيير الدور أو صلاحياته.
+- [x] استخدام realtime groups بصيغة `tenant:{tenantId}:permission:{permission}` و`tenant:{tenantId}:role:{roleId}` للأحداث المملوكة للـTenant، مع الإبقاء على audience عامة للأحداث المشتركة المراجعة فقط.
 
 معيار القبول:
 
@@ -335,7 +374,7 @@
 ### 20. Web
 
 - [ ] Tenant setup wizard: الشركة، الفروع، الهيكل، الـ admin invitation والإعدادات الأساسية.
-- [ ] Invitation management UI.
+- [x] Invitation management UI.
 - [ ] MFA enrollment وsession management.
 - [ ] Entitlement-aware navigation مع enforcement فعلي من الخادم.
 - [ ] Audit viewer مع filtering/export.
@@ -347,7 +386,8 @@
 - [ ] تحديد نطاق الموبايل رسميًا كـ employee/manager self-service أو admin app.
 - [ ] إذا كان Employee Self-Service: profile، leave، approvals، notifications وdocuments هي الأولوية.
 - [ ] عدم محاولة نسخ كل شاشات إدارة الويب بدون احتياج منتج واضح.
-- [ ] دعم invitation/activation وMFA وsession management.
+- [x] دعم invitation/activation.
+- [ ] دعم MFA وsession management.
 - [ ] دعم push notifications مع preference center.
 - [ ] توثيق السلوك عند offline والتعارضات وإعادة المحاولة.
 
@@ -435,4 +475,3 @@
 - كل feature مدفوعة enforced من الخادم بواسطة entitlements.
 - توجد backups مجربة، CI/CD، migration process، monitoring وalerts.
 - توجد سياسات audit، retention، export وtenant termination قابلة للتنفيذ والإثبات.
-

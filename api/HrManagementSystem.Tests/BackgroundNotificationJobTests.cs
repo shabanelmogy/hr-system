@@ -140,6 +140,12 @@ public sealed class BackgroundNotificationJobTests
             "permission:Countries:View",
             GeneralHubGroups.ForPermission(Permissions.ViewCountries));
         Assert.Equal(
+            "tenant:tenant-1:permission:Countries:View",
+            GeneralHubGroups.ForTenantPermission("tenant-1", Permissions.ViewCountries));
+        Assert.Equal(
+            "tenant:tenant-1:role:role-1",
+            GeneralHubGroups.ForTenantRole("tenant-1", "role-1"));
+        Assert.Equal(
             "tenant:tenant-1:company:7:permission:Users:View",
             GeneralHubGroups.ForCompanyPermission("tenant-1", 7, Permissions.ViewUsers));
         Assert.Equal(

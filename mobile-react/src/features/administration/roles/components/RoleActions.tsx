@@ -37,7 +37,7 @@ export function RoleActions({
         label={t('roleManagement.viewRole')}
         onPress={() => onView(role)}
       />
-      {canEdit ? (
+      {canEdit && !role.isSystem ? (
         <AppIconButton
           color={theme.colors.primary}
           icon="create-outline"
@@ -48,10 +48,10 @@ export function RoleActions({
       <AppIconButton
         color={theme.colors.accent}
         icon="key-outline"
-        label={t('roleManagement.managePermissions')}
+        label={t(role.isSystem ? 'roleManagement.viewPermissions' : 'roleManagement.managePermissions')}
         onPress={() => onManagePermissions(role)}
       />
-      {canDelete ? (
+      {canDelete && !role.isSystem ? (
         <AppIconButton
           color={role.isDeleted ? theme.colors.success : theme.colors.danger}
           icon={role.isDeleted ? 'play-circle-outline' : 'pause-circle-outline'}

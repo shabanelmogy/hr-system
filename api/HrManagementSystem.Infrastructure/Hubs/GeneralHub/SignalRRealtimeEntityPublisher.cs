@@ -35,6 +35,10 @@ public sealed class SignalRRealtimeEntityPublisher(
         {
             RealtimeAudienceKind.Permission =>
                 GeneralHubGroups.ForPermission(KnownPermission(audience.Permission)),
+            RealtimeAudienceKind.TenantPermission =>
+                GeneralHubGroups.ForTenantPermission(
+                    Required(audience.TenantId, nameof(audience.TenantId)),
+                    KnownPermission(audience.Permission)),
             RealtimeAudienceKind.Company =>
                 GeneralHubGroups.ForCompany(
                     Required(audience.TenantId, nameof(audience.TenantId)),
@@ -51,6 +55,10 @@ public sealed class SignalRRealtimeEntityPublisher(
                     Required(audience.UserId, nameof(audience.UserId))),
             RealtimeAudienceKind.Role =>
                 GeneralHubGroups.ForRole(Required(audience.Role, nameof(audience.Role))),
+            RealtimeAudienceKind.TenantRole =>
+                GeneralHubGroups.ForTenantRole(
+                    Required(audience.TenantId, nameof(audience.TenantId)),
+                    Required(audience.RoleId, nameof(audience.RoleId))),
             RealtimeAudienceKind.Tenant =>
                 GeneralHubGroups.ForTenant(Required(audience.TenantId, nameof(audience.TenantId))),
             _ => throw new ArgumentOutOfRangeException(

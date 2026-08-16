@@ -33,7 +33,7 @@ interface UsersDataGridProps {
   apiRef: RefObject<GridApi | null>;
   onEdit: (user: User) => void;
   onView: (user: User) => void;
-  onAdd: () => void;
+  onAdd?: () => void;
   onToggle: (user: User) => void;
   onUnlock: (user: User) => void;
   onRevoke: (user: User) => void;

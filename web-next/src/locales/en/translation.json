@@ -231,6 +231,7 @@
     "rolesAndUsersManagement": "Roles and Users",
     "rolesManagement": "Roles Management",
     "usersManagement": "Users Management",
+    "invitationsManagement": "Invitations",
     "superAdmin": "Super Admin",
     "superAdminDashboard": "Dashboard",
     "tenantManagement": "Tenant Management",
@@ -429,7 +430,12 @@
     "pleaseVerifyUsername": "Please verify your username",
     "pleaseVerifyEmail": "Please verify your email",
     "registerSuccess": "Registration successful, please check your email to activate your account",
-    "confirmationEmailSent": "Confirmation email sent successfully"
+    "confirmationEmailSent": "Confirmation email sent successfully",
+    "acceptInvitation": "Activate your account",
+    "acceptInvitationDescription": "Set a password to activate your invited account.",
+    "invalidInvitationLink": "This invitation link is missing or invalid.",
+    "activateAccount": "Activate account",
+    "invitationAccepted": "Your account has been activated. You can now sign in."
   },
   "googleAuth": {
     "orContinueWithGoogle": "Or continue with",
@@ -917,6 +923,8 @@
     "status": "Role Status",
     "namePlaceholder": "Role name | manager , user , accountant",
     "managePermissions": "Manage Permissions",
+    "viewPermissions": "View Permissions",
+    "systemRoleReadOnly": "This system role is read-only. Its permissions can be viewed but not changed.",
     "fetched": "Permission list fetched successfully",
     "updated": "Role updated successfully",
     "created": "Role created successfully",
@@ -1001,13 +1009,30 @@
     "defaultCompanyRequired": "Select a default company",
     "defaultCompanyMustBeSelected": "The default company must be included in the allowed companies",
     "companyAccessHint": "The user can sign in only to the selected companies. When several companies are selected, the user chooses one during sign-in.",
-    "noDefaultCompany": "No default company"
+    "noDefaultCompany": "No default company",
+    "sendingInvitation": "Sending invitation",
+    "sendInvitation": "Send invitation",
+    "inviteSubtitle": "Send an account invitation. The recipient will set their own password.",
+    "invitationSent": "Invitation sent successfully",
+    "pendingInvitations": "Pending invitations",
+    "noPendingInvitations": "There are no pending invitations.",
+    "invitationPending": "Pending",
+    "invitationExpired": "Expired",
+    "resendInvitation": "Resend",
+    "revokeInvitation": "Revoke",
+    "invitationResent": "Invitation resent successfully",
+    "invitationRevoked": "Invitation revoked successfully",
+    "expiresOn": "Expires {{date}}"
+  },
+  "invitations": {
+    "title": "Invitations",
+    "subTitle": "Invite users and manage pending account activation links."
   },
   "advancedTools": {
     "title": "Advanced Tools",
     "trackChanges": "Track Changes",
     "healthCheck": "Health Check",
-    "apiEndPoints": "API End Points",
+    "apiEndPoints": "API Endpoints",
     "localizationApi": "Localization API",
     "hangfireDashboard": "Hangfire Dashboard"
   },

@@ -4,6 +4,7 @@ namespace HrManagementSystem.Application.Features.Security.Authorization.Contrac
         string Id,
         string Name,
         bool IsDeleted,
-        IEnumerable<string> Permissions
+        IEnumerable<string> Permissions,
+        bool IsSystem
     );
 }

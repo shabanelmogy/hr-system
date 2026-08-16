@@ -5,6 +5,12 @@ public class GeneralHub : Hub<IGeneralHubClient>
 {
     private static readonly HashSet<string> KnownPermissions =
         Permissions.GetAllPermissions().ToHashSet(StringComparer.Ordinal);
+    private static readonly HashSet<string> SystemRoles = new(StringComparer.OrdinalIgnoreCase)
+    {
+        AppRoles.super_admin,
+        AppRoles.admin,
+        AppRoles.user
+    };
 
     public override async Task OnConnectedAsync()
     {
@@ -21,49 +27,63 @@ public class GeneralHub : Hub<IGeneralHubClient>
             return;
         }
 
-        var permissions = Context.User?.FindAll(Permissions.Type)
+        var groups = ResolveGroups(Context.User!, userId, tenantId, companyId);
+        await Task.WhenAll(groups.Select(group =>
+            Groups.AddToGroupAsync(Context.ConnectionId, group)));
+
+        await base.OnConnectedAsync();
+    }
+
+    internal static IReadOnlyCollection<string> ResolveGroups(
+        ClaimsPrincipal principal,
+        string userId,
+        string tenantId,
+        int companyId)
+    {
+        ArgumentNullException.ThrowIfNull(principal);
+        ArgumentException.ThrowIfNullOrWhiteSpace(userId);
+        ArgumentException.ThrowIfNullOrWhiteSpace(tenantId);
+        if (companyId <= 0)
+            throw new ArgumentOutOfRangeException(nameof(companyId));
+
+        var permissions = principal.FindAll(Permissions.Type)
             .Select(claim => claim.Value)
             .Where(KnownPermissions.Contains)
             .Distinct(StringComparer.Ordinal)
-            .ToArray() ?? [];
-        var roles = Context.User?.FindAll(ClaimTypes.Role)
+            .ToArray();
+        var systemRoles = principal.FindAll(ClaimTypes.Role)
             .Select(claim => claim.Value)
-            .Where(role => !string.IsNullOrWhiteSpace(role))
+            .Where(SystemRoles.Contains)
             .Distinct(StringComparer.OrdinalIgnoreCase)
-            .ToArray() ?? [];
+            .ToArray();
+        var tenantRoleIds = principal.FindAll(JwtClaimNames.TenantRoleId)
+            .Select(claim => claim.Value)
+            .Where(roleId => !string.IsNullOrWhiteSpace(roleId))
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
 
-        var groupTasks = new List<Task>(3 + permissions.Length * 2 + roles.Length)
+        var groups = new HashSet<string>(StringComparer.Ordinal)
         {
-            Groups.AddToGroupAsync(
-                Context.ConnectionId,
-                GeneralHubGroups.ForTenant(tenantId)),
-            Groups.AddToGroupAsync(
-                Context.ConnectionId,
-                GeneralHubGroups.ForCompany(tenantId, companyId)),
-            Groups.AddToGroupAsync(
-                Context.ConnectionId,
-                GeneralHubGroups.ForUserCompany(tenantId, companyId, userId))
+            GeneralHubGroups.ForTenant(tenantId),
+            GeneralHubGroups.ForCompany(tenantId, companyId),
+            GeneralHubGroups.ForUserCompany(tenantId, companyId, userId)
         };
+        groups.EnsureCapacity(
+            3 + permissions.Length * 3 + systemRoles.Length + tenantRoleIds.Length);
 
         foreach (var permission in permissions)
         {
-            groupTasks.Add(Groups.AddToGroupAsync(
-                Context.ConnectionId,
-                GeneralHubGroups.ForPermission(permission)));
-            groupTasks.Add(Groups.AddToGroupAsync(
-                Context.ConnectionId,
-                GeneralHubGroups.ForCompanyPermission(tenantId, companyId, permission)));
+            groups.Add(GeneralHubGroups.ForPermission(permission));
+            groups.Add(GeneralHubGroups.ForTenantPermission(tenantId, permission));
+            groups.Add(GeneralHubGroups.ForCompanyPermission(tenantId, companyId, permission));
         }
 
-        foreach (var role in roles)
-        {
-            groupTasks.Add(Groups.AddToGroupAsync(
-                Context.ConnectionId,
-                GeneralHubGroups.ForRole(role)));
-        }
+        foreach (var role in systemRoles)
+            groups.Add(GeneralHubGroups.ForRole(role));
 
-        await Task.WhenAll(groupTasks);
+        foreach (var roleId in tenantRoleIds)
+            groups.Add(GeneralHubGroups.ForTenantRole(tenantId, roleId));
 
-        await base.OnConnectedAsync();
+        return groups;
     }
 }

@@ -12,6 +12,9 @@ using HrManagementSystem.Domain.Catalog.Categories.Entities;
 using HrManagementSystem.Domain.Tenancy.Entities;
 using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
 using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
+using System.Reflection;
+using HrManagementSystem.Infrastructure.Security.Authentication;
 
 namespace HrManagementSystem.Tests;
 
@@ -79,6 +82,83 @@ public sealed class RealtimeEntityPublisherTests
         Assert.Equal("tenant:tenant-1", clients.SelectedGroup);
         Assert.Equal("tenants", Assert.Single(client.EntityChanges).Resource);
     }
+
+    [Theory]
+    [InlineData("tenant-1", "tenant:tenant-1:permission:Roles:View")]
+    [InlineData("tenant-2", "tenant:tenant-2:permission:Roles:View")]
+    public async Task PublishAsync_MapsTenantPermissionWithoutSamePermissionCollision(
+        string tenantId,
+        string expectedGroup)
+    {
+        var client = new RecordingClient();
+        var clients = new RecordingHubClients(client);
+        var publisher = new SignalRRealtimeEntityPublisher(
+            new TestHubContext(clients),
+            TimeProvider.System);
+
+        await publisher.PublishAsync(new RealtimeChangeRequest(
+            RealtimeAudience.ForTenantPermission(tenantId, Permissions.ViewRoles),
+            "role-claims",
+            "Update",
+            "role-id",
+            Guid.NewGuid()));
+
+        Assert.Equal(expectedGroup, clients.SelectedGroup);
+    }
+
+    [Fact]
+    public void ResolveGroups_UsesTenantRoleIdsAndKeepsOnlySystemRoleNamesGlobal()
+    {
+        var tenantOne = new ClaimsPrincipal(new ClaimsIdentity(
+        [
+            new Claim(Permissions.Type, Permissions.ViewRoles),
+            new Claim(ClaimTypes.Role, "manager"),
+            new Claim(JwtClaimNames.TenantRoleId, "role-tenant-1")
+        ]));
+        var tenantTwo = new ClaimsPrincipal(new ClaimsIdentity(
+        [
+            new Claim(Permissions.Type, Permissions.ViewRoles),
+            new Claim(ClaimTypes.Role, "manager"),
+            new Claim(JwtClaimNames.TenantRoleId, "role-tenant-2")
+        ]));
+
+        var tenantOneGroups = ResolveGroups(tenantOne, "user-1", "tenant-1", 7);
+        var tenantTwoGroups = ResolveGroups(tenantTwo, "user-2", "tenant-2", 7);
+
+        Assert.Contains(GeneralHubGroups.ForPermission(Permissions.ViewRoles), tenantOneGroups);
+        Assert.Contains(GeneralHubGroups.ForPermission(Permissions.ViewRoles), tenantTwoGroups);
+        Assert.Contains(
+            GeneralHubGroups.ForTenantPermission("tenant-1", Permissions.ViewRoles),
+            tenantOneGroups);
+        Assert.DoesNotContain(
+            GeneralHubGroups.ForTenantPermission("tenant-1", Permissions.ViewRoles),
+            tenantTwoGroups);
+        Assert.Contains(
+            GeneralHubGroups.ForTenantRole("tenant-1", "role-tenant-1"),
+            tenantOneGroups);
+        Assert.Contains(
+            GeneralHubGroups.ForTenantRole("tenant-2", "role-tenant-2"),
+            tenantTwoGroups);
+        Assert.DoesNotContain(GeneralHubGroups.ForRole("manager"), tenantOneGroups);
+        Assert.DoesNotContain(GeneralHubGroups.ForRole("manager"), tenantTwoGroups);
+
+        var superAdmin = new ClaimsPrincipal(new ClaimsIdentity(
+        [new Claim(ClaimTypes.Role, AppRoles.super_admin)]));
+        var systemGroups = ResolveGroups(superAdmin, "platform-user", "tenant-1", 7);
+        Assert.Contains(GeneralHubGroups.ForRole(AppRoles.super_admin), systemGroups);
+    }
+
+    private static IReadOnlyCollection<string> ResolveGroups(
+        ClaimsPrincipal principal,
+        string userId,
+        string tenantId,
+        int companyId) =>
+        Assert.IsAssignableFrom<IReadOnlyCollection<string>>(
+            typeof(GeneralHub)
+                .GetMethod(
+                    "ResolveGroups",
+                    BindingFlags.Static | BindingFlags.NonPublic)!
+                .Invoke(null, [principal, userId, tenantId, companyId]));
 
     private sealed class TestHubContext(IHubClients<IGeneralHubClient> clients)
         : IHubContext<GeneralHub, IGeneralHubClient>

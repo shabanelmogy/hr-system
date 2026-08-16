@@ -12,7 +12,7 @@ import {
   parseRoleWithClaimsResponse,
 } from "../../utils/apiResponse";
 import { create } from "zustand";
-import { createJSONStorage, devtools, persist } from "zustand/middleware";
+import { devtools } from "zustand/middleware";
 
 export interface RoleStore {
   roles: Role[];
@@ -29,7 +29,6 @@ export interface RoleStore {
 
 const useRoleStore = create<RoleStore>()(
   devtools(
-    persist(
       (set, get) => ({
         roles: [],
         hasLoaded: false,
@@ -55,7 +54,14 @@ const useRoleStore = create<RoleStore>()(
           const response = await apiService.get<unknown>(
             apiRoutes.roles.getRoleClaims(id),
           );
-          return parseRoleWithClaimsResponse(response);
+          const role = parseRoleWithClaimsResponse(response);
+          set((state) => ({
+            roles: [
+              ...state.roles.filter((current) => current.id !== role.id),
+              role,
+            ],
+          }));
+          return role;
         },
 
         addRole: async (request) => {
@@ -66,9 +72,10 @@ const useRoleStore = create<RoleStore>()(
         },
 
         updateRole: async (request) => {
-          await apiService.put<void>(apiRoutes.roles.update, request);
           const current = get().roles.find((role) => role.id === request.id);
           if (!current) throw new Error("Updated role was not found in the local store.");
+          if (current.isSystem) throw new Error("System roles are read-only.");
+          await apiService.put<void>(apiRoutes.roles.update, request);
 
           const updatedRole: Role = {
             ...current,
@@ -84,20 +91,24 @@ const useRoleStore = create<RoleStore>()(
         },
 
         updateRoleClaims: async (request) => {
-          await apiService.put<void>(apiRoutes.roles.updateRoleClaims, request);
           const current = get().roles.find((role) => role.id === request.id);
+          if (!current || current.isSystem) throw new Error("System roles are read-only.");
+          await apiService.put<void>(apiRoutes.roles.updateRoleClaims, request);
           return {
             id: request.id,
             name: request.name,
-            isDeleted: current?.isDeleted ?? false,
+            // No parsed API role may default to mutable; fail closed if cache is absent.
+            isSystem: current.isSystem,
+            isDeleted: current.isDeleted,
             roleClaims: request.roleClaims ?? [],
           };
         },
 
         toggleRole: async (id) => {
-          await apiService.put<void>(apiRoutes.roles.toggle(id));
           const current = get().roles.find((role) => role.id === id);
           if (!current) throw new Error("Toggled role was not found in the local store.");
+          if (current.isSystem) throw new Error("System roles are read-only.");
+          await apiService.put<void>(apiRoutes.roles.toggle(id));
 
           const updatedRole = { ...current, isDeleted: !current.isDeleted };
           set((state) => ({
@@ -108,12 +119,18 @@ const useRoleStore = create<RoleStore>()(
 
         resetRoleData: () => set({ roles: [], hasLoaded: false }),
       }),
-      {
-        name: "role-storage",
-        storage: createJSONStorage(() => sessionStorage),
-      },
-    ),
   ),
 );
+
+declare global {
+  interface Window {
+    __roleStoreLogoutListenerRegistered__?: boolean;
+  }
+}
+
+if (typeof window !== "undefined" && !window.__roleStoreLogoutListenerRegistered__) {
+  window.__roleStoreLogoutListenerRegistered__ = true;
+  window.addEventListener("auth:logout", () => useRoleStore.getState().resetRoleData());
+}
 
 export default useRoleStore;

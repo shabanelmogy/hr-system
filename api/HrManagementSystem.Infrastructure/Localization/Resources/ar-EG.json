@@ -105,6 +105,9 @@
 
     "InvalidCredentials": "خطأ فى إسم المستخدم أو كلمة المرور",
     "DisabledUser": "إسم المستخدم غير نشط تواصل مع مدير الموقع",
+    "SelfRegistrationDisabled": "التسجيل الذاتي العام غير مفعّل.",
+    "InvitationNotFound": "لم يتم العثور على الدعوة.",
+    "InvitationInvalidOrExpired": "الدعوة غير صالحة أو انتهت صلاحيتها.",
     "LockedUser": "تم حظر إسم المستخدم تواصل مع مدير الموقع",
     "InvalidJwtToken": "التوكن غير صالح",
     "InvalidRefreshToken": "رمز تجديد التوكين غير صالح",

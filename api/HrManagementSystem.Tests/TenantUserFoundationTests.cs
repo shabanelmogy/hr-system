@@ -35,6 +35,7 @@ public sealed class TenantUserFoundationTests
         var role = new ApplicationRole(AppRoles.admin)
         {
             Id = "admin-role",
+            IsSystem = true,
             NormalizedName = AppRoles.admin.ToUpperInvariant()
         };
 

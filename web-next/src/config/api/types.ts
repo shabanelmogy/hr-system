@@ -36,6 +36,14 @@ export interface UsersRoutes {
   restore: (id: Id) => string;
 }
 
+export interface UserInvitationsRoutes {
+  getAll: string;
+  create: string;
+  resend: (id: string) => string;
+  revoke: (id: string) => string;
+  accept: string;
+}
+
 export interface ExportRoutes {
   excel: string;
   pdf: string;

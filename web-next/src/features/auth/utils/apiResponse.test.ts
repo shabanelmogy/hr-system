@@ -26,6 +26,7 @@ const user = {
 const role = {
   id: "role-1",
   name: "Admin",
+  isSystem: true,
   isDeleted: false,
   roleClaims: null,
 };
@@ -63,6 +64,13 @@ describe("authentication API response parsing", () => {
 
   it("normalizes missing role claims to an empty collection", () => {
     expect(parseRoleWithClaimsResponse(role).roleClaims).toEqual([]);
+  });
+
+  it("rejects roles without the required system-role marker", () => {
+    const { isSystem: _isSystem, ...legacyRole } = role;
+    expect(() => parseRolesResponse([legacyRole])).toThrow(
+      "Invalid role.isSystem response",
+    );
   });
 
   it("rejects malformed user payloads", () => {

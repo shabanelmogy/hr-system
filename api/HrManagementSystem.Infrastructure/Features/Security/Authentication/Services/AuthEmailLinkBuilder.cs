@@ -22,6 +22,13 @@ public sealed class AuthEmailLinkBuilder(IOptions<AppSettings> appSettings)
             ["code"] = code
         });
 
+    public string BuildInvitationActivationLink(Guid invitationId, string token) =>
+        BuildLink("accept-invitation", new Dictionary<string, string?>
+        {
+            ["invitationId"] = invitationId.ToString("D"),
+            ["token"] = token
+        });
+
     private string BuildLink(
         string path,
         IReadOnlyDictionary<string, string?> query)

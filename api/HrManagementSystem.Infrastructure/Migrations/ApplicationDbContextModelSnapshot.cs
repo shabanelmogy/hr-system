@@ -1671,6 +1671,9 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsSystem")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -1679,14 +1682,26 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("TenantId")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasDatabaseName("IX_AspNetRoles_System_NormalizedName")
+                        .HasFilter("[IsSystem] = 1 AND [NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.HasIndex("TenantId", "NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("IX_AspNetRoles_Tenant_NormalizedName")
+                        .HasFilter("[IsSystem] = 0 AND [TenantId] IS NOT NULL AND [NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_AspNetRoles_SystemTenantConsistency", "([IsSystem] = 1 AND [TenantId] IS NULL AND [NormalizedName] IN ('SUPER_ADMIN', 'ADMIN', 'USER')) OR ([IsSystem] = 0 AND [TenantId] IS NOT NULL AND ([NormalizedName] IS NULL OR [NormalizedName] NOT IN ('SUPER_ADMIN', 'ADMIN', 'USER')))");
+                        });
                 });
 
             modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", b =>
@@ -1819,6 +1834,109 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.HasIndex("TenantId", "CompanyId");
 
                     b.ToTable("UserCompanyAccesses", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.UserInvitation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("AcceptedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CompanyIdsJson")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DefaultCompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime>("ExpiresOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("InvitedByUserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("RevokedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RolesJson")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("TokenHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvitedByUserId");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("TokenHash")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "NormalizedEmail", "Status");
+
+                    b.HasIndex("TenantId", "NormalizedUserName", "Status");
+
+                    b.ToTable("UserInvitations", (string)null);
                 });
 
             modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.UserLogin", b =>
@@ -2415,6 +2533,14 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Navigation("RecipientUser");
                 });
 
+            modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationRole", b =>
+                {
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", b =>
                 {
                     b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
@@ -2513,6 +2639,21 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Navigation("Company");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.UserInvitation", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("InvitedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.UserLogin", b =>

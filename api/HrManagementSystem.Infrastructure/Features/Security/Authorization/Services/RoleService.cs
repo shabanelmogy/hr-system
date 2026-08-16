@@ -9,21 +9,31 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
 {
     public class RoleService(
         RoleManager<ApplicationRole> roleManager,
-        IStringLocalizer<RoleRequest> localizer,
         RoleErrors roleErrors,
-        IRealtimeChangeDispatcher realtimeChanges) : IRoleService
+        IRealtimeChangeDispatcher realtimeChanges,
+        ICurrentActor currentActor) : IRoleService
     {
         private readonly RoleManager<ApplicationRole> _roleManager = roleManager;
-        private readonly IStringLocalizer<RoleRequest> _localizer = localizer;
         private readonly RoleErrors _roleErrors = roleErrors;
 
         public async Task<List<RoleResponse>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            var rolesQuery = _roleManager.Roles;
+            var tenantId = currentActor.TenantId;
+            if (string.IsNullOrWhiteSpace(tenantId))
+                return [];
 
-            var roles = await rolesQuery
-                .Where(role => role.NormalizedName != AppRoles.super_admin.ToUpper())
-                .ProjectToType<RoleResponse>()
+            var roles = await _roleManager.Roles
+                .AsNoTracking()
+                .Where(role =>
+                    (role.IsSystem &&
+                     role.NormalizedName != AppRoles.super_admin.ToUpper()) ||
+                    (!role.IsSystem && role.TenantId == tenantId))
+                .Select(role => new RoleResponse(
+                    role.Id,
+                    role.Name ?? string.Empty,
+                    role.IsDeleted,
+                    null,
+                    role.IsSystem))
                 .ToListAsync(cancellationToken);
             return roles;
         }
@@ -34,21 +44,32 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
             if (string.IsNullOrWhiteSpace(id))
                 return Result.Failure<RoleDetailResponse>(_roleErrors.RoleNotFound);
 
-            if (await _roleManager.FindByIdAsync(id) is not { } role || IsPlatformRole(role))
+            if (await FindVisibleRoleAsync(id, cancellationToken) is not { } role)
                 return Result.Failure<RoleDetailResponse>(_roleErrors.RoleNotFound);
 
             var permissions = await _roleManager.GetClaimsAsync(role);
 
-            var response = new RoleDetailResponse(role.Id, role.Name!, role.IsDeleted, permissions.Select(x => x.Value));
+            var response = new RoleDetailResponse(
+                role.Id,
+                role.Name!,
+                role.IsDeleted,
+                permissions.Select(x => x.Value),
+                role.IsSystem);
 
             return Result.Success(response);
         }
 
         public async Task<Result<RoleResponse>> AddAsync(RoleRequest request, CancellationToken cancellationToken = default)
         {
+            var tenantId = currentActor.TenantId;
+            if (string.IsNullOrWhiteSpace(tenantId) || IsSystemName(request.Name))
+                return Result.Failure<RoleResponse>(_roleErrors.RoleNotFound);
+
             var role = new ApplicationRole
             {
-                Name = request.Name,
+                Name = request.Name.Trim(),
+                TenantId = tenantId,
+                IsSystem = false,
                 ConcurrencyStamp = Guid.NewGuid().ToString()
             };
 
@@ -56,7 +77,12 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
 
             if (result.Succeeded)
             {
-                var response = new RoleResponse(role.Id, role.Name ?? string.Empty, role.IsDeleted, null);
+                var response = new RoleResponse(
+                    role.Id,
+                    role.Name ?? string.Empty,
+                    role.IsDeleted,
+                    null,
+                    role.IsSystem);
                 DispatchChange("Create", role.Id);
                 return Result.Success(response);
             }
@@ -72,11 +98,11 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
                 return Result.Failure(_roleErrors.RoleNotFound);
 
             cancellationToken.ThrowIfCancellationRequested();
-            var currentRole = await _roleManager.FindByIdAsync(roleRequest.Id);
-            if (currentRole is null || IsPlatformRole(currentRole))
+            var currentRole = await FindOwnedMutableRoleAsync(roleRequest.Id, cancellationToken);
+            if (currentRole is null || IsSystemName(roleRequest.Name))
                 return Result.Failure(_roleErrors.RoleNotFound);
 
-            currentRole.Name = roleRequest.Name;
+            currentRole.Name = roleRequest.Name.Trim();
 
             var result = await _roleManager.UpdateAsync(currentRole);
             if (result.Succeeded)
@@ -92,7 +118,7 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
 
         public async Task<Result> ToggleStatusAsync(string id, CancellationToken cancellationToken)
         {
-            if (await _roleManager.FindByIdAsync(id) is not { } role || IsPlatformRole(role))
+            if (await FindOwnedMutableRoleAsync(id, cancellationToken) is not { } role)
                 return Result.Failure<RoleDetailResponse>(_roleErrors.RoleNotFound);
 
             role.IsDeleted = !role.IsDeleted;
@@ -111,9 +137,9 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
 
         public async Task<Result<RoleResponse>> GetRoleClaims(string roleId, CancellationToken cancellationToken)
         {
-            var role = await _roleManager.FindByIdAsync(roleId);
+            var role = await FindVisibleRoleAsync(roleId, cancellationToken);
 
-            if (role == null || IsPlatformRole(role))
+            if (role == null)
                 return Result.Failure<RoleResponse>(_roleErrors.RoleNotFound);
 
             cancellationToken.ThrowIfCancellationRequested();
@@ -127,7 +153,12 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
                 })
                 .ToList();
 
-            var response = new RoleResponse(roleId, role.Name ?? string.Empty, role.IsDeleted, currentClaims);
+            var response = new RoleResponse(
+                roleId,
+                role.Name ?? string.Empty,
+                role.IsDeleted,
+                currentClaims,
+                role.IsSystem);
 
             return Result.Success(response);
         }
@@ -138,9 +169,9 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
                 return Result.Failure(_roleErrors.RoleNotFound);
 
             cancellationToken.ThrowIfCancellationRequested();
-            var role = await _roleManager.FindByIdAsync(rolerequest.Id);
+            var role = await FindOwnedMutableRoleAsync(rolerequest.Id, cancellationToken);
 
-            if (role == null || IsPlatformRole(role))
+            if (role == null)
                 return Result.Failure(_roleErrors.RoleNotFound);
 
             var roleClaims = await _roleManager.GetClaimsAsync(role);
@@ -160,23 +191,68 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
             }
 
             DispatchChange("PermissionsChanged", role.Id);
+            var tenantId = RequiredTenantId();
+            var eventId = Guid.NewGuid();
             realtimeChanges.Dispatch(new RealtimeChangeRequest(
-                RealtimeAudience.ForPermission(Permissions.ViewRoles),
+                RealtimeAudience.ForTenantPermission(tenantId, Permissions.ViewRoles),
                 "role-claims",
                 "Update",
                 role.Id,
-                Guid.NewGuid()));
+                eventId));
+            realtimeChanges.Dispatch(new RealtimeChangeRequest(
+                RealtimeAudience.ForTenantRole(tenantId, role.Id),
+                "role-claims",
+                "Update",
+                role.Id,
+                eventId));
 
             return Result.Success();
         }
 
         private void DispatchChange(string action, string roleId) =>
             realtimeChanges.Dispatch(RealtimeChangeRequest.For<ApplicationRole>(
-                RealtimeAudience.ForPermission(Permissions.ViewRoles),
+                RealtimeAudience.ForTenantPermission(RequiredTenantId(), Permissions.ViewRoles),
                 action,
                 roleId));
 
-        private static bool IsPlatformRole(ApplicationRole role) =>
-            string.Equals(role.Name, AppRoles.super_admin, StringComparison.OrdinalIgnoreCase);
+        private string RequiredTenantId()
+        {
+            var tenantId = currentActor.TenantId;
+            return !string.IsNullOrWhiteSpace(tenantId)
+                ? tenantId
+                : throw new InvalidOperationException("A tenant is required to publish role changes.");
+        }
+
+        private Task<ApplicationRole?> FindVisibleRoleAsync(string roleId, CancellationToken cancellationToken)
+        {
+            var tenantId = currentActor.TenantId;
+            if (string.IsNullOrWhiteSpace(tenantId))
+                return Task.FromResult<ApplicationRole?>(null);
+
+            return _roleManager.Roles.SingleOrDefaultAsync(role =>
+                role.Id == roleId &&
+                ((role.IsSystem && role.NormalizedName != AppRoles.super_admin.ToUpper()) ||
+                 (!role.IsSystem && role.TenantId == tenantId)), cancellationToken);
+        }
+
+        private Task<ApplicationRole?> FindOwnedMutableRoleAsync(
+            string roleId,
+            CancellationToken cancellationToken)
+        {
+            var tenantId = currentActor.TenantId;
+            if (string.IsNullOrWhiteSpace(tenantId))
+                return Task.FromResult<ApplicationRole?>(null);
+
+            return _roleManager.Roles.SingleOrDefaultAsync(role =>
+                role.Id == roleId &&
+                !role.IsSystem &&
+                role.TenantId == tenantId,
+                cancellationToken);
+        }
+
+        private static bool IsSystemName(string roleName) =>
+            string.Equals(roleName.Trim(), AppRoles.super_admin, StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(roleName.Trim(), AppRoles.admin, StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(roleName.Trim(), AppRoles.user, StringComparison.OrdinalIgnoreCase);
     }
 }

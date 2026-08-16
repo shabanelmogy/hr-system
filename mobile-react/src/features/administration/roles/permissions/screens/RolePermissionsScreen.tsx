@@ -78,7 +78,9 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
   const claims = useMemo(() => watchedClaims ?? [], [watchedClaims]);
   const roleName = useWatch({ control, name: 'name' }) ?? '';
   const busy = isSubmitting || updateMutation.isPending;
-  const editingDisabled = !canEdit || isReadOnly || busy;
+  // Treat missing/unparsed role data as protected until the API contract is known.
+  const isSystemRole = roleQuery.data?.isSystem ?? true;
+  const editingDisabled = !canEdit || isReadOnly || isSystemRole || busy;
 
   useEffect(() => {
     if (!roleQuery.data || initializedRoleId.current === roleQuery.data.id) return;
@@ -169,12 +171,13 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
 
   const leaveScreen = () => router.replace(asHref(ROUTES.administration.roles));
   const discard = useDiscardChanges({
-    active: true,
+    active: !isSystemRole,
     busy,
     isDirty,
     onDiscard: leaveScreen,
   });
   const submit = handleSubmit(async (values) => {
+    if (isSystemRole) return;
     try {
       await updateMutation.mutateAsync(values);
       reset(values);
@@ -216,7 +219,7 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
   return (
     <AppScreen
       edges={['left', 'right', 'bottom']}
-      footer={canEdit ? (
+      footer={canEdit && !isSystemRole ? (
         <AppButton
           disabled={isReadOnly || busy || !isDirty}
           fullWidth
@@ -243,7 +246,7 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
               {t('roleManagement.permissionsTitle', { role: roleName })}
             </AppText>
             <AppText color="muted" variant="caption">
-              {canEdit
+              {canEdit && !isSystemRole
                 ? t('roleManagement.permissionsSubtitle')
                 : t('roleManagement.permissionsReadOnly')}
             </AppText>
@@ -355,7 +358,7 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
               })} {t('roleManagement.selected')}
             </AppText>
           </View>
-          {canEdit ? (
+          {canEdit && !isSystemRole ? (
             <View style={[styles.listToolbarActions, { direction }]}>
               <AppIconButton
                 color={theme.colors.success}
@@ -386,7 +389,7 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
           ) : null}
         </View>
 
-        {canEdit && showBulkTools ? (
+        {canEdit && !isSystemRole && showBulkTools ? (
           <AppCard padding="sm" style={styles.actionBulkCard} variant="filled">
             <AppText variant="label" weight="800">
               {t('roleManagement.bulkByPermissionAction')}

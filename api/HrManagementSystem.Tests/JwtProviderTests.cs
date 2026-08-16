@@ -101,6 +101,7 @@ public sealed class JwtProviderTests
             new Claim(JwtClaimNames.TenantId, "tenant-id"),
             new Claim(JwtClaimNames.CompanyId, "7"),
             new Claim(ClaimTypes.Role, AppRoles.super_admin),
+            new Claim(JwtClaimNames.TenantRoleId, "tenant-role-id"),
             new Claim(Permissions.Type, Permissions.ViewCountries),
             new Claim(Permissions.Type, Permissions.ViewStates)
         ], "Bearer"));
@@ -117,6 +118,8 @@ public sealed class JwtProviderTests
             permissions);
         Assert.Contains(jwt.Claims, claim =>
             claim.Type == ClaimTypes.Role && claim.Value == AppRoles.super_admin);
+        Assert.Contains(jwt.Claims, claim =>
+            claim.Type == JwtClaimNames.TenantRoleId && claim.Value == "tenant-role-id");
     }
 
     private static JwtProvider CreateProvider()
@@ -130,7 +133,7 @@ public sealed class JwtProviderTests
             RealtimeExpireInMinutes = 2
         });
 
-        return new JwtProvider(options, null!, null!, null!);
+        return new JwtProvider(options, null!);
     }
 
     private static string CreateToken(string issuer, string audience)

@@ -2,7 +2,7 @@ import { passwordPolicyPattern } from "@/features/auth/validation/passwordPolicy
 import { z } from "zod";
 import type { Translator } from "../../types";
 
-export const getUserValidationSchema = (t: Translator, isAddMode = false) =>
+export const getUserValidationSchema = (t: Translator) =>
   z
     .object({
       firstName: z
@@ -47,10 +47,6 @@ export const getUserValidationSchema = (t: Translator, isAddMode = false) =>
           path: ["defaultCompanyId"],
           message: t("users.defaultCompanyMustBeSelected"),
         });
-      }
-
-      if (isAddMode && !password) {
-        ctx.addIssue({ code: "custom", path: ["password"], message: t("validation.required") });
       }
 
       if (password) {

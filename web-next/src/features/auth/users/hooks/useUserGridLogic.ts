@@ -1,4 +1,4 @@
-import type { CreateUserRequest, UpdateUserRequest, User } from "../../types";
+import type { UpdateUserRequest, User } from "../../types";
 import useApiHandler from "@/shared/hooks/useApiHandler";
 import { useGridCrudMarkerCleanup } from "@/shared/hooks/useGridCrudMarkerCleanup";
 import useNotifications from "@/shared/hooks/useNotifications";
@@ -24,7 +24,6 @@ const useUserGridLogic = () => {
   const fetchUsers = useUserStore((state) => state.fetchUsers);
   const fetchCompanyOptions = useUserStore((state) => state.fetchCompanyOptions);
   const users = useUserStore((state) => state.users);
-  const addUser = useUserStore((state) => state.addUser);
   const updateUser = useUserStore((state) => state.updateUser);
   const changeUserPassword = useUserStore((state) => state.changeUserPassword);
   const toggleUser = useUserStore((state) => state.toggleUser);
@@ -44,20 +43,6 @@ const useUserGridLogic = () => {
   }, []);
 
   const handleFormSubmit = useCallback(async (formData: UserFormData) => {
-    if (dialogType === "add") {
-      const request = toCreateUserRequest(formData);
-      const created = await handleApiCall(
-        () => addUser(request),
-        t("users.created"),
-        null,
-        true,
-      );
-      if (!created) return;
-      setLastAddedId(created.id);
-      closeDialog();
-      return;
-    }
-
     if (dialogType !== "edit" || !selectedUser) return;
     const request = toUpdateUserRequest(selectedUser.id, formData);
     const updated = await handleApiCall(
@@ -81,7 +66,6 @@ const useUserGridLogic = () => {
     setLastEditedId(updated.id);
     closeDialog();
   }, [
-    addUser,
     changeUserPassword,
     closeDialog,
     dialogType,
@@ -104,7 +88,6 @@ const useUserGridLogic = () => {
     await handleApiCall(() => revokeToken(user.id), t("users.revoked"));
   }, [handleApiCall, revokeToken, t]);
 
-  const onAdd = useCallback(() => openDialog("add"), [openDialog]);
   const onEdit = useCallback((user: User) => openDialog("edit", user), [openDialog]);
   const onView = useCallback((user: User) => openDialog("view", user), [openDialog]);
   const clearLastAdded = useCallback(() => setLastAddedId(null), []);
@@ -137,12 +120,10 @@ const useUserGridLogic = () => {
     loading,
     users: stableUsers,
     apiRef,
-    openDialog,
     closeDialog,
     handleFormSubmit,
     onEdit,
     onView,
-    onAdd,
     onToggle: handleToggleUser,
     onUnlock: handleUnlockUser,
     onRevoke: handleRevokeToken,
@@ -151,21 +132,6 @@ const useUserGridLogic = () => {
     SnackbarComponent,
   };
 };
-
-function toCreateUserRequest(formData: UserFormData): CreateUserRequest {
-  const password = formData.password?.trim();
-  if (!password) throw new Error("A password is required when creating a user.");
-  return {
-    firstName: formData.firstName,
-    lastName: formData.lastName,
-    userName: formData.userName,
-    email: formData.email,
-    password,
-    roles: formData.roles,
-    companyIds: formData.companyIds,
-    defaultCompanyId: formData.defaultCompanyId,
-  };
-}
 
 function toUpdateUserRequest(
   id: string,

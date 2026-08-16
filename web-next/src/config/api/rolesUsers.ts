@@ -1,4 +1,4 @@
-import type { RolesRoutes, UsersRoutes, Id } from './types';
+import type { RolesRoutes, UsersRoutes, UserInvitationsRoutes, Id } from './types';
 import { version } from "./constants";
 
 export const roles: RolesRoutes = {
@@ -23,4 +23,12 @@ export const users: UsersRoutes = {
   revoke: (userId: Id) => `${version}/auth/revokeRefreshTokenByUserId?userId=${userId}`,
   archive: (id: Id) => `${version}/users/archive/${id}`,
   restore: (id: Id) => `${version}/users/restore/${id}`,
+};
+
+export const userInvitations: UserInvitationsRoutes = {
+  getAll: `${version}/userinvitations/getAll`,
+  create: `${version}/userinvitations/create`,
+  resend: (id) => `${version}/userinvitations/resend/${id}`,
+  revoke: (id) => `${version}/userinvitations/revoke/${id}`,
+  accept: `${version}/account-invitations/accept`,
 };

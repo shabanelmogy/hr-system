@@ -14,6 +14,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { useRolePermissions } from "../hooks/useRolePermissions";
 import RolePermissionsActions from "./role-permissions/RolePermissionsActions";
 import RolePermissionsFilters from "./role-permissions/RolePermissionsFilters";
@@ -25,6 +26,7 @@ type RolePermissionsPageProps = { id: string };
 export default function RolePermissionsPage({ id }: RolePermissionsPageProps) {
   const permissions = useRolePermissions(id);
   const theme = useTheme();
+  const { t } = useTranslation();
 
   if (permissions.isLoading) {
     return (
@@ -57,6 +59,11 @@ export default function RolePermissionsPage({ id }: RolePermissionsPageProps) {
             {...permissions.statistics}
             onDashboard={permissions.goDashboard}
           />
+          {permissions.role.isSystem && (
+            <Alert severity="info" sx={{ mb: 2 }}>
+              {t("roles.systemRoleReadOnly")}
+            </Alert>
+          )}
           <Card sx={{ borderRadius: 2, boxShadow: 3, bgcolor: "background.paper" }}>
             <Box sx={{ p: 3, borderBottom: 1, borderColor: "divider" }}>
               <RolePermissionsFilters
@@ -69,7 +76,7 @@ export default function RolePermissionsPage({ id }: RolePermissionsPageProps) {
                 onShowOnlySelectedChange={permissions.setShowOnlySelected}
               />
             </Box>
-            <form onSubmit={permissions.submit} noValidate>
+            <form onSubmit={permissions.role.isSystem ? undefined : permissions.submit} noValidate>
               {Object.keys(permissions.formState.errors).length > 0 && (
                 <Alert severity="error" sx={{ mb: 2 }}>
                   Please review the role permissions before saving.
@@ -81,6 +88,7 @@ export default function RolePermissionsPage({ id }: RolePermissionsPageProps) {
                 areAllSelected={permissions.areAllSelected}
                 onSelectAll={permissions.selectAll}
                 onToggle={permissions.toggleClaim}
+                readOnly={permissions.role.isSystem}
               />
               <TablePagination
                 component="div"
@@ -107,17 +115,18 @@ export default function RolePermissionsPage({ id }: RolePermissionsPageProps) {
                 total={permissions.statistics.total}
                 isSaving={permissions.isSaving}
                 onBack={permissions.goBack}
+                readOnly={permissions.role.isSystem}
               />
             </form>
           </Card>
         </Box>
       </Fade>
       {permissions.notifications.SnackbarComponent}
-      <DiscardChangesDialog
+      {!permissions.role.isSystem && <DiscardChangesDialog
         open={permissions.discardDialogOpen}
         onClose={() => permissions.setDiscardDialogOpen(false)}
         onDiscard={permissions.confirmBack}
-      />
+      />}
     </ContentWrapper>
   );
 }

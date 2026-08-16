@@ -17,6 +17,8 @@ export default function ProtectedRouteLayout() {
   const { isRTL } = useLocalization();
   const { theme } = useAppTheme();
   const canViewBasicData = useCanAccessRoute(ROUTES.basicData.root);
+  const canViewExtras = useCanAccessRoute(ROUTES.extras.root);
+  const canViewAdvancedTools = useCanAccessRoute(ROUTES.advancedTools.root);
   const canViewSuperAdminDashboard = useCanAccessRoute(ROUTES.superAdminDashboard);
   const canManageTenants = useCanAccessRoute(ROUTES.tenantManagement);
   const canManageTenantAdmins = useCanAccessRoute(ROUTES.tenantAdminManagement);
@@ -81,6 +83,28 @@ export default function ProtectedRouteLayout() {
             title: t('navigation.administration'),
             drawerIcon: ({ color, size }) => (
               <AppIcon color={color} name="people-outline" size={size} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="extras"
+          options={{
+            drawerItemStyle: canViewExtras ? undefined : { display: 'none' },
+            headerShown: false,
+            title: t('navigation.extras'),
+            drawerIcon: ({ color, size }) => (
+              <AppIcon color={color} name="apps-outline" size={size} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="advanced-tools"
+          options={{
+            drawerItemStyle: canViewAdvancedTools ? undefined : { display: 'none' },
+            headerShown: false,
+            title: t('navigation.advancedTools'),
+            drawerIcon: ({ color, size }) => (
+              <AppIcon color={color} name="construct-outline" size={size} />
             ),
           }}
         />

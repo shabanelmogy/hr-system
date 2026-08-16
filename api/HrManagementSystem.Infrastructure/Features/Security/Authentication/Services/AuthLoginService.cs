@@ -19,7 +19,8 @@ public sealed class AuthLoginService(
     ISecurityAuditService securityAudit,
     IRealtimeChangeDispatcher realtimeChanges,
     ApplicationDbContext context,
-    TimeProvider timeProvider) : IAuthLoginService
+    TimeProvider timeProvider,
+    AuthenticationFeaturePolicy authenticationFeatures) : IAuthLoginService
 {
     public async Task<Result<LoginResult>> GetTokenAsync(
         string userName,
@@ -179,6 +180,14 @@ public sealed class AuthLoginService(
         ExternalLoginUser externalUser,
         CancellationToken cancellationToken)
     {
+        var externalLogin = await userManager.FindByLoginAsync("Google", externalUser.ProviderKey);
+        if (externalLogin is not null)
+        {
+            return await userManager.Users
+                .Include(candidate => candidate.RefreshTokens)
+                .SingleOrDefaultAsync(candidate => candidate.Id == externalLogin.Id, cancellationToken);
+        }
+
         var normalizedEmail = externalUser.Email.ToUpper();
         var user = await userManager.Users
             .Include(candidate => candidate.RefreshTokens)
@@ -188,6 +197,9 @@ public sealed class AuthLoginService(
 
         if (user is not null)
             return user;
+
+        if (!authenticationFeatures.CanAutoProvisionGoogleUsers)
+            return null;
 
         user = new ApplicationUser
         {

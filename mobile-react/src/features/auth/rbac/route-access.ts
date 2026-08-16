@@ -44,6 +44,10 @@ export const routePolicies: readonly RoutePolicy[] = [
     permissions: [permissions.ViewRoles],
   },
   {
+    path: ROUTES.administration.invitations,
+    permissions: [permissions.ViewUsers],
+  },
+  {
     path: ROUTES.administration.root,
     anyOf: [
       { permissions: [permissions.ViewUsers] },
@@ -63,6 +67,50 @@ export const routePolicies: readonly RoutePolicy[] = [
     anyOf: [
       { permissions: BASIC_DATA_VIEW_PERMISSIONS },
       { roles: [appRoles.admin] },
+    ],
+  },
+  {
+    path: ROUTES.extras.files,
+    roles: [appRoles.admin],
+  },
+  {
+    path: ROUTES.extras.appointments,
+    permissions: [permissions.ViewUsers],
+  },
+  {
+    path: ROUTES.extras.root,
+    anyOf: [
+      { roles: [appRoles.admin] },
+      { permissions: [permissions.ViewUsers] },
+    ],
+  },
+  {
+    path: ROUTES.advancedTools.trackChanges,
+    permissions: [permissions.ViewChangeLogs],
+  },
+  {
+    path: ROUTES.advancedTools.localizationApi,
+    permissions: [permissions.ViewLocalizations],
+  },
+  {
+    path: ROUTES.advancedTools.healthCheck,
+    roles: [appRoles.admin],
+  },
+  {
+    path: ROUTES.advancedTools.apiEndpoints,
+    roles: [appRoles.admin],
+  },
+  {
+    path: ROUTES.advancedTools.hangfireDashboard,
+    permissions: [permissions.ViewHangfireDashboard],
+  },
+  {
+    path: ROUTES.advancedTools.root,
+    anyOf: [
+      { permissions: [permissions.ViewChangeLogs] },
+      { permissions: [permissions.ViewLocalizations] },
+      { roles: [appRoles.admin] },
+      { permissions: [permissions.ViewHangfireDashboard] },
     ],
   },
   { path: ROUTES.home },

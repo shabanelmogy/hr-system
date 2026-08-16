@@ -105,6 +105,9 @@
 
     "InvalidCredentials": "Invalid email/password",
     "DisabledUser": "Disabled user, please contact your administrator",
+    "SelfRegistrationDisabled": "Public self-registration is not enabled.",
+    "InvitationNotFound": "Invitation was not found.",
+    "InvitationInvalidOrExpired": "The invitation is invalid or expired.",
     "LockedUser": "Locked user, please contact your administrator",
     "InvalidJwtToken": "Invalid Jwt token",
     "InvalidRefreshToken": "Invalid refresh token",

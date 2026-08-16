@@ -5,7 +5,8 @@ namespace HrManagementSystem.Application.Features.Security.Authorization.Contrac
         string Id,
         string Name,
         bool IsDeleted,
-        List<CheckBoxViewModel>? RoleClaims
+        List<CheckBoxViewModel>? RoleClaims,
+        bool IsSystem
     );
 
 

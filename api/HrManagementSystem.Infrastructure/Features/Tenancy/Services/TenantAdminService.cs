@@ -429,6 +429,7 @@ public sealed class TenantAdminService(
                 where tenantIds.Contains(tenantAccess.TenantId) &&
                       tenantAccess.UserId != excludedUserId &&
                       user.LifecycleStatus == UserLifecycleStatus.Active &&
+                      role.IsSystem &&
                       role.NormalizedName == AppRoles.admin.ToUpper()
                 group tenantAccess by tenantAccess.TenantId
                 into tenantGroup
@@ -589,12 +590,14 @@ public sealed class TenantAdminService(
         from userRole in context.UserRoles.AsNoTracking()
         join user in context.Users.AsNoTracking() on userRole.UserId equals user.Id
         join role in context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
-        where role.NormalizedName == AppRoles.admin.ToUpper() &&
+        where role.IsSystem &&
+              role.NormalizedName == AppRoles.admin.ToUpper() &&
               (includeArchived || user.LifecycleStatus == UserLifecycleStatus.Active) &&
               !(from otherUserRole in context.UserRoles.AsNoTracking()
                 join otherRole in context.Roles.AsNoTracking()
                     on otherUserRole.RoleId equals otherRole.Id
                 where otherUserRole.UserId == userRole.UserId &&
+                      otherRole.IsSystem &&
                       otherRole.NormalizedName == AppRoles.super_admin.ToUpper()
                 select otherUserRole).Any()
         select userRole.UserId;

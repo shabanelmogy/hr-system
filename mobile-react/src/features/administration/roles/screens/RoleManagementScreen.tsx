@@ -128,6 +128,7 @@ export function RoleManagementScreen() {
   const saveRole = async (values: RoleFormValues) => {
     const name = values.name.trim();
     if (formMode === 'edit' && selectedRole) {
+      if (selectedRole.isSystem) return;
       await saveMutation.mutateAsync({
         id: selectedRole.id,
         request: { id: selectedRole.id, name },
@@ -144,6 +145,10 @@ export function RoleManagementScreen() {
 
   const toggleRole = async () => {
     if (!pendingToggle) return;
+    if (pendingToggle.isSystem) {
+      setPendingToggle(null);
+      return;
+    }
     const wasDisabled = pendingToggle.isDeleted;
     await toggleMutation.mutateAsync(pendingToggle.id);
     setPendingToggle(null);

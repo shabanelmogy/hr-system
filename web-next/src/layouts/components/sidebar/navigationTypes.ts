@@ -56,6 +56,7 @@ export enum NavigationTitles {
   ROLES_AND_USERS_MANAGEMENT = "menu.rolesAndUsersManagement",
   ROLES_MANAGEMENT = "menu.rolesManagement",
   USERS_MANAGEMENT = "menu.usersManagement",
+  INVITATIONS_MANAGEMENT = "menu.invitationsManagement",
   CHAT = "menu.chat",
   CHAT_INTERFACE = "menu.chatInterface",
   REPORTS = "menu.reports",

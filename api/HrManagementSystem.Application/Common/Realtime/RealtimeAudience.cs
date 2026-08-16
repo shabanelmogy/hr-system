@@ -7,7 +7,9 @@ public enum RealtimeAudienceKind
     CompanyPermission,
     UserCompany,
     Role,
-    Tenant
+    Tenant,
+    TenantPermission,
+    TenantRole
 }
 
 public sealed record RealtimeAudience(
@@ -16,10 +18,17 @@ public sealed record RealtimeAudience(
     string? TenantId = null,
     int? CompanyId = null,
     string? UserId = null,
-    string? Role = null)
+    string? Role = null,
+    string? RoleId = null)
 {
     public static RealtimeAudience ForPermission(string permission) =>
         new(RealtimeAudienceKind.Permission, Permission: Required(permission, nameof(permission)));
+
+    public static RealtimeAudience ForTenantPermission(string tenantId, string permission) =>
+        new(
+            RealtimeAudienceKind.TenantPermission,
+            Permission: Required(permission, nameof(permission)),
+            TenantId: Required(tenantId, nameof(tenantId)));
 
     public static RealtimeAudience ForCompanyPermission(
         string tenantId,
@@ -49,6 +58,12 @@ public sealed record RealtimeAudience(
 
     public static RealtimeAudience ForRole(string role) =>
         new(RealtimeAudienceKind.Role, Role: Required(role, nameof(role)));
+
+    public static RealtimeAudience ForTenantRole(string tenantId, string roleId) =>
+        new(
+            RealtimeAudienceKind.TenantRole,
+            TenantId: Required(tenantId, nameof(tenantId)),
+            RoleId: Required(roleId, nameof(roleId)));
 
     public static RealtimeAudience ForTenant(string tenantId) =>
         new(RealtimeAudienceKind.Tenant, TenantId: Required(tenantId, nameof(tenantId)));

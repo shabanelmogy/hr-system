@@ -36,6 +36,14 @@ describe("route access policies", () => {
     })).toBe(true);
   });
 
+  it("requires ViewUsers for the invitations administration page", () => {
+    expect(canAccessRoute(appRoutes.auth.invitationsPage, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.auth.invitationsPage, {
+      ...session,
+      permissions: [permissions.ViewUsers],
+    })).toBe(true);
+  });
+
   it("allows the Basic Data workspace for any Basic Data view permission", () => {
     expect(canAccessRoute(appRoutes.basicData.index, session)).toBe(false);
     expect(canAccessRoute(appRoutes.basicData.index, {

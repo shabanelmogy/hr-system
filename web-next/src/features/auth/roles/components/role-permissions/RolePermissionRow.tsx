@@ -9,6 +9,7 @@ type RolePermissionRowProps = {
   colors: Record<PermissionType, string>;
   theme: Theme;
   onToggle: (claimIndex: number) => void;
+  readOnly: boolean;
 };
 
 export default function RolePermissionRow({
@@ -17,6 +18,7 @@ export default function RolePermissionRow({
   colors,
   theme,
   onToggle,
+  readOnly,
 }: RolePermissionRowProps) {
   return (
     <TableRow
@@ -57,6 +59,7 @@ export default function RolePermissionRow({
                   <input type="hidden" value={claim.displayValue} />
                   <Checkbox
                     checked={claim.isSelected}
+                    disabled={readOnly}
                     onChange={() => onToggle(claimIndex)}
                     sx={{
                       color: colors[type],

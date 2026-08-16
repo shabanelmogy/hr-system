@@ -23,6 +23,12 @@ export interface ConfirmEmailRequest {
   code: string;
 }
 
+export interface AcceptInvitationRequest {
+  invitationId: string;
+  token: string;
+  password: string;
+}
+
 export interface AuthResponse {
   id: string;
   userName: string;

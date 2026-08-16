@@ -25,6 +25,7 @@ export interface UserCompanyOption {
 export interface RoleOption {
   id: string;
   name: string;
+  isSystem: boolean;
   isDeleted: boolean;
   roleClaims: RoleClaim[] | null;
 }
@@ -57,18 +58,26 @@ export interface RolePermissionsFormValues {
   roleClaims: RoleClaim[];
 }
 
-export interface CreateManagedUserRequest {
+export interface CreateUserInvitationRequest {
   firstName: string;
   lastName: string;
   userName: string;
   email: string;
-  password: string;
   roles: string[];
   companyIds: number[];
   defaultCompanyId: number;
 }
 
-export type UpdateManagedUserRequest = Omit<CreateManagedUserRequest, 'password'>;
+export interface UserInvitation extends CreateUserInvitationRequest {
+  id: string;
+  status: 'pending' | 'accepted' | 'revoked' | 'expired';
+  expiresOn: string;
+  createdOn: string;
+  acceptedOn: string | null;
+  revokedOn: string | null;
+}
+
+export type UpdateManagedUserRequest = CreateUserInvitationRequest;
 
 export interface ChangeManagedUserPasswordRequest {
   newPassword: string;

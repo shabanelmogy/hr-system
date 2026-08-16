@@ -1,4 +1,5 @@
-// basicDataConfig.tsx
+// Supporting product tools. Authorization mirrors route-access.ts until
+// dedicated business permissions are introduced for files and appointments.
 import { appRoutes } from "@/config/routes";
 import {
   NavigationColors,

@@ -227,11 +227,78 @@ public sealed class NotificationServiceTests
     }
 
     [Fact]
+    public async Task GetAsync_DoesNotUseSameNamedCustomRoleFromAnotherTenant()
+    {
+        await using var context = CreateContext();
+        var tenantOneRole = new ApplicationRole("Viewer")
+        {
+            Id = "role-tenant-1",
+            TenantId = "tenant-1"
+        };
+        var tenantTwoRole = new ApplicationRole("Viewer")
+        {
+            Id = "role-tenant-2",
+            TenantId = "tenant-2"
+        };
+        context.Roles.AddRange(tenantOneRole, tenantTwoRole);
+        context.UserRoles.Add(new IdentityUserRole<string>
+        {
+            UserId = "user-1",
+            RoleId = tenantTwoRole.Id
+        });
+        context.RoleClaims.AddRange(
+            new IdentityRoleClaim<string>
+            {
+                RoleId = tenantOneRole.Id,
+                ClaimType = Permissions.Type,
+                ClaimValue = Permissions.ViewCountries
+            },
+            new IdentityRoleClaim<string>
+            {
+                RoleId = tenantTwoRole.Id,
+                ClaimType = Permissions.Type,
+                ClaimValue = Permissions.ViewCountries
+            });
+        context.Notifications.Add(CreateNotification("user-1", DateTime.UtcNow));
+        await context.SaveChangesAsync();
+
+        var result = await CreateService(context)
+            .GetAsync("user-1", new NotificationQueryRequest());
+
+        Assert.True(result.IsSuccess);
+        Assert.Empty(result.Value.Items);
+    }
+
+    [Fact]
+    public async Task GetAsync_RequiresCurrentTenantEvenWhenUserOwnsMatchingRoleThere()
+    {
+        await using var tenantOneContext = CreateContext();
+        GrantPermission(tenantOneContext, "user-1");
+        tenantOneContext.Notifications.Add(CreateNotification("user-1", DateTime.UtcNow));
+        await tenantOneContext.SaveChangesAsync();
+
+        var tenantTwoActor = new TestCurrentActor("tenant-2", 1);
+        var result = await CreateService(tenantOneContext, actor: tenantTwoActor)
+            .GetAsync("user-1", new NotificationQueryRequest());
+
+        Assert.True(result.IsSuccess);
+        Assert.Empty(result.Value.Items);
+    }
+
+    [Fact]
     public async Task Publisher_CreatesRowsOnlyForActiveUsersWithRequiredPermission()
     {
         await using var context = CreateContext();
-        var viewRole = new ApplicationRole("Country Viewer") { Id = "role-view" };
-        var otherRole = new ApplicationRole("Other") { Id = "role-other" };
+        var viewRole = new ApplicationRole("Country Viewer")
+        {
+            Id = "role-view",
+            TenantId = "tenant-1"
+        };
+        var otherRole = new ApplicationRole("Other")
+        {
+            Id = "role-other",
+            TenantId = "tenant-1"
+        };
         var allowedUser = CreateUser("allowed");
         var deniedUser = CreateUser("denied");
         var disabledUser = CreateUser("disabled", isDisabled: true);
@@ -279,7 +346,8 @@ public sealed class NotificationServiceTests
             EntityType: "Country",
             EntityId: "1",
             ActionUrl: "/basic-data/countries",
-            DeduplicationKey: "Countries.Created:1:test");
+            DeduplicationKey: "Countries.Created:1:test",
+            TenantId: "tenant-1");
 
         var result = await publisher.PublishToPermissionAsync(request);
         var duplicate = await publisher.PublishToPermissionAsync(request);
@@ -292,6 +360,102 @@ public sealed class NotificationServiceTests
         Assert.Equal(allowedUser.Id, saved.RecipientUserId);
     }
 
+    [Fact]
+    public async Task Publisher_GlobalAndScopedRequestsKeepCustomRolesWithinTheirRoleTenant()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
+            .Options;
+        await using var context = new ApplicationDbContext(
+            options,
+            new TestCurrentActor(null, null),
+            TimeProvider.System);
+        var tenantOneUser = CreateUser("tenant-1-user", tenantId: "tenant-1");
+        var tenantTwoUser = CreateUser("tenant-2-user", tenantId: "tenant-2");
+        var tenantOneRole = new ApplicationRole("Viewer")
+        {
+            Id = "tenant-1-role",
+            TenantId = "tenant-1"
+        };
+        var tenantTwoRole = new ApplicationRole("Viewer")
+        {
+            Id = "tenant-2-role",
+            TenantId = "tenant-2"
+        };
+        var tenantOneCompany = new Company("ONE", "One", "One", "EGP", "Africa/Cairo")
+        {
+            TenantId = "tenant-1",
+            CreatedById = tenantOneUser.Id
+        };
+        var tenantTwoCompany = new Company("TWO", "Two", "Two", "EGP", "Africa/Cairo")
+        {
+            TenantId = "tenant-2",
+            CreatedById = tenantTwoUser.Id
+        };
+        context.Users.AddRange(tenantOneUser, tenantTwoUser);
+        context.Roles.AddRange(tenantOneRole, tenantTwoRole);
+        context.Companies.AddRange(tenantOneCompany, tenantTwoCompany);
+        await context.SaveChangesAsync();
+
+        context.UserCompanyAccesses.AddRange(
+            new UserCompanyAccess
+            {
+                TenantId = "tenant-1",
+                CompanyId = tenantOneCompany.Id,
+                UserId = tenantOneUser.Id
+            },
+            new UserCompanyAccess
+            {
+                TenantId = "tenant-2",
+                CompanyId = tenantTwoCompany.Id,
+                UserId = tenantTwoUser.Id
+            });
+        context.UserRoles.AddRange(
+            new IdentityUserRole<string> { UserId = tenantOneUser.Id, RoleId = tenantOneRole.Id },
+            new IdentityUserRole<string> { UserId = tenantTwoUser.Id, RoleId = tenantTwoRole.Id });
+        context.RoleClaims.AddRange(
+            new IdentityRoleClaim<string>
+            {
+                RoleId = tenantOneRole.Id,
+                ClaimType = Permissions.Type,
+                ClaimValue = Permissions.ViewCountries
+            },
+            new IdentityRoleClaim<string>
+            {
+                RoleId = tenantTwoRole.Id,
+                ClaimType = Permissions.Type,
+                ClaimValue = Permissions.ViewCountries
+            });
+        await context.SaveChangesAsync();
+
+        var publisher = CreatePublisher(context);
+        var request = new NotificationPublishRequest(
+            Permissions.ViewCountries,
+            "GeographicalInformation",
+            "Countries.Created",
+            NotificationSeverity.Success,
+            "CountryNotificationTitle",
+            "CountryCreatedNotificationMessage");
+
+        var global = await publisher.PublishToPermissionAsync(request);
+        var tenantOne = await publisher.PublishToPermissionAsync(
+            request with { TenantId = "tenant-1" });
+
+        Assert.True(global.IsSuccess);
+        Assert.Equal(2, global.Value);
+        Assert.True(tenantOne.IsSuccess);
+        Assert.Equal(1, tenantOne.Value);
+        var saved = await context.Notifications.IgnoreQueryFilters().ToListAsync();
+        Assert.Equal(3, saved.Count);
+        Assert.Equal(2, saved.Count(item => item.TenantId == "tenant-1"));
+        Assert.Single(saved, item => item.TenantId == "tenant-2");
+        Assert.All(
+            saved,
+            item => Assert.Equal(
+                item.TenantId == "tenant-1" ? tenantOneUser.Id : tenantTwoUser.Id,
+                item.RecipientUserId));
+    }
+
     private static ApplicationDbContext CreateContext()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
@@ -302,7 +466,8 @@ public sealed class NotificationServiceTests
 
     private static NotificationService CreateService(
         ApplicationDbContext context,
-        RecordingRealtimeDispatcher? dispatcher = null)
+        RecordingRealtimeDispatcher? dispatcher = null,
+        ICurrentActor? actor = null)
     {
         var config = new TypeAdapterConfig();
         new NotificationMappingConfig().Register(config);
@@ -310,7 +475,7 @@ public sealed class NotificationServiceTests
             context,
             CreateErrors(),
             new Mapper(config),
-            new TestCurrentActor(),
+            actor ?? new TestCurrentActor(),
             dispatcher ?? new RecordingRealtimeDispatcher());
     }
 
@@ -331,11 +496,13 @@ public sealed class NotificationServiceTests
 
     private static NotificationErrors CreateErrors() => new(new TestStringLocalizer<NotificationQueryRequest>());
 
-    private sealed class TestCurrentActor : ICurrentActor
+    private sealed class TestCurrentActor(
+        string? tenantId = "tenant-1",
+        int? companyId = 1) : ICurrentActor
     {
         public string? UserId => null;
-        public string? TenantId => "tenant-1";
-        public int? CompanyId => 1;
+        public string? TenantId => tenantId;
+        public int? CompanyId => companyId;
     }
 
     private sealed class RecordingRealtimeDispatcher : IRealtimeChangeDispatcher
@@ -364,14 +531,18 @@ public sealed class NotificationServiceTests
             ExpiresOn = expiresOn
         };
 
-    private static ApplicationUser CreateUser(string id, bool isDisabled = false)
+    private static ApplicationUser CreateUser(
+        string id,
+        bool isDisabled = false,
+        string? tenantId = null)
     {
         var user = new ApplicationUser
         {
             Id = id,
             UserName = id,
             FirstName = id,
-            LastName = "User"
+            LastName = "User",
+            TenantId = tenantId ?? string.Empty
         };
         if (isDisabled)
             user.Disable();
@@ -389,7 +560,11 @@ public sealed class NotificationServiceTests
     private static void GrantPermission(ApplicationDbContext context, string userId)
     {
         var roleId = $"role-{userId}";
-        context.Roles.Add(new ApplicationRole("Viewer") { Id = roleId });
+        context.Roles.Add(new ApplicationRole("Viewer")
+        {
+            Id = roleId,
+            TenantId = "tenant-1"
+        });
         context.UserRoles.Add(new IdentityUserRole<string> { UserId = userId, RoleId = roleId });
         context.RoleClaims.Add(new IdentityRoleClaim<string>
         {

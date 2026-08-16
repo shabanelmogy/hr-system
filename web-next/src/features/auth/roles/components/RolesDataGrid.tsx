@@ -44,7 +44,8 @@ const RolesDataGrid = ({
 }: RolesDataGridProps) => {
   // Memoized action buttons
   const getActions = useCallback(
-    (params: GridRowParams<Role>): ReactElement<GridActionsCellItemProps>[] => [
+    (params: GridRowParams<Role>): ReactElement<GridActionsCellItemProps>[] => {
+      const actions: ReactElement<GridActionsCellItemProps>[] = [
       <Tooltip title={t("actions.view")} key={`view-${params.row.id}`} arrow>
         <GridActionsCellItem
           icon={<Visibility sx={{ fontSize: 25, color: "info.main" }} />}
@@ -52,6 +53,22 @@ const RolesDataGrid = ({
           onClick={() => onView(params.row)}
         />
       </Tooltip>,
+      <Tooltip
+        title={params.row.isSystem ? t("roles.viewPermissions") : t("roles.managePermissions")}
+        key={`permissions-${params.row.id}`}
+        arrow
+      >
+        <GridActionsCellItem
+          icon={<Key sx={{ fontSize: 25, color: "secondary.main" }} />}
+          label={params.row.isSystem ? t("roles.viewPermissions") : t("roles.managePermissions")}
+          onClick={() => onManagePermissions(params.row)}
+        />
+      </Tooltip>,
+      ];
+
+      if (params.row.isSystem) return actions;
+
+      actions.splice(1, 0,
       <Tooltip title={t("actions.edit")} key={`edit-${params.row.id}`} arrow>
         <GridActionsCellItem
           icon={<Edit sx={{ fontSize: 25 }} />}
@@ -60,17 +77,8 @@ const RolesDataGrid = ({
           onClick={() => onEdit(params.row)}
         />
       </Tooltip>,
-      <Tooltip
-        title={t("roles.managePermissions")}
-        key={`permissions-${params.row.id}`}
-        arrow
-      >
-        <GridActionsCellItem
-          icon={<Key sx={{ fontSize: 25, color: "secondary.main" }} />}
-          label={t("roles.managePermissions")}
-          onClick={() => onManagePermissions(params.row)}
-        />
-      </Tooltip>,
+      );
+      actions.push(
       <Tooltip
         title={t("actions.delete")}
         key={`delete-${params.row.id}`}
@@ -82,7 +90,9 @@ const RolesDataGrid = ({
           onClick={() => onDelete(params.row)}
         />
       </Tooltip>,
-    ],
+      );
+      return actions;
+    },
     [t, onEdit, onDelete, onView, onManagePermissions]
   );
 

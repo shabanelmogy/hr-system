@@ -4,6 +4,7 @@ import type {
   RoleWithClaims,
   User,
   UserCompanyOption,
+  UserInvitation,
 } from "../types";
 import type { ManagementPageResponse } from "@/lib/api/pagination";
 
@@ -19,6 +20,14 @@ export function parseUserResponse(response: unknown): User {
 
 export function parseUserCompanyOptionsResponse(response: unknown): UserCompanyOption[] {
   return parseArray(response, parseUserCompanyOption, "user company options");
+}
+
+export function parseUserInvitationsResponse(response: unknown): UserInvitation[] {
+  return parseArray(response, parseUserInvitation, "user invitations");
+}
+
+export function parseUserInvitationResponse(response: unknown): UserInvitation {
+  return parseUserInvitation(unwrapApiValue(response));
 }
 
 export function parseRolesResponse(response: unknown): Role[] {
@@ -66,6 +75,30 @@ function parseUser(value: unknown): User {
   };
 }
 
+function parseUserInvitation(value: unknown): UserInvitation {
+  const record = requireRecord(value, "user invitation");
+  const status = requireString(record.status, "userInvitation.status");
+  if (!["pending", "accepted", "revoked", "expired"].includes(status)) {
+    throw new Error("Invalid userInvitation.status.");
+  }
+
+  return {
+    id: requireString(record.id, "userInvitation.id"),
+    email: requireString(record.email, "userInvitation.email"),
+    firstName: requireString(record.firstName, "userInvitation.firstName"),
+    lastName: requireString(record.lastName, "userInvitation.lastName"),
+    userName: requireString(record.userName, "userInvitation.userName"),
+    roles: parseStringArray(record.roles, "userInvitation.roles"),
+    companyIds: parseNumberArray(record.companyIds, "userInvitation.companyIds"),
+    defaultCompanyId: requireNumber(record.defaultCompanyId, "userInvitation.defaultCompanyId"),
+    status: status as UserInvitation["status"],
+    expiresOn: requireString(record.expiresOn, "userInvitation.expiresOn"),
+    createdOn: requireString(record.createdOn, "userInvitation.createdOn"),
+    acceptedOn: optionalString(record.acceptedOn),
+    revokedOn: optionalString(record.revokedOn),
+  };
+}
+
 export function parseUsersPageResponse(response: unknown): ManagementPageResponse<User> {
   const page = requireRecord(unwrapApiValue(response), "users page");
   const metadata = requireRecord(page.metaData, "users page metadata");
@@ -103,6 +136,7 @@ function parseRole(value: unknown): Role {
   return {
     id: requireString(record.id, "role.id"),
     name: requireString(record.name, "role.name"),
+    isSystem: requireBoolean(record.isSystem, "role.isSystem"),
     isDeleted: requireBoolean(record.isDeleted, "role.isDeleted"),
     roleClaims: record.roleClaims == null
       ? null

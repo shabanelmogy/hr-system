@@ -1,7 +1,12 @@
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Services;
+using HrManagementSystem.Infrastructure.Features.Security.Users.Services;
 using HrManagementSystem.Application.Features.Security.Authentication.Services;
+using HrManagementSystem.Application.Features.Security.Invitations.Services;
+using HrManagementSystem.Application.Features.Security.Users.Services;
 using HrManagementSystem.Domain.Tenancy.Enums;
+using HrManagementSystem.Infrastructure.Features.Security.Authorization.Services;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
@@ -16,6 +21,9 @@ public static class AuthenticationService
         services.AddScoped<IAuthSessionService>(provider =>
             provider.GetRequiredService<AuthSessionService>());
         services.AddScoped<IAuthAccountService, AuthAccountService>();
+        services.AddScoped<IUserInvitationService, UserInvitationService>();
+        services.AddScoped<IUserSeatLimitService, UserSeatLimitService>();
+        services.AddScoped<TenantRoleAssignmentService>();
         services.AddScoped<AuthCompanyAccessService>();
         services.AddScoped<AuthEmailLinkBuilder>();
         services.AddScoped<RegistrationProfilePictureStore>();
@@ -23,6 +31,15 @@ public static class AuthenticationService
         services.AddScoped<IJwtProvider, JwtProvider>();
         services.AddScoped<IAuthEmailService, AuthEmailService>();
         services.AddScoped<ILoginAuditService, LoginAuditService>();
+        services.AddSingleton<AuthenticationFeaturePolicy>();
+        services.AddOptions<AuthenticationFeatureSettings>()
+            .BindConfiguration(AuthenticationFeatureSettings.SectionName)
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+        services.AddOptions<InvitationSettings>()
+            .BindConfiguration(InvitationSettings.SectionName)
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
         services.AddOptions<AppSettings>()
             .BindConfiguration(nameof(AppSettings))
             .ValidateDataAnnotations()
@@ -37,6 +54,9 @@ public static class AuthenticationService
         })
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
+
+        services.RemoveAll<IRoleValidator<ApplicationRole>>();
+        services.AddScoped<IRoleValidator<ApplicationRole>, TenantRoleValidator>();
 
         services.AddOptions<JwtOptions>()
             .BindConfiguration(nameof(JwtOptions))

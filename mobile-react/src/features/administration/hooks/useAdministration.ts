@@ -4,7 +4,7 @@ import { administrationApi } from '../api/administration-api';
 import type {
   ChangeManagedUserPasswordRequest,
   CreateRoleRequest,
-  CreateManagedUserRequest,
+  CreateUserInvitationRequest,
   RolePermissionsFormValues,
   UpdateRoleRequest,
   UpdateManagedUserRequest,
@@ -13,13 +13,14 @@ import type { PageQuery } from '@/src/core/api';
 
 export const administrationKeys = {
   users: ['administration', 'users'] as const,
+  invitations: ['administration', 'user-invitations'] as const,
   companyOptions: ['administration', 'company-options'] as const,
   roles: ['administration', 'roles'] as const,
   roleClaims: (roleId: string) => ['administration', 'roles', roleId, 'claims'] as const,
 };
 
 type SaveManagedUserInput =
-  | { id: null; request: CreateManagedUserRequest }
+  | { id: null; request: CreateUserInvitationRequest }
   | {
       id: string;
       request: UpdateManagedUserRequest;
@@ -37,6 +38,14 @@ export function useManagedUsersPage(query: PageQuery) {
   return useQuery({
     queryKey: [...administrationKeys.users, 'page', query] as const,
     queryFn: () => administrationApi.getUsersPage(query),
+  });
+}
+
+export function useUserInvitations(enabled = true) {
+  return useQuery({
+    queryKey: administrationKeys.invitations,
+    queryFn: administrationApi.getInvitations,
+    enabled,
   });
 }
 
@@ -118,7 +127,7 @@ export function useSaveManagedUser() {
 
   return useMutation({
     mutationFn: async (input: SaveManagedUserInput) => {
-      if (input.id === null) return administrationApi.createUser(input.request);
+      if (input.id === null) return administrationApi.createInvitation(input.request);
 
       await administrationApi.updateUser(input.id, input.request);
       if (input.password) {
@@ -126,7 +135,30 @@ export function useSaveManagedUser() {
       }
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: administrationKeys.users });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: administrationKeys.users }),
+        queryClient.invalidateQueries({ queryKey: administrationKeys.invitations }),
+      ]);
+    },
+  });
+}
+
+export function useResendUserInvitation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: administrationApi.resendInvitation,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: administrationKeys.invitations });
+    },
+  });
+}
+
+export function useRevokeUserInvitation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: administrationApi.revokeInvitation,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: administrationKeys.invitations });
     },
   });
 }

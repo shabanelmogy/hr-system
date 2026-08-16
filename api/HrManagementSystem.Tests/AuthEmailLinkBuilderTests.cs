@@ -32,6 +32,21 @@ public sealed class AuthEmailLinkBuilderTests
         Assert.Equal("/hr/reset-password", uri.AbsolutePath);
     }
 
+    [Fact]
+    public void InvitationActivationLink_UsesSharedHttpsBaseUrlAndEncodesToken()
+    {
+        var invitationId = Guid.NewGuid();
+        var links = CreateBuilder("https://app.example.com/");
+
+        var uri = new Uri(links.BuildInvitationActivationLink(invitationId, "token+/="));
+        var query = QueryHelpers.ParseQuery(uri.Query);
+
+        Assert.Equal("https", uri.Scheme);
+        Assert.Equal("/accept-invitation", uri.AbsolutePath);
+        Assert.Equal(invitationId.ToString("D"), query["invitationId"]);
+        Assert.Equal("token+/=", query["token"]);
+    }
+
     private static AuthEmailLinkBuilder CreateBuilder(string publicAppUrl) =>
         new(Options.Create(new AppSettings { FrontendUrl = publicAppUrl }));
 }

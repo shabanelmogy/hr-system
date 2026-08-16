@@ -41,6 +41,11 @@ export default ({ config }: ConfigContext): ExpoConfig => {
                     scheme: 'https',
                     host: appLinkHost,
                     pathPrefix: '/confirm-email'
+                  },
+                  {
+                    scheme: 'https',
+                    host: appLinkHost,
+                    pathPrefix: '/accept-invitation'
                   }
                 ],
                 category: ['BROWSABLE', 'DEFAULT']

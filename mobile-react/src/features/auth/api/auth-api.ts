@@ -10,6 +10,7 @@ import {
 import type {
   AuthResponse,
   ConfirmEmailRequest,
+  AcceptInvitationRequest,
   LoginOutcome,
   LoginRequest,
   RegisterRequest,
@@ -49,6 +50,14 @@ export const authApi = {
       AUTH_ENDPOINTS.confirmEmail,
       request,
       { skipAuth: true, skipAuthRefresh: true },
+    );
+  },
+
+  async acceptInvitation(request: AcceptInvitationRequest): Promise<void> {
+    await apiService.post<void, AcceptInvitationRequest>(
+      AUTH_ENDPOINTS.acceptInvitation,
+      request,
+      { skipAuth: true, skipAuthRefresh: true, allowWhenReadOnly: true },
     );
   },
 

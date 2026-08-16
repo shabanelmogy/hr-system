@@ -1,4 +1,5 @@
 using HrManagementSystem.Application.Features.Security.Authentication.Services;
+using HrManagementSystem.Application.Features.Security.Invitations.Services;
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Services;
 using Microsoft.AspNetCore.Hosting;
 
@@ -10,6 +11,7 @@ public sealed class AuthenticationFlowArchitectureTests
     [InlineData(typeof(AuthLoginService), typeof(IAuthLoginService))]
     [InlineData(typeof(AuthSessionService), typeof(IAuthSessionService))]
     [InlineData(typeof(AuthAccountService), typeof(IAuthAccountService))]
+    [InlineData(typeof(UserInvitationService), typeof(IUserInvitationService))]
     public void AuthenticationFlows_ImplementFocusedApplicationContracts(
         Type implementation,
         Type contract)

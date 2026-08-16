@@ -15,10 +15,6 @@ import { permissions } from "@/lib/auth/permissions";
 const UsersPage = () => {
   const { t } = useTranslation();
   const { hasAllPermissions, isReadOnly } = usePermissions();
-  const canCreate = !isReadOnly && hasAllPermissions([
-    permissions.CreateUsers,
-    permissions.ViewRoles,
-  ]);
   const canEdit = !isReadOnly && hasAllPermissions([
     permissions.EditUsers,
     permissions.ViewRoles,
@@ -34,7 +30,6 @@ const UsersPage = () => {
     onView,
     onToggle,
     onUnlock,
-    onAdd,
     onRevoke,
     lastAddedId,
     lastEditedId,
@@ -60,11 +55,10 @@ const UsersPage = () => {
           onView={onView}
           onToggle={onToggle}
           onUnlock={onUnlock}
-          onAdd={onAdd}
           onRevoke={onRevoke}
           lastAddedId={lastAddedId}
           lastEditedId={lastEditedId}
-          canCreate={canCreate}
+          canCreate={false}
           canEdit={canEdit}
           t={t}
         />

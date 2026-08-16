@@ -1,0 +1,19 @@
+using HrManagementSystem.Application.Features.Platform.BackgroundJobs.Services;
+
+namespace HrManagementSystem.Api.Features.Platform.BackgroundJobs.V1;
+
+[ApiVersion("1.0")]
+[Route(ApiRoutes.BaseRoute)]
+[ApiController]
+[Authorize]
+public sealed class BackgroundJobsController(
+    IBackgroundJobDashboardService backgroundJobDashboardService) : ControllerBase
+{
+    private readonly IBackgroundJobDashboardService _backgroundJobDashboardService =
+        backgroundJobDashboardService;
+
+    [HttpGet]
+    [HasPermission(Permissions.ViewHangfireDashboard)]
+    public IActionResult GetDashboard() =>
+        Ok(_backgroundJobDashboardService.GetDashboard());
+}

@@ -1,5 +1,8 @@
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
+using HrManagementSystem.Application.Features.Platform.BackgroundJobs.Services;
+using HrManagementSystem.Infrastructure.Features.Platform.BackgroundJobs.Services;
+
 public static class HangfireService
 {
     public static IServiceCollection AddHangfireService(this IServiceCollection services, IConfiguration configuration)
@@ -26,6 +29,7 @@ public static class HangfireService
                 "HangfireSettings:AllowedHosts must contain at least one valid host.")
             .ValidateOnStart();
         services.AddSingleton<HangfireAuthorizationFilter>();
+        services.AddScoped<IBackgroundJobDashboardService, BackgroundJobDashboardService>();
 
         services.AddHangfireServer();
 

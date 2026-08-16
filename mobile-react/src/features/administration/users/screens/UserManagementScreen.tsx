@@ -13,7 +13,6 @@ import {
   useUnlockManagedUser,
 } from '../../hooks/useAdministration';
 import type {
-  CreateManagedUserRequest,
   ManagedUser,
   ManagedUserFormValues,
   UpdateManagedUserRequest,
@@ -28,7 +27,6 @@ import { permissions } from '@/src/features/auth/rbac/permissions';
 import {
   AppDataTable,
   type AppDataTableColumn,
-  AppIconButton,
   AppMultiView,
   AppPageHeader,
   AppScreen,
@@ -41,10 +39,9 @@ import {
 } from '@/src/shared/components';
 import { useAppTheme } from '@/src/core/theme';
 
-const createPermissions = [permissions.CreateUsers, permissions.ViewRoles] as const;
 const editPermissions = [permissions.EditUsers, permissions.ViewRoles] as const;
 
-type UserFormMode = 'add' | 'edit' | 'view';
+type UserFormMode = 'edit' | 'view';
 type UserView = 'table' | 'cards';
 type PendingAccountAction = {
   type: 'toggle' | 'revoke';
@@ -55,23 +52,19 @@ export function UserManagementScreen() {
   const { t, i18n } = useTranslation();
   const { theme } = useAppTheme();
   const { session } = useAuth();
-  const { allowed: canCreate } = useAuthorization({
-    requiredPermissions: createPermissions,
-    permissionMode: 'all',
-  });
   const { allowed: canEdit } = useAuthorization({
     requiredPermissions: editPermissions,
     permissionMode: 'all',
   });
   const usersQuery = useManagedUsers();
   const companiesQuery = useAssignableCompanies();
-  const rolesQuery = useRoleOptions(canCreate || canEdit);
+  const rolesQuery = useRoleOptions(canEdit);
   const saveMutation = useSaveManagedUser();
   const toggleMutation = useToggleManagedUser();
   const unlockMutation = useUnlockManagedUser();
   const revokeMutation = useRevokeManagedUserSessions();
   const [editing, setEditing] = useState<ManagedUser | null>(null);
-  const [formMode, setFormMode] = useState<UserFormMode>('add');
+  const [formMode, setFormMode] = useState<UserFormMode>('view');
   const [formOpen, setFormOpen] = useState(false);
   const [pendingAction, setPendingAction] = useState<PendingAccountAction | null>(null);
   const [search, setSearch] = useState('');
@@ -85,7 +78,7 @@ export function UserManagementScreen() {
     }
   }, [t, unlockMutation]);
 
-  const openUserForm = useCallback((mode: UserFormMode, user: ManagedUser | null) => {
+  const openUserForm = useCallback((mode: UserFormMode, user: ManagedUser) => {
     setEditing(user);
     setFormMode(mode);
     setFormOpen(true);
@@ -115,7 +108,7 @@ export function UserManagementScreen() {
     [companiesQuery.data, i18n.language],
   );
 
-  const users = usersQuery.data ?? [];
+  const users = useMemo(() => usersQuery.data ?? [], [usersQuery.data]);
   const filteredUsers = useMemo(() => {
     const query = search.trim().toLocaleLowerCase(i18n.language);
     if (!query) return users;
@@ -246,10 +239,6 @@ export function UserManagementScreen() {
     },
   ], [companyNames, renderUserActions, t, theme.colors.danger, theme.colors.success]);
 
-  const openCreate = () => {
-    openUserForm('add', null);
-  };
-
   const closeForm = () => {
     if (saveMutation.isPending) return;
     setFormOpen(false);
@@ -257,6 +246,8 @@ export function UserManagementScreen() {
   };
 
   const save = async (values: ManagedUserFormValues) => {
+    if (!editing) return;
+
     const common: UpdateManagedUserRequest = {
       firstName: values.firstName.trim(),
       lastName: values.lastName.trim(),
@@ -266,19 +257,14 @@ export function UserManagementScreen() {
       companyIds: values.companyIds,
       defaultCompanyId: values.defaultCompanyId,
     };
-    if (editing) {
-      const password = values.password.trim();
-      await saveMutation.mutateAsync({
-        id: editing.id,
-        request: common,
-        password: password
-          ? { newPassword: password, confirmPassword: values.confirmPassword }
-          : undefined,
-      });
-    } else {
-      const request: CreateManagedUserRequest = { ...common, password: values.password };
-      await saveMutation.mutateAsync({ id: null, request });
-    }
+    const password = values.password.trim();
+    await saveMutation.mutateAsync({
+      id: editing.id,
+      request: common,
+      password: password
+        ? { newPassword: password, confirmPassword: values.confirmPassword }
+        : undefined,
+    });
     setFormOpen(false);
     setEditing(null);
     showToast.success(t('userManagement.savedSuccessfully'));
@@ -302,9 +288,9 @@ export function UserManagementScreen() {
   };
 
   const loading = usersQuery.isLoading || companiesQuery.isLoading ||
-    ((canCreate || canEdit) && rolesQuery.isLoading);
+    (canEdit && rolesQuery.isLoading);
   const queryError = usersQuery.error ?? companiesQuery.error ??
-    ((canCreate || canEdit) ? rolesQuery.error : null);
+    (canEdit ? rolesQuery.error : null);
 
   return (
     <AppScreen
@@ -315,23 +301,14 @@ export function UserManagementScreen() {
           onRefresh={() => void Promise.all([
             usersQuery.refetch(),
             companiesQuery.refetch(),
-            ...((canCreate || canEdit) ? [rolesQuery.refetch()] : []),
+            ...(canEdit ? [rolesQuery.refetch()] : []),
           ])}
-          refreshing={usersQuery.isRefetching || companiesQuery.isRefetching || rolesQuery.isRefetching}
+          refreshing={usersQuery.isRefetching || companiesQuery.isRefetching ||
+            rolesQuery.isRefetching}
           tintColor={theme.colors.primary}
         />
       }>
       <AppPageHeader
-        action={canCreate ? (
-          <AppIconButton
-            color={theme.colors.onPrimary}
-            icon="person-add-outline"
-            label={t('userManagement.addUser')}
-            onPress={openCreate}
-            pressedBackgroundColor={theme.colors.secondary}
-            style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
-          />
-        ) : null}
         subtitle={t('userManagement.subtitle')}
         title={t('userManagement.title')}
       />
@@ -412,7 +389,7 @@ export function UserManagementScreen() {
         />
       )}
 
-      {formOpen ? (
+      {formOpen && editing ? (
         <ManagedUserForm
           companies={companiesQuery.data ?? []}
           currentCompanyId={session?.companyId ?? 0}
@@ -440,9 +417,7 @@ export function UserManagementScreen() {
               ? 'userManagement.enableDescription'
               : 'userManagement.disableDescription',
           {
-            name: pendingAction
-              ? `${pendingAction.user.firstName} ${pendingAction.user.lastName}`
-              : '',
+            name: pendingAction ? `${pendingAction.user.firstName} ${pendingAction.user.lastName}` : '',
           },
         )}
         loading={toggleMutation.isPending || revokeMutation.isPending}
@@ -455,7 +430,9 @@ export function UserManagementScreen() {
               ? 'userManagement.enableUser'
               : 'userManagement.disableUser',
         )}
-        tone={pendingAction?.type === 'revoke' ? 'danger' : pendingAction?.user.isDisabled ? 'default' : 'warning'}
+        tone={pendingAction?.type === 'revoke'
+          ? 'danger'
+          : pendingAction?.user.isDisabled ? 'default' : 'warning'}
         visible={pendingAction !== null}
       />
     </AppScreen>
@@ -469,7 +446,6 @@ function getErrorMessage(error: unknown, fallback: string): string {
 }
 
 const styles = StyleSheet.create({
-  addButton: { flexShrink: 0 },
   primaryCell: { width: '100%', gap: 2 },
   nameCell: { width: '100%', flexDirection: 'row', alignItems: 'center', gap: 8 },
   cards: {

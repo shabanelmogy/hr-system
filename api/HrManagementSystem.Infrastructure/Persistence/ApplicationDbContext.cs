@@ -57,6 +57,7 @@ public class ApplicationDbContext(
     public DbSet<Company> Companies { get; set; }
     public DbSet<UserTenantAccess> UserTenantAccesses { get; set; }
     public DbSet<UserCompanyAccess> UserCompanyAccesses { get; set; }
+    public DbSet<UserInvitation> UserInvitations { get; set; }
     public DbSet<SecurityAuditEvent> SecurityAuditEvents { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -66,6 +67,10 @@ public class ApplicationDbContext(
         modelBuilder.ApplyConfigurationsFromAssembly(
             HrManagementSystem.Infrastructure.AssemblyReference.Assembly);
         base.OnModelCreating(modelBuilder);
+        // Identity applies its global role-name index in base.OnModelCreating, so role isolation
+        // must be the final role mapping applied to the model.
+        new Features.Security.Authentication.Persistence.ApplicationRoleConfiguration()
+            .Configure(modelBuilder.Entity<ApplicationRole>());
         ConfigureAuditRelationships(modelBuilder);
         ConfigureTenantIsolation(modelBuilder);
         RestrictCascadeDelete(modelBuilder);
@@ -311,6 +316,7 @@ public class ApplicationDbContext(
              on userRole.RoleId equals role.Id
          where tenantIds.Contains(tenantAccess.TenantId) &&
                user.LifecycleStatus == UserLifecycleStatus.Active &&
+               role.IsSystem &&
                role.NormalizedName == AppRoles.admin.ToUpper()
          select new TenantAdministratorAccess(tenantAccess.TenantId, tenantAccess.UserId))
         .Distinct();

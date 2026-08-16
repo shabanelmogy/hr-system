@@ -8,6 +8,7 @@ export const AUTH_ENDPOINTS = {
   forgetPassword: 'auth/forgetPassword',
   resetPassword: 'auth/resetPassword',
   confirmEmail: 'auth/confirmEmail',
+  acceptInvitation: 'account-invitations/accept',
   resendConfirmationEmail: 'auth/resendConfirmationEmail',
   selectTenant: 'auth/selectTenant',
   selectCompany: 'auth/selectCompany',

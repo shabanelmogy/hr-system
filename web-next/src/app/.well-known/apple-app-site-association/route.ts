@@ -16,7 +16,7 @@ export function GET() {
           ? [
               {
                 appID: appId,
-                paths: ["/confirm-email"]
+                paths: ["/confirm-email", "/accept-invitation"]
               }
             ]
           : []

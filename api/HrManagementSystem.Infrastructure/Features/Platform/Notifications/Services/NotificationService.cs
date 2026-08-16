@@ -220,19 +220,24 @@ public sealed class NotificationService(
 
     private IQueryable<Notification> GetAccessibleNotifications(string userId)
     {
-        var currentPermissions =
-            from userRole in context.UserRoles.AsNoTracking()
-            join role in context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
-            join roleClaim in context.RoleClaims.AsNoTracking() on role.Id equals roleClaim.RoleId
-            where userRole.UserId == userId &&
-                  !role.IsDeleted &&
-                  roleClaim.ClaimType == Permissions.Type &&
-                  roleClaim.ClaimValue != null
-            select roleClaim.ClaimValue!;
+        var tenantId = currentActor.TenantId;
+        var companyId = currentActor.CompanyId;
+        if (string.IsNullOrWhiteSpace(tenantId) || companyId is not > 0)
+            return context.Set<Notification>().Where(_ => false);
 
         return context.Set<Notification>().Where(notification =>
+            notification.TenantId == tenantId &&
+            notification.CompanyId == companyId &&
             notification.RecipientUserId == userId &&
-            currentPermissions.Contains(notification.RequiredPermission));
+            (from userRole in context.UserRoles.AsNoTracking()
+             join role in context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
+             join roleClaim in context.RoleClaims.AsNoTracking() on role.Id equals roleClaim.RoleId
+             where userRole.UserId == userId &&
+                   !role.IsDeleted &&
+                   (role.IsSystem || role.TenantId == notification.TenantId) &&
+                   roleClaim.ClaimType == Permissions.Type &&
+                   roleClaim.ClaimValue == notification.RequiredPermission
+             select roleClaim).Any());
     }
 
     private static IQueryable<Notification> ApplyOrdering(

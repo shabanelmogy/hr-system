@@ -372,6 +372,7 @@ public sealed class TenantManagementService(
             join role in context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
             where tenantIds.Contains(tenantAccess.TenantId) &&
                   user.LifecycleStatus == UserLifecycleStatus.Active &&
+                  role.IsSystem &&
                   (role.NormalizedName == AppRoles.admin.ToUpper() ||
                    role.NormalizedName == AppRoles.user.ToUpper())
             group tenantAccess by new { tenantAccess.TenantId, role.NormalizedName }

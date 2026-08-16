@@ -3,15 +3,19 @@ import { apiService } from "@/shared/services";
 import type {
   ChangeUserPasswordRequest,
   CreateUserRequest,
+  CreateUserInvitationRequest,
   UpdateUserRequest,
   User,
   UserCompanyOption,
+  UserInvitation,
 } from "../../types";
 import {
   parseUserResponse,
   parseUserCompanyOptionsResponse,
   parseUsersResponse,
   parseUsersPageResponse,
+  parseUserInvitationResponse,
+  parseUserInvitationsResponse,
 } from "../../utils/apiResponse";
 import type { ManagementPageQuery, ManagementPageResponse } from "@/lib/api/pagination";
 import { create } from "zustand";
@@ -20,10 +24,15 @@ import { createJSONStorage, devtools, persist } from "zustand/middleware";
 export interface UserStore {
   users: User[];
   companyOptions: UserCompanyOption[];
+  invitations: UserInvitation[];
   hasLoaded: boolean;
   fetchUsers: () => Promise<User[]>;
   fetchUsersPage: (query: ManagementPageQuery) => Promise<ManagementPageResponse<User>>;
   fetchCompanyOptions: () => Promise<UserCompanyOption[]>;
+  fetchInvitations: () => Promise<UserInvitation[]>;
+  inviteUser: (request: CreateUserInvitationRequest) => Promise<UserInvitation>;
+  resendInvitation: (id: string) => Promise<UserInvitation>;
+  revokeInvitation: (id: string) => Promise<void>;
   addUser: (request: CreateUserRequest) => Promise<User>;
   updateUser: (request: UpdateUserRequest) => Promise<User>;
   changeUserPassword: (request: ChangeUserPasswordRequest) => Promise<void>;
@@ -39,6 +48,7 @@ const useUserStore = create<UserStore>()(
       (set, get) => ({
         users: [],
         companyOptions: [],
+        invitations: [],
         hasLoaded: false,
 
         fetchUsers: async () => {
@@ -60,6 +70,43 @@ const useUserStore = create<UserStore>()(
           const companyOptions = parseUserCompanyOptionsResponse(response);
           set({ companyOptions });
           return companyOptions;
+        },
+
+        fetchInvitations: async () => {
+          const response = await apiService.get<unknown>(apiRoutes.userInvitations.getAll);
+          const invitations = parseUserInvitationsResponse(response);
+          set({ invitations });
+          return invitations;
+        },
+
+        inviteUser: async (request) => {
+          const response = await apiService.post<unknown>(apiRoutes.userInvitations.create, request);
+          const invitation = parseUserInvitationResponse(response);
+          set((state) => ({
+            invitations: [
+              invitation,
+              ...state.invitations.filter((item) => item.id !== invitation.id),
+            ],
+          }));
+          return invitation;
+        },
+
+        resendInvitation: async (id) => {
+          const response = await apiService.post<unknown>(apiRoutes.userInvitations.resend(id));
+          const invitation = parseUserInvitationResponse(response);
+          set((state) => ({
+            invitations: state.invitations.map((item) => item.id === id ? invitation : item),
+          }));
+          return invitation;
+        },
+
+        revokeInvitation: async (id) => {
+          await apiService.delete(apiRoutes.userInvitations.revoke(id));
+          set((state) => ({
+            invitations: state.invitations.map((item) => item.id === id
+              ? { ...item, status: "revoked", revokedOn: new Date().toISOString() }
+              : item),
+          }));
         },
 
         addUser: async (request) => {
@@ -127,7 +174,7 @@ const useUserStore = create<UserStore>()(
           await apiService.put<void>(apiRoutes.users.revoke(userId));
         },
 
-        resetUserData: () => set({ users: [], companyOptions: [], hasLoaded: false }),
+        resetUserData: () => set({ users: [], companyOptions: [], invitations: [], hasLoaded: false }),
       }),
       {
         name: "user-storage",

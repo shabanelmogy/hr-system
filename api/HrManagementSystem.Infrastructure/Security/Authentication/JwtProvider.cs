@@ -4,13 +4,9 @@ namespace HrManagementSystem.Infrastructure.Security.Authentication;
 
 public sealed class JwtProvider(
     IOptions<JwtOptions> jwtSettings,
-    UserManager<ApplicationUser> userManager,
-    RoleManager<ApplicationRole> roleManager,
     ApplicationDbContext context) : IJwtProvider
 {
     private readonly JwtOptions _jwtSettings = jwtSettings.Value;
-    private readonly UserManager<ApplicationUser> _userManager = userManager;
-    private readonly RoleManager<ApplicationRole> _roleManager = roleManager;
     private readonly ApplicationDbContext _context = context;
 
     public async Task<AccessTokenResult> GenerateAccessTokenAsync(
@@ -67,7 +63,8 @@ public sealed class JwtProvider(
             .Where(claim =>
                 requiredClaims.Contains(claim.Type) ||
                 claim.Type == ClaimTypes.Role ||
-                claim.Type == Permissions.Type)
+                claim.Type == Permissions.Type ||
+                claim.Type == JwtClaimNames.TenantRoleId)
             .Select(claim => new Claim(claim.Type, claim.Value))
             .ToList();
 
@@ -244,7 +241,14 @@ public sealed class JwtProvider(
         string tenantName,
         string tenantPlanName)
     {
-        var roles = await _userManager.GetRolesAsync(user);
+        var roles = await (
+            from userRole in _context.UserRoles.AsNoTracking()
+            join role in _context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
+            where userRole.UserId == user.Id &&
+                  (role.IsSystem ||
+                   (!role.IsSystem && role.TenantId == tenantId && !role.IsDeleted))
+            select new { role.Id, Name = role.Name!, role.IsSystem })
+            .ToArrayAsync();
         var claims = new List<Claim>
         {
             new(ClaimTypes.Name, user.UserName ?? string.Empty),
@@ -261,12 +265,12 @@ public sealed class JwtProvider(
             new(JwtClaimNames.CompanyId, companyId.ToString(CultureInfo.InvariantCulture))
         };
 
-        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role.Name)));
+        claims.AddRange(roles
+            .Where(role => !role.IsSystem)
+            .Select(role => new Claim(JwtClaimNames.TenantRoleId, role.Id)));
 
-        var roleIds = await _roleManager.Roles
-            .Where(r => roles.Contains(r.Name!))
-            .Select(r => r.Id)
-            .ToListAsync();
+        var roleIds = roles.Select(role => role.Id).ToArray();
 
         var roleClaims = await _context.RoleClaims
             .Where(rc => roleIds.Contains(rc.RoleId))
@@ -276,7 +280,6 @@ public sealed class JwtProvider(
         claims.AddRange(roleClaims
             .Where(rc => rc.ClaimType != null && rc.ClaimValue != null)
             .Select(rc => new Claim(rc.ClaimType!, rc.ClaimValue!)));
-
         return claims
             .DistinctBy(claim => (claim.Type, claim.Value))
             .ToList();

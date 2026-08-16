@@ -5,12 +5,13 @@ import type { PageQuery, PageResponse } from '@/src/core/api';
 import type {
   ChangeManagedUserPasswordRequest,
   CreateRoleRequest,
-  CreateManagedUserRequest,
+  CreateUserInvitationRequest,
   ManagedUser,
   RoleOption,
   RoleWithClaims,
   UpdateRoleRequest,
   UpdateManagedUserRequest,
+  UserInvitation,
   UserCompanyOption,
 } from '../types/administration';
 
@@ -46,6 +47,7 @@ const roleClaimSchema = z.object({
 const roleOptionSchema = z.object({
   id: z.string().min(1),
   name: z.string(),
+  isSystem: z.boolean(),
   isDeleted: z.boolean(),
   roleClaims: z.array(roleClaimSchema).nullable(),
 });
@@ -54,11 +56,30 @@ const roleWithClaimsSchema = roleOptionSchema.extend({
   roleClaims: z.array(roleClaimSchema),
 });
 
+const userInvitationSchema = z.object({
+  id: z.string().uuid(),
+  firstName: z.string(),
+  lastName: z.string(),
+  userName: z.string(),
+  email: z.string(),
+  roles: z.array(z.string()),
+  companyIds: z.array(z.number().int().positive()),
+  defaultCompanyId: z.number().int().positive(),
+  status: z.enum(['pending', 'accepted', 'revoked', 'expired']),
+  expiresOn: z.string(),
+  createdOn: z.string(),
+  acceptedOn: z.string().nullable(),
+  revokedOn: z.string().nullable(),
+});
+
 const endpoints = {
   users: 'users/getAll',
   usersPage: 'users/getPage',
   companyOptions: 'users/getCompanyOptions',
-  createUser: 'users/add',
+  invitations: 'userinvitations/getAll',
+  createInvitation: 'userinvitations/create',
+  resendInvitation: (id: string) => `userinvitations/resend/${encodeURIComponent(id)}`,
+  revokeInvitation: (id: string) => `userinvitations/revoke/${encodeURIComponent(id)}`,
   updateUser: (id: string) => `users/update/${id}`,
   changePassword: (id: string) => `users/changePassword/${id}`,
   toggleUser: (id: string) => `users/toggle/${id}`,
@@ -128,10 +149,24 @@ export const administrationApi = {
     await apiService.put<void, UpdateRoleRequest>(endpoints.updateRoleClaims, request);
   },
 
-  async createUser(request: CreateManagedUserRequest): Promise<ManagedUser> {
-    return managedUserSchema.parse(
-      await apiService.post<unknown, CreateManagedUserRequest>(endpoints.createUser, request),
+  async getInvitations(): Promise<UserInvitation[]> {
+    return z.array(userInvitationSchema).parse(await apiService.get<unknown>(endpoints.invitations));
+  },
+
+  async createInvitation(request: CreateUserInvitationRequest): Promise<UserInvitation> {
+    return userInvitationSchema.parse(
+      await apiService.post<unknown, CreateUserInvitationRequest>(endpoints.createInvitation, request),
     );
+  },
+
+  async resendInvitation(id: string): Promise<UserInvitation> {
+    return userInvitationSchema.parse(
+      await apiService.post<unknown, undefined>(endpoints.resendInvitation(id), undefined),
+    );
+  },
+
+  async revokeInvitation(id: string): Promise<void> {
+    await apiService.delete<void>(endpoints.revokeInvitation(id));
   },
 
   async updateUser(id: string, request: UpdateManagedUserRequest): Promise<void> {

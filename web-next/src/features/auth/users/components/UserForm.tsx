@@ -72,8 +72,7 @@ const UserForm = ({
   const isEditMode = dialogType === "edit";
   const isAddMode = dialogType === "add";
 
-  // ✅ FIXED: Only pass 2 parameters - removed showPasswordSection
-  const schema = getUserValidationSchema(t, isAddMode);
+  const schema = getUserValidationSchema(t);
 
   const {
     handleSubmit,
@@ -118,7 +117,7 @@ const UserForm = ({
   useEffect(() => {
     const timer = window.setTimeout(() => {
       if (open) {
-        setShowPasswordSection(isAddMode);
+        setShowPasswordSection(false);
         if (isEditMode) {
           clearErrors(["password", "confirmPassword"]);
         }
@@ -255,7 +254,7 @@ const UserForm = ({
 
   // Get appropriate overlay message
   const getOverlayMessage = () => {
-    if (isAddMode) return t("users.creatingUser") || "Creating user...";
+    if (isAddMode) return t("users.sendingInvitation") || "Sending invitation...";
     if (isEditMode) return t("users.updatingUser") || "Updating user...";
     return t("users.savingUser") || "Saving user...";
   };
@@ -339,14 +338,14 @@ const UserForm = ({
           ? t("users.viewSubtitle") || "View user details"
           : isEditMode
           ? t("users.editSubtitle") || "Modify user information"
-          : t("users.addSubtitle") || "Add a new user to the system"
+          : t("users.inviteSubtitle") || "Send an account invitation"
       }
       submitButtonText={
         isViewMode
           ? undefined
           : isEditMode
           ? t("actions.update")
-          : t("actions.create")
+          : t("users.sendInvitation")
       }
       onSubmit={isViewMode ? undefined : handleSubmit(handleFormSubmit)}
       isSubmitting={loading}
@@ -512,8 +511,8 @@ const UserForm = ({
           </Alert>
         ) : null}
       </Box>
-      {/* Password Section */}
-      {!isViewMode && (
+      {/* Only existing users can have their password changed by an administrator. */}
+      {isEditMode && (
         <Box sx={{ mt: 1 }}>
           <Divider sx={{ mb: 2 }}>
             <Typography variant="body2" sx={{
@@ -545,8 +544,7 @@ const UserForm = ({
             </Box>
           )}
 
-          {/* Password Fields - Show for Add mode or when toggled in Edit mode */}
-          {(isAddMode || showPasswordSection) && (
+          {showPasswordSection && (
             <Box>
               {/* Password Field */}
               <MyTextField

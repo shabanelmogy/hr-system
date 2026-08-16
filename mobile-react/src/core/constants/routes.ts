@@ -8,6 +8,7 @@ export const ROUTES = {
   forgotPassword: '/forgot-password',
   resetPassword: '/reset-password',
   confirmEmail: '/confirm-email',
+  acceptInvitation: '/accept-invitation',
   resendConfirmation: '/resend-confirmation',
   settings: '/settings',
   superAdminDashboard: '/super-admin-dashboard',
@@ -19,8 +20,22 @@ export const ROUTES = {
     geographicalInformation: '/basic-data/geographical-information',
     organizationalStructure: '/basic-data/organizational-structure',
   },
+  extras: {
+    root: '/extras',
+    files: '/extras/files',
+    appointments: '/extras/appointments',
+  },
+  advancedTools: {
+    root: '/advanced-tools',
+    trackChanges: '/advanced-tools/track-changes',
+    localizationApi: '/advanced-tools/localization-api',
+    healthCheck: '/advanced-tools/health-check',
+    apiEndpoints: '/advanced-tools/api-endpoints',
+    hangfireDashboard: '/advanced-tools/hangfire-dashboard',
+  },
   administration: {
     root: '/administration',
+    invitations: '/administration/invitations',
     roles: '/administration/roles',
     rolePermissionsRoot: '/administration/role-permissions',
     rolePermissions: (roleId: string) =>
@@ -37,6 +52,7 @@ export type AppRoute =
   | typeof ROUTES.forgotPassword
   | typeof ROUTES.resetPassword
   | typeof ROUTES.confirmEmail
+  | typeof ROUTES.acceptInvitation
   | typeof ROUTES.resendConfirmation
   | typeof ROUTES.settings
   | typeof ROUTES.superAdminDashboard
@@ -44,7 +60,10 @@ export type AppRoute =
   | typeof ROUTES.tenantAdminManagement
   | typeof ROUTES.modal
   | (typeof ROUTES.basicData)[keyof typeof ROUTES.basicData]
+  | (typeof ROUTES.extras)[keyof typeof ROUTES.extras]
+  | (typeof ROUTES.advancedTools)[keyof typeof ROUTES.advancedTools]
   | typeof ROUTES.administration.root
+  | typeof ROUTES.administration.invitations
   | typeof ROUTES.administration.roles
   | typeof ROUTES.administration.rolePermissionsRoot
   | ReturnType<typeof ROUTES.administration.rolePermissions>;

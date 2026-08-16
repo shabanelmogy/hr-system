@@ -6,6 +6,7 @@ type RolePermissionsActionsProps = {
   total: number;
   isSaving: boolean;
   onBack: () => void;
+  readOnly: boolean;
 };
 
 export default function RolePermissionsActions(props: RolePermissionsActionsProps) {
@@ -23,7 +24,7 @@ export default function RolePermissionsActions(props: RolePermissionsActionsProp
         >
           Back To Roles
         </Button>
-        <Button
+        {!props.readOnly && <Button
           type="submit"
           variant="contained"
           size="large"
@@ -37,7 +38,7 @@ export default function RolePermissionsActions(props: RolePermissionsActionsProp
           }}
         >
           {props.isSaving ? "Saving..." : "Save Changes"}
-        </Button>
+        </Button>}
       </Box>
     </Box>
   );

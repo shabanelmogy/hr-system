@@ -20,6 +20,13 @@ public class AuthEmailService(
             "ForgetPassword", user.FirstName, actionUrl);
     }
 
+    public void SendInvitationEmail(string email, string firstName, Guid invitationId, string token)
+    {
+        var actionUrl = links.BuildInvitationActivationLink(invitationId, token);
+        EnqueueEmail(email, "HR Management System: Activate your account",
+            "Invitation", firstName, actionUrl);
+    }
+
     private void EnqueueEmail(string to, string subject, string template, string name, string actionUrl)
     {
         var body = EmailBodyBuilder.GenerateEmailBody(template, new Dictionary<string, string>

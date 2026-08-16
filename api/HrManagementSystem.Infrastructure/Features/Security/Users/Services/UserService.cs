@@ -3,12 +3,12 @@ using HrManagementSystem.Infrastructure.Features.Security.Authentication.Jobs;
 using HrManagementSystem.Infrastructure.Features.Security.Users.Jobs;
 
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
-using HrManagementSystem.Application.Features.Security.Authorization.Services;
 using HrManagementSystem.Application.Features.Security.Users.Contracts;
 using HrManagementSystem.Application.Features.Security.Users.Errors;
 using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Common.Files;
 using HrManagementSystem.Application.Common.Realtime;
+using HrManagementSystem.Infrastructure.Features.Security.Authorization.Services;
 using HrManagementSystem.Application.Common.Paginations;
 using HrManagementSystem.Application.Features.Platform.SecurityAudits.Contracts;
 using HrManagementSystem.Application.Features.Platform.SecurityAudits.Services;
@@ -19,7 +19,6 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Users.Services;
 
 public class UserService(
     UserManager<ApplicationUser> userManager,
-    IRoleService roleService,
     UserErrors userErrors,
     ApplicationDbContext context,
     ICurrentActor currentActor,
@@ -27,10 +26,11 @@ public class UserService(
     TimeProvider timeProvider,
     ILogger<UserService> logger,
     ISecurityAuditService securityAudit,
-    IRealtimeChangeDispatcher realtimeChanges) : IUserService
+    IRealtimeChangeDispatcher realtimeChanges,
+    IUserSeatLimitService seatLimits,
+    TenantRoleAssignmentService roleAssignments) : IUserService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
-    private readonly IRoleService _roleService = roleService;
     private readonly UserErrors _userErrors = userErrors;
     private readonly ApplicationDbContext _context = context;
     private readonly ICurrentActor _currentActor = currentActor;
@@ -62,7 +62,9 @@ public class UserService(
                     access.UserId == user.Id && !actorCompanyIds.Contains(access.CompanyId)) &&
                 !(from userRole in _context.UserRoles.AsNoTracking()
                   join role in _context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
-                  where userRole.UserId == user.Id && role.NormalizedName == superAdminRoleName
+                  where userRole.UserId == user.Id &&
+                        role.IsSystem &&
+                        role.NormalizedName == superAdminRoleName
                   select userRole).Any());
 
         if (!string.IsNullOrWhiteSpace(request.SearchValue))
@@ -130,7 +132,8 @@ public class UserService(
         var roleRows = await (
                 from userRole in _context.UserRoles
                 join role in _context.Roles on userRole.RoleId equals role.Id
-                where userIds.Contains(userRole.UserId)
+                where userIds.Contains(userRole.UserId) &&
+                      (role.IsSystem || (!role.IsSystem && role.TenantId == tenantId))
                 select new { userRole.UserId, RoleName = role.Name! })
             .ToListAsync(cancellationToken);
         var accessRows = await _context.UserCompanyAccesses
@@ -207,7 +210,7 @@ public class UserService(
                     candidate.LifecycleStatus == UserLifecycleStatus.Active) is not { } user)
             return Result.Failure<UserResponse>(_userErrors.UserNotFound);
 
-        var userRoles = await _userManager.GetRolesAsync(user);
+        var userRoles = await roleAssignments.GetScopedRoleNamesAsync(user.Id, user.TenantId);
         if (userRoles.Contains(AppRoles.super_admin, StringComparer.OrdinalIgnoreCase))
             return Result.Failure<UserResponse>(_userErrors.UserNotFound);
 
@@ -247,15 +250,17 @@ public class UserService(
         if (userNameIsExists)
             return Result.Failure<UserResponse>(_userErrors.DuplicatedUserName);
 
-        var allowedRoles = await _roleService.GetAllAsync(cancellationToken);
-
-        if (request.Roles.Except(allowedRoles.Select(x => x.Name)).Any())
+        var resolvedRoles = await roleAssignments.ResolveAssignableRolesAsync(
+            _currentActor.TenantId,
+            request.Roles,
+            cancellationToken);
+        if (resolvedRoles is null)
             return Result.Failure<UserResponse>(_userErrors.InvalidRoles);
 
         await using var transaction = await _context.Database.BeginTransactionAsync(
             IsolationLevel.Serializable,
             cancellationToken);
-        if (await GetSeatLimitErrorAsync(request.Roles, cancellationToken) is { } seatLimitError)
+        if (await seatLimits.GetLimitErrorAsync(_currentActor.TenantId!, request.Roles, cancellationToken) is { } seatLimitError)
             return Result.Failure<UserResponse>(seatLimitError);
 
         var user = request.Adapt<ApplicationUser>();
@@ -265,13 +270,7 @@ public class UserService(
 
         if (result.Succeeded)
         {
-            var roleResult = await _userManager.AddToRolesAsync(user, request.Roles);
-            if (!roleResult.Succeeded)
-            {
-                var roleError = roleResult.Errors.First();
-                return Result.Failure<UserResponse>(
-                    new Error(roleError.Code, roleError.Description, ErrorType.Validation));
-            }
+            roleAssignments.AddAssignments(user.Id, resolvedRoles);
 
             _context.UserTenantAccesses.Add(new UserTenantAccess
             {
@@ -342,7 +341,7 @@ public class UserService(
             return Result.Failure(_userErrors.UserNotFound);
         }
 
-        var existingRoles = await _userManager.GetRolesAsync(user);
+        var existingRoles = await roleAssignments.GetScopedRoleNamesAsync(user.Id, user.TenantId, cancellationToken);
         if (existingRoles.Contains(AppRoles.super_admin, StringComparer.OrdinalIgnoreCase) ||
             !await IsUserWithinActorCompanyScopeAsync(user.Id, user.TenantId, cancellationToken))
         {
@@ -359,9 +358,11 @@ public class UserService(
         if (userNameIsExists)
             return Result.Failure<UserResponse>(_userErrors.DuplicatedUserName);
 
-        var allowedRoles = await _roleService.GetAllAsync(cancellationToken);
-
-        if (request.Roles.Except(allowedRoles.Select(x => x.Name)).Any())
+        var resolvedRoles = await roleAssignments.ResolveAssignableRolesAsync(
+            _currentActor.TenantId!,
+            request.Roles,
+            cancellationToken);
+        if (resolvedRoles is null)
             return Result.Failure(_userErrors.InvalidRoles);
 
         var companyIds = await ResolveCompanyIdsAsync(
@@ -377,7 +378,7 @@ public class UserService(
         await using var transaction = await _context.Database.BeginTransactionAsync(
             IsolationLevel.Serializable,
             cancellationToken);
-        if (await GetSeatLimitErrorAsync(addedRoles, cancellationToken) is { } seatLimitError)
+        if (await seatLimits.GetLimitErrorAsync(_currentActor.TenantId!, addedRoles, cancellationToken) is { } seatLimitError)
             return Result.Failure(seatLimitError);
 
         user = request.Adapt(user);
@@ -386,22 +387,20 @@ public class UserService(
 
         if (result.Succeeded)
         {
-            await _context.UserRoles
-                .Where(x => x.UserId == id)
-                .ExecuteDeleteAsync(cancellationToken);
-
-            var roleResult = await _userManager.AddToRolesAsync(user, request.Roles);
-            if (!roleResult.Succeeded)
-            {
-                var roleError = roleResult.Errors.First();
-                return Result.Failure(
-                    new Error(roleError.Code, roleError.Description, ErrorType.Validation));
-            }
+            await roleAssignments.SynchronizeAssignmentsAsync(
+                user.Id,
+                _currentActor.TenantId!,
+                resolvedRoles,
+                cancellationToken);
 
             await SynchronizeCompanyAccessesAsync(
                 user,
                 companyIds,
                 request.DefaultCompanyId,
+                cancellationToken);
+            var effectiveRoles = await roleAssignments.GetScopedRoleNamesAsync(
+                user.Id,
+                _currentActor.TenantId!,
                 cancellationToken);
 
             var stampResult = await _userManager.UpdateSecurityStampAsync(user);
@@ -431,7 +430,7 @@ public class UserService(
                 {
                     ["UserName"] = user.UserName,
                     ["PreviousRoles"] = string.Join(',', existingRoles.OrderBy(role => role, StringComparer.OrdinalIgnoreCase)),
-                    ["Roles"] = string.Join(',', request.Roles.OrderBy(role => role, StringComparer.OrdinalIgnoreCase)),
+                    ["Roles"] = string.Join(',', effectiveRoles.OrderBy(role => role, StringComparer.OrdinalIgnoreCase)),
                     ["CompanyIds"] = string.Join(',', companyIds.OrderBy(companyId => companyId))
                 }), cancellationToken);
             await transaction.CommitAsync(cancellationToken);
@@ -440,7 +439,7 @@ public class UserService(
                 "Your account permissions changed. Please sign in again.");
             QueueUserChanged(CreateUserResponse(
                 user,
-                request.Roles,
+                effectiveRoles,
                 companyIds.Select(companyId => new UserCompanyAccess
                 {
                     TenantId = user.TenantId,
@@ -474,7 +473,7 @@ public class UserService(
                 cancellationToken) is not { } user)
             return Result.Failure(_userErrors.UserNotFound);
 
-        if (await _userManager.IsInRoleAsync(user, AppRoles.super_admin))
+        if (await roleAssignments.IsSuperAdminAsync(user.Id, cancellationToken))
             return Result.Failure(_userErrors.UserNotFound);
 
         if (!await IsUserWithinActorCompanyScopeAsync(user.Id, user.TenantId, cancellationToken))
@@ -517,7 +516,7 @@ public class UserService(
                         candidate.LifecycleStatus == UserLifecycleStatus.Active) is not { } user)
             return Result.Failure(_userErrors.UserNotFound);
 
-        if (await _userManager.IsInRoleAsync(user, AppRoles.super_admin))
+        if (await roleAssignments.IsSuperAdminAsync(user.Id))
             return Result.Failure(_userErrors.UserNotFound);
 
         if (!await IsUserWithinActorCompanyScopeAsync(user.Id, user.TenantId))
@@ -545,7 +544,7 @@ public class UserService(
                 QueueSessionRevoked(user.Id, "Your account has been disabled.");
             }
 
-            var roles = await _userManager.GetRolesAsync(user);
+            var roles = await roleAssignments.GetScopedRoleNamesAsync(user.Id, user.TenantId);
             var accesses = await GetUserCompanyAccessesAsync(user.Id, user.TenantId);
             QueueUserChanged(
                 CreateUserResponse(user, roles, accesses),
@@ -569,7 +568,7 @@ public class UserService(
                     candidate.LifecycleStatus == UserLifecycleStatus.Active) is not { } user)
             return Result.Failure(_userErrors.UserNotFound);
 
-        if (await _userManager.IsInRoleAsync(user, AppRoles.super_admin))
+        if (await roleAssignments.IsSuperAdminAsync(user.Id))
             return Result.Failure(_userErrors.UserNotFound);
 
         if (!await IsUserWithinActorCompanyScopeAsync(user.Id, user.TenantId))
@@ -583,7 +582,7 @@ public class UserService(
             return Result.Failure(new Error(error.Code, error.Description, ErrorType.Validation));
         }
 
-        var roles = await _userManager.GetRolesAsync(user);
+        var roles = await roleAssignments.GetScopedRoleNamesAsync(user.Id, user.TenantId);
         var accesses = await GetUserCompanyAccessesAsync(user.Id, user.TenantId);
         await securityAudit.RecordAsync(new SecurityAuditRequest(
             "UserUnlocked",
@@ -611,13 +610,13 @@ public class UserService(
                     candidate.LifecycleStatus == UserLifecycleStatus.Active,
                 cancellationToken);
         if (user is null ||
-            await _userManager.IsInRoleAsync(user, AppRoles.super_admin) ||
+            await roleAssignments.IsSuperAdminAsync(user.Id, cancellationToken) ||
             !await IsUserWithinActorCompanyScopeAsync(user.Id, user.TenantId, cancellationToken))
         {
             return Result.Failure(_userErrors.UserNotFound);
         }
 
-        var roles = await _userManager.GetRolesAsync(user);
+        var roles = await roleAssignments.GetScopedRoleNamesAsync(user.Id, user.TenantId, cancellationToken);
         var accesses = await GetUserCompanyAccessesAsync(user.Id, user.TenantId, cancellationToken);
         user.Archive(request.Reason, timeProvider.GetUtcNow().UtcDateTime);
         RevokeActiveSessions(user, "Account archived");
@@ -654,17 +653,17 @@ public class UserService(
                     candidate.LifecycleStatus == UserLifecycleStatus.Archived,
                 cancellationToken);
         if (user is null ||
-            await _userManager.IsInRoleAsync(user, AppRoles.super_admin) ||
+            await roleAssignments.IsSuperAdminAsync(user.Id, cancellationToken) ||
             !await IsUserWithinActorCompanyScopeAsync(user.Id, user.TenantId, cancellationToken))
         {
             return Result.Failure(_userErrors.UserNotFound);
         }
 
-        var roles = await _userManager.GetRolesAsync(user);
+        var roles = await roleAssignments.GetScopedRoleNamesAsync(user.Id, user.TenantId, cancellationToken);
         await using var transaction = await _context.Database.BeginTransactionAsync(
             IsolationLevel.Serializable,
             cancellationToken);
-        if (await GetSeatLimitErrorAsync(roles, cancellationToken) is { } seatLimitError)
+        if (await seatLimits.GetLimitErrorAsync(_currentActor.TenantId!, roles, cancellationToken) is { } seatLimitError)
             return Result.Failure(seatLimitError);
 
         user.Restore();
@@ -899,10 +898,12 @@ public class UserService(
             return [];
 
         var userIds = users.Select(user => user.Id).ToArray();
+        var tenantId = _currentActor.TenantId;
         var roleRows = await (
                 from userRole in _context.UserRoles.AsNoTracking()
                 join role in _context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
-                where userIds.Contains(userRole.UserId)
+                where userIds.Contains(userRole.UserId) &&
+                      (role.IsSystem || (!role.IsSystem && role.TenantId == tenantId))
                 select new { userRole.UserId, RoleName = role.Name! })
             .ToArrayAsync(cancellationToken);
         var accessRows = await _context.UserCompanyAccesses
@@ -1015,59 +1016,6 @@ public class UserService(
             user.LifecycleStatus.ToString().ToLowerInvariant(),
             user.ArchivedOn,
             user.ArchiveReason);
-    }
-
-    private async Task<Error?> GetSeatLimitErrorAsync(
-        IEnumerable<string> roles,
-        CancellationToken cancellationToken)
-    {
-        var needsAdminSeat = roles.Contains(AppRoles.admin, StringComparer.OrdinalIgnoreCase);
-        var needsUserSeat = roles.Contains(AppRoles.user, StringComparer.OrdinalIgnoreCase);
-        if (!needsAdminSeat && !needsUserSeat)
-            return null;
-
-        var tenantId = _currentActor.TenantId;
-        if (string.IsNullOrWhiteSpace(tenantId))
-            return _userErrors.InvalidCompanySelection;
-
-        var limits = await _context.Tenants
-            .AsNoTracking()
-            .Where(tenant => tenant.Id == tenantId)
-            .Select(tenant => new { tenant.MaxAdmins, tenant.MaxUsers })
-            .SingleOrDefaultAsync(cancellationToken);
-        if (limits is null)
-            return _userErrors.InvalidCompanySelection;
-
-        var counts = await (
-            from tenantAccess in _context.UserTenantAccesses.IgnoreQueryFilters().AsNoTracking()
-            join user in _context.Users.IgnoreQueryFilters().AsNoTracking() on tenantAccess.UserId equals user.Id
-            join userRole in _context.UserRoles.AsNoTracking() on tenantAccess.UserId equals userRole.UserId
-            join role in _context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
-            where tenantAccess.TenantId == tenantId &&
-                  user.LifecycleStatus == UserLifecycleStatus.Active &&
-                  (role.NormalizedName == AppRoles.admin.ToUpper() ||
-                   role.NormalizedName == AppRoles.user.ToUpper())
-            group tenantAccess by role.NormalizedName
-            into roleGroup
-            select new
-            {
-                Role = roleGroup.Key,
-                Count = roleGroup.Select(access => access.UserId).Distinct().Count()
-            }).ToDictionaryAsync(item => item.Role!, item => item.Count, cancellationToken);
-
-        if (needsAdminSeat &&
-            counts.GetValueOrDefault(AppRoles.admin.ToUpper()) >= limits.MaxAdmins)
-        {
-            return _userErrors.AdminSeatLimitReached;
-        }
-
-        if (needsUserSeat &&
-            counts.GetValueOrDefault(AppRoles.user.ToUpper()) >= limits.MaxUsers)
-        {
-            return _userErrors.UserSeatLimitReached;
-        }
-
-        return null;
     }
 
     private void QueueSessionRevoked(string userId, string message)

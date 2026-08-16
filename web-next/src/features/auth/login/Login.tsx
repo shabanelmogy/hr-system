@@ -8,6 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useEffect } from "react";
+import useRoleStore from "../roles/store/useRoleStore";
 
 // Components
 import LeftPanel from "./components/LeftPanel";
@@ -20,15 +21,17 @@ import useLoginForm from "./hooks/useLoginForm";
 const Login = () => {
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
+  const resetRoleData = useRoleStore((state) => state.resetRoleData);
 
   // Clear session storage on login page mount (after logout)
   useEffect(() => {
+    resetRoleData();
     try {
       sessionStorage.clear();
     } catch {
       // Ignore storage errors
     }
-  }, []);
+  }, [resetRoleData]);
 
   // Get all form-related props and handlers from custom hook
   const {

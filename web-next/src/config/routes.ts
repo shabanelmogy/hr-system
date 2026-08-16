@@ -35,6 +35,7 @@ export interface BasicDataRoutes {
 export interface AuthRoutes {
   rolesPage: AppPath;
   usersPage: AppPath;
+  invitationsPage: AppPath;
   rolePermissionsPage: (id: string) => AppPath;
 }
 
@@ -51,6 +52,7 @@ export interface AppRoutes {
   emailConfirmed: "/confirm-email";
   forgetPassword: "/forget-password";
   resetPassword: "/reset-password";
+  acceptInvitation: "/accept-invitation";
   changePassword: "/change-password";
   home: "/";
   profile: "/profile";
@@ -72,6 +74,7 @@ export const appRoutes: AppRoutes = {
   emailConfirmed: "/confirm-email",
   forgetPassword: "/forget-password",
   resetPassword: "/reset-password",
+  acceptInvitation: "/accept-invitation",
   changePassword: "/change-password",
   home: "/",
   profile: "/profile",
@@ -104,6 +107,7 @@ export const appRoutes: AppRoutes = {
   auth: {
     rolesPage: "/administration/roles",
     usersPage: "/administration/users",
+    invitationsPage: toAppPath("/administration/invitations"),
     rolePermissionsPage: (id) =>
       toAppPath(`/administration/manage-role-permissions/${id}`),
   },

@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ROLE_MODULES, PERMISSION_TYPES } from "../components/role-permissions/constants";
 import useRoleStore from "../store/useRoleStore";
+import type { RoleWithClaims } from "../../types";
 import {
   getRoleClaimsValidationSchema,
   type RoleClaimsFormData,
@@ -15,7 +16,7 @@ export function useRolePermissions(roleId: string) {
   const router = useRouter();
   const { showError, showSuccess, SnackbarComponent } = useNotifications();
   const { getRoleWithClaims, updateRoleClaims } = useRoleStore();
-  const [role, setRole] = useState<RoleClaimsFormData | null>(null);
+  const [role, setRole] = useState<RoleWithClaims | null>(null);
   const [selectedModule, setSelectedModule] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -43,13 +44,14 @@ export function useRolePermissions(roleId: string) {
           return;
         }
 
-        const nextRole: RoleClaimsFormData = {
+        const nextRole: RoleWithClaims = {
+          ...result,
           id: result.id || roleId,
           name: result.name || "",
           roleClaims: result.roleClaims || [],
         };
         setRole(nextRole);
-        form.reset(nextRole);
+        form.reset({ id: nextRole.id, name: nextRole.name, roleClaims: nextRole.roleClaims });
       })
       .catch((error) => {
         if (!active) return;
@@ -66,13 +68,13 @@ export function useRolePermissions(roleId: string) {
   }, [form, getRoleWithClaims, roleId, showError]);
 
   const replaceClaims = (roleClaims: RoleClaimsFormData["roleClaims"]) => {
-    if (!role) return;
+    if (!role || role.isSystem) return;
     setRole({ ...role, roleClaims });
     form.setValue("roleClaims", roleClaims, { shouldDirty: true, shouldValidate: true });
   };
 
   const selectAll = (type: string, isSelected: boolean) => {
-    if (!role) return;
+    if (!role || role.isSystem) return;
     replaceClaims(
       role.roleClaims.map((claim) =>
         claim.displayValue.toLowerCase().endsWith(`:${type.toLowerCase()}`)
@@ -91,7 +93,7 @@ export function useRolePermissions(roleId: string) {
   };
 
   const toggleClaim = (claimIndex: number) => {
-    if (!role || claimIndex < 0) return;
+    if (!role || role.isSystem || claimIndex < 0) return;
     replaceClaims(
       role.roleClaims.map((claim, index) =>
         index === claimIndex ? { ...claim, isSelected: !claim.isSelected } : claim,
@@ -138,6 +140,7 @@ export function useRolePermissions(roleId: string) {
   }, [role]);
 
   const updateRole = async (data: RoleClaimsFormData) => {
+    if (!role || role.isSystem) return;
     setIsSaving(true);
     try {
       await updateRoleClaims(data);
@@ -154,6 +157,10 @@ export function useRolePermissions(roleId: string) {
   };
 
   const goBack = () => {
+    if (role?.isSystem) {
+      router.push("/administration/roles");
+      return;
+    }
     if (form.formState.isDirty) setDiscardDialogOpen(true);
     else router.push("/administration/roles");
   };

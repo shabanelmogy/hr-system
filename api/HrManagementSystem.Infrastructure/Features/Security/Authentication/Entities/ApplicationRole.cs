@@ -7,6 +7,8 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authentication.Ent
 
         public ApplicationRole(string role) : base(role) { }
 
+        public string? TenantId { get; set; }
+        public bool IsSystem { get; set; }
         public bool IsDefault { get; set; }
         public bool IsDeleted { get; set; }
     }

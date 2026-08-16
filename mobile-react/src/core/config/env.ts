@@ -16,3 +16,7 @@ export function requireApiUrl(): string {
 
   return ENV.apiUrl;
 }
+
+export function requireApiRootUrl(): string {
+  return requireApiUrl().replace(/\/api\/v\d+$/i, '');
+}

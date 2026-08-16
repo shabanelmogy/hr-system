@@ -33,6 +33,38 @@ export interface CreateUserRequest {
   defaultCompanyId: number;
 }
 
+export interface CreateUserInvitationRequest {
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  roles: string[];
+  companyIds: number[];
+  defaultCompanyId: number;
+}
+
+export interface UserInvitation {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  roles: string[];
+  companyIds: number[];
+  defaultCompanyId: number;
+  status: "pending" | "accepted" | "revoked" | "expired";
+  expiresOn: string;
+  createdOn: string;
+  acceptedOn: string | null;
+  revokedOn: string | null;
+}
+
+export interface AcceptUserInvitationRequest {
+  invitationId: string;
+  token: string;
+  password: string;
+}
+
 export interface UpdateUserRequest {
   id: string;
   firstName: string;
@@ -58,6 +90,7 @@ export interface RoleClaim {
 export interface Role {
   id: string;
   name: string;
+  isSystem: boolean;
   isDeleted: boolean;
   roleClaims: RoleClaim[] | null;
 }

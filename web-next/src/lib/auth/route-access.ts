@@ -38,6 +38,7 @@ export const routePolicies: readonly RoutePolicy[] = [
   },
   { path: appRoutes.auth.rolesPage, permissions: [permissions.ViewRoles] },
   { path: appRoutes.auth.usersPage, permissions: [permissions.ViewUsers] },
+  { path: appRoutes.auth.invitationsPage, permissions: [permissions.ViewUsers] },
   {
     path: appRoutes.basicData.countryReport,
     permissions: [permissions.ViewCountries],

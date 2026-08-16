@@ -10,6 +10,15 @@ namespace HrManagementSystem.Application.Features.Security.Users.Errors
         public Error DisabledUser =>
             new("User.DisabledUser", _localizer[nameof(DisabledUser)], ErrorType.Validation);
 
+        public Error SelfRegistrationDisabled =>
+            new("Authentication.SelfRegistrationDisabled", _localizer[nameof(SelfRegistrationDisabled)], ErrorType.Forbidden);
+
+        public Error InvitationNotFound =>
+            new("Invitation.NotFound", _localizer[nameof(InvitationNotFound)], ErrorType.NotFound);
+
+        public Error InvitationInvalidOrExpired =>
+            new("Invitation.InvalidOrExpired", _localizer[nameof(InvitationInvalidOrExpired)], ErrorType.Validation);
+
         public Error LockedUser =>
             new("User.LockedUser", _localizer[nameof(LockedUser)], ErrorType.Validation);
 

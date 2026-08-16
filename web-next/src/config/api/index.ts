@@ -1,6 +1,6 @@
 import { auth } from './auth';
 import { countries, addressTypes, states, districts } from './basicData';
-import { roles, users } from './rolesUsers';
+import { roles, users, userInvitations } from './rolesUsers';
 import { exportRoutes, advancedTools, google } from './advanced';
 import { appointments } from './appointments';
 import { files } from './files';
@@ -19,6 +19,7 @@ export const apiRoutes = {
   districts,
   roles,
   users,
+  userInvitations,
   export: exportRoutes,
   advancedTools,
   google,

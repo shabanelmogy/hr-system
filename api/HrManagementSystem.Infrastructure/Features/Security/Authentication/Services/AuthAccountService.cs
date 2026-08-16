@@ -17,12 +17,16 @@ public sealed class AuthAccountService(
     AuthSessionService sessions,
     ISecurityAuditService securityAudit,
     IRealtimeChangeDispatcher realtimeChanges,
-    ApplicationDbContext context) : IAuthAccountService
+    ApplicationDbContext context,
+    AuthenticationFeaturePolicy authenticationFeatures) : IAuthAccountService
 {
     public async Task<Result> RegisterAsync(
         RegisterRequest request,
         CancellationToken cancellationToken = default)
     {
+        if (!authenticationFeatures.CanSelfRegister)
+            return Result.Failure(userErrors.SelfRegistrationDisabled);
+
         var user = request.Adapt<ApplicationUser>();
         user.TenantId = TenantDefaults.DefaultId;
         var result = await userManager.CreateAsync(user, request.Password);

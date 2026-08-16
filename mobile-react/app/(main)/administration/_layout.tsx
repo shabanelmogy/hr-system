@@ -60,6 +60,16 @@ export default function AdministrationLayout() {
         }}
       />
       <Tabs.Screen
+        name="invitations"
+        options={{
+          href: canViewUsers ? undefined : null,
+          title: t('navigation.invitations'),
+          tabBarIcon: ({ color, size }) => (
+            <AppIcon color={color} name="mail-unread-outline" size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="roles"
         options={{
           href: canViewRoles ? undefined : null,

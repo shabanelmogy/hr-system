@@ -11,6 +11,12 @@ public static class GeneralHubGroups
     public static string ForPermission(string permission) =>
         $"permission:{permission}";
 
+    public static string ForTenantPermission(string tenantId, string permission) =>
+        $"{ForTenant(tenantId)}:{ForPermission(permission)}";
+
+    public static string ForTenantRole(string tenantId, string roleId) =>
+        $"{ForTenant(tenantId)}:role:{roleId.Trim()}";
+
     public static string ForCompany(string tenantId, int companyId) =>
         $"{ForTenant(tenantId)}:company:{companyId}";
 
