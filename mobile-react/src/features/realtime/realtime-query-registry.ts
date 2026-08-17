@@ -1,6 +1,7 @@
 import { administrationKeys } from '@/src/features/administration/hooks/useAdministration';
 import { tenantAdminKeys } from '@/src/features/tenant-admins/hooks/useTenantAdmins';
 import { tenantKeys } from '@/src/features/tenants/hooks/useTenants';
+import { platformToolKeys } from '@/src/features/platform-tools/hooks/usePlatformTools';
 
 type QueryKey = readonly unknown[];
 
@@ -23,6 +24,7 @@ const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
   addresses: [],
   appointments: [],
   notifications: [['notifications']],
+  'entity-change-logs': [platformToolKeys.trackChanges],
 };
 
 export function getRealtimeQueryKeys(resource: string): readonly QueryKey[] {
@@ -40,6 +42,7 @@ export function getAllRealtimeQueryKeys(): readonly QueryKey[] {
     tenantAdminKeys.all,
     ['auth', 'current-user-photo'],
     ['notifications'],
+    platformToolKeys.trackChanges,
     ...administrationQueryKeys,
   ].forEach((queryKey) => {
     keys.set(JSON.stringify(queryKey), queryKey);

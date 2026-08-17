@@ -8,20 +8,28 @@ export interface AppPageHeaderProps {
   title: string;
   subtitle: string;
   action?: ReactNode;
+  compact?: boolean;
 }
 
-export function AppPageHeader({ title, subtitle, action }: AppPageHeaderProps) {
+export function AppPageHeader({
+  title,
+  subtitle,
+  action,
+  compact = false,
+}: AppPageHeaderProps) {
   const { direction } = useLocalization();
 
   return (
-    <View style={[styles.container, { direction }]}>
+    <View style={[styles.container, compact && styles.compactContainer, { direction }]}>
       <View style={styles.text}>
         <AppText numberOfLines={1} variant="titleSmall">
           {title}
         </AppText>
-        <AppText color="muted" numberOfLines={1} variant="caption">
-          {subtitle}
-        </AppText>
+        {!compact ? (
+          <AppText color="muted" numberOfLines={1} variant="caption">
+            {subtitle}
+          </AppText>
+        ) : null}
       </View>
       {action}
     </View>
@@ -40,5 +48,8 @@ const styles = StyleSheet.create({
     flex: 1,
     minWidth: 0,
     gap: 2,
+  },
+  compactContainer: {
+    marginBottom: 8,
   },
 });

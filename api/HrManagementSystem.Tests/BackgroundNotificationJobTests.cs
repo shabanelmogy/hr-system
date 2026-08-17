@@ -30,6 +30,7 @@ using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
 using HrManagementSystem.Application.Common.Realtime;
 using HrManagementSystem.Domain.GeographicalInformation.AddressTypes.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
+using HrManagementSystem.Domain.Platform.EntityChangeLogs.Entities;
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
 using HrManagementSystem.Infrastructure.Features.Catalog.Categories.Services;
 using HrManagementSystem.Infrastructure.Features.Catalog.SubCategories.Services;
@@ -208,6 +209,7 @@ public sealed class BackgroundNotificationJobTests
     [InlineData(typeof(AddressType), "address-types")]
     [InlineData(typeof(ApplicationUser), "users")]
     [InlineData(typeof(ApplicationRole), "roles")]
+    [InlineData(typeof(EntityChangeLog), "entity-change-logs")]
     public void RealtimeResources_AreDerivedFromEntityTypes(Type entityType, string expected)
     {
         Assert.Equal(expected, RealtimeResource.For(entityType));

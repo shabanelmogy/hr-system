@@ -322,6 +322,7 @@ export function UserManagementScreen() {
 
   return (
     <AppScreen
+      contentContainerStyle={styles.screenContent}
       edges={['left', 'right', 'bottom']}
       refreshControl={
         <RefreshControl
@@ -347,6 +348,7 @@ export function UserManagementScreen() {
             style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
           />
         ) : null}
+        compact
         subtitle={t('userManagement.subtitle')}
         title={t('userManagement.title')}
       />
@@ -484,7 +486,8 @@ function getErrorMessage(error: unknown, fallback: string): string {
 }
 
 const styles = StyleSheet.create({
-  addButton: { flexShrink: 0 },
+  screenContent: { paddingVertical: 8 },
+  addButton: { width: 36, height: 36, flexShrink: 0 },
   primaryCell: { width: '100%', gap: 2 },
   nameCell: { width: '100%', flexDirection: 'row', alignItems: 'center', gap: 8 },
   cards: {

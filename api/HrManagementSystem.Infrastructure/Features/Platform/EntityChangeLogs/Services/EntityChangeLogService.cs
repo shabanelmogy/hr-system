@@ -1,6 +1,7 @@
 using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Features.Platform.EntityChangeLogs.Services;
 using System.Collections;
+using System.Globalization;
 using HrManagementSystem.Application.Features.Platform.EntityChangeLogs.Contracts;
 using Newtonsoft.Json;
 
@@ -24,14 +25,54 @@ public class EntityChangeLogService : IEntityChangeLogService
         _timeProvider = timeProvider ?? throw new ArgumentNullException(nameof(timeProvider));
     }
 
-    public async Task<EntityChangeLogsRequest?> CreateChangeLogAsync<TEntity>(int entityId, TEntity existingEntity, TEntity updatedEntity) where TEntity : class
+    public Task<EntityChangeLogsRequest?> CreateChangeLogAsync<TEntity>(
+        int entityId,
+        TEntity existingEntity,
+        TEntity updatedEntity,
+        CancellationToken cancellationToken = default)
+        where TEntity : class =>
+        CreateChangeLogAsync(
+            entityId,
+            entityKey: null,
+            typeof(TEntity).Name,
+            existingEntity,
+            updatedEntity,
+            cancellationToken);
+
+    public Task<EntityChangeLogsRequest?> CreateChangeLogAsync<TEntity>(
+        string entityKey,
+        string entityName,
+        TEntity existingEntity,
+        TEntity updatedEntity,
+        CancellationToken cancellationToken = default)
+        where TEntity : class
     {
-        if (existingEntity == null || updatedEntity == null)
+        ArgumentException.ThrowIfNullOrWhiteSpace(entityKey);
+        ArgumentException.ThrowIfNullOrWhiteSpace(entityName);
+
+        return CreateChangeLogAsync(
+            entityId: 0,
+            entityKey,
+            entityName,
+            existingEntity,
+            updatedEntity,
+            cancellationToken);
+    }
+
+    private async Task<EntityChangeLogsRequest?> CreateChangeLogAsync<TEntity>(
+        int entityId,
+        string? entityKey,
+        string entityName,
+        TEntity existingEntity,
+        TEntity updatedEntity,
+        CancellationToken cancellationToken)
+        where TEntity : class
+    {
+        if (existingEntity is null || updatedEntity is null)
         {
             throw new ArgumentNullException(nameof(existingEntity), "Entities cannot be null");
         }
 
-        var entityName = typeof(TEntity).Name;
         var oldValuesJson = GetValuesAsJson(existingEntity, updatedEntity, true);
         var newValuesJson = GetValuesAsJson(existingEntity, updatedEntity, false);
 
@@ -44,6 +85,7 @@ public class EntityChangeLogService : IEntityChangeLogService
         var changeLog = new EntityChangeLogsRequest
         {
             EntityId = entityId,
+            EntityKey = entityKey,
             EntityName = entityName,
             JsonOldValues = oldValuesJson,
             JsonNewValues = newValuesJson,
@@ -55,7 +97,7 @@ public class EntityChangeLogService : IEntityChangeLogService
         var changeLogResponse = changeLog.Adapt<EntityChangeLog>();
         changeLogResponse.ChangedAt = _timeProvider.GetUtcNow().UtcDateTime;
         _context.Set<EntityChangeLog>().Add(changeLogResponse);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
 
         return changeLog;
     }
@@ -70,6 +112,7 @@ public class EntityChangeLogService : IEntityChangeLogService
                              select new
                              {
                                  log.EntityId,
+                                 log.EntityKey,
                                  log.EntityName,
                                  log.JsonOldValues,
                                  log.JsonNewValues,
@@ -90,7 +133,7 @@ public class EntityChangeLogService : IEntityChangeLogService
                        on oldValue.Key equals newValue.Key
                        select new EntityChangeLogsResponse
                        (
-                           log.EntityId,
+                           log.EntityKey ?? log.EntityId.ToString(CultureInfo.InvariantCulture),
                            log.EntityName ?? string.Empty,
                            oldValue.Key,
                            oldValue.Value ?? string.Empty,
@@ -115,8 +158,21 @@ public class EntityChangeLogService : IEntityChangeLogService
 
         try
         {
-            var dictionary = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(json);
-            return dictionary?.ToList() ?? new List<KeyValuePair<string, string>>();
+            using var document = System.Text.Json.JsonDocument.Parse(json);
+            if (document.RootElement.ValueKind != System.Text.Json.JsonValueKind.Object)
+                return [];
+
+            return document.RootElement
+                .EnumerateObject()
+                .Select(property => new KeyValuePair<string, string>(
+                    property.Name,
+                    property.Value.ValueKind switch
+                    {
+                        System.Text.Json.JsonValueKind.String => property.Value.GetString() ?? string.Empty,
+                        System.Text.Json.JsonValueKind.Null => string.Empty,
+                        _ => property.Value.GetRawText()
+                    }))
+                .ToList();
         }
         catch (System.Text.Json.JsonException ex)
         {

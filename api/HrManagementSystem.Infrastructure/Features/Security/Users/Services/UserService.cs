@@ -12,6 +12,8 @@ using HrManagementSystem.Infrastructure.Features.Security.Authorization.Services
 using HrManagementSystem.Application.Common.Paginations;
 using HrManagementSystem.Application.Features.Platform.SecurityAudits.Contracts;
 using HrManagementSystem.Application.Features.Platform.SecurityAudits.Services;
+using HrManagementSystem.Application.Features.Platform.EntityChangeLogs.Services;
+using HrManagementSystem.Domain.Platform.EntityChangeLogs.Entities;
 using HrManagementSystem.Domain.Security.Users.Enums;
 using System.Data;
 
@@ -26,6 +28,7 @@ public class UserService(
     TimeProvider timeProvider,
     ILogger<UserService> logger,
     ISecurityAuditService securityAudit,
+    IEntityChangeLogService entityChangeLogs,
     IRealtimeChangeDispatcher realtimeChanges,
     IUserSeatLimitService seatLimits,
     TenantRoleAssignmentService roleAssignments) : IUserService
@@ -372,6 +375,16 @@ public class UserService(
         if (companyIds is null)
             return Result.Failure(_userErrors.InvalidCompanySelection);
 
+        var existingAccesses = await GetUserCompanyAccessesAsync(
+            user.Id,
+            user.TenantId,
+            cancellationToken);
+        var previousSnapshot = CreateUserChangeSnapshot(
+            user,
+            existingRoles,
+            existingAccesses.Select(access => access.CompanyId),
+            existingAccesses.FirstOrDefault(access => access.IsDefault)?.CompanyId);
+
         var addedRoles = request.Roles
             .Except(existingRoles, StringComparer.OrdinalIgnoreCase)
             .ToArray();
@@ -402,6 +415,11 @@ public class UserService(
                 user.Id,
                 _currentActor.TenantId!,
                 cancellationToken);
+            var updatedSnapshot = CreateUserChangeSnapshot(
+                user,
+                effectiveRoles,
+                companyIds,
+                request.DefaultCompanyId);
 
             var stampResult = await _userManager.UpdateSecurityStampAsync(user);
             if (!stampResult.Succeeded)
@@ -420,6 +438,13 @@ public class UserService(
                     new Error(revokeError.Code, revokeError.Description, ErrorType.Validation));
             }
 
+            var entityChangeLog = await entityChangeLogs.CreateChangeLogAsync(
+                user.Id,
+                "ApplicationUser",
+                previousSnapshot,
+                updatedSnapshot,
+                cancellationToken);
+
             await securityAudit.RecordAsync(new SecurityAuditRequest(
                 "UserUpdated",
                 "ApplicationUser",
@@ -434,6 +459,8 @@ public class UserService(
                     ["CompanyIds"] = string.Join(',', companyIds.OrderBy(companyId => companyId))
                 }), cancellationToken);
             await transaction.CommitAsync(cancellationToken);
+            if (entityChangeLog is not null)
+                DispatchEntityChangeLogChange(user.Id);
             QueueSessionRevoked(
                 user.Id,
                 "Your account permissions changed. Please sign in again.");
@@ -1018,6 +1045,30 @@ public class UserService(
             user.ArchiveReason);
     }
 
+    private static UserChangeSnapshot CreateUserChangeSnapshot(
+        ApplicationUser user,
+        IEnumerable<string> roles,
+        IEnumerable<int> companyIds,
+        int? defaultCompanyId) =>
+        new(
+            user.FirstName,
+            user.LastName,
+            user.UserName ?? string.Empty,
+            user.Email ?? string.Empty,
+            string.Join(',', roles.Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(role => role, StringComparer.OrdinalIgnoreCase)),
+            string.Join(',', companyIds.Distinct().OrderBy(companyId => companyId)),
+            defaultCompanyId);
+
+    private sealed record UserChangeSnapshot(
+        string FirstName,
+        string LastName,
+        string UserName,
+        string Email,
+        string Roles,
+        string CompanyIds,
+        int? DefaultCompanyId);
+
     private void QueueSessionRevoked(string userId, string message)
     {
         try
@@ -1032,6 +1083,22 @@ public class UserService(
                 "Unable to enqueue session revocation for user {UserId}.",
                 userId);
         }
+    }
+
+    private void DispatchEntityChangeLogChange(string entityId)
+    {
+        var tenantId = _currentActor.TenantId
+            ?? throw new InvalidOperationException("A tenant is required to publish change-log updates.");
+        var companyId = _currentActor.CompanyId
+            ?? throw new InvalidOperationException("A company is required to publish change-log updates.");
+
+        realtimeChanges.Dispatch(RealtimeChangeRequest.For<EntityChangeLog>(
+            RealtimeAudience.ForCompanyPermission(
+                tenantId,
+                companyId,
+                Permissions.ViewChangeLogs),
+            "Add",
+            entityId));
     }
 
     private void QueueUserChanged(UserResponse user, string action)

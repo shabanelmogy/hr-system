@@ -8,6 +8,7 @@ namespace HrManagementSystem.Domain.Platform.EntityChangeLogs.Entities
         public int CompanyId { get; set; }
         public int Id { get; set; }
         public int EntityId { get; set; }
+        public string? EntityKey { get; set; }
         public string? EntityName { get; set; }
         public string? JsonOldValues { get; set; }
         public string? JsonNewValues { get; set; }

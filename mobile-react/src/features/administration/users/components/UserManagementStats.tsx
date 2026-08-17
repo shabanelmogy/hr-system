@@ -102,13 +102,17 @@ export function UserManagementStats({ users }: UserManagementStatsProps) {
                 styles.icon,
                 { backgroundColor: `${card.color}1A`, borderRadius: theme.radius.sm },
               ]}>
-              <AppIcon color={card.color} name={card.icon} size={18} />
+              <AppIcon color={card.color} name={card.icon} size={16} />
             </View>
             <View style={styles.cardText}>
-              <AppText numberOfLines={1} variant="titleSmall" weight="800">
+              <AppText numberOfLines={1} style={styles.value} variant="label" weight="800">
                 {card.value}
               </AppText>
-              <AppText color="muted" numberOfLines={1} variant="caption">
+              <AppText
+                color="muted"
+                numberOfLines={1}
+                style={styles.label}
+                variant="caption">
                 {card.label}
               </AppText>
             </View>
@@ -120,15 +124,17 @@ export function UserManagementStats({ users }: UserManagementStatsProps) {
 }
 
 const styles = StyleSheet.create({
-  content: { flexDirection: 'row', gap: 6, paddingBottom: 2 },
+  content: { flexDirection: 'row', gap: 4 },
   card: {
-    width: 136,
-    minHeight: 54,
+    width: 120,
+    minHeight: 44,
     justifyContent: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 4,
   },
-  cardContent: { flexDirection: 'row', alignItems: 'center', gap: 7 },
-  icon: { width: 30, height: 30, alignItems: 'center', justifyContent: 'center' },
+  cardContent: { flexDirection: 'row', alignItems: 'center', gap: 5 },
+  icon: { width: 26, height: 26, alignItems: 'center', justifyContent: 'center' },
   cardText: { flex: 1, minWidth: 0 },
+  value: { fontSize: 16, lineHeight: 19 },
+  label: { fontSize: 11, lineHeight: 14 },
 });

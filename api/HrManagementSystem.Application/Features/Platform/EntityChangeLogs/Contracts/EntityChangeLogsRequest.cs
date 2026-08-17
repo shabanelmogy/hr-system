@@ -3,6 +3,7 @@ namespace HrManagementSystem.Application.Features.Platform.EntityChangeLogs.Cont
     public class EntityChangeLogsRequest
     {
         public int EntityId { get; set; }
+        public string? EntityKey { get; set; }
         public string? EntityName { get; set; }
         public string? JsonOldValues { get; set; }
         public string? JsonNewValues { get; set; }

@@ -21,6 +21,7 @@ export const realtimeResources = {
   roleClaims: "role-claims",
   companies: "companies",
   notifications: "notifications",
+  entityChangeLogs: "entity-change-logs",
 } as const;
 
 const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
@@ -36,6 +37,7 @@ const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
   [realtimeResources.roleClaims]: [],
   [realtimeResources.companies]: [],
   [realtimeResources.notifications]: [["notifications"]],
+  [realtimeResources.entityChangeLogs]: [["advancedTools", "trackChanges"]],
 };
 
 export function getRealtimeQueryKeys(resource: string): readonly QueryKey[] {

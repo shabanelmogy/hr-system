@@ -2,7 +2,7 @@ namespace HrManagementSystem.Application.Features.Platform.EntityChangeLogs.Cont
 {
     public record EntityChangeLogsResponse
     (
-        int ChangeLogId,
+        string ChangeLogId,
         string EntityName,
         string Key,
         string OldValue,
