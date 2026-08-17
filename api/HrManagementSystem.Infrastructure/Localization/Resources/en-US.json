@@ -39,7 +39,7 @@
     "InvalidIntervalValue": "Invalid interval value",
     "EnglishLetterOnly": "english letters only allowed",
     "ArabicLetterOnly": "arabic letters only allowed",
-    "InvalidFileSize": "Max file size is ",
+    "InvalidFileSize": "Maximum file size is {0} MB.",
     "ExtensionFileNotAllowed": "File extension is not allowed",
     "NotAllowedFileContent": "Not allowed file content",
     "TooManyFiles": "A maximum of 10 files is allowed per request",

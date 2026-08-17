@@ -1,5 +1,6 @@
 export * from './controls/AppButton';
 export * from './controls/AppDateTimeField';
+export * from './controls/AppFilterButton';
 export * from './controls/AppIconButton';
 export * from './controls/AppMultiSelectField';
 export * from './controls/AppSegmentedControl';

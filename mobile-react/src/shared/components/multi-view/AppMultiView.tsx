@@ -35,6 +35,7 @@ export interface AppMultiViewProps<Item, ViewId extends string> {
   resetKey?: string | number;
   toolbarContent?: ReactNode;
   compactToolbar?: boolean;
+  showViewLabels?: boolean;
 }
 
 const carouselPageSizeOptions = [1] as const;
@@ -49,6 +50,7 @@ export function AppMultiView<Item, ViewId extends string>({
   resetKey,
   toolbarContent,
   compactToolbar = true,
+  showViewLabels = false,
 }: AppMultiViewProps<Item, ViewId>) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
@@ -200,7 +202,7 @@ export function AppMultiView<Item, ViewId extends string>({
             );
           }}
           options={views}
-          showOptionLabels={false}
+          showOptionLabels={showViewLabels}
           style={[styles.viewSelector, compactToolbar && styles.compactViewSelector]}
           value={activeView.value}
         />

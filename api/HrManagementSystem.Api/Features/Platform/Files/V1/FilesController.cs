@@ -1,5 +1,6 @@
 using HrManagementSystem.Application.Features.Platform.Files.Contracts;
 using HrManagementSystem.Application.Features.Platform.Files.Services;
+using HrManagementSystem.Application.Common.Settings;
 
 namespace HrManagementSystem.Api.Features.Platform.Files.V1;
 
@@ -41,6 +42,8 @@ public class FilesController(
 
     [HttpPost]
     [Consumes("multipart/form-data")]
+    [RequestSizeLimit(FileSettings.MaxUploadRequestSizeInBytes)]
+    [RequestFormLimits(MultipartBodyLengthLimit = FileSettings.MaxUploadRequestSizeInBytes)]
     public async Task<IActionResult> UploadMany(
         [FromForm] MultipleFilesUploadForm form,
         CancellationToken cancellationToken)
@@ -84,10 +87,10 @@ public class FilesController(
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> Stream([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        var (fileStream, contentType, fileName) = await _fileService.StreamAsync(id, cancellationToken);
+        var (fileStream, contentType, _) = await _fileService.StreamAsync(id, cancellationToken);
         return fileStream is null
             ? NotFound()
-            : File(fileStream, contentType, fileName, enableRangeProcessing: true);
+            : File(fileStream, contentType, enableRangeProcessing: true);
     }
 
     [HttpDelete("{storedFilename}")]

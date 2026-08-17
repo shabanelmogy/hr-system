@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { permissions, useAuthorization } from '@/src/features/auth';
-import { AppAppBar } from '@/src/layouts/AppAppBar';
+import { AppNavigationHeader } from '@/src/layouts/navigation/AppNavigationHeader';
 import { AppIcon } from '@/src/shared/components';
 import { useAppTheme } from '@/src/core/theme';
 
@@ -27,7 +27,7 @@ export default function AdministrationLayout() {
     <Tabs
       screenOptions={({ navigation }) => ({
         header: () => (
-          <AppAppBar
+          <AppNavigationHeader
             onDrawerPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
             showDrawer
             showLogout

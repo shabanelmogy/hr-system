@@ -110,7 +110,9 @@ export function AppModal({
           <AppScreen
             contentContainerStyle={[styles.fullScreenContent, contentContainerStyle]}
             edges={footer ? ['top', 'right', 'left'] : undefined}
-            header={header}>
+            header={header}
+            keyboardAware={false}
+            scroll={scrollable}>
             {children}
           </AppScreen>
           {footer ? (

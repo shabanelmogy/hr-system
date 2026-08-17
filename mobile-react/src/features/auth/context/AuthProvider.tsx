@@ -10,6 +10,7 @@ import {
 import { ApiError, configureAxiosAuthentication } from '@/src/core/api';
 import { queryClient } from '@/src/core/query/query-client';
 import { secureSession } from '@/src/core/storage/secure-storage';
+import { clearSensitiveFileCache } from '@/src/core/storage/sensitive-file-cache';
 import { authApi } from '@/src/features/auth/api/auth-api';
 import type {
   AuthResponse,
@@ -38,7 +39,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const [session, setSession] = useState<SessionResponse | null>(null);
 
   const handleAuthFailure = useCallback(() => {
-    void secureSession.clear();
+    void Promise.all([secureSession.clear(), clearSensitiveFileCache()]);
     queryClient.clear();
     setSession(null);
     setStatus('unauthenticated');
@@ -51,6 +52,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     ]);
 
     if (!token || !refreshToken) {
+      void clearSensitiveFileCache();
       setSession(null);
       setStatus('unauthenticated');
       return;
@@ -85,6 +87,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   const completeAuthentication = async (response: AuthResponse) => {
     queryClient.clear();
+    await clearSensitiveFileCache();
     await secureSession.setTokens(response.token, response.refreshToken);
 
     try {
@@ -131,7 +134,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     try {
       await authApi.logout();
     } finally {
-      await secureSession.clear();
+      await Promise.all([secureSession.clear(), clearSensitiveFileCache()]);
       queryClient.clear();
       setSession(null);
       setStatus('unauthenticated');

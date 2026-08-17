@@ -10,6 +10,19 @@ export interface StoredFile {
   isDeleted: boolean;
 }
 
+export interface PreparedFilePreview {
+  uri: string;
+  size: number;
+  contentType: string;
+  readText: () => Promise<string>;
+  dispose: () => void;
+}
+
+export interface AuthenticatedFileSource {
+  uri: string;
+  headers?: Record<string, string>;
+}
+
 export interface UploadFileAsset {
   uri: string;
   name: string;

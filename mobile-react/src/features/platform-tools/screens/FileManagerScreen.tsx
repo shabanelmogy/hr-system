@@ -5,6 +5,9 @@ import { useTranslation } from 'react-i18next';
 
 import { useAppTheme } from '@/src/core/theme';
 import { platformToolsApi } from '@/src/features/platform-tools/api/platform-tools-api';
+import { FileActions } from '@/src/features/platform-tools/components/FileActions';
+import { FileViewerModal } from '@/src/features/platform-tools/components/FileViewerModal';
+import { GroupedFilesView } from '@/src/features/platform-tools/components/GroupedFilesView';
 import {
   useDeleteFile,
   useStoredFiles,
@@ -12,13 +15,23 @@ import {
 } from '@/src/features/platform-tools/hooks/usePlatformTools';
 import type { StoredFile, UploadFileAsset } from '@/src/features/platform-tools/types/platform-tools';
 import {
+  classifyFile,
+  fileGroupDefinitions,
+  type FileGroupId,
+  getFileIcon,
+} from '@/src/features/platform-tools/utils/file-manager';
+import {
   formatPlatformDate,
   getPlatformToolErrorMessage,
 } from '@/src/features/platform-tools/utils/platform-tool-utils';
 import {
   AppDataTable,
   type AppDataTableColumn,
+  AppFilterButton,
+  AppIcon,
   AppIconButton,
+  AppMultiView,
+  type AppMultiViewDefinition,
   AppPageHeader,
   AppScreen,
   AppStateView,
@@ -28,6 +41,8 @@ import {
   showToast,
 } from '@/src/shared/components';
 
+type FileManagerView = 'list' | 'grouped';
+
 export function FileManagerScreen() {
   const { t, i18n } = useTranslation();
   const { theme } = useAppTheme();
@@ -35,15 +50,29 @@ export function FileManagerScreen() {
   const uploadMutation = useUploadFiles();
   const deleteMutation = useDeleteFile();
   const [search, setSearch] = useState('');
+  const [selectedFilters, setSelectedFilters] = useState<FileGroupId[]>([]);
   const [pendingDelete, setPendingDelete] = useState<StoredFile | null>(null);
+  const [viewerFile, setViewerFile] = useState<StoredFile | null>(null);
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const files = useMemo(() => filesQuery.data ?? [], [filesQuery.data]);
+  const fileFilterOptions = useMemo(
+    () => fileGroupDefinitions.map((definition) => ({
+      icon: definition.icon,
+      label: t(definition.labelKey),
+      value: definition.id,
+    })),
+    [t],
+  );
   const filteredFiles = useMemo(() => {
     const term = search.trim().toLocaleLowerCase(i18n.language);
-    if (!term) return files;
-    return files.filter((file) => [file.fileName, file.fileExtension, file.contentType]
-      .some((value) => value.toLocaleLowerCase(i18n.language).includes(term)));
-  }, [files, i18n.language, search]);
+    const searchMatches = term
+      ? files.filter((file) => [file.fileName, file.fileExtension, file.contentType]
+        .some((value) => value.toLocaleLowerCase(i18n.language).includes(term)))
+      : files;
+    return selectedFilters.length === 0
+      ? searchMatches
+      : searchMatches.filter((file) => selectedFilters.includes(classifyFile(file)));
+  }, [files, i18n.language, search, selectedFilters]);
 
   const pickAndUpload = async () => {
     try {
@@ -91,7 +120,12 @@ export function FileManagerScreen() {
       id: 'name',
       header: t('platformTools.files.name'),
       width: 230,
-      render: (file) => <AppText variant="bodySmall">{file.fileName}</AppText>,
+      render: (file) => (
+        <View style={styles.fileName}>
+          <AppIcon color={theme.colors.primary} name={getFileIcon(file)} size={20} />
+          <AppText numberOfLines={2} variant="bodySmall">{file.fileName}</AppText>
+        </View>
+      ),
       sortValue: (file) => file.fileName,
     },
     {
@@ -111,27 +145,74 @@ export function FileManagerScreen() {
     {
       id: 'actions',
       header: t('platformTools.files.actions'),
-      width: 120,
+      width: 160,
       align: 'center',
       render: (file) => (
-        <View style={styles.rowActions}>
-          <AppIconButton
-            disabled={downloadingId === file.id}
-            icon="download-outline"
-            label={t('platformTools.files.download')}
-            onPress={() => void download(file)}
-          />
-          <AppIconButton
-            color={theme.colors.danger}
-            disabled={deleteMutation.isPending}
-            icon="trash-outline"
-            label={t('platformTools.files.delete')}
-            onPress={() => setPendingDelete(file)}
-          />
-        </View>
+        <FileActions
+          deleting={deleteMutation.isPending}
+          downloading={downloadingId === file.id}
+          file={file}
+          onDelete={setPendingDelete}
+          onDownload={(selectedFile) => void download(selectedFile)}
+          onView={setViewerFile}
+        />
       ),
     },
-  ], [deleteMutation.isPending, download, downloadingId, i18n.language, t, theme.colors.danger]);
+  ], [
+    deleteMutation.isPending,
+    download,
+    downloadingId,
+    i18n.language,
+    t,
+    theme.colors.primary,
+  ]);
+
+  const views = useMemo<readonly AppMultiViewDefinition<StoredFile, FileManagerView>[]>(
+    () => [
+      {
+        icon: 'list-outline',
+        label: t('platformTools.files.views.list'),
+        paginate: false,
+        value: 'list',
+        render: (items) => (
+          <AppDataTable
+            columns={columns}
+            defaultPageSize={5}
+            emptyMessage={t('platformTools.files.empty')}
+            getRowKey={(file) => file.id || file.storedFileName}
+            resetKey={`${search}|${selectedFilters.join(',')}`}
+            rows={items}
+          />
+        ),
+      },
+      {
+        icon: 'folder-open-outline',
+        label: t('platformTools.files.views.grouped'),
+        paginate: false,
+        value: 'grouped',
+        render: (items) => (
+          <GroupedFilesView
+            deleting={deleteMutation.isPending}
+            downloadingId={downloadingId}
+            files={items}
+            onDelete={setPendingDelete}
+            onDownload={(selectedFile) => void download(selectedFile)}
+            onView={setViewerFile}
+            visibleGroupIds={selectedFilters}
+          />
+        ),
+      },
+    ],
+    [
+      columns,
+      deleteMutation.isPending,
+      download,
+      downloadingId,
+      search,
+      selectedFilters,
+      t,
+    ],
+  );
 
   return (
     <AppScreen
@@ -170,22 +251,44 @@ export function FileManagerScreen() {
         />
       ) : (
         <View style={styles.content}>
-          <AppTextField
-            compact
-            label={t('platformTools.files.search')}
-            leadingIcon="search-outline"
-            onChangeText={setSearch}
-            value={search}
-          />
-          <AppDataTable
-            columns={columns}
-            emptyMessage={t('platformTools.files.empty')}
-            getRowKey={(file) => file.id || file.storedFileName}
-            resetKey={search}
-            rows={filteredFiles}
+          <View style={styles.filters}>
+            <View style={styles.search}>
+              <AppTextField
+                compact
+                label={t('platformTools.files.search')}
+                leadingIcon="search-outline"
+                onChangeText={setSearch}
+                value={search}
+              />
+            </View>
+            <AppFilterButton
+              applyLabel={t('platformTools.files.applyFilters')}
+              buttonLabel={t('platformTools.files.filterWithCount', {
+                count: selectedFilters.length,
+              })}
+              description={t('platformTools.files.filterDescription')}
+              modalTitle={t('platformTools.files.filterTitle')}
+              onChange={setSelectedFilters}
+              options={fileFilterOptions}
+              values={selectedFilters}
+            />
+          </View>
+          <AppMultiView
+            defaultView="list"
+            emptyContent={(
+              <AppStateView message={t('platformTools.files.empty')} state="empty" />
+            )}
+            items={filteredFiles}
+            resetKey={`${search}|${selectedFilters.join(',')}`}
+            showViewLabels
+            views={views}
           />
         </View>
       )}
+
+      {viewerFile ? (
+        <FileViewerModal file={viewerFile} onClose={() => setViewerFile(null)} />
+      ) : null}
 
       <ConfirmationDialog
         confirmLabel={t('platformTools.files.delete')}
@@ -205,6 +308,8 @@ export function FileManagerScreen() {
 
 const styles = StyleSheet.create({
   content: { gap: 14 },
+  filters: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  search: { minWidth: 0, flex: 1 },
   primaryAction: { flexShrink: 0 },
-  rowActions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
+  fileName: { flexDirection: 'row', alignItems: 'center', gap: 8 },
 });

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const FILE_CONFIG = {
-  MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
+  MAX_FILE_SIZE: 50 * 1024 * 1024, // 50MB
   MAX_FILES_PER_UPLOAD: 10,
   ALLOWED_TYPES: [
     // Images

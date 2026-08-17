@@ -11,7 +11,7 @@ namespace HrManagementSystem.Application.Features.Platform.Files.Contracts
             _fileLocalizer = fileLocalizer;
 
             RuleFor(x => x.Image)
-                .SetValidator(new FileSizeValidator(_fileLocalizer))
+                .SetValidator(new FileSizeValidator(_fileLocalizer, FileSettings.MaxImageFileSizeInMB))
                 .SetValidator(new BlockedSignaturesValidator(_fileLocalizer))
                 .SetValidator(new FileContentTypeValidator(_fileLocalizer))
                 .SetValidator(new FileNameValidator(_fileLocalizer));

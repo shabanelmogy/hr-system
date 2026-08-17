@@ -8,8 +8,8 @@ import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { useCanAccessRoute } from '@/src/features/auth';
 import { BASIC_DATA_SCREENS } from '@/src/features/basic-data/constants/basic-data-screens';
-import { AppAppBar } from '@/src/layouts/AppAppBar';
 import { ModuleDrawerContent } from '@/src/layouts/module/ModuleDrawerContent';
+import { AppNavigationHeader } from '@/src/layouts/navigation/AppNavigationHeader';
 import { AppIcon } from '@/src/shared/components';
 
 export function BasicDataLayout() {
@@ -52,7 +52,7 @@ export function BasicDataLayout() {
           letterSpacing: 0,
         },
         header: () => (
-          <AppAppBar
+          <AppNavigationHeader
             onDrawerPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
             showDrawer={!permanentDrawer}
             showLogout

@@ -1,33 +1,43 @@
-import { Directory, File, Paths } from 'expo-file-system';
+import { File } from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import { Platform } from 'react-native';
 
 import { apiService, axiosClient } from '@/src/core/api';
 import { requireApiRootUrl, requireApiUrl } from '@/src/core/config/env';
 import { secureSession } from '@/src/core/storage/secure-storage';
+import {
+  createSensitiveCacheFile,
+  type SensitiveFileCacheArea,
+} from '@/src/core/storage/sensitive-file-cache';
 import type {
   Appointment,
   AppointmentInput,
   AppointmentRange,
+  AuthenticatedFileSource,
   BackgroundJobDashboard,
   HealthCheckEntry,
   HealthCheckReport,
   HealthStatus,
   LocalizationCulture,
   LocalizationEntry,
+  PreparedFilePreview,
   StoredFile,
   TrackChangeLog,
   UploadFileAsset,
 } from '@/src/features/platform-tools/types/platform-tools';
 
-const MAX_UPLOAD_SIZE = 50 * 1024 * 1024;
+const MAX_UPLOAD_SIZE_MB = 50;
+const MAX_UPLOAD_SIZE = MAX_UPLOAD_SIZE_MB * 1024 * 1024;
 const MAX_UPLOAD_FILES = 10;
+const MAX_TOTAL_UPLOAD_SIZE = MAX_UPLOAD_SIZE * MAX_UPLOAD_FILES;
+const FILE_UPLOAD_TIMEOUT_MS = 120_000;
 
 const endpoints = {
   files: {
     getAll: 'files/getAll',
     uploadMany: 'files/uploadMany',
     download: (storedFileName: string) => `files/download/${encodeURIComponent(storedFileName)}`,
+    stream: (id: string) => `files/stream/${encodeURIComponent(id)}`,
     delete: (storedFileName: string) => `files/delete/${encodeURIComponent(storedFileName)}`,
   },
   appointments: {
@@ -58,7 +68,14 @@ export const platformToolsApi = {
 
     const oversized = files.filter((file) => (file.size ?? 0) > MAX_UPLOAD_SIZE);
     if (oversized.length > 0) {
-      throw new Error(`Files must not exceed 50 MB: ${oversized.map((file) => file.name).join(', ')}`);
+      throw new Error(
+        `Files must not exceed ${MAX_UPLOAD_SIZE_MB} MB: ${oversized.map((file) => file.name).join(', ')}`,
+      );
+    }
+
+    const totalUploadSize = files.reduce((total, file) => total + (file.size ?? 0), 0);
+    if (totalUploadSize > MAX_TOTAL_UPLOAD_SIZE) {
+      throw new Error(`The selected files must not exceed ${MAX_UPLOAD_SIZE_MB * MAX_UPLOAD_FILES} MB in total.`);
     }
 
     const formData = new FormData();
@@ -71,7 +88,9 @@ export const platformToolsApi = {
       formData.append('files', payload, file.name);
     });
 
-    await apiService.upload<unknown>(endpoints.files.uploadMany, formData);
+    await apiService.upload<unknown>(endpoints.files.uploadMany, formData, {
+      timeout: FILE_UPLOAD_TIMEOUT_MS,
+    });
   },
 
   async deleteFile(storedFileName: string): Promise<void> {
@@ -79,35 +98,82 @@ export const platformToolsApi = {
   },
 
   async downloadFile(file: StoredFile): Promise<void> {
+    const preview = await platformToolsApi.prepareFilePreview(file, 'download');
+    try {
+      await platformToolsApi.openPreparedFile(file, preview);
+    } finally {
+      preview.dispose();
+    }
+  },
+
+  async prepareFilePreview(
+    file: StoredFile,
+    cacheArea: SensitiveFileCacheArea = 'preview',
+  ): Promise<PreparedFilePreview> {
     const url = `${requireApiUrl()}/${endpoints.files.download(file.storedFileName)}`;
 
     if (Platform.OS === 'web') {
       const response = await axiosClient.get<Blob>(url, { responseType: 'blob' });
-      const objectUrl = URL.createObjectURL(response.data);
-      const anchor = document.createElement('a');
-      anchor.href = objectUrl;
-      anchor.download = file.fileName;
-      anchor.click();
-      URL.revokeObjectURL(objectUrl);
-      return;
+      const blob = response.data;
+      const objectUrl = URL.createObjectURL(blob);
+      return {
+        uri: objectUrl,
+        size: blob.size,
+        contentType: blob.type || file.contentType,
+        readText: () => blob.text(),
+        dispose: () => URL.revokeObjectURL(objectUrl),
+      };
     }
 
-    const downloads = new Directory(Paths.cache, 'hr-downloads');
-    if (!downloads.exists) downloads.create({ intermediates: true });
-    const destination = new File(downloads, sanitizeFileName(file.fileName));
+    const destination = createSensitiveCacheFile(
+      cacheArea,
+      `${sanitizeFileName(file.id || file.storedFileName)}-${sanitizeFileName(file.fileName)}`,
+    );
     const accessToken = await secureSession.getAccessToken();
     const downloaded = await File.downloadFileAsync(url, destination, {
       headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined,
       idempotent: true,
     });
 
+    return {
+      uri: downloaded.uri,
+      size: downloaded.size,
+      contentType: downloaded.type || file.contentType,
+      readText: () => downloaded.text(),
+      dispose: () => {
+        try {
+          if (downloaded.exists) downloaded.delete();
+        } catch {
+          // Cache cleanup is best-effort and must not interrupt closing the viewer.
+        }
+      },
+    };
+  },
+
+  async getAuthenticatedFileSource(file: StoredFile): Promise<AuthenticatedFileSource> {
+    const accessToken = await secureSession.getAccessToken();
+    return {
+      uri: `${requireApiUrl()}/${endpoints.files.stream(file.id)}`,
+      headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined,
+    };
+  },
+
+  async openPreparedFile(file: StoredFile, preview: PreparedFilePreview): Promise<void> {
+    if (Platform.OS === 'web') {
+      const anchor = document.createElement('a');
+      anchor.href = preview.uri;
+      anchor.download = file.fileName;
+      anchor.click();
+      return;
+    }
+
     if (!(await Sharing.isAvailableAsync())) {
       throw new Error('File sharing is not available on this device.');
     }
 
-    await Sharing.shareAsync(downloaded.uri, {
+    await Sharing.shareAsync(preview.uri, {
       dialogTitle: file.fileName,
-      mimeType: file.contentType || undefined,
+      mimeType: preview.contentType || file.contentType || undefined,
     });
   },
 

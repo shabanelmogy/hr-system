@@ -15,7 +15,7 @@ namespace HrManagementSystem.Application.Features.Security.Users.Contracts
                 .WithMessage(_fileLocalizer[Strings.Required]);
 
             RuleFor(x => x.ProfilePicture!)
-                .SetValidator(new FileSizeValidator(_fileLocalizer))
+                .SetValidator(new FileSizeValidator(_fileLocalizer, FileSettings.MaxImageFileSizeInMB))
                 .SetValidator(new BlockedSignaturesValidator(_fileLocalizer))
                 .SetValidator(new FileNameValidator(_fileLocalizer))
                 .Must(file => FileSettings.AllowedImagesExtensions.Contains(

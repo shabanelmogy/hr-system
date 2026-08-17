@@ -7,9 +7,9 @@ import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { useCanAccessRoute } from '@/src/features/auth';
 import { TenantAccessProvider } from '@/src/features/tenant-access';
-import { AppAppBar } from '@/src/layouts/AppAppBar';
 import { AppDrawerContent } from '@/src/layouts/drawer';
 import { MainLayout } from '@/src/layouts/main/MainLayout';
+import { AppNavigationHeader } from '@/src/layouts/navigation/AppNavigationHeader';
 import { AppIcon } from '@/src/shared/components';
 
 export default function ProtectedRouteLayout() {
@@ -45,7 +45,7 @@ export default function ProtectedRouteLayout() {
             letterSpacing: 0,
           },
           header: () => (
-            <AppAppBar
+            <AppNavigationHeader
               onDrawerPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
               showDrawer
               showLogout

@@ -2,8 +2,13 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ar';
 import 'dayjs/locale/en-gb';
 import { useCallback, useMemo, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Calendar, type ICalendarEventBase, type Mode } from 'react-native-big-calendar';
+import { StyleSheet, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import {
+  Calendar,
+  type CalendarTouchableOpacityProps,
+  type ICalendarEventBase,
+  type Mode,
+} from 'react-native-big-calendar';
 import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
@@ -37,6 +42,7 @@ type AppointmentCalendarMode = Extract<Mode, 'month' | 'week' | 'day' | 'schedul
 
 interface AppointmentCalendarEvent extends ICalendarEventBase {
   appointment: Appointment;
+  isAllDay: boolean;
 }
 
 interface AppointmentFormState {
@@ -49,6 +55,7 @@ export function AppointmentManagementScreen() {
   const { t, i18n } = useTranslation();
   const { isRTL } = useLocalization();
   const { theme } = useAppTheme();
+  const { width } = useWindowDimensions();
   const [mode, setMode] = useState<AppointmentCalendarMode>('month');
   const [visibleDate, setVisibleDate] = useState(() => new Date());
   const [calendarViewportHeight, setCalendarViewportHeight] = useState(0);
@@ -67,11 +74,62 @@ export function AppointmentManagementScreen() {
     [appointmentsQuery.data],
   );
   const calendarEvents = useMemo(
-    () => appointments.flatMap(toCalendarEvent),
+    () => appointments
+      .flatMap(toCalendarEvent)
+      .sort((first, second) => first.start.getTime() - second.start.getTime()),
     [appointments],
   );
   const calendarHeight = getCalendarRenderHeight(calendarViewportHeight, mode);
   const locale = isRTL ? 'ar' : 'en-gb';
+  const compactViewPicker = width < 520;
+  const maxVisibleEventCount = width < 600 || calendarViewportHeight < 500 ? 1 : 2;
+  const scrollOffsetMinutes = useMemo(
+    () => getCalendarScrollOffset(calendarEvents, range, mode),
+    [calendarEvents, mode, range],
+  );
+  const timeFormatter = useMemo(
+    () => new Intl.DateTimeFormat(i18n.language, {
+      hour: 'numeric',
+      minute: '2-digit',
+    }),
+    [i18n.language],
+  );
+
+  const renderCalendarEvent = useCallback((
+    event: AppointmentCalendarEvent,
+    touchableOpacityProps: CalendarTouchableOpacityProps,
+  ) => {
+    const { key, style, ...pressableProps } = touchableOpacityProps;
+
+    return (
+      <TouchableOpacity
+        {...pressableProps}
+        accessibilityLabel={event.title}
+        accessibilityRole="button"
+        key={key}
+        style={[style, styles.eventCell]}>
+        <AppText
+          align={isRTL ? 'right' : 'left'}
+          color="inverse"
+          numberOfLines={mode === 'day' ? 2 : 1}
+          style={styles.eventTitle}
+          variant="caption"
+          weight="700">
+          {event.title}
+        </AppText>
+        {mode !== 'month' && !event.isAllDay ? (
+          <AppText
+            align={isRTL ? 'right' : 'left'}
+            color="inverse"
+            numberOfLines={1}
+            style={styles.eventTime}
+            variant="caption">
+            {timeFormatter.format(event.start)}
+          </AppText>
+        ) : null}
+      </TouchableOpacity>
+    );
+  }, [isRTL, mode, timeFormatter]);
 
   const save = async (input: AppointmentInput) => {
     await saveMutation.mutateAsync(input);
@@ -143,6 +201,7 @@ export function AppointmentManagementScreen() {
           { icon: 'today-outline', label: t('platformTools.appointments.day'), value: 'day' },
           { icon: 'list-outline', label: t('platformTools.appointments.agenda'), value: 'schedule' },
         ]}
+        showOptionLabels={!compactViewPicker}
         value={mode}
         variant="pill"
       />
@@ -191,6 +250,7 @@ export function AppointmentManagementScreen() {
         ) : calendarViewportHeight > 0 ? (
           <AppCard padding="none" style={styles.calendarCard}>
             <Calendar<AppointmentCalendarEvent>
+            key={`${mode}:${locale}:${weekStartsOn}`}
             activeDate={visibleDate}
             allDayEventCellStyle={{ backgroundColor: theme.colors.primary }}
             allDayEventCellTextColor={theme.colors.onPrimary}
@@ -209,13 +269,16 @@ export function AppointmentManagementScreen() {
               borderRadius: theme.radius.sm,
             }}
             eventCellTextColor={theme.colors.onPrimary}
+            eventMinHeightForMonthView={20}
+            enableEnrichedEvents={mode === 'week' || mode === 'day'}
             events={calendarEvents}
+            eventsAreSorted
             height={calendarHeight}
             hourRowHeight={52}
             hourStyle={{ color: theme.colors.textMuted }}
             isRTL={isRTL}
             locale={locale}
-            maxVisibleEventCount={3}
+            maxVisibleEventCount={maxVisibleEventCount}
             mode={mode}
             moreLabel={t('platformTools.appointments.more', { count: '{moreCount}' })}
             onPressCell={(date) => openNewAppointment(date, mode === 'month')}
@@ -224,9 +287,16 @@ export function AppointmentManagementScreen() {
               setMode('day');
             }}
             onPressEvent={(event) => setFormState({ appointment: event.appointment })}
+            onPressMoreLabel={(events) => {
+              const firstEvent = events[0];
+              if (!firstEvent) return;
+              setVisibleDate(firstEvent.start);
+              setMode('day');
+            }}
             onSwipeEnd={setVisibleDate}
+            renderEvent={renderCalendarEvent}
             scheduleMonthSeparatorStyle={{ color: theme.colors.text, fontWeight: '700' }}
-            scrollOffsetMinutes={8 * 60}
+            scrollOffsetMinutes={scrollOffsetMinutes}
             showAdjacentMonths
             showTime
             showVerticalScrollIndicator
@@ -285,24 +355,73 @@ export function AppointmentManagementScreen() {
 }
 
 function toCalendarEvent(appointment: Appointment): AppointmentCalendarEvent[] {
+  const isAllDay = appointment.isAllDay || isLegacyAllDayAppointment(appointment);
   let start: Date;
   let end: Date;
 
-  if (appointment.isAllDay) {
-    start = localDateFromUtcKey(appointment.start);
-    end = localDateFromUtcKey(appointment.end);
+  if (isAllDay) {
+    const startKey = utcDateKey(appointment.start);
+    const exclusiveEndKey = utcDateKey(appointment.end);
+    const inclusiveEndKey = exclusiveEndKey > startKey
+      ? addUtcDateKey(exclusiveEndKey, -1)
+      : startKey;
+    start = localDateFromKey(startKey);
+    end = localDateFromKey(inclusiveEndKey);
   } else {
     start = new Date(appointment.start);
     end = new Date(appointment.end);
   }
 
-  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end <= start) return [];
-  return [{ appointment, title: appointment.text, start, end }];
+  if (
+    Number.isNaN(start.getTime()) ||
+    Number.isNaN(end.getTime()) ||
+    (isAllDay ? end < start : end <= start)
+  ) {
+    return [];
+  }
+
+  const normalizedAppointment = isAllDay && !appointment.isAllDay
+    ? { ...appointment, isAllDay: true }
+    : appointment;
+  return [{
+    appointment: normalizedAppointment,
+    isAllDay,
+    title: appointment.text,
+    start,
+    end,
+  }];
 }
 
-function localDateFromUtcKey(value: string): Date {
-  const key = new Date(value).toISOString().slice(0, 10);
+function utcDateKey(value: string): string {
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? value.slice(0, 10) : parsed.toISOString().slice(0, 10);
+}
+
+function localDateFromKey(key: string): Date {
   return new Date(`${key}T00:00:00`);
+}
+
+function addUtcDateKey(value: string, days: number): string {
+  const date = new Date(`${value}T00:00:00.000Z`);
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
+}
+
+function isLegacyAllDayAppointment(appointment: Appointment): boolean {
+  const start = new Date(appointment.start);
+  const end = new Date(appointment.end);
+  const dayInMilliseconds = 24 * 60 * 60 * 1000;
+  const duration = end.getTime() - start.getTime();
+
+  return (
+    Number.isFinite(duration) &&
+    duration >= dayInMilliseconds &&
+    duration % dayInMilliseconds === 0 &&
+    start.getUTCHours() === 12 &&
+    end.getUTCHours() === 12 &&
+    start.getUTCMinutes() === 0 &&
+    end.getUTCMinutes() === 0
+  );
 }
 
 function createAppointmentRange(
@@ -361,6 +480,30 @@ function getCalendarRenderHeight(
   return innerHeight;
 }
 
+function getCalendarScrollOffset(
+  events: readonly AppointmentCalendarEvent[],
+  range: AppointmentRange,
+  mode: AppointmentCalendarMode,
+): number {
+  if (mode !== 'week' && mode !== 'day') return 0;
+
+  const rangeStart = new Date(range.start);
+  const rangeEnd = new Date(range.end);
+  const visibleTimedEvents = events.filter((event) => (
+    !event.isAllDay && event.end > rangeStart && event.start < rangeEnd
+  ));
+
+  if (visibleTimedEvents.length === 0) return 8 * 60;
+
+  const earliestStart = Math.min(...visibleTimedEvents.map((event) => (
+    event.start <= rangeStart
+      ? 0
+      : event.start.getHours() * 60 + event.start.getMinutes()
+  )));
+
+  return Math.max(0, Math.min(20 * 60, earliestStart - 60));
+}
+
 const styles = StyleSheet.create({
   screenContent: { flex: 1, gap: 12 },
   headerActions: { flexDirection: 'row', alignItems: 'center' },
@@ -369,4 +512,12 @@ const styles = StyleSheet.create({
   periodTitle: { flex: 1, minWidth: 0 },
   calendarViewport: { flex: 1, minHeight: 0 },
   calendarCard: { flex: 1, overflow: 'hidden' },
+  eventCell: {
+    justifyContent: 'center',
+    overflow: 'hidden',
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+  },
+  eventTitle: { lineHeight: 15 },
+  eventTime: { fontSize: 10, lineHeight: 12, opacity: 0.9 },
 });

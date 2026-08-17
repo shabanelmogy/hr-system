@@ -20,6 +20,17 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     name: config.name ?? 'HR Management',
     slug: config.slug ?? 'hr-management-mobile',
     scheme: config.scheme ?? 'hrmanagement',
+    plugins: [
+      ...(config.plugins ?? []),
+      [
+        'expo-audio',
+        {
+          microphonePermission: false,
+          recordAudioAndroid: false,
+        },
+      ],
+      'expo-video',
+    ],
     ios: {
       ...config.ios,
       bundleIdentifier: config.ios?.bundleIdentifier ?? 'com.hrmanagementsystem.mobile',

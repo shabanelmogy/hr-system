@@ -2,9 +2,12 @@ namespace HrManagementSystem.Application.Common.Settings
 {
     public class FileSettings
     {
-        public const int MaxFileSizeInMB = 10;
+        public const int MaxFileSizeInMB = 50;
         public const int MaxFileSizeInBytes = MaxFileSizeInMB * 1024 * 1024;
+        public const int MaxImageFileSizeInMB = 10;
         public const int MaxFilesPerRequest = 10;
+        public const long MaxUploadRequestSizeInBytes =
+            (long)MaxFileSizeInBytes * MaxFilesPerRequest + (1024 * 1024);
         public static readonly string[] BlockedSignatures = ["4D-5A", "2F-2A", "D0-CF"];
         public static readonly string[] AllowedImagesExtensions = [".jpg", ".jpeg", ".png"];
         public static readonly string[] AllowedContentTypes =

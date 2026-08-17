@@ -39,7 +39,7 @@
     "InvalidIntervalValue": "محدد فترة زمنية غير صحيح",
     "EnglishLetterOnly": "مسموح أحرف إنجليزية فقط",
     "ArabicLetterOnly": "مسموح أحرف عربية فقط",
-    "InvalidFileSize": "اقصى حجم ملف مسموح",
+    "InvalidFileSize": "الحد الأقصى لحجم الملف هو {0} ميجابايت.",
     "ExtensionFileNotAllowed": "إمتداد الملف غير مسموح به",
     "NotAllowedFileContent": "غير مسموح برفع نوع الملف",
     "TooManyFiles": "الحد الأقصى المسموح به هو 10 ملفات لكل طلب",

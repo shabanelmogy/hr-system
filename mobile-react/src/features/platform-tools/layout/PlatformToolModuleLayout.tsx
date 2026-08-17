@@ -10,8 +10,8 @@ import {
   PLATFORM_TOOL_MODULES,
   type PlatformToolModuleId,
 } from '@/src/features/platform-tools/constants/platform-tool-definitions';
-import { AppAppBar } from '@/src/layouts/AppAppBar';
 import { ModuleDrawerContent } from '@/src/layouts/module/ModuleDrawerContent';
+import { AppNavigationHeader } from '@/src/layouts/navigation/AppNavigationHeader';
 import { AppIcon } from '@/src/shared/components';
 
 export function PlatformToolModuleLayout({ moduleId }: { moduleId: PlatformToolModuleId }) {
@@ -49,7 +49,7 @@ export function PlatformToolModuleLayout({ moduleId }: { moduleId: PlatformToolM
           letterSpacing: 0,
         },
         header: () => (
-          <AppAppBar
+          <AppNavigationHeader
             onDrawerPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
             showDrawer={!permanentDrawer}
             showLogout
