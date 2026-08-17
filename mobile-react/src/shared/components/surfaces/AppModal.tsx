@@ -1,15 +1,14 @@
 import type { PropsWithChildren, ReactNode } from 'react';
 import {
-  KeyboardAvoidingView,
   Modal,
   type ModalProps,
-  Platform,
   ScrollView,
   type StyleProp,
   StyleSheet,
   View,
   type ViewStyle,
 } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useLocalization } from '@/src/core/localization';
@@ -105,13 +104,13 @@ export function AppModal({
         presentationStyle="fullScreen"
         visible={visible}>
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          behavior="padding"
           style={[styles.fullScreenRoot, { backgroundColor: theme.colors.background }]}>
           <AppScreen
             contentContainerStyle={[styles.fullScreenContent, contentContainerStyle]}
             edges={footer ? ['top', 'right', 'left'] : undefined}
             header={header}
-            keyboardAware={false}
+            keyboardAware={scrollable}
             scroll={scrollable}>
             {children}
           </AppScreen>

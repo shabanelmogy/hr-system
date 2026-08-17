@@ -68,6 +68,10 @@ export interface CreateUserInvitationRequest {
   defaultCompanyId: number;
 }
 
+export interface CreateManagedUserRequest extends CreateUserInvitationRequest {
+  password: string;
+}
+
 export interface UserInvitation extends CreateUserInvitationRequest {
   id: string;
   status: 'pending' | 'accepted' | 'revoked' | 'expired';

@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { administrationApi } from '../api/administration-api';
 import type {
   ChangeManagedUserPasswordRequest,
+  CreateManagedUserRequest,
   CreateRoleRequest,
   CreateUserInvitationRequest,
   RolePermissionsFormValues,
@@ -38,6 +39,17 @@ export function useManagedUsersPage(query: PageQuery) {
   return useQuery({
     queryKey: [...administrationKeys.users, 'page', query] as const,
     queryFn: () => administrationApi.getUsersPage(query),
+  });
+}
+
+export function useCreateManagedUser() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (request: CreateManagedUserRequest) => administrationApi.createUser(request),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: administrationKeys.users });
+    },
   });
 }
 

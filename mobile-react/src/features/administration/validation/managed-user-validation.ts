@@ -3,7 +3,9 @@ import { z } from 'zod';
 
 const passwordPattern = /(?=.*[0-9])(?=.*[!@#$%^&*()\[\]{}\-_+=~`|:;"'<>,.\/?])(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 
-export function createManagedUserSchema(t: TFunction, isEdit: boolean) {
+export type ManagedUserValidationMode = 'add' | 'edit' | 'view' | 'invite';
+
+export function createManagedUserSchema(t: TFunction, mode: ManagedUserValidationMode) {
   return z.object({
     firstName: z.string().trim()
       .min(1, t('validation.required'))
@@ -38,8 +40,20 @@ export function createManagedUserSchema(t: TFunction, isEdit: boolean) {
       });
     }
 
-    // New managed accounts are activated through an invitation; only edits can change a password.
-    if (!isEdit || !values.password) return;
+    const requiresPassword = mode === 'add';
+    const acceptsPassword = requiresPassword || mode === 'edit';
+    if (!acceptsPassword) return;
+
+    if (!values.password) {
+      if (requiresPassword) {
+        context.addIssue({
+          code: 'custom',
+          path: ['password'],
+          message: t('validation.required'),
+        });
+      }
+      return;
+    }
 
     if (!passwordPattern.test(values.password) || values.password.length < 8) {
       context.addIssue({

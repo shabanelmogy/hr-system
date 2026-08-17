@@ -618,7 +618,7 @@ export const en = {
     editUser: 'Edit user',
     viewUser: 'View user',
     viewSubtitle: 'Review account, roles, and company access.',
-    addSubtitle: 'Send an account invitation and grant access to the appropriate companies.',
+    addSubtitle: 'Create the account directly and grant access to the appropriate companies.',
     editSubtitle: 'Update the account roles and company access.',
     identity: 'Account information',
     identityDescription: 'Identity and sign-in details',

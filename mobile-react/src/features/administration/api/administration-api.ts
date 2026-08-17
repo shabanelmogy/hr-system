@@ -4,6 +4,7 @@ import { apiService, pageMetadataSchema, toPageQuery } from '@/src/core/api';
 import type { PageQuery, PageResponse } from '@/src/core/api';
 import type {
   ChangeManagedUserPasswordRequest,
+  CreateManagedUserRequest,
   CreateRoleRequest,
   CreateUserInvitationRequest,
   ManagedUser,
@@ -75,6 +76,7 @@ const userInvitationSchema = z.object({
 const endpoints = {
   users: 'users/getAll',
   usersPage: 'users/getPage',
+  createUser: 'users/add',
   companyOptions: 'users/getCompanyOptions',
   invitations: 'userinvitations/getAll',
   createInvitation: 'userinvitations/create',
@@ -110,6 +112,12 @@ export const administrationApi = {
   async getUsers(): Promise<ManagedUser[]> {
     return z.array(managedUserSchema).parse(
       await apiService.get<unknown>(endpoints.users),
+    );
+  },
+
+  async createUser(request: CreateManagedUserRequest): Promise<ManagedUser> {
+    return managedUserSchema.parse(
+      await apiService.post<unknown, CreateManagedUserRequest>(endpoints.createUser, request),
     );
   },
 

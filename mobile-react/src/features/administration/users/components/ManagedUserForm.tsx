@@ -33,7 +33,7 @@ interface ManagedUserFormProps {
   onSave: (values: ManagedUserFormValues) => Promise<void>;
   roles: readonly RoleOption[];
   user: ManagedUser | null;
-  mode: 'add' | 'edit' | 'view';
+  mode: 'add' | 'edit' | 'view' | 'invite';
 }
 
 export function ManagedUserForm({
@@ -47,11 +47,13 @@ export function ManagedUserForm({
   mode,
 }: ManagedUserFormProps) {
   const { t, i18n } = useTranslation();
+  const isAdd = mode === 'add';
   const isEdit = mode === 'edit';
+  const isInvite = mode === 'invite';
   const isView = mode === 'view';
   const [showPasswordSection, setShowPasswordSection] = useState(false);
   const [focusErrorRequestId, setFocusErrorRequestId] = useState(0);
-  const schema = useMemo(() => createManagedUserSchema(t, isEdit), [isEdit, t]);
+  const schema = useMemo(() => createManagedUserSchema(t, mode), [mode, t]);
   const defaults = useMemo<ManagedUserFormValues>(() => createDefaults(user, currentCompanyId), [
     currentCompanyId,
     user,
@@ -121,7 +123,11 @@ export function ManagedUserForm({
     <AppForm
       errors={fieldErrors}
       focusErrorRequestId={focusErrorRequestId}
-      icon={isView ? 'eye-outline' : isEdit ? 'create-outline' : 'person-add-outline'}
+      icon={isView
+        ? 'eye-outline'
+        : isEdit
+          ? 'create-outline'
+          : isInvite ? 'mail-outline' : 'person-add-outline'}
       isDirty={isDirty}
       onCancel={onClose}
       onClearFieldError={(name) => clearErrors(name as keyof ManagedUserFormValues)}
@@ -133,14 +139,18 @@ export function ManagedUserForm({
           ? 'userManagement.viewSubtitle'
           : isEdit
             ? 'userManagement.editSubtitle'
-            : 'userManagement.addSubtitle',
+            : isInvite
+              ? 'invitationManagement.subtitle'
+              : 'userManagement.addSubtitle',
       )}
       title={t(
         isView
           ? 'userManagement.viewUser'
           : isEdit
             ? 'userManagement.editUser'
-            : 'userManagement.addUser',
+            : isInvite
+              ? 'invitationManagement.sendInvitation'
+              : 'userManagement.addUser',
       )}
       visible>
       <AppFormSection
@@ -291,7 +301,7 @@ export function ManagedUserForm({
         />
       </AppFormSection>
 
-      {isEdit ? (
+      {isAdd || isEdit ? (
         <AppFormSection
           description={t(isEdit
             ? 'userManagement.passwordChangeDescription'
@@ -314,7 +324,7 @@ export function ManagedUserForm({
               {t(showPasswordSection ? 'userManagement.hidePassword' : 'userManagement.changePassword')}
             </AppButton>
           ) : null}
-          {showPasswordSection ? (
+          {isAdd || showPasswordSection ? (
             <>
               <Controller
                 control={control}

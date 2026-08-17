@@ -160,7 +160,7 @@ export function InvitationManagementScreen() {
           companies={companiesQuery.data ?? []}
           currentCompanyId={session?.companyId ?? 0}
           loading={saveMutation.isPending}
-          mode="add"
+          mode="invite"
           onClose={closeForm}
           onSave={sendInvitation}
           roles={rolesQuery.data ?? []}
