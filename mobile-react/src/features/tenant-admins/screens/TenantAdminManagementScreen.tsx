@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -17,19 +17,17 @@ import type {
   TenantAdminRequest,
 } from '@/src/features/tenant-admins/types/tenant-admin';
 import {
-  AppAlert,
   AppCard,
   AppDataTable,
   type AppDataTableColumn,
   AppIcon,
   AppIconButton,
-  AppMultiView,
+  AppListScreen,
   AppPageHeader,
   AppScreen,
   AppStateView,
   AppStatusBadge,
   AppText,
-  AppTextField,
   ConfirmationDialog,
   showToast,
 } from '@/src/shared/components';
@@ -47,22 +45,44 @@ export function TenantAdminManagementScreen() {
   const [editing, setEditing] = useState<TenantAdmin | null>(null);
   const [formOpen, setFormOpen] = useState(false);
   const [deleting, setDeleting] = useState<TenantAdmin | null>(null);
-  const [search, setSearch] = useState('');
-  const filteredAdmins = useMemo(() => {
-    const query = search.trim().toLocaleLowerCase(i18n.language);
-    const admins = adminsQuery.data ?? [];
-    if (!query) return admins;
 
-    return admins.filter((admin) => [
-      admin.firstName,
-      admin.lastName,
-      `${admin.firstName} ${admin.lastName}`,
-      admin.userName,
-      admin.email,
-      admin.tenants.map((tenant) => `${tenant.name} ${tenant.identifier}`).join(' '),
-      t(getStatusKey(admin)),
-    ].some((value) => value.toLocaleLowerCase(i18n.language).includes(query)));
-  }, [adminsQuery.data, i18n.language, search, t]);
+  const admins = useMemo(() => adminsQuery.data ?? [], [adminsQuery.data]);
+
+  const [selectedAdminFilters, setSelectedAdminFilters] = useState<string[]>([]);
+
+  const adminFilterOptions = useMemo(() => [
+    { icon: 'checkmark-circle-outline' as const, label: t('tenantAdmins.active'), value: 'active' },
+    { icon: 'pause-circle-outline' as const, label: t('tenantAdmins.disabled'), value: 'disabled' },
+    { icon: 'lock-closed-outline' as const, label: t('tenantAdmins.locked'), value: 'locked' },
+  ], [t]);
+
+  const filteredAdmins = useMemo(() => {
+    if (selectedAdminFilters.length === 0) return admins;
+    return admins.filter((admin) => {
+      if (selectedAdminFilters.includes('disabled') && admin.isDisabled) return true;
+      if (selectedAdminFilters.includes('locked') && admin.isLocked) return true;
+      if (selectedAdminFilters.includes('active') && !admin.isDisabled && !admin.isLocked) return true;
+      return false;
+    });
+  }, [admins, selectedAdminFilters]);
+
+  const searchAdmins = useCallback(
+    (items: readonly TenantAdmin[], searchTerm: string) => {
+      const query = searchTerm.trim().toLocaleLowerCase(i18n.language);
+      if (!query) return items;
+
+      return items.filter((admin) => [
+        admin.firstName,
+        admin.lastName,
+        `${admin.firstName} ${admin.lastName}`,
+        admin.userName,
+        admin.email,
+        admin.tenants.map((tenant) => `${tenant.name} ${tenant.identifier}`).join(' '),
+        t(getStatusKey(admin)),
+      ].some((value) => value.toLocaleLowerCase(i18n.language).includes(query)));
+    },
+    [i18n.language, t],
+  );
 
   const openCreate = () => {
     saveMutation.reset();
@@ -221,10 +241,6 @@ export function TenantAdminManagementScreen() {
         title={t('tenantAdmins.title')}
       />
 
-      <AppAlert icon="sync-outline" severity="info" style={styles.syncHint}>
-        {t('tenantAdmins.refreshHint')}
-      </AppAlert>
-
       {isLoading ? (
         <AppStateView state="loading" />
       ) : queryError ? (
@@ -237,21 +253,19 @@ export function TenantAdminManagementScreen() {
           state="error"
         />
       ) : (
-        <AppMultiView<TenantAdmin, TenantAdminView>
+        <AppListScreen<TenantAdmin, TenantAdminView>
           defaultView="cards"
           emptyContent={<AppStateView message={t('tenantAdmins.empty')} state="empty" />}
           items={filteredAdmins}
-          resetKey={search}
-          toolbarContent={(
-            <AppTextField
-              compact
-              label={t('tenantAdmins.search')}
-              leadingIcon="search-outline"
-              onChangeText={setSearch}
-              showClearButton
-              value={search}
-            />
-          )}
+          filter={{
+            options: adminFilterOptions,
+            values: selectedAdminFilters,
+            onChange: setSelectedAdminFilters,
+            modalTitle: t('tenantAdmins.filterByStatus'),
+          }}
+          onSearch={searchAdmins}
+          searchPlaceholder={t('tenantAdmins.search')}
+          showViewLabels
           views={[
             {
               value: 'table',
@@ -267,7 +281,6 @@ export function TenantAdminManagementScreen() {
                   emptyMessage={t('tenantAdmins.empty')}
                   getRowKey={(admin) => admin.id}
                   pageSizeOptions={[5, 10, 25]}
-                  resetKey={search}
                   rows={admins}
                 />
               ),
@@ -441,7 +454,6 @@ function getErrorMessage(error: unknown, fallback: string): string {
 
 const styles = StyleSheet.create({
   addButton: { flexShrink: 0 },
-  syncHint: { marginBottom: 16 },
   list: {
     flexDirection: 'row',
     alignItems: 'stretch',

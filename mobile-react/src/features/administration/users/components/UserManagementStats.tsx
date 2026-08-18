@@ -9,9 +9,10 @@ import { AppCard, AppIcon, AppText } from '@/src/shared/components';
 
 interface UserManagementStatsProps {
   users: readonly ManagedUser[];
+  layout?: 'horizontal' | 'vertical';
 }
 
-export function UserManagementStats({ users }: UserManagementStatsProps) {
+export function UserManagementStats({ users, layout = 'horizontal' }: UserManagementStatsProps) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
   const { theme } = useAppTheme();
@@ -89,6 +90,30 @@ export function UserManagementStats({ users }: UserManagementStatsProps) {
     },
   ];
 
+  if (layout === 'vertical') {
+    return (
+      <View style={[styles.verticalContent, { direction }]}>
+        {cards.map((card) => (
+          <AppCard key={card.key} style={styles.verticalCard} variant="filled">
+            <View style={[styles.verticalCardContent, { direction }]}>
+              <View
+                style={[
+                  styles.verticalIcon,
+                  { backgroundColor: `${card.color}1A`, borderRadius: theme.radius.md },
+                ]}>
+                <AppIcon color={card.color} name={card.icon} size={22} />
+              </View>
+              <View style={styles.verticalCardText}>
+                <AppText color="muted" variant="bodySmall">{card.label}</AppText>
+                <AppText variant="titleSmall" weight="800">{card.value}</AppText>
+              </View>
+            </View>
+          </AppCard>
+        ))}
+      </View>
+    );
+  }
+
   return (
     <ScrollView
       contentContainerStyle={[styles.content, { direction }]}
@@ -137,4 +162,13 @@ const styles = StyleSheet.create({
   cardText: { flex: 1, minWidth: 0 },
   value: { fontSize: 16, lineHeight: 19 },
   label: { fontSize: 11, lineHeight: 14 },
+  verticalContent: { gap: 10, width: '100%' },
+  verticalCard: {
+    width: '100%',
+    paddingHorizontal: 14,
+    paddingVertical: 14,
+  },
+  verticalCardContent: { flexDirection: 'row', alignItems: 'center', gap: 14 },
+  verticalIcon: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
+  verticalCardText: { flex: 1, minWidth: 0, gap: 2 },
 });

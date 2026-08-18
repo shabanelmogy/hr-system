@@ -27,16 +27,14 @@ import {
 import {
   AppDataTable,
   type AppDataTableColumn,
-  AppFilterButton,
   AppIcon,
   AppIconButton,
-  AppMultiView,
+  AppListScreen,
   type AppMultiViewDefinition,
   AppPageHeader,
   AppScreen,
   AppStateView,
   AppText,
-  AppTextField,
   ConfirmationDialog,
   showToast,
 } from '@/src/shared/components';
@@ -49,7 +47,6 @@ export function FileManagerScreen() {
   const filesQuery = useStoredFiles();
   const uploadMutation = useUploadFiles();
   const deleteMutation = useDeleteFile();
-  const [search, setSearch] = useState('');
   const [selectedFilters, setSelectedFilters] = useState<FileGroupId[]>([]);
   const [pendingDelete, setPendingDelete] = useState<StoredFile | null>(null);
   const [viewerFile, setViewerFile] = useState<StoredFile | null>(null);
@@ -64,15 +61,21 @@ export function FileManagerScreen() {
     [t],
   );
   const filteredFiles = useMemo(() => {
-    const term = search.trim().toLocaleLowerCase(i18n.language);
-    const searchMatches = term
-      ? files.filter((file) => [file.fileName, file.fileExtension, file.contentType]
-        .some((value) => value.toLocaleLowerCase(i18n.language).includes(term)))
-      : files;
+    const searchMatches = files;
     return selectedFilters.length === 0
       ? searchMatches
       : searchMatches.filter((file) => selectedFilters.includes(classifyFile(file)));
-  }, [files, i18n.language, search, selectedFilters]);
+  }, [files, selectedFilters]);
+
+  const searchFiles = useCallback(
+    (items: readonly StoredFile[], searchTerm: string) => {
+      const term = searchTerm.trim().toLocaleLowerCase(i18n.language);
+      if (!term) return items;
+      return items.filter((file) => [file.fileName, file.fileExtension, file.contentType]
+        .some((value) => value.toLocaleLowerCase(i18n.language).includes(term)));
+    },
+    [i18n.language],
+  );
 
   const pickAndUpload = async () => {
     try {
@@ -180,7 +183,6 @@ export function FileManagerScreen() {
             defaultPageSize={5}
             emptyMessage={t('platformTools.files.empty')}
             getRowKey={(file) => file.id || file.storedFileName}
-            resetKey={`${search}|${selectedFilters.join(',')}`}
             rows={items}
           />
         ),
@@ -208,7 +210,6 @@ export function FileManagerScreen() {
       deleteMutation.isPending,
       download,
       downloadingId,
-      search,
       selectedFilters,
       t,
     ],
@@ -250,40 +251,25 @@ export function FileManagerScreen() {
           state="error"
         />
       ) : (
-        <View style={styles.content}>
-          <View style={styles.filters}>
-            <View style={styles.search}>
-              <AppTextField
-                compact
-                label={t('platformTools.files.search')}
-                leadingIcon="search-outline"
-                onChangeText={setSearch}
-                value={search}
-              />
-            </View>
-            <AppFilterButton
-              applyLabel={t('platformTools.files.applyFilters')}
-              buttonLabel={t('platformTools.files.filterWithCount', {
-                count: selectedFilters.length,
-              })}
-              description={t('platformTools.files.filterDescription')}
-              modalTitle={t('platformTools.files.filterTitle')}
-              onChange={setSelectedFilters}
-              options={fileFilterOptions}
-              values={selectedFilters}
-            />
-          </View>
-          <AppMultiView
-            defaultView="list"
-            emptyContent={(
-              <AppStateView message={t('platformTools.files.empty')} state="empty" />
-            )}
-            items={filteredFiles}
-            resetKey={`${search}|${selectedFilters.join(',')}`}
-            showViewLabels
-            views={views}
-          />
-        </View>
+        <AppListScreen<StoredFile, FileManagerView, FileGroupId>
+          defaultView="list"
+          emptyContent={(
+            <AppStateView message={t('platformTools.files.empty')} state="empty" />
+          )}
+          filter={{
+            options: fileFilterOptions,
+            values: selectedFilters,
+            onChange: setSelectedFilters,
+            modalTitle: t('platformTools.files.filterTitle'),
+            description: t('platformTools.files.filterDescription'),
+            applyLabel: t('platformTools.files.applyFilters'),
+          }}
+          items={filteredFiles}
+          onSearch={searchFiles}
+          searchPlaceholder={t('platformTools.files.search')}
+          showViewLabels
+          views={views}
+        />
       )}
 
       {viewerFile ? (
@@ -307,9 +293,6 @@ export function FileManagerScreen() {
 }
 
 const styles = StyleSheet.create({
-  content: { gap: 14 },
-  filters: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  search: { minWidth: 0, flex: 1 },
   primaryAction: { flexShrink: 0 },
   fileName: { flexDirection: 'row', alignItems: 'center', gap: 8 },
 });

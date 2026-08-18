@@ -30,13 +30,13 @@ import {
   AppDataTable,
   type AppDataTableColumn,
   AppIconButton,
-  AppMultiView,
+  AppListScreen,
+  AppModal,
   AppPageHeader,
   AppScreen,
   AppStateView,
   AppStatusBadge,
   AppText,
-  AppTextField,
   ConfirmationDialog,
   showToast,
 } from '@/src/shared/components';
@@ -46,7 +46,6 @@ const editPermissions = [permissions.EditUsers, permissions.ViewRoles] as const;
 const createPermissions = [permissions.CreateUsers, permissions.ViewRoles] as const;
 
 type UserFormMode = 'add' | 'edit' | 'view';
-type UserView = 'table' | 'cards';
 type PendingAccountAction = {
   type: 'toggle' | 'revoke';
   user: ManagedUser;
@@ -77,7 +76,9 @@ export function UserManagementScreen() {
   const [formMode, setFormMode] = useState<UserFormMode>('view');
   const [formOpen, setFormOpen] = useState(false);
   const [pendingAction, setPendingAction] = useState<PendingAccountAction | null>(null);
-  const [search, setSearch] = useState('');
+  const [cardsModalOpen, setCardsModalOpen] = useState(false);
+
+  const [selectedUserFilters, setSelectedUserFilters] = useState<string[]>([]);
 
   const unlockUser = useCallback(async (user: ManagedUser) => {
     try {
@@ -125,24 +126,44 @@ export function UserManagementScreen() {
   );
 
   const users = useMemo(() => usersQuery.data ?? [], [usersQuery.data]);
-  const filteredUsers = useMemo(() => {
-    const query = search.trim().toLocaleLowerCase(i18n.language);
-    if (!query) return users;
 
+  const userFilterOptions = useMemo(() => [
+    { icon: 'checkmark-circle-outline' as const, label: t('userManagement.active'), value: 'active' },
+    { icon: 'pause-circle-outline' as const, label: t('userManagement.disabled'), value: 'disabled' },
+    { icon: 'lock-closed-outline' as const, label: t('userManagement.locked'), value: 'locked' },
+  ], [t]);
+
+  const filteredUsers = useMemo(() => {
+    if (selectedUserFilters.length === 0) return users;
     return users.filter((user) => {
-      const companyText = user.companyIds
-        .map((companyId) => companyNames.get(companyId) ?? '')
-        .join(' ');
-      return [
-        user.firstName,
-        user.lastName,
-        user.userName,
-        user.email,
-        user.roles.join(' '),
-        companyText,
-      ].some((value) => value.toLocaleLowerCase(i18n.language).includes(query));
+      if (selectedUserFilters.includes('disabled') && user.isDisabled) return true;
+      if (selectedUserFilters.includes('locked') && user.isLocked) return true;
+      if (selectedUserFilters.includes('active') && !user.isDisabled && !user.isLocked) return true;
+      return false;
     });
-  }, [companyNames, i18n.language, search, users]);
+  }, [users, selectedUserFilters]);
+
+  const searchUsers = useCallback(
+    (items: readonly ManagedUser[], searchTerm: string) => {
+      const query = searchTerm.trim().toLocaleLowerCase(i18n.language);
+      if (!query) return items;
+
+      return items.filter((user) => {
+        const companyText = user.companyIds
+          .map((companyId) => companyNames.get(companyId) ?? '')
+          .join(' ');
+        return [
+          user.firstName,
+          user.lastName,
+          user.userName,
+          user.email,
+          user.roles.join(' '),
+          companyText,
+        ].some((value) => value.toLocaleLowerCase(i18n.language).includes(query));
+      });
+    },
+    [companyNames, i18n.language],
+  );
 
   const columns = useMemo<AppDataTableColumn<ManagedUser>[]>(() => [
     {
@@ -338,22 +359,32 @@ export function UserManagementScreen() {
         />
       }>
       <AppPageHeader
-        action={canCreate ? (
-          <AppIconButton
-            color={theme.colors.onPrimary}
-            icon="person-add-outline"
-            label={t('userManagement.addUser')}
-            onPress={openCreateForm}
-            pressedBackgroundColor={theme.colors.secondary}
-            style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
-          />
-        ) : null}
+        action={(
+          <View style={styles.headerActions}>
+            <AppIconButton
+              color={theme.colors.onPrimary}
+              icon="stats-chart-outline"
+              label={t('userManagement.viewStatistics')}
+              onPress={() => setCardsModalOpen(true)}
+              pressedBackgroundColor={theme.colors.secondary}
+              style={[styles.statsButton, { backgroundColor: theme.colors.accent }]}
+            />
+            {canCreate ? (
+              <AppIconButton
+                color={theme.colors.onPrimary}
+                icon="person-add-outline"
+                label={t('userManagement.addUser')}
+                onPress={openCreateForm}
+                pressedBackgroundColor={theme.colors.secondary}
+                style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
+              />
+            ) : null}
+          </View>
+        )}
         compact
         subtitle={t('userManagement.subtitle')}
         title={t('userManagement.title')}
       />
-
-      {!loading && !queryError ? <UserManagementStats users={users} /> : null}
 
       {loading ? (
         <AppStateView state="loading" />
@@ -364,24 +395,21 @@ export function UserManagementScreen() {
           state="error"
         />
       ) : (
-        <AppMultiView<ManagedUser, UserView>
-          compactToolbar
+        <AppListScreen<ManagedUser, 'table' | 'cards'>
           defaultView="table"
           emptyContent={(
             <AppStateView message={t('userManagement.empty')} state="empty" />
           )}
+          filter={{
+            options: userFilterOptions,
+            values: selectedUserFilters,
+            onChange: setSelectedUserFilters,
+            modalTitle: t('userManagement.filterByStatus'),
+          }}
           items={filteredUsers}
-          resetKey={search}
-          toolbarContent={(
-            <AppTextField
-              compact
-              label={t('userManagement.search')}
-              leadingIcon="search-outline"
-              onChangeText={setSearch}
-              showClearButton
-              value={search}
-            />
-          )}
+          onSearch={searchUsers}
+          searchPlaceholder={t('userManagement.search')}
+          showViewLabels
           views={[
             {
               value: 'table',
@@ -398,7 +426,6 @@ export function UserManagementScreen() {
                   emptyMessage={t('userManagement.empty')}
                   getRowKey={(user) => user.id}
                   pageSizeOptions={[5, 10, 25]}
-                  resetKey={search}
                   rows={users}
                 />
               ),
@@ -441,6 +468,17 @@ export function UserManagementScreen() {
           user={editing}
         />
       ) : null}
+
+      <AppModal
+        closeLabel={t('common.close')}
+        icon="stats-chart-outline"
+        onClose={() => setCardsModalOpen(false)}
+        scrollable={false}
+        sheetStyle={styles.statsModal}
+        title={t('userManagement.statistics')}
+        visible={cardsModalOpen}>
+        <UserManagementStats layout="vertical" users={filteredUsers} />
+      </AppModal>
 
       <ConfirmationDialog
         confirmLabel={t(
@@ -487,13 +525,11 @@ function getErrorMessage(error: unknown, fallback: string): string {
 
 const styles = StyleSheet.create({
   screenContent: { paddingVertical: 8 },
+  headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  statsButton: { width: 36, height: 36, flexShrink: 0 },
   addButton: { width: 36, height: 36, flexShrink: 0 },
   primaryCell: { width: '100%', gap: 2 },
   nameCell: { width: '100%', flexDirection: 'row', alignItems: 'center', gap: 8 },
-  cards: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    flexWrap: 'wrap',
-    gap: 12,
-  },
+  cards: { flexDirection: 'row', alignItems: 'stretch', flexWrap: 'wrap', gap: 12 },
+  statsModal: { maxHeight: '95%' },
 });

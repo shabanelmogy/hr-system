@@ -11,12 +11,11 @@ import {
   AppDataTable,
   type AppDataTableColumn,
   AppIconButton,
-  AppMultiView,
+  AppListScreen,
   AppScreen,
   AppStateView,
   AppStatusBadge,
   AppText,
-  AppTextField,
   ConfirmationDialog,
   showToast,
 } from '@/src/shared/components';
@@ -52,21 +51,40 @@ export function RoleManagementScreen() {
   const rolesQuery = useRoleOptions();
   const saveMutation = useSaveRole();
   const toggleMutation = useToggleRole();
-  const [search, setSearch] = useState('');
   const [selectedRole, setSelectedRole] = useState<RoleOption | null>(null);
   const [formMode, setFormMode] = useState<RoleFormMode>('add');
   const [formOpen, setFormOpen] = useState(false);
   const [pendingToggle, setPendingToggle] = useState<RoleOption | null>(null);
-  const roles = rolesQuery.data ?? [];
-  const filteredRoles = useMemo(() => {
-    const query = search.trim().toLocaleLowerCase(i18n.language);
-    if (!query) return roles;
+  const roles = useMemo(() => rolesQuery.data ?? [], [rolesQuery.data]);
 
-    return roles.filter((role) =>
-      [role.id, role.name, t(role.isDeleted ? 'roleManagement.disabled' : 'roleManagement.active')]
-        .some((value) => value.toLocaleLowerCase(i18n.language).includes(query)),
-    );
-  }, [i18n.language, roles, search, t]);
+  const [selectedRoleFilters, setSelectedRoleFilters] = useState<string[]>([]);
+
+  const roleFilterOptions = useMemo(() => [
+    { icon: 'checkmark-circle-outline' as const, label: t('roleManagement.active'), value: 'active' },
+    { icon: 'pause-circle-outline' as const, label: t('roleManagement.disabled'), value: 'disabled' },
+  ], [t]);
+
+  const filteredRoles = useMemo(() => {
+    if (selectedRoleFilters.length === 0) return roles;
+    return roles.filter((role) => {
+      if (selectedRoleFilters.includes('disabled') && role.isDeleted) return true;
+      if (selectedRoleFilters.includes('active') && !role.isDeleted) return true;
+      return false;
+    });
+  }, [roles, selectedRoleFilters]);
+
+  const searchRoles = useCallback(
+    (items: readonly RoleOption[], searchTerm: string) => {
+      const query = searchTerm.trim().toLocaleLowerCase(i18n.language);
+      if (!query) return items;
+
+      return items.filter((role) =>
+        [role.id, role.name, t(role.isDeleted ? 'roleManagement.disabled' : 'roleManagement.active')]
+          .some((value) => value.toLocaleLowerCase(i18n.language).includes(query)),
+      );
+    },
+    [i18n.language, t],
+  );
 
   const openForm = useCallback((mode: RoleFormMode, role: RoleOption | null) => {
     setSelectedRole(role);
@@ -198,23 +216,21 @@ export function RoleManagementScreen() {
           state="error"
         />
       ) : (
-        <AppMultiView<RoleOption, RoleView>
+        <AppListScreen<RoleOption, RoleView>
           defaultView="table"
           emptyContent={(
             <AppStateView message={t('roleManagement.empty')} state="empty" />
           )}
           items={filteredRoles}
-          resetKey={search}
-          toolbarContent={(
-            <AppTextField
-              compact
-              label={t('roleManagement.search')}
-              leadingIcon="search-outline"
-              onChangeText={setSearch}
-              showClearButton
-              value={search}
-            />
-          )}
+          filter={{
+            options: roleFilterOptions,
+            values: selectedRoleFilters,
+            onChange: setSelectedRoleFilters,
+            modalTitle: t('roleManagement.filterByStatus'),
+          }}
+          onSearch={searchRoles}
+          searchPlaceholder={t('roleManagement.search')}
+          showViewLabels
           views={[
             {
               value: 'table',
@@ -230,7 +246,6 @@ export function RoleManagementScreen() {
                   emptyMessage={t('roleManagement.empty')}
                   getRowKey={(role) => role.id}
                   pageSizeOptions={[5, 10, 25]}
-                  resetKey={search}
                   rows={roles}
                 />
               ),

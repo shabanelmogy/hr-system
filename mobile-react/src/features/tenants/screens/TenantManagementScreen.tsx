@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +14,6 @@ import type {
   TenantManagementResponse,
 } from '@/src/features/tenants/types/tenant';
 import {
-  AppAlert,
   AppButton,
   AppCard,
   AppDataTable,
@@ -22,13 +21,13 @@ import {
   AppIcon,
   AppIconButton,
   type AppIconName,
-  AppMultiView,
+  AppListScreen,
+  type AppMultiViewDefinition,
   AppPageHeader,
   AppScreen,
   AppStateView,
   AppStatusBadge,
   AppText,
-  AppTextField,
   showToast,
 } from '@/src/shared/components';
 
@@ -51,21 +50,40 @@ export function TenantManagementScreen() {
   const saveMutation = useSaveTenant();
   const [editing, setEditing] = useState<TenantManagementResponse | null>(null);
   const [form, setForm] = useState<TenantFormState | null>(null);
-  const [search, setSearch] = useState('');
-  const filteredTenants = useMemo(() => {
-    const query = search.trim().toLocaleLowerCase(i18n.language);
-    const tenants = tenantsQuery.data ?? [];
-    if (!query) return tenants;
 
-    return tenants.filter((tenant) => [
-      tenant.name,
-      tenant.identifier,
-      tenant.planName ?? '',
-      tenant.billingEmail ?? '',
-      tenant.contactName ?? '',
-      t(`tenantManagement.statuses.${tenant.subscriptionStatus}`),
-    ].some((value) => value.toLocaleLowerCase(i18n.language).includes(query)));
-  }, [i18n.language, search, t, tenantsQuery.data]);
+  const tenants = useMemo(() => tenantsQuery.data ?? [], [tenantsQuery.data]);
+
+  const [selectedStatuses, setSelectedStatuses] = useState<SubscriptionStatus[]>([]);
+
+  const statusFilterOptions = useMemo(() => {
+    const statuses: SubscriptionStatus[] = ['free', 'trial', 'active', 'pastDue', 'suspended', 'expired', 'cancelled'];
+    return statuses.map((status) => ({
+      icon: statusIcons[status],
+      label: t(`tenantManagement.statuses.${status}`),
+      value: status,
+    }));
+  }, [t]);
+
+  const filteredTenants = useMemo(() => {
+    if (selectedStatuses.length === 0) return tenants;
+    return tenants.filter((tenant) => selectedStatuses.includes(tenant.subscriptionStatus));
+  }, [tenants, selectedStatuses]);
+
+  const searchTenants = useCallback(
+    (items: readonly TenantManagementResponse[], searchTerm: string) => {
+      const query = searchTerm.trim().toLocaleLowerCase(i18n.language);
+      if (!query) return items;
+      return items.filter((tenant) => [
+        tenant.name,
+        tenant.identifier,
+        tenant.planName ?? '',
+        tenant.billingEmail ?? '',
+        tenant.contactName ?? '',
+        t(`tenantManagement.statuses.${tenant.subscriptionStatus}`),
+      ].some((value) => value.toLocaleLowerCase(i18n.language).includes(query)));
+    },
+    [i18n.language, t],
+  );
 
   const openCreate = () => {
     saveMutation.reset();
@@ -220,10 +238,6 @@ export function TenantManagementScreen() {
         title={t('tenantManagement.title')}
       />
 
-      <AppAlert icon="sync-outline" severity="info" style={styles.syncHint}>
-        {t('tenantManagement.refreshHint')}
-      </AppAlert>
-
       {tenantsQuery.isLoading ? (
         <AppStateView state="loading" />
       ) : tenantsQuery.isError ? (
@@ -233,23 +247,21 @@ export function TenantManagementScreen() {
           state="error"
         />
       ) : (
-        <AppMultiView<TenantManagementResponse, TenantView>
+        <AppListScreen<TenantManagementResponse, TenantView, SubscriptionStatus>
           defaultView="cards"
           emptyContent={(
             <AppStateView message={t('tenantManagement.emptyMessage')} state="empty" />
           )}
+          filter={{
+            options: statusFilterOptions,
+            values: selectedStatuses,
+            onChange: setSelectedStatuses,
+            modalTitle: t('tenantManagement.filterByStatus'),
+          }}
           items={filteredTenants}
-          resetKey={search}
-          toolbarContent={(
-            <AppTextField
-              compact
-              label={t('tenantManagement.search')}
-              leadingIcon="search-outline"
-              onChangeText={setSearch}
-              showClearButton
-              value={search}
-            />
-          )}
+          onSearch={searchTenants}
+          searchPlaceholder={t('tenantManagement.search')}
+          showViewLabels
           views={[
             {
               value: 'table',
@@ -265,7 +277,6 @@ export function TenantManagementScreen() {
                   emptyMessage={t('tenantManagement.emptyMessage')}
                   getRowKey={(tenant) => tenant.id}
                   pageSizeOptions={[5, 10, 25]}
-                  resetKey={search}
                   rows={tenants}
                 />
               ),
@@ -480,9 +491,6 @@ function getErrorMessage(error: unknown, fallback: string): string {
 
 const styles = StyleSheet.create({
   addButton: { flexShrink: 0 },
-  syncHint: {
-    marginBottom: 16,
-  },
   list: {
     flexDirection: 'row',
     alignItems: 'stretch',
