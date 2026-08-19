@@ -1,6 +1,6 @@
-import * as WebBrowser from 'expo-web-browser';
-import { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { useRef, useState } from 'react';
+import { WebView } from 'react-native-webview';
 import { useTranslation } from 'react-i18next';
 
 import { platformToolsApi } from '@/src/features/platform-tools/api/platform-tools-api';
@@ -9,30 +9,33 @@ import {
   AppButton,
   AppCard,
   AppIcon,
+  AppModal,
   AppPageHeader,
   AppScreen,
+  AppStateView,
   AppText,
-  showToast,
 } from '@/src/shared/components';
 import { useAppTheme } from '@/src/core/theme';
 
 export function ApiEndpointsScreen() {
   const { t } = useTranslation();
   const { theme } = useAppTheme();
-  const [opening, setOpening] = useState(false);
+  const swaggerUrl = platformToolsApi.getSwaggerUrl();
+  const webViewRef = useRef<WebView>(null);
+  const [swaggerVisible, setSwaggerVisible] = useState(false);
+  const [swaggerLoading, setSwaggerLoading] = useState(false);
+  const [swaggerError, setSwaggerError] = useState(false);
 
-  const openSwagger = async () => {
-    setOpening(true);
-    try {
-      await WebBrowser.openBrowserAsync(platformToolsApi.getSwaggerUrl(), {
-        showTitle: true,
-        toolbarColor: theme.colors.surface,
-      });
-    } catch (error) {
-      showToast.error(error, t('platformTools.apiEndpoints.openFailed'));
-    } finally {
-      setOpening(false);
-    }
+  const openSwagger = () => {
+    setSwaggerError(false);
+    setSwaggerLoading(true);
+    setSwaggerVisible(true);
+  };
+
+  const retrySwagger = () => {
+    setSwaggerError(false);
+    setSwaggerLoading(true);
+    webViewRef.current?.reload();
   };
 
   return (
@@ -51,14 +54,67 @@ export function ApiEndpointsScreen() {
         </AppText>
         <AppButton
           icon="open-outline"
-          loading={opening}
-          onPress={() => void openSwagger()}>
+          onPress={openSwagger}>
           {t('platformTools.apiEndpoints.open')}
         </AppButton>
       </AppCard>
       <AppAlert severity="info">{t('platformTools.apiEndpoints.environmentNote')}</AppAlert>
+      <AppModal
+        contentContainerStyle={styles.webViewContent}
+        icon="code-slash-outline"
+        onClose={() => setSwaggerVisible(false)}
+        scrollable={false}
+        title={t('platformTools.apiEndpoints.swaggerTitle')}
+        variant="fullScreen"
+        visible={swaggerVisible}>
+        <View style={styles.webViewContainer}>
+          <WebView
+            ref={webViewRef}
+            allowsBackForwardNavigationGestures
+            javaScriptEnabled
+            onError={() => {
+              setSwaggerLoading(false);
+              setSwaggerError(true);
+            }}
+            onLoadEnd={() => setSwaggerLoading(false)}
+            onLoadStart={() => {
+              setSwaggerError(false);
+              setSwaggerLoading(true);
+            }}
+            source={{ uri: swaggerUrl }}
+            style={styles.webView}
+          />
+          {swaggerLoading && !swaggerError ? (
+            <View style={[styles.loadingOverlay, { backgroundColor: theme.colors.background }]}>
+              <ActivityIndicator color={theme.colors.primary} size="large" />
+              <AppText color="muted">{t('states.loading')}</AppText>
+            </View>
+          ) : null}
+          {swaggerError ? (
+            <View style={[styles.errorOverlay, { backgroundColor: theme.colors.background }]}>
+              <AppStateView
+                message={t('platformTools.apiEndpoints.webViewError')}
+                onRetry={retrySwagger}
+                state="error"
+              />
+            </View>
+          ) : null}
+        </View>
+      </AppModal>
     </AppScreen>
   );
 }
 
-const styles = StyleSheet.create({ card: { alignItems: 'center', gap: 14, marginBottom: 16 } });
+const styles = StyleSheet.create({
+  card: { alignItems: 'center', gap: 14, marginBottom: 16 },
+  webViewContent: { flex: 1, padding: 0 },
+  webViewContainer: { flex: 1, position: 'relative' },
+  webView: { flex: 1 },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 12,
+  },
+  errorOverlay: { ...StyleSheet.absoluteFillObject },
+});

@@ -452,6 +452,7 @@ export const en = {
       swaggerDescription: 'Open Swagger to inspect routes, contracts, and response models.',
       open: 'Open Swagger',
       openFailed: 'Unable to open API documentation.',
+      webViewError: 'Swagger could not be loaded inside the app.',
       environmentNote: 'Swagger is available only when enabled by the API environment configuration.',
     },
     hangfire: {

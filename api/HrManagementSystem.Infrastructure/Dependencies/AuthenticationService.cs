@@ -6,6 +6,7 @@ using HrManagementSystem.Application.Features.Security.Invitations.Services;
 using HrManagementSystem.Application.Features.Security.Users.Services;
 using HrManagementSystem.Domain.Tenancy.Enums;
 using HrManagementSystem.Infrastructure.Features.Security.Authorization.Services;
+using HrManagementSystem.Infrastructure.Hangfire;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
@@ -84,6 +85,17 @@ public static class AuthenticationService
                 jwtOptions.Audience);
             options.Events = new JwtBearerEvents
             {
+                OnMessageReceived = context =>
+                {
+                    if (HangfireSessionAuthentication.TryGetAccessToken(
+                            context.Request,
+                            out var accessToken))
+                    {
+                        context.Token = accessToken;
+                    }
+
+                    return Task.CompletedTask;
+                },
                 OnTokenValidated = ValidateSessionAsync
             };
         })

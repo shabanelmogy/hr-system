@@ -14,7 +14,6 @@ import {
   AppDivider,
   AppIcon,
   type AppIconName,
-  AppMetricCard,
   AppPageHeader,
   AppScreen,
   AppStateView,
@@ -55,19 +54,15 @@ export function HealthCheckScreen() {
       ) : (
         <View style={styles.content}>
           <View style={[styles.metrics, { direction }]}>
-            <AppMetricCard
+            <CompactHealthMetricCard
               color={getStatusColor(report.status, theme.colors)}
               icon="pulse-outline"
               label={t('platformTools.health.overallStatus')}
-              padding="sm"
-              style={styles.metricCard}
               value={t(`platformTools.health.${report.status.toLowerCase()}`)}
             />
-            <AppMetricCard
+            <CompactHealthMetricCard
               icon="timer-outline"
               label={t('platformTools.health.totalDuration')}
-              padding="sm"
-              style={styles.metricCard}
               value={report.totalDuration || '—'}
             />
           </View>
@@ -109,7 +104,7 @@ function HealthDependencyCard({ entry }: { entry: HealthCheckEntry }) {
           <AppIcon color={statusColor} name="server-outline" size={23} />
         </View>
         <AppText numberOfLines={2} style={styles.dependencyName} variant="titleSmall">
-          {entry.name}
+          {formatHealthName(entry.name)}
         </AppText>
         <AppStatusBadge
           color={statusColor}
@@ -129,6 +124,40 @@ function HealthDependencyCard({ entry }: { entry: HealthCheckEntry }) {
         label={t('platformTools.health.description')}
         value={entry.description || '—'}
       />
+    </AppCard>
+  );
+}
+
+function CompactHealthMetricCard({
+  color,
+  icon,
+  label,
+  value,
+}: {
+  color?: string;
+  icon: AppIconName;
+  label: string;
+  value: string | number;
+}) {
+  const { direction } = useLocalization();
+  const { theme } = useAppTheme();
+  const resolvedColor = color ?? theme.colors.primary;
+
+  return (
+    <AppCard padding="sm" style={styles.compactMetricCard} variant="elevated">
+      <View style={[styles.compactMetric, { direction }]}>
+        <View
+          style={[
+            styles.compactMetricIcon,
+            { backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radius.sm },
+          ]}>
+          <AppIcon color={resolvedColor} name={icon} size={20} />
+        </View>
+        <View style={styles.compactMetricText}>
+          <AppText color="muted" numberOfLines={1} variant="caption">{label}</AppText>
+          <AppText numberOfLines={1} variant="label" weight="800">{value}</AppText>
+        </View>
+      </View>
     </AppCard>
   );
 }
@@ -156,7 +185,7 @@ function HealthDetailRow({
       </View>
       <View style={styles.detailText}>
         <AppText color="muted" variant="caption" weight="700">{label}</AppText>
-        <AppText selectable variant="bodySmall">{value}</AppText>
+        <AppText numberOfLines={2} selectable variant="bodySmall">{value}</AppText>
       </View>
     </View>
   );
@@ -183,10 +212,17 @@ function getStatusIcon(status: HealthStatus): AppIconName {
   return 'help-circle-outline';
 }
 
+function formatHealthName(name: string): string {
+  return name.replace(/\b[a-z]/g, (letter) => letter.toUpperCase());
+}
+
 const styles = StyleSheet.create({
   content: { gap: 16 },
-  metrics: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
-  metricCard: { minWidth: 135, minHeight: 88, flexBasis: 135, gap: 6 },
+  metrics: { width: '100%', gap: 10 },
+  compactMetricCard: { width: '100%', minHeight: 64 },
+  compactMetric: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  compactMetricIcon: { width: 34, height: 34, alignItems: 'center', justifyContent: 'center' },
+  compactMetricText: { flex: 1, minWidth: 0, gap: 1 },
   section: { gap: 10 },
   sectionTitle: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   dependencies: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },

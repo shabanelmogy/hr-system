@@ -244,7 +244,7 @@ export const platformToolsApi = {
   },
 
   getHangfireUrl(): string {
-    return `${requireApiRootUrl()}/hangfire`;
+    return `${requireApiUrl()}/backgroundJobs/openDashboard`;
   },
 };
 

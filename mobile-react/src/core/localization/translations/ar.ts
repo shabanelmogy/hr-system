@@ -452,6 +452,7 @@ export const ar = {
       swaggerDescription: 'افتح Swagger لمراجعة المسارات والعقود ونماذج الاستجابة.',
       open: 'فتح Swagger',
       openFailed: 'تعذر فتح توثيق API.',
+      webViewError: 'تعذر تحميل Swagger داخل التطبيق.',
       environmentNote: 'يتاح Swagger فقط عندما يكون مفعلاً في إعدادات بيئة الـAPI.',
     },
     hangfire: {

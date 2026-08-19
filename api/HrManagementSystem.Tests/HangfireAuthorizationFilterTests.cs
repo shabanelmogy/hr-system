@@ -22,6 +22,23 @@ public sealed class HangfireAuthorizationFilterTests
     }
 
     [Theory]
+    [InlineData("/hangfire/css123")]
+    [InlineData("/hangfire/css-dark123")]
+    [InlineData("/hangfire/js123")]
+    [InlineData("/hangfire/fonts/glyphicons-halflings-regular/woff2")]
+    public void Authorize_AllowsStaticDashboardAssetsWithoutUser(string path)
+    {
+        var filter = CreateFilter("localhost");
+        var context = CreateContext(
+            host: "untrusted.example",
+            authenticated: false,
+            permissions: [],
+            path: path);
+
+        Assert.True(filter.Authorize(context));
+    }
+
+    [Theory]
     [InlineData(false, true, "localhost")]
     [InlineData(true, false, "localhost")]
     [InlineData(true, true, "untrusted.example")]
@@ -48,7 +65,8 @@ public sealed class HangfireAuthorizationFilterTests
     private static DefaultHttpContext CreateContext(
         string host,
         bool authenticated,
-        IEnumerable<string> permissions)
+        IEnumerable<string> permissions,
+        string? path = null)
     {
         var claims = permissions.Select(permission =>
             new Claim(Permissions.Type, permission));
@@ -60,6 +78,7 @@ public sealed class HangfireAuthorizationFilterTests
             User = new ClaimsPrincipal(identity)
         };
         context.Request.Host = new HostString(host);
+        if (path is not null) context.Request.Path = path;
         return context;
     }
 }

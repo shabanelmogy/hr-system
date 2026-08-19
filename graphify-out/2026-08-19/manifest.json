@@ -30,8 +30,8 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Tests/BackgroundNotificationJobTests.cs": {
-    "mtime": 1787129145.4563167,
-    "ast_hash": "e7f36fcbae05e77df564c8d4808a210b",
+    "mtime": 1786874067.47936,
+    "ast_hash": "611249cc10d4486298845b2af1f0e6fa",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Tests/HangfireAuthorizationFilterTests.cs": {
@@ -4810,18 +4810,18 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/Platform/EntityChangeLogs/Contracts/EntityChangeLogsRequest.cs": {
-    "mtime": 1787129144.7913222,
-    "ast_hash": "70861004c11ac85fd44f68d4ab087b68",
+    "mtime": 1786265227.6554406,
+    "ast_hash": "bea2d421a5bb1e3c9a791190b6642acf",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/Platform/EntityChangeLogs/Contracts/EntityChangeLogsResponse.cs": {
-    "mtime": 1787129144.7913222,
-    "ast_hash": "7d007cb6cec40a4317ffafd80067eece",
+    "mtime": 1786265227.7135777,
+    "ast_hash": "bfc2763c6e7066defd8222234db0349d",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/Platform/EntityChangeLogs/Services/IEntityChangeLogService.cs": {
-    "mtime": 1787129144.7913222,
-    "ast_hash": "36f98527b43dec53997e9a0d17acd1dc",
+    "mtime": 1786265227.738624,
+    "ast_hash": "3be9a34b5720b420a93b31c5f54a754e",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/Platform/Files/Contracts/UploadFileRequest.cs": {
@@ -5330,8 +5330,8 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Domain/Platform/EntityChangeLogs/Entities/EntityChangeLog.cs": {
-    "mtime": 1787129145.0413394,
-    "ast_hash": "4cbf6136cf827e4a6becc106366182b2",
+    "mtime": 1786438675.123577,
+    "ast_hash": "4e885f61cbe49803bf0a18e66425490c",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Domain/Platform/Files/Entities/UploadedFile.cs": {
@@ -5700,8 +5700,8 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/Platform/EntityChangeLogs/Services/EntityChangeLogService.cs": {
-    "mtime": 1787129145.2685752,
-    "ast_hash": "e83d448cd09a33405a5f1d1ea96a0681",
+    "mtime": 1786438675.123577,
+    "ast_hash": "4f0cdf4db2f36f90ccb6386724e8c62f",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/Platform/Files/Persistence/UploadedFileConfiguration.cs": {
@@ -5830,8 +5830,8 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/Security/Users/Services/UserService.cs": {
-    "mtime": 1787129145.271003,
-    "ast_hash": "415bd11f87f8788e199533079b11aec7",
+    "mtime": 1786873416.9611547,
+    "ast_hash": "20efb7a86ba54214d7e59bbf208fc9ce",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/GlobalUsings.cs": {
@@ -6005,8 +6005,8 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Migrations/ApplicationDbContextModelSnapshot.cs": {
-    "mtime": 1787129145.4563167,
-    "ast_hash": "45c53aea82b7dbc16f25b9dca9802731",
+    "mtime": 1786873172.4042096,
+    "ast_hash": "d236d9269d24e2148a335123cb7632d9",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Persistence/ApplicationDbContext.cs": {
@@ -6250,8 +6250,8 @@
     "semantic_hash": ""
   },
   "web-next/src/features/realtime/realtimeEvent.test.ts": {
-    "mtime": 1787129147.391199,
-    "ast_hash": "b136c966304e0374d6f5f0e0146bcbd5",
+    "mtime": 1786792731.4755332,
+    "ast_hash": "0369c8d2504f0167584178d1d6234bd3",
     "semantic_hash": ""
   },
   "web-next/src/features/realtime/realtimeEvent.ts": {
@@ -6260,8 +6260,8 @@
     "semantic_hash": ""
   },
   "web-next/src/features/realtime/realtimeQueryRegistry.ts": {
-    "mtime": 1787129147.4014108,
-    "ast_hash": "6a563d69095d068120ccd1a02816ccf9",
+    "mtime": 1786792731.4795294,
+    "ast_hash": "916cf79c71f11f5d6ed2d5323da596c9",
     "semantic_hash": ""
   },
   "web-next/src/layouts/components/top-bar/AuthMobileMenu.tsx": {
@@ -6730,8 +6730,8 @@
     "semantic_hash": ""
   },
   "mobile-react/app/(main)/modal.tsx": {
-    "mtime": 1787132237.867108,
-    "ast_hash": "9f8e2721926c90ddf9272cf710594ad0",
+    "mtime": 1786454050.1027758,
+    "ast_hash": "b3672b191cfba03454038edf9ca508ab",
     "semantic_hash": ""
   },
   "mobile-react/app/+not-found.tsx": {
@@ -6815,13 +6815,13 @@
     "semantic_hash": ""
   },
   "mobile-react/src/core/localization/translations/ar.ts": {
-    "mtime": 1787134237.8272223,
-    "ast_hash": "e119112905fc70713a33c014d0a841b6",
+    "mtime": 1786960113.1388214,
+    "ast_hash": "19fa88421bd807a51e007b27bacf5494",
     "semantic_hash": ""
   },
   "mobile-react/src/core/localization/translations/en.ts": {
-    "mtime": 1787134237.8252153,
-    "ast_hash": "831573f0fb2a52f807e6b121855fc749",
+    "mtime": 1786960113.1378243,
+    "ast_hash": "3b9eb51714ba6b6bd51a9365f396f3d5",
     "semantic_hash": ""
   },
   "mobile-react/src/core/providers/AppProviders.tsx": {
@@ -7120,8 +7120,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/auth/login/components/CompanySelectionDialog.tsx": {
-    "mtime": 1787132188.4789557,
-    "ast_hash": "2341614c4566f655aa4e9138eaeb6988",
+    "mtime": 1786792731.4446144,
+    "ast_hash": "6626e7fafba2360f09d52390bcf8ed64",
     "semantic_hash": ""
   },
   "mobile-react/src/features/auth/login/components/LeftPanel.tsx": {
@@ -7130,8 +7130,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/auth/login/components/LoginForm.tsx": {
-    "mtime": 1787132188.4789557,
-    "ast_hash": "1423723cbf7deb33a394ab8ad1e9e381",
+    "mtime": 1786799182.2500825,
+    "ast_hash": "0163a7dde3c33493b8f98592df7ff5b6",
     "semantic_hash": ""
   },
   "mobile-react/src/features/auth/login/hooks/useLoginForm.ts": {
@@ -7290,8 +7290,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/tenants/screens/TenantManagementScreen.tsx": {
-    "mtime": 1787129146.7175457,
-    "ast_hash": "8cd52ede088591cbfc4f9166f14d75ee",
+    "mtime": 1786792731.4575796,
+    "ast_hash": "18437110afc304c6934308f2b9277c30",
     "semantic_hash": ""
   },
   "mobile-react/src/features/tenants/types/tenant.ts": {
@@ -7385,8 +7385,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/forms/AppForm.tsx": {
-    "mtime": 1787132237.867108,
-    "ast_hash": "a53117589d160257c6c5f4a1d0da83eb",
+    "mtime": 1786603966.8934495,
+    "ast_hash": "26210a1350eb445cdc2820a7c1c6c117",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260811_192249_fix_web_super_admin_login_failing_with_http_307_an.md": {
@@ -7430,8 +7430,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/controls/AppDateTimeField.tsx": {
-    "mtime": 1787132237.867108,
-    "ast_hash": "92b8eab1c6ea139266e8c04f7d132c74",
+    "mtime": 1786792731.4595752,
+    "ast_hash": "425f8f4821445ad70673afacf64e2c08",
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/controls/AppSelectField.tsx": {
@@ -7460,8 +7460,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/surfaces/AppModal.tsx": {
-    "mtime": 1787129147.1535933,
-    "ast_hash": "2780886745652feb6317c9c6d303cd70",
+    "mtime": 1786954508.3016458,
+    "ast_hash": "9c1968b4b6bb46dff5998831e4159167",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Api/Common/Tenancy/AllowTenantReadOnlyAttribute.cs": {
@@ -7550,13 +7550,13 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/administration/api/administration-api.ts": {
-    "mtime": 1787129145.9712403,
-    "ast_hash": "9a3c5e40f995f9b7f15136c332f90a5f",
+    "mtime": 1786874515.3864608,
+    "ast_hash": "1dba42d8a4b7571e6f7c865e6bdc0869",
     "semantic_hash": ""
   },
   "mobile-react/src/features/administration/hooks/useAdministration.ts": {
-    "mtime": 1787129145.9712403,
-    "ast_hash": "c8d3808844aee72577a9247da55a23af",
+    "mtime": 1786871767.389314,
+    "ast_hash": "0008c5a8a19428c6d7ddad873e50cdb4",
     "semantic_hash": ""
   },
   "mobile-react/src/features/administration/index.ts": {
@@ -7595,13 +7595,13 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/administration/roles/screens/RoleManagementScreen.tsx": {
-    "mtime": 1787129146.1410005,
-    "ast_hash": "bee13b42a04ed80dca5363b9ebcb725d",
+    "mtime": 1786876290.9372826,
+    "ast_hash": "f38316a4efa3fe5753c5742a1c189924",
     "semantic_hash": ""
   },
   "mobile-react/src/features/administration/types/administration.ts": {
-    "mtime": 1787129146.1410005,
-    "ast_hash": "27553e7986f68864ce6b82cb493d2329",
+    "mtime": 1786874515.3864608,
+    "ast_hash": "ad330d006a330218550c7e38fcd8f580",
     "semantic_hash": ""
   },
   "mobile-react/src/features/administration/users/components/ManagedUserActions.tsx": {
@@ -7620,23 +7620,23 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/administration/users/components/ManagedUserForm.tsx": {
-    "mtime": 1787129146.1410005,
-    "ast_hash": "a82ca28e2904cba191d71248ab74ef0b",
+    "mtime": 1786871305.6352408,
+    "ast_hash": "cd5f0c9ffb1d02d8d663ef5310eb3990",
     "semantic_hash": ""
   },
   "mobile-react/src/features/administration/users/components/UserManagementStats.tsx": {
-    "mtime": 1787129146.2857673,
-    "ast_hash": "a7a12cc6053ce4c1556ead46c1fc1169",
+    "mtime": 1786603966.6705947,
+    "ast_hash": "2630719f1c72e3b4de6de173d2e0ba2a",
     "semantic_hash": ""
   },
   "mobile-react/src/features/administration/users/screens/UserManagementScreen.tsx": {
-    "mtime": 1787129146.2867675,
-    "ast_hash": "25c57a1ccc5f8eee2c12a8f73cd20824",
+    "mtime": 1786878659.7193155,
+    "ast_hash": "4458566bf58417bcc9662d4b7c041262",
     "semantic_hash": ""
   },
   "mobile-react/src/features/administration/validation/managed-user-validation.ts": {
-    "mtime": 1787129146.4863577,
-    "ast_hash": "3f2ee3e615596c66e4784fa983f7eae5",
+    "mtime": 1786871767.389314,
+    "ast_hash": "972a1aad4d312e5d222f8ce063a3138d",
     "semantic_hash": ""
   },
   "mobile-react/src/features/administration/validation/role-validation.ts": {
@@ -7695,13 +7695,13 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/onboarding/screens/OnboardingScreen.tsx": {
-    "mtime": 1787132188.4789557,
-    "ast_hash": "6657951baee859c7249bd074aa99a7fe",
+    "mtime": 1786612826.1942625,
+    "ast_hash": "4ae46eeae219899a9188b6a82ac1e9ef",
     "semantic_hash": ""
   },
   "mobile-react/src/features/tenant-access/TenantAccessProvider.tsx": {
-    "mtime": 1787132237.867108,
-    "ast_hash": "312a63f1d6185db2d67bebdab4624b0c",
+    "mtime": 1786532785.008729,
+    "ast_hash": "eaf6a57358e18afde822883418a3d3dc",
     "semantic_hash": ""
   },
   "mobile-react/src/features/tenant-access/TenantNameBadge.tsx": {
@@ -7775,8 +7775,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/dialogs/confirmation/ConfirmationDialog.tsx": {
-    "mtime": 1787132237.867108,
-    "ast_hash": "e4f33a196d14f76bc209c67865c5d490",
+    "mtime": 1786523187.8609474,
+    "ast_hash": "d4b809793c3e10f9fe92768d9939b92b",
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/dialogs/discard-changes/DiscardChangesDialog.tsx": {
@@ -7805,8 +7805,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/feedback/transient/ErrorDialogHost.tsx": {
-    "mtime": 1787132237.867108,
-    "ast_hash": "0f9cc96d246c262bbf860d9c70123796",
+    "mtime": 1786792731.4605713,
+    "ast_hash": "e88e3ad14e2844f4e614ab2af8e07fb2",
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/feedback/transient/errorDialogStore.ts": {
@@ -7870,8 +7870,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/layout/AppPageHeader.tsx": {
-    "mtime": 1787129147.048252,
-    "ast_hash": "65f68eff38cd95b0d06e91a6bc3dc8a7",
+    "mtime": 1786603967.0223465,
+    "ast_hash": "5ab842a6237df2b7b97d67b6e0d676f0",
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/layout/AppScreenFooterContext.tsx": {
@@ -7890,8 +7890,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/multi-view/index.ts": {
-    "mtime": 1787129147.1535933,
-    "ast_hash": "fe4e0be21a5e62e140ca9b8bf6e6ec09",
+    "mtime": 1786542294.5937219,
+    "ast_hash": "0c7b6ca4f101eeaeaec92e8616e77a5c",
     "semantic_hash": ""
   },
   "mobile-react/src/shared/contexts/AppReadOnlyContext.tsx": {
@@ -8535,8 +8535,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/administration/invitations/screens/InvitationManagementScreen.tsx": {
-    "mtime": 1787129145.9810214,
-    "ast_hash": "98f56b97336db89927a798105a2a194b",
+    "mtime": 1786878739.8758905,
+    "ast_hash": "0351295290aa7a398c6e6779b0d805b1",
     "semantic_hash": ""
   },
   "mobile-react/src/features/administration/users/components/UserInvitationsPanel.tsx": {
@@ -8545,18 +8545,18 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/auth/invitation/InvitationAcceptanceScreen.tsx": {
-    "mtime": 1787132188.4789557,
-    "ast_hash": "d6e55ed8ebcb47694cac9f27af15b414",
+    "mtime": 1786871767.3913074,
+    "ast_hash": "bdca026b66615cfe085c63d0496a4d6a",
     "semantic_hash": ""
   },
   "mobile-react/src/features/auth/login/components/TenantSelectionDialog.tsx": {
-    "mtime": 1787132188.4789557,
-    "ast_hash": "704d8bb91cb16037767946ee99912031",
+    "mtime": 1786792731.445612,
+    "ast_hash": "69a8e9a147af71bcae31a58691a3f8dc",
     "semantic_hash": ""
   },
   "mobile-react/src/features/auth/recovery/AccountRecoveryScreens.tsx": {
-    "mtime": 1787132188.4789557,
-    "ast_hash": "60290a8eaf1b9c2c04342ec06684dc0c",
+    "mtime": 1786792731.4476066,
+    "ast_hash": "64126615528a9ce996b23f6f78b08265",
     "semantic_hash": ""
   },
   "mobile-react/src/features/platform-tools/api/platform-tools-api.ts": {
@@ -8580,8 +8580,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/platform-tools/components/GroupedFilesView.tsx": {
-    "mtime": 1787133668.7320864,
-    "ast_hash": "59097e613f536ea4772573cfef1a7c68",
+    "mtime": 1786961155.81924,
+    "ast_hash": "c9a2f2297e4ea4777ad3784ee101ea0a",
     "semantic_hash": ""
   },
   "mobile-react/src/features/platform-tools/components/LocalizationEditModal.tsx": {
@@ -8620,8 +8620,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/platform-tools/screens/FileManagerScreen.tsx": {
-    "mtime": 1787129146.4863577,
-    "ast_hash": "2389e51912d87bff0cb1394ba4f2962d",
+    "mtime": 1786959689.4413602,
+    "ast_hash": "5fbb7971256c66fcfb3f3658cd64866c",
     "semantic_hash": ""
   },
   "mobile-react/src/features/platform-tools/screens/HangfireDashboardScreen.tsx": {
@@ -8630,13 +8630,13 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/platform-tools/screens/HealthCheckScreen.tsx": {
-    "mtime": 1787136521.353383,
-    "ast_hash": "cff09f49e7400b85274c33df8ec174ab",
+    "mtime": 1786884813.1785374,
+    "ast_hash": "709da3e0e859f374f111708ba5462e62",
     "semantic_hash": ""
   },
   "mobile-react/src/features/platform-tools/screens/LocalizationManagementScreen.tsx": {
-    "mtime": 1787134259.4918594,
-    "ast_hash": "4a5660be44d81ba84d0dc5d62416f8d5",
+    "mtime": 1786885026.2701094,
+    "ast_hash": "c64e81e87fb5f4e2de3dbaf1e1fa3d61",
     "semantic_hash": ""
   },
   "mobile-react/src/features/platform-tools/screens/PlatformToolsOverviewScreen.tsx": {
@@ -8645,8 +8645,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/platform-tools/screens/TrackChangesScreen.tsx": {
-    "mtime": 1787134005.5997174,
-    "ast_hash": "057d67199d3464704f0a78587e595b0b",
+    "mtime": 1786885026.271109,
+    "ast_hash": "c360416dd85d3265206e5829e2405d69",
     "semantic_hash": ""
   },
   "mobile-react/src/features/platform-tools/types/platform-tools.ts": {
@@ -8680,8 +8680,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/realtime/realtime-query-registry.ts": {
-    "mtime": 1787129146.7155576,
-    "ast_hash": "1940b3b54f74d3c3ce144a874540738f",
+    "mtime": 1786792731.4505997,
+    "ast_hash": "b82e987092b4732e3b85d8096147d02f",
     "semantic_hash": ""
   },
   "mobile-react/src/features/tenant-admins/api/tenant-admin-api.ts": {
@@ -8705,8 +8705,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/tenant-admins/screens/TenantAdminManagementScreen.tsx": {
-    "mtime": 1787129146.7165482,
-    "ast_hash": "ac0dc2dadb8042d82c8fbde7d4ef6140",
+    "mtime": 1786792731.4545875,
+    "ast_hash": "ad64b5d4e44caf1dd2621e0fd85cca0c",
     "semantic_hash": ""
   },
   "mobile-react/src/features/tenant-admins/types/tenant-admin.ts": {
@@ -8725,8 +8725,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/controls/AppFilterButton.tsx": {
-    "mtime": 1787132237.867108,
-    "ast_hash": "16329b1b0062c803fab34e6b01eebe22",
+    "mtime": 1786959557.4115157,
+    "ast_hash": "41e2e5be628363abfb2f1a8d248c0419",
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/multi-view/paginationPlacement.ts": {
@@ -8735,8 +8735,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/pagination/AppPaginationNavigation.tsx": {
-    "mtime": 1787133155.4814327,
-    "ast_hash": "e5496e34493a00f5be2f1ab4bc7ce5e0",
+    "mtime": 1786792731.4625666,
+    "ast_hash": "8889e094b106d01585b2830acda955a3",
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/pagination/index.ts": {
@@ -8842,31 +8842,6 @@
   "api/HrManagementSystem.Api/Templates/Invitation.html": {
     "mtime": 1786870254.9041278,
     "ast_hash": "379682a8bd3bde1df1a8698f72e9bbab",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Features/Platform/EntityChangeLogs/Persistence/EntityChangeLogConfiguration.cs": {
-    "mtime": 1787129145.0504246,
-    "ast_hash": "35d7eba15db27f2875db4baf3883338d",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Migrations/20260817213236_AddEntityChangeLogStringKeys.Designer.cs": {
-    "mtime": 1787129145.271003,
-    "ast_hash": "b07ca05d1e81a443efa7b3eba6c270fa",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Migrations/20260817213236_AddEntityChangeLogStringKeys.cs": {
-    "mtime": 1787129145.4563167,
-    "ast_hash": "bba81d4a01b1c9426adf2a2cf5323604",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Tests/EntityChangeLogServiceTests.cs": {
-    "mtime": 1787129145.4563167,
-    "ast_hash": "4ab395b6ec68f6018be6a0d0ab759e82",
-    "semantic_hash": ""
-  },
-  "mobile-react/src/shared/components/multi-view/AppListScreen.tsx": {
-    "mtime": 1787129147.048252,
-    "ast_hash": "a926563d4991b4a0ea0f23633ed6675f",
     "semantic_hash": ""
   }
 }
