@@ -62,6 +62,7 @@ export function CompanySelectionDialog({
         <View style={[styles.actions, { direction }]}>
           <AppButton
             disabled={selectingCompanyId !== null}
+            icon="close-outline"
             onPress={onCancel}
             style={styles.action}
             variant="ghost">

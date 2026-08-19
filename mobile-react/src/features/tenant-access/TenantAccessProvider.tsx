@@ -91,7 +91,10 @@ function TenantAccessState({
       {children}
       <AppModal
         footer={(
-          <AppButton fullWidth onPress={() => setNoticeVisible(false)}>
+          <AppButton
+            fullWidth
+            icon="close-outline"
+            onPress={() => setNoticeVisible(false)}>
             {t('common.close')}
           </AppButton>
         )}

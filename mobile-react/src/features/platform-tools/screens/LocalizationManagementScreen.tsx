@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { permissions, useAuthorization } from '@/src/features/auth';
 import { LocalizationEditModal } from '@/src/features/platform-tools/components/LocalizationEditModal';
@@ -18,6 +19,7 @@ import {
   AppAlert,
   AppDataTable,
   type AppDataTableColumn,
+  AppFilterButton,
   AppIconButton,
   AppPageHeader,
   AppScreen,
@@ -28,8 +30,13 @@ import {
   showToast,
 } from '@/src/shared/components';
 
+type LocalizationValueFilter = 'plain' | 'placeholders' | 'empty';
+
+const placeholderPattern = /\{[^{}]+\}/;
+
 export function LocalizationManagementScreen() {
   const { t, i18n } = useTranslation();
+  const { direction } = useLocalization();
   const { theme } = useAppTheme();
   const { allowed: canEdit } = useAuthorization({
     requiredPermissions: [permissions.EditLocalizations],
@@ -38,16 +45,44 @@ export function LocalizationManagementScreen() {
     i18n.language.startsWith('ar') ? 'ar-EG' : 'en-US',
   );
   const [search, setSearch] = useState('');
+  const [selectedValueFilters, setSelectedValueFilters] = useState<LocalizationValueFilter[]>([]);
   const [editing, setEditing] = useState<LocalizationEntry | null>(null);
   const entriesQuery = useLocalizationEntries(culture);
   const updateMutation = useUpdateLocalization();
   const entries = useMemo(() => entriesQuery.data ?? [], [entriesQuery.data]);
+  const valueFilterOptions = useMemo(() => [
+    {
+      icon: 'text-outline' as const,
+      label: t('platformTools.localization.plainValues'),
+      value: 'plain' as const,
+    },
+    {
+      icon: 'code-slash-outline' as const,
+      label: t('platformTools.localization.placeholderValues'),
+      value: 'placeholders' as const,
+    },
+    {
+      icon: 'remove-circle-outline' as const,
+      label: t('platformTools.localization.emptyValues'),
+      value: 'empty' as const,
+    },
+  ], [t]);
   const filteredEntries = useMemo(() => {
     const term = search.trim().toLocaleLowerCase(i18n.language);
-    if (!term) return entries;
-    return entries.filter((entry) => [entry.key, entry.value]
-      .some((value) => value.toLocaleLowerCase(i18n.language).includes(term)));
-  }, [entries, i18n.language, search]);
+    return entries.filter((entry) => {
+      const trimmedValue = entry.value.trim();
+      const hasPlaceholder = placeholderPattern.test(trimmedValue);
+      const matchesFilter = selectedValueFilters.length === 0
+        || (selectedValueFilters.includes('empty') && !trimmedValue)
+        || (selectedValueFilters.includes('placeholders') && Boolean(trimmedValue) && hasPlaceholder)
+        || (selectedValueFilters.includes('plain') && Boolean(trimmedValue) && !hasPlaceholder);
+      if (!matchesFilter) return false;
+      if (!term) return true;
+
+      return [entry.key, entry.value]
+        .some((value) => value.toLocaleLowerCase(i18n.language).includes(term));
+    });
+  }, [entries, i18n.language, search, selectedValueFilters]);
 
   const save = async (value: string) => {
     if (!editing) return;
@@ -112,13 +147,29 @@ export function LocalizationManagementScreen() {
           showLabel
           value={culture}
         />
-        <AppTextField
-          compact
-          label={t('platformTools.localization.search')}
-          leadingIcon="search-outline"
-          onChangeText={setSearch}
-          value={search}
-        />
+        <View style={[styles.searchRow, { direction }]}>
+          <View style={styles.searchField}>
+            <AppTextField
+              compact
+              label={t('platformTools.localization.search')}
+              leadingIcon="search-outline"
+              onChangeText={setSearch}
+              onClear={() => setSearch('')}
+              showClearButton
+              value={search}
+            />
+          </View>
+          <AppFilterButton
+            buttonLabel={selectedValueFilters.length > 0
+              ? t('listScreen.filterActive', { count: selectedValueFilters.length })
+              : t('listScreen.filter')}
+            description={t('platformTools.localization.filterDescription')}
+            modalTitle={t('platformTools.localization.filterValues')}
+            onChange={setSelectedValueFilters}
+            options={valueFilterOptions}
+            values={selectedValueFilters}
+          />
+        </View>
       </View>
       {!canEdit ? (
         <AppAlert severity="info">{t('platformTools.localization.readOnly')}</AppAlert>
@@ -134,9 +185,11 @@ export function LocalizationManagementScreen() {
       ) : (
         <AppDataTable
           columns={columns}
+          defaultPageSize={5}
           emptyMessage={t('platformTools.localization.empty')}
           getRowKey={(entry) => entry.id}
-          resetKey={`${culture}:${search}`}
+          pageSizeOptions={[5, 10, 25]}
+          resetKey={`${culture}:${search}:${selectedValueFilters.join(',')}`}
           rows={filteredEntries}
         />
       )}
@@ -152,4 +205,8 @@ export function LocalizationManagementScreen() {
   );
 }
 
-const styles = StyleSheet.create({ filters: { gap: 12, marginBottom: 14 } });
+const styles = StyleSheet.create({
+  filters: { gap: 12, marginBottom: 14 },
+  searchRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  searchField: { flex: 1, minWidth: 0 },
+});

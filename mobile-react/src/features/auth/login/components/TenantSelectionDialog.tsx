@@ -55,6 +55,7 @@ export function TenantSelectionDialog({
         <View style={[styles.actions, { direction }]}>
           <AppButton
             disabled={selectingTenantId !== null}
+            icon="close-outline"
             onPress={onCancel}
             style={styles.action}
             variant="ghost">

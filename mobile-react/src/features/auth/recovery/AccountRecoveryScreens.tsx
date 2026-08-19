@@ -96,7 +96,11 @@ function EmailActionScreen({ action }: { action: EmailAction }) {
             returnKeyType="send"
             value={email}
           />
-          <AppButton fullWidth loading={submitting} onPress={() => void submit()}>
+          <AppButton
+            fullWidth
+            icon={action === 'forgot' ? 'paper-plane-outline' : 'refresh-outline'}
+            loading={submitting}
+            onPress={() => void submit()}>
             {action === 'forgot' ? t('auth.sendResetLink') : t('auth.resendConfirmation')}
           </AppButton>
         </AppForm>
@@ -206,7 +210,11 @@ export function ResetPasswordScreen() {
             secureTextEntry
             value={confirmPassword}
           />
-          <AppButton fullWidth loading={submitting} onPress={() => void submit()}>
+          <AppButton
+            fullWidth
+            icon="lock-open-outline"
+            loading={submitting}
+            onPress={() => void submit()}>
             {t('auth.resetPassword')}
           </AppButton>
         </AppForm>

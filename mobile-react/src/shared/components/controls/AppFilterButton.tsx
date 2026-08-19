@@ -76,12 +76,13 @@ export function AppFilterButton<Value extends string | number>({
     <View style={styles.footer}>
       <AppButton
         disabled={draftValues.length === 0}
+        icon="close-circle-outline"
         onPress={() => setDraftValues([])}
         style={styles.footerButton}
         variant="outline">
         {clearLabel ?? t('common.clear')}
       </AppButton>
-      <AppButton onPress={apply} style={styles.footerButton}>
+      <AppButton icon="checkmark-outline" onPress={apply} style={styles.footerButton}>
         {applyLabel ?? t('common.confirm')}
       </AppButton>
     </View>

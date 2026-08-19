@@ -16,7 +16,11 @@ export default function ModalScreen() {
         <AppText align="center" color="muted">
           {t('modal.description')}
         </AppText>
-        <AppButton fullWidth onPress={() => router.back()} variant="outline">
+        <AppButton
+          fullWidth
+          icon="close-outline"
+          onPress={() => router.back()}
+          variant="outline">
           {t('modal.close')}
         </AppButton>
       </AppCard>

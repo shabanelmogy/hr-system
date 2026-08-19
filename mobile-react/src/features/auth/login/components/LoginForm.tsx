@@ -104,6 +104,7 @@ export function LoginForm({ compact, form }: LoginFormProps) {
         <View style={[styles.forgotPasswordRow, { direction }]}>
           <AppButton
             disabled={form.isAnySubmitting}
+            icon="key-outline"
             onPress={() => router.push(asHref(ROUTES.forgotPassword))}
             style={styles.forgotPasswordButton}
             variant="ghost">
@@ -127,6 +128,7 @@ export function LoginForm({ compact, form }: LoginFormProps) {
             </AppText>
             <AppButton
               disabled={form.isAnySubmitting}
+              icon="person-add-outline"
               onPress={() => router.push(asHref(ROUTES.register))}
               style={[styles.registerButton, compact && styles.registerButtonCompact]}
               variant="ghost">

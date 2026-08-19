@@ -22,6 +22,10 @@ export function AppPaginationNavigation({
   const safePage = Math.min(Math.max(0, page), lastPage);
   const isFirstPage = safePage === 0;
   const isLastPage = safePage === lastPage;
+  const displayedPage = safePage + 1;
+  const displayedPageCount = Math.max(1, pageCount);
+  const pageNumberCharacterCount = `${displayedPage}${displayedPageCount}`.length;
+  const pageLabelWidth = Math.min(132, Math.max(76, 56 + pageNumberCharacterCount * 8));
 
   return (
     <View style={[styles.root, { direction }]}>
@@ -45,10 +49,10 @@ export function AppPaginationNavigation({
         adjustsFontSizeToFit
         minimumFontScale={0.8}
         numberOfLines={1}
-        style={styles.pageLabel}
+        style={[styles.pageLabel, { width: pageLabelWidth }]}
         variant="caption"
         weight="700">
-        {t('dataTable.pageOf', { page: safePage + 1, count: Math.max(1, pageCount) })}
+        {t('dataTable.pageOf', { page: displayedPage, count: displayedPageCount })}
       </AppText>
       <AppIconButton
         disabled={isLastPage}

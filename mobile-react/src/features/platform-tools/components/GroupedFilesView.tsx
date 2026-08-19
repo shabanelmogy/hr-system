@@ -62,7 +62,7 @@ export function GroupedFilesView({
     safePage * pageSize,
     safePage * pageSize + pageSize,
   ) ?? [];
-  const internalScrollHeight = Math.max(240, Math.min(viewportHeight * 0.38, 480));
+  const internalScrollHeight = Math.max(320, Math.min(viewportHeight * 0.55, 560));
 
   useEffect(() => {
     if (page !== safePage) setPage(safePage);

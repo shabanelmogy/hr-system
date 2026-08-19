@@ -58,7 +58,13 @@ export function InvitationAcceptanceScreen() {
           <AppForm errors={errors} serverError={serverError} style={styles.form}>
             <AppTextField autoCapitalize="none" autoComplete="new-password" label={t('auth.newPassword')} leadingIcon="lock-closed-outline" maxLength={50} name="password" onChangeText={setPassword} required secureTextEntry value={password} />
             <AppTextField autoCapitalize="none" autoComplete="new-password" label={t('auth.confirmPassword')} leadingIcon="lock-closed-outline" maxLength={50} name="confirmPassword" onChangeText={setConfirmPassword} onSubmitEditing={() => void submit()} required returnKeyType="send" secureTextEntry value={confirmPassword} />
-            <AppButton fullWidth loading={submitting} onPress={() => void submit()}>{t('auth.activateAccount')}</AppButton>
+            <AppButton
+              fullWidth
+              icon="checkmark-circle-outline"
+              loading={submitting}
+              onPress={() => void submit()}>
+              {t('auth.activateAccount')}
+            </AppButton>
           </AppForm>
         )}
         <AppButton fullWidth icon="arrow-back-outline" onPress={() => router.replace(asHref(ROUTES.login))} variant="ghost">{t('auth.backToSignIn')}</AppButton>

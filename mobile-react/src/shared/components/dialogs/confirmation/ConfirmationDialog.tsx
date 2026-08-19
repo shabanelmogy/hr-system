@@ -73,7 +73,11 @@ export function ConfirmationDialog({
       closeLabel={t('common.cancel')}
       footer={
         <View style={[styles.actions, { direction, borderTopColor: theme.colors.border }]}>
-          <AppButton disabled={busy} onPress={onCancel} variant="outline">
+          <AppButton
+            disabled={busy}
+            icon="close-outline"
+            onPress={onCancel}
+            variant="outline">
             {cancelLabel ?? t('common.cancel')}
           </AppButton>
           <AppButton

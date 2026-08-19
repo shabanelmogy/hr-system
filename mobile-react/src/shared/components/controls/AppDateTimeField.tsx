@@ -200,10 +200,15 @@ export function AppDateTimeField({
           closeLabel={t('common.cancel')}
           footer={
             <View style={[styles.actions, { direction }]}>
-              <AppButton onPress={() => setOpen(false)} style={styles.action} variant="ghost">
+              <AppButton
+                icon="close-outline"
+                onPress={() => setOpen(false)}
+                style={styles.action}
+                variant="ghost">
                 {t('common.cancel')}
               </AppButton>
               <AppButton
+                icon="save-outline"
                 onPress={() => {
                   commitDate(draftDate);
                   setOpen(false);

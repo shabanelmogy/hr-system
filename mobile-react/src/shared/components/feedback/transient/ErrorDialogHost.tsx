@@ -84,7 +84,7 @@ function ErrorDialogView({ details }: { details: ErrorDialogDetails }) {
       animationType="fade"
       footer={
         <View style={[styles.actions, { direction, borderTopColor: theme.colors.border }]}>
-          <AppButton onPress={close} variant="outline">
+          <AppButton icon="close-outline" onPress={close} variant="outline">
             {t('feedback.close')}
           </AppButton>
           <AppButton icon="share-social-outline" onPress={() => void share()}>

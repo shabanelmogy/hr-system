@@ -146,7 +146,11 @@ export function OnboardingScreen() {
           <AppText variant="label" weight="800">{t('common.appName')}</AppText>
         </View>
         {!isLast ? (
-          <AppButton disabled={finishing} onPress={() => void finish()} variant="ghost">
+          <AppButton
+            disabled={finishing}
+            icon={isRTL ? 'play-skip-back-outline' : 'play-skip-forward-outline'}
+            onPress={() => void finish()}
+            variant="ghost">
             {t('onboarding.skip')}
           </AppButton>
         ) : null}

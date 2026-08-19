@@ -219,6 +219,7 @@ export function AppForm({
       {onCancel ? (
         <AppButton
           disabled={submitting}
+          icon="close-outline"
           onPress={requestClose}
           style={styles.action}
           variant="outline">
@@ -228,6 +229,7 @@ export function AppForm({
       {onSubmit ? (
         <AppButton
           disabled={submitDisabled || submitting || isReadOnly}
+          icon="save-outline"
           loading={submitting}
           onPress={() => void handleSubmit()}
           style={styles.action}>
