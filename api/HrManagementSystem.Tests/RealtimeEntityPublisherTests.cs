@@ -197,7 +197,6 @@ public sealed class RealtimeEntityPublisherTests
         }
 
         public Task ReceiveUserUpdate(Result<UserChangedResponse> usersUpdate) => Task.CompletedTask;
-        public Task ReceiveCountryUpdate(CountriesCountResponse countriesCount) => Task.CompletedTask;
         public Task ReceiveStateUpdate(StatesCountResponse statesCount) => Task.CompletedTask;
         public Task ReceiveDistrictUpdate(Result<DistrictsCountResponse> districtsCount) => Task.CompletedTask;
         public Task ReceiveAddressTypeUpdate(Result<AddressTypesCountResponse> addressTypesCount) => Task.CompletedTask;

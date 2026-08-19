@@ -1,5 +1,12 @@
 # Enhancement Points — HrManagementSystem
 
+> **Historical audit only (superseded for Countries).** This file records a point-in-time
+> review of the former service/toggle/client-list implementation. Do not use its Country
+> paths or recommendations as a template. The implemented contract is documented in
+> `api/Docs/Controllers/Geographic/CountriesController.md`, and the authoritative
+> new-feature rules are in `Docs/CORE_FEATURE_CQRS_WEB_GUIDE.md` and
+> `api/Docs/Clean_Architecture_CQRS_Guide.md`.
+
 This document tracks all identified improvement opportunities across the backend and frontend. Items are grouped by area and prioritized.
 
 ---
@@ -19,11 +26,11 @@ This document tracks all identified improvement opportunities across the backend
 
 | # | File | Issue | Priority |
 |---|------|-------|----------|
-| B5 | `Services/CountriesService/CountryService.cs` | `ToggleAsync` checks `isInState` before loading the entity — if entity is null, the business check still runs. Swap order: load entity first, return 404 if null, then check business constraints. | Done ✅ |
+| B5 | Legacy Countries lifecycle | Superseded: the toggle operation and legacy service were removed. Separate archive and restore commands now enforce not-found and dependency rules explicitly. | Done ✅ |
 | B6 | `Controllers/V1/CountriesController.cs`, `StatesController.cs`, `DistrictsController.cs` | No Swagger XML doc comments or `[ProducesResponseType]` attributes on any action. Add as per the guide. | Done ✅ |
 | B7 | `Services/CountriesService/CountryService.cs` | `GetAllAsync` uses `ProjectToType<CountryResponse>()` without `Where(!IsDeleted)`. If Mapster config doesn't filter deleted records, all deleted countries are returned. Add explicit filter. | High |
 | B8 | All controllers | `[HasPermission]` is missing on `GetById` endpoints — they are publicly accessible to any authenticated user. Decide if this is intentional and document it. | Medium |
-| B9 | `Mapping/MappingConfigurations.cs` | No mapping registered for `Country → CountryResponse` or `CountryRequest → Country`. Mapster uses convention-based mapping by default, but explicit registration should be added for clarity and to support custom mappings. | Medium |
+| B9 | Countries mapping | Superseded: Countries now uses Mapster convention for matching fields and explicit feature rules only for normalization, active-child filtering, and computed counts. Do not add same-name mapping boilerplate for clarity alone. | Done ✅ |
 | B10 | `Docs/Entity_Implementation_Guide.md` | Step numbers still say 13 steps but the guide now has content for 15 steps (Swagger docs + frontend docs added). Update the header count. | Low |
 
 ---
@@ -101,7 +108,7 @@ This document tracks all identified improvement opportunities across the backend
 ### High (fix next)
 - ~~F1–F3: Remove `t` prop from all remaining features~~ ✅ Done
 - ~~F6–F7: Fix mutation variable types~~ — F6 Done ✅, F7 still pending
-- B5: Fix `ToggleAsync` null check order
+- ~~B5: Replace the legacy lifecycle toggle with explicit archive/restore commands~~ ✅ Done
 - B6: Add Swagger docs to controllers
 - B7: Add `Where(!IsDeleted)` to `GetAllAsync`
 - F15: Sync Arabic translation keys
@@ -129,5 +136,5 @@ This document tracks all identified improvement opportunities across the backend
 
 ---
 
-**Last Updated:** April 2026
+**Last Updated:** August 2026 — retained as a historical audit; see the superseding guides above.
 **Author:** HR Management System Team

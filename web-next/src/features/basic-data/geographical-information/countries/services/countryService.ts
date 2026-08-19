@@ -1,71 +1,70 @@
 import { apiRoutes } from "@/config";
 import apiService from "@/shared/services/apiService";
-import { extractValue, extractValues } from "@/shared/utils/ApiHelper";
-import { Country, CreateCountryRequest, UpdateCountryRequest } from "../types/Country";
+import type {
+  CountryDetail,
+  CountryLookup,
+  CountryPageQuery,
+  CountryPageResponse,
+  CountryWithStates,
+  CreateCountryRequest,
+  UpdateCountryMutation,
+} from "../types/Country";
 
-// Country Service
+const normalizeOptionalCode = (value: string | null | undefined): string | null => {
+  const normalized = value?.trim().toUpperCase();
+  return normalized || null;
+};
+
+const normalizeOptionalValue = (value: string | null | undefined): string | null =>
+  value?.trim() || null;
+
+export const toCountryRequest = (country: CreateCountryRequest): CreateCountryRequest => ({
+  nameAr: country.nameAr.trim(),
+  nameEn: country.nameEn.trim(),
+  alpha2Code: normalizeOptionalCode(country.alpha2Code),
+  alpha3Code: normalizeOptionalCode(country.alpha3Code),
+  phoneCode: normalizeOptionalValue(country.phoneCode),
+  currencyCode: normalizeOptionalCode(country.currencyCode),
+});
+
 export class CountryService {
-  static async getAll(): Promise<Country[]> {
-    const response = await apiService.get(apiRoutes.countries.getAll);
-    const countries = extractValues<Country>(response);
-    return countries.filter((country) => !country.isDeleted);
+  static getPage(query: CountryPageQuery): Promise<CountryPageResponse> {
+    return apiService.get<CountryPageResponse>(apiRoutes.countries.page, { ...query });
   }
 
-  static async getById(id: string | number): Promise<Country> {
-    const response = await apiService.get(apiRoutes.countries.getById(id));
-    return extractValue<Country>(response);
+  static getLookup(): Promise<CountryLookup[]> {
+    return apiService.get<CountryLookup[]>(apiRoutes.countries.lookup);
   }
 
-  static async create(countryData: CreateCountryRequest): Promise<Country> {
-    const response = await apiService.post(
-      apiRoutes.countries.add,
-      countryData
-    );
-    return extractValue<Country>(response);
+  static getById(id: number): Promise<CountryDetail> {
+    return apiService.get<CountryDetail>(apiRoutes.countries.getById(id));
   }
 
-  static async update(countryData: UpdateCountryRequest): Promise<Country> {
-    const response = await apiService.put(
-      apiRoutes.countries.update,
-      countryData
-    );
-    return extractValue<Country>(response);
+  static getWithStates(id: number): Promise<CountryWithStates> {
+    return apiService.get<CountryWithStates>(apiRoutes.countries.getWithStates(id));
   }
 
-  static async delete(id: string | number): Promise<string | number> {
-    await apiService.delete(apiRoutes.countries.delete(id));
+  static create(country: CreateCountryRequest): Promise<CountryDetail> {
+    return apiService.post<CountryDetail>(apiRoutes.countries.create, toCountryRequest(country));
+  }
+
+  static update({ id, request }: UpdateCountryMutation): Promise<CountryDetail> {
+    return apiService.put<CountryDetail>(apiRoutes.countries.update(id), toCountryRequest(request));
+  }
+
+  static async archive(id: number): Promise<number> {
+    await apiService.delete(apiRoutes.countries.archive(id));
     return id;
   }
 
-  static searchCountries(countries: Country[], searchTerm: string): Country[] {
-    if (!searchTerm.trim()) {
-      return countries;
-    }
+  static async restore(id: number): Promise<number> {
+    await apiService.post(apiRoutes.countries.restore(id));
+    return id;
+  }
 
-    const term = searchTerm.toLowerCase().trim();
-    return countries.filter((country) => {
-      if (!country || country.isDeleted) return false;
-
-      // Search in country fields
-      const countryMatch = (
-        country.nameEn?.toLowerCase().includes(term) ||
-        country.nameAr?.includes(term) ||
-        country.alpha2Code?.toLowerCase().includes(term) ||
-        country.alpha3Code?.toLowerCase().includes(term) ||
-        country.phoneCode?.toString().includes(term) ||
-        country.currencyCode?.toLowerCase().includes(term)
-      );
-
-      // Search in states
-      const statesMatch = country.states?.some(state => 
-        !state.isDeleted && (
-          state.nameEn?.toLowerCase().includes(term) ||
-          state.nameAr?.includes(term) ||
-          state.code?.toLowerCase().includes(term)
-        )
-      );
-
-      return countryMatch || statesMatch;
+  static createBulk(countries: CreateCountryRequest[]): Promise<{ createdCount: number }> {
+    return apiService.post(apiRoutes.countries.bulkCreate, {
+      countries: countries.map(toCountryRequest),
     });
   }
 }

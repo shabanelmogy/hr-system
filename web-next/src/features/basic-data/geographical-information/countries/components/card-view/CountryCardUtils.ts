@@ -1,8 +1,8 @@
 import type { Theme } from "@mui/material/styles";
-import type { Country } from "../../types/Country";
+import type { CountryListItem } from "../../types/Country";
 import { getQualityInfo, getQualityKey } from "@/shared/utils/quality";
 
-export const getQualityScore = (country: Country) => {
+export const getQualityScore = (country: CountryListItem) => {
   let score = 50; // Base score
   if (country.nameEn) score += 15;
   if (country.nameAr) score += 15;

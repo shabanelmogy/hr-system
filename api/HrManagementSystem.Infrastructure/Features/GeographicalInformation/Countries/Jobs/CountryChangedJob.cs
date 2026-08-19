@@ -8,7 +8,7 @@ using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
 namespace HrManagementSystem.Infrastructure.Features.GeographicalInformation.Countries.Jobs;
 
 public sealed record CountryChangedJobRequest(
-    CountryResponse? Country,
+    CountryDetailResponse? Country,
     string Action,
     int? BulkCount,
     string? ActorUserId,
@@ -16,9 +16,7 @@ public sealed record CountryChangedJobRequest(
 
 [AutomaticRetry(Attempts = 5, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
 public sealed class CountryChangedJob(
-    ApplicationDbContext context,
     INotificationPublisher notificationPublisher,
-    IHubContext<GeneralHub, IGeneralHubClient> hubContext,
     IRealtimeEntityPublisher realtimePublisher)
 {
     public async Task ExecuteAsync(CountryChangedJobRequest request, CancellationToken cancellationToken)
@@ -50,20 +48,12 @@ public sealed class CountryChangedJob(
         if (result.IsFailure)
             throw new InvalidOperationException($"Country notification failed: {result.Error.Code}");
 
-        var count = await context.Countries.AsNoTracking()
-            .CountAsync(country => !country.IsDeleted, cancellationToken);
-
-        var clients = hubContext.Clients.Group(
-            GeneralHubGroups.ForPermission(Permissions.ViewCountries));
         var entityId = request.Country?.Id.ToString(CultureInfo.InvariantCulture);
 
-        await Task.WhenAll(
-            clients.ReceiveCountryUpdate(
-                new CountriesCountResponse(count, request.Country, request.Action)),
-            realtimePublisher.PublishAsync(RealtimeChangeRequest.For<Country>(
-                RealtimeAudience.ForPermission(Permissions.ViewCountries),
-                request.Action,
-                entityId,
-                request.OperationId), cancellationToken));
+        await realtimePublisher.PublishAsync(RealtimeChangeRequest.For<Country>(
+            RealtimeAudience.ForPermission(Permissions.ViewCountries),
+            request.Action,
+            entityId,
+            request.OperationId), cancellationToken);
     }
 }

@@ -1,5 +1,8 @@
 # Clean Architecture and CQRS Guide
 
+This guide is authoritative for API architecture. For the complete backend-to-web
+workflow, also follow `../../Docs/CORE_FEATURE_CQRS_WEB_GUIDE.md`.
+
 ## Architecture
 
 The API is migrating incrementally to a Clean Architecture modular monolith:
@@ -93,6 +96,11 @@ version 13.
 CQRS in this project means separate command and query code paths. It does not mean
 event sourcing, separate databases, or distributed messaging.
 
+The MediatR foundation is active, but most existing production features were built
+with the older feature-service pattern. `Countries` is the first complete CQRS
+reference. The remaining geographical services are migration inputs, not templates
+for new core HR features.
+
 ```text
 Features/
   OrganizationalStructure/
@@ -134,6 +142,11 @@ Features/
 - Keep authorization attributes, API versioning, and response metadata in the API.
 - Do not inject `ApplicationDbContext` or feature services into migrated controllers.
 
+During an endpoint-by-endpoint migration, a legacy controller may temporarily inject
+both `ISender` and its feature service, but only unmigrated actions may use the
+service. New/fully migrated controllers, including `CountriesController`, inject
+`ISender` only.
+
 ## Pipeline Behaviors
 
 Application registers these behaviors for every MediatR request:
@@ -143,6 +156,14 @@ Application registers these behaviors for every MediatR request:
 
 Validation failures become HTTP 400 validation problem details. Unexpected failures
 remain HTTP 500 responses with a trace identifier.
+
+## Mapping
+
+Use Mapster for request, entity, response, and query projection mapping. Convention
+mapping is the default; configure only members that genuinely differ or require a
+transform. Do not add empty mapping files, same-name rules, or mapper wrappers.
+Normalization and preservation of identity/audit/navigation fields may use explicit
+rules. Business validation and authorization never belong in mapping configuration.
 
 ## Notifications
 
@@ -167,6 +188,18 @@ The existing service-based features are now isolated behind Application-owned
 interfaces in Infrastructure. New or substantially changed business workflows
 should be implemented as MediatR commands and queries instead of adding methods to
 those legacy services.
+
+Do not create a one-line handler that delegates to the legacy service merely to make
+the controller use `ISender`. A migrated handler owns the use case and depends on
+small Application-owned persistence or scheduling ports. Keep the legacy endpoint
+on its service until that real migration can be completed.
+
+Preserve an existing HTTP contract while migrating unless an early-stage redesign is
+explicitly chosen and every in-repository consumer is updated in the same change.
+Add contract and handler tests before removing its service method. New core list
+endpoints start with server-side paging, filtering, and a feature-owned sort
+allowlist. `Countries` demonstrates this split with a paged management collection
+and a separate lightweight lookup endpoint.
 
 Create and inspect EF migrations from the `api` solution directory, which owns the
 local `dotnet-ef` tool manifest:

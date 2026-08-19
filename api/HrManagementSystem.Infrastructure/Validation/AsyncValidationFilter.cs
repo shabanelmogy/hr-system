@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using HrManagementSystem.Infrastructure.Common.Observability;
+using MediatR;
 
 namespace HrManagementSystem.Infrastructure.Validation;
 
@@ -13,6 +14,11 @@ public sealed class AsyncValidationFilter(IServiceProvider serviceProvider) : IA
 
         foreach (var argument in context.ActionArguments.Values.Where(value => value is not null))
         {
+            // MediatR requests are validated by ValidationBehavior. Skipping them here
+            // keeps asynchronous validators from running twice at the HTTP boundary.
+            if (argument is IBaseRequest)
+                continue;
+
             var argumentType = argument!.GetType();
             var validatorType = typeof(IValidator<>).MakeGenericType(argumentType);
             if (serviceProvider.GetService(validatorType) is not IValidator validator)

@@ -1,35 +1,42 @@
 # Feature Module Implementation Guide
 
-Use this guide when creating a new feature-based module. The current reference module is `Features/GeographicalInformation/Countries`.
+Use this checklist for the detailed persistence, validation, delete-safety,
+realtime, and production rules of a feature. The authoritative architecture for new
+work is `Clean_Architecture_CQRS_Guide.md`; the full API-to-web workflow is
+`../../Docs/CORE_FEATURE_CQRS_WEB_GUIDE.md`.
+
+Most geographical features predate the CQRS migration. `Countries` is now the
+complete CQRS/API/web reference; the service-based States, Districts, Addresses, and
+Address Types shapes are not templates for new core HR modules.
 
 ## 1. Module Shape
 
 Keep each feature flat and predictable.
 
 ```text
-Features/{GroupName}/{FeatureName}
-  Controllers/V1
-    {FeatureNamePlural}Controller.cs
-  Contracts
-    {FeatureName}Request.cs
-    {FeatureName}RequestValidator.cs
-    {FeatureName}Response.cs
-    Simple{FeatureName}Response.cs
-    {FeatureNamePlural}CountResponse.cs
-  Entities
-    {FeatureName}.cs
-  Errors
-    {FeatureName}Errors.cs
-  Persistence
-    {FeatureName}Configuration.cs
-  Mapping optional
-    {FeatureName}MappingConfig.cs
-  Services
-    I{FeatureName}Service.cs
-    {FeatureName}Service.cs
+HrManagementSystem.Domain/{GroupName}/{FeatureNamePlural}/
+  Entities/{FeatureName}.cs
+
+HrManagementSystem.Application/Features/{GroupName}/{FeatureNamePlural}/
+  Commands/{UseCase}/
+  Queries/{UseCase}/
+  Abstractions/
+  Errors/
+
+HrManagementSystem.Infrastructure/Features/{GroupName}/{FeatureNamePlural}/
+  Persistence/{FeatureName}Configuration.cs
+  Persistence/{FeatureName}ReadStore.cs
+  Persistence/{FeatureName}WriteStore.cs
+  Jobs/{FeatureName}ChangedJob.cs
+
+HrManagementSystem.Api/Features/{GroupName}/{FeatureNamePlural}/V1/
+  {FeatureNamePlural}Controller.cs
 ```
 
-Do not create duplicate folders like `Contracts/Countries`, `Services/CountriesService`, or `Persistence/CountriesPersistence` unless the feature has real sub-domains.
+Keep every command/query with its request, validator, handler, and use-case response.
+Do not create a large CRUD service or duplicate folders such as
+`Services/{FeatureName}Service` for new work. Mapping is optional; prefer direct
+database projection for queries.
 
 `Mapping` is optional. Add it only when the feature needs custom mapping rules. Do not create empty mapping files just for structure.
 
@@ -37,26 +44,28 @@ Do not create duplicate folders like `Contracts/Countries`, `Services/CountriesS
 
 - Namespace must match the folder path exactly.
 - Use no spaces in folders that map to namespaces.
-- Use `{FeatureName}` singular for entity, request, response, service, errors, and configuration classes.
+- Use `{FeatureName}` singular for entity, command/query subject, response, errors, and configuration classes.
 - Use `{FeatureNamePlural}Controller` for controllers.
-- Prefer explicit operation names like `SoftDeleteAsync`, `RestoreAsync`, or `ToggleDeleteAsync` over vague names like `ToggleAsync`.
+- Name commands explicitly, such as `ArchiveEmployeeCommand` or
+  `RestoreEmployeeCommand`; avoid ambiguous operations such as `Toggle`.
 
 ## 3. Build Order
 
 Use this order when creating a new feature:
 
-1. Entity: define the database model.
-2. Persistence: configure fields, indexes, and relationships.
-3. Contracts: create request/response DTOs.
-4. Validator: add FluentValidation rules and duplicate checks.
-5. Errors: add feature-specific errors.
-6. Mapping if needed: add custom Mapster rules only when convention mapping is not enough.
-7. Realtime if needed: add a typed SignalR contract and a feature-owned Hangfire job.
-8. Service interface: define behavior with `Task<Result<T>>`.
-9. Service implementation: implement queries, add, update, delete, and count.
-10. Controller: expose API endpoints and permissions.
-11. XML docs: document summaries, parameters, responses, and examples.
-12. Tests: cover duplicate, FK, soft-delete, and edge cases.
+1. Define business invariants, ownership scope, permissions, list scale, and views.
+2. Entity: define domain state and behavior.
+3. Persistence: configure scope, fields, indexes, relationships, and concurrency.
+4. Responses and Application-owned read/write/scheduling ports.
+5. Queries and validators, including typed server paging/filtering/sorting.
+6. Commands and validators with separate create/update contracts.
+7. Handlers: own orchestration and return `Result`/`Result<T>`.
+8. Infrastructure stores and feature-owned post-commit job.
+9. Controller: inject `ISender`, send one request, and apply permissions.
+10. XML docs: document summaries, parameters, responses, and examples.
+11. Migration: generate and inspect only the intended model changes.
+12. Tests: cover handlers, persistence, scope, contract, duplicates, FK,
+    archive/restore, cancellation, concurrency, and post-commit scheduling.
 
 ## 4. Entity And Persistence
 
@@ -84,14 +93,15 @@ builder.HasIndex(x => x.Alpha2Code)
 - If an endpoint can return null values, make the DTO nullable.
 - Prefer PascalCase property names in records.
 - Keep request DTOs simple. Put validation in validators, not in DTO constructors.
-- When one request DTO is shared by add and update, make `Id` nullable, for example `int? Id`.
-- Do not force `Id` in the shared request validator when add requests do not need it.
+- Use separate create and update request DTOs. Put the update identity in the route,
+  not in either request body.
+- Use distinct list-item, detail, relation-detail, and lookup responses when their
+  data shapes differ. Do not return an empty relation collection from list rows.
 
 Example:
 
 ```csharp
-public record CountryRequest(
-    int? Id,
+public record CreateCountryRequest(
     string NameAr,
     string NameEn,
     string? Alpha2Code,
@@ -101,13 +111,21 @@ public record CountryRequest(
 );
 ```
 
-Example response:
+Example list response:
 
 ```csharp
-public record CountriesCountResponse(
-    int Count,
-    CountryResponse? Country,
-    string? Action
+public record CountryListItemResponse(
+    int Id,
+    string NameAr,
+    string NameEn,
+    string? Alpha2Code,
+    string? Alpha3Code,
+    string? PhoneCode,
+    string? CurrencyCode,
+    int StatesCount,
+    DateTime CreatedOn,
+    DateTime? UpdatedOn,
+    bool IsDeleted
 );
 ```
 
@@ -121,7 +139,8 @@ public record CountriesCountResponse(
 - Arabic name fields, for example `NameAr`, must validate Arabic text with `Strings.ArabicLetterOnly`.
 - English name fields, for example `NameEn`, must validate English text with `Strings.EnglishLetterOnly`.
 - Foreign keys must be greater than zero and checked against existing active records when required.
-- For a shared add/update request, keep `Id` nullable and do not add a validator rule for it unless the same rule is valid for every endpoint using that request.
+- Validate route IDs in the command and validate create/update bodies through their
+  matching command validators.
 - Enum/status fields must validate allowed values.
 - Date ranges must validate ordering, for example start date before end date.
 - Numeric fields must validate allowed ranges.
@@ -148,8 +167,9 @@ RuleFor(x => x)
         var requestId = request.Id;
 
         return string.IsNullOrWhiteSpace(request.Alpha2Code) ||
-            !await _dbContext.Countries.AnyAsync(
-                x => x.Alpha2Code == request.Alpha2Code && (!requestId.HasValue || x.Id != requestId.Value),
+            !await _validationQueries.CountryAlpha2CodeExistsAsync(
+                request.Alpha2Code,
+                requestId,
                 cancellationToken);
     })
     .WithName(Strings.Alpha2Code)
@@ -190,7 +210,7 @@ Example:
 
 ```csharp
 public Error CountryNotFound =>
-    new("Country.CountryNotFound", _localizer[nameof(CountryNotFound)], StatusCodes.Status404NotFound);
+    new("Country.CountryNotFound", _localizer[nameof(CountryNotFound)], ErrorType.NotFound);
 ```
 
 Required localization keys:
@@ -206,7 +226,11 @@ Required localization keys:
 - Create `Mapping/{FeatureName}MappingConfig.cs` only when the feature needs custom mapping rules.
 - Do not create empty mapping files just for folder consistency.
 - Keep request-to-entity, entity-to-response, and entity-to-simple-response rules in the feature mapping file.
-- Use the injected Mapster `IMapper` in services after mapping rules are configured.
+- Use Mapster convention mapping for matching members. Add explicit rules only for
+  a real transform, ignored identity/audit/navigation member, filtered relation, or
+  computed response value.
+- Use Mapster projection for read DTOs when the configured projection remains
+  database-translatable.
 - Put mapping transformations here when property names differ or when values need normalization.
 - Do not hide business validation in mapping rules.
 
@@ -226,20 +250,23 @@ Features/GeographicalInformation/Countries/Mapping/CountryMappingConfig.cs
 
 ## 9. Realtime With SignalR
 
-- Define a SignalR update event only when the frontend needs live updates for the module.
+- Publish the shared lightweight entity-change invalidation event when active clients
+  need to refresh the module.
 - Use the shared hub by default:
   - `Infrastructure/Hubs/GeneralHub/GeneralHub.cs`
-  - `Infrastructure/Hubs/GeneralHub/IGeneralHubClient.cs`
-- Add a typed client method to `IGeneralHubClient`, for example `ReceiveCountryUpdate`.
 - Create one feature-owned job in `Features/<Area>/<Feature>/Jobs/<Feature>ChangedJob.cs`.
-- The job request must include the changed response DTO, action, actor user ID, and one operation ID. Bulk requests may use a count when there is no single entity DTO.
-- The typed SignalR update payload must include the current count, changed entity, and action. Do not send count-only payloads for entity changes.
-- After `SaveChangesAsync` or a successful bulk operation, enqueue the feature job directly with `BackgroundJob.Enqueue<FeatureChangedJob>(...)`.
+- The job request contains only the bounded data needed for notification creation,
+  plus resource/action/entity ID, actor user ID, and one operation ID.
+- After `SaveChangesAsync`, call an Application-owned scheduling port implemented by
+  Hangfire Infrastructure.
 - Do not publish SignalR events before the database transaction succeeds.
-- Feature services must not inject `IHubContext`; the feature-owned job owns realtime delivery.
+- Handlers must not inject `IHubContext` or Hangfire; the feature-owned job owns
+  realtime/notification delivery.
 - Rely on Hangfire persistence and retries. Do not add an outbox table, dispatcher, polling loop, lease, or recovery service for noncritical realtime updates.
-- Keep event payloads small. Prefer count/update DTOs instead of returning full entity graphs.
-- Include an action value when the frontend needs to know what happened, for example `Add`, `Update`, `Delete`, or `Restore`.
+- The realtime event is an invalidation hint. The client invalidates feature query
+  keys and refetches authoritative data; do not send an entity/count payload through
+  a feature-specific hub method.
+- Use stable actions such as `Add`, `Update`, `Archive`, `Restore`, and `BulkAdd`.
 - Create a separate feature hub only when the module needs isolated connection rules, groups, permissions, or streaming behavior.
 - Do not create empty hub classes just for structure.
 
@@ -248,25 +275,18 @@ Default shared hub path:
 ```text
 Infrastructure/Hubs/GeneralHub
   GeneralHub.cs
-  IGeneralHubClient.cs
 
 Features/GeographicalInformation/Countries/Jobs
+  CountryChangeScheduler.cs
   CountryChangedJob.cs
 ```
 
-Example typed client method:
+Example handler scheduling after persistence:
 
 ```csharp
-Task ReceiveCountryUpdate(CountriesCountResponse countriesCount);
-```
+await unitOfWork.SaveChangesAsync(cancellationToken);
 
-Example service enqueue after persistence:
-
-```csharp
-await _context.SaveChangesAsync(cancellationToken);
-
-BackgroundJob.Enqueue<CountryChangedJob>(
-    job => job.ExecuteAsync(request, CancellationToken.None));
+countryChangeScheduler.Schedule(change);
 ```
 
 Detailed notification requirements for entity jobs:
@@ -283,20 +303,28 @@ Detailed notification requirements for entity jobs:
   - `web-next/src/locales/ar/translation.json`
 - Register each concrete job explicitly in `Infrastructure/Dependencies/EntitiesService.cs`.
 
-## 10. Service Rules
+## 10. Command, Query, And Port Rules
 
-- Service interfaces should not return nullable tasks. Prefer `Task<Result<T>>`, not `Task<Result<T>>?`.
-- Use `AsNoTracking()` for read-only queries.
-- For normal list endpoints, explicitly filter soft-deleted rows with `Where(x => !x.IsDeleted)`.
-- Pass `CancellationToken` to every EF async call.
-- Use one mapper style per feature. Prefer the injected Mapster `IMapper` used by this project.
-- Do not assume `HttpContext` is always present. If user data is required, prefer a current-user abstraction over direct `IHttpContextAccessor`.
-- For live frontend updates, follow the SignalR rules in section 9.
-- Before add and edit, validate unique fields before saving.
-- Before delete or soft delete, check foreign keys/dependent records and return a business error when the record is in use.
-- If one request DTO is shared by add and update, enforce `Id` rules in the service:
-  - Add and bulk add allow `Id` to be `null` or `0`; reject real IDs.
-  - Update requires `Id` to exist and be greater than `0`.
+- Implement `ICommand`/`IQuery` and the matching handler abstraction.
+- Handlers return non-null `Task<Result<T>>` or `Task<Result>` where an expected
+  business failure is possible.
+- A handler owns the use case; it must not delegate the workflow to a legacy CRUD
+  service.
+- Use Application-owned, feature-specific read/write ports. Do not expose
+  `DbContext`, `DbSet`, or `IQueryable` outside Infrastructure.
+- Use `AsNoTracking()` and direct projection for read-only queries.
+- Filter tenant/company scope and soft-deleted rows before search or paging.
+- Pass `CancellationToken` through handlers, ports, EF, and outbound work.
+- Resolve actor/tenant/company from trusted abstractions, not `HttpContext` or a
+  client-supplied ownership value inside Application.
+- Validate unique fields before saving and rely on scoped database indexes to close
+  races.
+- Before archive/delete, check dependent records and return a business error when
+  the record is in use.
+- Use separate create and update requests. A compatibility DTO with nullable `Id`
+  may remain only while migrating a legacy endpoint.
+- Save/commit before calling the Application-owned scheduling port for Hangfire and
+  realtime work.
 
 ## 11. Query Strategy
 
@@ -308,7 +336,9 @@ Detailed notification requirements for entity jobs:
 - Use `CountAsync` only when the count itself is required.
 - Use `ProjectToType<TResponse>()` or `Select(...)` for read responses instead of loading full entities when navigation data is not needed.
 - Use `Include(...)` only when the endpoint actually returns related data.
-- For large list endpoints, add paging/filtering instead of returning everything.
+- Core business list endpoints require database paging/filtering/sorting from their
+  first version. Map public sort keys through a feature allowlist and add a stable
+  secondary order before `Skip`/`Take`.
 
 Good bulk duplicate strategy:
 
@@ -353,8 +383,12 @@ if (isInUse)
 
 ## 13. Controller Rules
 
-- Use `[ApiVersion("1.0")]`, `[ApiController]`, `[Authorize]`, and `[Route(ApiRoutes.BaseRoute)]`.
+- Use `[ApiVersion("1.0")]`, `[ApiController]`, the applicable tenancy boundary,
+  and `[Route(ApiRoutes.BaseRoute)]`.
 - Every action should include permission attributes.
+- Inject `ISender`; a new or fully migrated controller must not inject a feature
+  service.
+- Bind HTTP input, send exactly one command/query, and translate its result.
 - Keep `[ProducesResponseType]` attributes in C# because ASP.NET and Swagger use them as runtime/OpenAPI metadata.
 - Use XML docs only for summaries, remarks, parameter descriptions, return descriptions, and response descriptions.
 - Always check `Result` before reading `result.Value`.
@@ -363,7 +397,7 @@ if (isInUse)
 Good pattern:
 
 ```csharp
-var result = await _service.AddAsync(request, cancellationToken);
+var result = await _sender.Send(command, cancellationToken);
 return result.IsSuccess
     ? CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result.Value)
     : result.ToProblem();
@@ -372,7 +406,7 @@ return result.IsSuccess
 Avoid:
 
 ```csharp
-var result = await _service.AddAsync(request, cancellationToken);
+var result = await _sender.Send(command, cancellationToken);
 return CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result);
 ```
 
@@ -403,38 +437,46 @@ Cover these before marking a feature complete:
 
 ## 16. Test Checklist
 
-Add focused tests for service behavior:
+Add focused tests for handler and persistence behavior:
 
 - `GetAllAsync` excludes soft-deleted records.
 - `GetAsync` returns not found for missing or deleted records.
-- `AddAsync` creates valid records and rejects duplicates.
-- `AddRangeAsync` rejects empty lists, request duplicates, and database duplicates.
-- `UpdateAsync` returns not found, rejects duplicate values, and creates change logs.
-- `ToggleDeleteAsync` blocks delete when related rows exist.
+- create handler creates valid records, normalizes values, and rejects duplicates;
+- bulk handler rejects empty lists, request duplicates, and database duplicates;
+- update handler returns not found, rejects duplicate values, and creates change logs;
+- archive/delete handler blocks the operation when related rows exist;
 - Restore clears delete metadata when restore is supported.
-- Count endpoint returns the expected active count.
+- paged query returns correct metadata, status filtering, child count, search, and
+  deterministic sorting;
+- tenant/company tests prove that foreign-scope IDs cannot be read or mutated;
+- scheduling happens only after a successful commit;
+- HTTP contract tests cover route, permission, status, and response body.
 
-## 17. Countries Baseline
+## 17. Countries Reference Baseline
 
-The `Countries` feature is the reference module for new geographical-information features. Copy these patterns from it:
+`Countries` is the complete reference slice. Copy these architectural patterns:
 
-- Controllers return `result.Value` only after checking `result.IsSuccess`.
-- Service methods return non-null `Task<Result<T>>`.
-- Read queries use `AsNoTracking()` and filter soft-deleted rows when returning active data.
-- Validation uses async database checks with `CancellationToken`.
-- `CountryRequest.Id` is nullable because the same request is used for add and update.
-- The validator does not validate `Id`; `CountryService` enforces add/update `Id` rules by operation.
-- Optional unique fields are ignored when null or whitespace.
-- Bulk create validates request duplicates and database duplicates before inserting.
-- Mutating operations publish SignalR updates after the database operation succeeds.
-- DTO nullability matches the values returned by the service.
-- EF configuration contains only the current entity configuration, required fields, max lengths, indexes, and relationships.
-- Mapping uses the injected Mapster `IMapper` consistently inside the service.
+- controller-to-`ISender` dispatch and `Result` translation;
+- MediatR validation and request logging;
+- Application handler ownership and narrow Infrastructure ports;
+- active-record projection and cancellation;
+- commit-before-Hangfire scheduling;
+- separate create/update, list/detail/relation/lookup contracts;
+- paged active/archived/all management queries with an allowlisted sort vocabulary;
+- a separate active-only lightweight lookup endpoint;
+- explicit archive and restore commands rather than toggle-delete;
+- Mapster convention mapping with explicit rules only for real transforms;
+- generic realtime invalidation and durable post-commit notifications;
+- server-managed grid/card state in `web-next`.
 
 ## 18. API Boundary And Production Readiness
 
-- Use the shared asynchronous validation filter; do not add MVC synchronous FluentValidation auto-validation.
-- Keep exactly one request validator per request DTO and use `MustAsync`/`AnyAsync` for database checks.
+- MediatR commands and queries are validated by `ValidationBehavior`. The shared
+  asynchronous MVC filter remains for legacy non-MediatR action DTOs and must not
+  validate the same request a second time.
+- Do not add MVC synchronous FluentValidation auto-validation.
+- Keep one validator per command/query and use `MustAsync`/`AnyAsync` for database
+  checks only when request validation genuinely needs persisted state.
 - Return RFC 7807 problem details for failures. Never return exception messages, stack traces, or exception sources.
 - Include a trace ID in unexpected-error responses and keep full exception details in server logs only.
 - Pass `CancellationToken` from controllers through services, EF queries, outbound HTTP, and file I/O.
@@ -472,8 +514,12 @@ The `Countries` feature is the reference module for new geographical-information
 - No namespace points to an old folder name.
 - Swagger XML docs resolve to the current namespace.
 - Feature is registered automatically by Scrutor or explicitly in dependency registration.
+- Commands/queries and validators are discovered by Application assembly scanning.
+- A new controller injects `ISender` only and each action sends one request.
+- List endpoints apply feature-owned server filters and deterministic paging.
 - Permissions exist and match controller attributes.
 - EF configuration is applied from `ApplicationDbContext`.
 - Localization keys exist for validation messages and every feature error property.
 - SignalR update method, detailed payload, and matching feature-owned Hangfire job are added for modules that need live frontend updates.
+- Post-commit work is queued only after persistence succeeds.
 - If EF configuration changed, create or update a migration deliberately.

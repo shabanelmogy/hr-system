@@ -3,7 +3,7 @@ import { EmptyState as ReusableEmptyState } from "@/shared/components/feedback/s
 import { useTranslation } from "react-i18next";
 
 interface EmptyStateProps {
-  onAdd: () => void;
+  onAdd?: () => void;
 }
 
 const EmptyState = ({ onAdd }: EmptyStateProps) => {
@@ -14,7 +14,7 @@ const EmptyState = ({ onAdd }: EmptyStateProps) => {
       icon={Public}
       title={t("countries.noCountriesAvailable")}
       subtitle={t("countries.noCountriesAvailableDescription")}
-      actionText={t("countries.addFirstCountry")}
+      actionText={onAdd ? t("countries.addFirstCountry") : undefined}
       onAction={onAdd}
     />
   );

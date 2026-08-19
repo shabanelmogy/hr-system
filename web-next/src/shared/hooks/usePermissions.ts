@@ -59,6 +59,7 @@ export const useCountriesPermissions = () => {
     canCreate: !isReadOnly && hasPermission("Countries:Create"),
     canEdit: !isReadOnly && hasPermission("Countries:Edit"),
     canDelete: !isReadOnly && hasPermission("Countries:Delete"),
+    canRestore: !isReadOnly && hasPermission("Countries:Delete"),
   }), [hasPermission, isReadOnly]);
 };
 

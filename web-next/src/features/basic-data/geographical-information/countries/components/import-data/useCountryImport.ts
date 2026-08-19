@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import HandleApiError from "@/shared/services/apiError";
-import apiService from "@/shared/services/apiService";
 import useSnackbar from "@/shared/hooks/useSnackbar";
 import { readExcelFile } from "@/shared/services/excelService";
-import { apiRoutes } from "@/config";
 import getCountryValidationSchema from "../../utils/validation";
+import CountryService from "../../services/countryService";
+import { useInvalidateCountries } from "../../hooks/useCountryQueries";
 import { Country } from "./types";
 
 type UploadStatus = "pending" | "uploaded" | "failed";
@@ -30,6 +30,7 @@ export const useCountryImport = () => {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const startTimeRef = useRef<number | null>(null);
   const { t } = useTranslation();
+  const invalidateCountries = useInvalidateCountries();
 
   useEffect(() => {
     return () => {
@@ -148,10 +149,13 @@ export const useCountryImport = () => {
       }, 1000);
 
       const validationSchema = getCountryValidationSchema(t);
-      let success = 0;
       const failures: string[] = [];
+      const validRows: Array<{
+        row: ImportCountry;
+        request: Parameters<typeof CountryService.create>[0];
+      }> = [];
 
-      // Validate and upload each row independently so failed rows remain retryable.
+      // Validate locally first; the API bulk command persists all valid rows atomically.
       for (let i = 0; i < rowsToUpload.length; i++) {
         const c = rowsToUpload[i];
         const validation = validationSchema.safeParse({
@@ -173,34 +177,45 @@ export const useCountryImport = () => {
           continue;
         }
 
-        try {
-          await apiService.post(apiRoutes.countries.add, {
+        validRows.push({
+          row: c,
+          request: {
             nameEn: validation.data.nameEn,
             nameAr: validation.data.nameAr,
             alpha2Code: validation.data.alpha2Code || null,
             alpha3Code: validation.data.alpha3Code || null,
             phoneCode: validation.data.phoneCode || null,
             currencyCode: validation.data.currencyCode || null,
-          });
-          success++;
-          updateRowStatus(c.rowNumber, "uploaded");
-        } catch (err) {
-          let message = err instanceof Error ? err.message : t("messages.error") || "Upload error";
-          HandleApiError(err, (updatedState) => {
-            message = updatedState.messages.join(" | ") || updatedState.title || message;
-          });
-          updateRowStatus(c.rowNumber, "failed", message);
-          failures.push(`${t("imports.row") || "Row"} ${c.rowNumber}: ${message}`);
-        }
-
-        setUploadProgress(Math.round(((i + 1) / rowsToUpload.length) * 100));
+          },
+        });
       }
 
-      if (success > 0) {
+      if (validRows.length > 0) {
+        try {
+          const result = await CountryService.createBulk(validRows.map(({ request }) => request));
+          await invalidateCountries();
+          validRows.forEach(({ row }) => updateRowStatus(row.rowNumber, "uploaded"));
+          setUploadProgress(100);
+          showSnackbar(
+            "success",
+            [`${result.createdCount} ${t("countries.uploaded", { defaultValue: "countries uploaded" })}`],
+            t("messages.success"),
+          );
+        } catch (error) {
+          let message = t("messages.error", { defaultValue: "Upload error" });
+          HandleApiError(error, (updatedState) => {
+            message = updatedState.messages.join(" | ") || updatedState.title || message;
+          });
+          validRows.forEach(({ row }) => updateRowStatus(row.rowNumber, "failed", message));
+          failures.push(message);
+        }
+      }
+
+      if (validRows.length === 0 && failures.length === 0) {
         showSnackbar(
-          "success",
-          [`${success} ${t("countries.uploaded") || "countries uploaded"}`],
-          t("messages.success") || "Success",
+          "error",
+          [t("imports.noValidRows", { defaultValue: "No valid rows to upload" })],
+          t("messages.error"),
         );
       }
       if (failures.length > 0) {

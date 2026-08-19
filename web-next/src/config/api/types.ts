@@ -36,6 +36,18 @@ export interface UsersRoutes {
   restore: (id: Id) => string;
 }
 
+export interface CountriesRoutes {
+  page: string;
+  lookup: string;
+  getById: (id: Id) => string;
+  getWithStates: (id: Id) => string;
+  create: string;
+  bulkCreate: string;
+  update: (id: Id) => string;
+  archive: (id: Id) => string;
+  restore: (id: Id) => string;
+}
+
 export interface UserInvitationsRoutes {
   getAll: string;
   create: string;

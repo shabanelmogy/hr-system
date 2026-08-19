@@ -1,11 +1,11 @@
 import { AttachMoney, Flag, Phone } from "@mui/icons-material";
 import { Box, Chip, Typography } from "@mui/material";
 import type { GridRenderCellParams } from "@mui/x-data-grid";
-import type { Country } from "../../types/Country";
+import type { CountryListItem } from "../../types/Country";
 
 export const renderCountryName =
   (showFlag = true) =>
-  function CountryNameCell({ value }: GridRenderCellParams<Country>): React.ReactNode {
+  function CountryNameCell({ value }: GridRenderCellParams<CountryListItem>): React.ReactNode {
     if (value == null || value === "") return "";
     return (
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", gap: 1 }}>
@@ -15,7 +15,7 @@ export const renderCountryName =
     );
   };
 
-export const renderPhoneCode = ({ value }: GridRenderCellParams<Country>): React.ReactNode => {
+export const renderPhoneCode = ({ value }: GridRenderCellParams<CountryListItem>): React.ReactNode => {
   if (value == null || value === "") return "";
   const normalizedCode = String(value).replace(/^\+/, "");
   return (
@@ -29,7 +29,7 @@ export const renderPhoneCode = ({ value }: GridRenderCellParams<Country>): React
   );
 };
 
-export const renderCurrencyCode = ({ value }: GridRenderCellParams<Country>): React.ReactNode =>
+export const renderCurrencyCode = ({ value }: GridRenderCellParams<CountryListItem>): React.ReactNode =>
   value == null || value === "" ? "" : (
     <Chip
       label={String(value)}
@@ -50,7 +50,7 @@ export const renderCountryInfo = ({ value }: GridRenderCellParams): React.ReactN
   );
 };
 
-function asCountry(value: unknown): Pick<Country, "nameAr" | "nameEn"> | null {
+function asCountry(value: unknown): Pick<CountryListItem, "nameAr" | "nameEn"> | null {
   if (!value || typeof value !== "object") return null;
   const record = value as Record<string, unknown>;
   return {

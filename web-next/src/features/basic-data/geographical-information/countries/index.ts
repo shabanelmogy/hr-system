@@ -6,7 +6,7 @@ export { default as CountriesPage } from './pages/CountriesPage';
 // Components
 export { default as CountriesMultiView } from './components/CountriesMultiView';
 export { default as CountryForm } from './components/CountryForm';
-export { default as CountryDeleteDialog } from './components/CountryDeleteDialog';
+export { default as CountryArchiveDialog } from './components/CountryArchiveDialog';
 
 // Services
 export { default as CountryService } from './services/countryService';
@@ -14,22 +14,31 @@ export { default as CountryService } from './services/countryService';
 // Hooks - TanStack Query
 export { default as useCountryGridLogic } from './hooks/useCountryGridLogic';
 export {
-  useCountries,
+  useCountryPage,
+  useCountryLookup,
   useCountry,
   useCreateCountry,
   useUpdateCountry,
-  useDeleteCountry,
+  useArchiveCountry,
+  useRestoreCountry,
   useInvalidateCountries,
-  filterCountries,
   countryKeys,
 } from './hooks/useCountryQueries';
 
 // Types — sourced from the correct location
 export type {
-  Country,
+  CountryListItem,
+  CountryDetail,
+  CountryWithStates,
+  CountryLookup,
+  CountryPageQuery,
+  CountryPageResponse,
+  CountrySortColumn,
+  CountryStatus,
+  CountryListFilters,
   SimpleState,
   CreateCountryRequest,
-  UpdateCountryRequest,
+  UpdateCountryMutation,
   CountryFormData,
   CountryFormProps,
 } from './types/Country';

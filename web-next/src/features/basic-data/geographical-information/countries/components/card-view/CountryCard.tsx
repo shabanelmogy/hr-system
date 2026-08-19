@@ -6,7 +6,7 @@ import {
   QualityMeter,
 } from "@/shared/components/cards";
 import { useTheme } from "@mui/material";
-import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 import CountryCardChips from "./CountryCardChips";
 import CountryDetails from "./CountryDetails";
 import CountryCardFooter from "./CountryCardFooter";
@@ -22,10 +22,13 @@ const CountryCard = ({
   highlightLabel,
   onEdit,
   onDelete,
+  onRestore,
   onView,
   onHover,
+  permissions,
 }: Omit<CountryCardProps, "t">) => {
   const theme = useTheme();
+  const { i18n, t } = useTranslation();
 
   const qualityScore = getQualityScore(country);
   const qualityInfo = getQualityLevel(qualityScore, theme);
@@ -52,13 +55,13 @@ const CountryCard = ({
         currencyCode={country.currencyCode}
       />
 
-      <CountryStatesSection country={country} />
+      <CountryStatesSection statesCount={country.statesCount} />
 
-      <QualityMeter score={qualityScore} title="Data Quality" />
+      <QualityMeter score={qualityScore} title={t("countries.dashboard.dataQuality")} />
 
       <CreatedDateRow
         date={country.createdOn ? new Date(country.createdOn) : null}
-        formatter={(d) => format(d, "MMM dd, yyyy")}
+        formatter={(date) => new Intl.DateTimeFormat(i18n.resolvedLanguage, { dateStyle: "medium" }).format(date)}
       />
     </>
   );
@@ -69,6 +72,8 @@ const CountryCard = ({
       onView={onView}
       onEdit={onEdit}
       onDelete={onDelete}
+      onRestore={onRestore}
+      permissions={permissions}
     />
   );
 
@@ -82,8 +87,8 @@ const CountryCard = ({
       height={420}
       endBadge={endBadge}
       startBadge={startBadge}
-      title={country.nameEn || "N/A"}
-      subtitle={country.nameAr || undefined}
+      title={theme.direction === "rtl" ? country.nameAr : country.nameEn}
+      subtitle={theme.direction === "rtl" ? country.nameEn : country.nameAr}
       chips={chips}
       content={content}
       footer={footer}

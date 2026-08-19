@@ -1,12 +1,16 @@
-import type { CrudRoutes, StatesRoutes, DistrictsRoutes, Id } from './types';
+import type { CountriesRoutes, CrudRoutes, StatesRoutes, DistrictsRoutes, Id } from './types';
 import { version } from "./constants";
 
-export const countries: CrudRoutes = {
-  getAll: `${version}/countries/getAll`,
+export const countries: CountriesRoutes = {
+  page: `${version}/countries`,
+  lookup: `${version}/countries/lookup`,
   getById: (id: Id) => `${version}/countries/${id}`,
-  add: `${version}/countries/add`,
-  update: `${version}/countries/update`,
-  delete: (id: Id) => `${version}/countries/delete/${id}`,
+  getWithStates: (id: Id) => `${version}/countries/${id}/states`,
+  create: `${version}/countries`,
+  bulkCreate: `${version}/countries/bulk`,
+  update: (id: Id) => `${version}/countries/${id}`,
+  archive: (id: Id) => `${version}/countries/${id}`,
+  restore: (id: Id) => `${version}/countries/${id}/restore`,
 };
 
 export const addressTypes: CrudRoutes = {

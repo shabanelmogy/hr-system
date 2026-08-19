@@ -1,124 +1,171 @@
+using HrManagementSystem.Application.Common.Paginations;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.ArchiveCountry;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.CreateCountry;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.CreateCountries;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.RestoreCountry;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.UpdateCountry;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts;
-using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Services;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountries;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryById;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryLookup;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryWithStates;
+using MediatR;
 
 namespace HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1;
 
 [ApiVersion("1.0")]
-[Route(ApiRoutes.BaseRoute)]
+[Route(ApiRoutes.BaseRoute2)]
 [ApiController]
 [TenantMember]
-public class CountriesController(ICountryService countryService) : ControllerBase
+public sealed class CountriesController(ISender sender) : ControllerBase
 {
-    private readonly ICountryService _countryService = countryService;
-
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/CountriesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.GetAll(System.Threading.CancellationToken)"]/*' />
+    /// <summary>Returns a server-paged country collection with explicit status filtering.</summary>
     [HttpGet]
     [HasPermission(Permissions.ViewCountries)]
-    [ProducesResponseType(typeof(IEnumerable<CountryResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PageResponse<CountryListItemResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
-    {
-        var countries = await _countryService.GetAllAsync(cancellationToken);
-        return Ok(countries);
-    }
+    public async Task<IActionResult> GetPage(
+        [FromQuery] GetCountriesQuery query,
+        CancellationToken cancellationToken) =>
+        Ok(await sender.Send(query, cancellationToken));
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/CountriesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.GetByID(System.Int32,System.Threading.CancellationToken)"]/*' />
-    [HttpGet("{id}")]
+    /// <summary>Returns lightweight active countries for selectors.</summary>
+    [HttpGet("lookup")]
     [HasPermission(Permissions.ViewCountries)]
-    [ProducesResponseType(typeof(CountryResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IReadOnlyList<SimpleCountryResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> GetLookup(CancellationToken cancellationToken) =>
+        Ok(await sender.Send(new GetCountryLookupQuery(), cancellationToken));
+
+    /// <summary>Returns one country, including an archived country, without loading its states.</summary>
+    [HttpGet("{id:int}")]
+    [HasPermission(Permissions.ViewCountries)]
+    [ProducesResponseType(typeof(CountryDetailResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> GetByID([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetById(
+        [FromRoute] int id,
+        CancellationToken cancellationToken)
     {
-        var response = await _countryService.GetAsync(id, cancellationToken);
-        return response.IsSuccess ? Ok(response.Value) : response.ToProblem();
+        var result = await sender.Send(new GetCountryByIdQuery(id), cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/CountriesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.GetCountryWithStates(System.Int32,System.Threading.CancellationToken)"]/*' />
-    [HttpGet("{id}/states")]
+    /// <summary>Returns one country with its active states.</summary>
+    [HttpGet("{id:int}/states")]
     [HasPermission(Permissions.ViewCountries)]
     [ProducesResponseType(typeof(CountryResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> GetCountryWithStates([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetWithStates(
+        [FromRoute] int id,
+        CancellationToken cancellationToken)
     {
-        var response = await _countryService.GetRelatedStates(id, cancellationToken);
-        return response.IsSuccess ? Ok(response.Value) : response.ToProblem();
+        var result = await sender.Send(new GetCountryWithStatesQuery(id), cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/CountriesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.Add(HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts.CountryRequest,System.Threading.CancellationToken)"]/*' />
+    /// <summary>Creates one country.</summary>
     [HttpPost]
     [HasPermission(Permissions.CreateCountries)]
-    [ProducesResponseType(typeof(CountryResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(CountryDetailResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> Add([FromBody] CountryRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create(
+        [FromBody] CreateCountryCommand command,
+        CancellationToken cancellationToken)
     {
-        var result = await _countryService.AddAsync(request, cancellationToken);
+        var result = await sender.Send(command, cancellationToken);
         return result.IsSuccess
-            ? CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result.Value)
+            ? CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value)
             : result.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/CountriesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.AddRange(System.Collections.Generic.List{HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts.CountryRequest},System.Threading.CancellationToken)"]/*' />
+    /// <summary>Creates multiple countries atomically.</summary>
     [HttpPost("bulk")]
     [HasPermission(Permissions.CreateCountries)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(CreateCountriesResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> AddRange([FromBody] List<CountryRequest> requests, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateBulk(
+        [FromBody] CreateCountriesRequest request,
+        CancellationToken cancellationToken)
     {
-        var result = await _countryService.AddRangeAsync(requests, cancellationToken);
-        return result.IsSuccess ? NoContent() : result.ToProblem();
+        var result = await sender.Send(
+            new CreateCountriesCommand(request.Countries),
+            cancellationToken);
+        return result.IsSuccess
+            ? StatusCode(StatusCodes.Status201Created, result.Value)
+            : result.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/CountriesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.Update(HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts.CountryRequest,System.Threading.CancellationToken)"]/*' />
-    [HttpPut("")]
+    /// <summary>Updates one active country.</summary>
+    [HttpPut("{id:int}")]
     [HasPermission(Permissions.EditCountries)]
-    [ProducesResponseType(typeof(CountryResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(CountryDetailResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> Update([FromBody] CountryRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(
+        [FromRoute] int id,
+        [FromBody] UpdateCountryRequest request,
+        CancellationToken cancellationToken)
     {
-        var result = await _countryService.UpdateAsync(request, cancellationToken);
-        return result.IsSuccess
-            ? CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result.Value)
-            : result.ToProblem();
+        var result = await sender.Send(
+            new UpdateCountryCommand(
+                id,
+                request.NameAr,
+                request.NameEn,
+                request.Alpha2Code,
+                request.Alpha3Code,
+                request.PhoneCode,
+                request.CurrencyCode),
+            cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/CountriesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.Delete(System.Int32,System.Threading.CancellationToken)"]/*' />
-    [HttpDelete("{id}")]
+    /// <summary>Archives one active country.</summary>
+    [HttpDelete("{id:int}")]
     [HasPermission(Permissions.DeleteCountries)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Archive(
+        [FromRoute] int id,
+        CancellationToken cancellationToken)
     {
-        var result = await _countryService.ToggleDeleteAsync(id, cancellationToken);
+        var result = await sender.Send(new ArchiveCountryCommand(id), cancellationToken);
         return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/CountriesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.GetCount(System.Threading.CancellationToken)"]/*' />
-    [HttpGet("count")]
-    [HasPermission(Permissions.ViewCountries)]
-    [ProducesResponseType(typeof(CountriesCountResponse), StatusCodes.Status200OK)]
+    /// <summary>Restores one archived country.</summary>
+    [HttpPost("{id:int}/restore")]
+    [HasPermission(Permissions.DeleteCountries)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> GetCount(CancellationToken cancellationToken)
+    public async Task<IActionResult> Restore(
+        [FromRoute] int id,
+        CancellationToken cancellationToken)
     {
-        var result = await _countryService.GetCountAsync(cancellationToken);
-        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+        var result = await sender.Send(new RestoreCountryCommand(id), cancellationToken);
+        return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 }

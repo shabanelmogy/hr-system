@@ -1,6 +1,5 @@
 using HrManagementSystem.Application.Features.GeographicalInformation.Addresses.Contracts;
 using HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Contracts;
-using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts;
 using HrManagementSystem.Application.Features.GeographicalInformation.Districts.Contracts;
 using HrManagementSystem.Application.Features.Platform.Notifications.Contracts;
 
@@ -13,7 +12,6 @@ namespace HrManagementSystem.Infrastructure.Hubs.GeneralHub;
 public interface IGeneralHubClient
 {
     Task ReceiveUserUpdate(Result<UserChangedResponse> usersUpdate);
-    Task ReceiveCountryUpdate(CountriesCountResponse countriesCount);
     Task ReceiveStateUpdate(StatesCountResponse statesCount);
     Task ReceiveDistrictUpdate(Result<DistrictsCountResponse> districtsCount);
     Task ReceiveAddressTypeUpdate(Result<AddressTypesCountResponse> addressTypesCount);

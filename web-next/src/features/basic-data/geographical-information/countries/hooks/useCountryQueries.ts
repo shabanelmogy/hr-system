@@ -1,69 +1,91 @@
-import { useMutation, useQuery, useQueryClient, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
-import { useMemo } from "react";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  type UseMutationOptions,
+  type UseQueryOptions,
+} from "@tanstack/react-query";
 import CountryService from "../services/countryService";
-import { Country, CreateCountryRequest, UpdateCountryRequest } from "../types/Country";
+import type {
+  CountryDetail,
+  CountryLookup,
+  CountryPageQuery,
+  CountryPageResponse,
+  CreateCountryRequest,
+  UpdateCountryMutation,
+} from "../types/Country";
 
-// Query Keys
 export const countryKeys = {
   all: ["countries"] as const,
-  list: () => [...countryKeys.all, "list"] as const,
-  detail: (id: string | number) => [...countryKeys.all, "detail", id] as const,
+  pages: () => [...countryKeys.all, "page"] as const,
+  page: (query: CountryPageQuery) => [...countryKeys.pages(), query] as const,
+  lookup: () => [...countryKeys.all, "lookup"] as const,
+  details: () => [...countryKeys.all, "detail"] as const,
+  detail: (id: number) => [...countryKeys.details(), id] as const,
+  withStates: (id: number) => [...countryKeys.detail(id), "states"] as const,
 };
 
-// Query Hooks
-export const useCountries = (options?: UseQueryOptions<Country[], Error>) =>
+export const useCountryPage = (
+  query: CountryPageQuery,
+  options?: Omit<UseQueryOptions<CountryPageResponse, Error>, "queryKey" | "queryFn">,
+) =>
   useQuery({
-    queryKey: countryKeys.list(),
-    queryFn: CountryService.getAll,
-    staleTime: 5 * 60 * 1000,
+    queryKey: countryKeys.page(query),
+    queryFn: () => CountryService.getPage(query),
+    placeholderData: (previous) => previous,
+    staleTime: 60_000,
     ...options,
   });
 
-export const useCountry = (id: string | number | null | undefined, options?: UseQueryOptions<Country, Error>) =>
+export const useCountryLookup = (
+  options?: Omit<UseQueryOptions<CountryLookup[], Error>, "queryKey" | "queryFn">,
+) =>
+  useQuery({
+    queryKey: countryKeys.lookup(),
+    queryFn: CountryService.getLookup,
+    staleTime: 5 * 60_000,
+    ...options,
+  });
+
+export const useCountry = (
+  id: number | null | undefined,
+  options?: Omit<UseQueryOptions<CountryDetail, Error>, "queryKey" | "queryFn">,
+) =>
   useQuery({
     queryKey: countryKeys.detail(id!),
     queryFn: () => CountryService.getById(id!),
-    enabled: !!id,
-    staleTime: 5 * 60 * 1000,
+    enabled: id != null,
+    staleTime: 5 * 60_000,
     ...options,
   });
 
-export const filterCountries = (
-  searchTerm: string,
-  existingCountries: Country[] = []
-) => {
-  if (!searchTerm.trim()) return existingCountries;
-  return CountryService.searchCountries(existingCountries, searchTerm);
-};
-
-// Generic Mutation Hook Factory
-function useCountryMutation<TData = unknown, TVariables = unknown, TContext = unknown>(
+function useCountryMutation<TData, TVariables>(
   mutationFn: (variables: TVariables) => Promise<TData>,
-  options?: UseMutationOptions<TData, Error, TVariables, TContext>
+  options?: UseMutationOptions<TData, Error, TVariables>,
 ) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn,
     ...options,
-    onSuccess: (data, variables, context, meta) => {
-      queryClient.invalidateQueries({ queryKey: countryKeys.all });
-      if (options && typeof options.onSuccess === "function") {
-        options.onSuccess(data, variables, context, meta);
-      }
+    onSuccess: async (data, variables, context, meta) => {
+      await queryClient.invalidateQueries({ queryKey: countryKeys.all });
+      await options?.onSuccess?.(data, variables, context, meta);
     },
   });
 }
 
-export const useCreateCountry = (options?: UseMutationOptions<Country, Error, CreateCountryRequest>) =>
-  useCountryMutation<Country, CreateCountryRequest>(CountryService.create, options);
+export const useCreateCountry = (options?: UseMutationOptions<CountryDetail, Error, CreateCountryRequest>) =>
+  useCountryMutation(CountryService.create, options);
 
-export const useUpdateCountry = (options?: UseMutationOptions<Country, Error, UpdateCountryRequest>) =>
-  useCountryMutation<Country, UpdateCountryRequest>(CountryService.update, options);
+export const useUpdateCountry = (options?: UseMutationOptions<CountryDetail, Error, UpdateCountryMutation>) =>
+  useCountryMutation(CountryService.update, options);
 
-export const useDeleteCountry = (options?: UseMutationOptions<string | number, Error, string | number>) =>
-  useCountryMutation<string | number, string | number>(CountryService.delete, options);
+export const useArchiveCountry = (options?: UseMutationOptions<number, Error, number>) =>
+  useCountryMutation(CountryService.archive, options);
 
-// Utility Hook
+export const useRestoreCountry = (options?: UseMutationOptions<number, Error, number>) =>
+  useCountryMutation(CountryService.restore, options);
+
 export const useInvalidateCountries = () => {
   const queryClient = useQueryClient();
   return () => queryClient.invalidateQueries({ queryKey: countryKeys.all });

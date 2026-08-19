@@ -4,9 +4,11 @@
 import { useTranslation } from "react-i18next";
 import { Alert, Box, Button } from "@mui/material";
 import CountriesMultiView from "../components/CountriesMultiView";
-import CountryDeleteDialog from "../components/CountryDeleteDialog";
+import CountryArchiveDialog from "../components/CountryArchiveDialog";
 import CountryForm from "../components/CountryForm";
+import CountryRestoreDialog from "../components/CountryRestoreDialog";
 import useCountryGridLogic from "../hooks/useCountryGridLogic";
+import { useCountry } from "../hooks/useCountryQueries";
 
 const CountriesPage = () => {
   const { t } = useTranslation();
@@ -16,6 +18,7 @@ const CountriesPage = () => {
     selectedCountry,
     loading,
     countries,
+    totalCount,
     apiRef,
     error,
     isFetching,
@@ -29,10 +32,32 @@ const CountriesPage = () => {
     handleRefresh,
     isCreating,
     isUpdating,
-    isDeleting,
+    isArchiving,
     lastAddedId,
     lastEditedId,
     lastDeletedIndex,
+    page,
+    pageSize,
+    searchValue,
+    sortColumn,
+    sortDirection,
+    filter,
+    currencyCode,
+    hasStatesFilter,
+    setPage,
+    setPageSize,
+    setSearchValue,
+    setSort,
+    setFilter,
+    setCurrencyCode,
+    setHasStatesFilter,
+    resetList,
+    restoreCountry,
+    isRestoring,
+    onRestore,
+    closeRestore,
+    handleRestore,
+    permissions,
   } = useCountryGridLogic();
 
   // Derive a type-safe form dialog type — null when the form should not be open
@@ -40,6 +65,10 @@ const CountriesPage = () => {
     dialogType === "add" || dialogType === "edit" || dialogType === "view"
       ? dialogType
       : null;
+  const detailQuery = useCountry(selectedCountry?.id, {
+    enabled: formDialogType === "edit" || formDialogType === "view",
+  });
+  const formCountry = detailQuery.data ?? selectedCountry;
 
   // Handle error state
   if (error) {
@@ -69,28 +98,54 @@ const CountriesPage = () => {
         onEdit={onEdit}
         onView={onView}
         onDelete={onDelete}
+        onRestore={onRestore}
         onAdd={onAdd}
         onRefresh={handleRefresh}
         lastAddedId={lastAddedId}
         lastEditedId={lastEditedId}
         lastDeletedIndex={lastDeletedIndex}
+        permissions={permissions}
+        totalCount={totalCount}
+        page={page}
+        pageSize={pageSize}
+        searchValue={searchValue}
+        sortColumn={sortColumn}
+        sortDirection={sortDirection}
+        filter={filter}
+        currencyCode={currencyCode}
+        hasStatesFilter={hasStatesFilter}
+        onPageChange={setPage}
+        onPageSizeChange={setPageSize}
+        onSearchChange={setSearchValue}
+        onSortChange={setSort}
+        onFilterChange={setFilter}
+        onCurrencyCodeChange={setCurrencyCode}
+        onHasStatesFilterChange={setHasStatesFilter}
+        onResetList={resetList}
       />
 
       <CountryForm
         open={formDialogType !== null}
         dialogType={formDialogType ?? "add"}
-        selectedCountry={selectedCountry}
+        selectedCountry={formCountry}
         onClose={closeDialog}
         onSubmit={handleFormSubmit}
-        loading={isCreating || isUpdating}
+        loading={isCreating || isUpdating || detailQuery.isFetching}
       />
 
-      <CountryDeleteDialog
+      <CountryArchiveDialog
         open={dialogType === "delete"}
         onClose={closeDialog}
         onConfirm={handleDelete}
         selectedCountry={selectedCountry}
-        loading={isDeleting}
+        loading={isArchiving}
+      />
+
+      <CountryRestoreDialog
+        country={restoreCountry}
+        loading={isRestoring}
+        onClose={closeRestore}
+        onConfirm={() => void handleRestore()}
       />
     </>
   );

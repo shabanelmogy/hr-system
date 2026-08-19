@@ -5,6 +5,7 @@ import { SearchBar } from "./header-controls/SearchBar";
 import { SortBySelect } from "./header-controls/SortBySelect";
 import { SortOrderToggle } from "./header-controls/SortOrderToggle";
 import type { FilterOption, SortOption } from "./header-controls/types";
+import type { ReactNode } from "react";
 
 export interface CardViewToolbarProps {
   searchTerm: string;
@@ -20,6 +21,7 @@ export interface CardViewToolbarProps {
   filterOptions: FilterOption[];
   onFilterByChange: (value: string) => void;
   onReset: () => void;
+  additionalControls?: ReactNode;
 }
 
 const CardViewToolbar = ({
@@ -36,6 +38,7 @@ const CardViewToolbar = ({
   filterOptions,
   onFilterByChange,
   onReset,
+  additionalControls,
 }: CardViewToolbarProps) => (
   <Grid container spacing={2} sx={{ alignItems: "center" }}>
     <Grid size={{ xs: 12, md: 4 }} sx={{ mb: 1 }}>
@@ -62,6 +65,8 @@ const CardViewToolbar = ({
     <Grid size={{ xs: 12, md: 2 }}>
       <ResetButton onReset={onReset} />
     </Grid>
+
+    {additionalControls}
   </Grid>
 );
 

@@ -1,13 +1,15 @@
 import React from "react";
 import { Stack } from "@mui/material";
 import { AppChip } from "@/shared/components/cards";
-import type { Country } from "../../types/Country";
+import { useTranslation } from "react-i18next";
+import type { CountryListItem } from "../../types/Country";
 
 interface CountryCardChipsProps {
-  country: Country;
+  country: CountryListItem;
 }
 
 const CountryCardChips: React.FC<CountryCardChipsProps> = ({ country }) => {
+  const { t } = useTranslation();
   return (
     <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", gap: 0.5 }}>
       {country.alpha2Code && (
@@ -16,7 +18,10 @@ const CountryCardChips: React.FC<CountryCardChipsProps> = ({ country }) => {
       {country.alpha3Code && (
         <AppChip label={country.alpha3Code} colorKey="secondary" variant="soft" monospace bold />
       )}
-      <AppChip label={`ID: ${country.id}`} colorKey="secondary" variant="outlined" monospace sx={{ fontSize: "0.7rem" }} />
+      <AppChip label={`${t("general.id")}: ${country.id}`} colorKey="secondary" variant="outlined" monospace sx={{ fontSize: "0.7rem" }} />
+      {country.isDeleted && (
+        <AppChip label={t("countries.status.archived")} colorKey="error" variant="soft" bold />
+      )}
     </Stack>
   );
 };

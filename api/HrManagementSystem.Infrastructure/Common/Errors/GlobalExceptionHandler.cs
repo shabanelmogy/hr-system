@@ -47,6 +47,29 @@ namespace HrManagementSystem.Infrastructure.Common.Errors
                 return true;
             }
 
+            if (exception is DbUpdateException databaseException &&
+                DatabaseExceptionClassifier.IsUniqueConstraintViolation(databaseException))
+            {
+                _logger.LogWarning(
+                    "Database unique constraint conflict. TraceId: {TraceId}",
+                    httpContext.TraceIdentifier);
+
+                var duplicateProblem = new ProblemDetails
+                {
+                    Status = StatusCodes.Status409Conflict,
+                    Title = "Duplicate Value Conflict",
+                    Type = "https://tools.ietf.org/html/rfc9110#section-15.5.10",
+                    Detail = "A record with the same unique value already exists."
+                };
+                duplicateProblem.Extensions["code"] = "UniqueConstraintViolation";
+                duplicateProblem.Extensions["traceId"] = httpContext.TraceIdentifier;
+                duplicateProblem.Extensions["correlationId"] = httpContext.GetCorrelationId();
+
+                httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
+                await httpContext.Response.WriteAsJsonAsync(duplicateProblem, cancellationToken);
+                return true;
+            }
+
             if (exception is DbUpdateConcurrencyException)
             {
                 _logger.LogWarning(

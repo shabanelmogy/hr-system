@@ -1,16 +1,15 @@
 // components/CountryForm.tsx
 import { MyForm, MyTextField } from "@/shared/components/forms";
-import { faker } from '@faker-js/faker';
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Casino } from "@mui/icons-material";
+import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
 import { Box, Button } from "@mui/material";
 import { useEffect, useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { countries } from "../utils/fakeData";
 import { getCountryValidationSchema } from "../utils/validation";
 import { CountryFormData, CountryFormProps } from "../types/Country";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
+import { getNextCountryMockData } from "../utils/countryMockData";
 
 const CountryForm = ({
   open,
@@ -22,12 +21,10 @@ const CountryForm = ({
 }: Omit<CountryFormProps, "t">) => {
   const { t } = useTranslation();
 
-  // Persists across renders so mock data generation doesn't repeat entries within a session
-  const usedIndexes = useRef<Set<number>>(new Set());
-
   const isViewMode: boolean = dialogType === "view";
   const isEditMode: boolean = dialogType === "edit";
   const isAddMode: boolean = dialogType === "add";
+  const usedMockIndexes = useRef(new Set<number>());
 
   // Memoised so the schema object is not recreated on every render
   const schema = useMemo(() => getCountryValidationSchema(t), [t]);
@@ -97,39 +94,17 @@ const CountryForm = ({
     return errorMessages;
   };
 
-  // Generate mock data using Faker.js
-  const generateMockData = (): void => {
-    const used = usedIndexes.current;
-    if (used.size === countries.length) {
-      used.clear(); // reset when all entries have been used
-    }
+  const generateMockData = () => {
+    const sample = getNextCountryMockData(usedMockIndexes.current);
+    const options = { shouldDirty: true, shouldValidate: true };
 
-    let index: number;
-    do {
-      index = Math.floor(Math.random() * countries.length);
-    } while (used.has(index));
-    used.add(index);
-
-    const country = countries[index];
-
-    const mockData = {
-      nameEn: country.en,
-      nameAr: country.ar,
-      alpha2Code: faker.location.countryCode("alpha-2"),
-      alpha3Code: faker.location.countryCode("alpha-3"),
-      phoneCode: faker.string.numeric({ length: { min: 1, max: 4 } }),
-      currencyCode: faker.finance.currencyCode(),
-    };
-
-    const mockOptions = { shouldDirty: true, shouldValidate: true };
-    setValue("nameEn", mockData.nameEn, mockOptions);
-    setValue("nameAr", mockData.nameAr, mockOptions);
-    setValue("alpha2Code", mockData.alpha2Code, mockOptions);
-    setValue("alpha3Code", mockData.alpha3Code, mockOptions);
-    setValue("phoneCode", mockData.phoneCode, mockOptions);
-    setValue("currencyCode", mockData.currencyCode, mockOptions);
+    setValue("nameAr", sample.nameAr, options);
+    setValue("nameEn", sample.nameEn, options);
+    setValue("alpha2Code", sample.alpha2Code, options);
+    setValue("alpha3Code", sample.alpha3Code, options);
+    setValue("phoneCode", sample.phoneCode, options);
+    setValue("currencyCode", sample.currencyCode, options);
   };
-
 
   return (
     <MyForm
@@ -179,21 +154,17 @@ const CountryForm = ({
       overlayMessage={getOverlayMessage()}
       errors={getErrorMessages()}
       footerLeft={
-        (isAddMode || isEditMode) ? (
+        process.env.NODE_ENV !== "production" && isAddMode ? (
           <Button
+            type="button"
             variant="outlined"
             color="secondary"
-            startIcon={<Casino />}
+            size="small"
+            startIcon={<CasinoOutlinedIcon />}
             onClick={generateMockData}
             disabled={loading}
-            size="small"
-            sx={{
-              borderRadius: "10px",
-              textTransform: "none",
-              fontWeight: 500,
-            }}
           >
-            {t("countries.generateMockData") || "🎲 Mock Data"}
+            {t("countries.generateMockData")}
           </Button>
         ) : null
       }

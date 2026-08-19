@@ -1,25 +1,73 @@
-export interface Country {
-  id: string | number;
+import type { ManagementPageResponse } from "@/lib/api/pagination";
+
+interface CountryFields {
+  /** Mirrors CountryResponse.Id (an integer) from the API. */
+  id: number;
   nameAr: string;
   nameEn: string;
-  alpha2Code: string;
-  alpha3Code: string;
-  phoneCode: string;
+  alpha2Code: string | null;
+  alpha3Code: string | null;
+  phoneCode: string | null;
   currencyCode: string | null;
-  states?: SimpleState[];
-  statesCount?: number;
   createdOn: string;
-  updatedOn: string;
+  updatedOn: string | null;
   isDeleted: boolean;
 }
 
 export interface SimpleState {
-  id: string | number;
+  id: number;
   nameAr: string;
   nameEn: string;
+  /** Optional compatibility field for older responses; the current API omits it. */
   code?: string;
   isDeleted: boolean;
 }
+
+export interface CountryListItem extends CountryFields {
+  statesCount: number;
+}
+
+export type CountryDetail = CountryFields;
+
+export interface CountryWithStates extends CountryDetail {
+  states: SimpleState[];
+}
+
+export interface CountryLookup {
+  id: number;
+  nameAr: string;
+  nameEn: string;
+  isDeleted: boolean;
+}
+
+export type CountrySortColumn =
+  | "nameEn"
+  | "nameAr"
+  | "alpha2Code"
+  | "alpha3Code"
+  | "currencyCode"
+  | "createdOn";
+
+export interface CountryPageFilters {
+  currencyCode?: string;
+  hasStates?: boolean;
+}
+
+export type CountryStatus = "active" | "archived" | "all";
+
+export interface CountryListFilters extends CountryPageFilters {
+  status: CountryStatus;
+}
+
+export interface CountryPageQuery extends CountryPageFilters {
+  pageNumber: number;
+  pageSize: number;
+  search?: string;
+  status: CountryStatus;
+  sortBy: CountrySortColumn;
+  sortDirection: "asc" | "desc";
+}
+export type CountryPageResponse = ManagementPageResponse<CountryListItem>;
 
 export interface CreateCountryRequest {
   nameEn: string;
@@ -30,8 +78,9 @@ export interface CreateCountryRequest {
   currencyCode?: string | null;
 }
 
-export interface UpdateCountryRequest extends CreateCountryRequest {
-  id: string | number;
+export interface UpdateCountryMutation {
+  id: number;
+  request: CreateCountryRequest;
 }
 
 export interface CountryFormData {
@@ -46,7 +95,7 @@ export interface CountryFormData {
 export interface CountryFormProps {
   open: boolean;
   dialogType: "add" | "edit" | "view";
-  selectedCountry?: Country | null;
+  selectedCountry?: CountryListItem | CountryDetail | null;
   onClose: () => void;
   onSubmit: (data: CountryFormData) => void | Promise<void>;
   loading: boolean;

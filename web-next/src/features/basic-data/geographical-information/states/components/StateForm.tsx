@@ -5,7 +5,7 @@ import { Box, Button } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { Resolver, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useCountries } from "../../countries/hooks/useCountryQueries";
+import { useCountryLookup } from "../../countries/hooks/useCountryQueries";
 import { CreateStateRequest, State } from "../types/State";
 import { states } from "../utils/fakeData";
 import { getStateValidationSchema } from "../utils/validation";
@@ -38,7 +38,9 @@ const StateForm = ({
   const schema = getStateValidationSchema(t);
 
   // Get countries for dropdown
-  const { data: countries = [] } = useCountries();
+  const { data: countries = [], isLoading: countriesLoading } = useCountryLookup({
+    enabled: open,
+  });
 
   const {
     handleSubmit,
@@ -249,7 +251,7 @@ const StateForm = ({
       <MyTextField
         fieldName="nameEn"
         labelKey={t("general.nameEn")}
-        loading={loading}
+        loading={loading || countriesLoading}
         errors={errors}
         control={control}
         placeholder={t("states.nameEnPlaceholder")}
@@ -285,7 +287,7 @@ const StateForm = ({
         errors={errors}
         placeholder={t("states.selectCountry")}
         isViewMode={isViewMode}
-        disabled={loading}
+        disabled={loading || countriesLoading}
         showClearButton={!isViewMode}
         actualFieldName="countryId"
         colorMember={undefined}

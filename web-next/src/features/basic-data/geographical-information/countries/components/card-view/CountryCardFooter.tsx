@@ -1,50 +1,60 @@
 import React from "react";
-import { Delete, Edit, Visibility } from "@mui/icons-material";
+import { Archive, Edit, Restore, Visibility } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import { CardActionButtons, type CardActionItem } from "@/shared/components/cards";
-import { permissions } from "@/lib/auth/permissions";
-import { useAuthorization } from "@/lib/auth/useAuthorization";
-import type { Country } from "../../types/Country";
-
-const deleteCountryPermissions = [permissions.DeleteCountries] as const;
+import type { CountryListItem } from "../../types/Country";
+import type { CountryActionPermissions } from "./CountryCard.types";
 
 export interface CountryCardFooterProps {
-  country: Country;
-  onView: (country: Country) => void;
-  onEdit: (country: Country) => void;
-  onDelete: (country: Country) => void;
+  country: CountryListItem;
+  onView: (country: CountryListItem) => void;
+  onEdit: (country: CountryListItem) => void;
+  onDelete: (country: CountryListItem) => void;
+  onRestore: (country: CountryListItem) => void;
+  permissions: CountryActionPermissions;
 }
 
-const CountryCardFooter: React.FC<CountryCardFooterProps> = ({ country, onView, onEdit, onDelete }) => {
+const CountryCardFooter: React.FC<CountryCardFooterProps> = ({ country, onView, onEdit, onDelete, onRestore, permissions }) => {
   const { t } = useTranslation();
-  const { allowed: canDelete } = useAuthorization({
-    requiredPermissions: deleteCountryPermissions,
-  });
+  const actions: CardActionItem[] = [];
 
-  const actions: CardActionItem[] = [
-    {
+  if (permissions.canView) {
+    actions.push({
       key: "view",
       title: t("actions.view") || "View Details",
       color: "info",
       icon: <Visibility sx={{ fontSize: 16 }} />,
       onClick: () => onView(country),
-    },
-    {
+    });
+  }
+
+  if (permissions.canEdit && !country.isDeleted) {
+    actions.push({
       key: "edit",
       title: t("actions.edit") || "Edit Country",
       color: "primary",
       icon: <Edit sx={{ fontSize: 16 }} />,
       onClick: () => onEdit(country),
-    },
-  ];
+    });
+  }
 
-  if (canDelete) {
+  if (permissions.canDelete && !country.isDeleted) {
     actions.push({
       key: "delete",
-      title: t("actions.delete") || "Delete Country",
-      color: "error",
-      icon: <Delete sx={{ fontSize: 16 }} />,
+      title: t("actions.archive"),
+      color: "warning",
+      icon: <Archive sx={{ fontSize: 16 }} />,
       onClick: () => onDelete(country),
+    });
+  }
+
+  if (permissions.canRestore && country.isDeleted) {
+    actions.push({
+      key: "restore",
+      title: t("actions.restore"),
+      color: "success",
+      icon: <Restore sx={{ fontSize: 16 }} />,
+      onClick: () => onRestore(country),
     });
   }
 

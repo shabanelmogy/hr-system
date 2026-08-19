@@ -1,24 +1,26 @@
 import React from "react";
 import { GridActionsCellItem, GridActionsCellItemProps } from "@mui/x-data-grid";
-import { Delete, Edit, Visibility } from "@mui/icons-material";
-import type { Country } from "../../types/Country";
+import { Archive, Edit, Restore, Visibility } from "@mui/icons-material";
+import type { CountryListItem } from "../../types/Country";
 
 export interface CountriesPermissionsModel {
   canView: boolean;
   canEdit: boolean;
   canDelete: boolean;
+  canRestore: boolean;
 }
 
 export interface ActionFactoryProps {
   t: (key: string) => string;
   permissions: CountriesPermissionsModel;
-  onView: (country: Country) => void;
-  onEdit: (country: Country) => void;
-  onDelete: (country: Country) => void;
+  onView: (country: CountryListItem) => void;
+  onEdit: (country: CountryListItem) => void;
+  onDelete: (country: CountryListItem) => void;
+  onRestore: (country: CountryListItem) => void;
 }
 
-export const makeCountryActions = ({ t, permissions, onView, onEdit, onDelete }: ActionFactoryProps) => {
-  return (params: { row: Country }): React.ReactElement<GridActionsCellItemProps>[] => {
+export const makeCountryActions = ({ t, permissions, onView, onEdit, onDelete, onRestore }: ActionFactoryProps) => {
+  return (params: { row: CountryListItem }): React.ReactElement<GridActionsCellItemProps>[] => {
     const actions: React.ReactElement<GridActionsCellItemProps>[] = [];
 
     if (permissions.canView) {
@@ -32,7 +34,7 @@ export const makeCountryActions = ({ t, permissions, onView, onEdit, onDelete }:
       );
     }
 
-    if (permissions.canEdit) {
+    if (permissions.canEdit && !params.row.isDeleted) {
       actions.push(
         <GridActionsCellItem
           key={`edit-${params.row.id}`}
@@ -44,14 +46,25 @@ export const makeCountryActions = ({ t, permissions, onView, onEdit, onDelete }:
       );
     }
 
-    if (permissions.canDelete) {
+    if (permissions.canDelete && !params.row.isDeleted) {
       // If you need extra permission checks (e.g., DeleteCountries), ensure canDelete already reflects that.
       actions.push(
         <GridActionsCellItem
           key={`delete-${params.row.id}`}
-          icon={<Delete sx={{ fontSize: 25, color: "error.main" }} />}
-          label={t("actions.delete")}
+          icon={<Archive sx={{ fontSize: 25, color: "warning.main" }} />}
+          label={t("actions.archive")}
           onClick={() => onDelete(params.row)}
+        />
+      );
+    }
+
+    if (permissions.canRestore && params.row.isDeleted) {
+      actions.push(
+        <GridActionsCellItem
+          key={`restore-${params.row.id}`}
+          icon={<Restore sx={{ fontSize: 25, color: "success.main" }} />}
+          label={t("actions.restore")}
+          onClick={() => onRestore(params.row)}
         />
       );
     }

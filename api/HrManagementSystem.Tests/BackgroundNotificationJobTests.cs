@@ -6,8 +6,6 @@ using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Address
 using HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Services;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.AddressTypes.Services;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Countries.Jobs;
-using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Services;
-using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Countries.Services;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Districts.Jobs;
 using HrManagementSystem.Application.Features.GeographicalInformation.Districts.Services;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Districts.Services;
@@ -48,7 +46,7 @@ namespace HrManagementSystem.Tests;
 public sealed class BackgroundNotificationJobTests
 {
     [Theory]
-    [InlineData(typeof(CountryService))]
+    [InlineData(typeof(CountryChangeScheduler))]
     [InlineData(typeof(StateService))]
     [InlineData(typeof(DistrictService))]
     [InlineData(typeof(AddressTypeService))]
@@ -109,6 +107,7 @@ public sealed class BackgroundNotificationJobTests
     [InlineData("Add", "Countries.Created", "CountryCreatedNotificationMessage", NotificationSeverity.Success)]
     [InlineData("BulkAdd", "Countries.BulkCreated", "CountriesCreatedNotificationMessage", NotificationSeverity.Success)]
     [InlineData("Delete", "Countries.Deleted", "CountryDeletedNotificationMessage", NotificationSeverity.Warning)]
+    [InlineData("Archive", "Countries.Archived", "CountryArchivedNotificationMessage", NotificationSeverity.Warning)]
     public void NotificationFactory_UsesConsistentDetailedMetadata(
         string action,
         string expectedEventType,

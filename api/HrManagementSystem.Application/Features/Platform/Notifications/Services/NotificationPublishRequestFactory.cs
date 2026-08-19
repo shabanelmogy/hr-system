@@ -27,7 +27,7 @@ public static class NotificationPublishRequestFactory
             requiredPermission,
             category,
             eventType,
-            action is "Delete" or "Disable"
+            action is "Archive" or "Delete" or "Disable"
                 ? NotificationSeverity.Warning
                 : NotificationSeverity.Success,
             $"{entityType}NotificationTitle",
@@ -48,6 +48,7 @@ public static class NotificationPublishRequestFactory
         "BulkAdd" => "Created",
         "Update" => "Updated",
         "Delete" => "Deleted",
+        "Archive" => "Archived",
         "Restore" => "Restored",
         "Disable" => "Disabled",
         "Enable" => "Enabled",

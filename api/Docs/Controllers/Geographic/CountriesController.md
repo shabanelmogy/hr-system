@@ -1,166 +1,116 @@
-# Countries API — Frontend Integration Guide
+# Countries API — Canonical Frontend Contract
 
-## Overview
+Countries is the reference implementation for basic-data modules that need CQRS, server-side lists, archive/restore, lookup endpoints, and permission-aware UI.
 
-Manages country records used across the system (states, addresses, etc.).
-All endpoints require a valid **JWT Bearer token**.
-
-**Base URL:** `/api/v1/countries`  
-**Permission Group:** `Countries`
-
----
-
-## Authentication
-
-All requests must include:
-```
-Authorization: Bearer <token>
-```
-
----
+- Base URL: `/api/v1/countries`
+- Authentication: JWT bearer token and active tenant membership
+- Content type for writes: `application/json`
+- IDs are integers
+- Query validation failures return `400`
+- Duplicate feature checks return `409` with code `Country.Duplicated`
+- A database uniqueness race returns `409` with code `UniqueConstraintViolation`
 
 ## Permissions
 
-| Constant | Value |
-|----------|-------|
-| `ViewCountries` | `Countries:View` |
-| `CreateCountries` | `Countries:Create` |
-| `EditCountries` | `Countries:Edit` |
-| `DeleteCountries` | `Countries:Delete` |
+| Operation | Permission |
+| --- | --- |
+| Read page, lookup, detail, states | `Countries:View` |
+| Create and bulk create | `Countries:Create` |
+| Update | `Countries:Edit` |
+| Archive and restore | `Countries:Delete` |
 
----
+## Endpoints
 
-## Endpoints Summary
+| Method | Path | Success | Purpose |
+| --- | --- | --- | --- |
+| `GET` | `/api/v1/countries` | `200` | Server-paged management list |
+| `GET` | `/api/v1/countries/lookup` | `200` | Lightweight active-country selector data |
+| `GET` | `/api/v1/countries/{id}` | `200` | Detail, including archived records, without states |
+| `GET` | `/api/v1/countries/{id}/states` | `200` | Country with its active states |
+| `POST` | `/api/v1/countries` | `201` | Create one country |
+| `POST` | `/api/v1/countries/bulk` | `201` | Atomically create multiple countries |
+| `PUT` | `/api/v1/countries/{id}` | `200` | Update one active country |
+| `DELETE` | `/api/v1/countries/{id}` | `204` | Archive one active country |
+| `POST` | `/api/v1/countries/{id}/restore` | `204` | Restore one archived country |
 
-| Method | Path | Permission | Description |
-|--------|------|------------|-------------|
-| GET | `/api/v1/countries` | ViewCountries | Get all countries |
-| GET | `/api/v1/countries/{id}` | ViewCountries | Get country by ID |
-| GET | `/api/v1/countries/{id}/states` | ViewCountries | Get country with its states |
-| POST | `/api/v1/countries` | CreateCountries | Create a new country |
-| POST | `/api/v1/countries/bulk` | CreateCountries | Bulk insert countries |
-| PUT | `/api/v1/countries` | EditCountries | Update a country |
-| DELETE | `/api/v1/countries/{id}` | DeleteCountries | Soft delete / restore |
-| GET | `/api/v1/countries/count` | ViewCountries | Get active country count |
+There is deliberately no count endpoint and no toggle-delete operation. Page metadata contains `totalCount`, and lifecycle transitions are explicit archive/restore commands.
 
----
+## Management page query
 
-## Data Models
+`GET /api/v1/countries`
 
-### CountryRequest (POST / PUT body)
+| Query | Default | Rules |
+| --- | --- | --- |
+| `pageNumber` | `1` | Minimum `1` |
+| `pageSize` | `10` | `1..50` |
+| `search` | — | Optional; maximum 200 characters |
+| `status` | `active` | `active`, `archived`, or `all` |
+| `currencyCode` | — | Optional exact three-letter code; normalized uppercase |
+| `hasStates` | — | Optional boolean; counts active states |
+| `sortBy` | `nameEn` | `nameEn`, `nameAr`, `alpha2Code`, `alpha3Code`, `currencyCode`, or `createdOn` |
+| `sortDirection` | `asc` | `asc` or `desc` |
 
-| Field | Type | Required | Constraints | UI Component |
-|-------|------|----------|-------------|--------------|
-| `id` | `int` | ✅ | Send `0` for new records, existing ID for update | Hidden field |
-| `nameAr` | `string` | ✅ | 2–100 chars, Arabic letters only, unique | Text input (RTL) |
-| `nameEn` | `string` | ✅ | 2–100 chars, English letters only, unique | Text input (LTR) |
-| `alpha2Code` | `string?` | ❌ | Exactly 2 uppercase letters if provided, unique (e.g. `EG`) | Text input, maxLength=2, auto-uppercase |
-| `alpha3Code` | `string?` | ❌ | Exactly 3 uppercase letters if provided, unique (e.g. `EGY`) | Text input, maxLength=3, auto-uppercase |
-| `phoneCode` | `string?` | ❌ | 1–10 chars if provided (e.g. `20`, `966`) | Text input, maxLength=10 |
-| `currencyCode` | `string?` | ❌ | Exactly 3 uppercase letters if provided, unique (e.g. `EGP`) | Text input, maxLength=3, auto-uppercase |
+Example:
 
-### CountryResponse (GET response)
+```http
+GET /api/v1/countries?pageNumber=1&pageSize=10&search=egy&status=active&currencyCode=EGP&hasStates=true&sortBy=nameEn&sortDirection=asc
+```
 
 ```json
 {
-  "id": 1,
-  "nameAr": "مصر",
-  "nameEn": "Egypt",
-  "alpha2Code": "EG",
-  "alpha3Code": "EGY",
-  "phoneCode": "20",
-  "currencyCode": "EGP",
-  "states": [
+  "items": [
     {
       "id": 1,
-      "nameAr": "القاهرة",
-      "nameEn": "Cairo",
-      "code": "CAI",
+      "nameAr": "مصر",
+      "nameEn": "Egypt",
+      "alpha2Code": "EG",
+      "alpha3Code": "EGY",
+      "phoneCode": "20",
+      "currencyCode": "EGP",
+      "statesCount": 2,
+      "createdOn": "2026-08-19T10:00:00Z",
+      "updatedOn": null,
       "isDeleted": false
     }
   ],
-  "createdOn": "2024-01-15T10:30:00Z",
-  "updatedOn": null,
-  "isDeleted": false
+  "metaData": {
+    "currentPage": 1,
+    "totalPages": 1,
+    "pageSize": 10,
+    "pageNumber": 1,
+    "totalCount": 1,
+    "hasPrev": false,
+    "hasNext": false
+  }
 }
 ```
 
----
+## Lookup
 
-## Endpoint Details
+`GET /api/v1/countries/lookup` returns active countries only and is the endpoint to use in selectors such as the State form.
 
-### GET /api/v1/countries
-
-**Permission:** `ViewCountries`  
-**Description:** Returns all countries (including deleted ones — filter `isDeleted` on the frontend).
-
-**Response 200:**
 ```json
 [
-  {
-    "id": 1,
-    "nameAr": "مصر",
-    "nameEn": "Egypt",
-    "alpha2Code": "EG",
-    "alpha3Code": "EGY",
-    "phoneCode": "20",
-    "currencyCode": "EGP",
-    "states": [],
-    "createdOn": "2024-01-15T10:30:00Z",
-    "updatedOn": null,
-    "isDeleted": false
-  }
+  { "id": 1, "nameAr": "مصر", "nameEn": "Egypt", "isDeleted": false }
 ]
 ```
 
-**Errors:**
-| Code | When |
-|------|------|
-| 401 | Missing or invalid token |
-| 403 | User lacks ViewCountries permission |
+Do not load the management page and reshape it client-side for a selector.
 
----
+## Detail and states
 
-### GET /api/v1/countries/{id}
+`GET /api/v1/countries/{id}` returns `CountryDetailResponse`. It can return an archived record and does not load states.
 
-**Permission:** `ViewCountries`  
-**Description:** Returns a single country by ID.
+`GET /api/v1/countries/{id}/states` returns `CountryResponse`. The country itself may be active or archived; its `states` array contains active states only.
 
-**Path Params:**
-| Param | Type | Description |
-|-------|------|-------------|
-| `id` | `int` | Country ID |
+Both return `404` with code `Country.CountryNotFound` when the requested resource is unavailable for that endpoint.
 
-**Response 200:** Same shape as single item in the list above.
+## Create and update body
 
-**Errors:**
-| Code | When |
-|------|------|
-| 404 | Country not found |
-| 401 | Unauthorized |
-| 403 | Missing permission |
+Create and update use the same mutable fields, but remain separate transport contracts. The update ID belongs in the route, never in the JSON body.
 
----
-
-### GET /api/v1/countries/{id}/states
-
-**Permission:** `ViewCountries`  
-**Description:** Returns a country with its full states list populated.  
-Use this endpoint when you need to show the states dropdown for a specific country.
-
-**Response 200:** Same as GET by ID but `states` array is fully populated.
-
----
-
-### POST /api/v1/countries
-
-**Permission:** `CreateCountries`  
-**Description:** Creates a new country.
-
-**Request Body:**
 ```json
 {
-  "id": 0,
   "nameAr": "مصر",
   "nameEn": "Egypt",
   "alpha2Code": "EG",
@@ -170,139 +120,79 @@ Use this endpoint when you need to show the states dropdown for a specific count
 }
 ```
 
-**Response 201:** Returns the created country.
+- `nameAr`: required, trimmed, 2–100 Arabic letters/spaces
+- `nameEn`: required, trimmed, 2–100 English letters/spaces
+- `alpha2Code`: optional, exactly 2 letters, stored uppercase
+- `alpha3Code`: optional, exactly 3 letters, stored uppercase
+- `phoneCode`: optional, 1–10 characters; digits with an optional leading `+`
+- `currencyCode`: optional, exactly 3 letters, stored uppercase
+- Empty optional strings are normalized to `null`
+- Name and ISO-code uniqueness is checked before persistence; database constraints remain the final race-safe guard
 
-**Errors:**
-| Code | When |
-|------|------|
-| 400 | Validation failed (see validation rules below) |
-| 409 | `nameAr`, `nameEn`, `alpha2Code`, or `alpha3Code` already exists |
-| 401 | Unauthorized |
-| 403 | Missing permission |
+Create returns `201 Created`, a `Location` header pointing to `GET /{id}`, and `CountryDetailResponse`. Update returns the same detail shape with `200 OK`.
 
----
+## Bulk create
 
-### POST /api/v1/countries/bulk
+`POST /api/v1/countries/bulk`
 
-**Permission:** `CreateCountries`  
-**Description:** Inserts multiple countries at once. Stops on first duplicate.
-
-**Request Body:** Array of CountryRequest objects (all with `id: 0`).
-
-```json
-[
-  { "id": 0, "nameAr": "مصر", "nameEn": "Egypt", "alpha2Code": "EG", "alpha3Code": "EGY", "phoneCode": "20", "currencyCode": "EGP" },
-  { "id": 0, "nameAr": "السعودية", "nameEn": "Saudi Arabia", "alpha2Code": "SA", "alpha3Code": "SAU", "phoneCode": "966", "currencyCode": "SAR" }
-]
-```
-
-**Response 204:** No content on success.
-
-**Errors:**
-| Code | When |
-|------|------|
-| 400 | Empty list provided |
-| 409 | One or more names/codes already exist |
-
----
-
-### PUT /api/v1/countries
-
-**Permission:** `EditCountries`  
-**Description:** Updates an existing country. Send the full object including the existing `id`.
-
-**Request Body:** Same as POST but `id` must be the existing record's ID.
-
-**Response 201:** Returns the updated country.
-
-**Errors:**
-| Code | When |
-|------|------|
-| 400 | Validation failed |
-| 404 | Country not found |
-| 409 | Name or code conflict |
-| 401 | Unauthorized |
-| 403 | Missing permission |
-
----
-
-### DELETE /api/v1/countries/{id}
-
-**Permission:** `DeleteCountries`  
-**Description:** Toggles soft-delete. Calling on an active record deletes it; calling again restores it.
-
-**Response 204:** No content.
-
-**Errors:**
-| Code | When |
-|------|------|
-| 400 | Country is referenced by states — cannot delete |
-| 404 | Country not found |
-| 401 | Unauthorized |
-| 403 | Missing permission |
-
----
-
-### GET /api/v1/countries/count
-
-**Permission:** `ViewCountries`  
-**Description:** Returns the count of active (non-deleted) countries.
-
-**Response 200:**
 ```json
 {
-  "count": 195,
-  "country": null,
-  "action": null
+  "countries": [
+    {
+      "nameAr": "مصر",
+      "nameEn": "Egypt",
+      "alpha2Code": "EG",
+      "alpha3Code": "EGY",
+      "phoneCode": "20",
+      "currencyCode": "EGP"
+    }
+  ]
 }
 ```
 
----
+Success is `201`:
 
-## Validation Rules
-
-| Field | Rule |
-|-------|------|
-| `nameEn` | Required, 2–100 chars, English letters only, unique across all countries |
-| `nameAr` | Required, 2–100 chars, Arabic letters only, unique across all countries |
-| `alpha2Code` | Optional — if provided: exactly 2 chars, unique |
-| `alpha3Code` | Optional — if provided: exactly 3 chars, unique |
-| `phoneCode` | Optional — if provided: 1–10 chars |
-| `currencyCode` | Optional — if provided: exactly 3 chars, unique |
-
-> **Note:** Uniqueness for `nameEn`, `nameAr`, `alpha2Code`, `alpha3Code` is global (not scoped to any parent). The same code cannot exist in two different countries.
-
----
-
-## UI Building Guide
-
-### Form Fields
-
-```
-┌─────────────────────────────────────────────────────┐
-│  Arabic Name *          │  English Name *            │
-│  [text input RTL]       │  [text input LTR]          │
-├─────────────────────────────────────────────────────┤
-│  Alpha-2 Code           │  Alpha-3 Code              │
-│  [text, max 2, upper]   │  [text, max 3, upper]      │
-├─────────────────────────────────────────────────────┤
-│  Phone Code             │  Currency Code             │
-│  [text, max 10]         │  [text, max 3, upper]      │
-└─────────────────────────────────────────────────────┘
+```json
+{ "createdCount": 1 }
 ```
 
-- `nameAr` and `nameEn` are **required** — show validation error immediately on blur
-- Optional fields (`alpha2Code`, `alpha3Code`, `phoneCode`, `currencyCode`) — only validate if the user types something
-- Auto-uppercase `alpha2Code`, `alpha3Code`, `currencyCode` on input
-- No dropdown fields — all free-text
+The command is atomic: validation or duplicate failure prevents the whole batch from being committed.
 
-### List / Grid View
+## Archive and restore
 
-- Show `isDeleted` as a status badge (Active / Deleted)
-- `states` array length can be shown as a chip count
-- Use `GET /api/v1/countries/count` to show a summary card at the top of the page
+- `DELETE /api/v1/countries/{id}` archives an active country and returns `204`.
+- `POST /api/v1/countries/{id}/restore` restores an archived country and returns `204`.
+- Archive returns `400` with code `Country.CountryInUseByState` if active state dependencies block it.
+- Missing resources return `404` with code `Country.CountryNotFound`.
+- The frontend must show archive and restore as separate, explicit actions; it must not infer a toggle.
 
-### Delete Behaviour
+## Frontend rules
 
-- If the API returns **400** on delete, show: *"This country cannot be deleted because it has associated states."*
-- If the API returns **204**, toggle the row's visual state (do not remove from list — it's a soft delete)
+1. Keep management lists server-paged, server-sorted, and server-filtered.
+2. Use the page response `totalCount`; do not add a count request.
+3. Use `/lookup` for selectors.
+4. Use `/{id}` for view/edit hydration and `/{id}/states` only when the relation is needed.
+5. After a mutation, invalidate/refetch the countries query family. Realtime is an invalidation hint, not an entity payload cache.
+6. Enforce permissions in both visibility and direct event handlers.
+7. Treat archived records as read-only except for restore.
+
+## Stable error cases
+
+| Status | Code | Meaning |
+| --- | --- | --- |
+| `400` | validation problem | Invalid query/body |
+| `400` | `Country.NoCountriesProvided` | Empty bulk request |
+| `400` | `Country.CountryInUseByState` | Archive blocked by active states |
+| `404` | `Country.CountryNotFound` | Country unavailable for the operation |
+| `409` | `Country.Duplicated` | Feature-level duplicate detected |
+| `409` | `UniqueConstraintViolation` | Database uniqueness race detected |
+| `401` | — | Missing/invalid authentication |
+| `403` | — | Tenant membership or permission denied |
+
+## Reference source
+
+- Controller: `api/HrManagementSystem.Api/Features/GeographicalInformation/Countries/V1/CountriesController.cs`
+- Commands/queries: `api/HrManagementSystem.Application/Features/GeographicalInformation/Countries`
+- Mapster configuration: `api/HrManagementSystem.Application/Features/GeographicalInformation/Countries/Mapping/CountryMappingConfig.cs`
+- Web implementation: `web-next/src/features/basic-data/geographical-information/countries`
+- Cross-feature guide: `Docs/CORE_FEATURE_CQRS_WEB_GUIDE.md`

@@ -206,6 +206,7 @@
     "CountriesCreatedNotificationMessage": "تم إنشاء {Count} دولة",
     "CountryUpdatedNotificationMessage": "تم تحديث الدولة {NameAr}",
     "CountryDeletedNotificationMessage": "تم حذف الدولة {NameAr}",
+    "CountryArchivedNotificationMessage": "تمت أرشفة الدولة {NameAr}",
     "CountryRestoredNotificationMessage": "تمت استعادة الدولة {NameAr}",
     "StateNotificationTitle": "تحديث بيانات الولاية",
     "StateCreatedNotificationMessage": "تم إنشاء الولاية {NameAr}",

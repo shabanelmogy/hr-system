@@ -1,9 +1,9 @@
 import React from "react";
 import { LocationOn } from "@mui/icons-material";
-import { useTheme } from "@mui/material";
 import { GridColDef, GridActionsCellItemProps } from "@mui/x-data-grid";
-import { renderCode, renderDate, renderList } from "@/shared/components/data-grid";
-import type { Country } from "../../types/Country";
+import { renderCode, renderDate } from "@/shared/components/data-grid";
+import { AppChip } from "@/shared/components/cards";
+import type { CountryListItem } from "../../types/Country";
 import {
   renderCountryName,
   renderCurrencyCode,
@@ -12,13 +12,11 @@ import {
 
 export interface ColumnsFactoryProps {
   t: (key: string) => string;
-  permissions: { canView: boolean; canEdit: boolean; canDelete: boolean };
-  getActions: (params: { row: Country }) => React.ReactElement<GridActionsCellItemProps>[];
+  permissions: { canView: boolean; canEdit: boolean; canDelete: boolean; canRestore: boolean };
+  getActions: (params: { row: CountryListItem }) => React.ReactElement<GridActionsCellItemProps>[];
 }
 
 export const useCountryColumns = ({ t, permissions, getActions }: ColumnsFactoryProps): GridColDef[] => {
-  const theme = useTheme();
-
   const baseColumns: GridColDef[] = [
     {
       field: "id",
@@ -76,34 +74,21 @@ export const useCountryColumns = ({ t, permissions, getActions }: ColumnsFactory
       renderCell: renderCurrencyCode,
     },
     {
-      field: "states",
+      field: "statesCount",
       headerName: t("countries.states") || "States",
       flex: 1.2,
       align: "center",
       headerAlign: "center",
       sortable: false,
-      valueGetter: (value: Country["states"]) => {
-        return Array.isArray(value)
-          ? value
-              .filter((state) => !state.isDeleted)
-              .map((state) =>
-                theme.direction === "rtl" ? state.nameAr : state.nameEn
-              )
-          : [];
-      },
-      renderCell: renderList({
-        displayType: "chips",
-        maxItems: 2,
-        defaultColor: "primary",
-        variant: "outlined",
-        size: "small",
-        showCount: true,
-        emptyText: t("countries.noStates") || "No states",
-        chipProps: {
-          icon: <LocationOn sx={{ fontSize: 14 }} />,
-          sx: { fontSize: "0.75rem" },
-        },
-      }),
+      renderCell: ({ value }) => (
+        <AppChip
+          icon={<LocationOn sx={{ fontSize: 14 }} />}
+          label={String(value ?? 0)}
+          colorKey={Number(value) > 0 ? "success" : "secondary"}
+          variant="outlined"
+          size="small"
+        />
+      ),
     },
     {
       field: "createdOn",
@@ -120,6 +105,22 @@ export const useCountryColumns = ({ t, permissions, getActions }: ColumnsFactory
       align: "center",
       headerAlign: "center",
       valueFormatter: renderDate,
+    },
+    {
+      field: "isDeleted",
+      headerName: t("countries.status.label"),
+      flex: 0.8,
+      align: "center",
+      headerAlign: "center",
+      sortable: false,
+      renderCell: ({ value }) => (
+        <AppChip
+          label={value ? t("countries.status.archived") : t("countries.status.active")}
+          colorKey={value ? "error" : "success"}
+          variant="soft"
+          size="small"
+        />
+      ),
     },
   ];
 

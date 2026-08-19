@@ -203,6 +203,7 @@
     "CountriesCreatedNotificationMessage": "{Count} countries were created",
     "CountryUpdatedNotificationMessage": "Country {NameEn} was updated",
     "CountryDeletedNotificationMessage": "Country {NameEn} was deleted",
+    "CountryArchivedNotificationMessage": "Country {NameEn} was archived",
     "CountryRestoredNotificationMessage": "Country {NameEn} was restored",
     "StateNotificationTitle": "State updated",
     "StateCreatedNotificationMessage": "State {NameEn} was created",
