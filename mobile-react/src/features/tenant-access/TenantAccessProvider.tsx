@@ -3,6 +3,7 @@ import { AppState } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { configureAxiosReadOnlyAccess } from '@/src/core/api';
+import { useAppTheme } from '@/src/core/theme';
 import { useAuth } from '@/src/features/auth';
 import { AppButton } from '@/src/shared/components/controls/AppButton';
 import { AppAlert } from '@/src/shared/components/feedback/AppAlert';
@@ -37,6 +38,7 @@ function TenantAccessState({
   session: ReturnType<typeof useAuth>['session'];
 }>) {
   const { t, i18n } = useTranslation();
+  const { theme } = useAppTheme();
   const [noticeVisible, setNoticeVisible] = useState(true);
   const [serverReadOnly, setServerReadOnly] = useState(false);
   const [subscriptionEnded, setSubscriptionEnded] = useState(() => hasSubscriptionEnded(session));
@@ -99,7 +101,7 @@ function TenantAccessState({
           </AppButton>
         )}
         icon="lock-closed-outline"
-        iconColor="#D97706"
+        iconColor={theme.colors.warning}
         onClose={() => setNoticeVisible(false)}
         title={t('tenantAccess.title')}
         visible={isReadOnly && noticeVisible}>

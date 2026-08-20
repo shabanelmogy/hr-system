@@ -55,6 +55,8 @@ This gives immediate application-level RTL changes. Native operating-system surf
 
 `AppThemeProvider` supports `system`, `light`, and `dark` modes and persists the preference. Use semantic colors from `theme.colors`; do not hardcode page colors. Navigation, status bar, shared fields, cards, and feedback states consume the same theme.
 
+For the full styling contract, including token ownership, colocated `StyleSheet.create`, RTL, responsive/safe-area, accessibility, and review guidance, see [MOBILE_STYLE_GUIDE.md](MOBILE_STYLE_GUIDE.md).
+
 ## API And Session
 
 - Configure the backend with `EXPO_PUBLIC_API_URL`.

@@ -70,7 +70,10 @@ export function AppAppBar({
                 accessibilityLabel={`Development role: ${developmentRoleLabel}`}
                 style={[
                   styles.roleBadge,
-                  { borderColor: theme.colors.onPrimary },
+                  {
+                    backgroundColor: theme.colors.onPrimaryMuted,
+                    borderColor: theme.colors.onPrimary,
+                  },
                 ]}>
                 <AppText
                   numberOfLines={1}
@@ -106,7 +109,9 @@ export function AppAppBar({
                         borderColor: theme.colors.primary,
                       },
                     ]}>
-                    <AppText style={styles.notificationBadgeText} weight="800">
+                    <AppText
+                      style={[styles.notificationBadgeText, { color: theme.colors.onDanger }]}
+                      weight="800">
                       {notificationCount > 99 ? '99+' : notificationCount}
                     </AppText>
                   </View>
@@ -180,7 +185,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 3,
   },
   notificationBadgeText: {
-    color: '#FFFFFF',
     fontSize: 9,
     lineHeight: 11,
   },
@@ -190,7 +194,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderRadius: 999,
-    backgroundColor: 'rgba(255, 255, 255, 0.14)',
     paddingHorizontal: 8,
   },
 });

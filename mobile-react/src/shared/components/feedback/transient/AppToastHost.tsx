@@ -53,7 +53,8 @@ function AppToast({
           borderColor: toastTheme.colors.border,
           borderStartColor: accent,
           borderRadius: theme.radius.md,
-          shadowColor: theme.isDark ? '#172026' : '#000000',
+          shadowColor: theme.colors.shadow,
+          maxWidth: theme.layout.overlayMaxWidth,
         },
       ]}>
       <AppIcon color={accent} name={icons[kind]} size={24} />
@@ -95,7 +96,6 @@ function getAccent(
 const styles = StyleSheet.create({
   toast: {
     width: '92%',
-    maxWidth: 520,
     minHeight: 66,
     flexDirection: 'row',
     alignItems: 'center',

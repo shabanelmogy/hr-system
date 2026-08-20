@@ -23,6 +23,12 @@ const MAX_OUTPUT_SIZE = 1024;
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 4;
 const ZOOM_STEP = 0.25;
+// Crop guides belong to the media editor, so they intentionally stay neutral
+// and theme-independent to remain visible over both light and dark photographs.
+const CROP_GUIDE_COLORS = {
+  border: 'rgba(255, 255, 255, 0.82)',
+  grid: 'rgba(255, 255, 255, 0.52)',
+} as const;
 
 export interface ProfilePhotoCropSource extends ProfilePhotoUpload {
   width: number;
@@ -339,9 +345,10 @@ export function ProfilePhotoCropModal({
               {
                 width: cropSize,
                 height: cropSize,
-                backgroundColor: '#111827',
+                backgroundColor: theme.colors.shadow,
                 borderColor: theme.colors.primary,
                 borderRadius: cropSize / 2,
+                shadowColor: theme.colors.shadow,
               },
             ]}>
             <Image
@@ -449,7 +456,6 @@ const styles = StyleSheet.create({
   cropViewport: {
     borderWidth: 3,
     overflow: 'hidden',
-    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.28,
     shadowRadius: 18,
@@ -458,12 +464,12 @@ const styles = StyleSheet.create({
   cropBorder: {
     ...StyleSheet.absoluteFillObject,
     borderWidth: 2,
-    borderColor: 'rgba(255, 255, 255, 0.82)',
+    borderColor: CROP_GUIDE_COLORS.border,
     borderRadius: 999,
   },
   gridLine: {
     position: 'absolute',
-    backgroundColor: 'rgba(255, 255, 255, 0.52)',
+    backgroundColor: CROP_GUIDE_COLORS.grid,
   },
   gridVerticalStart: { top: 0, bottom: 0, left: '33.333%', width: StyleSheet.hairlineWidth },
   gridVerticalEnd: { top: 0, bottom: 0, right: '33.333%', width: StyleSheet.hairlineWidth },

@@ -3,6 +3,7 @@ import { type StyleProp, StyleSheet, View, type ViewStyle } from 'react-native';
 import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon';
 import { AppText } from '@/src/shared/components/typography/AppText';
 import { useLocalization } from '@/src/core/localization';
+import { useAppTheme } from '@/src/core/theme';
 
 export interface AppStatusBadgeProps {
   label: string;
@@ -20,6 +21,7 @@ export function AppStatusBadge({
   style,
 }: AppStatusBadgeProps) {
   const { direction } = useLocalization();
+  const { theme } = useAppTheme();
   const solid = variant === 'solid';
 
   return (
@@ -34,8 +36,8 @@ export function AppStatusBadge({
         },
         style,
       ]}>
-      {icon ? <AppIcon color={solid ? '#FFFFFF' : color} name={icon} size={16} /> : null}
-      <AppText style={{ color: solid ? '#FFFFFF' : color }} variant="caption" weight="700">
+      {icon ? <AppIcon color={solid ? theme.colors.onSolid : color} name={icon} size={16} /> : null}
+      <AppText style={{ color: solid ? theme.colors.onSolid : color }} variant="caption" weight="700">
         {label}
       </AppText>
     </View>

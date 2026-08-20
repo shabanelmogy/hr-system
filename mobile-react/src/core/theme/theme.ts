@@ -26,6 +26,11 @@ export const typography = {
   display: 30,
 } as const;
 
+export const layout = {
+  contentMaxWidth: 960,
+  overlayMaxWidth: 520,
+} as const;
+
 const greenLightColors = {
   background: '#F5F7FA',
   surface: '#FFFFFF',
@@ -34,6 +39,11 @@ const greenLightColors = {
   textMuted: '#5C6970',
   primary: '#0F766E',
   onPrimary: '#FFFFFF',
+  onPrimaryMuted: 'rgba(255, 255, 255, 0.14)',
+  onSecondary: '#FFFFFF',
+  onWarning: '#FFFFFF',
+  onDanger: '#FFFFFF',
+  onSolid: '#FFFFFF',
   secondary: '#2563EB',
   accent: '#A21CAF',
   success: '#15803D',
@@ -42,6 +52,7 @@ const greenLightColors = {
   border: '#D4E1DE',
   disabled: '#9AA5AB',
   overlay: 'rgba(15, 23, 42, 0.48)',
+  shadow: '#000000',
 } as const;
 
 const greenDarkColors = {
@@ -52,6 +63,11 @@ const greenDarkColors = {
   textMuted: '#A8B8B4',
   primary: '#5EEAD4',
   onPrimary: '#0D2E2B',
+  onPrimaryMuted: 'rgba(13, 46, 43, 0.14)',
+  onSecondary: '#101514',
+  onWarning: '#101514',
+  onDanger: '#101514',
+  onSolid: '#101514',
   secondary: '#93C5FD',
   accent: '#F0ABFC',
   success: '#4ADE80',
@@ -60,6 +76,7 @@ const greenDarkColors = {
   border: '#334540',
   disabled: '#6F7A80',
   overlay: 'rgba(0, 0, 0, 0.64)',
+  shadow: '#000000',
 } as const;
 
 const orangeLightColors = {
@@ -80,6 +97,7 @@ const orangeDarkColors = {
   surfaceMuted: '#32231A',
   primary: '#FDBA74',
   onPrimary: '#431407',
+  onPrimaryMuted: 'rgba(67, 20, 7, 0.14)',
   secondary: '#7DD3FC',
   accent: '#C4B5FD',
   border: '#49372C',
@@ -102,6 +120,7 @@ const blueDarkColors = {
   surfaceMuted: '#202B3B',
   primary: '#93C5FD',
   onPrimary: '#102A56',
+  onPrimaryMuted: 'rgba(16, 42, 86, 0.14)',
   secondary: '#5EEAD4',
   accent: '#F0ABFC',
   border: '#334156',
@@ -129,6 +148,7 @@ const monochromeDarkColors = {
   textMuted: '#B5B5B5',
   primary: '#FAFAFA',
   onPrimary: '#111111',
+  onPrimaryMuted: 'rgba(17, 17, 17, 0.14)',
   secondary: '#D4D4D4',
   accent: '#A3A3A3',
   border: '#3F3F3F',
@@ -146,10 +166,11 @@ export interface AppTheme {
   radius: typeof radius;
   spacing: typeof spacing;
   typography: typeof typography;
+  layout: typeof layout;
 }
 
 function createTheme(colors: AppColors, isDark: boolean): AppTheme {
-  return { colors, isDark, radius, spacing, typography };
+  return { colors, isDark, radius, spacing, typography, layout };
 }
 
 export const themeCatalog: Record<ThemePalette, Record<ResolvedThemeMode, AppTheme>> = {

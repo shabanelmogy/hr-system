@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import type { TFunction } from 'i18next';
 
 import { ApiError } from '@/src/core/api';
+import { useAppTheme } from '@/src/core/theme';
 import { toFormErrorMap, useZodForm } from '@/src/core/validation';
 import type {
   ManagedUser,
@@ -378,14 +379,24 @@ export function ManagedUserForm({
 interface PasswordStrengthValue {
   score: number;
   label: string;
-  color: string;
   checks: readonly { passed: boolean; label: string }[];
 }
 
 function PasswordStrength({ value }: { value: PasswordStrengthValue }) {
+  const { theme } = useAppTheme();
+  const color = value.score === 0
+    ? theme.colors.disabled
+    : value.score <= 2
+      ? theme.colors.danger
+      : value.score === 3
+        ? theme.colors.warning
+        : value.score === 4
+          ? theme.colors.secondary
+          : theme.colors.success;
+
   return (
     <View style={styles.passwordStrength}>
-      <AppText style={{ color: value.color }} variant="caption" weight="700">
+      <AppText style={{ color }} variant="caption" weight="700">
         {value.label}
       </AppText>
       <View style={styles.strengthBars}>
@@ -394,7 +405,7 @@ function PasswordStrength({ value }: { value: PasswordStrengthValue }) {
             key={level}
             style={[
               styles.strengthBar,
-              { backgroundColor: level <= value.score ? value.color : '#CBD5E1' },
+              { backgroundColor: level <= value.score ? color : theme.colors.border },
             ]}
           />
         ))}
@@ -403,7 +414,7 @@ function PasswordStrength({ value }: { value: PasswordStrengthValue }) {
         {value.checks.map((check) => (
           <View key={check.label} style={styles.passwordCheck}>
             <AppIcon
-              color={check.passed ? value.color : '#94A3B8'}
+              color={check.passed ? color : theme.colors.disabled}
               name={check.passed ? 'checkmark-circle' : 'ellipse-outline'}
               size={15}
             />
@@ -435,11 +446,9 @@ function getPasswordStrength(
     t('userManagement.passwordStrong'),
     t('userManagement.passwordVeryStrong'),
   ];
-  const colors = ['#94A3B8', '#DC2626', '#DC2626', '#B45309', '#2563EB', '#15803D'];
   return {
     score,
     label: labels[score],
-    color: colors[score],
     checks,
   };
 }

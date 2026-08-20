@@ -166,16 +166,19 @@ export function LoginForm({ compact, form }: LoginFormProps) {
           <View
             style={[
               styles.adminButtonShell,
+              {
+                backgroundColor: theme.colors.danger,
+                shadowColor: theme.colors.danger,
+              },
               compact ? styles.quickButtonCompact : styles.quickButtonWide,
             ]}>
             <AppButton
               disabled={form.isAnySubmitting}
               fullWidth
-              gradientColors={['#F44336', '#E91E63']}
+              gradientColors={[theme.colors.danger, theme.colors.warning]}
               icon="shield-outline"
               loading={form.activeAction === 'admin'}
               onPress={() => void form.loginAs('admin')}
-              pressedGradientColors={['#D32F2F', '#C2185B']}
               style={styles.adminButton}
               variant="danger">
               {t('auth.loginAsAdmin')}
@@ -184,17 +187,21 @@ export function LoginForm({ compact, form }: LoginFormProps) {
           <View
             style={[
               styles.superAdminButtonShell,
+              {
+                backgroundColor: theme.colors.secondary,
+                shadowColor: theme.colors.secondary,
+              },
               compact ? styles.quickButtonCompact : styles.quickButtonWide,
             ]}>
             <AppButton
               disabled={form.isAnySubmitting}
               fullWidth
-              gradientColors={['#7C3AED', '#4F46E5']}
+              gradientColors={[theme.colors.secondary, theme.colors.primary]}
               icon="diamond-outline"
               loading={form.activeAction === 'superAdmin'}
               onPress={() => void form.loginAs('superAdmin')}
-              pressedGradientColors={['#6D28D9', '#4338CA']}
-              style={styles.adminButton}>
+              style={styles.adminButton}
+              variant="secondary">
               {t('auth.loginAsSuperAdmin')}
             </AppButton>
           </View>
@@ -304,18 +311,14 @@ const styles = StyleSheet.create({
     minWidth: 0,
   },
   adminButtonShell: {
-    backgroundColor: '#F44336',
     borderRadius: 8,
-    shadowColor: '#F44336',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.32,
     shadowRadius: 8,
     elevation: 5,
   },
   superAdminButtonShell: {
-    backgroundColor: '#6D28D9',
     borderRadius: 8,
-    shadowColor: '#6D28D9',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.32,
     shadowRadius: 8,

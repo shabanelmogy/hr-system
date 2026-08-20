@@ -22,7 +22,6 @@ import {
   AppIconButton,
   type AppIconName,
   AppListScreen,
-  type AppMultiViewDefinition,
   AppPageHeader,
   AppScreen,
   AppStateView,

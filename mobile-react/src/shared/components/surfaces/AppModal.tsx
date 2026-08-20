@@ -65,6 +65,7 @@ export function AppModal({
           direction,
           backgroundColor: variant === 'fullScreen' ? theme.colors.surface : 'transparent',
           borderBottomColor: theme.colors.border,
+          shadowColor: theme.colors.shadow,
         },
       ]}>
       {icon ? (
@@ -124,7 +125,13 @@ export function AppModal({
                   borderTopColor: theme.colors.border,
                 },
               ]}>
-              <View style={styles.fullScreenFooterContent}>{footer}</View>
+              <View
+                style={[
+                  styles.fullScreenFooterContent,
+                  { maxWidth: theme.layout.contentMaxWidth },
+                ]}>
+                {footer}
+              </View>
             </SafeAreaView>
           ) : null}
         </KeyboardAvoidingView>
@@ -147,6 +154,7 @@ export function AppModal({
               backgroundColor: theme.colors.surface,
               borderColor: theme.colors.border,
               borderRadius: theme.radius.md,
+              maxWidth: theme.layout.overlayMaxWidth,
             },
             sheetStyle,
           ]}>
@@ -179,7 +187,6 @@ const styles = StyleSheet.create({
   },
   sheet: {
     width: '100%',
-    maxWidth: 520,
     maxHeight: '82%',
     alignSelf: 'center',
     borderWidth: 1,
@@ -203,7 +210,6 @@ const styles = StyleSheet.create({
     minHeight: 76,
     borderBottomWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: 16,
-    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 5,
@@ -234,7 +240,6 @@ const styles = StyleSheet.create({
   },
   fullScreenFooterContent: {
     width: '100%',
-    maxWidth: 960,
     alignSelf: 'center',
   },
 });

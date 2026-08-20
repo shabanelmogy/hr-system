@@ -45,7 +45,7 @@ export function AppCard({
     ? {
         backgroundColor: theme.colors.surface,
         borderColor: 'transparent',
-        shadowColor: '#000000',
+        shadowColor: theme.colors.shadow,
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: theme.isDark ? 0.3 : 0.12,
         shadowRadius: 8,

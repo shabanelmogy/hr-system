@@ -54,11 +54,11 @@ export function AppButton({
   };
   const foregroundMap: Record<AppButtonVariant, string> = {
     primary: theme.colors.onPrimary,
-    secondary: '#FFFFFF',
+    secondary: theme.colors.onSecondary,
     outline: theme.colors.primary,
     ghost: theme.colors.primary,
-    warning: '#FFFFFF',
-    danger: '#FFFFFF',
+    warning: theme.colors.onWarning,
+    danger: theme.colors.onDanger,
   };
 
   return (

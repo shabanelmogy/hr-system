@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { toApiError } from '@/src/core/api';
 import { asHref, ROUTES } from '@/src/core/constants/routes';
 import { useLocalization } from '@/src/core/localization';
-import { useAppTheme } from '@/src/core/theme';
+import { layout, radius, spacing, useAppTheme } from '@/src/core/theme';
 import { authApi } from '@/src/features/auth/api/auth-api';
 import {
   AppAlert,
@@ -342,12 +342,12 @@ const styles = StyleSheet.create({
   screen: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: 16,
+    padding: spacing.lg,
   },
   card: {
     alignSelf: 'center',
-    gap: 16,
-    maxWidth: 520,
+    gap: spacing.lg,
+    maxWidth: layout.overlayMaxWidth,
     width: '100%',
   },
   heading: {
@@ -356,12 +356,12 @@ const styles = StyleSheet.create({
   },
   icon: {
     alignItems: 'center',
-    borderRadius: 999,
+    borderRadius: radius.full,
     height: 48,
     justifyContent: 'center',
     width: 48,
   },
   form: {
-    gap: 12,
+    gap: spacing.md,
   },
 });

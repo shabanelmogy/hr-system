@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
-import { useAppTheme } from '@/src/core/theme';
 import { AppFilterButton, type AppFilterButtonProps, type AppFilterOption } from '@/src/shared/components/controls/AppFilterButton';
 import { AppTextField } from '@/src/shared/components/controls/AppTextField';
 import { AppMultiView, type AppMultiViewDefinition } from './AppMultiView';
@@ -84,7 +83,6 @@ export function AppListScreen<Item, ViewId extends string, FilterValue extends s
 }: AppListScreenProps<Item, ViewId, FilterValue>) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
-  const { theme } = useAppTheme();
   const [search, setSearch] = useState('');
 
   const searchedItems = useMemo(() => {

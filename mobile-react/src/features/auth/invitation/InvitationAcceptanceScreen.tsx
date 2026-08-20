@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { toApiError } from '@/src/core/api';
 import { asHref, ROUTES } from '@/src/core/constants/routes';
 import { useLocalization } from '@/src/core/localization';
-import { useAppTheme } from '@/src/core/theme';
+import { layout, radius, spacing, useAppTheme } from '@/src/core/theme';
 import { authApi } from '@/src/features/auth/api/auth-api';
 import { AppAlert, AppButton, AppCard, AppForm, AppIcon, AppText, AppTextField } from '@/src/shared/components';
 
@@ -75,4 +75,4 @@ export function InvitationAcceptanceScreen() {
 
 function readParam(value: string | string[] | undefined): string { return Array.isArray(value) ? value[0] ?? '' : value ?? ''; }
 function isStrongPassword(value: string): boolean { return value.length >= 8 && value.length <= 50 && /[a-z]/.test(value) && /[A-Z]/.test(value) && /\d/.test(value) && /[^A-Za-z0-9]/.test(value); }
-const styles = StyleSheet.create({ screen: { flexGrow: 1, justifyContent: 'center', padding: 16 }, card: { alignSelf: 'center', gap: 16, maxWidth: 520, width: '100%' }, heading: { alignItems: 'center', gap: 6 }, icon: { alignItems: 'center', borderRadius: 999, height: 48, justifyContent: 'center', width: 48 }, form: { gap: 12 } });
+const styles = StyleSheet.create({ screen: { flexGrow: 1, justifyContent: 'center', padding: spacing.lg }, card: { alignSelf: 'center', gap: spacing.lg, maxWidth: layout.overlayMaxWidth, width: '100%' }, heading: { alignItems: 'center', gap: spacing.xs }, icon: { alignItems: 'center', borderRadius: radius.full, height: 48, justifyContent: 'center', width: 48 }, form: { gap: spacing.md } });

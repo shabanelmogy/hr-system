@@ -64,7 +64,7 @@ export function AppScreen({
 
   const contentStyle: StyleProp<ViewStyle> = [
     styles.content,
-    { direction },
+    { direction, maxWidth: theme.layout.contentMaxWidth },
     padded ? { padding: theme.spacing.lg } : {},
     contentContainerStyle,
   ];
@@ -106,7 +106,10 @@ export function AppScreen({
             <View
               style={[
                 styles.footerContent,
-                padded ? { paddingHorizontal: theme.spacing.lg } : {},
+                {
+                  maxWidth: theme.layout.contentMaxWidth,
+                  paddingHorizontal: padded ? theme.spacing.lg : undefined,
+                },
               ]}>
               {footerContent}
             </View>
@@ -126,7 +129,6 @@ const styles = StyleSheet.create({
   },
   content: {
     width: '100%',
-    maxWidth: 960,
     alignSelf: 'center',
   },
   footer: {
@@ -135,7 +137,6 @@ const styles = StyleSheet.create({
   },
   footerContent: {
     width: '100%',
-    maxWidth: 960,
     alignSelf: 'center',
     paddingTop: 4,
     paddingBottom: 4,
