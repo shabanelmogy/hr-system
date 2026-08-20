@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  getLastServerListPage,
   isServerListSearchPending,
   serverListReducer,
   type ServerListState,
@@ -47,5 +48,11 @@ describe("useServerListState transitions", () => {
   it("reports pending search while the debounced value lags", () => {
     expect(isServerListSearchPending(" Egypt ", "")).toBe(true);
     expect(isServerListSearchPending(" Egypt ", "Egypt")).toBe(false);
+  });
+
+  it("calculates the last valid zero-based page", () => {
+    expect(getLastServerListPage(0, 10)).toBe(0);
+    expect(getLastServerListPage(10, 10)).toBe(0);
+    expect(getLastServerListPage(11, 10)).toBe(1);
   });
 });

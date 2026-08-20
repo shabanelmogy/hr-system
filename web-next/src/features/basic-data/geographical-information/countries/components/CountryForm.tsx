@@ -2,7 +2,7 @@
 import { MyForm, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
-import { Box, Button } from "@mui/material";
+import { Alert, Box, Button } from "@mui/material";
 import { useEffect, useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -18,6 +18,8 @@ const CountryForm = ({
   onClose,
   onSubmit,
   loading,
+  detailError,
+  onRetryDetails,
 }: Omit<CountryFormProps, "t">) => {
   const { t } = useTranslation();
 
@@ -77,10 +79,10 @@ const CountryForm = ({
   // Get appropriate overlay message
   const getOverlayMessage = (): string => {
     if (isAddMode)
-      return t("countries.creatingCountry") || "Creating country...";
+      return t("countries.creatingCountry");
     if (isEditMode)
-      return t("countries.updatingCountry") || "Updating country...";
-    return t("countries.savingCountry") || "Saving country...";
+      return t("countries.updatingCountry");
+    return t("countries.savingCountry");
   };
 
   // Convert react-hook-form errors to simple error object for MyForm
@@ -119,10 +121,10 @@ const CountryForm = ({
       }
       subtitle={
         isViewMode
-          ? t("countries.viewSubtitle") || "View country details"
+          ? t("countries.viewSubtitle")
           : isEditMode
-            ? t("countries.editSubtitle") || "Modify country information"
-            : t("countries.addSubtitle") || "Add a new country to the system"
+            ? t("countries.editSubtitle")
+            : t("countries.addSubtitle")
       }
       submitButtonText={
         isViewMode
@@ -132,7 +134,7 @@ const CountryForm = ({
             : t("actions.create")
       }
       onSubmit={
-        isViewMode
+        isViewMode || detailError
           ? undefined
           : handleSubmit(async (data) => {
               try {
@@ -146,7 +148,7 @@ const CountryForm = ({
       }
       isSubmitting={loading}
       isDirty={isDirty}
-      hideFooter={isViewMode}
+      hideFooter={isViewMode || Boolean(detailError)}
       recordId={selectedCountry?.id}
       focusFieldName="nameAr"
       autoFocusFirst={true}
@@ -169,6 +171,20 @@ const CountryForm = ({
         ) : null
       }
     >
+      {detailError ? (
+        <Alert
+          severity="error"
+          action={onRetryDetails ? (
+            <Button color="inherit" size="small" onClick={onRetryDetails}>
+              {t("common.retry")}
+            </Button>
+          ) : undefined}
+          sx={{ mt: 2 }}
+        >
+          {detailError}
+        </Alert>
+      ) : null}
+
       {/* Required: Arabic Name */}
       <Box sx={{ mt: 2 }}>
         <MyTextField

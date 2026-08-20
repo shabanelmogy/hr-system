@@ -1,6 +1,6 @@
 import { IconButton, alpha, useTheme } from "@mui/material";
 import { Clear, Search } from "@mui/icons-material";
-import { MyTextField } from "@/shared/components/forms";
+import { MyTextField } from "@/shared/components/forms/text-fields";
 import { useTranslation } from "react-i18next";
 
 export interface SearchBarProps {

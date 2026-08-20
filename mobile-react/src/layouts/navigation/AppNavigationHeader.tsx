@@ -1,13 +1,9 @@
 import { View } from 'react-native';
 
-import { AppAppBar } from '@/src/layouts/AppAppBar';
+import { AppAppBar, type AppAppBarProps } from '@/src/layouts/AppAppBar';
 import { AppBreadcrumbs } from '@/src/layouts/navigation/AppBreadcrumbs';
 
-interface AppNavigationHeaderProps {
-  showDrawer?: boolean;
-  showLogout?: boolean;
-  onDrawerPress?: () => void;
-}
+type AppNavigationHeaderProps = AppAppBarProps;
 
 export function AppNavigationHeader(props: AppNavigationHeaderProps) {
   return (

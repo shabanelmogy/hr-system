@@ -1,5 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
-import { Button, Divider, Stack } from "@mui/material";
+import { Box, Button, Divider, Stack } from "@mui/material";
 import {
   GridToolbarColumnsButton,
   GridToolbarDensitySelector,
@@ -8,9 +8,15 @@ import {
 import { useTranslation } from "react-i18next";
 import { useDataGridShell } from "../core/context";
 import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
+import { SearchBar } from "@/shared/components/lists/card-view/header-controls/SearchBar";
 
 export function DataGridToolbar() {
-  const { onToolbarAdd } = useDataGridShell();
+  const {
+    onToolbarAdd,
+    showColumnFilterButton,
+    toolbarContent,
+    toolbarSearch,
+  } = useDataGridShell();
   const { t } = useTranslation();
   const { isReadOnly } = useAppReadOnly();
 
@@ -20,6 +26,16 @@ export function DataGridToolbar() {
       useFlexGap
       sx={{ alignItems: "center", flexWrap: "wrap", gap: 0.5, p: 1 }}
     >
+      {toolbarSearch ? (
+        <Box sx={{ flex: "1 1 280px", maxWidth: { xs: "100%", md: 440 }, minWidth: 220 }}>
+          <SearchBar
+            searchTerm={toolbarSearch.value}
+            placeholder={toolbarSearch.placeholder}
+            onSearchChange={toolbarSearch.onChange}
+            onClearSearch={toolbarSearch.onClear}
+          />
+        </Box>
+      ) : null}
       {onToolbarAdd ? (
         <>
           <Button
@@ -34,8 +50,9 @@ export function DataGridToolbar() {
         </>
       ) : null}
       <GridToolbarColumnsButton />
-      <GridToolbarFilterButton />
+      {showColumnFilterButton ? <GridToolbarFilterButton /> : null}
       <GridToolbarDensitySelector />
+      {toolbarContent}
     </Stack>
   );
 }

@@ -3,10 +3,11 @@ import { useTranslation } from "react-i18next";
 import { GridApi, type GridPaginationModel, type GridSortModel } from "@mui/x-data-grid";
 import { ContentWrapper } from "@/shared/components/layout";
 import { MyDataGrid } from "@/shared/components/data-grid";
-import { useCountriesPermissions } from "@/shared/hooks/usePermissions";
-import type { CountryListItem, CountrySortColumn } from "../../types/Country";
+import type { CountryListItem, CountrySortColumn, CountryStatus } from "../../types/Country";
+import type { CountryActionPermissions } from "../card-view/CountryCard.types";
 import { makeCountryActions } from "./GridActions";
 import { useCountryColumns } from "./Columns";
+import CountryGridFilters from "./CountryGridFilters";
 
 interface CountriesDataGridProps {
   countries: CountryListItem[];
@@ -17,11 +18,21 @@ interface CountriesDataGridProps {
   onDelete: (country: CountryListItem) => void;
   onView: (country: CountryListItem) => void;
   onRestore: (country: CountryListItem) => void;
+  permissions: CountryActionPermissions;
   page: number;
   pageSize: number;
   totalCount: number;
   sortColumn: CountrySortColumn;
   sortDirection: "ASC" | "DESC";
+  searchValue: string;
+  onSearchChange: (value: string) => void;
+  status: CountryStatus;
+  currencyCode: string;
+  hasStates: "all" | "with" | "without";
+  onStatusChange: (value: CountryStatus) => void;
+  onCurrencyCodeChange: (value: string) => void;
+  onHasStatesChange: (value: "all" | "with" | "without") => void;
+  onReset: () => void;
   onPaginationChange: (model: GridPaginationModel) => void;
   onSortChange: (model: GridSortModel) => void;
   lastAddedId?: string | number | null;
@@ -38,6 +49,7 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
   onDelete,
   onView,
   onRestore,
+  permissions,
   lastAddedId,
   lastEditedId,
   lastDeletedIndex,
@@ -46,11 +58,19 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
   totalCount,
   sortColumn,
   sortDirection,
+  searchValue,
+  onSearchChange,
+  status,
+  currencyCode,
+  hasStates,
+  onStatusChange,
+  onCurrencyCodeChange,
+  onHasStatesChange,
+  onReset,
   onPaginationChange,
   onSortChange,
 }) => {
   const { t } = useTranslation();
-  const permissions = useCountriesPermissions();
 
   const getActions = useMemo(
     () => makeCountryActions({ t, permissions, onView, onEdit, onDelete, onRestore }),
@@ -76,6 +96,23 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
         onPaginationModelChange={onPaginationChange}
         rowCount={totalCount}
         pageSizeOptions={[5, 10, 25, 50]}
+        toolbarSearch={{
+          value: searchValue,
+          placeholder: t("countries.searchPlaceHolder"),
+          onChange: onSearchChange,
+          onClear: () => onSearchChange(""),
+        }}
+        toolbarContent={(
+          <CountryGridFilters
+            status={status}
+            currencyCode={currencyCode}
+            hasStates={hasStates}
+            onStatusChange={onStatusChange}
+            onCurrencyCodeChange={onCurrencyCodeChange}
+            onHasStatesChange={onHasStatesChange}
+            onReset={onReset}
+          />
+        )}
         showNavigationButtons={false}
         lastAddedId={lastAddedId}
         lastEditedId={lastEditedId}

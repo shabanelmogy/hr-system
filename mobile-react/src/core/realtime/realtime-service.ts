@@ -15,17 +15,25 @@ class RealtimeService {
   private readonly stateCallbacks = new Set<ConnectionStateCallback>();
   private readonly eventCallbacks = new Map<string, Set<RealtimeCallback>>();
   private startPromise: Promise<boolean> | null = null;
+  private stopPromise: Promise<void> | null = null;
   private restartTimer: ReturnType<typeof setTimeout> | null = null;
   private enabled = false;
   private intentionallyStopped = false;
+  private lifecycleRevision = 0;
 
   async setEnabled(enabled: boolean): Promise<void> {
-    if (this.enabled === enabled) return;
+    if (this.enabled === enabled) {
+      if (enabled && this.connection?.state === signalR.HubConnectionState.Disconnected) {
+        await this.startWhenReady();
+      }
+      return;
+    }
 
     this.enabled = enabled;
+    this.lifecycleRevision += 1;
     if (enabled) {
       this.intentionallyStopped = false;
-      await this.start();
+      await this.startWhenReady();
       return;
     }
 
@@ -51,16 +59,24 @@ class RealtimeService {
     this.intentionallyStopped = false;
     this.clearRestartTimer();
     this.notifyState(false, true);
+    const startRevision = this.lifecycleRevision;
     this.startPromise = connection
       .start()
       .then(() => {
+        if (!this.enabled || this.intentionallyStopped) return false;
         this.notifyState(true, false);
         return true;
       })
       .catch((error: unknown) => {
         this.notifyState(false, false);
-        console.warn('[SignalR] Connection delayed', error);
-        this.scheduleRestart();
+        const canceledByLifecycle =
+          startRevision !== this.lifecycleRevision ||
+          !this.enabled ||
+          this.intentionallyStopped;
+        if (!canceledByLifecycle) {
+          console.warn('[SignalR] Connection delayed', error);
+          this.scheduleRestart();
+        }
         return false;
       })
       .finally(() => {
@@ -74,13 +90,24 @@ class RealtimeService {
     this.intentionallyStopped = true;
     this.clearRestartTimer();
 
-    if (
-      this.connection &&
-      this.connection.state !== signalR.HubConnectionState.Disconnected
-    ) {
-      await this.connection.stop();
+    if (!this.connection || this.connection.state === signalR.HubConnectionState.Disconnected) {
+      this.notifyState(false, false);
+      return;
     }
 
+    if (!this.stopPromise) {
+      const connection = this.connection;
+      this.stopPromise = connection
+        .stop()
+        .catch((error: unknown) => {
+          console.warn('[SignalR] Connection stop delayed', error);
+        })
+        .finally(() => {
+          this.stopPromise = null;
+        });
+    }
+
+    await this.stopPromise;
     this.notifyState(false, false);
   }
 
@@ -119,7 +146,9 @@ class RealtimeService {
         },
       })
       .withAutomaticReconnect([0, 2_000, 5_000, 10_000, 30_000])
-      .configureLogging(signalR.LogLevel.Warning)
+      // Lifecycle cancellation is handled by this service. SignalR's console logger
+      // otherwise reports an intentional background stop as a negotiation error.
+      .configureLogging(signalR.LogLevel.None)
       .build();
 
     for (const [eventName, callbacks] of this.eventCallbacks) {
@@ -128,8 +157,11 @@ class RealtimeService {
 
     connection.onreconnecting(() => this.notifyState(false, true));
     connection.onreconnected(() => this.notifyState(true, false));
-    connection.onclose(() => {
+    connection.onclose((error) => {
       this.notifyState(false, false);
+      if (error && this.enabled && !this.intentionallyStopped) {
+        console.warn('[SignalR] Connection closed', error);
+      }
       this.scheduleRestart();
     });
     this.connection = connection;
@@ -143,6 +175,12 @@ class RealtimeService {
       this.restartTimer = null;
       void this.start();
     }, restartDelayMs);
+  }
+
+  private async startWhenReady(): Promise<void> {
+    if (this.stopPromise) await this.stopPromise;
+    if (this.startPromise) await this.startPromise;
+    if (this.enabled) await this.start();
   }
 
   private clearRestartTimer(): void {

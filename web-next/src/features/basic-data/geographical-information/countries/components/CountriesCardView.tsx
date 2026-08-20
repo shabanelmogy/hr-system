@@ -35,21 +35,20 @@ const CountriesCardView = ({
 }: CountriesCardViewProps) => {
   const { t } = useTranslation();
   const [hoveredCard, setHoveredCard] = useState<string | number | null>(null);
-  const [highlightedCard, setHighlightedCard] = useState<string | number | null>(null);
-  const [highlightLabel, setHighlightLabel] = useState<string | null>(null);
+  const [expiredHighlightId, setExpiredHighlightId] = useState<string | number | null>(null);
+  const highlightId = lastAddedId ?? lastEditedId;
+  const highlightVisible = highlightId != null
+    && expiredHighlightId !== highlightId
+    && countries.some((country) => String(country.id) === String(highlightId));
+  const highlightLabel = lastAddedId != null
+    ? t("countries.highlight.new")
+    : t("countries.highlight.edited");
 
   useEffect(() => {
-    const id = lastAddedId ?? lastEditedId;
-    if (id == null || !countries.some((country) => String(country.id) === String(id))) return;
-
-    setHighlightedCard(id);
-    setHighlightLabel(lastAddedId != null ? t("countries.highlight.new") : t("countries.highlight.edited"));
-    const timer = setTimeout(() => {
-      setHighlightedCard(null);
-      setHighlightLabel(null);
-    }, 5_000);
+    if (highlightId == null) return;
+    const timer = setTimeout(() => setExpiredHighlightId(highlightId), 5_000);
     return () => clearTimeout(timer);
-  }, [countries, lastAddedId, lastEditedId, t]);
+  }, [highlightId]);
 
   if (loading) return <CardViewSkeleton />;
 
@@ -81,8 +80,10 @@ const CountriesCardView = ({
               country={country}
               index={index}
               isHovered={hoveredCard === country.id}
-              isHighlighted={highlightedCard === country.id}
-              highlightLabel={highlightedCard === country.id ? highlightLabel ?? undefined : undefined}
+              isHighlighted={highlightVisible && String(highlightId) === String(country.id)}
+              highlightLabel={highlightVisible && String(highlightId) === String(country.id)
+                ? highlightLabel
+                : undefined}
               onEdit={onEdit}
               onDelete={onDelete}
               onRestore={onRestore}

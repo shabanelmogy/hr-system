@@ -4,6 +4,14 @@ import type {
   GridSortModel,
   GridValidRowModel,
 } from "@mui/x-data-grid";
+import type { ReactNode } from "react";
+
+export interface DataGridToolbarSearchConfig {
+  value: string;
+  placeholder: string;
+  onChange: (value: string) => void;
+  onClear: () => void;
+}
 
 export type MyDataGridProps<
   TRow extends GridValidRowModel = GridValidRowModel,
@@ -11,6 +19,8 @@ export type MyDataGridProps<
   initialSortModel?: GridSortModel;
   showNavigationButtons?: boolean;
   onToolbarAdd?: () => void;
+  toolbarSearch?: DataGridToolbarSearchConfig;
+  toolbarContent?: ReactNode;
   lastAddedId?: GridRowId | null;
   lastEditedId?: GridRowId | null;
   lastDeletedIndex?: number | null;

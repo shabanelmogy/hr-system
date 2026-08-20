@@ -8,6 +8,8 @@ export interface CardViewHeaderProps extends CardViewToolbarProps {
   subtitle?: string;
   mainChipLabel: string;
   page: number;
+  showTitleSection?: boolean;
+  compact?: boolean;
 }
 
 const CardViewHeader = ({
@@ -15,6 +17,8 @@ const CardViewHeader = ({
   subtitle,
   mainChipLabel,
   page,
+  showTitleSection = true,
+  compact = false,
   searchTerm,
   searchPlaceholder,
   onSearchChange,
@@ -36,14 +40,16 @@ const CardViewHeader = ({
     <Paper
       elevation={3}
       sx={{
-        p: 3,
-        mb: 3,
+        p: compact ? 1.5 : 3,
+        mb: compact ? 1.5 : 3,
         background: `linear-gradient(135deg, ${theme.palette.primary.main}08 0%, ${theme.palette.secondary.main}08 100%)`,
         border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
-        borderRadius: 3,
+        borderRadius: compact ? 2 : 3,
       }}
     >
-      <TitleSection title={title} subtitle={subtitle} mainChipLabel={mainChipLabel} page={page} />
+      {showTitleSection && (
+        <TitleSection title={title} subtitle={subtitle} mainChipLabel={mainChipLabel} page={page} />
+      )}
       <CardViewToolbar
         searchTerm={searchTerm}
         searchPlaceholder={searchPlaceholder}
@@ -59,6 +65,7 @@ const CardViewHeader = ({
         onFilterByChange={onFilterByChange}
         onReset={onReset}
         additionalControls={additionalControls}
+        singleRow={compact}
       />
     </Paper>
   );

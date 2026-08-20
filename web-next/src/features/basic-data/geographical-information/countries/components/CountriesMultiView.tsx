@@ -1,16 +1,18 @@
 import { PageHeader } from "@/shared/components/navigation/header";
 import { Box } from "@mui/material";
 import type { GridApi, GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { CountryListItem, CountrySortColumn, CountryStatus } from "../types/Country";
 import CountriesCardView from "./CountriesCardView";
+import CountriesChartView from "./CountriesChartView";
 import type { CountryActionPermissions } from "./card-view/CountryCard.types";
 import CountryCardViewHeader from "./card-view/CountryCardViewHeader";
 import CountriesDataGrid from "./grid-view/CountriesDataGrid";
 import ImportCountries from "./import-data/ImportCountries";
+import CountryReportPage from "../reports/pages/CountryReportPage";
 
-type CountryView = "grid" | "cards" | "import";
+type CountryView = "grid" | "cards" | "chart" | "report" | "import";
 
 interface CountriesMultiViewProps {
   countries: CountryListItem[];
@@ -90,14 +92,21 @@ const CountriesMultiView = ({
 }: CountriesMultiViewProps) => {
   const { t } = useTranslation();
   const [currentView, setCurrentView] = useState<CountryView>("grid");
-
-  useEffect(() => {
-    if (!permissions.canCreate && currentView === "import") setCurrentView("grid");
-  }, [currentView, permissions.canCreate]);
+  const visibleView = currentView === "import" && !permissions.canCreate
+    ? "grid"
+    : currentView;
 
   const handleViewChange = useCallback((view: string) => {
-    if (view === "grid" || view === "cards" || view === "import") setCurrentView(view);
-  }, []);
+    if (
+      view === "grid" ||
+      view === "cards" ||
+      view === "chart" ||
+      view === "report" ||
+      view === "import"
+    ) {
+      if (view !== "import" || permissions.canCreate) setCurrentView(view);
+    }
+  }, [permissions.canCreate]);
 
   const handlePaginationChange = useCallback((model: GridPaginationModel) => {
     if (model.pageSize !== pageSize) onPageSizeChange(model.pageSize);
@@ -113,20 +122,22 @@ const CountriesMultiView = ({
   const activeFilterCount = Number(filter !== "active") + Number(currencyCode.length > 0) + Number(hasStatesFilter !== "all");
   const hasActiveCriteria = searchValue.trim().length > 0 || activeFilterCount > 0;
   const availableViews: CountryView[] = permissions.canCreate
-    ? ["grid", "cards", "import"]
-    : ["grid", "cards"];
+    ? ["grid", "cards", "chart", "report", "import"]
+    : ["grid", "cards", "chart", "report"];
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%" }}>
       <PageHeader
         variant="multi-view"
         title={t("countries.viewTitle")}
-        storageKey="countries-view-layout-v2"
+        storageKey="countries-view-layout"
         defaultView="grid"
         availableViews={availableViews}
         viewLabels={{
           grid: t("countries.views.grid"),
           cards: t("countries.views.cards"),
+          chart: t("countries.views.chart"),
+          report: t("countries.views.report"),
           import: t("countries.views.import"),
         }}
         onAdd={permissions.canCreate ? onAdd : undefined}
@@ -134,15 +145,10 @@ const CountriesMultiView = ({
         totalLabel={t("countries.total")}
         onRefresh={onRefresh}
         onViewTypeChange={handleViewChange}
-        additionalChips={activeFilterCount > 0 ? [{
-          label: t("countries.activeFilters", { count: activeFilterCount }),
-          color: "secondary",
-          variant: "outlined",
-        }] : undefined}
         showActions={{ add: permissions.canCreate, refresh: true, export: false, filter: false }}
       />
 
-      {currentView !== "import" && (
+      {(visibleView === "cards" || visibleView === "chart") && (
         <CountryCardViewHeader
           searchTerm={searchValue}
           sortBy={sortColumn}
@@ -163,7 +169,7 @@ const CountriesMultiView = ({
       )}
 
       <Box sx={{ flex: 1, minHeight: 0, overflow: "auto", position: "relative" }}>
-        {currentView === "grid" && (
+        {visibleView === "grid" && (
           <CountriesDataGrid
             countries={countries}
             loading={loading}
@@ -173,11 +179,21 @@ const CountriesMultiView = ({
             onDelete={onDelete}
             onRestore={onRestore}
             onView={onView}
+            permissions={permissions}
             page={page}
             pageSize={pageSize}
             totalCount={totalCount}
             sortColumn={sortColumn}
             sortDirection={sortDirection}
+            searchValue={searchValue}
+            onSearchChange={onSearchChange}
+            status={filter}
+            currencyCode={currencyCode}
+            hasStates={hasStatesFilter}
+            onStatusChange={onFilterChange}
+            onCurrencyCodeChange={onCurrencyCodeChange}
+            onHasStatesChange={onHasStatesFilterChange}
+            onReset={onResetList}
             onPaginationChange={handlePaginationChange}
             onSortChange={handleGridSortChange}
             lastAddedId={lastAddedId}
@@ -185,10 +201,10 @@ const CountriesMultiView = ({
             lastDeletedIndex={lastDeletedIndex}
           />
         )}
-        {currentView === "cards" && (
+        {visibleView === "cards" && (
           <CountriesCardView
             countries={countries}
-            loading={loading}
+            loading={loading || isFetching}
             onEdit={onEdit}
             onDelete={onDelete}
             onRestore={onRestore}
@@ -208,7 +224,20 @@ const CountriesMultiView = ({
             lastDeletedIndex={lastDeletedIndex}
           />
         )}
-        {currentView === "import" && permissions.canCreate && <ImportCountries />}
+        {visibleView === "chart" && (
+          <CountriesChartView
+            countries={countries}
+            totalCount={totalCount}
+            loading={loading || isFetching}
+            onAdd={permissions.canCreate ? onAdd : undefined}
+            page={page}
+            pageSize={pageSize}
+            onPageChange={onPageChange}
+            onPageSizeChange={onPageSizeChange}
+          />
+        )}
+        {visibleView === "report" && <CountryReportPage />}
+        {visibleView === "import" && permissions.canCreate && <ImportCountries />}
       </Box>
     </Box>
   );

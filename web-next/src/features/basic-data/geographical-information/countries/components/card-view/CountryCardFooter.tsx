@@ -21,7 +21,7 @@ const CountryCardFooter: React.FC<CountryCardFooterProps> = ({ country, onView, 
   if (permissions.canView) {
     actions.push({
       key: "view",
-      title: t("actions.view") || "View Details",
+      title: t("actions.view"),
       color: "info",
       icon: <Visibility sx={{ fontSize: 16 }} />,
       onClick: () => onView(country),
@@ -31,7 +31,7 @@ const CountryCardFooter: React.FC<CountryCardFooterProps> = ({ country, onView, 
   if (permissions.canEdit && !country.isDeleted) {
     actions.push({
       key: "edit",
-      title: t("actions.edit") || "Edit Country",
+      title: t("actions.edit"),
       color: "primary",
       icon: <Edit sx={{ fontSize: 16 }} />,
       onClick: () => onEdit(country),

@@ -24,8 +24,12 @@ export type AuthTokens = {
   migrationPayload?: AuthPayload;
 };
 
+const ACCESS_TOKEN_CHUNK_SIZE = 3_000;
+const MAX_ACCESS_TOKEN_CHUNKS = 8;
+const ACCESS_TOKEN_CHUNK_MARKER = "chunks-";
+
 export function readAuthTokens(source: AuthCookieSource): AuthTokens {
-  const currentAccessToken = source.get(ACCESS_TOKEN_COOKIE)?.value || undefined;
+  const currentAccessToken = readCurrentAccessToken(source);
   const legacyAccessToken = source.get(LEGACY_ACCESS_TOKEN_COOKIE)?.value || undefined;
   const currentRefreshToken = source.get(REFRESH_TOKEN_COOKIE)?.value || undefined;
   const legacyRefreshToken = source.get(LEGACY_REFRESH_TOKEN_COOKIE)?.value || undefined;
@@ -86,7 +90,7 @@ export function isAuthPayload(value: unknown): value is AuthPayload {
 export function setAuthCookies(response: NextResponse, payload: AuthPayload) {
   // Keep the access token cookie alive as long as the refresh token, 
   // so the server can access the expired token for refresh requests.
-  response.cookies.set(ACCESS_TOKEN_COOKIE, payload.token, cookieOptions(payload.refreshTokenExpiration));
+  setAccessTokenCookies(response, payload.token, payload.refreshTokenExpiration);
   response.cookies.set(REFRESH_TOKEN_COOKIE, payload.refreshToken, cookieOptions(payload.refreshTokenExpiration));
   clearCookie(response, LEGACY_ACCESS_TOKEN_COOKIE);
   clearCookie(response, LEGACY_REFRESH_TOKEN_COOKIE);
@@ -100,6 +104,7 @@ export function setAuthCookies(response: NextResponse, payload: AuthPayload) {
 
 export function clearAuthCookies(response: NextResponse) {
   clearCookie(response, ACCESS_TOKEN_COOKIE);
+  clearAccessTokenChunks(response);
   clearCookie(response, REFRESH_TOKEN_COOKIE);
   clearCookie(response, LEGACY_ACCESS_TOKEN_COOKIE);
   clearCookie(response, LEGACY_REFRESH_TOKEN_COOKIE);
@@ -154,4 +159,70 @@ function clearCookie(response: NextResponse, name: string) {
       maxAge: 0,
     });
   }
+}
+
+function readCurrentAccessToken(source: AuthCookieSource): string | undefined {
+  const value = source.get(ACCESS_TOKEN_COOKIE)?.value;
+  if (!value) return undefined;
+
+  const marker = new RegExp(`^${ACCESS_TOKEN_CHUNK_MARKER}(\\d+)$`).exec(value);
+  if (!marker) return value;
+
+  const chunkCount = Number(marker[1]);
+  if (!Number.isInteger(chunkCount) || chunkCount < 1 || chunkCount > MAX_ACCESS_TOKEN_CHUNKS) {
+    return undefined;
+  }
+
+  const chunks: string[] = [];
+  for (let index = 0; index < chunkCount; index += 1) {
+    const chunk = source.get(accessTokenChunkName(index))?.value;
+    if (!chunk) return undefined;
+    chunks.push(chunk);
+  }
+
+  return chunks.join("");
+}
+
+function setAccessTokenCookies(
+  response: NextResponse,
+  token: string,
+  expires?: string,
+) {
+  const options = cookieOptions(expires);
+  if (token.length <= ACCESS_TOKEN_CHUNK_SIZE) {
+    response.cookies.set(ACCESS_TOKEN_COOKIE, token, options);
+    clearAccessTokenChunks(response);
+    return;
+  }
+
+  const chunks = Array.from(
+    { length: Math.ceil(token.length / ACCESS_TOKEN_CHUNK_SIZE) },
+    (_, index) => token.slice(
+      index * ACCESS_TOKEN_CHUNK_SIZE,
+      (index + 1) * ACCESS_TOKEN_CHUNK_SIZE,
+    ),
+  );
+  if (chunks.length > MAX_ACCESS_TOKEN_CHUNKS) {
+    throw new Error("Access token exceeds the supported cookie capacity.");
+  }
+
+  response.cookies.set(
+    ACCESS_TOKEN_COOKIE,
+    `${ACCESS_TOKEN_CHUNK_MARKER}${chunks.length}`,
+    options,
+  );
+  chunks.forEach((chunk, index) => {
+    response.cookies.set(accessTokenChunkName(index), chunk, options);
+  });
+  clearAccessTokenChunks(response, chunks.length);
+}
+
+function clearAccessTokenChunks(response: NextResponse, fromIndex = 0) {
+  for (let index = fromIndex; index < MAX_ACCESS_TOKEN_CHUNKS; index += 1) {
+    clearCookie(response, accessTokenChunkName(index));
+  }
+}
+
+function accessTokenChunkName(index: number) {
+  return `${ACCESS_TOKEN_COOKIE}.${index}`;
 }

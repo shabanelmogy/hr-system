@@ -8,20 +8,26 @@ import { useAuth } from '@/src/features/auth/context/AuthProvider';
 import { useLogout } from '@/src/features/auth/hooks/useLogout';
 import { AppIcon, AppIconButton, AppText } from '@/src/shared/components';
 
-interface AppAppBarProps {
+export interface AppAppBarProps {
+  notificationCount?: number;
+  onNotificationsPress?: () => void;
   showDrawer?: boolean;
   showLogout?: boolean;
+  showNotifications?: boolean;
   onDrawerPress?: () => void;
 }
 
 export function AppAppBar({
+  notificationCount = 0,
+  onNotificationsPress,
   showDrawer = false,
   showLogout = false,
+  showNotifications = false,
   onDrawerPress,
 }: AppAppBarProps) {
   const { t } = useTranslation();
-  const { direction, language, setLanguage } = useLocalization();
-  const { theme, resolvedMode, setMode } = useAppTheme();
+  const { direction } = useLocalization();
+  const { theme } = useAppTheme();
   const { session } = useAuth();
   const { isLoggingOut, logout } = useLogout();
   const { width } = useWindowDimensions();
@@ -78,32 +84,35 @@ export function AppAppBar({
           </View>
 
           <View style={[styles.actions, { direction }]}>
-            <View style={[styles.languageAction, { direction }]}>
-              {!compactAuthenticatedBar ? (
-                <AppText
-                  style={{ color: theme.colors.onPrimary }}
-                  variant="caption"
-                  weight="700">
-                  {language === 'ar' ? 'AR' : 'EN'}
-                </AppText>
-              ) : null}
-              <AppIconButton
-                color={theme.colors.onPrimary}
-                icon="language-outline"
-                label={t('auth.changeLanguage')}
-                onPress={() => setLanguage(language === 'ar' ? 'en' : 'ar')}
-                pressedBackgroundColor="transparent"
-                style={({ pressed }) => ({ opacity: pressed ? 0.65 : 1 })}
-              />
-            </View>
-            <AppIconButton
-              color={theme.colors.onPrimary}
-              icon={resolvedMode === 'dark' ? 'sunny-outline' : 'moon-outline'}
-              label={t('auth.changeTheme')}
-              onPress={() => setMode(resolvedMode === 'dark' ? 'light' : 'dark')}
-              pressedBackgroundColor="transparent"
-              style={({ pressed }) => ({ opacity: pressed ? 0.65 : 1 })}
-            />
+            {showNotifications && onNotificationsPress ? (
+              <View style={styles.notificationAction}>
+                <AppIconButton
+                  color={theme.colors.onPrimary}
+                  icon={notificationCount > 0 ? 'notifications' : 'notifications-outline'}
+                  label={notificationCount > 0
+                    ? `${t('navigation.notifications')}: ${t('notifications.unreadCount', { count: notificationCount })}`
+                    : t('navigation.notifications')}
+                  onPress={onNotificationsPress}
+                  pressedBackgroundColor="transparent"
+                  style={({ pressed }) => ({ opacity: pressed ? 0.65 : 1 })}
+                />
+                {notificationCount > 0 ? (
+                  <View
+                    pointerEvents="none"
+                    style={[
+                      styles.notificationBadge,
+                      {
+                        backgroundColor: theme.colors.danger,
+                        borderColor: theme.colors.primary,
+                      },
+                    ]}>
+                    <AppText style={styles.notificationBadgeText} weight="800">
+                      {notificationCount > 99 ? '99+' : notificationCount}
+                    </AppText>
+                  </View>
+                ) : null}
+              </View>
+            ) : null}
             {showLogout ? (
               <AppIconButton
                 color={theme.colors.onPrimary}
@@ -155,9 +164,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 2,
   },
-  languageAction: {
-    flexDirection: 'row',
+  notificationAction: {
+    position: 'relative',
+  },
+  notificationBadge: {
+    position: 'absolute',
+    top: 2,
+    right: 0,
+    minWidth: 18,
+    height: 18,
     alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderRadius: 9,
+    paddingHorizontal: 3,
+  },
+  notificationBadgeText: {
+    color: '#FFFFFF',
+    fontSize: 9,
+    lineHeight: 11,
   },
   roleBadge: {
     maxWidth: 132,

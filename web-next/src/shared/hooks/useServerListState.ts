@@ -14,6 +14,7 @@ export interface ServerListState<TColumn extends string, TFilters extends object
 
 interface ServerListStateOptions<TColumn extends string, TFilters extends object> {
   defaultColumn: TColumn;
+  defaultSortDirection?: ServerListSortDirection;
   defaultFilters: TFilters;
   defaultPageSize?: number;
   debounceMs?: number;
@@ -51,6 +52,10 @@ export function isServerListSearchPending(searchValue: string, debouncedSearchVa
   return searchValue.trim() !== debouncedSearchValue;
 }
 
+export function getLastServerListPage(totalCount: number, pageSize: number) {
+  return Math.max(0, Math.ceil(Math.max(0, totalCount) / Math.max(1, pageSize)) - 1);
+}
+
 /**
  * Domain-neutral state for a server-managed collection. The UI page is
  * zero-based for MUI; each feature maps this state to its own HTTP contract.
@@ -58,6 +63,7 @@ export function isServerListSearchPending(searchValue: string, debouncedSearchVa
  */
 export function useServerListState<TColumn extends string, TFilters extends object>({
   defaultColumn,
+  defaultSortDirection = "ASC",
   defaultFilters,
   defaultPageSize = 10,
   debounceMs = 300,
@@ -68,10 +74,10 @@ export function useServerListState<TColumn extends string, TFilters extends obje
       pageSize: defaultPageSize,
       searchValue: "",
       columnName: defaultColumn,
-      sortDirection: "ASC",
+      sortDirection: defaultSortDirection,
       filters: defaultFilters,
     }),
-    [defaultColumn, defaultFilters, defaultPageSize],
+    [defaultColumn, defaultFilters, defaultPageSize, defaultSortDirection],
   );
   const [state, dispatch] = useReducer(serverListReducer<TColumn, TFilters>, initialState);
   const debouncedSearchValue = useDebounce(state.searchValue.trim(), debounceMs);

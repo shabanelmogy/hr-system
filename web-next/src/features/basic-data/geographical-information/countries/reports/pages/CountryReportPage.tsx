@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
 
 import { MySelect, MyTextField } from "@/shared/components/forms";
 import {
@@ -10,7 +11,7 @@ import {
   type ReportSearchParams,
   type UpdateReportSearchParams,
 } from "@/features/reporting";
-import { useTheme } from "@mui/material";
+import { Alert, Button, useTheme } from "@mui/material";
 
 interface ReportInfo {
   Id: string;
@@ -38,15 +39,35 @@ function selectionValue(value: unknown): unknown {
   return value;
 }
 
+async function getCountryReportCatalog(): Promise<ReportInfo[]> {
+  const response = await reportApiService.post("report/info", {
+    subFolderPath: "Countries",
+    reportCategory: "Countries",
+  });
+  const data: unknown = await response.json();
+  const reports = Array.isArray(data) ? data.filter(isReportInfo) : [];
+
+  return [...reports].sort((a, b) =>
+    a.Id === "Countries" ? -1 : b.Id === "Countries" ? 1 : 0
+  );
+}
+
 const CountryReportPage = () => {
   const { t } = useTranslation();
 
-  const [reportsInfo, setReportsInfo] = useState<ReportInfo[]>([]);
-  const [selectedReport, setSelectedReport] = useState<ReportInfo | null>(null);
-  const reportsRequested = useRef(false);
+  const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
   const theme = useTheme();
 
   const lang = theme.direction === "rtl" ? "ar" : "en";
+  const reportsQuery = useQuery({
+    queryKey: ["country-reports", "catalog", lang],
+    queryFn: getCountryReportCatalog,
+    staleTime: 5 * 60_000,
+  });
+  const reportsInfo = reportsQuery.data ?? [];
+  const selectedReport = reportsInfo.find((report) => report.Id === selectedReportId)
+    ?? reportsInfo[0]
+    ?? null;
 
   const defaultReportParams = {
     LogoName: "Logo1.jpg",
@@ -65,43 +86,28 @@ const CountryReportPage = () => {
       ReportFileName: "Countries",
     };
 
-  const fetchCountriesReports = async () => {
-    try {
-      const response = await reportApiService.post("report/info", {
-        subFolderPath: "Countries",
-        reportCategory: "Countries",
-      });
-
-      const data: unknown = await response.json();
-      const reports = Array.isArray(data) ? data.filter(isReportInfo) : [];
-
-      // Move "Countries" to the top using sort
-      const sorted = [...reports].sort((a, b) =>
-        a.Id === "Countries" ? -1 : b.Id === "Countries" ? 1 : 0
-      );
-
-      setReportsInfo(sorted);
-      setSelectedReport((previous) => previous ?? sorted[0] ?? null);
-    } catch (error) {
-      console.error("Failed to fetch country reports:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (reportsRequested.current) return;
-    reportsRequested.current = true;
-    void fetchCountriesReports();
-  }, []);
-
   const handleReportChange = (value: unknown) => {
     const selected = reportsInfo.find((report) => report.Id === selectionValue(value));
-    setSelectedReport(selected ?? null);
+    setSelectedReportId(selected?.Id ?? null);
   };
 
   return (
     <ReportViewer reportParams={reportParams}>
       {(updateSearchParams: UpdateReportSearchParams, currentParams: ReportSearchParams) => (
         <>
+          {reportsQuery.isError ? (
+            <Alert
+              severity="warning"
+              action={(
+                <Button color="inherit" size="small" onClick={() => void reportsQuery.refetch()}>
+                  {t("common.retry")}
+                </Button>
+              )}
+            >
+              {t("countries.reportCatalogError")}
+            </Alert>
+          ) : null}
+
           <MyTextField
             fieldName="CountryAr"
             value={String(currentParams.CountryAr ?? "")}
@@ -113,7 +119,7 @@ const CountryReportPage = () => {
             appearance="plain"
             margin="none"
             showCounter={false}
-            clearButtonAriaLabel="clear search"
+            clearButtonAriaLabel={t("general.clearSearch")}
           />
 
           <MyTextField
@@ -127,14 +133,14 @@ const CountryReportPage = () => {
             appearance="plain"
             margin="none"
             showCounter={false}
-            clearButtonAriaLabel="clear search"
+            clearButtonAriaLabel={t("general.clearSearch")}
           />
 
           <MySelect
             dataSource={reportsInfo}
             selectedItem={selectedReport?.Id || null}
             handleSelectionChange={handleReportChange}
-            loading={false}
+            loading={reportsQuery.isLoading || reportsQuery.isFetching}
             label={t("reports.reportForms")}
             valueMember="Id"
             displayMember={lang === "ar" ? "Title" : "Subject"}

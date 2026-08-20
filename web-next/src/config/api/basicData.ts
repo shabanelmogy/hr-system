@@ -5,7 +5,6 @@ export const countries: CountriesRoutes = {
   page: `${version}/countries`,
   lookup: `${version}/countries/lookup`,
   getById: (id: Id) => `${version}/countries/${id}`,
-  getWithStates: (id: Id) => `${version}/countries/${id}/states`,
   create: `${version}/countries`,
   bulkCreate: `${version}/countries/bulk`,
   update: (id: Id) => `${version}/countries/${id}`,

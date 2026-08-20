@@ -22,6 +22,7 @@ export interface CardViewToolbarProps {
   onFilterByChange: (value: string) => void;
   onReset: () => void;
   additionalControls?: ReactNode;
+  singleRow?: boolean;
 }
 
 const CardViewToolbar = ({
@@ -39,9 +40,23 @@ const CardViewToolbar = ({
   onFilterByChange,
   onReset,
   additionalControls,
+  singleRow = false,
 }: CardViewToolbarProps) => (
-  <Grid container spacing={2} sx={{ alignItems: "center" }}>
-    <Grid size={{ xs: 12, md: 4 }} sx={{ mb: 1 }}>
+  <Grid
+    container
+    spacing={singleRow ? 1 : 2}
+    sx={{
+      alignItems: "center",
+      flexWrap: singleRow ? { xs: "wrap", lg: "nowrap" } : "wrap",
+    }}
+  >
+    <Grid
+      size={singleRow ? { xs: 12, sm: 6, lg: "grow" } : { xs: 12, md: 4 }}
+      sx={{
+        mb: singleRow ? 0 : 1,
+        minWidth: singleRow ? { lg: 220 } : undefined,
+      }}
+    >
       <SearchBar
         searchTerm={searchTerm}
         placeholder={searchPlaceholder}
@@ -50,23 +65,26 @@ const CardViewToolbar = ({
       />
     </Grid>
 
-    <Grid size={{ xs: 6, md: 2 }}>
+    <Grid size={singleRow ? { xs: 6, sm: 3, lg: 2 } : { xs: 6, md: 2 }}>
       <SortBySelect sortBy={sortBy} options={sortByOptions} onChange={onSortByChange} />
     </Grid>
 
-    <Grid size={{ xs: 6, md: 2 }}>
+    <Grid size={singleRow ? { xs: 6, sm: 3, lg: 1.25 } : { xs: 6, md: 2 }}>
       <SortOrderToggle sortOrder={sortOrder} onChange={onSortOrderChange} />
     </Grid>
 
-    <Grid size={{ xs: 12, md: 2 }}>
+    <Grid size={singleRow ? { xs: 6, sm: 3, lg: 1.75 } : { xs: 12, md: 2 }}>
       <FilterSelect filterBy={filterBy} options={filterOptions} onChange={onFilterByChange} />
     </Grid>
 
-    <Grid size={{ xs: 12, md: 2 }}>
+    {additionalControls}
+
+    <Grid
+      size={singleRow ? { xs: 6, sm: 3, lg: "auto" } : { xs: 12, md: 2 }}
+      sx={{ minWidth: singleRow ? { lg: 110 } : undefined }}
+    >
       <ResetButton onReset={onReset} />
     </Grid>
-
-    {additionalControls}
   </Grid>
 );
 

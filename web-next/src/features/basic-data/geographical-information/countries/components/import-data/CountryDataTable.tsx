@@ -22,7 +22,7 @@ const CountryDataTable: React.FC<CountryDataTableProps> = ({
       data={countries}
       columns={columns}
       icon={<PublicIcon />}
-      countLabel={t("countries.total") || "Total Countries:"}
+      countLabel={t("countries.total")}
       initialRowsPerPage={10}
       rowsPerPageOptions={[5, 10, 25, 50]}
     />

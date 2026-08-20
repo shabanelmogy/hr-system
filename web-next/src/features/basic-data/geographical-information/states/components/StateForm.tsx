@@ -5,7 +5,7 @@ import { Box, Button } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { Resolver, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useCountryLookup } from "../../countries/hooks/useCountryQueries";
+import { useCountryLookup } from "@/features/basic-data/geographical-information/countries";
 import { CreateStateRequest, State } from "../types/State";
 import { states } from "../utils/fakeData";
 import { getStateValidationSchema } from "../utils/validation";

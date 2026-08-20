@@ -27,6 +27,7 @@ export interface AppFilterOption<Value extends string | number> {
 export interface AppFilterButtonProps<Value extends string | number> {
   applyLabel?: string;
   buttonLabel: string;
+  buttonSize?: number;
   clearLabel?: string;
   description?: string;
   disabled?: boolean;
@@ -34,6 +35,7 @@ export interface AppFilterButtonProps<Value extends string | number> {
   modalTitle: string;
   onChange: (values: Value[]) => void;
   options: readonly AppFilterOption<Value>[];
+  selectionMode?: 'multiple' | 'single';
   style?: StyleProp<ViewStyle>;
   values: readonly Value[];
 }
@@ -41,6 +43,7 @@ export interface AppFilterButtonProps<Value extends string | number> {
 export function AppFilterButton<Value extends string | number>({
   applyLabel,
   buttonLabel,
+  buttonSize = 50,
   clearLabel,
   description,
   disabled = false,
@@ -48,6 +51,7 @@ export function AppFilterButton<Value extends string | number>({
   modalTitle,
   onChange,
   options,
+  selectionMode = 'multiple',
   style,
   values,
 }: AppFilterButtonProps<Value>) {
@@ -62,9 +66,12 @@ export function AppFilterButton<Value extends string | number>({
   }, [open, values]);
 
   const toggle = (value: Value) => {
-    setDraftValues((current) => current.includes(value)
-      ? current.filter((selected) => selected !== value)
-      : [...current, value]);
+    setDraftValues((current) => {
+      if (selectionMode === 'single') return current.includes(value) ? [] : [value];
+      return current.includes(value)
+        ? current.filter((selected) => selected !== value)
+        : [...current, value];
+    });
   };
 
   const apply = () => {
@@ -89,7 +96,7 @@ export function AppFilterButton<Value extends string | number>({
   );
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, { width: buttonSize + 2, height: buttonSize + 2 }, style]}>
       <AppIconButton
         color={values.length > 0 ? theme.colors.primary : theme.colors.text}
         disabled={disabled}
@@ -102,6 +109,8 @@ export function AppFilterButton<Value extends string | number>({
           {
             backgroundColor: theme.colors.surface,
             borderColor: values.length > 0 ? theme.colors.primary : theme.colors.border,
+            width: buttonSize,
+            height: buttonSize,
           },
         ]}
       />
@@ -130,7 +139,7 @@ export function AppFilterButton<Value extends string | number>({
             return (
               <Pressable
                 accessibilityLabel={option.label}
-                accessibilityRole="checkbox"
+                accessibilityRole={selectionMode === 'single' ? 'radio' : 'checkbox'}
                 accessibilityState={{ checked: selected, disabled: option.disabled }}
                 disabled={option.disabled}
                 key={String(option.value)}

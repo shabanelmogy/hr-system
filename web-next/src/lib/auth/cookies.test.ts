@@ -1,5 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
-import { isAuthPayload, readAuthTokens } from "./cookies";
+import { NextResponse } from "next/server";
+import {
+  clearAuthCookies,
+  isAuthPayload,
+  readAuthTokens,
+  setAuthCookies,
+} from "./cookies";
 
 describe("isAuthPayload", () => {
   it("accepts non-empty tokens with valid expirations", () => {
@@ -71,5 +77,71 @@ describe("readAuthTokens", () => {
       refreshToken: "current-refresh",
       migrationPayload: undefined,
     });
+  });
+
+  it("reassembles a chunked access token", () => {
+    const source = new Map([
+      ["__Host-hrms-access-token", "chunks-2"],
+      ["__Host-hrms-access-token.0", "first-part-"],
+      ["__Host-hrms-access-token.1", "second-part"],
+      ["__Host-hrms-refresh-token", "current-refresh"],
+    ]);
+
+    expect(readAuthTokens({ get: (name) => {
+      const value = source.get(name);
+      return value ? { value } : undefined;
+    } })).toEqual({
+      accessToken: "first-part-second-part",
+      refreshToken: "current-refresh",
+      migrationPayload: undefined,
+    });
+  });
+
+  it("fails closed when a declared access-token chunk is missing", () => {
+    const source = new Map([
+      ["__Host-hrms-access-token", "chunks-2"],
+      ["__Host-hrms-access-token.0", "first-part"],
+      ["__Host-hrms-refresh-token", "current-refresh"],
+    ]);
+
+    expect(readAuthTokens({ get: (name) => {
+      const value = source.get(name);
+      return value ? { value } : undefined;
+    } })).toEqual({
+      accessToken: undefined,
+      refreshToken: "current-refresh",
+      migrationPayload: undefined,
+    });
+  });
+});
+
+describe("auth cookie writes", () => {
+  it("splits a large access token into browser-safe cookies", () => {
+    const response = NextResponse.json({});
+    const accessToken = "a".repeat(6_005);
+
+    setAuthCookies(response, {
+      token: accessToken,
+      refreshToken: "refresh-token",
+    });
+
+    expect(response.cookies.get("__Host-hrms-access-token")?.value).toBe("chunks-3");
+    expect(response.cookies.get("__Host-hrms-access-token.0")?.value).toHaveLength(3_000);
+    expect(response.cookies.get("__Host-hrms-access-token.1")?.value).toHaveLength(3_000);
+    expect(response.cookies.get("__Host-hrms-access-token.2")?.value).toHaveLength(5);
+
+    const tokens = readAuthTokens(response.cookies);
+    expect(tokens.accessToken).toBe(accessToken);
+    expect(tokens.refreshToken).toBe("refresh-token");
+  });
+
+  it("clears every possible access-token chunk on logout", () => {
+    const response = NextResponse.json({});
+
+    clearAuthCookies(response);
+
+    expect(response.cookies.get("__Host-hrms-access-token")?.value).toBe("");
+    expect(response.cookies.get("__Host-hrms-access-token.0")?.value).toBe("");
+    expect(response.cookies.get("__Host-hrms-access-token.7")?.value).toBe("");
   });
 });

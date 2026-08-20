@@ -113,6 +113,8 @@ export const routePolicies: readonly RoutePolicy[] = [
       { permissions: [permissions.ViewHangfireDashboard] },
     ],
   },
+  { path: ROUTES.profile },
+  { path: ROUTES.notifications, roles: [appRoles.admin, appRoles.user] },
   { path: ROUTES.home },
   { path: ROUTES.settings, roles: [appRoles.admin, appRoles.superAdmin] },
   { path: ROUTES.modal },
@@ -120,6 +122,7 @@ export const routePolicies: readonly RoutePolicy[] = [
 
 const superAdminAllowedRoutes = [
   ROUTES.home,
+  ROUTES.profile,
   ROUTES.settings,
   ROUTES.superAdminDashboard,
   ROUTES.tenantManagement,

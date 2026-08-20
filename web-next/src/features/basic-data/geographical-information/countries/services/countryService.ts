@@ -5,7 +5,6 @@ import type {
   CountryLookup,
   CountryPageQuery,
   CountryPageResponse,
-  CountryWithStates,
   CreateCountryRequest,
   UpdateCountryMutation,
 } from "../types/Country";
@@ -38,10 +37,6 @@ export class CountryService {
 
   static getById(id: number): Promise<CountryDetail> {
     return apiService.get<CountryDetail>(apiRoutes.countries.getById(id));
-  }
-
-  static getWithStates(id: number): Promise<CountryWithStates> {
-    return apiService.get<CountryWithStates>(apiRoutes.countries.getWithStates(id));
   }
 
   static create(country: CreateCountryRequest): Promise<CountryDetail> {

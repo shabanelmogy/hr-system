@@ -22,7 +22,6 @@ export const countryKeys = {
   lookup: () => [...countryKeys.all, "lookup"] as const,
   details: () => [...countryKeys.all, "detail"] as const,
   detail: (id: number) => [...countryKeys.details(), id] as const,
-  withStates: (id: number) => [...countryKeys.detail(id), "states"] as const,
 };
 
 export const useCountryPage = (

@@ -11,11 +11,14 @@ import {
 import { useSession } from "@/lib/auth/SessionContext";
 import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 
+const EMPTY_PERMISSIONS: readonly PermissionString[] = [];
+const EMPTY_ROLES: readonly string[] = [];
+
 export const usePermissions = () => {
   const { user } = useSession();
   const { isReadOnly } = useAppReadOnly();
-  const userPermissions = user?.permissions ?? [];
-  const userRoles = user?.roles ?? [];
+  const userPermissions = user?.permissions ?? EMPTY_PERMISSIONS;
+  const userRoles = user?.roles ?? EMPTY_ROLES;
   const isAuthenticated = user !== null;
 
   const checkPermission = useCallback(
@@ -52,15 +55,15 @@ export const usePermissions = () => {
 
 // Simplified Countries permissions hook
 export const useCountriesPermissions = () => {
-  const { hasPermission, isReadOnly } = usePermissions();
+  const { hasPermission } = usePermissions();
   
   return useMemo(() => ({
     canView: hasPermission("Countries:View"),
-    canCreate: !isReadOnly && hasPermission("Countries:Create"),
-    canEdit: !isReadOnly && hasPermission("Countries:Edit"),
-    canDelete: !isReadOnly && hasPermission("Countries:Delete"),
-    canRestore: !isReadOnly && hasPermission("Countries:Delete"),
-  }), [hasPermission, isReadOnly]);
+    canCreate: hasPermission("Countries:Create"),
+    canEdit: hasPermission("Countries:Edit"),
+    canDelete: hasPermission("Countries:Delete"),
+    canRestore: hasPermission("Countries:Delete"),
+  }), [hasPermission]);
 };
 
 // Simplified States permissions hook

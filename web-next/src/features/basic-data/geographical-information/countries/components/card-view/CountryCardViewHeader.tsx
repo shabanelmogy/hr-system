@@ -27,6 +27,8 @@ const CountryCardViewHeader = ({
       subtitle={t("countries.listSummary", { count: processedCountriesLength })}
       mainChipLabel={t("countries.totalCount", { count: processedCountriesLength })}
       page={page}
+      showTitleSection={false}
+      compact
 
       searchTerm={searchTerm}
       searchPlaceholder={t("countries.searchPlaceHolder")}
@@ -66,7 +68,9 @@ const CountryCardViewHeader = ({
               value={currencyCode}
               onChange={(event) => onCurrencyCodeChange(event.target.value.toUpperCase())}
               error={currencyCode.length > 0 && currencyCode.length !== 3}
-              helperText={currencyCode.length > 0 && currencyCode.length !== 3 ? t("countries.currencyFilterLength") : " "}
+              helperText={currencyCode.length > 0 && currencyCode.length !== 3
+                ? t("countries.currencyFilterLength")
+                : undefined}
               slotProps={{ htmlInput: { maxLength: 3, inputMode: "text" } }}
             />
           </Grid>

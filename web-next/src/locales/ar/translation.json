@@ -640,14 +640,16 @@
   "countries": {
     "dashboard": {
       "totalCountries": "الدول الكلية",
+      "totalMatching": "الدول المطابقة",
+      "visibleCountries": "دول الصفحة الحالية",
+      "statesOnPage": "محافظات الصفحة الحالية",
+      "currenciesOnPage": "عملات الصفحة الحالية",
       "completedProfiles": "الملفات المكتملة",
       "withAlphaCodes": "مع كود الدولة",
       "withPhoneCodes": "مع كود الهاتف",
       "withCurrencies": "مع كود العملة",
       "dataQuality": "جودة البيانات",
-      "regions": "المناطق",
       "currencies": "العملات",
-      "avgPerRegion": "متوسط/المنطقة",
       "totalStates": "إجمالى المحافظات"
     },
     "views": {
@@ -659,10 +661,17 @@
       "import": "استيراد البيانات"
     },
     "charts": {
-      "byRegion": "الدول حسب المنطقة",
-      "regionDistribution": "توزيع المناطق",
+      "title": "تحليلات الدول",
+      "noData": "لا توجد بيانات دول متاحة لمعايير البحث الحالية",
       "topCurrencies": "أهم العملات",
-      "timeline": "الدول المضافة عبر الوقت"
+      "timeline": "الدول المضافة عبر الوقت",
+      "pageScope": "تعرض الرسوم بيانات الصفحة المحملة حاليًا، بينما يأتي عدد الدول المطابقة من إجمالي الخادم.",
+      "statesCoverage": "الدول التي بها محافظات وبدون محافظات",
+      "withStates": "بها محافظات",
+      "withoutStates": "بدون محافظات",
+      "statesByCountry": "المحافظات حسب الدولة",
+      "statesByCountryDesc": "دول الصفحة الحالية مرتبة حسب عدد المحافظات النشطة",
+      "activeStates": "المحافظات النشطة"
     },
     "mapView": {
       "title": "عرض الخريطة العالمية",
@@ -688,16 +697,19 @@
     "delete": "حذف دولة",
     "list": "قائمة الدول",
     "details": "تفاصيل الدولة",
+    "total": "الإجمالي",
     "created": "تم إنشاء الدولة بنجاح",
     "updated": "تم تحديث الدولة بنجاح",
     "deleted": "تم حذف الدولة بنجاح",
     "archived": "تمت أرشفة الدولة بنجاح",
     "restored": "تمت استعادة الدولة بنجاح",
     "fetchError": "فشل تحميل الدول",
+    "detailLoadError": "تعذر تحميل تفاصيل الدولة. أعد المحاولة قبل تعديل هذا السجل.",
     "createError": "فشل إنشاء الدولة",
     "updateError": "فشل تحديث الدولة",
     "deleteError": "فشل أرشفة الدولة",
     "restoreError": "فشلت استعادة الدولة",
+    "reportCatalogError": "تعذر تحميل قائمة تقارير الدول، وما زال التقرير الافتراضي متاحًا.",
     "permissionDenied": "ليست لديك صلاحية لتنفيذ هذا الإجراء على الدول.",
     "restoreTitle": "استعادة الدولة؟",
     "restoreDescription": "ستصبح الدولة نشطة ومتاحة في قوائم الاختيار مرة أخرى.",
@@ -1334,6 +1346,11 @@
     "row": "الصف",
     "selectedFile": " الملف المحدد",
     "noDataAvailable": "لا توجد بيانات",
-    "startExcelUpload": "ابدأ رفع ملف اكسل (.xlsx)"
+    "startExcelUpload": "ابدأ رفع ملف اكسل (.xlsx)",
+    "parsing": "جارٍ قراءة ملف البيانات...",
+    "fileParsed": "تمت قراءة ملف البيانات بنجاح",
+    "fileTypeNotSupported": "ملفات .xlsx فقط هي المدعومة",
+    "uploading": "جارٍ رفع الدول...",
+    "noValidRows": "لا توجد صفوف صالحة للرفع"
   }
 }

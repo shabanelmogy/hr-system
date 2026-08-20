@@ -38,6 +38,8 @@ const DistrictCardViewHeader: React.FC<DistrictCardViewHeaderProps> = ({
       subtitle={`${t("districts.browseAndManage") || "Browse and manage"} ${processedDistrictsLength} ${t("districts.districts") || "Districts"}`}
       mainChipLabel={`${processedDistrictsLength} ${t("districts.districts") || "Districts"}`}
       page={page}
+      showTitleSection={false}
+      compact
       searchTerm={searchTerm}
       searchPlaceholder={t("districts.searchPlaceHolder") || "Search districts by name, code, or state..."}
       onSearchChange={onSearchChange}

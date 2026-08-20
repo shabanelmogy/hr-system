@@ -75,7 +75,7 @@ export const useCountryColumns = ({ t, permissions, getActions }: ColumnsFactory
     },
     {
       field: "statesCount",
-      headerName: t("countries.states") || "States",
+      headerName: t("countries.states"),
       flex: 1.2,
       align: "center",
       headerAlign: "center",

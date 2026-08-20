@@ -636,14 +636,16 @@
   "countries": {
     "dashboard": {
       "totalCountries": "Total Countries",
+      "totalMatching": "Matching Countries",
+      "visibleCountries": "Countries on This Page",
+      "statesOnPage": "States on This Page",
+      "currenciesOnPage": "Currencies on This Page",
       "completedProfiles": "Complete Profiles",
       "withAlphaCodes": "With Alpha Codes",
       "withPhoneCodes": "With Phone Codes",
       "withCurrencies": "With Currencies",
       "dataQuality": "Data Quality",
-      "regions": "Regions",
       "currencies": "Currencies",
-      "avgPerRegion": "Avg/Region",
       "totalStates": "Total States"
     },
     "views": {
@@ -655,10 +657,17 @@
       "import": "Import Data"
     },
     "charts": {
-      "byRegion": "Countries by Region",
-      "regionDistribution": "Region Distribution",
+      "title": "Countries Analytics",
+      "noData": "No country data is available for these criteria",
       "topCurrencies": "Top Currencies",
-      "timeline": "Countries Added Over Time"
+      "timeline": "Countries Added Over Time",
+      "pageScope": "Charts use the currently loaded page. Matching Countries comes from the server total.",
+      "statesCoverage": "Countries With and Without States",
+      "withStates": "With states",
+      "withoutStates": "Without states",
+      "statesByCountry": "States by Country",
+      "statesByCountryDesc": "Countries on this page with the most active states",
+      "activeStates": "Active states"
     },
     "mapView": {
       "title": "World Map View",
@@ -693,10 +702,12 @@
     "archived": "Country archived successfully",
     "restored": "Country restored successfully",
     "fetchError": "Failed to load countries",
+    "detailLoadError": "Country details could not be loaded. Retry before editing this record.",
     "createError": "Failed to create country",
     "updateError": "Failed to update country",
     "deleteError": "Failed to archive country",
     "restoreError": "Failed to restore country",
+    "reportCatalogError": "The country report list could not be loaded. The default report is still available.",
     "permissionDenied": "You do not have permission to perform this country action.",
     "restoreTitle": "Restore country?",
     "restoreDescription": "The country will become active and available in selectors again.",
@@ -1367,6 +1378,11 @@
     "row": "Row",
     "selectedFile": "Selected File  ",
     "noDataAvailable": "No data available",
-    "startExcelUpload": "Start by uploading an Excel file (.xlsx)"
+    "startExcelUpload": "Start by uploading an Excel file (.xlsx)",
+    "parsing": "Parsing spreadsheet...",
+    "fileParsed": "Spreadsheet parsed successfully",
+    "fileTypeNotSupported": "Only .xlsx files are supported",
+    "uploading": "Uploading countries...",
+    "noValidRows": "No valid rows to upload"
   }
 }

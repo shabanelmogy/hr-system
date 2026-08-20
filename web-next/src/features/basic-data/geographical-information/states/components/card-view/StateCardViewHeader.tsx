@@ -25,6 +25,8 @@ const StateCardViewHeader = ({
       )}`}
       mainChipLabel={`${processedStatesLength} ${t("states.state")}`}
       page={page}
+      showTitleSection={false}
+      compact
       searchTerm={searchTerm}
       searchPlaceholder={t("states.searchPlaceHolder")}
       onSearchChange={onSearchChange}

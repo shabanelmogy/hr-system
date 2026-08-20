@@ -40,7 +40,6 @@ export interface CountriesRoutes {
   page: string;
   lookup: string;
   getById: (id: Id) => string;
-  getWithStates: (id: Id) => string;
   create: string;
   bulkCreate: string;
   update: (id: Id) => string;

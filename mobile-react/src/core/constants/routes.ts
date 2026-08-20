@@ -10,6 +10,8 @@ export const ROUTES = {
   confirmEmail: '/confirm-email',
   acceptInvitation: '/accept-invitation',
   resendConfirmation: '/resend-confirmation',
+  profile: '/profile',
+  notifications: '/notifications',
   settings: '/settings',
   superAdminDashboard: '/super-admin-dashboard',
   tenantManagement: '/tenant-management',
@@ -54,6 +56,8 @@ export type AppRoute =
   | typeof ROUTES.confirmEmail
   | typeof ROUTES.acceptInvitation
   | typeof ROUTES.resendConfirmation
+  | typeof ROUTES.profile
+  | typeof ROUTES.notifications
   | typeof ROUTES.settings
   | typeof ROUTES.superAdminDashboard
   | typeof ROUTES.tenantManagement

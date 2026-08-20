@@ -25,6 +25,8 @@ const AddressTypeCardViewHeader = ({
       )}`}
       mainChipLabel={`${processedAddressTypesLength} ${t("addressTypes.addressType")}`}
       page={page}
+      showTitleSection={false}
+      compact
 
       searchTerm={searchTerm}
       searchPlaceholder={t("addressTypes.searchPlaceHolder")}

@@ -19,7 +19,7 @@ const NoDataMessage: React.FC<NoDataMessageProps> = ({ show }) => {
           color: "text.secondary",
           fontSize: { xs: "1rem", sm: "1.25rem" }
         }}>
-        {t("imports.noDataAvailable") || "No data available"}
+        {t("imports.noDataAvailable")}
       </Typography>
       <Typography
         variant="body2"
@@ -28,7 +28,7 @@ const NoDataMessage: React.FC<NoDataMessageProps> = ({ show }) => {
           mt: 1,
           fontSize: { xs: "0.75rem", sm: "0.875rem" }
         }}>
-        {t("imports.startExcelUpload") || "Start by uploading an Excel file (.xlsx)"}
+        {t("imports.startExcelUpload")}
       </Typography>
     </Paper>
   );

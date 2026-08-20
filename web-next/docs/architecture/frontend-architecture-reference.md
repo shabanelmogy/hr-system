@@ -4,6 +4,11 @@ Status: Applied to `web-next`.
 
 This document is the architecture baseline for future frontend work. It covers ownership, dependency direction, routing, naming, and scalability. It does not define authentication behavior, API implementation, UI design, or performance policy.
 
+## Feature Implementation Guides
+
+- [Server-Managed Feature Frontend Reference](../features/server-managed-feature-reference.md): the canonical reusable pattern for master-data and business CRUD features.
+- [Countries Applied Feature Profile](../features/countries-frontend-reference.md): the concrete Countries configuration and implementation notes for that general pattern.
+
 ## Review Summary
 
 The review found no Critical issues.

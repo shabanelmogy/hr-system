@@ -14,24 +14,11 @@ interface CountryFields {
   isDeleted: boolean;
 }
 
-export interface SimpleState {
-  id: number;
-  nameAr: string;
-  nameEn: string;
-  /** Optional compatibility field for older responses; the current API omits it. */
-  code?: string;
-  isDeleted: boolean;
-}
-
 export interface CountryListItem extends CountryFields {
   statesCount: number;
 }
 
 export type CountryDetail = CountryFields;
-
-export interface CountryWithStates extends CountryDetail {
-  states: SimpleState[];
-}
 
 export interface CountryLookup {
   id: number;
@@ -99,4 +86,6 @@ export interface CountryFormProps {
   onClose: () => void;
   onSubmit: (data: CountryFormData) => void | Promise<void>;
   loading: boolean;
+  detailError?: string;
+  onRetryDetails?: () => void;
 }

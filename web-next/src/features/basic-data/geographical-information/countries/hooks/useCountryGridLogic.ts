@@ -1,7 +1,10 @@
 import { showToast } from "@/shared/components/feedback/transient";
 import { useGridCrudController } from "@/shared/hooks/useGridCrudController";
 import { useGridCrudMarkerCleanup } from "@/shared/hooks/useGridCrudMarkerCleanup";
-import { useServerListState } from "@/shared/hooks/useServerListState";
+import {
+  getLastServerListPage,
+  useServerListState,
+} from "@/shared/hooks/useServerListState";
 import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 import { useCountriesPermissions } from "@/shared/hooks/usePermissions";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
@@ -16,7 +19,10 @@ import type {
   CreateCountryRequest,
 } from "../types/Country";
 import { toCountryPageQuery } from "../utils/countryPageQuery";
-import { canRunCountryAction } from "../utils/countryPermissions";
+import {
+  canRunCountryAction,
+  type CountryPermissionSet,
+} from "../utils/countryPermissions";
 import {
   useArchiveCountry,
   useCountryPage,
@@ -74,16 +80,17 @@ export interface UseCountryGridLogicReturn {
   lastAddedId: string | number | null;
   lastEditedId: string | number | null;
   lastDeletedIndex: number | null;
-  permissions: ReturnType<typeof useCountriesPermissions>;
+  permissions: CountryPermissionSet;
 }
 
 export default function useCountryGridLogic(): UseCountryGridLogicReturn {
   const { t } = useTranslation();
   const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
-  const permissions = useCountriesPermissions();
+  const authorization = useCountriesPermissions();
   const [restoreCountry, setRestoreCountry] = useState<CountryListItem | null>(null);
   const list = useServerListState<CountrySortColumn, CountryListFilters>({
-    defaultColumn: "nameEn",
+    defaultColumn: "createdOn",
+    defaultSortDirection: "DESC",
     defaultFilters: defaultCountryFilters,
     defaultPageSize: 10,
   });
@@ -95,14 +102,22 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
   const countries = query.data?.items ?? [];
   const totalCount = query.data?.metaData.totalCount ?? 0;
   const apiRef = useGridApiRef();
+  const currentPage = list.state.page;
+  const currentPageSize = list.state.pageSize;
+  const setListPage = list.setPage;
+  const permissions = useMemo<CountryPermissionSet>(() => ({
+    canView: authorization.canView,
+    canCreate: authorization.canCreate && !isReadOnly,
+    canEdit: authorization.canEdit && !isReadOnly,
+    canDelete: authorization.canDelete && !isReadOnly,
+    canRestore: authorization.canRestore && !isReadOnly,
+  }), [authorization, isReadOnly]);
 
   useEffect(() => {
-    if (query.error) {
-      showToast.error(
-        extractErrorMessage(query.error) || t("countries.fetchError", { defaultValue: "Failed to fetch countries" }),
-      );
-    }
-  }, [query.error, t]);
+    if (!query.data) return;
+    const lastPage = getLastServerListPage(totalCount, currentPageSize);
+    if (currentPage > lastPage) setListPage(lastPage);
+  }, [currentPage, currentPageSize, query.data, setListPage, totalCount]);
 
   const createMutation = useCreateCountry({
     onSuccess: (country) => showToast.success(
@@ -173,53 +188,68 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
   }, [t]);
 
   const onAdd = useCallback(() => {
-    if (!canRunCountryAction("create", permissions)) notifyPermissionDenied();
+    if (isReadOnly) notifyBlockedAction();
+    else if (!canRunCountryAction("create", authorization)) notifyPermissionDenied();
     else crud.onAdd();
-  }, [crud, notifyPermissionDenied, permissions.canCreate]);
+  }, [authorization, crud, isReadOnly, notifyBlockedAction, notifyPermissionDenied]);
 
   const onEdit = useCallback((country: CountryListItem) => {
-    if (!canRunCountryAction("edit", permissions, country)) notifyPermissionDenied();
+    if (isReadOnly) notifyBlockedAction();
+    else if (!canRunCountryAction("edit", authorization, country)) notifyPermissionDenied();
     else crud.onEdit(country);
-  }, [crud, notifyPermissionDenied, permissions.canEdit]);
+  }, [authorization, crud, isReadOnly, notifyBlockedAction, notifyPermissionDenied]);
 
   const onDelete = useCallback((country: CountryListItem) => {
-    if (!canRunCountryAction("archive", permissions, country)) notifyPermissionDenied();
+    if (isReadOnly) notifyBlockedAction();
+    else if (!canRunCountryAction("archive", authorization, country)) notifyPermissionDenied();
     else crud.onDelete(country);
-  }, [crud, notifyPermissionDenied, permissions.canDelete]);
+  }, [authorization, crud, isReadOnly, notifyBlockedAction, notifyPermissionDenied]);
 
   const onView = useCallback((country: CountryListItem) => {
-    if (!canRunCountryAction("view", permissions, country)) notifyPermissionDenied();
+    if (!canRunCountryAction("view", authorization, country)) notifyPermissionDenied();
     else crud.onView(country);
-  }, [crud, notifyPermissionDenied, permissions.canView]);
+  }, [authorization, crud, notifyPermissionDenied]);
 
   const handleFormSubmit = useCallback(async (request: CreateCountryRequest) => {
+    if (isReadOnly) {
+      notifyBlockedAction();
+      return;
+    }
     const allowed = crud.dialogType === "add"
-      ? canRunCountryAction("create", permissions)
-      : crud.dialogType === "edit" && canRunCountryAction("edit", permissions, crud.selectedItem);
+      ? canRunCountryAction("create", authorization)
+      : crud.dialogType === "edit" && canRunCountryAction("edit", authorization, crud.selectedItem);
     if (!allowed) {
       notifyPermissionDenied();
       return;
     }
     await crud.handleFormSubmit(request);
-  }, [crud, notifyPermissionDenied, permissions.canCreate, permissions.canEdit]);
+  }, [authorization, crud, isReadOnly, notifyBlockedAction, notifyPermissionDenied]);
 
   const handleDelete = useCallback(async () => {
-    if (!canRunCountryAction("archive", permissions, crud.selectedItem)) {
+    if (isReadOnly) {
+      notifyBlockedAction();
+      return;
+    }
+    if (!canRunCountryAction("archive", authorization, crud.selectedItem)) {
       notifyPermissionDenied();
       return;
     }
     await crud.handleDelete();
-  }, [crud, notifyPermissionDenied, permissions.canDelete]);
+  }, [authorization, crud, isReadOnly, notifyBlockedAction, notifyPermissionDenied]);
 
   const onRestore = useCallback((country: CountryListItem) => {
-    if (!canRunCountryAction("restore", permissions, country)) notifyPermissionDenied();
-    else if (isReadOnly) notifyBlockedAction();
+    if (isReadOnly) notifyBlockedAction();
+    else if (!canRunCountryAction("restore", authorization, country)) notifyPermissionDenied();
     else setRestoreCountry(country);
-  }, [isReadOnly, notifyBlockedAction, notifyPermissionDenied, permissions.canRestore]);
+  }, [authorization, isReadOnly, notifyBlockedAction, notifyPermissionDenied]);
 
   const closeRestore = useCallback(() => setRestoreCountry(null), []);
   const handleRestore = useCallback(async () => {
-    if (!restoreCountry || !canRunCountryAction("restore", permissions, restoreCountry)) {
+    if (isReadOnly) {
+      notifyBlockedAction();
+      return;
+    }
+    if (!restoreCountry || !canRunCountryAction("restore", authorization, restoreCountry)) {
       notifyPermissionDenied();
       return;
     }
@@ -229,7 +259,7 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     } catch {
       // The mutation callback owns user-facing API errors.
     }
-  }, [closeRestore, notifyPermissionDenied, permissions.canRestore, restoreCountry, restoreMutation]);
+  }, [authorization, closeRestore, isReadOnly, notifyBlockedAction, notifyPermissionDenied, restoreCountry, restoreMutation]);
 
   return {
     dialogType: crud.dialogType,

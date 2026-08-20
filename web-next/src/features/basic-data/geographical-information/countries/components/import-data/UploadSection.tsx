@@ -70,8 +70,8 @@ const UploadSection: React.FC<UploadSectionProps> = ({
             size="large"
           >
             {failedCount > 0
-              ? t("imports.retryFailed") || "Retry failed"
-              : t("imports.uploadData") || "Upload"}
+              ? t("imports.retryFailed")
+              : t("imports.uploadData")}
           </Button>
           {countriesCount > 0 && (
             <Button
@@ -84,7 +84,7 @@ const UploadSection: React.FC<UploadSectionProps> = ({
               onClick={onClear}
               disabled={loading}
             >
-              <Typography sx={{ color: (theme) => theme.palette.error.light }} >{t("imports.clearData") || "Clear"}</Typography>
+              <Typography sx={{ color: (theme) => theme.palette.error.light }} >{t("imports.clearData")}</Typography>
             </Button>
           )}
         </Stack>

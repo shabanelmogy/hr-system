@@ -50,6 +50,14 @@ const breadcrumbsByPath: Record<string, readonly BreadcrumbItem[]> = {
     homeItem,
     { key: 'settings', labelKey: 'navigation.settings' },
   ],
+  [ROUTES.profile]: [
+    homeItem,
+    { key: 'profile', labelKey: 'navigation.profile' },
+  ],
+  [ROUTES.notifications]: [
+    homeItem,
+    { key: 'notifications', labelKey: 'navigation.notifications' },
+  ],
   [ROUTES.superAdminDashboard]: [
     homeItem,
     { key: 'super-admin-dashboard', labelKey: 'navigation.superAdminDashboard' },

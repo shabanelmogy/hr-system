@@ -1,6 +1,5 @@
 "use client";
 
-// CountriesPage.js - TanStack Query Implementation
 import { useTranslation } from "react-i18next";
 import { Alert, Box, Button } from "@mui/material";
 import CountriesMultiView from "../components/CountriesMultiView";
@@ -9,10 +8,10 @@ import CountryForm from "../components/CountryForm";
 import CountryRestoreDialog from "../components/CountryRestoreDialog";
 import useCountryGridLogic from "../hooks/useCountryGridLogic";
 import { useCountry } from "../hooks/useCountryQueries";
+import { extractErrorMessage } from "@/shared/utils/errorUtils";
 
 const CountriesPage = () => {
   const { t } = useTranslation();
-  // All logic is now in the TanStack Query hook
   const {
     dialogType,
     selectedCountry,
@@ -60,7 +59,6 @@ const CountriesPage = () => {
     permissions,
   } = useCountryGridLogic();
 
-  // Derive a type-safe form dialog type — null when the form should not be open
   const formDialogType =
     dialogType === "add" || dialogType === "edit" || dialogType === "view"
       ? dialogType
@@ -70,19 +68,18 @@ const CountriesPage = () => {
   });
   const formCountry = detailQuery.data ?? selectedCountry;
 
-  // Handle error state
   if (error) {
     return (
       <Box sx={{ p: 3 }}>
-        <Alert 
-          severity="error" 
+        <Alert
+          severity="error"
           action={
             <Button color="inherit" size="small" onClick={handleRefresh}>
-              {t("common.retry") || "Retry"}
+              {t("common.retry")}
             </Button>
           }
         >
-          {error.message || t("countries.errorMessage") || "Failed to load countries"}
+          {error.message || t("countries.fetchError")}
         </Alert>
       </Box>
     );
@@ -131,6 +128,10 @@ const CountriesPage = () => {
         onClose={closeDialog}
         onSubmit={handleFormSubmit}
         loading={isCreating || isUpdating || detailQuery.isFetching}
+        detailError={detailQuery.error
+          ? extractErrorMessage(detailQuery.error) || t("countries.detailLoadError")
+          : undefined}
+        onRetryDetails={() => void detailQuery.refetch()}
       />
 
       <CountryArchiveDialog

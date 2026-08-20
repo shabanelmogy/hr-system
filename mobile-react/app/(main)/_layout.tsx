@@ -1,11 +1,13 @@
 import { DrawerActions } from '@react-navigation/native';
+import { router } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
 import { useTranslation } from 'react-i18next';
 
-import { ROUTES } from '@/src/core/constants/routes';
+import { asHref, ROUTES } from '@/src/core/constants/routes';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { useCanAccessRoute } from '@/src/features/auth';
+import { useUnreadNotificationCount } from '@/src/features/notifications';
 import { TenantAccessProvider } from '@/src/features/tenant-access';
 import { AppDrawerContent } from '@/src/layouts/drawer';
 import { MainLayout } from '@/src/layouts/main/MainLayout';
@@ -23,6 +25,11 @@ export default function ProtectedRouteLayout() {
   const canManageTenants = useCanAccessRoute(ROUTES.tenantManagement);
   const canManageTenantAdmins = useCanAccessRoute(ROUTES.tenantAdminManagement);
   const canViewAdministration = useCanAccessRoute(ROUTES.administration.root);
+  const canViewNotifications = useCanAccessRoute(ROUTES.notifications);
+  const unreadNotifications = useUnreadNotificationCount(canViewNotifications).data ?? 0;
+  const notificationLabel = unreadNotifications > 0
+    ? `${t('navigation.notifications')} (${unreadNotifications > 99 ? '99+' : unreadNotifications})`
+    : t('navigation.notifications');
 
   return (
     <TenantAccessProvider>
@@ -46,9 +53,12 @@ export default function ProtectedRouteLayout() {
           },
           header: () => (
             <AppNavigationHeader
+              notificationCount={unreadNotifications}
               onDrawerPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+              onNotificationsPress={() => router.push(asHref(ROUTES.notifications))}
               showDrawer
               showLogout
+              showNotifications={canViewNotifications}
             />
           ),
           sceneStyle: {
@@ -61,6 +71,25 @@ export default function ProtectedRouteLayout() {
             title: t('navigation.home'),
             drawerIcon: ({ color, size }) => (
               <AppIcon color={color} name="home-outline" size={size} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="profile"
+          options={{
+            title: t('navigation.profile'),
+            drawerIcon: ({ color, size }) => (
+              <AppIcon color={color} name="person-circle-outline" size={size} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="notifications"
+          options={{
+            drawerItemStyle: canViewNotifications ? undefined : { display: 'none' },
+            title: notificationLabel,
+            drawerIcon: ({ color, size }) => (
+              <AppIcon color={color} name="notifications-outline" size={size} />
             ),
           }}
         />

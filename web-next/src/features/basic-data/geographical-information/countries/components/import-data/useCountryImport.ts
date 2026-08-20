@@ -42,9 +42,9 @@ export const useCountryImport = () => {
 
   const getStatusLabel = (status: UploadStatus) => {
     const labels: Record<UploadStatus, string> = {
-      pending: t("imports.pending") || "Pending",
-      uploaded: t("imports.uploaded") || "Uploaded",
-      failed: t("imports.failed") || "Failed",
+      pending: t("imports.pending"),
+      uploaded: t("imports.uploaded"),
+      failed: t("imports.failed"),
     };
     return labels[status];
   };
@@ -91,7 +91,7 @@ export const useCountryImport = () => {
   const handleFileSelect = async (file: File) => {
     setSelectedFile(file);
     setLoading(true);
-    setLoadingText(t("downloading") || "Parsing file...");
+    setLoadingText(t("imports.parsing"));
     setUploadProgress(0);
 
     try {
@@ -100,14 +100,14 @@ export const useCountryImport = () => {
       setUploadProgress(100);
       showSnackbar(
         "success",
-        [t("messages.fileParsed") || "File parsed successfully"],
-        t("messages.success") || "Success"
+        [t("imports.fileParsed")],
+        t("messages.success")
       );
     } catch (error) {
       showSnackbar(
         "error",
-        [(error as Error).message || t("messages.error") || "Error"],
-        t("messages.error") || "Error"
+        [(error as Error).message || t("messages.error")],
+        t("messages.error")
       );
       setSelectedFile(null);
     } finally {
@@ -122,8 +122,8 @@ export const useCountryImport = () => {
     if (fileExtension !== "xlsx") {
       showSnackbar(
         "error",
-        [t("fileTypeNotSupported") || "Only .xlsx files are supported"],
-        t("error") || "Error"
+        [t("imports.fileTypeNotSupported")],
+        t("messages.error")
       );
       return false;
     }
@@ -139,7 +139,7 @@ export const useCountryImport = () => {
       startTimeRef.current = Date.now();
       setElapsedTime("0s");
       setLoading(true);
-      setLoadingText(t("uploading") || "Uploading...");
+      setLoadingText(t("imports.uploading"));
 
       timerRef.current = setInterval(() => {
         const seconds = Math.floor(
@@ -172,7 +172,7 @@ export const useCountryImport = () => {
             .map((issue) => issue.message)
             .join(" | ");
           updateRowStatus(c.rowNumber, "failed", message);
-          failures.push(`${t("imports.row") || "Row"} ${c.rowNumber}: ${message}`);
+          failures.push(`${t("imports.row")} ${c.rowNumber}: ${message}`);
           setUploadProgress(Math.round(((i + 1) / rowsToUpload.length) * 100));
           continue;
         }
@@ -202,7 +202,7 @@ export const useCountryImport = () => {
             t("messages.success"),
           );
         } catch (error) {
-          let message = t("messages.error", { defaultValue: "Upload error" });
+          let message = t("messages.error");
           HandleApiError(error, (updatedState) => {
             message = updatedState.messages.join(" | ") || updatedState.title || message;
           });
@@ -214,19 +214,19 @@ export const useCountryImport = () => {
       if (validRows.length === 0 && failures.length === 0) {
         showSnackbar(
           "error",
-          [t("imports.noValidRows", { defaultValue: "No valid rows to upload" })],
+          [t("imports.noValidRows")],
           t("messages.error"),
         );
       }
       if (failures.length > 0) {
-        showSnackbar("error", failures, t("messages.error") || "Error");
+        showSnackbar("error", failures, t("messages.error"));
       }
     } catch (error) {
       HandleApiError(error, (updatedState) => {
         showSnackbar(
           "error",
           updatedState.messages,
-          updatedState.title || t("messages.error") || "Error"
+          updatedState.title || t("messages.error")
         );
       });
     } finally {

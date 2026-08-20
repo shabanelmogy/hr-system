@@ -4,9 +4,12 @@ import {
   type DrawerContentComponentProps,
 } from '@react-navigation/drawer';
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
+import { asHref, ROUTES } from '@/src/core/constants/routes';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { authApi } from '@/src/features/auth/api/auth-api';
@@ -21,6 +24,8 @@ import {
 import { AppText } from '@/src/shared/components';
 
 export function AppDrawerContent(props: DrawerContentComponentProps) {
+  const { t } = useTranslation();
+  const router = useRouter();
   const { direction } = useLocalization();
   const { theme } = useAppTheme();
   const { session } = useAuth();
@@ -42,12 +47,19 @@ export function AppDrawerContent(props: DrawerContentComponentProps) {
         styles.content,
         { direction, backgroundColor: theme.colors.surface },
       ]}>
-      <View
-        style={[
+      <Pressable
+        accessibilityLabel={`${t('navigation.profile')}: ${displayName}`}
+        accessibilityRole="button"
+        onPress={() => {
+          props.navigation.closeDrawer();
+          router.navigate(asHref(ROUTES.profile));
+        }}
+        style={({ pressed }) => [
           styles.profile,
           {
             borderBottomColor: theme.colors.border,
             backgroundColor: theme.colors.surface,
+            opacity: pressed ? 0.72 : 1,
           },
         ]}>
         <UserAvatar initials={initials} photoUri={photoUri} />
@@ -67,7 +79,7 @@ export function AppDrawerContent(props: DrawerContentComponentProps) {
           <TenantSubscriptionStatusBadge />
           <TenantReadOnlyBadge />
         </View>
-      </View>
+      </Pressable>
 
       <View style={styles.navigationItems}>
         <DrawerItemList {...props} />
