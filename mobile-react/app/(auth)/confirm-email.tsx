@@ -1,3 +1,3 @@
-import { ConfirmEmailScreen } from '@/src/features/auth/recovery/AccountRecoveryScreens';
+import { ConfirmEmailScreen } from '@/src/features/auth';
 
 export default ConfirmEmailScreen;

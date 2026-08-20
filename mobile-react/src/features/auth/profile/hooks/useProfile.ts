@@ -61,10 +61,7 @@ export function useUpdateProfilePhoto() {
   return useMutation({
     mutationFn: (photo: ProfilePhotoUpload | null) => profileApi.updatePhoto(photo),
     onSuccess: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: profileKeys.all }),
-        queryClient.invalidateQueries({ queryKey: ['auth', 'current-user-photo'] }),
-      ]);
+      await queryClient.invalidateQueries({ queryKey: profileKeys.all });
     },
   });
 }

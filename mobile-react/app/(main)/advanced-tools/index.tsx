@@ -1,6 +1,6 @@
 import { ROUTES } from '@/src/core/constants/routes';
 import { RouteGuard } from '@/src/features/auth';
-import { PlatformToolsOverviewScreen } from '@/src/features/platform-tools';
+import { PlatformToolsOverviewScreen } from '@/src/features/platform-tools/navigation';
 
 export default function AdvancedToolsRoute() {
   return (

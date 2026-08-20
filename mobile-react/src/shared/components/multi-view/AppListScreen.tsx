@@ -5,7 +5,11 @@ import { useTranslation } from 'react-i18next';
 import { useLocalization } from '@/src/core/localization';
 import { AppFilterButton, type AppFilterButtonProps, type AppFilterOption } from '@/src/shared/components/controls/AppFilterButton';
 import { AppTextField } from '@/src/shared/components/controls/AppTextField';
-import { AppMultiView, type AppMultiViewDefinition } from './AppMultiView';
+import {
+  AppMultiView,
+  type AppMultiViewDefinition,
+  type AppMultiViewServerPagination,
+} from './AppMultiView';
 
 export interface AppListScreenFilterConfig<FilterValue extends string | number> {
   /** Options shown in the filter modal */
@@ -53,6 +57,14 @@ export interface AppListScreenProps<Item, ViewId extends string, FilterValue ext
   belowViews?: ReactNode;
   /** Whether to use compact toolbar style on AppMultiView */
   compactToolbar?: boolean;
+  /** Controlled search value for server-managed lists. */
+  searchValue?: string;
+  /** Receives search input changes for server-managed lists. */
+  onSearchChange?: (value: string) => void;
+  /** Controlled server pagination. When present, items are treated as the current server page. */
+  serverPagination?: AppMultiViewServerPagination;
+  /** Shows a non-destructive progress indicator while retaining the current page. */
+  isFetching?: boolean;
 }
 
 /**
@@ -62,9 +74,10 @@ export interface AppListScreenProps<Item, ViewId extends string, FilterValue ext
  * - Row 1: Search input + optional Filter button
  * - Row 2: Multi-view switcher (table/cards/grouped/etc.) with pagination
  *
- * This component owns the search state internally and applies client-side
- * filtering via the `onSearch` callback. External (server-side) filtering
- * can be done by passing pre-filtered `items` and omitting `onSearch`.
+ * By default this component owns search and pagination state and applies
+ * client-side filtering via `onSearch`. Server-backed features pass controlled
+ * search and `serverPagination`; the supplied items are then treated as the
+ * current server page and are not sliced again.
  */
 export function AppListScreen<Item, ViewId extends string, FilterValue extends string | number = string>({
   items,
@@ -80,15 +93,21 @@ export function AppListScreen<Item, ViewId extends string, FilterValue extends s
   aboveViews,
   belowViews,
   compactToolbar = true,
+  searchValue,
+  onSearchChange,
+  serverPagination,
+  isFetching = false,
 }: AppListScreenProps<Item, ViewId, FilterValue>) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
   const [search, setSearch] = useState('');
+  const effectiveSearch = searchValue ?? search;
+  const setEffectiveSearch = onSearchChange ?? setSearch;
 
   const searchedItems = useMemo(() => {
-    if (!onSearch || !search.trim()) return items;
-    return onSearch(items, search);
-  }, [items, onSearch, search]);
+    if (!onSearch || !effectiveSearch.trim()) return items;
+    return onSearch(items, effectiveSearch);
+  }, [effectiveSearch, items, onSearch]);
 
   const filteredItems = useMemo(() => {
     if (!filter || filter.values.length === 0) return searchedItems;
@@ -99,13 +118,13 @@ export function AppListScreen<Item, ViewId extends string, FilterValue extends s
   }, [filter, searchedItems]);
 
   const resetKey = useMemo(
-    () => `${search}|${filter?.values.join(',') ?? ''}`,
-    [filter?.values, search],
+    () => `${effectiveSearch}|${filter?.values.join(',') ?? ''}`,
+    [effectiveSearch, filter?.values],
   );
 
   const handleClearSearch = useCallback(() => {
-    setSearch('');
-  }, []);
+    setEffectiveSearch('');
+  }, [setEffectiveSearch]);
 
   const filterButtonLabel = filter
     ? filter.values.length > 0
@@ -122,10 +141,10 @@ export function AppListScreen<Item, ViewId extends string, FilterValue extends s
             compact
             label={searchPlaceholder ?? t('listScreen.search')}
             leadingIcon="search-outline"
-            onChangeText={setSearch}
+            onChangeText={setEffectiveSearch}
             onClear={handleClearSearch}
             showClearButton
-            value={search}
+            value={effectiveSearch}
           />
         </View>
         {filter ? (
@@ -156,6 +175,8 @@ export function AppListScreen<Item, ViewId extends string, FilterValue extends s
         pageSizeOptions={pageSizeOptions}
         resetKey={resetKey}
         showViewLabels={showViewLabels}
+        isFetching={isFetching}
+        serverPagination={serverPagination}
         views={views}
       />
 

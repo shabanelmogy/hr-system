@@ -1,0 +1,26 @@
+import { describe, expect, it } from '@jest/globals';
+
+import {
+  getAllRealtimeQueryKeys,
+  getRealtimeQueryKeys,
+  isKnownRealtimeResource,
+} from '../realtime-query-registry';
+
+describe('realtime query registry', () => {
+  it('targets every appointment range through the stable feature prefix', () => {
+    expect(getRealtimeQueryKeys('appointments')).toContainEqual([
+      'platform-tools',
+      'appointments',
+    ]);
+  });
+
+  it('does not mark unmapped resources as known', () => {
+    expect(isKnownRealtimeResource('countries')).toBe(false);
+    expect(getRealtimeQueryKeys('countries')).toEqual([]);
+  });
+
+  it('deduplicates reconnect invalidation prefixes', () => {
+    const serialized = getAllRealtimeQueryKeys().map((key) => JSON.stringify(key));
+    expect(new Set(serialized).size).toBe(serialized.length);
+  });
+});

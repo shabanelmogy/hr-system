@@ -5,15 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { permissions, useAuthorization } from '@/src/features/auth';
-import { LocalizationEditModal } from '@/src/features/platform-tools/components/LocalizationEditModal';
+import { LocalizationEditModal } from '@/src/features/platform-tools/localization/components/LocalizationEditModal';
 import {
   useLocalizationEntries,
   useUpdateLocalization,
-} from '@/src/features/platform-tools/hooks/usePlatformTools';
+} from '@/src/features/platform-tools/localization/hooks';
 import type {
   LocalizationCulture,
   LocalizationEntry,
-} from '@/src/features/platform-tools/types/platform-tools';
+} from '@/src/features/platform-tools/localization/types';
 import { getPlatformToolErrorMessage } from '@/src/features/platform-tools/utils/platform-tool-utils';
 import {
   AppAlert,

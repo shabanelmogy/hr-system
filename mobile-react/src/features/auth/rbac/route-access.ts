@@ -2,132 +2,15 @@ import { ROUTES } from '@/src/core/constants/routes';
 import {
   isAuthorized,
   type AuthorizationClaims,
-  type AuthorizationRequirement,
 } from '@/src/features/auth/rbac/authorization';
-import { permissions, type PermissionString } from '@/src/features/auth/rbac/permissions';
 import { appRoles, hasAnyRole } from '@/src/features/auth/rbac/roles';
+import {
+  routePolicies,
+  superAdminAllowedRoutes,
+  type RoutePolicy,
+} from '@/src/features/auth/rbac/route-manifest';
 
-export interface RoutePolicy {
-  path: string;
-  roles?: readonly string[];
-  permissions?: readonly PermissionString[];
-  anyOf?: readonly AuthorizationRequirement[];
-}
-
-export const BASIC_DATA_VIEW_PERMISSIONS = [
-  permissions.ViewCountries,
-  permissions.ViewStates,
-  permissions.ViewDistricts,
-  permissions.ViewAddressTypes,
-] as const;
-
-// More-specific routes must precede their parent route.
-export const routePolicies: readonly RoutePolicy[] = [
-  {
-    path: ROUTES.superAdminDashboard,
-    roles: [appRoles.superAdmin],
-  },
-  {
-    path: ROUTES.tenantManagement,
-    roles: [appRoles.superAdmin],
-  },
-  {
-    path: ROUTES.tenantAdminManagement,
-    roles: [appRoles.superAdmin],
-  },
-  {
-    path: ROUTES.administration.rolePermissionsRoot,
-    permissions: [permissions.ViewRoles],
-  },
-  {
-    path: ROUTES.administration.roles,
-    permissions: [permissions.ViewRoles],
-  },
-  {
-    path: ROUTES.administration.invitations,
-    permissions: [permissions.ViewUsers],
-  },
-  {
-    path: ROUTES.administration.root,
-    anyOf: [
-      { permissions: [permissions.ViewUsers] },
-      { permissions: [permissions.ViewRoles] },
-    ],
-  },
-  {
-    path: ROUTES.basicData.geographicalInformation,
-    permissions: BASIC_DATA_VIEW_PERMISSIONS,
-  },
-  {
-    path: ROUTES.basicData.organizationalStructure,
-    roles: [appRoles.admin],
-  },
-  {
-    path: ROUTES.basicData.root,
-    anyOf: [
-      { permissions: BASIC_DATA_VIEW_PERMISSIONS },
-      { roles: [appRoles.admin] },
-    ],
-  },
-  {
-    path: ROUTES.extras.files,
-    roles: [appRoles.admin],
-  },
-  {
-    path: ROUTES.extras.appointments,
-    permissions: [permissions.ViewUsers],
-  },
-  {
-    path: ROUTES.extras.root,
-    anyOf: [
-      { roles: [appRoles.admin] },
-      { permissions: [permissions.ViewUsers] },
-    ],
-  },
-  {
-    path: ROUTES.advancedTools.trackChanges,
-    permissions: [permissions.ViewChangeLogs],
-  },
-  {
-    path: ROUTES.advancedTools.localizationApi,
-    permissions: [permissions.ViewLocalizations],
-  },
-  {
-    path: ROUTES.advancedTools.healthCheck,
-    roles: [appRoles.admin],
-  },
-  {
-    path: ROUTES.advancedTools.apiEndpoints,
-    roles: [appRoles.admin],
-  },
-  {
-    path: ROUTES.advancedTools.hangfireDashboard,
-    permissions: [permissions.ViewHangfireDashboard],
-  },
-  {
-    path: ROUTES.advancedTools.root,
-    anyOf: [
-      { permissions: [permissions.ViewChangeLogs] },
-      { permissions: [permissions.ViewLocalizations] },
-      { roles: [appRoles.admin] },
-      { permissions: [permissions.ViewHangfireDashboard] },
-    ],
-  },
-  { path: ROUTES.profile },
-  { path: ROUTES.notifications, roles: [appRoles.admin, appRoles.user] },
-  { path: ROUTES.home },
-  { path: ROUTES.settings, roles: [appRoles.admin, appRoles.superAdmin] },
-  { path: ROUTES.modal },
-];
-
-const superAdminAllowedRoutes = [
-  ROUTES.home,
-  ROUTES.profile,
-  ROUTES.settings,
-  ROUTES.superAdminDashboard,
-  ROUTES.tenantManagement,
-  ROUTES.tenantAdminManagement,
-] as const;
+export { BASIC_DATA_VIEW_PERMISSIONS, routePolicies } from './route-manifest';
 
 function matchesRoute(pathname: string, routePath: string): boolean {
   return (

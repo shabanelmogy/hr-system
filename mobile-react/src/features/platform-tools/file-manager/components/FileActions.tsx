@@ -2,8 +2,8 @@ import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { useAppTheme } from '@/src/core/theme';
-import type { StoredFile } from '@/src/features/platform-tools/types/platform-tools';
-import { getFilePreviewKind } from '@/src/features/platform-tools/utils/file-manager';
+import type { StoredFile } from '@/src/features/platform-tools/file-manager/types';
+import { getFilePreviewKind } from '@/src/features/platform-tools/file-manager/file-utils';
 import { AppIconButton } from '@/src/shared/components';
 
 interface FileActionsProps {

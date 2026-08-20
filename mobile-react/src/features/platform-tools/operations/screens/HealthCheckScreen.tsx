@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
-import { useHealthCheck } from '@/src/features/platform-tools/hooks/usePlatformTools';
+import { useHealthCheck } from '@/src/features/platform-tools/operations/hooks';
 import type {
   HealthCheckEntry,
   HealthStatus,
-} from '@/src/features/platform-tools/types/platform-tools';
+} from '@/src/features/platform-tools/operations/types';
 import { getPlatformToolErrorMessage } from '@/src/features/platform-tools/utils/platform-tool-utils';
 import {
   AppCard,

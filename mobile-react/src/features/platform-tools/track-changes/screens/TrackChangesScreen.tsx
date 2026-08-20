@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
-import { useTrackChanges } from '@/src/features/platform-tools/hooks/usePlatformTools';
-import type { TrackChangeLog } from '@/src/features/platform-tools/types/platform-tools';
+import { useTrackChanges } from '@/src/features/platform-tools/track-changes/hooks';
+import type { TrackChangeLog } from '@/src/features/platform-tools/track-changes/types';
 import {
   formatPlatformDate,
   getPlatformToolErrorMessage,

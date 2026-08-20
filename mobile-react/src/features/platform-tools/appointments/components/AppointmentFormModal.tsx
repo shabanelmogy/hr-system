@@ -1,10 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import type {
-  Appointment,
-  AppointmentInput,
-} from '@/src/features/platform-tools/types/platform-tools';
+import type { Appointment, AppointmentInput } from '@/src/features/platform-tools/appointments/types';
 import { getPlatformToolErrorMessage } from '@/src/features/platform-tools/utils/platform-tool-utils';
 import {
   AppButton,

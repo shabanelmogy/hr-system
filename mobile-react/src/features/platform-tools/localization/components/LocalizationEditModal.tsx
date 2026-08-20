@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import type { LocalizationEntry } from '@/src/features/platform-tools/types/platform-tools';
+import type { LocalizationEntry } from '@/src/features/platform-tools/localization/types';
 import { getPlatformToolErrorMessage } from '@/src/features/platform-tools/utils/platform-tool-utils';
 import { AppForm, AppFormSection, AppTextField } from '@/src/shared/components';
 

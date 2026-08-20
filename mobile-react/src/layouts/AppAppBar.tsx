@@ -4,8 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
-import { useAuth } from '@/src/features/auth/context/AuthProvider';
-import { useLogout } from '@/src/features/auth/hooks/useLogout';
+import { useAuth, useLogout } from '@/src/features/auth';
 import { AppIcon, AppIconButton, AppText } from '@/src/shared/components';
 
 export interface AppAppBarProps {

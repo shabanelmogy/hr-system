@@ -47,6 +47,12 @@ export function TenantAdminManagementScreen() {
   const [deleting, setDeleting] = useState<TenantAdmin | null>(null);
 
   const admins = useMemo(() => adminsQuery.data ?? [], [adminsQuery.data]);
+  const tenantOptions = useMemo(() => (tenantsQuery.data ?? []).map((tenant) => ({
+    id: tenant.id,
+    identifier: tenant.identifier,
+    name: tenant.name,
+    isActive: tenant.isActive,
+  })), [tenantsQuery.data]);
 
   const [selectedAdminFilters, setSelectedAdminFilters] = useState<string[]>([]);
 
@@ -315,7 +321,7 @@ export function TenantAdminManagementScreen() {
           loading={saveMutation.isPending}
           onClose={closeForm}
           onSave={save}
-          tenants={tenantsQuery.data ?? []}
+          tenants={tenantOptions}
         />
       ) : null}
 

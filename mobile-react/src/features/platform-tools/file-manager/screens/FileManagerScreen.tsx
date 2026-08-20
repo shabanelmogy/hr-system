@@ -4,22 +4,22 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { useAppTheme } from '@/src/core/theme';
-import { platformToolsApi } from '@/src/features/platform-tools/api/platform-tools-api';
-import { FileActions } from '@/src/features/platform-tools/components/FileActions';
-import { FileViewerModal } from '@/src/features/platform-tools/components/FileViewerModal';
-import { GroupedFilesView } from '@/src/features/platform-tools/components/GroupedFilesView';
+import { fileManagerApi } from '@/src/features/platform-tools/file-manager/api';
+import { FileActions } from '@/src/features/platform-tools/file-manager/components/FileActions';
+import { FileViewerModal } from '@/src/features/platform-tools/file-manager/components/FileViewerModal';
+import { GroupedFilesView } from '@/src/features/platform-tools/file-manager/components/GroupedFilesView';
 import {
   useDeleteFile,
   useStoredFiles,
   useUploadFiles,
-} from '@/src/features/platform-tools/hooks/usePlatformTools';
-import type { StoredFile, UploadFileAsset } from '@/src/features/platform-tools/types/platform-tools';
+} from '@/src/features/platform-tools/file-manager/hooks';
+import type { StoredFile, UploadFileAsset } from '@/src/features/platform-tools/file-manager/types';
 import {
   classifyFile,
   fileGroupDefinitions,
   type FileGroupId,
   getFileIcon,
-} from '@/src/features/platform-tools/utils/file-manager';
+} from '@/src/features/platform-tools/file-manager/file-utils';
 import {
   formatPlatformDate,
   getPlatformToolErrorMessage,
@@ -103,7 +103,7 @@ export function FileManagerScreen() {
   const download = useCallback(async (file: StoredFile) => {
     setDownloadingId(file.id);
     try {
-      await platformToolsApi.downloadFile(file);
+      await fileManagerApi.downloadFile(file);
     } catch (error) {
       showToast.error(error, t('platformTools.files.downloadFailed'));
     } finally {

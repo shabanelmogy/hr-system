@@ -6,16 +6,16 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { useAppTheme } from '@/src/core/theme';
-import { platformToolsApi } from '@/src/features/platform-tools/api/platform-tools-api';
+import { fileManagerApi } from '@/src/features/platform-tools/file-manager/api';
 import type {
   AuthenticatedFileSource,
   PreparedFilePreview,
   StoredFile,
-} from '@/src/features/platform-tools/types/platform-tools';
+} from '@/src/features/platform-tools/file-manager/types';
 import {
   getFileIcon,
   getFilePreviewKind,
-} from '@/src/features/platform-tools/utils/file-manager';
+} from '@/src/features/platform-tools/file-manager/file-utils';
 import { formatFileSize } from '@/src/features/platform-tools/utils/platform-tool-utils';
 import {
   AppButton,
@@ -60,14 +60,14 @@ export function FileViewerModal({ file, onClose }: FileViewerModalProps) {
 
       try {
         if (previewKind === 'image' || previewKind === 'video' || previewKind === 'audio') {
-          const source = await platformToolsApi.getAuthenticatedFileSource(file);
+          const source = await fileManagerApi.getAuthenticatedFileSource(file);
           if (active) setMediaSource(source);
           return;
         }
 
         if (previewKind === 'external') return;
 
-        prepared = await platformToolsApi.prepareFilePreview(file);
+        prepared = await fileManagerApi.prepareFilePreview(file);
         if (!active) {
           prepared.dispose();
           return;
@@ -102,9 +102,9 @@ export function FileViewerModal({ file, onClose }: FileViewerModalProps) {
     setOpening(true);
     try {
       if (preview) {
-        await platformToolsApi.openPreparedFile(file, preview);
+        await fileManagerApi.openPreparedFile(file, preview);
       } else {
-        await platformToolsApi.downloadFile(file);
+        await fileManagerApi.downloadFile(file);
       }
     } catch (openError) {
       showToast.error(openError, t('platformTools.files.viewer.openFailed'));

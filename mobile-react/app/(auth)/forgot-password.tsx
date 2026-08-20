@@ -1,3 +1,3 @@
-import { ForgotPasswordScreen } from '@/src/features/auth/recovery/AccountRecoveryScreens';
+import { ForgotPasswordScreen } from '@/src/features/auth';
 
 export default ForgotPasswordScreen;

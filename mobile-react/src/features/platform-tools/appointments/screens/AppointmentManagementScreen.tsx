@@ -13,17 +13,17 @@ import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
-import { AppointmentFormModal } from '@/src/features/platform-tools/components/AppointmentFormModal';
+import { AppointmentFormModal } from '@/src/features/platform-tools/appointments/components/AppointmentFormModal';
 import {
   useAppointments,
   useDeleteAppointment,
   useSaveAppointment,
-} from '@/src/features/platform-tools/hooks/usePlatformTools';
+} from '@/src/features/platform-tools/appointments/hooks';
 import type {
   Appointment,
   AppointmentInput,
   AppointmentRange,
-} from '@/src/features/platform-tools/types/platform-tools';
+} from '@/src/features/platform-tools/appointments/types';
 import { getPlatformToolErrorMessage } from '@/src/features/platform-tools/utils/platform-tool-utils';
 import {
   AppButton,

@@ -42,3 +42,11 @@ export interface TenantAdminFormValues {
   tenantIds: string[];
   defaultTenantId: string;
 }
+
+/** Minimal tenant contract consumed by the tenant-admin form boundary. */
+export interface TenantAdminTenantOption {
+  id: string;
+  identifier: string;
+  name: string;
+  isActive: boolean;
+}

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { type AppColors, useAppTheme } from '@/src/core/theme';
-import { useAuth } from '@/src/features/auth/context/AuthProvider';
+import { useAuth } from '@/src/features/auth';
 import { AppStatusBadge, type AppIconName } from '@/src/shared/components';
 
 type SubscriptionStatusKey =

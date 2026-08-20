@@ -12,7 +12,7 @@ import { AppState } from 'react-native';
 import { z } from 'zod';
 
 import { realtimeService } from '@/src/core/realtime/realtime-service';
-import { useAuth } from '@/src/features/auth/context/AuthProvider';
+import { useAuth } from '@/src/features/auth';
 import { showToast } from '@/src/shared/components/feedback/transient';
 import { parseRealtimeEntityChanged } from './realtime-event';
 import {
@@ -116,7 +116,9 @@ export function RealtimeProvider({ children }: PropsWithChildren) {
         if (oldestId !== undefined) receivedNotificationIds.current.delete(oldestId);
       }
 
-      void queryClient.invalidateQueries({ refetchType: 'active' });
+      for (const queryKey of getRealtimeQueryKeys('notifications')) {
+        void queryClient.invalidateQueries({ queryKey, refetchType: 'active' });
+      }
       if (!result.data.actorUserId || result.data.actorUserId !== session?.userId) {
         showToast.info(t('feedback.liveUpdate'));
       }

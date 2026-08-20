@@ -25,4 +25,8 @@ Create `.env` from `.env.example` and set `EXPO_PUBLIC_API_URL` to an address re
 
 Navigation paths are centralized in `src/core/constants/routes.ts`. Add a constant only when its physical Expo Router route exists.
 
-See `docs/MOBILE_ARCHITECTURE.md` before adding a new feature or layout.
+Before adding a feature or layout, read:
+
+- `docs/MOBILE_ARCHITECTURE.md` for dependency and navigation boundaries.
+- `docs/MOBILE_FEATURE_GUIDE.md` for the implementation template and definition of done.
+- `docs/MOBILE_STYLE_GUIDE.md` for tokens, responsive layout, RTL and accessibility.

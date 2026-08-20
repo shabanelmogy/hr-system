@@ -1,6 +1,5 @@
 import { ROUTES } from '@/src/core/constants/routes';
-import { RouteGuard } from '@/src/features/auth';
-import { ProfileScreen } from '@/src/features/auth/profile';
+import { ProfileScreen, RouteGuard } from '@/src/features/auth';
 
 export default function ProfileRoute() {
   return (

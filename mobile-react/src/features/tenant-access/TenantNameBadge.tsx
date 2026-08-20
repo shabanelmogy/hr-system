@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
-import { useAuth } from '@/src/features/auth/context/AuthProvider';
+import { useAuth } from '@/src/features/auth';
 import { AppIcon, AppText } from '@/src/shared/components';
 
 export function TenantNameBadge() {

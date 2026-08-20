@@ -6,7 +6,7 @@ import { useAppTheme } from '@/src/core/theme';
 import { AppPaginationNavigation } from '@/src/shared/components/pagination';
 import { AppText } from '@/src/shared/components/typography/AppText';
 
-interface AppCollectionPaginationProps {
+export interface AppCollectionPaginationProps {
   attached?: boolean;
   page: number;
   pageSize: number;

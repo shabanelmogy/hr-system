@@ -1,30 +1,33 @@
-import { administrationKeys } from '@/src/features/administration/hooks/useAdministration';
-import { tenantAdminKeys } from '@/src/features/tenant-admins/hooks/useTenantAdmins';
-import { tenantKeys } from '@/src/features/tenants/hooks/useTenants';
-import { platformToolKeys } from '@/src/features/platform-tools/hooks/usePlatformTools';
-
 type QueryKey = readonly unknown[];
 
+// Stable public prefixes; realtime must not depend on feature hook implementations.
+const queryKeys = {
+  tenants: ['tenants'],
+  users: ['administration', 'users'],
+  companyOptions: ['administration', 'company-options'],
+  roles: ['administration', 'roles'],
+  tenantAdmins: ['tenant-admins'],
+  appointments: ['platform-tools', 'appointments'],
+  trackChanges: ['platform-tools', 'track-changes'],
+  notifications: ['notifications'],
+  profile: ['current-user-profile'],
+} as const satisfies Record<string, QueryKey>;
+
 const administrationQueryKeys: readonly QueryKey[] = [
-  administrationKeys.users,
-  administrationKeys.companyOptions,
-  administrationKeys.roles,
+  queryKeys.users,
+  queryKeys.companyOptions,
+  queryKeys.roles,
 ];
 
 const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
-  tenants: [tenantKeys.all],
-  users: [administrationKeys.users, tenantAdminKeys.all, ['auth', 'current-user-photo']],
-  roles: [administrationKeys.roles],
-  'role-claims': [administrationKeys.roles],
-  companies: [administrationKeys.companyOptions],
-  countries: [],
-  states: [],
-  districts: [],
-  'address-types': [],
-  addresses: [],
-  appointments: [],
-  notifications: [['notifications']],
-  'entity-change-logs': [platformToolKeys.trackChanges],
+  tenants: [queryKeys.tenants],
+  users: [queryKeys.users, queryKeys.tenantAdmins, queryKeys.profile],
+  roles: [queryKeys.roles],
+  'role-claims': [queryKeys.roles],
+  companies: [queryKeys.companyOptions],
+  appointments: [queryKeys.appointments],
+  notifications: [queryKeys.notifications],
+  'entity-change-logs': [queryKeys.trackChanges],
 };
 
 export function getRealtimeQueryKeys(resource: string): readonly QueryKey[] {
@@ -38,11 +41,12 @@ export function isKnownRealtimeResource(resource: string): boolean {
 export function getAllRealtimeQueryKeys(): readonly QueryKey[] {
   const keys = new Map<string, QueryKey>();
   [
-    tenantKeys.all,
-    tenantAdminKeys.all,
-    ['auth', 'current-user-photo'],
-    ['notifications'],
-    platformToolKeys.trackChanges,
+    queryKeys.tenants,
+    queryKeys.tenantAdmins,
+    queryKeys.profile,
+    queryKeys.notifications,
+    queryKeys.appointments,
+    queryKeys.trackChanges,
     ...administrationQueryKeys,
   ].forEach((queryKey) => {
     keys.set(JSON.stringify(queryKey), queryKey);

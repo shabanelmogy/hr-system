@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { toFormErrorMap, useZodForm } from '@/src/core/validation';
-import type { TenantManagementResponse } from '@/src/features/tenants';
 import type {
   TenantAdmin,
   TenantAdminFormValues,
   TenantAdminRequest,
+  TenantAdminTenantOption,
 } from '@/src/features/tenant-admins/types/tenant-admin';
 import {
   AppForm,
@@ -22,7 +22,7 @@ import {
 
 interface TenantAdminFormProps {
   admin: TenantAdmin | null;
-  tenants: readonly TenantManagementResponse[];
+  tenants: readonly TenantAdminTenantOption[];
   loading: boolean;
   onClose: () => void;
   onSave: (request: TenantAdminRequest) => Promise<void>;

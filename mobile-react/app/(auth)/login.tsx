@@ -1,3 +1,3 @@
-import { Login } from '@/src/features/auth/login/Login';
+import { Login } from '@/src/features/auth';
 
 export default Login;

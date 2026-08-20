@@ -1,6 +1,6 @@
 import { ROUTES } from '@/src/core/constants/routes';
 import { RouteGuard } from '@/src/features/auth';
-import { LocalizationManagementScreen } from '@/src/features/platform-tools';
+import { LocalizationManagementScreen } from '@/src/features/platform-tools/localization';
 
 export default function LocalizationApiRoute() {
   return (

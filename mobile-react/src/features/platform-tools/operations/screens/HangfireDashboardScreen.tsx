@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 
 import { useAppTheme } from '@/src/core/theme';
 import { secureSession } from '@/src/core/storage/secure-storage';
-import { platformToolsApi } from '@/src/features/platform-tools/api/platform-tools-api';
-import { useBackgroundJobs } from '@/src/features/platform-tools/hooks/usePlatformTools';
+import { operationsApi } from '@/src/features/platform-tools/operations/api';
+import { useBackgroundJobs } from '@/src/features/platform-tools/operations/hooks';
 import { formatPlatformDate, getPlatformToolErrorMessage } from '@/src/features/platform-tools/utils/platform-tool-utils';
 import {
   AppButton,
@@ -24,7 +24,7 @@ export function HangfireDashboardScreen() {
   const { t, i18n } = useTranslation();
   const { theme } = useAppTheme();
   const jobsQuery = useBackgroundJobs();
-  const dashboardUrl = platformToolsApi.getHangfireUrl();
+  const dashboardUrl = operationsApi.getHangfireUrl();
   const webViewRef = useRef<WebView>(null);
   const [dashboardVisible, setDashboardVisible] = useState(false);
   const [dashboardLoading, setDashboardLoading] = useState(false);

@@ -7,7 +7,7 @@ import 'react-native-reanimated';
 import { AppProviders } from '@/src/core/providers/AppProviders';
 import { useOnboarding } from '@/src/core/onboarding';
 import { useAppTheme } from '@/src/core/theme';
-import { AuthProvider, useAuth } from '@/src/features/auth/context/AuthProvider';
+import { AuthProvider, useAuth } from '@/src/features/auth';
 import { RealtimeProvider } from '@/src/features/realtime';
 import { AppScreen, AppStateView } from '@/src/shared/components';
 

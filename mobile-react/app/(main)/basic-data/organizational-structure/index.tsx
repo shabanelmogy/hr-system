@@ -1,6 +1,6 @@
 import { ROUTES } from '@/src/core/constants/routes';
 import { RouteGuard } from '@/src/features/auth';
-import { OrganizationalStructureScreen } from '@/src/features/basic-data/screens/OrganizationalStructureScreen';
+import { OrganizationalStructureScreen } from '@/src/features/basic-data';
 
 export default function OrganizationalStructureRoute() {
   return (

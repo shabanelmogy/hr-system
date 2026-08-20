@@ -24,8 +24,7 @@ import { ManagedUserAvatar } from '../components/ManagedUserAvatar';
 import { ManagedUserActions } from '../components/ManagedUserActions';
 import { ManagedUserCard } from '../components/ManagedUserCard';
 import { UserManagementStats } from '../components/UserManagementStats';
-import { useAuth, useAuthorization } from '@/src/features/auth';
-import { permissions } from '@/src/features/auth/rbac/permissions';
+import { permissions, useAuth, useAuthorization } from '@/src/features/auth';
 import {
   AppDataTable,
   type AppDataTableColumn,

@@ -1,0 +1,173 @@
+import { ROUTES, type AppRoute } from '@/src/core/constants/routes';
+import type { AppIconName } from '@/src/shared/components/icons/AppIcon';
+import type { AuthorizationRequirement } from './authorization';
+import { permissions, type PermissionString } from './permissions';
+import { appRoles } from './roles';
+
+export interface RoutePolicy {
+  path: AppRoute;
+  roles?: readonly string[];
+  permissions?: readonly PermissionString[];
+  anyOf?: readonly AuthorizationRequirement[];
+}
+
+export interface MainDrawerRouteDefinition {
+  name:
+    | '(tabs)'
+    | 'profile'
+    | 'notifications'
+    | 'basic-data'
+    | 'administration'
+    | 'extras'
+    | 'advanced-tools'
+    | 'super-admin-dashboard'
+    | 'tenant-management'
+    | 'tenant-admin-management';
+  path: AppRoute;
+  titleKey: string;
+  icon: AppIconName;
+  headerShown?: boolean;
+}
+
+export const BASIC_DATA_VIEW_PERMISSIONS = [
+  permissions.ViewCountries,
+  permissions.ViewStates,
+  permissions.ViewDistricts,
+  permissions.ViewAddressTypes,
+] as const;
+
+/**
+ * Canonical access manifest. More-specific routes must precede their parents.
+ * Route adapters and navigation both consume these paths through canAccessRoute.
+ */
+export const routePolicies: readonly RoutePolicy[] = [
+  { path: ROUTES.superAdminDashboard, roles: [appRoles.superAdmin] },
+  { path: ROUTES.tenantManagement, roles: [appRoles.superAdmin] },
+  { path: ROUTES.tenantAdminManagement, roles: [appRoles.superAdmin] },
+  { path: ROUTES.administration.rolePermissionsRoot, permissions: [permissions.ViewRoles] },
+  { path: ROUTES.administration.roles, permissions: [permissions.ViewRoles] },
+  { path: ROUTES.administration.invitations, permissions: [permissions.ViewUsers] },
+  {
+    path: ROUTES.administration.root,
+    anyOf: [
+      { permissions: [permissions.ViewUsers] },
+      { permissions: [permissions.ViewRoles] },
+    ],
+  },
+  { path: ROUTES.basicData.geographicalInformation, permissions: BASIC_DATA_VIEW_PERMISSIONS },
+  { path: ROUTES.basicData.organizationalStructure, roles: [appRoles.admin] },
+  {
+    path: ROUTES.basicData.root,
+    anyOf: [
+      { permissions: BASIC_DATA_VIEW_PERMISSIONS },
+      { roles: [appRoles.admin] },
+    ],
+  },
+  { path: ROUTES.extras.files, roles: [appRoles.admin] },
+  { path: ROUTES.extras.appointments, permissions: [permissions.ViewUsers] },
+  {
+    path: ROUTES.extras.root,
+    anyOf: [
+      { roles: [appRoles.admin] },
+      { permissions: [permissions.ViewUsers] },
+    ],
+  },
+  { path: ROUTES.advancedTools.trackChanges, permissions: [permissions.ViewChangeLogs] },
+  { path: ROUTES.advancedTools.localizationApi, permissions: [permissions.ViewLocalizations] },
+  { path: ROUTES.advancedTools.healthCheck, roles: [appRoles.admin] },
+  { path: ROUTES.advancedTools.apiEndpoints, roles: [appRoles.admin] },
+  {
+    path: ROUTES.advancedTools.hangfireDashboard,
+    permissions: [permissions.ViewHangfireDashboard],
+  },
+  {
+    path: ROUTES.advancedTools.root,
+    anyOf: [
+      { permissions: [permissions.ViewChangeLogs] },
+      { permissions: [permissions.ViewLocalizations] },
+      { roles: [appRoles.admin] },
+      { permissions: [permissions.ViewHangfireDashboard] },
+    ],
+  },
+  { path: ROUTES.profile },
+  { path: ROUTES.notifications, roles: [appRoles.admin, appRoles.user] },
+  { path: ROUTES.home },
+  { path: ROUTES.settings, roles: [appRoles.admin, appRoles.superAdmin] },
+  { path: ROUTES.modal },
+];
+
+export const superAdminAllowedRoutes: readonly AppRoute[] = [
+  ROUTES.home,
+  ROUTES.profile,
+  ROUTES.settings,
+  ROUTES.superAdminDashboard,
+  ROUTES.tenantManagement,
+  ROUTES.tenantAdminManagement,
+];
+
+export const MAIN_DRAWER_ROUTES: readonly MainDrawerRouteDefinition[] = [
+  {
+    name: '(tabs)',
+    path: ROUTES.home,
+    titleKey: 'navigation.home',
+    icon: 'home-outline',
+  },
+  {
+    name: 'profile',
+    path: ROUTES.profile,
+    titleKey: 'navigation.profile',
+    icon: 'person-circle-outline',
+  },
+  {
+    name: 'notifications',
+    path: ROUTES.notifications,
+    titleKey: 'navigation.notifications',
+    icon: 'notifications-outline',
+  },
+  {
+    name: 'basic-data',
+    path: ROUTES.basicData.root,
+    titleKey: 'navigation.basicData',
+    icon: 'server-outline',
+    headerShown: false,
+  },
+  {
+    name: 'administration',
+    path: ROUTES.administration.root,
+    titleKey: 'navigation.administration',
+    icon: 'people-outline',
+    headerShown: false,
+  },
+  {
+    name: 'extras',
+    path: ROUTES.extras.root,
+    titleKey: 'navigation.extras',
+    icon: 'apps-outline',
+    headerShown: false,
+  },
+  {
+    name: 'advanced-tools',
+    path: ROUTES.advancedTools.root,
+    titleKey: 'navigation.advancedTools',
+    icon: 'construct-outline',
+    headerShown: false,
+  },
+  {
+    name: 'super-admin-dashboard',
+    path: ROUTES.superAdminDashboard,
+    titleKey: 'navigation.superAdminDashboard',
+    icon: 'speedometer-outline',
+  },
+  {
+    name: 'tenant-management',
+    path: ROUTES.tenantManagement,
+    titleKey: 'navigation.tenantManagement',
+    icon: 'business-outline',
+  },
+  {
+    name: 'tenant-admin-management',
+    path: ROUTES.tenantAdminManagement,
+    titleKey: 'navigation.tenantAdminManagement',
+    icon: 'shield-checkmark-outline',
+  },
+];

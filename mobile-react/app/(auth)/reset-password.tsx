@@ -1,3 +1,3 @@
-import { ResetPasswordScreen } from '@/src/features/auth/recovery/AccountRecoveryScreens';
+import { ResetPasswordScreen } from '@/src/features/auth';
 
 export default ResetPasswordScreen;

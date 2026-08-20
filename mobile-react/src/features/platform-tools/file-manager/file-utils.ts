@@ -1,4 +1,4 @@
-import type { StoredFile } from '@/src/features/platform-tools/types/platform-tools';
+import type { StoredFile } from './types';
 import type { AppIconName } from '@/src/shared/components';
 
 export type FileGroupId =

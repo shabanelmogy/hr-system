@@ -25,14 +25,27 @@ export interface AppDataTableColumn<Row> {
   width?: number;
   align?: 'start' | 'center' | 'end';
   render: (row: Row) => ReactNode;
+  /** Marks a server-managed column sortable when no local sortValue is needed. */
+  sortable?: boolean;
   sortValue?: (row: Row) => AppDataTableSortValue;
 }
 
-type SortDirection = 'ascending' | 'descending';
+export type AppDataTableSortDirection = 'ascending' | 'descending';
 
-interface SortState {
+export interface AppDataTableSortState {
   columnId: string;
-  direction: SortDirection;
+  direction: AppDataTableSortDirection;
+}
+
+export interface AppDataTableServerState {
+  /** Zero-based page used by the UI. */
+  page: number;
+  pageSize: number;
+  totalRows: number;
+  sort: AppDataTableSortState | null;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
+  onSortChange: (sort: AppDataTableSortState | null) => void;
 }
 
 export interface AppDataTableProps<Row> {
@@ -45,6 +58,8 @@ export interface AppDataTableProps<Row> {
   showPagination?: boolean;
   compactHeader?: boolean;
   resetKey?: string | number;
+  /** Controlled list state. Rows are treated as one server page and are not sorted or sliced locally. */
+  serverState?: AppDataTableServerState;
 }
 
 export function AppDataTable<Row>({
@@ -57,16 +72,26 @@ export function AppDataTable<Row>({
   showPagination = true,
   compactHeader = true,
   resetKey,
+  serverState,
 }: AppDataTableProps<Row>) {
   const { t, i18n } = useTranslation();
   const { direction, isRTL } = useLocalization();
   const { theme } = useAppTheme();
   const footerHost = useContext(AppScreenFooterContext);
   const footerOwner = useRef(Symbol('AppDataTable pagination'));
+  const previousResetKey = useRef(resetKey);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(defaultPageSize);
-  const [sort, setSort] = useState<SortState | null>(null);
-  const pageCount = Math.max(1, Math.ceil(rows.length / pageSize));
+  const [sort, setSort] = useState<AppDataTableSortState | null>(null);
+  const usesServerState = Boolean(serverState);
+  const activePage = serverState?.page ?? page;
+  const activePageSize = serverState?.pageSize ?? pageSize;
+  const activeSort = serverState?.sort ?? sort;
+  const totalRows = serverState?.totalRows ?? rows.length;
+  const onServerPageChange = serverState?.onPageChange;
+  const onServerPageSizeChange = serverState?.onPageSizeChange;
+  const onServerSortChange = serverState?.onSortChange;
+  const pageCount = Math.max(1, Math.ceil(totalRows / activePageSize));
   const pageSizeOptionsKey = pageSizeOptions.join(',');
   const stablePageSizeOptions = useMemo(
     () => pageSizeOptionsKey.split(',').filter(Boolean).map(Number),
@@ -79,9 +104,9 @@ export function AppDataTable<Row>({
   );
 
   const sortedRows = useMemo(() => {
-    if (!sort) return rows;
+    if (usesServerState || !activeSort) return rows;
 
-    const column = columns.find((candidate) => candidate.id === sort.columnId);
+    const column = columns.find((candidate) => candidate.id === activeSort.columnId);
     if (!column?.sortValue) return rows;
 
     return rows
@@ -94,31 +119,43 @@ export function AppDataTable<Row>({
         );
 
         if (comparison === 0) return left.naturalIndex - right.naturalIndex;
-        return sort.direction === 'ascending' ? comparison : -comparison;
+        return activeSort.direction === 'ascending' ? comparison : -comparison;
       })
       .map(({ row }) => row);
-  }, [collator, columns, rows, sort]);
+  }, [activeSort, collator, columns, rows, usesServerState]);
 
   useEffect(() => {
-    setPage((current) => Math.min(current, pageCount - 1));
-  }, [pageCount]);
+    const safePage = Math.min(activePage, pageCount - 1);
+    if (activePage === safePage) return;
+    if (usesServerState) {
+      onServerPageChange?.(safePage);
+    } else {
+      setPage(safePage);
+    }
+  }, [activePage, onServerPageChange, pageCount, usesServerState]);
 
   useEffect(() => {
-    setPage(0);
-  }, [resetKey]);
+    if (Object.is(previousResetKey.current, resetKey)) return;
+    previousResetKey.current = resetKey;
+    if (usesServerState) {
+      onServerPageChange?.(0);
+    } else {
+      setPage(0);
+    }
+  }, [onServerPageChange, resetKey, usesServerState]);
 
   const pageRows = useMemo(
-    () => showPagination
-      ? sortedRows.slice(page * pageSize, page * pageSize + pageSize)
+    () => showPagination && !usesServerState
+      ? sortedRows.slice(activePage * activePageSize, activePage * activePageSize + activePageSize)
       : sortedRows,
-    [page, pageSize, showPagination, sortedRows],
+    [activePage, activePageSize, showPagination, sortedRows, usesServerState],
   );
   const pinPagination = showPagination && shouldPinPagination(
     pageRows.length,
     Boolean(footerHost),
   );
   const tableWidth = columns.reduce((total, column) => total + (column.width ?? 150), 0);
-  const pagination = useMemo(() => showPagination && rows.length > 0 ? (
+  const pagination = useMemo(() => showPagination && totalRows > 0 ? (
     <View
       style={[
         styles.pagination,
@@ -142,23 +179,27 @@ export function AppDataTable<Row>({
           <Pressable
             accessibilityLabel={t('dataTable.usePageSize', { count: option })}
             accessibilityRole="button"
-            accessibilityState={{ selected: option === pageSize }}
+            accessibilityState={{ selected: option === activePageSize }}
             key={option}
             onPress={() => {
-              setPageSize(option);
-              setPage(0);
+              if (usesServerState) {
+                onServerPageSizeChange?.(option);
+              } else {
+                setPageSize(option);
+                setPage(0);
+              }
             }}
             style={[
               styles.pageSize,
               {
-                backgroundColor: option === pageSize
+                backgroundColor: option === activePageSize
                   ? theme.colors.primary
                   : theme.colors.surfaceMuted,
                 borderRadius: theme.radius.sm,
               },
             ]}>
             <AppText
-              style={{ color: option === pageSize ? theme.colors.onPrimary : theme.colors.text }}
+              style={{ color: option === activePageSize ? theme.colors.onPrimary : theme.colors.text }}
               variant="caption"
               weight="700">
               {option}
@@ -168,18 +209,27 @@ export function AppDataTable<Row>({
       </View>
 
       <AppPaginationNavigation
-        page={page}
+        page={activePage}
         pageCount={pageCount}
-        onPageChange={setPage}
+        onPageChange={(nextPage) => {
+          if (usesServerState) {
+            onServerPageChange?.(nextPage);
+          } else {
+            setPage(nextPage);
+          }
+        }}
       />
     </View>
   ) : null, [
     direction,
-    page,
+    activePage,
+    activePageSize,
     pageCount,
-    pageSize,
     pinPagination,
-    rows.length,
+    totalRows,
+    usesServerState,
+    onServerPageChange,
+    onServerPageSizeChange,
     showPagination,
     stablePageSizeOptions,
     t,
@@ -228,8 +278,10 @@ export function AppDataTable<Row>({
               { direction, backgroundColor: theme.colors.surfaceMuted },
             ]}>
             {columns.map((column) => {
-              const sortable = Boolean(column.sortValue);
-              const activeDirection = sort?.columnId === column.id ? sort.direction : null;
+              const sortable = column.sortable ?? Boolean(column.sortValue);
+              const activeDirection = activeSort?.columnId === column.id
+                ? activeSort.direction
+                : null;
               const nextDirection = activeDirection === 'ascending'
                 ? 'descending'
                 : activeDirection === 'descending'
@@ -260,8 +312,15 @@ export function AppDataTable<Row>({
                       accessibilityState={{ selected: Boolean(activeDirection) }}
                       hitSlop={4}
                       onPress={() => {
-                        setSort(nextDirection ? { columnId: column.id, direction: nextDirection } : null);
-                        setPage(0);
+                        const nextSort: AppDataTableSortState | null = nextDirection
+                          ? { columnId: column.id, direction: nextDirection }
+                          : null;
+                        if (usesServerState) {
+                          onServerSortChange?.(nextSort);
+                        } else {
+                          setSort(nextSort);
+                          setPage(0);
+                        }
                       }}
                       style={({ pressed }) => [
                         styles.sortHeader,

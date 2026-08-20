@@ -1,6 +1,6 @@
 import { ROUTES } from '@/src/core/constants/routes';
 import { RouteGuard } from '@/src/features/auth';
-import { SettingsScreen } from '@/src/features/settings/screens/SettingsScreen';
+import { SettingsScreen } from '@/src/features/settings';
 
 export default function SettingsRoute() {
   return (

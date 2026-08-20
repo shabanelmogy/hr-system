@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
-import { FileActions } from '@/src/features/platform-tools/components/FileActions';
-import type { StoredFile } from '@/src/features/platform-tools/types/platform-tools';
+import { FileActions } from '@/src/features/platform-tools/file-manager/components/FileActions';
+import type { StoredFile } from '@/src/features/platform-tools/file-manager/types';
 import {
   type FileGroupId,
   getFileIcon,
   groupFiles,
-} from '@/src/features/platform-tools/utils/file-manager';
+} from '@/src/features/platform-tools/file-manager/file-utils';
 import { formatPlatformDate } from '@/src/features/platform-tools/utils/platform-tool-utils';
 import {
   AppCard,

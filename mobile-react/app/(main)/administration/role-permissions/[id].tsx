@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from 'expo-router';
 
 import { ROUTES } from '@/src/core/constants/routes';
-import { RolePermissionsScreen } from '@/src/features/administration/roles/permissions/screens/RolePermissionsScreen';
+import { RolePermissionsScreen } from '@/src/features/administration';
 import { RouteGuard } from '@/src/features/auth';
 
 export default function RolePermissionsRoute() {

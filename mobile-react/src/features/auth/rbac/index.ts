@@ -4,5 +4,7 @@ export * from './AuthorizeView';
 export * from './permissions';
 export * from './roles';
 export * from './route-access';
+export { MAIN_DRAWER_ROUTES } from './route-manifest';
+export type { MainDrawerRouteDefinition, RoutePolicy } from './route-manifest';
 export * from './RouteGuard';
 export * from './useAuthorization';

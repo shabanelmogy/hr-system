@@ -3,7 +3,6 @@ import {
   DrawerItemList,
   type DrawerContentComponentProps,
 } from '@react-navigation/drawer';
-import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
@@ -12,9 +11,8 @@ import { useTranslation } from 'react-i18next';
 import { asHref, ROUTES } from '@/src/core/constants/routes';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
-import { authApi } from '@/src/features/auth/api/auth-api';
-import { useAuth } from '@/src/features/auth/context/AuthProvider';
-import type { SessionResponse, UserPhoto } from '@/src/features/auth/types/auth';
+import { useAuth, type SessionResponse } from '@/src/features/auth';
+import { useProfilePhoto, type UserProfilePhoto } from '@/src/features/auth/profile';
 import {
   TenantNameBadge,
   TenantPlanBadge,
@@ -29,13 +27,7 @@ export function AppDrawerContent(props: DrawerContentComponentProps) {
   const { direction } = useLocalization();
   const { theme } = useAppTheme();
   const { session } = useAuth();
-  const { data: userPhoto } = useQuery({
-    queryKey: ['auth', 'current-user-photo', session?.userId],
-    queryFn: authApi.getUserPhoto,
-    enabled: Boolean(session?.userId),
-    staleTime: 5 * 60 * 1000,
-    retry: 1,
-  });
+  const { data: userPhoto } = useProfilePhoto();
   const photoUri = getPhotoUri(userPhoto);
   const displayName = getDisplayName(session);
   const initials = getInitials(session);
@@ -122,7 +114,7 @@ function UserAvatar({ initials, photoUri }: { initials: string; photoUri: string
   );
 }
 
-function getPhotoUri(photo: UserPhoto | undefined): string | null {
+function getPhotoUri(photo: UserProfilePhoto | undefined): string | null {
   const value = photo?.profilePicture?.trim();
   if (!value) return null;
   if (value.startsWith('data:')) return value;

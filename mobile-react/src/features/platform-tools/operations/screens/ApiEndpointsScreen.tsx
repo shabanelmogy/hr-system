@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { WebView } from 'react-native-webview';
 import { useTranslation } from 'react-i18next';
 
-import { platformToolsApi } from '@/src/features/platform-tools/api/platform-tools-api';
+import { operationsApi } from '@/src/features/platform-tools/operations/api';
 import {
   AppAlert,
   AppButton,
@@ -20,7 +20,7 @@ import { useAppTheme } from '@/src/core/theme';
 export function ApiEndpointsScreen() {
   const { t } = useTranslation();
   const { theme } = useAppTheme();
-  const swaggerUrl = platformToolsApi.getSwaggerUrl();
+  const swaggerUrl = operationsApi.getSwaggerUrl();
   const webViewRef = useRef<WebView>(null);
   const [swaggerVisible, setSwaggerVisible] = useState(false);
   const [swaggerLoading, setSwaggerLoading] = useState(false);

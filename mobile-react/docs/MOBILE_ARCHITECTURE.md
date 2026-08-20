@@ -1,79 +1,108 @@
-# Mobile Architecture
+# Mobile architecture
 
-## Guiding Rules
+This document defines the stable application boundaries for the Expo SDK 54 client. Read it together with [MOBILE_FEATURE_GUIDE.md](MOBILE_FEATURE_GUIDE.md) and [MOBILE_STYLE_GUIDE.md](MOBILE_STYLE_GUIDE.md) before adding a module.
 
-- Keep Expo Router files thin. A route imports a feature screen or composes a layout.
-- A business feature owns its screens, queries, mutations, schemas, and business UI.
-- `shared` contains only domain-neutral UI primitives.
-- Use React Query for server state and small React contexts only for app-wide preferences or session state.
-- Use React Hook Form with Zod through `zodResolver` for forms.
+## Layer ownership
+
+| Layer | Owns | Must not own |
+| --- | --- | --- |
+| `app` | Expo Router route adapters and navigator composition | API calls, queries, forms, business rules |
+| `src/core` | Environment, transport, secure storage, query client, localization runtime, theme tokens | Feature behavior or feature UI |
+| `src/features` | Business screens, feature API contracts, schemas, query keys, mutations and permissions-aware UI | Generic application infrastructure |
+| `src/layouts` | Application shells, headers, drawers and reusable module navigation | Server state or business API calls |
+| `src/shared` | Domain-neutral components, list state and utilities | Imports from business features |
+
+Dependency direction is `app/layouts -> feature public API -> shared/core`. A feature may use another feature only through that feature's curated root `index.ts`; it must not import another feature's internal files. `shared` and `core` never import a feature.
+
+Run `npm run check:architecture` to enforce these boundaries. The checker is intentionally small and supplements review; it does not replace TypeScript or tests.
+
+## Route and authorization ownership
+
+- `src/core/constants/routes.ts` mirrors physical Expo Router paths and provides typed dynamic builders.
+- `src/features/auth/rbac/route-manifest.ts` is the canonical access and main-drawer metadata manifest.
+- Route files still render `RouteGuard` for defense in depth.
+- Drawer visibility calls the same `canAccessRoute` policy used by the guard; do not reproduce role or permission checks in navigation.
+- Unknown authenticated routes are denied by default.
+- Expo Router protected groups in `app/_layout.tsx` separate onboarding, public auth and authenticated application areas.
+
+Current authenticated route modules:
+
+| Area | Route ownership | Navigation |
+| --- | --- | --- |
+| Home and settings | `app/(main)/(tabs)` | Main tabs |
+| Profile and notifications | `app/(main)` | Main drawer destinations |
+| Basic Data | `app/(main)/basic-data` | Dedicated responsive module drawer |
+| Administration | `app/(main)/administration` | Intentional three-tab workspace for Users, Invitations and Roles |
+| Extras | `app/(main)/extras` | Module navigation for Files and Appointments |
+| Advanced Tools | `app/(main)/advanced-tools` | Module navigation for operations/admin tools |
+| Tenant administration | `app/(main)` | Main drawer, super-admin policies |
+
+Administration intentionally keeps tabs because its three adjacent access-management workspaces are switched frequently. New large HR modules such as Employees, Attendance, Leave and Recruitment should use a dedicated responsive Drawer like Basic Data rather than adding more main tabs.
+
+## Feature boundaries
+
+Each routed feature exposes a curated public API. Router and layout files may import the feature root or a documented subdomain public index, but never `screens/...`, `hooks/...`, or `types/...` directly.
+
+`platform-tools` is a navigation/composition umbrella only. Its stable internal domains are:
+
+- `file-manager`
+- `appointments`
+- `track-changes`
+- `localization`
+- `operations` for health, background jobs and external operational viewers
+- `navigation` for Extras/Advanced Tools composition
+
+The legacy platform-tools API/hooks/type files remain compatibility facades while consumers migrate; new code targets the owning domain.
+
+## Server state and lists
+
+- React Query owns server state; local component state owns only transient UI state.
+- Query keys and endpoint constants belong to their feature.
+- Mutations invalidate the narrowest stable query prefix.
+- Realtime uses public/stable query prefixes and must not import hook implementations.
+- Large datasets use `useServerListState`, controlled `AppListScreen`, and `serverPagination`/`serverState` rather than downloading all rows and slicing locally.
+- UI pages are zero-based; use `toApiPageNumber` at the API boundary.
+- Keep the previous page visible while fetching the next page and surface a non-destructive progress indicator.
+
+## API and session
+
+- Configure the backend through `EXPO_PUBLIC_API_URL`; public variables never contain secrets.
+- Use `apiService` for JSON and multipart requests so authorization, cancellation, timeout, refresh and Problem Details mapping stay centralized.
+- Validate responses at the owning feature API boundary. Required fields fail closed; compatibility fallback is explicit and limited to optional fields.
 - Store access and refresh tokens through `secureSession`, never AsyncStorage.
-- Keep query keys and API endpoint constants with the feature that owns them.
+- Authentication and company changes clear React Query caches so data cannot cross tenant/company sessions.
+- Read-only tenant enforcement remains in Axios as well as the UI.
 
-## Layout Selection
+## Localization, RTL and styling
 
-| Screen type | Navigation/layout |
-| --- | --- |
-| Login, registration, recovery | Auth Stack inside `AuthLayout` |
-| Dashboard and frequently used top-level screens | Main Tabs inside `MainLayout` |
-| Large module such as Basic Data, Employees, or Recruitment | Dedicated module Drawer |
-| Create/edit/detail workflow | Stack screens inside the owning module |
-| Short focused action | Modal presentation from the owning Stack |
+- Add English and Arabic keys together.
+- Split future resources by stable feature namespace; do not add a second monolithic translation file.
+- Use the live `direction` from `LocalizationProvider`; do not reload the app or call `I18nManager.forceRTL` for language changes.
+- Use logical layout properties and directional icons.
+- Theme tokens live in `src/core/theme`; domain-neutral UI lives in `src/shared/components`; feature styles stay beside their owner.
+- Do not create a global `shared/styles` dumping folder.
 
-The Basic Data module is the reference implementation. Its Drawer is permanent on large screens and overlays content on phones. A future Employees or Recruitment module should own a similar layout file, while reusing only `ModuleDrawerContent`.
+The complete styling contract is in [MOBILE_STYLE_GUIDE.md](MOBILE_STYLE_GUIDE.md).
 
-Do not put every screen in the bottom tabs. Tabs are for a small number of frequent destinations; module navigation belongs to the module.
+## Verification
 
-## Routes
+The mobile quality gate is `npm run check`, which runs:
 
-`src/core/constants/routes.ts` mirrors the routes currently present under `app`. For a dynamic route, add a typed builder beside the constants only after creating the route file.
+1. strict TypeScript;
+2. ESLint;
+3. architecture boundaries;
+4. Jest through the Expo-compatible `jest-expo` preset.
 
-Constants follow ownership instead of one global dumping folder:
+Keep tests outside `app`; every file under `app` is treated as a route. Add Maestro end-to-end flows later for login, tenant/company selection and critical HR workflows.
 
-- App-wide routes, storage keys, pagination defaults, and timeouts live in `src/core/constants`.
-- API endpoints and internal navigator screen names live in the feature that owns them, such as `features/auth/constants` and `features/basic-data/constants`.
+## Adding a module
 
-Current route ownership:
+Follow [MOBILE_FEATURE_GUIDE.md](MOBILE_FEATURE_GUIDE.md). In summary:
 
-- `/` and `/settings`: Main Tabs.
-- `/basic-data`: Basic Data Drawer.
-- `/basic-data/geographical-information`: Basic Data Drawer.
-- `/basic-data/organizational-structure`: Basic Data Drawer.
-- `/modal`: Main Stack modal.
-
-## Localization And RTL
-
-- English and Arabic resources live under `src/core/localization/translations`.
-- `LocalizationProvider` persists the selected language and updates i18next immediately.
-- The React tree receives `direction`, while shared text controls set `textAlign` and `writingDirection`.
-- Do not call `I18nManager.forceRTL` or reload the application for an in-app language change.
-- Use logical styles such as `marginStart` and `marginEnd`. Directional icons must select the correct icon for RTL.
-
-This gives immediate application-level RTL changes. Native operating-system surfaces and native back gestures still follow the device language and platform conventions.
-
-## Theme
-
-`AppThemeProvider` supports `system`, `light`, and `dark` modes and persists the preference. Use semantic colors from `theme.colors`; do not hardcode page colors. Navigation, status bar, shared fields, cards, and feedback states consume the same theme.
-
-For the full styling contract, including token ownership, colocated `StyleSheet.create`, RTL, responsive/safe-area, accessibility, and review guidance, see [MOBILE_STYLE_GUIDE.md](MOBILE_STYLE_GUIDE.md).
-
-## API And Session
-
-- Configure the backend with `EXPO_PUBLIC_API_URL`.
-- Use the Axios-backed `apiService` for JSON and multipart requests; it adds the access token, timeout, cancellation support, Problem Details parsing, and one coordinated refresh attempt.
-- The Axios client owns transport behavior. Authentication endpoints, contracts, response parsing, and token rotation remain owned by the authentication feature.
-- React Query controls caching and server retries. Mutations do not retry automatically.
-- On Android/iOS, `secureSession` uses Expo SecureStore. The web development target keeps tokens in memory only.
-- A one-company login stores the returned access/refresh pair immediately. A multi-company login keeps only the short-lived selection response until the user chooses a company.
-- Authentication and company changes clear React Query caches so data from one company cannot appear in another company context.
-- For a physical device, run the API on a LAN binding such as `dotnet run --urls http://0.0.0.0:5293` and use the machine LAN address in `.env`.
-
-## Adding A Feature Module
-
-1. Add the feature under `src/features/<feature>`.
-2. Add its Expo Router group under `app/(main)/<feature>`.
-3. Create a feature-owned Drawer layout only when the feature has several navigation areas.
-4. Reuse `ModuleDrawerContent` for the drawer heading and dashboard action.
-5. Add only the new physical paths to `ROUTES`.
-6. Add English and Arabic keys together.
-7. Run `npm run check` and verify phone, tablet, LTR, RTL, light, and dark states.
+1. define the business boundary and API contract;
+2. create the feature public API;
+3. add physical routes and the route/access manifest entry;
+4. use server-managed list state for paged data;
+5. add runtime response validation and focused tests;
+6. add EN/AR resources and permission/read-only behavior;
+7. run `npm run check` and verify phone/tablet, LTR/RTL and light/dark modes.
