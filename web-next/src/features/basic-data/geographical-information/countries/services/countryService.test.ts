@@ -1,7 +1,18 @@
-import { describe, expect, it } from "vitest";
-import { toCountryRequest } from "./countryService";
+import { apiRoutes } from "@/config";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import CountryService, { toCountryRequest } from "./countryService";
+
+const { post } = vi.hoisted(() => ({ post: vi.fn() }));
+
+vi.mock("@/shared/services/apiService", () => ({
+  default: { post },
+}));
 
 describe("toCountryRequest", () => {
+  beforeEach(() => {
+    post.mockReset();
+  });
+
   it("matches the API nullability and normalizes code fields", () => {
     expect(
       toCountryRequest({
@@ -38,5 +49,13 @@ describe("toCountryRequest", () => {
       phoneCode: null,
       currencyCode: null,
     });
+  });
+
+  it("posts the exact bulk archive contract", async () => {
+    post.mockResolvedValue({ archivedCount: 2 });
+
+    await expect(CountryService.archiveBulk([3, 7])).resolves.toEqual({ archivedCount: 2 });
+
+    expect(post).toHaveBeenCalledWith(apiRoutes.countries.bulkArchive, { ids: [3, 7] });
   });
 });

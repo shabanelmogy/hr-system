@@ -28,6 +28,16 @@ describe('route access manifest', () => {
     expect(canAccessRoute('/administration/role-permissions/role-1', session)).toBe(true);
   });
 
+  it('protects the countries route with the countries view permission', () => {
+    expect(canAccessRoute(ROUTES.basicData.countries, userWith({
+      permissionClaims: [permissions.ViewCountries],
+    }))).toBe(true);
+    expect(canAccessRoute(ROUTES.basicData.countries, userWith())).toBe(false);
+    expect(canAccessRoute(ROUTES.basicData.countries, userWith({
+      permissionClaims: [permissions.ViewStates],
+    }))).toBe(false);
+  });
+
   it('keeps super administrators outside tenant-owned modules', () => {
     const session = userWith({
       roles: [appRoles.superAdmin],

@@ -1,6 +1,13 @@
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { GridApi, type GridPaginationModel, type GridSortModel } from "@mui/x-data-grid";
+import { Archive } from "@mui/icons-material";
+import { Button } from "@mui/material";
+import {
+  GridApi,
+  type GridPaginationModel,
+  type GridRowSelectionModel,
+  type GridSortModel,
+} from "@mui/x-data-grid";
 import { ContentWrapper } from "@/shared/components/layout";
 import { MyDataGrid } from "@/shared/components/data-grid";
 import type { CountryListItem, CountrySortColumn, CountryStatus } from "../../types/Country";
@@ -33,6 +40,10 @@ interface CountriesDataGridProps {
   onCurrencyCodeChange: (value: string) => void;
   onHasStatesChange: (value: "all" | "with" | "without") => void;
   onReset: () => void;
+  selectedCountryIds: number[];
+  onSelectedCountryIdsChange: (ids: number[]) => void;
+  onBulkArchive: () => void;
+  isBulkArchiving?: boolean;
   onPaginationChange: (model: GridPaginationModel) => void;
   onSortChange: (model: GridSortModel) => void;
   lastAddedId?: string | number | null;
@@ -67,6 +78,10 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
   onCurrencyCodeChange,
   onHasStatesChange,
   onReset,
+  selectedCountryIds,
+  onSelectedCountryIdsChange,
+  onBulkArchive,
+  isBulkArchiving = false,
   onPaginationChange,
   onSortChange,
 }) => {
@@ -78,6 +93,10 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
   );
 
   const columns = useCountryColumns({ t, permissions, getActions });
+  const rowSelectionModel = useMemo<GridRowSelectionModel>(() => ({
+    type: "include",
+    ids: new Set(selectedCountryIds),
+  }), [selectedCountryIds]);
 
   return (
     <ContentWrapper>
@@ -103,16 +122,41 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
           onClear: () => onSearchChange(""),
         }}
         toolbarContent={(
-          <CountryGridFilters
-            status={status}
-            currencyCode={currencyCode}
-            hasStates={hasStates}
-            onStatusChange={onStatusChange}
-            onCurrencyCodeChange={onCurrencyCodeChange}
-            onHasStatesChange={onHasStatesChange}
-            onReset={onReset}
-          />
+          <>
+            {permissions.canDelete ? (
+              <Button
+                color="warning"
+                size="small"
+                variant="outlined"
+                startIcon={<Archive />}
+                disabled={selectedCountryIds.length === 0 || isBulkArchiving}
+                onClick={onBulkArchive}
+              >
+                {t("countries.bulkArchiveAction", { count: selectedCountryIds.length })}
+              </Button>
+            ) : null}
+            <CountryGridFilters
+              status={status}
+              currencyCode={currencyCode}
+              hasStates={hasStates}
+              onStatusChange={onStatusChange}
+              onCurrencyCodeChange={onCurrencyCodeChange}
+              onHasStatesChange={onHasStatesChange}
+              onReset={onReset}
+            />
+          </>
         )}
+        checkboxSelection={permissions.canDelete}
+        autoSelectFirstRow={false}
+        disableRowSelectionExcludeModel
+        rowSelectionModel={rowSelectionModel}
+        onRowSelectionModelChange={(model) => {
+          const ids = [...model.ids]
+            .map(Number)
+            .filter((id) => Number.isInteger(id) && id > 0);
+          onSelectedCountryIdsChange(ids);
+        }}
+        isRowSelectable={({ row }) => permissions.canDelete && !row.isDeleted}
         showNavigationButtons={false}
         lastAddedId={lastAddedId}
         lastEditedId={lastEditedId}

@@ -42,6 +42,7 @@ export interface CountriesRoutes {
   getById: (id: Id) => string;
   create: string;
   bulkCreate: string;
+  bulkArchive: string;
   update: (id: Id) => string;
   archive: (id: Id) => string;
   restore: (id: Id) => string;

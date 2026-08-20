@@ -8,6 +8,7 @@ import {
 import CountryService from "../services/countryService";
 import type {
   CountryDetail,
+  BulkArchiveCountriesResponse,
   CountryLookup,
   CountryPageQuery,
   CountryPageResponse,
@@ -84,6 +85,10 @@ export const useArchiveCountry = (options?: UseMutationOptions<number, Error, nu
 
 export const useRestoreCountry = (options?: UseMutationOptions<number, Error, number>) =>
   useCountryMutation(CountryService.restore, options);
+
+export const useBulkArchiveCountries = (
+  options?: UseMutationOptions<BulkArchiveCountriesResponse, Error, number[]>,
+) => useCountryMutation(CountryService.archiveBulk, options);
 
 export const useInvalidateCountries = () => {
   const queryClient = useQueryClient();

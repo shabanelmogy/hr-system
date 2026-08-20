@@ -51,6 +51,8 @@ export interface AppListScreenProps<Item, ViewId extends string, FilterValue ext
   pageSizeOptions?: readonly number[];
   /** Whether to show labels next to view icons */
   showViewLabels?: boolean;
+  /** Whether to show the result count beside the view selector */
+  showResultCount?: boolean;
   /** Additional content rendered between search row and views (e.g. stats) */
   aboveViews?: ReactNode;
   /** Additional content rendered below the views */
@@ -90,6 +92,7 @@ export function AppListScreen<Item, ViewId extends string, FilterValue extends s
   defaultPageSize,
   pageSizeOptions,
   showViewLabels = false,
+  showResultCount = true,
   aboveViews,
   belowViews,
   compactToolbar = true,
@@ -175,6 +178,7 @@ export function AppListScreen<Item, ViewId extends string, FilterValue extends s
         pageSizeOptions={pageSizeOptions}
         resetKey={resetKey}
         showViewLabels={showViewLabels}
+        showResultCount={showResultCount}
         isFetching={isFetching}
         serverPagination={serverPagination}
         views={views}

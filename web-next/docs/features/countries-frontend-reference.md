@@ -48,8 +48,10 @@ Country transport types remain separate:
 - `CreateCountryRequest` for create/update bodies without route IDs;
 - `CountryPageQuery` and `CountryPageResponse` for the server list boundary.
 
-Supported lifecycle operations are create, update, archive, and restore. Import
-uses the atomic bulk-create endpoint. Successful mutations invalidate the
+Supported lifecycle operations are create, update, archive, bulk archive, and restore.
+Import uses the atomic bulk-create endpoint. Grid bulk archive sends only explicitly
+selected active IDs to `POST /countries/bulk-archive`; selection is limited to the
+loaded page and is cleared after success or a criteria/page change. Successful mutations invalidate the
 Countries query-key prefix so list, details, and lookup data remain coherent.
 
 ## Countries-Specific Rules
@@ -76,6 +78,7 @@ Countries query-key prefix so list, details, and lookup data remain coherent.
 | Create | `Countries:Create` | n/a | no |
 | Edit | `Countries:Edit` | active | no |
 | Archive | `Countries:Delete` | active | no |
+| Bulk archive | `Countries:Delete` | explicitly selected active rows | no |
 | Restore | `Countries:Delete` | archived | no |
 | Import | `Countries:Create` | n/a | no |
 

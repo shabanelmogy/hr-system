@@ -152,6 +152,9 @@
     "CountryInUseByState": "Country is in use by states",
     "InvalidCountryId": "Country id is invalid",
     "NoCountriesProvided": "No countries provided",
+    "CountryBatchLimitExceeded": "A maximum of 100 countries is allowed per request",
+    "CountryIdsMustBeDistinct": "Country IDs must be distinct",
+    "CountryIdsMustBePositive": "Country IDs must be greater than zero",
     "CountriesInOtherTables": "Countries are in use in other tables",
 
     "StateExists": "State already exists",
@@ -201,6 +204,7 @@
     "CountryNotificationTitle": "Country updated",
     "CountryCreatedNotificationMessage": "Country {NameEn} was created",
     "CountriesCreatedNotificationMessage": "{Count} countries were created",
+    "CountriesArchivedNotificationMessage": "{Count} countries were archived",
     "CountryUpdatedNotificationMessage": "Country {NameEn} was updated",
     "CountryDeletedNotificationMessage": "Country {NameEn} was deleted",
     "CountryArchivedNotificationMessage": "Country {NameEn} was archived",

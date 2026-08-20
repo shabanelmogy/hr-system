@@ -5,9 +5,12 @@ realtime, and production rules of a feature. The authoritative architecture for 
 work is `Clean_Architecture_CQRS_Guide.md`; the full API-to-web workflow is
 `../../Docs/CORE_FEATURE_CQRS_WEB_GUIDE.md`.
 
-Most geographical features predate the CQRS migration. `Countries` is now the
-complete CQRS/API/web reference; the service-based States, Districts, Addresses, and
-Address Types shapes are not templates for new core HR modules.
+Most geographical features predate the CQRS migration. `Countries` is the complete
+**global reference-data** CQRS/API/web reference. It does not demonstrate
+tenant/company ownership, effective dating, or high-contention concurrency. Add
+those rules for HR aggregates instead of copying Countries literally. The
+service-based States, Districts, Addresses, and Address Types shapes are not
+templates for new core HR modules.
 
 ## 1. Module Shape
 
@@ -21,7 +24,9 @@ HrManagementSystem.Application/Features/{GroupName}/{FeatureNamePlural}/
   Commands/{UseCase}/
   Queries/{UseCase}/
   Abstractions/
+  Contracts/                         # when contracts are shared across use cases
   Errors/
+  Mapping/                           # optional; only for non-conventional rules
 
 HrManagementSystem.Infrastructure/Features/{GroupName}/{FeatureNamePlural}/
   Persistence/{FeatureName}Configuration.cs
@@ -38,7 +43,9 @@ Do not create a large CRUD service or duplicate folders such as
 `Services/{FeatureName}Service` for new work. Mapping is optional; prefer direct
 database projection for queries.
 
-`Mapping` is optional. Add it only when the feature needs custom mapping rules. Do not create empty mapping files just for structure.
+`Contracts` may be omitted when every request/response belongs to exactly one use
+case. `Mapping` is optional; add it only for custom mapping rules. Do not create
+empty folders or mapping files just for symmetry.
 
 ## 2. Naming Rules
 
@@ -68,6 +75,14 @@ Use this order when creating a new feature:
     archive/restore, cancellation, concurrency, and post-commit scheduling.
 
 ## 4. Entity And Persistence
+
+Classify ownership first:
+
+- Global reference data, such as Countries, has no tenant/company scope marker.
+- Tenant data implements `ITenantScoped` and uses tenant-scoped indexes and queries.
+- Company data implements `ICompanyScoped` as well and applies both trusted scopes.
+
+Never infer an HR aggregate's ownership model from Countries.
 
 - Configure required fields, max lengths, indexes, and relationships in `{FeatureName}Configuration`.
 - Keep EF configuration focused on the current entity. Remove unused imports.
@@ -135,7 +150,9 @@ public record CountryListItemResponse(
 - Every request property must have suitable validation or an intentional reason for no validation.
 - Required strings need `NotEmpty`, trimming, and length limits.
 - Optional strings still need max length and format validation when provided.
-- Keep reusable regex patterns in `Shared/Consts/RegexPattern.cs`; do not duplicate inline regex strings in validators.
+- Keep reusable regex patterns in
+  `HrManagementSystem.Application/Common/Consts/RegexPattern.cs`; do not duplicate
+  inline regex strings in validators.
 - Arabic name fields, for example `NameAr`, must validate Arabic text with `Strings.ArabicLetterOnly`.
 - English name fields, for example `NameEn`, must validate English text with `Strings.EnglishLetterOnly`.
 - Foreign keys must be greater than zero and checked against existing active records when required.
@@ -144,15 +161,24 @@ public record CountryListItemResponse(
 - Enum/status fields must validate allowed values.
 - Date ranges must validate ordering, for example start date before end date.
 - Numeric fields must validate allowed ranges.
-- Unique fields must validate duplicates before add and edit.
-- Use `MustAsync` with `CancellationToken` for database checks.
-- Do not use synchronous `.Any(...)` for database validation.
+- Keep structural validation in FluentValidation: required values, lengths, format,
+  ranges, positive/distinct IDs, and bulk-size limits.
+- Enforce persisted-state rules in the handler through a narrow `IValidationQuery`
+  or write port: uniqueness, active FK existence, ownership, lifecycle,
+  dependencies, and concurrency.
+- Use asynchronous EF calls with `CancellationToken`; never use synchronous
+  `.Any(...)` against the database.
 - For optional unique fields, skip duplicate checks when the field is null or whitespace.
-- For update duplicate checks, exclude the current record only when `request.Id` has a value, so add requests still check all existing rows.
+- For update duplicate checks, exclude the route/command ID; create checks exclude
+  nothing.
 - Normalize values before comparing uniqueness where possible, for example trim and uppercase codes.
-- For bulk endpoints, validate both duplicates inside the request and duplicates already in the database.
+- For bulk endpoints, validate request-level duplicates and a maximum batch size
+  (100 unless the feature documents a smaller limit), then check persisted conflicts
+  in one handler/store query before any mutation.
+- Reuse a shared property validator for identical create/update field rules instead
+  of copying rules or making one nullable-ID request contract.
 
-Example optional unique rule:
+Example structural optional-code rule:
 
 ```csharp
 RuleFor(x => x.Alpha2Code)
@@ -161,20 +187,10 @@ RuleFor(x => x.Alpha2Code)
     .Matches(RegexPattern.IsoAlpha2Code)
     .When(x => !string.IsNullOrWhiteSpace(x.Alpha2Code));
 
-RuleFor(x => x)
-    .MustAsync(async (request, cancellationToken) =>
-    {
-        var requestId = request.Id;
-
-        return string.IsNullOrWhiteSpace(request.Alpha2Code) ||
-            !await _validationQueries.CountryAlpha2CodeExistsAsync(
-                request.Alpha2Code,
-                requestId,
-                cancellationToken);
-    })
-    .WithName(Strings.Alpha2Code)
-    .WithMessage(_localizer[Strings.DuplicatedValue]);
 ```
+
+The handler checks the normalized code through its feature port immediately before
+the write; the database unique index is the final race-safe guard.
 
 ## 7. Errors
 
@@ -189,6 +205,16 @@ RuleFor(x => x)
 - Use `409` for duplicates and conflicts.
 - Use `400` for invalid business operations.
 - Use `500` only for unexpected server errors.
+
+Keep the failure boundary explicit:
+
+- FluentValidation failures are translated by the API pipeline to `400` validation
+  problem details.
+- Expected handler failures use `Result`/`ErrorType` and map to their documented
+  `400`, `404`, `409`, or `403` response.
+- Known database races, such as a unique-index violation, are translated centrally
+  to the stable conflict code; handlers must not expose provider exception text.
+- Unhandled exceptions remain `500` with a trace ID and server-side logging only.
 
 Common errors to add:
 
@@ -262,11 +288,15 @@ Features/GeographicalInformation/Countries/Mapping/CountryMappingConfig.cs
 - Do not publish SignalR events before the database transaction succeeds.
 - Handlers must not inject `IHubContext` or Hangfire; the feature-owned job owns
   realtime/notification delivery.
-- Rely on Hangfire persistence and retries. Do not add an outbox table, dispatcher, polling loop, lease, or recovery service for noncritical realtime updates.
+- Rely on Hangfire persistence and retries for non-critical realtime and inbox work.
+  Database commit plus Hangfire enqueue is a dual-write boundary, not an atomic
+  guarantee. Use a transactional outbox and idempotent consumer when publication is
+  business-critical.
 - The realtime event is an invalidation hint. The client invalidates feature query
   keys and refetches authoritative data; do not send an entity/count payload through
   a feature-specific hub method.
-- Use stable actions such as `Add`, `Update`, `Archive`, `Restore`, and `BulkAdd`.
+- Use stable actions such as `Add`, `Update`, `Archive`, `Restore`, `BulkAdd`, and
+  `BulkArchive`.
 - Create a separate feature hub only when the module needs isolated connection rules, groups, permissions, or streaming behavior.
 - Do not create empty hub classes just for structure.
 
@@ -310,8 +340,12 @@ Detailed notification requirements for entity jobs:
   business failure is possible.
 - A handler owns the use case; it must not delegate the workflow to a legacy CRUD
   service.
+- A thin query handler may delegate to one feature-owned read-projection port. That
+  is the CQRS boundary, not legacy CRUD-service delegation.
 - Use Application-owned, feature-specific read/write ports. Do not expose
   `DbContext`, `DbSet`, or `IQueryable` outside Infrastructure.
+- Feature validation-query ports implement the `IValidationQuery` marker; there is
+  no `IValidationDataContext` abstraction in this solution.
 - Use `AsNoTracking()` and direct projection for read-only queries.
 - Filter tenant/company scope and soft-deleted rows before search or paging.
 - Pass `CancellationToken` through handlers, ports, EF, and outbound work.
@@ -325,6 +359,9 @@ Detailed notification requirements for entity jobs:
   may remain only while migrating a legacy endpoint.
 - Save/commit before calling the Application-owned scheduling port for Hangfire and
   realtime work.
+- For important concurrent updates, carry a row version/ETag, compare it during the
+  write, and translate a stale write to a stable conflict response. Omitting
+  concurrency protection requires an explicit low-risk decision.
 
 ## 11. Query Strategy
 
@@ -369,6 +406,20 @@ foreach (var request in requests)
 - Decide whether soft-deleted dependent rows should block the delete. Be explicit in the query.
 - For restore operations, clear delete metadata such as `DeletedById`, `DeletedByPc`, and `DeletedOn`.
 - Return a feature-specific business error when delete is blocked, for example `{FeatureName}.InUse`.
+- Bulk archive/delete must load every requested ID first, fail the whole command when
+  any ID is missing or any active item is blocked, mutate only after all checks pass,
+  and save once. Already archived IDs may be idempotent when documented.
+
+Document an endpoint lifecycle matrix. Countries uses:
+
+| Operation | Active | Archived | Missing |
+| --- | --- | --- | --- |
+| Page | Controlled by `status` | Controlled by `status` | n/a |
+| Lookup | Returned | Hidden | n/a |
+| Detail | Returned | Returned | `404` |
+| Update | Updated | Not found | `404` |
+| Archive / bulk archive | Archived | Idempotent | `404` |
+| Restore | Idempotent | Restored | `404` |
 
 Example:
 
@@ -384,11 +435,13 @@ if (isInUse)
 ## 13. Controller Rules
 
 - Use `[ApiVersion("1.0")]`, `[ApiController]`, the applicable tenancy boundary,
-  and `[Route(ApiRoutes.BaseRoute)]`.
+  and `[Route(ApiRoutes.BaseRoute2)]` for new versioned REST resources.
 - Every action should include permission attributes.
 - Inject `ISender`; a new or fully migrated controller must not inject a feature
   service.
 - Bind HTTP input, send exactly one command/query, and translate its result.
+- Bind the command directly when it intentionally is the public body contract;
+  otherwise bind a transport request and construct exactly one command.
 - Keep `[ProducesResponseType]` attributes in C# because ASP.NET and Swagger use them as runtime/OpenAPI metadata.
 - Use XML docs only for summaries, remarks, parameter descriptions, return descriptions, and response descriptions.
 - Always check `Result` before reading `result.Value`.
@@ -399,7 +452,7 @@ Good pattern:
 ```csharp
 var result = await _sender.Send(command, cancellationToken);
 return result.IsSuccess
-    ? CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result.Value)
+    ? CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value)
     : result.ToProblem();
 ```
 
@@ -407,7 +460,7 @@ Avoid:
 
 ```csharp
 var result = await _sender.Send(command, cancellationToken);
-return CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result);
+return CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result);
 ```
 
 ## 14. XML Documentation
@@ -430,17 +483,21 @@ Cover these before marking a feature complete:
 - Duplicate values inside the same bulk request.
 - Duplicate values already existing in the database.
 - Missing record on get, update, and delete.
-- Soft-deleted record behavior: hidden from lists, not returned by get, and restorable only if business allows it.
+- Soft-deleted behavior follows the documented lifecycle matrix; do not assume every
+  detail endpoint hides archived records.
+- Bulk request over the documented maximum (normally 100 IDs/items).
+- Bulk archive with a missing ID, a blocked active dependency, a mix of active and
+  archived IDs, and all IDs already archived.
 - Record in use by foreign keys before delete.
 - Related records that are already soft-deleted.
 - Cancellation token passed to all EF async calls.
 
 ## 16. Test Checklist
 
-Add focused tests for handler and persistence behavior:
+Add focused, behavior-based tests rather than tests coupled to method names:
 
-- `GetAllAsync` excludes soft-deleted records.
-- `GetAsync` returns not found for missing or deleted records.
+- management page applies its documented active/archived/all status behavior;
+- detail and lookup follow their distinct lifecycle contracts;
 - create handler creates valid records, normalizes values, and rejects duplicates;
 - bulk handler rejects empty lists, request duplicates, and database duplicates;
 - update handler returns not found, rejects duplicate values, and creates change logs;
@@ -451,10 +508,13 @@ Add focused tests for handler and persistence behavior:
 - tenant/company tests prove that foreign-scope IDs cannot be read or mutated;
 - scheduling happens only after a successful commit;
 - HTTP contract tests cover route, permission, status, and response body.
+- bulk tests prove all-or-nothing mutation and that scheduling never happens before
+  or after a failed commit.
 
 ## 17. Countries Reference Baseline
 
-`Countries` is the complete reference slice. Copy these architectural patterns:
+`Countries` is the complete **global reference-data** slice. Copy these architectural
+patterns, then add tenant/company rules for owned HR data:
 
 - controller-to-`ISender` dispatch and `Result` translation;
 - MediatR validation and request logging;
@@ -465,6 +525,7 @@ Add focused tests for handler and persistence behavior:
 - paged active/archived/all management queries with an allowlisted sort vocabulary;
 - a separate active-only lightweight lookup endpoint;
 - explicit archive and restore commands rather than toggle-delete;
+- atomic bulk archive with a 100-ID cap and idempotent archived IDs;
 - Mapster convention mapping with explicit rules only for real transforms;
 - generic realtime invalidation and durable post-commit notifications;
 - server-managed grid/card state in `web-next`.
@@ -475,8 +536,9 @@ Add focused tests for handler and persistence behavior:
   asynchronous MVC filter remains for legacy non-MediatR action DTOs and must not
   validate the same request a second time.
 - Do not add MVC synchronous FluentValidation auto-validation.
-- Keep one validator per command/query and use `MustAsync`/`AnyAsync` for database
-  checks only when request validation genuinely needs persisted state.
+- Keep one validator per command/query for structural request rules. Put persisted
+  state checks in the handler through narrow asynchronous ports so the rule is
+  enforced once at the write boundary.
 - Return RFC 7807 problem details for failures. Never return exception messages, stack traces, or exception sources.
 - Include a trace ID in unexpected-error responses and keep full exception details in server logs only.
 - Pass `CancellationToken` from controllers through services, EF queries, outbound HTTP, and file I/O.
@@ -520,6 +582,8 @@ Add focused tests for handler and persistence behavior:
 - Permissions exist and match controller attributes.
 - EF configuration is applied from `ApplicationDbContext`.
 - Localization keys exist for validation messages and every feature error property.
-- SignalR update method, detailed payload, and matching feature-owned Hangfire job are added for modules that need live frontend updates.
+- A generic lightweight SignalR invalidation and matching feature-owned Hangfire job
+  are added for modules that need live frontend updates; realtime never carries the
+  authoritative entity payload.
 - Post-commit work is queued only after persistence succeeds.
 - If EF configuration changed, create or update a migration deliberately.

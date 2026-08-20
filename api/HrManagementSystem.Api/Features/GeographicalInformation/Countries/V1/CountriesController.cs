@@ -1,5 +1,6 @@
 using HrManagementSystem.Application.Common.Paginations;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.ArchiveCountry;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.BulkArchiveCountries;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.CreateCountry;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.CreateCountries;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.RestoreCountry;
@@ -90,7 +91,7 @@ public sealed class CountriesController(ISender sender) : ControllerBase
             : result.ToProblem();
     }
 
-    /// <summary>Creates multiple countries atomically.</summary>
+    /// <summary>Creates up to 100 countries atomically.</summary>
     [HttpPost("bulk")]
     [HasPermission(Permissions.CreateCountries)]
     [ProducesResponseType(typeof(CreateCountriesResponse), StatusCodes.Status201Created)]
@@ -151,6 +152,24 @@ public sealed class CountriesController(ISender sender) : ControllerBase
     {
         var result = await sender.Send(new ArchiveCountryCommand(id), cancellationToken);
         return result.IsSuccess ? NoContent() : result.ToProblem();
+    }
+
+    /// <summary>Atomically archives up to 100 countries.</summary>
+    [HttpPost("bulk-archive")]
+    [HasPermission(Permissions.DeleteCountries)]
+    [ProducesResponseType(typeof(BulkArchiveCountriesResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> BulkArchive(
+        [FromBody] BulkArchiveCountriesRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(
+            new BulkArchiveCountriesCommand(request.Ids),
+            cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
     /// <summary>Restores one archived country.</summary>

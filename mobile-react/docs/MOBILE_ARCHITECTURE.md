@@ -76,7 +76,8 @@ The legacy platform-tools API/hooks/type files remain compatibility facades whil
 ## Localization, RTL and styling
 
 - Add English and Arabic keys together.
-- Split future resources by stable feature namespace; do not add a second monolithic translation file.
+- `translations/en.ts` and `translations/ar.ts` are composition facades only. Add strings to the paired, feature-grouped EN/AR resource files; do not rebuild either facade into a monolith.
+- Keep the same semantic keys in both locales. Locale-specific plural forms are expected and are normalized by the translation parity test.
 - Use the live `direction` from `LocalizationProvider`; do not reload the app or call `I18nManager.forceRTL` for language changes.
 - Use logical layout properties and directional icons.
 - Theme tokens live in `src/core/theme`; domain-neutral UI lives in `src/shared/components`; feature styles stay beside their owner.

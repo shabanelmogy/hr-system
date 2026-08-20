@@ -4,11 +4,15 @@ This is the authoritative end-to-end guide for new core HR features. It joins th
 API CQRS rules with the `web-next` page architecture so a feature is designed as
 one vertical business slice instead of an unrelated controller and screen.
 
-Use `Countries` as the implemented reference slice. It has the CQRS API, REST
+Use `Countries` as the implemented **global reference-data** slice. It has the CQRS API, REST
 contract, server-managed collection, lookup endpoint, archive/restore lifecycle,
 Mapster mappings, and web grid/card implementation described here. The other
 geographical-information features are still visual and migration references; do not
 copy their legacy service APIs or client-managed collections.
+
+Countries deliberately has no tenant/company ownership marker. Core HR aggregates
+must add tenant/company scope, scoped indexes, cross-scope tests, and concurrency or
+effective-date rules where applicable.
 
 ## 1. Decisions
 
@@ -46,7 +50,7 @@ The CQRS foundation already exists:
 - `api/HrManagementSystem.Application/DependencyInjection.cs`
 
 `Countries` is the first complete CQRS reference. Its controller injects `ISender`
-only; create, bulk create, update, archive, restore, page, lookup, detail, and
+only; create, bulk create, update, archive, atomic bulk archive, restore, page, lookup, detail, and
 detail-with-states are separate use cases. The legacy country service, toggle-delete,
 count payload, client-managed list, and entity-carrying SignalR method are removed.
 
@@ -208,8 +212,9 @@ column names.
 
 ## 5. Handler Ownership
 
-The handler is the use case. It must not be a one-line wrapper around a legacy
-service.
+The command handler owns its use case and must not be a one-line wrapper around a
+legacy CRUD service. A query handler may be a thin delegate to one feature-owned
+read-projection port that owns scope, projection, sorting, and paging.
 
 ### Command handler order
 
@@ -265,7 +270,7 @@ Mapping transforms data shape; business validation remains in validators/handler
 
 ```csharp
 [ApiVersion("1.0")]
-[Route(ApiRoutes.BaseRoute)]
+[Route(ApiRoutes.BaseRoute2)]
 [ApiController]
 [TenantMember]
 public sealed class EmployeesController(ISender sender) : ControllerBase
@@ -291,6 +296,8 @@ Controller rules:
 - do not inject feature services or `ApplicationDbContext`;
 - do not manually call validators;
 - preserve cancellation tokens end to end.
+- Directly bind a command only when it intentionally is the public JSON contract;
+  otherwise bind a transport request and construct one command.
 
 ## 7. Persistence and Data Safety
 
@@ -306,8 +313,20 @@ Before the first UI for a core aggregate:
 - generate and inspect the migration; never accept unrelated model changes;
 - test cross-tenant and cross-company access adversarially.
 
-Bulk operations must not bypass auditing or business invariants. If a bulk library is
-required, set all audit values explicitly and prove equivalent behavior in tests.
+Bulk operations must not bypass auditing or business invariants. Default to at most
+100 items/IDs. Load and validate the complete requested set, including missing IDs
+and dependencies, before changing tracked entities; save once so the operation is
+all-or-nothing. If a bulk library is required, set all audit values explicitly and
+prove equivalent behavior in tests.
+
+Document lifecycle behavior per endpoint. A management page may expose explicit
+active/archived/all filtering, lookup normally hides archived rows, detail may
+include archived rows for restore hydration, and archive/restore may be idempotent.
+Do not replace that matrix with a blanket soft-delete assumption.
+
+For important concurrent edits, include a row version/ETag in the public update
+contract and return a stable conflict for stale writes. Countries can remain a
+lower-risk reference-data exception; employee and policy records normally cannot.
 
 ## 8. Realtime and Notifications
 

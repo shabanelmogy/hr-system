@@ -21,6 +21,7 @@ export type MyDataGridProps<
   onToolbarAdd?: () => void;
   toolbarSearch?: DataGridToolbarSearchConfig;
   toolbarContent?: ReactNode;
+  autoSelectFirstRow?: boolean;
   lastAddedId?: GridRowId | null;
   lastEditedId?: GridRowId | null;
   lastDeletedIndex?: number | null;

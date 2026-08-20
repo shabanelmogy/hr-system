@@ -13,6 +13,13 @@ public sealed class CountryWriteStore(ApplicationDbContext context) : ICountryWr
     public Task<Country?> GetForUpdateAsync(int id, CancellationToken cancellationToken) =>
         context.Countries.FirstOrDefaultAsync(country => country.Id == id, cancellationToken);
 
+    public async Task<IReadOnlyList<Country>> GetForUpdateAsync(
+        IReadOnlyCollection<int> ids,
+        CancellationToken cancellationToken) =>
+        await context.Countries
+            .Where(country => ids.Contains(country.Id))
+            .ToListAsync(cancellationToken);
+
     public Task<bool> HasAnyConflictAsync(
         IReadOnlyCollection<Country> countries,
         int? excludedId,
@@ -44,5 +51,12 @@ public sealed class CountryWriteStore(ApplicationDbContext context) : ICountryWr
         CancellationToken cancellationToken) =>
         context.States.AnyAsync(
             state => state.CountryId == countryId && !state.IsDeleted,
+            cancellationToken);
+
+    public Task<bool> HasActiveStatesAsync(
+        IReadOnlyCollection<int> countryIds,
+        CancellationToken cancellationToken) =>
+        context.States.AnyAsync(
+            state => countryIds.Contains(state.CountryId) && !state.IsDeleted,
             cancellationToken);
 }

@@ -86,6 +86,14 @@ export const employeeKeys = {
 
 ## 6. Server-managed list reference
 
+`src/features/basic-data/countries` is the first implemented mobile reference for
+this pattern. It demonstrates a feature-owned endpoint/schema boundary, stable query
+keys, one server list state shared by table and card views, table page size 5,
+card page size 3,
+Created On descending order, permission and tenant read-only guards, archive/restore,
+and atomic bulk archive. Copy the pattern, not Countries' global-data ownership;
+tenant/company HR features must add their own trusted scope rules in the API.
+
 ```tsx
 const list = useServerListState<EmployeeSortColumn, EmployeeFilters>({
   initialPageSize: 5,
@@ -145,6 +153,7 @@ const query = useEmployees({
 ## 9. Localization and accessibility
 
 - Add the EN and AR namespace together.
+- Put the keys in the matching paired resource modules under `core/localization/translations`; keep `en.ts` and `ar.ts` composition-only.
 - Localize labels, errors, empty/loading states, confirmation text and accessibility labels.
 - Use semantic accessibility roles/states and at least 44x44 touch targets.
 - Verify dynamic text, long Arabic labels and screen-reader order.

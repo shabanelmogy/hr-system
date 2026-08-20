@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Alert, Box, Button } from "@mui/material";
 import CountriesMultiView from "../components/CountriesMultiView";
 import CountryArchiveDialog from "../components/CountryArchiveDialog";
+import CountryBulkArchiveDialog from "../components/CountryBulkArchiveDialog";
 import CountryForm from "../components/CountryForm";
 import CountryRestoreDialog from "../components/CountryRestoreDialog";
 import useCountryGridLogic from "../hooks/useCountryGridLogic";
@@ -57,6 +58,13 @@ const CountriesPage = () => {
     closeRestore,
     handleRestore,
     permissions,
+    selectedCountryIds,
+    bulkArchiveOpen,
+    setSelectedCountryIds,
+    onBulkArchive,
+    closeBulkArchive,
+    handleBulkArchive,
+    isBulkArchiving,
   } = useCountryGridLogic();
 
   const formDialogType =
@@ -119,6 +127,10 @@ const CountriesPage = () => {
         onCurrencyCodeChange={setCurrencyCode}
         onHasStatesFilterChange={setHasStatesFilter}
         onResetList={resetList}
+        selectedCountryIds={selectedCountryIds}
+        onSelectedCountryIdsChange={setSelectedCountryIds}
+        onBulkArchive={onBulkArchive}
+        isBulkArchiving={isBulkArchiving}
       />
 
       <CountryForm
@@ -147,6 +159,14 @@ const CountriesPage = () => {
         loading={isRestoring}
         onClose={closeRestore}
         onConfirm={() => void handleRestore()}
+      />
+
+      <CountryBulkArchiveDialog
+        open={bulkArchiveOpen}
+        selectedCount={selectedCountryIds.length}
+        loading={isBulkArchiving}
+        onClose={closeBulkArchive}
+        onConfirm={handleBulkArchive}
       />
     </>
   );

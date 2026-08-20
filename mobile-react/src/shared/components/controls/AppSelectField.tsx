@@ -33,6 +33,8 @@ export interface AppSelectFieldProps<Value extends string | number> {
   error?: string;
   helperText?: string;
   style?: StyleProp<ViewStyle>;
+  /** Keeps non-mutating controls such as report filters enabled in app read-only mode. */
+  allowWhenReadOnly?: boolean;
 }
 
 export function AppSelectField<Value extends string | number>({
@@ -48,12 +50,13 @@ export function AppSelectField<Value extends string | number>({
   error: suppliedError,
   helperText,
   style,
+  allowWhenReadOnly = false,
 }: AppSelectFieldProps<Value>) {
   const { t } = useTranslation();
   const { direction, isRTL } = useLocalization();
   const { theme } = useAppTheme();
   const { isReadOnly } = useAppReadOnly();
-  const effectiveDisabled = disabled || isReadOnly;
+  const effectiveDisabled = disabled || (isReadOnly && !allowWhenReadOnly);
   const [open, setOpen] = useState(false);
   const formField = useAppFormField(
     name,

@@ -5,6 +5,8 @@ import type {
   CountryLookup,
   CountryPageQuery,
   CountryPageResponse,
+  BulkArchiveCountriesRequest,
+  BulkArchiveCountriesResponse,
   CreateCountryRequest,
   UpdateCountryMutation,
 } from "../types/Country";
@@ -61,6 +63,11 @@ export class CountryService {
     return apiService.post(apiRoutes.countries.bulkCreate, {
       countries: countries.map(toCountryRequest),
     });
+  }
+
+  static archiveBulk(ids: number[]): Promise<BulkArchiveCountriesResponse> {
+    const request: BulkArchiveCountriesRequest = { ids };
+    return apiService.post(apiRoutes.countries.bulkArchive, request);
   }
 }
 

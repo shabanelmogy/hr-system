@@ -10,10 +10,18 @@ public interface ICountryWriteStore
 
     Task<Country?> GetForUpdateAsync(int id, CancellationToken cancellationToken);
 
+    Task<IReadOnlyList<Country>> GetForUpdateAsync(
+        IReadOnlyCollection<int> ids,
+        CancellationToken cancellationToken);
+
     Task<bool> HasAnyConflictAsync(
         IReadOnlyCollection<Country> countries,
         int? excludedId,
         CancellationToken cancellationToken);
 
     Task<bool> HasActiveStatesAsync(int countryId, CancellationToken cancellationToken);
+
+    Task<bool> HasActiveStatesAsync(
+        IReadOnlyCollection<int> countryIds,
+        CancellationToken cancellationToken);
 }

@@ -3,6 +3,7 @@ using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Abstractions.Persistence;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Abstractions;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.ArchiveCountry;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.BulkArchiveCountries;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.CreateCountry;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.CreateCountries;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.RestoreCountry;
@@ -267,6 +268,21 @@ public sealed class CountryCqrsHandlerTests
     }
 
     [Fact]
+    public async Task BulkCreateValidator_RejectsMoreThanMaximumBatchSize()
+    {
+        var countries = Enumerable.Range(1, CreateCountriesCommandValidator.MaximumBatchSize + 1)
+            .Select(index => Request($"دولة {index}", $"Country {index}", "EG", "EGY"))
+            .ToList();
+        var validator = new CreateCountriesCommandValidator(
+            new EchoStringLocalizer<CreateCountryRequest>());
+
+        var result = await validator.ValidateAsync(new CreateCountriesCommand(countries));
+
+        Assert.False(result.IsValid);
+        Assert.Contains(result.Errors, error => error.ErrorMessage == "CountryBatchLimitExceeded");
+    }
+
+    [Fact]
     public async Task Update_FailedCommitRecordsAuditButNeverSchedules()
     {
         var lifecycle = new List<string>();
@@ -315,6 +331,206 @@ public sealed class CountryCqrsHandlerTests
         Assert.Equal("Country.CountryInUseByState", result.Error.Code);
         Assert.Empty(lifecycle);
         Assert.Empty(scheduler.Changes);
+    }
+
+    [Fact]
+    public async Task BulkArchive_ArchivesOnlyActiveCountriesAndSchedulesOnceAfterCommit()
+    {
+        await using var context = CreateContext();
+        context.Countries.AddRange(
+            new Country { Id = 1, NameAr = "مصر", NameEn = "Egypt" },
+            new Country { Id = 2, NameAr = "الأردن", NameEn = "Jordan", IsDeleted = true });
+        await context.SaveChangesAsync();
+        context.ChangeTracker.Clear();
+        var lifecycle = new List<string>();
+        var scheduler = new RecordingScheduler(lifecycle);
+        var handler = new BulkArchiveCountriesCommandHandler(
+            new CountryWriteStore(context),
+            new RecordingDelegatingUnitOfWork(context, lifecycle),
+            scheduler,
+            new TestCurrentActor(),
+            TimeProvider.System,
+            CreateErrors());
+
+        var result = await handler.Handle(
+            new BulkArchiveCountriesCommand([1, 2]),
+            CancellationToken.None);
+
+        Assert.True(result.IsSuccess);
+        Assert.Equal(1, result.Value.ArchivedCount);
+        Assert.Equal(["save", "schedule"], lifecycle);
+        var countries = await context.Countries.AsNoTracking().OrderBy(country => country.Id).ToListAsync();
+        Assert.All(countries, country => Assert.True(country.IsDeleted));
+        var change = Assert.Single(scheduler.Changes);
+        Assert.Equal("BulkArchive", change.Action);
+        Assert.Equal(1, change.BulkCount);
+        Assert.Null(change.Country);
+    }
+
+    [Fact]
+    public async Task WriteStore_BulkLoadIncludesArchivedRowsAndChecksDependenciesInOneSet()
+    {
+        await using var context = CreateContext();
+        context.Countries.AddRange(
+            new Country
+            {
+                Id = 1,
+                NameAr = "مصر",
+                NameEn = "Egypt",
+                States = [new State { Id = 10, NameAr = "القاهرة", NameEn = "Cairo", Code = "CAI" }]
+            },
+            new Country { Id = 2, NameAr = "الأردن", NameEn = "Jordan", IsDeleted = true });
+        await context.SaveChangesAsync();
+        context.ChangeTracker.Clear();
+        var store = new CountryWriteStore(context);
+
+        var countries = await store.GetForUpdateAsync([1, 2], CancellationToken.None);
+
+        Assert.Equal(2, countries.Count);
+        Assert.Contains(countries, country => country.Id == 2 && country.IsDeleted);
+        Assert.True(await store.HasActiveStatesAsync([1, 2], CancellationToken.None));
+        Assert.False(await store.HasActiveStatesAsync([2], CancellationToken.None));
+    }
+
+    [Fact]
+    public async Task BulkArchive_AllArchivedIsIdempotentWithoutSaveOrSchedule()
+    {
+        var lifecycle = new List<string>();
+        var writer = new RecordingWriteStore(lifecycle)
+        {
+            BulkCountries =
+            [
+                new Country { Id = 1, NameAr = "مصر", NameEn = "Egypt", IsDeleted = true },
+                new Country { Id = 2, NameAr = "الأردن", NameEn = "Jordan", IsDeleted = true }
+            ]
+        };
+        var scheduler = new RecordingScheduler(lifecycle);
+        var handler = new BulkArchiveCountriesCommandHandler(
+            writer,
+            new RecordingUnitOfWork(lifecycle),
+            scheduler,
+            new TestCurrentActor(),
+            TimeProvider.System,
+            CreateErrors());
+
+        var result = await handler.Handle(
+            new BulkArchiveCountriesCommand([1, 2]),
+            CancellationToken.None);
+
+        Assert.True(result.IsSuccess);
+        Assert.Equal(0, result.Value.ArchivedCount);
+        Assert.Empty(lifecycle);
+        Assert.Empty(scheduler.Changes);
+    }
+
+    [Fact]
+    public async Task BulkArchive_MissingCountryDoesNotMutateSaveOrSchedule()
+    {
+        var lifecycle = new List<string>();
+        var active = new Country { Id = 1, NameAr = "مصر", NameEn = "Egypt" };
+        var writer = new RecordingWriteStore(lifecycle) { BulkCountries = [active] };
+        var scheduler = new RecordingScheduler(lifecycle);
+        var handler = new BulkArchiveCountriesCommandHandler(
+            writer,
+            new RecordingUnitOfWork(lifecycle),
+            scheduler,
+            new TestCurrentActor(),
+            TimeProvider.System,
+            CreateErrors());
+
+        var result = await handler.Handle(
+            new BulkArchiveCountriesCommand([1, 999]),
+            CancellationToken.None);
+
+        Assert.True(result.IsFailure);
+        Assert.Equal("Country.CountryNotFound", result.Error.Code);
+        Assert.False(active.IsDeleted);
+        Assert.Empty(lifecycle);
+        Assert.Empty(scheduler.Changes);
+    }
+
+    [Fact]
+    public async Task BulkArchive_DependencyDoesNotMutateAnyRequestedCountry()
+    {
+        var lifecycle = new List<string>();
+        var countries = new List<Country>
+        {
+            new() { Id = 1, NameAr = "مصر", NameEn = "Egypt" },
+            new() { Id = 2, NameAr = "الأردن", NameEn = "Jordan" }
+        };
+        var writer = new RecordingWriteStore(lifecycle)
+        {
+            BulkCountries = countries,
+            ActiveStates = true
+        };
+        var scheduler = new RecordingScheduler(lifecycle);
+        var handler = new BulkArchiveCountriesCommandHandler(
+            writer,
+            new RecordingUnitOfWork(lifecycle),
+            scheduler,
+            new TestCurrentActor(),
+            TimeProvider.System,
+            CreateErrors());
+
+        var result = await handler.Handle(
+            new BulkArchiveCountriesCommand([1, 2]),
+            CancellationToken.None);
+
+        Assert.True(result.IsFailure);
+        Assert.Equal("Country.CountryInUseByState", result.Error.Code);
+        Assert.All(countries, country => Assert.False(country.IsDeleted));
+        Assert.Empty(lifecycle);
+        Assert.Empty(scheduler.Changes);
+    }
+
+    [Fact]
+    public async Task BulkArchive_FailedCommitNeverSchedules()
+    {
+        var lifecycle = new List<string>();
+        var writer = new RecordingWriteStore(lifecycle)
+        {
+            BulkCountries = [new Country { Id = 1, NameAr = "مصر", NameEn = "Egypt" }]
+        };
+        var scheduler = new RecordingScheduler(lifecycle);
+        var handler = new BulkArchiveCountriesCommandHandler(
+            writer,
+            new RecordingUnitOfWork(lifecycle, throwOnSave: true),
+            scheduler,
+            new TestCurrentActor(),
+            TimeProvider.System,
+            CreateErrors());
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() => handler.Handle(
+            new BulkArchiveCountriesCommand([1]),
+            CancellationToken.None));
+
+        Assert.DoesNotContain("schedule", lifecycle);
+        Assert.Empty(scheduler.Changes);
+    }
+
+    [Theory]
+    [InlineData(new int[] { })]
+    [InlineData(new[] { 0 })]
+    [InlineData(new[] { 1, 1 })]
+    public async Task BulkArchiveValidator_RejectsEmptyNonPositiveAndDuplicateIds(int[] ids)
+    {
+        var result = await new BulkArchiveCountriesCommandValidator(
+                new EchoStringLocalizer<CreateCountryRequest>())
+            .ValidateAsync(new BulkArchiveCountriesCommand(ids));
+
+        Assert.False(result.IsValid);
+    }
+
+    [Fact]
+    public async Task BulkArchiveValidator_RejectsMoreThanMaximumBatchSize()
+    {
+        var ids = Enumerable.Range(1, BulkArchiveCountriesCommandValidator.MaximumBatchSize + 1).ToArray();
+
+        var result = await new BulkArchiveCountriesCommandValidator(
+                new EchoStringLocalizer<CreateCountryRequest>())
+            .ValidateAsync(new BulkArchiveCountriesCommand(ids));
+
+        Assert.False(result.IsValid);
     }
 
     [Fact]
@@ -438,11 +654,16 @@ public sealed class CountryCqrsHandlerTests
     private sealed class RecordingWriteStore(List<string> lifecycle, Country? existing = null) : ICountryWriteStore
     {
         public Country? Country { get; private set; } = existing;
+        public IReadOnlyList<Country> BulkCountries { get; init; } = [];
         public bool ActiveStates { get; init; }
 
         public void Add(Country country) { Country = country; lifecycle.Add("add"); }
         public void AddRange(IReadOnlyCollection<Country> countries) => lifecycle.Add("add-range");
         public Task<Country?> GetForUpdateAsync(int id, CancellationToken token) => Task.FromResult(Country);
+        public Task<IReadOnlyList<Country>> GetForUpdateAsync(
+            IReadOnlyCollection<int> ids,
+            CancellationToken token) =>
+            Task.FromResult(BulkCountries);
         public Task<bool> HasAnyConflictAsync(
             IReadOnlyCollection<Country> countries,
             int? excludedId,
@@ -450,6 +671,21 @@ public sealed class CountryCqrsHandlerTests
             Task.FromResult(false);
         public Task<bool> HasActiveStatesAsync(int countryId, CancellationToken token) =>
             Task.FromResult(ActiveStates);
+        public Task<bool> HasActiveStatesAsync(
+            IReadOnlyCollection<int> countryIds,
+            CancellationToken token) =>
+            Task.FromResult(ActiveStates);
+    }
+
+    private sealed class RecordingDelegatingUnitOfWork(
+        ApplicationDbContext context,
+        List<string> lifecycle) : IUnitOfWork
+    {
+        public async Task<int> SaveChangesAsync(CancellationToken token = default)
+        {
+            lifecycle.Add("save");
+            return await context.SaveChangesAsync(token);
+        }
     }
 
     private sealed class RecordingUnitOfWork(

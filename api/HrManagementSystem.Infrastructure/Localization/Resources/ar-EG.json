@@ -154,6 +154,9 @@
     "CountryInUseByState": "البلد مستخدم من قبل الولايات",
     "InvalidCountryId": "معرف الدولة غير صالح",
     "NoCountriesProvided": "لم يتم توفير البلدان",
+    "CountryBatchLimitExceeded": "الحد الأقصى المسموح به هو 100 دولة لكل طلب",
+    "CountryIdsMustBeDistinct": "يجب ألا تتكرر معرفات الدول",
+    "CountryIdsMustBePositive": "يجب أن تكون معرفات الدول أكبر من صفر",
     "CountriesInOtherTables": "البلدان مستخدمة في جداول أخرى",
     "ExactLengthError": "الطول المحدد مطلوب",
 
@@ -204,6 +207,7 @@
     "CountryNotificationTitle": "تم تحديث بيانات الدول",
     "CountryCreatedNotificationMessage": "تم إنشاء الدولة {NameAr}",
     "CountriesCreatedNotificationMessage": "تم إنشاء {Count} دولة",
+    "CountriesArchivedNotificationMessage": "تمت أرشفة {Count} دولة",
     "CountryUpdatedNotificationMessage": "تم تحديث الدولة {NameAr}",
     "CountryDeletedNotificationMessage": "تم حذف الدولة {NameAr}",
     "CountryArchivedNotificationMessage": "تمت أرشفة الدولة {NameAr}",

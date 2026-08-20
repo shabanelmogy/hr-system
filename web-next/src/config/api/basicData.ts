@@ -7,6 +7,7 @@ export const countries: CountriesRoutes = {
   getById: (id: Id) => `${version}/countries/${id}`,
   create: `${version}/countries`,
   bulkCreate: `${version}/countries/bulk`,
+  bulkArchive: `${version}/countries/bulk-archive`,
   update: (id: Id) => `${version}/countries/${id}`,
   archive: (id: Id) => `${version}/countries/${id}`,
   restore: (id: Id) => `${version}/countries/${id}/restore`,

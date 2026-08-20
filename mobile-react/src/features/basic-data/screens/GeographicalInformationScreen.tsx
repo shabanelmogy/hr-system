@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { permissions } from '@/src/features/auth';
+import { ROUTES } from '@/src/core/constants/routes';
 import { ReferenceSectionScreen } from '@/src/features/basic-data/screens/ReferenceSectionScreen';
 
 export function GeographicalInformationScreen() {
@@ -14,6 +15,7 @@ export function GeographicalInformationScreen() {
           label: t('basicData.countries'),
           icon: 'flag-outline',
           permissions: [permissions.ViewCountries],
+          route: ROUTES.basicData.countries,
         },
         {
           label: t('basicData.states'),

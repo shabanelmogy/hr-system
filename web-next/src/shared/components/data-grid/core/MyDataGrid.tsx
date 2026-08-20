@@ -73,6 +73,7 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   onToolbarAdd,
   toolbarSearch,
   toolbarContent,
+  autoSelectFirstRow = true,
   lastAddedId = null,
   lastEditedId = null,
   lastDeletedIndex = null,
@@ -238,6 +239,7 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   ]);
 
   useEffect(() => {
+    if (!autoSelectFirstRow) return;
     if (rows.length === 0) {
       initialSelectionDoneRef.current = false;
       return;
@@ -269,6 +271,7 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
 
     return () => clearTimeout(selectionTimer);
   }, [
+    autoSelectFirstRow,
     lastAddedId,
     lastDeletedIndex,
     lastEditedId,

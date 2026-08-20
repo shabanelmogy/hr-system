@@ -22,6 +22,7 @@ using HrManagementSystem.Infrastructure.Features.Security.Users.Jobs;
 using HrManagementSystem.Application.Features.Security.Users.Services;
 using HrManagementSystem.Infrastructure.Features.Security.Users.Services;
 using HrManagementSystem.Application.Common.Consts;
+using HrManagementSystem.Application.Common.Errors;
 using HrManagementSystem.Infrastructure.Features.Appointments.Jobs;
 using Microsoft.AspNetCore.SignalR;
 using HrManagementSystem.Infrastructure.Hubs.GeneralHub;
@@ -106,6 +107,7 @@ public sealed class BackgroundNotificationJobTests
     [Theory]
     [InlineData("Add", "Countries.Created", "CountryCreatedNotificationMessage", NotificationSeverity.Success)]
     [InlineData("BulkAdd", "Countries.BulkCreated", "CountriesCreatedNotificationMessage", NotificationSeverity.Success)]
+    [InlineData("BulkArchive", "Countries.BulkArchived", "CountriesArchivedNotificationMessage", NotificationSeverity.Warning)]
     [InlineData("Delete", "Countries.Deleted", "CountryDeletedNotificationMessage", NotificationSeverity.Warning)]
     [InlineData("Archive", "Countries.Archived", "CountryArchivedNotificationMessage", NotificationSeverity.Warning)]
     public void NotificationFactory_UsesConsistentDetailedMetadata(
@@ -131,6 +133,33 @@ public sealed class BackgroundNotificationJobTests
         Assert.Equal(expectedMessageKey, request.MessageKey);
         Assert.Equal(expectedSeverity, request.Severity);
         Assert.Equal($"{expectedEventType}:1:{operationId:N}", request.DeduplicationKey);
+    }
+
+    [Fact]
+    public async Task CountryBulkArchiveJob_PublishesOneDurableNotificationAndGenericInvalidation()
+    {
+        var operationId = Guid.Parse("22222222-2222-2222-2222-222222222222");
+        var notifications = new RecordingNotificationPublisher();
+        var realtime = new RecordingRealtimeEntityPublisher();
+        var job = new CountryChangedJob(notifications, realtime);
+
+        await job.ExecuteAsync(
+            new CountryChangedJobRequest(null, "BulkArchive", 3, "actor-1", operationId),
+            CancellationToken.None);
+
+        var notification = Assert.Single(notifications.Requests);
+        Assert.Equal("Countries.BulkArchived", notification.EventType);
+        Assert.Equal("CountriesArchivedNotificationMessage", notification.MessageKey);
+        Assert.Equal(NotificationSeverity.Warning, notification.Severity);
+        Assert.Equal("3", notification.Parameters!["Count"]);
+        Assert.Null(notification.EntityId);
+        Assert.Equal($"Countries.BulkArchived:bulk:{operationId:N}", notification.DeduplicationKey);
+
+        var change = Assert.Single(realtime.Requests);
+        Assert.Equal("countries", change.Resource);
+        Assert.Equal("BulkArchive", change.Action);
+        Assert.Null(change.EntityId);
+        Assert.Equal(operationId, change.EventId);
     }
 
     [Fact]
@@ -212,6 +241,32 @@ public sealed class BackgroundNotificationJobTests
     public void RealtimeResources_AreDerivedFromEntityTypes(Type entityType, string expected)
     {
         Assert.Equal(expected, RealtimeResource.For(entityType));
+    }
+
+    private sealed class RecordingNotificationPublisher : INotificationPublisher
+    {
+        public List<NotificationPublishRequest> Requests { get; } = [];
+
+        public Task<Result<int>> PublishToPermissionAsync(
+            NotificationPublishRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            Requests.Add(request);
+            return Task.FromResult(Result.Success(1));
+        }
+    }
+
+    private sealed class RecordingRealtimeEntityPublisher : IRealtimeEntityPublisher
+    {
+        public List<RealtimeChangeRequest> Requests { get; } = [];
+
+        public Task PublishAsync(
+            RealtimeChangeRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            Requests.Add(request);
+            return Task.CompletedTask;
+        }
     }
 
 }

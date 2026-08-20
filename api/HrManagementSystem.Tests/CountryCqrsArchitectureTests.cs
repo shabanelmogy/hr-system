@@ -2,8 +2,10 @@ using HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1;
 using HrManagementSystem.Application.Abstractions.Messaging;
 using HrManagementSystem.Application.Common.Errors;
 using HrManagementSystem.Application.Common.Paginations;
+using HrManagementSystem.Application.Common.Consts;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Abstractions;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.ArchiveCountry;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.BulkArchiveCountries;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.CreateCountry;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.CreateCountries;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.RestoreCountry;
@@ -20,6 +22,9 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Http;
+using HrManagementSystem.Infrastructure.Security.Authorization.Filters;
+using System.Reflection;
 
 namespace HrManagementSystem.Tests;
 
@@ -44,7 +49,17 @@ public sealed class CountryCqrsArchitectureTests
         AssertHttpRoute<HttpPostAttribute>(nameof(CountriesController.CreateBulk), "bulk");
         AssertHttpRoute<HttpPutAttribute>(nameof(CountriesController.Update), "{id:int}");
         AssertHttpRoute<HttpDeleteAttribute>(nameof(CountriesController.Archive), "{id:int}");
+        AssertHttpRoute<HttpPostAttribute>(nameof(CountriesController.BulkArchive), "bulk-archive");
         AssertHttpRoute<HttpPostAttribute>(nameof(CountriesController.Restore), "{id:int}/restore");
+
+        var bulkArchive = typeof(CountriesController).GetMethod(nameof(CountriesController.BulkArchive))!;
+        Assert.Equal(
+            Permissions.DeleteCountries,
+            bulkArchive.GetCustomAttribute<HasPermissionAttribute>()?.Policy);
+        Assert.Contains(
+            bulkArchive.GetCustomAttributes<ProducesResponseTypeAttribute>(),
+            attribute => attribute.StatusCode == StatusCodes.Status200OK &&
+                         attribute.Type == typeof(BulkArchiveCountriesResponse));
 
         Assert.DoesNotContain(
             typeof(CreateCountryCommand).GetProperties(),
@@ -102,6 +117,7 @@ public sealed class CountryCqrsArchitectureTests
     [InlineData(typeof(CreateCountriesCommandHandler), typeof(ICountryWriteStore))]
     [InlineData(typeof(UpdateCountryCommandHandler), typeof(ICountryAuditTrail))]
     [InlineData(typeof(ArchiveCountryCommandHandler), typeof(ICountryWriteStore))]
+    [InlineData(typeof(BulkArchiveCountriesCommandHandler), typeof(ICountryWriteStore))]
     [InlineData(typeof(RestoreCountryCommandHandler), typeof(ICountryWriteStore))]
     public void Handlers_UseNarrowPorts(Type handlerType, Type dependencyType)
     {
@@ -124,6 +140,8 @@ public sealed class CountryCqrsArchitectureTests
         Assert.IsAssignableFrom<ICommand<Result<CountryDetailResponse>>>(
             new UpdateCountryCommand(1, "مصر", "Egypt", "EG", "EGY", "+20", "EGP"));
         Assert.IsAssignableFrom<ICommand<Result>>(new ArchiveCountryCommand(1));
+        Assert.IsAssignableFrom<ICommand<Result<BulkArchiveCountriesResponse>>>(
+            new BulkArchiveCountriesCommand([1]));
         Assert.IsAssignableFrom<ICommand<Result>>(new RestoreCountryCommand(1));
     }
 

@@ -25,6 +25,7 @@ import {
 } from "../utils/countryPermissions";
 import {
   useArchiveCountry,
+  useBulkArchiveCountries,
   useCountryPage,
   useCreateCountry,
   useRestoreCountry,
@@ -40,6 +41,8 @@ export interface UseCountryGridLogicReturn {
   dialogType: DialogType;
   selectedCountry: CountryListItem | null;
   restoreCountry: CountryListItem | null;
+  selectedCountryIds: number[];
+  bulkArchiveOpen: boolean;
   loading: boolean;
   countries: CountryListItem[];
   totalCount: number;
@@ -65,6 +68,10 @@ export interface UseCountryGridLogicReturn {
   closeDialog: () => void;
   handleFormSubmit: (formdata: CreateCountryRequest) => Promise<void>;
   handleDelete: () => Promise<void>;
+  setSelectedCountryIds: (ids: number[]) => void;
+  onBulkArchive: () => void;
+  closeBulkArchive: () => void;
+  handleBulkArchive: () => Promise<void>;
   handleRefresh: () => void;
   onEdit: (country: CountryListItem) => void;
   onView: (country: CountryListItem) => void;
@@ -73,6 +80,7 @@ export interface UseCountryGridLogicReturn {
   isCreating: boolean;
   isUpdating: boolean;
   isArchiving: boolean;
+  isBulkArchiving: boolean;
   isRestoring: boolean;
   onRestore: (country: CountryListItem) => void;
   closeRestore: () => void;
@@ -88,6 +96,8 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
   const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
   const authorization = useCountriesPermissions();
   const [restoreCountry, setRestoreCountry] = useState<CountryListItem | null>(null);
+  const [selectionIds, setSelectionIds] = useState<number[]>([]);
+  const [bulkArchiveOpen, setBulkArchiveOpen] = useState(false);
   const list = useServerListState<CountrySortColumn, CountryListFilters>({
     defaultColumn: "createdOn",
     defaultSortDirection: "DESC",
@@ -99,7 +109,7 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     [list.debouncedSearchValue, list.state],
   );
   const query = useCountryPage(countryQuery);
-  const countries = query.data?.items ?? [];
+  const countries = useMemo(() => query.data?.items ?? [], [query.data?.items]);
   const totalCount = query.data?.metaData.totalCount ?? 0;
   const apiRef = useGridApiRef();
   const currentPage = list.state.page;
@@ -118,6 +128,62 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     const lastPage = getLastServerListPage(totalCount, currentPageSize);
     if (currentPage > lastPage) setListPage(lastPage);
   }, [currentPage, currentPageSize, query.data, setListPage, totalCount]);
+
+  const selectableCountryIds = useMemo(
+    () => new Set(countries.filter((country) => !country.isDeleted).map((country) => country.id)),
+    [countries],
+  );
+  const selectedCountryIds = useMemo(
+    () => permissions.canDelete
+      ? selectionIds.filter((id) => selectableCountryIds.has(id))
+      : [],
+    [permissions.canDelete, selectableCountryIds, selectionIds],
+  );
+  const setSelectedCountryIds = useCallback((ids: number[]) => {
+    setSelectionIds(ids.filter((id) => selectableCountryIds.has(id)));
+  }, [selectableCountryIds]);
+  const clearBulkSelection = useCallback(() => {
+    setSelectionIds([]);
+    setBulkArchiveOpen(false);
+  }, []);
+  const setPage = useCallback((page: number) => {
+    clearBulkSelection();
+    list.setPage(page);
+  }, [clearBulkSelection, list]);
+  const setPageSize = useCallback((pageSize: number) => {
+    clearBulkSelection();
+    list.setPageSize(pageSize);
+  }, [clearBulkSelection, list]);
+  const setSearchValue = useCallback((value: string) => {
+    clearBulkSelection();
+    list.setSearchValue(value);
+  }, [clearBulkSelection, list]);
+  const setSort = useCallback((column: CountrySortColumn, direction: "ASC" | "DESC") => {
+    clearBulkSelection();
+    list.setSort(column, direction);
+  }, [clearBulkSelection, list]);
+  const setFilter = useCallback((status: CountryFilter) => {
+    clearBulkSelection();
+    list.setFilters({ ...list.state.filters, status });
+  }, [clearBulkSelection, list]);
+  const setCurrencyCode = useCallback((currencyCode: string) => {
+    clearBulkSelection();
+    list.setFilters({
+      ...list.state.filters,
+      currencyCode: currencyCode || undefined,
+    });
+  }, [clearBulkSelection, list]);
+  const setHasStatesFilter = useCallback((nextFilter: "all" | "with" | "without") => {
+    clearBulkSelection();
+    list.setFilters({
+      ...list.state.filters,
+      hasStates: nextFilter === "all" ? undefined : nextFilter === "with",
+    });
+  }, [clearBulkSelection, list]);
+  const resetList = useCallback(() => {
+    clearBulkSelection();
+    list.reset();
+  }, [clearBulkSelection, list]);
 
   const createMutation = useCreateCountry({
     onSuccess: (country) => showToast.success(
@@ -145,6 +211,14 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     onSuccess: () => showToast.success(t("countries.restored")),
     onError: (error) => showToast.error(
       extractErrorMessage(error) || t("countries.restoreError", { defaultValue: "Failed to restore country" }),
+    ),
+  });
+  const bulkArchiveMutation = useBulkArchiveCountries({
+    onSuccess: (result) => showToast.success(
+      t("countries.bulkArchived", { count: result.archivedCount }),
+    ),
+    onError: (error) => showToast.error(
+      extractErrorMessage(error) || t("countries.bulkArchiveError"),
     ),
   });
 
@@ -237,6 +311,36 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     await crud.handleDelete();
   }, [authorization, crud, isReadOnly, notifyBlockedAction, notifyPermissionDenied]);
 
+  const onBulkArchive = useCallback(() => {
+    if (isReadOnly) notifyBlockedAction();
+    else if (!authorization.canDelete) notifyPermissionDenied();
+    else if (selectedCountryIds.length === 0) {
+      showToast.error(t("countries.bulkArchiveSelectionRequired"));
+    } else setBulkArchiveOpen(true);
+  }, [authorization.canDelete, isReadOnly, notifyBlockedAction, notifyPermissionDenied, selectedCountryIds.length, t]);
+
+  const closeBulkArchive = useCallback(() => {
+    if (!bulkArchiveMutation.isPending) setBulkArchiveOpen(false);
+  }, [bulkArchiveMutation.isPending]);
+
+  const handleBulkArchive = useCallback(async () => {
+    if (isReadOnly) {
+      notifyBlockedAction();
+      return;
+    }
+    if (!authorization.canDelete || selectedCountryIds.length === 0) {
+      notifyPermissionDenied();
+      return;
+    }
+    try {
+      await bulkArchiveMutation.mutateAsync(selectedCountryIds);
+      setSelectionIds([]);
+      setBulkArchiveOpen(false);
+    } catch {
+      // The mutation callback owns user-facing API errors and the dialog stays open.
+    }
+  }, [authorization.canDelete, bulkArchiveMutation, isReadOnly, notifyBlockedAction, notifyPermissionDenied, selectedCountryIds]);
+
   const onRestore = useCallback((country: CountryListItem) => {
     if (isReadOnly) notifyBlockedAction();
     else if (!canRunCountryAction("restore", authorization, country)) notifyPermissionDenied();
@@ -265,6 +369,8 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     dialogType: crud.dialogType,
     selectedCountry: crud.selectedItem,
     restoreCountry,
+    selectedCountryIds,
+    bulkArchiveOpen,
     loading: query.isLoading,
     countries,
     totalCount,
@@ -281,23 +387,21 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     hasStatesFilter: list.state.filters.hasStates === undefined
       ? "all"
       : list.state.filters.hasStates ? "with" : "without",
-    setPage: list.setPage,
-    setPageSize: list.setPageSize,
-    setSearchValue: list.setSearchValue,
-    setSort: list.setSort,
-    setFilter: (status) => list.setFilters({ ...list.state.filters, status }),
-    setCurrencyCode: (currencyCode) => list.setFilters({
-      ...list.state.filters,
-      currencyCode: currencyCode || undefined,
-    }),
-    setHasStatesFilter: (nextFilter) => list.setFilters({
-      ...list.state.filters,
-      hasStates: nextFilter === "all" ? undefined : nextFilter === "with",
-    }),
-    resetList: list.reset,
+    setPage,
+    setPageSize,
+    setSearchValue,
+    setSort,
+    setFilter,
+    setCurrencyCode,
+    setHasStatesFilter,
+    resetList,
     closeDialog: crud.closeDialog,
     handleFormSubmit,
     handleDelete,
+    setSelectedCountryIds,
+    onBulkArchive,
+    closeBulkArchive,
+    handleBulkArchive,
     handleRefresh: crud.handleRefresh,
     onEdit,
     onView,
@@ -306,6 +410,7 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     isCreating: createMutation.isPending,
     isUpdating: updateMutation.isPending,
     isArchiving: archiveMutation.isPending,
+    isBulkArchiving: bulkArchiveMutation.isPending,
     isRestoring: restoreMutation.isPending,
     onRestore,
     closeRestore,

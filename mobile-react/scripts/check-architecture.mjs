@@ -5,7 +5,7 @@ import process from 'node:process';
 const projectRoot = process.cwd();
 const sourceRoots = ['app', 'src'];
 const sourceExtensions = new Set(['.ts', '.tsx', '.js', '.jsx']);
-const importPattern = /\b(?:from\s*|import\s*)['"](@\/src\/[^'"]+)['"]/g;
+const importPattern = /\b(?:from\s*|import\s*)['"]([^'"]+)['"]/g;
 const violations = [];
 
 for (const sourceRoot of sourceRoots) {
@@ -46,9 +46,12 @@ function inspectFile(absoluteFile, source) {
 
 function inspectImport(sourceFile, importPath) {
   const sourceSegments = sourceFile.split('/');
-  const targetSegments = importPath.replace('@/src/', '').split('/');
+  const targetFile = resolveProjectImport(sourceFile, importPath);
+  if (!targetFile) return;
+
+  const targetSegments = targetFile.split('/');
   const sourceArea = sourceSegments[0] === 'src' ? sourceSegments[1] : sourceSegments[0];
-  const targetArea = targetSegments[0];
+  const targetArea = targetSegments[0] === 'src' ? targetSegments[1] : targetSegments[0];
 
   if (sourceArea === 'shared' && ['features', 'layouts', 'app'].includes(targetArea)) {
     addViolation(sourceFile, importPath, 'shared must stay domain-neutral');
@@ -61,7 +64,7 @@ function inspectImport(sourceFile, importPath) {
   }
 
   if ((sourceArea === 'app' || sourceArea === 'layouts') && targetArea === 'features') {
-    const publicDepth = targetSegments.length - 2;
+    const publicDepth = targetSegments.length - 3;
     if (publicDepth > 1) {
       addViolation(
         sourceFile,
@@ -75,11 +78,22 @@ function inspectImport(sourceFile, importPath) {
   if (sourceArea !== 'features' || targetArea !== 'features') return;
 
   const sourceFeature = sourceSegments[2];
-  const targetFeature = targetSegments[1];
-  const reachesFeatureInternals = targetSegments.length > 2;
+  const targetFeature = targetSegments[2];
+  const reachesFeatureInternals = targetSegments.length > 3;
   if (sourceFeature !== targetFeature && reachesFeatureInternals) {
     addViolation(sourceFile, importPath, 'cross-feature imports must use the target feature public API');
   }
+}
+
+function resolveProjectImport(sourceFile, importPath) {
+  if (importPath.startsWith('@/src/')) {
+    return `src/${importPath.slice('@/src/'.length)}`;
+  }
+
+  if (!importPath.startsWith('.')) return null;
+
+  const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(sourceFile), importPath));
+  return resolved === 'src' || resolved.startsWith('src/') ? resolved : null;
 }
 
 function addViolation(sourceFile, importPath, reason) {

@@ -29,3 +29,7 @@ public sealed record UpdateCountryRequest(
 public sealed record CreateCountriesRequest(IReadOnlyList<CreateCountryRequest> Countries);
 
 public sealed record CreateCountriesResponse(int CreatedCount);
+
+public sealed record BulkArchiveCountriesRequest(IReadOnlyList<int> Ids);
+
+public sealed record BulkArchiveCountriesResponse(int ArchivedCount);

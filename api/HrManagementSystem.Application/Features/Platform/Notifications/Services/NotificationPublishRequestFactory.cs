@@ -19,15 +19,16 @@ public static class NotificationPublishRequestFactory
         int? companyId = null)
     {
         var actionName = GetActionName(action);
-        var eventActionName = action == "BulkAdd" ? "BulkCreated" : actionName;
+        var isBulk = action.StartsWith("Bulk", StringComparison.Ordinal);
+        var eventActionName = isBulk ? $"Bulk{actionName}" : actionName;
         var eventType = $"{eventCollection}.{eventActionName}";
-        var messageEntity = action == "BulkAdd" ? eventCollection : entityType;
+        var messageEntity = isBulk ? eventCollection : entityType;
 
         return new NotificationPublishRequest(
             requiredPermission,
             category,
             eventType,
-            action is "Archive" or "Delete" or "Disable"
+            action is "Archive" or "BulkArchive" or "Delete" or "BulkDelete" or "Disable"
                 ? NotificationSeverity.Warning
                 : NotificationSeverity.Success,
             $"{entityType}NotificationTitle",
@@ -46,6 +47,8 @@ public static class NotificationPublishRequestFactory
     {
         "Add" => "Created",
         "BulkAdd" => "Created",
+        "BulkArchive" => "Archived",
+        "BulkDelete" => "Deleted",
         "Update" => "Updated",
         "Delete" => "Deleted",
         "Archive" => "Archived",

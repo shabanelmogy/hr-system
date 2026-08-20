@@ -70,6 +70,14 @@ export interface UpdateCountryMutation {
   request: CreateCountryRequest;
 }
 
+export interface BulkArchiveCountriesRequest {
+  ids: number[];
+}
+
+export interface BulkArchiveCountriesResponse {
+  archivedCount: number;
+}
+
 export interface CountryFormData {
   nameAr: string;
   nameEn: string;

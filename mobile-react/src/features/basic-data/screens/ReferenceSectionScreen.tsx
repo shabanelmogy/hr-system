@@ -1,7 +1,9 @@
+import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
+import { asHref, type AppRoute } from '@/src/core/constants/routes';
 import {
   isAuthorized,
   type PermissionMatchMode,
@@ -16,6 +18,7 @@ export interface ReferenceSectionItem {
   roles?: readonly string[];
   permissions?: readonly PermissionString[];
   permissionMode?: PermissionMatchMode;
+  route?: AppRoute;
 }
 
 interface ReferenceSectionScreenProps {
@@ -50,8 +53,10 @@ export function ReferenceSectionScreen({
       </View>
       <AppCard style={styles.list}>
         {visibleItems.map((item) => (
-          <View
+          <AppCard
+            accessibilityLabel={item.label}
             key={item.label}
+            onPress={item.route ? () => router.push(asHref(item.route!)) : undefined}
             style={[
               styles.row,
               { direction, borderBottomColor: theme.colors.border },
@@ -65,7 +70,7 @@ export function ReferenceSectionScreen({
               name={isRTL ? 'chevron-back' : 'chevron-forward'}
               size={19}
             />
-          </View>
+          </AppCard>
         ))}
       </AppCard>
     </AppScreen>
@@ -86,6 +91,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
     borderBottomWidth: StyleSheet.hairlineWidth,
+    borderRadius: 0,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
   },
   label: {
     flex: 1,

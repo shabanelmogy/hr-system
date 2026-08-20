@@ -14,9 +14,9 @@ describe('realtime query registry', () => {
     ]);
   });
 
-  it('does not mark unmapped resources as known', () => {
-    expect(isKnownRealtimeResource('countries')).toBe(false);
-    expect(getRealtimeQueryKeys('countries')).toEqual([]);
+  it('invalidates all country queries through the stable feature prefix', () => {
+    expect(isKnownRealtimeResource('countries')).toBe(true);
+    expect(getRealtimeQueryKeys('countries')).toEqual([['countries']]);
   });
 
   it('deduplicates reconnect invalidation prefixes', () => {

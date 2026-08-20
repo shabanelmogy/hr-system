@@ -3,6 +3,7 @@ using HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1;
 using HrManagementSystem.Application.Common.Errors;
 using HrManagementSystem.Application.Common.Paginations;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.ArchiveCountry;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.BulkArchiveCountries;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.CreateCountry;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.CreateCountries;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.RestoreCountry;
@@ -31,6 +32,7 @@ public sealed class CountriesControllerCqrsTests
             new CreateCountryRequest("مصر", "Egypt", "EG", "EGY", "+20", "EGP")
         ]);
         var updateRequest = new UpdateCountryRequest("مصر", "Egypt", "EG", "EGY", "+20", "EGP");
+        var bulkArchiveRequest = new BulkArchiveCountriesRequest([7, 8]);
 
         Assert.IsType<OkObjectResult>(await controller.GetPage(pageQuery, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.GetLookup(CancellationToken.None));
@@ -41,6 +43,9 @@ public sealed class CountriesControllerCqrsTests
             await controller.CreateBulk(bulkRequest, CancellationToken.None)).StatusCode);
         Assert.IsType<OkObjectResult>(await controller.Update(7, updateRequest, CancellationToken.None));
         Assert.IsType<NoContentResult>(await controller.Archive(7, CancellationToken.None));
+        var bulkArchive = Assert.IsType<OkObjectResult>(
+            await controller.BulkArchive(bulkArchiveRequest, CancellationToken.None));
+        Assert.Equal(2, Assert.IsType<BulkArchiveCountriesResponse>(bulkArchive.Value).ArchivedCount);
         Assert.IsType<NoContentResult>(await controller.Restore(7, CancellationToken.None));
 
         Assert.Collection(
@@ -59,6 +64,7 @@ public sealed class CountriesControllerCqrsTests
                 Assert.Equal(updateRequest.NameEn, update.NameEn);
             },
             request => Assert.Equal(7, Assert.IsType<ArchiveCountryCommand>(request).Id),
+            request => Assert.Equal([7, 8], Assert.IsType<BulkArchiveCountriesCommand>(request).Ids),
             request => Assert.Equal(7, Assert.IsType<RestoreCountryCommand>(request).Id));
     }
 
@@ -84,6 +90,7 @@ public sealed class CountriesControllerCqrsTests
                 CreateCountriesCommand => Result.Success(new CreateCountriesResponse(1)),
                 UpdateCountryCommand => Result.Success(Detail()),
                 ArchiveCountryCommand => Result.Success(),
+                BulkArchiveCountriesCommand => Result.Success(new BulkArchiveCountriesResponse(2)),
                 RestoreCountryCommand => Result.Success(),
                 _ => throw new NotSupportedException(request.GetType().FullName)
             };

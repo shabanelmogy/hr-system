@@ -15,13 +15,11 @@ namespace CrystalReportGeneratorApi.Controllers
         public HttpResponseMessage GenerateReportGet([FromUri] CountryReportRequest request)
         {
 
-            //var paramList = new List<(string PropertyName, string ColumnName)>
-            //        {
-            //            (nameof(request.NameAr), "NameAr"),
-            //            (nameof(request.NameEn), "NameEn"),
-            //        };
-
-            var paramList = new List<(string PropertyName, string ColumnName)>();
+            var paramList = new List<(string PropertyName, string ColumnName)>
+                    {
+                        (nameof(request.NameAr), "CountryAr"),
+                        (nameof(request.NameEn), "CountryEn"),
+                    };
 
             return ReportGenerator.GenerateReport(
                 request,
@@ -42,13 +40,11 @@ namespace CrystalReportGeneratorApi.Controllers
         public HttpResponseMessage GenerateReportPost([FromBody] CountryReportRequest request)
         {
 
-            //var paramList = new List<(string PropertyName, string ColumnName)>
-            //        {
-            //            (nameof(request.NameAr), "NameAr"),
-            //            (nameof(request.NameEn), "NameEn"),
-            //        };
-
-            var paramList = new List<(string PropertyName, string ColumnName)>();
+            var paramList = new List<(string PropertyName, string ColumnName)>
+                    {
+                        (nameof(request.NameAr), "CountryAr"),
+                        (nameof(request.NameEn), "CountryEn"),
+                    };
 
             // Generate report using the reusable logic
             HttpResponseMessage response = ReportGenerator.GenerateReport(

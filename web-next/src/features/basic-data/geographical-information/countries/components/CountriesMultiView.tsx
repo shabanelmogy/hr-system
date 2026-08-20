@@ -46,6 +46,10 @@ interface CountriesMultiViewProps {
   onCurrencyCodeChange: (currencyCode: string) => void;
   onHasStatesFilterChange: (filter: "all" | "with" | "without") => void;
   onResetList: () => void;
+  selectedCountryIds: number[];
+  onSelectedCountryIdsChange: (ids: number[]) => void;
+  onBulkArchive: () => void;
+  isBulkArchiving: boolean;
 }
 
 const sortableColumns = new Set<CountrySortColumn>([
@@ -89,6 +93,10 @@ const CountriesMultiView = ({
   onCurrencyCodeChange,
   onHasStatesFilterChange,
   onResetList,
+  selectedCountryIds,
+  onSelectedCountryIdsChange,
+  onBulkArchive,
+  isBulkArchiving,
 }: CountriesMultiViewProps) => {
   const { t } = useTranslation();
   const [currentView, setCurrentView] = useState<CountryView>("grid");
@@ -194,6 +202,10 @@ const CountriesMultiView = ({
             onCurrencyCodeChange={onCurrencyCodeChange}
             onHasStatesChange={onHasStatesFilterChange}
             onReset={onResetList}
+            selectedCountryIds={selectedCountryIds}
+            onSelectedCountryIdsChange={onSelectedCountryIdsChange}
+            onBulkArchive={onBulkArchive}
+            isBulkArchiving={isBulkArchiving}
             onPaginationChange={handlePaginationChange}
             onSortChange={handleGridSortChange}
             lastAddedId={lastAddedId}

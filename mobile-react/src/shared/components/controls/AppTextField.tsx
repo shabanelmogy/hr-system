@@ -41,6 +41,8 @@ export interface AppTextFieldProps extends TextInputProps {
   minValue?: number;
   maxValue?: number;
   compact?: boolean;
+  /** Keeps non-mutating controls such as search/report filters enabled in app read-only mode. */
+  allowWhenReadOnly?: boolean;
 }
 
 export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function AppTextField(
@@ -68,6 +70,7 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
     minValue,
     maxValue,
     compact = false,
+    allowWhenReadOnly = false,
     secureTextEntry = false,
     autoFocus,
     editable = true,
@@ -99,7 +102,10 @@ export const AppTextField = forwardRef<TextInput, AppTextFieldProps>(function Ap
   const inputRef = useRef<TextInput | null>(null);
   const currentValue = String(value ?? uncontrolledValue);
   const currentLength = currentValue.length;
-  const effectiveEditable = editable && !loading && !readOnly && !appIsReadOnly;
+  const effectiveEditable = editable
+    && !loading
+    && !readOnly
+    && (allowWhenReadOnly || !appIsReadOnly);
   const { clearError, error: formError, focusNext } = useAppFormField(
     name,
     () => inputRef.current?.focus(),

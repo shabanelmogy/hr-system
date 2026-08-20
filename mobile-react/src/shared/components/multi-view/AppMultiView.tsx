@@ -21,6 +21,8 @@ export interface AppMultiViewDefinition<Item, ViewId extends string> {
   paginate?: boolean;
   pageSizeOptions?: readonly number[];
   render: (items: readonly Item[]) => ReactNode;
+  /** Render this independent view even when the backing collection is empty. */
+  renderWhenEmpty?: boolean;
   scrollable?: boolean;
   value: ViewId;
 }
@@ -36,6 +38,7 @@ export interface AppMultiViewProps<Item, ViewId extends string> {
   toolbarContent?: ReactNode;
   compactToolbar?: boolean;
   showViewLabels?: boolean;
+  showResultCount?: boolean;
   isFetching?: boolean;
   serverPagination?: AppMultiViewServerPagination;
 }
@@ -63,6 +66,7 @@ export function AppMultiView<Item, ViewId extends string>({
   toolbarContent,
   compactToolbar = true,
   showViewLabels = false,
+  showResultCount = true,
   isFetching = false,
   serverPagination,
 }: AppMultiViewProps<Item, ViewId>) {
@@ -87,7 +91,9 @@ export function AppMultiView<Item, ViewId extends string>({
   const onServerPageChange = serverPagination?.onPageChange;
   const onServerPageSizeChange = serverPagination?.onPageSizeChange;
   const usesCollectionPagination = activeView?.carousel || activeView?.paginate !== false;
-  const usesServerPagination = Boolean(serverPagination) && !activeView?.carousel;
+  const usesServerPagination = Boolean(serverPagination)
+    && !activeView?.carousel
+    && activeView?.paginate !== false;
   const activePage = usesServerPagination ? serverPage : page;
   const activePageSize = activeView?.carousel
     ? 1
@@ -200,7 +206,7 @@ export function AppMultiView<Item, ViewId extends string>({
 
   if (!activeView) return emptyContent ?? null;
 
-  const content = items.length === 0
+  const content = items.length === 0 && !activeView.renderWhenEmpty
     ? emptyContent
     : activeView.carousel
       ? (
@@ -229,14 +235,14 @@ export function AppMultiView<Item, ViewId extends string>({
         ]}>
         {toolbarContent ? (
           <View style={styles.toolbarContent}>{toolbarContent}</View>
-        ) : (
+        ) : showResultCount ? (
           <View style={styles.resultCount}>
             <AppText variant="label" weight="800">{totalItems}</AppText>
             <AppText color="muted" variant="caption">
               {t('multiView.results')}
             </AppText>
           </View>
-        )}
+        ) : null}
         <AppSegmentedControl
           containerStyle={[
             styles.viewOptions,
@@ -246,15 +252,22 @@ export function AppMultiView<Item, ViewId extends string>({
           layout="wrap"
           onChange={(nextView) => {
             const nextDefinition = views.find((candidate) => candidate.value === nextView);
+            const nextPageSize = nextDefinition?.carousel
+              ? 1
+              : nextDefinition?.defaultPageSize ?? defaultPageSize;
             setView(nextView);
-            if (onServerPageChange && !nextDefinition?.carousel) {
-              onServerPageChange(0);
+            const nextUsesServerPagination = Boolean(serverPagination)
+              && !nextDefinition?.carousel
+              && nextDefinition?.paginate !== false;
+            if (nextUsesServerPagination) {
+              onServerPageChange?.(0);
+              if (nextPageSize !== serverPageSize) {
+                onServerPageSizeChange?.(nextPageSize);
+              }
             } else {
               setPage(0);
             }
-            setPageSize(
-              nextDefinition?.carousel ? 1 : nextDefinition?.defaultPageSize ?? defaultPageSize,
-            );
+            setPageSize(nextPageSize);
           }}
           options={views}
           showOptionLabels={showViewLabels}
@@ -268,7 +281,9 @@ export function AppMultiView<Item, ViewId extends string>({
           styles.collection,
           activeView.carousel && !pinPagination && styles.attachedCollection,
         ]}>
-        {activeView.scrollable && !activeView.carousel && items.length > 0 ? (
+        {activeView.scrollable
+        && !activeView.carousel
+        && (items.length > 0 || activeView.renderWhenEmpty) ? (
           <ScrollView
             contentContainerStyle={styles.scrollContent}
             directionalLockEnabled

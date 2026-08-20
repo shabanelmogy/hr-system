@@ -7,6 +7,7 @@ import type {
   UserProfile,
   UserProfilePhoto,
 } from '@/src/features/auth/profile/types';
+import { userProfilePhotoSchema, userProfileSchema } from '@/src/features/auth/profile/api/profile-schemas';
 
 const accountInfoUrl = ENV.apiUrl.replace(/\/api\/v\d+$/i, '') + '/AccountInfo';
 
@@ -19,9 +20,13 @@ const endpoints = {
 } as const;
 
 export const profileApi = {
-  getInfo: () => apiService.get<UserProfile>(endpoints.info),
+  async getInfo(): Promise<UserProfile> {
+    return userProfileSchema.parse(await apiService.get<unknown>(endpoints.info));
+  },
 
-  getPhoto: () => apiService.get<UserProfilePhoto>(endpoints.photo),
+  async getPhoto(): Promise<UserProfilePhoto> {
+    return userProfilePhotoSchema.parse(await apiService.get<unknown>(endpoints.photo));
+  },
 
   updateInfo: (request: UpdateProfileRequest) =>
     apiService.put<void, UpdateProfileRequest>(endpoints.updateInfo, request),

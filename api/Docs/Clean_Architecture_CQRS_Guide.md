@@ -57,7 +57,8 @@ Keep Application contracts independent of HTTP and persistence frameworks:
 - Bind `IFormFile`, claims, status codes, and route templates in `HrManagementSystem.Api`.
 - Adapt multipart files to Application's `FileUpload` model at the controller boundary.
 - Adapt external identity payloads to transport-neutral records before calling Application ports.
-- Expose narrow asynchronous validation questions through `IValidationDataContext`; never expose `DbSet` or `IQueryable`.
+- Expose narrow asynchronous validation questions through feature interfaces that
+  implement the `IValidationQuery` marker; never expose `DbSet` or `IQueryable`.
 - Execute EF Core filtering, projection, and pagination in Infrastructure, then construct Application response models.
 - Represent failures with `ErrorType`; map that classification to HTTP status codes only in the API host.
 
@@ -126,6 +127,12 @@ Features/
 - Save database changes before scheduling non-critical Hangfire work.
 - Do not place HTTP, SignalR, Hangfire, or controller concerns in the command.
 
+FluentValidation owns transport-shape rules such as required values, ranges,
+formats, distinct IDs, and bulk-size limits. The handler owns persisted-state and
+race-sensitive rules such as uniqueness, ownership, lifecycle, dependencies, and
+optimistic concurrency. A database constraint remains the final race-safe guard.
+Do not run the same database rule independently in both the validator and handler.
+
 ## Queries
 
 - Implement `IQuery<TResponse>` and `IQueryHandler<TQuery, TResponse>`.
@@ -133,6 +140,9 @@ Features/
 - Return response models, never EF entities.
 - Apply pagination, filtering, sorting, tenant, and company scope in the query.
 - Do not modify state from a query handler.
+- A thin query handler may delegate to one feature-owned read-projection port. The
+  prohibition on one-line delegation applies to legacy CRUD workflow services, not
+  to a query-specific store that owns filtering, projection, and paging.
 
 ## Controllers
 
@@ -141,6 +151,12 @@ Features/
 - Send one request and translate its result into the HTTP response.
 - Keep authorization attributes, API versioning, and response metadata in the API.
 - Do not inject `ApplicationDbContext` or feature services into migrated controllers.
+- Use `[Route(ApiRoutes.BaseRoute2)]` for the versioned REST resource shape. Put
+  operations such as `bulk-archive` or `{id}/restore` in explicit action templates;
+  do not use the legacy `[action]` route shape for new CQRS resources.
+- Direct command binding is allowed when the JSON body and command are intentionally
+  the same public contract. Otherwise bind a transport request and construct one
+  command in the action.
 
 During an endpoint-by-endpoint migration, a legacy controller may temporarily inject
 both `ISender` and its feature service, but only unmigrated actions may use the
@@ -176,6 +192,43 @@ screens refresh across browsers. Follow `Docs/Realtime_Updates_Guide.md`: use st
 resource names, permission-aware tenant/company groups, and feature-owned Hangfire
 jobs. Never broadcast entity changes with `Clients.All` and never send entity data as
 the authoritative realtime payload.
+
+Saving the business change and enqueueing Hangfire are two writes. This deliberate
+boundary is acceptable only for non-critical inbox notifications and UI
+invalidation. Use a transactional outbox and idempotent consumer when publication
+is business-critical or must be guaranteed with the database commit.
+
+## Ownership And Lifecycle
+
+Classify a feature before copying Countries:
+
+- **Global reference data**, such as Countries, is shared across tenants and does
+  not implement `ITenantScoped`/`ICompanyScoped`.
+- **Tenant-owned data** implements `ITenantScoped` and is filtered and mutated only
+  in the current tenant.
+- **Company-owned data** implements both scope markers and requires the current
+  tenant/company on every read and write.
+
+Countries is the global-reference CQRS template, not the ownership template for HR
+aggregates. New HR features must add scoped indexes and adversarial cross-scope
+tests.
+
+Document lifecycle behavior per endpoint instead of assuming one global soft-delete
+rule:
+
+| Endpoint kind | Active record | Archived record | Missing record |
+| --- | --- | --- | --- |
+| Management page | Included by explicit status filter | Included only for `archived`/`all` | n/a |
+| Lookup | Returned | Hidden | n/a |
+| Detail | Returned | Returned when restore/edit hydration needs it | `404` |
+| Update | Updated | `404`/business failure, as documented | `404` |
+| Archive | Archived | Idempotent success | `404` |
+| Restore | Idempotent success | Restored | `404` |
+
+For important concurrent edits, expose a row-version/ETag in the update contract,
+verify it in the handler, and translate `DbUpdateConcurrencyException` to a stable
+conflict response. Reference-data features may omit it only after an explicit risk
+decision.
 
 ## Migration Rule
 

@@ -70,7 +70,7 @@
     <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.CreateBulk(HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts.CreateCountriesRequest,System.Threading.CancellationToken)">
       <summary>Atomically creates multiple countries.</summary>
       <remarks>Requires <c>Countries:Create</c>.</remarks>
-      <param name="request">A non-empty countries collection.</param>
+      <param name="request">A collection containing 1 through 100 countries.</param>
       <param name="cancellationToken">Request cancellation token.</param>
       <returns>A <c>CreateCountriesResponse</c> containing createdCount.</returns>
       <response code="201">All countries were created.</response>
@@ -116,6 +116,23 @@
       <returns>No response body.</returns>
       <response code="204">Country restored.</response>
       <response code="404">Archived country was not found.</response>
+      <response code="401">Authentication is missing or invalid.</response>
+      <response code="403">Tenant membership or permission was denied.</response>
+    </member>
+
+    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.BulkArchive(HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts.BulkArchiveCountriesRequest,System.Threading.CancellationToken)">
+      <summary>Atomically archives up to 100 countries.</summary>
+      <remarks>
+        Requires <c>Countries:Delete</c>. IDs must be positive and distinct. Missing
+        IDs or an active state dependency fail the entire operation; already archived
+        countries are idempotent.
+      </remarks>
+      <param name="request">A collection containing 1 through 100 country IDs.</param>
+      <param name="cancellationToken">Request cancellation token.</param>
+      <returns>A <c>BulkArchiveCountriesResponse</c> containing archivedCount.</returns>
+      <response code="200">All active requested countries were archived.</response>
+      <response code="400">Validation failed or an active state dependency blocked archival.</response>
+      <response code="404">At least one requested country was not found.</response>
       <response code="401">Authentication is missing or invalid.</response>
       <response code="403">Tenant membership or permission was denied.</response>
     </member>

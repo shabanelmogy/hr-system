@@ -17,7 +17,7 @@ Countries is the reference implementation for basic-data modules that need CQRS,
 | Read page, lookup, detail, states | `Countries:View` |
 | Create and bulk create | `Countries:Create` |
 | Update | `Countries:Edit` |
-| Archive and restore | `Countries:Delete` |
+| Archive, bulk archive, and restore | `Countries:Delete` |
 
 ## Endpoints
 
@@ -31,6 +31,7 @@ Countries is the reference implementation for basic-data modules that need CQRS,
 | `POST` | `/api/v1/countries/bulk` | `201` | Atomically create multiple countries |
 | `PUT` | `/api/v1/countries/{id}` | `200` | Update one active country |
 | `DELETE` | `/api/v1/countries/{id}` | `204` | Archive one active country |
+| `POST` | `/api/v1/countries/bulk-archive` | `200` | Atomically archive up to 100 countries |
 | `POST` | `/api/v1/countries/{id}/restore` | `204` | Restore one archived country |
 
 There is deliberately no count endpoint and no toggle-delete operation. Page metadata contains `totalCount`, and lifecycle transitions are explicit archive/restore commands.
@@ -156,7 +157,8 @@ Success is `201`:
 { "createdCount": 1 }
 ```
 
-The command is atomic: validation or duplicate failure prevents the whole batch from being committed.
+The request accepts 1–100 countries. The command is atomic: validation or duplicate
+failure prevents the whole batch from being committed.
 
 ## Archive and restore
 
@@ -165,6 +167,38 @@ The command is atomic: validation or duplicate failure prevents the whole batch 
 - Archive returns `400` with code `Country.CountryInUseByState` if active state dependencies block it.
 - Missing resources return `404` with code `Country.CountryNotFound`.
 - The frontend must show archive and restore as separate, explicit actions; it must not infer a toggle.
+
+### Bulk archive
+
+`POST /api/v1/countries/bulk-archive`
+
+```json
+{ "ids": [1, 2, 3] }
+```
+
+The collection must contain 1–100 distinct positive IDs. Success is `200`:
+
+```json
+{ "archivedCount": 2 }
+```
+
+Bulk archive is all-or-nothing. A missing requested ID returns
+`Country.CountryNotFound`; an active state dependency on any active requested
+country returns `Country.CountryInUseByState`; neither failure changes any country.
+Already archived requested countries are idempotent and are not included in
+`archivedCount`. The API saves all active requested countries once and emits one
+post-commit `BulkArchive` change event.
+
+### Lifecycle matrix
+
+| Operation | Active | Archived | Missing |
+| --- | --- | --- | --- |
+| Management page | Included by `active`/`all` | Included by `archived`/`all` | n/a |
+| Lookup | Returned | Hidden | n/a |
+| Detail / detail with states | Returned | Returned | `404` |
+| Update | Updated | `404` | `404` |
+| Archive / bulk archive | Archived | Idempotent | `404` |
+| Restore | Idempotent | Restored | `404` |
 
 ## Frontend rules
 
@@ -183,6 +217,7 @@ The command is atomic: validation or duplicate failure prevents the whole batch 
 | `400` | validation problem | Invalid query/body |
 | `400` | `Country.NoCountriesProvided` | Empty bulk request |
 | `400` | `Country.CountryInUseByState` | Archive blocked by active states |
+| `400` | validation problem | Bulk IDs empty, non-positive, duplicated, or over 100 |
 | `404` | `Country.CountryNotFound` | Country unavailable for the operation |
 | `409` | `Country.Duplicated` | Feature-level duplicate detected |
 | `409` | `UniqueConstraintViolation` | Database uniqueness race detected |
