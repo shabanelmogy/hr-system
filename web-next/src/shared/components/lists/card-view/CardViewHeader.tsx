@@ -32,7 +32,11 @@ const CardViewHeader = ({
   filterOptions,
   onFilterByChange,
   onReset,
+  beforeSearchControls,
   additionalControls,
+  optionsContent,
+  optionsLabel,
+  showFilter,
 }: CardViewHeaderProps) => {
   const theme = useTheme();
 
@@ -64,7 +68,11 @@ const CardViewHeader = ({
         filterOptions={filterOptions}
         onFilterByChange={onFilterByChange}
         onReset={onReset}
+        beforeSearchControls={beforeSearchControls}
         additionalControls={additionalControls}
+        optionsContent={optionsContent}
+        optionsLabel={optionsLabel}
+        showFilter={showFilter}
         singleRow={compact}
       />
     </Paper>

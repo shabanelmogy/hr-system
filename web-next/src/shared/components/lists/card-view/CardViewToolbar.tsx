@@ -1,5 +1,6 @@
 import { Grid } from "@mui/material";
 import { FilterSelect } from "./header-controls/FilterSelect";
+import { CardViewOptionsButton } from "./header-controls/CardViewOptionsButton";
 import { ResetButton } from "./header-controls/ResetButton";
 import { SearchBar } from "./header-controls/SearchBar";
 import { SortBySelect } from "./header-controls/SortBySelect";
@@ -21,7 +22,11 @@ export interface CardViewToolbarProps {
   filterOptions: FilterOption[];
   onFilterByChange: (value: string) => void;
   onReset: () => void;
+  beforeSearchControls?: ReactNode;
   additionalControls?: ReactNode;
+  optionsContent?: (closeMenu: () => void) => ReactNode;
+  optionsLabel?: string;
+  showFilter?: boolean;
   singleRow?: boolean;
 }
 
@@ -39,7 +44,11 @@ const CardViewToolbar = ({
   filterOptions,
   onFilterByChange,
   onReset,
+  beforeSearchControls,
   additionalControls,
+  optionsContent,
+  optionsLabel,
+  showFilter = true,
   singleRow = false,
 }: CardViewToolbarProps) => (
   <Grid
@@ -47,9 +56,11 @@ const CardViewToolbar = ({
     spacing={singleRow ? 1 : 2}
     sx={{
       alignItems: "center",
-      flexWrap: singleRow ? { xs: "wrap", lg: "nowrap" } : "wrap",
+      flexWrap: "wrap",
     }}
   >
+    {beforeSearchControls}
+
     <Grid
       size={singleRow ? { xs: 12, sm: 6, lg: "grow" } : { xs: 12, md: 4 }}
       sx={{
@@ -62,6 +73,7 @@ const CardViewToolbar = ({
         placeholder={searchPlaceholder}
         onSearchChange={onSearchChange}
         onClearSearch={onClearSearch}
+        margin="none"
       />
     </Grid>
 
@@ -73,9 +85,11 @@ const CardViewToolbar = ({
       <SortOrderToggle sortOrder={sortOrder} onChange={onSortOrderChange} />
     </Grid>
 
-    <Grid size={singleRow ? { xs: 6, sm: 3, lg: 1.75 } : { xs: 12, md: 2 }}>
-      <FilterSelect filterBy={filterBy} options={filterOptions} onChange={onFilterByChange} />
-    </Grid>
+    {showFilter && (
+      <Grid size={singleRow ? { xs: 6, sm: 3, lg: 1.75 } : { xs: 12, md: 2 }}>
+        <FilterSelect filterBy={filterBy} options={filterOptions} onChange={onFilterByChange} />
+      </Grid>
+    )}
 
     {additionalControls}
 
@@ -83,8 +97,14 @@ const CardViewToolbar = ({
       size={singleRow ? { xs: 6, sm: 3, lg: "auto" } : { xs: 12, md: 2 }}
       sx={{ minWidth: singleRow ? { lg: 110 } : undefined }}
     >
-      <ResetButton onReset={onReset} />
+      <ResetButton onReset={onReset} height={40} />
     </Grid>
+
+    {optionsContent && optionsLabel && (
+      <Grid size={singleRow ? { xs: 6, sm: 3, lg: "auto" } : { xs: 12, md: 2 }}>
+        <CardViewOptionsButton label={optionsLabel}>{optionsContent}</CardViewOptionsButton>
+      </Grid>
+    )}
   </Grid>
 );
 

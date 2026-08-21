@@ -44,8 +44,6 @@ const CountriesPage = () => {
     sortColumn,
     sortDirection,
     filter,
-    currencyCode,
-    hasStatesFilter,
     setPage,
     setPageSize,
     setSearchValue,
@@ -53,8 +51,6 @@ const CountriesPage = () => {
     setSearchOperator,
     setSort,
     setFilter,
-    setCurrencyCode,
-    setHasStatesFilter,
     resetList,
     restoreCountry,
     isRestoring,
@@ -123,8 +119,6 @@ const CountriesPage = () => {
         sortColumn={sortColumn}
         sortDirection={sortDirection}
         filter={filter}
-        currencyCode={currencyCode}
-        hasStatesFilter={hasStatesFilter}
         onPageChange={setPage}
         onPageSizeChange={setPageSize}
         onSearchChange={setSearchValue}
@@ -132,8 +126,6 @@ const CountriesPage = () => {
         onSearchOperatorChange={setSearchOperator}
         onSortChange={setSort}
         onFilterChange={setFilter}
-        onCurrencyCodeChange={setCurrencyCode}
-        onHasStatesFilterChange={setHasStatesFilter}
         onResetList={resetList}
         selectedCountryIds={selectedCountryIds}
         onSelectedCountryIdsChange={setSelectedCountryIds}

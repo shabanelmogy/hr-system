@@ -2,9 +2,9 @@ using HrManagementSystem.Application.Features.GeographicalInformation.States.Con
 
 namespace HrManagementSystem.Application.Features.GeographicalInformation.States.Errors;
 
-public class StateErrors(IStringLocalizer<StateRequest> localizer)
+public class StateErrors(IStringLocalizer<CreateStateRequest> localizer)
 {
-    private readonly IStringLocalizer<StateRequest> _localizer = localizer;
+    private readonly IStringLocalizer<CreateStateRequest> _localizer = localizer;
 
     public Error StateExists =>
             new("State.Duplicated", _localizer[nameof(StateExists)], ErrorType.Conflict);
@@ -23,5 +23,11 @@ public class StateErrors(IStringLocalizer<StateRequest> localizer)
 
     public Error StateInUseByCountry =>
             new("State.StateInUseByCountry", _localizer[nameof(StateInUseByCountry)], ErrorType.Validation);
+
+    public Error CountryNotFound =>
+            new("State.CountryNotFound", _localizer["CountryNotFound"], ErrorType.NotFound);
+
+    public Error NoStatesProvided =>
+            new("State.NoStatesProvided", _localizer[nameof(NoStatesProvided)], ErrorType.Validation);
 
 }

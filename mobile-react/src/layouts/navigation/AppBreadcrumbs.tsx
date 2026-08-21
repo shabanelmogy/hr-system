@@ -1,6 +1,6 @@
 import { usePathname, useRouter } from 'expo-router';
-import { useRef } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { useCallback, useEffect, useRef } from 'react';
+import { type LayoutChangeEvent, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { asHref, ROUTES, type AppRoute } from '@/src/core/constants/routes';
@@ -79,6 +79,18 @@ const breadcrumbsByPath: Record<string, readonly BreadcrumbItem[]> = {
     homeItem,
     basicDataItem,
     { key: 'geographical-information', labelKey: 'navigation.geographicalInformation' },
+  ],
+  [ROUTES.basicData.countries]: [
+    homeItem,
+    basicDataItem,
+    { key: 'geographical-information', labelKey: 'navigation.geographicalInformation', route: ROUTES.basicData.geographicalInformation },
+    { key: 'countries', labelKey: 'countries.title' },
+  ],
+  [ROUTES.basicData.states]: [
+    homeItem,
+    basicDataItem,
+    { key: 'geographical-information', labelKey: 'navigation.geographicalInformation', route: ROUTES.basicData.geographicalInformation },
+    { key: 'states', labelKey: 'states.title' },
   ],
   [ROUTES.basicData.organizationalStructure]: [
     homeItem,
@@ -169,6 +181,29 @@ export function AppBreadcrumbs() {
   const { theme } = useAppTheme();
   const breadcrumbs = getBreadcrumbs(pathname);
 
+  const syncScrollPosition = useCallback(() => {
+    if (!scrollRef.current) return;
+
+    if (isRTL) {
+      scrollRef.current.scrollToEnd({ animated: false });
+      return;
+    }
+
+    scrollRef.current.scrollTo({ animated: false, x: 0, y: 0 });
+  }, [isRTL]);
+
+  const handleContainerLayout = useCallback((_event: LayoutChangeEvent) => {
+    syncScrollPosition();
+  }, [syncScrollPosition]);
+
+  const handleContentSizeChange = useCallback(() => {
+    syncScrollPosition();
+  }, [syncScrollPosition]);
+
+  useEffect(() => {
+    syncScrollPosition();
+  }, [syncScrollPosition]);
+
   if (!breadcrumbs) {
     return null;
   }
@@ -183,12 +218,13 @@ export function AppBreadcrumbs() {
           backgroundColor: theme.colors.surface,
           borderBottomColor: theme.colors.border,
         },
-      ]}>
+      ]}
+      onLayout={handleContainerLayout}>
       <ScrollView
         ref={scrollRef}
         contentContainerStyle={[styles.content, { direction }]}
         horizontal
-        onContentSizeChange={() => scrollRef.current?.scrollToEnd({ animated: false })}
+        onContentSizeChange={handleContentSizeChange}
         showsHorizontalScrollIndicator={false}>
         {breadcrumbs.map((item, index) => {
           const isCurrent = index === breadcrumbs.length - 1;

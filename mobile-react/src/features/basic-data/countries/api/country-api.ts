@@ -21,6 +21,8 @@ export function toCountryPageQuery(query: CountryPageQuery): string {
     pageNumber: String(query.pageNumber),
     pageSize: String(query.pageSize),
     status: query.status,
+    searchField: query.searchField,
+    searchOperator: query.searchOperator,
     sortBy: query.sortBy,
     sortDirection: query.sortDirection,
   });

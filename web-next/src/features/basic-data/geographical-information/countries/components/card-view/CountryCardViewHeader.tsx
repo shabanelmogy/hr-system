@@ -1,24 +1,29 @@
 import { CardViewHeader as SharedCardViewHeader } from "@/shared/components/lists/card-view";
+import { Archive } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import { CountryCardViewHeaderProps } from "./CountryCard.types";
-import { Grid, MenuItem, TextField } from "@mui/material";
+import { Divider, Grid, ListItemIcon, ListItemText, MenuItem, Radio, TextField } from "@mui/material";
 
 const CountryCardViewHeader = ({
   searchTerm,
+  searchField,
+  searchOperator,
   sortBy,
   sortOrder,
   filterBy,
-  currencyCode,
-  hasStatesFilter,
   processedCountriesLength,
   page,
   onSearchChange,
+  onSearchFieldChange,
+  onSearchOperatorChange,
   onSortChange,
   onFilterByChange,
-  onCurrencyCodeChange,
-  onHasStatesFilterChange,
   onClearSearch,
   onReset,
+  selectedCount,
+  canBulkArchive,
+  isBulkArchiving,
+  onBulkArchive,
 }: CountryCardViewHeaderProps) => {
   const { t } = useTranslation();
   return (
@@ -34,6 +39,46 @@ const CountryCardViewHeader = ({
       searchPlaceholder={t("countries.searchPlaceHolder")}
       onSearchChange={onSearchChange}
       onClearSearch={onClearSearch}
+
+      beforeSearchControls={
+        <>
+          <Grid size={{ xs: 12, sm: 6, lg: 2 }}>
+            <TextField
+              select
+              fullWidth
+              size="small"
+              label={t("countries.search.column")}
+              value={searchField}
+              onChange={(event) => onSearchFieldChange(event.target.value as typeof searchField)}
+            >
+              <MenuItem value="all">{t("countries.search.allColumns")}</MenuItem>
+              <MenuItem value="nameAr">{t("general.nameAr")}</MenuItem>
+              <MenuItem value="nameEn">{t("general.nameEn")}</MenuItem>
+              <MenuItem value="alpha2Code">{t("countries.alpha2Code")}</MenuItem>
+              <MenuItem value="alpha3Code">{t("countries.alpha3Code")}</MenuItem>
+              <MenuItem value="phoneCode">{t("countries.phoneCode")}</MenuItem>
+              <MenuItem value="currencyCode">{t("countries.currencyCode")}</MenuItem>
+            </TextField>
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, lg: 2 }}>
+            <TextField
+              select
+              fullWidth
+              size="small"
+              label={t("countries.search.condition")}
+              value={searchOperator}
+              onChange={(event) => onSearchOperatorChange(event.target.value as typeof searchOperator)}
+            >
+              <MenuItem value="contains">{t("countries.search.operators.contains")}</MenuItem>
+              <MenuItem value="doesNotContain">{t("countries.search.operators.doesNotContain")}</MenuItem>
+              <MenuItem value="equals">{t("countries.search.operators.equals")}</MenuItem>
+              <MenuItem value="doesNotEqual">{t("countries.search.operators.doesNotEqual")}</MenuItem>
+              <MenuItem value="startsWith">{t("countries.search.operators.startsWith")}</MenuItem>
+              <MenuItem value="endsWith">{t("countries.search.operators.endsWith")}</MenuItem>
+            </TextField>
+          </Grid>
+        </>
+      }
 
       sortBy={sortBy}
       sortByOptions={[
@@ -58,38 +103,44 @@ const CountryCardViewHeader = ({
       onFilterByChange={(value) => onFilterByChange(value as typeof filterBy)}
 
       onReset={onReset}
-      additionalControls={
+      showFilter={false}
+      optionsLabel={t("actions.gridOptions")}
+      optionsContent={(closeMenu) => (
         <>
-          <Grid size={{ xs: 12, sm: 6, md: 2 }}>
-            <TextField
-              fullWidth
-              size="small"
-              label={t("countries.currencyFilter")}
-              value={currencyCode}
-              onChange={(event) => onCurrencyCodeChange(event.target.value.toUpperCase())}
-              error={currencyCode.length > 0 && currencyCode.length !== 3}
-              helperText={currencyCode.length > 0 && currencyCode.length !== 3
-                ? t("countries.currencyFilterLength")
-                : undefined}
-              slotProps={{ htmlInput: { maxLength: 3, inputMode: "text" } }}
-            />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 2 }}>
-            <TextField
-              select
-              fullWidth
-              size="small"
-              label={t("countries.statesFilter")}
-              value={hasStatesFilter}
-              onChange={(event) => onHasStatesFilterChange(event.target.value as typeof hasStatesFilter)}
+          <MenuItem disabled>
+            <ListItemText primary={t("countries.status.label")} />
+          </MenuItem>
+          {(["active", "archived", "all"] as const).map((value) => (
+            <MenuItem
+              key={value}
+              selected={filterBy === value}
+              onClick={() => {
+                closeMenu();
+                onFilterByChange(value);
+              }}
             >
-              <MenuItem value="all">{t("countries.statesFilterOptions.all")}</MenuItem>
-              <MenuItem value="with">{t("countries.statesFilterOptions.with")}</MenuItem>
-              <MenuItem value="without">{t("countries.statesFilterOptions.without")}</MenuItem>
-            </TextField>
-          </Grid>
+              <ListItemIcon><Radio checked={filterBy === value} size="small" /></ListItemIcon>
+              <ListItemText primary={t(`countries.status.${value}`)} />
+            </MenuItem>
+          ))}
+          {canBulkArchive && (
+            <>
+              <Divider component="li" />
+              <MenuItem
+                disabled={selectedCount === 0 || isBulkArchiving}
+                onClick={() => {
+                  closeMenu();
+                  onBulkArchive();
+                }}
+                sx={{ color: "warning.main" }}
+              >
+                <ListItemIcon><Archive fontSize="small" /></ListItemIcon>
+                <ListItemText primary={t("countries.bulkArchiveAction", { count: selectedCount })} />
+              </MenuItem>
+            </>
+          )}
         </>
-      }
+      )}
     />
   );
 };

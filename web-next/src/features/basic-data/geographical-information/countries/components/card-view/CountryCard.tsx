@@ -26,6 +26,8 @@ const CountryCard = ({
   onView,
   onHover,
   permissions,
+  selected,
+  onSelectedChange,
 }: Omit<CountryCardProps, "t">) => {
   const theme = useTheme();
   const { i18n, t } = useTranslation();
@@ -92,6 +94,11 @@ const CountryCard = ({
       chips={chips}
       content={content}
       footer={footer}
+      selected={selected}
+      selectionLabel={t("countries.cardSelectionAriaLabel", {
+        name: theme.direction === "rtl" ? country.nameAr : country.nameEn,
+      })}
+      onSelectedChange={onSelectedChange}
     />
   );
 };

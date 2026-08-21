@@ -294,7 +294,7 @@ Good shared candidates are domain-neutral and have multiple real consumers:
 
 - `useServerListState` and page-bound helpers;
 - Data Grid, toolbar, footer, and pagination primitives;
-- Card header, toolbar, filter modal, and pagination primitives;
+- `EntityCard`, card header, toolbar, skeleton, empty/no-results state, and pagination primitives;
 - form controls, confirmation dialogs, loading/error/empty states;
 - API error extraction, field mapping, toast, read-only, and permission helpers.
 
@@ -302,9 +302,17 @@ Keep these feature-owned:
 
 - routes, transport types, and query mapping;
 - filters, sort allow-list, lifecycle, permissions, and validation;
-- columns, cards, domain metrics, reports, imports, and mock samples.
+- columns, card content, domain metrics, reports, imports, and mock samples.
 
 Do not create a generic abstraction for a hypothetical second consumer.
+
+When related management features offer a card view, feature cards must compose
+the established shared card scaffold (`EntityCard` plus the shared card
+header/skeleton/empty/no-results/pagination primitives). Keep the domain title,
+chips, metrics, and lifecycle rules feature-owned, but preserve the common grid
+spacing, hover/highlight behavior, fixed-card layout, server-page pagination,
+and permission-aware action footer. Do not replace that scaffold with a raw MUI
+`Card` unless the feature profile documents a product-specific exception.
 
 ## 14. Minimum Test Matrix
 

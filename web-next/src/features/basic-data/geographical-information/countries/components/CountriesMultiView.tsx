@@ -44,8 +44,6 @@ interface CountriesMultiViewProps {
   sortColumn: CountrySortColumn;
   sortDirection: "ASC" | "DESC";
   filter: CountryStatus;
-  currencyCode: string;
-  hasStatesFilter: "all" | "with" | "without";
   onPageChange: (page: number) => void;
   onPageSizeChange: (pageSize: number) => void;
   onSearchChange: (value: string) => void;
@@ -53,8 +51,6 @@ interface CountriesMultiViewProps {
   onSearchOperatorChange: (operator: CountrySearchOperator) => void;
   onSortChange: (column: CountrySortColumn, direction: "ASC" | "DESC") => void;
   onFilterChange: (filter: CountryStatus) => void;
-  onCurrencyCodeChange: (currencyCode: string) => void;
-  onHasStatesFilterChange: (filter: "all" | "with" | "without") => void;
   onResetList: () => void;
   selectedCountryIds: number[];
   onSelectedCountryIdsChange: (ids: number[]) => void;
@@ -95,8 +91,6 @@ const CountriesMultiView = ({
   sortColumn,
   sortDirection,
   filter,
-  currencyCode,
-  hasStatesFilter,
   onPageChange,
   onPageSizeChange,
   onSearchChange,
@@ -104,8 +98,6 @@ const CountriesMultiView = ({
   onSearchOperatorChange,
   onSortChange,
   onFilterChange,
-  onCurrencyCodeChange,
-  onHasStatesFilterChange,
   onResetList,
   selectedCountryIds,
   onSelectedCountryIdsChange,
@@ -141,7 +133,7 @@ const CountriesMultiView = ({
     onSortChange(next.field as CountrySortColumn, next.sort.toUpperCase() as "ASC" | "DESC");
   }, [onSortChange]);
 
-  const activeFilterCount = Number(filter !== "active") + Number(currencyCode.length > 0) + Number(hasStatesFilter !== "all");
+  const activeFilterCount = Number(filter !== "active");
   const hasActiveCriteria = searchValue.trim().length > 0 || activeFilterCount > 0;
   const availableViews: CountryView[] = permissions.canCreate
     ? ["grid", "cards", "chart", "report", "import"]
@@ -173,20 +165,24 @@ const CountriesMultiView = ({
       {(visibleView === "cards" || visibleView === "chart") && (
         <CountryCardViewHeader
           searchTerm={searchValue}
+          searchField={searchField}
+          searchOperator={searchOperator}
           sortBy={sortColumn}
           sortOrder={sortDirection}
           filterBy={filter}
-          currencyCode={currencyCode}
-          hasStatesFilter={hasStatesFilter}
           processedCountriesLength={totalCount}
           page={page}
           onSearchChange={onSearchChange}
+          onSearchFieldChange={onSearchFieldChange}
+          onSearchOperatorChange={onSearchOperatorChange}
           onSortChange={onSortChange}
           onFilterByChange={onFilterChange}
-          onCurrencyCodeChange={onCurrencyCodeChange}
-          onHasStatesFilterChange={onHasStatesFilterChange}
           onClearSearch={() => onSearchChange("")}
           onReset={onResetList}
+          selectedCount={selectedCountryIds.length}
+          canBulkArchive={visibleView === "cards" && permissions.canDelete}
+          isBulkArchiving={isBulkArchiving}
+          onBulkArchive={onBulkArchive}
         />
       )}
 
@@ -248,6 +244,8 @@ const CountriesMultiView = ({
             lastAddedId={lastAddedId}
             lastEditedId={lastEditedId}
             lastDeletedIndex={lastDeletedIndex}
+            selectedCountryIds={selectedCountryIds}
+            onSelectedCountryIdsChange={onSelectedCountryIdsChange}
           />
         )}
         {visibleView === "chart" && (

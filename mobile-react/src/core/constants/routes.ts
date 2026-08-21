@@ -21,6 +21,7 @@ export const ROUTES = {
     root: '/basic-data',
     geographicalInformation: '/basic-data/geographical-information',
     countries: '/basic-data/geographical-information/countries',
+    states: '/basic-data/geographical-information/states',
     organizationalStructure: '/basic-data/organizational-structure',
   },
   extras: {

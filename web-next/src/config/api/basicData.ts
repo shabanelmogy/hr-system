@@ -22,11 +22,18 @@ export const addressTypes: CrudRoutes = {
 };
 
 export const states: StatesRoutes = {
-  getAll: `${version}/states/getAll`,
+  page: `${version}/states`,
+  lookup: (countryId?: Id) => countryId == null
+    ? `${version}/states/lookup`
+    : `${version}/states/lookup?countryId=${countryId}`,
+  byCountry: (countryId: Id) => `${version}/states/by-country/${countryId}`,
   getById: (id: Id) => `${version}/states/${id}`,
-  add: `${version}/states/add`,
-  update: `${version}/states/update`,
-  delete: (id: Id) => `${version}/states/delete/${id}`,
+  getWithDistricts: (id: Id) => `${version}/states/${id}/districts`,
+  create: `${version}/states`,
+  update: (id: Id) => `${version}/states/${id}`,
+  archive: (id: Id) => `${version}/states/${id}`,
+  bulkArchive: `${version}/states/bulk-archive`,
+  restore: (id: Id) => `${version}/states/${id}/restore`,
 };
 
 export const districts: DistrictsRoutes = {

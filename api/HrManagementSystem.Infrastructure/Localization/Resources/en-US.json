@@ -164,6 +164,10 @@
     "InvalidStateId": "State id is invalid",
     "StateInUseByDistrict": "State is currently in use by districts and cannot be deleted",
     "StateInUseByCountry": "State is currently in use by countries and cannot be deleted",
+    "NoStatesProvided": "No states provided",
+    "StateBatchLimitExceeded": "A maximum of 100 states is allowed per request",
+    "StateIdsMustBeDistinct": "State IDs must be distinct",
+    "StateIdsMustBePositive": "State IDs must be greater than zero",
 
     "DistrictExists": "District already exists",
     "DistrictNotFound": "District not found",

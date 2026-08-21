@@ -19,6 +19,11 @@ describe('realtime query registry', () => {
     expect(getRealtimeQueryKeys('countries')).toEqual([['countries']]);
   });
 
+  it('invalidates all State queries through the stable feature prefix', () => {
+    expect(isKnownRealtimeResource('states')).toBe(true);
+    expect(getRealtimeQueryKeys('states')).toEqual([['states']]);
+  });
+
   it('deduplicates reconnect invalidation prefixes', () => {
     const serialized = getAllRealtimeQueryKeys().map((key) => JSON.stringify(key));
     expect(new Set(serialized).size).toBe(serialized.length);

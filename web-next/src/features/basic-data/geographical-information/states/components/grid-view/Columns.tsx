@@ -1,108 +1,41 @@
 import React from "react";
 import { LocationOn } from "@mui/icons-material";
-import { useTheme } from "@mui/material";
-import { GridActionsCellItemProps, GridColDef } from "@mui/x-data-grid";
-import { renderCode, renderDate, renderList } from "@/shared/components/data-grid";
-import { useTranslation } from "react-i18next";
-import type { State } from "../../types/State";
+import { AppChip } from "@/shared/components/cards";
+import { renderCode, renderDate } from "@/shared/components/data-grid";
+import type { GridActionsCellItemProps, GridColDef } from "@mui/x-data-grid";
+import type { StateListItem } from "../../types/State";
+import type { StatePermissionSet } from "../../utils/statePermissions";
 import { renderStateName } from "./StateCellRenderers";
 
-export interface ColumnsFactoryProps {
-  permissions: { canView: boolean; canEdit: boolean; canDelete: boolean };
-  getActions: (params: { row: State }) => React.ReactElement<GridActionsCellItemProps>[];
+interface ColumnsFactoryProps {
+  t: (key: string) => string;
+  permissions: StatePermissionSet;
+  getActions: (params: { row: StateListItem }) => React.ReactElement<GridActionsCellItemProps>[];
 }
 
-export const useStateColumns = ({ permissions, getActions }: ColumnsFactoryProps): GridColDef[] => {
-  const { t } = useTranslation();
-  const theme = useTheme();
-  const baseColumns: GridColDef[] = [
+export const useStateColumns = ({ t, permissions, getActions }: ColumnsFactoryProps): GridColDef[] => {
+  const columns: GridColDef[] = [
+    { field: "id", headerName: t("general.id"), flex: 0.45, align: "center", headerAlign: "center" },
+    { field: "nameAr", headerName: t("general.nameAr"), flex: 1.15, align: "center", headerAlign: "center", renderCell: renderStateName(true) },
+    { field: "nameEn", headerName: t("general.nameEn"), flex: 1.15, align: "center", headerAlign: "center", renderCell: renderStateName(false) },
+    { field: "code", headerName: t("states.code"), flex: 0.75, align: "center", headerAlign: "center", renderCell: renderCode },
     {
-      field: "id",
-      headerName: t("general.id"),
-      flex: 0.5,
-      align: "center",
-      headerAlign: "center"
+      field: "country", headerName: t("states.country"), flex: 1.2, align: "center", headerAlign: "center", sortable: false,
+      renderCell: ({ row }) => <AppChip icon={<LocationOn sx={{ fontSize: 14 }} />} label={row.country.nameEn || row.country.nameAr} colorKey="primary" variant="outlined" size="small" />,
     },
     {
-      field: "nameAr",
-      headerName: t("general.nameAr"),
-      flex: 1.2,
-      align: "center",
-      headerAlign: "center",
-      renderCell: renderStateName(true),
+      field: "districtsCount", headerName: t("states.districts"), flex: 0.75, align: "center", headerAlign: "center", sortable: false,
+      renderCell: ({ value }) => <AppChip label={String(value ?? 0)} colorKey={Number(value) > 0 ? "success" : "secondary"} variant="outlined" size="small" />,
     },
+    { field: "createdOn", headerName: t("general.createdOn"), flex: 1, align: "center", headerAlign: "center", valueFormatter: renderDate },
+    { field: "updatedOn", headerName: t("general.updatedOn"), flex: 1, align: "center", headerAlign: "center", valueFormatter: renderDate },
     {
-      field: "nameEn",
-      headerName: t("general.nameEn"),
-      flex: 1.5,
-      align: "center",
-      headerAlign: "center",
-      renderCell: renderStateName(false),
-    },
-    {
-      field: "code",
-      headerName: t("states.code"),
-      flex: 0.8,
-      align: "center",
-      headerAlign: "center",
-      renderCell: renderCode,
-    },
-    {
-      field: "country",
-      headerName: t("states.country"),
-      flex: 1.5,
-      align: "center",
-      headerAlign: "center",
-      sortable: false,
-      valueGetter: (value: State["country"]) => {
-        if (!value) return [];
-        const name = theme.direction === "rtl"
-          ? value.nameAr || value.nameEn
-          : value.nameEn || value.nameAr;
-        return name ? [name] : [];
-      },
-      renderCell: renderList({
-        displayType: "chips",
-        maxItems: 1,
-        defaultColor: "primary",
-        variant: "outlined",
-        size: "small",
-        showCount: false,
-        chipProps: {
-          icon: <LocationOn sx={{ fontSize: 14 }} />,
-          sx: { fontSize: "0.75rem" },
-        },
-      }),
-    },
-    {
-      field: "createdOn",
-      headerName: t("general.createdOn"),
-      flex: 1,
-      align: "center",
-      headerAlign: "center",
-      valueFormatter: renderDate,
-    },
-    {
-      field: "updatedOn",
-      headerName: t("general.updatedOn"),
-      flex: 1,
-      align: "center",
-      headerAlign: "center",
-      valueFormatter: renderDate,
+      field: "isDeleted", headerName: t("states.status.label"), flex: 0.8, align: "center", headerAlign: "center", sortable: false,
+      renderCell: ({ value }) => <AppChip label={value ? t("states.status.archived") : t("states.status.active")} colorKey={value ? "error" : "success"} variant="soft" size="small" />,
     },
   ];
-
-  if (permissions.canView || permissions.canEdit || permissions.canDelete) {
-    baseColumns.push({
-      field: "actions",
-      type: "actions",
-      headerName: t("actions.buttons"),
-      flex: 1,
-      align: "center",
-      headerAlign: "center",
-      getActions,
-    });
+  if (permissions.canView || permissions.canEdit || permissions.canDelete || permissions.canRestore) {
+    columns.push({ field: "actions", type: "actions", headerName: t("actions.buttons"), flex: 0.9, align: "center", headerAlign: "center", getActions });
   }
-
-  return baseColumns;
+  return columns;
 };

@@ -22,10 +22,31 @@
       "id": "mobile",
       "path": "../mobile-react/countries-mobile-reference.md",
       "title": "Countries Expo implementation profile"
+    },
+    {
+      "id": "states-master",
+      "path": "../project/STATES_FEATURE_FULL_REVIEW.md",
+      "title": "States cross-platform master review"
+    },
+    {
+      "id": "states-api",
+      "path": "../api/States_API_Implementation_Profile.md",
+      "title": "States API implementation profile"
+    },
+    {
+      "id": "states-web",
+      "path": "../web-next/features/states-frontend-reference.md",
+      "title": "States Next.js implementation profile"
+    },
+    {
+      "id": "states-mobile",
+      "path": "../mobile-react/states-mobile-reference.md",
+      "title": "States Expo implementation profile"
     }
   ],
   "requiredFileManifests": [
-    "features/countries/required-files.json"
+    "features/countries/required-files.json",
+    "features/states/required-files.json"
   ],
   "recipes": [
     {
@@ -104,6 +125,84 @@
         { "book": "api", "sections": [10, 11] },
         { "book": "web", "sections": [12, 13, 14] },
         { "book": "mobile", "sections": [14, 15] }
+      ]
+    },
+    {
+      "id": "states-phase-00-discovery-evidence",
+      "title": "States Phase 00 - Discovery and Evidence",
+      "template": "templates/PHASE-00-discovery-evidence.template.md",
+      "output": "generated/states/PHASE-00-discovery-evidence.md",
+      "sources": [
+        { "book": "states-master", "sections": [1, 2, 5, 8, 9] },
+        { "book": "states-api", "sections": [1, 10, 11] },
+        { "book": "states-web", "sections": [1, 2, 12, 13] },
+        { "book": "states-mobile", "sections": [1, 14, 15] }
+      ]
+    },
+    {
+      "id": "states-phase-01-domain-api",
+      "title": "States Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/states/PHASE-01-domain-api.md",
+      "sources": [
+        { "book": "states-master", "sections": [3, 4, 6] },
+        { "book": "states-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+      ]
+    },
+    {
+      "id": "states-phase-02-web-client",
+      "title": "States Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/states/PHASE-02-web-client.md",
+      "sources": [
+        { "book": "states-master", "sections": [3, 4, 6, 7] },
+        { "book": "states-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+      ]
+    },
+    {
+      "id": "states-phase-03-mobile-client",
+      "title": "States Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/states/PHASE-03-mobile-client.md",
+      "sources": [
+        { "book": "states-master", "sections": [3, 4, 6, 7] },
+        { "book": "states-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+      ]
+    },
+    {
+      "id": "states-phase-04-domain-actions",
+      "title": "States Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/states/PHASE-04-domain-actions.md",
+      "sources": [
+        { "book": "states-master", "sections": [3, 4, 6, 7, 8] },
+        { "book": "states-api", "sections": [6, 7, 8] },
+        { "book": "states-web", "sections": [6, 7, 8, 9] },
+        { "book": "states-mobile", "sections": [9, 10, 11] }
+      ]
+    },
+    {
+      "id": "states-phase-05-integration-runtime",
+      "title": "States Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/states/PHASE-05-integration-runtime.md",
+      "sources": [
+        { "book": "states-master", "sections": [4, 5, 6, 7, 8] },
+        { "book": "states-api", "sections": [8, 9, 10] },
+        { "book": "states-web", "sections": [8, 9, 10, 13] },
+        { "book": "states-mobile", "sections": [2, 11, 12, 13, 15] }
+      ]
+    },
+    {
+      "id": "states-phase-06-final-reconciliation",
+      "title": "States Phase 06 - Final Reconciliation",
+      "template": "templates/PHASE-06-final-reconciliation.template.md",
+      "output": "generated/states/PHASE-06-final-reconciliation.md",
+      "sources": [
+        { "book": "states-master", "sections": [8, 9, 10] },
+        { "book": "states-api", "sections": [10, 11] },
+        { "book": "states-web", "sections": [12, 13, 14] },
+        { "book": "states-mobile", "sections": [14, 15] }
       ]
     }
   ]

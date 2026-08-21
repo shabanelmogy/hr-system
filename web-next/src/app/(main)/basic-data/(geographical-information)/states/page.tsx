@@ -5,8 +5,8 @@ export const metadata: Metadata = {
   description: "HR Management System page for Basic Data States."
 };
 
-import PageComponent from "@/features/basic-data/geographical-information/states/pages/StatesPage";
+import { StatesPage } from "@/features/basic-data/geographical-information/states";
 
 export default function Page() {
-  return <PageComponent />;
+  return <StatesPage />;
 }

@@ -1,5 +1,11 @@
 import { SelectChangeEvent } from "@mui/material";
-import type { CountryListItem, CountrySortColumn, CountryStatus } from "../../types/Country";
+import type {
+  CountryListItem,
+  CountrySearchField,
+  CountrySearchOperator,
+  CountrySortColumn,
+  CountryStatus,
+} from "../../types/Country";
 
 export interface CountryCardProps {
   country: CountryListItem;
@@ -13,6 +19,8 @@ export interface CountryCardProps {
   onView: (country: CountryListItem) => void;
   onHover: (id: string | number | null) => void;
   permissions: CountryActionPermissions;
+  selected?: boolean;
+  onSelectedChange?: (selected: boolean) => void;
 }
 
 export interface CountryActionPermissions {
@@ -24,20 +32,24 @@ export interface CountryActionPermissions {
 
 export interface CountryCardViewHeaderProps {
   searchTerm: string;
+  searchField: CountrySearchField;
+  searchOperator: CountrySearchOperator;
   sortBy: CountrySortColumn;
   sortOrder: "ASC" | "DESC";
   filterBy: CountryStatus;
-  currencyCode: string;
-  hasStatesFilter: "all" | "with" | "without";
   processedCountriesLength: number;
   page: number;
   onSearchChange: (value: string) => void;
+  onSearchFieldChange: (value: CountrySearchField) => void;
+  onSearchOperatorChange: (value: CountrySearchOperator) => void;
   onSortChange: (column: CountrySortColumn, direction: "ASC" | "DESC") => void;
   onFilterByChange: (value: CountryStatus) => void;
-  onCurrencyCodeChange: (value: string) => void;
-  onHasStatesFilterChange: (value: "all" | "with" | "without") => void;
   onClearSearch: () => void;
   onReset: () => void;
+  selectedCount: number;
+  canBulkArchive: boolean;
+  isBulkArchiving: boolean;
+  onBulkArchive: () => void;
 }
 
 export interface CountryCardViewPaginationProps {
@@ -69,4 +81,6 @@ export interface CountriesCardViewProps {
   onPageChange: (page: number) => void;
   onPageSizeChange: (pageSize: number) => void;
   onClearCriteria: () => void;
+  selectedCountryIds: number[];
+  onSelectedCountryIdsChange: (ids: number[]) => void;
 }

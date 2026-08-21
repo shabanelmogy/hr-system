@@ -44,6 +44,7 @@ Avoid broad `export *` for APIs and implementation hooks. A public API is a comp
 - A route imports a feature root/subdomain public API and renders a screen or feature-owned layout.
 - Add the access policy to `auth/rbac/route-manifest.ts`.
 - Main drawer metadata belongs in the same manifest so visibility and authorization cannot drift.
+- Add every direct route to `AppBreadcrumbs` with its complete parent chain. Breadcrumb overflow stays anchored at the logical Home item (left in LTR, right in RTL), while later items remain horizontally swipeable; re-evaluate that position after route, language, orientation, and width changes.
 - Keep `RouteGuard` in routed pages even when a navigation item is hidden.
 - Use a module Drawer for a large module; reserve main tabs for a few frequent destinations.
 
@@ -145,6 +146,7 @@ const query = useEmployees({
 ## 8. UI and styles
 
 - Compose shared fields, buttons, cards, feedback and pagination before creating a new primitive.
+- For server lists that support a search column and condition, keep the main toolbar to the search field and one filter button. Pass a feature-owned `AppFilterFormButton` through `AppListScreen.filterControl`; its modal contains Status, Column, and Condition together. Do not render those selectors in a separate toolbar row.
 - Feature-specific styles stay beside their component.
 - Extract to `Component.styles.ts` only when the component style map obscures behavior or is intentionally shared locally.
 - Add a theme token only after it has independent application-wide use.

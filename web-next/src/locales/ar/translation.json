@@ -724,6 +724,7 @@
     "bulkArchived": "الدول التي تمت أرشفتها: {{count}}",
     "bulkArchiveError": "فشلت أرشفة الدول المحددة",
     "bulkArchiveSelectionRequired": "اختر دولة نشطة واحدة على الأقل للأرشفة.",
+    "cardSelectionAriaLabel": "تحديد {{name}}",
     "uploaded": "دولة تم رفعها",
     "status": {
       "label": "الحالة",
@@ -811,7 +812,8 @@
       "grid": "عرض الجدول",
       "cards": "عرض البطاقات",
       "map": "عرض الخريطة",
-      "chart": "عرض الرسوم البيانية"
+      "chart": "عرض الرسوم البيانية",
+      "report": "التقرير"
     },
     "charts": {
       "barChart": "رسم بياني عمودي",
@@ -860,12 +862,67 @@
     "createError": "فشل في إنشاء المحافظة",
     "updateError": "فشل في تحديث المحافظة",
     "deleteError": "فشل في حذف المحافظة",
+    "archiveError": "فشل في أرشفة المحافظة",
+    "restoreError": "فشل في استعادة المحافظة",
+    "archived": "تمت أرشفة المحافظة بنجاح",
+    "restored": "تمت استعادة المحافظة بنجاح",
+    "permissionDenied": "ليس لديك صلاحية تنفيذ هذا الإجراء",
+    "districts": "الأحياء",
+    "districtsCount": "{{count}} أحياء",
+    "cardsAriaLabel": "بطاقات المحافظات، الإجمالي {{count}}",
+    "reportAriaLabel": "تقرير المحافظات",
+    "noResults": "لا توجد محافظات تطابق هذه المعايير",
+    "noResultsDescription": "جرّب تغيير البحث أو عوامل التصفية.",
+    "clearCriteria": "مسح المعايير",
+    "archiveTitle": "أرشفة المحافظة",
+    "archiveDescription": "هل تريد أرشفة هذه المحافظة؟ لا يمكن أرشفة المحافظة التي تحتوي على أحياء نشطة.",
+    "restoreTitle": "استعادة المحافظة",
+    "restoreDescription": "هل تريد استعادة هذه المحافظة ضمن دولتها النشطة؟",
+    "bulkArchiveTitle": "أرشفة المحافظات المحددة",
+    "bulkArchiveDescription": "هل تريد أرشفة كل المحافظات المحددة؟ سيتم الرفض إذا كان لأي منها أحياء نشطة.",
+    "bulkArchiveConfirm": "أرشفة {{count}} محافظات",
+    "bulkArchiveAction": "أرشفة المحدد ({{count}})",
+    "bulkArchiveSelectionRequired": "حدد محافظة نشطة واحدة على الأقل للأرشفة",
+    "cardSelectionAriaLabel": "تحديد {{name}}",
+    "bulkArchived": "تمت أرشفة {{count}} محافظات",
+    "bulkArchiveError": "تعذر أرشفة المحافظات المحددة",
+    "selectedCount": "تم تحديد {{count}} محافظات",
+    "status": {
+      "label": "الحالة",
+      "active": "نشط",
+      "archived": "مؤرشف",
+      "all": "الكل"
+    },
+    "search": {
+      "placeholder": "ابحث باسم المحافظة أو رمزها أو الدولة",
+      "column": "العمود",
+      "condition": "الشرط",
+      "allColumns": "كل الأعمدة",
+      "operators": {
+        "contains": "يحتوي على",
+        "doesNotContain": "لا يحتوي على",
+        "equals": "يساوي",
+        "doesNotEqual": "لا يساوي",
+        "startsWith": "يبدأ بـ",
+        "endsWith": "ينتهي بـ"
+      }
+    },
+    "report": {
+      "title": "تقرير قائمة المحافظات",
+      "scope": "يعرض {{count}} صفًا حاليًا من أصل {{total}} محافظة مطابقة."
+    },
     "withCodes": "مع الأكواد",
     "generateMockData": "توليد بيانات تجريبية",
     "errorMessage": "فشل في تحميل المحافظات",
     "noStatesAvailable": "لا توجد محافظات متاحة",
     "noStatesAvailableDescription": "ابدء بإضافة محافظة جديدة",
     "addFirstState": "إضافة محافظة جديدة",
+    "listSummary": "تصفح وإدارة {{count}} محافظة مع البحث والتصفية من الخادم",
+    "totalCount": "{{count}} محافظة",
+    "highlight": {
+      "new": "جديد",
+      "edited": "تم التحديث"
+    },
     "mainTitle": "قائمة المحافظات",
     "mainSubTitle": "لا توجد محافظات متاحة لعرضها",
     "browseAndManage": "تصفح وادارة المحافظات",

@@ -8,11 +8,11 @@ import {
 } from "@/shared/components/cards";
 import { Stack, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
-import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import StateCodeRow from "./StateCodeRow";
 import CountryPill from "./CountryPill";
 import StateCardFooter from "./StateCardFooter";
+import StateDistrictsSection from "./StateDistrictsSection";
 import type { StateCardProps } from "./StateCard.types";
 import { getQualityScore, getQualityLevel } from "./StateCardUtils";
 
@@ -25,10 +25,14 @@ const StateCard = ({
   highlightLabel,
   onEdit,
   onDelete,
+  onRestore,
   onView,
   onHover,
+  permissions,
+  selected,
+  onSelectedChange,
 }: StateCardProps) => {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const theme = useTheme();
 
   const qualityScore = getQualityScore(state);
@@ -64,12 +68,15 @@ const StateCard = ({
         />
       )}
       <AppChip
-        label={`ID: ${state.id}`}
+        label={`${t("general.id")}: ${state.id}`}
         colorKey="secondary"
         variant="outlined"
         monospace
         sx={{ fontSize: "0.7rem" }}
       />
+      {state.isDeleted && (
+        <AppChip label={t("states.status.archived")} colorKey="error" variant="soft" bold />
+      )}
     </Stack>
   );
 
@@ -87,11 +94,13 @@ const StateCard = ({
         <StateCodeRow label={t("states.code")} code={state.code} />
       </Box>
 
-      <QualityMeter score={qualityScore} />
+      <StateDistrictsSection districtsCount={state.districtsCount} />
+
+      <QualityMeter score={qualityScore} title={t("states.dashboard.dataQuality")} />
 
       <CreatedDateRow
         date={state.createdOn ? new Date(state.createdOn) : null}
-        formatter={(d) => format(d, "MMM dd, yyyy")}
+        formatter={(date) => new Intl.DateTimeFormat(i18n.resolvedLanguage, { dateStyle: "medium" }).format(date)}
       />
     </>
   );
@@ -102,6 +111,8 @@ const StateCard = ({
       onView={onView}
       onEdit={onEdit}
       onDelete={onDelete}
+      onRestore={onRestore}
+      permissions={permissions}
     />
   );
 
@@ -112,7 +123,7 @@ const StateCard = ({
       isHovered={isHovered}
       onMouseEnter={() => onHover(state.id)}
       onMouseLeave={() => onHover(null)}
-      height={370}
+      height={420}
       endBadge={endBadge}
       startBadge={startBadge}
       title={primaryTitle}
@@ -120,6 +131,9 @@ const StateCard = ({
       chips={chips}
       content={content}
       footer={footer}
+      selected={selected}
+      selectionLabel={t("states.cardSelectionAriaLabel", { name: primaryTitle })}
+      onSelectedChange={onSelectedChange}
     />
   );
 };

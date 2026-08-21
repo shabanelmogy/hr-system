@@ -21,6 +21,7 @@ export function GeographicalInformationScreen() {
           label: t('basicData.states'),
           icon: 'map-outline',
           permissions: [permissions.ViewStates],
+          route: ROUTES.basicData.states,
         },
         {
           label: t('basicData.districts'),

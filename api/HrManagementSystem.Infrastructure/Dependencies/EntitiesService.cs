@@ -4,6 +4,8 @@ using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Address
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Countries.Jobs;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Countries.Persistence;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Abstractions;
+using HrManagementSystem.Application.Features.GeographicalInformation.States.Abstractions;
+using HrManagementSystem.Infrastructure.Features.GeographicalInformation.States.Persistence;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Districts.Jobs;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.States.Jobs;
 using HrManagementSystem.Application.Features.Platform.Notifications.Services;
@@ -30,6 +32,11 @@ public static class EntitiesService
         services.AddScoped<ICountryChangeScheduler, CountryChangeScheduler>();
         services.AddScoped<ICountryAuditTrail, CountryAuditTrail>();
         services.AddScoped<StateChangedJob>();
+        services.AddScoped<StateManagementChangedJob>();
+        services.AddScoped<IStateReadStore, StateReadStore>();
+        services.AddScoped<IStateWriteStore, StateWriteStore>();
+        services.AddScoped<IStateChangeScheduler, StateChangeScheduler>();
+        services.AddScoped<IStateAuditTrail, StateAuditTrail>();
         services.AddScoped<DistrictChangedJob>();
         services.AddScoped<AddressTypeChangedJob>();
         services.AddScoped<AddressChangedJob>();

@@ -23,6 +23,7 @@ import {
   showToast,
 } from '@/src/shared/components';
 import { CountryCard } from '../components/CountryCard';
+import { CountryFilterButton } from '../components/CountryFilterButton';
 import { CountryForm } from '../components/CountryForm';
 import { CountryReportView } from '../components/CountryReportView';
 import {
@@ -32,7 +33,7 @@ import {
   useRestoreCountry,
   useSaveCountry,
 } from '../queries/use-countries';
-import type { Country, CountryFilters, CountryRequest, CountrySortColumn } from '../types/country';
+import type { Country, CountryFilters, CountryRequest, CountrySearchField, CountrySearchOperator, CountrySortColumn } from '../types/country';
 
 type FormMode = 'create' | 'edit' | 'view';
 type PendingAction = { kind: 'archive'; country: Country } | { kind: 'bulk' } | null;
@@ -51,9 +52,11 @@ export function CountriesScreen() {
   const canEdit = isEditAuthorized && !isReadOnly;
   const canDelete = isDeleteAuthorized && !isReadOnly;
   const list = useServerListState<CountrySortColumn, CountryFilters>({ initialFilters, initialPageSize: 5, initialSort: { columnId: 'createdOn', direction: 'descending' } });
+  const [searchField, setSearchField] = useState<CountrySearchField>('all');
+  const [searchOperator, setSearchOperator] = useState<CountrySearchOperator>('contains');
   const countriesQuery = useCountries({
     pageNumber: toApiPageNumber(list.state.page), pageSize: list.state.pageSize,
-    search: list.state.search, status: list.state.filters.status,
+    search: list.state.search, searchField, searchOperator, status: list.state.filters.status,
     currencyCode: list.state.filters.currencyCode, hasStates: list.state.filters.hasStates,
     sortBy: list.state.sort?.columnId ?? 'nameEn', sortDirection: list.state.sort?.direction === 'descending' ? 'desc' : 'asc',
   });
@@ -89,13 +92,16 @@ export function CountriesScreen() {
     clearBulkSelection();
     setListPageSize(pageSize);
   }, [clearBulkSelection, setListPageSize]);
-  const changeStatus = useCallback((values: string[]) => {
+  const applyFilters = useCallback((next: { field: CountrySearchField; operator: CountrySearchOperator; status: CountryFilters['status'] }) => {
     clearBulkSelection();
+    setSearchField(next.field);
+    setSearchOperator(next.operator);
     setListFilters({
       ...listFilters,
-      status: (values[0] ?? 'active') as CountryFilters['status'],
+      status: next.status,
     });
-  }, [clearBulkSelection, listFilters, setListFilters]);
+    setListPage(0);
+  }, [clearBulkSelection, listFilters, setListFilters, setListPage]);
   const changeSort = useCallback((sort: { columnId: string; direction: 'ascending' | 'descending' } | null) => {
     clearBulkSelection();
     setListSort(sort ? {
@@ -177,13 +183,6 @@ export function CountriesScreen() {
       {canDelete ? <AppIconButton icon={country.isDeleted ? 'refresh-outline' : 'archive-outline'} label={t(country.isDeleted ? 'countries.restore' : 'countries.archive')} onPress={() => country.isDeleted ? void restore(country) : setPendingAction({ kind: 'archive', country })} /> : null}
     </View> },
   ], [canDelete, canEdit, i18n.language, openForm, restore, t, theme.colors.success, theme.colors.warning]);
-  const filters = useMemo(() => [
-    { icon: 'checkmark-circle-outline' as const, label: t('countries.active'), value: 'active' },
-    { icon: 'archive-outline' as const, label: t('countries.archived'), value: 'archived' },
-    { icon: 'albums-outline' as const, label: t('countries.all'), value: 'all' },
-  ], [t]);
-  const selectedStatus = list.state.filters.status === 'active' ? ['active'] : list.state.filters.status === 'archived' ? ['archived'] : ['all'];
-
   if (countriesQuery.isLoading) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView state="loading" /></AppScreen>;
   if (countriesQuery.error) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView message={errorMessage(countriesQuery.error, t('countries.loadFailed'))} onRetry={() => void countriesQuery.refetch()} state="error" /></AppScreen>;
 
@@ -191,7 +190,7 @@ export function CountriesScreen() {
     <AppPageHeader action={<View style={[styles.headerActions, { direction }]}>{selectedIds.length > 0 && canDelete ? <AppButton icon="archive-outline" onPress={() => setPendingAction({ kind: 'bulk' })} variant="outline">{t('countries.archiveSelected', { count: selectedIds.length })}</AppButton> : null}{canCreate ? <AppIconButton color={theme.colors.onPrimary} icon="add-outline" label={t('countries.addCountry')} onPress={() => openForm('create', null)} style={[styles.add, { backgroundColor: theme.colors.primary }]} /> : null}</View>} compact subtitle={t('countries.formSubtitle')} title={t('countries.title')} />
     <AppListScreen<Country, 'table' | 'cards' | 'report'>
       defaultView="table" emptyContent={<AppStateView message={t('countries.empty')} state="empty" />}
-      filter={{ modalTitle: t('countries.filterStatus'), onChange: changeStatus, options: filters, values: selectedStatus }}
+      filterControl={<CountryFilterButton field={searchField} onApply={applyFilters} operator={searchOperator} status={list.state.filters.status} />}
       isFetching={countriesQuery.isFetching}
       items={rows}
       onSearchChange={changeSearch}

@@ -1,0 +1,58 @@
+<!-- GENERATED FILE. DO NOT EDIT. Source: recipe-manifest.json + templates/PHASE-03-mobile-client.template.md -->
+
+# States Phase 03 - Expo Mobile Client
+
+## Purpose
+
+Implement the Expo client as a native presentation of the shared contract, using the same server-list and lifecycle semantics as web.
+
+## Required structure
+
+- Thin Expo Router file and a typed route constant.
+- Route-manifest permission guard and navigation entry.
+- Feature public API plus feature-owned schemas, endpoint wrappers, query keys, hooks, screen, cards, form, report, and tests.
+- Shared list state, data table, form, screen, header, feedback, and responsive primitives.
+
+## Read and interaction checks
+
+- [ ] Zero-based device state converts to one-based API paging once.
+- [ ] Search, filters, sort, page, page size, and selection have one owner.
+- [ ] Search or filter changes clear stale bulk selection and reset paging.
+- [ ] Table and card modes consume the same page and server total.
+- [ ] Compact widths, touch targets, safe areas, keyboard avoidance, and orientation changes are verified.
+- [ ] English, Arabic, RTL ordering, labels, validation, and screen-reader names are verified.
+- [ ] Read-only mode and permissions disable every mutation entry point.
+- [ ] Archive, restore, bulk, report, notification deep link, and realtime refresh behavior match the API.
+
+## Mobile-specific decisions
+
+Record whether detail requires a dedicated query, whether reports open or share locally, which filters are exposed on compact screens, and how forms handle offline or retry states. These decisions may differ from web but must be explicit.
+
+## Approved references
+
+- **States cross-platform master review:** `../project/STATES_FEATURE_FULL_REVIEW.md` sections 3, 4, 6, 7
+- **States Expo implementation profile:** `../mobile-react/states-mobile-reference.md` sections 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+
+## Source fingerprints
+
+| Book | Section | SHA-256 |
+| --- | ---: | --- |
+| states-master | 3 | `1bcee45daae927bacec3682c14a6330114ca29ffbcf6b489376cccf337a7d38f` |
+| states-master | 4 | `9d784c317c702d41f1d9282b7d153ea617fab527d8e80ef7222e65f18cd52fb0` |
+| states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
+| states-master | 7 | `7863ba4255bde2c3546b78b9f78db32f27d29d8759e953c15cc28e3445c2ee87` |
+| states-mobile | 1 | `26054606895b798f1b277e4e0eca622dd99d75f4d1ce7815e8dcfc92d9c5ee81` |
+| states-mobile | 2 | `df5e503c56700392a3580c09741dd3bf946ce7f43ec310fd3a0a79acb53329be` |
+| states-mobile | 3 | `8d90933824c1a003440f0344dab7d4045ff66d68c5ffc200a99b257d98974c40` |
+| states-mobile | 4 | `30658a398475bda73f68d955a018f4d6468a6584256862583f5ae50207835e6e` |
+| states-mobile | 5 | `38a5f224df7fe514d651dcb05a0e203822b9b15ce0ecf66b03440b4737d63862` |
+| states-mobile | 6 | `59d68df2993d391812625ebf915f2a7b4bc1cb12b19ba1ec50a1231b236ed94d` |
+| states-mobile | 7 | `58ba6289c1c5189b8643bfe422c89151884af35066d5d3f1d1a8a062440ee07f` |
+| states-mobile | 8 | `e4cf84946d16f50c32b778d9c28d13a868781fb2b81385a8a66a3ceb21570a57` |
+| states-mobile | 9 | `c13868e55ed4b8222f0f9c3198da550e0d9ef4a8400fac18280850115b3cf1c0` |
+| states-mobile | 10 | `0c98fb8ba9d3ae023010173c1dec5c03cf83d196656377dcee0a9563155944fc` |
+| states-mobile | 11 | `b566631745234edd79055f13f0b8a6966119912f9560a7e88e40b321d912af22` |
+| states-mobile | 12 | `7536843d769e8361a410f15eec2b76d37720f6bb7ef92aaeb086714bf585dc5f` |
+| states-mobile | 13 | `6cdcf87afece4e578bc818a282cfe89996fc9b27c8248b5d37fbb7a23b841efa` |
+| states-mobile | 14 | `7d5c6b9e3f30747a1618af874a2eedd703bc07977d38eafa2068069da9e76028` |
+| states-mobile | 15 | `4b53b4a14da5675cf262da99e7d8698c0fdd0159f1f488b3fee1d616d08c7b6d` |

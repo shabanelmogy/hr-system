@@ -38,6 +38,12 @@ describe('route access manifest', () => {
     }))).toBe(false);
   });
 
+  it('protects the States route with the States view permission', () => {
+    expect(canAccessRoute(ROUTES.basicData.states, userWith({ permissionClaims: [permissions.ViewStates] }))).toBe(true);
+    expect(canAccessRoute(ROUTES.basicData.states, userWith())).toBe(false);
+    expect(canAccessRoute(ROUTES.basicData.states, userWith({ permissionClaims: [permissions.ViewCountries] }))).toBe(false);
+  });
+
   it('keeps super administrators outside tenant-owned modules', () => {
     const session = userWith({
       roles: [appRoles.superAdmin],

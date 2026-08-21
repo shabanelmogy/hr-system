@@ -12,6 +12,7 @@ const queryKeys = {
   notifications: ['notifications'],
   profile: ['current-user-profile'],
   countries: ['countries'],
+  states: ['states'],
 } as const satisfies Record<string, QueryKey>;
 
 const administrationQueryKeys: readonly QueryKey[] = [
@@ -30,6 +31,7 @@ const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
   notifications: [queryKeys.notifications],
   'entity-change-logs': [queryKeys.trackChanges],
   countries: [queryKeys.countries],
+  states: [queryKeys.states],
 };
 
 export function getRealtimeQueryKeys(resource: string): readonly QueryKey[] {
@@ -50,6 +52,7 @@ export function getAllRealtimeQueryKeys(): readonly QueryKey[] {
     queryKeys.appointments,
     queryKeys.trackChanges,
     queryKeys.countries,
+    queryKeys.states,
     ...administrationQueryKeys,
   ].forEach((queryKey) => {
     keys.set(JSON.stringify(queryKey), queryKey);

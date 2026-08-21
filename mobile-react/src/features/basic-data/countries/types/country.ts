@@ -1,5 +1,22 @@
 export type CountryStatus = 'active' | 'archived' | 'all';
 
+export type CountrySearchField =
+  | 'all'
+  | 'nameAr'
+  | 'nameEn'
+  | 'alpha2Code'
+  | 'alpha3Code'
+  | 'phoneCode'
+  | 'currencyCode';
+
+export type CountrySearchOperator =
+  | 'contains'
+  | 'doesNotContain'
+  | 'equals'
+  | 'doesNotEqual'
+  | 'startsWith'
+  | 'endsWith';
+
 export type CountrySortColumn =
   | 'nameEn'
   | 'nameAr'
@@ -47,6 +64,8 @@ export interface CountryPageQuery extends CountryFilters {
   pageNumber: number;
   pageSize: number;
   search: string;
+  searchField: CountrySearchField;
+  searchOperator: CountrySearchOperator;
   sortBy: CountrySortColumn;
   sortDirection: 'asc' | 'desc';
 }

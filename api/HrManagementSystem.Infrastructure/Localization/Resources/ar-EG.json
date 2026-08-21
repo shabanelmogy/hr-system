@@ -167,6 +167,10 @@
     "InvalidStateId": "معرف الولاية غير صالح",
     "StateInUseByDistrict": "الولاية مستخدمة حاليًا من قبل المناطق ولا يمكن حذفها",
     "StateInUseByCountry": "الولاية مستخدمة حاليًا من قبل الدولة ولا يمكن حذفها",
+    "NoStatesProvided": "لم يتم توفير الولايات",
+    "StateBatchLimitExceeded": "الحد الأقصى المسموح به هو 100 ولاية لكل طلب",
+    "StateIdsMustBeDistinct": "يجب ألا تتكرر معرفات الولايات",
+    "StateIdsMustBePositive": "يجب أن تكون معرفات الولايات أكبر من صفر",
 
     "DistrictExists": "المنطقة موجودة بالفعل",
     "DistrictNotFound": "المنطقة غير موجودة",

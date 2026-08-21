@@ -21,6 +21,10 @@ Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain
 - API Countries profile: [`api/Countries_API_Implementation_Profile.md`](api/Countries_API_Implementation_Profile.md)
 - Web Countries profile: [`web-next/features/countries-frontend-reference.md`](web-next/features/countries-frontend-reference.md)
 - Mobile Countries profile: [`mobile-react/countries-mobile-reference.md`](mobile-react/countries-mobile-reference.md)
+- Three-project States review: [`project/STATES_FEATURE_FULL_REVIEW.md`](project/STATES_FEATURE_FULL_REVIEW.md)
+- API States profile: [`api/States_API_Implementation_Profile.md`](api/States_API_Implementation_Profile.md)
+- Web States profile: [`web-next/features/states-frontend-reference.md`](web-next/features/states-frontend-reference.md)
+- Mobile States profile: [`mobile-react/states-mobile-reference.md`](mobile-react/states-mobile-reference.md)
 - Reusable documentation workflow: [`system/README.md`](system/README.md)
 
 ## Organization rules

@@ -1,76 +1,65 @@
 import { apiRoutes } from "@/config";
 import apiService from "@/shared/services/apiService";
-import { extractValue, extractValues } from "@/shared/utils/ApiHelper";
-import { State, CreateStateRequest, UpdateStateRequest } from "../types/State";
+import type {
+  BulkArchiveStatesResponse,
+  CreateStateRequest,
+  StateDetail,
+  StateLookup,
+  StatePageQuery,
+  StatePageResponse,
+  StateWithDistricts,
+  UpdateStateMutation,
+} from "../types/State";
 
-// State Service
+export const toStateRequest = (state: CreateStateRequest): CreateStateRequest => ({
+  nameAr: state.nameAr.trim(),
+  nameEn: state.nameEn.trim(),
+  code: state.code.trim().toUpperCase(),
+  countryId: Number(state.countryId),
+});
+
 export class StateService {
-  static async getAll(): Promise<State[]> {
-    const response = await apiService.get(apiRoutes.states.getAll);
-    const states = extractValues<State>(response);
-    return states.filter((state) => !state.isDeleted);
+  static getPage(query: StatePageQuery): Promise<StatePageResponse> {
+    return apiService.get<StatePageResponse>(apiRoutes.states.page, { ...query });
   }
 
-  static async getById(id: string | number): Promise<State> {
-    const response = await apiService.get(apiRoutes.states.getById(id));
-    return extractValue<State>(response);
+  static getLookup(countryId?: number): Promise<StateLookup[]> {
+    return apiService.get<StateLookup[]>(apiRoutes.states.lookup(countryId));
   }
 
-  static async create(stateData: CreateStateRequest): Promise<State> {
-    const response = await apiService.post(
-      apiRoutes.states.add,
-      stateData
-    );
-    return extractValue<State>(response);
+  static getByCountry(countryId: number): Promise<StateLookup[]> {
+    return apiService.get<StateLookup[]>(apiRoutes.states.byCountry(countryId));
   }
 
-  static async update(stateData: UpdateStateRequest): Promise<State> {
-    const response = await apiService.put(
-      apiRoutes.states.update,
-      stateData
-    );
-    return extractValue<State>(response);
+  static getById(id: number): Promise<StateDetail> {
+    return apiService.get<StateDetail>(apiRoutes.states.getById(id));
   }
 
-  static async delete(id: string | number): Promise<string | number> {
-    await apiService.delete(apiRoutes.states.delete(id));
+  static getWithDistricts(id: number): Promise<StateWithDistricts> {
+    return apiService.get<StateWithDistricts>(apiRoutes.states.getWithDistricts(id));
+  }
+
+  static create(request: CreateStateRequest): Promise<StateDetail> {
+    return apiService.post<StateDetail>(apiRoutes.states.create, toStateRequest(request));
+  }
+
+  static update({ id, request }: UpdateStateMutation): Promise<StateDetail> {
+    return apiService.put<StateDetail>(apiRoutes.states.update(id), toStateRequest(request));
+  }
+
+  static async archive(id: number): Promise<number> {
+    await apiService.delete(apiRoutes.states.archive(id));
     return id;
   }
 
-  static searchStates(states: State[], searchTerm: string): State[] {
-    if (!searchTerm.trim()) {
-      return states;
-    }
-
-    const term = searchTerm.toLowerCase().trim();
-    return states.filter((state) => {
-      if (!state || state.isDeleted) return false;
-
-      return (
-        state.nameEn?.toLowerCase().includes(term) ||
-        state.nameAr?.includes(term) ||
-        state.code?.toLowerCase().includes(term) ||
-        state.country?.nameEn?.toLowerCase().includes(term) ||
-        state.country?.nameAr?.includes(term)
-      );
-    });
+  static async restore(id: number): Promise<number> {
+    await apiService.post(apiRoutes.states.restore(id));
+    return id;
   }
 
-  // Additional method for getting states by country
-  static async getByCountry(countryId: string | number): Promise<State[]> {
-    const allStates = await this.getAll();
-    return allStates.filter((state) => state.countryId === Number(countryId));
+  static archiveBulk(ids: number[]): Promise<BulkArchiveStatesResponse> {
+    return apiService.post<BulkArchiveStatesResponse>(apiRoutes.states.bulkArchive, { ids });
   }
 }
 
 export default StateService;
-
-// Export the service instance for backward compatibility
-export const stateService = {
-  getStates: () => StateService.getAll(),
-  getStateById: (id: number) => StateService.getById(id),
-  createState: (data: CreateStateRequest) => StateService.create(data),
-  updateState: (data: UpdateStateRequest) => StateService.update(data),
-  deleteState: (id: number) => StateService.delete(id),
-  getStatesByCountry: (countryId: number) => StateService.getByCountry(countryId),
-};

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "feature": "states",
+  "purpose": "Minimum evidence for reviewing and reproducing the States feature without treating Countries-only behavior as a requirement.",
+  "sourceCollections": [
+    { "id": "api-application", "layer": "api", "path": "api/HrManagementSystem.Application/Features/GeographicalInformation/States", "minimumFiles": 9, "purpose": "State contracts, CQRS, mapping, errors, and ports" },
+    { "id": "api-infrastructure", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/States", "minimumFiles": 5, "purpose": "State persistence, audit, scheduling, and realtime delivery" },
+    { "id": "web-feature", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/states", "minimumFiles": 20, "purpose": "Browser page, grid, cards, dialogs, hooks, service, types, and utilities" },
+    { "id": "mobile-feature", "layer": "mobile-react", "path": "mobile-react/src/features/basic-data/states", "minimumFiles": 10, "purpose": "Expo schemas, API, queries, screen, form, controls, and views" }
+  ],
+  "requiredFiles": [
+    { "id": "root-agent", "layer": "configuration", "path": "AGENTS.md", "purpose": "Repository guidance" },
+    { "id": "master", "layer": "documentation", "path": "documentation/project/STATES_FEATURE_FULL_REVIEW.md", "purpose": "Cross-platform State authority" },
+    { "id": "api-profile", "layer": "documentation", "path": "documentation/api/States_API_Implementation_Profile.md", "purpose": "State API contract" },
+    { "id": "web-profile", "layer": "documentation", "path": "documentation/web-next/features/states-frontend-reference.md", "purpose": "State browser contract" },
+    { "id": "mobile-profile", "layer": "documentation", "path": "documentation/mobile-react/states-mobile-reference.md", "purpose": "State Expo contract" },
+    { "id": "api-controller", "layer": "api", "path": "api/HrManagementSystem.Api/Features/GeographicalInformation/States/V1/StatesController.cs", "purpose": "HTTP/permission boundary" },
+    { "id": "api-entity", "layer": "api", "path": "api/HrManagementSystem.Domain/GeographicalInformation/States/Entities/State.cs", "purpose": "State domain and dependents" },
+    { "id": "api-config", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/States/Persistence/StateConfiguration.cs", "purpose": "Indexes and database constraints" },
+    { "id": "api-commands", "layer": "api", "path": "api/HrManagementSystem.Application/Features/GeographicalInformation/States/Commands/StateCommands.cs", "purpose": "State lifecycle commands" },
+    { "id": "api-queries", "layer": "api", "path": "api/HrManagementSystem.Application/Features/GeographicalInformation/States/Queries/StateQueries.cs", "purpose": "Server list query contract" },
+    { "id": "api-stores", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/States/Persistence/StateManagementStores.cs", "purpose": "Read/write/audit ports" },
+    { "id": "api-job", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/States/Jobs/StateManagementChangedJob.cs", "purpose": "Post-commit notification/realtime job" },
+    { "id": "api-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/StateCqrsArchitectureTests.cs", "purpose": "CQRS architecture coverage" },
+    { "id": "api-controller-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/StatesControllerCqrsTests.cs", "purpose": "Controller dispatch coverage" },
+    { "id": "web-route", "layer": "web-next", "path": "web-next/src/app/(main)/basic-data/(geographical-information)/states/page.tsx", "purpose": "Thin browser route" },
+    { "id": "web-page", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/states/pages/StatesPage.tsx", "purpose": "Browser composition" },
+    { "id": "web-list", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/states/hooks/useStateGridLogic.ts", "purpose": "Server-list controller" },
+    { "id": "web-grid", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/states/components/grid-view/StatesDataGrid.tsx", "purpose": "Shared toolbar/Grid Options integration" },
+    { "id": "web-service", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/states/services/stateService.ts", "purpose": "HTTP transport" },
+    { "id": "web-query", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/states/utils/statePageQuery.ts", "purpose": "Page conversion" },
+    { "id": "web-realtime", "layer": "web-next", "path": "web-next/src/features/realtime/realtimeQueryRegistry.ts", "purpose": "Query invalidation" },
+    { "id": "web-localization-en", "layer": "web-next", "path": "web-next/src/locales/en/translation.json", "purpose": "English State strings" },
+    { "id": "web-localization-ar", "layer": "web-next", "path": "web-next/src/locales/ar/translation.json", "purpose": "Arabic State strings" },
+    { "id": "mobile-route", "layer": "mobile-react", "path": "mobile-react/app/(main)/basic-data/geographical-information/states.tsx", "purpose": "Guarded Expo route" },
+    { "id": "mobile-screen", "layer": "mobile-react", "path": "mobile-react/src/features/basic-data/states/screens/StatesScreen.tsx", "purpose": "Controlled mobile feature screen" },
+    { "id": "mobile-api", "layer": "mobile-react", "path": "mobile-react/src/features/basic-data/states/api/state-api.ts", "purpose": "Runtime-validated State API" },
+    { "id": "mobile-schema", "layer": "mobile-react", "path": "mobile-react/src/features/basic-data/states/api/state-schemas.ts", "purpose": "Zod boundary" },
+    { "id": "mobile-route-policy", "layer": "mobile-react", "path": "mobile-react/src/features/auth/rbac/route-manifest.ts", "purpose": "States permission route policy" },
+    { "id": "mobile-realtime", "layer": "mobile-react", "path": "mobile-react/src/features/realtime/realtime-query-registry.ts", "purpose": "State realtime prefix" },
+    { "id": "mobile-notifications", "layer": "mobile-react", "path": "mobile-react/src/features/notifications/utils/notification-presentation.ts", "purpose": "State notification deep link" }
+  ]
+}

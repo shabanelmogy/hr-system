@@ -3,6 +3,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  Checkbox,
   Divider,
   Fade,
   Typography,
@@ -29,6 +30,9 @@ export interface EntityCardProps {
   chips?: ReactNode;
   content?: ReactNode;
   footer?: ReactNode;
+  selected?: boolean;
+  selectionLabel?: string;
+  onSelectedChange?: (selected: boolean) => void;
 }
 
 const EntityCard = ({
@@ -47,6 +51,9 @@ const EntityCard = ({
   chips,
   content,
   footer,
+  selected = false,
+  selectionLabel,
+  onSelectedChange,
 }: EntityCardProps) => {
   const theme = useTheme();
   const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
@@ -116,6 +123,16 @@ const EntityCard = ({
           <Box sx={{ position: "absolute", top: 12, insetInlineEnd: 12, zIndex: 2 }}>
             {endBadge}
           </Box>
+        )}
+
+        {onSelectedChange && (
+          <Checkbox
+            checked={selected}
+            onChange={(event) => onSelectedChange(event.target.checked)}
+            size="small"
+            slotProps={{ input: { "aria-label": selectionLabel } }}
+            sx={{ position: "absolute", top: 8, insetInlineStart: 4, zIndex: 3 }}
+          />
         )}
 
         {startBadge && (

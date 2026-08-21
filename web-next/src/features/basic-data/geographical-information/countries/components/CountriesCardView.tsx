@@ -32,6 +32,8 @@ const CountriesCardView = ({
   onPageChange,
   onPageSizeChange,
   onClearCriteria,
+  selectedCountryIds,
+  onSelectedCountryIdsChange,
 }: CountriesCardViewProps) => {
   const { t } = useTranslation();
   const [hoveredCard, setHoveredCard] = useState<string | number | null>(null);
@@ -71,6 +73,14 @@ const CountriesCardView = ({
     onPageSizeChange(Number(event.target.value));
   };
 
+  const handleSelectionChange = (countryId: number, selected: boolean) => {
+    onSelectedCountryIdsChange(
+      selected
+        ? [...new Set([...selectedCountryIds, countryId])]
+        : selectedCountryIds.filter((id) => id !== countryId),
+    );
+  };
+
   return (
     <Box>
       <Grid container spacing={3}>
@@ -90,6 +100,10 @@ const CountriesCardView = ({
               onView={onView}
               onHover={setHoveredCard}
               permissions={permissions}
+              selected={selectedCountryIds.includes(country.id)}
+              onSelectedChange={permissions.canDelete && !country.isDeleted
+                ? (selected) => handleSelectionChange(country.id, selected)
+                : undefined}
             />
           </Grid>
         ))}

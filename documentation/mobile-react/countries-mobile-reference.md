@@ -111,7 +111,7 @@ app/layout -> feature public API -> feature internals -> shared/core
 | `CountryDetail` / `countryDetailSchema` | Detail/mutation shape without count |
 | `CountryWithStates` / `countryWithStatesSchema` | Relation detail with active states |
 | `CountryRequest` | Mutable request fields only |
-| `CountryPageQuery` | One-based API page plus status/filter/sort/search inputs |
+| `CountryPageQuery` | One-based API page plus status/filter/sort/search inputs, search field and search condition |
 | `CountryFilters` | Status, currency code and state-presence state |
 | `BulkArchiveCountriesResponse` / schema | Runtime-validated archive count |
 | lookup schema | Runtime-validated selector rows |
@@ -135,13 +135,10 @@ API base:
 | Restore | `countries/{id}/restore` |
 | Bulk archive | `countries/bulk-archive` |
 
-`toCountryPageQuery` always sends page number, page size, status, sort column and
-direction. It sends search only after trimming, sends currency only after trim
-and uppercase, and converts `withStates`/`withoutStates` to `true`/`false` while
-omitting the `all` state.
-
-Mobile does not currently send `searchField` or `searchOperator`, so the API's
-documented defaults apply: all searchable fields with `contains`.
+`toCountryPageQuery` always sends page number, page size, status, search field,
+search condition, sort column and direction. It sends search only after trimming,
+sends currency only after trim and uppercase, and converts
+`withStates`/`withoutStates` to `true`/`false` while omitting the `all` state.
 
 ## 6. Query Keys, Queries and Mutations
 
@@ -182,6 +179,8 @@ pending confirmation and selected IDs.
 | Currency | empty |
 | State presence | `all` |
 | Search | empty, shared 350 ms debounce |
+| Search column | `all` |
+| Search condition | `contains` |
 
 The screen converts UI page to API page with `toApiPageNumber`. Search, page
 size, sort and filter changes reset to page zero through the shared reducer.
@@ -193,9 +192,11 @@ the current server page; it must not search, filter or slice those rows locally.
 `AppDataTable` receives `serverState` and disables its own pagination because
 `AppMultiView` owns the shared pager.
 
-Current mobile filter UI exposes status only. `currencyCode` and `hasStates`
-exist in the state/query serializer but remain at defaults; this is recorded as
-a review finding rather than implied functionality.
+The main toolbar keeps only the shared search field and one Filter button. Its
+feature-owned modal applies Status, Column, and Condition together through
+`AppListScreen.filterControl` and the shared `AppSearchFilterControls`.
+`currencyCode` and `hasStates` remain at defaults because this modal does not
+yet expose Country-specific values for them.
 
 ## 8. View Contract
 

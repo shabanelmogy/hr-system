@@ -55,6 +55,7 @@ export const routePolicies: readonly RoutePolicy[] = [
     ],
   },
   { path: ROUTES.basicData.countries, permissions: [permissions.ViewCountries] },
+  { path: ROUTES.basicData.states, permissions: [permissions.ViewStates] },
   { path: ROUTES.basicData.geographicalInformation, permissions: BASIC_DATA_VIEW_PERMISSIONS },
   { path: ROUTES.basicData.organizationalStructure, roles: [appRoles.admin] },
   {

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { Resolver, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { CreateDistrictRequest, District } from "../types/District";
-import { useStates } from "../../states/hooks/useStateQueries";
+import { useStateLookup } from "@/features/basic-data/geographical-information/states";
 import { getDistrictValidationSchema } from "../utils/validation";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 
@@ -40,7 +40,7 @@ const DistrictForm = ({
   const schema = getDistrictValidationSchema(t);
 
   // Load states for dropdown
-  const { data: states = [] } = useStates();
+  const { data: states = [] } = useStateLookup();
 
   const {
     handleSubmit,

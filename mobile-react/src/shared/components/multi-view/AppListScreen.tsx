@@ -43,6 +43,8 @@ export interface AppListScreenProps<Item, ViewId extends string, FilterValue ext
   onSearch?: (items: readonly Item[], searchTerm: string) => readonly Item[];
   /** Filter configuration. Omit to hide the filter button. */
   filter?: AppListScreenFilterConfig<FilterValue>;
+  /** Custom filter trigger, used when a feature needs form controls in its filter modal. */
+  filterControl?: ReactNode;
   /** Content to show when the item list is empty */
   emptyContent?: ReactNode;
   /** Default page size for pagination */
@@ -88,6 +90,7 @@ export function AppListScreen<Item, ViewId extends string, FilterValue extends s
   searchPlaceholder,
   onSearch,
   filter,
+  filterControl,
   emptyContent,
   defaultPageSize,
   pageSizeOptions,
@@ -150,7 +153,7 @@ export function AppListScreen<Item, ViewId extends string, FilterValue extends s
             value={effectiveSearch}
           />
         </View>
-        {filter ? (
+        {filterControl ?? (filter ? (
           <AppFilterButton
             applyLabel={filter.applyLabel}
             buttonLabel={filterButtonLabel}
@@ -162,7 +165,7 @@ export function AppListScreen<Item, ViewId extends string, FilterValue extends s
             options={filter.options}
             values={filter.values}
           />
-        ) : null}
+        ) : null)}
       </View>
 
       {/* Optional content above views (stats, alerts, etc.) */}

@@ -1,89 +1,116 @@
 import React, { useMemo } from "react";
-import { GridApi } from "@mui/x-data-grid";
-import { ContentWrapper } from "@/shared/components/layout";
+import { Archive } from "@mui/icons-material";
+import { Divider, ListItemIcon, ListItemText, MenuItem, Radio } from "@mui/material";
+import { type GridApi, type GridPaginationModel, type GridRowSelectionModel, type GridSortModel } from "@mui/x-data-grid";
 import { MyDataGrid } from "@/shared/components/data-grid";
-import { useStatesPermissions } from "@/shared/hooks/usePermissions";
+import { ContentWrapper } from "@/shared/components/layout";
+import { ResetButton } from "@/shared/components/lists/card-view/header-controls/ResetButton";
 import { useTranslation } from "react-i18next";
-import { State } from "../../types/State"
+import type { StateListItem, StateSearchField, StateSearchOperator, StateSortColumn, StateStatus } from "../../types/State";
+import type { StatePermissionSet } from "../../utils/statePermissions";
 import { makeStateActions } from "./GridActions";
 import { useStateColumns } from "./Columns";
 
-// Define interfaces for better type safety
-interface StatesDataGridProps {
-  states: State[];
+export interface StatesDataGridProps {
+  states: StateListItem[];
   loading?: boolean;
+  isFetching?: boolean;
   apiRef?: React.RefObject<GridApi | null>;
-  onEdit: (state: State) => void;
-  onDelete: (state: State) => void;
-  onView: (state: State) => void;
+  onEdit: (state: StateListItem) => void;
+  onDelete: (state: StateListItem) => void;
+  onRestore: (state: StateListItem) => void;
+  onView: (state: StateListItem) => void;
+  permissions: StatePermissionSet;
+  page: number;
+  pageSize: number;
+  totalCount: number;
+  sortColumn: StateSortColumn;
+  sortDirection: "ASC" | "DESC";
+  searchValue: string;
+  searchField: StateSearchField;
+  searchOperator: StateSearchOperator;
+  status: StateStatus;
+  onSearchChange: (value: string) => void;
+  onSearchFieldChange: (value: StateSearchField) => void;
+  onSearchOperatorChange: (value: StateSearchOperator) => void;
+  onStatusChange: (value: StateStatus) => void;
+  onReset: () => void;
+  selectedStateIds: number[];
+  onSelectedStateIdsChange: (ids: number[]) => void;
+  onBulkArchive: () => void;
+  isBulkArchiving?: boolean;
+  onPaginationChange: (model: GridPaginationModel) => void;
+  onSortChange: (model: GridSortModel) => void;
   lastAddedId?: string | number | null;
   lastEditedId?: string | number | null;
   lastDeletedIndex?: number | null;
 }
 
 const StatesDataGrid: React.FC<StatesDataGridProps> = ({
-  states,
-  loading = false,
-  apiRef,
-  onEdit,
-  onDelete,
-  onView,
-  lastAddedId,
-  lastEditedId,
-  lastDeletedIndex,
+  states, loading = false, isFetching = false, apiRef, onEdit, onDelete, onRestore, onView, permissions,
+  page, pageSize, totalCount, sortColumn, sortDirection, searchValue, searchField, searchOperator, status,
+  onSearchChange, onSearchFieldChange, onSearchOperatorChange, onStatusChange, onReset,
+  selectedStateIds, onSelectedStateIdsChange, onBulkArchive, isBulkArchiving = false,
+  onPaginationChange, onSortChange, lastAddedId, lastEditedId, lastDeletedIndex,
 }) => {
   const { t } = useTranslation();
-  const permissions = useStatesPermissions();
-
-  // Actions factory based on permissions and handlers
   const getActions = useMemo(
-    () => makeStateActions({ t, permissions, onView, onEdit, onDelete }),
-    [t, permissions, onView, onEdit, onDelete]
+    () => makeStateActions({ t, permissions, onView, onEdit, onDelete, onRestore }),
+    [onDelete, onEdit, onRestore, onView, permissions, t],
   );
-
-  // Columns factory
-  const columns = useStateColumns({ permissions, getActions });
+  const columns = useStateColumns({ t, permissions, getActions });
+  const rowSelectionModel = useMemo<GridRowSelectionModel>(() => ({ type: "include", ids: new Set(selectedStateIds) }), [selectedStateIds]);
 
   return (
     <ContentWrapper>
       <MyDataGrid
-        rows={states}
-        columns={columns}
-        loading={loading}
-        apiRef={apiRef}
-        filterMode="client"
-        initialSortModel={[{ field: "id", sort: "asc" }]}
-        pagination
-        pageSizeOptions={[5, 10, 25]}
-        lastAddedId={lastAddedId}
-        lastEditedId={lastEditedId}
-        lastDeletedIndex={lastDeletedIndex}
-        sx={{
-          "& .MuiDataGrid-cell": {
-            alignItems: "center",
+        rows={states} columns={columns} loading={loading || isFetching} apiRef={apiRef}
+        filterMode="server" sortingMode="server"
+        sortModel={[{ field: sortColumn, sort: sortDirection.toLowerCase() as "asc" | "desc" }]}
+        onSortModelChange={onSortChange}
+        pagination paginationMode="server" paginationModel={{ page, pageSize }} onPaginationModelChange={onPaginationChange}
+        rowCount={totalCount} pageSizeOptions={[5, 10, 25, 50]} showGridOptions
+        toolbarSearch={{
+          value: searchValue, placeholder: t("states.search.placeholder"), onChange: onSearchChange, onClear: () => onSearchChange(""),
+          column: {
+            label: t("states.search.column"), value: searchField,
+            onChange: (value) => onSearchFieldChange(value as StateSearchField),
+            options: [
+              { value: "all", label: t("states.search.allColumns") }, { value: "nameAr", label: t("general.nameAr") },
+              { value: "nameEn", label: t("general.nameEn") }, { value: "code", label: t("states.code") },
+              { value: "country", label: t("states.country") },
+            ],
           },
-          "& .MuiDataGrid-cell--textCenter": {
-            justifyContent: "center",
-          },
-          "& .MuiDataGrid-cellContent": {
-            display: "flex",
-            width: "100%",
-            height: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          },
-          "& .MuiDataGrid-actionsCell": {
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
+          operator: {
+            label: t("states.search.condition"), value: searchOperator,
+            onChange: (value) => onSearchOperatorChange(value as StateSearchOperator),
+            options: [
+              { value: "contains", label: t("states.search.operators.contains") }, { value: "doesNotContain", label: t("states.search.operators.doesNotContain") },
+              { value: "equals", label: t("states.search.operators.equals") }, { value: "doesNotEqual", label: t("states.search.operators.doesNotEqual") },
+              { value: "startsWith", label: t("states.search.operators.startsWith") }, { value: "endsWith", label: t("states.search.operators.endsWith") },
+            ],
           },
         }}
+        toolbarContent={<ResetButton onReset={onReset} fullWidth={false} height={40} />}
+        gridOptionsContent={(closeMenu) => <>
+          <MenuItem disabled><ListItemText primary={t("states.status.label")} /></MenuItem>
+          {(["active", "archived", "all"] as const).map((value) => (
+            <MenuItem key={value} selected={status === value} onClick={() => { closeMenu(); onStatusChange(value); }}>
+              <ListItemIcon><Radio checked={status === value} size="small" /></ListItemIcon><ListItemText primary={t(`states.status.${value}`)} />
+            </MenuItem>
+          ))}
+          {permissions.canDelete ? <><Divider component="li" /><MenuItem disabled={selectedStateIds.length === 0 || isBulkArchiving} onClick={() => { closeMenu(); onBulkArchive(); }} sx={{ color: "warning.main" }}>
+            <ListItemIcon><Archive fontSize="small" /></ListItemIcon><ListItemText primary={t("states.bulkArchiveAction", { count: selectedStateIds.length })} />
+          </MenuItem></> : null}
+        </>}
+        checkboxSelection={permissions.canDelete} autoSelectFirstRow={false} disableRowSelectionExcludeModel
+        rowSelectionModel={rowSelectionModel}
+        onRowSelectionModelChange={(model) => onSelectedStateIdsChange([...model.ids].map(Number).filter((id) => Number.isInteger(id) && id > 0))}
+        isRowSelectable={({ row }) => permissions.canDelete && !row.isDeleted} showNavigationButtons={false}
+        lastAddedId={lastAddedId} lastEditedId={lastEditedId} lastDeletedIndex={lastDeletedIndex}
       />
     </ContentWrapper>
   );
 };
 
 export default StatesDataGrid;
-
-// Export types for use in other components
-export type { StatesDataGridProps, State };

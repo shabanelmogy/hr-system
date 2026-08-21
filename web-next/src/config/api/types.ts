@@ -8,7 +8,18 @@ export interface CrudRoutes {
   delete: (id: Id) => string;
 }
 
-export type StatesRoutes = CrudRoutes;
+export interface StatesRoutes {
+  page: string;
+  lookup: (countryId?: Id) => string;
+  byCountry: (countryId: Id) => string;
+  getById: (id: Id) => string;
+  getWithDistricts: (id: Id) => string;
+  create: string;
+  update: (id: Id) => string;
+  archive: (id: Id) => string;
+  bulkArchive: string;
+  restore: (id: Id) => string;
+}
 
 export interface DistrictsRoutes extends CrudRoutes {
   getAllByState: (stateId: Id) => string;

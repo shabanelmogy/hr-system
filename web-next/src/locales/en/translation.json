@@ -722,6 +722,7 @@
     "bulkArchived": "Archived countries: {{count}}",
     "bulkArchiveError": "Failed to archive the selected countries",
     "bulkArchiveSelectionRequired": "Select at least one active country to archive.",
+    "cardSelectionAriaLabel": "Select {{name}}",
     "uploaded": "countries uploaded",
     "status": {
       "label": "Status",
@@ -807,7 +808,8 @@
       "grid": "Grid View",
       "cards": "Card View",
       "map": "Map View",
-      "chart": "Chart View"
+      "chart": "Chart View",
+      "report": "Report"
     },
     "charts": {
       "barChart": "Bar Chart",
@@ -858,12 +860,67 @@
     "createError": "Failed to create state",
     "updateError": "Failed to update state",
     "deleteError": "Failed to delete state",
+    "archiveError": "Failed to archive state",
+    "restoreError": "Failed to restore state",
+    "archived": "State archived successfully",
+    "restored": "State restored successfully",
+    "permissionDenied": "You do not have permission to perform this action",
+    "districts": "Districts",
+    "districtsCount": "{{count}} districts",
+    "cardsAriaLabel": "States cards, {{count}} total",
+    "reportAriaLabel": "States report",
+    "noResults": "No states match these criteria",
+    "noResultsDescription": "Try changing the search or filters.",
+    "clearCriteria": "Clear criteria",
+    "archiveTitle": "Archive state",
+    "archiveDescription": "Archive this state? States with active districts cannot be archived.",
+    "restoreTitle": "Restore state",
+    "restoreDescription": "Restore this state under its active country?",
+    "bulkArchiveTitle": "Archive selected states",
+    "bulkArchiveDescription": "Archive all selected states? This is blocked when any selected state has active districts.",
+    "bulkArchiveConfirm": "Archive {{count}} states",
+    "bulkArchiveAction": "Archive selected ({{count}})",
+    "bulkArchiveSelectionRequired": "Select at least one active state to archive",
+    "cardSelectionAriaLabel": "Select {{name}}",
+    "bulkArchived": "Archived {{count}} states",
+    "bulkArchiveError": "Unable to archive the selected states",
+    "selectedCount": "{{count}} states selected",
+    "status": {
+      "label": "Status",
+      "active": "Active",
+      "archived": "Archived",
+      "all": "All"
+    },
+    "search": {
+      "placeholder": "Search states by name, code, or country",
+      "column": "Column",
+      "condition": "Condition",
+      "allColumns": "All columns",
+      "operators": {
+        "contains": "Contains",
+        "doesNotContain": "Does not contain",
+        "equals": "Equals",
+        "doesNotEqual": "Does not equal",
+        "startsWith": "Starts with",
+        "endsWith": "Ends with"
+      }
+    },
+    "report": {
+      "title": "States list report",
+      "scope": "Showing {{count}} current rows out of {{total}} matching states."
+    },
     "withCodes": "With Codes",
     "generateMockData": "Generate Mock Data",
     "errorMessage": "Failed to load states",
     "noStatesAvailable": "No states available",
     "noStatesAvailableDescription": "Start by adding your first state",
     "addFirstState": "Add New state",
+    "listSummary": "Browse and manage {{count}} states with server-side search and filtering",
+    "totalCount": "{{count}} states",
+    "highlight": {
+      "new": "New",
+      "edited": "Updated"
+    },
     "mainTitle": "States Card View",
     "mainSubTitle": "No States Available To Display",
     "browseAndManage": "Browse and manage",
