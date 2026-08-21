@@ -9,11 +9,13 @@ import { useTranslation } from "react-i18next";
 import { useDataGridShell } from "../core/context";
 import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 import { SearchBar } from "@/shared/components/lists/card-view/header-controls/SearchBar";
+import { GridOptionsButton } from "./GridOptionsButton";
 
 export function DataGridToolbar() {
   const {
     onToolbarAdd,
     showColumnFilterButton,
+    showGridOptions,
     toolbarContent,
     toolbarSearch,
   } = useDataGridShell();
@@ -49,10 +51,11 @@ export function DataGridToolbar() {
           <Divider orientation="vertical" flexItem />
         </>
       ) : null}
-      <GridToolbarColumnsButton />
+      {!showGridOptions ? <GridToolbarColumnsButton /> : null}
       {showColumnFilterButton ? <GridToolbarFilterButton /> : null}
-      <GridToolbarDensitySelector />
+      {!showGridOptions ? <GridToolbarDensitySelector /> : null}
       {toolbarContent}
+      {showGridOptions ? <GridOptionsButton label={t("actions.gridOptions")} /> : null}
     </Stack>
   );
 }

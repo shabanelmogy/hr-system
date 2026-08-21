@@ -115,6 +115,7 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
         onPaginationModelChange={onPaginationChange}
         rowCount={totalCount}
         pageSizeOptions={[5, 10, 25, 50]}
+        showGridOptions
         toolbarSearch={{
           value: searchValue,
           placeholder: t("countries.searchPlaceHolder"),

@@ -5,6 +5,38 @@ export const getDesignTokens = (
   direction: "ltr" | "rtl" = "ltr"
 ): ThemeOptions => ({
   direction,
+  components: {
+    // Keep the page scroll position stable for every reusable overlay.
+    // Individual components can still opt back into scroll locking with
+    // disableScrollLock={false} when they need modal behavior.
+    MuiDialog: {
+      defaultProps: {
+        disableScrollLock: true,
+      },
+    },
+    MuiDrawer: {
+      defaultProps: {
+        ModalProps: {
+          disableScrollLock: true,
+        },
+      },
+    },
+    MuiMenu: {
+      defaultProps: {
+        disableScrollLock: true,
+      },
+    },
+    MuiModal: {
+      defaultProps: {
+        disableScrollLock: true,
+      },
+    },
+    MuiPopover: {
+      defaultProps: {
+        disableScrollLock: true,
+      },
+    },
+  },
   palette: {
     mode,
     ...(mode === "light"

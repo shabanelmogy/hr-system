@@ -336,6 +336,7 @@
     "active": "Active",
     "disable": "Disable",
     "enable": "Enable",
+    "gridOptions": "Grid options",
     "unlock": "Unlock"
   },
   "auth": {

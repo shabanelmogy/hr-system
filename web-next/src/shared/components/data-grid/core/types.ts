@@ -18,6 +18,7 @@ export type MyDataGridProps<
 > = DataGridProps<TRow> & {
   initialSortModel?: GridSortModel;
   showNavigationButtons?: boolean;
+  showGridOptions?: boolean;
   onToolbarAdd?: () => void;
   toolbarSearch?: DataGridToolbarSearchConfig;
   toolbarContent?: ReactNode;
