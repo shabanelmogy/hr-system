@@ -1,4 +1,3 @@
-import { SelectChangeEvent } from "@mui/material";
 import type {
   CountryListItem,
   CountrySearchField,
@@ -57,8 +56,8 @@ export interface CountryCardViewPaginationProps {
   rowsPerPage: number;
   totalItems: number;
   itemsPerPageOptions: number[];
-  onPageChange: (event: unknown, newPage: number) => void;
-  onRowsPerPageChange: (event: SelectChangeEvent<number>) => void;
+  onPageChange: (newPage: number) => void;
+  onRowsPerPageChange: (rowsPerPage: number) => void;
 }
 
 export interface CountriesCardViewProps {

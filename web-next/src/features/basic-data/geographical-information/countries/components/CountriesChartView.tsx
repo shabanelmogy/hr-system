@@ -1,7 +1,6 @@
 import { Alert, Box, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
-import type { SelectChangeEvent } from "@mui/material/Select";
 import type { CountryListItem } from "../types/Country";
 import { CountryCardViewPagination } from "./card-view";
 import {
@@ -101,10 +100,8 @@ const CountriesChartView: React.FC<CountriesChartViewProps> = ({
         rowsPerPage={pageSize}
         totalItems={totalCount}
         itemsPerPageOptions={[5, 10, 25, 50]}
-        onPageChange={(_, nextPage) => onPageChange(nextPage)}
-        onRowsPerPageChange={(event: SelectChangeEvent<number>) =>
-          onPageSizeChange(Number(event.target.value))
-        }
+        onPageChange={onPageChange}
+        onRowsPerPageChange={onPageSizeChange}
       />
     </Box>
   );

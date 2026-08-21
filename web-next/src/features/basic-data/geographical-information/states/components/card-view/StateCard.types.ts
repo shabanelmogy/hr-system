@@ -1,4 +1,3 @@
-import { SelectChangeEvent } from "@mui/material";
 import type {
   StateListItem,
   StateSearchField,
@@ -51,8 +50,8 @@ export interface StateCardViewPaginationProps {
   rowsPerPage: number;
   totalItems: number;
   itemsPerPageOptions: number[];
-  onPageChange: (event: unknown, newPage: number) => void;
-  onRowsPerPageChange: (event: SelectChangeEvent<number>) => void;
+  onPageChange: (newPage: number) => void;
+  onRowsPerPageChange: (rowsPerPage: number) => void;
 }
 
 export interface StatesCardViewProps {

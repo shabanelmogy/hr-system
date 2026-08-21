@@ -1,4 +1,3 @@
-import { SelectChangeEvent } from "@mui/material";
 import type { District } from "../../types/District";
 
 export interface DistrictCardProps {
@@ -33,8 +32,8 @@ export interface DistrictCardViewPaginationProps {
   rowsPerPage: number;
   totalItems: number;
   itemsPerPageOptions: number[];
-  onPageChange: (event: unknown, newPage: number) => void;
-  onRowsPerPageChange: (event: SelectChangeEvent<number>) => void;
+  onPageChange: (newPage: number) => void;
+  onRowsPerPageChange: (rowsPerPage: number) => void;
 }
 
 export interface DistrictsCardViewProps {

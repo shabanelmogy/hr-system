@@ -17,6 +17,7 @@ describe("CardViewPagination", () => {
               of: "من",
               items: "العناصر",
               itemsPerPage: "عدد العناصر في الصفحة",
+              pages: "الصفحات",
             },
           },
         },
@@ -38,5 +39,7 @@ describe("CardViewPagination", () => {
 
     expect(html).toContain("1-10");
     expect(html).toContain("العناصر");
+    expect(html).toContain('aria-label="الصفحات"');
+    expect(html).toContain("<nav");
   });
 });

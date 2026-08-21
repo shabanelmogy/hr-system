@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 // components/DistrictsCardView.jsx
 import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
-import type { SelectChangeEvent } from "@mui/material/Select";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDistrictSearch } from "../hooks/useDistrictQueries";
@@ -228,13 +227,12 @@ const DistrictsCardView = ({
     return processedDistricts.slice(startIndex, startIndex + rowsPerPage);
   }, [processedDistricts, page, rowsPerPage]);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    void event;
+  const handleChangePage = (newPage: number) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: SelectChangeEvent<number>) => {
-    setRowsPerPage(Number(event.target.value));
+  const handleChangeRowsPerPage = (newRowsPerPage: number) => {
+    setRowsPerPage(newRowsPerPage);
     setPage(0);
   };
 

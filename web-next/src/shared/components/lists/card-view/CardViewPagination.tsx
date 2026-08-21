@@ -1,14 +1,18 @@
 import {
   Box,
+  FormControl,
+  InputLabel,
   MenuItem,
   Pagination,
   Paper,
   Select,
   Stack,
   Typography,
+  alpha,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import type { SelectChangeEvent } from "@mui/material/Select";
-import { useEffect } from "react";
+import { useEffect, useId } from "react";
 import { useTranslation } from "react-i18next";
 import { getCardPageCorrection, getCardPaginationState } from "./pagination";
 
@@ -18,8 +22,8 @@ export interface CardViewPaginationProps {
   totalItems: number;
   itemsPerPageOptions: number[];
   itemsLabel?: string;
-  onPageChange: (event: unknown, newPage: number) => void;
-  onRowsPerPageChange: (event: SelectChangeEvent<number>) => void;
+  onPageChange: (newPage: number) => void;
+  onRowsPerPageChange: (rowsPerPage: number) => void;
 }
 
 const CardViewPagination = ({
@@ -32,108 +36,103 @@ const CardViewPagination = ({
   onRowsPerPageChange,
 }: CardViewPaginationProps) => {
   const { t } = useTranslation();
+  const theme = useTheme();
+  const isCompact = useMediaQuery(theme.breakpoints.down("sm"));
+  const rowsPerPageLabelId = useId();
   const pagination = getCardPaginationState(page, rowsPerPage, totalItems);
   const itemsLabel = itemsLabelProp ?? t("pagination.items", { defaultValue: "items" });
 
   useEffect(() => {
     const correctedPage = getCardPageCorrection(page, pagination.page);
     if (correctedPage !== null) {
-      onPageChange(undefined, correctedPage);
+      onPageChange(correctedPage);
     }
   }, [onPageChange, page, pagination.page]);
 
   return (
-    <Paper sx={{ mt: 3, p: { xs: 2, sm: 3 } }}>
+    <Paper
+      component="nav"
+      aria-label={t("pagination.pages")}
+      variant="outlined"
+      sx={{
+        mt: 3,
+        p: { xs: 1.5, sm: 2 },
+        borderColor: alpha(theme.palette.primary.main, 0.16),
+        background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.04)}, ${theme.palette.background.paper})`,
+      }}
+    >
       <Stack
-        direction="row"
-        spacing={2}
+        direction={{ xs: "column", lg: "row" }}
+        spacing={{ xs: 1.5, sm: 2 }}
         sx={{
           justifyContent: "space-between",
           alignItems: "center",
-          "@media (max-width:660px)": {
-            flexDirection: "column",
-          },
         }}
       >
-        {/* Left side - Showing info and items per page */}
         <Stack
-          direction="row"
-          spacing={2}
+          direction={{ xs: "column", sm: "row" }}
+          spacing={1.5}
           sx={{
             alignItems: "center",
-            order: 1,
-            "@media (max-width:660px)": {
-              justifyContent: "space-between",
-              width: "100%",
-            },
-            "@media (max-width:599.95px)": {
-              justifyContent: "center",
-            },
+            width: { xs: "100%", lg: "auto" },
+            justifyContent: { xs: "space-between", sm: "flex-start" },
           }}
         >
           <Typography
             variant="body2"
             sx={{
               color: "text.secondary",
-              textAlign: "center",
-            }}>
+              fontWeight: 500,
+              textAlign: { xs: "center", sm: "start" },
+            }}
+            aria-live="polite"
+          >
             {totalItems === 0
               ? `${t("pagination.showing")} 0 of 0 ${itemsLabel}`
               : `${t("pagination.showing")} ${pagination.start}-${pagination.end} ${t("pagination.of")} ${totalItems} ${itemsLabel}`}
           </Typography>
 
-          <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
-            <Typography
-              variant="body2"
-              sx={{
-                color: "text.secondary",
-                whiteSpace: "nowrap"
-              }}>            
-              {t("pagination.itemsPerPage")}
-            </Typography>
-            <Select size="small" value={rowsPerPage} onChange={onRowsPerPageChange} sx={{ minWidth: 80 }}>
+          <FormControl size="small" sx={{ minWidth: 148 }}>
+            <InputLabel id={rowsPerPageLabelId}>{t("pagination.itemsPerPage")}</InputLabel>
+            <Select
+              label={t("pagination.itemsPerPage")}
+              labelId={rowsPerPageLabelId}
+              onChange={(event) => onRowsPerPageChange(Number(event.target.value))}
+              value={rowsPerPage}
+            >
               {itemsPerPageOptions.map((option) => (
                 <MenuItem key={option} value={option}>
                   {option}
                 </MenuItem>
               ))}
             </Select>
-          </Stack>
+          </FormControl>
         </Stack>
 
-        {/* Right side - Pagination controls */}
         {totalItems > 0 && (
           <Box
             sx={{
-              order: 2,
-              maxWidth: "100%",
               display: "flex",
-              justifyContent: "flex-start",
-              overflowX: "visible",
-              whiteSpace: "normal",
+              justifyContent: { xs: "center", lg: "flex-end" },
+              maxWidth: "100%",
+              overflowX: "auto",
+              pb: { xs: 0.25, sm: 0 },
+              width: { xs: "100%", lg: "auto" },
               "& .MuiPagination-ul": { flexWrap: "nowrap" },
-              "@media (max-width:724px)": {
-                justifyContent: "center",
-                overflowX: "auto",
-                whiteSpace: "nowrap",
-                width: "100%",
-                "& .MuiPaginationItem-firstLast": {
-                  display: "none",
-                },
-              },
             }}
           >
             <Pagination
-              count={pagination.pageCount}
-              page={pagination.page + 1}
-              onChange={(event, value) => onPageChange(event, value - 1)}
+              aria-label={t("pagination.pages")}
+              boundaryCount={isCompact ? 0 : 1}
               color="primary"
+              count={pagination.pageCount}
+              onChange={(_, value) => onPageChange(value - 1)}
+              page={pagination.page + 1}
               showFirstButton
               showLastButton
-              siblingCount={1}
-              boundaryCount={1}
-              size="medium"
-              sx={{ display: "inline-flex", "& .MuiPagination-ul": { flexWrap: "nowrap" } }}
+              siblingCount={isCompact ? 0 : 1}
+              size={isCompact ? "small" : "medium"}
+              sx={{ display: "inline-flex", flexShrink: 0 }}
             />
           </Box>
         )}

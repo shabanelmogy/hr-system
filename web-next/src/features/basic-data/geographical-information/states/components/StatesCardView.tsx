@@ -1,6 +1,5 @@
 import { CardViewSkeleton } from "@/shared/components/lists/card-view";
 import { Box, Grid } from "@mui/material";
-import type { SelectChangeEvent } from "@mui/material/Select";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { StatesCardViewProps } from "./card-view/StateCard.types";
@@ -70,10 +69,6 @@ const StatesCardView = ({
     );
   }
 
-  const handleRowsPerPageChange = (event: SelectChangeEvent<number>) => {
-    onPageSizeChange(Number(event.target.value));
-  };
-
   const handleSelectionChange = (stateId: number, selected: boolean) => {
     onSelectedStateIdsChange(
       selected
@@ -115,8 +110,8 @@ const StatesCardView = ({
         rowsPerPage={pageSize}
         totalItems={totalCount}
         itemsPerPageOptions={pageSizeOptions}
-        onPageChange={(_, nextPage) => onPageChange(nextPage)}
-        onRowsPerPageChange={handleRowsPerPageChange}
+        onPageChange={onPageChange}
+        onRowsPerPageChange={onPageSizeChange}
       />
     </Box>
   );
