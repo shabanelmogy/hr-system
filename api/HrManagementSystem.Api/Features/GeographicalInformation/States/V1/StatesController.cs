@@ -12,7 +12,7 @@ public class StatesController(IStateService stateService) : ControllerBase
 {
     private readonly IStateService _stateService = stateService;
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetAll(System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetAll(System.Threading.CancellationToken)"]/*' />
     [HttpGet]
     [HasPermission(Permissions.ViewStates)]
     [ProducesResponseType(typeof(IEnumerable<StateResponse>), StatusCodes.Status200OK)]
@@ -24,7 +24,7 @@ public class StatesController(IStateService stateService) : ControllerBase
         return Ok(states);
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetAllByCountry(System.Int32,System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetAllByCountry(System.Int32,System.Threading.CancellationToken)"]/*' />
     [HttpGet("by-country/{countryId}")]
     [HasPermission(Permissions.ViewStates)]
     [ProducesResponseType(typeof(IEnumerable<StateResponse>), StatusCodes.Status200OK)]
@@ -36,7 +36,7 @@ public class StatesController(IStateService stateService) : ControllerBase
         return Ok(states);
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetByID(System.Int32,System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetByID(System.Int32,System.Threading.CancellationToken)"]/*' />
     [HttpGet("{id}")]
     [HasPermission(Permissions.ViewStates)]
     [ProducesResponseType(typeof(StateResponse), StatusCodes.Status200OK)]
@@ -49,7 +49,7 @@ public class StatesController(IStateService stateService) : ControllerBase
         return response.IsSuccess ? Ok(response.Value) : response.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetStateWithDistricts(System.Int32,System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetStateWithDistricts(System.Int32,System.Threading.CancellationToken)"]/*' />
     [HttpGet("{id}/districts")]
     [HasPermission(Permissions.ViewStates)]
     [ProducesResponseType(typeof(StateResponse), StatusCodes.Status200OK)]
@@ -62,7 +62,7 @@ public class StatesController(IStateService stateService) : ControllerBase
         return response.IsSuccess ? Ok(response.Value) : response.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.Add(HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts.StateRequest,System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.Add(HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts.StateRequest,System.Threading.CancellationToken)"]/*' />
     [HttpPost]
     [HasPermission(Permissions.CreateStates)]
     [ProducesResponseType(typeof(StateResponse), StatusCodes.Status201Created)]
@@ -76,7 +76,7 @@ public class StatesController(IStateService stateService) : ControllerBase
         return result.IsSuccess ? CreatedAtAction(nameof(GetByID), new { id = result.Value.Id }, result.Value) : result.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.Update(HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts.StateRequest,System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.Update(HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts.StateRequest,System.Threading.CancellationToken)"]/*' />
     [HttpPut]
     [HasPermission(Permissions.EditStates)]
     [ProducesResponseType(typeof(StateResponse), StatusCodes.Status200OK)]
@@ -91,7 +91,7 @@ public class StatesController(IStateService stateService) : ControllerBase
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.Delete(System.Int32,System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.Delete(System.Int32,System.Threading.CancellationToken)"]/*' />
     [HttpDelete("{id}")]
     [HasPermission(Permissions.DeleteStates)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -105,7 +105,7 @@ public class StatesController(IStateService stateService) : ControllerBase
         return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetCount(System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/StatesController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetCount(System.Threading.CancellationToken)"]/*' />
     [HttpGet("count")]
     [HasPermission(Permissions.ViewStates)]
     [ProducesResponseType(typeof(StatesCountResponse), StatusCodes.Status200OK)]

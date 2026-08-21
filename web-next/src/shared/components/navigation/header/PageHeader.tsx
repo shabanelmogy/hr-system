@@ -71,6 +71,7 @@ function MultiViewPageHeader({
   showActions = { add: true, refresh: true, export: false, filter: false },
   additionalChips = [],
   sx = {},
+  compact = true,
   onViewTypeChange,
   viewComponents = {},
   enableActivity = false,
@@ -114,6 +115,7 @@ function MultiViewPageHeader({
     viewType,
     viewOptions,
     additionalChips,
+    compact,
     onViewChange: handleViewChange,
   };
 

@@ -45,6 +45,8 @@ export interface MultiViewPageHeaderProps {
   showActions?: HeaderActions;
   additionalChips?: ComponentProps<typeof Chip>[];
   sx?: ComponentProps<typeof Paper>["sx"];
+  /** Reduces the vertical spacing for dense data-management screens. */
+  compact?: boolean;
   onViewTypeChange?: (viewType: ViewType) => void;
   viewComponents?: Record<string, ComponentType>;
   enableActivity?: boolean;

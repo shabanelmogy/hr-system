@@ -27,5 +27,5 @@ The setup command uses the native mkcert executable downloaded by Next.js, so
 a global `mkcert` command is not required. Existing certificate files are moved
 to timestamped `.stale-*` backups before replacement.
 
-See `docs/architecture/frontend-architecture-reference.md` for the frontend architecture conventions.
+See [`../documentation/web-next/architecture/frontend-architecture-reference.md`](../documentation/web-next/architecture/frontend-architecture-reference.md) for the frontend architecture conventions.
 

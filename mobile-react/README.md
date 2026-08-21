@@ -27,6 +27,6 @@ Navigation paths are centralized in `src/core/constants/routes.ts`. Add a consta
 
 Before adding a feature or layout, read:
 
-- `docs/MOBILE_ARCHITECTURE.md` for dependency and navigation boundaries.
-- `docs/MOBILE_FEATURE_GUIDE.md` for the implementation template and definition of done.
-- `docs/MOBILE_STYLE_GUIDE.md` for tokens, responsive layout, RTL and accessibility.
+- [`../documentation/mobile-react/MOBILE_ARCHITECTURE.md`](../documentation/mobile-react/MOBILE_ARCHITECTURE.md) for dependency and navigation boundaries.
+- [`../documentation/mobile-react/MOBILE_FEATURE_GUIDE.md`](../documentation/mobile-react/MOBILE_FEATURE_GUIDE.md) for the implementation template and definition of done.
+- [`../documentation/mobile-react/MOBILE_STYLE_GUIDE.md`](../documentation/mobile-react/MOBILE_STYLE_GUIDE.md) for tokens, responsive layout, RTL and accessibility.

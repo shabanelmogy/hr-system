@@ -30,3 +30,14 @@ Rules:
 - If an implementation or fix does not satisfy the user on the first attempt, stop iterative guessing and research the issue on the web before making another implementation attempt.
 - Prefer current official documentation and primary sources for the relevant framework, library, or platform.
 - Base the next change on the documented behavior, and cite the sources used when reporting the result.
+
+## Centralized documentation system
+
+- All project-owned guides live under [`documentation/`](documentation/README.md). Do not create new `Docs/`, `docs/`, or `doc/` trees inside application projects.
+- Before creating or restructuring a feature that spans API, `web-next`, or `mobile-react`, read [`documentation/system/README.md`](documentation/system/README.md) and run `./documentation/system/Generate-Documentation.ps1 -Check`.
+- Use [`documentation/system/features/countries/required-files.json`](documentation/system/features/countries/required-files.json) to discover the complete Countries evidence surface. Verify current source before applying the pattern to another feature.
+- The Countries authorities are the cross-platform master plus the API, web, and mobile profiles listed in `documentation/system/recipe-manifest.json`.
+- Work through generated phases 00 through 06 in order. Phase 06 is mandatory for handoff.
+- Never edit `documentation/system/generated/` directly. Update a canonical numbered section, recipe template, or manifest and regenerate.
+- Keep runtime source in its owning application. Documentation manifests reference source files; they do not duplicate them.
+- Copy Countries architecture and verification discipline, but do not copy Countries-only fields, optional views, or documented findings unless the new feature requires them.

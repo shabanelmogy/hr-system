@@ -24,6 +24,7 @@ type DesktopHeaderLayoutProps = {
   viewType: ViewType;
   viewOptions: ViewOption[];
   additionalChips: ComponentProps<typeof MuiChip>[];
+  compact: boolean;
   onViewChange: (
     event: MouseEvent<HTMLElement> | null,
     value: ViewType | null,
@@ -40,16 +41,23 @@ export default function DesktopHeaderLayout(props: DesktopHeaderLayoutProps) {
   return (
     <Box
       sx={{
-        p: { xs: 2, md: 2.5, xl: 3 },
+        p: props.compact ? { xs: 1, md: 1.25 } : { xs: 2, md: 2.5, xl: 3 },
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        gap: 2,
+        gap: props.compact ? 1 : 2,
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", flex: 1, minWidth: 0 }}>
         <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: props.compact ? 0.75 : 1,
+              mb: props.compact ? 0.25 : 0.5,
+            }}
+          >
             {props.showBackButton && props.onBack ? (
               <BackButton onClick={props.onBack} size="small" />
             ) : null}
@@ -60,7 +68,7 @@ export default function DesktopHeaderLayout(props: DesktopHeaderLayoutProps) {
             ) : null}
             <Typography
               component="h1"
-              variant="h5"
+              variant={props.compact ? "h6" : "h5"}
               sx={{
                 color: "text.primary",
                 fontWeight: 600,
@@ -75,7 +83,7 @@ export default function DesktopHeaderLayout(props: DesktopHeaderLayoutProps) {
             sx={{
               display: "flex",
               alignItems: "center",
-              gap: 1,
+              gap: props.compact ? 0.5 : 1,
               flexWrap: "wrap",
               marginInlineStart: titleOffset,
             }}
@@ -99,7 +107,7 @@ export default function DesktopHeaderLayout(props: DesktopHeaderLayoutProps) {
         sx={{
           display: "flex",
           alignItems: "center",
-          gap: 1.5,
+          gap: props.compact ? 1 : 1.5,
           minWidth: 0,
           flexShrink: 0,
         }}
@@ -107,17 +115,19 @@ export default function DesktopHeaderLayout(props: DesktopHeaderLayoutProps) {
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexShrink: 0 }}>
           <HeaderActions
             actions={props.actions}
+            compact={props.compact}
             onAdd={props.onAdd}
             onRefresh={props.onRefresh}
             onFilter={props.onFilter}
             exportOptions={props.exportOptions}
           />
         </Box>
-        <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+        <Divider orientation="vertical" flexItem sx={{ mx: props.compact ? 0.5 : 1 }} />
         <ViewToggle
           value={props.viewType}
           options={props.viewOptions}
           showLabels
+          compact={props.compact}
           onChange={props.onViewChange}
         />
       </Box>

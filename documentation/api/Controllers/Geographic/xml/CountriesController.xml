@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  CountriesController external XML documentation.
+  Canonical integration guide: documentation/api/Controllers/Geographic/CountriesController.md
+-->
+<doc>
+  <members>
+    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.GetPage(HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountries.GetCountriesQuery,System.Threading.CancellationToken)">
+      <summary>Returns the server-paged country management collection.</summary>
+      <remarks>
+        Supports pageNumber, pageSize, search, status, currencyCode, hasStates,
+        sortBy, and sortDirection. Requires <c>Countries:View</c>.
+      </remarks>
+      <param name="query">Validated paging, search, filter, and sort criteria.</param>
+      <param name="cancellationToken">Request cancellation token.</param>
+      <returns>A <c>PageResponse&lt;CountryListItemResponse&gt;</c>.</returns>
+      <response code="200">Page returned.</response>
+      <response code="400">Query validation failed.</response>
+      <response code="401">Authentication is missing or invalid.</response>
+      <response code="403">Tenant membership or permission was denied.</response>
+    </member>
+
+    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.GetLookup(System.Threading.CancellationToken)">
+      <summary>Returns lightweight active countries for selectors.</summary>
+      <remarks>Requires <c>Countries:View</c>.</remarks>
+      <param name="cancellationToken">Request cancellation token.</param>
+      <returns>Active <c>SimpleCountryResponse</c> items.</returns>
+      <response code="200">Lookup returned.</response>
+      <response code="401">Authentication is missing or invalid.</response>
+      <response code="403">Tenant membership or permission was denied.</response>
+    </member>
+
+    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.GetById(System.Int32,System.Threading.CancellationToken)">
+      <summary>Returns one active or archived country without its states.</summary>
+      <remarks>Requires <c>Countries:View</c>.</remarks>
+      <param name="id">Country identifier.</param>
+      <param name="cancellationToken">Request cancellation token.</param>
+      <returns>A <c>CountryDetailResponse</c>.</returns>
+      <response code="200">Country returned.</response>
+      <response code="404">Country was not found.</response>
+      <response code="401">Authentication is missing or invalid.</response>
+      <response code="403">Tenant membership or permission was denied.</response>
+    </member>
+
+    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.GetWithStates(System.Int32,System.Threading.CancellationToken)">
+      <summary>Returns one country with its active states.</summary>
+      <remarks>Requires <c>Countries:View</c>.</remarks>
+      <param name="id">Country identifier.</param>
+      <param name="cancellationToken">Request cancellation token.</param>
+      <returns>A <c>CountryResponse</c> with active states.</returns>
+      <response code="200">Country and states returned.</response>
+      <response code="404">Country was not found.</response>
+      <response code="401">Authentication is missing or invalid.</response>
+      <response code="403">Tenant membership or permission was denied.</response>
+    </member>
+
+    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.Create(HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.CreateCountry.CreateCountryCommand,System.Threading.CancellationToken)">
+      <summary>Creates one country.</summary>
+      <remarks>Requires <c>Countries:Create</c>.</remarks>
+      <param name="command">Country fields; the server normalizes optional codes.</param>
+      <param name="cancellationToken">Request cancellation token.</param>
+      <returns>The created <c>CountryDetailResponse</c>.</returns>
+      <response code="201">Country created.</response>
+      <response code="400">Validation failed.</response>
+      <response code="409">A duplicate was detected.</response>
+      <response code="401">Authentication is missing or invalid.</response>
+      <response code="403">Tenant membership or permission was denied.</response>
+    </member>
+
+    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.CreateBulk(HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts.CreateCountriesRequest,System.Threading.CancellationToken)">
+      <summary>Atomically creates multiple countries.</summary>
+      <remarks>Requires <c>Countries:Create</c>.</remarks>
+      <param name="request">A collection containing 1 through 100 countries.</param>
+      <param name="cancellationToken">Request cancellation token.</param>
+      <returns>A <c>CreateCountriesResponse</c> containing createdCount.</returns>
+      <response code="201">All countries were created.</response>
+      <response code="400">Validation failed or no countries were provided.</response>
+      <response code="409">A duplicate was detected.</response>
+      <response code="401">Authentication is missing or invalid.</response>
+      <response code="403">Tenant membership or permission was denied.</response>
+    </member>
+
+    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.Update(System.Int32,HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts.UpdateCountryRequest,System.Threading.CancellationToken)">
+      <summary>Updates one active country.</summary>
+      <remarks>The identifier comes from the route. Requires <c>Countries:Edit</c>.</remarks>
+      <param name="id">Country identifier.</param>
+      <param name="request">Mutable country fields without an identifier.</param>
+      <param name="cancellationToken">Request cancellation token.</param>
+      <returns>The updated <c>CountryDetailResponse</c>.</returns>
+      <response code="200">Country updated.</response>
+      <response code="400">Validation failed.</response>
+      <response code="404">Active country was not found.</response>
+      <response code="409">A duplicate was detected.</response>
+      <response code="401">Authentication is missing or invalid.</response>
+      <response code="403">Tenant membership or permission was denied.</response>
+    </member>
+
+    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.Archive(System.Int32,System.Threading.CancellationToken)">
+      <summary>Archives one active country.</summary>
+      <remarks>Requires <c>Countries:Delete</c>. This is not a lifecycle toggle.</remarks>
+      <param name="id">Country identifier.</param>
+      <param name="cancellationToken">Request cancellation token.</param>
+      <returns>No response body.</returns>
+      <response code="204">Country archived.</response>
+      <response code="400">Active state dependencies block archival.</response>
+      <response code="404">Active country was not found.</response>
+      <response code="401">Authentication is missing or invalid.</response>
+      <response code="403">Tenant membership or permission was denied.</response>
+    </member>
+
+    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.Restore(System.Int32,System.Threading.CancellationToken)">
+      <summary>Restores one archived country.</summary>
+      <remarks>Requires <c>Countries:Delete</c>.</remarks>
+      <param name="id">Country identifier.</param>
+      <param name="cancellationToken">Request cancellation token.</param>
+      <returns>No response body.</returns>
+      <response code="204">Country restored.</response>
+      <response code="404">Archived country was not found.</response>
+      <response code="401">Authentication is missing or invalid.</response>
+      <response code="403">Tenant membership or permission was denied.</response>
+    </member>
+
+    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.BulkArchive(HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts.BulkArchiveCountriesRequest,System.Threading.CancellationToken)">
+      <summary>Atomically archives up to 100 countries.</summary>
+      <remarks>
+        Requires <c>Countries:Delete</c>. IDs must be positive and distinct. Missing
+        IDs or an active state dependency fail the entire operation; already archived
+        countries are idempotent.
+      </remarks>
+      <param name="request">A collection containing 1 through 100 country IDs.</param>
+      <param name="cancellationToken">Request cancellation token.</param>
+      <returns>A <c>BulkArchiveCountriesResponse</c> containing archivedCount.</returns>
+      <response code="200">All active requested countries were archived.</response>
+      <response code="400">Validation failed or an active state dependency blocked archival.</response>
+      <response code="404">At least one requested country was not found.</response>
+      <response code="401">Authentication is missing or invalid.</response>
+      <response code="403">Tenant membership or permission was denied.</response>
+    </member>
+  </members>
+</doc>

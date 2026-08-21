@@ -45,6 +45,7 @@ type MobileHeaderLayoutProps = {
   dataCount: number;
   totalLabel: string;
   additionalChips: ComponentProps<typeof MuiChip>[];
+  compact: boolean;
   onViewChange: (
     event: MouseEvent<HTMLElement> | null,
     value: ViewType | null,
@@ -70,8 +71,15 @@ export default function MobileHeaderLayout(props: MobileHeaderLayoutProps) {
   const isMenuOpen = Boolean(menuAnchor);
 
   return (
-    <Box sx={{ p: 2 }}>
-      <Box sx={{ display: "flex", alignItems: "center", mb: 1, gap: 1 }}>
+    <Box sx={{ p: props.compact ? 1.25 : 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          mb: props.compact ? 0.5 : 1,
+          gap: props.compact ? 0.5 : 1,
+        }}
+      >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, flex: 1, minWidth: 0 }}>
           {props.showBackButton && props.onBack ? (
             <BackButton onClick={props.onBack} size="small" />
@@ -87,7 +95,7 @@ export default function MobileHeaderLayout(props: MobileHeaderLayoutProps) {
             sx={{
               color: "text.primary",
               fontWeight: 600,
-              fontSize: "1.1rem",
+              fontSize: props.compact ? "1rem" : "1.1rem",
               minWidth: 0,
               overflowWrap: "anywhere",
             }}
@@ -134,9 +142,9 @@ export default function MobileHeaderLayout(props: MobileHeaderLayoutProps) {
         sx={{
           display: "flex",
           alignItems: "center",
-          gap: 1,
+          gap: props.compact ? 0.5 : 1,
           flexWrap: "wrap",
-          mb: 2,
+          mb: props.compact ? 1 : 2,
           marginInlineStart: titleOffset,
         }}
       >

@@ -31,6 +31,20 @@ export class LegacyWebReference {
   constructor(readonly replacement: WebNextFrontend) {}
 }
 
+export class MobileReactFrontend {
+  readonly path = "mobile-react";
+  readonly apiClient = "mobile-react/src/core/api/api-service.ts";
+  readonly environment = "mobile-react/src/core/config/env.ts";
+  readonly routeDefinitions = "mobile-react/src/core/constants/routes.ts";
+
+  constructor(readonly backend: HrManagementSystemApi) {}
+
+  consumesHttpApi(): string {
+    return this.backend.handleHttpRequest();
+  }
+}
+
 export const api = new HrManagementSystemApi();
 export const webNext = new WebNextFrontend(api);
+export const mobileReact = new MobileReactFrontend(api);
 export const legacyWeb = new LegacyWebReference(webNext);

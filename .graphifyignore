@@ -1,7 +1,7 @@
 .git/
 graphify-out/
 
-# The canonical application graph is api/HrManagementSystem + web-next.
+# The canonical application graph is api/HrManagementSystem + web-next + mobile-react.
 # Keep the legacy Vite frontend available as source reference without indexing it.
 web/
 

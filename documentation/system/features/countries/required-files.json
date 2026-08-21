@@ -1,0 +1,433 @@
+{
+  "schemaVersion": 1,
+  "feature": "countries",
+  "purpose": "Minimum evidence set for reviewing or reproducing the Countries feature across API, Next.js, and Expo without copying runtime source into documentation.",
+  "sourceCollections": [
+    {
+      "id": "api-application-feature",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Application/Features/GeographicalInformation/Countries",
+      "minimumFiles": 30,
+      "purpose": "CQRS contracts, handlers, validators, errors, abstractions, and mapping"
+    },
+    {
+      "id": "api-infrastructure-feature",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Countries",
+      "minimumFiles": 7,
+      "purpose": "Persistence stores, configuration, audit, scheduling, and background delivery"
+    },
+    {
+      "id": "web-feature",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries",
+      "minimumFiles": 45,
+      "purpose": "Complete browser feature boundary including views, forms, import, reports, hooks, services, and tests"
+    },
+    {
+      "id": "mobile-feature",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/basic-data/countries",
+      "minimumFiles": 14,
+      "purpose": "Complete mobile feature boundary including schemas, API, queries, screen, form, report, and tests"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide documentation and graph guidance"
+    },
+    {
+      "id": "master-review",
+      "layer": "documentation",
+      "path": "documentation/project/COUNTRIES_FEATURE_FULL_REVIEW.md",
+      "purpose": "Cross-platform authority and reconciliation"
+    },
+    {
+      "id": "api-profile",
+      "layer": "documentation",
+      "path": "documentation/api/Countries_API_Implementation_Profile.md",
+      "purpose": "Applied API contract"
+    },
+    {
+      "id": "web-profile",
+      "layer": "documentation",
+      "path": "documentation/web-next/features/countries-frontend-reference.md",
+      "purpose": "Applied browser contract"
+    },
+    {
+      "id": "mobile-profile",
+      "layer": "documentation",
+      "path": "documentation/mobile-react/countries-mobile-reference.md",
+      "purpose": "Applied mobile contract"
+    },
+    {
+      "id": "api-controller",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Api/Features/GeographicalInformation/Countries/V1/CountriesController.cs",
+      "purpose": "Versioned HTTP surface and permission boundary"
+    },
+    {
+      "id": "api-entity",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Domain/GeographicalInformation/Countries/Entities/Country.cs",
+      "purpose": "Domain state and relationships"
+    },
+    {
+      "id": "api-entity-configuration",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryConfiguration.cs",
+      "purpose": "Database shape, lengths, indexes, and relationship mapping"
+    },
+    {
+      "id": "api-db-context",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Persistence/ApplicationDbContext.cs",
+      "purpose": "Country DbSet and persistence boundary"
+    },
+    {
+      "id": "api-di-entities",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Dependencies/EntitiesService.cs",
+      "purpose": "Feature store and job registrations"
+    },
+    {
+      "id": "api-di-validation",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Dependencies/DatabaseService.cs",
+      "purpose": "Validation and persistence registrations"
+    },
+    {
+      "id": "api-mapping-scan",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Dependencies/MapsetrService.cs",
+      "purpose": "Mapster configuration discovery"
+    },
+    {
+      "id": "api-permissions",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Application/Common/Consts/Permissions.cs",
+      "purpose": "Countries permission constants"
+    },
+    {
+      "id": "api-localization-en",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Localization/Resources/en-US.json",
+      "purpose": "Stable English errors and notifications"
+    },
+    {
+      "id": "api-localization-ar",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Localization/Resources/ar-EG.json",
+      "purpose": "Stable Arabic errors and notifications"
+    },
+    {
+      "id": "api-handler-tests",
+      "layer": "api-test",
+      "path": "api/HrManagementSystem.Tests/CountryCqrsHandlerTests.cs",
+      "purpose": "CQRS behavior coverage"
+    },
+    {
+      "id": "api-architecture-tests",
+      "layer": "api-test",
+      "path": "api/HrManagementSystem.Tests/CountryCqrsArchitectureTests.cs",
+      "purpose": "Feature boundary and architecture coverage"
+    },
+    {
+      "id": "api-controller-tests",
+      "layer": "api-test",
+      "path": "api/HrManagementSystem.Tests/CountriesControllerCqrsTests.cs",
+      "purpose": "HTTP-to-CQRS surface coverage"
+    },
+    {
+      "id": "web-agent-guidance",
+      "layer": "web-next-config",
+      "path": "web-next/AGENTS.md",
+      "purpose": "Scoped browser build rules"
+    },
+    {
+      "id": "web-route",
+      "layer": "web-next",
+      "path": "web-next/src/app/(main)/basic-data/(geographical-information)/countries/page.tsx",
+      "purpose": "Thin App Router entry"
+    },
+    {
+      "id": "web-public-api",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/index.ts",
+      "purpose": "Feature boundary"
+    },
+    {
+      "id": "web-page-controller",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/pages/CountriesPage.tsx",
+      "purpose": "Feature orchestration"
+    },
+    {
+      "id": "web-list-logic",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/hooks/useCountryGridLogic.ts",
+      "purpose": "Single server-list state owner"
+    },
+    {
+      "id": "web-query-hooks",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/hooks/useCountryQueries.ts",
+      "purpose": "Query keys, reads, mutations, and invalidation"
+    },
+    {
+      "id": "web-service",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/services/countryService.ts",
+      "purpose": "HTTP serialization"
+    },
+    {
+      "id": "web-types",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/types/Country.ts",
+      "purpose": "Browser-side shared contract types"
+    },
+    {
+      "id": "web-query-mapper",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/utils/countryPageQuery.ts",
+      "purpose": "Paging, search, filter, and sort mapping"
+    },
+    {
+      "id": "web-permission-matrix",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/utils/countryPermissions.ts",
+      "purpose": "Feature action eligibility"
+    },
+    {
+      "id": "web-multi-view",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/components/CountriesMultiView.tsx",
+      "purpose": "Grid, cards, chart, report, and import composition"
+    },
+    {
+      "id": "web-grid",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/components/grid-view/CountriesDataGrid.tsx",
+      "purpose": "Server-driven grid and toolbar integration"
+    },
+    {
+      "id": "web-grid-toolbar",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/components/data-grid/toolbar/DataGridToolbar.tsx",
+      "purpose": "Reusable aligned search and grid controls"
+    },
+    {
+      "id": "web-grid-options",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/components/data-grid/toolbar/GridOptionsButton.tsx",
+      "purpose": "Reusable columns, density, status, and action menu"
+    },
+    {
+      "id": "web-feature-layout",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/components/layout/feature-module/FeatureModuleLayout.tsx",
+      "purpose": "Reusable feature shell and compact breadcrumb card"
+    },
+    {
+      "id": "web-page-header",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/components/navigation/header/PageHeader.tsx",
+      "purpose": "Reusable multi-view header"
+    },
+    {
+      "id": "web-api-registry",
+      "layer": "web-next-config",
+      "path": "web-next/src/config/api/basicData.ts",
+      "purpose": "Countries endpoint registration"
+    },
+    {
+      "id": "web-route-registry",
+      "layer": "web-next-config",
+      "path": "web-next/src/config/routes.ts",
+      "purpose": "Typed browser routes"
+    },
+    {
+      "id": "web-auth-permissions",
+      "layer": "web-next-config",
+      "path": "web-next/src/lib/auth/permissions.ts",
+      "purpose": "Client permission constants"
+    },
+    {
+      "id": "web-route-access",
+      "layer": "web-next-config",
+      "path": "web-next/src/lib/auth/route-access.ts",
+      "purpose": "Route authorization mapping"
+    },
+    {
+      "id": "web-navigation",
+      "layer": "web-next-config",
+      "path": "web-next/src/features/basic-data/navigation/basicDataNavigation.tsx",
+      "purpose": "Basic-data navigation entry"
+    },
+    {
+      "id": "web-realtime",
+      "layer": "web-next-config",
+      "path": "web-next/src/features/realtime/realtimeQueryRegistry.ts",
+      "purpose": "Realtime query invalidation"
+    },
+    {
+      "id": "web-translation-en",
+      "layer": "web-next-config",
+      "path": "web-next/src/locales/en/translation.json",
+      "purpose": "English labels and messages"
+    },
+    {
+      "id": "web-translation-ar",
+      "layer": "web-next-config",
+      "path": "web-next/src/locales/ar/translation.json",
+      "purpose": "Arabic labels and RTL content"
+    },
+    {
+      "id": "web-package",
+      "layer": "web-next-config",
+      "path": "web-next/package.json",
+      "purpose": "Browser verification commands and dependencies"
+    },
+    {
+      "id": "mobile-agent-guidance",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/AGENTS.md",
+      "purpose": "Scoped Expo build rules"
+    },
+    {
+      "id": "mobile-route",
+      "layer": "mobile-react",
+      "path": "mobile-react/app/(main)/basic-data/geographical-information/countries.tsx",
+      "purpose": "Thin Expo Router entry"
+    },
+    {
+      "id": "mobile-public-api",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/basic-data/countries/index.ts",
+      "purpose": "Feature boundary"
+    },
+    {
+      "id": "mobile-screen",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/basic-data/countries/screens/CountriesScreen.tsx",
+      "purpose": "List, modes, permissions, and action orchestration"
+    },
+    {
+      "id": "mobile-types",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/basic-data/countries/types/country.ts",
+      "purpose": "Mobile shared contract types"
+    },
+    {
+      "id": "mobile-schemas",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/basic-data/countries/api/country-schemas.ts",
+      "purpose": "Runtime response and request validation"
+    },
+    {
+      "id": "mobile-api",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/basic-data/countries/api/country-api.ts",
+      "purpose": "Endpoint and query serialization"
+    },
+    {
+      "id": "mobile-query-keys",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/basic-data/countries/queries/country-keys.ts",
+      "purpose": "Stable query-key family"
+    },
+    {
+      "id": "mobile-query-hooks",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/basic-data/countries/queries/use-countries.ts",
+      "purpose": "Reads, mutations, and cache invalidation"
+    },
+    {
+      "id": "mobile-server-list-state",
+      "layer": "mobile-react-shared",
+      "path": "mobile-react/src/shared/listing/useServerListState.ts",
+      "purpose": "Reusable controlled server-list state"
+    },
+    {
+      "id": "mobile-list-screen",
+      "layer": "mobile-react-shared",
+      "path": "mobile-react/src/shared/components/multi-view/AppListScreen.tsx",
+      "purpose": "Reusable table, cards, filters, and report shell"
+    },
+    {
+      "id": "mobile-data-table",
+      "layer": "mobile-react-shared",
+      "path": "mobile-react/src/shared/components/data-table/AppDataTable.tsx",
+      "purpose": "Reusable mobile data table"
+    },
+    {
+      "id": "mobile-form",
+      "layer": "mobile-react-shared",
+      "path": "mobile-react/src/shared/components/forms/AppForm.tsx",
+      "purpose": "Reusable validated form shell"
+    },
+    {
+      "id": "mobile-screen-shell",
+      "layer": "mobile-react-shared",
+      "path": "mobile-react/src/shared/components/layout/AppScreen.tsx",
+      "purpose": "Safe-area and responsive screen shell"
+    },
+    {
+      "id": "mobile-page-header",
+      "layer": "mobile-react-shared",
+      "path": "mobile-react/src/shared/components/layout/AppPageHeader.tsx",
+      "purpose": "Reusable responsive page header"
+    },
+    {
+      "id": "mobile-route-constants",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/src/core/constants/routes.ts",
+      "purpose": "Typed mobile route path"
+    },
+    {
+      "id": "mobile-route-manifest",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/src/features/auth/rbac/route-manifest.ts",
+      "purpose": "Permission-protected route registration"
+    },
+    {
+      "id": "mobile-navigation",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/src/features/basic-data/screens/GeographicalInformationScreen.tsx",
+      "purpose": "Basic-data navigation entry"
+    },
+    {
+      "id": "mobile-realtime",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/src/features/realtime/realtime-query-registry.ts",
+      "purpose": "Realtime query invalidation"
+    },
+    {
+      "id": "mobile-translation-en",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/src/core/localization/translations/en-basic-data.ts",
+      "purpose": "English labels and messages"
+    },
+    {
+      "id": "mobile-translation-ar",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/src/core/localization/translations/ar-basic-data.ts",
+      "purpose": "Arabic labels and RTL content"
+    },
+    {
+      "id": "mobile-api-tests",
+      "layer": "mobile-react-test",
+      "path": "mobile-react/src/features/basic-data/countries/api/__tests__/country-api.test.ts",
+      "purpose": "Mobile endpoint serialization and schema coverage"
+    },
+    {
+      "id": "mobile-package",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/package.json",
+      "purpose": "Mobile verification commands and dependencies"
+    }
+  ]
+}

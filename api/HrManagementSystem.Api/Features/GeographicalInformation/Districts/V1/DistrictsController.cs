@@ -11,7 +11,7 @@ public class DistrictsController(IDistrictService districtService) : ControllerB
 {
     private readonly IDistrictService _districtService = districtService;
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetAll(System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetAll(System.Threading.CancellationToken)"]/*' />
     [HttpGet]
     [HasPermission(Permissions.ViewDistricts)]
     [ProducesResponseType(typeof(IEnumerable<DistrictResponse>), StatusCodes.Status200OK)]
@@ -23,7 +23,7 @@ public class DistrictsController(IDistrictService districtService) : ControllerB
         return Ok(districts);
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetAllByState(System.Int32,System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetAllByState(System.Int32,System.Threading.CancellationToken)"]/*' />
     [HttpGet("by-state/{stateId}")]
     [HasPermission(Permissions.ViewDistricts)]
     [ProducesResponseType(typeof(IEnumerable<DistrictResponse>), StatusCodes.Status200OK)]
@@ -35,7 +35,7 @@ public class DistrictsController(IDistrictService districtService) : ControllerB
         return Ok(districts);
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetByID(System.Int32,System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetByID(System.Int32,System.Threading.CancellationToken)"]/*' />
     [HttpGet("{id}")]
     [HasPermission(Permissions.ViewDistricts)]
     [ProducesResponseType(typeof(DistrictResponse), StatusCodes.Status200OK)]
@@ -48,7 +48,7 @@ public class DistrictsController(IDistrictService districtService) : ControllerB
         return response.IsSuccess ? Ok(response.Value) : response.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetDistrictWithAddresses(System.Int32,System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetDistrictWithAddresses(System.Int32,System.Threading.CancellationToken)"]/*' />
     [HttpGet("{id}/addresses")]
     [HasPermission(Permissions.ViewDistricts)]
     [ProducesResponseType(typeof(DistrictResponse), StatusCodes.Status200OK)]
@@ -61,7 +61,7 @@ public class DistrictsController(IDistrictService districtService) : ControllerB
         return response.IsSuccess ? Ok(response.Value) : response.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.Add(HrManagementSystem.Application.Features.GeographicalInformation.Districts.Contracts.DistrictRequest,System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.Add(HrManagementSystem.Application.Features.GeographicalInformation.Districts.Contracts.DistrictRequest,System.Threading.CancellationToken)"]/*' />
     [HttpPost]
     [HasPermission(Permissions.CreateDistricts)]
     [ProducesResponseType(typeof(DistrictResponse), StatusCodes.Status201Created)]
@@ -77,7 +77,7 @@ public class DistrictsController(IDistrictService districtService) : ControllerB
             : result.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.Update(HrManagementSystem.Application.Features.GeographicalInformation.Districts.Contracts.DistrictRequest,System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.Update(HrManagementSystem.Application.Features.GeographicalInformation.Districts.Contracts.DistrictRequest,System.Threading.CancellationToken)"]/*' />
     [HttpPut]
     [HasPermission(Permissions.EditDistricts)]
     [ProducesResponseType(typeof(DistrictResponse), StatusCodes.Status201Created)]
@@ -92,7 +92,7 @@ public class DistrictsController(IDistrictService districtService) : ControllerB
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.Delete(System.Int32,System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.Delete(System.Int32,System.Threading.CancellationToken)"]/*' />
     [HttpDelete("{id}")]
     [HasPermission(Permissions.DeleteDistricts)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -106,7 +106,7 @@ public class DistrictsController(IDistrictService districtService) : ControllerB
         return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 
-    /// <include file='../../../../../Docs/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetCount(System.Threading.CancellationToken)"]/*' />
+    /// <include file='../../../../../../documentation/api/Controllers/Geographic/xml/DistrictsController.xml' path='doc/members/member[@name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetCount(System.Threading.CancellationToken)"]/*' />
     [HttpGet("count")]
     [HasPermission(Permissions.ViewDistricts)]
     [ProducesResponseType(typeof(DistrictsCountResponse), StatusCodes.Status200OK)]

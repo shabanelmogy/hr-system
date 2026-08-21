@@ -181,11 +181,11 @@ function ModuleContextBar({
       component="header"
       sx={{
         display: "flex",
-        minHeight: 58,
+        minHeight: 46,
         alignItems: "center",
-        gap: 1.25,
-        mb: 2,
-        pb: 1.5,
+        gap: 1,
+        mb: 1.25,
+        pb: 0.75,
         borderBottom: 1,
         borderColor: "divider",
       }}
