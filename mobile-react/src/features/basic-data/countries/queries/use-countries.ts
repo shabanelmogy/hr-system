@@ -5,7 +5,11 @@ import { countryKeys } from './country-keys';
 import type { CountryPageQuery, CountryRequest } from '../types/country';
 
 export function useCountries(query: CountryPageQuery) {
-  return useQuery({ queryKey: countryKeys.list(query), queryFn: () => countryApi.getPage(query) });
+  return useQuery({
+    queryKey: countryKeys.list(query),
+    queryFn: () => countryApi.getPage(query),
+    placeholderData: (previous) => previous,
+  });
 }
 
 export function useCountry(id: number | null) {
