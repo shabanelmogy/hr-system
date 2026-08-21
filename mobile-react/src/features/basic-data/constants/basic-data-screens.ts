@@ -1,5 +1,5 @@
 export const BASIC_DATA_SCREENS = {
   overview: 'index',
-  geographicalInformation: 'geographical-information/index',
-  organizationalStructure: 'organizational-structure/index',
+  geographicalInformation: 'geographical-information',
+  organizationalStructure: 'organizational-structure',
 } as const;
