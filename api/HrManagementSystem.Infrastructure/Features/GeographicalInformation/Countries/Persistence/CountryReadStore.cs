@@ -3,6 +3,7 @@ using HrManagementSystem.Application.Features.GeographicalInformation.Countries.
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountries;
 using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
+using System.Linq.Expressions;
 
 namespace HrManagementSystem.Infrastructure.Features.GeographicalInformation.Countries.Persistence;
 
@@ -25,14 +26,11 @@ public sealed class CountryReadStore(
 
         if (!string.IsNullOrWhiteSpace(request.Search))
         {
-            var search = request.Search.Trim().ToUpper();
-            query = query.Where(country =>
-                country.NameAr.ToUpper().Contains(search) ||
-                country.NameEn.ToUpper().Contains(search) ||
-                (country.Alpha2Code != null && country.Alpha2Code.ToUpper().Contains(search)) ||
-                (country.Alpha3Code != null && country.Alpha3Code.ToUpper().Contains(search)) ||
-                (country.PhoneCode != null && country.PhoneCode.ToUpper().Contains(search)) ||
-                (country.CurrencyCode != null && country.CurrencyCode.ToUpper().Contains(search)));
+            query = ApplySearch(
+                query,
+                request.SearchField,
+                request.SearchOperator,
+                request.Search.Trim().ToUpper());
         }
 
         if (!string.IsNullOrWhiteSpace(request.CurrencyCode))
@@ -90,6 +88,85 @@ public sealed class CountryReadStore(
 
     private IQueryable<Country> ActiveCountries() =>
         context.Countries.AsNoTracking().Where(country => !country.IsDeleted);
+
+    private static IQueryable<Country> ApplySearch(
+        IQueryable<Country> query,
+        string? searchField,
+        string? searchOperator,
+        string search)
+    {
+        var normalizedField = searchField?.ToUpperInvariant() ?? "ALL";
+        var normalizedOperator = searchOperator?.ToUpperInvariant() ?? "CONTAINS";
+        string[] propertyNames = normalizedField switch
+        {
+            "NAMEAR" => [nameof(Country.NameAr)],
+            "NAMEEN" => [nameof(Country.NameEn)],
+            "ALPHA2CODE" => [nameof(Country.Alpha2Code)],
+            "ALPHA3CODE" => [nameof(Country.Alpha3Code)],
+            "PHONECODE" => [nameof(Country.PhoneCode)],
+            "CURRENCYCODE" => [nameof(Country.CurrencyCode)],
+            _ =>
+            [
+                nameof(Country.NameAr),
+                nameof(Country.NameEn),
+                nameof(Country.Alpha2Code),
+                nameof(Country.Alpha3Code),
+                nameof(Country.PhoneCode),
+                nameof(Country.CurrencyCode)
+            ]
+        };
+        var country = Expression.Parameter(typeof(Country), "country");
+        var conditions = propertyNames
+            .Select(propertyName => CreateSearchCondition(
+                Expression.Property(country, propertyName),
+                normalizedOperator,
+                search))
+            .ToArray();
+        var requiresEveryColumn = normalizedOperator is "DOESNOTCONTAIN" or "DOESNOTEQUAL";
+        var predicate = conditions.Aggregate((current, next) =>
+            requiresEveryColumn
+                ? Expression.AndAlso(current, next)
+                : Expression.OrElse(current, next));
+
+        return query.Where(Expression.Lambda<Func<Country, bool>>(predicate, country));
+    }
+
+    private static Expression CreateSearchCondition(
+        Expression property,
+        string searchOperator,
+        string search)
+    {
+        var isNull = Expression.Equal(property, Expression.Constant(null, typeof(string)));
+        var hasValue = Expression.Not(isNull);
+        var normalizedProperty = Expression.Call(
+            property,
+            nameof(string.ToUpper),
+            Type.EmptyTypes);
+        var searchValue = Expression.Constant(search);
+        Expression match = searchOperator switch
+        {
+            "EQUALS" or "DOESNOTEQUAL" => Expression.Equal(normalizedProperty, searchValue),
+            "STARTSWITH" => Expression.Call(
+                normalizedProperty,
+                nameof(string.StartsWith),
+                Type.EmptyTypes,
+                searchValue),
+            "ENDSWITH" => Expression.Call(
+                normalizedProperty,
+                nameof(string.EndsWith),
+                Type.EmptyTypes,
+                searchValue),
+            _ => Expression.Call(
+                normalizedProperty,
+                nameof(string.Contains),
+                Type.EmptyTypes,
+                searchValue)
+        };
+
+        return searchOperator is "DOESNOTCONTAIN" or "DOESNOTEQUAL"
+            ? Expression.OrElse(isNull, Expression.Not(match))
+            : Expression.AndAlso(hasValue, match);
+    }
 
     private static IQueryable<Country> ApplyOrdering(
         IQueryable<Country> query,

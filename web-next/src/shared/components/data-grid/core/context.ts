@@ -1,10 +1,11 @@
 import { createContext, useContext, type ReactNode } from "react";
-import type { DataGridToolbarSearchConfig } from "./types";
+import type { DataGridToolbarSearchConfig, GridOptionsContent } from "./types";
 
 export interface DataGridShellContextValue {
   showRecordNavigation: boolean;
   showColumnFilterButton: boolean;
   showGridOptions: boolean;
+  gridOptionsContent?: GridOptionsContent;
   onToolbarAdd?: () => void;
   toolbarSearch?: DataGridToolbarSearchConfig;
   toolbarContent?: ReactNode;

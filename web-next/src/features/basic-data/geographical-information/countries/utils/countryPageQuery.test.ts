@@ -9,11 +9,19 @@ describe("toCountryPageQuery", () => {
       searchValue: "ignored immediate value",
       columnName: "createdOn",
       sortDirection: "DESC",
-      filters: { status: "archived", currencyCode: "EGP", hasStates: false },
+      filters: {
+        status: "archived",
+        currencyCode: "EGP",
+        hasStates: false,
+        searchField: "nameEn",
+        searchOperator: "startsWith",
+      },
     }, "Egypt")).toEqual({
       pageNumber: 3,
       pageSize: 25,
       search: "Egypt",
+      searchField: "nameEn",
+      searchOperator: "startsWith",
       status: "archived",
       currencyCode: "EGP",
       hasStates: false,
@@ -31,5 +39,19 @@ describe("toCountryPageQuery", () => {
       sortDirection: "ASC",
       filters: { status: "active", currencyCode: "EG" },
     }, "").currencyCode).toBeUndefined();
+  });
+
+  it("uses the global contains search defaults when no search controls are selected", () => {
+    expect(toCountryPageQuery({
+      page: 0,
+      pageSize: 10,
+      searchValue: "",
+      columnName: "nameEn",
+      sortDirection: "ASC",
+      filters: { status: "active" },
+    }, "")).toMatchObject({
+      searchField: "all",
+      searchOperator: "contains",
+    });
   });
 });

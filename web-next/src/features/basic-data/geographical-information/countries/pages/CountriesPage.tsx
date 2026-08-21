@@ -39,6 +39,8 @@ const CountriesPage = () => {
     page,
     pageSize,
     searchValue,
+    searchField,
+    searchOperator,
     sortColumn,
     sortDirection,
     filter,
@@ -47,6 +49,8 @@ const CountriesPage = () => {
     setPage,
     setPageSize,
     setSearchValue,
+    setSearchField,
+    setSearchOperator,
     setSort,
     setFilter,
     setCurrencyCode,
@@ -114,6 +118,8 @@ const CountriesPage = () => {
         page={page}
         pageSize={pageSize}
         searchValue={searchValue}
+        searchField={searchField}
+        searchOperator={searchOperator}
         sortColumn={sortColumn}
         sortDirection={sortDirection}
         filter={filter}
@@ -122,6 +128,8 @@ const CountriesPage = () => {
         onPageChange={setPage}
         onPageSizeChange={setPageSize}
         onSearchChange={setSearchValue}
+        onSearchFieldChange={setSearchField}
+        onSearchOperatorChange={setSearchOperator}
         onSortChange={setSort}
         onFilterChange={setFilter}
         onCurrencyCodeChange={setCurrencyCode}

@@ -35,9 +35,28 @@ export type CountrySortColumn =
   | "currencyCode"
   | "createdOn";
 
+export type CountrySearchField =
+  | "all"
+  | "nameAr"
+  | "nameEn"
+  | "alpha2Code"
+  | "alpha3Code"
+  | "phoneCode"
+  | "currencyCode";
+
+export type CountrySearchOperator =
+  | "contains"
+  | "doesNotContain"
+  | "equals"
+  | "doesNotEqual"
+  | "startsWith"
+  | "endsWith";
+
 export interface CountryPageFilters {
   currencyCode?: string;
   hasStates?: boolean;
+  searchField?: CountrySearchField;
+  searchOperator?: CountrySearchOperator;
 }
 
 export type CountryStatus = "active" | "archived" | "all";

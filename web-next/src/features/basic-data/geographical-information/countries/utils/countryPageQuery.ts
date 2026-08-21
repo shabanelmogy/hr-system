@@ -14,6 +14,8 @@ export function toCountryPageQuery(
     pageNumber: state.page + 1,
     pageSize: state.pageSize,
     search: debouncedSearchValue || undefined,
+    searchField: state.filters.searchField ?? "all",
+    searchOperator: state.filters.searchOperator ?? "contains",
     status: state.filters.status,
     currencyCode: currencyCode?.length === 3 ? currencyCode : undefined,
     hasStates: state.filters.hasStates,

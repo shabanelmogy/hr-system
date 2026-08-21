@@ -71,6 +71,7 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   initialSortModel = [{ field: "id", sort: "asc" }],
   showNavigationButtons = true,
   showGridOptions = false,
+  gridOptionsContent,
   onToolbarAdd,
   toolbarSearch,
   toolbarContent,
@@ -140,12 +141,14 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
       showRecordNavigation: showNavigationButtons,
       showColumnFilterButton: dataGridProps.filterMode !== "server",
       showGridOptions,
+      gridOptionsContent,
       onToolbarAdd,
       toolbarSearch,
       toolbarContent,
     }),
     [
       dataGridProps.filterMode,
+      gridOptionsContent,
       onToolbarAdd,
       showGridOptions,
       showNavigationButtons,
@@ -306,7 +309,7 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
           paginationMode={paginationMode}
           rowCount={rowCount}
           checkboxSelection={checkboxSelection}
-          showToolbar={showToolbar ?? Boolean(onToolbarAdd || showGridOptions || toolbarSearch || toolbarContent)}
+          showToolbar={showToolbar ?? Boolean(onToolbarAdd || showGridOptions || toolbarSearch || toolbarContent || gridOptionsContent)}
           className={showNavigationButtons ? "" : "no-navigation"}
           slots={resolvedSlots}
           sx={resolvedSx}

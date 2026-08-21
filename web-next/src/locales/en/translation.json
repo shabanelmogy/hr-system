@@ -774,6 +774,19 @@
       "edited": "Edited"
     },
     "searchPlaceHolder": "Search countries by name, code, phone, or currency...",
+    "search": {
+      "column": "Column",
+      "condition": "Condition",
+      "allColumns": "All columns",
+      "operators": {
+        "contains": "Contains",
+        "doesNotContain": "Does not contain",
+        "equals": "Equals",
+        "doesNotEqual": "Does not equal",
+        "startsWith": "Starts with",
+        "endsWith": "Ends with"
+      }
+    },
     "country": "Country",
     "createdDate": "Created Date",
     "all": "All Countries",

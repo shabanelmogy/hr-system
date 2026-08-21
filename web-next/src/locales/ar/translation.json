@@ -778,6 +778,19 @@
       "edited": "معدلة"
     },
     "searchPlaceHolder": "ابحث باسم الدولة، الكود، الهاتف أو العملة...",
+    "search": {
+      "column": "العمود",
+      "condition": "الشرط",
+      "allColumns": "كل الأعمدة",
+      "operators": {
+        "contains": "يحتوي على",
+        "doesNotContain": "لا يحتوي على",
+        "equals": "يساوي",
+        "doesNotEqual": "لا يساوي",
+        "startsWith": "يبدأ بـ",
+        "endsWith": "ينتهي بـ"
+      }
+    },
     "country": "دولة",
     "createdDate": "تاريخ الانشاء",
     "all": "كل الدول",

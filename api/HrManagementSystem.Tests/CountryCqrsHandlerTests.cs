@@ -151,6 +151,47 @@ public sealed class CountryCqrsHandlerTests
     }
 
     [Fact]
+    public async Task ReadStore_AppliesTheSelectedSearchFieldAndOperator()
+    {
+        await using var context = CreateContext();
+        context.Countries.AddRange(
+            new Country { Id = 1, NameAr = "مصر", NameEn = "Egypt", Alpha2Code = "EG" },
+            new Country { Id = 2, NameAr = "الأردن", NameEn = "Jordan", Alpha2Code = "JO" });
+        await context.SaveChangesAsync();
+        context.ChangeTracker.Clear();
+        var store = new CountryReadStore(context, CreateConfig());
+
+        var exactCode = await store.GetPageAsync(
+            new GetCountriesQuery
+            {
+                Search = "eg",
+                SearchField = "alpha2Code",
+                SearchOperator = "equals"
+            },
+            CancellationToken.None);
+        var excludesName = await store.GetPageAsync(
+            new GetCountriesQuery
+            {
+                Search = "gypt",
+                SearchField = "nameEn",
+                SearchOperator = "doesNotContain"
+            },
+            CancellationToken.None);
+        var latinLetterInArabicName = await store.GetPageAsync(
+            new GetCountriesQuery
+            {
+                Search = "a",
+                SearchField = "nameAr",
+                SearchOperator = "contains"
+            },
+            CancellationToken.None);
+
+        Assert.Equal(1, Assert.Single(exactCode.Items).Id);
+        Assert.Equal(2, Assert.Single(excludesName.Items).Id);
+        Assert.Empty(latinLetterInArabicName.Items);
+    }
+
+    [Fact]
     public async Task ReadStore_DetailIncludesArchivedAndStatesFiltersArchivedStates()
     {
         await using var context = CreateContext();
@@ -581,6 +622,22 @@ public sealed class CountryCqrsHandlerTests
             Status = status,
             SortBy = sortBy,
             SortDirection = sortDirection
+        });
+
+        Assert.False(result.IsValid);
+    }
+
+    [Theory]
+    [InlineData("unknown", "contains")]
+    [InlineData("all", "unknown")]
+    public async Task PageValidator_RejectsInvalidSearchControls(
+        string searchField,
+        string searchOperator)
+    {
+        var result = await new GetCountriesQueryValidator().ValidateAsync(new GetCountriesQuery
+        {
+            SearchField = searchField,
+            SearchOperator = searchOperator
         });
 
         Assert.False(result.IsValid);

@@ -14,6 +14,8 @@ import { useTranslation } from "react-i18next";
 import type {
   CountryListItem,
   CountryListFilters,
+  CountrySearchField,
+  CountrySearchOperator,
   CountryStatus,
   CountrySortColumn,
   CreateCountryRequest,
@@ -35,7 +37,11 @@ import {
 type DialogType = "add" | "edit" | "view" | "delete" | null;
 export type CountryFilter = CountryStatus;
 
-const defaultCountryFilters: CountryListFilters = { status: "active" };
+const defaultCountryFilters: CountryListFilters = {
+  status: "active",
+  searchField: "all",
+  searchOperator: "contains",
+};
 
 export interface UseCountryGridLogicReturn {
   dialogType: DialogType;
@@ -52,6 +58,8 @@ export interface UseCountryGridLogicReturn {
   page: number;
   pageSize: number;
   searchValue: string;
+  searchField: CountrySearchField;
+  searchOperator: CountrySearchOperator;
   sortColumn: CountrySortColumn;
   sortDirection: "ASC" | "DESC";
   filter: CountryFilter;
@@ -60,6 +68,8 @@ export interface UseCountryGridLogicReturn {
   setPage: (page: number) => void;
   setPageSize: (pageSize: number) => void;
   setSearchValue: (value: string) => void;
+  setSearchField: (field: CountrySearchField) => void;
+  setSearchOperator: (operator: CountrySearchOperator) => void;
   setSort: (column: CountrySortColumn, direction: "ASC" | "DESC") => void;
   setFilter: (filter: CountryFilter) => void;
   setCurrencyCode: (currencyCode: string) => void;
@@ -157,6 +167,14 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
   const setSearchValue = useCallback((value: string) => {
     clearBulkSelection();
     list.setSearchValue(value);
+  }, [clearBulkSelection, list]);
+  const setSearchField = useCallback((searchField: CountrySearchField) => {
+    clearBulkSelection();
+    list.setFilters({ ...list.state.filters, searchField });
+  }, [clearBulkSelection, list]);
+  const setSearchOperator = useCallback((searchOperator: CountrySearchOperator) => {
+    clearBulkSelection();
+    list.setFilters({ ...list.state.filters, searchOperator });
   }, [clearBulkSelection, list]);
   const setSort = useCallback((column: CountrySortColumn, direction: "ASC" | "DESC") => {
     clearBulkSelection();
@@ -380,6 +398,8 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     page: list.state.page,
     pageSize: list.state.pageSize,
     searchValue: list.state.searchValue,
+    searchField: list.state.filters.searchField ?? "all",
+    searchOperator: list.state.filters.searchOperator ?? "contains",
     sortColumn: list.state.columnName,
     sortDirection: list.state.sortDirection,
     filter: list.state.filters.status,
@@ -390,6 +410,8 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     setPage,
     setPageSize,
     setSearchValue,
+    setSearchField,
+    setSearchOperator,
     setSort,
     setFilter,
     setCurrencyCode,

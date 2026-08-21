@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Archive } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Divider, ListItemIcon, ListItemText, MenuItem, Radio } from "@mui/material";
 import {
   GridApi,
   type GridPaginationModel,
@@ -10,11 +10,17 @@ import {
 } from "@mui/x-data-grid";
 import { ContentWrapper } from "@/shared/components/layout";
 import { MyDataGrid } from "@/shared/components/data-grid";
-import type { CountryListItem, CountrySortColumn, CountryStatus } from "../../types/Country";
+import { ResetButton } from "@/shared/components/lists/card-view/header-controls/ResetButton";
+import type {
+  CountryListItem,
+  CountrySearchField,
+  CountrySearchOperator,
+  CountrySortColumn,
+  CountryStatus,
+} from "../../types/Country";
 import type { CountryActionPermissions } from "../card-view/CountryCard.types";
 import { makeCountryActions } from "./GridActions";
 import { useCountryColumns } from "./Columns";
-import CountryGridFilters from "./CountryGridFilters";
 
 interface CountriesDataGridProps {
   countries: CountryListItem[];
@@ -32,13 +38,13 @@ interface CountriesDataGridProps {
   sortColumn: CountrySortColumn;
   sortDirection: "ASC" | "DESC";
   searchValue: string;
+  searchField: CountrySearchField;
+  searchOperator: CountrySearchOperator;
   onSearchChange: (value: string) => void;
+  onSearchFieldChange: (field: CountrySearchField) => void;
+  onSearchOperatorChange: (operator: CountrySearchOperator) => void;
   status: CountryStatus;
-  currencyCode: string;
-  hasStates: "all" | "with" | "without";
   onStatusChange: (value: CountryStatus) => void;
-  onCurrencyCodeChange: (value: string) => void;
-  onHasStatesChange: (value: "all" | "with" | "without") => void;
   onReset: () => void;
   selectedCountryIds: number[];
   onSelectedCountryIdsChange: (ids: number[]) => void;
@@ -70,13 +76,13 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
   sortColumn,
   sortDirection,
   searchValue,
+  searchField,
+  searchOperator,
   onSearchChange,
+  onSearchFieldChange,
+  onSearchOperatorChange,
   status,
-  currencyCode,
-  hasStates,
   onStatusChange,
-  onCurrencyCodeChange,
-  onHasStatesChange,
   onReset,
   selectedCountryIds,
   onSelectedCountryIdsChange,
@@ -121,30 +127,89 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
           placeholder: t("countries.searchPlaceHolder"),
           onChange: onSearchChange,
           onClear: () => onSearchChange(""),
+          column: {
+            label: t("countries.search.column"),
+            value: searchField,
+            onChange: (value) => onSearchFieldChange(value as CountrySearchField),
+            options: [
+              { value: "all", label: t("countries.search.allColumns") },
+              { value: "nameAr", label: t("general.nameAr") },
+              { value: "nameEn", label: t("general.nameEn") },
+              { value: "alpha2Code", label: t("countries.alpha2Code") },
+              { value: "alpha3Code", label: t("countries.alpha3Code") },
+              { value: "phoneCode", label: t("countries.phoneCode") },
+              { value: "currencyCode", label: t("countries.currencyCode") },
+            ],
+          },
+          operator: {
+            label: t("countries.search.condition"),
+            value: searchOperator,
+            onChange: (value) =>
+              onSearchOperatorChange(value as CountrySearchOperator),
+            options: [
+              { value: "contains", label: t("countries.search.operators.contains") },
+              {
+                value: "doesNotContain",
+                label: t("countries.search.operators.doesNotContain"),
+              },
+              { value: "equals", label: t("countries.search.operators.equals") },
+              {
+                value: "doesNotEqual",
+                label: t("countries.search.operators.doesNotEqual"),
+              },
+              {
+                value: "startsWith",
+                label: t("countries.search.operators.startsWith"),
+              },
+              { value: "endsWith", label: t("countries.search.operators.endsWith") },
+            ],
+          },
         }}
-        toolbarContent={(
+        toolbarContent={
+          <ResetButton onReset={onReset} fullWidth={false} height={40} />
+        }
+        gridOptionsContent={(closeMenu) => (
           <>
-            {permissions.canDelete ? (
-              <Button
-                color="warning"
-                size="small"
-                variant="outlined"
-                startIcon={<Archive />}
-                disabled={selectedCountryIds.length === 0 || isBulkArchiving}
-                onClick={onBulkArchive}
+            <MenuItem disabled>
+              <ListItemText primary={t("countries.status.label")} />
+            </MenuItem>
+            {(["active", "archived", "all"] as const).map((value) => (
+              <MenuItem
+                key={value}
+                selected={status === value}
+                onClick={() => {
+                  closeMenu();
+                  onStatusChange(value);
+                }}
               >
-                {t("countries.bulkArchiveAction", { count: selectedCountryIds.length })}
-              </Button>
+                <ListItemIcon>
+                  <Radio checked={status === value} size="small" />
+                </ListItemIcon>
+                <ListItemText primary={t(`countries.status.${value}`)} />
+              </MenuItem>
+            ))}
+            {permissions.canDelete ? (
+              <>
+                <Divider component="li" />
+                <MenuItem
+                  disabled={selectedCountryIds.length === 0 || isBulkArchiving}
+                  onClick={() => {
+                    closeMenu();
+                    onBulkArchive();
+                  }}
+                  sx={{ color: "warning.main" }}
+                >
+                  <ListItemIcon>
+                    <Archive fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={t("countries.bulkArchiveAction", {
+                      count: selectedCountryIds.length,
+                    })}
+                  />
+                </MenuItem>
+              </>
             ) : null}
-            <CountryGridFilters
-              status={status}
-              currencyCode={currencyCode}
-              hasStates={hasStates}
-              onStatusChange={onStatusChange}
-              onCurrencyCodeChange={onCurrencyCodeChange}
-              onHasStatesChange={onHasStatesChange}
-              onReset={onReset}
-            />
           </>
         )}
         checkboxSelection={permissions.canDelete}

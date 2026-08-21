@@ -1,6 +1,12 @@
 export { default as ClientDataGrid } from "./core/ClientDataGrid";
 export { default as MyDataGrid } from "./core/MyDataGrid";
-export type { DataGridToolbarSearchConfig, MyDataGridProps } from "./core/types";
+export type {
+  DataGridToolbarSearchConfig,
+  DataGridToolbarSearchOption,
+  DataGridToolbarSearchSelect,
+  GridOptionsContent,
+  MyDataGridProps,
+} from "./core/types";
 export { GridFooter } from "./navigation/GridFooter";
 export { DataGridToolbar } from "./toolbar/DataGridToolbar";
 export { default as MyDataTable } from "./table/MyDataTable";

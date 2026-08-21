@@ -3,7 +3,13 @@ import { Box } from "@mui/material";
 import type { GridApi, GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { CountryListItem, CountrySortColumn, CountryStatus } from "../types/Country";
+import type {
+  CountryListItem,
+  CountrySearchField,
+  CountrySearchOperator,
+  CountrySortColumn,
+  CountryStatus,
+} from "../types/Country";
 import CountriesCardView from "./CountriesCardView";
 import CountriesChartView from "./CountriesChartView";
 import type { CountryActionPermissions } from "./card-view/CountryCard.types";
@@ -33,6 +39,8 @@ interface CountriesMultiViewProps {
   page: number;
   pageSize: number;
   searchValue: string;
+  searchField: CountrySearchField;
+  searchOperator: CountrySearchOperator;
   sortColumn: CountrySortColumn;
   sortDirection: "ASC" | "DESC";
   filter: CountryStatus;
@@ -41,6 +49,8 @@ interface CountriesMultiViewProps {
   onPageChange: (page: number) => void;
   onPageSizeChange: (pageSize: number) => void;
   onSearchChange: (value: string) => void;
+  onSearchFieldChange: (field: CountrySearchField) => void;
+  onSearchOperatorChange: (operator: CountrySearchOperator) => void;
   onSortChange: (column: CountrySortColumn, direction: "ASC" | "DESC") => void;
   onFilterChange: (filter: CountryStatus) => void;
   onCurrencyCodeChange: (currencyCode: string) => void;
@@ -80,6 +90,8 @@ const CountriesMultiView = ({
   page,
   pageSize,
   searchValue,
+  searchField,
+  searchOperator,
   sortColumn,
   sortDirection,
   filter,
@@ -88,6 +100,8 @@ const CountriesMultiView = ({
   onPageChange,
   onPageSizeChange,
   onSearchChange,
+  onSearchFieldChange,
+  onSearchOperatorChange,
   onSortChange,
   onFilterChange,
   onCurrencyCodeChange,
@@ -194,13 +208,13 @@ const CountriesMultiView = ({
             sortColumn={sortColumn}
             sortDirection={sortDirection}
             searchValue={searchValue}
+            searchField={searchField}
+            searchOperator={searchOperator}
             onSearchChange={onSearchChange}
+            onSearchFieldChange={onSearchFieldChange}
+            onSearchOperatorChange={onSearchOperatorChange}
             status={filter}
-            currencyCode={currencyCode}
-            hasStates={hasStatesFilter}
             onStatusChange={onFilterChange}
-            onCurrencyCodeChange={onCurrencyCodeChange}
-            onHasStatesChange={onHasStatesFilterChange}
             onReset={onResetList}
             selectedCountryIds={selectedCountryIds}
             onSelectedCountryIdsChange={onSelectedCountryIdsChange}

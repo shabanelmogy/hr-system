@@ -77,6 +77,8 @@ public sealed class CountryCqrsArchitectureTests
         var properties = typeof(GetCountriesQuery).GetProperties().Select(property => property.Name).ToArray();
 
         Assert.Contains("Search", properties);
+        Assert.Contains("SearchField", properties);
+        Assert.Contains("SearchOperator", properties);
         Assert.Contains("Status", properties);
         Assert.Contains("SortBy", properties);
         Assert.DoesNotContain("Operation", properties);

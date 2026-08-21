@@ -8,9 +8,16 @@ export interface SearchBarProps {
   placeholder: string;
   onSearchChange: (value: string) => void;
   onClearSearch: () => void;
+  margin?: "none" | "dense" | "normal";
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, placeholder, onSearchChange, onClearSearch }) => {
+export const SearchBar: React.FC<SearchBarProps> = ({
+  searchTerm,
+  placeholder,
+  onSearchChange,
+  onClearSearch,
+  margin = "normal",
+}) => {
   const theme = useTheme();
   const { t } = useTranslation();
 
@@ -30,6 +37,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, placeholder, o
       })}
       startIcon={<Search color="action" />}
       size="small"
+      margin={margin}
       showClearButton={false}
       endAdornment={
         <IconButton

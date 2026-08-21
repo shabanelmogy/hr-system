@@ -1,16 +1,21 @@
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import ViewColumnOutlinedIcon from "@mui/icons-material/ViewColumnOutlined";
 import {
   Button,
+  Checkbox,
   Divider,
+  List,
   ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
+  Popover,
   Radio,
 } from "@mui/material";
 import {
-  GridPreferencePanelsValue,
+  gridColumnDefinitionsSelector,
+  gridColumnVisibilityModelSelector,
   gridDensitySelector,
   type GridDensity,
   useGridApiContext,
@@ -18,6 +23,7 @@ import {
   useGridSelector,
 } from "@mui/x-data-grid";
 import { useId, useState } from "react";
+import { useDataGridShell } from "../core/context";
 
 interface GridOptionsButtonProps {
   label: string;
@@ -38,27 +44,44 @@ const densityOptions: ReadonlyArray<{
 export function GridOptionsButton({ label }: GridOptionsButtonProps) {
   const apiRef = useGridApiContext();
   const rootProps = useGridRootProps();
+  const { gridOptionsContent } = useDataGridShell();
   const density = useGridSelector(apiRef, gridDensitySelector);
+  const columns = useGridSelector(apiRef, gridColumnDefinitionsSelector);
+  const columnVisibilityModel = useGridSelector(
+    apiRef,
+    gridColumnVisibilityModelSelector,
+  );
   const { localeText } = rootProps;
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [columnsAnchorEl, setColumnsAnchorEl] = useState<HTMLElement | null>(
+    null,
+  );
   const buttonId = useId();
   const menuId = `${buttonId}-menu`;
+  const columnsMenuId = `${buttonId}-columns-menu`;
   const isOpen = Boolean(anchorEl);
 
-  if (rootProps.disableColumnSelector && rootProps.disableDensitySelector) {
+  if (
+    rootProps.disableColumnSelector &&
+    rootProps.disableDensitySelector &&
+    !gridOptionsContent
+  ) {
     return null;
   }
 
-  const closeMenu = () => setAnchorEl(null);
-
-  const openColumnsPanel = () => {
-    closeMenu();
-    apiRef.current.showPreferences(
-      GridPreferencePanelsValue.columns,
-      `${buttonId}-columns-panel`,
-      buttonId,
-    );
+  const closeMenu = () => {
+    setColumnsAnchorEl(null);
+    setAnchorEl(null);
   };
+
+  const openColumnsMenu = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    setColumnsAnchorEl(event.currentTarget);
+  };
+
+  const visibleColumns = columns.filter(
+    (column) => !column.field.startsWith("__"),
+  );
 
   return (
     <>
@@ -84,11 +107,17 @@ export function GridOptionsButton({ label }: GridOptionsButtonProps) {
         transformOrigin={{ vertical: "top", horizontal: "right" }}
       >
         {!rootProps.disableColumnSelector ? (
-          <MenuItem onClick={openColumnsPanel}>
+          <MenuItem
+            aria-haspopup="menu"
+            aria-expanded={Boolean(columnsAnchorEl) ? "true" : undefined}
+            aria-controls={Boolean(columnsAnchorEl) ? columnsMenuId : undefined}
+            onClick={openColumnsMenu}
+          >
             <ListItemIcon>
               <ViewColumnOutlinedIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText primary={localeText.toolbarColumns} />
+            <ChevronRightIcon fontSize="small" />
           </MenuItem>
         ) : null}
         {!rootProps.disableColumnSelector && !rootProps.disableDensitySelector ? (
@@ -116,7 +145,62 @@ export function GridOptionsButton({ label }: GridOptionsButtonProps) {
               </MenuItem>
             ))
           : null}
+        {gridOptionsContent ? (
+          <>
+            <Divider component="li" />
+            {gridOptionsContent(closeMenu)}
+          </>
+        ) : null}
       </Menu>
+      <Popover
+        id={columnsMenuId}
+        anchorEl={columnsAnchorEl}
+        open={Boolean(columnsAnchorEl)}
+        onClose={() => setColumnsAnchorEl(null)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "left" }}
+        slotProps={{
+          paper: {
+            sx: { maxHeight: 420, minWidth: 280, width: "max-content" },
+          },
+        }}
+      >
+        <List dense disablePadding>
+          {visibleColumns.map((column) => {
+            const isVisible = columnVisibilityModel[column.field] !== false;
+            const isHideable = column.hideable !== false;
+
+            return (
+              <MenuItem
+                key={column.field}
+                disabled={!isHideable}
+                onClick={() => {
+                  if (isHideable) {
+                    apiRef.current.setColumnVisibility(
+                      column.field,
+                      !isVisible,
+                    );
+                  }
+                }}
+              >
+                <Checkbox
+                  edge="start"
+                  checked={isVisible}
+                  disabled={!isHideable}
+                  tabIndex={-1}
+                  disableRipple
+                  slotProps={{
+                    input: {
+                      "aria-label": `Toggle ${column.headerName ?? column.field}`,
+                    },
+                  }}
+                />
+                <ListItemText primary={column.headerName ?? column.field} />
+              </MenuItem>
+            );
+          })}
+        </List>
+      </Popover>
     </>
   );
 }
