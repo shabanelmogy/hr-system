@@ -78,41 +78,55 @@ const StatesCardView = ({
   };
 
   return (
-    <Box>
-      <Grid container spacing={3}>
-        {states.map((state, index) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={state.id}>
-            <StateCard
-              state={state}
-              index={index}
-              isHovered={hoveredCard === state.id}
-              isHighlighted={highlightVisible && String(highlightId) === String(state.id)}
-              highlightLabel={highlightVisible && String(highlightId) === String(state.id)
-                ? highlightLabel
-                : undefined}
-              onEdit={onEdit}
-              onDelete={onDelete}
-              onRestore={onRestore}
-              onView={onView}
-              onHover={setHoveredCard}
-              permissions={permissions}
-              selected={selectedStateIds.includes(state.id)}
-              onSelectedChange={permissions.canDelete && !state.isDeleted
-                ? (selected) => handleSelectionChange(state.id, selected)
-                : undefined}
-            />
-          </Grid>
-        ))}
-      </Grid>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0 }}>
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: 0,
+          overflowX: "hidden",
+          overflowY: "auto",
+          p: { xs: 1, md: 1.5 },
+          scrollbarGutter: "stable",
+        }}
+      >
+        <Grid container spacing={3}>
+          {states.map((state, index) => (
+            <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={state.id}>
+              <StateCard
+                state={state}
+                index={index}
+                isHovered={hoveredCard === state.id}
+                isHighlighted={highlightVisible && String(highlightId) === String(state.id)}
+                highlightLabel={highlightVisible && String(highlightId) === String(state.id)
+                  ? highlightLabel
+                  : undefined}
+                onEdit={onEdit}
+                onDelete={onDelete}
+                onRestore={onRestore}
+                onView={onView}
+                onHover={setHoveredCard}
+                permissions={permissions}
+                selected={selectedStateIds.includes(state.id)}
+                onSelectedChange={permissions.canDelete && !state.isDeleted
+                  ? (selected) => handleSelectionChange(state.id, selected)
+                  : undefined}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
 
-      <StateCardViewPagination
-        page={page}
-        rowsPerPage={pageSize}
-        totalItems={totalCount}
-        itemsPerPageOptions={pageSizeOptions}
-        onPageChange={onPageChange}
-        onRowsPerPageChange={onPageSizeChange}
-      />
+      <Box sx={{ flexShrink: 0, pt: 1.5, zIndex: 1 }}>
+        <StateCardViewPagination
+          page={page}
+          rowsPerPage={pageSize}
+          totalItems={totalCount}
+          itemsPerPageOptions={pageSizeOptions}
+          pinned
+          onPageChange={onPageChange}
+          onRowsPerPageChange={onPageSizeChange}
+        />
+      </Box>
     </Box>
   );
 };

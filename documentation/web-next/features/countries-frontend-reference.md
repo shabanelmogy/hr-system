@@ -306,6 +306,37 @@ does not depend on the current Countries page containing rows. Mobile has no
 Chart or XLSX Import view. That is an explicit platform profile, not permission
 to duplicate those operations with ad hoc components.
 
+### Web Cards applied profile
+
+Countries Cards use the same server-owned list state as Grid and Chart. The
+shared card toolbar exposes the Countries search-column choices (`all`, Arabic
+and English names, alpha codes, phone, and currency) and all six search
+conditions before the search input; Reset follows the shared sort controls. Its
+terminal Grid Options menu contains Status and the permission-gated bulk Archive action, while
+the shared Columns and Density controls remain available in the matching Grid
+toolbar. Shared sort-column and direction controls follow the search controls
+and accept only the Countries server sort allow-list.
+
+`CountriesCardView` renders a responsive `12 / 6 / 4 / 3` card grid
+(`xs / sm / md / lg`) from the current server page. It uses `EntityCard` for
+the fixed visual scaffold, guarded active-row selection, lifecycle actions,
+hover/reduced-motion treatment and a five-second create/edit highlight. Country
+content remains feature-specific; Currency and States are not extra Card toolbar
+filters.
+
+The card grid owns vertical overflow. `CountryCardViewPagination` is the final
+non-shrinking, pinned footer and delegates to shared `CardViewPagination` with
+the Countries server page size options `5`, `10`, `25`, and `50`. The footer
+shows a localized live range, page-size selector and responsive one-based page
+navigation while the controller remains zero-based. The Basic Data shell is
+viewport-bounded, so the document does not scroll to reach pagination; only the
+card-grid region scrolls when the page of cards exceeds its available space.
+
+Empty default results show the permitted Add path; filtered results show Clear
+criteria and Refresh. Selection clears through the shared server-list transition
+rules whenever criteria, page, or page size changes, and the archive menu action
+remains disabled while no eligible item is selected or a bulk mutation is busy.
+
 ## 6. Detail and Write Contract
 
 ### Form fields and validation

@@ -60,7 +60,8 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
           display: "flex",
           flexDirection: theme.direction === "rtl" ? "row-reverse" : "row",
           width: "100%",
-          minHeight: "100vh",
+          minHeight: dedicatedLayoutRoute ? 0 : "100vh",
+          height: dedicatedLayoutRoute ? "100dvh" : undefined,
           overflow: "hidden",
           bgcolor: "background.default",
           opacity: isLoggingOut ? 0 : 1,
@@ -88,10 +89,22 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
             flexGrow: 1,
             minWidth: 0,
             m: { xs: 1.5, sm: 2, md: 3 },
+            ...(dedicatedLayoutRoute && {
+              display: "flex",
+              flexDirection: "column",
+              minHeight: 0,
+              overflow: "hidden",
+            }),
           }}
         >
-          <ToolbarSpacer />
-          {children}
+          <ToolbarSpacer sx={{ flexShrink: 0 }} />
+          {dedicatedLayoutRoute ? (
+            <Box sx={{ display: "flex", flex: 1, flexDirection: "column", minHeight: 0 }}>
+              {children}
+            </Box>
+          ) : (
+            children
+          )}
         </Box>
       </Box>
 

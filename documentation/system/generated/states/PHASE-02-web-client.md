@@ -51,7 +51,7 @@ Implement the canonical browser feature with one server-managed list state share
 | states-web | 3 | `95ff792642bfed9c3e2e6720b788ec6098addfe6017c36fe1bee99c216624b4b` |
 | states-web | 4 | `16135891d42d8eb39e656598a474a71b59b7effe562deabecfce17c180e52390` |
 | states-web | 5 | `31edfadf929a3c8a57388ef60a51869579f6471df0760443ff662e97ffcef7ef` |
-| states-web | 6 | `979ba81120461ee67ed30c50251e0bf5e0f02398d6d7177cf8e765af30f2a88e` |
+| states-web | 6 | `1b640bfdb6e76bdb8ae12ba9ab0bb67b71094c49adc857a188e7d0352b723dd8` |
 | states-web | 7 | `dd6b988a8e7b8b83010b144e56d1cec974980774b9fd9155dd966a6167bed42c` |
 | states-web | 8 | `dec0c122194d60ca08d8135c4d8fa24774fbecc3f5dc9d9fb4df340f9b3259c8` |
 | states-web | 9 | `3103392ff8db16be591f2bf6d1e3bc0abfba246c3b6421fc00b0af2afcbbb665` |

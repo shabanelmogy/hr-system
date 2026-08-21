@@ -167,7 +167,14 @@ const StatesMultiView = ({
         />
       )}
 
-      <Box sx={{ flex: 1, minHeight: 0, overflow: "auto", position: "relative" }}>
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: 0,
+          overflow: currentView === "cards" ? "hidden" : "auto",
+          position: "relative",
+        }}
+      >
         {currentView === "grid" && (
           <StatesDataGrid
             states={states}

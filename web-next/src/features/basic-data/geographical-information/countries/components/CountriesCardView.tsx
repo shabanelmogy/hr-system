@@ -77,41 +77,55 @@ const CountriesCardView = ({
   };
 
   return (
-    <Box>
-      <Grid container spacing={3}>
-        {countries.map((country, index) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={country.id}>
-            <CountryCard
-              country={country}
-              index={index}
-              isHovered={hoveredCard === country.id}
-              isHighlighted={highlightVisible && String(highlightId) === String(country.id)}
-              highlightLabel={highlightVisible && String(highlightId) === String(country.id)
-                ? highlightLabel
-                : undefined}
-              onEdit={onEdit}
-              onDelete={onDelete}
-              onRestore={onRestore}
-              onView={onView}
-              onHover={setHoveredCard}
-              permissions={permissions}
-              selected={selectedCountryIds.includes(country.id)}
-              onSelectedChange={permissions.canDelete && !country.isDeleted
-                ? (selected) => handleSelectionChange(country.id, selected)
-                : undefined}
-            />
-          </Grid>
-        ))}
-      </Grid>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0 }}>
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: 0,
+          overflowX: "hidden",
+          overflowY: "auto",
+          p: { xs: 1, md: 1.5 },
+          scrollbarGutter: "stable",
+        }}
+      >
+        <Grid container spacing={3}>
+          {countries.map((country, index) => (
+            <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={country.id}>
+              <CountryCard
+                country={country}
+                index={index}
+                isHovered={hoveredCard === country.id}
+                isHighlighted={highlightVisible && String(highlightId) === String(country.id)}
+                highlightLabel={highlightVisible && String(highlightId) === String(country.id)
+                  ? highlightLabel
+                  : undefined}
+                onEdit={onEdit}
+                onDelete={onDelete}
+                onRestore={onRestore}
+                onView={onView}
+                onHover={setHoveredCard}
+                permissions={permissions}
+                selected={selectedCountryIds.includes(country.id)}
+                onSelectedChange={permissions.canDelete && !country.isDeleted
+                  ? (selected) => handleSelectionChange(country.id, selected)
+                  : undefined}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
 
-      <CountryCardViewPagination
-        page={page}
-        rowsPerPage={pageSize}
-        totalItems={totalCount}
-        itemsPerPageOptions={pageSizeOptions}
-        onPageChange={onPageChange}
-        onRowsPerPageChange={onPageSizeChange}
-      />
+      <Box sx={{ flexShrink: 0, pt: 1.5, zIndex: 1 }}>
+        <CountryCardViewPagination
+          page={page}
+          rowsPerPage={pageSize}
+          totalItems={totalCount}
+          itemsPerPageOptions={pageSizeOptions}
+          pinned
+          onPageChange={onPageChange}
+          onRowsPerPageChange={onPageSizeChange}
+        />
+      </Box>
     </Box>
   );
 };

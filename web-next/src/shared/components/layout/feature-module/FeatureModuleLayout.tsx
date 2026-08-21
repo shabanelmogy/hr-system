@@ -47,7 +47,15 @@ export default function FeatureModuleLayout({
   );
 
   return (
-    <Box sx={{ minWidth: 0 }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        minHeight: 0,
+        minWidth: 0,
+      }}
+    >
       <ModuleContextBar
         title={title}
         description={description}
@@ -69,9 +77,11 @@ export default function FeatureModuleLayout({
             xs: "minmax(0, 1fr)",
             lg: `${desktopExpanded ? expandedSidebarWidth : compactSidebarWidth}px minmax(0, 1fr)`,
           },
-          alignItems: "start",
+          alignItems: "stretch",
           gap: { xs: 0, lg: 2 },
           minWidth: 0,
+          flex: 1,
+          minHeight: 0,
           transition: theme.transitions.create("grid-template-columns", {
             duration: theme.transitions.duration.shortest,
           }),
@@ -83,10 +93,8 @@ export default function FeatureModuleLayout({
           sx={{
             display: { xs: "none", lg: "block" },
             width: desktopExpanded ? expandedSidebarWidth : compactSidebarWidth,
-            height: "calc(100vh - 126px)",
-            minHeight: 480,
-            position: "sticky",
-            top: 88,
+            height: "100%",
+            minHeight: 0,
             overflow: "hidden",
             border: 1,
             borderColor: "divider",
@@ -113,8 +121,20 @@ export default function FeatureModuleLayout({
           />
         </Paper>
 
-        <Box component="section" sx={{ minWidth: 0, width: "100%" }}>
-          {children}
+        <Box
+          component="section"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            minWidth: 0,
+            minHeight: 0,
+            overflow: "hidden",
+          }}
+        >
+          <Box sx={{ display: "flex", flex: 1, flexDirection: "column", minHeight: 0 }}>
+            {children}
+          </Box>
         </Box>
       </Box>
 
@@ -186,6 +206,7 @@ function ModuleContextBar({
         gap: 1,
         mb: 1.25,
         pb: 0.75,
+        flexShrink: 0,
         borderBottom: 1,
         borderColor: "divider",
       }}

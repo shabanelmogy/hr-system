@@ -186,7 +186,14 @@ const CountriesMultiView = ({
         />
       )}
 
-      <Box sx={{ flex: 1, minHeight: 0, overflow: "auto", position: "relative" }}>
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: 0,
+          overflow: visibleView === "cards" ? "hidden" : "auto",
+          position: "relative",
+        }}
+      >
         {visibleView === "grid" && (
           <CountriesDataGrid
             countries={countries}

@@ -56,6 +56,7 @@ export interface CountryCardViewPaginationProps {
   rowsPerPage: number;
   totalItems: number;
   itemsPerPageOptions: number[];
+  pinned?: boolean;
   onPageChange: (newPage: number) => void;
   onRowsPerPageChange: (rowsPerPage: number) => void;
 }

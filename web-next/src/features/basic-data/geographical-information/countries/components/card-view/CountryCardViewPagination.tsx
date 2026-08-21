@@ -7,6 +7,7 @@ const CountryCardViewPagination = ({
   rowsPerPage,
   totalItems,
   itemsPerPageOptions,
+  pinned,
   onPageChange,
   onRowsPerPageChange,
 }: CountryCardViewPaginationProps) => {
@@ -18,6 +19,7 @@ const CountryCardViewPagination = ({
       totalItems={totalItems}
       itemsPerPageOptions={itemsPerPageOptions}
       itemsLabel={t("countries.country")}
+      pinned={pinned}
       onPageChange={onPageChange}
       onRowsPerPageChange={onRowsPerPageChange}
     />

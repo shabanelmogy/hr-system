@@ -32,6 +32,36 @@ the same current server page and declares its current-row/total scope because no
 State report backend exists. Chart and import are deliberately absent; they are
 Countries-only capabilities without a States contract.
 
+### Web Cards applied profile
+
+States Cards use the same server-owned list state as Grid. The shared card
+toolbar renders the State search-column choices (`all`, English name, Arabic
+name, State code, and Country) and all six supported conditions before the
+search input, then the shared sort controls and Reset in the same aligned row.
+The terminal Grid Options menu owns Status and the permission-gated bulk Archive action; it does
+not add State-specific client filtering. Shared sort-column and direction
+controls follow search and accept only the State server sort allow-list.
+
+`StatesCardView` maps the current server page into the shared responsive
+`12 / 6 / 4 / 3` card grid (`xs / sm / md / lg`). It composes `EntityCard` for
+the fixed card scaffold, guarded active-row selection, action footer,
+hover/reduced-motion behavior, logical RTL positioning, and the temporary
+five-second create/edit highlight. State fields remain State-owned; do not add
+Countries-only card content or filters.
+
+The card grid—not the document—owns vertical overflow. `StateCardViewPagination`
+is the final non-shrinking pinned footer and delegates to shared
+`CardViewPagination` with State page sizes `5`, `10`, `25`, and `50`. It presents
+a localized live range, responsive one-based page navigation and a page-size
+selector while the server-list controller remains zero-based. The Basic Data
+feature shell is viewport-bounded so the pager stays at the bottom; only the
+cards area scrolls when needed.
+
+Default empty results preserve the permitted Add action; filtered empty results
+offer Clear criteria and Refresh. Selection clears through controller transitions
+on criteria/page/page-size changes, and bulk Archive is disabled with no eligible
+selection or while its mutation is pending.
+
 ## 7. Form and details
 
 `StateForm` uses React Hook Form/Zod and the Countries public lookup API for parent selection. Edit/view requests State detail, blocks submission on detail load failure, maps Country/duplicate API errors, and uses modal dirty/busy behavior. Code entry is normalized to uppercase at service/API boundaries.

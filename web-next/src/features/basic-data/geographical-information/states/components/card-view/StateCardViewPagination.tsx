@@ -7,6 +7,7 @@ const StateCardViewPagination = ({
   rowsPerPage,
   totalItems,
   itemsPerPageOptions,
+  pinned,
   onPageChange,
   onRowsPerPageChange,
 }: StateCardViewPaginationProps) => {
@@ -18,6 +19,7 @@ const StateCardViewPagination = ({
       totalItems={totalItems}
       itemsPerPageOptions={itemsPerPageOptions}
       itemsLabel={t("states.state")}
+      pinned={pinned}
       onPageChange={onPageChange}
       onRowsPerPageChange={onRowsPerPageChange}
     />

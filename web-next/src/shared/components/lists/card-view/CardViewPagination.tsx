@@ -22,6 +22,7 @@ export interface CardViewPaginationProps {
   totalItems: number;
   itemsPerPageOptions: number[];
   itemsLabel?: string;
+  pinned?: boolean;
   onPageChange: (newPage: number) => void;
   onRowsPerPageChange: (rowsPerPage: number) => void;
 }
@@ -32,6 +33,7 @@ const CardViewPagination = ({
   totalItems,
   itemsPerPageOptions,
   itemsLabel: itemsLabelProp,
+  pinned = false,
   onPageChange,
   onRowsPerPageChange,
 }: CardViewPaginationProps) => {
@@ -55,10 +57,11 @@ const CardViewPagination = ({
       aria-label={t("pagination.pages")}
       variant="outlined"
       sx={{
-        mt: 3,
+        mt: pinned ? 0 : 3,
         p: { xs: 1.5, sm: 2 },
         borderColor: alpha(theme.palette.primary.main, 0.16),
         background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.04)}, ${theme.palette.background.paper})`,
+        boxShadow: pinned ? `0 -8px 20px ${alpha(theme.palette.common.black, 0.06)}` : undefined,
       }}
     >
       <Stack

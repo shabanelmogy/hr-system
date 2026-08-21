@@ -205,6 +205,67 @@ Cards are optional. They consume the same criteria, rows, total, pagination, and
 background-fetch state as Grid. Presentation-only metrics must not look like
 persisted business facts.
 
+#### Required card-view composition
+
+Use the shared card-view pieces rather than creating a second local list or a
+raw MUI card layout:
+
+```text
+<Feature>MultiView
+  -> feature CardViewHeader
+     -> column + condition + search + sort + direction + Reset + terminal Grid Options menu
+  -> <Feature>CardView
+     -> scrollable responsive card grid
+        -> feature cards built on EntityCard
+     -> pinned CardViewPagination
+```
+
+- The feature CardViewHeader must expose every server criterion that stays
+  active in Cards. Place search-column and search-condition controls before the
+  search input, then render only API-allow-listed sort and direction controls.
+  Keep the controls and Reset in the shared aligned control row, and put status
+  plus permission-gated bulk actions in the final Grid Options menu. Do not
+  leave field-specific search criteria active but hidden after a view switch.
+- Cards, Grid, Charts, and Reports consume the same controlled zero-based page,
+  page size, search value, field, operator, sort, status, rows, total, and
+  background-fetch state. A CardView must never filter, sort, or paginate the
+  loaded server page locally.
+- Build feature cards on `EntityCard`. Keep domain title, chips, metrics and
+  lifecycle text feature-owned; preserve the shared fixed-card presentation,
+  hover/highlight treatment, reduced-motion behavior, action footer, logical
+  RTL positioning and accessible selection checkbox.
+- Selection is controlled by the feature controller. Render a checkbox only
+  when the record is eligible and the user has the lifecycle permission; clear
+  selected IDs when the server criteria, page, or page size changes. Put bulk
+  Archive behind Grid Options with its selected-count and pending-state guard.
+- Use loading, default-empty, filtered-no-results, and Retry states. New or
+  edited rows may receive the shared temporary highlight; it must not change
+  server ordering or criteria.
+
+#### Pagination and viewport rule
+
+`CardViewPagination` is a controlled shared footer: it receives zero-based
+state, presents one-based page numbers, corrects a now-invalid page when a
+total shrinks, emits a page-size value (not a DOM event), announces the visible
+range, and adapts its controls at narrow widths. The feature owns its allowed
+server page sizes.
+
+When Cards are used inside a management shell, the pagination footer must be
+the final non-shrinking child. The card grid is the only vertical scroll region:
+
+```text
+viewport-bounded feature shell (height + minHeight: 0)
+  -> MultiView (column, height: 100%, minHeight: 0)
+     -> card content (flex: 1, minHeight: 0, overflow: hidden)
+        -> card grid (overflowY: auto)
+     -> pagination footer (flexShrink: 0)
+```
+
+Do not make the document/page scroll merely to reach the pager. Do not use
+`overflow: hidden` unless every ancestor is height-bounded and the card grid has
+its own usable scroll region. Preserve horizontal safety for narrow pagination
+controls and use logical CSS properties for RTL.
+
 ### Chart and analytics
 
 Add only when there is a product need. A chart based on the current page must say
