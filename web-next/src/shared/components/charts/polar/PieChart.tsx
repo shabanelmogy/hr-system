@@ -52,6 +52,7 @@ const PieChart = ({
   showLabels = true,
   loading = false,
   error,
+  compact = false,
   innerRadius = 0, // Set > 0 for donut chart
   outerRadius = '75%',
   startAngle = 90,
@@ -164,6 +165,7 @@ const PieChart = ({
       error={error}
       dataCount={data.length}
       gradient={gradient}
+      compact={compact}
       {...props}
     >
       {chartContent}

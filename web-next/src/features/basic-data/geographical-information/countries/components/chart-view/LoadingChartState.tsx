@@ -8,7 +8,8 @@ const LoadingChartState: React.FC = () => {
     <ChartContainer
       title={t("countries.charts.title")}
       loading={true}
-      height={400}
+      height={200}
+      compact
       subtitle={undefined}
     />
   );

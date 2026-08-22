@@ -55,9 +55,15 @@ const CountriesChartView: React.FC<CountriesChartViewProps> = ({
   const visibleCurrencies = currencyData.length;
   const visibleStates = getTotalStatesCount(countries);
 
+  const chartGridItemSx = {
+    display: "flex",
+    minWidth: 0,
+    "& > *": { width: "100%" },
+  } as const;
+
   return (
-    <Box sx={{ boxSizing: "border-box", p: { xs: 1, md: 1.5 }, width: "100%" }}>
-      <Alert severity="info" sx={{ mb: 2 }}>
+    <Box sx={{ boxSizing: "border-box", px: { xs: 0.5, md: 0.75 }, pt: 0.5, width: "100%", minWidth: 0, overflowX: "hidden" }}>
+      <Alert severity="info" sx={{ mb: 0.75, py: 0 }}>
         {t("countries.charts.pageScope")}
       </Alert>
 
@@ -68,24 +74,28 @@ const CountriesChartView: React.FC<CountriesChartViewProps> = ({
         visibleStates={visibleStates}
       />
 
-      <Grid container spacing={3}>
-        <Grid size={{ xs: 12, md: 6 }}>
+      <Grid container spacing={0.75}>
+        <Grid size={{ xs: 12, md: 6 }} sx={chartGridItemSx}>
           <StatesChart data={statesData} />
         </Grid>
 
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, md: 6 }} sx={chartGridItemSx}>
           <StatesCoverageChart data={statesCoverageData} colors={colors} />
         </Grid>
 
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid
+          size={{ xs: 12, md: timelineData.length > 0 ? 6 : 12 }}
+          sx={chartGridItemSx}
+        >
           <CurrencyChart data={currencyData} />
         </Grid>
 
-        <Grid size={{ xs: 12, md: 6 }}>
-          <TimelineChart data={timelineData} />
-        </Grid>
+        {timelineData.length > 0 && (
+          <Grid size={{ xs: 12, md: 6 }} sx={chartGridItemSx}>
+            <TimelineChart data={timelineData} />
+          </Grid>
+        )}
       </Grid>
-
     </Box>
   );
 };

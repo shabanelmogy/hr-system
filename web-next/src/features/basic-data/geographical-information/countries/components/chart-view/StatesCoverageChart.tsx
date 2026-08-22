@@ -16,7 +16,9 @@ const StatesCoverageChart = ({ data, colors }: StatesCoverageChartProps) => {
       title={t("countries.charts.statesCoverage")}
       nameKey="name"
       valueKey="value"
-      height={400}
+      height={200}
+      fullHeight
+      compact
       colors={colors}
       showLegend
       showTooltip

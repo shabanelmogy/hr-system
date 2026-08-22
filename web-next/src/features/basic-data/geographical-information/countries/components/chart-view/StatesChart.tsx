@@ -28,7 +28,9 @@ const StatesChart: React.FC<StatesChartProps> = ({ data }) => {
           color: "#2196F3",
         }
       ]}
-      height={400}
+      height={200}
+      fullHeight
+      compact
       showLegend={true}
       showTooltip={true}
       showGrid={true}

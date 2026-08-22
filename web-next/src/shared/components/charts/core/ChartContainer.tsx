@@ -31,6 +31,7 @@ export interface ChartContainerProps extends Omit<PaperProps, "children" | "titl
   height?: number | string;
   gradient?: boolean;
   fullHeight?: boolean;
+  compact?: boolean;
   icon?: ElementType<SvgIconProps>;
   actions?: ReactNode;
 }
@@ -50,6 +51,7 @@ const ChartContainer = ({
   elevation = 1,
   gradient = false,
   fullHeight = false,
+  compact = false,
   icon: Icon = TrendingUp,
   actions = null,
   sx,
@@ -67,7 +69,7 @@ const ChartContainer = ({
       : t("chartCommon.dataPointCount", { count: dataCount }));
   const rootSx = [
     {
-      p: 3,
+      p: compact ? 1 : 3,
       m: 0,
       borderRadius: 2,
       background: gradient
@@ -131,9 +133,9 @@ const ChartContainer = ({
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-start",
-            gap: 2,
-            mb: 3,
-            pb: 2,
+            gap: compact ? 1 : 2,
+            mb: compact ? 0.75 : 3,
+            pb: compact ? 0.5 : 2,
             borderBottom: `1px solid ${alpha(theme.palette.divider, 0.08)}`,
           }}
         >
@@ -144,17 +146,33 @@ const ChartContainer = ({
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  gap: 1.5,
+                  gap: compact ? 0.75 : 1.5,
                   color: "primary.main",
                   fontWeight: 600,
                   mb: subtitle ? 0.5 : 0,
+                  fontSize: compact ? "1rem" : undefined,
                 }}
               >
-                <Icon aria-hidden="true" sx={{ color: "primary.main", flexShrink: 0 }} />
+                <Icon
+                  aria-hidden="true"
+                  sx={{
+                    color: "primary.main",
+                    flexShrink: 0,
+                    fontSize: compact ? 20 : undefined,
+                  }}
+                />
                 {title}
               </Typography>
             )}
-            {subtitle && <Typography variant="body2" color="text.secondary">{subtitle}</Typography>}
+            {subtitle && (
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={compact ? { fontSize: "0.75rem", lineHeight: 1.25 } : undefined}
+              >
+                {subtitle}
+              </Typography>
+            )}
           </Box>
           {actions && <Box sx={{ flexShrink: 0 }}>{actions}</Box>}
         </Box>

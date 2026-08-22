@@ -174,7 +174,8 @@ const StatesMultiView = ({
         sx={{
           flex: 1,
           minHeight: 0,
-          overflow: currentView === "cards" ? "hidden" : "auto",
+          overflowX: currentView === "cards" || currentView === "chart" ? "hidden" : "auto",
+          overflowY: currentView === "cards" ? "hidden" : "auto",
           position: "relative",
         }}
       >

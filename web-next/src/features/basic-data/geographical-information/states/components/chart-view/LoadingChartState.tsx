@@ -8,7 +8,8 @@ const LoadingChartState = () => {
     <ChartContainer
       title={t("states.charts.title")}
       loading
-      height={400}
+      height={200}
+      compact
       subtitle={undefined}
     />
   );

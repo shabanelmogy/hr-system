@@ -45,16 +45,21 @@ const SummaryCards = ({
   ];
 
   return (
-    <Grid container spacing={3} sx={{ mb: 4 }}>
+    <Grid container spacing={0.75} sx={{ mb: 0.75 }}>
       {cards.map((card) => (
-        <Grid size={{ xs: 12, sm: 6, md: 3 }} key={card.title}>
+        <Grid
+          size={{ xs: 12, sm: 6, md: 3 }}
+          sx={{ display: "flex", minWidth: 0, "& > *": { width: "100%" } }}
+          key={card.title}
+        >
           <MetricCard
             title={card.title}
             value={card.value}
             icon={card.icon}
             color={card.color}
             gradient
-            size="medium"
+            size="small"
+            compact
             elevation={2}
             formatValue={(value) => String(value)}
           />

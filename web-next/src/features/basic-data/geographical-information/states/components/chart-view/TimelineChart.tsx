@@ -16,7 +16,9 @@ const TimelineChart = ({ data }: TimelineChartProps) => {
       title={t("states.charts.timeline")}
       xKey="month"
       yKey="cumulative"
-      height={400}
+      height={200}
+      fullHeight
+      compact
       colors={COLOR_PALETTES.success}
       showGrid
       showTooltip

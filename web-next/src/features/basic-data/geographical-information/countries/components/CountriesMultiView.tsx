@@ -190,7 +190,8 @@ const CountriesMultiView = ({
         sx={{
           flex: 1,
           minHeight: 0,
-          overflow: visibleView === "cards" ? "hidden" : "auto",
+          overflowX: visibleView === "cards" || visibleView === "chart" ? "hidden" : "auto",
+          overflowY: visibleView === "cards" ? "hidden" : "auto",
           position: "relative",
         }}
       >

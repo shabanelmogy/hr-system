@@ -46,16 +46,21 @@ const SummaryCards: React.FC<SummaryCardsProps> = ({
   ];
 
   return (
-    <Grid container spacing={3} sx={{ mb: 4 }}>
+    <Grid container spacing={0.75} sx={{ mb: 0.75 }}>
       {cards.map((card, index) => (
-        <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
+        <Grid
+          size={{ xs: 12, sm: 6, md: 3 }}
+          sx={{ display: "flex", minWidth: 0, "& > *": { width: "100%" } }}
+          key={index}
+        >
           <MetricCard
             title={card.title}
             value={card.value}
             icon={card.icon}
             color={card.color}
             gradient={true}
-            size="medium"
+            size="small"
+            compact
             elevation={2}
             formatValue={(value) => String(value)}
           />

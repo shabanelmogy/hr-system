@@ -35,6 +35,7 @@ const BarChart = ({
   showTooltip = true,
   loading = false,
   error,
+  compact = false,
   orientation = 'vertical', // 'vertical' or 'horizontal'
   barRadius = 4,
   barSize,
@@ -122,7 +123,9 @@ const BarChart = ({
         data={data}
         layout={getBarChartLayout(orientation)}
         accessibilityLayer
-        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+        margin={compact
+          ? { top: 8, right: 12, left: 4, bottom: 0 }
+          : { top: 20, right: 30, left: 20, bottom: 5 }}
       >
         {showGrid && (
           <CartesianGrid
@@ -181,6 +184,7 @@ const BarChart = ({
       error={error}
       dataCount={data.length}
       gradient={gradient}
+      compact={compact}
       {...props}
     >
       {chartContent}

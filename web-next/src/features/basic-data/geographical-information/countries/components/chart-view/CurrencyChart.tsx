@@ -19,7 +19,9 @@ const CurrencyChart: React.FC<CurrencyChartProps> = ({ data }) => {
       title={t("countries.charts.topCurrencies")}
       xKey="name"
       yKey="value"
-      height={400}
+      height={200}
+      fullHeight
+      compact
       colors="secondary"
       showGrid={true}
       showTooltip={true}
@@ -27,7 +29,8 @@ const CurrencyChart: React.FC<CurrencyChartProps> = ({ data }) => {
       orientation="horizontal"
       formatValue={(value) => String(value)}
       formatLabel={(label) => String(label ?? '')}
-      subtitle={undefined} />
+      subtitle={undefined}
+    />
   );
 };
 

@@ -41,10 +41,15 @@ const StatesChartView = ({
   const timelineData = prepareTimelineData(states);
   const colors = getChartColors(theme.palette.mode);
   const visibleDistricts = states.reduce((total, state) => total + state.districtsCount, 0);
+  const chartGridItemSx = {
+    display: "flex",
+    minWidth: 0,
+    "& > *": { width: "100%" },
+  } as const;
 
   return (
-    <Box sx={{ boxSizing: "border-box", p: { xs: 1, md: 1.5 }, width: "100%" }}>
-      <Alert severity="info" sx={{ mb: 2 }}>
+    <Box sx={{ boxSizing: "border-box", px: { xs: 0.5, md: 0.75 }, pt: 0.5, width: "100%", minWidth: 0, overflowX: "hidden" }}>
+      <Alert severity="info" sx={{ mb: 0.75, py: 0 }}>
         {t("states.charts.pageScope")}
       </Alert>
 
@@ -55,24 +60,28 @@ const StatesChartView = ({
         visibleDistricts={visibleDistricts}
       />
 
-      <Grid container spacing={3}>
-        <Grid size={{ xs: 12, md: 6 }}>
+      <Grid container spacing={0.75}>
+        <Grid size={{ xs: 12, md: 6 }} sx={chartGridItemSx}>
           <CountryBarChart data={countryData} />
         </Grid>
 
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, md: 6 }} sx={chartGridItemSx}>
           <CountryPieChart data={countryData} colors={colors} />
         </Grid>
 
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid
+          size={{ xs: 12, md: timelineData.length > 0 ? 6 : 12 }}
+          sx={chartGridItemSx}
+        >
           <DistrictsChart data={districtData} />
         </Grid>
 
-        <Grid size={{ xs: 12, md: 6 }}>
-          <TimelineChart data={timelineData} />
-        </Grid>
+        {timelineData.length > 0 && (
+          <Grid size={{ xs: 12, md: 6 }} sx={chartGridItemSx}>
+            <TimelineChart data={timelineData} />
+          </Grid>
+        )}
       </Grid>
-
     </Box>
   );
 };

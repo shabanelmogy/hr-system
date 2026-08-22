@@ -16,7 +16,9 @@ const CountryPieChart = ({ data, colors }: CountryPieChartProps) => {
       title={t("states.charts.countryShare")}
       nameKey="name"
       valueKey="value"
-      height={400}
+      height={200}
+      fullHeight
+      compact
       colors={colors}
       showLegend
       showTooltip

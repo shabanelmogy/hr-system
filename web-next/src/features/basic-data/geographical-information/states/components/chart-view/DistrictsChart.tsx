@@ -16,7 +16,9 @@ const DistrictsChart = ({ data }: DistrictsChartProps) => {
       subtitle={t("states.charts.districtsByStateDescription")}
       xKey="name"
       yKey="value"
-      height={400}
+      height={200}
+      fullHeight
+      compact
       colors={COLOR_PALETTES.secondary}
       showGrid
       showTooltip

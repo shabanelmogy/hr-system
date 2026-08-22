@@ -55,6 +55,7 @@ export type MetricCardProps = Omit<CardProps, "children" | "onClick" | "title" |
   description?: ReactNode;
   badge?: ReactNode;
   footerContent?: ReactNode;
+  compact?: boolean;
 };
 
 const MetricCard = ({
@@ -79,6 +80,7 @@ const MetricCard = ({
   description,
   badge, // Additional badge/count indicator
   footerContent, // Optional footer content (e.g., sparkline)
+  compact = false,
   sx,
   ...cardProps
 }: MetricCardProps) => {
@@ -91,18 +93,23 @@ const MetricCard = ({
       <Card
         elevation={elevation}
         sx={{
-          borderRadius: 3,
+          borderRadius: compact ? 2 : 3,
           overflow: "hidden",
           ...(Array.isArray(sx) ? Object.assign({}, ...sx) : sx),
         }}
       >
-        <CardContent sx={{ p: 3 }}>
+        <CardContent
+          sx={{
+            p: compact ? 1 : 3,
+            "&:last-child": { pb: compact ? 1 : 3 },
+          }}
+        >
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              mb: 2,
+              mb: compact ? 0.75 : 2,
             }}
           >
             <Box sx={{ flex: 1 }}>
@@ -186,6 +193,9 @@ const MetricCard = ({
 
   const config = sizeConfig[size];
   const themeColor = theme.palette[color] || theme.palette.primary;
+  const hasSupportingMetrics =
+    (showTrend && previousValue !== null) ||
+    ((showProgress || showTarget) && target !== null);
 
   // Get variant-specific styles
   const getVariantStyles = () => {
@@ -193,7 +203,7 @@ const MetricCard = ({
       cursor: onClick ? "pointer" : "default",
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       "@media (prefers-reduced-motion: reduce)": { transition: "none" },
-      borderRadius: 3,
+      borderRadius: compact ? 2 : 3,
       position: "relative",
       overflow: "hidden",
     };
@@ -281,7 +291,13 @@ const MetricCard = ({
       role={onClick ? "button" : undefined}
       tabIndex={onClick ? 0 : undefined}
     >
-      <CardContent sx={{ p: config.padding, position: "relative" }}>
+      <CardContent
+        sx={{
+          p: compact ? 1 : config.padding,
+          position: "relative",
+          "&:last-child": { pb: compact ? 1 : config.padding },
+        }}
+      >
         {/* Badge indicator */}
         {badge && (
           <Box sx={{ position: "absolute", top: 16, right: 16, zIndex: 1 }}>
@@ -306,7 +322,7 @@ const MetricCard = ({
             display: "flex",
             alignItems: "flex-start",
             justifyContent: "space-between",
-            mb: 2,
+            mb: compact ? 0.75 : 2,
           }}
         >
           <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -346,8 +362,8 @@ const MetricCard = ({
             <Box sx={{ position: "relative" }}>
               <Avatar
                 sx={{
-                  width: config.avatarSize,
-                  height: config.avatarSize,
+                  width: compact ? 34 : config.avatarSize,
+                  height: compact ? 34 : config.avatarSize,
                   background: `linear-gradient(135deg, ${alpha(
                     themeColor.main,
                     0.15
@@ -400,8 +416,7 @@ const MetricCard = ({
         {/* Main value with enhanced styling */}
         <Box
           sx={{
-            mb:
-              showTrend || showProgress || showTarget || description ? 2.5 : 0,
+            mb: hasSupportingMetrics ? (compact ? 1 : 2.5) : 0,
           }}
         >
           <Typography

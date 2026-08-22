@@ -24,7 +24,9 @@ const TimelineChart: React.FC<TimelineChartProps> = ({ data }) => {
       title={t("countries.charts.timeline")}
       xKey="month"
       yKey="cumulative"
-      height={400}
+      height={200}
+      fullHeight
+      compact
       colors="success"
       showGrid={true}
       showTooltip={true}
@@ -33,7 +35,8 @@ const TimelineChart: React.FC<TimelineChartProps> = ({ data }) => {
       fillOpacity={0.3}
       formatValue={(value) => String(value)}
       formatLabel={(label) => String(label ?? '')}
-      subtitle={undefined} />
+      subtitle={undefined}
+    />
   );
 };
 

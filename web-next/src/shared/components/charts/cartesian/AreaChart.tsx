@@ -34,6 +34,7 @@ const AreaChart = ({
   showTooltip = true,
   loading = false,
   error,
+  compact = false,
   strokeWidth = 2,
   fillOpacity = 0.6,
   gradient = true,
@@ -148,7 +149,9 @@ const AreaChart = ({
       <RechartsAreaChart
         data={data}
         accessibilityLayer
-        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+        margin={compact
+          ? { top: 8, right: 12, left: 4, bottom: 0 }
+          : { top: 20, right: 30, left: 20, bottom: 5 }}
       >
         {renderGradients()}
         
@@ -189,6 +192,7 @@ const AreaChart = ({
       error={error}
       dataCount={data.length}
       gradient={false} // We handle gradient internally
+      compact={compact}
       {...props}
     >
       {chartContent}
