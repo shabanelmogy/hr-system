@@ -38,4 +38,15 @@ Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain
 
 ## Adding a new feature review
 
-Use Countries as the applied example. Create one cross-project review plus platform-specific profiles, add their source paths to `system/recipe-manifest.json`, add a required-file manifest under `system/features/<feature>/`, and work through generated phases 00 through 06. The final reconciliation phase is mandatory.
+Choose the closest applied reference: Countries for a flat global reference-data lifecycle, or States for a parent-dependent reference-data lifecycle. Neither is an ownership template for tenant/company HR aggregates.
+
+Create the draft evidence workspace first:
+
+```powershell
+./documentation/system/New-FeatureDocumentation.ps1 `
+  -FeatureId employees `
+  -FeatureName "Employees" `
+  -ReferenceFeature countries
+```
+
+The scaffold creates an evidence artifact, `required-files.draft.json`, and a feature-scoped `recipe-registration.draft.json`; it does not weaken the global documentation check by registering paths that do not exist yet. After the implementation sources and four canonical profiles exist, replace the required-file draft with `required-files.json`, merge the reviewed registration draft into `system/recipe-manifest.json`, generate `system/generated/<feature>/PHASE-00` through `PHASE-06`, and finish the mandatory reconciliation phase.

@@ -163,7 +163,7 @@ restore remain explicit use cases.
 | Input | Default | Validation/behavior |
 |---|---|---|
 | `pageNumber` | `1` | Greater than zero |
-| `pageSize` | `10` | `1..50` |
+| `pageSize` | `10` | `1..5000`; the larger ceiling supports the bounded adaptive web read path |
 | `search` | absent | Maximum 200, trimmed for execution |
 | `searchField` | `all` | `all`, `nameAr`, `nameEn`, `alpha2Code`, `alpha3Code`, `phoneCode`, `currencyCode` |
 | `searchOperator` | `contains` | `contains`, `doesNotContain`, `equals`, `doesNotEqual`, `startsWith`, `endsWith` |

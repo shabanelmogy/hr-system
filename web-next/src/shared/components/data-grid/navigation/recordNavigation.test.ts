@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { getActiveRecordIndex, getPageForRecord } from "./recordNavigation";
+import {
+  getActiveRecordIndex,
+  getPageForRecord,
+  getServerRecordIndex,
+} from "./recordNavigation";
 
 describe("record navigation", () => {
   it("tracks the selected row in the filtered grid", () => {
@@ -23,5 +27,11 @@ describe("record navigation", () => {
   it("maps records to pages without a zero-page-size failure", () => {
     expect(getPageForRecord(11, 5)).toBe(2);
     expect(getPageForRecord(3, 0)).toBe(3);
+  });
+
+  it("maps a selected server-page row to its authoritative record position", () => {
+    expect(getServerRecordIndex([21, 22, 23, 24, 25], 23, 2, 10, 42)).toBe(22);
+    expect(getServerRecordIndex([41, 42], undefined, 4, 10, 42)).toBe(40);
+    expect(getServerRecordIndex([], undefined, 0, 10, 42)).toBe(-1);
   });
 });

@@ -608,7 +608,7 @@ public sealed class CountryCqrsHandlerTests
 
     [Theory]
     [InlineData(0, 10, "active", "nameEn", "asc")]
-    [InlineData(1, 51, "active", "nameEn", "asc")]
+    [InlineData(1, 5001, "active", "nameEn", "asc")]
     [InlineData(1, 10, "invalid", "nameEn", "asc")]
     [InlineData(1, 10, "active", "unknown", "asc")]
     [InlineData(1, 10, "active", "nameEn", "sideways")]
@@ -625,6 +625,17 @@ public sealed class CountryCqrsHandlerTests
         });
 
         Assert.False(result.IsValid);
+    }
+
+    [Fact]
+    public async Task PageValidator_AcceptsAdaptiveClientPageLimit()
+    {
+        var result = await new GetCountriesQueryValidator().ValidateAsync(new GetCountriesQuery
+        {
+            PageSize = GetCountriesQuery.MaxPageSize
+        });
+
+        Assert.True(result.IsValid);
     }
 
     [Theory]

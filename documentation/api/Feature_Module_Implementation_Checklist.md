@@ -573,6 +573,18 @@ patterns, then add tenant/company rules for owned HR data:
 
 ## 20. Done Checklist
 
+Run from `api/` before handoff:
+
+```powershell
+dotnet restore HrManagementSystem.sln
+dotnet build HrManagementSystem.sln --no-restore
+dotnet test HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-build --no-restore
+```
+
+When a running host locks normal outputs, use one explicit isolated
+`--artifacts-path` consistently for restore, build, and test. Record skipped
+integration, migration, or environment-dependent checks in phase 06.
+
 - Build succeeds with `0 Error(s)`.
 - No namespace points to an old folder name.
 - Swagger XML docs resolve to the current namespace.

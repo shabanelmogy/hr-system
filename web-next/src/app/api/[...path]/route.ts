@@ -10,6 +10,12 @@ import {
   type AuthPayload
 } from "@/lib/auth/cookies";
 import { refreshAuthTokens } from "@/lib/auth/backend-session";
+import { shouldRefreshAccessToken } from "@/lib/auth/token-expiration";
+import {
+  copyBackendResponseHeaders,
+  prepareBackendBody,
+  type PreparedBackendBody,
+} from "@/lib/api/proxy-transport";
 import { getBackendUrl } from "@/lib/env/server";
 
 const TAG = "[📡 API Proxy]";
@@ -21,6 +27,10 @@ const forwardedHeaders = [
   "accept",
   "content-type",
   "culture",
+  "if-modified-since",
+  "if-none-match",
+  "if-range",
+  "range",
   "user-agent",
   "x-forwarded-for",
 ] as const;
@@ -35,25 +45,27 @@ function createBackendHeaders(request: NextRequest, token?: string) {
   return headers;
 }
 
-async function requestBody(request: NextRequest) {
-  return request.method === "GET" || request.method === "HEAD"
-    ? undefined
-    : await request.arrayBuffer();
-}
-
-async function callBackend(request: NextRequest, path: string[], token?: string, body?: ArrayBuffer) {
+async function callBackend(
+  request: NextRequest,
+  path: string[],
+  token: string | undefined,
+  preparedBody: PreparedBackendBody,
+) {
   const backendPath = resolveBackendPath(path);
   const url = new URL(`${getBackendUrl()}/${backendPath}`);
   url.search = request.nextUrl.search;
 
-  return fetch(url, {
+  const init: RequestInit & { duplex?: "half" } = {
     method: request.method,
     headers: createBackendHeaders(request, token),
-    body,
+    body: preparedBody.body,
     cache: "no-store",
     redirect: "manual",
     signal: AbortSignal.timeout(backendRequestTimeoutMs),
-  });
+  };
+  if (preparedBody.streaming) init.duplex = "half";
+
+  return fetch(url, init);
 }
 
 function resolveBackendPath(path: string[]) {
@@ -69,6 +81,7 @@ async function toNextResponse(backendResponse: Response, authPayload?: AuthPaylo
   if ([204, 205, 304].includes(backendResponse.status)) {
     const response = new NextResponse(null, { status: backendResponse.status });
     applyAuthPayload(response, authPayload);
+    copyBackendResponseHeaders(backendResponse.headers, response.headers);
     response.headers.set("cache-control", "no-store");
     return response;
   }
@@ -94,10 +107,8 @@ async function toNextResponse(backendResponse: Response, authPayload?: AuthPaylo
       );
       applyAuthPayload(response, discoveredAuth);
     } else {
-      response = new NextResponse(await backendResponse.arrayBuffer(), {
-        status: backendResponse.status,
-        headers: { "content-type": contentType }
-      });
+      response = new NextResponse(backendResponse.body, { status: backendResponse.status });
+      copyBackendResponseHeaders(backendResponse.headers, response.headers);
       applyAuthPayload(response, authPayload);
     }
   } catch (error) {
@@ -138,19 +149,51 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
   );
 
   console.log(`${TAG} 📋 Request to /api/${route}`);
-  const body = await requestBody(request);
-  let backendResponse: Response;
-  try {
-    backendResponse = await callBackend(request, path, accessToken, body);
-  } catch (error) {
-    console.error(`${TAG} Error calling backend:`, error);
-    return backendFailureResponse(error);
-  }
-
+  const preparedBody = await prepareBackendBody(request);
+  let requestAccessToken = accessToken;
   let refreshedAuth: AuthPayload | null = null;
 
+  if (
+    preparedBody.streaming &&
+    accessToken &&
+    refreshToken &&
+    shouldRefreshAccessToken(accessToken)
+  ) {
+    const refreshResult = await refreshAuthTokens(accessToken, refreshToken);
+    if (refreshResult.status === "unavailable") {
+      return NextResponse.json(
+        { title: "Authentication service unavailable" },
+        { status: 503 },
+      );
+    }
+    if (refreshResult.status === "rejected") {
+      const response = NextResponse.json({ title: "Unauthorized" }, { status: 401 });
+      clearAuthCookies(response);
+      return response;
+    }
+
+    refreshedAuth = refreshResult.payload;
+    requestAccessToken = refreshedAuth.token;
+  }
+
+  let backendResponse: Response;
+  try {
+    backendResponse = await callBackend(request, path, requestAccessToken, preparedBody);
+  } catch (error) {
+    console.error(`${TAG} Error calling backend:`, error);
+    const response = backendFailureResponse(error);
+    applyAuthPayload(response, refreshedAuth);
+    return response;
+  }
+
   // Only attempt ONE refresh per request (not multiple concurrent ones)
-  if (backendResponse.status === 401 && accessToken && refreshToken) {
+  if (
+    backendResponse.status === 401 &&
+    preparedBody.replayable &&
+    !refreshedAuth &&
+    accessToken &&
+    refreshToken
+  ) {
     console.log(`${TAG} 🔄 Got 401, attempting token refresh for /api/${route}`);
     const refreshResult = await refreshAuthTokens(accessToken, refreshToken);
     
@@ -164,7 +207,7 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
       console.log(`${TAG} 🔁 Retrying /api/${route} with new token...`);
       refreshedAuth = refreshResult.payload;
       try {
-        backendResponse = await callBackend(request, path, refreshedAuth.token, body);
+        backendResponse = await callBackend(request, path, refreshedAuth.token, preparedBody);
         console.log(`${TAG} ✅ Retry successful: ${backendResponse.status} for /api/${route}`);
       } catch (error) {
         const response = backendFailureResponse(error);
@@ -180,8 +223,8 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
     backendResponse,
     refreshedAuth ?? migrationPayload,
   );
-  if (backendResponse.status === 401 && !refreshedAuth) {
-    console.warn(`${TAG} ❌ Clearing auth cookies — 401 with no successful refresh`);
+  if (backendResponse.status === 401) {
+    console.warn(`${TAG} ❌ Clearing auth cookies — backend rejected the final access token`);
     clearAuthCookies(response);
   }
   return response;

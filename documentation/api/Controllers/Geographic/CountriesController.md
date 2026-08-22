@@ -43,7 +43,7 @@ There is deliberately no count endpoint and no toggle-delete operation. Page met
 | Query | Default | Rules |
 | --- | --- | --- |
 | `pageNumber` | `1` | Minimum `1` |
-| `pageSize` | `10` | `1..50` |
+| `pageSize` | `10` | `1..5000`; values above normal UI page sizes support bounded adaptive client pagination |
 | `search` | — | Optional; maximum 200 characters |
 | `searchField` | `all` | `all`, `nameAr`, `nameEn`, `alpha2Code`, `alpha3Code`, `phoneCode`, or `currencyCode` |
 | `searchOperator` | `contains` | `contains`, `doesNotContain`, `equals`, `doesNotEqual`, `startsWith`, or `endsWith` |

@@ -35,9 +35,12 @@ Rules:
 
 - All project-owned guides live under [`documentation/`](documentation/README.md). Do not create new `Docs/`, `docs/`, or `doc/` trees inside application projects.
 - Before creating or restructuring a feature that spans API, `web-next`, or `mobile-react`, read [`documentation/system/README.md`](documentation/system/README.md) and run `./documentation/system/Generate-Documentation.ps1 -Check`.
-- Use [`documentation/system/features/countries/required-files.json`](documentation/system/features/countries/required-files.json) to discover the complete Countries evidence surface. Verify current source before applying the pattern to another feature.
-- The Countries authorities are the cross-platform master plus the API, web, and mobile profiles listed in `documentation/system/recipe-manifest.json`.
-- Work through generated phases 00 through 06 in order. Phase 06 is mandatory for handoff.
+- Choose the closest reviewed reference explicitly: Countries for a flat global reference-data lifecycle, or States for a parent-dependent reference-data lifecycle. Neither reference supplies tenant/company ownership rules for HR aggregates.
+- Use the selected feature's `documentation/system/features/<reference>/required-files.json` to discover its complete evidence surface. Verify current source before applying the pattern.
+- For a new feature, run `./documentation/system/New-FeatureDocumentation.ps1 -FeatureId <kebab-case-id> -FeatureName "<Display Name>" -ReferenceFeature countries|states`. Keep its required-file manifest in draft state until the referenced runtime files exist.
+- For a review of an existing feature, default to read-only evidence collection unless the user also asks for changes. Record verified behavior, requested behavior, intentional platform differences, and unresolved findings separately.
+- Register final canonical books, the final required-file manifest, and feature-scoped recipes under `generated/<feature>/`; do not reuse the unscoped Countries packets for another feature.
+- During a new-feature draft, use the phase templates and the selected reference packets as navigation, never as implementation evidence. After canonical books are registered, generate the feature's own phases 00 through 06; phase 06 is mandatory for handoff.
 - Never edit `documentation/system/generated/` directly. Update a canonical numbered section, recipe template, or manifest and regenerate.
 - Keep runtime source in its owning application. Documentation manifests reference source files; they do not duplicate them.
-- Copy Countries architecture and verification discipline, but do not copy Countries-only fields, optional views, or documented findings unless the new feature requires them.
+- Copy the selected reference's architecture and verification discipline, but do not copy reference-specific fields, ownership, optional views, or documented findings unless the new feature requires them.

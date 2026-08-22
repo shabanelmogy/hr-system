@@ -13,6 +13,9 @@ Use this file as the evidence ledger for one feature. Replace every bracketed va
 | Review owner | `<name>` |
 | Review date | `<YYYY-MM-DD>` |
 | Required-file manifest | `<repository-relative path>` |
+| Operating mode | `<new feature | existing-feature review | existing-feature change>` |
+| Documentation state | `Draft` until runtime evidence exists; `Final` only after recipe registration and check mode pass |
+| Applied reference | `Countries`, `States`, or `<documented alternative>` |
 
 ## Requirement manifest
 
@@ -70,6 +73,6 @@ Record route constants, route guards, navigation, API registration, dependency i
 - [ ] Every requirement has evidence and a final status.
 - [ ] API, web, and mobile serialize the same shared contract where applicable.
 - [ ] Intentional platform differences are written down.
-- [ ] Known Countries gaps were not copied as requirements.
+- [ ] Known reference-feature gaps were not copied as requirements.
 - [ ] Required paths exist and generated packets are current.
 - [ ] Focused and project-level quality gates pass.

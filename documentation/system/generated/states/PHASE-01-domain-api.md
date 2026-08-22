@@ -48,7 +48,7 @@ Build the server contract first so both clients consume one stable model.
 | states-api | 1 | `15d834bcb75fb59cc980cd3b79c748f1be10cae3708fbc8f16bb2cf5f1fe05fd` |
 | states-api | 2 | `a0d81d59b393752b1da9b83b766b01834e0146568e7bbacffd168ba66634652f` |
 | states-api | 3 | `48a7b9f439ef0ded4904ee351254b2f8d392224ca5598f72fd290f05cd3b3528` |
-| states-api | 4 | `34545e1f1539e97351e4d0f61b94ec9ad79a9182ab3616afc68465a1aad1290a` |
+| states-api | 4 | `5436b2b4eb4947f63d84e03931b6030fd296510ca38beb398ce168a140ee52b8` |
 | states-api | 5 | `7a24944b7ecfa6276e2f6fd1201c54f3ca488e400930d2408f665f630035709f` |
 | states-api | 6 | `97e7703fbf9f0fa2eee2f1927c01c3e8c47dc983c6169ffc42bc09df2fd4853e` |
 | states-api | 7 | `79ef819ddb68cb8382bf2c5f313131548be7b4a66ed3ab6e53777108f1093f66` |

@@ -130,10 +130,6 @@ const FilesMultiView = ({
         storageKey="files-view-layout"
         defaultView="list"
         availableViews={["list", "grouped"]}
-        viewLabels={{
-          list: t("files.grid-view") || "List",
-          grouped: t("files.groupView") || "Grouped",
-        }}
         onAdd={onAdd}
         dataCount={displayFiles?.length || 0}
         totalLabel={

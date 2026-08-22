@@ -20,6 +20,12 @@ const imageExtensions = [
 ] as const;
 const videoExtensions = ["mp4", "webm", "mov", "avi", "mkv"] as const;
 const audioExtensions = ["mp3", "wav", "ogg", "m4a"] as const;
+const browserStreamMediaTypes = new Set<MediaType>([
+  "iframe",
+  "image",
+  "video",
+  "audio",
+]);
 
 export interface UseMediaViewerReturn {
   isLoading: boolean;
@@ -100,6 +106,14 @@ export default function useMediaViewer(): UseMediaViewerReturn {
           return;
         }
 
+        if (browserStreamMediaTypes.has(mediaType)) {
+          cleanupRef.current?.();
+          cleanupRef.current = null;
+          setMediaUrl(fileService.getStreamUrl(fileId));
+          setIsLoading(false);
+          return;
+        }
+
         // Debounce rapid navigation
         await new Promise((resolve) => {
           timeoutId = setTimeout(resolve, 300);
@@ -144,7 +158,7 @@ export default function useMediaViewer(): UseMediaViewerReturn {
         cleanupRef.current = null;
       }
     };
-  }, [fileId, extension, retryKey]);
+  }, [fileId, extension, mediaType, retryKey]);
 
   const retry = useCallback(() => {
     setRetryKey((value) => value + 1);

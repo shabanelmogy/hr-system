@@ -9,10 +9,12 @@ Freeze scope and gather evidence before implementation. Do not treat a neighbori
 ## Required outputs
 
 1. Copy `FEATURE-REVIEW-ARTIFACTS.template.md` to `features/<feature>/<FEATURE>-REVIEW-ARTIFACTS.md`.
-2. Create `features/<feature>/required-files.json` using repository-relative paths.
-3. Record API, web, and mobile routes, owners, permissions, list fields, actions, reports, imports, and child relationships.
-4. Separate verified current behavior, requested behavior, intentional platform differences, and unresolved findings.
-5. Record tests that prove each contract rather than only naming test folders.
+2. Record the operating mode (`new feature`, `existing-feature review`, or `existing-feature change`) and the selected applied reference with a reason.
+3. For a new feature, create `features/<feature>/required-files.draft.json`; do not register it while declared runtime files are missing. For an existing review, start from its final `required-files.json`.
+4. Before final registration, replace the draft with `required-files.json` containing only existing repository-relative paths and evidence-based source-collection minimums.
+5. Record API, web, and mobile routes, owners, permissions, list fields, actions, reports, imports, and child relationships.
+6. Separate verified current behavior, requested behavior, intentional platform differences, and unresolved findings.
+7. Record tests that prove each contract rather than only naming test folders.
 
 ## Discovery checklist
 
@@ -22,6 +24,7 @@ Freeze scope and gather evidence before implementation. Do not treat a neighbori
 - [ ] Mobile route, feature boundary, server-list state, forms, permissions, realtime, translations, responsive layout, RTL, and shared UI identified.
 - [ ] Shared HTTP field names, nullability, paging base, sort tokens, filters, errors, and lifecycle actions frozen.
 - [ ] Known gaps are listed as findings and excluded from the copy baseline.
+- [ ] The generated phase packets and fingerprints belong to this feature, not to an unscoped reference output.
 
 ## Approved references
 
@@ -42,7 +45,7 @@ Freeze scope and gather evidence before implementation. Do not treat a neighbori
 | api | 1 | `32d383dbea72903c12b0dd2d1b90c2ba6a10d6621ed91ae24f466af2563cd9c7` |
 | api | 10 | `6267cad08ac31db9d3fefbf5abda40d64d5be3e91d08b0eb42495ebd14b40aba` |
 | api | 11 | `8cf8721b54c7ec180a44474d9f751d095233c9ab7496926de2a18a5d14f5abb4` |
-| web | 1 | `064ed098ebe189727d7f97d579f6dacb34044372cda60ab6f67d1e7943386bf9` |
+| web | 1 | `71557c8ac89ad012765ad3dbef58e1c2e7f16287ff93870d1f71e6962169f722` |
 | web | 2 | `129f961feb274ccfa5b9c458008df1d43a3435a13001fcd9a06937d1bcf53ed8` |
 | web | 12 | `7f655066219089b3a56fe9c1d009830d6f176e529de009bd3c577aacc357a84e` |
 | web | 13 | `10a6cf1f7b73698bd57e74ccbcbe1b5a50fa96af854189b82ba63e75543e6f88` |

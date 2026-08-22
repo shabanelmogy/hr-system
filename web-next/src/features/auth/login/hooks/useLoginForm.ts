@@ -1,6 +1,5 @@
 import { auth as authRoutes } from "@/config/api/auth";
 import { google as googleRoutes } from "@/config/api/advanced";
-import { useSession } from "@/lib/auth/SessionContext";
 import useNotifications from "@/shared/hooks/useNotifications";
 import apiService from "@/shared/services/apiService";
 import HandleApiError from "@/shared/services/apiError";
@@ -26,7 +25,6 @@ const DEV_CREDENTIALS = {
 } as const;
 
 const useLoginForm = () => {
-  const { refresh } = useSession();
   const { t } = useTranslation();
   const { showError, showSuccess, SnackbarComponent } = useNotifications();
   const submittingRef = useRef(false);
@@ -56,19 +54,18 @@ const useLoginForm = () => {
     userNameRef.current?.focus();
   }, []);
 
-  const completeAuthentication = async () => {
+  const completeAuthentication = () => {
     const returnTo = getSafeReturnTo();
     setCompanySelection(null);
     showSuccess(t("messages.loginSuccessful"), t("messages.success"));
     setTenantSelection(null);
-    await refresh();
     window.location.replace(returnTo);
   };
 
   const handleLoginResult = async (data: unknown): Promise<boolean> => {
     const result = parseLoginResult(data);
     if (result?.kind === "authenticated") {
-      await completeAuthentication();
+      completeAuthentication();
       return true;
     }
     if (result?.kind === "tenant-selection") {
@@ -157,7 +154,7 @@ const useLoginForm = () => {
       });
       const result = parseLoginResult(data);
       if (result?.kind === "authenticated") {
-        await completeAuthentication();
+        completeAuthentication();
       } else if (result?.kind === "company-selection") {
         setTenantSelection(null);
         setCompanySelection(result.response);
@@ -187,7 +184,7 @@ const useLoginForm = () => {
       if (result?.kind !== "authenticated") {
         showError(t("auth.invalidCompanySelection"), t("messages.error"));
       } else {
-        await completeAuthentication();
+        completeAuthentication();
       }
     } catch (error) {
       showHandledError(error, showError, t("messages.error"));

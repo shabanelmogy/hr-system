@@ -14,9 +14,14 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { useCallback, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useDataGridShell } from "../core/context";
-import { getActiveRecordIndex, getPageForRecord } from "./recordNavigation";
+import {
+  getActiveRecordIndex,
+  getPageForRecord,
+  getServerRecordIndex,
+} from "./recordNavigation";
 
 export function GridFooter() {
   const apiRef = useGridApiContext();
@@ -27,35 +32,88 @@ export function GridFooter() {
   const { showRecordNavigation } = useDataGridShell();
   const { t } = useTranslation();
   const theme = useTheme();
+  const pendingServerRecordRef = useRef<number | null>(null);
 
   const isRtl = theme.direction === "rtl";
-  const recordNavigationEnabled =
-    showRecordNavigation && rootProps.paginationMode !== "server";
+  const isServerPagination = rootProps.paginationMode === "server";
   const selectedId = selectedRows.keys().next().value;
-  const activeIndex = getActiveRecordIndex(
-    orderedIds,
-    selectedId,
-    paginationModel.page,
-    paginationModel.pageSize,
-  );
-  const recordNumber = activeIndex < 0 ? 0 : activeIndex + 1;
   const totalRowCount =
-    rootProps.paginationMode === "server"
+    isServerPagination
       ? (rootProps.rowCount ?? orderedIds.length)
       : orderedIds.length;
+  const activeIndex = isServerPagination
+    ? getServerRecordIndex(
+        orderedIds,
+        selectedId,
+        paginationModel.page,
+        paginationModel.pageSize,
+        totalRowCount,
+      )
+    : getActiveRecordIndex(
+        orderedIds,
+        selectedId,
+        paginationModel.page,
+        paginationModel.pageSize,
+      );
+  const recordNumber = activeIndex < 0 ? 0 : activeIndex + 1;
   const totalPages = Math.max(
     1,
     Math.ceil(totalRowCount / Math.max(1, paginationModel.pageSize)),
   );
   const currentPage = Math.min(paginationModel.page + 1, totalPages);
 
+  const selectVisibleRow = useCallback((localIndex: number) => {
+    if (localIndex < 0 || localIndex >= orderedIds.length) return undefined;
+
+    apiRef.current.setRowSelectionModel({
+      type: "include",
+      ids: new Set([orderedIds[localIndex]]),
+    });
+
+    return setTimeout(() => {
+      apiRef.current.scrollToIndexes({ rowIndex: localIndex });
+    }, 150);
+  }, [apiRef, orderedIds]);
+
+  useEffect(() => {
+    if (!isServerPagination || pendingServerRecordRef.current == null) return;
+
+    const pendingIndex = pendingServerRecordRef.current;
+    const targetPage = getPageForRecord(pendingIndex, paginationModel.pageSize);
+    if (targetPage !== paginationModel.page || orderedIds.length === 0) return;
+
+    pendingServerRecordRef.current = null;
+    const timer = selectVisibleRow(
+      Math.min(pendingIndex % paginationModel.pageSize, orderedIds.length - 1),
+    );
+    return () => {
+      if (timer != null) clearTimeout(timer);
+    };
+  }, [
+    isServerPagination,
+    orderedIds.length,
+    paginationModel.page,
+    paginationModel.pageSize,
+    selectVisibleRow,
+  ]);
+
   const navigateToIndex = (targetIndex: number) => {
-    if (targetIndex < 0 || targetIndex >= orderedIds.length) return;
+    if (targetIndex < 0 || targetIndex >= totalRowCount) return;
+
+    const targetPage = getPageForRecord(targetIndex, paginationModel.pageSize);
+    if (isServerPagination) {
+      const localIndex = targetIndex % paginationModel.pageSize;
+      if (targetPage === paginationModel.page) {
+        selectVisibleRow(localIndex);
+      } else {
+        pendingServerRecordRef.current = targetIndex;
+        apiRef.current.setPage(targetPage);
+      }
+      return;
+    }
 
     const targetId = orderedIds[targetIndex];
-    apiRef.current.setPage(
-      getPageForRecord(targetIndex, paginationModel.pageSize),
-    );
+    apiRef.current.setPage(targetPage);
     apiRef.current.setRowSelectionModel({
       type: "include",
       ids: new Set([targetId]),
@@ -94,7 +152,7 @@ export function GridFooter() {
     >
       <Box aria-hidden="true" sx={{ flex: "0 0 150px" }} />
 
-      {recordNavigationEnabled ? (
+      {showRecordNavigation ? (
         <Box
           sx={{
             display: "flex",
@@ -104,13 +162,13 @@ export function GridFooter() {
             flex: 1,
           }}
         >
-          <RecordNavigationButton
+          <NavigationButton
             label={labels.first}
             disabled={activeIndex <= 0}
             onClick={() => navigateToIndex(0)}
             icon={<FirstIcon />}
           />
-          <RecordNavigationButton
+          <NavigationButton
             label={labels.previous}
             disabled={activeIndex <= 0}
             onClick={() => navigateToIndex(activeIndex - 1)}
@@ -140,19 +198,19 @@ export function GridFooter() {
                 fontVariantNumeric: "tabular-nums",
               }}
             >
-              {recordNumber} / {orderedIds.length}
+              {recordNumber} / {totalRowCount}
             </Typography>
           </Box>
-          <RecordNavigationButton
+          <NavigationButton
             label={labels.next}
-            disabled={activeIndex < 0 || activeIndex >= orderedIds.length - 1}
+            disabled={activeIndex < 0 || activeIndex >= totalRowCount - 1}
             onClick={() => navigateToIndex(activeIndex + 1)}
             icon={<NextIcon />}
           />
-          <RecordNavigationButton
+          <NavigationButton
             label={labels.last}
-            disabled={activeIndex < 0 || activeIndex >= orderedIds.length - 1}
-            onClick={() => navigateToIndex(orderedIds.length - 1)}
+            disabled={activeIndex < 0 || activeIndex >= totalRowCount - 1}
+            onClick={() => navigateToIndex(totalRowCount - 1)}
             icon={<LastIcon />}
           />
         </Box>
@@ -213,19 +271,19 @@ export function GridFooter() {
   );
 }
 
-interface RecordNavigationButtonProps {
+interface NavigationButtonProps {
   label: string;
   disabled: boolean;
   onClick: () => void;
   icon: React.ReactNode;
 }
 
-function RecordNavigationButton({
+function NavigationButton({
   label,
   disabled,
   onClick,
   icon,
-}: RecordNavigationButtonProps) {
+}: NavigationButtonProps) {
   return (
     <Tooltip title={label}>
       <span>

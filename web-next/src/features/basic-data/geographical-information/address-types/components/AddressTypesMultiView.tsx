@@ -155,11 +155,6 @@ const AddressTypesMultiView = ({
         storageKey="addressTypes-view-layout"
         defaultView="grid"
         availableViews={["grid", "cards", "chart"]}
-        viewLabels={{
-          grid: t("addressTypes.views.grid") || "Grid",
-          cards: t("addressTypes.views.card") || "Cards",
-          chart: t("addressTypes.views.chart") || "Chart",
-        }}
         onAdd={onAdd}
         dataCount={items?.length || 0}
         totalLabel={t("addressTypes.total") || "Total"}

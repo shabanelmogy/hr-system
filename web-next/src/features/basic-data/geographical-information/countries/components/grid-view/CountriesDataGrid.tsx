@@ -24,6 +24,7 @@ import { useCountryColumns } from "./Columns";
 
 interface CountriesDataGridProps {
   countries: CountryListItem[];
+  paginationMode: "client" | "server";
   loading?: boolean;
   isFetching?: boolean;
   apiRef?: React.RefObject<GridApi | null>;
@@ -59,6 +60,7 @@ interface CountriesDataGridProps {
 
 const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
   countries,
+  paginationMode,
   loading = false,
   isFetching = false,
   apiRef,
@@ -116,10 +118,10 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
         sortModel={[{ field: sortColumn, sort: sortDirection.toLowerCase() as "asc" | "desc" }]}
         onSortModelChange={onSortChange}
         pagination
-        paginationMode="server"
+        paginationMode={paginationMode}
         paginationModel={{ page, pageSize }}
         onPaginationModelChange={onPaginationChange}
-        rowCount={totalCount}
+        rowCount={paginationMode === "server" ? totalCount : undefined}
         pageSizeOptions={[5, 10, 25, 50]}
         showGridOptions
         toolbarSearch={{
@@ -223,7 +225,6 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
           onSelectedCountryIdsChange(ids);
         }}
         isRowSelectable={({ row }) => permissions.canDelete && !row.isDeleted}
-        showNavigationButtons={false}
         lastAddedId={lastAddedId}
         lastEditedId={lastEditedId}
         lastDeletedIndex={lastDeletedIndex}

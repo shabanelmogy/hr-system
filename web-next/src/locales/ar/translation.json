@@ -806,7 +806,11 @@
       "uniqueCountries": "الدول الفريدة",
       "withCountries": "مع الدول",
       "avgStatesPerCountry": "متوسط المحافظات/الدولة",
-      "dataQuality": "جودة البيانات"
+      "dataQuality": "جودة البيانات",
+      "totalMatching": "المحافظات المطابقة",
+      "visibleStates": "محافظات الصفحة الحالية",
+      "countriesOnPage": "دول الصفحة الحالية",
+      "districtsOnPage": "أحياء الصفحة الحالية"
     },
     "views": {
       "grid": "عرض الجدول",
@@ -819,11 +823,19 @@
       "barChart": "رسم بياني عمودي",
       "pieChart": "رسم بياني دائري",
       "statesByCountry": "توزيع المحافظات حسب الدولة",
+      "statesByCountryDescription": "المحافظات المحملة مجمعة حسب الدولة التابعة لها",
+      "countryShare": "نسبة الدول في الصفحة الحالية",
+      "districtsByState": "أعلى المحافظات حسب عدد الأحياء",
+      "districtsByStateDescription": "إجمالي الأحياء للمحافظات المحملة",
       "totalStates": "إجمالي المحافظات",
       "acrossCountries": "عبر {{count}} دولة",
       "averageStatesPerCountry": "متوسط المحافظات لكل دولة",
       "distributionMetric": "مقياس التوزيع",
-      "topCountries": "أهم الدول حسب عدد المحافظات"
+      "topCountries": "أهم الدول حسب عدد المحافظات",
+      "title": "تحليلات المحافظات",
+      "timeline": "المحافظات المضافة بمرور الوقت",
+      "noData": "لا توجد بيانات محافظات متاحة",
+      "pageScope": "تعرض الرسوم بيانات الصفحة المحملة حاليًا، بينما يأتي عدد المحافظات المطابقة من إجمالي الخادم."
     },
     "fetched": "تم تحميل قائمة المحافظات بنجاح",
     "title": "المحافظات",

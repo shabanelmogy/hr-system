@@ -28,7 +28,7 @@ implementation details to guess.
 | Lifecycle | Active/archive/restore, status transitions, dependency rules |
 | List contract | Search, filters, sort fields, default sort, page-size limits |
 | Error contract | Stable codes, statuses, field errors, conflict behavior |
-| Views | Required Grid and justified optional views |
+| Views | Required Grid; mark every optional view Required, Deferred, or Excluded with its data scope and contract |
 | Cross-feature consumers | Deliberate public lookup or type APIs |
 
 The backend owns authorization, tenant isolation, invariants, uniqueness, and
@@ -193,11 +193,63 @@ then record lifecycle. The API is the final boundary.
 
 ## 8. Views
 
+### Multi-view naming and spacing
+
+Use `PageHeader` with `variant="multi-view"` as the shared view registry and
+switcher. Standard view IDs (`grid`, `cards`, `chart`, `list`, `smallList`,
+`report`, `import`, and `grouped`) take their labels from the global `views.*`
+translation keys. Do not pass feature-owned `viewLabels` for those standard
+meanings; override a label only when the feature is expressing a genuinely
+different product concept.
+
+The shared toggle owns consistent internal button padding and click/touch space.
+Each rendered view still owns responsive content padding appropriate to its
+surface: Grid and Cards may provide it through their established wrappers,
+while Chart, Report, and Import roots must not render flush against the feature
+shell. Avoid adding the same padding at both the MultiView root and a child view.
+
 ### Grid
 
 Grid is the default required list view. Use server pagination and sorting. Wire
 search and filters to the server contract. Do not show a client-only filter button
 in server mode unless it maps to a supported server filter.
+
+Use the reusable `MyDataGrid` footer and its existing pagination controls, as in
+Districts. Do not hide `GridFooter` navigation and replace it with a feature-local
+pager. Configure server/client mode, controlled page, totals, and page-size options
+through `MyDataGrid` props.
+
+This is a preservation rule, not a styling suggestion. The shared Grid footer,
+navigation, range/page-size behavior, responsive layout, and RTL handling are
+product-owned reusable behavior. A feature implementation or refactor must not
+disable, fork, or restyle that behavior locally unless the product requirement
+explicitly calls for a different Grid interaction. A change to the shared primitive
+requires checking all current consumers rather than fixing only the active feature.
+
+`GridFooter` presents one tested product interaction in both modes: the same
+first/previous/next/last record buttons, current-record/total counter, page
+indicator, and page-size selector used by Districts. Client mode moves through
+the loaded collection. Server mode moves within the current page and, when a
+record boundary is crossed, drives the controlled `paginationModel` to fetch the
+adjacent authoritative page before selecting the target record. Do not expose a
+second MUI-default pager or a feature-local footer in server mode.
+
+Never switch a server-managed feature to client pagination merely to obtain the
+footer controls; that would paginate only the loaded page and break the list
+contract.
+
+Use one reusable `MyDataGrid` for both modes. The shared adaptive list strategy
+may choose client pagination only after it has obtained the authoritative total
+and loaded the complete filtered/sorted collection. The standard client ceiling
+is 5000 rows, inclusive; totals above 5000 remain server-paginated. The data
+controller owns this decision and fetching. The visual Grid must never infer
+client mode from `rowCount` while it only holds one server page.
+
+During a rolling deployment, an older API may still enforce the ordinary page
+cap. If the bounded complete-result request is rejected, the adaptive hook must
+fail safely back to server pagination and must not surface that compatibility
+probe as a page failure. Client mode activates automatically after the matching
+API contract is deployed.
 
 ### Cards
 
@@ -268,9 +320,32 @@ controls and use logical CSS properties for RTL.
 
 ### Chart and analytics
 
-Add only when there is a product need. A chart based on the current page must say
-so and expose the same criteria/pagination. Global analytics requires a dedicated
-aggregate endpoint and separate query key.
+Add only when there is a product need. Pagination controls belong to list
+surfaces (Grid and Cards), not to Chart. A Chart that reuses the list endpoint
+must preserve the same criteria, reset the controlled page to zero when entered,
+reuse the current server page size, and label every metric as first-page scoped.
+It must not render its own pager. Global analytics requires a dedicated aggregate
+endpoint and separate query key.
+
+If users need to browse successive pages while looking at a chart, the surface is
+acting as another list rather than useful analytics. Keep that navigation in Grid
+or Cards, or define an aggregate/chart endpoint with an explicit scope.
+
+Record the decision for each optional view before implementation:
+
+| Decision | Meaning |
+|---|---|
+| Required | The product needs the view and its data source/scope is approved. |
+| Deferred | The need is accepted but a named contract or dependency is missing. |
+| Excluded | The feature does not need the view; record the reason. |
+
+Do not leave a feature-owned `*ChartView`, report, or import implementation
+orphaned from the view registry. Wire and test an approved view, or remove the
+unreachable implementation. Current-page charts may reuse the list endpoint only
+when they preserve the same criteria, reset to page zero on entry, omit pagination
+controls, and label every metric as page-scoped. Do not require an aggregate
+endpoint for that limited scope. Do not present current-page data as global
+analytics.
 
 ### Report
 
@@ -351,6 +426,11 @@ Do not report one query failure through both a persistent alert and duplicate to
 
 ## 13. Reuse Rules
 
+Established shared controls are deliberate project assets. Reuse them before
+writing local UI, and preserve their configured behavior during feature refactors.
+Do not treat a working shared control as temporary scaffolding merely because a
+feature can reproduce it with a library default.
+
 Good shared candidates are domain-neutral and have multiple real consumers:
 
 - `useServerListState` and page-bound helpers;
@@ -402,7 +482,8 @@ type checks, strict type checks, lint, full tests, and production build.
 
 ## 15. Implementation Order
 
-1. Complete the feature decision table and API contract.
+1. Complete the feature decision table and API contract, including a
+   Required/Deferred/Excluded decision for every optional view.
 2. Define separate list/detail/lookup/request/query types.
 3. Add centralized API routes.
 4. Implement and test request normalization and query mapping.
@@ -439,6 +520,10 @@ A feature follows this reference only when:
 - transport types, routes, scope, and nullability match the API;
 - server criteria, default order, tie-break order, and pagination are deterministic;
 - all list views share one state and query contract;
+- every Grid uses the reusable `MyDataGrid`/`GridFooter` pagination unless an
+  explicit product exception is documented;
+- every approved optional view is registered and tested, with no unreachable
+  feature-owned view implementation left behind;
 - permissions, lifecycle, tenant scope, and read-only behavior fail closed;
 - list, detail, mutation, background-fetch, and empty states are explicit;
 - EN/AR, RTL, keyboard, and accessibility behavior is complete;

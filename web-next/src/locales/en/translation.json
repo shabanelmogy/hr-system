@@ -802,7 +802,11 @@
       "uniqueCountries": "Unique Countries",
       "withCountries": "With Countries",
       "avgStatesPerCountry": "Avg States/Country",
-      "dataQuality": "Data Quality"
+      "dataQuality": "Data Quality",
+      "totalMatching": "Matching States",
+      "visibleStates": "States on This Page",
+      "countriesOnPage": "Countries on This Page",
+      "districtsOnPage": "Districts on This Page"
     },
     "views": {
       "grid": "Grid View",
@@ -815,13 +819,19 @@
       "barChart": "Bar Chart",
       "pieChart": "Pie Chart",
       "statesByCountry": "States Distribution by Country",
+      "statesByCountryDescription": "Loaded states grouped by their parent country",
+      "countryShare": "Country Share on This Page",
+      "districtsByState": "Top States by District Count",
+      "districtsByStateDescription": "District totals for the loaded states",
       "totalStates": "Total States",
       "acrossCountries": "Across {{count}} countries",
       "averageStatesPerCountry": "Average States per Country",
       "distributionMetric": "Distribution metric",
       "topCountries": "Top Countries by State Count",
       "title": "States Analytics",
-      "timeline": "States Added Over Time"
+      "timeline": "States Added Over Time",
+      "noData": "No State Data Available",
+      "pageScope": "Charts use the currently loaded page. Matching States comes from the server total."
     },
     "fetched": "State list fetched successfully",
     "title": "States",

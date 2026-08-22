@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import type { ReactNode } from "react";
 import type { ThemeMode } from "@/theme/ThemePreferences";
-import { INTERNAL_SESSION_HEADER } from "@/lib/auth/constants";
-import { decodeRequestSession } from "@/lib/auth/request-session";
 import { Providers } from "./providers";
 import "@/index.css";
 
@@ -19,11 +17,6 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
   const savedLang = cookieStore.get("i18next")?.value === "ar" ? "ar" : "en";
   const dir = savedLang === "ar" ? "rtl" : "ltr";
-
-  const requestHeaders = await headers();
-  const initialUser = decodeRequestSession(
-    requestHeaders.get(INTERNAL_SESSION_HEADER),
-  );
 
   const fg = initialThemeMode === "dark" ? "#90caf9" : "#1976d2";
 
@@ -72,7 +65,6 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           initialThemeMode={initialThemeMode}
           initialDirection={dir}
           initialLanguage={savedLang}
-          initialUser={initialUser}
         >
           {children}
         </Providers>

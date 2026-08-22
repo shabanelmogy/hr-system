@@ -17,3 +17,4 @@ features only through curated public APIs, use controlled server-list state for 
 business data, and run `npm run check` before handoff.
 
 When following Countries, also read the [cross-platform master](../documentation/project/COUNTRIES_FEATURE_FULL_REVIEW.md), the [mobile applied profile](../documentation/mobile-react/countries-mobile-reference.md), and phases 03, 04, 05, and 06 under `../documentation/system/generated/`. Run `../documentation/system/Generate-Documentation.ps1 -Check` when a feature contract, source manifest, or guide changes. Do not create a new `mobile-react/docs/` directory.
+Use the States profiles when a parent selector or parent-dependent list contract makes them the closer reference. Do not use the unscoped Countries generated packets as evidence for a different feature.

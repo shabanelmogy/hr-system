@@ -30,7 +30,7 @@ This is the applied evidence ledger for the current Countries feature. The detai
 
 | Concern | Frozen rule |
 | --- | --- |
-| Paging | API is one-based; web and mobile state are zero-based and convert once; maximum page size is 50 |
+| Paging | API is one-based; web and mobile state are zero-based and convert once; Countries accepts up to 5000 for bounded adaptive web reads while ordinary page choices stay small |
 | Default list | Active records, deterministic sort with `Id` tie-break |
 | Search fields | `all`, `nameAr`, `nameEn`, `alpha2`, `alpha3`, `phone`, `currency` |
 | Search operators | contains, does-not-contain, equals, does-not-equal, starts-with, ends-with |

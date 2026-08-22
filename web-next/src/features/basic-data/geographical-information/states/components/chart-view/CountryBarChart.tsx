@@ -1,34 +1,29 @@
-import React from 'react';
-import { BarChart } from '@/shared/components/charts';
-import { COLOR_PALETTES } from '@/shared/components/charts';
-
-interface CountryData {
-  name: string;
-  value: number;
-  nameAr?: string;
-}
+import { BarChart, COLOR_PALETTES } from "@/shared/components/charts";
+import { useTranslation } from "react-i18next";
+import type { CountryData } from "./chartDataUtils";
 
 interface CountryBarChartProps {
   data: CountryData[];
-  t: (key: string) => string;
 }
 
-const CountryBarChart: React.FC<CountryBarChartProps> = ({ data, t }) => {
+const CountryBarChart = ({ data }: CountryBarChartProps) => {
+  const { t } = useTranslation();
+
   return (
     <BarChart
       data={data}
-      title={t("states.charts.statesByCountry") || "States by Country"}
+      title={t("states.charts.statesByCountry")}
+      subtitle={t("states.charts.statesByCountryDescription")}
       xKey="name"
       yKey="value"
       height={400}
       colors={COLOR_PALETTES.primary}
-      showGrid={true}
-      showTooltip={true}
+      showGrid
+      showTooltip
       barRadius={4}
       orientation="vertical"
       formatValue={(value) => String(value)}
-      formatLabel={(label) => String(label ?? '')}
-      subtitle={undefined}
+      formatLabel={(label) => String(label ?? "")}
     />
   );
 };

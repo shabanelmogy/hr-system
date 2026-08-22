@@ -1,15 +1,13 @@
-import React from 'react';
-import { ChartContainer } from '@/shared/components/charts';
+import { ChartContainer } from "@/shared/components/charts";
+import { useTranslation } from "react-i18next";
 
-interface LoadingChartStateProps {
-  t: (key: string) => string;
-}
+const LoadingChartState = () => {
+  const { t } = useTranslation();
 
-const LoadingChartState: React.FC<LoadingChartStateProps> = ({ t }) => {
   return (
     <ChartContainer
-      title={t("states.charts.title") || "States Analytics"}
-      loading={true}
+      title={t("states.charts.title")}
+      loading
       height={400}
       subtitle={undefined}
     />

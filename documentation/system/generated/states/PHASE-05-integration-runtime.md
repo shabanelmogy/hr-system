@@ -36,9 +36,9 @@ Verify all applicable registrations:
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | states-master | 4 | `9d784c317c702d41f1d9282b7d153ea617fab527d8e80ef7222e65f18cd52fb0` |
-| states-master | 5 | `b85ea22e1bc1ef15c1c78c113fce28d750b952c79e7ab08250d2428f658c2705` |
+| states-master | 5 | `885ba01b409f605e650990d649c44935897caed196b1c3edaf44f56297bc25f6` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
-| states-master | 7 | `7863ba4255bde2c3546b78b9f78db32f27d29d8759e953c15cc28e3445c2ee87` |
+| states-master | 7 | `9e3df427e9a5cf7bec84a8f110739543a736248bb2b576225895c0f523e9de51` |
 | states-master | 8 | `4943e0d1fc6a2d0893837c810839ab2fb28cfadee58e6b7a57e1cd5e318e4699` |
 | states-api | 8 | `5f502b1906084a55b3bbff646f16611cc3c88e03b432a210d739a729d0eca2aa` |
 | states-api | 9 | `19ad89693b2398543aff1b54378da61520f0171ab8d1e1e67f8b7627de4ff7a1` |
@@ -46,7 +46,7 @@ Verify all applicable registrations:
 | states-web | 8 | `dec0c122194d60ca08d8135c4d8fa24774fbecc3f5dc9d9fb4df340f9b3259c8` |
 | states-web | 9 | `3103392ff8db16be591f2bf6d1e3bc0abfba246c3b6421fc00b0af2afcbbb665` |
 | states-web | 10 | `fc95a596f566ea1b062e1df4e995f381918234f6db6c5b4c56a87ab7a0c93c10` |
-| states-web | 13 | `389190823e4ecd90cfac1f037883294acfcf5f5a1a5eee9340064d06d89f6f4d` |
+| states-web | 13 | `69707aa982857aa1778d13b32ec7f4a6149889380ca6a889acffd0d41af71a90` |
 | states-mobile | 2 | `df5e503c56700392a3580c09741dd3bf946ce7f43ec310fd3a0a79acb53329be` |
 | states-mobile | 11 | `b566631745234edd79055f13f0b8a6966119912f9560a7e88e40b321d912af22` |
 | states-mobile | 12 | `7536843d769e8361a410f15eec2b76d37720f6bb7ef92aaeb086714bf585dc5f` |

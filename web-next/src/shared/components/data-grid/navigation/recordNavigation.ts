@@ -21,3 +21,20 @@ export function getActiveRecordIndex(
 export function getPageForRecord(recordIndex: number, pageSize: number) {
   return Math.floor(recordIndex / Math.max(1, pageSize));
 }
+
+export function getServerRecordIndex(
+  visibleIds: readonly GridRowId[],
+  selectedId: GridRowId | undefined,
+  page: number,
+  pageSize: number,
+  totalRowCount: number,
+) {
+  if (visibleIds.length === 0 || totalRowCount <= 0) return -1;
+
+  const selectedIndex = selectedId == null ? -1 : visibleIds.indexOf(selectedId);
+  const localIndex = selectedIndex >= 0 ? selectedIndex : 0;
+  return Math.min(
+    Math.max(0, page) * Math.max(1, pageSize) + localIndex,
+    totalRowCount - 1,
+  );
+}

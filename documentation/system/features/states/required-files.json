@@ -25,6 +25,8 @@
     { "id": "api-controller-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/StatesControllerCqrsTests.cs", "purpose": "Controller dispatch coverage" },
     { "id": "web-route", "layer": "web-next", "path": "web-next/src/app/(main)/basic-data/(geographical-information)/states/page.tsx", "purpose": "Thin browser route" },
     { "id": "web-page", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/states/pages/StatesPage.tsx", "purpose": "Browser composition" },
+    { "id": "web-multi-view", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/states/components/StatesMultiView.tsx", "purpose": "Approved Grid, Card, Chart, and Report registration" },
+    { "id": "web-chart", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/states/components/StatesChartView.tsx", "purpose": "Current-page chart scope and pagination" },
     { "id": "web-list", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/states/hooks/useStateGridLogic.ts", "purpose": "Server-list controller" },
     { "id": "web-grid", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/states/components/grid-view/StatesDataGrid.tsx", "purpose": "Shared toolbar/Grid Options integration" },
     { "id": "web-service", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/states/services/stateService.ts", "purpose": "HTTP transport" },

@@ -8,6 +8,7 @@ Close the evidence loop and decide whether the feature is ready for handoff.
 
 - [ ] Every requirement maps to implementation evidence and a verification result.
 - [ ] Required-source manifest validation passes.
+- [ ] No draft manifest, placeholder path, reference-only fingerprint, or shared output path is registered as final evidence.
 - [ ] Generated documentation is current.
 - [ ] API contract tests and focused feature tests pass.
 - [ ] Web typecheck, lint, architecture checks, focused tests, and production build pass.
@@ -16,7 +17,8 @@ Close the evidence loop and decide whether the feature is ready for handoff.
 - [ ] Search, filter, sorting, pagination, refresh, mode switches, selection, forms, archive, restore, bulk, report, import, notification, and realtime paths are reconciled.
 - [ ] Intentional API/web/mobile differences are documented.
 - [ ] Open findings have severity, evidence, owner, and a release decision.
-- [ ] No Countries-specific field, view, or known gap was copied without a feature requirement.
+- [ ] No reference-specific field, ownership rule, view, or known gap was copied without a feature requirement.
+- [ ] The chosen applied reference and every intentional departure from it are recorded.
 
 ## Handoff decision
 

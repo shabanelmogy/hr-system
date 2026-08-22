@@ -2,6 +2,7 @@ import { showToast } from "@/shared/components/feedback/transient";
 import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 import { useGridCrudController } from "@/shared/hooks/useGridCrudController";
 import { useGridCrudMarkerCleanup } from "@/shared/hooks/useGridCrudMarkerCleanup";
+import { useAdaptivePagination } from "@/shared/hooks/useAdaptivePagination";
 import { getLastServerListPage, useServerListState } from "@/shared/hooks/useServerListState";
 import { useStatesPermissions } from "@/shared/hooks/usePermissions";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
@@ -20,13 +21,14 @@ import type {
 import { toStatePageQuery } from "../utils/statePageQuery";
 import { canRunStateAction, type StatePermissionSet } from "../utils/statePermissions";
 import {
+  stateKeys,
   useArchiveState,
   useBulkArchiveStates,
   useCreateState,
   useRestoreState,
-  useStatePage,
   useUpdateState,
 } from "./useStateQueries";
+import StateService from "../services/stateService";
 
 type DialogType = "add" | "edit" | "view" | "delete" | null;
 const defaultStateFilters: StateListFilters = {
@@ -43,6 +45,8 @@ export interface UseStateGridLogicReturn {
   bulkArchiveOpen: boolean;
   loading: boolean;
   states: StateListItem[];
+  gridStates: StateListItem[];
+  paginationMode: "client" | "server";
   totalCount: number;
   apiRef: RefObject<GridApi | null>;
   error: Error | null;
@@ -106,9 +110,14 @@ export default function useStateGridLogic(): UseStateGridLogicReturn {
     () => toStatePageQuery(list.state, list.debouncedSearchValue),
     [list.debouncedSearchValue, list.state],
   );
-  const query = useStatePage(pageQuery);
-  const states = useMemo(() => query.data?.items ?? [], [query.data?.items]);
-  const totalCount = query.data?.metaData.totalCount ?? 0;
+  const adaptivePagination = useAdaptivePagination({
+    query: pageQuery,
+    queryKey: stateKeys.page,
+    queryFn: StateService.getPage,
+  });
+  const states = adaptivePagination.pageItems;
+  const gridStates = adaptivePagination.allItems;
+  const totalCount = adaptivePagination.totalCount;
   const apiRef = useGridApiRef();
   const permissions = useMemo<StatePermissionSet>(() => ({
     canView: authorization.canView,
@@ -119,14 +128,14 @@ export default function useStateGridLogic(): UseStateGridLogicReturn {
   }), [authorization, isReadOnly]);
 
   useEffect(() => {
-    if (!query.data) return;
+    if (!adaptivePagination.isReady) return;
     const lastPage = getLastServerListPage(totalCount, list.state.pageSize);
     if (list.state.page > lastPage) list.setPage(lastPage);
-  }, [list, query.data, totalCount]);
+  }, [adaptivePagination.isReady, list, totalCount]);
 
   const selectableIds = useMemo(
-    () => new Set(states.filter((state) => !state.isDeleted).map((state) => state.id)),
-    [states],
+    () => new Set(gridStates.filter((state) => !state.isDeleted).map((state) => state.id)),
+    [gridStates],
   );
   const selectedStateIds = useMemo(
     () => permissions.canDelete ? selectionIds.filter((id) => selectableIds.has(id)) : [],
@@ -193,14 +202,14 @@ export default function useStateGridLogic(): UseStateGridLogicReturn {
     onError: (error) => showToast.error(extractErrorMessage(error) || t("states.bulkArchiveError")),
   });
   const crud = useGridCrudController<StateListItem, CreateStateRequest>({
-    items: states,
+    items: gridStates,
     create: async (request) => ({ ...(await createMutation.mutateAsync(request)), districtsCount: 0 }),
     update: (id, request) => {
       const stateId = Number(id);
       if (!Number.isInteger(stateId)) return Promise.reject(new Error("Invalid state identifier."));
       return updateMutation.mutateAsync({ id: stateId, request }).then((state) => ({
         ...state,
-        districtsCount: states.find((item) => item.id === stateId)?.districtsCount ?? 0,
+        districtsCount: gridStates.find((item) => item.id === stateId)?.districtsCount ?? 0,
       }));
     },
     remove: (id) => {
@@ -209,7 +218,7 @@ export default function useStateGridLogic(): UseStateGridLogicReturn {
         ? archiveMutation.mutateAsync(stateId)
         : Promise.reject(new Error("Invalid state identifier."));
     },
-    refresh: () => query.refetch(),
+    refresh: adaptivePagination.refetch,
   });
   useGridCrudMarkerCleanup({
     lastAddedId: crud.lastAddedId,
@@ -311,8 +320,10 @@ export default function useStateGridLogic(): UseStateGridLogicReturn {
 
   return {
     dialogType: crud.dialogType, selectedState: crud.selectedItem, restoreState, selectedStateIds, bulkArchiveOpen,
-    loading: query.isLoading, states, totalCount, apiRef, error: query.error,
-    isFetching: query.isFetching || list.isSearchPending,
+    loading: adaptivePagination.isLoading, states, gridStates,
+    paginationMode: adaptivePagination.mode,
+    totalCount, apiRef, error: adaptivePagination.error,
+    isFetching: adaptivePagination.isFetching || list.isSearchPending,
     page: list.state.page, pageSize: list.state.pageSize, searchValue: list.state.searchValue,
     searchField: list.state.filters.searchField ?? "all",
     searchOperator: list.state.filters.searchOperator ?? "contains",

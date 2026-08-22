@@ -22,7 +22,7 @@ View, create, edit, and archive use `States:View`, `States:Create`, `States:Edit
 
 ## 5. List contract
 
-The API owns filtering, ordering, and paging. It accepts one-based page number (1-50 page size), `search`, `searchField` (`all`, `nameAr`, `nameEn`, `code`, `country`), six search operators, `status`, optional `countryId` and `hasDistricts`, and the documented sort allow-list (`nameEn`, `nameAr`, `code`, `country`, `createdOn`). Browser and mobile UI state is zero-based and converts only at the transport boundary. Every server sort has an Id tie-break.
+The API owns filtering, ordering, and paging. It accepts one-based page number (1-5000 page size for the bounded adaptive web read), `search`, `searchField` (`all`, `nameAr`, `nameEn`, `code`, `country`), six search operators, `status`, optional `countryId` and `hasDistricts`, and the documented sort allow-list (`nameEn`, `nameAr`, `code`, `country`, `createdOn`). Browser and mobile UI state is zero-based and converts only at the transport boundary. The web loads the complete result and uses client pagination through 5000 rows, then uses server pages above that boundary. Every server sort has an Id tie-break.
 
 ## 6. API architecture
 
@@ -30,7 +30,7 @@ The versioned controller depends only on `ISender`. State read/write ports, Maps
 
 ## 7. Client architecture
 
-Next.js uses one `useServerListState` controller, React Query prefix invalidation, the shared aligned Grid toolbar, Grid Options at the end of the toolbar row, server Grid/Card/Report views, modal form/detail retrieval, lifecycle dialogs, and state-specific fields. Expo uses one controlled `useServerListState`, runtime Zod parsing, a guarded route, full-screen State form with an active Country selector, search-field/operator controls, status filter, table/cards/report modes, and touch-safe lifecycle actions.
+Next.js uses one `useServerListState` criteria controller plus the shared adaptive pagination hook, React Query prefix invalidation, the shared aligned Grid toolbar, Grid Options at the end of the toolbar row, Grid/Card/Chart/Report views, modal form/detail retrieval, lifecycle dialogs, and state-specific fields. The same `MyDataGrid` runs in client mode through 5000 complete rows and server mode above the boundary. Standard Multi View names come from the shared global labels and the shared toggle owns consistent inner padding. Chart mode keeps the same criteria, resets to the first page when entered, omits pagination controls, labels its page scope, and is not global aggregate analytics. Expo uses one controlled `useServerListState`, runtime Zod parsing, a guarded route, full-screen State form with an active Country selector, search-field/operator controls, status filter, table/cards/report modes, and touch-safe lifecycle actions.
 
 ## 8. Realtime, localization, RTL, and accessibility
 

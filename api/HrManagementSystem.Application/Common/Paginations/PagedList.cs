@@ -8,13 +8,19 @@ namespace HrManagementSystem.Application.Common.Paginations
     {
         public MetaData MetaData { get; set; }
 
-        public PagedList(List<T> items, int count, int pageNumber, int pageSize)
+        public PagedList(
+            List<T> items,
+            int count,
+            int pageNumber,
+            int pageSize,
+            int maxPageSize = PaginationRequest.MaxPageSize)
         {
             ArgumentNullException.ThrowIfNull(items);
             ArgumentOutOfRangeException.ThrowIfNegative(count);
             ArgumentOutOfRangeException.ThrowIfLessThan(pageNumber, 1);
             ArgumentOutOfRangeException.ThrowIfLessThan(pageSize, 1);
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(pageSize, PaginationRequest.MaxPageSize);
+            ArgumentOutOfRangeException.ThrowIfLessThan(maxPageSize, 1);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(pageSize, maxPageSize);
 
             MetaData = new()
             {

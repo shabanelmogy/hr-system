@@ -149,11 +149,6 @@ const DistrictsMultiView = ({
         storageKey="districts-view-layout"
         defaultView="grid"
         availableViews={["grid", "cards", "chart"]}
-        viewLabels={{
-          grid: t("districts.views.grid") || "Grid",
-          cards: t("districts.views.cards") || "Cards",
-          chart: t("districts.views.chart") || "Chart",
-        }}
         onAdd={onAdd}
         dataCount={districts?.length || 0}
         totalLabel={t("districts.total") || "Total"}

@@ -6,7 +6,7 @@ namespace HrManagementSystem.Application.Features.GeographicalInformation.Countr
 
 public sealed record GetCountriesQuery : IQuery<PageResponse<CountryListItemResponse>>
 {
-    public const int MaxPageSize = 50;
+    public const int MaxPageSize = PaginationRequest.MaxClientPageSize;
     public static readonly string[] SearchFields =
     [
         "all",

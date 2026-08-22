@@ -118,7 +118,7 @@ describe("resolveSession", () => {
 
     await resolveSession("expired-access-token", "timeout-test-refresh-token");
 
-    expect(timeoutSpy.mock.calls).toEqual([[3_000], [5_000], [3_000]]);
+    expect(timeoutSpy.mock.calls).toEqual([[15_000], [15_000], [15_000]]);
     for (const [, init] of fetchMock.mock.calls) {
       expect(init?.signal).toBeInstanceOf(AbortSignal);
     }

@@ -1,38 +1,30 @@
-import { AreaChart } from '@/shared/components/charts';
-import { COLOR_PALETTES } from '@/shared/components/charts';
-import React from 'react';
-
-interface TimelineData {
-  month: string;
-  count: number;
-  cumulative: number;
-}
+import { AreaChart, COLOR_PALETTES } from "@/shared/components/charts";
+import { useTranslation } from "react-i18next";
+import type { TimelineData } from "./chartDataUtils";
 
 interface TimelineChartProps {
   data: TimelineData[];
-  t: (key: string) => string;
 }
 
-const TimelineChart: React.FC<TimelineChartProps> = ({ data, t }) => {
-  if (data.length === 0) {
-    return null;
-  }
+const TimelineChart = ({ data }: TimelineChartProps) => {
+  const { t } = useTranslation();
+  if (data.length === 0) return null;
 
   return (
     <AreaChart
       data={data}
-      title={t("states.charts.timeline") || "States Added Over Time"}
+      title={t("states.charts.timeline")}
       xKey="month"
       yKey="cumulative"
       height={400}
       colors={COLOR_PALETTES.success}
-      showGrid={true}
-      showTooltip={true}
-      gradient={true}
+      showGrid
+      showTooltip
+      gradient
       strokeWidth={2}
       fillOpacity={0.3}
       formatValue={(value) => String(value)}
-      formatLabel={(label) => String(label ?? '')}
+      formatLabel={(label) => String(label ?? "")}
       subtitle={undefined}
     />
   );

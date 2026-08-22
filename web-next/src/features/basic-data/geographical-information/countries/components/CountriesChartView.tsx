@@ -2,7 +2,6 @@ import { Alert, Box, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
 import type { CountryListItem } from "../types/Country";
-import { CountryCardViewPagination } from "./card-view";
 import {
   CurrencyChart,
   EmptyChartState,
@@ -24,10 +23,6 @@ interface CountriesChartViewProps {
   totalCount: number;
   loading: boolean;
   onAdd?: () => void;
-  page: number;
-  pageSize: number;
-  onPageChange: (page: number) => void;
-  onPageSizeChange: (pageSize: number) => void;
 }
 
 const CountriesChartView: React.FC<CountriesChartViewProps> = ({
@@ -35,10 +30,6 @@ const CountriesChartView: React.FC<CountriesChartViewProps> = ({
   totalCount,
   loading,
   onAdd,
-  page,
-  pageSize,
-  onPageChange,
-  onPageSizeChange,
 }) => {
   const { i18n, t } = useTranslation();
   const theme = useTheme();
@@ -65,7 +56,7 @@ const CountriesChartView: React.FC<CountriesChartViewProps> = ({
   const visibleStates = getTotalStatesCount(countries);
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ boxSizing: "border-box", p: { xs: 1, md: 1.5 }, width: "100%" }}>
       <Alert severity="info" sx={{ mb: 2 }}>
         {t("countries.charts.pageScope")}
       </Alert>
@@ -95,14 +86,6 @@ const CountriesChartView: React.FC<CountriesChartViewProps> = ({
         </Grid>
       </Grid>
 
-      <CountryCardViewPagination
-        page={page}
-        rowsPerPage={pageSize}
-        totalItems={totalCount}
-        itemsPerPageOptions={[5, 10, 25, 50]}
-        onPageChange={onPageChange}
-        onRowsPerPageChange={onPageSizeChange}
-      />
     </Box>
   );
 };

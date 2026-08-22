@@ -1,6 +1,6 @@
 # States Next.js Frontend Reference
 
-Status: applied server-managed feature profile. Feature owner: `src/features/basic-data/geographical-information/states`.
+Status: applied adaptive-list feature profile. Feature owner: `src/features/basic-data/geographical-information/states`.
 
 ## 1. Route and ownership
 
@@ -16,25 +16,40 @@ The App Router adapter at `app/(main)/basic-data/(geographical-information)/stat
 
 ## 4. Server-list controller
 
-`useStateGridLogic` owns the only browser list state. It debounces search, converts zero-based page state in `toStatePageQuery`, resets on criteria changes, clamps an invalid last page, clears bulk selection on criteria/page changes, and never filters or sorts a server page locally.
+`useStateGridLogic` owns the only browser list criteria state. It debounces search, converts zero-based page state in `toStatePageQuery`, resets on criteria changes, clamps an invalid last page, and clears bulk selection on criteria/page changes. The shared adaptive hook loads the complete filtered/sorted result through 5000 rows and otherwise retains server paging.
 
 ## 5. Shared toolbar and Grid Options
 
-`StatesDataGrid` uses `MyDataGrid` server modes and the shared toolbar. The column dropdown, condition dropdown, search input, and Reset button use the shared aligned 40px control row. Grid Options is the terminal toolbar item; it owns status selection, the shared Columns/Density controls, and bulk archive. The grid does not expose unsupported client sorting.
+`StatesDataGrid` uses the same `MyDataGrid` in client or server pagination mode and the shared toolbar. The column dropdown, condition dropdown, search input, and Reset button use the shared aligned 40px control row. Grid Options is the terminal toolbar item; it owns status selection, the shared Columns/Density controls, and bulk archive. Sorting and filtering continue through the API contract in both pagination modes.
 
 ## 6. Views
 
-Grid is the default. Cards render the same server page and actions through the
+Grid is the default. Cards render the same adaptive display page and actions through the
 shared `EntityCard` scaffold, shared card criteria toolbar, loading/empty/no-results
-states, highlight behavior, and server-page pagination. State-specific content is
+states, highlight behavior, and shared pagination. State-specific content is
 Country, State code, District count, quality, and created date. Report mode renders
-the same current server page and declares its current-row/total scope because no
-State report backend exists. Chart and import are deliberately absent; they are
-Countries-only capabilities without a States contract.
+the same current display page and declares its current-row/total scope because no
+State report backend exists. Chart mode is Required and uses the same controlled
+criteria, resets to the first page when entered, and does not render
+pagination controls. Its notice and metric labels explicitly distinguish matching
+authoritative totals from first-page-scoped Country, State, District, and timeline data.
+Grid and Cards remain the paginated list surfaces. Import is Excluded because no
+State bulk-create contract exists.
+
+States uses the shared global `views.*` names and shared padded view toggle rather
+than feature-owned label variants. Its Chart root provides responsive inner
+padding so analytics do not render flush against the feature shell.
+
+Grid keeps the reusable `MyDataGrid`/`GridFooter` pagination used by Districts.
+States configures the same component for client paging only when the complete
+result is loaded through 5000 rows, and for controlled server paging above that
+boundary; it never hides navigation or creates a feature-specific replacement.
+An older hosted API that rejects the bounded complete-result request triggers a
+safe server-pagination fallback until the updated States contract is deployed.
 
 ### Web Cards applied profile
 
-States Cards use the same server-owned list state as Grid. The shared card
+States Cards use the same adaptive list criteria as Grid. The shared card
 toolbar renders the State search-column choices (`all`, English name, Arabic
 name, State code, and Country) and all six supported conditions before the
 search input, then the shared sort controls and Reset in the same aligned row.
@@ -42,8 +57,9 @@ The terminal Grid Options menu owns Status and the permission-gated bulk Archive
 not add State-specific client filtering. Shared sort-column and direction
 controls follow search and accept only the State server sort allow-list.
 
-`StatesCardView` maps the current server page into the shared responsive
-`12 / 6 / 4 / 3` card grid (`xs / sm / md / lg`). It composes `EntityCard` for
+`StatesCardView` maps the current page into the shared responsive
+`12 / 6 / 4 / 3` card grid (`xs / sm / md / lg`). Results at or below 5000 rows
+are loaded once and paged on the client; larger results remain server-paged. It composes `EntityCard` for
 the fixed card scaffold, guarded active-row selection, action footer,
 hover/reduced-motion behavior, logical RTL positioning, and the temporary
 five-second create/edit highlight. State fields remain State-owned; do not add
@@ -88,7 +104,7 @@ Add pure query serialization, State permission matrix, service route, and contro
 
 ## 13. State-specific differences from Countries
 
-States has required parent Country and active District archive checks; it has no currency, alpha code, phone, Country-state presence filters, XLSX bulk create/import, chart, or State PDF report. Do not copy any of those Countries fields or findings.
+States has required parent Country and active District archive checks; it has no currency, alpha code, phone, Country-state presence filters, XLSX bulk create/import, global aggregate analytics, or State PDF report. Its Chart is intentionally first-page scoped and has no pager. Do not copy any of those Countries fields or findings.
 
 ## 14. Verification
 

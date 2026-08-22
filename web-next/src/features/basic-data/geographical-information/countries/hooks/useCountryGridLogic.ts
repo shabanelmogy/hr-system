@@ -1,6 +1,7 @@
 import { showToast } from "@/shared/components/feedback/transient";
 import { useGridCrudController } from "@/shared/hooks/useGridCrudController";
 import { useGridCrudMarkerCleanup } from "@/shared/hooks/useGridCrudMarkerCleanup";
+import { useAdaptivePagination } from "@/shared/hooks/useAdaptivePagination";
 import {
   getLastServerListPage,
   useServerListState,
@@ -26,13 +27,14 @@ import {
   type CountryPermissionSet,
 } from "../utils/countryPermissions";
 import {
+  countryKeys,
   useArchiveCountry,
   useBulkArchiveCountries,
-  useCountryPage,
   useCreateCountry,
   useRestoreCountry,
   useUpdateCountry,
 } from "./useCountryQueries";
+import CountryService from "../services/countryService";
 
 type DialogType = "add" | "edit" | "view" | "delete" | null;
 export type CountryFilter = CountryStatus;
@@ -51,6 +53,8 @@ export interface UseCountryGridLogicReturn {
   bulkArchiveOpen: boolean;
   loading: boolean;
   countries: CountryListItem[];
+  gridCountries: CountryListItem[];
+  paginationMode: "client" | "server";
   totalCount: number;
   apiRef: RefObject<GridApi | null>;
   error: Error | null;
@@ -118,9 +122,14 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     () => toCountryPageQuery(list.state, list.debouncedSearchValue),
     [list.debouncedSearchValue, list.state],
   );
-  const query = useCountryPage(countryQuery);
-  const countries = useMemo(() => query.data?.items ?? [], [query.data?.items]);
-  const totalCount = query.data?.metaData.totalCount ?? 0;
+  const adaptivePagination = useAdaptivePagination({
+    query: countryQuery,
+    queryKey: countryKeys.page,
+    queryFn: CountryService.getPage,
+  });
+  const countries = adaptivePagination.pageItems;
+  const gridCountries = adaptivePagination.allItems;
+  const totalCount = adaptivePagination.totalCount;
   const apiRef = useGridApiRef();
   const currentPage = list.state.page;
   const currentPageSize = list.state.pageSize;
@@ -134,14 +143,14 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
   }), [authorization, isReadOnly]);
 
   useEffect(() => {
-    if (!query.data) return;
+    if (!adaptivePagination.isReady) return;
     const lastPage = getLastServerListPage(totalCount, currentPageSize);
     if (currentPage > lastPage) setListPage(lastPage);
-  }, [currentPage, currentPageSize, query.data, setListPage, totalCount]);
+  }, [adaptivePagination.isReady, currentPage, currentPageSize, setListPage, totalCount]);
 
   const selectableCountryIds = useMemo(
-    () => new Set(countries.filter((country) => !country.isDeleted).map((country) => country.id)),
-    [countries],
+    () => new Set(gridCountries.filter((country) => !country.isDeleted).map((country) => country.id)),
+    [gridCountries],
   );
   const selectedCountryIds = useMemo(
     () => permissions.canDelete
@@ -241,7 +250,7 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
   });
 
   const crud = useGridCrudController<CountryListItem, CreateCountryRequest>({
-    items: countries,
+    items: gridCountries,
     create: async (request) => ({
       ...(await createMutation.mutateAsync(request)),
       statesCount: 0,
@@ -253,7 +262,7 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
       }
       return updateMutation.mutateAsync({ id: countryId, request }).then((country) => ({
         ...country,
-        statesCount: countries.find((item) => item.id === countryId)?.statesCount ?? 0,
+        statesCount: gridCountries.find((item) => item.id === countryId)?.statesCount ?? 0,
       }));
     },
     remove: (id) => {
@@ -263,7 +272,7 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
       }
       return archiveMutation.mutateAsync(countryId);
     },
-    refresh: () => query.refetch(),
+    refresh: adaptivePagination.refetch,
   });
 
   useGridCrudMarkerCleanup({
@@ -389,12 +398,14 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     restoreCountry,
     selectedCountryIds,
     bulkArchiveOpen,
-    loading: query.isLoading,
+    loading: adaptivePagination.isLoading,
     countries,
+    gridCountries,
+    paginationMode: adaptivePagination.mode,
     totalCount,
     apiRef,
-    error: query.error,
-    isFetching: query.isFetching || list.isSearchPending,
+    error: adaptivePagination.error,
+    isFetching: adaptivePagination.isFetching || list.isSearchPending,
     page: list.state.page,
     pageSize: list.state.pageSize,
     searchValue: list.state.searchValue,

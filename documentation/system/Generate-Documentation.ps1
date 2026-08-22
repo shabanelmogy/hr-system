@@ -69,14 +69,34 @@ function Get-NumberedSection {
 
 function Test-RequiredSources {
     foreach ($requiredManifestRelative in $manifest.requiredFileManifests) {
+        if ($requiredManifestRelative -match '\.draft\.json$') {
+            throw "Draft required-file manifests cannot be registered: $requiredManifestRelative"
+        }
+
         $requiredManifestPath = Assert-RepositoryPath -Path (Resolve-SystemPath -RelativePath $requiredManifestRelative) -Label "Required-file manifest"
         if (-not (Test-Path -LiteralPath $requiredManifestPath -PathType Leaf)) {
             throw "Required-file manifest is missing: $requiredManifestPath"
         }
 
         $requiredManifest = Get-Content -LiteralPath $requiredManifestPath -Raw | ConvertFrom-Json
+        if ($requiredManifest.PSObject.Properties.Name -contains 'status' -and $requiredManifest.status -eq 'draft') {
+            throw "Draft required-file manifest cannot be validated as final: $requiredManifestRelative"
+        }
+
+        $duplicateRequiredIds = @($requiredManifest.requiredFiles | Group-Object id | Where-Object Count -gt 1)
+        if ($duplicateRequiredIds.Count -gt 0) {
+            throw "Required-file manifest contains duplicate IDs [$($duplicateRequiredIds.Name -join ', ')]: $requiredManifestRelative"
+        }
+
+        $duplicateCollectionIds = @($requiredManifest.sourceCollections | Group-Object id | Where-Object Count -gt 1)
+        if ($duplicateCollectionIds.Count -gt 0) {
+            throw "Required-file manifest contains duplicate collection IDs [$($duplicateCollectionIds.Name -join ', ')]: $requiredManifestRelative"
+        }
 
         foreach ($entry in $requiredManifest.requiredFiles) {
+            if ([string]$entry.path -match '[<>]') {
+                throw "Required source contains a placeholder path [$($entry.id)]: $($entry.path)"
+            }
             $requiredPath = Assert-RepositoryPath -Path (Join-Path $repositoryRoot $entry.path) -Label "Required source"
             if (-not (Test-Path -LiteralPath $requiredPath -PathType Leaf)) {
                 throw "Required source is missing [$($entry.layer)/$($entry.id)]: $($entry.path)"
@@ -84,6 +104,12 @@ function Test-RequiredSources {
         }
 
         foreach ($collection in $requiredManifest.sourceCollections) {
+            if ([string]$collection.path -match '[<>]') {
+                throw "Source collection contains a placeholder path [$($collection.id)]: $($collection.path)"
+            }
+            if ([int]$collection.minimumFiles -lt 1) {
+                throw "Source collection minimumFiles must be at least 1 [$($collection.id)]."
+            }
             $collectionPath = Assert-RepositoryPath -Path (Join-Path $repositoryRoot $collection.path) -Label "Source collection"
             if (-not (Test-Path -LiteralPath $collectionPath -PathType Container)) {
                 throw "Source collection is missing [$($collection.layer)/$($collection.id)]: $($collection.path)"
@@ -95,6 +121,26 @@ function Test-RequiredSources {
             }
         }
     }
+}
+
+$duplicateBookIds = @($manifest.books | Group-Object id | Where-Object Count -gt 1)
+if ($duplicateBookIds.Count -gt 0) {
+    throw "recipe-manifest.json contains duplicate book IDs: $($duplicateBookIds.Name -join ', ')"
+}
+
+$duplicateRequiredManifestPaths = @($manifest.requiredFileManifests | Group-Object | Where-Object Count -gt 1)
+if ($duplicateRequiredManifestPaths.Count -gt 0) {
+    throw "recipe-manifest.json contains duplicate required-file manifests: $($duplicateRequiredManifestPaths.Name -join ', ')"
+}
+
+$duplicateRecipeIds = @($manifest.recipes | Group-Object id | Where-Object Count -gt 1)
+if ($duplicateRecipeIds.Count -gt 0) {
+    throw "recipe-manifest.json contains duplicate recipe IDs: $($duplicateRecipeIds.Name -join ', ')"
+}
+
+$duplicateRecipeOutputs = @($manifest.recipes | Group-Object output | Where-Object Count -gt 1)
+if ($duplicateRecipeOutputs.Count -gt 0) {
+    throw "recipe-manifest.json contains duplicate recipe outputs: $($duplicateRecipeOutputs.Name -join ', ')"
 }
 
 $booksById = @{}

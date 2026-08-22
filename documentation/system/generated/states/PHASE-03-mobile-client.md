@@ -40,7 +40,7 @@ Record whether detail requires a dedicated query, whether reports open or share 
 | states-master | 3 | `1bcee45daae927bacec3682c14a6330114ca29ffbcf6b489376cccf337a7d38f` |
 | states-master | 4 | `9d784c317c702d41f1d9282b7d153ea617fab527d8e80ef7222e65f18cd52fb0` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
-| states-master | 7 | `7863ba4255bde2c3546b78b9f78db32f27d29d8759e953c15cc28e3445c2ee87` |
+| states-master | 7 | `9e3df427e9a5cf7bec84a8f110739543a736248bb2b576225895c0f523e9de51` |
 | states-mobile | 1 | `26054606895b798f1b277e4e0eca622dd99d75f4d1ce7815e8dcfc92d9c5ee81` |
 | states-mobile | 2 | `df5e503c56700392a3580c09741dd3bf946ce7f43ec310fd3a0a79acb53329be` |
 | states-mobile | 3 | `8d90933824c1a003440f0344dab7d4045ff66d68c5ffc200a99b257d98974c40` |

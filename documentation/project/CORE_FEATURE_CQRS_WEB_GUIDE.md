@@ -392,14 +392,43 @@ reimplement the same filtering in grid and card views.
 
 ### 9.4 Multi-view policy
 
+Use the shared global `views.*` labels for standard view IDs and keep the shared
+toggle's internal padding. Do not create feature-specific alternatives such as
+`Grid View`, `Grid`, and `Table View` for the same registered view. Child views
+own their responsive content padding; avoid both flush content and double padding.
+
 Required by default:
 
-- **Grid** for dense administration and sorting;
+- **Grid** for dense administration and sorting, using the existing reusable
+  `MyDataGrid` footer pagination;
 - **Cards** for responsive scanning and mobile-sized web layouts.
+
+The Grid footer is an established reusable product component. Features configure
+its server/client paging inputs; they do not hide its navigation, copy it, or
+replace it with the UI library default. Changes to the shared footer must be
+verified against all consumers, including Countries, States, and Districts.
+Client and server modes render the same Districts-style record navigation,
+counter, page indicator, and page-size selector from `GridFooter`. Client mode
+moves through loaded records. Server mode fetches the adjacent authoritative
+page only when record navigation crosses a page boundary, then selects the
+target record. Do not expose the UI-library default pager or change a server
+list to client mode merely to imitate the Districts footer.
+
+The default adaptive boundary is 5000 rows. At or below the boundary, the data
+controller may load the complete filtered/sorted result and configure the same
+`MyDataGrid` with `paginationMode="client"`. Above it, the controller keeps
+authoritative server paging and configures `paginationMode="server"`. Do not
+split the visual Grid into client/server components, and do not select client
+mode unless all matching rows are actually loaded.
+
+Keep rolling deployments compatible: rejection of the bounded full-result read
+by an older API falls back to server mode. Do not fail the management page or
+pretend that the current server page is the complete client collection.
 
 Optional:
 
-- chart only for a meaningful metric;
+- chart only for a meaningful metric; list-backed charts reset to page zero,
+  show no pagination controls, and label their first-page scope;
 - report only for a defined printable/export workflow;
 - map only for geographic coordinates;
 - timeline/calendar only for time-based records;

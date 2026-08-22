@@ -114,6 +114,17 @@ public sealed class StateCqrsArchitectureTests
     }
 
     [Fact]
+    public async Task PageValidator_AcceptsAdaptiveClientPageLimit()
+    {
+        var result = await new GetStatesQueryValidator().ValidateAsync(new GetStatesQuery
+        {
+            PageSize = GetStatesQuery.MaxPageSize
+        });
+
+        Assert.True(result.IsValid);
+    }
+
+    [Fact]
     public void MappingConfiguration_NormalizesOnlyMutableStateFields()
     {
         var config = new TypeAdapterConfig();

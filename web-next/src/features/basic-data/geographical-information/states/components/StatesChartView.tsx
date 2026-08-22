@@ -1,98 +1,78 @@
-import { Box, Grid } from '@mui/material';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { State } from '../types/State';
+import { Alert, Box, Grid } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";
+import type { StateListItem } from "../types/State";
 import {
-  ChartLegend,
   CountryBarChart,
   CountryPieChart,
+  DistrictsChart,
   EmptyChartState,
   getChartColors,
   LoadingChartState,
   prepareCountryData,
-  prepareStateDistributionData,
+  prepareDistrictData,
   prepareTimelineData,
-  StateDistributionChart,
   SummaryCards,
   TimelineChart,
-} from './chart-view';
+} from "./chart-view";
 
 interface StatesChartViewProps {
-  states: State[];
+  states: StateListItem[];
+  totalCount: number;
   loading: boolean;
   onAdd?: () => void;
 }
 
-const StatesChartView: React.FC<StatesChartViewProps> = ({
+const StatesChartView = ({
   states,
+  totalCount,
   loading,
   onAdd,
-}) => {
-  const { t } = useTranslation();
+}: StatesChartViewProps) => {
+  const { i18n, t } = useTranslation();
+  const theme = useTheme();
 
-  // Handle loading state
-  if (loading) {
-    return <LoadingChartState t={t} />;
-  }
+  if (loading) return <LoadingChartState />;
+  if (states.length === 0) return <EmptyChartState onAdd={onAdd} />;
 
-  // Handle empty state
-  if (!states || states.length === 0) {
-    return <EmptyChartState t={t} onAdd={onAdd} />;
-  }
-
-  // Prepare chart data
-  const countryData = prepareCountryData(states);
-  const distributionData = prepareStateDistributionData(states);
+  const language = i18n.resolvedLanguage;
+  const countryData = prepareCountryData(states, language);
+  const districtData = prepareDistrictData(states, language);
   const timelineData = prepareTimelineData(states);
-  const colors = getChartColors();
-
-  // Calculate summary metrics
-  const totalStates = states.length;
-  const totalCountries = countryData.length;
-  const avgStatesPerCountry = totalCountries > 0 ? Math.round(totalStates / totalCountries) : 0;
-  
-  // Calculate completion rate based on data quality
-  const completedStates = states.filter(state => 
-    state.nameEn && state.nameAr && state.code && state.countryId
-  ).length;
-  const completionRate = totalStates > 0 ? Math.round((completedStates / totalStates) * 100) : 0;
+  const colors = getChartColors(theme.palette.mode);
+  const visibleDistricts = states.reduce((total, state) => total + state.districtsCount, 0);
 
   return (
-    <Box sx={{ width: "100%" }}>
-      {/* Summary Cards */}
+    <Box sx={{ boxSizing: "border-box", p: { xs: 1, md: 1.5 }, width: "100%" }}>
+      <Alert severity="info" sx={{ mb: 2 }}>
+        {t("states.charts.pageScope")}
+      </Alert>
+
       <SummaryCards
-        totalStates={totalStates}
-        totalCountries={totalCountries}
-        avgStatesPerCountry={avgStatesPerCountry}
-        completionRate={completionRate}
-        t={t}
+        totalMatchingStates={totalCount}
+        visibleStates={states.length}
+        visibleCountries={countryData.length}
+        visibleDistricts={visibleDistricts}
       />
 
-      {/* Charts */}
       <Grid container spacing={3}>
-        {/* States by Country - Bar Chart */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <CountryBarChart data={countryData} t={t} />
+          <CountryBarChart data={countryData} />
         </Grid>
 
-        {/* States by Country - Pie Chart */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <CountryPieChart data={countryData} colors={colors} t={t} />
+          <CountryPieChart data={countryData} colors={colors} />
         </Grid>
 
-        {/* State Distribution */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <StateDistributionChart data={distributionData} t={t} />
+          <DistrictsChart data={districtData} />
         </Grid>
 
-        {/* Timeline */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <TimelineChart data={timelineData} t={t} />
+          <TimelineChart data={timelineData} />
         </Grid>
       </Grid>
 
-      {/* Legend */}
-      <ChartLegend data={countryData} colors={colors} />
     </Box>
   );
 };

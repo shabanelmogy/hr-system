@@ -93,6 +93,35 @@ Rules:
 - Dashboard sections belong to the feature represented by their data, not automatically to `home`.
 - Reports stay with the domain that owns their data unless they are truly cross-domain reporting infrastructure.
 
+## Reuse-first and behavior-preservation rule
+
+Before creating or replacing UI, search the relevant shared directories and
+inspect the existing component's public API, tests, and internal behavior. A
+reusable component may contain substantial product logic in addition to visual
+styling, including boundary correction, controlled/uncontrolled coordination,
+responsive behavior, RTL, accessibility, loading states, and error recovery.
+
+Rules:
+
+1. Reuse an established shared component when it already owns the required
+   behavior. A feature configures it through its public props; it does not copy,
+   hide, or replace the component with a library default.
+2. Preserve existing shared behavior during refactors unless the user or product
+   contract explicitly requests a change. Visual similarity is not proof that a
+   simpler replacement is equivalent.
+3. When a shared capability is missing, first decide whether it is genuinely
+   domain-neutral. Extend the shared API only when multiple real consumers need
+   the behavior; otherwise compose feature-owned behavior around the shared base.
+4. A shared-component change requires focused tests for its behavioral invariants
+   and verification of all known consumers. Do not validate only the feature that
+   triggered the change.
+5. Reuse does not justify moving domain fields, permissions, lifecycle rules,
+   filters, or validation into `shared`; those remain feature-owned.
+
+Examples of protected reusable behavior include `MyDataGrid` with `GridFooter`,
+`CardViewPagination`, `PageHeader`, the shared card scaffold, form/dialog shells,
+and shared loading/error/empty states.
+
 Current examples:
 
 - Geographical pages live under `src/features/basic-data/geographical-information`.
@@ -143,6 +172,8 @@ npm.cmd run build
 ## Future Change Checklist
 
 - [ ] Identify the owning feature before creating files.
+- [ ] Inspect existing shared components and tests before creating or replacing UI.
+- [ ] Preserve shared behavior and configure it through public props; document any explicit exception.
 - [ ] Keep the App Router adapter thin.
 - [ ] Keep feature code independent from layouts and routes.
 - [ ] Confirm shared code has no feature-specific imports.

@@ -18,6 +18,8 @@ const CountriesPage = () => {
     selectedCountry,
     loading,
     countries,
+    gridCountries,
+    paginationMode,
     totalCount,
     apiRef,
     error,
@@ -97,6 +99,8 @@ const CountriesPage = () => {
     <>
       <CountriesMultiView
         countries={countries}
+        gridCountries={gridCountries}
+        paginationMode={paginationMode}
         loading={loading}
         isFetching={isFetching}
         apiRef={apiRef}

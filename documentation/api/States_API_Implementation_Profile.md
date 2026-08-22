@@ -16,7 +16,7 @@ List rows contain State fields, parent `SimpleCountryResponse`, active `District
 
 ## 4. Paging, search, and sort
 
-`GetStatesQuery` validates positive page, size 1-50, search at most 200 chars, allow-listed field/operator/status/sort values, optional positive CountryId, and ASC/DESC. The read store applies the criteria before count/page projection and adds deterministic Id ordering.
+`GetStatesQuery` validates positive page, size 1-5000, search at most 200 chars, allow-listed field/operator/status/sort values, optional positive CountryId, and ASC/DESC. The larger ceiling is restricted to this bounded adaptive read path. The read store applies the criteria before count/page projection and adds deterministic Id ordering.
 
 ## 5. Validation and normalization
 

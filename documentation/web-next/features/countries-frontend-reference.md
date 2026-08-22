@@ -35,7 +35,7 @@ semantics, but they do not need identical controls or screen composition.
 | Mobile route adapter | `mobile-react/app/(main)/basic-data/geographical-information/countries.tsx` |
 | Web primary UI shape | Server-managed Grid with modal create/edit/view workflows |
 | Mobile primary UI shape | Responsive server-managed Table/Cards with a full-screen create/edit/view form |
-| Web optional UI shapes | Cards, page-scoped Chart, independent Report, XLSX Import |
+| Web optional UI shapes | Cards, first-page-scoped Chart without pagination controls, independent Report, XLSX Import |
 | Mobile optional UI shape | Independent PDF Report with preview/share; no import or chart |
 | Backend pattern | Global reference-data CQRS slice with explicit archive/restore |
 | Identifier | Positive integer `id` |
@@ -284,9 +284,9 @@ contract and serialize those choices; do not filter the visible page locally.
 
 | Platform/view | Data source and scope | Required behavior |
 |---|---|---|
-| Web Grid | Current server page | Authoritative management view; server paging/sort/search |
-| Web Cards | Same current server page and criteria | Same actions and server pager; no second list state |
-| Web Chart | Same current server page plus server total | Label metrics as page-scoped; never imply global aggregation |
+| Web Grid | Complete filtered/sorted result through 5000 rows; current authoritative server page above 5000 | One adaptive data strategy and the reusable `MyDataGrid` footer |
+| Web Cards | Current display page from the same adaptive criteria/result | Same actions and pager; no second list state |
+| Web Chart | First display page for the shared criteria plus authoritative total | Reset to page zero on entry, omit pagination controls, label metrics as page-scoped, and never imply global aggregation |
 | Web Report | Reporting API and report catalog | Independent filters, loading/error recovery and export/print behavior |
 | Web Import | Local XLSX preview then bulk-create API | Create permission, local validation, submitted-batch atomicity and invalidation |
 | Mobile Table | Current server page | Horizontally capable data table, API-supported sort columns and shared server pager |
@@ -295,6 +295,20 @@ contract and serialize those choices; do not filter the visible page locally.
 
 The selected view is stored under `countries-view-layout`. Import is omitted and
 forced back to Grid when the user lacks create permission.
+
+Countries uses the shared global `views.*` labels rather than feature-owned
+variants, so Grid, Cards, Chart, Report, and Import have the same names as every
+other Multi View screen. The shared toggle owns its internal button padding;
+the Chart root owns responsive content padding. Chart deliberately has no pager:
+entering it resets the shared list page to zero, preserves the current criteria
+and page size, and keeps the page-scope notice visible.
+
+Countries does not own a Grid pager. It configures the shared
+`MyDataGrid`/`GridFooter` in client mode only after the adaptive hook has loaded
+the complete result at 5000 rows or fewer. Larger results use controlled server
+pagination. Both modes keep the established reusable navigation behavior.
+If the hosted API still enforces its earlier page-size cap, the adaptive hook
+falls back to server pagination until the updated Countries API is deployed.
 
 Optional views are not mandatory for the next feature. Add them only when the
 product and API contracts justify them.
@@ -308,7 +322,7 @@ to duplicate those operations with ad hoc components.
 
 ### Web Cards applied profile
 
-Countries Cards use the same server-owned list state as Grid and Chart. The
+Countries Cards use the same adaptive list criteria as Grid and Chart. The
 shared card toolbar exposes the Countries search-column choices (`all`, Arabic
 and English names, alpha codes, phone, and currency) and all six search
 conditions before the search input; Reset follows the shared sort controls. Its
@@ -318,7 +332,8 @@ toolbar. Shared sort-column and direction controls follow the search controls
 and accept only the Countries server sort allow-list.
 
 `CountriesCardView` renders a responsive `12 / 6 / 4 / 3` card grid
-(`xs / sm / md / lg`) from the current server page. It uses `EntityCard` for
+(`xs / sm / md / lg`) from the current page. Results at or below 5000 rows are
+loaded once and paged on the client; larger results remain server-paged. It uses `EntityCard` for
 the fixed visual scaffold, guarded active-row selection, lifecycle actions,
 hover/reduced-motion treatment and a five-second create/edit highlight. Country
 content remains feature-specific; Currency and States are not extra Card toolbar
@@ -326,7 +341,7 @@ filters.
 
 The card grid owns vertical overflow. `CountryCardViewPagination` is the final
 non-shrinking, pinned footer and delegates to shared `CardViewPagination` with
-the Countries server page size options `5`, `10`, `25`, and `50`. The footer
+the Countries display page size options `5`, `10`, `25`, and `50`. The footer
 shows a localized live range, page-size selector and responsive one-based page
 navigation while the controller remains zero-based. The Basic Data shell is
 viewport-bounded, so the document does not scroll to reach pagination; only the

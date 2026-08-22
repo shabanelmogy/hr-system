@@ -35,7 +35,7 @@ Verify all applicable registrations:
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 4 | `d37a682ba9744f70bdcbcc638c1e4478487a97d079da7960b292ae7746c784bd` |
+| master | 4 | `981aca037f6288ddcd99834cf04d08cd99f65850ed34036f2f44374e894e3104` |
 | master | 5 | `4b5e21317ec85f4069a90ae400241c3669950251d859d6d30258815b66f476d9` |
 | master | 6 | `e671cfed0bfb63b0063c4f83c86be605190925f9dc7e6b1ef6e335c26fb89c54` |
 | master | 7 | `a569747a5ae09a0eb3f1619080e56572e4f79a0c722408583485e404f2654f8a` |

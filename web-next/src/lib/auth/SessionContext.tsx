@@ -1,12 +1,14 @@
 "use client";
 
+import type { Route } from "next";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { isSessionClaims, type SessionClaims } from "./session";
 import type { PermissionString } from "./permissions";
 import { isAuthorized } from "./authorization";
 import apiClient from "@/lib/api/client";
-import { SESSION_CHANGED_EVENT } from "./constants";
+import { isPublicRoute, SESSION_CHANGED_EVENT } from "./constants";
+import { UNAVAILABLE_ROUTE } from "./route-access";
 import { SessionRequestState } from "./session-request-state";
 
 const sessionRevalidationIntervalMs = 5 * 60_000;
@@ -31,18 +33,27 @@ type SessionContextValue = {
 
 const SessionContext = createContext<SessionContextValue | null>(null);
 
-export function SessionProvider({ children, initialUser }: { children: ReactNode; initialUser: SessionClaims | null }) {
+export function SessionProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
-  const [user, setUser] = useState<SessionClaims | null>(initialUser);
-  const [isLoading, setIsLoading] = useState(false);
+  const pathname = usePathname();
+  const requiresSession = !isPublicRoute(pathname) && pathname !== UNAVAILABLE_ROUTE;
+  const [user, setUser] = useState<SessionClaims | null>(null);
+  const [isLoading, setIsLoading] = useState(requiresSession);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const refreshStateRef = useRef<SessionRequestState | null>(null);
   const logoutPromiseRef = useRef<Promise<void> | null>(null);
   const lastRefreshAtRef = useRef(0);
+  const userRef = useRef<SessionClaims | null>(null);
+  const bootstrappedRef = useRef(false);
+  const pathnameRef = useRef(pathname);
   if (refreshStateRef.current == null) {
     refreshStateRef.current = new SessionRequestState();
   }
+
+  useEffect(() => {
+    pathnameRef.current = pathname;
+  }, [pathname]);
 
   const refresh = useCallback(async () => {
     return refreshStateRef.current!.run(async (requestGeneration) => {
@@ -58,8 +69,13 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
         // 401 = not authenticated (expected, not an error)
         if (response.status === 401) {
           if (refreshStateRef.current!.isCurrent(requestGeneration)) {
+            const currentPathname = pathnameRef.current;
+            userRef.current = null;
             setUser(null);
             setError(null);
+            if (!isPublicRoute(currentPathname)) {
+              router.replace(loginUrlWithReturnTo() as Route);
+            }
           }
           return;
         }
@@ -67,7 +83,11 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
         // Server errors - don't clear user, they might still be authenticated
         if (!response.ok) {
           if (refreshStateRef.current!.isCurrent(requestGeneration)) {
+            const currentPathname = pathnameRef.current;
             setError(`Server error: ${response.status}`);
+            if (!userRef.current && currentPathname !== UNAVAILABLE_ROUTE) {
+              router.replace(unavailableUrlWithReturnTo() as Route);
+            }
           }
           return;
         }
@@ -75,17 +95,27 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
         const payload = (await response.json()) as { user?: unknown };
         if (!refreshStateRef.current!.isCurrent(requestGeneration)) return;
         if (isSessionClaims(payload.user)) {
+          userRef.current = payload.user;
           setUser(payload.user);
           setIsLoggingOut(false);
           setError(null);
         } else {
+          const currentPathname = pathnameRef.current;
           setError("Invalid session data");
+          userRef.current = null;
           setUser(null);
+          if (currentPathname !== UNAVAILABLE_ROUTE) {
+            router.replace(unavailableUrlWithReturnTo() as Route);
+          }
         }
       } catch (err) {
         // Network errors - don't clear user
         if (refreshStateRef.current!.isCurrent(requestGeneration)) {
+          const currentPathname = pathnameRef.current;
           setError(err instanceof Error ? err.message : "Network error");
+          if (!userRef.current && currentPathname !== UNAVAILABLE_ROUTE) {
+            router.replace(unavailableUrlWithReturnTo() as Route);
+          }
         }
       } finally {
         if (refreshStateRef.current!.isCurrent(requestGeneration)) {
@@ -93,7 +123,18 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
         }
       }
     });
-  }, []);
+  }, [router]);
+
+  useEffect(() => {
+    if (!requiresSession) {
+      bootstrappedRef.current = false;
+      return;
+    }
+    if (bootstrappedRef.current) return;
+    bootstrappedRef.current = true;
+    setIsLoading(true);
+    void refresh();
+  }, [refresh, requiresSession]);
 
   useEffect(() => {
     const handleSessionChanged = () => {
@@ -172,6 +213,7 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
 
         // Keep the history stack clean so Back cannot reopen a protected page.
         router.replace("/login");
+        userRef.current = null;
         setUser(null);
         setError(null);
         apiClient.resetLogoutGuard();
@@ -210,6 +252,18 @@ export function SessionProvider({ children, initialUser }: { children: ReactNode
   }), [isLoading, isLoggingOut, error, refresh, logout, user]);
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
+}
+
+function loginUrlWithReturnTo() {
+  if (typeof window === "undefined") return "/login";
+  const returnTo = `${window.location.pathname}${window.location.search}`;
+  return `/login?returnTo=${encodeURIComponent(returnTo)}`;
+}
+
+function unavailableUrlWithReturnTo() {
+  if (typeof window === "undefined") return UNAVAILABLE_ROUTE;
+  const returnTo = `${window.location.pathname}${window.location.search}`;
+  return `${UNAVAILABLE_ROUTE}?reason=service&returnTo=${encodeURIComponent(returnTo)}`;
 }
 
 export function useSession() {

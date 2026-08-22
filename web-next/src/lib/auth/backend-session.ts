@@ -24,8 +24,8 @@ export type ResolvedSession =
 
 const refreshRequests = new Map<string, Promise<RefreshResult>>();
 const completedRefreshGraceMs = 10_000;
-const sessionValidationTimeoutMs = 3_000;
-const tokenRefreshTimeoutMs = 5_000;
+const sessionValidationTimeoutMs = 15_000;
+const tokenRefreshTimeoutMs = 15_000;
 const definitiveRefreshRejectionStatuses = new Set([400, 401, 403]);
 
 export async function resolveSession(

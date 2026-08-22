@@ -13,6 +13,7 @@ import { useStateColumns } from "./Columns";
 
 export interface StatesDataGridProps {
   states: StateListItem[];
+  paginationMode: "client" | "server";
   loading?: boolean;
   isFetching?: boolean;
   apiRef?: React.RefObject<GridApi | null>;
@@ -47,7 +48,7 @@ export interface StatesDataGridProps {
 }
 
 const StatesDataGrid: React.FC<StatesDataGridProps> = ({
-  states, loading = false, isFetching = false, apiRef, onEdit, onDelete, onRestore, onView, permissions,
+  states, paginationMode, loading = false, isFetching = false, apiRef, onEdit, onDelete, onRestore, onView, permissions,
   page, pageSize, totalCount, sortColumn, sortDirection, searchValue, searchField, searchOperator, status,
   onSearchChange, onSearchFieldChange, onSearchOperatorChange, onStatusChange, onReset,
   selectedStateIds, onSelectedStateIdsChange, onBulkArchive, isBulkArchiving = false,
@@ -68,8 +69,8 @@ const StatesDataGrid: React.FC<StatesDataGridProps> = ({
         filterMode="server" sortingMode="server"
         sortModel={[{ field: sortColumn, sort: sortDirection.toLowerCase() as "asc" | "desc" }]}
         onSortModelChange={onSortChange}
-        pagination paginationMode="server" paginationModel={{ page, pageSize }} onPaginationModelChange={onPaginationChange}
-        rowCount={totalCount} pageSizeOptions={[5, 10, 25, 50]} showGridOptions
+        pagination paginationMode={paginationMode} paginationModel={{ page, pageSize }} onPaginationModelChange={onPaginationChange}
+        rowCount={paginationMode === "server" ? totalCount : undefined} pageSizeOptions={[5, 10, 25, 50]} showGridOptions
         toolbarSearch={{
           value: searchValue, placeholder: t("states.search.placeholder"), onChange: onSearchChange, onClear: () => onSearchChange(""),
           column: {
@@ -106,7 +107,7 @@ const StatesDataGrid: React.FC<StatesDataGridProps> = ({
         checkboxSelection={permissions.canDelete} autoSelectFirstRow={false} disableRowSelectionExcludeModel
         rowSelectionModel={rowSelectionModel}
         onRowSelectionModelChange={(model) => onSelectedStateIdsChange([...model.ids].map(Number).filter((id) => Number.isInteger(id) && id > 0))}
-        isRowSelectable={({ row }) => permissions.canDelete && !row.isDeleted} showNavigationButtons={false}
+        isRowSelectable={({ row }) => permissions.canDelete && !row.isDeleted}
         lastAddedId={lastAddedId} lastEditedId={lastEditedId} lastDeletedIndex={lastDeletedIndex}
       />
     </ContentWrapper>

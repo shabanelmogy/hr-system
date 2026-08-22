@@ -1,12 +1,12 @@
-import { State } from "../../types/State";
+import { getColorPalette } from "@/shared/components/charts";
+import type { StateListItem } from "../../types/State";
 
 export interface CountryData {
   name: string;
   value: number;
-  nameAr?: string;
 }
 
-export interface StateDistributionData {
+export interface DistrictData {
   name: string;
   value: number;
 }
@@ -17,61 +17,67 @@ export interface TimelineData {
   cumulative: number;
 }
 
-export const prepareCountryData = (states: State[]): CountryData[] => {
-  const countries: Record<string, { count: number; nameAr?: string }> = {};
+const usesArabicNames = (language?: string): boolean =>
+  language?.toLowerCase().startsWith("ar") ?? false;
 
-  states.forEach((state: State) => {
-    if (state.country) {
-      const countryName = state.country.nameEn;
-      if (!countries[countryName]) {
-        countries[countryName] = { count: 0, nameAr: state.country.nameAr };
-      }
-      countries[countryName].count += 1;
-    }
-  });
-
-  return Object.entries(countries)
-    .map(([name, data]) => ({ 
-      name, 
-      value: data.count,
-      nameAr: data.nameAr 
-    }))
-    .sort((a, b) => b.value - a.value);
-};
-
-export const prepareStateDistributionData = (states: State[]): StateDistributionData[] => {
-  const distribution: Record<string, number> = {};
+export const prepareCountryData = (
+  states: StateListItem[],
+  language?: string,
+): CountryData[] => {
+  const countries = new Map<number, CountryData>();
+  const useArabicName = usesArabicNames(language);
 
   states.forEach((state) => {
-    // Group by first letter of state name for distribution analysis
-    const firstLetter = state.nameEn?.charAt(0)?.toUpperCase() || 'Unknown';
-    const group = `${firstLetter} States`;
-    
-    distribution[group] = (distribution[group] || 0) + 1;
+    const current = countries.get(state.country.id);
+    if (current) {
+      current.value += 1;
+      return;
+    }
+
+    countries.set(state.country.id, {
+      name: useArabicName ? state.country.nameAr : state.country.nameEn,
+      value: 1,
+    });
   });
 
-  return Object.entries(distribution).map(([name, value]) => ({ name, value }));
+  return [...countries.values()].sort((left, right) => right.value - left.value);
 };
 
-export const prepareTimelineData = (states: State[]): TimelineData[] => {
+export const prepareDistrictData = (
+  states: StateListItem[],
+  language?: string,
+): DistrictData[] => {
+  const useArabicName = usesArabicNames(language);
+
+  return states
+    .map((state) => ({
+      name: useArabicName ? state.nameAr : state.nameEn,
+      value: state.districtsCount,
+    }))
+    .filter((state) => state.value > 0)
+    .sort((left, right) => right.value - left.value)
+    .slice(0, 10);
+};
+
+export const prepareTimelineData = (states: StateListItem[]): TimelineData[] => {
   const timeline: Record<string, number> = {};
 
   states.forEach((state) => {
-    if (state.createdOn) {
-      const month = new Date(state.createdOn).toISOString().slice(0, 7); // YYYY-MM
-      timeline[month] = (timeline[month] || 0) + 1;
-    }
+    const createdOn = new Date(state.createdOn);
+    if (Number.isNaN(createdOn.getTime())) return;
+
+    const month = createdOn.toISOString().slice(0, 7);
+    timeline[month] = (timeline[month] ?? 0) + 1;
   });
 
+  let cumulative = 0;
   return Object.entries(timeline)
-    .map(([month, count]) => ({ month, count: count as number, cumulative: 0 }))
-    .sort((a, b) => a.month.localeCompare(b.month))
-    .map((item, index, array) => ({
-      ...item,
-      cumulative: array.slice(0, index + 1).reduce((sum, curr) => sum + curr.count, 0),
-    }));
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([month, count]) => {
+      cumulative += count;
+      return { month, count, cumulative };
+    });
 };
 
-import { getColorPalette } from '@/shared/components/charts';
-
-export const getChartColors = (): string[] => getColorPalette('rainbow', 'light');
+export const getChartColors = (mode: "light" | "dark"): string[] =>
+  getColorPalette("rainbow", mode);

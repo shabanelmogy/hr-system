@@ -38,8 +38,8 @@ For create, bulk create, edit, archive, restore, bulk archive, import, report, a
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 3 | `92135fc9b114e7094a6b019dbd6d9ee5c3a33641c4586487689d2b8f65255a5a` |
-| master | 4 | `d37a682ba9744f70bdcbcc638c1e4478487a97d079da7960b292ae7746c784bd` |
+| master | 3 | `b0ae30454b32e1209cd9b74f1bc82d45e58ae969a61381a25c64c86db7b09dfc` |
+| master | 4 | `981aca037f6288ddcd99834cf04d08cd99f65850ed34036f2f44374e894e3104` |
 | master | 6 | `e671cfed0bfb63b0063c4f83c86be605190925f9dc7e6b1ef6e335c26fb89c54` |
 | master | 7 | `a569747a5ae09a0eb3f1619080e56572e4f79a0c722408583485e404f2654f8a` |
 | master | 8 | `3a46a1a850e082e79228d9471dad600b673f71194b1aaf0156a0828f07f7ba8e` |

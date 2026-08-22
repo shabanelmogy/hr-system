@@ -104,7 +104,7 @@ tenant-member policy remain the final authorization boundary.
 | Input | API rule | Web | Mobile |
 |---|---|---|---|
 | Page | One-based, minimum 1 | Zero-based UI converted in query mapper | Zero-based UI converted with `toApiPageNumber` |
-| Size | 1-50 | Default 10 | Table 5, Cards 3; options 3/5/10 |
+| Size | 1-5000 for the adaptive web read; ordinary pages remain small | Default 10; client through 5000, server above | Table 5, Cards 3; options 3/5/10 |
 | Search | Trimmed, maximum 200 | Controlled debounced text | Controlled shared 350 ms debounce |
 | Search field | Seven-field allow-list | User-selectable | API default `all` |
 | Operator | Six-operator allow-list | User-selectable | API default `contains` |
@@ -151,7 +151,7 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | Runtime authorization | Controller/policies | Presentation + handler guards | Route + presentation + handler guards |
 | List execution | EF server query | Serialize criteria/cache page | Serialize criteria, Zod parse/cache page |
 | Response validation | Typed server response | TypeScript service types | Required Zod boundary |
-| Paging | One-based | Zero-based grid/card/chart UI | Zero-based table/card UI |
+| Paging | One-based | Zero-based Grid/Card UI; Chart resets to page zero and has no pager | Zero-based table/card UI |
 | Detail | Distinct detail endpoint | Required for edit/view | Hook exists; current screen uses list row |
 | Write transaction | Authoritative, atomic | Mutation request | Mutation request |
 | Archive dependencies | Authoritative | Confirmation/error feedback | Confirmation/error feedback |

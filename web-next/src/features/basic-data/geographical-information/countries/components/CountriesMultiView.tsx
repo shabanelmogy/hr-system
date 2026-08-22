@@ -22,6 +22,8 @@ type CountryView = "grid" | "cards" | "chart" | "report" | "import";
 
 interface CountriesMultiViewProps {
   countries: CountryListItem[];
+  gridCountries: CountryListItem[];
+  paginationMode: "client" | "server";
   loading: boolean;
   isFetching?: boolean;
   apiRef?: React.RefObject<GridApi | null>;
@@ -69,6 +71,8 @@ const sortableColumns = new Set<CountrySortColumn>([
 
 const CountriesMultiView = ({
   countries,
+  gridCountries,
+  paginationMode,
   loading,
   isFetching = false,
   apiRef,
@@ -118,9 +122,12 @@ const CountriesMultiView = ({
       view === "report" ||
       view === "import"
     ) {
-      if (view !== "import" || permissions.canCreate) setCurrentView(view);
+      if (view !== "import" || permissions.canCreate) {
+        if (view === "chart" && page !== 0) onPageChange(0);
+        setCurrentView(view);
+      }
     }
-  }, [permissions.canCreate]);
+  }, [onPageChange, page, permissions.canCreate]);
 
   const handlePaginationChange = useCallback((model: GridPaginationModel) => {
     if (model.pageSize !== pageSize) onPageSizeChange(model.pageSize);
@@ -147,13 +154,6 @@ const CountriesMultiView = ({
         storageKey="countries-view-layout"
         defaultView="grid"
         availableViews={availableViews}
-        viewLabels={{
-          grid: t("countries.views.grid"),
-          cards: t("countries.views.cards"),
-          chart: t("countries.views.chart"),
-          report: t("countries.views.report"),
-          import: t("countries.views.import"),
-        }}
         onAdd={permissions.canCreate ? onAdd : undefined}
         dataCount={totalCount}
         totalLabel={t("countries.total")}
@@ -196,7 +196,8 @@ const CountriesMultiView = ({
       >
         {visibleView === "grid" && (
           <CountriesDataGrid
-            countries={countries}
+            countries={gridCountries}
+            paginationMode={paginationMode}
             loading={loading}
             isFetching={isFetching}
             apiRef={apiRef}
@@ -261,10 +262,6 @@ const CountriesMultiView = ({
             totalCount={totalCount}
             loading={loading || isFetching}
             onAdd={permissions.canCreate ? onAdd : undefined}
-            page={page}
-            pageSize={pageSize}
-            onPageChange={onPageChange}
-            onPageSizeChange={onPageSizeChange}
           />
         )}
         {visibleView === "report" && <CountryReportPage />}

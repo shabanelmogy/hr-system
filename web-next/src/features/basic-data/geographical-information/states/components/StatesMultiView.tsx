@@ -11,12 +11,16 @@ import type {
   StateStatus,
 } from "../types/State";
 import type { StatePermissionSet } from "../utils/statePermissions";
+import {
+  isStateManagementView,
+  stateManagementViews,
+  type StateManagementView,
+} from "../utils/stateViews";
 import StatesCardView from "./StatesCardView";
+import StatesChartView from "./StatesChartView";
 import StatesReportView from "./StatesReportView";
 import StateCardViewHeader from "./card-view/StateCardViewHeader";
 import StatesDataGrid from "./grid-view/StatesDataGrid";
-
-type StateView = "grid" | "cards" | "report";
 
 const sortableColumns = new Set<StateSortColumn>([
   "nameEn",
@@ -28,6 +32,8 @@ const sortableColumns = new Set<StateSortColumn>([
 
 interface StatesMultiViewProps {
   states: StateListItem[];
+  gridStates: StateListItem[];
+  paginationMode: "client" | "server";
   loading: boolean;
   isFetching?: boolean;
   apiRef?: React.RefObject<GridApi | null>;
@@ -66,6 +72,8 @@ interface StatesMultiViewProps {
 
 const StatesMultiView = ({
   states,
+  gridStates,
+  paginationMode,
   loading,
   isFetching = false,
   apiRef,
@@ -101,13 +109,13 @@ const StatesMultiView = ({
   lastEditedId,
 }: StatesMultiViewProps) => {
   const { t } = useTranslation();
-  const [currentView, setCurrentView] = useState<StateView>("grid");
+  const [currentView, setCurrentView] = useState<StateManagementView>("grid");
 
   const handleViewChange = useCallback((view: string) => {
-    if (view === "grid" || view === "cards" || view === "report") {
-      setCurrentView(view);
-    }
-  }, []);
+    if (!isStateManagementView(view)) return;
+    if (view === "chart" && page !== 0) onPageChange(0);
+    setCurrentView(view);
+  }, [onPageChange, page]);
 
   const handlePaginationChange = useCallback((model: GridPaginationModel) => {
     if (model.pageSize !== pageSize) onPageSizeChange(model.pageSize);
@@ -129,12 +137,7 @@ const StatesMultiView = ({
         title={t("states.viewTitle")}
         storageKey="states-view-layout"
         defaultView="grid"
-        availableViews={["grid", "cards", "report"]}
-        viewLabels={{
-          grid: t("states.views.grid"),
-          cards: t("states.views.cards"),
-          report: t("states.views.report"),
-        }}
+        availableViews={[...stateManagementViews]}
         onAdd={permissions.canCreate ? onAdd : undefined}
         dataCount={totalCount}
         totalLabel={t("states.total")}
@@ -143,7 +146,7 @@ const StatesMultiView = ({
         showActions={{ add: permissions.canCreate, refresh: true, export: false, filter: false }}
       />
 
-      {currentView === "cards" && (
+      {(currentView === "cards" || currentView === "chart") && (
         <StateCardViewHeader
           searchTerm={searchValue}
           searchField={searchField}
@@ -161,7 +164,7 @@ const StatesMultiView = ({
           onClearSearch={() => onSearchChange("")}
           onReset={onResetList}
           selectedCount={selectedStateIds.length}
-          canBulkArchive={permissions.canDelete}
+          canBulkArchive={currentView === "cards" && permissions.canDelete}
           isBulkArchiving={isBulkArchiving}
           onBulkArchive={onBulkArchive}
         />
@@ -177,7 +180,8 @@ const StatesMultiView = ({
       >
         {currentView === "grid" && (
           <StatesDataGrid
-            states={states}
+            states={gridStates}
+            paginationMode={paginationMode}
             loading={loading}
             isFetching={isFetching}
             apiRef={apiRef}
@@ -233,6 +237,14 @@ const StatesMultiView = ({
             lastEditedId={lastEditedId}
             selectedStateIds={selectedStateIds}
             onSelectedStateIdsChange={onSelectedStateIdsChange}
+          />
+        )}
+        {currentView === "chart" && (
+          <StatesChartView
+            states={states}
+            totalCount={totalCount}
+            loading={loading || isFetching}
+            onAdd={permissions.canCreate ? onAdd : undefined}
           />
         )}
         {currentView === "report" && <StatesReportView states={states} totalCount={totalCount} />}

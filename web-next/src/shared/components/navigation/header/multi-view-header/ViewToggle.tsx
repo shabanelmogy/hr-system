@@ -33,10 +33,12 @@ export default function ViewToggle(props: ViewToggleProps) {
           border: `1px solid ${theme.palette.divider}`,
           borderRadius: `${props.compact ? 4 : 8}px !important`,
           mx: props.compact ? 0.125 : 0.25,
-          px: props.compact ? { xs: 0.25, sm: 0.5 } : { md: 1, lg: 1.5 },
-          py: props.compact ? 0.5 : 0.75,
-          minWidth: props.compact ? { xs: 28, sm: 32 } : undefined,
-          height: props.compact ? { xs: 28, sm: 32 } : undefined,
+          px: props.compact
+            ? { xs: 0.75, sm: 1, lg: props.showLabels ? 1.25 : 1 }
+            : { xs: 1, md: 1.25, lg: 1.5 },
+          py: props.compact ? 0.625 : 0.75,
+          minWidth: props.compact ? { xs: 32, sm: 36 } : undefined,
+          minHeight: props.compact ? { xs: 32, sm: 36 } : undefined,
           flexShrink: 0,
           whiteSpace: "nowrap",
           transition: "all 0.2s ease-in-out",
@@ -53,7 +55,7 @@ export default function ViewToggle(props: ViewToggleProps) {
       {props.options.map((option) => (
         <ToggleButton key={option.value} value={option.value} aria-label={option.label}>
           <Tooltip title={option.label} arrow>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
               {props.compact ? cloneElement(option.icon, { fontSize: "small" }) : option.icon}
               {props.showLabels && (
                 <Box

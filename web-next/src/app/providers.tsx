@@ -10,14 +10,12 @@ import {
   type ThemeMode,
 } from "@/theme/ThemePreferences";
 import { ThemeShell } from "@/theme/ThemeShell";
-import type { SessionClaims } from "@/lib/auth/session";
 
 type ProvidersProps = {
   children: ReactNode;
   initialThemeMode: ThemeMode;
   initialDirection: ThemeDirection;
   initialLanguage: "en" | "ar";
-  initialUser: SessionClaims | null;
 };
 
 export function Providers({
@@ -25,7 +23,6 @@ export function Providers({
   initialThemeMode,
   initialDirection,
   initialLanguage,
-  initialUser,
 }: ProvidersProps) {
   // Match the server-selected cookie language before any translated client
   // component renders, preventing an English/Arabic hydration mismatch.
@@ -81,7 +78,7 @@ export function Providers({
       initialDirection={initialDirection}
     >
       <ThemeShell>
-        <SessionProvider initialUser={initialUser}>{children}</SessionProvider>
+        <SessionProvider>{children}</SessionProvider>
       </ThemeShell>
     </ThemePreferencesProvider>
   );

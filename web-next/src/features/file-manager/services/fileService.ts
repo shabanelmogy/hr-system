@@ -125,6 +125,12 @@ class FileService {
     }
   }
 
+  getStreamUrl(idOrPath: string | number): string {
+    const value = String(idOrPath).trim();
+    if (!value) throw new Error("Invalid file stream identifier");
+    return `${BASE}/stream/${encodeURIComponent(value)}`;
+  }
+
   static async delete(storedFileName: string): Promise<string> {
     if (!storedFileName.trim()) throw new Error("Invalid stored filename");
     await apiService.delete(`${BASE}/Delete/${storedFileName}`);

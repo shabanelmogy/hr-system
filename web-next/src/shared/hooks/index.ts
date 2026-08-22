@@ -14,3 +14,5 @@ export { default as useViewLayout } from "./useViewLayout";
 export { default as useViewLayoutEnhanced } from "./useViewLayoutEnhanced";
 export { useServerListState } from "./useServerListState";
 export type { ServerListState, ServerListSortDirection } from "./useServerListState";
+export { useAdaptivePagination } from "./useAdaptivePagination";
+export type { AdaptivePaginationMode } from "./useAdaptivePagination";

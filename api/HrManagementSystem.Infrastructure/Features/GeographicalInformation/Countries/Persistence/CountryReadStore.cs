@@ -57,7 +57,8 @@ public sealed class CountryReadStore(
             items,
             totalCount,
             request.PageNumber,
-            request.PageSize);
+            request.PageSize,
+            GetCountriesQuery.MaxPageSize);
 
         return new PageResponse<CountryListItemResponse>(page, page.MetaData);
     }

@@ -3,6 +3,7 @@ namespace HrManagementSystem.Application.Common.Paginations
     public record PaginationRequest
     {
         public const int MaxPageSize = 50;
+        public const int MaxClientPageSize = 5000;
 
         public int PageNumber { get; init; } = 1;
 

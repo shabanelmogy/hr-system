@@ -1,38 +1,28 @@
-import React from 'react';
-import { PieChart } from '@/shared/components/charts';
-import { COLOR_PALETTES } from '@/shared/components/charts';
-
-interface CountryData {
-  name: string;
-  value: number;
-  nameAr?: string;
-}
+import { PieChart } from "@/shared/components/charts";
+import { useTranslation } from "react-i18next";
+import type { CountryData } from "./chartDataUtils";
 
 interface CountryPieChartProps {
   data: CountryData[];
   colors: string[];
-  t: (key: string) => string;
 }
 
-const CountryPieChart: React.FC<CountryPieChartProps> = ({ data, colors, t }) => {
+const CountryPieChart = ({ data, colors }: CountryPieChartProps) => {
+  const { t } = useTranslation();
+
   return (
     <PieChart
       data={data}
-      title={t("states.charts.statesByCountry") || "States Distribution by Country"}
+      title={t("states.charts.countryShare")}
       nameKey="name"
       valueKey="value"
       height={400}
-      colors={colors.length > 0 ? colors : COLOR_PALETTES.rainbow}
-      showLegend={false}
-      showTooltip={true}
-      showLabels={true}
-      outerRadius={120}
+      colors={colors}
+      showLegend
+      showTooltip
+      showLabels
       formatValue={(value) => String(value)}
-      formatLabel={(label) => String(label ?? '')}
-      customLabel={({ name, percent = 0 }) =>
-        `${String(name ?? '')} ${(percent * 100).toFixed(0)}%`
-      }
-      subtitle={undefined}
+      formatLabel={(label) => String(label ?? "")}
     />
   );
 };

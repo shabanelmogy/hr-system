@@ -37,7 +37,12 @@ public sealed class StateReadStore(ApplicationDbContext context, TypeAdapterConf
             .Take(request.PageSize)
             .ProjectToType<StateListItemResponse>(mappingConfig)
             .ToListAsync(cancellationToken);
-        var page = new PagedList<StateListItemResponse>(items, totalCount, request.PageNumber, request.PageSize);
+        var page = new PagedList<StateListItemResponse>(
+            items,
+            totalCount,
+            request.PageNumber,
+            request.PageSize,
+            GetStatesQuery.MaxPageSize);
         return new PageResponse<StateListItemResponse>(page, page.MetaData);
     }
 

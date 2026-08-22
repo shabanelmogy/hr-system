@@ -8,7 +8,7 @@ namespace HrManagementSystem.Application.Features.GeographicalInformation.States
 
 public sealed record GetStatesQuery : IQuery<PageResponse<StateListItemResponse>>
 {
-    public const int MaxPageSize = 50;
+    public const int MaxPageSize = PaginationRequest.MaxClientPageSize;
     public static readonly string[] SearchFields = ["all", "nameAr", "nameEn", "code", "country"];
     public static readonly string[] SearchOperators = ["contains", "doesNotContain", "equals", "doesNotEqual", "startsWith", "endsWith"];
 
