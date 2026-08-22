@@ -24,7 +24,7 @@ const TimelineChart: React.FC<TimelineChartProps> = ({ data }) => {
       title={t("countries.charts.timeline")}
       xKey="month"
       yKey="cumulative"
-      height={200}
+      height={280}
       fullHeight
       compact
       colors="success"

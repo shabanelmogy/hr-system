@@ -43,24 +43,50 @@ const StatesChartView = ({
   const visibleDistricts = states.reduce((total, state) => total + state.districtsCount, 0);
   const chartGridItemSx = {
     display: "flex",
+    height: "100%",
+    minHeight: { xs: 280, md: 0 },
     minWidth: 0,
-    "& > *": { width: "100%" },
+    "& > *": { width: "100%", height: "100%" },
   } as const;
 
   return (
-    <Box sx={{ boxSizing: "border-box", px: { xs: 0.5, md: 0.75 }, pt: 0.5, width: "100%", minWidth: 0, overflowX: "hidden" }}>
-      <Alert severity="info" sx={{ mb: 0.75, py: 0 }}>
+    <Box
+      sx={{
+        boxSizing: "border-box",
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        minHeight: 0,
+        overflow: "hidden",
+        px: { xs: 0.5, md: 0.75 },
+        pt: 0.5,
+        width: "100%",
+        minWidth: 0,
+      }}
+    >
+      <Alert severity="info" sx={{ flexShrink: 0, mb: 0.75, py: 0 }}>
         {t("states.charts.pageScope")}
       </Alert>
 
-      <SummaryCards
-        totalMatchingStates={totalCount}
-        visibleStates={states.length}
-        visibleCountries={countryData.length}
-        visibleDistricts={visibleDistricts}
-      />
+      <Box sx={{ flexShrink: 0 }}>
+        <SummaryCards
+          totalMatchingStates={totalCount}
+          visibleStates={states.length}
+          visibleCountries={countryData.length}
+          visibleDistricts={visibleDistricts}
+        />
+      </Box>
 
-      <Grid container spacing={0.75}>
+      <Grid
+        container
+        spacing={0.75}
+        sx={{
+          flex: 1,
+          minHeight: 0,
+          overflowY: "auto",
+          alignContent: { xs: "start", md: "stretch" },
+        }}
+      >
         <Grid size={{ xs: 12, md: 6 }} sx={chartGridItemSx}>
           <CountryBarChart data={countryData} />
         </Grid>

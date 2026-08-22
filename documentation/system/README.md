@@ -66,6 +66,12 @@ Default to read-only inspection unless implementation changes were also requeste
 
 Read only the relevant generated phases and applied profiles, preserve the frozen contract or update it explicitly, implement the change, then repeat phase 04–06 reconciliation for the affected actions and integrations. Update the required-file manifest only when the evidence surface changes.
 
+When a change creates or extends a reusable web behavior, record its general
+contract in `web-next/features/server-managed-feature-reference.md` and its
+applied behavior in every affected feature profile. Regenerating the affected
+phase packets then propagates those canonical rules automatically; never copy
+the rule into `generated/` files or feature-local documentation by hand.
+
 ## Workflow
 
 1. Run check mode before starting. Resolve stale registered documentation first.

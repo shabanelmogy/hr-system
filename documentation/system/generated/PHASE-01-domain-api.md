@@ -43,7 +43,7 @@ Build the server contract first so both clients consume one stable model.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | master | 3 | `b0ae30454b32e1209cd9b74f1bc82d45e58ae969a61381a25c64c86db7b09dfc` |
-| master | 4 | `981aca037f6288ddcd99834cf04d08cd99f65850ed34036f2f44374e894e3104` |
+| master | 4 | `d87f6ff83a1e29ada8b672a2a9a385708954ba0144a8d37dab88b8664ceb540e` |
 | master | 6 | `e671cfed0bfb63b0063c4f83c86be605190925f9dc7e6b1ef6e335c26fb89c54` |
 | api | 1 | `32d383dbea72903c12b0dd2d1b90c2ba6a10d6621ed91ae24f466af2563cd9c7` |
 | api | 2 | `afe1864abf7934444f9ea9b8b23456c10205bf6f59cdf60460c07fd71a5a5e8c` |

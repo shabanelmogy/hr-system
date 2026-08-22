@@ -40,6 +40,7 @@ export interface StatesDataGridProps {
   onSelectedStateIdsChange: (ids: number[]) => void;
   onBulkArchive: () => void;
   isBulkArchiving?: boolean;
+  showFilterBar?: boolean;
   onPaginationChange: (model: GridPaginationModel) => void;
   onSortChange: (model: GridSortModel) => void;
   lastAddedId?: string | number | null;
@@ -52,6 +53,7 @@ const StatesDataGrid: React.FC<StatesDataGridProps> = ({
   page, pageSize, totalCount, sortColumn, sortDirection, searchValue, searchField, searchOperator, status,
   onSearchChange, onSearchFieldChange, onSearchOperatorChange, onStatusChange, onReset,
   selectedStateIds, onSelectedStateIdsChange, onBulkArchive, isBulkArchiving = false,
+  showFilterBar = true,
   onPaginationChange, onSortChange, lastAddedId, lastEditedId, lastDeletedIndex,
 }) => {
   const { t } = useTranslation();
@@ -70,7 +72,7 @@ const StatesDataGrid: React.FC<StatesDataGridProps> = ({
         sortModel={[{ field: sortColumn, sort: sortDirection.toLowerCase() as "asc" | "desc" }]}
         onSortModelChange={onSortChange}
         pagination paginationMode={paginationMode} paginationModel={{ page, pageSize }} onPaginationModelChange={onPaginationChange}
-        rowCount={paginationMode === "server" ? totalCount : undefined} pageSizeOptions={[5, 10, 25, 50]} showGridOptions
+        rowCount={paginationMode === "server" ? totalCount : undefined} pageSizeOptions={[5, 10, 25, 50]} showToolbar={showFilterBar} showGridOptions
         toolbarSearch={{
           value: searchValue, placeholder: t("states.search.placeholder"), onChange: onSearchChange, onClear: () => onSearchChange(""),
           column: {

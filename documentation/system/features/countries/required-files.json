@@ -208,6 +208,24 @@
       "purpose": "Grid, cards, chart, report, and import composition"
     },
     {
+      "id": "web-active-report-designer",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/reports/components/CountryActiveReportsDesigner.tsx",
+      "purpose": "SSR-safe ActiveReportsJS browser designer boundary alongside the Crystal report viewer"
+    },
+    {
+      "id": "web-active-report-designer-client",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/reports/components/CountryActiveReportsDesignerClient.tsx",
+      "purpose": "Countries starter-template load, local download, and browser-only designer composition"
+    },
+    {
+      "id": "web-active-report-template",
+      "layer": "web-next",
+      "path": "web-next/public/reports/countries/countries-directory.rdlx-json",
+      "purpose": "Editable Countries ActiveReportsJS starter report definition"
+    },
+    {
       "id": "web-grid",
       "layer": "web-next",
       "path": "web-next/src/features/basic-data/geographical-information/countries/components/grid-view/CountriesDataGrid.tsx",

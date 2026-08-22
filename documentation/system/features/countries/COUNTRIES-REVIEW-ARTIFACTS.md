@@ -10,7 +10,7 @@ This is the applied evidence ledger for the current Countries feature. The detai
 | API route | `/api/v1/countries` |
 | Web route | `/basic-data/countries` through the App Router route under geographical information |
 | Mobile route | `/basic-data/geographical-information/countries` |
-| Review date | 2026-08-21 |
+| Review date | 2026-08-22 |
 | Required-file manifest | `documentation/system/features/countries/required-files.json` |
 | Canonical master | `documentation/project/COUNTRIES_FEATURE_FULL_REVIEW.md` |
 
@@ -22,7 +22,7 @@ This is the applied evidence ledger for the current Countries feature. The detai
 | R-02 | Server-managed search, filters, sort, and pagination | `GetCountriesQuery` plus read store | `useCountryGridLogic`, query mapper, service | `useServerListState`, API mapper, query hook | Verified with findings |
 | R-03 | Create, edit, archive, restore, and bulk archive | Commands, validators, stores, audit, scheduler | Forms, dialogs, permission matrix, query invalidation | Form, confirmation state, mutation hooks | Verified |
 | R-04 | Grid/table and card views share one server page | Paged response contract | Grid and cards consume common controller state | Table and cards consume common list state | Verified |
-| R-05 | Report behavior is connected | Report endpoint/request support | Report view and route | Report schema, API, query, and device handling | Verified |
+| R-05 | Report behavior is connected | Report endpoint/request support | Crystal report view plus client-only ActiveReportsJS starter template | Report schema, API, query, and device handling | Verified with finding |
 | R-06 | Realtime and notifications refresh clients | Post-commit Country job | Realtime query registry | Realtime registry and notification route mapping | Verified |
 | R-07 | English, Arabic, RTL, responsive, and accessible presentation | Localized server errors/messages | Translation files and shared responsive UI | Translation modules, theme, shared screen/list components | Verified by source; runtime matrix remains a release gate |
 
@@ -49,6 +49,7 @@ This is the applied evidence ledger for the current Countries feature. The detai
 | E-WEB-01 | One hook owns list query state | `web-next/src/features/basic-data/geographical-information/countries/hooks/useCountryGridLogic.ts` |
 | E-WEB-02 | Toolbar and grid options are reusable shared components | `web-next/src/shared/components/data-grid/toolbar/` |
 | E-WEB-03 | Page composition supports grid, cards, chart, report, and import | `CountriesMultiView.tsx` |
+| E-WEB-04 | Crystal remains the default report engine while an SSR-safe ActiveReportsJS designer loads an editable Countries `.rdlx-json` starter and downloads changes locally | `reports/pages/CountryReportPage.tsx`, `reports/components/`, and `public/reports/countries/countries-directory.rdlx-json` |
 | E-MOB-01 | One controlled state owns the mobile server list | `mobile-react/src/shared/listing/useServerListState.ts` and `CountriesScreen.tsx` |
 | E-MOB-02 | Runtime schemas guard mobile API responses | `mobile-react/src/features/basic-data/countries/api/country-schemas.ts` |
 | E-MOB-03 | Route authorization and deep-link integration are registered | mobile route manifest, realtime registry, and notification presentation utility |
@@ -72,6 +73,7 @@ These differences are presentation decisions. They do not change the shared API 
 | C-F02 | Medium | Cards and chart can hide the active search field/operator context | Keep active query controls visible or clearly summarize them in every view |
 | C-F03 | Medium | Web import does not preflight the API 100-row batch limit | Reject or split oversized files before mutation while retaining server validation |
 | C-F04 | Medium | Web has focused unit tests but lacks a complete Countries integration path | Add page-level search, paging, lifecycle, and view-switch coverage |
+| C-F05 | Medium | ActiveReportsJS currently provides a local authoring demonstration only; no API persists or validates templates/data sources. | Add permissions, version/audit semantics, template validation, and an allow-listed data-source catalog before production authoring. |
 | C-M01 | Medium | Currency and has-states filters are modeled on mobile but not exposed | Expose them or remove them from the presented filter contract |
 | C-M02 | Medium | A mobile detail hook exists, but view/edit currently uses the selected list row | Use detail data when list and detail contracts diverge |
 | C-M03 | Medium | Mobile has API tests but lacks a full Countries screen integration test | Add list, form, archive/restore, bulk, report, and permission coverage |
@@ -84,7 +86,8 @@ These differences are presentation decisions. They do not change the shared API 
 | Web | Focused Countries Vitest files | 6 files, 15 tests passed |
 | Mobile | Country API test | 5 passed |
 | Mobile | Typecheck, architecture check, lint | Passed |
-| Documentation | Required-source validation and generated packet freshness | Passed for all 7 recipes on 2026-08-21 |
+| Documentation | Required-source validation and generated packet freshness | Passed for all 14 recipes on 2026-08-22 |
+| Web | ActiveReportsJS wrapper strict typecheck and starter-template JSON parse | Passed on 2026-08-22; visual browser mount could not run from the isolated browser because it cannot reach the local dev server |
 
 Focused results prove the reviewed paths, not every repository quality gate. Production release still requires the complete commands listed in the canonical master review.
 

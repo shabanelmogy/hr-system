@@ -67,6 +67,60 @@ namespace CrystalReportGeneratorApi.Controllers
 
             return response;
         }
+
+        [HttpGet]
+        [Route("report/states/generate")]
+        //[ApiKeyAuth]
+        public HttpResponseMessage GenerateStateReportGet([FromUri] StateReportRequest request)
+        {
+            var paramList = new List<(string PropertyName, string ColumnName)>
+                    {
+                        (nameof(request.NameAr), "StateAr"),
+                        (nameof(request.NameEn), "StateEn"),
+                    };
+
+            return ReportGenerator.GenerateReport(
+                request,
+                ViewsName.AllStates,
+                ViewsQueries.AllStates,
+                request.ReportPath,
+                request.ReportFileName,
+                request.ExportFilename,
+                request.LogoName,
+                request.Lang,
+                paramList);
+        }
+
+        [HttpPost]
+        [Route("report/states/generate")]
+        //[ApiKeyAuth]
+        public HttpResponseMessage GenerateStateReportPost([FromBody] StateReportRequest request)
+        {
+            var paramList = new List<(string PropertyName, string ColumnName)>
+                    {
+                        (nameof(request.NameAr), "StateAr"),
+                        (nameof(request.NameEn), "StateEn"),
+                    };
+
+            HttpResponseMessage response = ReportGenerator.GenerateReport(
+                request,
+                ViewsName.AllStates,
+                ViewsQueries.AllStates,
+                request.ReportPath,
+                request.ReportFileName,
+                request.ExportFilename,
+                request.LogoName,
+                request.Lang,
+                paramList);
+
+            response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
+            response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("inline")
+            {
+                FileName = $"{request.ExportFilename}.pdf"
+            };
+
+            return response;
+        }
     }
 }
 

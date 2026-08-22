@@ -18,9 +18,9 @@ import {
 } from "../utils/stateViews";
 import StatesCardView from "./StatesCardView";
 import StatesChartView from "./StatesChartView";
-import StatesReportView from "./StatesReportView";
 import StateCardViewHeader from "./card-view/StateCardViewHeader";
 import StatesDataGrid from "./grid-view/StatesDataGrid";
+import StateReportPage from "../reports/pages/StateReportPage";
 
 const sortableColumns = new Set<StateSortColumn>([
   "nameEn",
@@ -110,6 +110,7 @@ const StatesMultiView = ({
 }: StatesMultiViewProps) => {
   const { t } = useTranslation();
   const [currentView, setCurrentView] = useState<StateManagementView>("grid");
+  const [isFilterBarVisible, setIsFilterBarVisible] = useState(true);
 
   const handleViewChange = useCallback((view: string) => {
     if (!isStateManagementView(view)) return;
@@ -143,10 +144,12 @@ const StatesMultiView = ({
         totalLabel={t("states.total")}
         onRefresh={onRefresh}
         onViewTypeChange={handleViewChange}
-        showActions={{ add: permissions.canCreate, refresh: true, export: false, filter: false }}
+        onFilter={() => setIsFilterBarVisible((visible) => !visible)}
+        isFilterBarVisible={isFilterBarVisible}
+        showActions={{ add: permissions.canCreate, refresh: true, export: false, filter: true }}
       />
 
-      {(currentView === "cards" || currentView === "chart") && (
+      {isFilterBarVisible && (currentView === "cards" || currentView === "chart") && (
         <StateCardViewHeader
           searchTerm={searchValue}
           searchField={searchField}
@@ -175,7 +178,7 @@ const StatesMultiView = ({
           flex: 1,
           minHeight: 0,
           overflowX: currentView === "cards" || currentView === "chart" ? "hidden" : "auto",
-          overflowY: currentView === "cards" ? "hidden" : "auto",
+          overflowY: currentView === "cards" || currentView === "chart" ? "hidden" : "auto",
           position: "relative",
         }}
       >
@@ -209,6 +212,7 @@ const StatesMultiView = ({
             onSelectedStateIdsChange={onSelectedStateIdsChange}
             onBulkArchive={onBulkArchive}
             isBulkArchiving={isBulkArchiving}
+            showFilterBar={isFilterBarVisible}
             onPaginationChange={handlePaginationChange}
             onSortChange={handleGridSortChange}
             lastAddedId={lastAddedId}
@@ -248,7 +252,7 @@ const StatesMultiView = ({
             onAdd={permissions.canCreate ? onAdd : undefined}
           />
         )}
-        {currentView === "report" && <StatesReportView states={states} totalCount={totalCount} />}
+        {currentView === "report" && <StateReportPage showFilterBar={isFilterBarVisible} />}
       </Box>
     </Box>
   );

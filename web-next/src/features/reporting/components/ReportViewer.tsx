@@ -30,6 +30,10 @@ interface ReportViewerProps {
   reportParams?: ReportSearchParams;
   onSearch?: (params?: ReportSearchParams) => void;
   initialOpen?: boolean;
+  /** Lets a multi-view header own the report criteria sidebar. */
+  filterBarVisible?: boolean;
+  /** Feature-specific report route. Countries continues to use report/generate. */
+  generateEndpoint?: string;
 }
 
 const ReportViewer = ({
@@ -37,17 +41,21 @@ const ReportViewer = ({
   reportParams = {}, // Default report parameters (ReportPath, ReportFileName, etc.)
   onSearch = () => {},
   initialOpen = true,
+  filterBarVisible,
+  generateEndpoint = "report/generate",
 }: ReportViewerProps) => {
   const [searchParams, setSearchParams] = useState<ReportSearchParams>({});
   const [reportUrl, setReportUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [noResults, setNoResults] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(initialOpen);
+  const [uncontrolledSidebarOpen, setUncontrolledSidebarOpen] = useState(initialOpen);
 
   const theme = useTheme();
   const lang = theme.direction === "rtl" ? "ar" : "en";
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isFilterBarControlled = filterBarVisible !== undefined;
+  const sidebarOpen = filterBarVisible ?? uncontrolledSidebarOpen;
 
   // Constants
   const SIDEBAR_WIDTH = 280;
@@ -58,10 +66,10 @@ const ReportViewer = ({
 
   // Close sidebar automatically on mobile
   useEffect(() => {
-    if (isMobile) {
-      setSidebarOpen(false);
+    if (isMobile && !isFilterBarControlled) {
+      setUncontrolledSidebarOpen(false);
     }
-  }, [isMobile]);
+  }, [isFilterBarControlled, isMobile]);
 
   // Initial search when language changes
   useEffect(() => {
@@ -69,7 +77,9 @@ const ReportViewer = ({
   }, [lang]);
 
   const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
+    if (!isFilterBarControlled) {
+      setUncontrolledSidebarOpen((open) => !open);
+    }
   };
 
   const generateReport = async (params: ReportSearchParams) => {
@@ -82,7 +92,7 @@ const ReportViewer = ({
       };
 
       const response = await reportApiService.post(
-        "report/generate",
+        generateEndpoint,
         allParams
       );
 
@@ -143,8 +153,8 @@ const ReportViewer = ({
     setLoading(false);
 
     // Close sidebar on mobile after search
-    if (isMobile) {
-      setSidebarOpen(false);
+    if (isMobile && !isFilterBarControlled) {
+      setUncontrolledSidebarOpen(false);
     }
   };
 
@@ -226,7 +236,7 @@ const ReportViewer = ({
       }}
     >
       {/* Mobile Header - Always visible */}
-      {isMobile && (
+      {isMobile && !isFilterBarControlled && (
         <Box
           sx={{
             width: "100%",
@@ -307,7 +317,7 @@ const ReportViewer = ({
       </Paper>
 
       {/* Desktop Toggle Button */}
-      {!isMobile && (
+      {!isMobile && !isFilterBarControlled && (
         <Box
           sx={{
             position: "absolute",
@@ -406,6 +416,8 @@ ReportViewer.propTypes = {
   reportParams: PropTypes.object,
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   initialOpen: PropTypes.bool,
+  filterBarVisible: PropTypes.bool,
+  generateEndpoint: PropTypes.string,
   onSearch: PropTypes.func,
 };
 

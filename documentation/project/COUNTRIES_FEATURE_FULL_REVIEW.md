@@ -157,7 +157,7 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | Archive dependencies | Authoritative | Confirmation/error feedback | Confirmation/error feedback |
 | Audit | DbContext + update trail | None | None |
 | Realtime production | Post-commit Hangfire job | Invalidate Countries + States | Invalidate `['countries']` |
-| Reports | Separate Report API | Independent report view | Independent PDF/device workflow |
+| Reports | Separate Crystal Report API | Crystal viewer plus opt-in, client-only ActiveReportsJS template designer | Independent PDF/device workflow |
 | Import | Atomic bulk-create endpoint | XLSX parse/preview/submit | Not implemented |
 | Localization | EN/AR errors/notifications | EN/AR UI | EN/AR UI |
 
@@ -187,6 +187,7 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | `countryPageQuery.ts` | Exact criteria serialization |
 | `useCountryQueries.ts`, `countryService.ts` | Cache and HTTP normalization |
 | `CountriesMultiView.tsx` and view folders | Grid/Cards/Chart/Report/Import composition |
+| `CountryReportPage.tsx`, `reports/components/`, and `public/reports/countries/` | Crystal viewer remains the default report path; ActiveReportsJS mounts only in the browser with a downloadable `.rdlx-json` starter template |
 | `CountryForm.tsx`, validation | Detail-backed modes and request rules |
 | web Countries tests | Query/service/permission/chart/cell evidence |
 
@@ -272,7 +273,7 @@ specified for the new feature.
 | Page size | 10 | 5 Table / 3 Cards | API limit remains shared |
 | Analytics | Page-scoped Chart | None | Never invent client-side global metrics |
 | Import | XLSX preview/bulk create | None | Mobile absence is explicit |
-| Report output | Browser report workflow | PDF preview/share/download | Report API remains independent |
+| Report output | Crystal viewer remains the default; optional browser-native `.rdlx-json` design/download is local-only | PDF preview/share/download | Crystal API remains independent; the browser designer has no template-storage API yet |
 | Form surface | Modal/dialog | Full-screen modal | Same request and lifecycle contract |
 
 Parity means equivalent business capability and truthful criteria, not
@@ -286,6 +287,7 @@ pixel-identical UI.
 | C-F02 | Web | Cards/Chart can inherit hidden field/operator criteria selected in Grid. | Expose or reset all active criteria per view. |
 | C-F03 | Web | Import has no localized client preflight for the 100-row endpoint maximum. | Validate before submit while preserving atomicity. |
 | C-F04 | Web tests | No complete controller/view/mutation integration coverage. | Add criteria, detail, permission, lifecycle and invalidation tests. |
+| C-F05 | Web reports | The ActiveReportsJS Countries example downloads templates locally; it has no authorized persistence, revision history, or approved runtime data-source catalog yet. | Add a dedicated report-template API and permission/version contract before treating the browser designer as a production authoring workflow. |
 | C-M01 | Mobile | Currency/state-presence criteria exist but are not exposed. | Expose or remove reserved criteria. |
 | C-M02 | Mobile | View/edit use list row while detail hook is unused. | Hydrate detail whenever list is not authoritative. |
 | C-M03 | Mobile tests | No screen/form/action/invalidation integration coverage. | Add representative integration tests. |
@@ -353,6 +355,7 @@ loading/error/empty/retry, dirty/busy forms and realtime refresh.
 - [ ] Edit/view hydrate authoritative detail.
 - [ ] Actions are guarded by permission, read-only and lifecycle.
 - [ ] Optional views state their true data scope.
+- [ ] Crystal remains a separately selectable default viewer; browser-native report design never exposes database credentials or unrestricted SQL.
 - [ ] Mutations and realtime invalidate all affected keys.
 - [ ] EN/AR, RTL, accessibility and responsive states are verified.
 

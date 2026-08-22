@@ -38,7 +38,21 @@ The State change job schedules only after persistence succeeds, sends the `state
 
 ## 9. State-specific report decision
 
-No State report template or report-catalog endpoint exists in `CrystalReportGeneratorApi`; only Countries report assets are present. Therefore browser and mobile Report modes truthfully render the current server page and state its current-row/total scope. They do not pretend to produce a global or PDF report. Adding a State PDF/export report requires an explicit report-template and Report API contract.
+The browser Report mode uses the same Crystal viewer pattern as Countries, not a
+local State table. `CrystalReportGeneratorApi` now has a States catalog slot,
+the `V_AllStates` report dataset, and `report/states/generate` for State Arabic
+and English name parameters. `Reports/States/.gitkeep` intentionally creates an
+empty report location; no fake `.rpt` is generated. Until the owner adds a
+valid State Crystal template, browser Report mode presents a localized
+unavailable state and never calls report generation with a nonexistent file.
+The template filename must contain `States` (for example, `States.rpt`) to meet
+the existing report-catalog filter.
+
+Expo retains its current-page report summary because it has no Crystal PDF
+viewer/file-handling integration. This is an intentional platform difference,
+not an indication that the browser should fall back to a local table. A future
+mobile Crystal experience must reuse the States catalog and generation contract
+and add explicit device PDF handling.
 
 ## 10. Verification and remaining review work
 

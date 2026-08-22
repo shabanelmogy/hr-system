@@ -7,5 +7,7 @@
         public static string AllCountries = $"{ViewPrefix}{nameof(AllCountries)}";
 
         public static string AllCountriesWithStates = $"{ViewPrefix}{nameof(AllCountriesWithStates)}";
+
+        public static string AllStates = $"{ViewPrefix}{nameof(AllStates)}";
     }
 }

@@ -19,7 +19,7 @@ const CurrencyChart: React.FC<CurrencyChartProps> = ({ data }) => {
       title={t("countries.charts.topCurrencies")}
       xKey="name"
       yKey="value"
-      height={200}
+      height={280}
       fullHeight
       compact
       colors="secondary"

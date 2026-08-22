@@ -22,23 +22,51 @@ The App Router adapter at `app/(main)/basic-data/(geographical-information)/stat
 
 `StatesDataGrid` uses the same `MyDataGrid` in client or server pagination mode and the shared toolbar. The column dropdown, condition dropdown, search input, and Reset button use the shared aligned 40px control row. Grid Options is the terminal toolbar item; it owns status selection, the shared Columns/Density controls, and bulk archive. Sorting and filtering continue through the API contract in both pagination modes.
 
+The shared multi-view header Filter button begins pressed and toggles only
+criteria-bar visibility. It controls the Grid toolbar in Grid, the State
+criteria header in Cards and Chart, and the `ReportViewer` criteria sidebar in
+Report. It never resets or locally applies controlled criteria, and it exposes
+its pressed state for keyboard and screen-reader users. The implementation
+comes from shared `PageHeader` and `HeaderActions`, so future multi-view
+features reuse the same props instead of creating another header toggle.
+
 ## 6. Views
 
 Grid is the default. Cards render the same adaptive display page and actions through the
 shared `EntityCard` scaffold, shared card criteria toolbar, loading/empty/no-results
 states, highlight behavior, and shared pagination. State-specific content is
-Country, State code, District count, quality, and created date. Report mode renders
-the same current display page and declares its current-row/total scope because no
-State report backend exists. Chart mode is Required and uses the same controlled
-criteria, resets to the first page when entered, and does not render
-pagination controls. Its notice and metric labels explicitly distinguish matching
-authoritative totals from first-page-scoped Country, State, District, and timeline data.
+Country, State code, District count, quality, and created date. Report mode uses
+the shared Crystal `ReportViewer`, a States-only report catalog, and the
+States-only generation route; it does not render a local table as a pretend
+report. The checked-in `Reports/States` slot is intentionally empty, so report
+mode displays a localized unavailable state until a valid State `.rpt` is
+added. Chart mode is Required and uses the same controlled criteria, resets to
+the first page when entered, and does not render pagination controls. Its notice
+and metric labels explicitly distinguish matching authoritative totals from
+first-page-scoped Country, State, District, and timeline data.
 Grid and Cards remain the paginated list surfaces. Import is Excluded because no
 State bulk-create contract exists.
 
 States uses the shared global `views.*` names and shared padded view toggle rather
 than feature-owned label variants. Its Chart root provides responsive inner
 padding so analytics do not render flush against the feature shell.
+
+### Web Chart applied profile
+
+`StatesChartView` uses the same controlled criteria as Grid and Cards and resets
+to the first page on entry. `totalCount` remains the authoritative matching-State
+total; visible States, Country distribution, District count, and timeline data
+are derived from that first page. The localized States scope notice and metric
+labels make this boundary explicit. The view has no pager and does not claim
+global aggregation.
+
+The Chart root is a viewport-bounded flex column with responsive inner padding,
+`height: 100%`, `minHeight: 0`, and hidden outer overflow. Its scope notice and
+summary cards do not shrink; the chart grid fills the remaining height and owns
+vertical scrolling when space is short. Country bar, Country pie, District, and
+optional Timeline panels fill their responsive grid cells, have a 280px narrow-
+screen minimum, and stretch in desktop rows. This removes the unused area below
+the chart grid while keeping the application document from scrolling vertically.
 
 Grid keeps the reusable `MyDataGrid`/`GridFooter` pagination used by Districts.
 States configures the same component for client paging only when the complete
@@ -90,22 +118,39 @@ The State permission matrix differentiates view, create, edit, archive, and rest
 
 The existing State basic-data route, permission policy, navigation configuration, and realtime registry are retained. `stateKeys.all` remains the public realtime prefix so a post-commit State event refreshes States and affected Country/District views.
 
-## 10. Localization and RTL
+## 10. Crystal report integration
+
+`StateReportPage` follows Country report catalog and viewer behavior. It sends
+`{ subFolderPath: "States", reportCategory: "States" }` to `report/info` and
+only mounts `ReportViewer` after the catalog supplies a valid `.rpt`. The viewer
+calls `report/states/generate`, whose request supports Arabic and English State
+name parameters and uses the `V_AllStates` dataset. The shared viewer accepts a
+feature generation route and a controlled filter-sidebar state, preserving the
+existing Countries route.
+
+`api/CrystalReportGeneratorApi/Reports/States/.gitkeep` deliberately creates a
+catalog location without inventing an invalid report file. When the State
+Crystal template is ready, place the valid `.rpt` in that folder with `States`
+in its filename (for example, `States.rpt`); the current catalog filter will
+then expose it without a browser replacement. The Crystal template itself must
+use the documented State dataset fields rather than Country-only report fields.
+
+## 11. Localization and RTL
 
 The `states` namespace has paired EN/AR search, status, lifecycle, report, empty/error, and accessibility labels. Names choose active locale/Theme direction without hard-coded left/right layout.
 
-## 11. Responsive and accessibility
+## 12. Responsive and accessibility
 
 Shared feature header/breadcrumb layout, DataGrid toolbar, MUI dialogs, cards, table overflow, icon labels, focus-managed forms, and status text provide desktop, tablet, and narrow-screen behavior. Manual keyboard, dialog focus, and high text-scale verification remains a release gate.
 
-## 12. Test focus
+## 13. Test focus
 
 Add pure query serialization, State permission matrix, service route, and controller/view integration coverage as the implementation evolves. Existing generic server-list, toolbar, route, and realtime tests remain shared evidence.
 
-## 13. State-specific differences from Countries
+## 14. State-specific differences from Countries
 
-States has required parent Country and active District archive checks; it has no currency, alpha code, phone, Country-state presence filters, XLSX bulk create/import, global aggregate analytics, or State PDF report. Its Chart is intentionally first-page scoped and has no pager. Do not copy any of those Countries fields or findings.
+States has required parent Country and active District archive checks; it has no currency, alpha code, phone, Country-state presence filters, XLSX bulk create/import, or global aggregate analytics. Its Crystal report uses State plus parent-Country dataset fields, and its Chart is intentionally first-page scoped with no pager. Do not copy Countries-only fields, report parameters, or findings.
 
-## 14. Verification
+## 15. Verification
 
 Run architecture, type-check, strict type-check, lint, tests, build, documentation validation, link checks, and a browser matrix for EN/AR, RTL, desktop/tablet/mobile widths, permissions/read-only, lifecycle dependency errors, reset/search conditions, and realtime refresh.

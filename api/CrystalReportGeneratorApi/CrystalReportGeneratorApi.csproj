@@ -332,6 +332,7 @@
     <Compile Include="ReportInfo.cs" />
     <Compile Include="ReportRequests\CountryReportRequest.cs" />
     <Compile Include="ReportRequests\ReportRequest.cs" />
+    <Compile Include="ReportRequests\StateReportRequest.cs" />
     <Compile Include="ReportRequests\ReportTitlesRequest.cs" />
     <Compile Include="Reports\Countries\Countries.cs">
       <AutoGen>True</AutoGen>
@@ -375,6 +376,7 @@
     <Content Include="Global.asax" />
     <Content Include="ReportsLogo\Logo1.jpg" />
     <Content Include="ReportsLogo\Logo2.jpg" />
+    <Content Include="Reports\States\.gitkeep" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />

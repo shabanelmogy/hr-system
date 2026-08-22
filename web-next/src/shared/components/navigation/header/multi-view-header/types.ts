@@ -42,6 +42,8 @@ export interface MultiViewPageHeaderProps {
   onRefresh?: () => void;
   exportOptions?: HeaderExportOption[];
   onFilter?: () => void;
+  /** Whether the feature-owned criteria bar is currently visible. */
+  isFilterBarVisible?: boolean;
   showActions?: HeaderActions;
   additionalChips?: ComponentProps<typeof Chip>[];
   sx?: ComponentProps<typeof Paper>["sx"];

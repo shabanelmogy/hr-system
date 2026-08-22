@@ -46,10 +46,10 @@ For create, bulk create, edit, archive, restore, bulk archive, import, report, a
 | states-api | 6 | `97e7703fbf9f0fa2eee2f1927c01c3e8c47dc983c6169ffc42bc09df2fd4853e` |
 | states-api | 7 | `79ef819ddb68cb8382bf2c5f313131548be7b4a66ed3ab6e53777108f1093f66` |
 | states-api | 8 | `5f502b1906084a55b3bbff646f16611cc3c88e03b432a210d739a729d0eca2aa` |
-| states-web | 6 | `850571533d63654ef75ac6caf5c708b89998cb5a3b22bc0aca0643917fc7e5e5` |
+| states-web | 6 | `d12500e4febb37cccf52cb70d167f2b69e9a84793948328d0928459a19f787d2` |
 | states-web | 7 | `dd6b988a8e7b8b83010b144e56d1cec974980774b9fd9155dd966a6167bed42c` |
 | states-web | 8 | `dec0c122194d60ca08d8135c4d8fa24774fbecc3f5dc9d9fb4df340f9b3259c8` |
 | states-web | 9 | `3103392ff8db16be591f2bf6d1e3bc0abfba246c3b6421fc00b0af2afcbbb665` |
 | states-mobile | 9 | `c13868e55ed4b8222f0f9c3198da550e0d9ef4a8400fac18280850115b3cf1c0` |
 | states-mobile | 10 | `0c98fb8ba9d3ae023010173c1dec5c03cf83d196656377dcee0a9563155944fc` |
-| states-mobile | 11 | `b566631745234edd79055f13f0b8a6966119912f9560a7e88e40b321d912af22` |
+| states-mobile | 11 | `a658c758cf1ad2b2ee4e64cfe6ecc5c5c16418220248aa4cd02df51a1ced4063` |

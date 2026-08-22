@@ -16,7 +16,7 @@ const CountryBarChart = ({ data }: CountryBarChartProps) => {
       subtitle={t("states.charts.statesByCountryDescription")}
       xKey="name"
       yKey="value"
-      height={200}
+      height={280}
       fullHeight
       compact
       colors={COLOR_PALETTES.primary}

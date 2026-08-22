@@ -35,7 +35,7 @@ semantics, but they do not need identical controls or screen composition.
 | Mobile route adapter | `mobile-react/app/(main)/basic-data/geographical-information/countries.tsx` |
 | Web primary UI shape | Server-managed Grid with modal create/edit/view workflows |
 | Mobile primary UI shape | Responsive server-managed Table/Cards with a full-screen create/edit/view form |
-| Web optional UI shapes | Cards, first-page-scoped Chart without pagination controls, independent Report, XLSX Import |
+| Web optional UI shapes | Cards, first-page-scoped Chart without pagination controls, independent Crystal Report plus an opt-in client-only ActiveReportsJS design example, XLSX Import |
 | Mobile optional UI shape | Independent PDF Report with preview/share; no import or chart |
 | Backend pattern | Global reference-data CQRS slice with explicit archive/restore |
 | Identifier | Positive integer `id` |
@@ -47,10 +47,10 @@ semantics, but they do not need identical controls or screen composition.
 | Cross-feature consumers | States consumes the active-country lookup through the Countries public API |
 | Web realtime consumers | Country changes invalidate Countries and States query prefixes |
 | Mobile realtime consumers | Country changes invalidate the stable `['countries']` prefix |
-| Web shared dependencies | server-list state, React Query, Data Grid, PageHeader, form/dialog primitives, read-only context, permission hooks, reporting, Excel parser |
+| Web shared dependencies | server-list state, React Query, Data Grid, PageHeader, form/dialog primitives, read-only context, permission hooks, reporting, ActiveReportsJS designer, Excel parser |
 | Mobile shared dependencies | Expo Router, React Query, `AppListScreen`, `AppDataTable`, `AppForm`, read-only context, authorization hooks, localization/theme, Expo print/share |
 | Working-tree note | This review describes the current working tree, including the compact shared multi-view/header changes |
-| Explicit exclusions | Crystal Report service internals, generic notification infrastructure, offline write queues, and unrelated geographical features |
+| Explicit exclusions | Crystal Report service internals, ActiveReportsJS template persistence/runtime-data APIs, generic notification infrastructure, offline write queues, and unrelated geographical features |
 
 ### Applicable review phases
 
@@ -104,6 +104,7 @@ Expo Router page + RouteGuard
 | Page-scoped analytics | `components/chart-view/` and `components/CountriesChartView.tsx` |
 | Submitted-batch import | `components/import-data/` |
 | Domain report page | `reports/pages/CountryReportPage.tsx` |
+| Browser-native report design example | `reports/components/CountryActiveReportsDesigner.tsx`, `reports/components/CountryActiveReportsDesignerClient.tsx`, and `public/reports/countries/countries-directory.rdlx-json` |
 | Deliberate public API | `index.ts` |
 
 The feature public API exports only the page, report page, lookup hook,
@@ -154,9 +155,14 @@ versioned routing and sends one CQRS request per action.
 | Bulk archive | `POST /api/v1/countries/bulk-archive` | Delete | `200 { archivedCount }` |
 | Restore | `POST /api/v1/countries/{id}/restore` | Delete | `204` |
 
-The report view is intentionally independent. It uses the reporting service and
-does not inherit the Countries list query unless a report contract explicitly
-adds equivalent parameters.
+The Crystal report view is intentionally independent. It uses the reporting
+service and does not inherit the Countries list query unless a report contract
+explicitly adds equivalent parameters. The optional ActiveReportsJS mode is a
+client-only authoring example: it loads a static `.rdlx-json` Countries starter
+template and downloads the edited JSON locally. It does not call the Crystal API
+or expose a database connection, arbitrary SQL, or an unauthorised data endpoint.
+Production template persistence, revision history, permissions, and a vetted
+runtime data-source catalogue require a dedicated API contract.
 
 ### Transport types
 
@@ -255,6 +261,15 @@ Status choices and permission-gated bulk Archive action. Currency and states
 filters are not direct Grid-toolbar controls; Cards and Chart expose them in
 their feature header while all list views still share one query state.
 
+The multi-view header Filter button starts pressed and toggles criteria-bar
+visibility without changing the controlled query. It opens or closes the Grid
+toolbar in Grid, the shared Country criteria header in Cards and Chart, and the
+independent Country Report parameters in Report. Import has no filter surface,
+so the action is omitted there. The button exposes its pressed state for keyboard
+and screen-reader users. This behavior is provided by shared `PageHeader` and
+`HeaderActions`; future multi-view features reuse those props rather than adding
+their own header toggle.
+
 ### Mobile list profile
 
 Mobile uses the same backend page, sort and lifecycle semantics with a smaller
@@ -287,7 +302,7 @@ contract and serialize those choices; do not filter the visible page locally.
 | Web Grid | Complete filtered/sorted result through 5000 rows; current authoritative server page above 5000 | One adaptive data strategy and the reusable `MyDataGrid` footer |
 | Web Cards | Current display page from the same adaptive criteria/result | Same actions and pager; no second list state |
 | Web Chart | First display page for the shared criteria plus authoritative total | Reset to page zero on entry, omit pagination controls, label metrics as page-scoped, and never imply global aggregation |
-| Web Report | Reporting API and report catalog | Independent filters, loading/error recovery and export/print behavior |
+| Web Report | Crystal reporting API/catalog; optional local ActiveReportsJS `.rdlx-json` starter template | Crystal is the default viewer with independent filters/export/print; Designer is an opt-in browser authoring comparison with local download only |
 | Web Import | Local XLSX preview then bulk-create API | Create permission, local validation, submitted-batch atomicity and invalidation |
 | Mobile Table | Current server page | Horizontally capable data table, API-supported sort columns and shared server pager |
 | Mobile Cards | Same current server page and criteria | Touch-first names, codes, state count, status, selection and guarded actions |
@@ -301,7 +316,8 @@ variants, so Grid, Cards, Chart, Report, and Import have the same names as every
 other Multi View screen. The shared toggle owns its internal button padding;
 the Chart root owns responsive content padding. Chart deliberately has no pager:
 entering it resets the shared list page to zero, preserves the current criteria
-and page size, and keeps the page-scope notice visible.
+and page size. Its summary labels, rather than a duplicate informational alert,
+disclose that only the first display page supplies the chart derivations.
 
 Countries does not own a Grid pager. It configures the shared
 `MyDataGrid`/`GridFooter` in client mode only after the adaptive hook has loaded
@@ -313,12 +329,48 @@ falls back to server pagination until the updated Countries API is deployed.
 Optional views are not mandatory for the next feature. Add them only when the
 product and API contracts justify them.
 
+### Web Report engines
+
+`CountryReportPage` renders an accessible exclusive engine selector. **Crystal
+Reports** remains the default selection and retains the existing report catalog,
+parameters, PDF generation, print, and export flow without modification.
+**ActiveReportsJS Designer** is dynamically imported with `ssr: false` because
+the vendor control uses browser APIs. It loads
+`public/reports/countries/countries-directory.rdlx-json`, exposes the vendor's
+drag-and-drop report surface, shows unsaved changes, and downloads the edited
+definition as `countries-directory.rdlx-json`.
+
+The starter deliberately contains layout only, not a database connection or
+static production rows. Authors add a vetted JSON/REST source through the Data
+panel during the demonstration. Do not make the browser own credentials, a
+connection string, unrestricted SQL, or direct access to internal API data.
+Before this becomes a production authoring feature, add a permission-protected
+template store, revision/audit semantics, validation, allowed data-source
+templates, and server-side rendering/export policy.
+
 Mobile view switching is owned by `AppListScreen`/`AppMultiView`. Switching to
 Table or Cards applies that view's server page size and returns to page zero;
 Report declares `paginate: false` and `renderWhenEmpty: true`, so report access
 does not depend on the current Countries page containing rows. Mobile has no
 Chart or XLSX Import view. That is an explicit platform profile, not permission
 to duplicate those operations with ad hoc components.
+
+### Web Chart applied profile
+
+`CountriesChartView` is a viewport-bounded flex column beneath
+`CountriesMultiView`. The authoritative `totalCount` is labeled as matching
+Countries; visible Countries, currencies, States, and timeline values are all
+derived from the first loaded page. The previous page-scope alert was removed
+because those localized summary labels already state the distinction. There is
+no chart pager and no implication that these are global aggregates.
+
+The Country chart root owns responsive inner padding and has `height: 100%`,
+`minHeight: 0`, and hidden outer overflow. Its summary block does not shrink;
+the remaining chart grid has the only vertical scroll region. The States by
+Country, States Coverage, Currency, and optional Timeline panels each fill their
+grid row. They use a 280px narrow-screen minimum height and stretch on desktop,
+so the available view height is occupied without a blank area under the charts
+or a vertical document scroll.
 
 ### Web Cards applied profile
 
@@ -486,6 +538,11 @@ browser XLSX workflow can be copied into React Native unchanged.
 - Countries owns its English and Arabic keys under `countries`.
 - Search column/operator labels, status choices, lifecycle dialogs, Retry,
   empty states, report errors and import feedback are localized.
+- The Countries wrapper around ActiveReportsJS localizes its engine switcher,
+  actions, guidance, errors, and outer responsive layout. Vendor-panel language
+  packs and full RTL authoring remain a vendor integration decision; do not
+  claim the internal designer chrome is localized until that configuration is
+  supplied and manually verified.
 - Theme direction controls layout; avoid hardcoded left/right positioning.
 - Icon-only Grid actions have labels.
 - Shared dialogs own focus trapping, dirty-exit confirmation and busy guards.
@@ -662,6 +719,7 @@ pixel and interaction-for-interaction template.
 | Development mock selection | `utils/countryMockData.test.ts` |
 | Chart derivations and page scope | `components/chart-view/chartDataUtils.test.ts` |
 | Cell formatting | `components/grid-view/CountryCellRenderers.test.tsx` |
+| ActiveReportsJS starter | Strict TypeScript compilation of the client-only wrapper plus JSON parsing of `public/reports/countries/countries-directory.rdlx-json` |
 | Mobile endpoint/query and response schemas | `mobile-react/src/features/basic-data/countries/api/__tests__/country-api.test.ts` |
 | Mobile shared list debounce/reset | `mobile-react/src/shared/listing/__tests__/useServerListState.test.ts` |
 | Mobile route authorization | `mobile-react/src/features/auth/rbac/__tests__/route-access.test.ts` |

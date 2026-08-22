@@ -11,7 +11,8 @@ import {
   type ReportSearchParams,
   type UpdateReportSearchParams,
 } from "@/features/reporting";
-import { Alert, Button, useTheme } from "@mui/material";
+import { Alert, Box, Button, ToggleButton, ToggleButtonGroup, useTheme } from "@mui/material";
+import CountryActiveReportsDesigner from "../components/CountryActiveReportsDesigner";
 
 interface ReportInfo {
   Id: string;
@@ -19,6 +20,13 @@ interface ReportInfo {
   Title: string;
   Subject: string;
 }
+
+interface CountryReportPageProps {
+  /** Controlled by the shared multi-view header filter toggle. */
+  showFilterBar?: boolean;
+}
+
+type CountryReportMode = "crystal" | "designer";
 
 function isReportInfo(value: unknown): value is ReportInfo {
   if (!value || typeof value !== "object") return false;
@@ -52,16 +60,18 @@ async function getCountryReportCatalog(): Promise<ReportInfo[]> {
   );
 }
 
-const CountryReportPage = () => {
+const CountryReportPage = ({ showFilterBar = true }: CountryReportPageProps) => {
   const { t } = useTranslation();
 
   const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
+  const [reportMode, setReportMode] = useState<CountryReportMode>("crystal");
   const theme = useTheme();
 
   const lang = theme.direction === "rtl" ? "ar" : "en";
   const reportsQuery = useQuery({
     queryKey: ["country-reports", "catalog", lang],
     queryFn: getCountryReportCatalog,
+    enabled: reportMode === "crystal",
     staleTime: 5 * 60_000,
   });
   const reportsInfo = reportsQuery.data ?? [];
@@ -91,65 +101,97 @@ const CountryReportPage = () => {
     setSelectedReportId(selected?.Id ?? null);
   };
 
+  const handleReportModeChange = (_event: React.MouseEvent<HTMLElement>, value: CountryReportMode | null) => {
+    if (value) setReportMode(value);
+  };
+
   return (
-    <ReportViewer reportParams={reportParams}>
-      {(updateSearchParams: UpdateReportSearchParams, currentParams: ReportSearchParams) => (
-        <>
-          {reportsQuery.isError ? (
-            <Alert
-              severity="warning"
-              action={(
-                <Button color="inherit" size="small" onClick={() => void reportsQuery.refetch()}>
-                  {t("common.retry")}
-                </Button>
-              )}
-            >
-              {t("countries.reportCatalogError")}
-            </Alert>
-          ) : null}
+    <Box sx={{ display: "flex", flex: 1, flexDirection: "column", minHeight: 0 }}>
+      <Box sx={{ px: { xs: 1, sm: 1.5 }, pt: { xs: 1, sm: 1.5 } }}>
+        <ToggleButtonGroup
+          aria-label={t("countries.activeReports.reportModeAriaLabel")}
+          color="primary"
+          exclusive
+          onChange={handleReportModeChange}
+          size="small"
+          value={reportMode}
+        >
+          <ToggleButton value="crystal">
+            {t("countries.activeReports.crystalMode")}
+          </ToggleButton>
+          <ToggleButton value="designer">
+            {t("countries.activeReports.designerMode")}
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
 
-          <MyTextField
-            fieldName="CountryAr"
-            value={String(currentParams.CountryAr ?? "")}
-            label={t("countries.arabicName")}
-            onChange={(event) =>
-              updateSearchParams({ CountryAr: event.target.value })
-            }
-            onClear={() => updateSearchParams({ CountryAr: null })}
-            appearance="plain"
-            margin="none"
-            showCounter={false}
-            clearButtonAriaLabel={t("general.clearSearch")}
-          />
+      {reportMode === "designer" ? (
+        <CountryActiveReportsDesigner />
+      ) : (
+        <ReportViewer reportParams={reportParams} filterBarVisible={showFilterBar}>
+          {(updateSearchParams: UpdateReportSearchParams, currentParams: ReportSearchParams) => (
+            <>
+              {reportsQuery.isError ? (
+                <Alert
+                  severity="warning"
+                  action={(
+                    <Button color="inherit" size="small" onClick={() => void reportsQuery.refetch()}>
+                      {t("common.retry")}
+                    </Button>
+                  )}
+                >
+                  {t("countries.reportCatalogError")}
+                </Alert>
+              ) : null}
 
-          <MyTextField
-            fieldName="CountryEn"
-            value={String(currentParams.CountryEn ?? "")}
-            label={t("countries.englishName")}
-            onChange={(event) =>
-              updateSearchParams({ CountryEn: event.target.value })
-            }
-            onClear={() => updateSearchParams({ CountryEn: null })}
-            appearance="plain"
-            margin="none"
-            showCounter={false}
-            clearButtonAriaLabel={t("general.clearSearch")}
-          />
+              {showFilterBar ? (
+                <>
+                  <MyTextField
+                    fieldName="CountryAr"
+                    value={String(currentParams.CountryAr ?? "")}
+                    label={t("countries.arabicName")}
+                    onChange={(event) =>
+                      updateSearchParams({ CountryAr: event.target.value })
+                    }
+                    onClear={() => updateSearchParams({ CountryAr: null })}
+                    appearance="plain"
+                    margin="none"
+                    showCounter={false}
+                    clearButtonAriaLabel={t("general.clearSearch")}
+                  />
 
-          <MySelect
-            dataSource={reportsInfo}
-            selectedItem={selectedReport?.Id || null}
-            handleSelectionChange={handleReportChange}
-            loading={reportsQuery.isLoading || reportsQuery.isFetching}
-            label={t("reports.reportForms")}
-            valueMember="Id"
-            displayMember={lang === "ar" ? "Title" : "Subject"}
-            all={false}
-            showClearButton={true}
-          />
-        </>
+                  <MyTextField
+                    fieldName="CountryEn"
+                    value={String(currentParams.CountryEn ?? "")}
+                    label={t("countries.englishName")}
+                    onChange={(event) =>
+                      updateSearchParams({ CountryEn: event.target.value })
+                    }
+                    onClear={() => updateSearchParams({ CountryEn: null })}
+                    appearance="plain"
+                    margin="none"
+                    showCounter={false}
+                    clearButtonAriaLabel={t("general.clearSearch")}
+                  />
+
+                  <MySelect
+                    dataSource={reportsInfo}
+                    selectedItem={selectedReport?.Id || null}
+                    handleSelectionChange={handleReportChange}
+                    loading={reportsQuery.isLoading || reportsQuery.isFetching}
+                    label={t("reports.reportForms")}
+                    valueMember="Id"
+                    displayMember={lang === "ar" ? "Title" : "Subject"}
+                    all={false}
+                    showClearButton={true}
+                  />
+                </>
+              ) : null}
+            </>
+          )}
+        </ReportViewer>
       )}
-    </ReportViewer>
+    </Box>
   );
 };
 

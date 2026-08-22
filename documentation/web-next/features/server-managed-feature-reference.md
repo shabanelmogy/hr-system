@@ -208,6 +208,21 @@ surface: Grid and Cards may provide it through their established wrappers,
 while Chart, Report, and Import roots must not render flush against the feature
 shell. Avoid adding the same padding at both the MultiView root and a child view.
 
+When a feature exposes a criteria bar, the multi-view header owns its visible
+state through the shared Filter action. It is an accessible pressed toggle, not
+a second filtering mechanism: opening or closing it never resets, changes, or
+locally applies the server-list criteria. The same state must control the Grid
+toolbar in Grid and the feature-owned criteria bar in every other view that
+consumes those criteria. A report with independent parameters must toggle its
+own report filter controls instead; omit the action for views with no applicable
+filter surface.
+
+This is a shared `PageHeader` contract, not a feature-local header pattern. A
+feature reuses it by enabling `showActions.filter`, supplying `onFilter`, and
+binding `isFilterBarVisible`; `HeaderActions` supplies the visual pressed state
+and accessible button behavior. Do not duplicate the button, its selected
+styling, or its accessibility attributes in each feature.
+
 ### Grid
 
 Grid is the default required list view. Use server pagination and sorting. Wire
@@ -330,6 +345,29 @@ endpoint and separate query key.
 If users need to browse successive pages while looking at a chart, the surface is
 acting as another list rather than useful analytics. Keep that navigation in Grid
 or Cards, or define an aggregate/chart endpoint with an explicit scope.
+
+#### Chart layout and viewport rule
+
+When a Chart belongs to a viewport-bounded feature shell, it must use the
+remaining shell height without making the document scroll or leaving unused
+space below the chart panels. Use a flex-column Chart root with `height: 100%`,
+`minHeight: 0`, and hidden outer overflow. Static scope notices and summary cards
+must not shrink; the chart grid takes the remaining height with `flex: 1`,
+`minHeight: 0`, and its own vertical overflow.
+
+At desktop widths, stretch chart rows and make each chart panel fill its grid
+cell. On narrow screens, stack panels and give each a usable minimum height
+(the applied Countries and States profile uses 280px). The Chart root needs its
+own responsive inner padding, but do not duplicate that padding in the
+MultiView container. This keeps charts tall enough to read, removes the blank
+tail below a partially filled chart grid, and confines any necessary scrolling
+to the chart grid rather than the application page.
+
+Scope disclosure belongs in localized summary labels: distinguish the
+authoritative matching total from records, relations, or timelines derived from
+the first loaded page. A scope alert is optional and is never a substitute for
+those labels; avoid adding one when it only repeats the scope already made
+unambiguous in the summary.
 
 Record the decision for each optional view before implementation:
 

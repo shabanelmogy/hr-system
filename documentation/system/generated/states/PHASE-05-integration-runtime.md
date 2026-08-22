@@ -45,10 +45,10 @@ Verify all applicable registrations:
 | states-api | 10 | `86e2ea950a4ca4301825133cc4e23a5fb901d665a9105e81b22821a9080ef4d5` |
 | states-web | 8 | `dec0c122194d60ca08d8135c4d8fa24774fbecc3f5dc9d9fb4df340f9b3259c8` |
 | states-web | 9 | `3103392ff8db16be591f2bf6d1e3bc0abfba246c3b6421fc00b0af2afcbbb665` |
-| states-web | 10 | `fc95a596f566ea1b062e1df4e995f381918234f6db6c5b4c56a87ab7a0c93c10` |
-| states-web | 13 | `69707aa982857aa1778d13b32ec7f4a6149889380ca6a889acffd0d41af71a90` |
+| states-web | 10 | `3e502c9832ab020e30d883b7b57ffbec73936e1159832768a087ac1ed9da3522` |
+| states-web | 13 | `48a89826eaa88cdbbfb10e23d72ae3e27889b82befa84294db8b5f2d1d1de232` |
 | states-mobile | 2 | `df5e503c56700392a3580c09741dd3bf946ce7f43ec310fd3a0a79acb53329be` |
-| states-mobile | 11 | `b566631745234edd79055f13f0b8a6966119912f9560a7e88e40b321d912af22` |
+| states-mobile | 11 | `a658c758cf1ad2b2ee4e64cfe6ecc5c5c16418220248aa4cd02df51a1ced4063` |
 | states-mobile | 12 | `7536843d769e8361a410f15eec2b76d37720f6bb7ef92aaeb086714bf585dc5f` |
 | states-mobile | 13 | `6cdcf87afece4e578bc818a282cfe89996fc9b27c8248b5d37fbb7a23b841efa` |
 | states-mobile | 15 | `4b53b4a14da5675cf262da99e7d8698c0fdd0159f1f488b3fee1d616d08c7b6d` |

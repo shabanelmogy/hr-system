@@ -38,12 +38,12 @@ Record one outcome: `Ready`, `Ready with accepted findings`, or `Not ready`. Inc
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | states-master | 8 | `4943e0d1fc6a2d0893837c810839ab2fb28cfadee58e6b7a57e1cd5e318e4699` |
-| states-master | 9 | `dc012338042d0c12e881dd3cd7993cbadef93fd194a278e843ed21ba01613d61` |
+| states-master | 9 | `3bb32b0b771b82c4f9f9369d2aac0af5ad543878f7e223b3f4b989555486ff28` |
 | states-master | 10 | `0166f31ed3a894bd0e8caf2a191e128085fc6447772a6b564755b3bb02ca860f` |
 | states-api | 10 | `86e2ea950a4ca4301825133cc4e23a5fb901d665a9105e81b22821a9080ef4d5` |
-| states-api | 11 | `f2b01ffaf68b622e1d1806e4023186002714fec72fb3b0ea81f8a376afe3e681` |
-| states-web | 12 | `a92d7e498e248a50703de9be7ceff1d2f7c49e773223584579c4c860d036d162` |
-| states-web | 13 | `69707aa982857aa1778d13b32ec7f4a6149889380ca6a889acffd0d41af71a90` |
-| states-web | 14 | `f59d0ad3ee884b461898f470a9dd01b5c842b5b2ffd005a39b8bff5872a180cf` |
+| states-api | 11 | `539f37f24d7580f0ff02e92c6172aa48665203d2179e10f21b91074b929472a8` |
+| states-web | 12 | `ecb38dd9b6149a025aa10b1edca9ed23050620cedf2f397b10ff34764e10874d` |
+| states-web | 13 | `48a89826eaa88cdbbfb10e23d72ae3e27889b82befa84294db8b5f2d1d1de232` |
+| states-web | 14 | `3dfbf0dde3dc0418dfa72481ca85dd39d0b073a438c87a8d14fcb623cd8ccc35` |
 | states-mobile | 14 | `7d5c6b9e3f30747a1618af874a2eedd703bc07977d38eafa2068069da9e76028` |
 | states-mobile | 15 | `4b53b4a14da5675cf262da99e7d8698c0fdd0159f1f488b3fee1d616d08c7b6d` |

@@ -51,6 +51,7 @@ interface CountriesDataGridProps {
   onSelectedCountryIdsChange: (ids: number[]) => void;
   onBulkArchive: () => void;
   isBulkArchiving?: boolean;
+  showFilterBar?: boolean;
   onPaginationChange: (model: GridPaginationModel) => void;
   onSortChange: (model: GridSortModel) => void;
   lastAddedId?: string | number | null;
@@ -90,6 +91,7 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
   onSelectedCountryIdsChange,
   onBulkArchive,
   isBulkArchiving = false,
+  showFilterBar = true,
   onPaginationChange,
   onSortChange,
 }) => {
@@ -123,6 +125,7 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
         onPaginationModelChange={onPaginationChange}
         rowCount={paginationMode === "server" ? totalCount : undefined}
         pageSizeOptions={[5, 10, 25, 50]}
+        showToolbar={showFilterBar}
         showGridOptions
         toolbarSearch={{
           value: searchValue,

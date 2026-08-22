@@ -36,7 +36,7 @@ Controls use direction-aware, accessible shared select modals.
 
 ## 8. Views
 
-Table and Cards share rows, criteria, total, controlled pagination, actions, and pull-to-refresh. Report mode renders a truthful current-server-page list with its current-row/total scope. No chart, import, or pretend State PDF output is offered without a backend State report contract.
+Table and Cards share rows, criteria, total, controlled pagination, actions, and pull-to-refresh. Report mode currently renders a truthful current-server-page list with its current-row/total scope. No chart or import is offered. Browser Crystal reporting is intentionally separate until Expo has a Crystal PDF viewer/download/share design.
 
 ## 9. Form
 
@@ -48,7 +48,7 @@ Route/view uses `States:View`; create/edit/archive/restore recheck permission an
 
 ## 11. Report decision
 
-States has no State report catalog/template in the report service. Its report view is a current-page summary, not a PDF/export workflow. An independent State report needs a new Report API contract and device file-handling implementation.
+The browser State report catalog and generation contract are ready, but Expo deliberately keeps a current-page summary. It is not a PDF/export workflow until device file download, viewing, sharing, error handling, and permissions are designed and implemented against that existing report contract.
 
 ## 12. RTL, responsive, and accessibility
 

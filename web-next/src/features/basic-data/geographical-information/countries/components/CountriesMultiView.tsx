@@ -110,6 +110,7 @@ const CountriesMultiView = ({
 }: CountriesMultiViewProps) => {
   const { t } = useTranslation();
   const [currentView, setCurrentView] = useState<CountryView>("grid");
+  const [isFilterBarVisible, setIsFilterBarVisible] = useState(true);
   const visibleView = currentView === "import" && !permissions.canCreate
     ? "grid"
     : currentView;
@@ -145,6 +146,7 @@ const CountriesMultiView = ({
   const availableViews: CountryView[] = permissions.canCreate
     ? ["grid", "cards", "chart", "report", "import"]
     : ["grid", "cards", "chart", "report"];
+  const supportsFilterBar = visibleView !== "import";
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%" }}>
@@ -159,10 +161,12 @@ const CountriesMultiView = ({
         totalLabel={t("countries.total")}
         onRefresh={onRefresh}
         onViewTypeChange={handleViewChange}
-        showActions={{ add: permissions.canCreate, refresh: true, export: false, filter: false }}
+        onFilter={supportsFilterBar ? () => setIsFilterBarVisible((visible) => !visible) : undefined}
+        isFilterBarVisible={isFilterBarVisible}
+        showActions={{ add: permissions.canCreate, refresh: true, export: false, filter: supportsFilterBar }}
       />
 
-      {(visibleView === "cards" || visibleView === "chart") && (
+      {isFilterBarVisible && (visibleView === "cards" || visibleView === "chart") && (
         <CountryCardViewHeader
           searchTerm={searchValue}
           searchField={searchField}
@@ -191,7 +195,7 @@ const CountriesMultiView = ({
           flex: 1,
           minHeight: 0,
           overflowX: visibleView === "cards" || visibleView === "chart" ? "hidden" : "auto",
-          overflowY: visibleView === "cards" ? "hidden" : "auto",
+          overflowY: visibleView === "cards" || visibleView === "chart" ? "hidden" : "auto",
           position: "relative",
         }}
       >
@@ -225,6 +229,7 @@ const CountriesMultiView = ({
             onSelectedCountryIdsChange={onSelectedCountryIdsChange}
             onBulkArchive={onBulkArchive}
             isBulkArchiving={isBulkArchiving}
+            showFilterBar={isFilterBarVisible}
             onPaginationChange={handlePaginationChange}
             onSortChange={handleGridSortChange}
             lastAddedId={lastAddedId}
@@ -265,7 +270,7 @@ const CountriesMultiView = ({
             onAdd={permissions.canCreate ? onAdd : undefined}
           />
         )}
-        {visibleView === "report" && <CountryReportPage />}
+        {visibleView === "report" && <CountryReportPage showFilterBar={isFilterBarVisible} />}
         {visibleView === "import" && permissions.canCreate && <ImportCountries />}
       </Box>
     </Box>

@@ -48,10 +48,10 @@ Record whether detail requires a dedicated query, whether reports open or share 
 | states-mobile | 5 | `38a5f224df7fe514d651dcb05a0e203822b9b15ce0ecf66b03440b4737d63862` |
 | states-mobile | 6 | `59d68df2993d391812625ebf915f2a7b4bc1cb12b19ba1ec50a1231b236ed94d` |
 | states-mobile | 7 | `58ba6289c1c5189b8643bfe422c89151884af35066d5d3f1d1a8a062440ee07f` |
-| states-mobile | 8 | `e4cf84946d16f50c32b778d9c28d13a868781fb2b81385a8a66a3ceb21570a57` |
+| states-mobile | 8 | `783bf011d5b8062bd5f80237a30e32df1d3652cb3062af1391c54c6cdc31d43d` |
 | states-mobile | 9 | `c13868e55ed4b8222f0f9c3198da550e0d9ef4a8400fac18280850115b3cf1c0` |
 | states-mobile | 10 | `0c98fb8ba9d3ae023010173c1dec5c03cf83d196656377dcee0a9563155944fc` |
-| states-mobile | 11 | `b566631745234edd79055f13f0b8a6966119912f9560a7e88e40b321d912af22` |
+| states-mobile | 11 | `a658c758cf1ad2b2ee4e64cfe6ecc5c5c16418220248aa4cd02df51a1ced4063` |
 | states-mobile | 12 | `7536843d769e8361a410f15eec2b76d37720f6bb7ef92aaeb086714bf585dc5f` |
 | states-mobile | 13 | `6cdcf87afece4e578bc818a282cfe89996fc9b27c8248b5d37fbb7a23b841efa` |
 | states-mobile | 14 | `7d5c6b9e3f30747a1618af874a2eedd703bc07977d38eafa2068069da9e76028` |

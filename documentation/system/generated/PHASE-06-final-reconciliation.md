@@ -37,13 +37,13 @@ Record one outcome: `Ready`, `Ready with accepted findings`, or `Not ready`. Inc
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 8 | `3a46a1a850e082e79228d9471dad600b673f71194b1aaf0156a0828f07f7ba8e` |
+| master | 8 | `eff03df20ff236d1351d1fe9db02a020b6bc12d5b91d415a6479e24ce9551b36` |
 | master | 9 | `abba6bf0a3940b1b8b716d85be4964c054059387ffe9897256bd60f0093d141d` |
-| master | 10 | `6614e6eda1cf44d082c299b8d2aeecaaca9042ca76508f52ee07ffae7b947523` |
+| master | 10 | `d4a858aabd03461f2bf8a31aeac34f5ecd96a8753ac5e10ada4ffe914fa12b14` |
 | api | 10 | `6267cad08ac31db9d3fefbf5abda40d64d5be3e91d08b0eb42495ebd14b40aba` |
 | api | 11 | `8cf8721b54c7ec180a44474d9f751d095233c9ab7496926de2a18a5d14f5abb4` |
 | web | 12 | `7f655066219089b3a56fe9c1d009830d6f176e529de009bd3c577aacc357a84e` |
-| web | 13 | `10a6cf1f7b73698bd57e74ccbcbe1b5a50fa96af854189b82ba63e75543e6f88` |
+| web | 13 | `3091b276da25c62120d28b1d3fefcf7b11059b4c2e37cf887f144c218ef60316` |
 | web | 14 | `80765976d54ff8e1c218832a3dbd4d3643fda41d5caa77f3878160e71213626c` |
 | mobile | 14 | `b15ec26feac731016fd8046fd86d415a59c3a77bee168ed75179ae98b1b28e3d` |
 | mobile | 15 | `1f4ec4134d0b95a3e858a7ad3c3c2457d03d0db1b92f97e8f885b56021174164` |

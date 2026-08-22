@@ -1,0 +1,154 @@
+{
+  "Name": "CountriesDirectory",
+  "Body": {
+    "Width": "8.0in",
+    "Height": "10.0in",
+    "ReportItems": [
+      {
+        "Type": "textbox",
+        "Name": "CountriesDirectoryTitle",
+        "Value": "Countries Directory",
+        "Left": "0.25in",
+        "Top": "0.25in",
+        "Width": "7.5in",
+        "Height": "0.45in",
+        "Style": {
+          "BackgroundColor": "#1976D2",
+          "Color": "White",
+          "FontFamily": "Arial",
+          "FontSize": "20pt",
+          "FontWeight": "Bold",
+          "PaddingLeft": "12pt",
+          "PaddingTop": "6pt",
+          "VerticalAlign": "Middle"
+        }
+      },
+      {
+        "Type": "textbox",
+        "Name": "CountriesDirectorySubtitle",
+        "Value": "Starter template — use the Data panel to bind an approved Countries JSON endpoint.",
+        "Left": "0.25in",
+        "Top": "0.82in",
+        "Width": "7.5in",
+        "Height": "0.3in",
+        "Style": {
+          "Color": "#5F6368",
+          "FontFamily": "Arial",
+          "FontSize": "9pt",
+          "PaddingLeft": "2pt"
+        }
+      },
+      {
+        "Type": "textbox",
+        "Name": "CountryNameHeader",
+        "Value": "Country name",
+        "Left": "0.25in",
+        "Top": "1.35in",
+        "Width": "2.65in",
+        "Height": "0.32in",
+        "Style": {
+          "BackgroundColor": "#E3F2FD",
+          "Color": "#0D47A1",
+          "FontFamily": "Arial",
+          "FontSize": "10pt",
+          "FontWeight": "Bold",
+          "PaddingLeft": "6pt",
+          "PaddingTop": "4pt"
+        }
+      },
+      {
+        "Type": "textbox",
+        "Name": "Alpha2Header",
+        "Value": "Alpha-2",
+        "Left": "2.9in",
+        "Top": "1.35in",
+        "Width": "1.0in",
+        "Height": "0.32in",
+        "Style": {
+          "BackgroundColor": "#E3F2FD",
+          "Color": "#0D47A1",
+          "FontFamily": "Arial",
+          "FontSize": "10pt",
+          "FontWeight": "Bold",
+          "PaddingLeft": "6pt",
+          "PaddingTop": "4pt"
+        }
+      },
+      {
+        "Type": "textbox",
+        "Name": "Alpha3Header",
+        "Value": "Alpha-3",
+        "Left": "3.9in",
+        "Top": "1.35in",
+        "Width": "1.0in",
+        "Height": "0.32in",
+        "Style": {
+          "BackgroundColor": "#E3F2FD",
+          "Color": "#0D47A1",
+          "FontFamily": "Arial",
+          "FontSize": "10pt",
+          "FontWeight": "Bold",
+          "PaddingLeft": "6pt",
+          "PaddingTop": "4pt"
+        }
+      },
+      {
+        "Type": "textbox",
+        "Name": "PhoneCodeHeader",
+        "Value": "Phone code",
+        "Left": "4.9in",
+        "Top": "1.35in",
+        "Width": "1.15in",
+        "Height": "0.32in",
+        "Style": {
+          "BackgroundColor": "#E3F2FD",
+          "Color": "#0D47A1",
+          "FontFamily": "Arial",
+          "FontSize": "10pt",
+          "FontWeight": "Bold",
+          "PaddingLeft": "6pt",
+          "PaddingTop": "4pt"
+        }
+      },
+      {
+        "Type": "textbox",
+        "Name": "StatusHeader",
+        "Value": "Status",
+        "Left": "6.05in",
+        "Top": "1.35in",
+        "Width": "1.7in",
+        "Height": "0.32in",
+        "Style": {
+          "BackgroundColor": "#E3F2FD",
+          "Color": "#0D47A1",
+          "FontFamily": "Arial",
+          "FontSize": "10pt",
+          "FontWeight": "Bold",
+          "PaddingLeft": "6pt",
+          "PaddingTop": "4pt"
+        }
+      },
+      {
+        "Type": "textbox",
+        "Name": "CountriesPlaceholder",
+        "Value": "Drag Country fields here after you configure the approved data source.",
+        "Left": "0.25in",
+        "Top": "1.9in",
+        "Width": "7.5in",
+        "Height": "0.45in",
+        "Style": {
+          "Border": {
+            "Color": "#B0BEC5",
+            "Style": "Dashed"
+          },
+          "Color": "#546E7A",
+          "FontFamily": "Arial",
+          "FontSize": "10pt",
+          "FontStyle": "Italic",
+          "PaddingLeft": "8pt",
+          "PaddingTop": "8pt"
+        }
+      }
+    ]
+  }
+}

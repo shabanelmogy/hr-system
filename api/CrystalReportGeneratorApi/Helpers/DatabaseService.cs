@@ -16,6 +16,7 @@ namespace CrystalReportGeneratorApi.Services
         private void InitializeTables()
         {
             CreateCompaniesView();
+            CreateStatesView();
         }
 
         public void CreateOrAlterView(string query)
@@ -33,6 +34,12 @@ namespace CrystalReportGeneratorApi.Services
         public void CreateCompaniesView()
         {
             var query = $"CREATE OR ALTER VIEW {ViewsName.AllCountries} AS {ViewsQueries.AllCountries}";
+            CreateOrAlterView(query);
+        }
+
+        public void CreateStatesView()
+        {
+            var query = $"CREATE OR ALTER VIEW {ViewsName.AllStates} AS {ViewsQueries.AllStates}";
             CreateOrAlterView(query);
         }
     }

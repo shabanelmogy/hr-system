@@ -35,6 +35,7 @@ type HeaderActionsProps = {
   onAdd?: () => void;
   onRefresh: () => void;
   onFilter?: () => void;
+  isFilterBarVisible?: boolean;
   exportOptions: HeaderExportOption[];
 };
 
@@ -128,11 +129,19 @@ export default function HeaderActions(props: HeaderActionsProps) {
             size="small"
             onClick={props.onFilter}
             aria-label={t("navigation.filter")}
+            aria-pressed={props.isFilterBarVisible}
+            color={props.isFilterBarVisible ? "primary" : "default"}
             sx={{
-              backgroundColor: theme.palette.action.hover,
+              backgroundColor: props.isFilterBarVisible
+                ? alpha(theme.palette.primary.main, 0.14)
+                : theme.palette.action.hover,
               width: props.compact ? 32 : undefined,
               height: props.compact ? 32 : undefined,
-              "&:hover": { backgroundColor: theme.palette.action.selected },
+              "&:hover": {
+                backgroundColor: props.isFilterBarVisible
+                  ? alpha(theme.palette.primary.main, 0.22)
+                  : theme.palette.action.selected,
+              },
             }}
           >
             <FilterAlt fontSize={props.compact ? "small" : "medium"} />

@@ -38,6 +38,7 @@ type MobileHeaderLayoutProps = {
   onAdd?: () => void;
   onRefresh: () => void;
   onFilter?: () => void;
+  isFilterBarVisible?: boolean;
   exportOptions: HeaderExportOption[];
   viewType: ViewType;
   viewOptions: ViewOption[];
@@ -111,6 +112,7 @@ export default function MobileHeaderLayout(props: MobileHeaderLayoutProps) {
             onAdd={props.onAdd}
             onRefresh={props.onRefresh}
             onFilter={props.onFilter}
+            isFilterBarVisible={props.isFilterBarVisible}
             exportOptions={props.exportOptions}
           />
         </Box>

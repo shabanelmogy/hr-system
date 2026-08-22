@@ -20,6 +20,7 @@ type DesktopHeaderLayoutProps = {
   onAdd?: () => void;
   onRefresh: () => void;
   onFilter?: () => void;
+  isFilterBarVisible?: boolean;
   exportOptions: HeaderExportOption[];
   viewType: ViewType;
   viewOptions: ViewOption[];
@@ -119,6 +120,7 @@ export default function DesktopHeaderLayout(props: DesktopHeaderLayoutProps) {
             onAdd={props.onAdd}
             onRefresh={props.onRefresh}
             onFilter={props.onFilter}
+            isFilterBarVisible={props.isFilterBarVisible}
             exportOptions={props.exportOptions}
           />
         </Box>

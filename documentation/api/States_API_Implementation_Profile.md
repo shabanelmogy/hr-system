@@ -42,6 +42,18 @@ Archive rejects an active-District State. Restore rejects a State whose parent C
 
 Stable errors include duplicate State, missing State, missing/inactive Country, active District dependency, and empty bulk input. English and Arabic infrastructure resources include bulk-size, duplicate-ID, and positive-ID validation messages.
 
-## 11. Tests and legacy note
+## 11. Browser Crystal report contract
+
+The legacy `CrystalReportGeneratorApi` exposes a States report catalog through
+`POST report/info` with `subFolderPath: "States"` and `reportCategory: "States"`.
+`POST` and `GET report/states/generate` accept `StateReportRequest`, including
+`NameAr`, `NameEn`, report path/file, export filename, logo, and language. They
+generate through `V_AllStates`, which contains State id/names/code and parent
+Country id/names. The States folder is checked in empty with `.gitkeep`; its
+absence of an `.rpt` is a valid catalog-empty state, not a generation error. A
+future template filename must contain `States` to satisfy the existing catalog
+filter.
+
+## 12. Tests and legacy note
 
 `StateCqrsArchitectureTests` verifies controller routes, message contracts, handler ports, mapping, and validators. `StatesControllerCqrsTests` verifies dispatch and success status. The former `IStateService`, service, and old job remain source-compatible but are no longer the controller path; remove them only in a separately scoped legacy cleanup after dependent checks are audited.

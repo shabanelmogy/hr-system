@@ -5,6 +5,8 @@
 @import "@syncfusion/ej2-popups/styles/material.css";
 @import "@syncfusion/ej2-splitbuttons/styles/material.css";
 @import "@syncfusion/ej2-pdfviewer/styles/material.css";
+@import "@mescius/activereportsjs/styles/ar-js-ui.css";
+@import "@mescius/activereportsjs/styles/ar-js-designer.css";
 
 body {
   overflow-x: hidden;
