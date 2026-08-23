@@ -17,6 +17,8 @@ Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain
 
 ## Start here
 
+- Core feature delivery guide: [`project/CORE_FEATURE_CQRS_WEB_GUIDE.md`](project/CORE_FEATURE_CQRS_WEB_GUIDE.md)
+- Managed Crystal reporting integration: [`project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md`](project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md)
 - Three-project Countries review: [`project/COUNTRIES_FEATURE_FULL_REVIEW.md`](project/COUNTRIES_FEATURE_FULL_REVIEW.md)
 - API Countries profile: [`api/Countries_API_Implementation_Profile.md`](api/Countries_API_Implementation_Profile.md)
 - Web Countries profile: [`web-next/features/countries-frontend-reference.md`](web-next/features/countries-frontend-reference.md)

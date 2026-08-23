@@ -91,6 +91,27 @@ Never infer an HR aggregate's ownership model from Countries.
 - For optional unique columns, use filtered unique indexes when supported by the database.
 - Keep check constraints readable and valid. Do not keep corrupted or commented constraints in the final feature.
 
+For tenant-owned editable definitions, templates, rules, or other document-like
+configuration:
+
+- derive `TenantId` from the authenticated actor and apply the normal tenant query
+  filter to both the current entity and its revision rows;
+- make human-facing uniqueness indexes tenant-scoped, for example
+  `(TenantId, FeatureKey, NormalizedName)`, so separate tenants may use the same
+  name without colliding;
+- keep immutable revision snapshots in a dedicated entity when users must audit or
+  recover changes; do not overload the ordinary entity-change log with a large
+  document payload;
+- validate a bounded UTF-8 payload and its minimum runtime structure before save,
+  compute a stable content hash, and reject embedded credentials or unapproved
+  external connections;
+- require the latest row version for content changes and lifecycle transitions.
+  A stale publish or archive is still a concurrency conflict even when the action
+  is otherwise idempotent;
+- expose approved external/data-source capabilities through a server-owned catalog
+  of logical keys. Clients must not submit database connection strings, secrets,
+  tenant IDs, or deployment-specific API hosts.
+
 Example:
 
 ```csharp
@@ -399,6 +420,35 @@ foreach (var request in requests)
 }
 ```
 
+### Optional managed Crystal reports
+
+Record reporting as Required, Deferred, or Excluded before adding a Report view.
+When Managed Crystal is Required, follow the canonical
+[Crystal Report Manager Feature Integration Guide](../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md).
+
+A business feature normally does not create its own public Crystal controller.
+The shared `/api/v1/crystal-reports` catalog/render endpoints own report identity,
+version selection, tenant/company scope, and per-report ACL. The feature adds only
+the approved data contract needed by its `entityKey`:
+
+- define one stable lower-case `entityKey`, exact `ReportData` columns/types, and
+  allowed filter keys;
+- extend the allowlisted `ICrystalReportDataSource` implementation with an
+  `AsNoTracking()` EF projection that enforces trusted tenant/company, lifecycle,
+  feature permission, deterministic ordering, cancellation, and a result bound;
+- reject unknown filters instead of accepting table/column names, SQL, report
+  paths, connection strings, tenant IDs, or company IDs from a client;
+- add the same `entityKey` and required columns to the Crystal host's
+  `ManagedReportRuntime` schema profile;
+- keep ActiveReports/RDLX `ReportTemplates` separate from Crystal `.rpt` lifecycle
+  and permissions;
+- test scope isolation, Run ACL, filters, schema/nullability, empty data,
+  unsupported profiles, runtime failure mapping, and PDF success.
+
+The browser/mobile consumer sends only the manager report ID, `ar`/`en`, and the
+feature's bounded filters. Report SummaryInfo Title is the Arabic selector name
+and Subject is the English selector name.
+
 ## 12. Delete Safety
 
 - Load the entity first. Return `404` if it does not exist.
@@ -511,6 +561,10 @@ Add focused, behavior-based tests rather than tests coupled to method names:
 - HTTP contract tests cover route, permission, status, and response body.
 - bulk tests prove all-or-nothing mutation and that scheduling never happens before
   or after a failed commit.
+- document/template tests prove cross-tenant IDs are invisible, same names are
+  allowed in different tenants, scoped duplicate names conflict, every persisted
+  revision has the same tenant, unsafe/oversized payloads fail, and stale content
+  or lifecycle row versions return a stable conflict.
 
 ## 17. Countries Reference Baseline
 
@@ -598,5 +652,9 @@ integration, migration, or environment-dependent checks in phase 06.
 - A generic lightweight SignalR invalidation and matching feature-owned Hangfire job
   are added for modules that need live frontend updates; realtime never carries the
   authoritative entity payload.
+- Reporting is explicitly Required, Deferred, or Excluded. Required Managed
+  Crystal reports satisfy the shared manager guide, including matching HR API and
+  Crystal runtime profiles; required browser templates use the separate
+  `ReportTemplates` contract.
 - Post-commit work is queued only after persistence succeeds.
 - If EF configuration changed, create or update a migration deliberately.

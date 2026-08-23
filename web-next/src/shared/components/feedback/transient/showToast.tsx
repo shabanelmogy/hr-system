@@ -14,8 +14,8 @@ export const showToast = {
   success: (message: string, options?: ToastOptions) =>
     toast.success(message, { ...baseOptions, ...options }),
 
-  error: (error: unknown) => {
-    showErrorDialog(error);
+  error: (error: unknown, fallbackTitle?: string) => {
+    showErrorDialog(error, fallbackTitle);
     return "error-dialog";
   },
 

@@ -22,6 +22,505 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("HrManagementSystem.Domain.Analytics.CrystalReports.Entities.CrystalReport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("CurrentPublishedVersionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("EntityKey")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ReportKey")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("CurrentPublishedVersionId");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "EntityKey", "ReportKey")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "EntityKey", "IsDeleted", "DisplayName");
+
+                    b.ToTable("CrystalReports");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Analytics.CrystalReports.Entities.CrystalReportRoleGrant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CrystalReportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Rights")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("CrystalReportId");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "CrystalReportId", "RoleId")
+                        .IsUnique()
+                        .HasFilter("[IsDeleted] = 0");
+
+                    b.ToTable("CrystalReportRoleGrants");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Analytics.CrystalReports.Entities.CrystalReportVersion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CrystalReportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OriginalFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Sha256")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nchar(64)")
+                        .IsFixedLength();
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("StorageKey")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("SummarySubject")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("SummaryTitle")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ValidationReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ValidationStatus")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<int>("VersionNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("CrystalReportId");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "StorageKey")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CrystalReportId", "VersionNumber")
+                        .IsUnique();
+
+                    b.ToTable("CrystalReportVersions");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Analytics.ReportTemplates.Entities.ReportTemplate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ContentHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nchar(64)")
+                        .IsFixedLength();
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DataSourceKey")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("DefinitionJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("FeatureKey")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("RevisionNumber")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "FeatureKey", "Name")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "FeatureKey", "IsDeleted", "IsPublished", "Name");
+
+                    b.ToTable("ReportTemplates");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Analytics.ReportTemplates.Entities.ReportTemplateRevision", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ContentHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nchar(64)")
+                        .IsFixedLength();
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DataSourceKey")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("DefinitionJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Operation")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<Guid>("ReportTemplateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("RevisionNumber")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("ReportTemplateId");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "ReportTemplateId", "RevisionNumber")
+                        .IsUnique();
+
+                    b.ToTable("ReportTemplateRevisions");
+                });
+
             modelBuilder.Entity("HrManagementSystem.Domain.Analytics.Reports.Entities.ReportCategory", b =>
                 {
                     b.Property<int>("Id")
@@ -2106,6 +2605,163 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("HrManagementSystem.Domain.Analytics.CrystalReports.Entities.CrystalReport", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.Analytics.CrystalReports.Entities.CrystalReportVersion", null)
+                        .WithMany()
+                        .HasForeignKey("CurrentPublishedVersionId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Analytics.CrystalReports.Entities.CrystalReportRoleGrant", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.Analytics.CrystalReports.Entities.CrystalReport", "CrystalReport")
+                        .WithMany("RoleGrants")
+                        .HasForeignKey("CrystalReportId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CrystalReport");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Analytics.CrystalReports.Entities.CrystalReportVersion", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.Analytics.CrystalReports.Entities.CrystalReport", "CrystalReport")
+                        .WithMany("Versions")
+                        .HasForeignKey("CrystalReportId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("CrystalReport");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Analytics.ReportTemplates.Entities.ReportTemplate", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Analytics.ReportTemplates.Entities.ReportTemplateRevision", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Analytics.ReportTemplates.Entities.ReportTemplate", "ReportTemplate")
+                        .WithMany("Revisions")
+                        .HasForeignKey("ReportTemplateId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("ReportTemplate");
+                });
+
             modelBuilder.Entity("HrManagementSystem.Domain.Analytics.Reports.Entities.ReportCategory", b =>
                 {
                     b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
@@ -2750,6 +3406,18 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Analytics.CrystalReports.Entities.CrystalReport", b =>
+                {
+                    b.Navigation("RoleGrants");
+
+                    b.Navigation("Versions");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Analytics.ReportTemplates.Entities.ReportTemplate", b =>
+                {
+                    b.Navigation("Revisions");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Domain.Analytics.Reports.Entities.ReportCategory", b =>

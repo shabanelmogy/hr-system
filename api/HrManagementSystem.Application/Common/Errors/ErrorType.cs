@@ -8,5 +8,6 @@ public enum ErrorType
     Forbidden,
     NotFound,
     Conflict,
-    Unexpected
+    Unexpected,
+    ServiceUnavailable
 }

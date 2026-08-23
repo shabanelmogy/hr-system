@@ -42,7 +42,7 @@
     { "id": "crystal-report-view-registration", "layer": "reporting-api", "path": "api/CrystalReportGeneratorApi/Helpers/DatabaseService.cs", "purpose": "V_AllStates report-view registration" },
     { "id": "crystal-report-view-name", "layer": "reporting-api", "path": "api/CrystalReportGeneratorApi/Helpers/ViewsName.cs", "purpose": "V_AllStates report-view identity" },
     { "id": "crystal-report-dataset", "layer": "reporting-api", "path": "api/CrystalReportGeneratorApi/Helpers/ViewsQueries.cs", "purpose": "V_AllStates Crystal report dataset" },
-    { "id": "crystal-report-slot", "layer": "reporting-api", "path": "api/CrystalReportGeneratorApi/Reports/States/.gitkeep", "purpose": "Intentional empty State Crystal report catalog slot" },
+    { "id": "internal-crystal-report-catalog", "layer": "reporting-api", "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportCatalogController.cs", "purpose": "Discovers State reports from the deployment-owned Reports/States folder" },
     { "id": "mobile-route", "layer": "mobile-react", "path": "mobile-react/app/(main)/basic-data/geographical-information/states.tsx", "purpose": "Guarded Expo route" },
     { "id": "mobile-screen", "layer": "mobile-react", "path": "mobile-react/src/features/basic-data/states/screens/StatesScreen.tsx", "purpose": "Controlled mobile feature screen" },
     { "id": "mobile-api", "layer": "mobile-react", "path": "mobile-react/src/features/basic-data/states/api/state-api.ts", "purpose": "Runtime-validated State API" },

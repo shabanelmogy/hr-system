@@ -3,7 +3,7 @@
 Status: Canonical project-level reference for creating one feature across
 `api`, `web-next`, and `mobile-react` by following the current Countries slice.
 
-Reviewed: 2026-08-21
+Reviewed: 2026-08-23
 
 ## 1. Review Manifest
 
@@ -157,7 +157,7 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | Archive dependencies | Authoritative | Confirmation/error feedback | Confirmation/error feedback |
 | Audit | DbContext + update trail | None | None |
 | Realtime production | Post-commit Hangfire job | Invalidate Countries + States | Invalidate `['countries']` |
-| Reports | Separate Crystal Report API | Crystal viewer plus opt-in, client-only ActiveReportsJS template designer | Independent PDF/device workflow |
+| Reports | Crystal remains separate; main API owns tenant-scoped report-template CQRS, revisions, approved data-source catalog, and Countries report data | Crystal viewer plus published ActiveReportsJS viewer and permission-protected shared Designer | Independent PDF/device workflow |
 | Import | Atomic bulk-create endpoint | XLSX parse/preview/submit | Not implemented |
 | Localization | EN/AR errors/notifications | EN/AR UI | EN/AR UI |
 
@@ -176,6 +176,9 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | `CountryAuditTrail.cs` | Changed-field update history |
 | Country scheduler/job | Notification/realtime integration |
 | Country CQRS tests | Handler, architecture and controller evidence |
+| `Domain/Application/Infrastructure/Api` ReportTemplates slices | Tenant-owned definitions, published/management split, permissions, optimistic concurrency, revisions, approved source catalog and migration |
+| `GetCountryReportDataQuery` and `GET /api/v1/countries/report-data` | Stable active-country JSON array behind tenant membership and `Countries:View` |
+| `ReportTemplateFeatureTests.cs` | Definition safety, tenant query-filter isolation, unloaded revision history and append-only revisions |
 
 ### Web-next
 
@@ -187,7 +190,7 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | `countryPageQuery.ts` | Exact criteria serialization |
 | `useCountryQueries.ts`, `countryService.ts` | Cache and HTTP normalization |
 | `CountriesMultiView.tsx` and view folders | Grid/Cards/Chart/Report/Import composition |
-| `CountryReportPage.tsx`, `reports/components/`, and `public/reports/countries/` | Crystal viewer remains the default report path; ActiveReportsJS mounts only in the browser with a downloadable `.rdlx-json` starter template |
+| `CountryReportPage.tsx`, Countries report composition, shared `features/reporting`, and `public/reports/countries/` | Crystal remains default; ActiveReportsJS uses SSR-safe tenant-published Viewer/management Designer flows and an API-bound starter template |
 | `CountryForm.tsx`, validation | Detail-backed modes and request rules |
 | web Countries tests | Query/service/permission/chart/cell evidence |
 
@@ -273,7 +276,7 @@ specified for the new feature.
 | Page size | 10 | 5 Table / 3 Cards | API limit remains shared |
 | Analytics | Page-scoped Chart | None | Never invent client-side global metrics |
 | Import | XLSX preview/bulk create | None | Mobile absence is explicit |
-| Report output | Crystal viewer remains the default; optional browser-native `.rdlx-json` design/download is local-only | PDF preview/share/download | Crystal API remains independent; the browser designer has no template-storage API yet |
+| Report output | Crystal remains default; published tenant ActiveReports templates are viewable and authorized authors manage drafts with Save/Save As/publish | PDF preview/share/download | Crystal remains independent; ActiveReports templates use the main API, revisions, RowVersion, and only the approved relative Countries JSON source |
 | Form surface | Modal/dialog | Full-screen modal | Same request and lifecycle contract |
 
 Parity means equivalent business capability and truthful criteria, not
@@ -287,7 +290,7 @@ pixel-identical UI.
 | C-F02 | Web | Cards/Chart can inherit hidden field/operator criteria selected in Grid. | Expose or reset all active criteria per view. |
 | C-F03 | Web | Import has no localized client preflight for the 100-row endpoint maximum. | Validate before submit while preserving atomicity. |
 | C-F04 | Web tests | No complete controller/view/mutation integration coverage. | Add criteria, detail, permission, lifecycle and invalidation tests. |
-| C-F05 | Web reports | The ActiveReportsJS Countries example downloads templates locally; it has no authorized persistence, revision history, or approved runtime data-source catalog yet. | Add a dedicated report-template API and permission/version contract before treating the browser designer as a production authoring workflow. |
+| C-F05 | Web reports | Resolved: ActiveReportsJS now has tenant-scoped template/revision persistence, published and management reads, explicit permissions, RowVersion, an approved source catalog, and a published viewer. | Preserve the shared reporting contract; register every future feature/data source in the server allow-list and prove tenant isolation. |
 | C-M01 | Mobile | Currency/state-presence criteria exist but are not exposed. | Expose or remove reserved criteria. |
 | C-M02 | Mobile | View/edit use list row while detail hook is unused. | Hydrate detail whenever list is not authoritative. |
 | C-M03 | Mobile tests | No screen/form/action/invalidation integration coverage. | Add representative integration tests. |
@@ -355,7 +358,7 @@ loading/error/empty/retry, dirty/busy forms and realtime refresh.
 - [ ] Edit/view hydrate authoritative detail.
 - [ ] Actions are guarded by permission, read-only and lifecycle.
 - [ ] Optional views state their true data scope.
-- [ ] Crystal remains a separately selectable default viewer; browser-native report design never exposes database credentials or unrestricted SQL.
+- [ ] Crystal remains the separately selectable default; ActiveReports published and management catalogs do not cross tenants, and browser-native definitions expose neither database credentials, absolute API hosts, nor unrestricted SQL.
 - [ ] Mutations and realtime invalidate all affected keys.
 - [ ] EN/AR, RTL, accessibility and responsive states are verified.
 

@@ -7,6 +7,8 @@ import { files } from './files';
 import { version } from './constants';
 import { tenants } from './tenants';
 import { tenantAdmins } from './tenantAdmins';
+import { reportTemplates } from './reportTemplates';
+import { crystalReports } from './crystalReports';
 
 export { version } from './constants';
 
@@ -27,6 +29,8 @@ export const apiRoutes = {
   files,
   tenants,
   tenantAdmins,
+  reportTemplates,
+  crystalReports,
 };
 
 export default apiRoutes;

@@ -11,6 +11,7 @@ export const countries: CountriesRoutes = {
   update: (id: Id) => `${version}/countries/${id}`,
   archive: (id: Id) => `${version}/countries/${id}`,
   restore: (id: Id) => `${version}/countries/${id}/restore`,
+  reportData: `${version}/countries/report-data`,
 };
 
 export const addressTypes: CrudRoutes = {

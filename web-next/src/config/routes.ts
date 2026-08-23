@@ -37,6 +37,7 @@ export interface AuthRoutes {
   usersPage: AppPath;
   invitationsPage: AppPath;
   rolePermissionsPage: (id: string) => AppPath;
+  crystalReportsPage: AppPath;
 }
 
 export interface SuperAdminRoutes {
@@ -110,6 +111,8 @@ export const appRoutes: AppRoutes = {
     invitationsPage: toAppPath("/administration/invitations"),
     rolePermissionsPage: (id) =>
       toAppPath(`/administration/manage-role-permissions/${id}`),
+    // Cast while Next's generated typed-route declarations catch up to this new App Router page.
+    crystalReportsPage: toAppPath("/administration/crystal-reports"),
   },
 
   superAdmin: {

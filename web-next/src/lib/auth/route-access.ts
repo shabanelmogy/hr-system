@@ -40,6 +40,10 @@ export const routePolicies: readonly RoutePolicy[] = [
   { path: appRoutes.auth.usersPage, permissions: [permissions.ViewUsers] },
   { path: appRoutes.auth.invitationsPage, permissions: [permissions.ViewUsers] },
   {
+    path: appRoutes.auth.crystalReportsPage,
+    permissions: [permissions.ManageCrystalReportAccess],
+  },
+  {
     path: appRoutes.basicData.countryReport,
     permissions: [permissions.ViewCountries],
   },

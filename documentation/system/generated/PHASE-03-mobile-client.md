@@ -38,9 +38,9 @@ Record whether detail requires a dedicated query, whether reports open or share 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | master | 3 | `b0ae30454b32e1209cd9b74f1bc82d45e58ae969a61381a25c64c86db7b09dfc` |
-| master | 4 | `d87f6ff83a1e29ada8b672a2a9a385708954ba0144a8d37dab88b8664ceb540e` |
+| master | 4 | `b23b2333eb1c612669ddd269677711f77cebee002628a2903f3e10262a5184f3` |
 | master | 6 | `e671cfed0bfb63b0063c4f83c86be605190925f9dc7e6b1ef6e335c26fb89c54` |
-| master | 7 | `f7dc9728e7a7634637b3a07481a2c922df470868bb90ff0dfc3f51311698b517` |
+| master | 7 | `8c0ba157ab3e6ca7bfa97bd23bdd022523f69dc7ac4386e25462b7ad667ba74b` |
 | mobile | 1 | `3908ad84e0021b6aa47e39548ddf2e6304b14ae22b26209f1e9841d26856fbe3` |
 | mobile | 2 | `21269af699d3bfad64b852c262d640017d620ac4165fa112561ef66626153552` |
 | mobile | 3 | `01e73f1b2e5f96346140b0e92cf9e7764f40491ca271649ab37cec2fe46bf0c0` |

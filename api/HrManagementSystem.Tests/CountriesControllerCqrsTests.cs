@@ -13,6 +13,7 @@ using HrManagementSystem.Application.Features.GeographicalInformation.Countries.
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryById;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryLookup;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryWithStates;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryReportData;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,6 +37,7 @@ public sealed class CountriesControllerCqrsTests
 
         Assert.IsType<OkObjectResult>(await controller.GetPage(pageQuery, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.GetLookup(CancellationToken.None));
+        Assert.IsType<OkObjectResult>(await controller.GetReportData(CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.GetById(7, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.GetWithStates(7, CancellationToken.None));
         Assert.IsType<CreatedAtActionResult>(await controller.Create(create, CancellationToken.None));
@@ -52,6 +54,7 @@ public sealed class CountriesControllerCqrsTests
             sender.Requests,
             request => Assert.Same(pageQuery, request),
             request => Assert.IsType<GetCountryLookupQuery>(request),
+            request => Assert.IsType<GetCountryReportDataQuery>(request),
             request => Assert.Equal(7, Assert.IsType<GetCountryByIdQuery>(request).Id),
             request => Assert.Equal(7, Assert.IsType<GetCountryWithStatesQuery>(request).Id),
             request => Assert.Same(create, request),
@@ -83,6 +86,10 @@ public sealed class CountriesControllerCqrsTests
                 GetCountryLookupQuery => new List<SimpleCountryResponse>
                 {
                     new(7, "مصر", "Egypt", false)
+                },
+                GetCountryReportDataQuery => new List<CountryReportDataResponse>
+                {
+                    new(7, "مصر", "Egypt", "EG", "EGY", "+20", "EGP", true)
                 },
                 GetCountryByIdQuery => Result.Success(Detail()),
                 GetCountryWithStatesQuery => Result.Success(WithStates()),

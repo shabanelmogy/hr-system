@@ -1,5 +1,33 @@
 {
   "Name": "CountriesDirectory",
+  "DataSources": [
+    {
+      "Name": "countries",
+      "ConnectionProperties": {
+        "DataProvider": "JSON",
+        "ConnectString": "endpoint=/api/v1/countries/report-data"
+      }
+    }
+  ],
+  "DataSets": [
+    {
+      "Name": "Countries",
+      "Query": {
+        "DataSourceName": "countries",
+        "CommandText": "jpath=$.[*]"
+      },
+      "Fields": [
+        { "Name": "id", "DataField": "id" },
+        { "Name": "nameAr", "DataField": "nameAr" },
+        { "Name": "nameEn", "DataField": "nameEn" },
+        { "Name": "alpha2Code", "DataField": "alpha2Code" },
+        { "Name": "alpha3Code", "DataField": "alpha3Code" },
+        { "Name": "phoneCode", "DataField": "phoneCode" },
+        { "Name": "currencyCode", "DataField": "currencyCode" },
+        { "Name": "isActive", "DataField": "isActive" }
+      ]
+    }
+  ],
   "Body": {
     "Width": "8.0in",
     "Height": "10.0in",

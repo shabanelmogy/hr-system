@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HrManagementSystem.Applicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HrManagementSystem.Infrastructure", "HrManagementSystem.Infrastructure\HrManagementSystem.Infrastructure.csproj", "{526900B3-E830-497F-A6E4-38EE6FDE57E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrystalReportGeneratorApi", "CrystalReportGeneratorApi\CrystalReportGeneratorApi.csproj", "{4560FFB6-AB1F-4E59-BF8C-C78EEE9F8EB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{526900B3-E830-497F-A6E4-38EE6FDE57E7}.Release|x64.Build.0 = Release|Any CPU
 		{526900B3-E830-497F-A6E4-38EE6FDE57E7}.Release|x86.ActiveCfg = Release|Any CPU
 		{526900B3-E830-497F-A6E4-38EE6FDE57E7}.Release|x86.Build.0 = Release|Any CPU
+		{4560FFB6-AB1F-4E59-BF8C-C78EEE9F8EB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4560FFB6-AB1F-4E59-BF8C-C78EEE9F8EB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4560FFB6-AB1F-4E59-BF8C-C78EEE9F8EB1}.Debug|x64.ActiveCfg = Debug|x64
+		{4560FFB6-AB1F-4E59-BF8C-C78EEE9F8EB1}.Debug|x64.Build.0 = Debug|x64
+		{4560FFB6-AB1F-4E59-BF8C-C78EEE9F8EB1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4560FFB6-AB1F-4E59-BF8C-C78EEE9F8EB1}.Debug|x86.Build.0 = Debug|Any CPU
+		{4560FFB6-AB1F-4E59-BF8C-C78EEE9F8EB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4560FFB6-AB1F-4E59-BF8C-C78EEE9F8EB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4560FFB6-AB1F-4E59-BF8C-C78EEE9F8EB1}.Release|x64.ActiveCfg = Release|x64
+		{4560FFB6-AB1F-4E59-BF8C-C78EEE9F8EB1}.Release|x64.Build.0 = Release|x64
+		{4560FFB6-AB1F-4E59-BF8C-C78EEE9F8EB1}.Release|x86.ActiveCfg = Release|Any CPU
+		{4560FFB6-AB1F-4E59-BF8C-C78EEE9F8EB1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

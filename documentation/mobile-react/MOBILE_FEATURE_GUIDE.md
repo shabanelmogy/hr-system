@@ -160,6 +160,29 @@ const query = useEmployees({
 - Use semantic accessibility roles/states and at least 44x44 touch targets.
 - Verify dynamic text, long Arabic labels and screen-reader order.
 
+### Managed Crystal reports
+
+Record every Report view as Required, Deferred, or Excluded. When Managed Crystal
+is Required, follow the cross-project
+[Crystal Report Manager Feature Integration Guide](../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md).
+
+Mobile uses the same HR API catalog and render endpoints as web. The feature owns
+its stable `entityKey`, localized selector, allowed filters, and PDF
+open/share/error experience; shared reporting infrastructure owns the typed
+service, Zod parsing, query keys, and viewer primitives after the first mobile
+consumer is implemented.
+
+- list published, permitted reports with
+  `GET /api/v1/crystal-reports?entityKey={entityKey}`;
+- display SummaryInfo Title in Arabic and Subject in English, with the documented
+  manager fallback;
+- render with `POST /api/v1/crystal-reports/{reportId}/render`, sending only report
+  ID, `ar`/`en`, and approved bounded filters;
+- keep Report independent from table/card pagination. In `AppMultiView`, use
+  `paginate: false` and `renderWhenEmpty: true`;
+- never call the Crystal host directly or send paths, filenames, SQL, connection
+  strings, tenant IDs, or company IDs.
+
 ## 10. Tests and definition of done
 
 Minimum tests for a business feature:
@@ -171,6 +194,8 @@ Minimum tests for a business feature:
 - one representative loading/error/empty/success screen test;
 - route policy for every physical protected route;
 - realtime mapping when the resource publishes changes.
+- required Managed Crystal reporting: entity catalog key, localized report names,
+  approved render payload, no pagination, and catalog/render failure states.
 
 Before handoff:
 

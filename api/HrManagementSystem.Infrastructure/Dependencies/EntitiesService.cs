@@ -14,6 +14,12 @@ using HrManagementSystem.Infrastructure.Features.Security.Authentication.Jobs;
 using HrManagementSystem.Infrastructure.Features.Security.Users.Jobs;
 using HrManagementSystem.Infrastructure.Features.Appointments.Jobs;
 using HrManagementSystem.Application.Common.Realtime;
+using HrManagementSystem.Application.Features.Analytics.ReportTemplates.Abstractions;
+using HrManagementSystem.Infrastructure.Features.Analytics.ReportTemplates.Persistence;
+using HrManagementSystem.Application.Features.Analytics.CrystalReports.Abstractions;
+using HrManagementSystem.Infrastructure.Features.Analytics.CrystalReports.Persistence;
+using HrManagementSystem.Infrastructure.Features.Analytics.CrystalReports.Security;
+using HrManagementSystem.Infrastructure.Features.Analytics.CrystalReports.Storage;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
@@ -25,6 +31,11 @@ public static class EntitiesService
         services.AddScoped<INotificationPublisher, NotificationPublisher>();
         services.AddScoped<IRealtimeEntityPublisher, SignalRRealtimeEntityPublisher>();
         services.AddScoped<IRealtimeChangeDispatcher, HangfireRealtimeChangeDispatcher>();
+        services.AddScoped<IReportTemplateStore, ReportTemplateStore>();
+        services.AddScoped<ICrystalReportStore, CrystalReportStore>();
+        services.AddScoped<ICrystalReportFileStorage, PrivateCrystalReportFileStorage>();
+        services.AddScoped<ICrystalReportDataSource, CrystalReportDataSource>();
+        services.AddScoped<ICurrentPermissionChecker, CurrentPermissionChecker>();
         services.AddScoped<RealtimeEntityChangedJob>();
         services.AddScoped<CountryChangedJob>();
         services.AddScoped<ICountryReadStore, CountryReadStore>();

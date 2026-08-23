@@ -43,7 +43,7 @@ Build the server contract first so both clients consume one stable model.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | master | 3 | `b0ae30454b32e1209cd9b74f1bc82d45e58ae969a61381a25c64c86db7b09dfc` |
-| master | 4 | `d87f6ff83a1e29ada8b672a2a9a385708954ba0144a8d37dab88b8664ceb540e` |
+| master | 4 | `b23b2333eb1c612669ddd269677711f77cebee002628a2903f3e10262a5184f3` |
 | master | 6 | `e671cfed0bfb63b0063c4f83c86be605190925f9dc7e6b1ef6e335c26fb89c54` |
 | api | 1 | `32d383dbea72903c12b0dd2d1b90c2ba6a10d6621ed91ae24f466af2563cd9c7` |
 | api | 2 | `afe1864abf7934444f9ea9b8b23456c10205bf6f59cdf60460c07fd71a5a5e8c` |
@@ -54,4 +54,4 @@ Build the server contract first so both clients consume one stable model.
 | api | 7 | `1ab9fa036b11c40090cb0b49890916d71ab6eedaf0ee99815a641c4fcd123237` |
 | api | 8 | `19ba24881ed075978da2d89d9f5d6ac913ca8289d14d251464edfd93ab1e8c12` |
 | api | 9 | `d573f11dbd27c997e0f25cadcdbfb27a171809b7cd3ac088a355154f6c9c0105` |
-| api | 10 | `6267cad08ac31db9d3fefbf5abda40d64d5be3e91d08b0eb42495ebd14b40aba` |
+| api | 10 | `227e13a27928f6d22c69cfa2b190b987539127edff9229588fc481c425639ef3` |

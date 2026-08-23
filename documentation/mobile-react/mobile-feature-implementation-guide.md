@@ -518,7 +518,19 @@ const changeSearch = useCallback((value) => { clearBulkSelection(); setListSearc
 
 ### Report View
 
-The report view uses `paginate: false` and `renderWhenEmpty: true` so it always renders regardless of item data:
+First record the Report view as Required, Deferred, or Excluded and choose its
+engine. Managed Crystal `.rpt` reports must follow the
+[Crystal Report Manager Feature Integration Guide](../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md);
+do not mix them with ActiveReports/RDLX `ReportTemplates`.
+
+For Managed Crystal, list the manager-owned published catalog with the feature's
+stable `entityKey`, localize SummaryInfo Title for Arabic and Subject for English,
+and render by report ID through the HR API. Send only `ar`/`en` and feature-approved
+filters. Never call the Crystal host or pass its path, filename, connection string,
+tenant ID, or company ID.
+
+The report view uses `paginate: false` and `renderWhenEmpty: true` so it always
+renders regardless of list data and never owns list pagination:
 
 ```tsx
 { value: 'report', paginate: false, renderWhenEmpty: true, render: () => <FeatureReportView /> }
@@ -580,7 +592,9 @@ The report view uses `paginate: false` and `renderWhenEmpty: true` so it always 
   - [ ] `showViewLabels`
   - [ ] Table view with `AppDataTable` + `serverState`
   - [ ] Cards view with `scrollable: true` + `defaultPageSize: 3`
-  - [ ] Report view with `paginate: false` + `renderWhenEmpty: true` (optional)
+  - [ ] Report view decision recorded as Required/Deferred/Excluded
+  - [ ] Required Managed Crystal view uses manager catalog/render by `entityKey`
+  - [ ] Report view uses `paginate: false` + `renderWhenEmpty: true` and no pager
 - [ ] Bulk selection cleared on search/page/filter changes
 - [ ] Archive/restore gated by `isReadOnly` + `notifyBlockedAction`
 - [ ] `ConfirmationDialog` for archive + bulk archive
@@ -604,3 +618,5 @@ The report view uses `paginate: false` and `renderWhenEmpty: true` so it always 
 - Do not forget `_layout.tsx` in nested route directories — causes drawer item leak
 - Do not use `toolbarContent` on `AppMultiView` directly — use `AppListScreen` which wraps it
 - Do not hardcode strings — use `useTranslation()`
+- Do not call the Crystal host directly or treat a deployed `.rpt` as published —
+  consume only the HR API Report Manager catalog/render contract

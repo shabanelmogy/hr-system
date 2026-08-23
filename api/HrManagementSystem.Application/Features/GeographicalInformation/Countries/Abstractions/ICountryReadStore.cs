@@ -20,4 +20,7 @@ public interface ICountryReadStore
 
     Task<IReadOnlyList<SimpleCountryResponse>> GetLookupAsync(
         CancellationToken cancellationToken);
+
+    Task<IReadOnlyList<CountryReportDataResponse>> GetReportDataAsync(
+        CancellationToken cancellationToken);
 }

@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "status": "draft",
+  "feature": "crystal-report-manager",
+  "featureName": "Crystal Report Manager",
+  "referenceFeature": "countries",
+  "purpose": "Draft evidence plan for Crystal Report Manager. This file is not registered until every final source exists.",
+  "reviewArtifact": "documentation/system/features/crystal-report-manager/CRYSTAL_REPORT_MANAGER-REVIEW-ARTIFACTS.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/project/CRYSTAL_REPORT_MANAGER_FEATURE_FULL_REVIEW.md",
+    "api": "documentation/api/CrystalReportManager_API_Implementation_Profile.md",
+    "web": "documentation/web-next/features/crystal-report-manager-frontend-reference.md",
+    "mobile": "documentation/mobile-react/crystal-report-manager-mobile-reference.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "api-application-feature",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Application/Features/Analytics/CrystalReports",
+      "minimumFiles": 8,
+      "purpose": "Crystal report CQRS contracts, commands, queries, validation, errors, and ports"
+    },
+    {
+      "id": "api-infrastructure-feature",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports",
+      "minimumFiles": 7,
+      "purpose": "EF persistence, company ACL evaluation, private storage, and Crystal inspection/render adapters"
+    },
+    {
+      "id": "web-feature",
+      "layer": "web-next",
+      "path": "web-next/src/features/reporting/crystal-report-manager",
+      "minimumFiles": 5,
+      "purpose": "Management grid, multipart workflow, versions, permissions, service, types, and tests"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/system/features/crystal-report-manager/CRYSTAL_REPORT_MANAGER-REVIEW-ARTIFACTS.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "api-controller",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Api/Features/Analytics/CrystalReports/V1/CrystalReportsController.cs",
+      "purpose": "Versioned management, upload, download, publish, ACL, and archive HTTP surface"
+    },
+    {
+      "id": "api-domain-report",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Domain/Analytics/CrystalReports/Entities/CrystalReport.cs",
+      "purpose": "Tenant-owned stable report identity and published-version pointer"
+    },
+    {
+      "id": "api-domain-version",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Domain/Analytics/CrystalReports/Entities/CrystalReportVersion.cs",
+      "purpose": "Immutable private source revision metadata"
+    },
+    {
+      "id": "api-domain-grant",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Domain/Analytics/CrystalReports/Entities/CrystalReportRoleGrant.cs",
+      "purpose": "Company-scoped per-role report rights"
+    },
+    {
+      "id": "api-store",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportStore.cs",
+      "purpose": "Tenant/company filtering, server paging, projections, ACL checks, and persistence"
+    },
+    {
+      "id": "api-private-storage",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Storage/PrivateCrystalReportFileStorage.cs",
+      "purpose": "Opaque private storage, size/signature checks, hash, and containment"
+    },
+    {
+      "id": "api-inspector-client",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportInspectorClient.cs",
+      "purpose": "Authenticated service-to-service SummaryInfo and Crystal runtime inspection"
+    },
+    {
+      "id": "api-legacy-source-client",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportLegacySourceClient.cs",
+      "purpose": "Authenticated catalog and bounded source-copy adapter for existing reports"
+    },
+    {
+      "id": "api-renderer-client",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportRendererClient.cs",
+      "purpose": "Streams the authorized published RPT to the internal Crystal runtime and validates the PDF response"
+    },
+    {
+      "id": "api-report-data-source",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs",
+      "purpose": "Builds allowlisted explicit-schema report data from the HR API EF context"
+    },
+    {
+      "id": "legacy-inspector-controller",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportInspectorController.cs",
+      "purpose": "Crystal SDK inspection and automatic SummaryInfo extraction"
+    },
+    {
+      "id": "legacy-inspector-auth",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Filters/InternalApiKeyAttribute.cs",
+      "purpose": "Service-to-service secret boundary independent of browser Origin"
+    },
+    {
+      "id": "legacy-catalog-controller",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportCatalogController.cs",
+      "purpose": "Path-safe discovery and source streaming for deployment-owned report files"
+    },
+    {
+      "id": "legacy-render-controller",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportRenderController.cs",
+      "purpose": "Internal path-free multipart rendering boundary"
+    },
+    {
+      "id": "legacy-runtime-profiles",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Helpers/CrystalReport/ManagedReportRuntime.cs",
+      "purpose": "Allowlisted entity data/view/filter profiles for managed reports"
+    },
+    {
+      "id": "web-page",
+      "layer": "web-next",
+      "path": "web-next/src/features/reporting/crystal-report-manager/CrystalReportManagerPage.tsx",
+      "purpose": "User Manager-style administration workflow"
+    },
+    {
+      "id": "web-service",
+      "layer": "web-next",
+      "path": "web-next/src/features/reporting/crystal-report-manager/services.ts",
+      "purpose": "Typed API mapping, multipart upload, source download, lifecycle, and ACL transport"
+    },
+    {
+      "id": "web-route",
+      "layer": "web-next",
+      "path": "web-next/src/app/(main)/(security)/administration/crystal-reports/page.tsx",
+      "purpose": "App Router entry point"
+    },
+    {
+      "id": "web-countries-report-consumer",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/reports/pages/CountryReportPage.tsx",
+      "purpose": "Consumes only the manager-owned Countries published catalog and render endpoint"
+    },
+    {
+      "id": "web-states-report-consumer",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/states/reports/pages/StateReportPage.tsx",
+      "purpose": "Consumes only the manager-owned States published catalog and render endpoint"
+    },
+    {
+      "id": "api-tests",
+      "layer": "test",
+      "path": "api/HrManagementSystem.Tests/CrystalReportsControllerContractTests.cs",
+      "purpose": "Controller route and permission contract verification"
+    },
+    {
+      "id": "web-tests",
+      "layer": "test",
+      "path": "web-next/src/features/reporting/crystal-report-manager/services.test.ts",
+      "purpose": "HTTP criteria, row-version, lifecycle, and scope transport verification"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Add existing API, web, mobile, configuration, localization, and test sources.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create and complete the four planned canonical books.",
+    "Rename this file to required-files.json only after every declared path exists.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json only after the four canonical books are complete.",
+    "Write generated packets under documentation/system/generated/crystal-report-manager/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit handoff decision."
+  ]
+}

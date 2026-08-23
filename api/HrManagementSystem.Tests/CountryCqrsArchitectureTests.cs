@@ -16,6 +16,7 @@ using HrManagementSystem.Application.Features.GeographicalInformation.Countries.
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryById;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryLookup;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryWithStates;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryReportData;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Countries.Persistence;
 using Mapster;
 using MapsterMapper;
@@ -43,6 +44,7 @@ public sealed class CountryCqrsArchitectureTests
     {
         AssertHttpRoute<HttpGetAttribute>(nameof(CountriesController.GetPage), null);
         AssertHttpRoute<HttpGetAttribute>(nameof(CountriesController.GetLookup), "lookup");
+        AssertHttpRoute<HttpGetAttribute>(nameof(CountriesController.GetReportData), "report-data");
         AssertHttpRoute<HttpGetAttribute>(nameof(CountriesController.GetById), "{id:int}");
         AssertHttpRoute<HttpGetAttribute>(nameof(CountriesController.GetWithStates), "{id:int}/states");
         AssertHttpRoute<HttpPostAttribute>(nameof(CountriesController.Create), null);
@@ -113,6 +115,7 @@ public sealed class CountryCqrsArchitectureTests
     [InlineData(typeof(GetCountryByIdQueryHandler), typeof(ICountryReadStore))]
     [InlineData(typeof(GetCountryWithStatesQueryHandler), typeof(ICountryReadStore))]
     [InlineData(typeof(GetCountryLookupQueryHandler), typeof(ICountryReadStore))]
+    [InlineData(typeof(GetCountryReportDataQueryHandler), typeof(ICountryReadStore))]
     [InlineData(typeof(CreateCountryCommandHandler), typeof(ICountryWriteStore))]
     [InlineData(typeof(CreateCountryCommandHandler), typeof(ICountryChangeScheduler))]
     [InlineData(typeof(CreateCountryCommandHandler), typeof(IMapper))]
@@ -135,6 +138,7 @@ public sealed class CountryCqrsArchitectureTests
         Assert.IsAssignableFrom<IQuery<Result<CountryDetailResponse>>>(new GetCountryByIdQuery(1));
         Assert.IsAssignableFrom<IQuery<Result<CountryResponse>>>(new GetCountryWithStatesQuery(1));
         Assert.IsAssignableFrom<IQuery<IReadOnlyList<SimpleCountryResponse>>>(new GetCountryLookupQuery());
+        Assert.IsAssignableFrom<IQuery<IReadOnlyList<CountryReportDataResponse>>>(new GetCountryReportDataQuery());
         Assert.IsAssignableFrom<ICommand<Result<CountryDetailResponse>>>(
             new CreateCountryCommand("مصر", "Egypt", "EG", "EGY", "+20", "EGP"));
         Assert.IsAssignableFrom<ICommand<Result<CreateCountriesResponse>>>(

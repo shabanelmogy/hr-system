@@ -53,6 +53,20 @@ public static class Permissions
     public const string EditReportsCategories = "ReportsCategories:Edit";
     public const string DeleteReportsCategories = "ReportsCategories:Delete";
 
+    public const string ViewReportTemplates = "ReportTemplates:View";
+    public const string CreateReportTemplates = "ReportTemplates:Create";
+    public const string EditReportTemplates = "ReportTemplates:Edit";
+    public const string PublishReportTemplates = "ReportTemplates:Publish";
+    public const string DeleteReportTemplates = "ReportTemplates:Delete";
+
+    public const string ViewCrystalReports = "CrystalReports:View";
+    public const string CreateCrystalReports = "CrystalReports:Create";
+    public const string DownloadCrystalReports = "CrystalReports:Download";
+    public const string UploadCrystalReports = "CrystalReports:Upload";
+    public const string PublishCrystalReports = "CrystalReports:Publish";
+    public const string ManageCrystalReportAccess = "CrystalReports:ManageAccess";
+    public const string DeleteCrystalReports = "CrystalReports:Delete";
+
     public const string ViewRoles = "Roles:View";
     public const string CreateRoles = "Roles:Create";
     public const string EditRoles = "Roles:Edit";

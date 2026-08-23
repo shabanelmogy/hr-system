@@ -60,6 +60,21 @@ public sealed class ApiHardeningTests
         Assert.Equal(404, details.Status);
     }
 
+    [Fact]
+    public void ResultProblem_MapsServiceUnavailableToHttp503()
+    {
+        var result = Result.Failure(new Error(
+            "Test.ServiceUnavailable",
+            "Service unavailable",
+            ErrorType.ServiceUnavailable));
+
+        var response = result.ToProblem();
+
+        Assert.Equal(503, response.StatusCode);
+        var details = Assert.IsType<ProblemDetails>(response.Value);
+        Assert.Equal(503, details.Status);
+    }
+
     [Theory]
     [InlineData(typeof(IAddressService), nameof(IAddressService.GetAsync))]
     [InlineData(typeof(IAddressTypeService), nameof(IAddressTypeService.GetAsync))]

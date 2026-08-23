@@ -150,15 +150,24 @@ class ApiClient {
     return this.request<T>("GET", endpoint, { params });
   }
 
+  getBlob(endpoint: string) {
+    return this.request<Blob>("GET", endpoint, {
+      responseType: "blob",
+      headers: { Accept: "application/octet-stream" },
+      allowWhenReadOnly: true,
+    });
+  }
+
   post<T = any>(endpoint: string, data?: unknown, headers: Record<string, string> = {}) {
     return this.request<T>("POST", endpoint, { data, headers: getDataHeaders(data, headers) });
   }
 
-  postBlob(endpoint: string, data: unknown, contentType: string) {
+  postBlob(endpoint: string, data: unknown, contentType: string, timeout = 30_000) {
     return this.request<Blob>("POST", endpoint, {
       data,
       responseType: "blob",
       headers: { Accept: contentType },
+      timeout,
       allowWhenReadOnly: true,
     });
   }
@@ -171,8 +180,8 @@ class ApiClient {
     return this.request<T>("PATCH", endpoint, { data, headers: getDataHeaders(data, headers) });
   }
 
-  delete<T = any>(endpoint: string) {
-    return this.request<T>("DELETE", endpoint);
+  delete<T = any>(endpoint: string, data?: unknown) {
+    return this.request<T>("DELETE", endpoint, { data });
   }
 
   async logout() {

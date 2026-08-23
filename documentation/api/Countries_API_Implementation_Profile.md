@@ -286,7 +286,50 @@ payload. A new resource must be added to each client's realtime query registry.
 - [ ] Add API XML/controller documentation.
 - [ ] Add client realtime resource mappings and notification route adapters.
 
-## 10. Test Evidence and Required Coverage
+## 10. Tenant-scoped ActiveReports Template Extension
+
+Countries remains global reference data, but browser-authored report templates
+are tenant-owned. The main API, not the Crystal service, owns the reusable
+`Analytics/ReportTemplates` slice.
+
+| Concern | Applied contract |
+|---|---|
+| Ownership | `ReportTemplate` and immutable `ReportTemplateRevision` extend `TenantAuditableEntity`; `ApplicationDbContext` derives and filters `TenantId` |
+| Uniqueness | Template name is unique within `(TenantId, FeatureKey)`; another tenant may reuse the same name |
+| Public reads | `GET /api/v1/report-templates?featureKey=countries` and `GET /{id}` return active published templates only |
+| Author reads | `GET /manage`, `GET /manage/{id}`, and revision routes require Edit and can read the current tenant's drafts/lifecycle state |
+| Writes | Create starts as draft; update uses the current RDLX definition; Save As creates a new draft from the edited browser definition; publish/unpublish/archive/restore are explicit |
+| Permissions | `ReportTemplates:View`, `Create`, `Edit`, `Publish`, and `Delete` |
+| Concurrency | Update and lifecycle requests carry Base64 `RowVersion`; stale writes map to the shared `409 ConcurrencyConflict` response |
+| Revision history | Create, update, publish, unpublish, archive, and restore append snapshots; revision entities are rejected if modified or deleted |
+| Definition safety | Maximum 1 MiB UTF-8, JSON object with non-empty `Name` and object `Body`, SHA-256 content hash, and rejection of credentials, database strings, absolute URLs, or unapproved endpoints |
+| Approved source | `GET /api/v1/report-templates/data-sources?featureKey=countries` declares JSON `endpoint=/api/v1/countries/report-data` |
+| Runtime data | `GET /api/v1/countries/report-data` requires tenant membership and `Countries:View`, returns active countries ordered by English name then ID, and contains no connection secrets |
+| Persistence | `AddTenantReportTemplates` migration creates templates/revisions, tenant indexes, RowVersion columns, audit FKs and append-only application enforcement |
+
+The relative source path intentionally runs through the same-origin web API
+proxy. `BACKEND_URL` selects local or hosted deployment server-side, while the
+stored RDLX remains environment-neutral and receives no bearer token or database
+connection string.
+
+The source inventory for this extension is:
+
+```text
+HrManagementSystem.Domain/Analytics/ReportTemplates/
+HrManagementSystem.Application/Features/Analytics/ReportTemplates/
+HrManagementSystem.Infrastructure/Features/Analytics/ReportTemplates/
+HrManagementSystem.Api/Features/Analytics/ReportTemplates/V1/
+HrManagementSystem.Application/Features/GeographicalInformation/Countries/
+  Contracts/CountryReportDataResponse.cs
+  Queries/GetCountryReportData/
+HrManagementSystem.Tests/ReportTemplateFeatureTests.cs
+```
+
+This is a reusable platform capability with a currently allow-listed Countries
+source. A future feature adds a reviewed logical source descriptor and safe data
+endpoint; it must not accept arbitrary client URLs or database connection strings.
+
+## 11. Test Evidence and Required Coverage
 
 | Test source | Proven behavior |
 |---|---|
@@ -307,7 +350,7 @@ For a copied feature, add persistence tests for scope, unique indexes and
 relationships when those guarantees are not fully represented by the Countries
 in-memory handler suite.
 
-## 11. Rules That Must Not Be Copied Blindly
+## 12. Rules That Must Not Be Copied Blindly
 
 | Countries decision | Required replacement question |
 |---|---|

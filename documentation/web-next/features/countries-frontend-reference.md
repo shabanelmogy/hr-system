@@ -4,7 +4,7 @@
 |---|---|
 | Status | Applied reference with documented follow-up findings |
 | Scope | Shared Countries API plus the `web-next` and `mobile-react` clients |
-| Reviewed | 2026-08-21 |
+| Reviewed | 2026-08-23 |
 | Web route | `/basic-data/countries` |
 | Mobile route | `/basic-data/geographical-information/countries` |
 | Project master | [Countries Feature Full Review](../../project/COUNTRIES_FEATURE_FULL_REVIEW.md) |
@@ -35,7 +35,7 @@ semantics, but they do not need identical controls or screen composition.
 | Mobile route adapter | `mobile-react/app/(main)/basic-data/geographical-information/countries.tsx` |
 | Web primary UI shape | Server-managed Grid with modal create/edit/view workflows |
 | Mobile primary UI shape | Responsive server-managed Table/Cards with a full-screen create/edit/view form |
-| Web optional UI shapes | Cards, first-page-scoped Chart without pagination controls, independent Crystal Report plus an opt-in client-only ActiveReportsJS design example, XLSX Import |
+| Web optional UI shapes | Cards, first-page-scoped Chart without pagination controls, independent Crystal Report, tenant-scoped ActiveReportsJS published viewer and permission-protected designer, XLSX Import |
 | Mobile optional UI shape | Independent PDF Report with preview/share; no import or chart |
 | Backend pattern | Global reference-data CQRS slice with explicit archive/restore |
 | Identifier | Positive integer `id` |
@@ -47,10 +47,10 @@ semantics, but they do not need identical controls or screen composition.
 | Cross-feature consumers | States consumes the active-country lookup through the Countries public API |
 | Web realtime consumers | Country changes invalidate Countries and States query prefixes |
 | Mobile realtime consumers | Country changes invalidate the stable `['countries']` prefix |
-| Web shared dependencies | server-list state, React Query, Data Grid, PageHeader, form/dialog primitives, read-only context, permission hooks, reporting, ActiveReportsJS designer, Excel parser |
+| Web shared dependencies | server-list state, React Query, Data Grid, PageHeader, form/dialog primitives, read-only context, permission hooks, shared report-template repository/designer/viewer, ActiveReportsJS, Excel parser |
 | Mobile shared dependencies | Expo Router, React Query, `AppListScreen`, `AppDataTable`, `AppForm`, read-only context, authorization hooks, localization/theme, Expo print/share |
 | Working-tree note | This review describes the current working tree, including the compact shared multi-view/header changes |
-| Explicit exclusions | Crystal Report service internals, ActiveReportsJS template persistence/runtime-data APIs, generic notification infrastructure, offline write queues, and unrelated geographical features |
+| Explicit exclusions | Crystal Report service internals, server-side ActiveReportsJS rendering/export, generic notification infrastructure, offline write queues, and unrelated geographical features |
 
 ### Applicable review phases
 
@@ -104,7 +104,7 @@ Expo Router page + RouteGuard
 | Page-scoped analytics | `components/chart-view/` and `components/CountriesChartView.tsx` |
 | Submitted-batch import | `components/import-data/` |
 | Domain report page | `reports/pages/CountryReportPage.tsx` |
-| Browser-native report design example | `reports/components/CountryActiveReportsDesigner.tsx`, `reports/components/CountryActiveReportsDesignerClient.tsx`, and `public/reports/countries/countries-directory.rdlx-json` |
+| Browser report composition | `reports/components/CountryActiveReportsDesigner.tsx`, shared `features/reporting` designer/viewer/repository, and `public/reports/countries/countries-directory.rdlx-json` |
 | Deliberate public API | `index.ts` |
 
 The feature public API exports only the page, report page, lookup hook,
@@ -157,12 +157,18 @@ versioned routing and sends one CQRS request per action.
 
 The Crystal report view is intentionally independent. It uses the reporting
 service and does not inherit the Countries list query unless a report contract
-explicitly adds equivalent parameters. The optional ActiveReportsJS mode is a
-client-only authoring example: it loads a static `.rdlx-json` Countries starter
-template and downloads the edited JSON locally. It does not call the Crystal API
-or expose a database connection, arbitrary SQL, or an unauthorised data endpoint.
-Production template persistence, revision history, permissions, and a vetted
-runtime data-source catalogue require a dedicated API contract.
+explicitly adds equivalent parameters. ActiveReportsJS has its own tenant-scoped
+template contract under `/api/v1/report-templates`: published list/detail reads,
+management list/detail reads, create/update, publish/unpublish, archive/restore,
+Save As, and immutable revisions. The current authenticated tenant is derived by
+the API and is never supplied by the browser.
+
+The approved Countries source is discovered from the report-template data-source
+catalog and resolves to `endpoint=/api/v1/countries/report-data`. It is a relative,
+same-origin JSON endpoint protected by the existing tenant session and
+`Countries:View`; it is not a database connection string. Stored definitions may
+contain only this approved logical source and never contain a database credential,
+token, absolute deployment host, arbitrary SQL, or an unauthorised endpoint.
 
 ### Transport types
 
@@ -302,7 +308,7 @@ contract and serialize those choices; do not filter the visible page locally.
 | Web Grid | Complete filtered/sorted result through 5000 rows; current authoritative server page above 5000 | One adaptive data strategy and the reusable `MyDataGrid` footer |
 | Web Cards | Current display page from the same adaptive criteria/result | Same actions and pager; no second list state |
 | Web Chart | First display page for the shared criteria plus authoritative total | Reset to page zero on entry, omit pagination controls, label metrics as page-scoped, and never imply global aggregation |
-| Web Report | Crystal reporting API/catalog; optional local ActiveReportsJS `.rdlx-json` starter template | Crystal is the default viewer with independent filters/export/print; Designer is an opt-in browser authoring comparison with local download only |
+| Web Report | Crystal reporting API/catalog plus tenant-scoped ActiveReportsJS template API and approved Countries JSON data | Crystal remains default; published ActiveReports templates have a read-only viewer, while permission-protected authors use the reusable Designer with Save, Save As, drafts, publish, dirty guards, revisions, and RowVersion conflicts |
 | Web Import | Local XLSX preview then bulk-create API | Create permission, local validation, submitted-batch atomicity and invalidation |
 | Mobile Table | Current server page | Horizontally capable data table, API-supported sort columns and shared server pager |
 | Mobile Cards | Same current server page and criteria | Touch-first names, codes, state count, status, selection and guarded actions |
@@ -334,19 +340,25 @@ product and API contracts justify them.
 `CountryReportPage` renders an accessible exclusive engine selector. **Crystal
 Reports** remains the default selection and retains the existing report catalog,
 parameters, PDF generation, print, and export flow without modification.
-**ActiveReportsJS Designer** is dynamically imported with `ssr: false` because
-the vendor control uses browser APIs. It loads
-`public/reports/countries/countries-directory.rdlx-json`, exposes the vendor's
-drag-and-drop report surface, shows unsaved changes, and downloads the edited
-definition as `countries-directory.rdlx-json`.
+**ActiveReportsJS Viewer** is available to users with `ReportTemplates:View` and
+loads only published templates from the current tenant. **ActiveReportsJS
+Designer** is available to non-read-only authors with View and Edit; create,
+overwrite, publish, and future lifecycle controls are additionally guarded by
+their explicit permissions.
 
-The starter deliberately contains layout only, not a database connection or
-static production rows. Authors add a vetted JSON/REST source through the Data
-panel during the demonstration. Do not make the browser own credentials, a
-connection string, unrestricted SQL, or direct access to internal API data.
-Before this becomes a production authoring feature, add a permission-protected
-template store, revision/audit semantics, validation, allowed data-source
-templates, and server-side rendering/export policy.
+Both ActiveReports controls are dynamically imported with `ssr: false` because
+the vendor controls use browser APIs. The reusable reporting layer owns the
+repository callbacks, published/management selectors, Save, Save As from the
+current edited definition, dirty-switch guard, data-source descriptor validation,
+and RowVersion conflict feedback. Countries supplies only feature vocabulary,
+the starter template, approved dataset fields, and expected logical source key.
+
+The starter contains the approved REST binding, not database access:
+`DataProvider=JSON`, `ConnectString=endpoint=/api/v1/countries/report-data`, and
+`jpath=$.[*]`. The API returns the stable active-country array. Local and hosted
+deployments use the same stored template because the Next same-origin API proxy
+derives the backend host and carries the authenticated session. Server-side
+ActiveReports rendering/export remains a separate explicit product decision.
 
 Mobile view switching is owned by `AppListScreen`/`AppMultiView`. Switching to
 Table or Cards applies that view's server page size and returns to page zero;
@@ -474,6 +486,14 @@ recheck read-only first so the user receives the tenant read-only explanation.
 Delete permission deliberately owns archive, bulk archive and restore on both
 clients. Mobile bulk selection is exposed on active Cards only; Table does not
 currently provide a selection column.
+
+ActiveReports templates use a separate tenant-scoped permission family:
+`ReportTemplates:View`, `ReportTemplates:Create`, `ReportTemplates:Edit`,
+`ReportTemplates:Publish`, and `ReportTemplates:Delete`. Published list/detail
+reads require View. Management catalog/detail and revision history require Edit;
+create/Save As, overwrite, publication, and lifecycle actions use their matching
+permissions. The current Countries UI exposes the published viewer to View users
+and the Designer to non-read-only users with both View and Edit.
 
 Archive and restore are idempotent on the server. Bulk archive is atomic: one
 missing ID or one active-state dependency prevents every requested mutation.
@@ -719,7 +739,7 @@ pixel and interaction-for-interaction template.
 | Development mock selection | `utils/countryMockData.test.ts` |
 | Chart derivations and page scope | `components/chart-view/chartDataUtils.test.ts` |
 | Cell formatting | `components/grid-view/CountryCellRenderers.test.tsx` |
-| ActiveReportsJS starter | Strict TypeScript compilation of the client-only wrapper plus JSON parsing of `public/reports/countries/countries-directory.rdlx-json` |
+| ActiveReportsJS templates | Shared service route tests, strict TypeScript compilation of SSR-safe Designer/Viewer wrappers, API safety/scope tests, and JSON parsing of the bound `public/reports/countries/countries-directory.rdlx-json` starter |
 | Mobile endpoint/query and response schemas | `mobile-react/src/features/basic-data/countries/api/__tests__/country-api.test.ts` |
 | Mobile shared list debounce/reset | `mobile-react/src/shared/listing/__tests__/useServerListState.test.ts` |
 | Mobile route authorization | `mobile-react/src/features/auth/rbac/__tests__/route-access.test.ts` |

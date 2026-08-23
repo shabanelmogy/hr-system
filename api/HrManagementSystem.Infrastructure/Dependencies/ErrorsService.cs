@@ -12,6 +12,8 @@ using HrManagementSystem.Application.Features.Platform.Localization.Errors;
 using HrManagementSystem.Application.Features.Security.ApiKeys.Errors;
 using HrManagementSystem.Application.Features.Security.Authorization.Errors;
 using HrManagementSystem.Application.Features.Security.Users.Errors;
+using HrManagementSystem.Application.Features.Analytics.ReportTemplates.Errors;
+using HrManagementSystem.Application.Features.Analytics.CrystalReports.Errors;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
@@ -25,6 +27,8 @@ public static class ErrorsService
         service.AddScoped<CategoryErrors>();
         service.AddScoped<SubCategoryErrors>();
         service.AddScoped<ReportCategoryErrors>();
+        service.AddScoped<ReportTemplateErrors>();
+        service.AddScoped<CrystalReportErrors>();
         service.AddScoped<ApiKeyErrors>();
         service.AddScoped<CountryErrors>();
         service.AddScoped<StateErrors>();

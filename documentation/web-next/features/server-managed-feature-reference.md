@@ -391,6 +391,77 @@ Keep domain report ownership in the feature and reusable viewers in shared
 reporting infrastructure. List filters affect a report only when the report API
 supports them explicitly.
 
+Record the Report view as Required, Deferred, or Excluded and choose its engine
+before implementation. Managed Crystal `.rpt` reports and browser-designed RDLX
+`ReportTemplates` are separate contracts; do not share their IDs, APIs,
+permissions, lifecycle, or UI state.
+
+#### Managed Crystal reports
+
+Follow the canonical
+[Crystal Report Manager Feature Integration Guide](../../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md).
+The source of a feature's Crystal selector is the manager-owned published catalog,
+not the legacy Crystal filesystem/API:
+
+```ts
+const reports = useQuery({
+  queryKey: ["crystal-reports", "published", entityKey],
+  queryFn: () => crystalReportService.listPublished(entityKey),
+});
+```
+
+- use the shared `crystalReportService` and `ReportViewer` exports from
+  `src/features/reporting`;
+- list through `GET /api/v1/crystal-reports?entityKey={entityKey}`;
+- render through `POST /api/v1/crystal-reports/{reportId}/render` with only the
+  report ID, `ar`/`en`, and feature-approved bounded filters;
+- display `summaryTitle` for Arabic/RTL and `summarySubject` for English, falling
+  back to manager `displayName`/`reportKey`;
+- keep the Report view independent from Grid/Cards pagination. With
+  `AppMultiView`, use `paginate: false` and `renderWhenEmpty: true`;
+- show explicit catalog loading/error/empty and PDF render/retry states;
+- never call legacy `report/info` or `report/generate`, send `ReportPath` or
+  `ReportFileName`, or read `NEXT_PUBLIC_REPORT_API_URL` for managed reports.
+
+A new `entityKey` is not runnable merely because an `.rpt` is deployed. The API
+feature must have an allowlisted dataset/filter profile, the Crystal runtime must
+have the matching schema profile, and Report Manager must own a published version
+with current-company `Run` access.
+
+#### Server-managed browser report templates
+
+When a browser report designer persists editable templates, treat authoring as a
+server-managed feature rather than local file download behavior:
+
+- the API derives tenant ownership from the authenticated context; clients never
+  send or select a tenant ID;
+- published list/detail routes are separate from management routes so drafts are
+  not visible to ordinary report viewers;
+- View, Create, Edit, Publish, and Delete/Archive are independent permissions,
+  and the client guards both visible controls and direct callbacks;
+- every update and lifecycle transition carries the latest `RowVersion`; a stale
+  save, publish, unpublish, archive, or restore returns a stable conflict;
+- Save As creates a new template from the current edited definition. It must not
+  duplicate only the last persisted source when unsaved changes exist;
+- immutable revisions record create, update, publish, unpublish, archive, and
+  restore after the corresponding transaction succeeds;
+- report definitions have a bounded UTF-8 size, minimum vendor structure, stable
+  content hash, and server-side validation against credentials, database
+  connection strings, absolute URLs, and unapproved endpoints;
+- the browser receives only an approved logical data-source descriptor. For a
+  same-origin JSON source, use a relative application API path so local and
+  hosted deployments share one template and authentication stays in the BFF;
+- never persist a database connection string, bearer token, cookie, API host, or
+  fetched tenant data inside the report definition;
+- domain features supply the feature key, approved dataset fields, starter
+  template, and vocabulary. The repository, designer lifecycle, viewer, dirty
+  guards, concurrency handling, and template selector stay in shared reporting
+  infrastructure after there is a real cross-feature contract.
+
+Published templates must have a read-only viewer path for users with View
+permission. Hiding the designer from non-authors while exposing no viewer does
+not satisfy tenant-wide availability.
+
 ### Import/export
 
 Import requires create permission, local parsing feedback, row-level validation,
@@ -562,6 +633,9 @@ A feature follows this reference only when:
   explicit product exception is documented;
 - every approved optional view is registered and tested, with no unreachable
   feature-owned view implementation left behind;
+- every Report view records its engine. Managed Crystal views use the shared
+  published catalog/render path and link their `entityKey` contract to the
+  canonical manager guide;
 - permissions, lifecycle, tenant scope, and read-only behavior fail closed;
 - list, detail, mutation, background-fetch, and empty states are explicit;
 - EN/AR, RTL, keyboard, and accessibility behavior is complete;

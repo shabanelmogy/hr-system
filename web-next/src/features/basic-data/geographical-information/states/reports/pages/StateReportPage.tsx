@@ -1,38 +1,20 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Alert, Box, Button, CircularProgress, useTheme } from "@mui/material";
-import { useState } from "react";
+import { Alert, Box, Button, CircularProgress } from "@mui/material";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MySelect, MyTextField } from "@/shared/components/forms";
 import {
   ReportViewer,
-  reportApiService,
+  crystalReportService,
   type ReportSearchParams,
   type UpdateReportSearchParams,
 } from "@/features/reporting";
 
-interface ReportInfo {
-  Id: string;
-  ReportPath: string;
-  Title: string;
-  Subject: string;
-}
-
 interface StateReportPageProps {
   /** Controlled by the shared multi-view header filter toggle. */
   showFilterBar?: boolean;
-}
-
-function isReportInfo(value: unknown): value is ReportInfo {
-  if (!value || typeof value !== "object") return false;
-  const report = value as Record<string, unknown>;
-  return (
-    typeof report.Id === "string" &&
-    typeof report.ReportPath === "string" &&
-    typeof report.Title === "string" &&
-    typeof report.Subject === "string"
-  );
 }
 
 function selectionValue(value: unknown): unknown {
@@ -42,32 +24,36 @@ function selectionValue(value: unknown): unknown {
   return value;
 }
 
-async function getStateReportCatalog(): Promise<ReportInfo[]> {
-  const response = await reportApiService.post("report/info", {
-    subFolderPath: "States",
-    reportCategory: "States",
-  });
-  const data: unknown = await response.json();
-  return Array.isArray(data) ? data.filter(isReportInfo) : [];
-}
-
 export default function StateReportPage({ showFilterBar = true }: StateReportPageProps) {
-  const { t } = useTranslation();
-  const theme = useTheme();
+  const { t, i18n } = useTranslation();
   const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
-  const lang = theme.direction === "rtl" ? "ar" : "en";
   const reportsQuery = useQuery({
-    queryKey: ["state-reports", "catalog", lang],
-    queryFn: getStateReportCatalog,
+    queryKey: ["crystal-reports", "published", "states"],
+    queryFn: () => crystalReportService.listPublished("states"),
     staleTime: 5 * 60_000,
   });
   const reports = reportsQuery.data ?? [];
-  const selectedReport = reports.find((report) => report.Id === selectedReportId) ?? reports[0] ?? null;
+  const reportOptions = reports.map((report) => ({
+    ...report,
+    localizedName: (i18n.dir() === "rtl" ? report.summaryTitle : report.summarySubject)
+      || report.displayName,
+  }));
+  const selectedReport = reports.find((report) => report.id === selectedReportId) ?? reports[0] ?? null;
 
   const handleReportChange = (value: unknown) => {
-    const selected = reports.find((report) => report.Id === selectionValue(value));
-    setSelectedReportId(selected?.Id ?? null);
+    const selected = reports.find((report) => report.id === selectionValue(value));
+    setSelectedReportId(selected?.id ?? null);
   };
+
+  const renderCrystalReport = useCallback((params: ReportSearchParams, language: "ar" | "en") => {
+    if (!selectedReport) throw new Error("No published Crystal report is selected.");
+    const filters = Object.fromEntries(
+      Object.entries(params)
+        .filter(([, value]) => value !== null && value !== undefined && value !== "")
+        .map(([key, value]) => [key, String(value)]),
+    );
+    return crystalReportService.render(selectedReport.id, { language, filters });
+  }, [selectedReport]);
 
   if (reportsQuery.isLoading) {
     return (
@@ -92,18 +78,11 @@ export default function StateReportPage({ showFilterBar = true }: StateReportPag
     );
   }
 
-  const reportParams = {
-    LogoName: "Logo1.jpg",
-    ExportFilename: "States",
-    ReportPath: selectedReport.ReportPath,
-    ReportFileName: selectedReport.Id,
-  };
-
   return (
     <ReportViewer
-      reportParams={reportParams}
+      renderReport={renderCrystalReport}
+      renderKey={selectedReport.id}
       filterBarVisible={showFilterBar}
-      generateEndpoint="report/states/generate"
     >
       {(updateSearchParams: UpdateReportSearchParams, currentParams: ReportSearchParams) => (
         <>
@@ -132,13 +111,13 @@ export default function StateReportPage({ showFilterBar = true }: StateReportPag
                 clearButtonAriaLabel={t("general.clearSearch")}
               />
               <MySelect
-                dataSource={reports}
-                selectedItem={selectedReport.Id}
+                dataSource={reportOptions}
+                selectedItem={selectedReport.id}
                 handleSelectionChange={handleReportChange}
                 loading={reportsQuery.isFetching}
                 label={t("reports.reportForms")}
-                valueMember="Id"
-                displayMember={lang === "ar" ? "Title" : "Subject"}
+                valueMember="id"
+                displayMember="localizedName"
                 all={false}
                 showClearButton={false}
               />

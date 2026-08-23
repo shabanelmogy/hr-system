@@ -1,4 +1,4 @@
-import { useState, useEffect, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Box,
   Button,
@@ -18,172 +18,30 @@ import {
   DescriptionOutlined,
   Clear,
 } from "@mui/icons-material";
-import PropTypes from "prop-types";
-import reportApiService from "../services/reportApiService";
-
 export type ReportParameterValue = string | number | boolean | null | undefined;
 export type ReportSearchParams = Record<string, ReportParameterValue>;
 export type UpdateReportSearchParams = (params: ReportSearchParams) => void;
+export type RenderReport = (
+  params: ReportSearchParams,
+  language: "ar" | "en",
+) => Promise<Blob>;
 
 interface ReportViewerProps {
   children?: ReactNode | ((updateSearchParams: UpdateReportSearchParams, searchParams: ReportSearchParams) => ReactNode);
-  reportParams?: ReportSearchParams;
+  renderReport: RenderReport;
+  /** Causes the current report to render again when the selected managed report changes. */
+  renderKey?: string;
   onSearch?: (params?: ReportSearchParams) => void;
   initialOpen?: boolean;
   /** Lets a multi-view header own the report criteria sidebar. */
   filterBarVisible?: boolean;
-  /** Feature-specific report route. Countries continues to use report/generate. */
-  generateEndpoint?: string;
 }
 
-const ReportViewer = ({
-  children,
-  reportParams = {}, // Default report parameters (ReportPath, ReportFileName, etc.)
-  onSearch = () => {},
-  initialOpen = true,
-  filterBarVisible,
-  generateEndpoint = "report/generate",
-}: ReportViewerProps) => {
-  const [searchParams, setSearchParams] = useState<ReportSearchParams>({});
-  const [reportUrl, setReportUrl] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [noResults, setNoResults] = useState(false);
-  const [uncontrolledSidebarOpen, setUncontrolledSidebarOpen] = useState(initialOpen);
+const noop = () => {};
 
+const NoResultsMessage = () => {
   const theme = useTheme();
-  const lang = theme.direction === "rtl" ? "ar" : "en";
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isFilterBarControlled = filterBarVisible !== undefined;
-  const sidebarOpen = filterBarVisible ?? uncontrolledSidebarOpen;
-
-  // Constants
-  const SIDEBAR_WIDTH = 280;
-  const TOP_OFFSET = isMobile ? 60 : 120;
-  const MARGIN_BETWEEN = 8;
-  const MOBILE_HEADER_HEIGHT = 48;
-  const MOBILE_SIDEBAR_MIN_HEIGHT = 400; // Added minimum height for mobile sidebar
-
-  // Close sidebar automatically on mobile
-  useEffect(() => {
-    if (isMobile && !isFilterBarControlled) {
-      setUncontrolledSidebarOpen(false);
-    }
-  }, [isFilterBarControlled, isMobile]);
-
-  // Initial search when language changes
-  useEffect(() => {
-    handleSearch();
-  }, [lang]);
-
-  const toggleSidebar = () => {
-    if (!isFilterBarControlled) {
-      setUncontrolledSidebarOpen((open) => !open);
-    }
-  };
-
-  const generateReport = async (params: ReportSearchParams) => {
-    try {
-      // Combine default report parameters with search parameters and language
-      const allParams = {
-        Lang: lang,
-        ...reportParams,
-        ...params,
-      };
-
-      const response = await reportApiService.post(
-        generateEndpoint,
-        allParams
-      );
-
-      // Get the response as a blob (PDF)
-      const blob = await response.blob();
-
-      // If blob is empty, too small, or not a PDF
-      if (
-        blob.size === 0 ||
-        blob.size < 100 ||
-        blob.type !== "application/pdf"
-      ) {
-        console.log("Blob invalid (size or type), no content");
-        return { url: null, hasContent: false };
-      }
-
-      // Create a temporary URL for the blob
-      const blobUrl = URL.createObjectURL(blob);
-
-      return { url: blobUrl, hasContent: true };
-    } catch (err: unknown) {
-      return {
-        url: null,
-        hasContent: false,
-        error: err instanceof Error ? err.message : "Unknown report error",
-      };
-    }
-  };
-
-  const handleSearch = async () => {
-    setLoading(true);
-    setError(null);
-    setNoResults(false);
-
-    const {
-      url,
-      hasContent,
-      error: reportError,
-    } = await generateReport(searchParams);
-
-    if (hasContent && url) {
-      setReportUrl(url);
-      setNoResults(false);
-      onSearch(searchParams);
-    } else {
-      // Clear any previous report URL
-      if (reportUrl && reportUrl.startsWith("blob:")) {
-        URL.revokeObjectURL(reportUrl);
-      }
-      setReportUrl("");
-      setNoResults(true);
-
-      if (reportError) {
-        setError(`Error: ${reportError}`);
-      }
-    }
-
-    setLoading(false);
-
-    // Close sidebar on mobile after search
-    if (isMobile && !isFilterBarControlled) {
-      setUncontrolledSidebarOpen(false);
-    }
-  };
-
-  // Function to be passed to children to update search params
-  const updateSearchParams: UpdateReportSearchParams = (newParams) => {
-    setSearchParams((prev) => {
-      const updated = { ...prev, ...newParams };
-
-      // Remove keys with null or empty string values to avoid sending invalid params
-      Object.keys(updated).forEach((key) => {
-        if (updated[key] === null || updated[key] === "") {
-          delete updated[key];
-        }
-      });
-      return updated;
-    });
-  };
-
-  // Clean up blob URL when component unmounts
-  useEffect(() => {
-    return () => {
-      if (reportUrl && reportUrl.startsWith("blob:")) {
-        URL.revokeObjectURL(reportUrl);
-      }
-    };
-  }, [reportUrl]);
-
-  // No Results message component
-  const NoResultsMessage = () => (
+  return (
     <Box
       sx={{
         display: "flex",
@@ -205,12 +63,7 @@ const ReportViewer = ({
           mb: 2,
         }}
       />
-      <Typography
-        variant="h5"
-        color="textSecondary"
-        align="center"
-        sx={{ mb: 1 }}
-      >
+      <Typography variant="h5" color="textSecondary" align="center" sx={{ mb: 1 }}>
         No Results Found
       </Typography>
       <Typography
@@ -224,6 +77,139 @@ const ReportViewer = ({
       </Typography>
     </Box>
   );
+};
+
+const ReportViewer = ({
+  children,
+  renderReport,
+  renderKey,
+  onSearch = noop,
+  initialOpen = true,
+  filterBarVisible,
+}: ReportViewerProps) => {
+  const theme = useTheme();
+  const lang: "ar" | "en" = theme.direction === "rtl" ? "ar" : "en";
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [searchParams, setSearchParams] = useState<ReportSearchParams>({});
+  const searchParamsRef = useRef<ReportSearchParams>({});
+  const [reportUrl, setReportUrl] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [noResults, setNoResults] = useState(false);
+  const [uncontrolledSidebarOpen, setUncontrolledSidebarOpen] = useState(
+    initialOpen && !isMobile,
+  );
+  const isFilterBarControlled = filterBarVisible !== undefined;
+  const sidebarOpen = filterBarVisible ?? uncontrolledSidebarOpen;
+
+  // Constants
+  const SIDEBAR_WIDTH = 280;
+  const TOP_OFFSET = isMobile ? 60 : 120;
+  const MARGIN_BETWEEN = 8;
+  const MOBILE_HEADER_HEIGHT = 48;
+  const toggleSidebar = () => {
+    if (!isFilterBarControlled) {
+      setUncontrolledSidebarOpen((open) => !open);
+    }
+  };
+
+  const generateReport = useCallback(async (params: ReportSearchParams) => {
+    try {
+      const blob = await renderReport(params, lang);
+
+      // If blob is empty, too small, or not a PDF
+      if (
+        blob.size === 0 ||
+        blob.size < 100 ||
+        blob.type !== "application/pdf"
+      ) {
+        console.log("Blob invalid (size or type), no content");
+        return { url: null, hasContent: false };
+      }
+
+      // Create a temporary URL for the blob
+      const blobUrl = URL.createObjectURL(blob);
+
+      return { url: blobUrl, hasContent: true };
+    } catch (err: unknown) {
+      const message = err instanceof Error
+        ? err.message
+        : err && typeof err === "object" && "message" in err && typeof err.message === "string"
+          ? err.message
+          : "Unknown report error";
+      return {
+        url: null,
+        hasContent: false,
+        error: message,
+      };
+    }
+  }, [lang, renderReport]);
+
+  const handleSearch = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    setNoResults(false);
+
+    const {
+      url,
+      hasContent,
+      error: reportError,
+    } = await generateReport(searchParamsRef.current);
+
+    if (hasContent && url) {
+      setReportUrl(url);
+      setNoResults(false);
+      onSearch(searchParamsRef.current);
+    } else {
+      // Clear any previous report URL
+      setReportUrl((current) => {
+        if (current.startsWith("blob:")) URL.revokeObjectURL(current);
+        return "";
+      });
+      setNoResults(true);
+
+      if (reportError) {
+        setError(`Error: ${reportError}`);
+      }
+    }
+
+    setLoading(false);
+
+    // Close sidebar on mobile after search
+    if (isMobile && !isFilterBarControlled) {
+      setUncontrolledSidebarOpen(false);
+    }
+  }, [generateReport, isFilterBarControlled, isMobile, onSearch]);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => void handleSearch(), 0);
+    return () => window.clearTimeout(timeout);
+  }, [handleSearch, renderKey]);
+
+  // Function to be passed to children to update search params
+  const updateSearchParams: UpdateReportSearchParams = (newParams) => {
+    setSearchParams((prev) => {
+      const updated = { ...prev, ...newParams };
+
+      // Remove keys with null or empty string values to avoid sending invalid params
+      Object.keys(updated).forEach((key) => {
+        if (updated[key] === null || updated[key] === "") {
+          delete updated[key];
+        }
+      });
+      searchParamsRef.current = updated;
+      return updated;
+    });
+  };
+
+  // Clean up blob URL when component unmounts
+  useEffect(() => {
+    return () => {
+      if (reportUrl && reportUrl.startsWith("blob:")) {
+        URL.revokeObjectURL(reportUrl);
+      }
+    };
+  }, [reportUrl]);
 
   return (
     <Box
@@ -305,7 +291,10 @@ const ReportViewer = ({
 
           <Button
             variant="outlined"
-            onClick={() => setSearchParams({})}
+            onClick={() => {
+              searchParamsRef.current = {};
+              setSearchParams({});
+            }}
             startIcon={<Clear />}
             fullWidth
             sx={{ mt: 1, mb: isMobile ? 2 : 0 }}
@@ -409,16 +398,6 @@ const ReportViewer = ({
       </Box>
     </Box>
   );
-};
-
-ReportViewer.propTypes = {
-  reportApiBaseUrl: PropTypes.string.isRequired,
-  reportParams: PropTypes.object,
-  children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-  initialOpen: PropTypes.bool,
-  filterBarVisible: PropTypes.bool,
-  generateEndpoint: PropTypes.string,
-  onSearch: PropTypes.func,
 };
 
 export default ReportViewer;

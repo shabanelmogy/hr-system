@@ -1,43 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 
 import { MySelect, MyTextField } from "@/shared/components/forms";
+import { usePermissions } from "@/shared/hooks/usePermissions";
 import {
   ReportViewer,
-  reportApiService,
+  ServerReportViewer,
+  crystalReportService,
   type ReportSearchParams,
   type UpdateReportSearchParams,
 } from "@/features/reporting";
-import { Alert, Box, Button, ToggleButton, ToggleButtonGroup, useTheme } from "@mui/material";
+import { Alert, Box, Button, CircularProgress, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import CountryActiveReportsDesigner from "../components/CountryActiveReportsDesigner";
-
-interface ReportInfo {
-  Id: string;
-  ReportPath: string;
-  Title: string;
-  Subject: string;
-}
 
 interface CountryReportPageProps {
   /** Controlled by the shared multi-view header filter toggle. */
   showFilterBar?: boolean;
 }
 
-type CountryReportMode = "crystal" | "designer";
-
-function isReportInfo(value: unknown): value is ReportInfo {
-  if (!value || typeof value !== "object") return false;
-  const report = value as Record<string, unknown>;
-  return (
-    typeof report.Id === "string" &&
-    typeof report.ReportPath === "string" &&
-    typeof report.Title === "string" &&
-    typeof report.Subject === "string"
-  );
-}
+type CountryReportMode = "crystal" | "activeReports" | "designer";
 
 function selectionValue(value: unknown): unknown {
   if (value && typeof value === "object" && "target" in value) {
@@ -47,62 +31,50 @@ function selectionValue(value: unknown): unknown {
   return value;
 }
 
-async function getCountryReportCatalog(): Promise<ReportInfo[]> {
-  const response = await reportApiService.post("report/info", {
-    subFolderPath: "Countries",
-    reportCategory: "Countries",
-  });
-  const data: unknown = await response.json();
-  const reports = Array.isArray(data) ? data.filter(isReportInfo) : [];
-
-  return [...reports].sort((a, b) =>
-    a.Id === "Countries" ? -1 : b.Id === "Countries" ? 1 : 0
-  );
-}
-
 const CountryReportPage = ({ showFilterBar = true }: CountryReportPageProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { hasPermission, isReadOnly } = usePermissions();
 
   const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
   const [reportMode, setReportMode] = useState<CountryReportMode>("crystal");
-  const theme = useTheme();
+  const canManageTemplates = !isReadOnly &&
+    hasPermission("ReportTemplates:View") &&
+    hasPermission("ReportTemplates:Edit");
+  const canViewTemplates = hasPermission("ReportTemplates:View");
 
-  const lang = theme.direction === "rtl" ? "ar" : "en";
   const reportsQuery = useQuery({
-    queryKey: ["country-reports", "catalog", lang],
-    queryFn: getCountryReportCatalog,
+    queryKey: ["crystal-reports", "published", "countries"],
+    queryFn: () => crystalReportService.listPublished("countries"),
     enabled: reportMode === "crystal",
     staleTime: 5 * 60_000,
   });
   const reportsInfo = reportsQuery.data ?? [];
-  const selectedReport = reportsInfo.find((report) => report.Id === selectedReportId)
+  const reportOptions = reportsInfo.map((report) => ({
+    ...report,
+    localizedName: (i18n.dir() === "rtl" ? report.summaryTitle : report.summarySubject)
+      || report.displayName,
+  }));
+  const selectedReport = reportsInfo.find((report) => report.id === selectedReportId)
     ?? reportsInfo[0]
     ?? null;
 
-  const defaultReportParams = {
-    LogoName: "Logo1.jpg",
-    ExportFilename: "Countries",
-  };
-
-  const reportParams = selectedReport
-    ? {
-      ...defaultReportParams,
-      ReportPath: selectedReport.ReportPath,
-      ReportFileName: selectedReport.Id,
-    }
-    : {
-      ...defaultReportParams,
-      ReportPath: "Reports/Countries",
-      ReportFileName: "Countries",
-    };
-
   const handleReportChange = (value: unknown) => {
-    const selected = reportsInfo.find((report) => report.Id === selectionValue(value));
-    setSelectedReportId(selected?.Id ?? null);
+    const selected = reportsInfo.find((report) => report.id === selectionValue(value));
+    setSelectedReportId(selected?.id ?? null);
   };
+
+  const renderCrystalReport = useCallback((params: ReportSearchParams, language: "ar" | "en") => {
+    if (!selectedReport) throw new Error("No published Crystal report is selected.");
+    const filters = Object.fromEntries(
+      Object.entries(params)
+        .filter(([, value]) => value !== null && value !== undefined && value !== "")
+        .map(([key, value]) => [key, String(value)]),
+    );
+    return crystalReportService.render(selectedReport.id, { language, filters });
+  }, [selectedReport]);
 
   const handleReportModeChange = (_event: React.MouseEvent<HTMLElement>, value: CountryReportMode | null) => {
-    if (value) setReportMode(value);
+    if (value && (value !== "designer" || canManageTemplates)) setReportMode(value);
   };
 
   return (
@@ -119,16 +91,56 @@ const CountryReportPage = ({ showFilterBar = true }: CountryReportPageProps) => 
           <ToggleButton value="crystal">
             {t("countries.activeReports.crystalMode")}
           </ToggleButton>
-          <ToggleButton value="designer">
-            {t("countries.activeReports.designerMode")}
-          </ToggleButton>
+          {canViewTemplates ? (
+            <ToggleButton value="activeReports">
+              {t("countries.activeReports.viewerMode")}
+            </ToggleButton>
+          ) : null}
+          {canManageTemplates ? (
+            <ToggleButton value="designer">
+              {t("countries.activeReports.designerMode")}
+            </ToggleButton>
+          ) : null}
         </ToggleButtonGroup>
       </Box>
 
-      {reportMode === "designer" ? (
+      {reportMode === "designer" && canManageTemplates ? (
         <CountryActiveReportsDesigner />
+      ) : reportMode === "activeReports" && canViewTemplates ? (
+        <ServerReportViewer
+          featureKey="countries"
+          labels={{
+            title: t("countries.activeReports.viewerTitle"),
+            description: t("countries.activeReports.viewerDescription"),
+            selectTemplate: t("countries.activeReports.selectTemplate"),
+            noTemplates: t("countries.activeReports.noPublishedTemplates"),
+            loadError: t("countries.activeReports.viewerLoadError"),
+          }}
+        />
+      ) : reportsQuery.isLoading ? (
+        <Box sx={{ display: "grid", flex: 1, placeItems: "center" }}>
+          <CircularProgress />
+        </Box>
+      ) : !selectedReport ? (
+        <Alert
+          severity={reportsQuery.isError ? "warning" : "info"}
+          action={(
+            <Button color="inherit" size="small" onClick={() => void reportsQuery.refetch()}>
+              {t("common.retry")}
+            </Button>
+          )}
+          sx={{ m: 1.5 }}
+        >
+          {reportsQuery.isError
+            ? t("countries.reportCatalogError")
+            : t("countries.reportUnavailable")}
+        </Alert>
       ) : (
-        <ReportViewer reportParams={reportParams} filterBarVisible={showFilterBar}>
+        <ReportViewer
+          renderReport={renderCrystalReport}
+          renderKey={selectedReport.id}
+          filterBarVisible={showFilterBar}
+        >
           {(updateSearchParams: UpdateReportSearchParams, currentParams: ReportSearchParams) => (
             <>
               {reportsQuery.isError ? (
@@ -147,13 +159,13 @@ const CountryReportPage = ({ showFilterBar = true }: CountryReportPageProps) => 
               {showFilterBar ? (
                 <>
                   <MyTextField
-                    fieldName="CountryAr"
-                    value={String(currentParams.CountryAr ?? "")}
+                    fieldName="NameAr"
+                    value={String(currentParams.NameAr ?? "")}
                     label={t("countries.arabicName")}
                     onChange={(event) =>
-                      updateSearchParams({ CountryAr: event.target.value })
+                      updateSearchParams({ NameAr: event.target.value })
                     }
-                    onClear={() => updateSearchParams({ CountryAr: null })}
+                    onClear={() => updateSearchParams({ NameAr: null })}
                     appearance="plain"
                     margin="none"
                     showCounter={false}
@@ -161,13 +173,13 @@ const CountryReportPage = ({ showFilterBar = true }: CountryReportPageProps) => 
                   />
 
                   <MyTextField
-                    fieldName="CountryEn"
-                    value={String(currentParams.CountryEn ?? "")}
+                    fieldName="NameEn"
+                    value={String(currentParams.NameEn ?? "")}
                     label={t("countries.englishName")}
                     onChange={(event) =>
-                      updateSearchParams({ CountryEn: event.target.value })
+                      updateSearchParams({ NameEn: event.target.value })
                     }
-                    onClear={() => updateSearchParams({ CountryEn: null })}
+                    onClear={() => updateSearchParams({ NameEn: null })}
                     appearance="plain"
                     margin="none"
                     showCounter={false}
@@ -175,13 +187,13 @@ const CountryReportPage = ({ showFilterBar = true }: CountryReportPageProps) => 
                   />
 
                   <MySelect
-                    dataSource={reportsInfo}
-                    selectedItem={selectedReport?.Id || null}
+                    dataSource={reportOptions}
+                    selectedItem={selectedReport.id}
                     handleSelectionChange={handleReportChange}
                     loading={reportsQuery.isLoading || reportsQuery.isFetching}
                     label={t("reports.reportForms")}
-                    valueMember="Id"
-                    displayMember={lang === "ar" ? "Title" : "Subject"}
+                    valueMember="id"
+                    displayMember="localizedName"
                     all={false}
                     showClearButton={true}
                   />

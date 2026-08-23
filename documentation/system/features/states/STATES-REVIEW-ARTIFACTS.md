@@ -40,7 +40,7 @@
 | ID | Priority | Finding | Required follow-up |
 | --- | --- | --- |
 | S-F01 | P2 | The legacy `IStateService`/State service/old job remain compiled but are not used by the CQRS controller. | Remove only in a dedicated compatibility audit once all consumers are migrated. |
-| S-F03 | Owner action | The State Crystal report template is intentionally not yet supplied. | Add a valid `.rpt` containing `States` in its filename under `api/CrystalReportGeneratorApi/Reports/States`; the existing browser catalog/viewer and `report/states/generate` contract will pick it up. |
+| S-F03 | Owner action | The State Crystal report template is intentionally not tracked in source. | Add a valid `.rpt` whose filename starts with `States` to the deployment-owned `Reports/States` folder on the Crystal host; the catalog and report contract will pick it up. |
 | S-F04 | Release gate | Automated checks cannot replace browser/device visual testing. | Execute the master review matrix before release. |
 
 ## Resolved findings

@@ -12,6 +12,8 @@ using HrManagementSystem.Domain.GeographicalInformation.Districts.Entities;
 using HrManagementSystem.Infrastructure.Features.Platform.Notifications.Entities;
 
 using HrManagementSystem.Domain.Analytics.Reports.Entities;
+using HrManagementSystem.Domain.Analytics.ReportTemplates.Entities;
+using HrManagementSystem.Domain.Analytics.CrystalReports.Entities;
 using HrManagementSystem.Domain.Appointments.Entities;
 using HrManagementSystem.Domain.Catalog.Categories.Entities;
 using HrManagementSystem.Domain.Catalog.SubCategories.Entities;
@@ -45,6 +47,11 @@ public class ApplicationDbContext(
     public DbSet<ReportCategory> ReportsCategories { get; set; }
     public DbSet<ReportMaster> ReportsMasters { get; set; }
     public DbSet<ReportDetail> ReportsDetails { get; set; }
+    public DbSet<ReportTemplate> ReportTemplates { get; set; }
+    public DbSet<ReportTemplateRevision> ReportTemplateRevisions { get; set; }
+    public DbSet<CrystalReport> CrystalReports { get; set; }
+    public DbSet<CrystalReportVersion> CrystalReportVersions { get; set; }
+    public DbSet<CrystalReportRoleGrant> CrystalReportRoleGrants { get; set; }
     public DbSet<ApiKey> ApiKeys { get; set; }
     public DbSet<Country> Countries { get; set; }
     public DbSet<State> States { get; set; }
@@ -230,6 +237,8 @@ public class ApplicationDbContext(
     private void PrepareChanges()
     {
         EnforceAppendOnlySecurityAudit();
+        EnforceAppendOnlyReportTemplateRevisions();
+        EnforceAppendOnlyCrystalReportVersions();
         ApplyTenantIsolation();
 
         var currentUserId = _currentActor.UserId;
@@ -261,6 +270,24 @@ public class ApplicationDbContext(
 
         if (invalidEntry is not null)
             throw new InvalidOperationException("Security audit events are append-only.");
+    }
+
+    private void EnforceAppendOnlyReportTemplateRevisions()
+    {
+        var invalidEntry = ChangeTracker.Entries<ReportTemplateRevision>()
+            .FirstOrDefault(entry => entry.State is EntityState.Modified or EntityState.Deleted);
+
+        if (invalidEntry is not null)
+            throw new InvalidOperationException("Report template revisions are append-only.");
+    }
+
+    private void EnforceAppendOnlyCrystalReportVersions()
+    {
+        var invalidEntry = ChangeTracker.Entries<CrystalReportVersion>()
+            .FirstOrDefault(entry => entry.State is EntityState.Modified or EntityState.Deleted);
+
+        if (invalidEntry is not null)
+            throw new InvalidOperationException("Crystal report versions are append-only.");
     }
 
     private void GrantNewCompanyAccesses()

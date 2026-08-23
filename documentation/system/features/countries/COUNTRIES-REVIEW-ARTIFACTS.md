@@ -22,7 +22,7 @@ This is the applied evidence ledger for the current Countries feature. The detai
 | R-02 | Server-managed search, filters, sort, and pagination | `GetCountriesQuery` plus read store | `useCountryGridLogic`, query mapper, service | `useServerListState`, API mapper, query hook | Verified with findings |
 | R-03 | Create, edit, archive, restore, and bulk archive | Commands, validators, stores, audit, scheduler | Forms, dialogs, permission matrix, query invalidation | Form, confirmation state, mutation hooks | Verified |
 | R-04 | Grid/table and card views share one server page | Paged response contract | Grid and cards consume common controller state | Table and cards consume common list state | Verified |
-| R-05 | Report behavior is connected | Report endpoint/request support | Crystal report view plus client-only ActiveReportsJS starter template | Report schema, API, query, and device handling | Verified with finding |
+| R-05 | Report behavior is connected | Crystal contract plus tenant-scoped ActiveReports template/data endpoints | Crystal default, published ActiveReports viewer, permission-protected reusable Designer | Report schema, API, query, and device handling | Verified; server-side ActiveReports rendering remains excluded |
 | R-06 | Realtime and notifications refresh clients | Post-commit Country job | Realtime query registry | Realtime registry and notification route mapping | Verified |
 | R-07 | English, Arabic, RTL, responsive, and accessible presentation | Localized server errors/messages | Translation files and shared responsive UI | Translation modules, theme, shared screen/list components | Verified by source; runtime matrix remains a release gate |
 
@@ -49,7 +49,8 @@ This is the applied evidence ledger for the current Countries feature. The detai
 | E-WEB-01 | One hook owns list query state | `web-next/src/features/basic-data/geographical-information/countries/hooks/useCountryGridLogic.ts` |
 | E-WEB-02 | Toolbar and grid options are reusable shared components | `web-next/src/shared/components/data-grid/toolbar/` |
 | E-WEB-03 | Page composition supports grid, cards, chart, report, and import | `CountriesMultiView.tsx` |
-| E-WEB-04 | Crystal remains the default report engine while an SSR-safe ActiveReportsJS designer loads an editable Countries `.rdlx-json` starter and downloads changes locally | `reports/pages/CountryReportPage.tsx`, `reports/components/`, and `public/reports/countries/countries-directory.rdlx-json` |
+| E-WEB-04 | Crystal remains default while SSR-safe shared ActiveReportsJS Viewer/Designer components load published or management templates from the current tenant; the starter is bound only to the approved relative Countries API source | `reports/pages/CountryReportPage.tsx`, Countries composition, `src/features/reporting/`, and `public/reports/countries/countries-directory.rdlx-json` |
+| E-API-07 | Report templates/revisions are tenant-filtered, drafts are absent from public reads, lifecycle writes use RowVersion, revisions are append-only, and the source catalog permits only `endpoint=/api/v1/countries/report-data` | `Domain/Application/Infrastructure/Api` ReportTemplates slices, `GetCountryReportDataQuery`, migration `20260823075732_AddTenantReportTemplates`, and `ReportTemplateFeatureTests.cs` |
 | E-MOB-01 | One controlled state owns the mobile server list | `mobile-react/src/shared/listing/useServerListState.ts` and `CountriesScreen.tsx` |
 | E-MOB-02 | Runtime schemas guard mobile API responses | `mobile-react/src/features/basic-data/countries/api/country-schemas.ts` |
 | E-MOB-03 | Route authorization and deep-link integration are registered | mobile route manifest, realtime registry, and notification presentation utility |
@@ -73,7 +74,7 @@ These differences are presentation decisions. They do not change the shared API 
 | C-F02 | Medium | Cards and chart can hide the active search field/operator context | Keep active query controls visible or clearly summarize them in every view |
 | C-F03 | Medium | Web import does not preflight the API 100-row batch limit | Reject or split oversized files before mutation while retaining server validation |
 | C-F04 | Medium | Web has focused unit tests but lacks a complete Countries integration path | Add page-level search, paging, lifecycle, and view-switch coverage |
-| C-F05 | Medium | ActiveReportsJS currently provides a local authoring demonstration only; no API persists or validates templates/data sources. | Add permissions, version/audit semantics, template validation, and an allow-listed data-source catalog before production authoring. |
+| C-F05 | Resolved | ActiveReportsJS templates now persist per tenant with published/management separation, permissions, RowVersion, immutable revisions, safe definition validation, an approved source catalog, and a published Viewer. | Preserve this shared contract and add future feature sources only through reviewed server allow-list entries and tenant/scope tests. |
 | C-M01 | Medium | Currency and has-states filters are modeled on mobile but not exposed | Expose them or remove them from the presented filter contract |
 | C-M02 | Medium | A mobile detail hook exists, but view/edit currently uses the selected list row | Use detail data when list and detail contracts diverge |
 | C-M03 | Medium | Mobile has API tests but lacks a full Countries screen integration test | Add list, form, archive/restore, bulk, report, and permission coverage |
@@ -87,7 +88,8 @@ These differences are presentation decisions. They do not change the shared API 
 | Mobile | Country API test | 5 passed |
 | Mobile | Typecheck, architecture check, lint | Passed |
 | Documentation | Required-source validation and generated packet freshness | Passed for all 14 recipes on 2026-08-22 |
-| Web | ActiveReportsJS wrapper strict typecheck and starter-template JSON parse | Passed on 2026-08-22; visual browser mount could not run from the isolated browser because it cannot reach the local dev server |
+| Web | ActiveReportsJS service tests, type-check/strict/lint, and bound starter JSON | Passed on 2026-08-23; architecture check remains blocked by four pre-existing unrelated boundary/cycle violations; no visual browser run in this change |
+| API report templates | Isolated build, full tests, EF pending-model check | Passed on 2026-08-23: 0 build errors/warnings, 272/272 tests, no pending model changes; migration generated but not applied |
 
 Focused results prove the reviewed paths, not every repository quality gate. Production release still requires the complete commands listed in the canonical master review.
 

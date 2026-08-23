@@ -57,6 +57,40 @@ export interface CountriesRoutes {
   update: (id: Id) => string;
   archive: (id: Id) => string;
   restore: (id: Id) => string;
+  /**
+   * Same-origin JSON endpoint consumed by ActiveReportsJS.  It is deliberately
+   * an API URL, never a database connection string.
+   */
+  reportData: string;
+}
+
+export interface ReportTemplatesRoutes {
+  list: string;
+  manage: string;
+  getForManagement: (id: string) => string;
+  dataSources: string;
+  getById: (id: string) => string;
+  create: string;
+  update: (id: string) => string;
+  duplicate: (id: string) => string;
+  publish: (id: string) => string;
+  unpublish: (id: string) => string;
+}
+
+export interface CrystalReportsRoutes {
+  list: string;
+  render: (id: string) => string;
+  manage: string;
+  getForManagement: (id: string) => string;
+  create: string;
+  versions: (id: string) => string;
+  download: (id: string) => string;
+  downloadVersion: (id: string, versionId: string) => string;
+  publishVersion: (id: string, versionId: string) => string;
+  access: (id: string) => string;
+  archive: (id: string) => string;
+  legacyCandidates: string;
+  importLegacy: string;
 }
 
 export interface UserInvitationsRoutes {

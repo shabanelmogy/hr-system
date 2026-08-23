@@ -429,7 +429,10 @@ Optional:
 
 - chart only for a meaningful metric; list-backed charts reset to page zero,
   show no pagination controls, and label their first-page scope;
-- report only for a defined printable/export workflow;
+- report only for a defined printable/export workflow. Record
+  Required/Deferred/Excluded and the engine before implementation. Managed
+  Crystal reports must follow
+  [Crystal Report Manager Feature Integration Guide](CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md);
 - map only for geographic coordinates;
 - timeline/calendar only for time-based records;
 - import only with mapping, validation, preview, error export, and permission checks.
@@ -519,7 +522,10 @@ Deliver one aggregate end to end before opening several unfinished screens.
 - identify tenant/company ownership and permissions;
 - define list columns, filters, sort keys, and expected scale;
 - define archive/delete, concurrency, audit, and effective-date behavior;
-- decide which views have real business value.
+- decide which views have real business value;
+- record reporting as Required, Deferred, or Excluded. If Required, choose
+  Managed Crystal or server-managed browser templates and document the dataset,
+  filters, permissions, and deployment owner.
 
 ### Backend
 
@@ -533,6 +539,9 @@ Deliver one aggregate end to end before opening several unfinished screens.
 8. Post-commit jobs and realtime registry contract.
 9. Migration inspection.
 10. Handler, persistence, authorization, and HTTP contract tests.
+11. When Managed Crystal is Required, add the allowlisted HR API dataset profile
+    and matching Crystal runtime schema profile; do not add a feature-specific
+    public render controller.
 
 ### Web
 
@@ -546,6 +555,8 @@ Deliver one aggregate end to end before opening several unfinished screens.
 8. Permissions, read-only boundary, localization, RTL, accessibility.
 9. Realtime invalidation.
 10. Focused component/hook tests and required architecture checks.
+11. When Managed Crystal is Required, consume the shared Report Manager published
+    catalog/render service by `entityKey`; never call the Crystal host directly.
 
 ## 13. Definition of Done
 
@@ -559,6 +570,9 @@ Deliver one aggregate end to end before opening several unfinished screens.
 - save completes before background scheduling;
 - error codes and HTTP statuses are stable;
 - migration contains only intended model changes;
+- required Managed Crystal reporting has a documented `entityKey`, filter
+  allowlist, exact dataset schema, matching HR/Crystal runtime profiles, and
+  tenant/company/ACL tests;
 - tests cover success, validation, duplicate, not-found, FK/dependency,
   cross-scope, concurrency, cancellation, and post-commit scheduling.
 
@@ -572,6 +586,8 @@ Deliver one aggregate end to end before opening several unfinished screens.
 - direct mutation handlers enforce permission, not only hidden buttons;
 - EN/AR, RTL, keyboard, and dialog focus are checked;
 - query invalidation and realtime refresh are tested;
+- a required Managed Crystal view lists only manager-owned published reports,
+  localizes Title/Subject correctly, renders by report ID, and owns no list pager;
 - architecture, type, strict type, lint, tests, and production build pass.
 
 Run the checks documented in:
@@ -594,6 +610,9 @@ Do not update `graphify-out` as part of ordinary feature implementation.
 - duplicated filter logic in grid and card views;
 - feature UI placed inside `src/app`;
 - chart/import/report tabs added only because another feature has them;
+- direct browser/mobile calls to the Crystal host or client-supplied report paths,
+  filenames, SQL, connection strings, tenant IDs, or company IDs;
+- treating ActiveReports/RDLX `ReportTemplates` as Crystal Report Manager records;
 - authorization implemented only by hiding a button;
 - realtime payload treated as the saved record;
 - cross-tenant IDs trusted from the request body.

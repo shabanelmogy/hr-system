@@ -87,6 +87,22 @@ public sealed class CountryReadStore(
             .ProjectToType<SimpleCountryResponse>(mappingConfig)
             .ToListAsync(cancellationToken);
 
+    public async Task<IReadOnlyList<CountryReportDataResponse>> GetReportDataAsync(
+        CancellationToken cancellationToken) =>
+        await ActiveCountries()
+            .OrderBy(country => country.NameEn)
+            .ThenBy(country => country.Id)
+            .Select(country => new CountryReportDataResponse(
+                country.Id,
+                country.NameAr,
+                country.NameEn,
+                country.Alpha2Code,
+                country.Alpha3Code,
+                country.PhoneCode,
+                country.CurrencyCode,
+                true))
+            .ToListAsync(cancellationToken);
+
     private IQueryable<Country> ActiveCountries() =>
         context.Countries.AsNoTracking().Where(country => !country.IsDeleted);
 

@@ -18,11 +18,25 @@
       "purpose": "Persistence stores, configuration, audit, scheduling, and background delivery"
     },
     {
+      "id": "api-report-template-application",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Application/Features/Analytics/ReportTemplates",
+      "minimumFiles": 20,
+      "purpose": "Reusable tenant-scoped report-template CQRS, contracts, permissions, validation, revisions, and lifecycle"
+    },
+    {
       "id": "web-feature",
       "layer": "web-next",
       "path": "web-next/src/features/basic-data/geographical-information/countries",
       "minimumFiles": 45,
       "purpose": "Complete browser feature boundary including views, forms, import, reports, hooks, services, and tests"
+    },
+    {
+      "id": "web-shared-reporting",
+      "layer": "web-next",
+      "path": "web-next/src/features/reporting",
+      "minimumFiles": 12,
+      "purpose": "Reusable Crystal viewer plus tenant-scoped ActiveReportsJS template repository, Designer, Viewer, types, and tests"
     },
     {
       "id": "mobile-feature",
@@ -74,6 +88,42 @@
       "layer": "api",
       "path": "api/HrManagementSystem.Domain/GeographicalInformation/Countries/Entities/Country.cs",
       "purpose": "Domain state and relationships"
+    },
+    {
+      "id": "api-report-template-controller",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Api/Features/Analytics/ReportTemplates/V1/ReportTemplatesController.cs",
+      "purpose": "Published/management routes, explicit permissions, lifecycle, revisions, and tenant-safe HTTP boundary"
+    },
+    {
+      "id": "api-report-template-entity",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Domain/Analytics/ReportTemplates/Entities/ReportTemplate.cs",
+      "purpose": "Current tenant-owned report definition, publication state, content hash, and revision number"
+    },
+    {
+      "id": "api-report-template-revision",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Domain/Analytics/ReportTemplates/Entities/ReportTemplateRevision.cs",
+      "purpose": "Immutable tenant-owned report-template snapshots"
+    },
+    {
+      "id": "api-report-template-store",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/ReportTemplates/Persistence/ReportTemplateStore.cs",
+      "purpose": "Tenant-filtered published/management projections and optimistic-concurrency persistence"
+    },
+    {
+      "id": "api-report-template-safety",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Application/Features/Analytics/ReportTemplates/Validation/ReportTemplateDefinitionSafety.cs",
+      "purpose": "RDLX size/structure/connection validation and approved Countries API descriptor"
+    },
+    {
+      "id": "api-country-report-data",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Application/Features/GeographicalInformation/Countries/Queries/GetCountryReportData/GetCountryReportDataQuery.cs",
+      "purpose": "Approved stable Countries JSON data query for browser report rendering"
     },
     {
       "id": "api-entity-configuration",
@@ -140,6 +190,18 @@
       "layer": "api-test",
       "path": "api/HrManagementSystem.Tests/CountriesControllerCqrsTests.cs",
       "purpose": "HTTP-to-CQRS surface coverage"
+    },
+    {
+      "id": "api-report-template-tests",
+      "layer": "api-test",
+      "path": "api/HrManagementSystem.Tests/ReportTemplateFeatureTests.cs",
+      "purpose": "Definition safety, tenant isolation, revision loading, and append-only coverage"
+    },
+    {
+      "id": "api-report-template-controller-tests",
+      "layer": "api-test",
+      "path": "api/HrManagementSystem.Tests/ReportTemplatesControllerContractTests.cs",
+      "purpose": "Published/management routes, permissions, lifecycle RowVersion, and thin CQRS controller coverage"
     },
     {
       "id": "web-agent-guidance",
@@ -211,19 +273,37 @@
       "id": "web-active-report-designer",
       "layer": "web-next",
       "path": "web-next/src/features/basic-data/geographical-information/countries/reports/components/CountryActiveReportsDesigner.tsx",
-      "purpose": "SSR-safe ActiveReportsJS browser designer boundary alongside the Crystal report viewer"
+      "purpose": "Countries composition of the reusable server-managed ActiveReportsJS designer"
     },
     {
-      "id": "web-active-report-designer-client",
-      "layer": "web-next",
-      "path": "web-next/src/features/basic-data/geographical-information/countries/reports/components/CountryActiveReportsDesignerClient.tsx",
-      "purpose": "Countries starter-template load, local download, and browser-only designer composition"
+      "id": "web-server-report-designer",
+      "layer": "web-next-shared",
+      "path": "web-next/src/features/reporting/components/ServerReportDesignerClient.tsx",
+      "purpose": "Reusable management catalog, Designer callbacks, Save/Save As, publish, dirty guards, and RowVersion feedback"
+    },
+    {
+      "id": "web-server-report-viewer",
+      "layer": "web-next-shared",
+      "path": "web-next/src/features/reporting/components/ServerReportViewerClient.tsx",
+      "purpose": "Reusable published tenant-template selector and ActiveReportsJS viewer"
+    },
+    {
+      "id": "web-report-template-service",
+      "layer": "web-next-shared",
+      "path": "web-next/src/features/reporting/services/reportTemplateService.ts",
+      "purpose": "Published and management report-template HTTP repository"
+    },
+    {
+      "id": "web-report-template-service-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/features/reporting/services/reportTemplateService.test.ts",
+      "purpose": "Tenant-free management routes, approved descriptor query, and RowVersion request coverage"
     },
     {
       "id": "web-active-report-template",
       "layer": "web-next",
       "path": "web-next/public/reports/countries/countries-directory.rdlx-json",
-      "purpose": "Editable Countries ActiveReportsJS starter report definition"
+      "purpose": "Editable Countries ActiveReportsJS starter bound only to the approved relative Countries API source"
     },
     {
       "id": "web-grid",

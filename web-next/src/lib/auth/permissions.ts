@@ -39,6 +39,18 @@ export const permissions = {
   CreateReportsCategories: "ReportsCategories:Create",
   EditReportsCategories: "ReportsCategories:Edit",
   DeleteReportsCategories: "ReportsCategories:Delete",
+  ViewReportTemplates: "ReportTemplates:View",
+  CreateReportTemplates: "ReportTemplates:Create",
+  EditReportTemplates: "ReportTemplates:Edit",
+  DeleteReportTemplates: "ReportTemplates:Delete",
+  PublishReportTemplates: "ReportTemplates:Publish",
+  ViewCrystalReports: "CrystalReports:View",
+  CreateCrystalReports: "CrystalReports:Create",
+  DownloadCrystalReports: "CrystalReports:Download",
+  UploadCrystalReports: "CrystalReports:Upload",
+  PublishCrystalReports: "CrystalReports:Publish",
+  ManageCrystalReportAccess: "CrystalReports:ManageAccess",
+  DeleteCrystalReports: "CrystalReports:Delete",
   ViewRoles: "Roles:View",
   CreateRoles: "Roles:Create",
   EditRoles: "Roles:Edit",
@@ -129,6 +141,8 @@ export type PermissionModule =
   | "DatabaseViews"
   | "Localizations"
   | "ReportsCategories"
+  | "ReportTemplates"
+  | "CrystalReports"
   | "Roles"
   | "States"
   | "SubCategories"

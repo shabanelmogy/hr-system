@@ -10,6 +10,7 @@ using HrManagementSystem.Application.Features.GeographicalInformation.Countries.
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryById;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryLookup;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryWithStates;
+using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryReportData;
 using MediatR;
 
 namespace HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1;
@@ -40,6 +41,20 @@ public sealed class CountriesController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> GetLookup(CancellationToken cancellationToken) =>
         Ok(await sender.Send(new GetCountryLookupQuery(), cancellationToken));
+
+    /// <summary>Returns the approved, active Countries JSON dataset for tenant report rendering.</summary>
+    /// <remarks>
+    /// This endpoint is the only Countries data source approved for browser-authored report
+    /// templates. The stored report contains the relative API endpoint, never a database
+    /// connection string, credential, or environment-specific host.
+    /// </remarks>
+    [HttpGet("report-data")]
+    [HasPermission(Permissions.ViewCountries)]
+    [ProducesResponseType(typeof(IReadOnlyList<CountryReportDataResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> GetReportData(CancellationToken cancellationToken) =>
+        Ok(await sender.Send(new GetCountryReportDataQuery(), cancellationToken));
 
     /// <summary>Returns one country, including an archived country, without loading its states.</summary>
     [HttpGet("{id:int}")]

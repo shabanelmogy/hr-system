@@ -20,6 +20,7 @@ import { getBackendUrl } from "@/lib/env/server";
 
 const TAG = "[📡 API Proxy]";
 const backendRequestTimeoutMs = 30_000;
+const reportRenderTimeoutMs = 120_000;
 
 type RouteParameters = { params: Promise<{ path: string[] }> };
 
@@ -61,11 +62,20 @@ async function callBackend(
     body: preparedBody.body,
     cache: "no-store",
     redirect: "manual",
-    signal: AbortSignal.timeout(backendRequestTimeoutMs),
+    signal: AbortSignal.timeout(isCrystalReportRender(path)
+      ? reportRenderTimeoutMs
+      : backendRequestTimeoutMs),
   };
   if (preparedBody.streaming) init.duplex = "half";
 
   return fetch(url, init);
+}
+
+function isCrystalReportRender(path: string[]) {
+  return path.length === 4 &&
+    path[0] === "v1" &&
+    path[1] === "crystal-reports" &&
+    path[3] === "render";
 }
 
 function resolveBackendPath(path: string[]) {
