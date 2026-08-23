@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ENV } from '@/src/core/config/env';
 import { useLocalization } from '@/src/core/localization';
+import { permissions, useAuthorization } from '@/src/features/auth';
 import {
   AppAlert,
   AppButton,
@@ -17,28 +18,50 @@ import {
 } from '@/src/shared/components';
 import {
   countryReportApi,
-  defaultCountryReport,
+  getCountryReportDisplayName,
   type GeneratedCountryReport,
 } from '../api/country-report-api';
 import { useCountryReportCatalog } from '../queries/use-country-reports';
 
 export function CountryReportView() {
   const { t } = useTranslation();
+  const { allowed, isLoading } = useAuthorization({
+    requiredPermissions: [permissions.ViewCrystalReports],
+  });
+
+  if (isLoading) {
+    return (
+      <AppCard padding="md" style={styles.card} variant="outlined">
+        <AppAlert severity="info">{t('common.loading')}</AppAlert>
+      </AppCard>
+    );
+  }
+
+  if (!allowed) {
+    return (
+      <AppCard padding="md" style={styles.card} variant="outlined">
+        <AppAlert severity="warning">{t('countries.reportPermissionDenied')}</AppAlert>
+      </AppCard>
+    );
+  }
+
+  return <AuthorizedCountryReportView />;
+}
+
+function AuthorizedCountryReportView() {
+  const { t } = useTranslation();
   const { isRTL } = useLocalization();
   const language = isRTL ? 'ar' : 'en';
-  const catalogQuery = useCountryReportCatalog(language, ENV.isReportApiConfigured);
-  const reports = useMemo(
-    () => catalogQuery.data?.length ? catalogQuery.data : [defaultCountryReport],
-    [catalogQuery.data],
-  );
-  const [selectedReportId, setSelectedReportId] = useState(defaultCountryReport.Id);
+  const catalogQuery = useCountryReportCatalog(ENV.isApiConfigured);
+  const reports = useMemo(() => catalogQuery.data ?? [], [catalogQuery.data]);
+  const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
   const [nameAr, setNameAr] = useState('');
   const [nameEn, setNameEn] = useState('');
   const [draftNameAr, setDraftNameAr] = useState('');
   const [draftNameEn, setDraftNameEn] = useState('');
   const [generating, setGenerating] = useState(false);
   const [generatedReport, setGeneratedReport] = useState<GeneratedCountryReport | null>(null);
-  const selectedReport = reports.find((report) => report.Id === selectedReportId) ?? reports[0];
+  const selectedReport = reports.find((report) => report.id === selectedReportId) ?? reports[0] ?? null;
 
   useEffect(() => () => generatedReport?.dispose(), [generatedReport]);
 
@@ -51,7 +74,7 @@ export function CountryReportView() {
   }, []);
 
   const generate = useCallback(async () => {
-    if (!ENV.isReportApiConfigured || !selectedReport) return;
+    if (!ENV.isApiConfigured || !selectedReport) return;
     setGenerating(true);
     try {
       const report = await countryReportApi.generate({ language, nameAr, nameEn, report: selectedReport });
@@ -102,16 +125,15 @@ export function CountryReportView() {
   }, []);
 
   const reportOptions = useMemo(() => reports.map((report) => ({
-    value: report.Id,
-    label: language === 'ar' ? report.Title : report.Subject,
+    value: report.id,
+    label: getCountryReportDisplayName(report, language),
     icon: 'document-text-outline' as const,
   })), [language, reports]);
 
+  const catalogUnavailable = !catalogQuery.isLoading && !catalogQuery.isError && reports.length === 0;
+
   return (
     <AppCard padding="md" style={styles.card} variant="outlined">
-      {!ENV.isReportApiConfigured ? (
-        <AppAlert severity="warning">{t('countries.reportApiNotConfigured')}</AppAlert>
-      ) : null}
       {catalogQuery.isError ? (
         <View style={styles.feedback}>
           <AppAlert severity="warning">{t('countries.reportCatalogError')}</AppAlert>
@@ -120,21 +142,24 @@ export function CountryReportView() {
           </AppButton>
         </View>
       ) : null}
+      {catalogUnavailable ? (
+        <AppAlert severity="info">{t('countries.reportUnavailable')}</AppAlert>
+      ) : null}
 
       <AppSelectField
         allowWhenReadOnly
-        disabled={!ENV.isReportApiConfigured || catalogQuery.isLoading}
+        disabled={!ENV.isApiConfigured || catalogQuery.isLoading || reports.length === 0}
         label={t('countries.reportType')}
         leadingIcon="document-text-outline"
-        onChange={setSelectedReportId}
+        onChange={(value) => setSelectedReportId(value as string)}
         options={reportOptions}
-        value={selectedReport?.Id ?? defaultCountryReport.Id}
+        value={selectedReport?.id ?? null}
       />
       <AppFilterFormButton
         activeCount={activeFilterCount}
         buttonLabel={t('countries.searchReport')}
         clearDisabled={!draftNameAr && !draftNameEn}
-        disabled={!ENV.isReportApiConfigured}
+        disabled={!ENV.isApiConfigured || !selectedReport}
         display="button"
         icon="search-outline"
         modalTitle={t('countries.reportFilters')}
@@ -163,7 +188,7 @@ export function CountryReportView() {
 
       <View style={styles.actions}>
         <AppButton
-          disabled={!ENV.isReportApiConfigured || !selectedReport}
+          disabled={!ENV.isApiConfigured || !selectedReport}
           fullWidth
           icon="search-outline"
           loading={generating}

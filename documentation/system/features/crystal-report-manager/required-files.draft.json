@@ -33,6 +33,13 @@
       "path": "web-next/src/features/reporting/crystal-report-manager",
       "minimumFiles": 5,
       "purpose": "Management grid, multipart workflow, versions, permissions, service, types, and tests"
+    },
+    {
+      "id": "mobile-shared-reporting",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/reporting",
+      "minimumFiles": 4,
+      "purpose": "Authenticated mobile catalog/render boundary, runtime schemas, and transport tests"
     }
   ],
   "requiredFiles": [
@@ -47,6 +54,12 @@
       "layer": "documentation",
       "path": "documentation/system/features/crystal-report-manager/CRYSTAL_REPORT_MANAGER-REVIEW-ARTIFACTS.md",
       "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "integration-guide",
+      "layer": "documentation",
+      "path": "documentation/project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md",
+      "purpose": "Applied manager lifecycle and cross-platform integration contract"
     },
     {
       "id": "api-controller",
@@ -167,6 +180,36 @@
       "layer": "web-next",
       "path": "web-next/src/features/basic-data/geographical-information/states/reports/pages/StateReportPage.tsx",
       "purpose": "Consumes only the manager-owned States published catalog and render endpoint"
+    },
+    {
+      "id": "mobile-reporting-public-api",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/reporting/index.ts",
+      "purpose": "Curated shared reporting exports"
+    },
+    {
+      "id": "mobile-reporting-service",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/reporting/crystal-reports/crystal-report-api.ts",
+      "purpose": "Authenticated published catalog and PDF render transport"
+    },
+    {
+      "id": "mobile-reporting-schemas",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/reporting/crystal-reports/crystal-report-schemas.ts",
+      "purpose": "Runtime-validated mobile manager contracts"
+    },
+    {
+      "id": "mobile-countries-report-consumer",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/basic-data/countries/components/CountryReportView.tsx",
+      "purpose": "Permission-aware Countries report selector, filters, preview, and sharing"
+    },
+    {
+      "id": "mobile-reporting-tests",
+      "layer": "test",
+      "path": "mobile-react/src/features/reporting/crystal-reports/__tests__/crystal-report-api.test.ts",
+      "purpose": "Catalog and render transport contract coverage"
     },
     {
       "id": "api-tests",

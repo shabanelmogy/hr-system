@@ -1,13 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { countryReportApi } from '../api/country-report-api';
+import { crystalReportsApi } from '@/src/features/reporting';
+
 import { countryKeys } from './country-keys';
 
-export function useCountryReportCatalog(language: 'ar' | 'en', enabled = true) {
+export function useCountryReportCatalog(enabled = true) {
   return useQuery({
     enabled,
-    queryKey: countryKeys.reportCatalog(language),
-    queryFn: () => countryReportApi.getCatalog(language),
+    queryKey: countryKeys.reportCatalog(),
+    queryFn: () => crystalReportsApi.listPublished('countries'),
     staleTime: 5 * 60_000,
   });
 }

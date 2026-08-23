@@ -13,7 +13,7 @@ This artifact remains the implementation evidence and verification history.
 | Feature | `crystal-report-manager` |
 | API route | `/api/v1/crystal-reports` |
 | Web route | `/administration/crystal-reports` |
-| Mobile route | `N/A - web/API scope requested for the first implementation` |
+| Mobile route | `N/A for manager administration; Countries consumes managed reports inside its existing route` |
 | Review owner | `Codex` |
 | Review date | `2026-08-23` |
 | Required-file manifest | `documentation/system/features/crystal-report-manager/required-files.draft.json` |
@@ -32,7 +32,7 @@ This artifact remains the implementation evidence and verification history.
 | R-05 | Publish a validated revision and retain older revisions for rollback/audit. | Agreed design, 2026-08-23 | Published-version pointer and append-only revisions complete | Version status and publish action complete | N/A | Complete |
 | R-06 | Archive/delete reports without weakening the generic file security policy. | User request, 2026-08-23 | Soft archive and report-specific storage complete | Confirmation workflow complete | N/A | Complete |
 | R-07 | Discover and import Crystal reports already deployed under entity folders. | User request, 2026-08-23 | Authenticated catalog/source adapter and tenant import complete | Existing-report catalog/import dialog complete | N/A | Complete |
-| R-08 | Make Countries and other entity report screens list and run the manager-owned published versions. | User request, 2026-08-23 | Published-version render query, Run ACL, and internal runtime adapter complete | Countries and States now use the managed catalog/render contract | N/A | Complete |
+| R-08 | Make Countries and other entity report screens list and run the manager-owned published versions. | User request, 2026-08-23 | Published-version render query, Run ACL, and internal runtime adapter complete | Countries and States use the managed catalog/render contract | Countries uses the shared authenticated catalog/render boundary with permission-aware composition | Complete |
 
 ## Evidence register
 
@@ -45,6 +45,7 @@ This artifact remains the implementation evidence and verification history.
 | E-05 | The browser manager exposes create, versions, downloads, publish, access grants, and archive through one guarded route. | `CrystalReportManagerPage.tsx`; `services.ts` | Type checks, lint, Vitest, and production build |
 | E-06 | Existing legacy reports are discovered without exposing paths and are copied through the same inspection/private-storage pipeline. | `InternalReportCatalogController.cs`; `CrystalReportLegacySourceClient.cs`; `ImportDiscoveredCrystalReportCommandHandler` | Modern API build/tests and web contract tests |
 | E-07 | Entity report screens send only a managed report ID, language, and bounded filters. The HR API resolves the current tenant-owned published RPT, enforces Run ACL, reads approved data from its own EF context, and passes an explicit-schema DataSet plus the source to an allowlisted Crystal rendering profile. | `RenderCrystalReportQueryHandler`; `CrystalReportDataSource`; `CrystalReportRendererClient`; `InternalReportRenderController`; `ManagedReportRuntime`; entity report pages | Modern and legacy builds, API data/client/controller tests, web service contract test |
+| E-08 | Mobile Countries uses the same authenticated HR API catalog/render endpoints, hides Report mode without `CrystalReports:View`, repeats the component guard before querying, validates catalog rows with Zod, and persists only validated PDF bytes in temporary cache. | `mobile-react/src/features/reporting`; `CountryReportView.tsx`; `country-report-api.ts`; `permissions.ts` | Mobile typecheck, architecture check, transport/authorization tests, and full Jest suite |
 
 ## Read and list contract
 
@@ -76,7 +77,7 @@ Create requires entity key, optional description, and an initial `.rpt`; the use
 
 ## Integration register
 
-The web management route belongs beside Users/Roles administration and requires `CrystalReports:ManageAccess`; the published-report catalog separately uses `CrystalReports:View`, and every mutation is additionally guarded by its specific permission. The API derives tenant/company from the authenticated actor and evaluates role grants from the database at request time. The browser talks only to the HR API; physical paths, tenant/company IDs, connection strings, SQL, and storage keys are never client inputs. Managed report data is selected by allowlisted EF providers in the HR API and sent to the Crystal host as an explicit-schema DataSet, so the managed path does not depend on the Crystal host's database connection string. EN/AR, RTL, keyboard focus, icon labels, loading/error states, and direct callback permission guards are required. Crystal runtime inspection/rendering remains an internal adapter boundary rather than a browser-to-legacy-API call.
+The web management route belongs beside Users/Roles administration and requires `CrystalReports:ManageAccess`; the published-report catalog separately uses `CrystalReports:View`, and every mutation is additionally guarded by its specific permission. The API derives tenant/company from the authenticated actor and evaluates role grants from the database at request time. Browser and mobile consumers talk only to the HR API; physical paths, tenant/company IDs, connection strings, SQL, storage keys, and the Crystal host URL are never client inputs. Managed report data is selected by allowlisted EF providers in the HR API and sent to the Crystal host as an explicit-schema DataSet, so the managed path does not depend on the Crystal host's database connection string. EN/AR, RTL, keyboard focus, icon labels, loading/error states, and direct callback permission guards are required. Crystal runtime inspection/rendering remains an internal adapter boundary rather than a client-to-legacy-API call.
 
 ## Findings and handoffs
 
@@ -99,13 +100,13 @@ The manager does not read the legacy report filesystem directly. The HR API call
 | API | Modern API build; full test project; EF pending-model check | Passed: 0 warnings/errors, 300 tests including private-storage, managed-data, runtime-client, and controller contract coverage; no pending model changes | `2026-08-23` |
 | Web | architecture check, focused ESLint, normal/strict TypeScript, full Vitest, production build | Feature boundary clean; 64 files/221 tests passed. Repository architecture check still reports unrelated pre-existing findings. | `2026-08-23` |
 | Legacy Crystal API | Visual Studio MSBuild x64, Debug and Release | Passed after unifying Crystal package references on `13.0.4003`; physical reports stay on the host | `2026-08-23` |
-| Mobile | N/A | Not requested in this implementation | `2026-08-23` |
+| Mobile | `npm run check`; focused managed-report transport and authorization tests | Countries managed-report consumer passes typecheck, lint, architecture, and the full Jest suite | `2026-08-23` |
 
 ## Final reconciliation
 
-- [x] Every requested API/web requirement has evidence and a final status.
-- [x] API and web serialize the same shared contract; mobile is explicitly out of scope.
+- [x] Every requested API/web requirement and the applied mobile Countries consumer have evidence and a final status.
+- [x] API, web, and mobile consumers serialize the same managed catalog/render contract.
 - [x] Intentional platform differences are written down.
 - [x] Known reference-feature gaps were not copied as requirements.
-- [x] Draft required paths exist; final recipe registration remains deferred until the mobile decision and runtime deployment are reviewed.
-- [x] Feature-focused and project-level API/web gates pass, with unrelated/pre-existing blockers recorded above.
+- [x] Draft required paths include the applied mobile reporting boundary; final recipe registration remains deferred until the four canonical books and runtime deployment are reviewed.
+- [x] Feature-focused API/web/mobile gates pass, with unrelated/pre-existing blockers recorded above.

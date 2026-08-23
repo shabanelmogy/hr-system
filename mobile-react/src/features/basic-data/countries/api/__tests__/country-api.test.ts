@@ -1,5 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
 
+import { publishedCrystalReportsSchema } from '@/src/features/reporting';
+
 import { countryEndpoints } from '../country-endpoints';
 import { toCountryPageQuery } from '../country-api';
 import {
@@ -7,7 +9,10 @@ import {
   countryPageSchema,
   countryWithStatesSchema,
 } from '../country-schemas';
-import { countryReportInfoSchema } from '../country-report-schemas';
+import {
+  buildCountryRenderFilters,
+  getCountryReportDisplayName,
+} from '../country-report-api';
 
 describe('country API boundary', () => {
   it('maps server list filters to the documented countries query contract', () => {
@@ -59,18 +64,50 @@ describe('country API boundary', () => {
     })).toThrow();
   });
 
-  it('validates the Crystal Reports catalog contract used by the report view', () => {
+  it('validates the published Crystal Reports catalog contract used by the report view', () => {
     const report = {
-      Id: 'Countries',
-      ReportPath: 'Reports/Countries',
-      Title: 'الدول',
-      Subject: 'Countries',
+      id: '3f2504e0-4f89-11d3-9a0c-0305e82c3301',
+      entityKey: 'countries',
+      reportKey: 'countries-directory',
+      displayName: 'Countries directory',
+      summaryTitle: 'دليل الدول',
+      summarySubject: 'Countries directory report',
+      description: null,
+      currentVersionNumber: 2,
+      isPublished: true,
+      isArchived: false,
+      rowVersion: '0x1',
+      updatedOn: '2026-08-23T10:00:00Z',
     };
-    expect(countryReportInfoSchema.parse(report)).toEqual(report);
-    expect(() => countryReportInfoSchema.parse({
-      Id: 'Countries',
-      ReportPath: 'Reports/Countries',
-      Title: 'الدول',
-    })).toThrow();
+    expect(publishedCrystalReportsSchema.parse([report])).toEqual([report]);
+    expect(() => publishedCrystalReportsSchema.parse([{ ...report, id: 'not-a-guid' }])).toThrow();
+    expect(() => publishedCrystalReportsSchema.parse([{ ...report, displayName: '' }])).toThrow();
+  });
+
+  it('maps country name filters to the manager render contract', () => {
+    expect(buildCountryRenderFilters(' مصر ', ' Egypt ')).toEqual({ NameAr: 'مصر', NameEn: 'Egypt' });
+    expect(buildCountryRenderFilters('   ', '')).toEqual({});
+  });
+
+  it('uses the manager summaries for localized report names with a stable fallback', () => {
+    const report = {
+      id: '3f2504e0-4f89-11d3-9a0c-0305e82c3301',
+      entityKey: 'countries',
+      reportKey: 'countries-directory',
+      displayName: 'Countries directory',
+      summaryTitle: 'دليل الدول',
+      summarySubject: 'Countries directory report',
+      description: null,
+      currentVersionNumber: 2,
+      isPublished: true,
+      isArchived: false,
+      rowVersion: '0x1',
+      updatedOn: '2026-08-23T10:00:00Z',
+    };
+
+    expect(getCountryReportDisplayName(report, 'ar')).toBe('دليل الدول');
+    expect(getCountryReportDisplayName(report, 'en')).toBe('Countries directory report');
+    expect(getCountryReportDisplayName({ ...report, summaryTitle: null }, 'ar'))
+      .toBe('Countries directory');
   });
 });

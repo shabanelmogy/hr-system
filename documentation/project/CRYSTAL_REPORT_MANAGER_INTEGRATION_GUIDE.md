@@ -252,17 +252,59 @@ Do not use the legacy public `report/info` or `report/generate` endpoints,
 
 ## 8. Mobile feature integration
 
-Mobile must use the same HR API published catalog and render endpoint as web. Add
-a typed/Zod-validated API boundary and stable query key under shared reporting
-infrastructure once the first mobile Crystal consumer is implemented; do not copy
-manager logic into the business feature.
+Mobile must use the same HR API published catalog and render endpoint as web. The
+first mobile Crystal consumer (Countries) introduced the shared reporting
+boundary; every other feature consumes reports only through its curated public
+API at `mobile-react/src/features/reporting`:
 
-The feature screen owns only:
+- `crystalReportsApi.listPublished(entityKey)` parses
+  `GET /api/v1/crystal-reports?entityKey={key}` with
+  `publishedCrystalReportsSchema`;
+- `crystalReportsApi.render(reportId, { language, filters })` posts the same JSON
+  body as web and returns the raw PDF bytes. It uses an authenticated axios
+  request with `responseType: 'arraybuffer'`, a dedicated long timeout, an
+  `application/pdf` accept header, and stays allowed while the tenant is
+  read-only because rendering is a read workflow;
+- Zod contracts live beside the service; features must not re-declare or loosen
+  them;
+- the mobile permission catalog must include `CrystalReports:View`. Feature
+  composition hides Report mode without that permission, and the report component
+  repeats the guard before mounting a catalog query.
+
+The business feature keeps one stable query key such as
+
+```ts
+["countries", "reports", "catalog"]
+```
+
+and owns only:
 
 - its `entityKey`;
-- localized report selection;
+- localized report selection (Arabic uses `summaryTitle`, English uses
+  `summarySubject`, falling back to `displayName`);
 - allowed filter controls;
 - PDF loading/error/empty/open/share experience.
+
+There is no static default report on mobile. An empty published catalog renders
+a localized info state, and a catalog failure renders a warning with Retry; the
+view never fabricates a fallback report entry.
+
+The feature persists rendered bytes without changing the contract: native builds
+validate the `%PDF-` signature, write to sensitive temporary cache, print/preview
+through Expo Print, share through Expo Sharing, and dispose best-effort; web
+builds wrap the bytes into an object URL for open/download and revoke it on
+dispose.
+
+Do not use the legacy public `report/info` or `report/generate` endpoints, the
+`X-ApiKey` header, `ReportPath`/`ReportFileName` payloads, or
+`EXPO_PUBLIC_REPORT_API_URL` for managed reports. Remove that legacy variable and
+its helpers once no unmanaged mobile consumer remains; managed reports need only
+the authenticated HR API URL.
+
+The shared mobile transport test must assert the exact feature `entityKey`,
+catalog schema failure, render endpoint/body, PDF response type, long timeout,
+read-only allowance, and authenticated HR API boundary. Feature tests separately
+cover localized display-name selection and approved filter mapping.
 
 The report view is independent from the table/card page and must not render its own
 pagination. Never call the Crystal host, pass a filesystem path, or embed a
@@ -346,5 +388,10 @@ granted, and both allowlisted runtime profiles support its `entityKey`.
 - Applied web consumers:
   `web-next/src/features/basic-data/geographical-information/countries/reports` and
   `web-next/src/features/basic-data/geographical-information/states/reports`
+- Mobile shared service and schemas:
+  `mobile-react/src/features/reporting/crystal-reports/crystal-report-api.ts` and
+  `mobile-react/src/features/reporting/crystal-reports/crystal-report-schemas.ts`
+- Applied mobile consumer:
+  `mobile-react/src/features/basic-data/countries/components/CountryReportView.tsx`
 - Manager administration page:
   `web-next/src/features/reporting/crystal-report-manager/CrystalReportManagerPage.tsx`

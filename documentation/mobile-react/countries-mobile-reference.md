@@ -34,7 +34,6 @@ src/features/basic-data/countries/
     country-endpoints.ts
     country-schemas.ts
     country-api.ts
-    country-report-schemas.ts
     country-report-api.ts
     __tests__/country-api.test.ts
   types/country.ts
@@ -47,6 +46,12 @@ src/features/basic-data/countries/
     CountryForm.tsx
     CountryReportView.tsx
   screens/CountriesScreen.tsx
+
+src/features/reporting/
+  index.ts
+  crystal-reports/
+    crystal-report-api.ts
+    crystal-report-schemas.ts
 ```
 
 Required integration sources:
@@ -54,12 +59,16 @@ Required integration sources:
 - `src/features/basic-data/index.ts` — public screen export;
 - `src/core/constants/routes.ts` — typed path;
 - `src/features/auth/rbac/route-manifest.ts` — canonical access policy;
+- `src/features/auth/rbac/permissions.ts` — Countries and managed-report permission constants;
 - `src/features/basic-data/screens/GeographicalInformationScreen.tsx` — module navigation;
 - `src/core/localization/translations/en-basic-data.ts` and
   `ar-basic-data.ts` — paired strings;
 - `src/features/realtime/realtime-query-registry.ts` — stable invalidation prefix;
 - `src/features/notifications/utils/notification-presentation.ts` — maps the
-  API's web-oriented notification action URL to the mobile route.
+  API's web-oriented notification action URL to the mobile route;
+- `src/features/reporting/index.ts` — shared Crystal Report Manager catalog and
+  render boundary (see the
+  [Crystal Report Manager Integration Guide](../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md)).
 
 The route imports through the Basic Data public API. Router files must not import
 feature-private screens, API modules or hooks.
@@ -89,7 +98,8 @@ The feature root deliberately exports:
 - `CountriesScreen`;
 - `countryApi` and `countryReportApi`;
 - `countryKeys`;
-- selected transport/domain types.
+- selected transport/domain types, including the `CountryReportInfo` alias of
+  the shared manager catalog item.
 
 It does not expose feature-private components, mutation hooks or implementation
 state. A cross-feature consumer uses the public root or a deliberately added
@@ -115,7 +125,7 @@ app/layout -> feature public API -> feature internals -> shared/core
 | `CountryFilters` | Status, currency code and state-presence state |
 | `BulkArchiveCountriesResponse` / schema | Runtime-validated archive count |
 | lookup schema | Runtime-validated selector rows |
-| report info schema | Runtime-validated report catalog entries |
+| shared reporting schemas | Manager catalog items and render request, owned by `src/features/reporting` |
 
 Every JSON API method requests `unknown` from `apiService` and parses it with a
 feature-owned Zod schema. A missing required field fails closed. Do not hide a
@@ -147,7 +157,7 @@ countries
   list + CountryPageQuery
   lookup
   detail + id
-  reports + catalog + language
+  reports + catalog
 ```
 
 - The list query uses `placeholderData: previous => previous` to retain the
@@ -260,21 +270,34 @@ Successful bulk archive clears selection; single archive removes the archived ID
 
 ## 11. Report Contract
 
-The report view is independent from the management query.
+The report view is independent from the management query and reads the Crystal
+Report Manager through the shared `src/features/reporting` boundary; see the
+[Crystal Report Manager Integration Guide](../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md)
+for the canonical contract. Feature-specific behavior:
 
-- It is disabled with a localized warning when the Report API URL is absent.
-- Catalog query key includes `ar`/`en` and is stale for five minutes.
-- Catalog failure keeps the default Countries report available and exposes Retry.
-- Report filters are Arabic/English country names with draft/apply/clear state.
-- Generation sends language, fixed logo/export metadata, report path/ID and
-  nullable trimmed name filters.
-- The response must be a non-trivial PDF by content type or PDF signature.
+- The catalog comes from `crystalReportsApi.listPublished('countries')` and is
+  stale for five minutes under one language-independent query key.
+- The Report mode is visible only with `CrystalReports:View`. The report
+  component repeats that authorization check before mounting its catalog query
+  and renders a localized forbidden state if it is composed elsewhere.
+- Catalog failure shows a localized warning with Retry; a loaded-but-empty
+  catalog shows a localized info state. There is no static default report.
+- Arabic selects `summaryTitle`, English selects `summarySubject`, both falling
+  back to `displayName`.
+- Report filters are Arabic/English country names with draft/apply/clear state;
+  only trimmed non-empty values are sent as `NameAr`/`NameEn`.
+- Rendering sends only the selected report ID, `ar`/`en`, and those filters to
+  `crystalReportsApi.render`; the call stays available in tenant read-only mode.
+- The response must be a non-trivial PDF validated by size and `%PDF-`
+  signature.
 - Native platforms write to sensitive temporary cache, print/preview through
   Expo Print, share through Expo Sharing and dispose the file best-effort.
 - Web builds use an object URL, browser open/download and URL revocation.
 
-Report authentication/service internals are a separate integration contract;
-do not route report traffic through the HR JSON API by assumption.
+The legacy `report/info`, `report/generate`, `X-ApiKey` header and
+`EXPO_PUBLIC_REPORT_API_URL` are not part of this feature anymore. Mobile
+environment configuration exposes only the authenticated HR API URL for managed
+reports.
 
 ## 12. Localization, RTL, Responsive and Accessibility
 
@@ -322,6 +345,7 @@ do not route report traffic through the HR JSON API by assumption.
 Existing focused evidence:
 
 - `src/features/basic-data/countries/api/__tests__/country-api.test.ts`;
+- `src/features/reporting/crystal-reports/__tests__/crystal-report-api.test.ts`;
 - `src/shared/listing/__tests__/useServerListState.test.ts`;
 - `src/features/auth/rbac/__tests__/route-access.test.ts`;
 - `src/features/realtime/__tests__/realtime-query-registry.test.ts`;

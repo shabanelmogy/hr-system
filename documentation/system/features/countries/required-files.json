@@ -44,6 +44,13 @@
       "path": "mobile-react/src/features/basic-data/countries",
       "minimumFiles": 14,
       "purpose": "Complete mobile feature boundary including schemas, API, queries, screen, form, report, and tests"
+    },
+    {
+      "id": "mobile-shared-reporting",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/reporting",
+      "minimumFiles": 4,
+      "purpose": "Shared authenticated Crystal Report Manager catalog, schemas, binary renderer, public API, and transport tests"
     }
   ],
   "requiredFiles": [
@@ -76,6 +83,12 @@
       "layer": "documentation",
       "path": "documentation/mobile-react/countries-mobile-reference.md",
       "purpose": "Applied mobile contract"
+    },
+    {
+      "id": "crystal-report-manager-integration-guide",
+      "layer": "documentation",
+      "path": "documentation/project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md",
+      "purpose": "Canonical managed Crystal lifecycle, permission, transport, runtime, and client integration contract"
     },
     {
       "id": "api-controller",
@@ -408,6 +421,48 @@
       "purpose": "Feature boundary"
     },
     {
+      "id": "mobile-country-report-api",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/basic-data/countries/api/country-report-api.ts",
+      "purpose": "Countries filter mapping, localized report naming, PDF validation, and secure temporary-file lifecycle"
+    },
+    {
+      "id": "mobile-country-report-query",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/basic-data/countries/queries/use-country-reports.ts",
+      "purpose": "Stable Countries published-report catalog query"
+    },
+    {
+      "id": "mobile-country-report-view",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/features/basic-data/countries/components/CountryReportView.tsx",
+      "purpose": "Permission-aware report selection, filters, render, preview, share, and failure states"
+    },
+    {
+      "id": "mobile-reporting-public-api",
+      "layer": "mobile-react-shared",
+      "path": "mobile-react/src/features/reporting/index.ts",
+      "purpose": "Curated shared reporting boundary"
+    },
+    {
+      "id": "mobile-crystal-report-api",
+      "layer": "mobile-react-shared",
+      "path": "mobile-react/src/features/reporting/crystal-reports/crystal-report-api.ts",
+      "purpose": "Authenticated HR API catalog and binary render transport"
+    },
+    {
+      "id": "mobile-crystal-report-schemas",
+      "layer": "mobile-react-shared",
+      "path": "mobile-react/src/features/reporting/crystal-reports/crystal-report-schemas.ts",
+      "purpose": "Runtime-validated published catalog and render request contracts"
+    },
+    {
+      "id": "mobile-crystal-report-api-tests",
+      "layer": "mobile-react-test",
+      "path": "mobile-react/src/features/reporting/crystal-reports/__tests__/crystal-report-api.test.ts",
+      "purpose": "Exact entity-key, schema failure, render payload, binary response, timeout, and read-only transport coverage"
+    },
+    {
       "id": "mobile-screen",
       "layer": "mobile-react",
       "path": "mobile-react/src/features/basic-data/countries/screens/CountriesScreen.tsx",
@@ -490,6 +545,12 @@
       "layer": "mobile-react-config",
       "path": "mobile-react/src/features/auth/rbac/route-manifest.ts",
       "purpose": "Permission-protected route registration"
+    },
+    {
+      "id": "mobile-auth-permissions",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/src/features/auth/rbac/permissions.ts",
+      "purpose": "Countries and managed Crystal report permission constants"
     },
     {
       "id": "mobile-navigation",

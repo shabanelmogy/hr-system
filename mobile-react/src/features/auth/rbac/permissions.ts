@@ -24,6 +24,13 @@ export const permissions = {
   CreateCountries: 'Countries:Create',
   EditCountries: 'Countries:Edit',
   DeleteCountries: 'Countries:Delete',
+  ViewCrystalReports: 'CrystalReports:View',
+  CreateCrystalReports: 'CrystalReports:Create',
+  DownloadCrystalReports: 'CrystalReports:Download',
+  UploadCrystalReports: 'CrystalReports:Upload',
+  PublishCrystalReports: 'CrystalReports:Publish',
+  ManageCrystalReportAccess: 'CrystalReports:ManageAccess',
+  DeleteCrystalReports: 'CrystalReports:Delete',
   ViewDistricts: 'Districts:View',
   CreateDistricts: 'Districts:Create',
   EditDistricts: 'Districts:Edit',
@@ -121,6 +128,7 @@ export type PermissionModule =
   | 'Backups'
   | 'Categories'
   | 'Countries'
+  | 'CrystalReports'
   | 'Districts'
   | 'ChangeLogs'
   | 'Hangfire'

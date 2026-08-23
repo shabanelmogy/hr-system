@@ -1,6 +1,7 @@
 export { CountriesScreen } from './screens/CountriesScreen';
 export { countryApi } from './api/country-api';
 export { countryReportApi } from './api/country-report-api';
+export type { CountryReportInfo } from './api/country-report-api';
 export { countryKeys } from './queries/country-keys';
 export type {
   BulkArchiveCountriesResponse,

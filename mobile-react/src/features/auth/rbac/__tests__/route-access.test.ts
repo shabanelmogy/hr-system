@@ -1,7 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
 
 import { ROUTES } from '@/src/core/constants/routes';
-import type { AuthorizationClaims } from '../authorization';
+import { getAuthorizationState, type AuthorizationClaims } from '../authorization';
 import { permissions } from '../permissions';
 import { canAccessRoute, getRoutePolicy } from '../route-access';
 import { MAIN_DRAWER_ROUTES } from '../route-manifest';
@@ -36,6 +36,20 @@ describe('route access manifest', () => {
     expect(canAccessRoute(ROUTES.basicData.countries, userWith({
       permissionClaims: [permissions.ViewStates],
     }))).toBe(false);
+  });
+
+  it('keeps managed report access independent from Countries view access', () => {
+    const countriesOnly = userWith({ permissionClaims: [permissions.ViewCountries] });
+    const reportViewer = userWith({
+      permissionClaims: [permissions.ViewCountries, permissions.ViewCrystalReports],
+    });
+
+    expect(getAuthorizationState(countriesOnly, false, {
+      permissions: [permissions.ViewCrystalReports],
+    })).toBe('forbidden');
+    expect(getAuthorizationState(reportViewer, false, {
+      permissions: [permissions.ViewCrystalReports],
+    })).toBe('authorized');
   });
 
   it('protects the States route with the States view permission', () => {
