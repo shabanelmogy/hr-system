@@ -1,16 +1,16 @@
-# Graph Report - hr-system  (2026-08-23)
+# Graph Report - hr-system  (2026-08-22)
 
 ## Corpus Check
-- 2094 files · ~633,704 words
+- 2008 files · ~592,030 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 8520 nodes · 14210 edges · 1237 communities (460 shown, 777 thin omitted)
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 295 edges (avg confidence: 0.79)
+- 7536 nodes · 11979 edges · 1186 communities (394 shown, 792 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 287 edges (avg confidence: 0.79)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2ec092f5`
+- Built from commit: `01348a42`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -18,24 +18,24 @@
 - DistrictService
 - include
 - StateService
-- .GenerateSyncfusionPdf
+- ExportPdfFileService
 - dependencies
 - RealtimeResource
-- HrManagementSystem.Domain.Common.Entities
-- AddressRequestValidator
+- CompanyAuditableEntity
+- AddressTypeService
 - dependencies
 - HrManagementSystem.Application.Features.Security.ApiKeys.Contracts
-- .SeedAsync
-- HrManagementSystem.Infrastructure.Security.Authorization.Filters
+- HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities
+- Globalusings.cs
 - AppointmentService
 - .EveryAction_DispatchesItsSliceAndUsesCanonicalSuccessStatus
 - AddressService
 - ViewService
 - Program.cs
 - District
-- HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities
+- HrManagementSystem.Application.Features.Platform.Notifications.Services
 - IGeneralHubClient
-- HrManagementSystem.Domain.GeographicalInformation.Countries.Entities
+- HrManagementSystem.Domain.GeographicalInformation.Districts.Entities
 - config/api/index.ts
 - AddressTypeForm.tsx
 - HrManagementSystem.Infrastructure
@@ -43,17 +43,17 @@
 - Candidate
 - HrManagementSystem.Infrastructure.Dependencies
 - web-next/src/features/auth/login/components/LoginForm.tsx
-- AddressType
+- address-types/index.ts
 - AddressTypeChart.types.ts
 - CountryCqrsHandlerTests
-- cards/index.ts
+- card-view/CountryCard.tsx
 - DistrictsChartView.tsx
 - RefreshToken
 - HandleApiError
-- CategoryService
+- .SaveChangesAsync
 - web-next/src/features/auth/register/Register.tsx
 - ar.ts
-- useUserGridLogic.ts
+- UsersPage.tsx
 - StatesChartView.tsx
 - platform-tools-api.ts
 - data-grid/index.ts
@@ -61,7 +61,7 @@
 - devDependencies
 - expo
 - ProfileHeader.tsx
-- reportApiService.ts
+- CountryReportPage.tsx
 - useSession
 - feedback/states/index.ts
 - FileUploadPage.tsx
@@ -75,7 +75,7 @@
 - useFileGridLogic.ts
 - HrManagementSystem.Application.Features.Security.Users.Contracts
 - http
-- HrManagementSystem.Infrastructure.Migrations
+- HrManagementSystem.Application.Common.Consts
 - FileService
 - JsonStringLocalizer
 - signalRService.ts
@@ -87,31 +87,31 @@
 - .GetUsersCount
 - CategoriesController
 - StateQueries.cs
-- Category
+- ValidationQueriesTests.cs
 - .Required
-- groupByType.ts
+- FileItem
 - HrManagementSystem.Application.Features.Catalog.SubCategories.Contracts
 - What You Must Do When Invoked
 - navigationUtils.tsx
-- pagination.ts
+- hooks/index.ts
 - InvoiceRequest
 - HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts
-- hooks/index.ts
+- useUserGridLogic.ts
 - HrManagementSystem.Domain.Recruitment.Enums
 - Interview
-- top-bar/TopBar.tsx
+- TopBarStyles.tsx
 - Countries Full-Stack Web and Mobile Implementation Profile
 - ApplicationDbContextAuditTests.cs
 - ChangePassword.tsx
-- HrManagementSystem.Application.Features.Analytics.CrystalReports.Contracts
+- DistrictsCardView.tsx
 - MyForm.tsx
-- HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Contracts
-- HrManagementSystem.Application.Features.Platform.Files.Contracts
+- ErrorsService.cs
+- AbstractValidator
 - .SendWithTransientRetryAsync
 - SubCategoryRequestValidator
-- ReportMaster
+- IEntityTypeConfiguration
 - AppIconName
-- StatesMultiView.tsx
+- lists/card-view/index.ts
 - quick-insights/index.tsx
 - AuthController
 - HrManagementSystem.Application.Features.Analytics.Reports.Contracts
@@ -127,7 +127,7 @@
 - HrManagementSystem.Application.Common.Paginations
 - ICategoryValidationQueries
 - NotificationServiceTests
-- UpdateProfileRequest
+- UpdateProfileRequestValidator
 - useStateGridLogic.ts
 - VideoPlayer.tsx
 - searchCatalog.ts
@@ -136,12 +136,12 @@
 - TenantManagementService
 - devDependencies
 - compilerOptions
-- StateCardFooter.tsx
+- cards/index.ts
 - IReportValidationQueries
 - districts/index.ts
 - HrManagementSystem.Infrastructure.Common.Observability
 - HangfireAuthorizationFilter
-- SubCategoryRequest
+- SubcategoriesController
 - UsersController
 - Result
 - SubcategoryService
@@ -153,29 +153,29 @@
 - HrManagementSystem.Application.Abstractions.Authentication
 - HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts
 - .Success
-- .PublishToPermissionAsync
+- BackgroundNotificationJobTests
 - Country
-- IQuery
+- ApplicationDbContext.cs
 - Notification
 - ApplicationDbContextAuditTests
-- tenantApi.ts
-- CrystalReport
+- UserStore
+- CountryStatesSection.tsx
 - useCountryGridLogic.ts
 - forms/index.ts
 - AccountController
 - HrManagementSystem.Application.Features.Tenancy.Contracts
 - Tenant
-- CancellationToken
+- HrManagementSystem.Infrastructure.Migrations
 - JwtProvider
 - AttendanceTrendsPage.tsx
 - PersonalInfo.tsx
-- IRequest
+- RecordingSender
 - GlobalPresencePage.tsx
 - MediaViewer.tsx
 - errorUtils.ts
 - Frontend Feature Implementation Guide
 - StatesController
-- ReportsCategoriesController
+- ReportCategoryRequest
 - .Failure
 - NotificationsController
 - JobDescription
@@ -183,18 +183,18 @@
 - Server-Managed Feature Frontend Reference
 - web-next/scripts/check-architecture.mjs
 - video/TopBar.tsx
-- CrystalReportStore
+- Documentation README
 - States Next.js Frontend Reference
-- .SaveChangesAsync
+- LoginAuditService
 - StateRequest
 - CountryCqrsArchitectureTests
-- CrystalReportManagerPage.tsx
+- Company
 - routes/index.ts
-- HomePage.tsx
+- trends-row/index.tsx
 - Feature Module Implementation Checklist
-- ReportTemplatesController
+- ICurrentActor
 - TenantManagementRequest
-- StateReadStore
+- CancellationToken
 - INotificationService
 - .GetAsync
 - JobOpening
@@ -203,7 +203,7 @@
 - AppRoute
 - web-next/package.json
 - scripts
-- ICountryWriteStore
+- HrManagementSystem.Domain.GeographicalInformation.Countries.Entities
 - JobRequisition
 - State
 - ConfigureSwaggerOptions
@@ -216,41 +216,41 @@
 - mobile-react/src/shared/components/forms/layouts/index.ts
 - include
 - HealthPipelinePage.tsx
-- navigation.test.ts
+- components/layout/index.ts
 - useAppointmentQueries.ts
 - Countries Feature (Reference Implementation)
 - TenantManagementResponse
 - AuthenticationService
-- HrManagementSystem.Application.Features.Analytics.ReportTemplates.Contracts
+- .SeedAsync
 - Infrastructure Layer (HrManagementSystem.Infrastructure)
-- ReportTemplateLifecycleCommands.cs
-- route-access.ts
+- .ExecuteAsync
+- SessionClaims
 - utils/constants.ts
-- HrManagementSystem.Infrastructure.Security.Authentication
+- HomePage.tsx
 - kpi-row/index.tsx
 - Appointment
-- HrManagementSystem.Application/GlobalUsings.cs
+- UploadedFile
 - CronExpressions
 - .BuildModel
 - .ReferencedAssemblies
-- AuthControllerAuthorizationTests
+- AuthControllerAuthorizationTests.cs
 - HrManagementSystem.Infrastructure.Common.Settings
 - graphify reference: extra exports and benchmark
 - mobile-react/package.json
 - tsconfig.strict.json
-- usePermissions.ts
+- AddressType
 - MappedFile
 - ImageViewer.tsx
-- CountryReportPage.tsx
+- backend-session.test.ts
 - FilterSelect.tsx
 - maps/index.ts
 - Entity Implementation Guide
 - ReportCategoryService
-- HrManagementSystem.Infrastructure/GlobalUsings.cs
-- HrManagementSystem.Domain.Common.Abstractions
-- .SelectCompany
+- ICacheService
+- UserCompanyAccess
+- CompanySelectionContracts.cs
 - .CreateFixedWindowPartition
-- reporting/index.ts
+- CategoryValidationQueries
 - .TrySaveAsync
 - IStateService
 - mobile-react/src/shared/components/feedback/transient/index.ts
@@ -261,8 +261,8 @@
 - hooks/useServerListState.test.ts
 - .ToProblem
 - CountryMutation.cs
-- FilesController
-- Globalusings.cs
+- .AddCorsService
+- CultureMiddleware
 - PermissionAuthorizationPolicyProvider
 - plugins
 - apiResponse.test.ts
@@ -272,7 +272,7 @@
 - global.d.ts
 - <Feature Name> Review Artifacts
 - FileErrors
-- BulkArchiveCountriesCommand
+- HrManagementSystem.Application.Abstractions.Messaging
 - Migration
 - graphify reference: query, path, explain
 - HR Management System
@@ -290,21 +290,21 @@
 - Countries Review Artifacts
 - UserErrors
 - Frontend Architecture Reference
-- HrManagementSystem.Application.Features.Security.Authorization.Contracts
+- addAppointmentTable
 - RemoveStateNameCheckConstraints
 - HardenRefreshTokenSessions
-- ReportTemplate
-- FilesPage.tsx
-- .InspectAsync
-- CrystalReportContracts.cs
+- ProfilePicture_BlobToFilename
+- modifyLogging
+- AddNotifications
+- FixCountryNotificationActionUrl
 - SimplifyNotificationDelivery
 - AlignAppointmentsContract
 - AddTenantCompanyIsolation
-- AddressTypeService
-- RoleRequestValidator
-- Crystal Report Manager Feature Integration Guide
+- AddOrganizationalStructureFields
+- MoveDomainTypesToCleanArchitecture
+- ApplyPragmaticDomainFoundation
 - AddTenantSubscriptionsAndSuperAdmin
-- AddressTypesController
+- .SeedAsync
 - ControllerBase
 - Q: when focus input keyboard cover input
 - Q: fix style for buton : login as admin
@@ -323,33 +323,33 @@
 - route.ts
 - ViewLayoutContext.tsx
 - HrManagementSystem.Domain/AssemblyReference.cs
-- IQueryHandler
-- IFileService
-- ServerReportDesignerClient.tsx
-- ReportTemplateRevisionResponse
-- HrManagementSystem.Infrastructure.Persistence
+- 20250803182736_CreateDatabase.Designer.cs
+- 20251016180547_addAppointmentTable.Designer.cs
+- 20260715084244_SimplifyNotificationDelivery.Designer.cs
+- 20260801123243_AddTenantCompanyIsolation.Designer.cs
+- ApplicationDbContextModelSnapshot
 - InlineData
 - .Handle
 - graphify reference: add a URL and watch a folder
 - graphify reference: commit hook and native CLAUDE.md integration
 - graphify reference: incremental update and cluster-only
-- countries-frontend-reference.md
+- Countries Feature Full Review (Cross-Platform)
 - HR Management Mobile
 - country-api.test.ts
 - realtime-query-registry.test.ts
 - mobile-react/src/features/tenants/index.ts
 - web-next/src/features/notifications/index.ts
 - .Handle
-- ICountryReadStore
+- State
 - characterCount.test.ts
 - header/index.ts
-- PrivateCrystalReportFileStorage
+- StateReadStore
 - useLoginForm.ts
 - graphify reference: GitHub clone and cross-repo merge
 - graphify reference: transcribe video and audio
 - dayjs
-- HrManagementSystem.Application.Features.Catalog.Categories.Contracts
-- ExportPdfFileService
+- .GetAll
+- ApplicationPipelineTests.cs
 - i18next
 - @microsoft/signalr
 - eslint.config.js
@@ -437,7 +437,7 @@
 - localizationValidation.ts
 - auth/constants.ts
 - permissions-parity.test.ts
-- api/types.ts
+- CrudRoutes
 - clampPage
 - matchesConfirmationText
 - safeReturnPath
@@ -491,8 +491,8 @@
 - MobileReactFrontend
 - WebNextFrontend
 - CancellationToken
-- CrystalReportsController
-- 3. Key Patterns
+- Consumes
+- .Add
 - Authentication Configuration
 - Domain Development Guide
 - Recruitment Domain Design
@@ -510,12 +510,12 @@
 - HttpPost
 - HttpPut
 - IActionResult
-- ReportTemplateDetailResponse
-- AbstractValidator
+- ICommand
+- ICommandHandler
 - IdentityResult
 - IFileService
 - INotificationPublisher
-- ReportTemplateFeatureTests
+- int
 - IReadOnlyDictionary
 - IValidator
 - Kanban Board Feature
@@ -909,13 +909,13 @@
 - GET
 - GET
 - AuthRoutes
-- permissions.ts
-- geographical-information/countries/components/CountryForm.tsx
-- StateForm.tsx
-- .ExportCsv
-- AddressTypeRequest
-- .Issue
-- BackgroundNotificationJobTests
+- AdvancedToolsRoutes
+- AuthRoutes
+- BasicDataRoutes
+- ExtrasRoutes
+- RouteKey
+- RouteValue
+- SuperAdminRoutes
 - ExternalToolFrame
 - ApiEndpointsPage
 - HangfireDashboardFrame
@@ -992,12 +992,12 @@
 - DistrictValidationSchema
 - CountryPillProps
 - {{RECIPE_TITLE}}
-- .SendAsync
+- advanced.ts
 - proxy-transport.ts
 - SimpleCountry
 - StateDistrictListItem
-- Crystal Report Manager Review Artifacts
-- FileUploadForms.cs
+- BasicService.cs
+- .AddHangfireService
 - StateAction
 - StateValidationSchema
 - BasicDataLayout
@@ -1011,10 +1011,10 @@
 - TextToolbarProps
 - RepeatMode
 - useMediaViewer.ts
-- IReportTemplateStore
-- CrystalReportDataSource
+- .AddHealthCheckService
+- .AddSendEmailService
 - 11. Blueprint for the Next Feature
-- ReportTemplateStore
+- 4. Read Path Contract
 - FileDialogType
 - GlobalSearchPanel
 - SearchField
@@ -1057,22 +1057,22 @@
 - createTenantValidationSchema
 - TenantFormState
 - SubscriptionStatus
-- NotificationParameters
-- .PrepareChanges
+- ColorValue
+- TitleValue
 - AuthMobileMenu
 - DisplayDebugger
-- ApiClient
+- ApiError
 - ManagementPageMetadata
 - AuthorizationRequirement
 - AuthorizationState
 - PermissionMatchMode
-- Mobile feature guide
-- CrystalReportLegacySourceClient
+- StatePieChart.tsx
+- ExceptionService.cs
 - AuthCookieSource
-- ApplicationDbContextDesignFactory
+- MapsetrService.cs
 - AuthTokens
-- .SeedUserAsync
-- ActorScope
+- SwaggerService.cs
+- RoutePolicy
 - Clean Architecture (Modular Monolith)
 - UseAuthorizationOptions
 - SignalRProvider
@@ -1162,74 +1162,23 @@
 - react-to-print
 - CreateCountryCommand
 - Theory
-- CrystalReportRules
+- IEnumerable
 - StateArchiveDialog
 - StateBulkArchiveDialog
 - StateRestoreDialog
-- IReportCategoryService
-- GetReportDataSourcesQuery
-- .InvokeAsync
-- CrystalReportsControllerContractTests
-- 2. Implementation Steps
-- EnhancedStepper.tsx
-- ControlsBar.tsx
-- CountryReportDataResponse
-- constants/validation.ts
-- .OnActionExecutionAsync
-- ReportCategoryRequest
-- .AddDefinitionRules
-- GetStatesQuery
-- AddressType
-- District
-- ExportExcelService
-- AddressTypeValidationQueries
-- GeneralHub
-- useAdaptivePagination.ts
-- .Trimmed
-- GetCountriesQuery
-- ILoginAuditService
-- CorrelationContext
-- DistrictValidationQueries
-- StateValidationQueries
-- CrystalReportManagerAdminPermissionsMigrationTests
-- ReportTemplateAdminPermissionsMigrationTests
-- .ResetPassword
-- ReportValidationQueries
-- CrystalReportDataSourceTests
-- xlsx
-- .RefreshToken
-- CreateCountriesCommandValidator
-- ChangeUserPasswordRequest
-- UpdateProfilePictureRequest
-- .GenerateEmailBody
-- AddTenantReportTemplates
-- ReportTemplatesControllerContractTests
-- SpreadsheetFilePicker.tsx
-- token-expiration.test.ts
-- NoOpHubClientProxy
-- components/auth/index.ts
-- IConfiguration
-- DateTime
-- TimeProvider
-- List
-- CountryDetailResponse
-- CountryListItemResponse
-- CountryResponse
-- GetCountriesQuery
-- ICountryReadStore
-- SimpleCountryResponse
+- StatesReportView
 
 ## God Nodes (most connected - your core abstractions)
 1. `include` - 97 edges
-2. `ApplicationDbContext` - 68 edges
+2. `ApplicationDbContext` - 49 edges
 3. `CountryCqrsHandlerTests` - 42 edges
 4. `UserService` - 35 edges
-5. `HrManagementSystem.Infrastructure.Migrations` - 34 edges
-6. `HrManagementSystem.Infrastructure` - 33 edges
-7. `HrManagementSystem.Tests` - 31 edges
-8. `useSession()` - 30 edges
-9. `HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities` - 30 edges
-10. `AppIconName` - 27 edges
+5. `HrManagementSystem.Infrastructure` - 33 edges
+6. `HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities` - 31 edges
+7. `useSession()` - 30 edges
+8. `ApplicationUser` - 27 edges
+9. `AppIconName` - 27 edges
+10. `Result` - 26 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Entity Implementation Guide` --semantically_similar_to--> `Feature Module Implementation Checklist`  [INFERRED] [semantically similar]
@@ -1246,7 +1195,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (1237 total, 777 thin omitted)
+## Communities (1186 total, 792 thin omitted)
 
 ### Community 0 - "DistrictService"
 Cohesion: 0.07
@@ -1260,25 +1209,25 @@ Nodes (96): src/app/api/**/*.ts, src/app/layout.tsx, src/app/(main)/appointments
 Cohesion: 0.24
 Nodes (11): StateResponse, ApplicationDbContext, CancellationToken, ICurrentActor, IEntityChangeLogService, IEnumerable, IMapper, Result (+3 more)
 
-### Community 3 - ".GenerateSyncfusionPdf"
-Cohesion: 0.14
-Nodes (11): Dictionary, HttpPost, IActionResult, List, ExportPdfController, Dictionary, List, IExportPdfFileService (+3 more)
+### Community 3 - "ExportPdfFileService"
+Cohesion: 0.07
+Nodes (30): Dictionary, HttpPost, IActionResult, List, ExportController, Dictionary, HttpPost, IActionResult (+22 more)
 
 ### Community 4 - "dependencies"
 Cohesion: 0.03
 Nodes (73): axios, expo-audio, expo-constants, expo-document-picker, expo-file-system, expo-font, expo-image-picker, expo-linear-gradient (+65 more)
 
 ### Community 5 - "RealtimeResource"
-Cohesion: 0.04
-Nodes (49): AllowTenantReadOnlyAttribute, RealtimeEntityChanged, Type, RealtimeResource, RealtimeResourceNameAttribute, Guid, IReadOnlyDictionary, NotificationPublishRequestFactory (+41 more)
+Cohesion: 0.08
+Nodes (18): AllowTenantReadOnlyAttribute, Type, RealtimeResource, RealtimeResourceNameAttribute, CancellationToken, Task, AppointmentChangedJob, AppointmentChangedJobRequest (+10 more)
 
-### Community 6 - "HrManagementSystem.Domain.Common.Entities"
+### Community 6 - "CompanyAuditableEntity"
+Cohesion: 0.08
+Nodes (22): ICompanyScoped, ITenantScoped, CompanyAuditableEntity, TenantAuditableEntity, Employee, ICollection, Department, Employee (+14 more)
+
+### Community 7 - "AddressTypeService"
 Cohesion: 0.06
-Nodes (32): DateTime, AuditableEntity, CompanyAuditableEntity, TenantAuditableEntity, DateOnly, EmployeeAssignment, DateOnly, Employee (+24 more)
-
-### Community 7 - "AddressRequestValidator"
-Cohesion: 0.15
-Nodes (12): CancellationToken, IStringLocalizer, Task, AddressRequestValidator, CancellationToken, Task, IAddressTypeValidationQueries, CancellationToken (+4 more)
+Nodes (45): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, Task (+37 more)
 
 ### Community 8 - "dependencies"
 Cohesion: 0.03
@@ -1288,21 +1237,21 @@ Nodes (65): chart.js, country-code-lookup, crypto-js, date-fns, docx-preview, @e
 Cohesion: 0.08
 Nodes (32): CancellationToken, HasPermission, HttpGet, HttpPost, HttpPut, IActionResult, Task, ApiKeysController (+24 more)
 
-### Community 10 - ".SeedAsync"
-Cohesion: 0.07
-Nodes (18): ApplicationRole, ApplicationDbContext, CancellationToken, Task, DefaultCompanies, RoleManager, Task, DefaultRoles (+10 more)
+### Community 10 - "HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities"
+Cohesion: 0.06
+Nodes (23): ApplicationRole, Task, SessionRevokedJob, SessionRevocationNotifier, DefaultCompanies, RoleManager, Task, DefaultRoles (+15 more)
 
-### Community 11 - "HrManagementSystem.Infrastructure.Security.Authorization.Filters"
-Cohesion: 0.15
-Nodes (11): HasPermissionAttribute, Task, PermissionAuthorizationHandler, PermissionRequirement, string, TenantMemberAttribute, AuthorizationHandler, AuthorizationHandlerContext (+3 more)
+### Community 11 - "Globalusings.cs"
+Cohesion: 0.05
+Nodes (29): string, ApiRoutes, ErrorType, FluentValidationExtensions, int, string, FileSettings, HasPermissionAttribute (+21 more)
 
 ### Community 12 - "AppointmentService"
 Cohesion: 0.07
 Nodes (34): CancellationToken, DateTimeOffset, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, Task (+26 more)
 
 ### Community 13 - ".EveryAction_DispatchesItsSliceAndUsesCanonicalSuccessStatus"
-Cohesion: 0.12
-Nodes (27): CancellationToken, GetCountriesQuery, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult (+19 more)
+Cohesion: 0.26
+Nodes (15): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, ProducesResponseType (+7 more)
 
 ### Community 14 - "AddressService"
 Cohesion: 0.08
@@ -1310,59 +1259,59 @@ Nodes (33): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, Htt
 
 ### Community 15 - "ViewService"
 Cohesion: 0.10
-Nodes (23): CancellationToken, HttpDelete, HttpGet, HttpPost, IActionResult, IWebHostEnvironment, Task, ViewsController (+15 more)
+Nodes (22): CancellationToken, HttpDelete, HttpGet, HttpPost, IActionResult, IWebHostEnvironment, Task, ViewsController (+14 more)
 
 ### Community 16 - "Program.cs"
-Cohesion: 0.40
-Nodes (3): Assembly, AssemblyReference, HrManagementSystem.Infrastructure
+Cohesion: 0.20
+Nodes (6): Assembly, AssemblyReference, IConfiguration, IServiceCollection, DependencyInjection, HrManagementSystem.Infrastructure
 
 ### Community 17 - "District"
-Cohesion: 0.11
-Nodes (22): DistrictCardProps, DistrictsCardViewProps, DistrictCardFooterProps, DistrictDeleteDialog(), DistrictDeleteDialogProps, DistrictForm(), DistrictFormData, DistrictFormProps (+14 more)
+Cohesion: 0.13
+Nodes (18): DistrictCardFooterProps, DistrictDeleteDialog(), DistrictDeleteDialogProps, DistrictsChartViewProps, districtExportColumns, DistrictsMultiView(), DistrictsMultiViewProps, ColumnsFactoryProps (+10 more)
 
-### Community 18 - "HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities"
-Cohesion: 0.10
-Nodes (15): Task, SessionRevokedJob, SessionRevocationNotifier, HrManagementSystem.Infrastructure.Features.Security.Authentication.Services, HrManagementSystem.Application.Features.Platform.Notifications.Contracts, HrManagementSystem.Infrastructure.Features.Platform.Notifications.Mapping, HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities, HrManagementSystem.Infrastructure.Features.Security.Authentication.Jobs (+7 more)
+### Community 18 - "HrManagementSystem.Application.Features.Platform.Notifications.Services"
+Cohesion: 0.07
+Nodes (24): Guid, IReadOnlyDictionary, NotificationPublishRequestFactory, IServiceCollection, EntitiesService, CancellationToken, Task, CountryChangedJob (+16 more)
 
 ### Community 19 - "IGeneralHubClient"
-Cohesion: 0.13
-Nodes (9): AddressTypesCountResponse, StatesCountResponse, NotificationRealtimeResponse, UserChangedResponse, Result, Task, IGeneralHubClient, IReadOnlyList (+1 more)
+Cohesion: 0.09
+Nodes (16): RealtimeEntityChanged, StatesCountResponse, NotificationRealtimeResponse, UserChangedResponse, HashSet, GeneralHub, Result, Task (+8 more)
 
-### Community 20 - "HrManagementSystem.Domain.GeographicalInformation.Countries.Entities"
-Cohesion: 0.20
-Nodes (8): Address, EntityTypeBuilder, AddressConfiguration, HrManagementSystem.Domain.GeographicalInformation.Districts.Entities, HrManagementSystem.Domain.GeographicalInformation.States.Entities, HrManagementSystem.Domain.GeographicalInformation.Countries.Entities, HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities, HrManagementSystem.Infrastructure.Features.GeographicalInformation.Addresses.Persistence
+### Community 20 - "HrManagementSystem.Domain.GeographicalInformation.Districts.Entities"
+Cohesion: 0.15
+Nodes (8): CancellationToken, Task, DistrictValidationQueries, HrManagementSystem.Domain.GeographicalInformation.Districts.Entities, HrManagementSystem.Domain.GeographicalInformation.States.Entities, HrManagementSystem.Infrastructure.Features.GeographicalInformation.Districts.Persistence, HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities, HrManagementSystem.Infrastructure.Features.GeographicalInformation.Addresses.Persistence
 
 ### Community 21 - "config/api/index.ts"
 Cohesion: 0.15
-Nodes (17): appointments, addressTypes, countries, districts, states, version, crystalReports, files (+9 more)
+Nodes (18): appointments, addressTypes, countries, districts, states, version, files, roles (+10 more)
 
 ### Community 22 - "AddressTypeForm.tsx"
-Cohesion: 0.27
-Nodes (8): RoleForm(), RoleFormProps, RoleFormData, AddressTypeForm(), AddressTypeFormProps, addressTypes, MyForm(), applyApiFieldErrors
+Cohesion: 0.16
+Nodes (13): RoleForm(), RoleFormProps, RoleFormData, AddressTypeDeleteDialog(), AddressTypeDeleteDialogProps, AddressTypeModel, AddressTypeForm(), useAddressTypeGridLogic (+5 more)
 
 ### Community 23 - "HrManagementSystem.Infrastructure"
 Cohesion: 0.06
-Nodes (40): CrystalReportGeneratorApi, HrManagementSystem.Api, HrManagementSystem.Application, HrManagementSystem.Domain, HrManagementSystem.Infrastructure, HrManagementSystem.Tests, net10.0, Microsoft.NET.Sdk (+32 more)
+Nodes (39): HrManagementSystem.Api, HrManagementSystem.Application, HrManagementSystem.Domain, HrManagementSystem.Infrastructure, HrManagementSystem.Tests, net10.0, Microsoft.NET.Sdk, Asp.Versioning.Mvc.ApiExplorer (8.1.0) (+31 more)
 
 ### Community 24 - "UserService"
 Cohesion: 0.17
 Nodes (13): UserResponse, ApplicationDbContext, CancellationToken, Error, HashSet, IEnumerable, IReadOnlyCollection, Result (+5 more)
 
 ### Community 25 - "Candidate"
-Cohesion: 0.13
-Nodes (7): DomainGuard, DateOnly, DateTimeOffset, Guid, Candidate, DateOnly, HrManagementSystem.Domain.Common.Guards
+Cohesion: 0.12
+Nodes (8): DomainGuard, DateOnly, DateTimeOffset, Guid, Candidate, DateOnly, HrManagementSystem.Domain.Common.Guards, TenantAuditableEntity
 
 ### Community 26 - "HrManagementSystem.Infrastructure.Dependencies"
-Cohesion: 0.04
-Nodes (28): IConfiguration, IServiceCollection, CorsService, IServiceCollection, CultureService, IServiceCollection, ErrorsService, IServiceCollection (+20 more)
+Cohesion: 0.15
+Nodes (7): IServiceCollection, CultureService, IServiceCollection, FluentValidationService, IServiceCollection, VersionService, HrManagementSystem.Infrastructure.Dependencies
 
 ### Community 27 - "web-next/src/features/auth/login/components/LoginForm.tsx"
 Cohesion: 0.11
 Nodes (11): GoogleLoginButton, LoginFormProps, GoogleSocialLoginControl, SocialLoginButtons(), SocialLoginButtonsProps, SocialLoginHandler, LoginFormData, MyButton() (+3 more)
 
-### Community 28 - "AddressType"
-Cohesion: 0.11
-Nodes (27): AddressTypeDeleteDialog(), AddressTypeDeleteDialogProps, AddressTypeModel, AddressTypesCardView(), AddressTypesChartViewProps, addressTypeExportColumns, AddressTypesMultiView(), AddressTypesMultiViewProps (+19 more)
+### Community 28 - "address-types/index.ts"
+Cohesion: 0.14
+Nodes (18): AddressTypesCardView(), AddressTypeCardViewHeaderProps, AddressTypeCardViewPaginationProps, AddressTypesCardViewProps, AddressTypeCardViewHeader(), AddressTypeCardViewPagination(), addressTypeKeys, useAddressType() (+10 more)
 
 ### Community 29 - "AddressTypeChart.types.ts"
 Cohesion: 0.10
@@ -1370,43 +1319,43 @@ Nodes (28): AddressTypesChartView(), ChartLegendProps, EmptyChartStateProps, Ini
 
 ### Community 30 - "CountryCqrsHandlerTests"
 Cohesion: 0.06
-Nodes (37): CancellationToken, Country, CountryDetailResponse, CountryListItemResponse, CountryResponse, Expression, GetCountriesQuery, IQueryable (+29 more)
+Nodes (38): CancellationToken, Country, CountryListItemResponse, Expression, IQueryable, IReadOnlyList, PageResponse, Task (+30 more)
 
-### Community 31 - "cards/index.ts"
-Cohesion: 0.08
-Nodes (36): AddressTypeCard(), AddressTypeCardChipsProps, AddressTypeCardChips(), getQualityLevel(), getQualityScore(), CountryCard(), CountryCardChips(), CountryCardChipsProps (+28 more)
+### Community 31 - "card-view/CountryCard.tsx"
+Cohesion: 0.11
+Nodes (26): CountryCard(), CountryCardProps, CountryCardChips(), CountryCardChipsProps, getQualityLevel(), getQualityScore(), DistrictCard(), DistrictCardProps (+18 more)
 
 ### Community 32 - "DistrictsChartView.tsx"
-Cohesion: 0.11
-Nodes (29): getActiveDistrictsCount(), getAverageDistrictsPerState(), getChartColors(), getDistrictsWithCodesCount(), getTotalDistrictsCount(), getUniqueStatesCount(), prepareDistrictCodeData(), prepareStateData() (+21 more)
+Cohesion: 0.13
+Nodes (25): getActiveDistrictsCount(), getAverageDistrictsPerState(), getChartColors(), getDistrictsWithCodesCount(), getTotalDistrictsCount(), getUniqueStatesCount(), prepareDistrictCodeData(), prepareStateData() (+17 more)
 
 ### Community 33 - "RefreshToken"
-Cohesion: 0.15
-Nodes (12): DateTime, string, TimeSpan, RefreshToken, DateTime, int, List, TimeSpan (+4 more)
+Cohesion: 0.10
+Nodes (18): DateTime, string, TimeSpan, RefreshToken, DateTime, int, List, TimeSpan (+10 more)
 
 ### Community 34 - "HandleApiError"
-Cohesion: 0.10
-Nodes (22): metadata, metadata, apiRoutes, ForgetPassword(), BooleanSetter, describeProfileError(), getErrorStatus(), useProfileImage() (+14 more)
+Cohesion: 0.08
+Nodes (28): metadata, metadata, apiRoutes, ForgetPassword(), BooleanSetter, describeProfileError(), getErrorStatus(), useProfileImage() (+20 more)
 
-### Community 35 - "CategoryService"
-Cohesion: 0.17
-Nodes (17): CategoryRequest, CategoryResponse, CancellationToken, IEnumerable, Result, Task, ICategoryService, ApplicationDbContext (+9 more)
+### Community 35 - ".SaveChangesAsync"
+Cohesion: 0.14
+Nodes (19): CategoryRequest, CategoryResponse, CancellationToken, IEnumerable, Result, Task, ICategoryService, ApplicationDbContext (+11 more)
 
 ### Community 36 - "web-next/src/features/auth/register/Register.tsx"
-Cohesion: 0.14
-Nodes (16): FormBody, FormFooter, FormHeader, FormStepsWrapper(), FormStepsWrapperProps, PersonalDetailsStep(), PersonalDetailsStepProps, ProfilePictureStep() (+8 more)
+Cohesion: 0.09
+Nodes (24): CompletedCheckIcon, CustomConnector, CustomConnectorProps, CustomStepIconProps, EnhancedStepper(), EnhancedStepperProps, StepIconContainer, StepIconContainerProps (+16 more)
 
 ### Community 37 - "ar.ts"
 Cohesion: 0.09
 Nodes (19): appI18n, arAdministrationTenants, ar, arAuthProfileOnboarding, arBasicData, arCommon, arNavigationSettings, arPlatformToolsNotifications (+11 more)
 
-### Community 38 - "useUserGridLogic.ts"
-Cohesion: 0.13
-Nodes (24): RolesDataGridProps, Translator, User, UserForm(), UserFormProps, UsersDashboardHeader(), UsersDashboardHeaderProps, UsersDataGrid() (+16 more)
+### Community 38 - "UsersPage.tsx"
+Cohesion: 0.14
+Nodes (20): Translator, User, UserForm(), UserFormProps, UsersDashboardHeader(), UsersDashboardHeaderProps, UsersDataGrid(), UsersDataGridProps (+12 more)
 
 ### Community 39 - "StatesChartView.tsx"
 Cohesion: 0.11
-Nodes (24): CountryData, DistrictData, getChartColors(), prepareCountryData(), prepareDistrictData(), prepareTimelineData(), states, TimelineData (+16 more)
+Nodes (25): CountryData, DistrictData, getChartColors(), prepareCountryData(), prepareDistrictData(), prepareTimelineData(), states, TimelineData (+17 more)
 
 ### Community 40 - "platform-tools-api.ts"
 Cohesion: 0.09
@@ -1429,40 +1378,40 @@ Cohesion: 0.06
 Nodes (32): backgroundColor, backgroundImage, foregroundImage, monochromeImage, adaptiveIcon, edgeToEdgeEnabled, package, predictiveBackGestureEnabled (+24 more)
 
 ### Community 45 - "ProfileHeader.tsx"
-Cohesion: 0.12
-Nodes (16): metadata, EditControls(), EditControlsProps, ProfileAvatar(), ProfileAvatarProps, ProfileHeader(), ProfileHeaderProps, ProfileImageDropZone() (+8 more)
+Cohesion: 0.13
+Nodes (15): metadata, EditControls(), EditControlsProps, ProfileAvatar(), ProfileAvatarProps, ProfileHeader(), ProfileHeaderProps, ProfileImageDropZone() (+7 more)
 
-### Community 46 - "reportApiService.ts"
-Cohesion: 0.17
-Nodes (9): publicApiUrl, publicReportApiUrl, asString(), isRecord(), normalizeErrors(), ReportApiService, ReportError, ReportRequest (+1 more)
+### Community 46 - "CountryReportPage.tsx"
+Cohesion: 0.09
+Nodes (18): publicApiUrl, publicReportApiUrl, CountryReportPage(), getCountryReportCatalog(), isReportInfo(), ReportInfo, selectionValue(), MyReportViewerProps (+10 more)
 
 ### Community 47 - "useSession"
-Cohesion: 0.11
-Nodes (23): useTokenRevocation(), usePrefetchUserProfile(), USER_PROFILE_KEYS, useUserInfo(), useUserPhoto(), useUserProfile(), useUserProfileWithHelpers(), CompleteUserProfile (+15 more)
+Cohesion: 0.08
+Nodes (31): useTokenRevocation(), usePrefetchUserProfile(), USER_PROFILE_KEYS, useUserInfo(), useUserPhoto(), useUserProfile(), useUserProfileWithHelpers(), CompleteUserProfile (+23 more)
 
 ### Community 48 - "feedback/states/index.ts"
-Cohesion: 0.04
-Nodes (34): AddressTypeCardViewHeaderProps, AddressTypeCardViewPaginationProps, EmptyStateProps, NoResultsStateProps, AddressTypeCardViewHeader(), AddressTypeCardViewPagination(), EmptyState(), NoResultsState() (+26 more)
+Cohesion: 0.07
+Nodes (19): EmptyStateProps, NoResultsStateProps, EmptyState(), NoResultsState(), CountryCardViewPaginationProps, EmptyStateProps, NoResultsStateProps, EmptyChartStateProps (+11 more)
 
 ### Community 49 - "FileUploadPage.tsx"
-Cohesion: 0.17
-Nodes (9): FileUploadDialogProps, UploadActions(), UploadHeader(), FILE_CONFIG, FileUpload(), FileUploadProps, useFileUpload, UploadActionsProps (+1 more)
+Cohesion: 0.12
+Nodes (11): SpreadsheetFilePickerProps, FileUploadDialogProps, UploadActions(), UploadHeader(), FILE_CONFIG, FileUpload(), FileUploadProps, useFileUpload (+3 more)
 
 ### Community 50 - ".SaveLocalization"
-Cohesion: 0.12
-Nodes (20): CancellationToken, Dictionary, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult (+12 more)
+Cohesion: 0.10
+Nodes (24): CancellationToken, Dictionary, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult (+16 more)
 
 ### Community 51 - "HrManagementSystem.Application.Features.Security.Authentication.Contracts"
-Cohesion: 0.09
-Nodes (15): AuthResponse, ConfirmEmailRequestValidator, ExternalLoginUser, ForgetPasswordRequest, IStringLocalizer, ForgetPasswordRequestValidator, IStringLocalizer, RegisterRequestValidator (+7 more)
+Cohesion: 0.05
+Nodes (25): AuthResponse, ConfirmEmailRequest, ConfirmEmailRequestValidator, ExternalLoginUser, ForgetPasswordRequest, IStringLocalizer, ForgetPasswordRequestValidator, LogoutRequest (+17 more)
 
 ### Community 52 - "administration-api.ts"
 Cohesion: 0.08
 Nodes (28): apiService, PageQuery, PageResponse, toPageQuery, administrationApi, companyOptionSchema, endpoints, managedUserSchema (+20 more)
 
 ### Community 53 - "MediaContent.tsx"
-Cohesion: 0.10
-Nodes (22): useExcelFilter, useExcelViewer(), MediaErrorView(), MediaErrorViewProps, TextMenu(), TextMenuProps, ExcelViewer(), ExcelViewerProps (+14 more)
+Cohesion: 0.11
+Nodes (21): useExcelFilter, useExcelViewer(), MediaErrorView(), MediaErrorViewProps, TextMenu(), TextMenuProps, ExcelViewer(), ExcelViewerProps (+13 more)
 
 ### Community 54 - "charts/index.ts"
 Cohesion: 0.07
@@ -1473,28 +1422,28 @@ Cohesion: 0.10
 Nodes (14): platformToolsApi, appointmentsApi, AppointmentManagementScreen, fileManagerApi, FileManagerScreen, PlatformToolModuleLayout, localizationApi, LocalizationManagementScreen (+6 more)
 
 ### Community 56 - "RoleRequest"
-Cohesion: 0.18
-Nodes (17): CancellationToken, HasPermission, HttpGet, HttpPost, HttpPut, IActionResult, Task, RolesController (+9 more)
+Cohesion: 0.06
+Nodes (40): CancellationToken, HasPermission, HttpGet, HttpPost, HttpPut, IActionResult, Task, RolesController (+32 more)
 
 ### Community 57 - "useFileGridLogic.ts"
-Cohesion: 0.19
-Nodes (13): DialogType, useFileGridLogic(), fileKeys, getDownloadError(), useDeleteFile(), useDownloadFile(), useFileMutation(), useFiles() (+5 more)
+Cohesion: 0.14
+Nodes (16): metadata, FilesMultiView(), FilesMultiViewProps, DialogType, useFileGridLogic(), fileKeys, getDownloadError(), useDeleteFile() (+8 more)
 
 ### Community 58 - "HrManagementSystem.Application.Features.Security.Users.Contracts"
-Cohesion: 0.08
-Nodes (15): ChangePasswordRequest, ChangePasswordRequestValidator, CreateUserRequest, CreateUserRequestValidator, SimpleUserResponse, UpdateUserRequest, IStringLocalizer, UpdateUserRequestValidator (+7 more)
+Cohesion: 0.10
+Nodes (12): ChangePasswordRequestValidator, IStringLocalizer, ChangeUserPasswordRequestValidator, SimpleUserResponse, IStringLocalizer, UpdateProfilePictureRequestValidator, IStringLocalizer, UpdateUserRequestValidator (+4 more)
 
 ### Community 59 - "http"
 Cohesion: 0.07
 Nodes (28): ASPNETCORE_ENVIRONMENT, applicationUrl, commandName, dotnetRunMessages, environmentVariables, launchBrowser, launchUrl, applicationUrl (+20 more)
 
-### Community 60 - "HrManagementSystem.Infrastructure.Migrations"
-Cohesion: 0.03
-Nodes (37): string, AppRoles, CacheKeys, IntervalType, KanbanBoardRole, TaskPriority, TaskStatus, string (+29 more)
+### Community 60 - "HrManagementSystem.Application.Common.Consts"
+Cohesion: 0.06
+Nodes (20): string, AppRoles, CacheKeys, IntervalType, KanbanBoardRole, TaskPriority, TaskStatus, string (+12 more)
 
 ### Community 61 - "FileService"
-Cohesion: 0.18
-Nodes (15): Stream, FileUpload, ApplicationDbContext, CancellationToken, contentType, fileName, Guid, IEnumerable (+7 more)
+Cohesion: 0.05
+Nodes (52): IFormFile, IReadOnlyCollection, ImageUploadForm, MultipleFilesUploadForm, ProfilePictureUploadForm, SingleFileUploadForm, IFormFile, FormFileExtensions (+44 more)
 
 ### Community 62 - "JsonStringLocalizer"
 Cohesion: 0.21
@@ -1505,24 +1454,24 @@ Cohesion: 0.12
 Nodes (9): ConnectionStateCallback, getErrorMessage(), getJwtExpiration(), setEnabled(), SignalRCallback, SignalRLogger, SignalRService, start() (+1 more)
 
 ### Community 64 - "CountriesMultiView.tsx"
-Cohesion: 0.10
-Nodes (20): CountriesCardViewProps, CountryActionPermissions, CountryCardProps, CountryCardViewHeaderProps, CountryCardFooterProps, pageSizeOptions, CountriesChartView(), CountriesChartViewProps (+12 more)
+Cohesion: 0.11
+Nodes (19): CountriesCardViewProps, CountryActionPermissions, CountryCardViewHeaderProps, CountryCardFooterProps, pageSizeOptions, CountriesChartView(), CountriesChartViewProps, CountriesMultiViewProps (+11 more)
 
 ### Community 65 - "countries/components/chart-view/index.ts"
 Cohesion: 0.10
 Nodes (9): StatesCoverageData, StatesData, CurrencyChartProps, CurrencyData, StatesChartProps, StatesCoverageChartProps, SummaryCardsProps, TimelineChartProps (+1 more)
 
 ### Community 66 - "ApplicationDbContext"
-Cohesion: 0.06
-Nodes (31): Address, AddressType, Country, ICurrentActor, ModelBuilder, ApplicationDbContext, TenantAdministratorAccess, ApiKey (+23 more)
+Cohesion: 0.14
+Nodes (10): DateTime, AuditableEntity, DateTime, ModelBuilder, TimeProvider, ApplicationDbContext, DbContextOptionsBuilder, DbSet (+2 more)
 
 ### Community 67 - "PragmaticDomainModelTests"
-Cohesion: 0.17
-Nodes (7): DateOnly, EmployeeContract, EmployeeContractStatus, EmployeeContractType, DateTime, Fact, PragmaticDomainModelTests
+Cohesion: 0.14
+Nodes (9): DateOnly, EmployeeAssignment, DateOnly, EmployeeContract, EmployeeContractStatus, EmployeeContractType, DateTime, Fact (+1 more)
 
 ### Community 68 - "EmploymentApplication"
-Cohesion: 0.20
-Nodes (10): DateTimeOffset, ApplicationStatusHistory, DateTimeOffset, Guid, IReadOnlyCollection, IReadOnlyDictionary, List, EmploymentApplication (+2 more)
+Cohesion: 0.21
+Nodes (9): DateTimeOffset, ApplicationStatusHistory, DateTimeOffset, Guid, IReadOnlyCollection, IReadOnlyDictionary, List, EmploymentApplication (+1 more)
 
 ### Community 69 - ".GetUsersCount"
 Cohesion: 0.10
@@ -1533,48 +1482,48 @@ Cohesion: 0.32
 Nodes (9): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, Task (+1 more)
 
 ### Community 71 - "StateQueries.cs"
-Cohesion: 0.24
-Nodes (16): CancellationToken, IReadOnlyList, StateDetailResponse, StateLookupResponse, StateWithDistrictsResponse, Task, GetStateByIdQuery, GetStateByIdQueryHandler (+8 more)
-
-### Community 72 - "Category"
 Cohesion: 0.13
-Nodes (12): ICollection, Category, CategorySubcategory, EntityTypeBuilder, CategoryConfiguration, EntityTypeBuilder, CategorySubcategoryConfiguration, CancellationToken (+4 more)
+Nodes (30): CountryListItemResponse, int, PageResponse, string, GetCountriesQuery, GetCountriesQueryValidator, CancellationToken, int (+22 more)
+
+### Community 72 - "ValidationQueriesTests.cs"
+Cohesion: 0.12
+Nodes (12): ICollection, Category, CategorySubcategory, EntityTypeBuilder, CategoryConfiguration, EntityTypeBuilder, CategorySubcategoryConfiguration, Fact (+4 more)
 
 ### Community 73 - ".Required"
 Cohesion: 0.29
 Nodes (5): DateOnly, Guid, ICollection, Employee, EmployeeStatus
 
-### Community 74 - "groupByType.ts"
-Cohesion: 0.40
-Nodes (5): classifyFileType, FileTypeGroup, groupByType(), GroupedFiles, GroupedFilesViewProps
+### Community 74 - "FileItem"
+Cohesion: 0.27
+Nodes (8): FileDeleteDialog(), FileDeleteDialogProps, classifyFileType, FileTypeGroup, groupByType(), GroupedFiles, GroupedFilesViewProps, FileItem
 
 ### Community 75 - "HrManagementSystem.Application.Features.Catalog.SubCategories.Contracts"
-Cohesion: 0.09
-Nodes (17): SimpleSubCategoryResponse, Error, IStringLocalizer, SubCategoryErrors, ICollection, SubCategory, EntityTypeBuilder, SubcategoryConfiguration (+9 more)
+Cohesion: 0.06
+Nodes (25): SimpleCategoryResponse, Error, IStringLocalizer, CategoryErrors, SimpleSubCategoryResponse, Error, IStringLocalizer, SubCategoryErrors (+17 more)
 
 ### Community 76 - "What You Must Do When Invoked"
 Cohesion: 0.08
 Nodes (24): For /graphify add and --watch, For /graphify query, For the commit hook and native CLAUDE.md integration, For --update and --cluster-only, /graphify, Honesty Rules, Interpreter guard for subcommands, Part A - Structural extraction for code files (+16 more)
 
 ### Community 77 - "navigationUtils.tsx"
-Cohesion: 0.18
-Nodes (24): AppRoutes, ColoredIcon, getAdvancedToolsConfig(), getBasicDataConfig(), getExtrasConfig(), getSuperAdminConfig(), getUsersAndRolesConfig(), getNavigationConfig() (+16 more)
+Cohesion: 0.27
+Nodes (18): AppRoutes, ColoredIcon, getAdvancedToolsConfig(), getBasicDataConfig(), getExtrasConfig(), getSuperAdminConfig(), getUsersAndRolesConfig(), getNavigationConfig() (+10 more)
 
-### Community 78 - "pagination.ts"
-Cohesion: 0.36
-Nodes (3): CLIENT_PAGINATION_MAX_ROWS, DEFAULT_ROWS_PER_PAGE, DEFAULT_ROWS_PER_PAGE_OPTIONS
+### Community 78 - "hooks/index.ts"
+Cohesion: 0.12
+Nodes (13): CLIENT_PAGINATION_MAX_ROWS, DEFAULT_ROWS_PER_PAGE, DEFAULT_ROWS_PER_PAGE_OPTIONS, AdaptivePaginationMode, getAdaptivePaginationMode(), getClientPageItems(), PagedQuery, resolveAdaptivePaginationMode() (+5 more)
 
 ### Community 79 - "InvoiceRequest"
 Cohesion: 0.14
 Nodes (13): HttpPost, IActionResult, InvoiceController, InvoiceRequest, InvoiceRequestValidator, IInvoiceQrCodeService, InvoiceQrCodeResult, List (+5 more)
 
 ### Community 80 - "HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts"
-Cohesion: 0.21
-Nodes (7): SimpleCountryResponse, HrManagementSystem.Application.Features.GeographicalInformation.Countries.Abstractions, HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1, HrManagementSystem.Infrastructure.Features.GeographicalInformation.Countries.Persistence, HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts, HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountries, HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountryReportData
+Cohesion: 0.18
+Nodes (9): int, CreateCountriesCommandValidator, SimpleCountryResponse, CreateCountriesCommand, HrManagementSystem.Application.Features.GeographicalInformation.Countries.Abstractions, HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.CreateCountries, HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.BulkArchiveCountries, HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1 (+1 more)
 
-### Community 81 - "hooks/index.ts"
-Cohesion: 0.13
-Nodes (15): RolesDataGrid(), useRoleGridLogic(), RolesPage(), RoleStore, CreateRoleRequest, Role, RoleWithClaims, UpdateRoleRequest (+7 more)
+### Community 81 - "useUserGridLogic.ts"
+Cohesion: 0.14
+Nodes (21): RoleDeleteDialog(), RolesDataGrid(), RolesDataGridProps, useRoleGridLogic(), RolesPage(), RoleStore, CreateRoleRequest, Role (+13 more)
 
 ### Community 82 - "HrManagementSystem.Domain.Recruitment.Enums"
 Cohesion: 0.15
@@ -1582,75 +1531,75 @@ Nodes (6): DomainRuleException, ApplicationSource, HrManagementSystem.Domain.Rec
 
 ### Community 83 - "Interview"
 Cohesion: 0.13
-Nodes (10): DateTimeOffset, IReadOnlyCollection, List, Interview, DateTimeOffset, InterviewEvaluation, InterviewParticipant, InterviewRecommendation (+2 more)
+Nodes (11): DateTimeOffset, IReadOnlyCollection, List, Interview, DateTimeOffset, InterviewEvaluation, InterviewParticipant, InterviewRecommendation (+3 more)
 
-### Community 84 - "top-bar/TopBar.tsx"
-Cohesion: 0.12
-Nodes (15): LanguageSelector(), MobileMenu(), SettingsMenu(), SettingsSystem(), ThemeToggler(), DisplayDebugger, GlobalSearchButton, NotificationBell (+7 more)
+### Community 84 - "TopBarStyles.tsx"
+Cohesion: 0.28
+Nodes (6): MobileMenu(), AppBar, NotificationItem, StyledListItem, StyledToolbar, languageLabels
 
 ### Community 85 - "Countries Full-Stack Web and Mobile Implementation Profile"
-Cohesion: 0.07
-Nodes (29): 10. Localization, RTL and Accessibility, 12. Review Findings: Do Not Copy These Gaps, 13. Verification Matrix, 14. Final Reconciliation Checklist, 1. Feature Review Manifest, 2. Source Map and Ownership, 3. Frozen HTTP Contract, 4. Read Path Contract (+21 more)
+Cohesion: 0.09
+Nodes (22): 10. Localization, RTL and Accessibility, 12. Review Findings: Do Not Copy These Gaps, 13. Verification Matrix, 14. Final Reconciliation Checklist, 1. Feature Review Manifest, 2. Source Map and Ownership, 3. Frozen HTTP Contract, 5. View Contract (+14 more)
 
 ### Community 86 - "ApplicationDbContextAuditTests.cs"
 Cohesion: 0.17
 Nodes (7): CancellationToken, Task, IUnitOfWork, IConfiguration, IServiceCollection, DatabaseService, HrManagementSystem.Application.Abstractions.Persistence
 
 ### Community 87 - "ChangePassword.tsx"
-Cohesion: 0.21
-Nodes (9): ChangePassword(), PasswordChangeValues, SecurityHeader(), SecurityHeaderProps, StyledCard(), StyledCardProps, StyledDivider(), getPasswordChangeSchema() (+1 more)
+Cohesion: 0.14
+Nodes (15): ChangePassword(), PasswordChangeValues, SecurityHeader(), SecurityHeaderProps, StyledCard(), StyledCardProps, StyledDivider(), getPasswordChangeSchema() (+7 more)
 
-### Community 88 - "HrManagementSystem.Application.Features.Analytics.CrystalReports.Contracts"
-Cohesion: 0.08
-Nodes (21): ICurrentPermissionChecker, Error, CrystalReportErrors, IServiceCollection, EntitiesService, IServiceCollection, DependencyInjection, CurrentPermissionChecker (+13 more)
+### Community 88 - "DistrictsCardView.tsx"
+Cohesion: 0.19
+Nodes (9): DistrictCardViewPaginationProps, DistrictsCardViewProps, DistrictCardViewHeader(), DistrictCardViewHeaderProps, DistrictCardViewPagination(), NoResultsState(), NoResultsStateProps, DistrictsCardView() (+1 more)
 
 ### Community 89 - "MyForm.tsx"
 Cohesion: 0.24
 Nodes (12): DialogTransition, FormContainer(), FormContent(), getFormOverlayIcon(), FormFooter(), FormHeader(), getFormModeIcon, MyFormComponent (+4 more)
 
-### Community 90 - "HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Contracts"
-Cohesion: 0.20
-Nodes (7): Error, IStringLocalizer, AddressTypeErrors, HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Errors, HrManagementSystem.Infrastructure.Features.GeographicalInformation.AddressTypes.Services, HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Contracts, HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Services
+### Community 90 - "ErrorsService.cs"
+Cohesion: 0.11
+Nodes (12): IServiceCollection, ErrorsService, CancellationToken, Task, AddressTypeChangedJob, AddressTypeChangedJobRequest, HrManagementSystem.Domain.GeographicalInformation.AddressTypes.Entities, HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Errors (+4 more)
 
-### Community 91 - "HrManagementSystem.Application.Features.Platform.Files.Contracts"
-Cohesion: 0.07
-Nodes (24): FileUpload, IStringLocalizer, BlockedSignaturesValidator, FileUpload, IStringLocalizer, FileContentTypeValidator, FileUpload, IStringLocalizer (+16 more)
+### Community 91 - "AbstractValidator"
+Cohesion: 0.06
+Nodes (30): AbstractValidator, FileUpload, IStringLocalizer, BlockedSignaturesValidator, FileUpload, IStringLocalizer, FileContentTypeValidator, FileUpload (+22 more)
 
 ### Community 92 - ".SendWithTransientRetryAsync"
-Cohesion: 0.13
-Nodes (13): CancellationToken, HttpPost, IActionResult, string, Task, GoogleAuthController, GoogleAuthRequest, GoogleTokenInfo (+5 more)
+Cohesion: 0.11
+Nodes (16): CancellationToken, HttpPost, IActionResult, string, Task, GoogleAuthController, GoogleAuthRequest, GoogleTokenInfo (+8 more)
 
 ### Community 93 - "SubCategoryRequestValidator"
-Cohesion: 0.13
-Nodes (13): CancellationToken, Task, ISubCategoryValidationQueries, CancellationToken, IStringLocalizer, Task, SubCategoryRequestValidator, CancellationToken (+5 more)
+Cohesion: 0.12
+Nodes (14): CancellationToken, Task, ISubCategoryValidationQueries, CancellationToken, IStringLocalizer, Task, SubCategoryRequestValidator, CancellationToken (+6 more)
 
-### Community 94 - "ReportMaster"
-Cohesion: 0.13
-Nodes (13): ICollection, ReportCategory, ReportDetail, ICollection, ReportMaster, EntityTypeBuilder, ReportCategoryConfiguration, EntityTypeBuilder (+5 more)
+### Community 94 - "IEntityTypeConfiguration"
+Cohesion: 0.08
+Nodes (26): ICollection, ReportCategory, ReportDetail, ICollection, ReportMaster, Address, ICollection, AddressType (+18 more)
 
 ### Community 95 - "AppIconName"
 Cohesion: 0.10
 Nodes (22): FileGroup, FileGroupDefinition, StoredFile, AppButtonProps, AppDateTimeFieldProps, AppFilterButtonProps, AppFilterOption, AppFilterFormButtonProps (+14 more)
 
-### Community 96 - "StatesMultiView.tsx"
-Cohesion: 0.15
-Nodes (20): StateCardProps, StateCardViewHeaderProps, StatesCardViewProps, ActionFactoryProps, makeStateActions(), StatesPermissionsModel, StatesDataGrid(), StatesDataGridProps (+12 more)
+### Community 96 - "lists/card-view/index.ts"
+Cohesion: 0.13
+Nodes (12): EmptyState(), EmptyStateProps, NoResultsState(), NoResultsStateProps, StateCardViewPaginationProps, StatesCardViewProps, StateCardViewHeader(), StateCardViewPagination() (+4 more)
 
 ### Community 97 - "quick-insights/index.tsx"
 Cohesion: 0.17
 Nodes (19): sparklineAbsence, sparklineApplicants, sparklineAttritionRisk, sparklineComplianceIncidents, sparklineDiversityIndex, sparklineGenderBalance, sparklineHeadcount, sparklineHiring (+11 more)
 
 ### Community 98 - "AuthController"
-Cohesion: 0.14
-Nodes (18): AllowAnonymous, Authorize, CancellationToken, HasPermission, HttpGet, HttpPost, HttpPut, IActionResult (+10 more)
+Cohesion: 0.29
+Nodes (12): AllowAnonymous, Authorize, CancellationToken, HasPermission, HttpGet, HttpPost, HttpPut, IActionResult (+4 more)
 
 ### Community 99 - "HrManagementSystem.Application.Features.Analytics.Reports.Contracts"
-Cohesion: 0.11
-Nodes (12): ReportDetailResponse, ReportMasterRequest, IStringLocalizer, ReportMasterRequestValidator, ReportMasterResponse, Error, IStringLocalizer, ReportCategoryErrors (+4 more)
+Cohesion: 0.10
+Nodes (13): ReportDetailResponse, ReportMasterRequest, IStringLocalizer, ReportMasterRequestValidator, ReportMasterResponse, Error, IStringLocalizer, ReportCategoryErrors (+5 more)
 
 ### Community 100 - "EntityChangeLogService"
 Cohesion: 0.11
-Nodes (16): EntityChangeLogsRequest, EntityChangeLogsResponse, List, Task, IEntityChangeLogService, ApplicationDbContext, List, Task (+8 more)
+Nodes (15): EntityChangeLogsRequest, EntityChangeLogsResponse, List, Task, IEntityChangeLogService, ApplicationDbContext, List, Task (+7 more)
 
 ### Community 101 - "JobOffer"
 Cohesion: 0.29
@@ -1673,40 +1622,40 @@ Cohesion: 0.14
 Nodes (17): endpoints, profileApi, userProfilePhotoSchema, userProfileSchema, ProfilePhotoCropSource, useChangeProfilePassword, useProfileInfo, useProfilePhoto (+9 more)
 
 ### Community 106 - "ImportCountries.tsx"
-Cohesion: 0.11
-Nodes (20): CountryDataTable(), CountryDataTableProps, AnimatedBox, ImportCountries(), LoadingAlert(), LoadingAlertProps, NoDataMessage(), NoDataMessageProps (+12 more)
+Cohesion: 0.07
+Nodes (33): xlsx, CountryDataTable(), CountryDataTableProps, AnimatedBox, ImportCountries(), LoadingAlert(), LoadingAlertProps, NoDataMessage() (+25 more)
 
 ### Community 107 - "web-next/src/shared/components/dialogs/index.ts"
-Cohesion: 0.18
-Nodes (9): RoleDeleteDialog(), RoleDeleteDialogProps, UserDeleteDialogProps, ConfirmationDialog, ConfirmationDialogProps, DeleteConfirmationDialog, DeleteConfirmationDialogProps, DiscardChangesDialog (+1 more)
+Cohesion: 0.16
+Nodes (9): RoleDeleteDialogProps, UserDeleteDialogProps, StateDeleteDialogProps, ConfirmationDialog, ConfirmationDialogProps, DeleteConfirmationDialog, DeleteConfirmationDialogProps, DiscardChangesDialog (+1 more)
 
 ### Community 108 - "VideoSidebar.tsx"
 Cohesion: 0.19
 Nodes (13): VideoSidebar(), VideoSidebarProps, BookmarkNoteItemProps, BookmarksTab(), BookmarksTabProps, NotesTab(), NotesTabProps, SidebarDrawer (+5 more)
 
 ### Community 109 - "HrManagementSystem.Application.Common.Paginations"
-Cohesion: 0.12
-Nodes (12): MetaData, PagedList, int, string, PaginationRequest, PaginationRequestValidator, string, NotificationRequestValidator (+4 more)
+Cohesion: 0.11
+Nodes (17): MetaData, PagedList, int, string, PaginationRequest, PaginationRequestValidator, NotificationPageResponse, NotificationQueryRequest (+9 more)
 
 ### Community 110 - "ICategoryValidationQueries"
 Cohesion: 0.23
 Nodes (8): CancellationToken, IReadOnlyCollection, Task, ICategoryValidationQueries, CancellationToken, IStringLocalizer, Task, CategoryRequestValidator
 
 ### Community 111 - "NotificationServiceTests"
-Cohesion: 0.31
-Nodes (6): Error, NotificationErrors, DateTime, Fact, Task, NotificationServiceTests
+Cohesion: 0.22
+Nodes (9): Error, NotificationErrors, DateTime, Fact, MethodInfo, Task, NoOpHubClientProxy, NotificationServiceTests (+1 more)
 
-### Community 112 - "UpdateProfileRequest"
-Cohesion: 0.12
-Nodes (13): CancellationToken, Task, IUserValidationQueries, UpdateProfileRequest, CancellationToken, IStringLocalizer, Task, UpdateProfileRequestValidator (+5 more)
+### Community 112 - "UpdateProfileRequestValidator"
+Cohesion: 0.13
+Nodes (12): CancellationToken, Task, IUserValidationQueries, CancellationToken, IStringLocalizer, Task, UpdateProfileRequestValidator, CancellationToken (+4 more)
 
 ### Community 113 - "useStateGridLogic.ts"
-Cohesion: 0.09
-Nodes (25): defaultStateFilters, DialogType, useStateGridLogic(), UseStateGridLogicReturn, stateKeys, stateQueryKeys, useCreateState(), useDeleteState() (+17 more)
+Cohesion: 0.06
+Nodes (43): StateCardViewHeaderProps, ColumnsFactoryProps, ActionFactoryProps, makeStateActions(), StatesPermissionsModel, StatesDataGrid(), StatesDataGridProps, sortableColumns (+35 more)
 
 ### Community 114 - "VideoPlayer.tsx"
-Cohesion: 0.20
-Nodes (11): formatTime(), TimeMark, TimeMarks(), TimeMarksProps, ProgressBar(), ProgressBarProps, ControlsOverlay, TimeDisplay (+3 more)
+Cohesion: 0.11
+Nodes (16): formatTime(), TimeMark, TimeMarks(), TimeMarksProps, baseIconSx, ControlsBar(), ControlsBarProps, skipIconSx (+8 more)
 
 ### Community 115 - "searchCatalog.ts"
 Cohesion: 0.17
@@ -1717,11 +1666,11 @@ Cohesion: 0.18
 Nodes (7): IValidationQuery, CancellationToken, Task, ICountryValidationQueries, HrManagementSystem.Application.Abstractions.Validation, HrManagementSystem.Application.Features.GeographicalInformation.States.Abstractions, HrManagementSystem.Application.Features.GeographicalInformation.Districts.Abstractions
 
 ### Community 117 - "IUserService"
-Cohesion: 0.29
-Nodes (6): CancellationToken, IEnumerable, IReadOnlyCollection, Result, Task, IUserService
+Cohesion: 0.16
+Nodes (10): ChangePasswordRequest, UpdateProfilePictureRequest, UpdateProfileRequest, UserPhoto, UserProfileResponse, CancellationToken, IReadOnlyCollection, Result (+2 more)
 
 ### Community 118 - "TenantManagementService"
-Cohesion: 0.27
+Cohesion: 0.26
 Nodes (10): CancellationToken, Dictionary, Error, IReadOnlyCollection, IReadOnlyList, Result, Task, RoleCounts (+2 more)
 
 ### Community 119 - "devDependencies"
@@ -1732,49 +1681,49 @@ Nodes (19): eslint, eslint-config-expo, jest, jest-expo, devDependencies, eslint
 Cohesion: 0.11
 Nodes (19): dom, dom.iterable, esnext, compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules (+11 more)
 
-### Community 121 - "StateCardFooter.tsx"
-Cohesion: 0.15
-Nodes (14): AddressTypeCardFooterProps, AddressTypeCardFooter(), deleteAddressTypePermissions, ColorKey, colorKeyForState(), CountryStatesSection(), CountryStatesSectionProps, hashString() (+6 more)
+### Community 121 - "cards/index.ts"
+Cohesion: 0.11
+Nodes (21): AddressTypeCard(), AddressTypeCardChipsProps, AddressTypeCardFooterProps, AddressTypeCardChips(), AddressTypeCardFooter(), deleteAddressTypePermissions, getQualityLevel(), getQualityScore() (+13 more)
 
 ### Community 122 - "IReportValidationQueries"
-Cohesion: 0.20
-Nodes (9): CancellationToken, Task, IReportValidationQueries, ReportDetailRequest, CancellationToken, IStringLocalizer, Task, ReportDetailRequestValidator (+1 more)
+Cohesion: 0.11
+Nodes (16): CancellationToken, Task, IReportValidationQueries, CancellationToken, IStringLocalizer, Task, ReportCategoryRequestValidator, ReportDetailRequest (+8 more)
 
 ### Community 123 - "districts/index.ts"
-Cohesion: 0.12
-Nodes (23): DistrictCardViewPaginationProps, DistrictCardViewHeader(), DistrictCardViewHeaderProps, DistrictCardViewPagination(), NoResultsState(), NoResultsStateProps, DistrictsCardView(), districtKeys (+15 more)
+Cohesion: 0.17
+Nodes (19): DistrictForm(), DistrictFormData, DistrictFormProps, districtKeys, useCreateDistrict(), useDeleteDistrict(), useDistrict(), useDistrictCount() (+11 more)
 
 ### Community 124 - "HrManagementSystem.Infrastructure.Common.Observability"
-Cohesion: 0.12
-Nodes (13): CancellationToken, HttpContext, ILogger, GlobalExceptionHandler, CrystalReportTooLargeException, Fact, Task, GlobalExceptionHandlerTests (+5 more)
+Cohesion: 0.06
+Nodes (27): ActionExecutingContext, ActionExecutionDelegate, CancellationToken, HttpContext, ILogger, GlobalExceptionHandler, HttpContext, string (+19 more)
 
 ### Community 125 - "HangfireAuthorizationFilter"
-Cohesion: 0.14
-Nodes (12): HttpContext, HangfireAuthorizationFilter, Fact, IEnumerable, InlineData, Theory, HangfireAuthorizationFilterTests, HrManagementSystem.Infrastructure.Hangfire.Filters (+4 more)
+Cohesion: 0.16
+Nodes (11): HttpContext, HangfireAuthorizationFilter, Fact, IEnumerable, InlineData, Theory, HangfireAuthorizationFilterTests, DashboardContext (+3 more)
 
-### Community 126 - "SubCategoryRequest"
-Cohesion: 0.20
-Nodes (15): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, Task (+7 more)
+### Community 126 - "SubcategoriesController"
+Cohesion: 0.34
+Nodes (9): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, Task (+1 more)
 
 ### Community 127 - "UsersController"
-Cohesion: 0.37
-Nodes (8): CancellationToken, HasPermission, HttpGet, HttpPost, HttpPut, IActionResult, Task, UsersController
+Cohesion: 0.17
+Nodes (11): CancellationToken, HasPermission, HttpGet, HttpPut, IActionResult, Task, UsersController, ChangeUserPasswordRequest (+3 more)
 
 ### Community 128 - "Result"
-Cohesion: 0.20
-Nodes (12): Error, ErrorType, Result, RoleResponse, CancellationToken, IStringLocalizer, List, Result (+4 more)
+Cohesion: 0.32
+Nodes (9): Result, RoleResponse, CancellationToken, IStringLocalizer, List, Result, RoleManager, Task (+1 more)
 
 ### Community 129 - "SubcategoryService"
-Cohesion: 0.25
-Nodes (11): SubCategoryResponse, ApplicationDbContext, CancellationToken, HybridCache, ICurrentActor, IEnumerable, IMapper, Result (+3 more)
+Cohesion: 0.17
+Nodes (17): SubCategoryRequest, SubCategoryResponse, CancellationToken, IEnumerable, Result, Task, ISubCategoryService, ApplicationDbContext (+9 more)
 
 ### Community 130 - "JobPosting"
 Cohesion: 0.24
 Nodes (5): DateTimeOffset, Guid, JobPosting, JobPostingAudience, JobPostingStatus
 
 ### Community 131 - "ApplicationUser"
-Cohesion: 0.17
-Nodes (7): ICollection, List, ApplicationUser, IEmailSender, AuthEmailService, IAuthEmailService, IdentityUser
+Cohesion: 0.11
+Nodes (16): Dictionary, EmailBodyBuilder, ICollection, List, ApplicationUser, IEmailSender, AuthEmailService, IAuthEmailService (+8 more)
 
 ### Community 132 - "basic-data/countries/index.ts"
 Cohesion: 0.16
@@ -1789,28 +1738,28 @@ Cohesion: 0.18
 Nodes (12): CloseButtonContainer, DrawerHeader(), StyledDrawerHeader, NavigationItem(), NavigationSection(), NavigationItem, NavigationSection, DrawerContent (+4 more)
 
 ### Community 135 - "HrManagementSystem.Application.Abstractions.Authentication"
-Cohesion: 0.08
-Nodes (21): HashSet, HttpContext, IStringLocalizer, Task, TenantReadOnlyMiddleware, ICurrentActor, IDisposable, ICurrentActorScope (+13 more)
+Cohesion: 0.13
+Nodes (11): Action, IDisposable, ICurrentActorScope, IDisposable, ActorOverride, ActorScope, CurrentActor, Fact (+3 more)
 
 ### Community 136 - "HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts"
-Cohesion: 0.12
-Nodes (10): CountryResponse, SimpleStateResponse, Error, IStringLocalizer, StateErrors, HrManagementSystem.Application.Features.GeographicalInformation.States.Errors, HrManagementSystem.Application.Features.GeographicalInformation.States.Services, HrManagementSystem.Infrastructure.Features.GeographicalInformation.States.Services (+2 more)
+Cohesion: 0.10
+Nodes (14): SimpleStateResponse, Error, IStringLocalizer, StateErrors, CancellationToken, Task, StateChangedJob, StateChangedJobRequest (+6 more)
 
 ### Community 137 - ".Success"
 Cohesion: 0.44
 Nodes (5): CancellationToken, Result, Task, NotificationService, IQueryable
 
-### Community 138 - ".PublishToPermissionAsync"
-Cohesion: 0.11
-Nodes (17): NotificationPublishRequest, CancellationToken, Result, Task, INotificationPublisher, CancellationToken, DateTime, Result (+9 more)
+### Community 138 - "BackgroundNotificationJobTests"
+Cohesion: 0.06
+Nodes (30): NotificationPublishRequest, CancellationToken, Result, Task, INotificationPublisher, IReadOnlyDictionary, NotificationMappingConfig, NotificationParameters (+22 more)
 
 ### Community 139 - "Country"
-Cohesion: 0.22
-Nodes (9): ICollection, Country, EntityTypeBuilder, CountryConfiguration, CancellationToken, IReadOnlyCollection, IReadOnlyList, Task (+1 more)
+Cohesion: 0.18
+Nodes (12): CancellationToken, IReadOnlyCollection, IReadOnlyList, Task, ICountryWriteStore, ICollection, Country, CancellationToken (+4 more)
 
-### Community 140 - "IQuery"
-Cohesion: 0.12
-Nodes (33): CrystalReportDownload, CrystalReportListItemResponse, CrystalReportPageResponse, DiscoveredCrystalReportResponse, IReadOnlyList, Result, DownloadCrystalReportQuery, GetCrystalReportGrantsQuery (+25 more)
+### Community 140 - "ApplicationDbContext.cs"
+Cohesion: 0.20
+Nodes (7): HrManagementSystem.Domain.Common.Entities, HrManagementSystem.Domain.Employees.Enums, HrManagementSystem.Domain.OrganizationalStructure.Entities, HrManagementSystem.Domain.OrganizationalStructure.Enums, HrManagementSystem.Domain.Security.ApiKeys.Entities, HrManagementSystem.Domain.Employees.Entities, HrManagementSystem.Domain.Appointments.Entities
 
 ### Community 141 - "Notification"
 Cohesion: 0.25
@@ -1820,17 +1769,17 @@ Nodes (7): ApplicationUser, DateTime, Guid, Notification, EntityTypeBuilder, Not
 Cohesion: 0.30
 Nodes (7): ApplicationDbContext, DateTimeOffset, Fact, Task, TimeProvider, ApplicationDbContextAuditTests, FixedTimeProvider
 
-### Community 143 - "tenantApi.ts"
-Cohesion: 0.15
-Nodes (14): ChangeUserPasswordRequest, CreateUserInvitationRequest, CreateUserRequest, UpdateUserRequest, UserCompanyOption, UserInvitation, UserStore, tenantApi (+6 more)
+### Community 143 - "UserStore"
+Cohesion: 0.22
+Nodes (9): ChangeUserPasswordRequest, CreateUserInvitationRequest, CreateUserRequest, UpdateUserRequest, UserCompanyOption, UserInvitation, UserStore, ManagementPageQuery (+1 more)
 
-### Community 144 - "CrystalReport"
-Cohesion: 0.07
-Nodes (18): Guid, StoredCrystalReportFile, Guid, ICollection, CrystalReport, Guid, CrystalReportValidationStatus, CrystalReportVersion (+10 more)
+### Community 144 - "CountryStatesSection.tsx"
+Cohesion: 0.38
+Nodes (6): ColorKey, colorKeyForState(), CountryStatesSection(), CountryStatesSectionProps, hashString(), paletteKeys
 
 ### Community 145 - "useCountryGridLogic.ts"
-Cohesion: 0.10
-Nodes (27): CountriesMultiView(), CountryFilter, defaultCountryFilters, DialogType, useCountryGridLogic(), UseCountryGridLogicReturn, countryKeys, useArchiveCountry() (+19 more)
+Cohesion: 0.08
+Nodes (35): CountriesMultiView(), CountryFilter, defaultCountryFilters, DialogType, useCountryGridLogic(), UseCountryGridLogicReturn, countryKeys, useArchiveCountry() (+27 more)
 
 ### Community 146 - "forms/index.ts"
 Cohesion: 0.12
@@ -1845,24 +1794,28 @@ Cohesion: 0.15
 Nodes (8): TenantManagementRequestValidator, ITenantAccessService, HrManagementSystem.Application.Features.Tenancy.Contracts, HrManagementSystem.Domain.Tenancy.Entities, HrManagementSystem.Domain.Tenancy.Enums, HrManagementSystem.Infrastructure.Features.Tenancy.Services, HrManagementSystem.Application.Features.Tenancy.Services, HrManagementSystem.Api.Features.Tenancy.V1
 
 ### Community 149 - "Tenant"
-Cohesion: 0.18
+Cohesion: 0.20
 Nodes (6): DateTime, Tenant, SubscriptionStatus, EntityTypeBuilder, TenantConfiguration, HrManagementSystem.Infrastructure.Persistence.Configurations.Tenancy
 
-### Community 150 - "CancellationToken"
-Cohesion: 0.14
-Nodes (13): CancellationToken, FileUpload, Guid, IReadOnlyCollection, IReadOnlyDictionary, IReadOnlyList, Stream, Task (+5 more)
+### Community 150 - "HrManagementSystem.Infrastructure.Migrations"
+Cohesion: 0.13
+Nodes (8): ModelBuilder, AddOrganizationalStructureFields, ModelBuilder, MoveDomainTypesToCleanArchitecture, ModelBuilder, ApplyPragmaticDomainFoundation, HrManagementSystem.Infrastructure.Migrations, HrManagementSystem.Infrastructure.Persistence
 
 ### Community 151 - "JwtProvider"
-Cohesion: 0.11
-Nodes (15): CompanySelectionTokenResult, ValidatedCompanySelectionToken, JwtOptions, ApplicationDbContext, ClaimsPrincipal, DateTime, IEnumerable, List (+7 more)
+Cohesion: 0.07
+Nodes (20): AccessTokenResult, CompanySelectionTokenResult, ValidatedCompanySelectionToken, ClaimsPrincipal, Task, IJwtProvider, JwtOptions, ApplicationDbContext (+12 more)
 
 ### Community 152 - "AttendanceTrendsPage.tsx"
 Cohesion: 0.21
 Nodes (10): metadata, anomalies, AttendanceTrendsPage(), rollingWeekly, attendanceHeatmapData, formatHeatmapLabel(), microTrends, weekdays (+2 more)
 
 ### Community 153 - "PersonalInfo.tsx"
-Cohesion: 0.16
-Nodes (14): useUpdateUserInfo(), PersonalInfoForm(), PersonalInfoFormProps, PersonalInfoHeader(), PersonalInfoHeaderProps, describeProfileError(), getErrorStatus(), PersonalInfo() (+6 more)
+Cohesion: 0.15
+Nodes (15): useUpdateUserInfo(), PersonalInfoForm(), PersonalInfoFormProps, PersonalInfoHeader(), PersonalInfoHeaderProps, describeProfileError(), getErrorStatus(), PersonalInfo() (+7 more)
+
+### Community 154 - "RecordingSender"
+Cohesion: 0.14
+Nodes (12): CountryResponse, CancellationToken, IRequest, List, Task, CountriesControllerCqrsTests, RecordingSender, CountryDetailResponse (+4 more)
 
 ### Community 155 - "GlobalPresencePage.tsx"
 Cohesion: 0.16
@@ -1884,13 +1837,13 @@ Nodes (9): Frontend Feature Implementation Guide, Web Page Standard (Required St
 Cohesion: 0.37
 Nodes (10): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, ProducesResponseType (+2 more)
 
-### Community 160 - "ReportsCategoriesController"
-Cohesion: 0.27
-Nodes (10): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, Task (+2 more)
+### Community 160 - "ReportCategoryRequest"
+Cohesion: 0.20
+Nodes (16): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, Task (+8 more)
 
 ### Community 161 - ".Failure"
-Cohesion: 0.36
-Nodes (7): CancellationToken, Dictionary, HashSet, IDistributedCache, Result, Task, LocalizationService
+Cohesion: 0.32
+Nodes (8): Error, CancellationToken, Dictionary, HashSet, IDistributedCache, Result, Task, LocalizationService
 
 ### Community 162 - "NotificationsController"
 Cohesion: 0.42
@@ -1913,20 +1866,20 @@ Cohesion: 0.14
 Nodes (8): cycles, graph, sourceFiles, sourceFileSet, sourceRoot, stack, states, violations
 
 ### Community 167 - "video/TopBar.tsx"
-Cohesion: 0.19
-Nodes (9): HeaderBar(), HeaderBarProps, ImageToolbarProps, TopBar(), TopBarProps, TopControlsOverlay, ToolbarProps, BackButton() (+1 more)
+Cohesion: 0.21
+Nodes (8): HeaderBar(), HeaderBarProps, TopBar(), TopBarProps, TopControlsOverlay, ToolbarProps, BackButton(), BackButtonProps
 
-### Community 168 - "CrystalReportStore"
-Cohesion: 0.17
-Nodes (10): Guid, CrystalReportRight, CrystalReportRoleGrant, CancellationToken, Guid, IQueryable, IReadOnlyCollection, IReadOnlyList (+2 more)
+### Community 168 - "Documentation README"
+Cohesion: 0.22
+Nodes (10): Centralized Documentation System, Root AGENTS.md, Graphify Knowledge Graph, States API Implementation Profile, States Feature Full Review (Cross-Platform), Documentation README, Generated Phase Workflow (Phase 00-06), Feature Documentation System README (+2 more)
 
 ### Community 169 - "States Next.js Frontend Reference"
 Cohesion: 0.12
 Nodes (16): 10. Localization and RTL, 11. Responsive and accessibility, 12. Test focus, 13. State-specific differences from Countries, 14. Verification, 1. Route and ownership, 2. Browser transport, 3. Query model (+8 more)
 
-### Community 170 - ".SaveChangesAsync"
-Cohesion: 0.18
-Nodes (10): ApplicationDbContext, CancellationToken, Task, LoginAuditService, CancellationToken, IQueryable, IReadOnlyCollection, Task (+2 more)
+### Community 170 - "LoginAuditService"
+Cohesion: 0.19
+Nodes (8): CancellationToken, Task, ILoginAuditService, ApplicationDbContext, CancellationToken, Task, LoginAuditService, HrManagementSystem.Application.Features.Security.Authentication.Services
 
 ### Community 171 - "StateRequest"
 Cohesion: 0.28
@@ -1936,37 +1889,37 @@ Nodes (8): CancellationToken, Task, IStateValidationQueries, StateRequest, Cance
 Cohesion: 0.22
 Nodes (5): Fact, InlineData, Theory, Type, CountryCqrsArchitectureTests
 
-### Community 173 - "CrystalReportManagerPage.tsx"
-Cohesion: 0.15
-Nodes (27): canUseRpt(), CreateDialog(), DetailDialog(), downloadBlob(), formatBytes(), ImportExistingDialog(), RIGHTS, discovered() (+19 more)
+### Community 173 - "Company"
+Cohesion: 0.14
+Nodes (10): DateOnly, Employee, ICollection, Branch, Employee, ICollection, Company, EntityTypeBuilder (+2 more)
 
 ### Community 174 - "routes/index.ts"
-Cohesion: 0.21
+Cohesion: 0.23
 Nodes (6): PageUnavailable, PageUnavailableProps, UnavailableReason, RouteError, RouteErrorProps, RouteLoading
 
-### Community 175 - "HomePage.tsx"
-Cohesion: 0.10
-Nodes (16): metadata, AttendanceTrendsRow, GlobalPresenceRow, HealthPipelineRow, KpiRow, QuickInsights, TrendsRow, TrendsPage() (+8 more)
+### Community 175 - "trends-row/index.tsx"
+Cohesion: 0.23
+Nodes (8): metadata, TrendsPage(), departmentDistribution, monthlyNetAdds, monthlySeriesKeys, monthlyTrend, TrendsRow(), TrendsRowProps
 
 ### Community 176 - "Feature Module Implementation Checklist"
 Cohesion: 0.24
 Nodes (11): CQRS Pattern (API), API AGENTS.md, Clean Architecture CQRS Guide, MediatR (Command/Query Dispatch), Feature Module Implementation Checklist, Tenant/Company Scoping (ITenantScoped/ICompanyScoped), Core Feature CQRS Web Guide, Feature Implementation Playbook (+3 more)
 
-### Community 177 - "ReportTemplatesController"
-Cohesion: 0.26
-Nodes (15): CancellationToken, Guid, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult (+7 more)
+### Community 177 - "ICurrentActor"
+Cohesion: 0.27
+Nodes (8): HashSet, HttpContext, IStringLocalizer, Task, TenantReadOnlyMiddleware, ICurrentActor, TestCurrentActor, TestCurrentActor
 
 ### Community 178 - "TenantManagementRequest"
 Cohesion: 0.33
 Nodes (8): CancellationToken, HttpGet, HttpPost, HttpPut, IActionResult, Task, TenantsController, TenantManagementRequest
 
-### Community 179 - "StateReadStore"
-Cohesion: 0.11
-Nodes (19): CancellationToken, Expression, IQueryable, IReadOnlyCollection, IReadOnlyList, PageResponse, StateDetailResponse, StateListItemResponse (+11 more)
+### Community 179 - "CancellationToken"
+Cohesion: 0.22
+Nodes (9): CancellationToken, IReadOnlyCollection, IReadOnlyList, StateDetailResponse, StateLookupResponse, StateWithDistrictsResponse, Task, StateWriteStore (+1 more)
 
 ### Community 180 - "INotificationService"
-Cohesion: 0.27
-Nodes (9): NotificationPageResponse, NotificationQueryRequest, NotificationReadStatus, NotificationResponse, NotificationSeverity, CancellationToken, Result, Task (+1 more)
+Cohesion: 0.48
+Nodes (4): CancellationToken, Result, Task, INotificationService
 
 ### Community 181 - ".GetAsync"
 Cohesion: 0.22
@@ -1996,24 +1949,24 @@ Nodes (11): engines, node, npm, name, overrides, postcss, react, react-dom (+3 m
 Cohesion: 0.17
 Nodes (12): scripts, build, cert:install, check, check:architecture, dev, dev:https, lint (+4 more)
 
-### Community 188 - "ICountryWriteStore"
-Cohesion: 0.31
-Nodes (5): CancellationToken, IReadOnlyCollection, IReadOnlyList, Task, ICountryWriteStore
+### Community 188 - "HrManagementSystem.Domain.GeographicalInformation.Countries.Entities"
+Cohesion: 0.25
+Nodes (4): EntityTypeBuilder, CountryConfiguration, HrManagementSystem.Domain.GeographicalInformation.Countries.Entities, HrManagementSystem.Infrastructure.Features.GeographicalInformation.Countries.Persistence
 
 ### Community 189 - "JobRequisition"
 Cohesion: 0.30
 Nodes (4): DateOnly, DateTimeOffset, JobRequisition, JobRequisitionStatus
 
 ### Community 190 - "State"
-Cohesion: 0.29
-Nodes (5): ICollection, State, EntityTypeBuilder, StateConfiguration, HrManagementSystem.Infrastructure.Features.GeographicalInformation.States.Persistence
+Cohesion: 0.20
+Nodes (8): ICollection, State, EntityTypeBuilder, StateConfiguration, CancellationToken, Task, StateValidationQueries, HrManagementSystem.Infrastructure.Features.GeographicalInformation.States.Persistence
 
 ### Community 191 - "ConfigureSwaggerOptions"
 Cohesion: 0.33
 Nodes (6): ConfigureSwaggerOptions, ApiVersionDescription, IApiVersionDescriptionProvider, IConfigureOptions, OpenApiInfo, SwaggerGenOptions
 
 ### Community 192 - "ApiHardeningTests"
-Cohesion: 0.26
+Cohesion: 0.27
 Nodes (5): Fact, InlineData, Theory, Type, ApiHardeningTests
 
 ### Community 193 - "JwtProviderTests"
@@ -2048,9 +2001,9 @@ Nodes (10): compilerOptions, paths, strict, extends, include, **/*.ts, **/*.tsx,
 Cohesion: 0.27
 Nodes (6): metadata, HealthPipelinePage(), complianceScore, engagementScore, recruitmentFunnel, HealthPipelineRow()
 
-### Community 201 - "navigation.test.ts"
-Cohesion: 0.27
-Nodes (8): AppPath, BasicDataNavigationItem, findActiveNavigationTrail, flattenFeatureNavigation, isFeaturePathActive, navigation, FeatureModuleLayoutProps, FeatureModuleNavigationItem
+### Community 201 - "components/layout/index.ts"
+Cohesion: 0.14
+Nodes (14): AppPath, BasicDataNavigationItem, FilesDataGrid(), makeFileActions, makeFileColumns, FilesDataGridProps, MyDataGrid, ContentWrapper() (+6 more)
 
 ### Community 202 - "useAppointmentQueries.ts"
 Cohesion: 0.22
@@ -2068,29 +2021,29 @@ Nodes (6): TenantManagementResponse, CancellationToken, IReadOnlyList, Result, T
 Cohesion: 0.29
 Nodes (6): IConfiguration, IServiceCollection, JwtOptions, Task, AuthenticationService, TokenValidatedContext
 
-### Community 206 - "HrManagementSystem.Application.Features.Analytics.ReportTemplates.Contracts"
-Cohesion: 0.14
-Nodes (14): Error, ReportTemplateErrors, HrManagementSystem.Application.Features.Analytics.ReportTemplates.Errors, HrManagementSystem.Application.Features.Analytics.ReportTemplates.Queries.GetReportTemplateById, HrManagementSystem.Application.Features.Analytics.ReportTemplates.Commands.CreateReportTemplate, HrManagementSystem.Application.Features.Analytics.ReportTemplates.Queries.GetReportTemplateRevisions, HrManagementSystem.Domain.Analytics.ReportTemplates.Entities, HrManagementSystem.Application.Features.Analytics.ReportTemplates.Contracts (+6 more)
+### Community 206 - ".SeedAsync"
+Cohesion: 0.20
+Nodes (7): ApplicationDbContext, CancellationToken, Task, TimeProvider, DefaultTenants, Task, WebApplication
 
 ### Community 207 - "Infrastructure Layer (HrManagementSystem.Infrastructure)"
 Cohesion: 0.18
 Nodes (12): Entity Framework Core, Hangfire Background Jobs, Infrastructure Layer (HrManagementSystem.Infrastructure), SignalR Realtime (Backend), Durable Notifications Pattern, Server-Side Paging/Filtering/Sorting, Realtime Updates Guide, RealtimeEntityChanged Event Contract (+4 more)
 
-### Community 208 - "ReportTemplateLifecycleCommands.cs"
-Cohesion: 0.16
-Nodes (18): Result, ArchiveReportTemplateCommand, ArchiveReportTemplateCommandValidator, PublishReportTemplateCommand, PublishReportTemplateCommandValidator, RestoreReportTemplateCommand, RestoreReportTemplateCommandValidator, UnpublishReportTemplateCommand (+10 more)
+### Community 208 - ".ExecuteAsync"
+Cohesion: 0.22
+Nodes (7): CancellationToken, Task, UserChangedJob, UserChangedJobRequest, Task, GeneralHubGroups, HrManagementSystem.Infrastructure.Features.Security.Users.Jobs
 
-### Community 209 - "route-access.ts"
-Cohesion: 0.09
-Nodes (23): AdvancedToolsRoutes, AuthRoutes, BasicDataRoutes, ExtrasRoutes, normalizeAppPath(), RouteKey, RouteValue, SuperAdminRoutes (+15 more)
+### Community 209 - "SessionClaims"
+Cohesion: 0.12
+Nodes (10): getAuthorizedBasicDataNavigation, getAuthorizationState, session, canAccessRoute, session, SessionClaims, AuthorizeViewProps, ForbiddenPageProps (+2 more)
 
 ### Community 210 - "utils/constants.ts"
 Cohesion: 0.20
 Nodes (9): DIALOG_TYPES, FILE_API_ENDPOINTS, FILE_ERROR_MESSAGES, FILE_STATUS, FILE_SUCCESS_MESSAGES, FILE_UPLOAD_CONFIG, GRID_ACTION_TYPES, MEDIA_VIEWER_CONFIG (+1 more)
 
-### Community 211 - "HrManagementSystem.Infrastructure.Security.Authentication"
-Cohesion: 0.08
-Nodes (13): AccessTokenResult, GoogleAuth, ClaimsPrincipal, Task, IJwtProvider, string, JwtAuthenticationSchemes, string (+5 more)
+### Community 211 - "HomePage.tsx"
+Cohesion: 0.17
+Nodes (8): AttendanceTrendsRow, GlobalPresenceRow, HealthPipelineRow, KpiRow, QuickInsights, TrendsRow, Section(), SectionProps
 
 ### Community 212 - "kpi-row/index.tsx"
 Cohesion: 0.19
@@ -2098,11 +2051,11 @@ Nodes (10): metadata, KpisPage(), extraKpis, KpiColor, KpiData, kpisCore, openPo
 
 ### Community 213 - "Appointment"
 Cohesion: 0.24
-Nodes (6): DateTimeOffset, Appointment, EntityTypeBuilder, AppointmentConfiguration, HrManagementSystem.Infrastructure.Features.Appointments.Persistence, HrManagementSystem.Domain.Appointments.Entities
+Nodes (5): DateTimeOffset, Appointment, EntityTypeBuilder, AppointmentConfiguration, HrManagementSystem.Infrastructure.Features.Appointments.Persistence
 
-### Community 214 - "HrManagementSystem.Application/GlobalUsings.cs"
-Cohesion: 0.09
-Nodes (15): int, string, FileSettings, Guid, UploadedFile, EntityTypeBuilder, UploadedFileConfiguration, HrManagementSystem.Api.Features.Platform.Files.V1 (+7 more)
+### Community 214 - "UploadedFile"
+Cohesion: 0.28
+Nodes (6): Guid, UploadedFile, EntityTypeBuilder, UploadedFileConfiguration, HrManagementSystem.Domain.Platform.Files.Entities, HrManagementSystem.Infrastructure.Features.Platform.Files.Persistence
 
 ### Community 216 - ".BuildModel"
 Cohesion: 0.28
@@ -2112,8 +2065,8 @@ Nodes (4): ModelBuilder, modifyLogging, ModelBuilder, AddNotifications
 Cohesion: 0.36
 Nodes (4): Assembly, Fact, HashSet, ArchitectureDependencyTests
 
-### Community 218 - "AuthControllerAuthorizationTests"
-Cohesion: 0.36
+### Community 218 - "AuthControllerAuthorizationTests.cs"
+Cohesion: 0.31
 Nodes (5): Fact, InlineData, Theory, AuthControllerAuthorizationTests, MethodInfo
 
 ### Community 219 - "HrManagementSystem.Infrastructure.Common.Settings"
@@ -2132,21 +2085,21 @@ Nodes (8): jest, cacheDirectory, moduleNameMapper, preset, main, name, private, 
 Cohesion: 0.22
 Nodes (8): ./tsconfig.json, node_modules, compilerOptions, incremental, noImplicitAny, strict, exclude, extends
 
-### Community 223 - "usePermissions.ts"
-Cohesion: 0.22
-Nodes (11): AddressTypesDataGrid(), AddressTypesDataGridProps, AddressTypeActionFactoryProps, AddressTypePermissionsModel, makeAddressTypeActions(), EMPTY_PERMISSIONS, EMPTY_ROLES, useCountriesPermissions() (+3 more)
+### Community 223 - "AddressType"
+Cohesion: 0.19
+Nodes (12): AddressTypesChartViewProps, addressTypeExportColumns, AddressTypesMultiView(), AddressTypesMultiViewProps, AddressTypeCardProps, AddressTypesDataGrid(), AddressTypesDataGridProps, AddressTypeColumnsFactoryProps (+4 more)
 
 ### Community 224 - "MappedFile"
 Cohesion: 0.22
 Nodes (4): MappedFile, SortKey, GroupFilesViewProps, GroupsOverviewProps
 
 ### Community 225 - "ImageViewer.tsx"
-Cohesion: 0.28
-Nodes (6): ImageMenu(), ImageMenuProps, ImageToolbar(), ImageViewerArea(), ImageViewerAreaProps, ImageViewerProps
+Cohesion: 0.21
+Nodes (8): ImageMenu(), ImageMenuProps, ImageToolbar(), ImageToolbarProps, ImageViewerArea(), ImageViewerAreaProps, ImageViewer(), ImageViewerProps
 
-### Community 226 - "CountryReportPage.tsx"
-Cohesion: 0.11
-Nodes (17): CountryActiveReportsDesigner(), CountryReportMode, CountryReportPage(), CountryReportPageProps, selectionValue(), selectionValue(), StateReportPage(), StateReportPageProps (+9 more)
+### Community 226 - "backend-session.test.ts"
+Cohesion: 0.33
+Nodes (4): createRefreshFlowMock(), jsonResponse(), refreshedAuth, session
 
 ### Community 227 - "FilterSelect.tsx"
 Cohesion: 0.33
@@ -2161,31 +2114,31 @@ Cohesion: 0.29
 Nodes (8): Entity Implementation Guide, AuditableEntity Base Class, Bilingual Names Pattern (NameAr/NameEn), FluentValidation, Localization (en-US / ar-EG), Permission Model (View/Create/Edit/Delete), Result Pattern (Error Handling), Soft Delete Pattern (IsDeleted Flag)
 
 ### Community 230 - "ReportCategoryService"
-Cohesion: 0.27
-Nodes (10): ReportCategoryResponse, ApplicationDbContext, CancellationToken, HybridCache, IEnumerable, IMapper, Result, string (+2 more)
+Cohesion: 0.26
+Nodes (9): ApplicationDbContext, CancellationToken, HybridCache, IEnumerable, IMapper, Result, string, Task (+1 more)
 
-### Community 231 - "HrManagementSystem.Infrastructure/GlobalUsings.cs"
-Cohesion: 0.25
-Nodes (5): CancellationToken, Task, ICacheService, HrManagementSystem.Application.Common.Services, HrManagementSystem.Infrastructure.Versions
+### Community 231 - "ICacheService"
+Cohesion: 0.39
+Nodes (4): CancellationToken, Task, ICacheService, HrManagementSystem.Application.Common.Services
 
-### Community 232 - "HrManagementSystem.Domain.Common.Abstractions"
-Cohesion: 0.13
-Nodes (13): ICompanyScoped, ITenantScoped, DateTime, EntityChangeLog, ApplicationUser, DateTime, UserCompanyAccess, ApplicationUser (+5 more)
+### Community 232 - "UserCompanyAccess"
+Cohesion: 0.16
+Nodes (9): ApplicationUser, DateTime, UserCompanyAccess, ApplicationUser, EntityTypeBuilder, ApplicationUserConfiguration, EntityTypeBuilder, UserCompanyAccessConfiguration (+1 more)
 
-### Community 233 - ".SelectCompany"
-Cohesion: 0.31
+### Community 233 - "CompanySelectionContracts.cs"
+Cohesion: 0.36
 Nodes (7): AuthenticatedLoginResult, CompanyOptionResponse, CompanySelectionLoginResult, CompanySelectionRequiredResponse, LoginResult, SelectCompanyRequest, SelectCompanyRequestValidator
 
 ### Community 234 - ".CreateFixedWindowPartition"
 Cohesion: 0.29
 Nodes (5): HttpContext, IServiceCollection, TimeSpan, RateLimitingService, RateLimitPartition
 
-### Community 235 - "reporting/index.ts"
-Cohesion: 0.17
-Nodes (17): ServerReportDesignerClient, ApprovedReportDataSource, ServerReportDesignerLabels, ServerReportDesignerProps, ServerReportViewer(), ServerReportViewerClient, messageFrom(), ServerReportViewerClient() (+9 more)
+### Community 235 - "CategoryValidationQueries"
+Cohesion: 0.39
+Nodes (4): CancellationToken, IReadOnlyCollection, Task, CategoryValidationQueries
 
 ### Community 236 - ".TrySaveAsync"
-Cohesion: 0.28
+Cohesion: 0.32
 Nodes (5): ApplicationUser, CancellationToken, string, Task, RegistrationProfilePictureStore
 
 ### Community 237 - "IStateService"
@@ -2217,20 +2170,20 @@ Cohesion: 0.25
 Nodes (7): getLastServerListPage, isServerListSearchPending, serverListReducer, ServerListState, Column, defaults, Filters
 
 ### Community 244 - ".ToProblem"
-Cohesion: 0.29
-Nodes (5): Result, ResultExtensions, HrManagementSystem.Api.Common.Errors, ErrorType, ObjectResult
+Cohesion: 0.33
+Nodes (4): Result, ResultExtensions, ErrorType, ObjectResult
 
 ### Community 245 - "CountryMutation.cs"
+Cohesion: 0.17
+Nodes (13): Result, BulkArchiveCountriesCommand, CancellationToken, Result, Task, BulkArchiveCountriesCommandHandler, int, BulkArchiveCountriesCommandValidator (+5 more)
+
+### Community 246 - ".AddCorsService"
+Cohesion: 0.33
+Nodes (4): IConfiguration, IServiceCollection, CorsService, CorsSettings
+
+### Community 247 - "CultureMiddleware"
 Cohesion: 0.29
-Nodes (6): BulkArchiveCountriesRequest, CountryMutation, CreateCountriesRequest, CreateCountriesResponse, CreateCountryRequest, UpdateCountryRequest
-
-### Community 246 - "FilesController"
-Cohesion: 0.18
-Nodes (16): CancellationToken, Consumes, Guid, HttpDelete, HttpGet, HttpPost, IActionResult, IValidator (+8 more)
-
-### Community 247 - "Globalusings.cs"
-Cohesion: 0.14
-Nodes (9): string, ApiRoutes, HttpContext, Task, CultureMiddleware, HrManagementSystem.Infrastructure.Localization, HrManagementSystem.Infrastructure.Common.Storage, HrManagementSystem.Api.Common.Routes (+1 more)
+Nodes (5): HttpContext, Task, CultureMiddleware, HrManagementSystem.Infrastructure.Localization, RequestDelegate
 
 ### Community 248 - "PermissionAuthorizationPolicyProvider"
 Cohesion: 0.29
@@ -2262,19 +2215,19 @@ Nodes (6): *.css, @fullcalendar/daygrid/main.css, @fullcalendar/list/main.css, @
 
 ### Community 255 - "<Feature Name> Review Artifacts"
 Cohesion: 0.15
-Nodes (13): Detail and write contract, Evidence register, <Feature Name> Review Artifacts, Final reconciliation, Findings and handoffs, Grid and card contract, Integration register, Metadata (+5 more)
+Nodes (12): Detail and write contract, Evidence register, <Feature Name> Review Artifacts, Final reconciliation, Findings and handoffs, Grid and card contract, Integration register, Metadata (+4 more)
 
 ### Community 256 - "FileErrors"
 Cohesion: 0.33
 Nodes (4): Error, IStringLocalizer, FileErrors, HrManagementSystem.Application.Features.Platform.Files.Errors
 
-### Community 257 - "BulkArchiveCountriesCommand"
-Cohesion: 0.11
-Nodes (18): ICommand, ICommandHandler, IQuery, IQueryHandler, Result, BulkArchiveCountriesCommand, CancellationToken, Result (+10 more)
+### Community 257 - "HrManagementSystem.Application.Abstractions.Messaging"
+Cohesion: 0.20
+Nodes (8): ICommand, ICommandHandler, IQuery, IQueryHandler, TestCommand, HrManagementSystem.Application.Abstractions.Messaging, IRequest, IRequestHandler
 
 ### Community 258 - "Migration"
-Cohesion: 0.05
-Nodes (21): MigrationBuilder, CreateDatabase, MigrationBuilder, addAppointmentTable, MigrationBuilder, ProfilePicture_BlobToFilename, MigrationBuilder, modifyLogging (+13 more)
+Cohesion: 0.40
+Nodes (3): MigrationBuilder, CreateDatabase, Migration
 
 ### Community 259 - "graphify reference: query, path, explain"
 Cohesion: 0.33
@@ -2285,8 +2238,8 @@ Cohesion: 0.53
 Nodes (6): Backend API (ASP.NET Core), HR Management System, Legacy Web Client (Scheduled for Removal), Mobile React Native Client, Next.js API Proxy, Web Next.js Frontend
 
 ### Community 261 - "ApiKey"
-Cohesion: 0.22
-Nodes (6): DateTime, ApiKey, EntityTypeBuilder, ApiKeyConfiguration, HrManagementSystem.Domain.Security.ApiKeys.Entities, HrManagementSystem.Infrastructure.Features.Security.ApiKeys.Persistence
+Cohesion: 0.26
+Nodes (5): DateTime, ApiKey, EntityTypeBuilder, ApiKeyConfiguration, HrManagementSystem.Infrastructure.Features.Security.ApiKeys.Persistence
 
 ### Community 262 - "appointments/page.tsx"
 Cohesion: 0.40
@@ -2313,8 +2266,12 @@ Cohesion: 0.40
 Nodes (4): Error, IStringLocalizer, CountryErrors, HrManagementSystem.Application.Features.GeographicalInformation.Countries.Errors
 
 ### Community 269 - "web-next/src/shared/components/feedback/transient/index.ts"
-Cohesion: 0.22
+Cohesion: 0.20
 Nodes (9): ErrorDialogHost, showErrorDialog, ErrorDialogDetails, ErrorEnvironment, baseOptions, loadingOptions, showToast, ToastProvider (+1 more)
+
+### Community 270 - "LoginRequestValidator"
+Cohesion: 0.40
+Nodes (3): LoginRequest, IStringLocalizer, LoginRequestValidator
 
 ### Community 271 - "StateCqrsArchitectureTests"
 Cohesion: 0.29
@@ -2332,41 +2289,9 @@ Nodes (4): Error, IStringLocalizer, UserErrors, HrManagementSystem.Application.F
 Cohesion: 0.18
 Nodes (11): App Router Rules, Dependency Direction, Feature Implementation Guides, Feature Ownership, Frontend Architecture Reference, Future Change Checklist, Naming Rules, Required Checks (+3 more)
 
-### Community 275 - "HrManagementSystem.Application.Features.Security.Authorization.Contracts"
-Cohesion: 0.09
-Nodes (15): Error, IStringLocalizer, LocalizationError, CheckBoxViewModel, RoleDetailResponse, RoleIdQuery, RoleIdQueryValidator, Error (+7 more)
-
-### Community 278 - "ReportTemplate"
-Cohesion: 0.13
-Nodes (10): Guid, ICollection, ReportTemplate, Guid, ReportTemplateRevision, EntityTypeBuilder, ReportTemplateConfiguration, EntityTypeBuilder (+2 more)
-
-### Community 279 - "FilesPage.tsx"
-Cohesion: 0.16
-Nodes (12): metadata, FileDeleteDialog(), FileDeleteDialogProps, FilesDataGrid(), FilesMultiView(), FilesMultiViewProps, makeFileActions, makeFileColumns (+4 more)
-
-### Community 280 - ".InspectAsync"
-Cohesion: 0.12
-Nodes (16): ICrystalReportInspector, CrystalReportInspection, CancellationToken, FileUpload, Task, CrystalReportInspectorClient, InspectionResponse, CancellationToken (+8 more)
-
-### Community 281 - "CrystalReportContracts.cs"
-Cohesion: 0.14
-Nodes (14): ICrystalReportRenderer, CrystalReportGrantRequest, CrystalReportIdentity, CrystalReportRenderFailure, CrystalReportRenderRequest, CrystalReportRenderResult, CrystalReportRuntimeRequest, ImportDiscoveredCrystalReportRequest (+6 more)
-
-### Community 285 - "AddressTypeService"
-Cohesion: 0.27
-Nodes (10): AddressTypeResponse, ApplicationDbContext, CancellationToken, ICurrentActor, IEntityChangeLogService, IEnumerable, IMapper, Result (+2 more)
-
-### Community 286 - "RoleRequestValidator"
-Cohesion: 0.13
-Nodes (12): CancellationToken, Task, IRoleValidationQueries, CancellationToken, IStringLocalizer, Task, RoleRequestValidator, CancellationToken (+4 more)
-
-### Community 287 - "Crystal Report Manager Feature Integration Guide"
-Cohesion: 0.11
-Nodes (18): 10. Verification matrix, 11. Definition of done, 12. Implementation anchors, 1. Make the reporting decision first, 2. Source of truth and runtime flow, 3. Identifiers, folders, and localized names, 4. Manager lifecycle and permissions, 5. Public HR API contract (+10 more)
-
-### Community 289 - "AddressTypesController"
-Cohesion: 0.29
-Nodes (9): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, IActionResult, Task, AddressTypesController (+1 more)
+### Community 289 - ".SeedAsync"
+Cohesion: 0.50
+Nodes (3): ApplicationDbContext, CancellationToken, Task
 
 ### Community 290 - "ControllerBase"
 Cohesion: 0.20
@@ -2429,36 +2354,20 @@ Cohesion: 0.40
 Nodes (4): createHangfireBackendPath, isHangfireAntiforgeryCookie, rewriteHangfireAntiforgeryCookie, rewriteHangfireLocation
 
 ### Community 305 - "route.ts"
-Cohesion: 0.11
+Cohesion: 0.10
 Nodes (23): applyAuthPayload(), backendFailureResponse(), callBackend(), createBackendHeaders(), DELETE, dynamic, forwardedHeaders, GET (+15 more)
 
 ### Community 307 - "HrManagementSystem.Domain/AssemblyReference.cs"
 Cohesion: 0.50
 Nodes (3): Assembly, AssemblyReference, HrManagementSystem.Domain
 
-### Community 308 - "IQueryHandler"
-Cohesion: 0.25
-Nodes (13): ReportTemplateListItemResponse, IReadOnlyList, GetPublishedReportTemplatesQuery, GetPublishedReportTemplatesQueryValidator, GetReportTemplatesManagementQuery, GetReportTemplatesManagementQueryValidator, CancellationToken, IReadOnlyList (+5 more)
-
-### Community 309 - "IFileService"
-Cohesion: 0.26
-Nodes (10): CancellationToken, FileUpload, Guid, IEnumerable, IReadOnlyCollection, Stream, Task, IFileService (+2 more)
-
-### Community 310 - "ServerReportDesignerClient.tsx"
-Cohesion: 0.18
-Nodes (16): apiErrorMessage(), createDataSources(), definitionFrom(), DesignerProps, isConcurrencyError(), OpenResult, parseDefinition(), SaveAsOptions (+8 more)
-
-### Community 311 - "ReportTemplateRevisionResponse"
-Cohesion: 0.26
-Nodes (13): ReportTemplateRevisionResponse, IReadOnlyList, Result, GetReportTemplateRevisionQuery, GetReportTemplateRevisionQueryValidator, GetReportTemplateRevisionsQuery, GetReportTemplateRevisionsQueryValidator, CancellationToken (+5 more)
-
-### Community 312 - "HrManagementSystem.Infrastructure.Persistence"
-Cohesion: 0.08
-Nodes (12): ModelBuilder, AddTenantReportTemplates, ModelBuilder, AddCrystalReportManager, ModelBuilder, AddCrystalReportManagerAdminPermissions, MigrationBuilder, AddReportTemplateAdminPermissions (+4 more)
+### Community 312 - "ApplicationDbContextModelSnapshot"
+Cohesion: 0.50
+Nodes (3): ModelBuilder, ApplicationDbContextModelSnapshot, ModelSnapshot
 
 ### Community 314 - ".Handle"
-Cohesion: 0.12
-Nodes (12): Assembly, AssemblyReference, CancellationToken, RequestHandlerDelegate, Task, RequestLoggingBehavior, ValidationBehavior, IServiceCollection (+4 more)
+Cohesion: 0.22
+Nodes (7): CancellationToken, RequestHandlerDelegate, Task, RequestLoggingBehavior, ValidationBehavior, HrManagementSystem.Application.Behaviors, IPipelineBehavior
 
 ### Community 315 - "graphify reference: add a URL and watch a folder"
 Cohesion: 0.50
@@ -2472,9 +2381,9 @@ Nodes (3): For git commit hook, For native CLAUDE.md integration, graphify refer
 Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
-### Community 318 - "countries-frontend-reference.md"
-Cohesion: 0.11
-Nodes (17): Centralized Documentation System, Root AGENTS.md, Graphify Knowledge Graph, Countries API Frontend Contract, Countries API Implementation Profile, States API Implementation Profile, Countries Feature Full Review (Cross-Platform), States Feature Full Review (Cross-Platform) (+9 more)
+### Community 318 - "Countries Feature Full Review (Cross-Platform)"
+Cohesion: 0.24
+Nodes (7): Countries API Frontend Contract, Countries API Implementation Profile, Countries Feature Full Review (Cross-Platform), Expo HAS CHANGED, Mobile feature architecture, Mobile styling, Frontend Build Guidance
 
 ### Community 319 - "HR Management Mobile"
 Cohesion: 0.50
@@ -2493,12 +2402,12 @@ Cohesion: 0.50
 Nodes (3): NotificationBell, NotificationRealtimeBridge, AppNotification
 
 ### Community 324 - ".Handle"
-Cohesion: 0.23
-Nodes (8): CancellationToken, RequestHandlerDelegate, Task, Fact, Task, ApplicationPipelineTests, TestCommandValidator, TestCommand
+Cohesion: 0.29
+Nodes (6): CancellationToken, RequestHandlerDelegate, Task, Fact, Task, ApplicationPipelineTests
 
-### Community 325 - "ICountryReadStore"
-Cohesion: 0.20
-Nodes (10): CancellationToken, CountryDetailResponse, CountryListItemResponse, CountryResponse, GetCountriesQuery, IReadOnlyList, PageResponse, SimpleCountryResponse (+2 more)
+### Community 325 - "State"
+Cohesion: 0.27
+Nodes (5): StateAuditTrail, HrManagementSystem.Application.Features.GeographicalInformation.States.Queries, Dictionary, IStateAuditTrail, State
 
 ### Community 326 - "characterCount.test.ts"
 Cohesion: 0.50
@@ -2508,25 +2417,25 @@ Nodes (3): formatCharacterCount, getCharacterCount, options
 Cohesion: 0.15
 Nodes (8): partitionMobileViewOptions, HeaderExportOption, MultiViewPageHeaderProps, PageHeaderProps, SimplePageHeaderProps, ViewOption, ViewType, ViewToggleProps
 
-### Community 328 - "PrivateCrystalReportFileStorage"
-Cohesion: 0.28
-Nodes (8): CrystalReportFileFailure, StoreCrystalReportFileResult, CancellationToken, FileUpload, Stream, Task, PrivateCrystalReportFileStorage, byte
+### Community 328 - "StateReadStore"
+Cohesion: 0.29
+Nodes (6): Expression, IQueryable, PageResponse, StateListItemResponse, StateReadStore, IStateReadStore
 
 ### Community 329 - "useLoginForm.ts"
-Cohesion: 0.15
-Nodes (14): advancedTools, exportRoutes, google, AdvancedToolsRoutes, ExportRoutes, GoogleRoutes, DEV_CREDENTIALS, getGoogleToken() (+6 more)
+Cohesion: 0.27
+Nodes (8): DEV_CREDENTIALS, getGoogleToken(), getSafeReturnTo(), showHandledError(), useLoginForm(), parseLoginResult, CompanySelectionResponse, TenantSelectionResponse
 
 ### Community 332 - "dayjs"
 Cohesion: 0.67
 Nodes (3): dayjs, dayjs, dayjs
 
-### Community 333 - "HrManagementSystem.Application.Features.Catalog.Categories.Contracts"
-Cohesion: 0.09
-Nodes (16): CancellationToken, HasPermission, HttpGet, IActionResult, Task, CategoriesController, SimpleCategoryResponse, Error (+8 more)
+### Community 333 - ".GetAll"
+Cohesion: 0.22
+Nodes (7): CancellationToken, HasPermission, HttpGet, IActionResult, Task, CategoriesController, HrManagementSystem.Api.Features.Catalog.Categories.V2
 
-### Community 334 - "ExportPdfFileService"
-Cohesion: 0.35
-Nodes (7): Dictionary, List, ExportPdfFileService, PdfFont, PdfGrid, PdfPage, SizeF
+### Community 334 - "ApplicationPipelineTests.cs"
+Cohesion: 0.22
+Nodes (5): Assembly, AssemblyReference, IServiceCollection, DependencyInjection, HrManagementSystem.Application
 
 ### Community 335 - "i18next"
 Cohesion: 0.67
@@ -2561,23 +2470,23 @@ Cohesion: 0.20
 Nodes (9): SESSION_CHANGED_EVENT, isSessionClaims, SessionRequestState, validSession, loginUrlWithReturnTo(), SessionContext, SessionContextValue, SessionProvider() (+1 more)
 
 ### Community 359 - "backend-session.ts"
-Cohesion: 0.13
-Nodes (21): asPositiveInteger(), asString(), asStringArray(), decodeApiValidatedClaims(), definitiveRefreshRejectionStatuses, fetchValidatedClaimsFromCheckAuth(), fetchVerifiedSession(), isTimeoutError() (+13 more)
+Cohesion: 0.17
+Nodes (18): asPositiveInteger(), asString(), asStringArray(), decodeApiValidatedClaims(), definitiveRefreshRejectionStatuses, fetchValidatedClaimsFromCheckAuth(), fetchVerifiedSession(), isTimeoutError() (+10 more)
 
 ### Community 360 - "GridFooter.tsx"
 Cohesion: 0.40
 Nodes (6): useDataGridShell, GridFooter(), NavigationButtonProps, getActiveRecordIndex(), getPageForRecord(), getServerRecordIndex()
 
 ### Community 364 - "fileService.ts"
-Cohesion: 0.12
-Nodes (12): asRecord(), asString(), DownloadResult, DownloadStreamData, DownloadStreamResult, FILE_CONFIG, FileErrorCollection, FileService (+4 more)
+Cohesion: 0.11
+Nodes (14): asRecord(), asString(), DownloadResult, DownloadStreamData, DownloadStreamResult, FILE_CONFIG, FileErrorCollection, FileErrorResponse (+6 more)
 
 ### Community 369 - "providers.tsx"
 Cohesion: 0.21
 Nodes (8): metadata, Providers(), ProvidersProps, ThemeDirection, ThemeMode, ThemePreferencesProvider, ThemeShell, ThemeSettings
 
 ### Community 370 - "CountryValidationQueries"
-Cohesion: 0.54
+Cohesion: 0.44
 Nodes (3): CancellationToken, Task, CountryValidationQueries
 
 ### Community 378 - "JsonStringLocalizerFactory"
@@ -2585,8 +2494,8 @@ Cohesion: 0.22
 Nodes (6): IDistributedCache, IStringLocalizer, Type, JsonStringLocalizerFactory, HrManagementSystem.Infrastructure.Localization.Configurations, IStringLocalizerFactory
 
 ### Community 382 - "8. Views"
-Cohesion: 0.17
-Nodes (12): 8. Views, Cards, Chart and analytics, Chart layout and viewport rule, Grid, Import/export, Managed Crystal reports, Multi-view naming and spacing (+4 more)
+Cohesion: 0.22
+Nodes (9): 8. Views, Cards, Chart and analytics, Grid, Import/export, Multi-view naming and spacing, Pagination and viewport rule, Report (+1 more)
 
 ### Community 385 - "States Review Artifacts"
 Cohesion: 0.25
@@ -2621,32 +2530,16 @@ Cohesion: 0.25
 Nodes (7): Approved references, Purpose, Read-path contract, {{RECIPE_TITLE}}, Required structure, Source fingerprints, UI and action checks
 
 ### Community 428 - "auth/constants.ts"
-Cohesion: 0.22
-Nodes (11): ACCESS_TOKEN_COOKIE, isPublicRoute(), LEGACY_ACCESS_TOKEN_COOKIE, LEGACY_REFRESH_TOKEN_COOKIE, PUBLIC_ROUTES, REFRESH_TOKEN_COOKIE, applyMigratedCookies(), config (+3 more)
+Cohesion: 0.20
+Nodes (12): ACCESS_TOKEN_COOKIE, isPublicRoute(), LEGACY_ACCESS_TOKEN_COOKIE, LEGACY_REFRESH_TOKEN_COOKIE, PUBLIC_ROUTES, REFRESH_TOKEN_COOKIE, SESSION_REFRESHED_HEADER, applyMigratedCookies() (+4 more)
 
-### Community 430 - "api/types.ts"
-Cohesion: 0.22
-Nodes (13): roles, users, BoardTaskAttachmentsRoutes, BoardTaskCommentsRoutes, CrudRoutes, DistrictsRoutes, KanbanBoardMembersRoutes, KanbanCardAssigneesRoutes (+5 more)
+### Community 430 - "CrudRoutes"
+Cohesion: 0.25
+Nodes (8): BoardTaskAttachmentsRoutes, BoardTaskCommentsRoutes, CrudRoutes, DistrictsRoutes, KanbanBoardMembersRoutes, KanbanCardAssigneesRoutes, KanbanCardAttachmentsRoutes, KanbanCardLabelsRoutes
 
-### Community 489 - "CrystalReportsController"
-Cohesion: 0.23
-Nodes (16): CancellationToken, FileUpload, Guid, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut (+8 more)
-
-### Community 490 - "3. Key Patterns"
-Cohesion: 0.13
-Nodes (15): 1. Folder Structure, 3. Key Patterns, 4. Reusable Components Used, 5. Shared Hooks Used, 6. Checklist, 7. Anti-Patterns (Do Not), Bulk Selection + Clearing, Form with useZodForm (+7 more)
-
-### Community 508 - "ReportTemplateDetailResponse"
-Cohesion: 0.09
-Nodes (29): Result, CreateReportTemplateCommand, CreateReportTemplateCommandValidator, CancellationToken, Result, Task, CreateReportTemplateCommandHandler, Result (+21 more)
-
-### Community 509 - "AbstractValidator"
-Cohesion: 0.12
-Nodes (33): AbstractValidator, CancellationToken, Error, IReadOnlyList, Result, Task, AddCrystalReportVersionCommandHandler, ArchiveCrystalReportCommandHandler (+25 more)
-
-### Community 513 - "ReportTemplateFeatureTests"
-Cohesion: 0.17
-Nodes (10): string, ReportTemplateDefinitionSafety, Fact, InlineData, string, Task, Theory, ReportTemplateFeatureTests (+2 more)
+### Community 490 - ".Add"
+Cohesion: 0.33
+Nodes (3): HttpPost, CreateUserRequest, CreateUserRequestValidator
 
 ### Community 871 - "Generate-Documentation.ps1"
 Cohesion: 0.48
@@ -2676,34 +2569,6 @@ Nodes (6): Approved references, Discovery checklist, Purpose, Required outputs, 
 Cohesion: 0.29
 Nodes (6): Action ledger, Approved references, Exit checks, Purpose, Source fingerprints, States Phase 04 - Domain Actions and Lifecycle
 
-### Community 917 - "permissions.ts"
-Cohesion: 0.18
-Nodes (11): metadata, CrystalReportManagerPage(), getAllPermissionModules(), getAllPermissions(), getPermissionModule(), getPermissionSet(), hasAllPermissions(), hasAnyPermission() (+3 more)
-
-### Community 918 - "geographical-information/countries/components/CountryForm.tsx"
-Cohesion: 0.20
-Nodes (11): CountryFormData, CountryFormProps, getNextCountryMockData, getCountryValidationSchema(), arabicLettersAndSpacesPattern, currencyCodePattern, englishLettersAndSpacesPattern, internationalPhoneCodePattern (+3 more)
-
-### Community 919 - "StateForm.tsx"
-Cohesion: 0.16
-Nodes (11): useCountryLookup(), ColumnsFactoryProps, StateDeleteDialogProps, StateForm(), StateFormData, StateFormProps, CreateStateRequest, State (+3 more)
-
-### Community 920 - ".ExportCsv"
-Cohesion: 0.23
-Nodes (8): Dictionary, HttpPost, IActionResult, List, ExportController, Dictionary, List, IExportExcelService
-
-### Community 921 - "AddressTypeRequest"
-Cohesion: 0.32
-Nodes (7): HttpPut, AddressTypeRequest, CancellationToken, IEnumerable, Result, Task, IAddressTypeService
-
-### Community 922 - ".Issue"
-Cohesion: 0.29
-Nodes (6): DateTime, IssuedRefreshToken, RefreshTokenProtector, DateTime, Fact, RefreshTokenProtectorTests
-
-### Community 923 - "BackgroundNotificationJobTests"
-Cohesion: 0.32
-Nodes (5): Fact, InlineData, Theory, Type, BackgroundNotificationJobTests
-
 ### Community 990 - "States Phase 05 - Integration and Runtime"
 Cohesion: 0.29
 Nodes (6): Approved references, Integration matrix, Purpose, Runtime evidence, Source fingerprints, States Phase 05 - Integration and Runtime
@@ -2720,73 +2585,45 @@ Nodes (6): Approved references, Discovery checklist, Purpose, {{RECIPE_TITLE}}, 
 Cohesion: 0.29
 Nodes (6): Approved references, Handoff decision, Purpose, {{RECIPE_TITLE}}, Reconciliation gates, Source fingerprints
 
-### Community 1000 - ".SendAsync"
-Cohesion: 0.22
-Nodes (9): CancellationToken, Fact, HttpRequestMessage, Task, CallbackHandler, CrystalReportRendererClientTests, HttpClient, HttpMessageHandler (+1 more)
+### Community 1000 - "advanced.ts"
+Cohesion: 0.29
+Nodes (6): advancedTools, exportRoutes, google, AdvancedToolsRoutes, ExportRoutes, GoogleRoutes
 
 ### Community 1001 - "proxy-transport.ts"
 Cohesion: 0.38
 Nodes (5): copyBackendResponseHeaders(), forwardedResponseHeaders, prepareBackendBody(), PreparedBackendBody, streamedRequestTypes
 
-### Community 1004 - "Crystal Report Manager Review Artifacts"
-Cohesion: 0.15
-Nodes (13): Crystal Report Manager Review Artifacts, Detail and write contract, Evidence register, Final reconciliation, Findings and handoffs, Grid and card contract, Integration register, Metadata (+5 more)
+### Community 1004 - "BasicService.cs"
+Cohesion: 0.40
+Nodes (3): IConfiguration, IServiceCollection, BasicService
 
-### Community 1005 - "FileUploadForms.cs"
-Cohesion: 0.21
-Nodes (9): IFormFile, IReadOnlyCollection, ImageUploadForm, MultipleFilesUploadForm, ProfilePictureUploadForm, SingleFileUploadForm, IFormFile, FormFileExtensions (+1 more)
+### Community 1005 - ".AddHangfireService"
+Cohesion: 0.40
+Nodes (3): IConfiguration, IServiceCollection, HangfireService
 
 ### Community 1019 - "useMediaViewer.ts"
 Cohesion: 0.18
 Nodes (10): allowedIframeExtensions, audioExtensions, browserStreamMediaTypes, excelExtensions, imageExtensions, MediaType, txtExtensions, UseMediaViewerReturn (+2 more)
 
-### Community 1020 - "IReportTemplateStore"
-Cohesion: 0.39
-Nodes (5): CancellationToken, Guid, IReadOnlyList, Task, IReportTemplateStore
+### Community 1020 - ".AddHealthCheckService"
+Cohesion: 0.40
+Nodes (3): IConfiguration, IServiceCollection, HealthCheckService
 
-### Community 1021 - "CrystalReportDataSource"
-Cohesion: 0.36
-Nodes (7): CancellationToken, IReadOnlyDictionary, string, Task, CountryRow, CrystalReportDataSource, StateRow
+### Community 1021 - ".AddSendEmailService"
+Cohesion: 0.40
+Nodes (3): IConfiguration, IServiceCollection, SendEmailService
 
 ### Community 1022 - "11. Blueprint for the Next Feature"
 Cohesion: 0.40
 Nodes (5): 11. Blueprint for the Next Feature, Implementation order, Recommended feature shape, Required decisions before coding, What to reuse and what to replace
 
-### Community 1023 - "ReportTemplateStore"
-Cohesion: 0.42
-Nodes (5): CancellationToken, Guid, IReadOnlyList, Task, ReportTemplateStore
-
-### Community 1066 - "NotificationParameters"
-Cohesion: 0.18
-Nodes (8): IReadOnlyDictionary, NotificationMappingConfig, NotificationParameters, TypeAdapterConfig, MappingConfigurations, IRegister, JsonSerializerOptions, TypeAdapterConfig
-
-### Community 1067 - ".PrepareChanges"
-Cohesion: 0.26
-Nodes (3): AuditableEntity, DateTime, EntityEntry
-
-### Community 1070 - "ApiClient"
-Cohesion: 0.12
-Nodes (12): ApiClient, ApiError, AppRequestConfig, createReadOnlyError(), getDataHeaders(), isPublicAuthenticationRequest(), isWriteMethod(), normalizeApiErrors() (+4 more)
-
-### Community 1075 - "Mobile feature guide"
-Cohesion: 0.17
-Nodes (12): 10. Tests and definition of done, 1. Define the boundary first, 2. Target structure, 3. Routes and navigation, 4. API boundary, 5. Query ownership, 6. Server-managed list reference, 7. Forms and mutations (+4 more)
-
-### Community 1076 - "CrystalReportLegacySourceClient"
-Cohesion: 0.25
-Nodes (8): CancellationToken, FileUpload, HttpRequestMessage, IReadOnlyList, Task, CatalogItem, CrystalReportLegacySourceClient, HttpMethod
-
-### Community 1078 - "ApplicationDbContextDesignFactory"
-Cohesion: 0.20
-Nodes (8): ApplicationDbContextDesignFactory, DesignTimeActor, TestCurrentActor, TestCurrentActor, TestCurrentActor, DesignTimeActor, ICurrentActor, IDesignTimeDbContextFactory
-
-### Community 1080 - ".SeedUserAsync"
+### Community 1023 - "4. Read Path Contract"
 Cohesion: 0.40
-Nodes (6): IConfiguration, RoleManager, Task, UserManager, DefaultUsers, IConfigurationSection
+Nodes (5): 4. Read Path Contract, Grid column contract, Mobile list profile, Paging, sorting and refresh, Search and filter contract
 
-### Community 1081 - "ActorScope"
-Cohesion: 0.24
-Nodes (5): Action, IDisposable, ActorScope, Fact, CurrentActorScopeTests
+### Community 1075 - "StatePieChart.tsx"
+Cohesion: 0.40
+Nodes (4): PieTooltipProps, StatePieChart(), StatePieChartProps, StatePieDatum
 
 ### Community 1082 - "Clean Architecture (Modular Monolith)"
 Cohesion: 0.50
@@ -2800,182 +2637,31 @@ Nodes (3): react-i18next, react-i18next, react-i18next
 Cohesion: 0.67
 Nodes (3): typescript, typescript, typescript
 
-### Community 1181 - "CrystalReportRules"
-Cohesion: 0.17
-Nodes (7): IReadOnlyDictionary, RenderCrystalReportQueryValidator, string, CrystalReportRules, GeneratedRegex, IEnumerable, Regex
-
-### Community 1185 - "IReportCategoryService"
-Cohesion: 0.44
-Nodes (5): CancellationToken, IEnumerable, Result, Task, IReportCategoryService
-
-### Community 1186 - "GetReportDataSourcesQuery"
-Cohesion: 0.38
-Nodes (7): ReportDataSourceDescriptorResponse, CancellationToken, IReadOnlyList, Task, GetReportDataSourcesQuery, GetReportDataSourcesQueryHandler, GetReportDataSourcesQueryValidator
-
-### Community 1187 - ".InvokeAsync"
-Cohesion: 0.27
-Nodes (6): HttpContext, Task, CorrelationIdMiddleware, Fact, Task, CorrelationIdMiddlewareTests
-
-### Community 1188 - "CrystalReportsControllerContractTests"
-Cohesion: 0.24
-Nodes (5): Fact, InlineData, Theory, CrystalReportsControllerContractTests, HrManagementSystem.Api.Features.Analytics.CrystalReports.V1
-
-### Community 1189 - "2. Implementation Steps"
-Cohesion: 0.20
-Nodes (10): 2. Implementation Steps, Step 1 — Types (`types/{feature}.ts`), Step 2 — Endpoints (`api/{feature}-endpoints.ts`), Step 3 — Zod Schemas (`api/{feature}-schemas.ts`), Step 4 — API Functions (`api/{feature}-api.ts`), Step 5 — Query Keys (`queries/{feature}-keys.ts`), Step 6 — Query Hooks (`queries/use-{features}.ts`), Step 7 — Card Component (`components/{Feature}Card.tsx`) (+2 more)
-
-### Community 1190 - "EnhancedStepper.tsx"
-Cohesion: 0.20
-Nodes (8): CompletedCheckIcon, CustomConnector, CustomConnectorProps, CustomStepIconProps, EnhancedStepper(), EnhancedStepperProps, StepIconContainer, StepIconContainerProps
-
-### Community 1191 - "ControlsBar.tsx"
-Cohesion: 0.20
-Nodes (5): baseIconSx, ControlsBar(), ControlsBarProps, skipIconSx, TimeDisplayProps
-
-### Community 1192 - "CountryReportDataResponse"
-Cohesion: 0.39
-Nodes (6): CountryReportDataResponse, CancellationToken, IReadOnlyList, Task, GetCountryReportDataQuery, GetCountryReportDataQueryHandler
-
-### Community 1193 - "constants/validation.ts"
-Cohesion: 0.42
-Nodes (6): accountSecuritySchema(), getRegistrationValidationSchema(), getValidationSchema(), personalDetailsSchema(), validRegistration, Translator
-
-### Community 1194 - ".OnActionExecutionAsync"
-Cohesion: 0.25
-Nodes (6): ActionExecutingContext, ActionExecutionDelegate, Task, AsyncValidationFilter, HrManagementSystem.Infrastructure.Validation, IAsyncActionFilter
-
-### Community 1195 - "ReportCategoryRequest"
-Cohesion: 0.29
-Nodes (5): ReportCategoryRequest, CancellationToken, IStringLocalizer, Task, ReportCategoryRequestValidator
-
-### Community 1196 - ".AddDefinitionRules"
-Cohesion: 0.25
-Nodes (5): AbstractValidator, Expression, ReportTemplateCommandRules, HrManagementSystem.Application.Features.Analytics.ReportTemplates.Commands, Func
-
-### Community 1197 - "GetStatesQuery"
-Cohesion: 0.46
-Nodes (7): int, PageResponse, StateListItemResponse, string, GetStatesQuery, GetStatesQueryHandler, GetStatesQueryValidator
-
-### Community 1198 - "AddressType"
-Cohesion: 0.32
-Nodes (5): ICollection, AddressType, EntityTypeBuilder, AddressTypeConfiguration, HrManagementSystem.Domain.GeographicalInformation.AddressTypes.Entities
-
-### Community 1199 - "District"
-Cohesion: 0.29
-Nodes (5): ICollection, District, EntityTypeBuilder, DistrictConfiguration, HrManagementSystem.Infrastructure.Features.GeographicalInformation.Districts.Persistence
-
-### Community 1200 - "ExportExcelService"
-Cohesion: 0.54
-Nodes (4): Dictionary, List, ExportExcelService, DataTable
-
-### Community 1201 - "AddressTypeValidationQueries"
-Cohesion: 0.39
-Nodes (4): CancellationToken, Task, AddressTypeValidationQueries, HrManagementSystem.Infrastructure.Features.GeographicalInformation.AddressTypes.Persistence
-
-### Community 1202 - "GeneralHub"
-Cohesion: 0.25
-Nodes (7): HashSet, GeneralHub, TestHubContext, Hub, IGroupManager, IHubClients, IHubContext
-
-### Community 1203 - "useAdaptivePagination.ts"
-Cohesion: 0.46
-Nodes (6): getAdaptivePaginationMode(), getClientPageItems(), PagedQuery, resolveAdaptivePaginationMode(), useAdaptivePagination(), UseAdaptivePaginationOptions
-
-### Community 1204 - ".Trimmed"
-Cohesion: 0.29
-Nodes (4): FluentValidationExtensions, HrManagementSystem.Application.Common.Extensions, IRuleBuilder, IRuleBuilderOptions
-
-### Community 1205 - "GetCountriesQuery"
-Cohesion: 0.38
-Nodes (6): CountryListItemResponse, int, PageResponse, string, GetCountriesQuery, GetCountriesQueryValidator
-
-### Community 1206 - "ILoginAuditService"
-Cohesion: 0.38
-Nodes (4): CancellationToken, Task, ILoginAuditService, HrManagementSystem.Application.Features.Security.Authentication.Services
-
-### Community 1207 - "CorrelationContext"
-Cohesion: 0.38
-Nodes (3): HttpContext, string, CorrelationContext
-
-### Community 1208 - "DistrictValidationQueries"
-Cohesion: 0.57
-Nodes (3): CancellationToken, Task, DistrictValidationQueries
-
-### Community 1209 - "StateValidationQueries"
-Cohesion: 0.57
-Nodes (3): CancellationToken, Task, StateValidationQueries
-
-### Community 1210 - "CrystalReportManagerAdminPermissionsMigrationTests"
-Cohesion: 0.43
-Nodes (4): Fact, MigrationBuilder, string, CrystalReportManagerAdminPermissionsMigrationTests
-
-### Community 1211 - "ReportTemplateAdminPermissionsMigrationTests"
-Cohesion: 0.43
-Nodes (4): Fact, MigrationBuilder, string, ReportTemplateAdminPermissionsMigrationTests
-
-### Community 1212 - ".ResetPassword"
-Cohesion: 0.33
-Nodes (3): ResetPasswordRequest, IStringLocalizer, ResetPasswordRequestValidator
-
-### Community 1213 - "ReportValidationQueries"
-Cohesion: 0.60
-Nodes (3): CancellationToken, Task, ReportValidationQueries
-
-### Community 1214 - "CrystalReportDataSourceTests"
-Cohesion: 0.60
-Nodes (3): Fact, Task, CrystalReportDataSourceTests
-
-### Community 1215 - "xlsx"
-Cohesion: 0.47
-Nodes (4): xlsx, useGridExport(), exportGridToExcel(), xlsx
-
-### Community 1217 - "CreateCountriesCommandValidator"
-Cohesion: 0.40
-Nodes (4): int, CreateCountriesCommandValidator, CreateCountriesCommand, HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.CreateCountries
-
-### Community 1218 - "ChangeUserPasswordRequest"
-Cohesion: 0.40
-Nodes (3): ChangeUserPasswordRequest, IStringLocalizer, ChangeUserPasswordRequestValidator
-
-### Community 1219 - "UpdateProfilePictureRequest"
-Cohesion: 0.40
-Nodes (3): UpdateProfilePictureRequest, IStringLocalizer, UpdateProfilePictureRequestValidator
-
-### Community 1220 - ".GenerateEmailBody"
-Cohesion: 0.40
-Nodes (3): Dictionary, EmailBodyBuilder, HrManagementSystem.Infrastructure.Common.Helpers
-
-### Community 1225 - "NoOpHubClientProxy"
-Cohesion: 0.50
-Nodes (3): MethodInfo, NoOpHubClientProxy, DispatchProxy
-
-### Community 1226 - "components/auth/index.ts"
-Cohesion: 0.50
-Nodes (3): AuthorizeViewProps, ForbiddenPageProps, RouteAuthorizationGuardProps
-
 ## Knowledge Gaps
-- **2138 isolated node(s):** `ErrorType`, `CrystalReportGrantRequest`, `HrManagementSystem.Application.Features.Analytics.ReportTemplates.Commands`, `CountryRow`, `StateRow` (+2133 more)
+- **2051 isolated node(s):** `Documentation System Guidance`, `Metadata`, `Requirement manifest`, `Shared contract snapshot`, `Evidence register` (+2046 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **777 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **792 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `proxy()` (2× useful, score=1.560575324)
+- `proxy()` (2× useful, score=1.632969798) _(code changed — re-verify)_
+- `TenantDashboardPage()` (2× useful, score=1.632444945)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `HrManagementSystem.Tests` connect `HrManagementSystem.Infrastructure.Migrations` to `HrManagementSystem.Domain.Common.Entities`, `HrManagementSystem.Application.Abstractions.Authentication`, `CrystalReport`, `HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities`, `.InvokeAsync`, `CrystalReportsControllerContractTests`, `HrManagementSystem.Infrastructure.Persistence`, `ActorScope`, `.Handle`, `HrManagementSystem.Application.Features.Analytics.ReportTemplates.Contracts`, `HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts`, `HrManagementSystem.Domain.Recruitment.Enums`, `HrManagementSystem.Infrastructure.Security.Authentication`, `ApplicationDbContextAuditTests.cs`, `HrManagementSystem.Application.Features.Analytics.CrystalReports.Contracts`, `.ReferencedAssemblies`, `HrManagementSystem.Infrastructure.Common.Settings`, `HrManagementSystem.Application.Common.Paginations`, `HrManagementSystem.Infrastructure.Common.Observability`?**
-  _High betweenness centrality (0.054) - this node is a cross-community bridge._
-- **Why does `ApplicationDbContext` connect `ApplicationDbContext` to `ReportTemplateFeatureTests`, `CrystalReportStore`, `.SaveChangesAsync`, `.PrepareChanges`, `NotificationServiceTests`, `CrystalReport`, `StateReadStore`, `ReportTemplate`, `ApplicationDbContextDesignFactory`, `HrManagementSystem.Infrastructure.Persistence`, `CrystalReportDataSourceTests`, `CountryCqrsHandlerTests`?**
-  _High betweenness centrality (0.034) - this node is a cross-community bridge._
-- **Why does `dependencies` connect `dependencies` to `dependencies`, `framer-motion`, `@mui/material`, `@mui/material-nextjs`, `@mui/x-data-grid`, `@hello-pangea/dnd`, `next`, `react-chartjs-2`, `react-timeago`, `@mui/x-date-pickers`, `react-error-boundary`, `react-to-print`, `react-virtualized`, `recharts`, `stylis`, `stylis-plugin-rtl`, `@syncfusion/ej2-base`, `@syncfusion/ej2-inputs`, `@syncfusion/ej2-navigations`, `@syncfusion/ej2-splitbuttons`, `zustand`, `web-next/package.json`, `react-i18next`, `xlsx`, `@emotion/styled`, `dayjs`, `i18next`, `@microsoft/signalr`, `react-dom`, `react-hook-form`, `@tanstack/react-query`, `@faker-js/faker`, `file-saver`, `@fullcalendar/core`, `@fullcalendar/daygrid`, `@fullcalendar/react`, `lucide-react`?**
-  _High betweenness centrality (0.029) - this node is a cross-community bridge._
-- **What connects `ErrorType`, `CrystalReportGrantRequest`, `HrManagementSystem.Application.Features.Analytics.ReportTemplates.Commands` to the rest of the system?**
-  _2138 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `dependencies` connect `dependencies` to `dependencies`, `framer-motion`, `@mui/material`, `@mui/material-nextjs`, `@mui/x-data-grid`, `@hello-pangea/dnd`, `next`, `react-chartjs-2`, `react-timeago`, `@mui/x-date-pickers`, `react-error-boundary`, `react-to-print`, `react-virtualized`, `recharts`, `stylis`, `stylis-plugin-rtl`, `@syncfusion/ej2-base`, `@syncfusion/ej2-inputs`, `@syncfusion/ej2-navigations`, `@syncfusion/ej2-splitbuttons`, `zustand`, `web-next/package.json`, `react-i18next`, `@emotion/styled`, `dayjs`, `i18next`, `@microsoft/signalr`, `react-dom`, `react-hook-form`, `@tanstack/react-query`, `ImportCountries.tsx`, `@faker-js/faker`, `file-saver`, `@fullcalendar/core`, `@fullcalendar/daygrid`, `@fullcalendar/react`, `lucide-react`?**
+  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+- **Why does `xlsx` connect `ImportCountries.tsx` to `dependencies`, `MediaContent.tsx`?**
+  _High betweenness centrality (0.040) - this node is a cross-community bridge._
+- **Why does `dependencies` connect `dependencies` to `dayjs`, `expo-image-manipulator`, `i18next`, `@microsoft/signalr`, `react-dom`, `react-hook-form`, `expo`, `expo-haptics`, `expo-image`, `expo-status-bar`, `react-native-gesture-handler`, `plugins`, `@tanstack/react-query`, `mobile-react/package.json`, `react-i18next`?**
+  _High betweenness centrality (0.036) - this node is a cross-community bridge._
+- **What connects `Documentation System Guidance`, `Metadata`, `Requirement manifest` to the rest of the system?**
+  _2051 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `DistrictService` be split into smaller, more focused modules?**
   _Cohesion score 0.0653417645287564 - nodes in this community are weakly interconnected._
 - **Should `include` be split into smaller, more focused modules?**
   _Cohesion score 0.020833333333333332 - nodes in this community are weakly interconnected._
-- **Should `.GenerateSyncfusionPdf` be split into smaller, more focused modules?**
-  _Cohesion score 0.13970588235294118 - nodes in this community are weakly interconnected._
+- **Should `ExportPdfFileService` be split into smaller, more focused modules?**
+  _Cohesion score 0.06918238993710692 - nodes in this community are weakly interconnected._
