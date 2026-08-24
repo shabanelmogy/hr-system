@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-23T14:35:03.822937+00:00",
+  "generated_at": "2026-08-24T13:27:23.762559+00:00",
   "nodes": {
     "api_hrmanagementsystem_infrastructure_security_authorization_filters_tenantmemberattribute_hrmanagementsystem_infrastructure_security_authorization_filters_tenantmemberattribute": {
       "code_fingerprint": "c688d01f21cf802ce06e8127e0616e83d139f1db2d949b03d8890a7fb4da571d",
@@ -12,7 +12,7 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.760677475,
+      "score": 0.744111045,
       "source_file": "api/HrManagementSystem.Infrastructure/Security/Authorization/Filters/TenantMemberAttribute.cs",
       "status": "tentative",
       "uses": 1
@@ -28,7 +28,7 @@
           "q": "when focus input keyboard cover input"
         }
       ],
-      "score": 0.759348738,
+      "score": 0.742811246,
       "source_file": "mobile-react/app.json",
       "status": "tentative",
       "uses": 1
@@ -44,7 +44,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.761050258,
+      "score": 0.744475709,
       "source_file": "web-next/package.json",
       "status": "tentative",
       "uses": 1
@@ -60,7 +60,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.76084024,
+      "score": 0.744270265,
       "source_file": "web-next/README.md",
       "status": "tentative",
       "uses": 1
@@ -76,7 +76,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.76084024,
+      "score": 0.744270265,
       "source_file": "web-next/scripts/setup-local-https.ps1",
       "status": "tentative",
       "uses": 1
@@ -92,7 +92,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.761050258,
+      "score": 0.744475709,
       "source_file": "web-next/src/app/(auth)/login/page.tsx",
       "status": "tentative",
       "uses": 1
@@ -108,7 +108,7 @@
           "q": "fix style for buton : login as admin"
         }
       ],
-      "score": 0.759452136,
+      "score": 0.742912392,
       "source_file": "web-next/src/features/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
@@ -124,7 +124,7 @@
           "q": "Fix web super-admin login failing with HTTP 307 and React minWidth DOM warning on the tenant dashboard."
         }
       ],
-      "score": 0.761365445,
+      "score": 0.744784032,
       "source_file": "web-next/src/features/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
@@ -140,7 +140,7 @@
           "q": "fix style for buton : login as admin"
         }
       ],
-      "score": 0.759452136,
+      "score": 0.742912392,
       "source_file": "web-next/src/features/auth/login/Login.tsx",
       "status": "tentative",
       "uses": 1
@@ -156,7 +156,7 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.760677475,
+      "score": 0.744111045,
       "source_file": "web-next/src/layouts/components/sidebar/navigationConfig.tsx",
       "status": "tentative",
       "uses": 1
@@ -172,7 +172,7 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.760677475,
+      "score": 0.744111045,
       "source_file": "web-next/src/lib/auth/route-access.ts",
       "status": "tentative",
       "uses": 1
@@ -193,7 +193,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 1.522415703,
+      "score": 1.489259741,
       "source_file": "web-next/src/proxy.ts",
       "status": "preferred",
       "uses": 2
