@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { toFormErrorMap, useZodForm } from '@/src/core/validation';
 import type { Country, CountryRequest } from '../types/country';
 import { AppForm, AppFormSection, AppTextField } from '@/src/shared/components';
+import { createCountryRequestSchema } from '../validation/country-request-schema';
 
 interface CountryFormProps {
   country: Country | null;
@@ -18,25 +19,7 @@ interface CountryFormProps {
 
 export function CountryForm({ country, loading, mode, onClose, onSave }: CountryFormProps) {
   const { t } = useTranslation();
-  const schema = useMemo(() => {
-    const optionalPattern = (pattern: RegExp, message: string) =>
-      z.string().trim().refine((value) => value.length === 0 || pattern.test(value), message);
-
-    return z.object({
-      nameAr: z.string().trim()
-        .min(2, t('validation.minLength', { count: 2 }))
-        .max(100, t('validation.maxLength', { count: 100 }))
-        .regex(/^[\p{Script=Arabic}\s]+$/u, t('countries.nameArInvalid')),
-      nameEn: z.string().trim()
-        .min(2, t('validation.minLength', { count: 2 }))
-        .max(100, t('validation.maxLength', { count: 100 }))
-        .regex(/^[A-Za-z\s]+$/, t('countries.nameEnInvalid')),
-      alpha2Code: optionalPattern(/^[A-Za-z]{2}$/, t('countries.alpha2Invalid')),
-      alpha3Code: optionalPattern(/^[A-Za-z]{3}$/, t('countries.alpha3Invalid')),
-      phoneCode: optionalPattern(/^\+?\d{1,10}$/, t('countries.phoneCodeInvalid')),
-      currencyCode: optionalPattern(/^[A-Za-z]{3}$/, t('countries.currencyCodeInvalid')),
-    });
-  }, [t]);
+  const schema = useMemo(() => createCountryRequestSchema(t), [t]);
   type FormValues = z.infer<typeof schema>;
   const defaults = useMemo<FormValues>(() => ({
     nameAr: country?.nameAr ?? '', nameEn: country?.nameEn ?? '',

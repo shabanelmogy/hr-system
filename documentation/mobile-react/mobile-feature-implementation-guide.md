@@ -516,6 +516,42 @@ const clearBulkSelection = useCallback(() => { setSelectedIds([]); }, []);
 const changeSearch = useCallback((value) => { clearBulkSelection(); setListSearchInput(value); }, [...]);
 ```
 
+### Chart View
+
+Use the shared `AppChartCard`, `AppChartSummary`, `AppHorizontalBarChart`, and
+`AppDistributionChart` primitives. Keep feature-specific series preparation in a
+feature-owned `chart-view/*-chart-data.ts` module with pure tests.
+
+A list-backed Chart shows the current loaded server page, not global analytics.
+Render the authoritative `totalCount` only with a distinct matching-total label,
+name loaded-page metrics explicitly, remove list pagination, and use the view's
+internal scroll. Do not add a scope paragraph below the MultiView buttons:
+
+```tsx
+{
+  value: 'chart',
+  icon: 'stats-chart-outline',
+  paginate: false,
+  renderWhenEmpty: true,
+  scrollable: true,
+  render: (items) => <FeatureChartView items={items} totalCount={totalCount} />,
+}
+```
+
+If the product needs global metrics, trends, or large categorical analysis, add a
+dedicated aggregate API/query key instead of loading every list row. Advanced
+chart types may use `react-native-gifted-charts`, installed through Expo and kept
+behind the same shared boundary.
+
+With four or more compact views below 600px, `AppMultiView` uses icon-only buttons.
+Pass `fillViewSelector` when the product wants them distributed equally across the
+full toolbar width. Do not solve Report/Import overflow by adding a wrapped second
+toolbar row.
+
+The temporary Countries/States Import reservation is disabled and renders
+nothing. Do not enable it or add placeholder text until picking, validation,
+preview, submission, permissions, and errors are implemented.
+
 ### Report View
 
 First record the Report view as Required, Deferred, or Excluded and choose its
@@ -546,6 +582,10 @@ renders regardless of list data and never owns list pagination:
 | `AppPageHeader` | Title + subtitle + action buttons |
 | `AppListScreen` | Search + filter + multi-view (unified layout) |
 | `AppDataTable` | Sortable table with server pagination |
+| `AppChartCard` | Compact shared chart panel |
+| `AppChartSummary` | Responsive page/global metric summary |
+| `AppHorizontalBarChart` | Accessible categorical comparison |
+| `AppDistributionChart` | Accessible part-to-whole distribution |
 | `AppCard` | Card container |
 | `AppForm` | Full-screen form dialog |
 | `AppFormSection` | Form section with icon + title |
@@ -591,8 +631,12 @@ renders regardless of list data and never owns list pagination:
   - [ ] `searchValue` + `onSearchChange` (controlled)
   - [ ] `isFetching` for background loading indicator
   - [ ] `showViewLabels`
+  - [ ] `fillViewSelector` when all view buttons must share the full toolbar width
   - [ ] Table view with `AppDataTable` + `serverState`
   - [ ] Cards view with `scrollable: true` + `defaultPageSize: 3`
+  - [ ] Chart decision recorded as Required/Deferred/Excluded
+  - [ ] Required list-backed Chart labels loaded-page metrics and authoritative total separately
+  - [ ] Chart uses shared primitives, `paginate: false`, `renderWhenEmpty: true`, and `scrollable: true`
   - [ ] Report view decision recorded as Required/Deferred/Excluded
   - [ ] Required Managed Crystal view uses manager catalog/render by `entityKey`
   - [ ] Report view uses `paginate: false` + `renderWhenEmpty: true` and no pager
@@ -623,5 +667,9 @@ renders regardless of list data and never owns list pagination:
 - Do not forget `_layout.tsx` in nested route directories — causes drawer item leak
 - Do not use `toolbarContent` on `AppMultiView` directly — use `AppListScreen` which wraps it
 - Do not hardcode strings — use `useTranslation()`
+- Do not label current-page Chart series as global analytics or load all rows to
+  simulate an aggregate endpoint
+- Do not import a chart package directly into business screens — wrap it in shared
+  chart primitives and keep series preparation feature-owned
 - Do not call the Crystal host directly or treat a deployed `.rpt` as published —
   consume only the HR API Report Manager catalog/render contract

@@ -24,7 +24,7 @@ export interface AppSegmentedControlProps<Value extends string> {
   helperText?: string;
   showLabel?: boolean;
   showOptionLabels?: boolean;
-  layout?: 'equal' | 'wrap';
+  layout?: 'equal' | 'wrap' | 'fill';
   variant?: 'segment' | 'pill';
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
@@ -64,6 +64,7 @@ export function AppSegmentedControl<Value extends string>({
         style={[
           styles.container,
           layout === 'wrap' && styles.wrappedContainer,
+          layout === 'fill' && styles.fillContainer,
           {
             direction,
             backgroundColor: variant === 'segment' ? theme.colors.surfaceMuted : 'transparent',
@@ -84,12 +85,14 @@ export function AppSegmentedControl<Value extends string>({
               accessibilityRole="radio"
               accessibilityState={{ checked: selected, disabled: optionDisabled }}
               disabled={optionDisabled}
+              hitSlop={!showOptionLabels ? 2 : undefined}
               key={option.value}
               onPress={() => onChange(option.value)}
               style={({ pressed }) => [
                 styles.option,
                 layout === 'equal' ? styles.equalOption : styles.wrappedOption,
                 !showOptionLabels && styles.iconOnlyOption,
+                layout === 'fill' && styles.fillOption,
                 {
                   backgroundColor: selected
                     ? variant === 'pill'
@@ -100,7 +103,7 @@ export function AppSegmentedControl<Value extends string>({
                       : 'transparent',
                   borderColor: selected ? theme.colors.primary : theme.colors.border,
                   borderRadius: variant === 'pill' ? theme.radius.full : theme.radius.sm,
-                  opacity: pressed ? 0.75 : 1,
+                  opacity: optionDisabled ? 0.45 : pressed ? 0.75 : 1,
                 },
               ]}>
               <View style={styles.optionContent}>
@@ -112,7 +115,7 @@ export function AppSegmentedControl<Value extends string>({
                         ? theme.colors.primary
                         : theme.colors.textMuted}
                     name={option.icon}
-                    size={17}
+                    size={showOptionLabels ? 17 : 21}
                   />
                 ) : null}
                 {showOptionLabels ? (
@@ -153,6 +156,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     gap: 8,
   },
+  fillContainer: {
+    flexWrap: 'nowrap',
+    justifyContent: 'flex-start',
+    gap: 4,
+  },
   option: {
     minHeight: 40,
     justifyContent: 'center',
@@ -166,8 +174,14 @@ const styles = StyleSheet.create({
     flexGrow: 0,
   },
   iconOnlyOption: {
-    width: 42,
+    minHeight: 40,
+    width: 44,
     paddingHorizontal: 0,
+  },
+  fillOption: {
+    flexGrow: 1,
+    flexShrink: 1,
+    minWidth: 44,
   },
   optionContent: {
     flexDirection: 'row',

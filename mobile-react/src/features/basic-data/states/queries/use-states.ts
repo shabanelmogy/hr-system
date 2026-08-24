@@ -13,3 +13,4 @@ export function useSaveState() { return useInvalidatingMutation(({ id, request }
 export function useArchiveState() { return useInvalidatingMutation((id: number) => stateApi.archive(id)); }
 export function useRestoreState() { return useInvalidatingMutation((id: number) => stateApi.restore(id)); }
 export function useBulkArchiveStates() { return useInvalidatingMutation((ids: number[]) => stateApi.bulkArchive(ids)); }
+export function useBulkCreateStates() { return useInvalidatingMutation((requests: StateRequest[]) => stateApi.bulkCreate(requests)); }

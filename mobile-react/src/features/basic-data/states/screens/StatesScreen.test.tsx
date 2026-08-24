@@ -53,6 +53,7 @@ jest.mock('@/src/shared/listing', () => ({
 jest.mock('../queries/use-states', () => ({
   useArchiveState: () => ({ isPending: false, mutateAsync: mockArchive }),
   useBulkArchiveStates: () => ({ isPending: false, mutateAsync: mockBulkArchive }),
+  useBulkCreateStates: () => ({ isPending: false, mutateAsync: jest.fn() }),
   useRestoreState: () => ({ mutateAsync: jest.fn() }),
   useSaveState: () => ({ isPending: false, mutateAsync: jest.fn() }),
   useStates: (query: unknown) => mockUseStates(query),
@@ -64,8 +65,8 @@ jest.mock('@/src/shared/components', () => {
     AppButton: ({ children, onPress }: { children: React.ReactNode; onPress: () => void }) => <Pressable onPress={onPress} testID="bulk-action"><Text>{children}</Text></Pressable>,
     AppDataTable: ({ columns, rows }: { columns: { id: string; render: (row: State) => React.ReactNode }[]; rows: State[] }) => <View>{rows.map((row) => <View key={row.id}>{columns.find((column) => column.id === 'actions')?.render(row)}</View>)}</View>,
     AppIconButton: ({ label, onPress }: { label: string; onPress: () => void }) => <Pressable onPress={onPress} testID={`icon-${label}`}><Text>{label}</Text></Pressable>,
-    AppListScreen: ({ filterControl, items, views }: { filterControl: React.ReactNode; items: State[]; views: { value: string; render: (rows: State[]) => React.ReactNode }[] }) => <View testID="state-list">{filterControl}{views.map((view) => <View key={view.value}>{view.render(items)}</View>)}</View>,
-    AppPageHeader: ({ action }: { action: React.ReactNode }) => <View>{action}</View>,
+    AppListScreen: ({ aboveViews, fillViewSelector, filterControl, items, searchActions, views }: { aboveViews?: React.ReactNode; fillViewSelector?: boolean; filterControl: React.ReactNode; items: State[]; searchActions?: React.ReactNode; views: { value: string; disabled?: boolean; render: (rows: State[]) => React.ReactNode }[] }) => <View testID="state-list">{filterControl}{searchActions}{aboveViews}<Text testID="state-selector-fill">{String(fillViewSelector)}</Text><Text testID="state-import-present">{String(Boolean(views.find((view) => view.value === 'import')))}</Text>{views.map((view) => <View key={view.value}>{view.render(items)}</View>)}</View>,
+    AppPageHeader: () => <View testID="state-page-header" />,
     AppScreen: ({ children }: { children: React.ReactNode }) => <View>{children}</View>,
     AppStateView: ({ state }: { state: string }) => <Text>{state}</Text>,
     AppStatusBadge: ({ label }: { label: string }) => <Text>{label}</Text>,
@@ -110,6 +111,18 @@ jest.mock('../components/StateReportView', () => {
   return { StateReportView: () => <View testID="state-report" /> };
 });
 
+jest.mock('../components/StatesChartView', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+  return { StatesChartView: () => <View testID="state-charts" /> };
+});
+
+jest.mock('../components/import-data/StateImportView', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+  return { StateImportView: () => <View testID="state-import" /> };
+});
+
 const state: State = {
   id: 11,
   nameAr: 'القاهرة',
@@ -141,7 +154,13 @@ describe('StatesScreen', () => {
     expect(mockUseStates).toHaveBeenCalledWith({ pageNumber: 1, pageSize: 5, search: '', searchField: 'all', searchOperator: 'contains', status: 'active', sortBy: 'createdOn', sortDirection: 'desc' });
     expect(screen.getByTestId('state-list')).toBeTruthy();
     expect(screen.getByTestId('state-filter')).toBeTruthy();
+    expect(screen.getByTestId('icon-states.addState')).toBeTruthy();
+    expect(screen.queryByTestId('state-page-header')).toBeNull();
+    expect(screen.getByTestId('state-charts')).toBeTruthy();
     expect(screen.getByTestId('state-report')).toBeTruthy();
+    expect(screen.getByTestId('state-selector-fill').props.children).toBe('true');
+    expect(screen.getByTestId('state-import-present').props.children).toBe('true');
+    expect(screen.getByTestId('state-import')).toBeTruthy();
     await fireEvent.press(screen.getAllByTestId('view-11')[0]);
     expect(screen.getByTestId('state-form-view')).toBeTruthy();
     await fireEvent.press(screen.getAllByTestId('edit-11')[0]);
@@ -163,5 +182,6 @@ describe('StatesScreen', () => {
     expect(screen.queryByTestId('icon-states.addState')).toBeNull();
     expect(screen.queryByTestId('edit-11')).toBeNull();
     expect(screen.queryByTestId('archive-11')).toBeNull();
+    expect(screen.getByTestId('state-import-present').props.children).toBe('false');
   });
 });

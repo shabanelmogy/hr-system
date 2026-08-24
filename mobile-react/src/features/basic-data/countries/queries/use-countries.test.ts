@@ -5,6 +5,7 @@ import { countryKeys } from './country-keys';
 import {
   useArchiveCountry,
   useBulkArchiveCountries,
+  useBulkCreateCountries,
   useRestoreCountry,
   useSaveCountry,
 } from './use-countries';
@@ -22,6 +23,7 @@ jest.mock('../api/country-api', () => ({
   countryApi: {
     archive: jest.fn(),
     bulkArchive: jest.fn(),
+    bulkCreate: jest.fn(),
     create: jest.fn(),
     getPage: jest.fn(),
     restore: jest.fn(),
@@ -44,6 +46,7 @@ describe('country mutation hooks', () => {
     ['archive', useArchiveCountry, 7, countryApi.archive],
     ['restore', useRestoreCountry, 7, countryApi.restore],
     ['bulk archive', useBulkArchiveCountries, [3, 7], countryApi.bulkArchive],
+    ['bulk create', useBulkCreateCountries, [{ nameAr: 'مصر', nameEn: 'Egypt', alpha2Code: 'EG', alpha3Code: 'EGY', phoneCode: '+20', currencyCode: 'EGP' }], countryApi.bulkCreate],
   ] as const)('invalidates the Countries root after %s succeeds', async (_name, useMutationHook, variables, apiMethod) => {
     const hook = await renderHook(() => useMutationHook());
     const mutation = hook.result.current as unknown as MutationContract<typeof variables>;

@@ -1,7 +1,7 @@
 import { apiService, type PageResponse } from '@/src/core/api';
 import { stateEndpoints } from './state-endpoints';
-import { bulkArchiveStatesResultSchema, stateDetailSchema, stateLookupSchema, statePageSchema, stateWithDistrictsSchema } from './state-schemas';
-import type { BulkArchiveStatesResponse, State, StateDetail, StateLookup, StatePageQuery, StateRequest, StateWithDistricts } from '../types/state';
+import { bulkArchiveStatesResultSchema, bulkCreateStatesResultSchema, stateDetailSchema, stateLookupSchema, statePageSchema, stateWithDistrictsSchema } from './state-schemas';
+import type { BulkArchiveStatesResponse, BulkCreateStatesResponse, State, StateDetail, StateLookup, StatePageQuery, StateRequest, StateWithDistricts } from '../types/state';
 
 export function toStatePageQuery(query: StatePageQuery): string {
   const parameters = new URLSearchParams({ pageNumber: String(query.pageNumber), pageSize: String(query.pageSize), status: query.status, sortBy: query.sortBy, sortDirection: query.sortDirection, searchField: query.searchField, searchOperator: query.searchOperator });
@@ -18,6 +18,7 @@ export const stateApi = {
   async getById(id: number): Promise<StateDetail> { return stateDetailSchema.parse(await apiService.get<unknown>(stateEndpoints.byId(id))); },
   async getWithDistricts(id: number): Promise<StateWithDistricts> { return stateWithDistrictsSchema.parse(await apiService.get<unknown>(stateEndpoints.withDistricts(id))); },
   async create(request: StateRequest): Promise<StateDetail> { return stateDetailSchema.parse(await apiService.post<unknown, StateRequest>(stateEndpoints.base, normalizeRequest(request))); },
+  async bulkCreate(requests: readonly StateRequest[]): Promise<BulkCreateStatesResponse> { const states = requests.map(normalizeRequest); return bulkCreateStatesResultSchema.parse(await apiService.post<unknown, { states: StateRequest[] }>(stateEndpoints.bulkCreate, { states })); },
   async update(id: number, request: StateRequest): Promise<StateDetail> { return stateDetailSchema.parse(await apiService.put<unknown, StateRequest>(stateEndpoints.byId(id), normalizeRequest(request))); },
   async archive(id: number): Promise<void> { await apiService.delete<unknown>(stateEndpoints.byId(id)); },
   async restore(id: number): Promise<void> { await apiService.post<unknown, undefined>(stateEndpoints.restore(id), undefined); },

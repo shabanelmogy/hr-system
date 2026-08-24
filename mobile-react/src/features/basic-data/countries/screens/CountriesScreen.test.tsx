@@ -74,6 +74,7 @@ jest.mock('@/src/shared/listing', () => ({
 jest.mock('../queries/use-countries', () => ({
   useArchiveCountry: () => ({ isPending: false, mutateAsync: mockArchive }),
   useBulkArchiveCountries: () => ({ isPending: false, mutateAsync: mockBulkArchive }),
+  useBulkCreateCountries: () => ({ isPending: false, mutateAsync: jest.fn() }),
   useCountries: (query: unknown) => mockUseCountries(query),
   useRestoreCountry: () => ({ mutateAsync: mockRestore }),
   useSaveCountry: () => ({ isPending: false, mutateAsync: mockSave }),
@@ -92,17 +93,24 @@ jest.mock('@/src/shared/components', () => {
   AppIconButton: ({ label, onPress }: { label: string; onPress: () => void }) => (
     <Pressable onPress={onPress} testID={`icon-${label}`}><Text>{label}</Text></Pressable>
   ),
-  AppListScreen: ({ filterControl, items, views }: {
+  AppListScreen: ({ aboveViews, fillViewSelector, filterControl, items, searchActions, views }: {
+    aboveViews?: React.ReactNode;
+    fillViewSelector?: boolean;
     filterControl: React.ReactNode;
     items: Country[];
-    views: { value: string; render: (rows: Country[]) => React.ReactNode }[];
+    searchActions?: React.ReactNode;
+    views: { value: string; disabled?: boolean; render: (rows: Country[]) => React.ReactNode }[];
   }) => (
     <View testID="country-list">
       {filterControl}
+      {searchActions}
+      {aboveViews}
+      <Text testID="country-selector-fill">{String(fillViewSelector)}</Text>
+      <Text testID="country-import-present">{String(Boolean(views.find((view) => view.value === 'import')))}</Text>
       {views.map((view) => <View key={view.value}>{view.render(items)}</View>)}
     </View>
   ),
-  AppPageHeader: ({ action }: { action: React.ReactNode }) => <View>{action}</View>,
+  AppPageHeader: () => <View testID="country-page-header" />,
   AppScreen: ({ children }: { children: React.ReactNode }) => <View>{children}</View>,
   AppStateView: ({ state }: { state: string }) => <Text testID={`state-${state}`}>{state}</Text>,
   AppStatusBadge: ({ label }: { label: string }) => <Text>{label}</Text>,
@@ -155,6 +163,18 @@ jest.mock('../components/CountryReportView', () => {
   return { CountryReportView: () => <View testID="country-report" /> };
 });
 
+jest.mock('../components/CountriesChartView', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+  return { CountriesChartView: () => <View testID="country-charts" /> };
+});
+
+jest.mock('../components/import-data/CountryImportView', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+  return { CountryImportView: () => <View testID="country-import" /> };
+});
+
 const country: Country = {
   id: 7,
   nameAr: 'مصر',
@@ -190,7 +210,7 @@ describe('CountriesScreen', () => {
     mockBulkArchive.mockResolvedValue({ archivedCount: 1 });
   });
 
-  it('uses only visible server criteria and composes table, cards, filters, and reports', async () => {
+  it('uses only visible server criteria and composes table, cards, charts, filters, and reports', async () => {
     await render(<CountriesScreen />);
 
     expect(mockUseCountries).toHaveBeenCalledWith({
@@ -205,7 +225,13 @@ describe('CountriesScreen', () => {
     });
     expect(screen.getByTestId('country-list')).toBeTruthy();
     expect(screen.getByTestId('country-filter')).toBeTruthy();
+    expect(screen.getByTestId('icon-countries.addCountry')).toBeTruthy();
+    expect(screen.queryByTestId('country-page-header')).toBeNull();
+    expect(screen.getByTestId('country-charts')).toBeTruthy();
     expect(screen.getByTestId('country-report')).toBeTruthy();
+    expect(screen.getByTestId('country-selector-fill').props.children).toBe('true');
+    expect(screen.getByTestId('country-import-present').props.children).toBe('true');
+    expect(screen.getByTestId('country-import')).toBeTruthy();
   });
 
   it('opens view/edit forms and archives single and selected rows through confirmation', async () => {
@@ -235,5 +261,6 @@ describe('CountriesScreen', () => {
     expect(screen.queryByTestId('edit-7')).toBeNull();
     expect(screen.queryByTestId('archive-7')).toBeNull();
     expect(screen.queryByTestId('country-report')).toBeNull();
+    expect(screen.getByTestId('country-import-present').props.children).toBe('false');
   });
 });

@@ -6,6 +6,7 @@ import { countryEndpoints } from '../country-endpoints';
 import { toCountryPageQuery } from '../country-api';
 import {
   bulkArchiveResultSchema,
+  bulkCreateResultSchema,
   countryPageSchema,
   countryWithStatesSchema,
 } from '../country-schemas';
@@ -38,6 +39,12 @@ describe('country API boundary', () => {
   it('keeps the bulk archive route and response contract explicit', () => {
     expect(countryEndpoints.bulkArchive).toBe('countries/bulk-archive');
     expect(bulkArchiveResultSchema.parse({ archivedCount: 2 })).toEqual({ archivedCount: 2 });
+  });
+
+  it('keeps the atomic bulk-create route and response contract explicit', () => {
+    expect(countryEndpoints.bulkCreate).toBe('countries/bulk');
+    expect(bulkCreateResultSchema.parse({ createdCount: 2 })).toEqual({ createdCount: 2 });
+    expect(() => bulkCreateResultSchema.parse({ createdCount: -1 })).toThrow();
   });
 
   it('requires the complete state lookup contract', () => {

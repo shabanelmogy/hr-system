@@ -60,4 +60,4 @@ decision. A focused test pass alone is never a `Ready` decision.
 | web | 13 | `3a78555f943e8934b512813fb738bb774d429bbc68dff3ad58a9da46199f55fc` |
 | web | 14 | `80765976d54ff8e1c218832a3dbd4d3643fda41d5caa77f3878160e71213626c` |
 | mobile | 14 | `72286a76f99d350c43eb2cc1645ac0aa89055b23b096e9d8af98bc4935c85430` |
-| mobile | 15 | `139dc66ea0c00c0655dec6c9b42b688d4f151fd9c50766125a390a920ec9aa56` |
+| mobile | 15 | `504bef869eafe4d776837ca41e9160b58a5e45439b85cb6a79c8e340f736b967` |

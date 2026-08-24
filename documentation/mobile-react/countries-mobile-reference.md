@@ -202,9 +202,13 @@ the current server page; it must not search, filter or slice those rows locally.
 `AppDataTable` receives `serverState` and disables its own pagination because
 `AppMultiView` owns the shared pager.
 
-The main toolbar keeps only the shared search field and one Filter button. Its
-feature-owned modal applies Status, Column, and Condition together through
-`AppListScreen.filterControl` and the shared `AppSearchFilterControls`.
+The navigation App Header owns the page identity, so the content does not repeat
+the Countries title/subtitle in `AppPageHeader`. The main toolbar keeps the shared
+search field, one Filter button, and the permission-guarded Add icon passed through
+`AppListScreen.searchActions`. Its feature-owned modal applies Status, Column, and
+Condition together through `AppListScreen.filterControl` and the shared
+`AppSearchFilterControls`. Bulk Archive appears through `aboveViews` only while
+rows are selected, rather than crowding the search row.
 The API's dedicated `currencyCode` and `hasStates` filters are intentionally not
 part of the current mobile screen query state. Currency remains available as an
 explicit search column; no criterion can remain active without a visible control.
@@ -215,11 +219,46 @@ explicit search column; no criterion can remain active without a visible control
 |---|---|---|
 | Table | Current server page | Sortable Name EN/AR, Alpha-2, Currency and Created columns; state count, status and guarded row actions; shared server pager |
 | Cards | Same current server page | Names, alpha codes, active-state count, lifecycle badge, selection and guarded touch actions |
+| Chart | Same loaded server page | No pager; compact summary, horizontal states ranking, ring coverage, vertical currency columns, and a vertical creation timeline inside the view's scroll |
 | Report | Independent report catalog/API | No list pagination; available even when the country page is empty |
+| Import | Required native XLSX workflow | No list pager; select one `.xlsx` (max 5 MiB), require `nameAr,nameEn,alpha2Code,alpha3Code,phoneCode,currencyCode`, preview at most 100 rows, then atomically submit `{ countries: [...] }` to `POST countries/bulk` |
 
-Table and Cards share criteria, rows, total count, actions and query state. View
-switching applies the view's default server page size and resets page position.
-There is no mobile Chart or XLSX Import view.
+Table, Cards and Chart share criteria, rows, total count and query state. View
+switching applies paginated views' default server page size and resets their page
+position. Chart uses `paginate: false`, `renderWhenEmpty: true`, and
+`scrollable: true`; it does not render list pagination. Its localized scope alert
+is intentionally omitted; the summary labels distinguish loaded-page metrics from
+the authoritative matching total. Import uses `paginate: false`,
+`renderWhenEmpty: true`, and `scrollable: true`; its picker, validation summary,
+row preview, submit state, and retry/reconciliation feedback render within the
+view rather than using the list pager.
+
+Country Import uses Expo's native document picker and cache-safe file access. It
+accepts only `.xlsx` files up to 5 MiB, requires the exact headers
+`nameAr,nameEn,alpha2Code,alpha3Code,phoneCode,currencyCode`, and rejects a file
+with more than 100 data rows before a request. Local validation normalizes the
+same request fields as the form and identifies field-scoped, case-insensitive
+duplicates before submit. Pending valid rows are sent once as
+`POST countries/bulk` with `{ countries: CountryRequest[] }`; the API batch is
+atomic. Picker cancellation leaves the view usable without an error. A timeout or
+ambiguous transport result is shown as `uncertain`, preserves the preview, and
+requires canonical-list reconciliation before a user can resubmit the source.
+Import visibility and its direct submit handler require `Countries:Create`; tenant
+read-only is checked first. A successful response invalidates `countryKeys.all`.
+
+Chart rendering composes the shared `src/shared/components/charts` primitives;
+Countries owns only the series transformations in
+`components/chart-view/country-chart-data.ts`. Color is supplemented by visible
+labels/values and accessible row/distribution summaries. Pure tests cover Arabic
+names, deterministic sorting, coverage, currencies, invalid dates, and summary
+totals.
+The selected shapes are semantic: long country names stay in horizontal bars,
+the two-part with/without coverage uses a ring, and short currency/month labels
+use vertical bars. Do not replace them with one repeated chart shape or add a
+page-scoped Line chart that implies a complete global timeline.
+On phone widths, the five reserved view positions use one full-width row of
+equally distributed icon-only buttons with localized accessibility labels, so
+Report and Import do not wrap or overflow below Chart.
 
 Pull-to-refresh refetches the current query key without clearing criteria.
 Initial loading uses a full state view; list failure is persistent and retryable;
@@ -324,6 +363,8 @@ reports.
 6. Add hierarchical query keys, list queries, invalidating mutations, and detail queries only when the list is not authoritative.
 7. Configure one server-list state and map zero-based UI pages at the boundary.
 8. Build Table and Cards through `AppListScreen`; add only API-supported sorts.
+   If Chart is Required, compose shared chart primitives and document whether its
+   series are page-scoped or backed by a dedicated aggregate endpoint.
 9. Add permission/read-only/lifecycle guards to visibility and handlers.
 10. Build full-screen create/edit/view form with dirty and busy protection.
 11. Add confirmations, pull-to-refresh and explicit state/retry feedback.
@@ -346,7 +387,11 @@ reports.
 Existing focused evidence:
 
 - `src/features/basic-data/countries/api/__tests__/country-api.test.ts`;
+- `src/features/basic-data/countries/api/__tests__/country-bulk-api.test.ts`;
 - `src/features/basic-data/countries/screens/CountriesScreen.test.tsx`;
+- `src/features/basic-data/countries/components/chart-view/country-chart-data.test.ts`;
+- `src/features/basic-data/countries/components/import-data/country-import.test.ts`;
+- `src/shared/importing/native-spreadsheet.test.ts`;
 - `src/features/basic-data/countries/queries/use-countries.test.ts`;
 - `src/features/reporting/crystal-reports/__tests__/crystal-report-api.test.ts`;
 - `src/shared/listing/__tests__/useServerListState.test.ts`;
@@ -366,4 +411,9 @@ Manual verification must include direct route access, phone/tablet,
 portrait/landscape, EN/AR, LTR/RTL, light/dark/system, text scaling, keyboard,
 safe areas, list state transitions, pull-to-refresh, permissions, read-only,
 archive/restore/bulk behavior, dirty/busy form exits, report unavailable/error,
-PDF preview/share and realtime refresh.
+PDF preview/share, Chart internal scrolling, visible and screen-reader Chart
+summaries, no-series states, and realtime refresh. Import verification includes
+picker cancellation, wrong extension/MIME, oversized/corrupt/header-invalid files,
+101 rows, row-level validation/duplicates, preview scrolling, atomic success,
+conflict, uncertain reconciliation, Create/read-only guards, EN/AR/RTL labels,
+screen-reader status summaries, and cache/realtime refresh.

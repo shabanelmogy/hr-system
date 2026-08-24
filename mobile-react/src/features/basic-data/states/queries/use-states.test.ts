@@ -5,6 +5,7 @@ import { stateKeys } from './state-keys';
 import {
   useArchiveState,
   useBulkArchiveStates,
+  useBulkCreateStates,
   useRestoreState,
   useSaveState,
 } from './use-states';
@@ -22,6 +23,7 @@ jest.mock('../api/state-api', () => ({
   stateApi: {
     archive: jest.fn(),
     bulkArchive: jest.fn(),
+    bulkCreate: jest.fn(),
     create: jest.fn(),
     getLookup: jest.fn(),
     getPage: jest.fn(),
@@ -45,6 +47,7 @@ describe('state mutation hooks', () => {
     ['archive', useArchiveState, 11, stateApi.archive],
     ['restore', useRestoreState, 11, stateApi.restore],
     ['bulk archive', useBulkArchiveStates, [11, 12], stateApi.bulkArchive],
+    ['bulk create', useBulkCreateStates, [{ nameAr: 'القاهرة', nameEn: 'Cairo', code: 'CAI', countryId: 7 }], stateApi.bulkCreate],
   ] as const)('invalidates the States root after %s succeeds', async (_name, useMutationHook, variables, apiMethod) => {
     const hook = await renderHook(() => useMutationHook());
     const mutation = hook.result.current as unknown as MutationContract<typeof variables>;

@@ -11,10 +11,12 @@ import { AppScreenFooterContext } from '@/src/shared/components/layout/AppScreen
 import { AppText } from '@/src/shared/components/typography/AppText';
 import { AppCollectionPagination } from './AppCollectionPagination';
 import { shouldPinPagination } from './paginationPlacement';
+import { shouldCollapseMultiViewLabels } from './viewSelectorLayout';
 
 export interface AppMultiViewDefinition<Item, ViewId extends string> {
   carousel?: boolean;
   defaultPageSize?: number;
+  disabled?: boolean;
   getItemKey?: (item: Item, index: number) => string | number;
   icon: AppIconName;
   label: string;
@@ -40,6 +42,7 @@ export interface AppMultiViewProps<Item, ViewId extends string> {
   showViewLabels?: boolean;
   showResultCount?: boolean;
   isFetching?: boolean;
+  fillViewSelector?: boolean;
   serverPagination?: AppMultiViewServerPagination;
 }
 
@@ -68,12 +71,13 @@ export function AppMultiView<Item, ViewId extends string>({
   showViewLabels = false,
   showResultCount = true,
   isFetching = false,
+  fillViewSelector = false,
   serverPagination,
 }: AppMultiViewProps<Item, ViewId>) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
   const { theme } = useAppTheme();
-  const { height: viewportHeight } = useWindowDimensions();
+  const { height: viewportHeight, width: viewportWidth } = useWindowDimensions();
   const footerHost = useContext(AppScreenFooterContext);
   const footerOwner = useRef(Symbol('AppMultiView pagination'));
   const previousResetKey = useRef(resetKey);
@@ -129,6 +133,12 @@ export function AppMultiView<Item, ViewId extends string>({
       paginationItemCount,
       Boolean(footerHost),
     );
+  const collapseViewLabels = shouldCollapseMultiViewLabels({
+    compactToolbar,
+    showViewLabels,
+    viewCount: views.length,
+    viewportWidth,
+  });
 
   useEffect(() => {
     if (activePage === safePage) return;
@@ -247,9 +257,10 @@ export function AppMultiView<Item, ViewId extends string>({
           containerStyle={[
             styles.viewOptions,
             compactToolbar && styles.compactViewOptions,
+            fillViewSelector && styles.fullWidthViewOptions,
           ]}
           label={t('multiView.chooseView')}
-          layout="wrap"
+          layout={fillViewSelector ? 'fill' : 'wrap'}
           onChange={(nextView) => {
             const nextDefinition = views.find((candidate) => candidate.value === nextView);
             const nextPageSize = nextDefinition?.carousel
@@ -270,8 +281,12 @@ export function AppMultiView<Item, ViewId extends string>({
             setPageSize(nextPageSize);
           }}
           options={views}
-          showOptionLabels={showViewLabels}
-          style={[styles.viewSelector, compactToolbar && styles.compactViewSelector]}
+          showOptionLabels={showViewLabels && !collapseViewLabels}
+          style={[
+            styles.viewSelector,
+            compactToolbar && styles.compactViewSelector,
+            fillViewSelector && styles.fullWidthViewSelector,
+          ]}
           value={activeView.value}
         />
       </View>
@@ -333,6 +348,8 @@ const styles = StyleSheet.create({
   viewOptions: { width: 'auto', height: 54 },
   compactViewSelector: { paddingTop: 6 },
   compactViewOptions: { height: 50 },
+  fullWidthViewSelector: { width: '100%', flexGrow: 0, flexShrink: 1, minWidth: 0 },
+  fullWidthViewOptions: { alignSelf: 'stretch', width: '100%' },
   scrollContent: { width: '100%', paddingBottom: 2 },
   fetchingIndicator: {
     position: 'absolute',

@@ -134,6 +134,65 @@ const query = useEmployees({
 - The API receives a one-based page; UI components remain zero-based.
 - When a view renders `AppDataTable` inside `AppMultiView`, disable the table's local pagination. For a standalone table, pass its controlled `serverState`.
 
+### Chart view contract
+
+Record Chart as Required, Deferred, or Excluded. Countries and States are the
+implemented list-backed reference: Chart summarizes the current loaded server
+page, shows the authoritative matching total separately, owns no pager, and uses
+an internal vertical scroll for compact chart cards.
+
+```tsx
+{
+  value: 'chart',
+  icon: 'stats-chart-outline',
+  paginate: false,
+  renderWhenEmpty: true,
+  scrollable: true,
+  render: (items) => <FeatureChartView items={items} totalCount={totalCount} />,
+}
+```
+
+- Use shared primitives from `src/shared/components/charts` for card framing,
+  summaries, horizontal bars, vertical bars, rings, compact distributions,
+  theme, RTL, and accessibility. Feature code prepares business series and
+  composes these primitives; it must not redraw equivalent charts locally.
+- Choose the shape by meaning, not decoration: horizontal bars compare ranked
+  values with long labels; vertical bars compare a small set of short categories
+  or a compact ordered timeline; rings show part-to-whole proportions with a
+  bounded category count (normally two to five); the compact distribution bar is
+  the dense proportional fallback. A reference Chart view should intentionally
+  mix suitable shapes instead of rendering every series as the same bar type.
+- Keep vertical categories to a readable phone-width set (at most ten short
+  labels). Use horizontal bars for long Arabic/English names. Do not squeeze
+  labels, hide values, or make horizontal scrolling the only way to understand a
+  chart.
+- Use a Line/Area chart only for a complete ordered series with explicit missing
+  buckets and a defensible time axis. A sparse current server page is not a line
+  series; add a dedicated aggregate endpoint/query before presenting it as one.
+- Keep domain aggregation and labels feature-owned and cover them with pure tests.
+- State visibly that list-backed values describe the loaded page. Never present
+  them as global analytics; use a dedicated aggregate endpoint/query for that.
+- Chart reuses the list's server filters and sort. It must not fetch all rows,
+  locally re-filter the server page, or add its own pagination.
+- Provide explicit empty/no-series states and meaning in text; color is never the
+  only signal.
+- Verify phone/tablet, orientation, text scaling, EN/AR, RTL, all theme palettes,
+  light/dark, and screen-reader summaries.
+- With four or more compact views below 600px, `AppMultiView` hides visible
+  option labels. Screens that pass `fillViewSelector` distribute the icon buttons
+  equally across the full toolbar width. Localized accessibility labels remain;
+  Report/Import must never wrap or overflow.
+- Do not add a scope paragraph directly below the view buttons. Distinguish
+  authoritative matching totals from loaded-page metrics in the summary labels.
+
+For advanced Line/Pie interactions beyond the shared vertical/ring primitives, the preferred
+external candidate is
+[`react-native-gifted-charts`](https://www.npmjs.com/package/react-native-gifted-charts),
+because it supports Bar/Line/Pie and documents Expo installation with
+`react-native-svg`. Install native dependencies through Expo and keep the package
+behind the shared chart boundary. Do not add Victory Native/Skia only for basic
+administration charts.
+
 ## 7. Forms and mutations
 
 - Use React Hook Form and Zod through `zodResolver`.
@@ -156,6 +215,8 @@ When mobile Import is Required:
 
 - use Expo/native document-picker and file-system APIs; do not copy a browser file
   input, drag/drop component, `FileReader`, DOM API, or browser workbook worker;
+- accept only the approved `.xlsx` format, reject a source over 5 MiB, require the
+  feature's exact headers, and reject more than 100 data rows before submission;
 - enforce the approved extension/MIME and file-size bounds before parsing, process
   value data only, and use a bounded parser that does not evaluate macros/formulas;
 - use the same exact API envelope, permissions, batch limits, normalization,
@@ -174,12 +235,34 @@ When mobile Import is Required:
 If the API instead owns multipart parsing, document upload progress, operation
 status polling, retention/cleanup, authentication refresh, cancellation, and safe
 recovery after the app is backgrounded. Do not silently mix native parsing with a
-server-job contract.
+server-job contract. When the documented endpoint is an atomic JSON bulk-create
+endpoint, parse locally and submit its exact JSON envelope instead of uploading the
+workbook as multipart. An ambiguous timeout or transport failure is `uncertain`:
+reconcile the canonical list before allowing a new submission; never retry it
+automatically.
+
+Countries and States use the required native XLSX workflow in their Import view.
+The view is not server-paginated (`paginate: false`), renders the picker/preview
+when the list is empty, and scrolls its preview internally. Countries submit at
+most 100 validated rows to `POST countries/bulk` as `{ countries: [...] }`.
+States submit `{ states: [...] }` to `POST states/bulk`, resolving each required
+`countryName` through the authorized active-Countries lookup before submission.
+State Import therefore requires both `States:Create` and Countries lookup/View
+access; both direct handlers check tenant read-only before permission denial.
 
 ## 8. UI and styles
 
 - Compose shared fields, buttons, cards, feedback and pagination before creating a new primitive.
-- For server lists that support a search column and condition, keep the main toolbar to the search field and one filter button. Pass a feature-owned `AppFilterFormButton` through `AppListScreen.filterControl`; its modal contains Status, Column, and Condition together. Do not render those selectors in a separate toolbar row.
+- For server lists that support a search column and condition, keep the main toolbar
+  to the search field, one filter button, and at most one permission-guarded primary
+  icon action. Pass the feature filter through `AppListScreen.filterControl` and the
+  primary action through `AppListScreen.searchActions`; the filter modal contains
+  Status, Column, and Condition together. Do not render those selectors in a
+  separate toolbar row.
+- When the navigation App Header already identifies the route, do not repeat the
+  page title/subtitle in an `AppPageHeader` inside the content. Selection-dependent
+  text actions such as Bulk Archive belong in `aboveViews`; do not squeeze them
+  beside Search, Filter, and Add.
 - Feature-specific styles stay beside their component.
 - Extract to `Component.styles.ts` only when the component style map obscures behavior or is intentionally shared locally.
 - Add a theme token only after it has independent application-wide use.

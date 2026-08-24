@@ -53,6 +53,7 @@ export interface CountryRequest {
   phoneCode: string | null;
   currencyCode: string | null;
 }
+export interface BulkCreateCountriesResponse { createdCount: number; }
 
 export interface CountryFilters {
   status: CountryStatus;

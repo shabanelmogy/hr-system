@@ -1,7 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
 import { stateEndpoints } from '../state-endpoints';
 import { toStatePageQuery } from '../state-api';
-import { bulkArchiveStatesResultSchema, statePageSchema, stateWithDistrictsSchema } from '../state-schemas';
+import { bulkArchiveStatesResultSchema, bulkCreateStatesResultSchema, statePageSchema, stateWithDistrictsSchema } from '../state-schemas';
 
 describe('state API boundary', () => {
   it('serializes State paging, field, condition, and lifecycle criteria', () => {
@@ -15,5 +15,11 @@ describe('state API boundary', () => {
     expect(stateWithDistrictsSchema.parse(state)).toEqual(state);
     expect(stateEndpoints.bulkArchive).toBe('states/bulk-archive');
     expect(bulkArchiveStatesResultSchema.parse({ archivedCount: 2 })).toEqual({ archivedCount: 2 });
+  });
+
+  it('keeps the atomic bulk-create route and response contract explicit', () => {
+    expect(stateEndpoints.bulkCreate).toBe('states/bulk');
+    expect(bulkCreateStatesResultSchema.parse({ createdCount: 2 })).toEqual({ createdCount: 2 });
+    expect(() => bulkCreateStatesResultSchema.parse({ createdCount: -1 })).toThrow();
   });
 });

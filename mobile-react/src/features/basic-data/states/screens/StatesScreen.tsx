@@ -2,16 +2,17 @@ import { useCallback, useMemo, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/src/core/api';
-import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { permissions, useAuthorization } from '@/src/features/auth';
 import { useAppReadOnly } from '@/src/shared/contexts/AppReadOnlyContext';
 import { toApiPageNumber, useServerListState } from '@/src/shared/listing';
-import { AppButton, AppDataTable, type AppDataTableColumn, AppIconButton, AppListScreen, AppPageHeader, AppScreen, AppStateView, AppStatusBadge, AppText, ConfirmationDialog, showToast } from '@/src/shared/components';
+import { AppButton, AppDataTable, type AppDataTableColumn, AppIconButton, AppListScreen, AppScreen, AppStateView, AppStatusBadge, AppText, ConfirmationDialog, showToast } from '@/src/shared/components';
 import { StateCard } from '../components/StateCard';
+import { StatesChartView } from '../components/StatesChartView';
 import { StateForm } from '../components/StateForm';
 import { StateReportView } from '../components/StateReportView';
 import { StateFilterButton } from '../components/StateFilterButton';
+import { StateImportView } from '../components/import-data/StateImportView';
 import { useArchiveState, useBulkArchiveStates, useRestoreState, useSaveState, useStates } from '../queries/use-states';
 import type { State, StateFilters, StateRequest, StateSearchField, StateSearchOperator, StateSortColumn } from '../types/state';
 
@@ -20,7 +21,7 @@ type PendingAction = { kind: 'archive'; state: State } | { kind: 'bulk' } | null
 const initialFilters: StateFilters = { status: 'active' };
 
 export function StatesScreen() {
-  const { i18n, t } = useTranslation(); const { direction } = useLocalization(); const { theme } = useAppTheme(); const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
+  const { i18n, t } = useTranslation(); const { theme } = useAppTheme(); const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
   const { allowed: isCreateAuthorized } = useAuthorization({ requiredPermissions: [permissions.CreateStates] });
   const { allowed: isEditAuthorized } = useAuthorization({ requiredPermissions: [permissions.EditStates] });
   const { allowed: isDeleteAuthorized } = useAuthorization({ requiredPermissions: [permissions.DeleteStates] });
@@ -62,11 +63,12 @@ export function StatesScreen() {
   if (statesQuery.isLoading) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView state="loading" /></AppScreen>;
   if (statesQuery.error) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView message={errorMessage(statesQuery.error, t('states.loadFailed'))} onRetry={() => void statesQuery.refetch()} state="error" /></AppScreen>;
   return <AppScreen contentContainerStyle={styles.screen} edges={['left', 'right', 'bottom']} refreshControl={<RefreshControl colors={[theme.colors.primary]} onRefresh={() => void statesQuery.refetch()} refreshing={statesQuery.isRefetching} tintColor={theme.colors.primary} />}>
-    <AppPageHeader action={<View style={[styles.headerActions, { direction }]}>{selectedIds.length > 0 && canDelete ? <AppButton icon="archive-outline" onPress={() => setPendingAction({ kind: 'bulk' })} variant="outline">{t('states.archiveSelected', { count: selectedIds.length })}</AppButton> : null}{canCreate ? <AppIconButton color={theme.colors.onPrimary} icon="add-outline" label={t('states.addState')} onPress={() => openForm('create', null)} style={[styles.add, { backgroundColor: theme.colors.primary }]} /> : null}</View>} compact subtitle={t('states.formSubtitle')} title={t('states.title')} />
-    <AppListScreen<State, 'table' | 'cards' | 'report'> defaultView="table" emptyContent={<AppStateView message={t('states.empty')} state="empty" />} filterControl={<StateFilterButton field={searchField} onApply={applyFilters} operator={searchOperator} status={list.state.filters.status} />} isFetching={statesQuery.isFetching} items={rows} onSearchChange={changeSearch} searchPlaceholder={t('states.search')} searchValue={list.searchInput} serverPagination={{ onPageChange: changePage, onPageSizeChange: changePageSize, page: list.state.page, pageSize: list.state.pageSize, pageSizeOptions: [3, 5, 10], totalItems: statesQuery.data?.metaData.totalCount ?? 0 }} showResultCount={false} showViewLabels views={[
+    <AppListScreen<State, 'table' | 'cards' | 'chart' | 'report' | 'import'> aboveViews={selectedIds.length > 0 && canDelete ? <AppButton icon="archive-outline" onPress={() => setPendingAction({ kind: 'bulk' })} variant="outline">{t('states.archiveSelected', { count: selectedIds.length })}</AppButton> : null} defaultView="table" emptyContent={<AppStateView message={t('states.empty')} state="empty" />} fillViewSelector filterControl={<StateFilterButton field={searchField} onApply={applyFilters} operator={searchOperator} status={list.state.filters.status} />} isFetching={statesQuery.isFetching} items={rows} onSearchChange={changeSearch} searchActions={canCreate ? <AppIconButton color={theme.colors.onPrimary} icon="add-outline" label={t('states.addState')} onPress={() => openForm('create', null)} size={22} style={({ pressed }) => ({ backgroundColor: theme.colors.primary, opacity: pressed ? 0.75 : 1 })} /> : null} searchPlaceholder={t('states.search')} searchValue={list.searchInput} serverPagination={{ onPageChange: changePage, onPageSizeChange: changePageSize, page: list.state.page, pageSize: list.state.pageSize, pageSizeOptions: [3, 5, 10], totalItems: statesQuery.data?.metaData.totalCount ?? 0 }} showResultCount={false} showViewLabels views={[
       { value: 'table', icon: 'grid-outline', label: t('multiView.table'), defaultPageSize: 5, render: (items) => <AppDataTable columns={columns} getRowKey={(state) => state.id} rows={items} showPagination={false} serverState={{ onPageChange: changePage, onPageSizeChange: changePageSize, onSortChange: changeSort, page: list.state.page, pageSize: list.state.pageSize, sort: list.state.sort, totalRows: statesQuery.data?.metaData.totalCount ?? 0 }} /> },
       { value: 'cards', icon: 'albums-outline', label: t('multiView.cards'), defaultPageSize: 3, scrollable: true, render: (items) => <View style={styles.cards}>{items.map((state) => <StateCard canDelete={canDelete} canEdit={canEdit} key={state.id} onArchive={(item) => setPendingAction({ kind: 'archive', state: item })} onEdit={(item) => openForm('edit', item)} onRestore={(item) => void restore(item)} onToggleSelection={toggleSelection} onView={(item) => openForm('view', item)} selected={selectedIds.includes(state.id)} state={state} />)}</View> },
+      { value: 'chart', icon: 'stats-chart-outline', label: t('states.chartView'), paginate: false, renderWhenEmpty: true, scrollable: true, render: (items) => <StatesChartView states={items} totalCount={statesQuery.data?.metaData.totalCount ?? 0} /> },
       { value: 'report', icon: 'document-text-outline', label: t('states.reportView'), paginate: false, renderWhenEmpty: true, render: (items) => <StateReportView states={items} totalCount={statesQuery.data?.metaData.totalCount ?? 0} /> },
+      ...(canCreate ? [{ value: 'import' as const, icon: 'cloud-upload-outline' as const, label: t('states.importView'), paginate: false, renderWhenEmpty: true, scrollable: true, render: () => <StateImportView /> }] : []),
     ]} />
     {selectedState || formMode === 'create' ? <StateForm loading={saveMutation.isPending} mode={formMode} onClose={closeForm} onSave={save} state={selectedState} /> : null}
     <ConfirmationDialog confirmLabel={t('states.archive')} description={t(pendingAction?.kind === 'bulk' ? 'states.bulkArchiveDescription' : 'states.archiveDescription', { count: selectedIds.length, name: pendingAction?.kind === 'archive' ? pendingAction.state.nameEn : '' })} loading={archiveMutation.isPending || bulkArchiveMutation.isPending} onCancel={() => setPendingAction(null)} onConfirm={() => void confirmAction()} title={t(pendingAction?.kind === 'bulk' ? 'states.bulkArchiveTitle' : 'states.archiveTitle')} tone="warning" visible={pendingAction !== null} />
@@ -74,4 +76,4 @@ export function StatesScreen() {
 }
 function errorMessage(error: unknown, fallback: string) { return error instanceof ApiError || error instanceof Error ? error.message || fallback : fallback; }
 function formatDate(value: string, locale: string) { const date = new Date(value); return Number.isNaN(date.getTime()) ? value : new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }).format(date); }
-const styles = StyleSheet.create({ screen: { gap: 12, paddingVertical: 8 }, headerActions: { alignItems: 'center', flexDirection: 'row', gap: 8 }, add: { backgroundColor: 'transparent', height: 38, width: 38 }, tableActions: { flexDirection: 'row', justifyContent: 'center', gap: 4 }, cards: { gap: 6 } });
+const styles = StyleSheet.create({ screen: { gap: 12, paddingVertical: 8 }, tableActions: { flexDirection: 'row', justifyContent: 'center', gap: 4 }, cards: { gap: 6 } });

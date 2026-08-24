@@ -59,5 +59,5 @@ decision. A focused test pass alone is never a `Ready` decision.
 | states-web | 12 | `ecb38dd9b6149a025aa10b1edca9ed23050620cedf2f397b10ff34764e10874d` |
 | states-web | 13 | `6f4711600d21044390b0bccc326dadf61fbb4bb687b5c0b4aebe5f33772c42ca` |
 | states-web | 14 | `24a28864f93adb1f877c2b27fd13309b3a8fe3231a7dee92d0380ee502e062e1` |
-| states-mobile | 14 | `69f8ea98f4981c4ff4a6b4de0fa2056193765e5aa1684a8d918d510f672113e0` |
-| states-mobile | 15 | `4b53b4a14da5675cf262da99e7d8698c0fdd0159f1f488b3fee1d616d08c7b6d` |
+| states-mobile | 14 | `878d6ee91cf9a0c0fbbad61869a28448bd5abe694f3c8ad4fa6943c2ce49221e` |
+| states-mobile | 15 | `b3b8a55cb4cbf29648648d312dc0d12f8fa6c2673bb0c40e6123a12247f18acd` |

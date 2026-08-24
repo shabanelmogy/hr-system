@@ -13,3 +13,4 @@ export const stateWithDistrictsSchema: z.ZodType<StateWithDistricts> = stateDeta
 export const stateLookupSchema: z.ZodType<StateLookup[]> = z.array(z.object({ id: z.number().int().positive(), nameAr: z.string().min(1), nameEn: z.string().min(1), code: z.string().min(1), countryId: z.number().int().positive() }));
 export const statePageSchema = z.object({ items: z.array(stateSchema), metaData: pageMetadataSchema });
 export const bulkArchiveStatesResultSchema = z.object({ archivedCount: z.number().int().nonnegative() });
+export const bulkCreateStatesResultSchema = z.object({ createdCount: z.number().int().nonnegative() });

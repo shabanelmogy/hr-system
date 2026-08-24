@@ -13,6 +13,7 @@ export interface StateWithDistricts extends StateDetail { districts: StateDistri
 export interface StateDistrict { id: number; nameAr: string; nameEn: string; code: string; isDeleted: boolean; }
 export interface StateLookup { id: number; nameAr: string; nameEn: string; code: string; countryId: number; }
 export interface StateRequest { nameAr: string; nameEn: string; code: string; countryId: number; }
+export interface BulkCreateStatesResponse { createdCount: number; }
 export interface StateFilters { status: StateStatus; }
 export interface StatePageQuery extends StateFilters {
   pageNumber: number; pageSize: number; search: string; searchField: StateSearchField; searchOperator: StateSearchOperator;

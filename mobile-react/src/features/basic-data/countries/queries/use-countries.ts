@@ -38,3 +38,6 @@ export function useRestoreCountry() {
 export function useBulkArchiveCountries() {
   return useInvalidatingMutation((ids: number[]) => countryApi.bulkArchive(ids));
 }
+export function useBulkCreateCountries() {
+  return useInvalidatingMutation((requests: CountryRequest[]) => countryApi.bulkCreate(requests));
+}

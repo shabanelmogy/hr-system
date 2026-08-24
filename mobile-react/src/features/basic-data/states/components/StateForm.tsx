@@ -9,17 +9,13 @@ import { countryApi, countryKeys } from '@/src/features/basic-data/countries';
 import { toFormErrorMap, useZodForm } from '@/src/core/validation';
 import { AppForm, AppFormSection, AppSelectField, AppTextField } from '@/src/shared/components';
 import type { State, StateRequest } from '../types/state';
+import { createStateRequestSchema } from '../validation/state-request-schema';
 
 interface StateFormProps { state: State | null; loading: boolean; mode: 'create' | 'edit' | 'view'; onClose: () => void; onSave: (request: StateRequest) => Promise<void>; }
 export function StateForm({ state, loading, mode, onClose, onSave }: StateFormProps) {
   const { t } = useTranslation();
   const countries = useQuery({ queryKey: countryKeys.lookup(), queryFn: countryApi.getLookup, staleTime: 5 * 60_000 });
-  const schema = useMemo(() => z.object({
-    nameAr: z.string().trim().min(2, t('validation.minLength', { count: 2 })).max(100, t('validation.maxLength', { count: 100 })).regex(/^[\p{Script=Arabic}\s]+$/u, t('states.nameArInvalid')),
-    nameEn: z.string().trim().min(2, t('validation.minLength', { count: 2 })).max(100, t('validation.maxLength', { count: 100 })).regex(/^[A-Za-z\s]+$/, t('states.nameEnInvalid')),
-    code: z.string().trim().min(2, t('validation.minLength', { count: 2 })).max(10, t('validation.maxLength', { count: 10 })).regex(/^[A-Za-z0-9_-]+$/, t('states.codeInvalid')),
-    countryId: z.number().int().positive(t('states.countryRequired')),
-  }), [t]);
+  const schema = useMemo(() => createStateRequestSchema(t), [t]);
   type FormValues = z.infer<typeof schema>;
   const defaults = useMemo<FormValues>(() => ({ nameAr: state?.nameAr ?? '', nameEn: state?.nameEn ?? '', code: state?.code ?? '', countryId: state?.countryId ?? 0 }), [state]);
   const { clearErrors, control, handleSubmit, formState: { errors, isDirty, isSubmitting } } = useZodForm<FormValues>(schema, { defaultValues: defaults });

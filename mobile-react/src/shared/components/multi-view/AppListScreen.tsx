@@ -45,6 +45,8 @@ export interface AppListScreenProps<Item, ViewId extends string, FilterValue ext
   filter?: AppListScreenFilterConfig<FilterValue>;
   /** Custom filter trigger, used when a feature needs form controls in its filter modal. */
   filterControl?: ReactNode;
+  /** Feature actions rendered after the filter trigger in the search row. */
+  searchActions?: ReactNode;
   /** Content to show when the item list is empty */
   emptyContent?: ReactNode;
   /** Default page size for pagination */
@@ -69,6 +71,8 @@ export interface AppListScreenProps<Item, ViewId extends string, FilterValue ext
   serverPagination?: AppMultiViewServerPagination;
   /** Shows a non-destructive progress indicator while retaining the current page. */
   isFetching?: boolean;
+  /** Distributes view buttons equally across the available toolbar width. */
+  fillViewSelector?: boolean;
 }
 
 /**
@@ -91,6 +95,7 @@ export function AppListScreen<Item, ViewId extends string, FilterValue extends s
   onSearch,
   filter,
   filterControl,
+  searchActions,
   emptyContent,
   defaultPageSize,
   pageSizeOptions,
@@ -103,6 +108,7 @@ export function AppListScreen<Item, ViewId extends string, FilterValue extends s
   onSearchChange,
   serverPagination,
   isFetching = false,
+  fillViewSelector = false,
 }: AppListScreenProps<Item, ViewId, FilterValue>) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
@@ -166,6 +172,7 @@ export function AppListScreen<Item, ViewId extends string, FilterValue extends s
             values={filter.values}
           />
         ) : null)}
+        {searchActions}
       </View>
 
       {/* Optional content above views (stats, alerts, etc.) */}
@@ -183,6 +190,7 @@ export function AppListScreen<Item, ViewId extends string, FilterValue extends s
         showViewLabels={showViewLabels}
         showResultCount={showResultCount}
         isFetching={isFetching}
+        fillViewSelector={fillViewSelector}
         serverPagination={serverPagination}
         views={views}
       />

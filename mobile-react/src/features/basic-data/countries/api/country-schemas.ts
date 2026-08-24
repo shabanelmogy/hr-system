@@ -58,3 +58,4 @@ export const countryLookupSchema = z.array(z.object({
 export const bulkArchiveResultSchema = z.object({
   archivedCount: z.number().int().nonnegative(),
 });
+export const bulkCreateResultSchema = z.object({ createdCount: z.number().int().nonnegative() });

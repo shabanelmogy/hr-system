@@ -3,7 +3,6 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { ApiError } from '@/src/core/api';
-import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { permissions, useAuthorization } from '@/src/features/auth';
 import { useAppReadOnly } from '@/src/shared/contexts/AppReadOnlyContext';
@@ -14,7 +13,6 @@ import {
   type AppDataTableColumn,
   AppIconButton,
   AppListScreen,
-  AppPageHeader,
   AppScreen,
   AppStateView,
   AppStatusBadge,
@@ -23,9 +21,11 @@ import {
   showToast,
 } from '@/src/shared/components';
 import { CountryCard } from '../components/CountryCard';
+import { CountriesChartView } from '../components/CountriesChartView';
 import { CountryFilterButton } from '../components/CountryFilterButton';
 import { CountryForm } from '../components/CountryForm';
 import { CountryReportView } from '../components/CountryReportView';
+import { CountryImportView } from '../components/import-data/CountryImportView';
 import {
   useArchiveCountry,
   useBulkArchiveCountries,
@@ -42,7 +42,6 @@ const initialFilters: CountryFilters = { status: 'active' };
 
 export function CountriesScreen() {
   const { i18n, t } = useTranslation();
-  const { direction } = useLocalization();
   const { theme } = useAppTheme();
   const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
   const { allowed: isCreateAuthorized } = useAuthorization({ requiredPermissions: [permissions.CreateCountries] });
@@ -187,14 +186,16 @@ export function CountriesScreen() {
   if (countriesQuery.error) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView message={errorMessage(countriesQuery.error, t('countries.loadFailed'))} onRetry={() => void countriesQuery.refetch()} state="error" /></AppScreen>;
 
   return <AppScreen contentContainerStyle={styles.screen} edges={['left', 'right', 'bottom']} refreshControl={<RefreshControl colors={[theme.colors.primary]} onRefresh={() => void countriesQuery.refetch()} refreshing={countriesQuery.isRefetching} tintColor={theme.colors.primary} />}>
-    <AppPageHeader action={<View style={[styles.headerActions, { direction }]}>{selectedIds.length > 0 && canDelete ? <AppButton icon="archive-outline" onPress={() => setPendingAction({ kind: 'bulk' })} variant="outline">{t('countries.archiveSelected', { count: selectedIds.length })}</AppButton> : null}{canCreate ? <AppIconButton color={theme.colors.onPrimary} icon="add-outline" label={t('countries.addCountry')} onPress={() => openForm('create', null)} style={[styles.add, { backgroundColor: theme.colors.primary }]} /> : null}</View>} compact subtitle={t('countries.formSubtitle')} title={t('countries.title')} />
-    <AppListScreen<Country, 'table' | 'cards' | 'report'>
+    <AppListScreen<Country, 'table' | 'cards' | 'chart' | 'report' | 'import'>
+      aboveViews={selectedIds.length > 0 && canDelete ? <AppButton icon="archive-outline" onPress={() => setPendingAction({ kind: 'bulk' })} variant="outline">{t('countries.archiveSelected', { count: selectedIds.length })}</AppButton> : null}
       defaultView="table" emptyContent={<AppStateView message={t('countries.empty')} state="empty" />}
+      fillViewSelector
       filterControl={<CountryFilterButton field={searchField} onApply={applyFilters} operator={searchOperator} status={list.state.filters.status} />}
       isFetching={countriesQuery.isFetching}
       items={rows}
       onSearchChange={changeSearch}
       searchPlaceholder={t('countries.search')}
+      searchActions={canCreate ? <AppIconButton color={theme.colors.onPrimary} icon="add-outline" label={t('countries.addCountry')} onPress={() => openForm('create', null)} size={22} style={({ pressed }) => ({ backgroundColor: theme.colors.primary, opacity: pressed ? 0.75 : 1 })} /> : null}
       searchValue={list.searchInput}
       serverPagination={{ onPageChange: changePage, onPageSizeChange: changePageSize, page: list.state.page, pageSize: list.state.pageSize, pageSizeOptions: [3, 5, 10], totalItems: countriesQuery.data?.metaData.totalCount ?? 0 }}
       showResultCount={false}
@@ -202,7 +203,9 @@ export function CountriesScreen() {
       views={[
         { value: 'table', icon: 'grid-outline', label: t('multiView.table'), defaultPageSize: 5, render: (items) => <AppDataTable columns={columns} getRowKey={(country) => country.id} rows={items} showPagination={false} serverState={{ onPageChange: changePage, onPageSizeChange: changePageSize, onSortChange: changeSort, page: list.state.page, pageSize: list.state.pageSize, sort: list.state.sort, totalRows: countriesQuery.data?.metaData.totalCount ?? 0 }} /> },
         { value: 'cards', icon: 'albums-outline', label: t('multiView.cards'), defaultPageSize: 3, scrollable: true, render: (items) => <View style={styles.cards}>{items.map((country) => <CountryCard canDelete={canDelete} canEdit={canEdit} country={country} key={country.id} onArchive={(item) => setPendingAction({ kind: 'archive', country: item })} onEdit={(item) => openForm('edit', item)} onRestore={(item) => void restore(item)} onToggleSelection={toggleSelection} onView={(item) => openForm('view', item)} selected={selectedIds.includes(country.id)} />)}</View> },
+        { value: 'chart', icon: 'stats-chart-outline', label: t('countries.chartView'), paginate: false, renderWhenEmpty: true, scrollable: true, render: (items) => <CountriesChartView countries={items} totalCount={countriesQuery.data?.metaData.totalCount ?? 0} /> },
         ...(isReportAuthorized ? [{ value: 'report' as const, icon: 'document-text-outline' as const, label: t('countries.reportView'), paginate: false, renderWhenEmpty: true, render: () => <CountryReportView /> }] : []),
+        ...(canCreate ? [{ value: 'import' as const, icon: 'cloud-upload-outline' as const, label: t('countries.importView'), paginate: false, renderWhenEmpty: true, scrollable: true, render: () => <CountryImportView /> }] : []),
       ]}
     />
     {selectedCountry || formMode === 'create' ? <CountryForm country={selectedCountry} loading={saveMutation.isPending} mode={formMode} onClose={closeForm} onSave={save} /> : null}
@@ -216,4 +219,4 @@ function formatDate(value: string, locale: string): string {
     ? value
     : new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }).format(date);
 }
-const styles = StyleSheet.create({ screen: { gap: 12, paddingVertical: 8 }, headerActions: { alignItems: 'center', flexDirection: 'row', gap: 8 }, add: { backgroundColor: 'transparent', height: 38, width: 38 }, tableActions: { flexDirection: 'row', justifyContent: 'center', gap: 4 }, cards: { gap: 6 } });
+const styles = StyleSheet.create({ screen: { gap: 12, paddingVertical: 8 }, tableActions: { flexDirection: 'row', justifyContent: 'center', gap: 4 }, cards: { gap: 6 } });

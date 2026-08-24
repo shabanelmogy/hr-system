@@ -6,4 +6,5 @@ export const stateEndpoints = {
   withDistricts: (id: number) => `states/${id}/districts`,
   restore: (id: number) => `states/${id}/restore`,
   bulkArchive: 'states/bulk-archive',
+  bulkCreate: 'states/bulk',
 } as const;
