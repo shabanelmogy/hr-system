@@ -234,6 +234,11 @@ Grid is the default required list view. Use server pagination and sorting. Wire
 search and filters to the server contract. Do not show a client-only filter button
 in server mode unless it maps to a supported server filter.
 
+Treat sorting as an exact contract. Set `sortable: false` on every Grid column
+outside the API allow-list, leave every supported field operable, and add a
+focused column-contract test so a visible sort affordance cannot drift from the
+controlled handler or server validator.
+
 Use the reusable `MyDataGrid` footer and its existing pagination controls, as in
 Districts. Do not hide `GridFooter` navigation and replace it with a feature-local
 pager. Configure server/client mode, controlled page, totals, and page-size options
@@ -310,6 +315,9 @@ raw MUI card layout:
   when the record is eligible and the user has the lifecycle permission; clear
   selected IDs when the server criteria, page, or page size changes. Put bulk
   Archive behind Grid Options with its selected-count and pending-state guard.
+  Normalize unique eligible IDs, reject selections above the API maximum with
+  localized feedback, never silently truncate a select-all result, and recheck
+  the maximum in the direct submit handler.
 - Use loading, default-empty, filtered-no-results, and Retry states. New or
   edited rows may receive the shared temporary highlight; it must not change
   server ordering or criteria.
@@ -496,6 +504,8 @@ multipart in one ambiguous endpoint.
 When browser Import is Required:
 
 - require the declared create permission and respect application read-only state;
+- enforce those checks again inside the direct submit callback; a hidden view or
+  disabled button is presentation, not the mutation authorization boundary;
 - document template download, accepted extension/MIME, file-size and row limits,
   workbook/sheet selection, exact required headers, duplicate-header handling,
   blank rows, and empty files;
@@ -606,7 +616,7 @@ and validates it from the authenticated context.
 | State | Required experience |
 |---|---|
 | First load | Skeleton or accessible loading state |
-| Background refetch | Keep layout stable and show non-destructive progress |
+| Background refetch | Keep current Grid/Card/Chart content mounted and show non-destructive progress; do not reuse initial-load skeletons/overlays |
 | List failure | Persistent error, explanation, Retry |
 | Detail failure | Error inside the workflow, Retry, mutation blocked |
 | Empty default list | Domain empty state and permitted primary action |
@@ -670,6 +680,8 @@ Pure tests:
 - permission/lifecycle action matrix;
 - server-list reducer, page bounds, debounce, and reset;
 - configured initial sort and reset back to it;
+- Grid column sort affordances exactly match the server allow-list;
+- bulk selection normalization rejects rather than truncates values above the API limit;
 - domain adapters and deterministic mock-data rules.
 - when Import is Required: parser/header/blank-row rules, normalization, client
   bounds, field-scoped duplicates, and dependency mapping.
@@ -684,7 +696,7 @@ Integration tests:
 - lifecycle rows expose only valid actions;
 - background fetch does not present stale criteria as current;
 - EN/AR and RTL-critical controls render correctly.
-- when Import is Required: permission/read-only guards, exact HTTP request body,
+- when Import is Required: button and direct-handler permission/read-only guards, exact HTTP request body,
   dependency loading/failure, stable API conflicts, retry, cache invalidation,
   preview feedback, and focus restoration.
 

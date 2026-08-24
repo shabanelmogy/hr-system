@@ -580,6 +580,7 @@ renders regardless of list data and never owns list pagination:
 - [ ] API functions with Zod validation
 - [ ] Query keys factory
 - [ ] Query hooks with `placeholderData: (previous) => previous`
+- [ ] Detail query/key exists only when list rows are not authoritative for view/edit
 - [ ] Invalidating mutation wrapper
 - [ ] Card component with actions gated by permissions + isDeleted
 - [ ] Form component with AppForm + AppFormSection + useZodForm + Controller
@@ -596,6 +597,7 @@ renders regardless of list data and never owns list pagination:
   - [ ] Required Managed Crystal view uses manager catalog/render by `entityKey`
   - [ ] Report view uses `paginate: false` + `renderWhenEmpty: true` and no pager
 - [ ] Bulk selection cleared on search/page/filter changes
+- [ ] Every serialized criterion has a visible control and reset path; no hidden filter state
 - [ ] Archive/restore gated by `isReadOnly` + `notifyBlockedAction`
 - [ ] `ConfirmationDialog` for archive + bulk archive
 - [ ] `showToast` for success/error feedback
@@ -603,6 +605,8 @@ renders regardless of list data and never owns list pagination:
 - [ ] App Router page file with `RouteGuard`
 - [ ] `_layout.tsx` (Stack) in the route directory (prevents drawer leak)
 - [ ] Public exports in `index.ts`
+- [ ] Screen integration covers criteria/views, form entry, lifecycle/bulk actions, and permission/read-only visibility
+- [ ] Mutation-hook tests prove exact transport and root invalidation
 
 ---
 
@@ -615,6 +619,7 @@ renders regardless of list data and never owns list pagination:
 - Do not skip Zod validation — parse every response
 - Do not put form logic in the screen — extract to a Form component with `useZodForm`
 - Do not forget `clearBulkSelection` when changing search/page/filters
+- Do not keep API-supported criteria or detail hooks in client state when the current UI/runtime contract does not use them
 - Do not forget `_layout.tsx` in nested route directories — causes drawer item leak
 - Do not use `toolbarContent` on `AppMultiView` directly — use `AppListScreen` which wraps it
 - Do not hardcode strings — use `useTranslation()`

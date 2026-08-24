@@ -9,9 +9,11 @@ import {
 import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 import { useCountriesPermissions } from "@/shared/hooks/usePermissions";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
+import { normalizeBulkSelection } from "@/shared/utils/bulkSelection";
 import { useGridApiRef, type GridApi } from "@mui/x-data-grid";
 import { useCallback, useEffect, useMemo, useState, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
+import { COUNTRY_BULK_ARCHIVE_LIMIT } from "../types/Country";
 import type {
   CountryListItem,
   CountryListFilters,
@@ -67,8 +69,6 @@ export interface UseCountryGridLogicReturn {
   sortColumn: CountrySortColumn;
   sortDirection: "ASC" | "DESC";
   filter: CountryFilter;
-  currencyCode: string;
-  hasStatesFilter: "all" | "with" | "without";
   setPage: (page: number) => void;
   setPageSize: (pageSize: number) => void;
   setSearchValue: (value: string) => void;
@@ -76,8 +76,6 @@ export interface UseCountryGridLogicReturn {
   setSearchOperator: (operator: CountrySearchOperator) => void;
   setSort: (column: CountrySortColumn, direction: "ASC" | "DESC") => void;
   setFilter: (filter: CountryFilter) => void;
-  setCurrencyCode: (currencyCode: string) => void;
-  setHasStatesFilter: (filter: "all" | "with" | "without") => void;
   resetList: () => void;
   closeDialog: () => void;
   handleFormSubmit: (formdata: CreateCountryRequest) => Promise<void>;
@@ -159,8 +157,19 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     [permissions.canDelete, selectableCountryIds, selectionIds],
   );
   const setSelectedCountryIds = useCallback((ids: number[]) => {
-    setSelectionIds(ids.filter((id) => selectableCountryIds.has(id)));
-  }, [selectableCountryIds]);
+    const selection = normalizeBulkSelection(
+      ids,
+      selectableCountryIds,
+      COUNTRY_BULK_ARCHIVE_LIMIT,
+    );
+    if (selection.exceedsLimit) {
+      showToast.error(t("countries.bulkArchiveLimitExceeded", {
+        max: COUNTRY_BULK_ARCHIVE_LIMIT,
+      }));
+      return;
+    }
+    setSelectionIds(selection.ids);
+  }, [selectableCountryIds, t]);
   const clearBulkSelection = useCallback(() => {
     setSelectionIds([]);
     setBulkArchiveOpen(false);
@@ -192,20 +201,6 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
   const setFilter = useCallback((status: CountryFilter) => {
     clearBulkSelection();
     list.setFilters({ ...list.state.filters, status });
-  }, [clearBulkSelection, list]);
-  const setCurrencyCode = useCallback((currencyCode: string) => {
-    clearBulkSelection();
-    list.setFilters({
-      ...list.state.filters,
-      currencyCode: currencyCode || undefined,
-    });
-  }, [clearBulkSelection, list]);
-  const setHasStatesFilter = useCallback((nextFilter: "all" | "with" | "without") => {
-    clearBulkSelection();
-    list.setFilters({
-      ...list.state.filters,
-      hasStates: nextFilter === "all" ? undefined : nextFilter === "with",
-    });
   }, [clearBulkSelection, list]);
   const resetList = useCallback(() => {
     clearBulkSelection();
@@ -343,6 +338,10 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     else if (!authorization.canDelete) notifyPermissionDenied();
     else if (selectedCountryIds.length === 0) {
       showToast.error(t("countries.bulkArchiveSelectionRequired"));
+    } else if (selectedCountryIds.length > COUNTRY_BULK_ARCHIVE_LIMIT) {
+      showToast.error(t("countries.bulkArchiveLimitExceeded", {
+        max: COUNTRY_BULK_ARCHIVE_LIMIT,
+      }));
     } else setBulkArchiveOpen(true);
   }, [authorization.canDelete, isReadOnly, notifyBlockedAction, notifyPermissionDenied, selectedCountryIds.length, t]);
 
@@ -359,6 +358,12 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
       notifyPermissionDenied();
       return;
     }
+    if (selectedCountryIds.length > COUNTRY_BULK_ARCHIVE_LIMIT) {
+      showToast.error(t("countries.bulkArchiveLimitExceeded", {
+        max: COUNTRY_BULK_ARCHIVE_LIMIT,
+      }));
+      return;
+    }
     try {
       await bulkArchiveMutation.mutateAsync(selectedCountryIds);
       setSelectionIds([]);
@@ -366,7 +371,7 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     } catch {
       // The mutation callback owns user-facing API errors and the dialog stays open.
     }
-  }, [authorization.canDelete, bulkArchiveMutation, isReadOnly, notifyBlockedAction, notifyPermissionDenied, selectedCountryIds]);
+  }, [authorization.canDelete, bulkArchiveMutation, isReadOnly, notifyBlockedAction, notifyPermissionDenied, selectedCountryIds, t]);
 
   const onRestore = useCallback((country: CountryListItem) => {
     if (isReadOnly) notifyBlockedAction();
@@ -414,10 +419,6 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     sortColumn: list.state.columnName,
     sortDirection: list.state.sortDirection,
     filter: list.state.filters.status,
-    currencyCode: list.state.filters.currencyCode ?? "",
-    hasStatesFilter: list.state.filters.hasStates === undefined
-      ? "all"
-      : list.state.filters.hasStates ? "with" : "without",
     setPage,
     setPageSize,
     setSearchValue,
@@ -425,8 +426,6 @@ export default function useCountryGridLogic(): UseCountryGridLogicReturn {
     setSearchOperator,
     setSort,
     setFilter,
-    setCurrencyCode,
-    setHasStatesFilter,
     resetList,
     closeDialog: crud.closeDialog,
     handleFormSubmit,

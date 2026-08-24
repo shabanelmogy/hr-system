@@ -56,6 +56,8 @@ export interface UpdateStateMutation {
 
 export interface BulkArchiveStatesResponse { archivedCount: number; }
 
+export const STATE_BULK_ARCHIVE_LIMIT = 100;
+
 export interface CreateStatesRequest { states: CreateStateRequest[]; }
 
 export interface CreateStatesResponse { createdCount: number; }

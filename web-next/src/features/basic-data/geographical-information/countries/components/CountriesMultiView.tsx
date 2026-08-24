@@ -1,5 +1,5 @@
 import { PageHeader } from "@/shared/components/navigation/header";
-import { Box } from "@mui/material";
+import { Box, LinearProgress } from "@mui/material";
 import type { GridApi, GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -204,12 +204,17 @@ const CountriesMultiView = ({
           position: "relative",
         }}
       >
+        {isFetching && !loading ? (
+          <LinearProgress
+            aria-label={t("common.loading")}
+            sx={{ position: "absolute", insetInline: 0, top: 0, zIndex: 2 }}
+          />
+        ) : null}
         {visibleView === "grid" && (
           <CountriesDataGrid
             countries={gridCountries}
             paginationMode={paginationMode}
             loading={loading}
-            isFetching={isFetching}
             apiRef={apiRef}
             onEdit={onEdit}
             onDelete={onDelete}
@@ -245,7 +250,7 @@ const CountriesMultiView = ({
         {visibleView === "cards" && (
           <CountriesCardView
             countries={countries}
-            loading={loading || isFetching}
+            loading={loading}
             onEdit={onEdit}
             onDelete={onDelete}
             onRestore={onRestore}
@@ -271,7 +276,7 @@ const CountriesMultiView = ({
           <CountriesChartView
             countries={countries}
             totalCount={totalCount}
-            loading={loading || isFetching}
+            loading={loading}
             onAdd={permissions.canCreate ? onAdd : undefined}
           />
         )}

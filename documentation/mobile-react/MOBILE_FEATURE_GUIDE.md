@@ -129,6 +129,7 @@ const query = useEmployees({
 
 - Search is debounced by the shared hook.
 - Search, filters, sort and page-size changes reset to page zero.
+- Every criterion copied into the server query must have a visible control and reset path. Do not retain API-capable but unexposed filter state.
 - Sort cycles natural -> ascending -> descending -> natural through `cycleSort`.
 - The API receives a one-based page; UI components remain zero-based.
 - When a view renders `AppDataTable` inside `AppMultiView`, disable the table's local pagination. For a standalone table, pass its controlled `serverState`.
@@ -137,6 +138,7 @@ const query = useEmployees({
 
 - Use React Hook Form and Zod through `zodResolver`.
 - Map domain data to form defaults and form values to API requests in named feature functions.
+- Reuse a list row for view/edit only when it contains every mutable form field. Otherwise fetch detail, show explicit loading/error state, and block unsafe edit; do not retain an unused detail hook/key.
 - Disable submit while pending and prevent duplicate submissions.
 - Preserve entered data after recoverable errors.
 - Check tenant read-only before permission denial so the user receives the correct explanation.
@@ -221,8 +223,8 @@ Minimum tests for a business feature:
 - API parsing and request/query mapping;
 - list reducer/query parameters, including page conversion;
 - permission and tenant read-only matrices;
-- mutation invalidation;
-- one representative loading/error/empty/success screen test;
+- mutation transport plus root invalidation for create/update/lifecycle/bulk paths;
+- representative loading/error/empty/success and screen-composition tests covering filters/views, form entry, lifecycle/bulk actions, and permission/read-only visibility;
 - route policy for every physical protected route;
 - realtime mapping when the resource publishes changes.
 - required Managed Crystal reporting: entity catalog key, localized report names,

@@ -1,5 +1,6 @@
 using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Abstractions.Messaging;
+using HrManagementSystem.Application.Features.GeographicalInformation;
 using HrManagementSystem.Application.Features.GeographicalInformation.States.Abstractions;
 using HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts;
 using HrManagementSystem.Application.Features.GeographicalInformation.States.Errors;
@@ -105,19 +106,31 @@ public sealed class CreateStateCommandHandler(
 {
     public async Task<Result<StateDetailResponse>> Handle(CreateStateCommand request, CancellationToken cancellationToken)
     {
-        if (!await stateWriteStore.IsCountryActiveAsync(request.CountryId, cancellationToken))
-            return Result.Failure<StateDetailResponse>(stateErrors.CountryNotFound);
+        StateChange? change = null;
+        var result = await unitOfWork.ExecuteAtomicallyAsync(
+            [GeographicalLifecycleLocks.Country(request.CountryId)],
+            async token =>
+            {
+                if (!await stateWriteStore.IsCountryActiveAsync(request.CountryId, token))
+                    return Result.Failure<StateDetailResponse>(stateErrors.CountryNotFound);
 
-        var state = mapper.Map<State>((StateMutation)request);
-        if (await stateWriteStore.HasConflictAsync(state, null, cancellationToken))
-            return Result.Failure<StateDetailResponse>(stateErrors.StateExists);
+                var state = mapper.Map<State>((StateMutation)request);
+                if (await stateWriteStore.HasConflictAsync(state, null, token))
+                    return Result.Failure<StateDetailResponse>(stateErrors.StateExists);
 
-        stateWriteStore.Add(state);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-        var response = await stateReadStore.GetByIdAsync(state.Id, cancellationToken)
-            ?? throw new InvalidOperationException("The newly created State could not be read.");
-        stateChangeScheduler.Schedule(new StateChange(response, "Add", null, currentActor.UserId, Guid.NewGuid()));
-        return Result.Success(response);
+                stateWriteStore.Add(state);
+                await unitOfWork.SaveChangesAsync(token);
+                var response = await stateReadStore.GetByIdAsync(state.Id, token)
+                    ?? throw new InvalidOperationException("The newly created State could not be read.");
+                change = new StateChange(response, "Add", null, currentActor.UserId, Guid.NewGuid());
+                return Result.Success(response);
+            },
+            cancellationToken);
+
+        if (change is not null)
+            stateChangeScheduler.Schedule(change);
+
+        return result;
     }
 }
 
@@ -138,29 +151,43 @@ public sealed class CreateStatesCommandHandler(
         var states = request.States
             .Select(state => mapper.Map<State>((StateMutation)state))
             .ToList();
-        if (!await stateWriteStore.AreCountriesActiveAsync(
-                states.Select(state => state.CountryId).ToList(),
-                cancellationToken))
-        {
-            return Result.Failure<CreateStatesResponse>(stateErrors.CountryNotFound);
-        }
-        if (HasDuplicates(states) ||
-            await stateWriteStore.HasAnyConflictAsync(states, cancellationToken))
-        {
-            return Result.Failure<CreateStatesResponse>(stateErrors.StateExists);
-        }
+        StateChange? change = null;
+        var result = await unitOfWork.ExecuteAtomicallyAsync(
+            states.Select(state => state.CountryId)
+                .Distinct()
+                .Select(GeographicalLifecycleLocks.Country)
+                .ToArray(),
+            async token =>
+            {
+                if (!await stateWriteStore.AreCountriesActiveAsync(
+                        states.Select(state => state.CountryId).ToList(),
+                        token))
+                {
+                    return Result.Failure<CreateStatesResponse>(stateErrors.CountryNotFound);
+                }
+                if (HasDuplicates(states) ||
+                    await stateWriteStore.HasAnyConflictAsync(states, token))
+                {
+                    return Result.Failure<CreateStatesResponse>(stateErrors.StateExists);
+                }
 
-        stateWriteStore.AddRange(states);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+                stateWriteStore.AddRange(states);
+                await unitOfWork.SaveChangesAsync(token);
+                change = new StateChange(
+                    null,
+                    "BulkAdd",
+                    states.Count,
+                    currentActor.UserId,
+                    Guid.NewGuid());
 
-        stateChangeScheduler.Schedule(new StateChange(
-            null,
-            "BulkAdd",
-            states.Count,
-            currentActor.UserId,
-            Guid.NewGuid()));
+                return Result.Success(new CreateStatesResponse(states.Count));
+            },
+            cancellationToken);
 
-        return Result.Success(new CreateStatesResponse(states.Count));
+        if (change is not null)
+            stateChangeScheduler.Schedule(change);
+
+        return result;
     }
 
     private static bool HasDuplicates(IReadOnlyList<State> states)
@@ -199,22 +226,34 @@ public sealed class UpdateStateCommandHandler(
 {
     public async Task<Result<StateDetailResponse>> Handle(UpdateStateCommand request, CancellationToken cancellationToken)
     {
-        var state = await stateWriteStore.GetForUpdateAsync(request.Id, cancellationToken);
-        if (state is null || state.IsDeleted)
-            return Result.Failure<StateDetailResponse>(stateErrors.StateNotFound);
-        if (!await stateWriteStore.IsCountryActiveAsync(request.CountryId, cancellationToken))
-            return Result.Failure<StateDetailResponse>(stateErrors.CountryNotFound);
+        StateChange? change = null;
+        var result = await unitOfWork.ExecuteAtomicallyAsync(
+            [GeographicalLifecycleLocks.Country(request.CountryId)],
+            async token =>
+            {
+                var state = await stateWriteStore.GetForUpdateAsync(request.Id, token);
+                if (state is null || state.IsDeleted)
+                    return Result.Failure<StateDetailResponse>(stateErrors.StateNotFound);
+                if (!await stateWriteStore.IsCountryActiveAsync(request.CountryId, token))
+                    return Result.Failure<StateDetailResponse>(stateErrors.CountryNotFound);
 
-        var updatedState = mapper.Map<State>((StateMutation)request);
-        if (await stateWriteStore.HasConflictAsync(updatedState, state.Id, cancellationToken))
-            return Result.Failure<StateDetailResponse>(stateErrors.StateExists);
+                var updatedState = mapper.Map<State>((StateMutation)request);
+                if (await stateWriteStore.HasConflictAsync(updatedState, state.Id, token))
+                    return Result.Failure<StateDetailResponse>(stateErrors.StateExists);
 
-        stateAuditTrail.RecordUpdate(state, updatedState);
-        mapper.Map((StateMutation)request, state);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-        var response = mapper.Map<StateDetailResponse>(state);
-        stateChangeScheduler.Schedule(new StateChange(response, "Update", null, currentActor.UserId, Guid.NewGuid()));
-        return Result.Success(response);
+                stateAuditTrail.RecordUpdate(state, updatedState);
+                mapper.Map((StateMutation)request, state);
+                await unitOfWork.SaveChangesAsync(token);
+                var response = mapper.Map<StateDetailResponse>(state);
+                change = new StateChange(response, "Update", null, currentActor.UserId, Guid.NewGuid());
+                return Result.Success(response);
+            },
+            cancellationToken);
+
+        if (change is not null)
+            stateChangeScheduler.Schedule(change);
+
+        return result;
     }
 }
 
@@ -230,19 +269,36 @@ public sealed class ArchiveStateCommandHandler(
 {
     public async Task<Result> Handle(ArchiveStateCommand request, CancellationToken cancellationToken)
     {
-        var state = await stateWriteStore.GetForUpdateAsync(request.Id, cancellationToken);
-        if (state is null) return Result.Failure(stateErrors.StateNotFound);
-        if (state.IsDeleted) return Result.Success();
-        if (await stateWriteStore.HasActiveDistrictsAsync(state.Id, cancellationToken))
-            return Result.Failure(stateErrors.StateInUseByDistrict);
+        StateChange? change = null;
+        var result = await unitOfWork.ExecuteAtomicallyAsync(
+            [GeographicalLifecycleLocks.State(request.Id)],
+            async token =>
+            {
+                var state = await stateWriteStore.GetForUpdateAsync(request.Id, token);
+                if (state is null) return Result.Failure(stateErrors.StateNotFound);
+                if (state.IsDeleted) return Result.Success();
+                if (await stateWriteStore.HasActiveDistrictsAsync(state.Id, token))
+                    return Result.Failure(stateErrors.StateInUseByDistrict);
 
-        state.IsDeleted = true;
-        state.DeletedById = currentActor.UserId;
-        state.DeletedByPc = Environment.MachineName;
-        state.DeletedOn = timeProvider.GetUtcNow().UtcDateTime;
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-        stateChangeScheduler.Schedule(new StateChange(mapper.Map<StateDetailResponse>(state), "Archive", null, currentActor.UserId, Guid.NewGuid()));
-        return Result.Success();
+                state.IsDeleted = true;
+                state.DeletedById = currentActor.UserId;
+                state.DeletedByPc = Environment.MachineName;
+                state.DeletedOn = timeProvider.GetUtcNow().UtcDateTime;
+                await unitOfWork.SaveChangesAsync(token);
+                change = new StateChange(
+                    mapper.Map<StateDetailResponse>(state),
+                    "Archive",
+                    null,
+                    currentActor.UserId,
+                    Guid.NewGuid());
+                return Result.Success();
+            },
+            cancellationToken);
+
+        if (change is not null)
+            stateChangeScheduler.Schedule(change);
+
+        return result;
     }
 }
 
@@ -257,19 +313,52 @@ public sealed class RestoreStateCommandHandler(
 {
     public async Task<Result> Handle(RestoreStateCommand request, CancellationToken cancellationToken)
     {
-        var state = await stateWriteStore.GetForUpdateAsync(request.Id, cancellationToken);
-        if (state is null) return Result.Failure(stateErrors.StateNotFound);
-        if (!state.IsDeleted) return Result.Success();
-        if (!await stateWriteStore.IsCountryActiveAsync(state.CountryId, cancellationToken))
-            return Result.Failure(stateErrors.CountryNotFound);
+        while (true)
+        {
+            var expectedCountryId = await stateWriteStore.GetCountryIdAsync(request.Id, cancellationToken);
+            if (!expectedCountryId.HasValue)
+                return Result.Failure(stateErrors.StateNotFound);
 
-        state.IsDeleted = false;
-        state.DeletedById = null;
-        state.DeletedByPc = null;
-        state.DeletedOn = null;
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-        stateChangeScheduler.Schedule(new StateChange(mapper.Map<StateDetailResponse>(state), "Restore", null, currentActor.UserId, Guid.NewGuid()));
-        return Result.Success();
+            var retryWithCurrentParent = false;
+            StateChange? change = null;
+            var result = await unitOfWork.ExecuteAtomicallyAsync(
+                [GeographicalLifecycleLocks.Country(expectedCountryId.Value)],
+                async token =>
+                {
+                    var state = await stateWriteStore.GetForUpdateAsync(request.Id, token);
+                    if (state is null) return Result.Failure(stateErrors.StateNotFound);
+                    if (state.CountryId != expectedCountryId.Value)
+                    {
+                        retryWithCurrentParent = true;
+                        return Result.Success();
+                    }
+                    if (!state.IsDeleted) return Result.Success();
+                    if (!await stateWriteStore.IsCountryActiveAsync(state.CountryId, token))
+                        return Result.Failure(stateErrors.CountryNotFound);
+
+                    state.IsDeleted = false;
+                    state.DeletedById = null;
+                    state.DeletedByPc = null;
+                    state.DeletedOn = null;
+                    await unitOfWork.SaveChangesAsync(token);
+                    change = new StateChange(
+                        mapper.Map<StateDetailResponse>(state),
+                        "Restore",
+                        null,
+                        currentActor.UserId,
+                        Guid.NewGuid());
+                    return Result.Success();
+                },
+                cancellationToken);
+
+            if (retryWithCurrentParent)
+                continue;
+
+            if (change is not null)
+                stateChangeScheduler.Schedule(change);
+
+            return result;
+        }
     }
 }
 
@@ -284,27 +373,44 @@ public sealed class BulkArchiveStatesCommandHandler(
 {
     public async Task<Result<BulkArchiveStatesResponse>> Handle(BulkArchiveStatesCommand request, CancellationToken cancellationToken)
     {
-        var states = await stateWriteStore.GetForUpdateAsync(request.Ids, cancellationToken);
-        if (states.Count != request.Ids.Count)
-            return Result.Failure<BulkArchiveStatesResponse>(stateErrors.StateNotFound);
+        StateChange? change = null;
+        var result = await unitOfWork.ExecuteAtomicallyAsync(
+            request.Ids.Select(GeographicalLifecycleLocks.State).ToArray(),
+            async token =>
+            {
+                var states = await stateWriteStore.GetForUpdateAsync(request.Ids, token);
+                if (states.Count != request.Ids.Count)
+                    return Result.Failure<BulkArchiveStatesResponse>(stateErrors.StateNotFound);
 
-        var activeStates = states.Where(state => !state.IsDeleted).ToArray();
-        if (activeStates.Length == 0)
-            return Result.Success(new BulkArchiveStatesResponse(0));
-        if (await stateWriteStore.HasActiveDistrictsAsync(activeStates.Select(state => state.Id).ToArray(), cancellationToken))
-            return Result.Failure<BulkArchiveStatesResponse>(stateErrors.StateInUseByDistrict);
+                var activeStates = states.Where(state => !state.IsDeleted).ToArray();
+                if (activeStates.Length == 0)
+                    return Result.Success(new BulkArchiveStatesResponse(0));
+                if (await stateWriteStore.HasActiveDistrictsAsync(activeStates.Select(state => state.Id).ToArray(), token))
+                    return Result.Failure<BulkArchiveStatesResponse>(stateErrors.StateInUseByDistrict);
 
-        var deletedOn = timeProvider.GetUtcNow().UtcDateTime;
-        foreach (var state in activeStates)
-        {
-            state.IsDeleted = true;
-            state.DeletedById = currentActor.UserId;
-            state.DeletedByPc = Environment.MachineName;
-            state.DeletedOn = deletedOn;
-        }
+                var deletedOn = timeProvider.GetUtcNow().UtcDateTime;
+                foreach (var state in activeStates)
+                {
+                    state.IsDeleted = true;
+                    state.DeletedById = currentActor.UserId;
+                    state.DeletedByPc = Environment.MachineName;
+                    state.DeletedOn = deletedOn;
+                }
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-        stateChangeScheduler.Schedule(new StateChange(null, "BulkArchive", activeStates.Length, currentActor.UserId, Guid.NewGuid()));
-        return Result.Success(new BulkArchiveStatesResponse(activeStates.Length));
+                await unitOfWork.SaveChangesAsync(token);
+                change = new StateChange(
+                    null,
+                    "BulkArchive",
+                    activeStates.Length,
+                    currentActor.UserId,
+                    Guid.NewGuid());
+                return Result.Success(new BulkArchiveStatesResponse(activeStates.Length));
+            },
+            cancellationToken);
+
+        if (change is not null)
+            stateChangeScheduler.Schedule(change);
+
+        return result;
     }
 }

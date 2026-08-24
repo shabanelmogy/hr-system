@@ -42,7 +42,7 @@
       "id": "mobile-feature",
       "layer": "mobile-react",
       "path": "mobile-react/src/features/basic-data/countries",
-      "minimumFiles": 14,
+      "minimumFiles": 17,
       "purpose": "Complete mobile feature boundary including schemas, API, queries, screen, form, report, and tests"
     },
     {
@@ -148,7 +148,31 @@
       "id": "api-db-context",
       "layer": "api",
       "path": "api/HrManagementSystem.Infrastructure/Persistence/ApplicationDbContext.cs",
-      "purpose": "Country DbSet and persistence boundary"
+      "purpose": "Country DbSet, atomic SQL Server transaction, and resource-lock boundary"
+    },
+    {
+      "id": "api-unit-of-work",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Application/Abstractions/Persistence/IUnitOfWork.cs",
+      "purpose": "Application-owned atomic operation and commit contract"
+    },
+    {
+      "id": "api-geographical-lifecycle-locks",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Application/Features/GeographicalInformation/GeographicalLifecycleLocks.cs",
+      "purpose": "Shared Country and State dependency lock identities"
+    },
+    {
+      "id": "api-state-lifecycle-participant",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Application/Features/GeographicalInformation/States/Commands/StateCommands.cs",
+      "purpose": "State writes that share Country lifecycle resources"
+    },
+    {
+      "id": "api-district-lifecycle-participant",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Districts/Services/DistrictService.cs",
+      "purpose": "District writes that share State lifecycle resources"
     },
     {
       "id": "api-di-entities",
@@ -241,6 +265,12 @@
       "purpose": "Feature orchestration"
     },
     {
+      "id": "web-page-controller-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/pages/CountriesPage.test.tsx",
+      "purpose": "Controller/view/loading/form/bulk wiring coverage"
+    },
+    {
       "id": "web-list-logic",
       "layer": "web-next",
       "path": "web-next/src/features/basic-data/geographical-information/countries/hooks/useCountryGridLogic.ts",
@@ -253,10 +283,22 @@
       "purpose": "Query keys, reads, mutations, and invalidation"
     },
     {
+      "id": "web-query-hook-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/hooks/useCountryQueries.test.ts",
+      "purpose": "Mutation invalidation order coverage"
+    },
+    {
       "id": "web-service",
       "layer": "web-next",
       "path": "web-next/src/features/basic-data/geographical-information/countries/services/countryService.ts",
       "purpose": "HTTP serialization"
+    },
+    {
+      "id": "web-service-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/services/countryService.test.ts",
+      "purpose": "Request normalization and exact bulk create/archive envelopes"
     },
     {
       "id": "web-types",
@@ -365,6 +407,30 @@
       "layer": "web-next",
       "path": "web-next/src/features/basic-data/geographical-information/countries/components/grid-view/CountriesDataGrid.tsx",
       "purpose": "Server-driven grid and toolbar integration"
+    },
+    {
+      "id": "web-grid-columns",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/components/grid-view/Columns.tsx",
+      "purpose": "API-aligned sortable column contract"
+    },
+    {
+      "id": "web-grid-column-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/components/grid-view/Columns.test.tsx",
+      "purpose": "Supported and unsupported sort affordance coverage"
+    },
+    {
+      "id": "web-shared-bulk-selection",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/utils/bulkSelection.ts",
+      "purpose": "Reusable eligible-ID normalization and non-truncating limit result"
+    },
+    {
+      "id": "web-shared-bulk-selection-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/shared/utils/bulkSelection.test.ts",
+      "purpose": "Eligibility, duplicate, and API-limit coverage"
     },
     {
       "id": "web-grid-toolbar",
@@ -511,6 +577,12 @@
       "purpose": "List, modes, permissions, and action orchestration"
     },
     {
+      "id": "mobile-screen-tests",
+      "layer": "mobile-react-test",
+      "path": "mobile-react/src/features/basic-data/countries/screens/CountriesScreen.test.tsx",
+      "purpose": "Server criteria, view composition, form entry, lifecycle, bulk, report, and permission coverage"
+    },
+    {
       "id": "mobile-types",
       "layer": "mobile-react",
       "path": "mobile-react/src/features/basic-data/countries/types/country.ts",
@@ -539,6 +611,12 @@
       "layer": "mobile-react",
       "path": "mobile-react/src/features/basic-data/countries/queries/use-countries.ts",
       "purpose": "Reads, mutations, and cache invalidation"
+    },
+    {
+      "id": "mobile-query-hook-tests",
+      "layer": "mobile-react-test",
+      "path": "mobile-react/src/features/basic-data/countries/queries/use-countries.test.ts",
+      "purpose": "Create/update/lifecycle transport and root invalidation coverage"
     },
     {
       "id": "mobile-server-list-state",

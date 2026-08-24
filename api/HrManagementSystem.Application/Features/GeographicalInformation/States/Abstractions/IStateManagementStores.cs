@@ -23,6 +23,8 @@ public interface IStateWriteStore
 
     Task<IReadOnlyList<State>> GetForUpdateAsync(IReadOnlyCollection<int> ids, CancellationToken cancellationToken);
 
+    Task<int?> GetCountryIdAsync(int stateId, CancellationToken cancellationToken);
+
     Task<bool> HasConflictAsync(State candidate, int? excludedId, CancellationToken cancellationToken);
 
     Task<bool> HasAnyConflictAsync(IReadOnlyCollection<State> states, CancellationToken cancellationToken);

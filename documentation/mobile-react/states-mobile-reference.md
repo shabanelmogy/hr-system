@@ -20,7 +20,7 @@ The API wrapper owns `states`, lookup, compatibility by-country lookup, details,
 
 ## 5. Query keys and mutations
 
-`stateKeys` provides list, lookup, detail, and relation prefixes. List uses prior-page placeholder data. Save selects create/update; lifecycle mutations invalidate `stateKeys.all`; realtime uses the same stable prefix without importing private hooks.
+`stateKeys` provides list, lookup, and relation prefixes. List uses prior-page placeholder data. Because each State list row contains every mutable form field, no redundant detail hook/key is retained. Save selects create/update; lifecycle mutations invalidate `stateKeys.all`; realtime uses the same stable prefix without importing private hooks.
 
 ## 6. Controlled list state
 
@@ -60,7 +60,7 @@ The `states` realtime resource invalidates `['states']`. `/basic-data/states` no
 
 ## 14. Tests
 
-Feature API tests cover serialization/runtime schemas. Shared route, server-list, realtime, localization, and architecture tests cover common behavior. Add a representative State screen/form/lifecycle integration suite when test render fixtures are available.
+Feature API tests cover serialization/runtime schemas. `StatesScreen.test.tsx` covers server criteria, filter/view composition, form entry, permission visibility, single archive, and bulk archive wiring. `use-states.test.ts` proves create/update/archive/restore/bulk transport and root invalidation. Shared route, server-list, realtime, localization, and architecture tests cover common behavior.
 
 ## 15. Verification
 

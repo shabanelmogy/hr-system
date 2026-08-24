@@ -23,11 +23,9 @@ describe('country API boundary', () => {
       searchField: 'nameEn',
       searchOperator: 'startsWith',
       status: 'archived',
-      currencyCode: ' egp ',
-      hasStates: 'withStates',
       sortBy: 'createdOn',
       sortDirection: 'desc',
-    })).toBe('pageNumber=2&pageSize=5&status=archived&searchField=nameEn&searchOperator=startsWith&sortBy=createdOn&sortDirection=desc&search=Egypt&currencyCode=EGP&hasStates=true');
+    })).toBe('pageNumber=2&pageSize=5&status=archived&searchField=nameEn&searchOperator=startsWith&sortBy=createdOn&sortDirection=desc&search=Egypt');
   });
 
   it('rejects a page item that does not satisfy the country contract', () => {

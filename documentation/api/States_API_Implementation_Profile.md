@@ -24,9 +24,13 @@ Command validators enforce Arabic and English names, State code, CountryId, Ids,
 
 ## 6. Create, bulk create, and update
 
-Create and update require the requested Country to be active. Update loads an including-Country State, rejects archived States, records only changed State business fields, saves through the unit of work, and schedules the change after save.
+Create and update require the requested Country to be active. Their dependency
+check and save run in one atomic unit under the same transaction-owned Country
+lifecycle resource used by Country archive. Update loads an including-Country
+State, rejects archived States, records only changed State business fields,
+saves through the unit of work, commits, and only then schedules the change.
 
-`POST states/bulk` accepts `{ "states": [/* 1-100 CreateStateRequest values */] }` and returns `CreateStatesResponse(CreatedCount)` with `201`. The command validates every row through the mutation validator, then rejects with `State.CountryNotFound` when any requested Country is missing or inactive. It returns `State.Duplicated` when the batch repeats the same field case-insensitively under one Country, or when that same field conflicts case-insensitively with an existing State under the parent Country. Cross-field equality is allowed. Valid rows persist atomically in one save and schedule one `BulkAdd` change.
+`POST states/bulk` accepts `{ "states": [/* 1-100 CreateStateRequest values */] }` and returns `CreateStatesResponse(CreatedCount)` with `201`. The command validates every row through the mutation validator, acquires the de-duplicated sorted Country lifecycle resources, then rejects with `State.CountryNotFound` when any requested Country is missing or inactive. It returns `State.Duplicated` when the batch repeats the same field case-insensitively under one Country, or when that same field conflicts case-insensitively with an existing State under the parent Country. Cross-field equality is allowed. Valid rows persist atomically in one save, commit, and schedule one `BulkAdd` change.
 
 The atomic bulk endpoint does not define an idempotency key or replay token. A
 client that receives no response or a 5xx after submission must treat commit state
@@ -36,7 +40,16 @@ failed batch, not an uncertainty state.
 
 ## 7. Archive, restore, and bulk archive
 
-Archive rejects an active-District State. Restore rejects a State whose parent Country is archived. Bulk archive loads all requested States, validates existence and all active District dependencies before any mutation, skips already archived States idempotently, saves once, then schedules one `BulkArchive` change.
+Archive and bulk archive acquire transaction-owned State lifecycle resources
+before checking active Districts. District create, update, archive/restore toggle
+uses the same State resource; restore additionally rechecks that the parent State
+is active. Therefore a District cannot be committed under an archived State and
+a State cannot archive after a concurrent child check has passed. Restore locks
+the State's current Country resource, retries if the parent changed between the
+untracked lookup and lock acquisition, and rejects an archived Country. Bulk
+archive loads all requested States, validates existence and every active District
+dependency before mutation, skips already archived States idempotently, saves
+once, commits, then schedules one `BulkArchive` change.
 
 ## 8. Side effects
 
@@ -44,7 +57,7 @@ Archive rejects an active-District State. Restore rejects a State whose parent C
 
 ## 9. Persistence and scope
 
-`StateReadStore` uses no-tracking queries and projects with the State mapping config. `StateWriteStore` obtains entities with parent Country where lifecycle mapping requires it. Existing DbContext tenant/company filters remain the authoritative scope boundary.
+`StateReadStore` uses no-tracking queries and projects with the State mapping config. `StateWriteStore` obtains entities with parent Country where lifecycle mapping requires it and exposes an untracked parent-ID read for restore lock selection. `ApplicationDbContext.ExecuteAtomicallyAsync` owns the SQL Server transaction and deterministic `sp_getapplock` resources; non-SQL relational providers fail closed. Existing DbContext tenant/company filters remain the authoritative scope boundary.
 
 ## 10. Error and localization contract
 
@@ -64,4 +77,4 @@ filter.
 
 ## 12. Tests and legacy note
 
-`StateCqrsArchitectureTests` verifies controller routes, message contracts, handler ports, mapping, and validators. `StatesControllerCqrsTests` verifies dispatch, the bulk envelope, and success status. `StateBulkCreateHandlerTests` proves cross-field values are allowed, same-field case-insensitive request duplicates fail, persistence checks remain field-scoped and case-insensitive, and scheduling follows commit. `BackgroundNotificationJobTests` proves plural bulk notification keys. The former `IStateService`, service, and old job remain source-compatible but are no longer the controller path; remove them only in a separately scoped legacy cleanup after dependent checks are audited.
+`StateCqrsArchitectureTests` verifies controller routes, message contracts, handler ports, mapping, and validators. `StatesControllerCqrsTests` verifies dispatch, the bulk envelope, and success status. `StateBulkCreateHandlerTests` proves cross-field values are allowed, same-field case-insensitive request duplicates fail, persistence checks remain field-scoped and case-insensitive, scheduling follows commit, and create/archive/restore select the required Country or State lifecycle resource. `BackgroundNotificationJobTests` proves plural bulk notification keys. The unused `IStateService` and `StateService` path was removed after a repository-wide consumer audit. `StateChangedJob` remains registered only as a compatibility executor for jobs persisted before the CQRS migration; no current producer schedules it, and it can be removed after the deployed Hangfire queues and retained job history no longer reference its serialized type.

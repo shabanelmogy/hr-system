@@ -38,7 +38,7 @@ import type { Country, CountryFilters, CountryRequest, CountrySearchField, Count
 type FormMode = 'create' | 'edit' | 'view';
 type PendingAction = { kind: 'archive'; country: Country } | { kind: 'bulk' } | null;
 
-const initialFilters: CountryFilters = { status: 'active', currencyCode: '', hasStates: 'all' };
+const initialFilters: CountryFilters = { status: 'active' };
 
 export function CountriesScreen() {
   const { i18n, t } = useTranslation();
@@ -58,7 +58,6 @@ export function CountriesScreen() {
   const countriesQuery = useCountries({
     pageNumber: toApiPageNumber(list.state.page), pageSize: list.state.pageSize,
     search: list.state.search, searchField, searchOperator, status: list.state.filters.status,
-    currencyCode: list.state.filters.currencyCode, hasStates: list.state.filters.hasStates,
     sortBy: list.state.sort?.columnId ?? 'nameEn', sortDirection: list.state.sort?.direction === 'descending' ? 'desc' : 'asc',
   });
   const saveMutation = useSaveCountry();

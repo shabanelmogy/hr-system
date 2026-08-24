@@ -1,5 +1,6 @@
 using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Abstractions.Persistence;
+using HrManagementSystem.Application.Features.GeographicalInformation;
 using HrManagementSystem.Application.Features.GeographicalInformation.States.Abstractions;
 using HrManagementSystem.Application.Features.GeographicalInformation.States.Commands;
 using HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts;
@@ -24,7 +25,8 @@ public sealed class StateBulkCreateHandlerTests
         var lifecycle = new List<string>();
         var store = new RecordingStateWriteStore(lifecycle);
         var scheduler = new RecordingStateScheduler(lifecycle);
-        var handler = CreateHandler(store, new RecordingUnitOfWork(lifecycle), scheduler);
+        var unitOfWork = new RecordingUnitOfWork(lifecycle);
+        var handler = CreateHandler(store, unitOfWork, scheduler);
 
         var result = await handler.Handle(new CreateStatesCommand(
         [
@@ -35,6 +37,9 @@ public sealed class StateBulkCreateHandlerTests
         Assert.True(result.IsSuccess);
         Assert.Equal(2, result.Value.CreatedCount);
         Assert.Equal(["add-range", "save", "schedule"], lifecycle);
+        Assert.Equal(
+            [GeographicalLifecycleLocks.Country(1)],
+            Assert.Single(unitOfWork.AtomicLockResources));
         Assert.Equal("BulkAdd", Assert.Single(scheduler.Changes).Action);
     }
 
@@ -88,6 +93,50 @@ public sealed class StateBulkCreateHandlerTests
         Assert.False(crossFieldValue);
     }
 
+    [Fact]
+    public async Task Archive_UsesTheStateLifecycleLockBeforeDependencyChecks()
+    {
+        var lifecycle = new List<string>();
+        var unitOfWork = new RecordingUnitOfWork(lifecycle);
+        var handler = new ArchiveStateCommandHandler(
+            new RecordingStateWriteStore(lifecycle),
+            unitOfWork,
+            new RecordingStateScheduler(lifecycle),
+            new TestCurrentActor(),
+            TimeProvider.System,
+            CreateMapper(),
+            CreateErrors());
+
+        var result = await handler.Handle(new ArchiveStateCommand(17), CancellationToken.None);
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(
+            [GeographicalLifecycleLocks.State(17)],
+            Assert.Single(unitOfWork.AtomicLockResources));
+    }
+
+    [Fact]
+    public async Task Restore_UsesTheCurrentCountryLifecycleLock()
+    {
+        var lifecycle = new List<string>();
+        var unitOfWork = new RecordingUnitOfWork(lifecycle);
+        var store = new RecordingStateWriteStore(lifecycle) { CountryId = 7 };
+        var handler = new RestoreStateCommandHandler(
+            store,
+            unitOfWork,
+            new RecordingStateScheduler(lifecycle),
+            new TestCurrentActor(),
+            CreateMapper(),
+            CreateErrors());
+
+        var result = await handler.Handle(new RestoreStateCommand(17), CancellationToken.None);
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(
+            [GeographicalLifecycleLocks.Country(7)],
+            Assert.Single(unitOfWork.AtomicLockResources));
+    }
+
     private static CreateStatesCommandHandler CreateHandler(
         IStateWriteStore store,
         IUnitOfWork unitOfWork,
@@ -116,11 +165,15 @@ public sealed class StateBulkCreateHandlerTests
 
     private sealed class RecordingStateWriteStore(List<string> lifecycle) : IStateWriteStore
     {
+        public int? CountryId { get; init; }
+
         public void Add(State state) => lifecycle.Add("add");
         public void AddRange(IReadOnlyCollection<State> states) => lifecycle.Add("add-range");
         public Task<State?> GetForUpdateAsync(int id, CancellationToken cancellationToken) => Task.FromResult<State?>(null);
         public Task<IReadOnlyList<State>> GetForUpdateAsync(IReadOnlyCollection<int> ids, CancellationToken cancellationToken) =>
             Task.FromResult<IReadOnlyList<State>>([]);
+        public Task<int?> GetCountryIdAsync(int stateId, CancellationToken cancellationToken) =>
+            Task.FromResult(CountryId);
         public Task<bool> HasConflictAsync(State candidate, int? excludedId, CancellationToken cancellationToken) => Task.FromResult(false);
         public Task<bool> HasAnyConflictAsync(IReadOnlyCollection<State> states, CancellationToken cancellationToken) => Task.FromResult(false);
         public Task<bool> AreCountriesActiveAsync(IReadOnlyCollection<int> countryIds, CancellationToken cancellationToken) => Task.FromResult(true);
@@ -131,6 +184,17 @@ public sealed class StateBulkCreateHandlerTests
 
     private sealed class RecordingUnitOfWork(List<string> lifecycle) : IUnitOfWork
     {
+        public List<IReadOnlyCollection<string>> AtomicLockResources { get; } = [];
+
+        public async Task<TResult> ExecuteAtomicallyAsync<TResult>(
+            IReadOnlyCollection<string> lockResources,
+            Func<CancellationToken, Task<TResult>> operation,
+            CancellationToken cancellationToken = default)
+        {
+            AtomicLockResources.Add(lockResources);
+            return await operation(cancellationToken);
+        }
+
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             lifecycle.Add("save");

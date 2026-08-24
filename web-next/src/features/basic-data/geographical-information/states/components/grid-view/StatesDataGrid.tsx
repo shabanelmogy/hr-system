@@ -15,7 +15,6 @@ export interface StatesDataGridProps {
   states: StateListItem[];
   paginationMode: "client" | "server";
   loading?: boolean;
-  isFetching?: boolean;
   apiRef?: React.RefObject<GridApi | null>;
   onEdit: (state: StateListItem) => void;
   onDelete: (state: StateListItem) => void;
@@ -49,7 +48,7 @@ export interface StatesDataGridProps {
 }
 
 const StatesDataGrid: React.FC<StatesDataGridProps> = ({
-  states, paginationMode, loading = false, isFetching = false, apiRef, onEdit, onDelete, onRestore, onView, permissions,
+  states, paginationMode, loading = false, apiRef, onEdit, onDelete, onRestore, onView, permissions,
   page, pageSize, totalCount, sortColumn, sortDirection, searchValue, searchField, searchOperator, status,
   onSearchChange, onSearchFieldChange, onSearchOperatorChange, onStatusChange, onReset,
   selectedStateIds, onSelectedStateIdsChange, onBulkArchive, isBulkArchiving = false,
@@ -67,7 +66,7 @@ const StatesDataGrid: React.FC<StatesDataGridProps> = ({
   return (
     <ContentWrapper>
       <MyDataGrid
-        rows={states} columns={columns} loading={loading || isFetching} apiRef={apiRef}
+        rows={states} columns={columns} loading={loading} apiRef={apiRef}
         filterMode="server" sortingMode="server"
         sortModel={[{ field: sortColumn, sort: sortDirection.toLowerCase() as "asc" | "desc" }]}
         onSortModelChange={onSortChange}

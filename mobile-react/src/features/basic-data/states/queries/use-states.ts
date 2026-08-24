@@ -4,7 +4,6 @@ import { stateKeys } from './state-keys';
 import type { StatePageQuery, StateRequest } from '../types/state';
 
 export function useStates(query: StatePageQuery) { return useQuery({ queryKey: stateKeys.list(query), queryFn: () => stateApi.getPage(query), placeholderData: (previous) => previous }); }
-export function useState(id: number | null) { return useQuery({ enabled: id !== null, queryKey: stateKeys.detail(id ?? 0), queryFn: () => stateApi.getById(id ?? 0) }); }
 export function useStateLookup(countryId?: number) { return useQuery({ queryKey: stateKeys.lookup(countryId), queryFn: () => stateApi.getLookup(countryId), staleTime: 5 * 60_000 }); }
 function useInvalidatingMutation<TVariables, TResult = unknown>(mutationFn: (variables: TVariables) => Promise<TResult>) {
   const queryClient = useQueryClient();

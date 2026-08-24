@@ -24,6 +24,7 @@ export const useCountryColumns = ({ t, permissions, getActions }: ColumnsFactory
       flex: 0.5,
       align: "center",
       headerAlign: "center",
+      sortable: false,
     },
     {
       field: "nameAr",
@@ -63,6 +64,7 @@ export const useCountryColumns = ({ t, permissions, getActions }: ColumnsFactory
       flex: 0.8,
       align: "center",
       headerAlign: "center",
+      sortable: false,
       renderCell: renderPhoneCode,
     },
     {
@@ -104,6 +106,7 @@ export const useCountryColumns = ({ t, permissions, getActions }: ColumnsFactory
       flex: 1,
       align: "center",
       headerAlign: "center",
+      sortable: false,
       valueFormatter: renderDate,
     },
     {
@@ -132,6 +135,7 @@ export const useCountryColumns = ({ t, permissions, getActions }: ColumnsFactory
       flex: 1,
       align: "center",
       headerAlign: "center",
+      sortable: false,
       getActions,
     });
   }

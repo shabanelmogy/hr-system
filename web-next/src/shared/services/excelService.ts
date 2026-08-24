@@ -70,6 +70,13 @@ export type SpreadsheetImportRowStatus =
   | "failed"
   | "uncertain";
 
+export function canSubmitSpreadsheetImport(
+  isReadOnly: boolean,
+  hasCreatePermission: boolean,
+): boolean {
+  return !isReadOnly && hasCreatePermission;
+}
+
 type SpreadsheetFileMetadata = Pick<File, "name" | "size" | "type">;
 
 export function validateSpreadsheetImportFile(

@@ -1,5 +1,6 @@
 using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Abstractions.Messaging;
+using HrManagementSystem.Application.Features.GeographicalInformation;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Abstractions;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Errors;
@@ -19,24 +20,36 @@ public sealed class RestoreCountryCommandHandler(
 {
     public async Task<Result> Handle(RestoreCountryCommand request, CancellationToken cancellationToken)
     {
-        var country = await countryWriteStore.GetForUpdateAsync(request.Id, cancellationToken);
-        if (country is null)
-            return Result.Failure(countryErrors.CountryNotFound);
-        if (!country.IsDeleted)
-            return Result.Success();
+        CountryChange? change = null;
+        var result = await unitOfWork.ExecuteAtomicallyAsync(
+            [GeographicalLifecycleLocks.Country(request.Id)],
+            async token =>
+            {
+                var country = await countryWriteStore.GetForUpdateAsync(request.Id, token);
+                if (country is null)
+                    return Result.Failure(countryErrors.CountryNotFound);
+                if (!country.IsDeleted)
+                    return Result.Success();
 
-        country.IsDeleted = false;
-        country.DeletedById = null;
-        country.DeletedByPc = null;
-        country.DeletedOn = null;
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+                country.IsDeleted = false;
+                country.DeletedById = null;
+                country.DeletedByPc = null;
+                country.DeletedOn = null;
+                await unitOfWork.SaveChangesAsync(token);
 
-        countryChangeScheduler.Schedule(new CountryChange(
-            mapper.Map<CountryDetailResponse>(country),
-            "Restore",
-            null,
-            currentActor.UserId,
-            Guid.NewGuid()));
-        return Result.Success();
+                change = new CountryChange(
+                    mapper.Map<CountryDetailResponse>(country),
+                    "Restore",
+                    null,
+                    currentActor.UserId,
+                    Guid.NewGuid());
+                return Result.Success();
+            },
+            cancellationToken);
+
+        if (change is not null)
+            countryChangeScheduler.Schedule(change);
+
+        return result;
     }
 }

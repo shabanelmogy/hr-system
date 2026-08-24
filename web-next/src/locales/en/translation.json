@@ -754,6 +754,7 @@
     "bulkArchived": "Archived countries: {{count}}",
     "bulkArchiveError": "Failed to archive the selected countries",
     "bulkArchiveSelectionRequired": "Select at least one active country to archive.",
+    "bulkArchiveLimitExceeded": "Select no more than {{max}} countries per archive request.",
     "cardSelectionAriaLabel": "Select {{name}}",
     "uploaded": "countries uploaded",
     "status": {
@@ -929,6 +930,7 @@
     "bulkArchiveConfirm": "Archive {{count}} states",
     "bulkArchiveAction": "Archive selected ({{count}})",
     "bulkArchiveSelectionRequired": "Select at least one active state to archive",
+    "bulkArchiveLimitExceeded": "Select no more than {{max}} states per archive request.",
     "cardSelectionAriaLabel": "Select {{name}}",
     "bulkArchived": "Archived {{count}} states",
     "bulkArchiveError": "Unable to archive the selected states",

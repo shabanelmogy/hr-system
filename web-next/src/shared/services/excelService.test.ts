@@ -1,6 +1,7 @@
 import * as XLSX from "xlsx";
 import { describe, expect, it } from "vitest";
 import {
+  canSubmitSpreadsheetImport,
   SpreadsheetImportError,
   XLSX_MIME_TYPE,
   isAmbiguousImportSubmissionError,
@@ -171,5 +172,13 @@ describe("ambiguous spreadsheet submissions", () => {
   it("keeps deterministic client conflicts retryable only after correction", () => {
     expect(isAmbiguousImportSubmissionError({ status: 400 })).toBe(false);
     expect(isAmbiguousImportSubmissionError({ status: 409 })).toBe(false);
+  });
+});
+
+describe("spreadsheet import authorization", () => {
+  it("requires both write mode and the feature create permission", () => {
+    expect(canSubmitSpreadsheetImport(false, true)).toBe(true);
+    expect(canSubmitSpreadsheetImport(true, true)).toBe(false);
+    expect(canSubmitSpreadsheetImport(false, false)).toBe(false);
   });
 });

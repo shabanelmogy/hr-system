@@ -13,6 +13,8 @@ public sealed record StateChangedJobRequest(
     string? ActorUserId,
     Guid OperationId);
 
+// Compatibility executor for State jobs persisted before the CQRS migration.
+// Current runtime code schedules StateManagementChangedJob instead.
 [AutomaticRetry(Attempts = 5, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
 public sealed class StateChangedJob(
     ApplicationDbContext context,

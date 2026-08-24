@@ -26,6 +26,9 @@ Execution references:
 - Convert the UI page base to the API page base exactly once.
 - Use the server total for pagination and never client-filter a server page.
 - Make unsupported sorting unavailable rather than displaying a nonfunctional affordance.
+- Treat the API sort allow-list as a UI contract: every unsupported Grid column
+  sets `sortable: false`, every supported field remains operable, and a focused
+  column test prevents drift.
 - Preserve criteria and lifecycle state across every approved view. Do not assume
   chart, report, import, or export exists unless its Required/Deferred/Excluded
   decision and data scope are recorded for this feature.
@@ -41,8 +44,13 @@ Execution references:
 - [ ] Search column, condition, input, and reset controls align and share control height.
 - [ ] Grid options are the final toolbar item and own column visibility, density, status, archive, and restore actions where specified.
 - [ ] Create, view, edit, archive, restore, and bulk actions follow permissions and read-only state.
+- [ ] Bulk selection normalizes eligible unique IDs, rejects rather than truncates
+      selections above the API maximum with localized feedback, and rechecks the
+      limit inside the direct submit handler.
 - [ ] Forms normalize and validate the same fields as the API without inventing server rules.
-- [ ] Loading, background refresh, empty, no-results, and error states are distinct.
+- [ ] Loading, background refresh, empty, no-results, and error states are distinct;
+      background refresh preserves current rows/cards/charts and uses
+      non-destructive progress instead of an initial-load skeleton/overlay.
 - [ ] Realtime invalidation uses stable query-key prefixes.
 - [ ] Every implemented optional view is registered and tested; no feature-owned
       Chart, Report, Import, or Export implementation is left unreachable.
@@ -55,6 +63,9 @@ Excluded, record that decision and do not register an empty Import view.
 
 - [ ] Import registration uses the declared create permission and read-only guard;
       the shared Filter action is omitted when the view has no criteria bar.
+- [ ] The Import submit callback independently enforces read-only and feature
+      create permission, even when the parent view and submit button are already
+      permission-filtered.
 - [ ] Accepted extension/MIME, file size, workbook/sheet, required headers,
       duplicate headers, blank rows, and empty-file behavior are deterministic.
 - [ ] Preview rows use the shared form schema and normalization, show localized
@@ -67,7 +78,8 @@ Excluded, record that decision and do not register an empty Import view.
       conflict errors, and transient network failures.
 - [ ] Success invalidates the canonical feature query-key root, clears stale
       selection, and preserves the expected active view.
-- [ ] Tests cover parsing, headers, exact request body, limits, field-scoped
+- [ ] Tests cover parsing, headers, exact request body, direct submit authorization,
+      limits, field-scoped
       duplicates, dependency lookups, permission/read-only state, API conflict,
       retry, invalidation, English, Arabic, and RTL.
 
@@ -80,8 +92,9 @@ failure into partial success.
 ## Evidence to capture
 
 - Public route/API/permission/realtime/localization registrations.
-- Exact query and mutation serialization tests.
-- View registration and permission/read-only behavior for direct handlers.
+- Exact query and mutation serialization tests, including named bulk envelopes.
+- View/controller wiring, mutation invalidation, column allow-list, batch-limit,
+  and permission/read-only behavior for direct handlers.
 - Desktop/compact, EN/AR, RTL, keyboard, focus, loading/error/empty/retry evidence.
 
 ## Approved references
@@ -93,21 +106,21 @@ failure into partial success.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 3 | `b0ae30454b32e1209cd9b74f1bc82d45e58ae969a61381a25c64c86db7b09dfc` |
+| master | 3 | `3b1d97b7b5b8b6e365586be28116f39b8e3ffae0414257fca7abe5ece53fcc89` |
 | master | 4 | `a9c88864fafde572fc0ffc1502f1a5ccb2fc55fdbd77aefe2c54c33d143b9529` |
-| master | 6 | `e671cfed0bfb63b0063c4f83c86be605190925f9dc7e6b1ef6e335c26fb89c54` |
+| master | 6 | `b7fb453c6be690cf10f98e85664f30fb55fb590e628b0f8a0435f54cf67058ac` |
 | master | 7 | `8c0ba157ab3e6ca7bfa97bd23bdd022523f69dc7ac4386e25462b7ad667ba74b` |
 | web | 1 | `66a9531a90a5b8e58c45035848107d5c0dd756d800a174869bafef93437a7715` |
 | web | 2 | `07678043219ba47afeeb50860fd12813f00028c7ec72cca8630d3671314b8d32` |
 | web | 3 | `8ed626078fb4bfcf82f49bef3053e0a706c11d9801738c6e797befd29b29df53` |
-| web | 4 | `148b62160dd0bf9814dcc9af74f3bc11ee47a78114a9ef369dfb5104ec1f3e1d` |
-| web | 5 | `c550718bb0ec6f227e0e50a48e7d42c7207918e964bf3f0172ac76887a834db3` |
-| web | 6 | `5603515b843af92bfacc318fcc08638b9af594e0cf20dd1ced247f3391193d63` |
+| web | 4 | `d65a1f9e04c4f9445a29a6fd80d6416d04bedf0d32cafe2d997870c485938730` |
+| web | 5 | `287e979faf77b6e82ba2ac96642f14d525cd2b12cc709cb6e14bc5e9bdaa2f8c` |
+| web | 6 | `361cc5de9174989d99221209f2fbc9bb8c19772025fb89d55e280e2ca0a3e425` |
 | web | 7 | `f9f1e9693346be686ff0effa80374e6f012a385ee00d622e1a3df1168dd8126a` |
 | web | 8 | `43a7e4cb95554e828d56afdc3c933a1b1f224531dc5829a1c6d0b31e25f632fe` |
-| web | 9 | `2e1b004b06ae6403aa3ffdae146f851381c08bcab5040da2a8fe50638904f045` |
+| web | 9 | `4da29b144dca03553c2568393fde9b32e14b1782bcd53ce7244453d4c9510f97` |
 | web | 10 | `dfca66fe993ca501dfd506da6673879ea9c49d5f9fa8fcd1050486f4346ffaeb` |
 | web | 11 | `f957846d6351e68c251cca5257f0413128cf9b4100a6e722a4a7fe01cd7fb1f2` |
-| web | 12 | `5e43026062cf8d6ff83ff4f5fa227e049dac688c4730fec9a9937aa56a868727` |
-| web | 13 | `7c7e9a1bc3046f0106740192bb9f3537822dcfa9bf984d268993ebd588c575ca` |
+| web | 12 | `7e1719746bfe470e8b8e620c2aa6ae5618be17d388c4a6fdb1a58f9aa7d72ae8` |
+| web | 13 | `3a78555f943e8934b512813fb738bb774d429bbc68dff3ad58a9da46199f55fc` |
 | web | 14 | `80765976d54ff8e1c218832a3dbd4d3643fda41d5caa77f3878160e71213626c` |

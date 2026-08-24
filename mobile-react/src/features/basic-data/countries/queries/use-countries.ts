@@ -12,14 +12,6 @@ export function useCountries(query: CountryPageQuery) {
   });
 }
 
-export function useCountry(id: number | null) {
-  return useQuery({
-    enabled: id !== null,
-    queryKey: countryKeys.detail(id ?? 0),
-    queryFn: () => countryApi.getById(id ?? 0),
-  });
-}
-
 function useInvalidatingMutation<TVariables, TResult = unknown>(
   mutationFn: (variables: TVariables) => Promise<TResult>,
 ) {

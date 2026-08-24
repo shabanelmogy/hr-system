@@ -24,6 +24,9 @@ Execution references:
 - Convert the UI page base to the API page base exactly once.
 - Use the server total for pagination and never client-filter a server page.
 - Make unsupported sorting unavailable rather than displaying a nonfunctional affordance.
+- Treat the API sort allow-list as a UI contract: every unsupported Grid column
+  sets `sortable: false`, every supported field remains operable, and a focused
+  column test prevents drift.
 - Preserve criteria and lifecycle state across every approved view. Do not assume
   chart, report, import, or export exists unless its Required/Deferred/Excluded
   decision and data scope are recorded for this feature.
@@ -39,8 +42,13 @@ Execution references:
 - [ ] Search column, condition, input, and reset controls align and share control height.
 - [ ] Grid options are the final toolbar item and own column visibility, density, status, archive, and restore actions where specified.
 - [ ] Create, view, edit, archive, restore, and bulk actions follow permissions and read-only state.
+- [ ] Bulk selection normalizes eligible unique IDs, rejects rather than truncates
+      selections above the API maximum with localized feedback, and rechecks the
+      limit inside the direct submit handler.
 - [ ] Forms normalize and validate the same fields as the API without inventing server rules.
-- [ ] Loading, background refresh, empty, no-results, and error states are distinct.
+- [ ] Loading, background refresh, empty, no-results, and error states are distinct;
+      background refresh preserves current rows/cards/charts and uses
+      non-destructive progress instead of an initial-load skeleton/overlay.
 - [ ] Realtime invalidation uses stable query-key prefixes.
 - [ ] Every implemented optional view is registered and tested; no feature-owned
       Chart, Report, Import, or Export implementation is left unreachable.
@@ -53,6 +61,9 @@ Excluded, record that decision and do not register an empty Import view.
 
 - [ ] Import registration uses the declared create permission and read-only guard;
       the shared Filter action is omitted when the view has no criteria bar.
+- [ ] The Import submit callback independently enforces read-only and feature
+      create permission, even when the parent view and submit button are already
+      permission-filtered.
 - [ ] Accepted extension/MIME, file size, workbook/sheet, required headers,
       duplicate headers, blank rows, and empty-file behavior are deterministic.
 - [ ] Preview rows use the shared form schema and normalization, show localized
@@ -65,7 +76,8 @@ Excluded, record that decision and do not register an empty Import view.
       conflict errors, and transient network failures.
 - [ ] Success invalidates the canonical feature query-key root, clears stale
       selection, and preserves the expected active view.
-- [ ] Tests cover parsing, headers, exact request body, limits, field-scoped
+- [ ] Tests cover parsing, headers, exact request body, direct submit authorization,
+      limits, field-scoped
       duplicates, dependency lookups, permission/read-only state, API conflict,
       retry, invalidation, English, Arabic, and RTL.
 
@@ -78,8 +90,9 @@ failure into partial success.
 ## Evidence to capture
 
 - Public route/API/permission/realtime/localization registrations.
-- Exact query and mutation serialization tests.
-- View registration and permission/read-only behavior for direct handlers.
+- Exact query and mutation serialization tests, including named bulk envelopes.
+- View/controller wiring, mutation invalidation, column allow-list, batch-limit,
+  and permission/read-only behavior for direct handlers.
 - Desktop/compact, EN/AR, RTL, keyboard, focus, loading/error/empty/retry evidence.
 
 ## Approved references

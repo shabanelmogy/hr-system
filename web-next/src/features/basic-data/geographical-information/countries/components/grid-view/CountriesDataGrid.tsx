@@ -26,7 +26,6 @@ interface CountriesDataGridProps {
   countries: CountryListItem[];
   paginationMode: "client" | "server";
   loading?: boolean;
-  isFetching?: boolean;
   apiRef?: React.RefObject<GridApi | null>;
   onEdit: (country: CountryListItem) => void;
   onDelete: (country: CountryListItem) => void;
@@ -63,7 +62,6 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
   countries,
   paginationMode,
   loading = false,
-  isFetching = false,
   apiRef,
   onEdit,
   onDelete,
@@ -113,7 +111,7 @@ const CountriesDataGrid: React.FC<CountriesDataGridProps> = ({
       <MyDataGrid
         rows={countries}
         columns={columns}
-        loading={loading || isFetching}
+        loading={loading}
         apiRef={apiRef}
         filterMode="server"
         sortingMode="server"

@@ -38,6 +38,7 @@ const ImportCountries = ({ onReconcile }: ImportCountriesProps) => {
     selectedFile,
     uploadProgress,
     uploadableCount,
+    canSubmit,
     maximumBatchSize,
     maximumFileSizeMb,
     expectedHeaders,
@@ -63,6 +64,7 @@ const ImportCountries = ({ onReconcile }: ImportCountriesProps) => {
           hint={t("imports.expectedHeaders", { headers: expectedHeaders })}
           icon={<PublicOutlined />}
           uploadableCount={uploadableCount}
+          canSubmit={canSubmit}
           locked={viewState === "uncertain"}
           onFileSelect={handleFileSelect}
           validateFile={validateFile}

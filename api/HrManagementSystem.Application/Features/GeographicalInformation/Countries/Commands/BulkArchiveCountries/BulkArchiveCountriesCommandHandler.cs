@@ -1,5 +1,6 @@
 using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Abstractions.Messaging;
+using HrManagementSystem.Application.Features.GeographicalInformation;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Abstractions;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts;
@@ -20,36 +21,47 @@ public sealed class BulkArchiveCountriesCommandHandler(
         BulkArchiveCountriesCommand request,
         CancellationToken cancellationToken)
     {
-        var countries = await countryWriteStore.GetForUpdateAsync(request.Ids, cancellationToken);
-        if (countries.Count != request.Ids.Count)
-            return Result.Failure<BulkArchiveCountriesResponse>(countryErrors.CountryNotFound);
+        CountryChange? change = null;
+        var result = await unitOfWork.ExecuteAtomicallyAsync(
+            request.Ids.Select(GeographicalLifecycleLocks.Country).ToArray(),
+            async token =>
+            {
+                var countries = await countryWriteStore.GetForUpdateAsync(request.Ids, token);
+                if (countries.Count != request.Ids.Count)
+                    return Result.Failure<BulkArchiveCountriesResponse>(countryErrors.CountryNotFound);
 
-        var activeCountries = countries.Where(country => !country.IsDeleted).ToList();
-        if (activeCountries.Count == 0)
-            return Result.Success(new BulkArchiveCountriesResponse(0));
+                var activeCountries = countries.Where(country => !country.IsDeleted).ToList();
+                if (activeCountries.Count == 0)
+                    return Result.Success(new BulkArchiveCountriesResponse(0));
 
-        var activeIds = activeCountries.Select(country => country.Id).ToList();
-        if (await countryWriteStore.HasActiveStatesAsync(activeIds, cancellationToken))
-            return Result.Failure<BulkArchiveCountriesResponse>(countryErrors.CountryInUseByState);
+                var activeIds = activeCountries.Select(country => country.Id).ToList();
+                if (await countryWriteStore.HasActiveStatesAsync(activeIds, token))
+                    return Result.Failure<BulkArchiveCountriesResponse>(countryErrors.CountryInUseByState);
 
-        var deletedOn = timeProvider.GetUtcNow().UtcDateTime;
-        foreach (var country in activeCountries)
-        {
-            country.IsDeleted = true;
-            country.DeletedById = currentActor.UserId;
-            country.DeletedByPc = Environment.MachineName;
-            country.DeletedOn = deletedOn;
-        }
+                var deletedOn = timeProvider.GetUtcNow().UtcDateTime;
+                foreach (var country in activeCountries)
+                {
+                    country.IsDeleted = true;
+                    country.DeletedById = currentActor.UserId;
+                    country.DeletedByPc = Environment.MachineName;
+                    country.DeletedOn = deletedOn;
+                }
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+                await unitOfWork.SaveChangesAsync(token);
+                change = new CountryChange(
+                    null,
+                    "BulkArchive",
+                    activeCountries.Count,
+                    currentActor.UserId,
+                    Guid.NewGuid());
 
-        countryChangeScheduler.Schedule(new CountryChange(
-            null,
-            "BulkArchive",
-            activeCountries.Count,
-            currentActor.UserId,
-            Guid.NewGuid()));
+                return Result.Success(new BulkArchiveCountriesResponse(activeCountries.Count));
+            },
+            cancellationToken);
 
-        return Result.Success(new BulkArchiveCountriesResponse(activeCountries.Count));
+        if (change is not null)
+            countryChangeScheduler.Schedule(change);
+
+        return result;
     }
 }

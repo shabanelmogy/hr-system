@@ -97,6 +97,8 @@ export interface BulkArchiveCountriesResponse {
   archivedCount: number;
 }
 
+export const COUNTRY_BULK_ARCHIVE_LIMIT = 100;
+
 export interface CountryFormData {
   nameAr: string;
   nameEn: string;

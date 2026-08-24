@@ -13,6 +13,8 @@ For create, bulk create, edit, archive, restore, bulk archive, import, report, a
 - Confirmation and dirty-exit behavior.
 - Request shape, normalization, validation, and maximum batch size.
 - Transaction boundary, audit record, background job, notification, and realtime behavior.
+- Shared concurrency resource/constraint for every dependency predicate, including
+  all parent, child, restore, move, and bulk participants plus lock ordering.
 - Cache invalidation and list-selection cleanup in both clients.
 - Success, partial failure, all-or-nothing, idempotent, and retry outcomes.
 
@@ -22,6 +24,10 @@ For create, bulk create, edit, archive, restore, bulk archive, import, report, a
 - [ ] Archived records cannot enter active-only flows.
 - [ ] Restore behavior is explicit and tested.
 - [ ] Bulk operations do not silently ignore invalid or duplicated identifiers.
+- [ ] Client bulk selection cannot exceed the API maximum; oversized selection is
+      rejected with feedback and the direct submit path rechecks it.
+- [ ] Parent/child lifecycle races are tested or otherwise proven at the database
+      boundary; isolated handler prechecks are not accepted as concurrency proof.
 - [ ] Required Import distinguishes local-invalid rows from the submitted batch,
       states whether the submitted batch is atomic, and never reports partial
       success unless the API contract explicitly supports it.

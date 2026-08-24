@@ -1,6 +1,7 @@
 using FluentValidation;
 using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Abstractions.Persistence;
+using HrManagementSystem.Application.Features.GeographicalInformation;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Abstractions;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.ArchiveCountry;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.BulkArchiveCountries;
@@ -357,9 +358,10 @@ public sealed class CountryCqrsHandlerTests
             lifecycle,
             new Country { Id = 9, NameAr = "مصر", NameEn = "Egypt" }) { ActiveStates = true };
         var scheduler = new RecordingScheduler(lifecycle);
+        var unitOfWork = new RecordingUnitOfWork(lifecycle);
         var handler = new ArchiveCountryCommandHandler(
             writer,
-            new RecordingUnitOfWork(lifecycle),
+            unitOfWork,
             scheduler,
             new TestCurrentActor(),
             TimeProvider.System,
@@ -370,6 +372,9 @@ public sealed class CountryCqrsHandlerTests
 
         Assert.True(result.IsFailure);
         Assert.Equal("Country.CountryInUseByState", result.Error.Code);
+        Assert.Equal(
+            [GeographicalLifecycleLocks.Country(9)],
+            Assert.Single(unitOfWork.AtomicLockResources));
         Assert.Empty(lifecycle);
         Assert.Empty(scheduler.Changes);
     }
@@ -749,6 +754,12 @@ public sealed class CountryCqrsHandlerTests
         ApplicationDbContext context,
         List<string> lifecycle) : IUnitOfWork
     {
+        public Task<TResult> ExecuteAtomicallyAsync<TResult>(
+            IReadOnlyCollection<string> lockResources,
+            Func<CancellationToken, Task<TResult>> operation,
+            CancellationToken cancellationToken = default) =>
+            context.ExecuteAtomicallyAsync(lockResources, operation, cancellationToken);
+
         public async Task<int> SaveChangesAsync(CancellationToken token = default)
         {
             lifecycle.Add("save");
@@ -761,6 +772,17 @@ public sealed class CountryCqrsHandlerTests
         RecordingWriteStore? writer = null,
         bool throwOnSave = false) : IUnitOfWork
     {
+        public List<IReadOnlyCollection<string>> AtomicLockResources { get; } = [];
+
+        public async Task<TResult> ExecuteAtomicallyAsync<TResult>(
+            IReadOnlyCollection<string> lockResources,
+            Func<CancellationToken, Task<TResult>> operation,
+            CancellationToken cancellationToken = default)
+        {
+            AtomicLockResources.Add(lockResources);
+            return await operation(cancellationToken);
+        }
+
         public Task<int> SaveChangesAsync(CancellationToken token = default)
         {
             if (throwOnSave) throw new InvalidOperationException("Commit failed.");

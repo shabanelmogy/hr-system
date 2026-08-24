@@ -1,5 +1,6 @@
 using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Abstractions.Messaging;
+using HrManagementSystem.Application.Features.GeographicalInformation;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Abstractions;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands;
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Errors;
@@ -20,26 +21,38 @@ public sealed class ArchiveCountryCommandHandler(
 {
     public async Task<Result> Handle(ArchiveCountryCommand request, CancellationToken cancellationToken)
     {
-        var country = await countryWriteStore.GetForUpdateAsync(request.Id, cancellationToken);
-        if (country is null)
-            return Result.Failure(countryErrors.CountryNotFound);
-        if (country.IsDeleted)
-            return Result.Success();
-        if (await countryWriteStore.HasActiveStatesAsync(country.Id, cancellationToken))
-            return Result.Failure(countryErrors.CountryInUseByState);
+        CountryChange? change = null;
+        var result = await unitOfWork.ExecuteAtomicallyAsync(
+            [GeographicalLifecycleLocks.Country(request.Id)],
+            async token =>
+            {
+                var country = await countryWriteStore.GetForUpdateAsync(request.Id, token);
+                if (country is null)
+                    return Result.Failure(countryErrors.CountryNotFound);
+                if (country.IsDeleted)
+                    return Result.Success();
+                if (await countryWriteStore.HasActiveStatesAsync(country.Id, token))
+                    return Result.Failure(countryErrors.CountryInUseByState);
 
-        country.IsDeleted = true;
-        country.DeletedById = currentActor.UserId;
-        country.DeletedByPc = Environment.MachineName;
-        country.DeletedOn = timeProvider.GetUtcNow().UtcDateTime;
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+                country.IsDeleted = true;
+                country.DeletedById = currentActor.UserId;
+                country.DeletedByPc = Environment.MachineName;
+                country.DeletedOn = timeProvider.GetUtcNow().UtcDateTime;
+                await unitOfWork.SaveChangesAsync(token);
 
-        countryChangeScheduler.Schedule(new CountryChange(
-            mapper.Map<CountryDetailResponse>(country),
-            "Archive",
-            null,
-            currentActor.UserId,
-            Guid.NewGuid()));
-        return Result.Success();
+                change = new CountryChange(
+                    mapper.Map<CountryDetailResponse>(country),
+                    "Archive",
+                    null,
+                    currentActor.UserId,
+                    Guid.NewGuid());
+                return Result.Success();
+            },
+            cancellationToken);
+
+        if (change is not null)
+            countryChangeScheduler.Schedule(change);
+
+        return result;
     }
 }

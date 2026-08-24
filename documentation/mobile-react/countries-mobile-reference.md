@@ -121,8 +121,8 @@ app/layout -> feature public API -> feature internals -> shared/core
 | `CountryDetail` / `countryDetailSchema` | Detail/mutation shape without count |
 | `CountryWithStates` / `countryWithStatesSchema` | Relation detail with active states |
 | `CountryRequest` | Mutable request fields only |
-| `CountryPageQuery` | One-based API page plus status/filter/sort/search inputs, search field and search condition |
-| `CountryFilters` | Status, currency code and state-presence state |
+| `CountryPageQuery` | One-based API page plus the visible status/sort/search inputs, search field and search condition |
+| `CountryFilters` | Visible status state only; no hidden criteria are retained |
 | `BulkArchiveCountriesResponse` / schema | Runtime-validated archive count |
 | lookup schema | Runtime-validated selector rows |
 | shared reporting schemas | Manager catalog items and render request, owned by `src/features/reporting` |
@@ -205,8 +205,9 @@ the current server page; it must not search, filter or slice those rows locally.
 The main toolbar keeps only the shared search field and one Filter button. Its
 feature-owned modal applies Status, Column, and Condition together through
 `AppListScreen.filterControl` and the shared `AppSearchFilterControls`.
-`currencyCode` and `hasStates` remain at defaults because this modal does not
-yet expose Country-specific values for them.
+The API's dedicated `currencyCode` and `hasStates` filters are intentionally not
+part of the current mobile screen query state. Currency remains available as an
+explicit search column; no criterion can remain active without a visible control.
 
 ## 8. View Contract
 
@@ -246,9 +247,9 @@ initial focus, first-error focus, next-field behavior, keyboard/safe-area
 composition, dirty-exit confirmation and busy close protection. View mode has
 no submit action and fields are not editable.
 
-Current Countries passes its list row into view/edit even though a `useCountry`
-detail hook exists. A copied feature must fetch detail whenever the list DTO is
-not the authoritative form contract.
+The Country list row contains every form field, so view/edit use that authoritative
+row and no redundant detail hook is retained. A copied feature must fetch detail
+and block unsafe edit on failure whenever its list DTO omits mutable form fields.
 
 ## 10. Permission, Read-only and Lifecycle Matrix
 
@@ -320,7 +321,7 @@ reports.
 3. Create feature types and Zod schemas for every response.
 4. Add endpoint constants and pure query serialization tests.
 5. Add API functions that accept `unknown` and parse before return.
-6. Add hierarchical query keys, list/detail queries and invalidating mutations.
+6. Add hierarchical query keys, list queries, invalidating mutations, and detail queries only when the list is not authoritative.
 7. Configure one server-list state and map zero-based UI pages at the boundary.
 8. Build Table and Cards through `AppListScreen`; add only API-supported sorts.
 9. Add permission/read-only/lifecycle guards to visibility and handlers.
@@ -332,19 +333,21 @@ reports.
 15. Add API, state, route, permission, mutation and representative screen tests.
 16. Run the full mobile quality gate and manual device matrix.
 
-## 14. Review Findings: Do Not Copy These Gaps
+## 14. Resolved Review Findings
 
-| ID | Priority | Current finding | Rule for the next feature |
-|---|---|---|---|
-| C-M01 | P2 | Currency and state-presence filters are modeled/serialized but not exposed by the screen. | Expose required criteria or remove reserved state until required. |
-| C-M02 | P2 | View/edit use the list row while the detail query hook is unused. | Hydrate detail when list and form contracts differ; block unsafe edit on failure. |
-| C-M03 | P2 | Countries has API/schema coverage but no feature screen/form/action/invalidation integration suite. | Add representative feature integration tests, not only boundary tests. |
+| ID | Resolution | Reusable rule |
+|---|---|---|
+| C-M01 | Removed unexposed `currencyCode`/`hasStates` filter state and serialization from the mobile screen contract. | Every active criterion must have a visible control; otherwise omit it from presented state. |
+| C-M02 | Removed the unused detail hook/key because the list row includes every mutable Country form field. | Fetch detail only when the list is not authoritative, and block unsafe edit on detail failure. |
+| C-M03 | Added Countries screen composition/action/permission coverage and mutation transport/invalidation tests. | Pair boundary tests with representative screen and mutation-hook integration coverage. |
 
 ## 15. Verification
 
 Existing focused evidence:
 
 - `src/features/basic-data/countries/api/__tests__/country-api.test.ts`;
+- `src/features/basic-data/countries/screens/CountriesScreen.test.tsx`;
+- `src/features/basic-data/countries/queries/use-countries.test.ts`;
 - `src/features/reporting/crystal-reports/__tests__/crystal-report-api.test.ts`;
 - `src/shared/listing/__tests__/useServerListState.test.ts`;
 - `src/features/auth/rbac/__tests__/route-access.test.ts`;

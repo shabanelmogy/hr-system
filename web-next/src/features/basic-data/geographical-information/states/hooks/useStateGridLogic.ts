@@ -6,9 +6,11 @@ import { useAdaptivePagination } from "@/shared/hooks/useAdaptivePagination";
 import { getLastServerListPage, useServerListState } from "@/shared/hooks/useServerListState";
 import { useStatesPermissions } from "@/shared/hooks/usePermissions";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
+import { normalizeBulkSelection } from "@/shared/utils/bulkSelection";
 import { useGridApiRef, type GridApi } from "@mui/x-data-grid";
 import { useCallback, useEffect, useMemo, useState, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
+import { STATE_BULK_ARCHIVE_LIMIT } from "../types/State";
 import type {
   CreateStateRequest,
   StateListFilters,
@@ -146,8 +148,19 @@ export default function useStateGridLogic(): UseStateGridLogicReturn {
     setBulkArchiveOpen(false);
   }, []);
   const setSelectedStateIds = useCallback((ids: number[]) => {
-    setSelectionIds(ids.filter((id) => selectableIds.has(id)));
-  }, [selectableIds]);
+    const selection = normalizeBulkSelection(
+      ids,
+      selectableIds,
+      STATE_BULK_ARCHIVE_LIMIT,
+    );
+    if (selection.exceedsLimit) {
+      showToast.error(t("states.bulkArchiveLimitExceeded", {
+        max: STATE_BULK_ARCHIVE_LIMIT,
+      }));
+      return;
+    }
+    setSelectionIds(selection.ids);
+  }, [selectableIds, t]);
   const setPage = useCallback((page: number) => {
     clearBulkSelection();
     list.setPage(page);
@@ -278,6 +291,11 @@ export default function useStateGridLogic(): UseStateGridLogicReturn {
     if (isReadOnly) notifyBlockedAction();
     else if (!permissions.canDelete) notifyPermissionDenied();
     else if (selectedStateIds.length === 0) showToast.error(t("states.bulkArchiveSelectionRequired"));
+    else if (selectedStateIds.length > STATE_BULK_ARCHIVE_LIMIT) {
+      showToast.error(t("states.bulkArchiveLimitExceeded", {
+        max: STATE_BULK_ARCHIVE_LIMIT,
+      }));
+    }
     else setBulkArchiveOpen(true);
   }, [isReadOnly, notifyBlockedAction, notifyPermissionDenied, permissions.canDelete, selectedStateIds.length, t]);
   const closeBulkArchive = useCallback(() => {
@@ -292,11 +310,17 @@ export default function useStateGridLogic(): UseStateGridLogicReturn {
       notifyPermissionDenied();
       return;
     }
+    if (selectedStateIds.length > STATE_BULK_ARCHIVE_LIMIT) {
+      showToast.error(t("states.bulkArchiveLimitExceeded", {
+        max: STATE_BULK_ARCHIVE_LIMIT,
+      }));
+      return;
+    }
     try {
       await bulkArchiveMutation.mutateAsync(selectedStateIds);
       clearBulkSelection();
     } catch { /* mutation callback keeps the dialog visible with an actionable error */ }
-  }, [bulkArchiveMutation, clearBulkSelection, isReadOnly, notifyBlockedAction, notifyPermissionDenied, permissions.canDelete, selectedStateIds]);
+  }, [bulkArchiveMutation, clearBulkSelection, isReadOnly, notifyBlockedAction, notifyPermissionDenied, permissions.canDelete, selectedStateIds, t]);
   const onRestore = useCallback((state: StateListItem) => {
     if (isReadOnly) notifyBlockedAction();
     else if (!canRunStateAction("restore", permissions, state)) notifyPermissionDenied();

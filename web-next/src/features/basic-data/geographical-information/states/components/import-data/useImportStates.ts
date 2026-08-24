@@ -5,6 +5,7 @@ import usePermissions from "@/shared/hooks/usePermissions";
 import HandleApiError from "@/shared/services/apiError";
 import {
   downloadSpreadsheetImportTemplate,
+  canSubmitSpreadsheetImport,
   isAmbiguousImportSubmissionError,
   toSpreadsheetImportError,
   validateSpreadsheetImportFile,
@@ -12,6 +13,7 @@ import {
   type SpreadsheetImportViewState,
 } from "@/shared/services/excelService";
 import useSnackbar from "@/shared/hooks/useSnackbar";
+import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 import { getStateValidationSchema } from "../../utils/validation";
 import StateService from "../../services/stateService";
 import { useInvalidateStates } from "../../hooks/useStateQueries";
@@ -53,7 +55,9 @@ export const useImportStates = () => {
   const { t } = useTranslation();
   const { showSnackbar, SnackbarComponent } = useSnackbar();
   const { hasPermission } = usePermissions();
+  const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
   const canViewCountries = hasPermission("Countries:View");
+  const canCreateStates = hasPermission("States:Create");
   const invalidateStates = useInvalidateStates();
   const countryLookupQuery = useCountryLookup({
     enabled: canViewCountries,
@@ -67,6 +71,8 @@ export const useImportStates = () => {
     isError: countryLookupQuery.isError,
     countryCount: countryLookupQuery.data?.length ?? 0,
   });
+  const canSubmit = canSubmitSpreadsheetImport(isReadOnly, canCreateStates) &&
+    countryLookupState === "ready";
 
   const lookupIndex = useMemo(
     () => createCountryLookupIndex(countryLookupQuery.data ?? []),
@@ -157,6 +163,18 @@ export const useImportStates = () => {
   );
 
   const uploadStates = useCallback(async () => {
+    if (isReadOnly) {
+      notifyBlockedAction();
+      return;
+    }
+    if (!canCreateStates) {
+      const message = t("states.permissionDenied");
+      setViewState("failed");
+      setViewMessage(message);
+      showSnackbar("error", [message], t("messages.error"));
+      return;
+    }
+
     const rowsToUpload = states.filter((state) => state.uploadStatus === "pending");
     if (rowsToUpload.length === 0) return;
 
@@ -312,10 +330,13 @@ export const useImportStates = () => {
     }
   }, [
     applyRowUpdates,
+    canCreateStates,
     countryLookupState,
     getCountryLookupMessage,
     invalidateStates,
+    isReadOnly,
     lookupIndex,
+    notifyBlockedAction,
     showSnackbar,
     states,
     stopTimer,
@@ -353,6 +374,7 @@ export const useImportStates = () => {
     selectedFile,
     uploadProgress,
     uploadableCount,
+    canSubmit,
     countryLookupState,
     maximumBatchSize: STATE_IMPORT_MAX_ROWS,
     maximumFileSizeMb: STATE_IMPORT_MAX_BYTES / (1024 * 1024),

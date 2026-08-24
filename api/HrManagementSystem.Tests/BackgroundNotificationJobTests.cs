@@ -10,8 +10,6 @@ using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Distric
 using HrManagementSystem.Application.Features.GeographicalInformation.Districts.Services;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Districts.Services;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.States.Jobs;
-using HrManagementSystem.Application.Features.GeographicalInformation.States.Services;
-using HrManagementSystem.Infrastructure.Features.GeographicalInformation.States.Services;
 using HrManagementSystem.Application.Features.Platform.Notifications.Contracts;
 using HrManagementSystem.Application.Features.Platform.Notifications.Services;
 using HrManagementSystem.Infrastructure.Features.Platform.Notifications.Entities;
@@ -48,7 +46,6 @@ public sealed class BackgroundNotificationJobTests
 {
     [Theory]
     [InlineData(typeof(CountryChangeScheduler))]
-    [InlineData(typeof(StateService))]
     [InlineData(typeof(DistrictService))]
     [InlineData(typeof(AddressTypeService))]
     [InlineData(typeof(AddressService))]

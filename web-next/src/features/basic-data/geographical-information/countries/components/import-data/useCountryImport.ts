@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import HandleApiError from "@/shared/services/apiError";
 import {
   downloadSpreadsheetImportTemplate,
+  canSubmitSpreadsheetImport,
   isAmbiguousImportSubmissionError,
   toSpreadsheetImportError,
   validateSpreadsheetImportFile,
@@ -10,6 +11,8 @@ import {
   type SpreadsheetImportViewState,
 } from "@/shared/services/excelService";
 import useSnackbar from "@/shared/hooks/useSnackbar";
+import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
+import { useCountriesPermissions } from "@/shared/hooks/usePermissions";
 import getCountryValidationSchema from "../../utils/validation";
 import CountryService from "../../services/countryService";
 import { useInvalidateCountries } from "../../hooks/useCountryQueries";
@@ -43,8 +46,11 @@ export const useCountryImport = () => {
   const startTimeRef = useRef<number | null>(null);
   const { t } = useTranslation();
   const { showSnackbar, SnackbarComponent } = useSnackbar();
+  const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
+  const authorization = useCountriesPermissions();
   const invalidateCountries = useInvalidateCountries();
   const loading = viewState === "parsing" || viewState === "submitting";
+  const canSubmit = canSubmitSpreadsheetImport(isReadOnly, authorization.canCreate);
 
   const stopTimer = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -125,6 +131,18 @@ export const useCountryImport = () => {
   );
 
   const uploadCountries = useCallback(async () => {
+    if (isReadOnly) {
+      notifyBlockedAction();
+      return;
+    }
+    if (!authorization.canCreate) {
+      const message = t("countries.permissionDenied");
+      setViewState("failed");
+      setViewMessage(message);
+      showSnackbar("error", [message], t("messages.error"));
+      return;
+    }
+
     const rowsToUpload = countries.filter((country) => country.uploadStatus === "pending");
     if (rowsToUpload.length === 0) return;
 
@@ -266,7 +284,7 @@ export const useCountryImport = () => {
       setLoadingText("");
       setUploadProgress(0);
     }
-  }, [applyRowUpdates, countries, invalidateCountries, showSnackbar, stopTimer, t]);
+  }, [applyRowUpdates, authorization.canCreate, countries, invalidateCountries, isReadOnly, notifyBlockedAction, showSnackbar, stopTimer, t]);
 
   const clearData = useCallback(() => {
     stopTimer();
@@ -297,6 +315,7 @@ export const useCountryImport = () => {
     selectedFile,
     uploadProgress,
     uploadableCount,
+    canSubmit,
     maximumBatchSize: COUNTRY_IMPORT_MAX_ROWS,
     maximumFileSizeMb: COUNTRY_IMPORT_MAX_BYTES / (1024 * 1024),
     expectedHeaders: COUNTRY_IMPORT_HEADERS.join(", "),

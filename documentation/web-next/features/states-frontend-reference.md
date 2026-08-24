@@ -22,6 +22,11 @@ The App Router adapter at `app/(main)/basic-data/(geographical-information)/stat
 
 `StatesDataGrid` uses the same `MyDataGrid` in client or server pagination mode and the shared toolbar. The column dropdown, condition dropdown, search input, and Reset button use the shared aligned 40px control row. Grid Options is the terminal toolbar item; it owns status selection, the shared Columns/Density controls, and bulk archive. Sorting and filtering continue through the API contract in both pagination modes.
 
+ID, District count, Updated, Status, and Actions are explicitly non-sortable;
+Country remains sortable because the State API allow-list supports it. Selection
+is normalized to active eligible IDs and rejects more than 100 with localized
+feedback instead of truncating or sending an invalid bulk request.
+
 The shared multi-view header Filter button begins pressed and toggles only
 criteria-bar visibility. It controls the Grid toolbar in Grid, the State
 criteria header in Cards and Chart, and the `ReportViewer` criteria sidebar in
@@ -105,7 +110,9 @@ cards area scrolls when needed.
 Default empty results preserve the permitted Add action; filtered empty results
 offer Clear criteria and Refresh. Selection clears through controller transitions
 on criteria/page/page-size changes, and bulk Archive is disabled with no eligible
-selection or while its mutation is pending.
+selection or while its mutation is pending. Initial loading owns skeleton/overlay
+UI; background refetch preserves the current Grid, Cards, or Chart and uses the
+non-destructive progress indicator at the view boundary.
 
 ## 7. Form and details
 
@@ -163,6 +170,12 @@ Country-scoped duplicate rules, exact request mapping, and domain messages insid
 States. This ownership split—not a copy of Countries internals—is the pattern for
 future dependent imports.
 
+Import visibility is not the write boundary. `uploadStates` independently blocks
+tenant read-only mode and requires `States:Create` before dependency resolution or
+submission; the card's `canSubmit` combines that decision with the ready Country
+lookup. `Countries:View` remains a separate required lookup permission and its
+failure never becomes an unknown-Country row.
+
 Import is web-only in States; mobile exposes neither document picking nor bulk
 create.
 
@@ -197,10 +210,13 @@ Shared parser tests prove file metadata, exact/headerless/reordered/duplicate
 headers, blank and empty files, formulas, unexpected columns, row limits, row
 numbers, and ambiguous-response classification. State Import tests prove lookup
 resolution and the explicit loading/empty/forbidden/error/ready state matrix;
-duplicate tests prove field-scoped, case-insensitive behavior per Country. The
-State service test asserts the exact normalized `{ states: [...] }` body for the
-bulk route. Keep controller/view integration, direct permission/read-only guards,
-locked uncertainty reconciliation, invalidation, and EN/AR/RTL coverage current.
+duplicate tests prove field-scoped, case-insensitive behavior per Country. State
+service tests assert the exact normalized `{ states: [...] }` body for the bulk
+route. Page wiring tests cover controller criteria, separate initial and
+background loading, forms, and bulk callbacks; query-hook tests prove invalidation
+precedes consumer success handling; column and shared-selection tests cover sort
+affordances and the 100-ID bulk boundary. Keep direct permission/read-only guards,
+locked uncertainty reconciliation, and EN/AR/RTL coverage current.
 Existing generic server-list, toolbar, route, and realtime tests remain shared
 evidence.
 

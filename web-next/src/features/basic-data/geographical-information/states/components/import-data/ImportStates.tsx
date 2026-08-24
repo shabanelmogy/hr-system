@@ -39,6 +39,7 @@ const ImportStates = ({ onReconcile }: ImportStatesProps) => {
     selectedFile,
     uploadProgress,
     uploadableCount,
+    canSubmit,
     countryLookupState,
     maximumBatchSize,
     maximumFileSizeMb,
@@ -68,7 +69,7 @@ const ImportStates = ({ onReconcile }: ImportStatesProps) => {
           hint={t("imports.expectedHeaders", { headers: expectedHeaders })}
           icon={<MapOutlined />}
           uploadableCount={uploadableCount}
-          canSubmit={countryLookupState === "ready"}
+          canSubmit={canSubmit}
           locked={viewState === "uncertain"}
           onFileSelect={handleFileSelect}
           validateFile={validateFile}

@@ -264,8 +264,15 @@ The Grid toolbar order is part of the applied interaction contract:
 
 Grid Options owns shared Columns and Density entries. Countries contributes the
 Status choices and permission-gated bulk Archive action. Currency and states
-filters are not direct Grid-toolbar controls; Cards and Chart expose them in
-their feature header while all list views still share one query state.
+filters remain API-reserved criteria and are not exposed by the current Countries
+UI. All visible criteria—search field, search condition, text, status, sort, page,
+and page size—still come from one query state.
+
+Only API allow-listed columns expose sorting. ID, Phone, States count, Updated,
+Status, and Actions are explicitly non-sortable; the controlled handler remains a
+second defensive allow-list. Bulk selection is normalized to eligible active IDs
+and rejects more than the API maximum of 100 with localized feedback. It never
+silently truncates a select-all result or sends a request the API must reject.
 
 The multi-view header Filter button starts pressed and toggles criteria-bar
 visibility without changing the controlled query. It opens or closes the Grid
@@ -415,6 +422,9 @@ Empty default results show the permitted Add path; filtered results show Clear
 criteria and Refresh. Selection clears through the shared server-list transition
 rules whenever criteria, page, or page size changes, and the archive menu action
 remains disabled while no eligible item is selected or a bulk mutation is busy.
+Initial loading may use the view skeleton/overlay; a later refetch keeps the
+current rows/cards/charts mounted and shows only the non-destructive linear
+progress indicator at the view boundary.
 
 ## 6. Detail and Write Contract
 
@@ -448,12 +458,11 @@ The list row is not the authoritative edit contract. Edit and view load
 Development mock data may populate Add mode but never auto-submits and is absent
 from production behavior.
 
-That paragraph describes the web contract. The current mobile implementation
-passes the selected `Country` list row into `CountryForm`; although a
-`useCountry(id)` detail query exists, the screen does not use it. The mobile list
-row currently contains every editable field, so the form is functional, but a
-new feature whose list and detail DTOs differ must fetch detail before view/edit.
-This current Countries divergence is also recorded as `C-M02` below.
+That paragraph describes the web contract. Mobile intentionally passes the
+selected `Country` list row into `CountryForm` because its list row contains every
+editable field; the redundant detail hook/key were removed. A new feature whose
+list and detail DTOs differ must fetch detail before view/edit and block unsafe
+edit when detail loading fails.
 
 Mobile presents the form through `AppForm` with `presentation="fullScreen"`.
 The shared form/modal stack owns safe-area and keyboard behavior, initial/error
@@ -572,6 +581,12 @@ submission therefore marks submitted rows `uncertain`, locks that preview, and
 offers only a refreshed Grid reconciliation path. It never exposes “Retry failed”
 for an uncertain batch. A stable 4xx conflict is `failed` and requires correction
 or refresh before a new file is selected.
+
+The Import view is permission-filtered, but visibility is not its mutation
+boundary. `useCountryImport.uploadCountries` independently blocks tenant
+read-only mode and requires `Countries:Create`; `SpreadsheetImportCard.canSubmit`
+mirrors that decision for the button. Keep both checks for direct callbacks,
+tests, and future composition changes.
 
 Do not copy import into a feature unless its bulk endpoint defines maximum size,
 duplicate behavior, transaction scope, error presentation and cache refresh.
@@ -743,19 +758,22 @@ Replace every Countries-owned contract:
 
 | ID | Priority | Finding | Required rule for the next feature |
 |---|---|---|---|
-| C-F01 | P2 | ID, Phone and Updated columns currently inherit a Grid sort affordance even though the API sort allow-list excludes them. The controlled handler rejects the sort, but the affordance is misleading. | Set `sortable: false` on every column not accepted by the backend. |
-| C-F02 | P2 | Cards/Chart share the selected Grid search field/operator, but their header exposes only the search text. A user can switch views while a hidden field-specific condition remains active. | Every view must display or deliberately reset all active server criteria. |
+| C-F01 | Resolved | ID, Phone, States count, Updated, Status, and Actions no longer expose sorting; State Country sorting is enabled because its API supports it. | Keep Grid affordances synchronized with the server sort allow-list and test both supported and unsupported columns. |
+| C-F02 | Resolved | Cards and Chart expose the same search field, condition, text, status, and sort criteria as Grid; Currency/has-States remain API-reserved and are not silently active UI filters. | Every view must display or deliberately reset all active server criteria. |
 | C-F03 | Resolved | Import now rejects more than 100 non-empty data rows during shared parsing and retains the API's authoritative 1-100 atomic bound. | Preserve the shared parser policy and API validation. |
 | C-F06 | Resolved | Countries previously skipped row 1 without validating its schema and checked only the filename extension. | Preserve template download plus extension/MIME/size/first-sheet/exact-header/duplicate-header/empty/formula/unexpected-column preflight. |
 | C-F07 | Resolved | Countries previously offered failed-row retry after an ambiguous network result. | Keep uncertain rows locked and reconcile the refreshed canonical list unless the API gains a reviewed idempotency contract. |
-| C-F04 | P2 | Frontend tests cover pure query mapping, request normalization, permissions, mock data, chart adapters and cell rendering, but not the complete controller/view/mutation flow. | Add integration coverage for criteria, permissions, detail failure, lifecycle dialogs and invalidation. |
-| C-M01 | P2 | Mobile models and serializes `currencyCode` and `hasStates`, but the screen exposes only status. The extra criteria are permanently fixed at defaults. | Either expose required filters through the controlled mobile filter UI or remove reserved criteria until the product contract requires them. |
-| C-M02 | P2 | Mobile defines `useCountry(id)` but view/edit pass the current list row directly to the form. This is safe only while the list DTO contains every form/detail field and is fresh enough. | Fetch and handle detail explicitly whenever list and detail contracts differ; persistent detail failure must block edit and expose Retry. |
-| C-M03 | P2 | Mobile Countries has focused API/schema tests plus shared route/realtime/list tests, but no feature screen, form, permission/read-only or mutation-invalidation integration tests. | Add representative loading/error/empty/success, form, action-state and cache-invalidation coverage. |
+| C-F04 | Resolved | Page wiring now proves controller criteria, distinct initial/background loading, bulk action and form mutation composition; query-hook tests prove mutation invalidation order; services assert exact bulk envelopes. | Keep representative page/controller/mutation wiring tests beside pure adapters and component tests. |
+| C-F08 | Resolved | Country archive could race a State create between dependency check and save. The API now shares transaction-owned Country lifecycle resources across both operations. | Every parent/child invariant needs one shared atomic lock or equivalent database guarantee used by all participating mutations. |
+| C-F09 | Resolved | Adaptive selection could exceed the API's 100-ID archive contract. Shared normalization now rejects oversized eligible selections with localized feedback and direct-submit defense. | Client batch limits must mirror—but never replace—the authoritative API validator. |
+| C-F10 | Resolved | Background refetch previously replaced current Grid/Card/Chart content with initial-loading UI. The view now preserves content and shows a non-destructive progress bar. | Model initial load and background fetching as distinct states. |
+| C-F11 | Resolved | Import submit previously relied on the parent view being hidden. The button and direct handler now enforce read-only and `Countries:Create`. | Enforce mutation authorization inside every direct handler as well as in UI visibility. |
+| C-M01 | Resolved | Mobile no longer models or serializes dedicated `currencyCode`/`hasStates` filters without visible controls; Currency remains an explicit search column. | Every active criterion needs a visible control and reset path. |
+| C-M02 | Resolved | Mobile removed the unused detail hook/key because its list row contains every editable field. | Fetch and handle detail whenever list and form contracts differ. |
+| C-M03 | Resolved | Mobile Countries/States now have screen criteria/view/form/action/permission tests plus mutation transport/invalidation tests. | Keep representative feature integration coverage beside boundary tests. |
 
-These findings do not invalidate the architecture. They mark behavior that must
-be corrected or consciously resolved before Countries is treated as a pixel-for-
-pixel and interaction-for-interaction template.
+Resolved findings remain recorded so future features preserve the correction
+instead of recreating the original gap.
 
 ## 13. Verification Matrix
 
@@ -764,11 +782,15 @@ pixel and interaction-for-interaction template.
 | Area | Evidence |
 |---|---|
 | Query serialization | `utils/countryPageQuery.test.ts` |
-| Request normalization and bulk archive body | `services/countryService.test.ts` |
+| Request normalization plus exact bulk create/archive bodies | `services/countryService.test.ts` |
 | Permission/lifecycle predicate | `utils/countryPermissions.test.ts` |
 | Development mock selection | `utils/countryMockData.test.ts` |
 | Chart derivations and page scope | `components/chart-view/chartDataUtils.test.ts` |
 | Cell formatting | `components/grid-view/CountryCellRenderers.test.tsx` |
+| Grid sort affordances | `components/grid-view/Columns.test.tsx` |
+| Page/controller/action wiring | `pages/CountriesPage.test.tsx` |
+| Mutation invalidation order | `hooks/useCountryQueries.test.ts` |
+| Shared bulk limit normalization | `shared/utils/bulkSelection.test.ts` |
 | Shared XLSX safety contract | `shared/services/excelService.test.ts` |
 | Countries Import duplicate scope | `components/import-data/countryImport.test.ts` |
 | ActiveReportsJS templates | Shared service route tests, strict TypeScript compilation of SSR-safe Designer/Viewer wrappers, API safety/scope tests, and JSON parsing of the bound `public/reports/countries/countries-directory.rdlx-json` starter |

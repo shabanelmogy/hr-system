@@ -756,6 +756,7 @@
     "bulkArchived": "الدول التي تمت أرشفتها: {{count}}",
     "bulkArchiveError": "فشلت أرشفة الدول المحددة",
     "bulkArchiveSelectionRequired": "اختر دولة نشطة واحدة على الأقل للأرشفة.",
+    "bulkArchiveLimitExceeded": "حدد بحد أقصى {{max}} دولة في طلب الأرشفة الواحد.",
     "cardSelectionAriaLabel": "تحديد {{name}}",
     "uploaded": "دولة تم رفعها",
     "status": {
@@ -933,6 +934,7 @@
     "bulkArchiveConfirm": "أرشفة {{count}} محافظات",
     "bulkArchiveAction": "أرشفة المحدد ({{count}})",
     "bulkArchiveSelectionRequired": "حدد محافظة نشطة واحدة على الأقل للأرشفة",
+    "bulkArchiveLimitExceeded": "حدد بحد أقصى {{max}} محافظة في طلب الأرشفة الواحد.",
     "cardSelectionAriaLabel": "تحديد {{name}}",
     "bulkArchived": "تمت أرشفة {{count}} محافظات",
     "bulkArchiveError": "تعذر أرشفة المحافظات المحددة",

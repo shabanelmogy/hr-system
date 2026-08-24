@@ -16,6 +16,14 @@ implementation discipline.
 - Search field and operator allow-lists, including negative-search null behavior.
 - Stable validation, not-found, conflict, in-use, and authorization responses.
 - Commit order for audit, persistence, background scheduling, notification, and realtime publication.
+- Legacy replacement audit: controller/DI/source consumers, tests, and persisted
+  background-job type compatibility. Remove dead service paths; retain old job
+  executors only for an explicit queue/history drain window with no current producer.
+- Concurrency closure for every parent/child lifecycle predicate. Identify every
+  mutation that can change the predicate, make all participants use one database
+  transaction-lock or constraint strategy, and define deterministic multi-lock
+  ordering. A check followed by `SaveChanges` without shared serialization is not
+  an atomic invariant.
 - When Import is Required: exact endpoint, permission, request envelope, response,
   success status, batch limit, atomicity, and idempotency. Prefer a typed JSON bulk
   envelope when the client owns file parsing; use multipart only when server-owned
@@ -38,6 +46,9 @@ implementation discipline.
 
 - [ ] A client can implement the feature using only documented contracts.
 - [ ] Mutations commit once and schedule side effects after a successful commit.
+- [ ] Parent archive versus child create/update/restore and child archive versus
+      grandchild create/update/restore races are covered by the same database
+      invariant boundary and focused regression evidence.
 - [ ] Bulk actions state limits, duplicate-ID behavior, atomicity, and idempotency.
 - [ ] A Required Import documents one exact wire example and has a controller or
       service test that asserts its request envelope and success response.
@@ -45,6 +56,8 @@ implementation discipline.
       relationship validation, case-only persistence conflicts, atomic failure,
       commit-before-schedule ordering, and stable errors.
 - [ ] Every externally visible error has a stable code and localized message.
+- [ ] No superseded service/write path remains compiled without a verified consumer
+      or an explicit persisted-job compatibility reason and removal condition.
 - [ ] Tests cover default paging, search, sort, status, duplicates, archive guards, restore, and bulk behavior.
 
 ## Evidence to capture

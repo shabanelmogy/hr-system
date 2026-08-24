@@ -268,16 +268,16 @@ export function AppBreadcrumbs() {
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: 38,
+    minHeight: 32,
     borderBottomWidth: StyleSheet.hairlineWidth,
     justifyContent: 'center',
   },
   content: {
     minWidth: '100%',
-    minHeight: 38,
+    minHeight: 32,
     alignItems: 'center',
     paddingHorizontal: 14,
-    paddingVertical: 8,
+    paddingVertical: 4,
   },
   item: {
     flexDirection: 'row',

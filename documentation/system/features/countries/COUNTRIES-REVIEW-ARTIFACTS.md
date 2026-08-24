@@ -37,9 +37,10 @@ This is the applied evidence ledger for the current Countries feature. The detai
 | Search operators | contains, does-not-contain, equals, does-not-equal, starts-with, ends-with |
 | Sort allow-list | Names, alpha codes, currency, and created date as documented by the API profile |
 | Status | active, archived, or all |
-| Bulk archive | 1 to 100 distinct positive IDs, all-or-nothing validation, one commit and one scheduled job |
+| Bulk archive | 1 to 100 distinct positive IDs, all-or-nothing validation, one commit and one scheduled job; web rejects oversized eligible selection without truncation |
 | Bulk create/import | Canonical first-sheet XLSX headers, 5 MiB and 100 non-empty row preflight; local-invalid rows excluded; submitted valid rows atomic; no-response/5xx locks retry pending list reconciliation |
-| Side effects | Persist first; schedule notification/realtime work only after a successful commit |
+| Dependency concurrency | Country lifecycle operations and participating State writes share transaction-owned Country resources; bulk resources are sorted |
+| Side effects | Persist and commit first; schedule notification/realtime work only after a successful commit |
 
 ## Evidence register
 
@@ -47,7 +48,7 @@ This is the applied evidence ledger for the current Countries feature. The detai
 | --- | --- | --- |
 | E-API-01 | Controller remains thin and sends typed CQRS messages | `api/HrManagementSystem.Api/Features/GeographicalInformation/Countries/V1/CountriesController.cs` |
 | E-API-02 | Read behavior is server-driven and deterministic | `api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryReadStore.cs` |
-| E-API-03 | Writes own one transaction then schedule side effects | Countries command handlers, write store, and `CountryChangeScheduler` |
+| E-API-03 | Dependency-sensitive writes own one transaction and shared lifecycle resource, then schedule side effects after commit | `IUnitOfWork`, `ApplicationDbContext`, geographical lifecycle resources, Country/State handlers, and `CountryChangeScheduler` |
 | E-WEB-01 | One hook owns list query state | `web-next/src/features/basic-data/geographical-information/countries/hooks/useCountryGridLogic.ts` |
 | E-WEB-02 | Toolbar and grid options are reusable shared components | `web-next/src/shared/components/data-grid/toolbar/` |
 | E-WEB-03 | Page composition supports grid, cards, chart, report, and import | `CountriesMultiView.tsx` |
@@ -73,27 +74,32 @@ These differences are presentation decisions. They do not change the shared API 
 
 | ID | Severity | Finding | Required decision |
 | --- | --- | --- | --- |
-| C-F01 | Medium | Some web grid columns display sort affordances that the API does not support | Disable unsupported sort or extend the API allow-list with tests |
-| C-F02 | Medium | Cards and chart can hide the active search field/operator context | Keep active query controls visible or clearly summarize them in every view |
+| C-F01 | Resolved | Unsupported Countries and States grid sort affordances now match their API allow-lists and have focused column tests | Preserve explicit `sortable: false` and allow-list coverage |
+| C-F02 | Resolved | Cards and Chart expose the selected search field/operator and all visible shared criteria; API-reserved filters are not silently active | Keep active criteria visible or deliberately reset them |
 | C-F03 | Resolved | Web import now rejects more than 100 non-empty rows before mapping/mutation while retaining API validation | Preserve the shared parser and atomic server bound |
 | C-F06 | Resolved | Web import now validates extension/MIME/size, first-sheet presence, canonical ordered headers, duplicate headers, empty files, formulas, and unexpected columns | Keep the feature adapter limited to domain mapping and validation |
 | C-F07 | Resolved | Ambiguous bulk responses now lock the preview and reconcile through a refreshed Grid instead of offering blind retry | Add retry only if the API gains a reviewed idempotency contract |
-| C-F04 | Medium | Web has focused unit tests but lacks a complete Countries integration path | Add page-level search, paging, lifecycle, and view-switch coverage |
+| C-F04 | Resolved | Countries/States page wiring, service-envelope, query invalidation, column contract, import guard, and bulk-limit paths now have focused coverage | Keep representative controller/view/mutation tests current |
 | C-F05 | Resolved | ActiveReportsJS templates now persist per tenant with published/management separation, permissions, RowVersion, immutable revisions, safe definition validation, an approved source catalog, and a published Viewer. | Preserve this shared contract and add future feature sources only through reviewed server allow-list entries and tenant/scope tests. |
-| C-M01 | Medium | Currency and has-states filters are modeled on mobile but not exposed | Expose them or remove them from the presented filter contract |
-| C-M02 | Medium | A mobile detail hook exists, but view/edit currently uses the selected list row | Use detail data when list and detail contracts diverge |
-| C-M03 | Medium | Mobile has API tests but lacks a full Countries screen integration test | Add list, form, archive/restore, bulk, report, and permission coverage |
+| C-F08 | Resolved | Transaction-owned lifecycle resources close Country archive versus State write races | Require every parent/child participant to use the same resource inside one transaction |
+| C-F09 | Resolved | Web bulk archive rejects more than 100 eligible records with localized feedback and a direct-submit guard | Mirror API limits without silent truncation |
+| C-F10 | Resolved | Background fetching preserves current Grid/Card/Chart content and uses non-destructive progress | Keep initial and background loading states separate |
+| C-F11 | Resolved | Country/State import buttons and direct submit handlers enforce read-only and feature create permissions | Never rely only on hidden views/buttons for mutation authorization |
+| C-M01 | Resolved | Unexposed currency/has-states mobile filter state and serialization were removed | Never retain active criteria without visible controls |
+| C-M02 | Resolved | The unused detail hook/key were removed because the list row is authoritative for all mutable fields | Fetch detail only when the list contract is incomplete |
+| C-M03 | Resolved | Countries and States now have screen/action/permission and mutation-invalidation integration tests | Keep representative screen coverage beside API/schema tests |
 
 ## Verification record
 
 | Layer | Check | Result |
 | --- | --- | --- |
-| API | Focused Country CQRS suite | 51 passed |
+| API | Focused Country CQRS suite | 53 passed on 2026-08-24 |
+| API | Full suite | 306 passed; one inherited tenant-role migration text assertion failed outside Countries/States |
 | Web | Shared/feature Import regression suite | 4 files, 30 tests passed on 2026-08-24 |
-| Web | Full tests and production build | 68 files/252 tests passed; 41 routes generated on 2026-08-24 |
-| Mobile | Country API test | 5 passed |
-| Mobile | Typecheck, architecture check, lint | Passed |
-| Documentation | Required-source validation and generated packet freshness | Passed for all 14 recipes on 2026-08-22 |
+| Web | Full tests and production build | 75 files/262 tests passed; 41 routes generated on 2026-08-24 |
+| Mobile | Full suite | 17 files/58 tests passed, including Countries/States screen and mutation integration coverage |
+| Mobile | Typecheck, architecture check, lint | Passed with no lint errors |
+| Documentation | Required-source validation and generated packet freshness | Passed for all 14 recipes on 2026-08-24 |
 | Web | ActiveReportsJS service tests, type-check/strict/lint, and bound starter JSON | Passed on 2026-08-23; architecture check remains blocked by four pre-existing unrelated boundary/cycle violations; no visual browser run in this change |
 | API report templates | Isolated build, full tests, EF pending-model check | Passed on 2026-08-23: 0 build errors/warnings, 272/272 tests, no pending model changes; migration generated but not applied |
 
@@ -111,6 +117,6 @@ Focused results prove the reviewed paths, not every repository quality gate. Pro
 
 ## Handoff decision
 
-`Ready as the implementation reference with documented findings.` Import findings
-C-F03, C-F06, and C-F07 are closed. This does not close C-F01, C-F02, C-F04,
-C-M01 through C-M03, or replace full release verification for a future feature.
+`Ready as the implementation reference with documented release gates.` Countries
+findings C-F01 through C-F11 and C-M01 through C-M03 are closed where applicable.
+Manual browser/device verification and inherited repository gates remain separate.

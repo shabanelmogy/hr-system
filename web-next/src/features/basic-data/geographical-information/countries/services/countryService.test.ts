@@ -58,4 +58,28 @@ describe("toCountryRequest", () => {
 
     expect(post).toHaveBeenCalledWith(apiRoutes.countries.bulkArchive, { ids: [3, 7] });
   });
+
+  it("posts the exact bulk create envelope with normalized rows", async () => {
+    post.mockResolvedValue({ createdCount: 1 });
+
+    await expect(CountryService.createBulk([{
+      nameAr: " مصر ",
+      nameEn: " Egypt ",
+      alpha2Code: " eg ",
+      alpha3Code: " egy ",
+      phoneCode: " 20 ",
+      currencyCode: " egp ",
+    }])).resolves.toEqual({ createdCount: 1 });
+
+    expect(post).toHaveBeenCalledWith(apiRoutes.countries.bulkCreate, {
+      countries: [{
+        nameAr: "مصر",
+        nameEn: "Egypt",
+        alpha2Code: "EG",
+        alpha3Code: "EGY",
+        phoneCode: "20",
+        currencyCode: "EGP",
+      }],
+    });
+  });
 });

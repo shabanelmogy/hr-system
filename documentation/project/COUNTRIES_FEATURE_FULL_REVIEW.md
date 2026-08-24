@@ -67,9 +67,9 @@ the contracts and boundaries while substituting its own domain decisions.
 | Scope | Global reference data, not tenant/company-owned |
 | Read lifecycle | Active, archived or all |
 | Update lifecycle | Active only |
-| Archive | Idempotent; blocked by active states |
-| Bulk archive | 1-100 distinct positive IDs; all-or-nothing; archived IDs ignored in count |
-| Restore | Idempotent |
+| Archive | Idempotent; blocked by active states; shares a transaction-owned Country lifecycle resource with State writes |
+| Bulk archive | 1-100 distinct positive IDs; all-or-nothing; archived IDs ignored in count; sorted lifecycle resources |
+| Restore | Idempotent and serialized with dependent State writes |
 | Delete model | Soft archive only; no hard delete/toggle |
 
 ### Permissions
@@ -109,8 +109,8 @@ tenant-member policy remain the final authorization boundary.
 | Search field | Seven-field allow-list | User-selectable | API default `all` |
 | Operator | Six-operator allow-list | User-selectable | API default `contains` |
 | Status | active/archived/all | Grid Options/Cards/Chart criteria | Status filter modal |
-| Currency | Exact three letters | Feature criteria | Modeled but no visible control |
-| Has states | Optional boolean | Feature criteria | Modeled but no visible control |
+| Currency | Exact three letters | API-reserved; not exposed by current UI | Modeled but no visible control |
+| Has states | Optional boolean | API-reserved; not exposed by current UI | Modeled but no visible control |
 | Sort | Six-column allow-list plus deterministic ID | Default `createdOn DESC` | Default `createdOn DESC` |
 | Total | `metaData.totalCount` | Shared pager/chart total | Shared pager |
 
@@ -215,6 +215,8 @@ rows. The handler checks conflicts and the database unique indexes close races.
 3. Define ID, editable fields, nullability, normalization and uniqueness.
 4. Define list/detail/relation/lookup/request response shapes separately.
 5. Define lifecycle transitions, dependency checks and idempotency.
+   For every parent/child check, identify every concurrent mutation that can make
+   the predicate stale and select one shared database transaction-lock strategy.
 6. Define permissions, error codes, localization and post-commit consumers.
 7. Define list scale, page limits, search fields/operators, filters and sort
    allow-list with a deterministic tie-break.
@@ -230,8 +232,9 @@ specified for the new feature.
 4. Add infrastructure stores, mapping, audit trail and post-commit job.
 5. Register DI, mapping, validation queries, permissions and localization.
 6. Add thin versioned controller and XML/HTTP documentation.
-7. Prove handler transaction order, persistence, scope, errors, lifecycle,
-   atomic batches, controller routes and architecture.
+7. Prove handler transaction order, shared dependency-lock resources,
+   persistence, scope, errors, lifecycle, atomic batches, controller routes and
+   architecture.
 
 ### Phase C — implement web-next
 
@@ -240,7 +243,8 @@ specified for the new feature.
 3. Add hierarchical React Query keys/hooks and one feature controller.
 4. Build the authoritative server Grid with only API-supported sorting.
 5. Add permission/read-only/lifecycle actions and detail-backed forms.
-6. Add loading/fetching/error/retry/empty/no-results states.
+6. Add distinct initial-loading/fetching/error/retry/empty/no-results states;
+   background fetching must preserve the current content.
 7. Add optional Cards/Chart/Report/Import only with explicit data scope.
 8. Add EN/AR, RTL, keyboard/focus/accessibility and realtime invalidation.
 9. Prove pure mappings plus controller/view/mutation integration.
@@ -286,16 +290,20 @@ pixel-identical UI.
 
 | ID | Area | Finding | Required handling |
 |---|---|---|---|
-| C-F01 | Web | ID, Phone and Updated grid columns expose unsupported sort affordance. | Set `sortable: false` for non-API sort columns. |
-| C-F02 | Web | Cards/Chart can inherit hidden field/operator criteria selected in Grid. | Expose or reset all active criteria per view. |
+| C-F01 | Web | Resolved: unsupported ID, Phone, States-count, Updated, Status, and Action sorting is disabled and covered by a column-contract test. | Keep visual sort affordances synchronized with the API allow-list. |
+| C-F02 | Web | Resolved: Grid, Cards, and Chart expose the active search field/operator and shared visible criteria; API-reserved filters are not silently active. | Expose or reset all active criteria per view. |
 | C-F03 | Web | Resolved: shared XLSX parsing now rejects more than 100 non-empty data rows before mapping or mutation while the API keeps the authoritative atomic bound. | Preserve both client feedback and server validation. |
 | C-F06 | Web | Resolved: Import now validates extension/MIME/size, XLSX container, first-sheet presence, exact ordered headers, duplicate headers, empty files, formulas, and unexpected columns instead of blindly discarding row 1. | Keep feature headers/mapping separate from the shared parser. |
 | C-F07 | Web | Resolved: ambiguous no-response/5xx submissions are locked as uncertain and reconcile through a refreshed Grid; stable 4xx batches are failed and never conflated with uncertainty. | Do not add blind retry without API idempotency. |
-| C-F04 | Web tests | No complete controller/view/mutation integration coverage. | Add criteria, detail, permission, lifecycle and invalidation tests. |
+| C-F04 | Web tests | Resolved: page wiring covers criteria/loading/action/form composition, service tests assert bulk bodies, and query-hook tests prove mutation invalidation order. | Keep representative integration wiring beside pure-unit coverage. |
 | C-F05 | Web reports | Resolved: ActiveReportsJS now has tenant-scoped template/revision persistence, published and management reads, explicit permissions, RowVersion, an approved source catalog, and a published viewer. | Preserve the shared reporting contract; register every future feature/data source in the server allow-list and prove tenant isolation. |
-| C-M01 | Mobile | Currency/state-presence criteria exist but are not exposed. | Expose or remove reserved criteria. |
-| C-M02 | Mobile | View/edit use list row while detail hook is unused. | Hydrate detail whenever list is not authoritative. |
-| C-M03 | Mobile tests | No screen/form/action/invalidation integration coverage. | Add representative integration tests. |
+| C-F08 | API lifecycle | Resolved: Country archive and State create/update/restore now share transaction-owned Country lifecycle resources, closing the stale dependency-check race. | Every dependent mutation must participate in the same database invariant boundary. |
+| C-F09 | Web bulk | Resolved: oversized eligible selections are rejected at 100 with localized feedback and rechecked by direct submit handlers. | Mirror API limits without truncation; keep API validation authoritative. |
+| C-F10 | Web loading | Resolved: background refetch preserves current Grid/Card/Chart content and shows a non-destructive progress indicator. | Never conflate initial loading with background fetching. |
+| C-F11 | Web import | Resolved: Country and State Import submit handlers enforce read-only and feature create permission directly; State keeps Countries lookup permission separate. | UI visibility is never the only mutation guard. |
+| C-M01 | Mobile | Resolved: unexposed currency/state-presence filter state and serialization were removed from the presented mobile contract. | Never retain active criteria without visible controls. |
+| C-M02 | Mobile | Resolved: the unused detail hook/key were removed because the list row contains every mutable form field. | Hydrate detail only when the list is not authoritative. |
+| C-M03 | Mobile tests | Resolved: Countries and States now cover screen composition/actions/permissions and mutation transport/invalidation. | Keep representative integration tests beside boundary tests. |
 | C-D01 | API docs | Controller contract omitted search field/operator although code supports them. | Corrected in this review; keep contract docs synchronized. |
 
 These findings are not behaviors to clone. Resolve them in Countries or avoid

@@ -210,14 +210,24 @@ validate request
 
 The scheduler must never run before a successful save.
 
+Lifecycle rules that read a dependency and then write must remain true under
+concurrent requests, not only within one handler call. `IUnitOfWork.ExecuteAtomicallyAsync`
+opens one database transaction and acquires deterministic transaction-owned SQL
+Server application locks. Country archive/restore and State create, bulk create,
+update, and restore share `GeographicalInformation:Country:<id>` resources. This
+serializes the active-Country/active-State invariant without relying on a stale
+pre-save check. Multi-resource locks are de-duplicated and sorted before they are
+acquired to avoid order-dependent deadlocks. In-memory test providers execute the
+same operation boundary without SQL Server locks.
+
 | Command | Exact handler behavior |
 |---|---|
 | Create | Normalize/map candidate; query all uniqueness conflicts; add; save once; map detail; schedule `Add` |
 | Bulk create | Require 1-100; normalize all; reject request-local duplicate names/alpha codes case-insensitively; reject database conflicts; add range; save once; schedule one `BulkAdd` |
 | Update | Load tracked row including archived; reject missing/archived as not found; normalize candidate; reject conflicts excluding ID; record changed fields; map into tracked entity; save once; schedule `Update` |
-| Archive | Load tracked row; missing -> not found; archived -> idempotent success; reject active-state dependency; set delete metadata; save once; schedule `Archive` |
-| Bulk archive | Require 1-100 distinct positive IDs; load all in one set; any missing -> fail all; ignore archived rows; all archived -> count 0 without save/job; reject any active-state dependency; apply one timestamp; save once; schedule one `BulkArchive` |
-| Restore | Load tracked row; missing -> not found; active -> idempotent success; clear delete metadata; save once; schedule `Restore` |
+| Archive | Acquire the Country lifecycle lock; load tracked row; missing -> not found; archived -> idempotent success; reject active-state dependency; set delete metadata; save once; commit; schedule `Archive` |
+| Bulk archive | Require 1-100 distinct positive IDs; acquire sorted Country lifecycle locks; load all in one set; any missing -> fail all; ignore archived rows; all archived -> count 0 without save/job; reject any active-state dependency; apply one timestamp; save once; commit; schedule one `BulkArchive` |
+| Restore | Acquire the Country lifecycle lock; load tracked row; missing -> not found; active -> idempotent success; clear delete metadata; save once; commit; schedule `Restore` |
 
 The write store intentionally loads archived rows for lifecycle commands and
 checks conflicts against active and archived rows. Dependency checks target
@@ -339,7 +349,7 @@ endpoint; it must not accept arbitrary client URLs or database connection string
 
 | Test source | Proven behavior |
 |---|---|
-| `CountryCqrsHandlerTests.cs` | Mapping, page/search/filter/sort, detail/relation, transaction order, duplicate checks, lifecycle, atomic bulk behavior and validators |
+| `CountryCqrsHandlerTests.cs` | Mapping, page/search/filter/sort, detail/relation, transaction order and lifecycle lock resources, duplicate checks, atomic bulk behavior and validators |
 | `CountryCqrsArchitectureTests.cs` | Thin controller, canonical routes/contracts, narrow ports, no legacy service/toggle/count, feature mapping ownership |
 | `CountriesControllerCqrsTests.cs` | Every action dispatches the correct slice and returns the canonical success result |
 | `ValidationQueriesTests.cs` | Infrastructure validation-query registration |

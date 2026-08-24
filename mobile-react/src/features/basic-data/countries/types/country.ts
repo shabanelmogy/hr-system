@@ -56,8 +56,6 @@ export interface CountryRequest {
 
 export interface CountryFilters {
   status: CountryStatus;
-  currencyCode: string;
-  hasStates: 'all' | 'withStates' | 'withoutStates';
 }
 
 export interface CountryPageQuery extends CountryFilters {

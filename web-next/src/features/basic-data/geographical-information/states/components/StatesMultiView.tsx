@@ -1,5 +1,5 @@
 import { PageHeader } from "@/shared/components/navigation/header";
-import { Box } from "@mui/material";
+import { Box, LinearProgress } from "@mui/material";
 import type { GridApi, GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -196,12 +196,17 @@ const StatesMultiView = ({
           position: "relative",
         }}
       >
+        {isFetching && !loading ? (
+          <LinearProgress
+            aria-label={t("common.loading")}
+            sx={{ position: "absolute", insetInline: 0, top: 0, zIndex: 2 }}
+          />
+        ) : null}
         {visibleView === "grid" && (
           <StatesDataGrid
             states={gridStates}
             paginationMode={paginationMode}
             loading={loading}
-            isFetching={isFetching}
             apiRef={apiRef}
             onEdit={onEdit}
             onDelete={onDelete}
@@ -236,7 +241,7 @@ const StatesMultiView = ({
         {visibleView === "cards" && (
           <StatesCardView
             states={states}
-            loading={loading || isFetching}
+            loading={loading}
             onEdit={onEdit}
             onDelete={onDelete}
             onRestore={onRestore}
@@ -262,7 +267,7 @@ const StatesMultiView = ({
           <StatesChartView
             states={states}
             totalCount={totalCount}
-            loading={loading || isFetching}
+            loading={loading}
             onAdd={permissions.canCreate ? onAdd : undefined}
           />
         )}

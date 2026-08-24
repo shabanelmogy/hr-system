@@ -10,7 +10,7 @@ Most geographical features predate the CQRS migration. `Countries` is the comple
 **global reference-data** CQRS/API/web reference. It does not demonstrate
 tenant/company ownership, effective dating, or high-contention concurrency. Add
 those rules for HR aggregates instead of copying Countries literally. The
-service-based States, Districts, Addresses, and Address Types shapes are not
+remaining service-based Districts, Addresses, and Address Types shapes are not
 templates for new core HR modules.
 
 ## 1. Module Shape
@@ -412,8 +412,19 @@ Detailed notification requirements for entity jobs:
   races.
 - Before archive/delete, check dependent records and return a business error when
   the record is in use.
+- A dependency check followed by a later save is not concurrency-safe by itself.
+  Identify every parent/child mutation that can change the predicate and make all
+  participants share one database transaction-lock/constraint boundary. Order
+  multi-resource locks deterministically and keep post-commit scheduling outside
+  the transaction.
 - Use separate create and update requests. A compatibility DTO with nullable `Id`
   may remain only while migrating a legacy endpoint.
+- After a CQRS replacement is live, audit controllers, DI scanning, source callers,
+  tests, and serialized background-job type references. Remove an unused legacy
+  service/interface instead of compiling two write paths. Retain a legacy job
+  executor only when deployed queues/history can still contain its serialized type;
+  document that compatibility boundary, ensure current code cannot enqueue it, and
+  define the deployment condition for final removal.
 - Save/commit before calling the Application-owned scheduling port for Hangfire and
   realtime work.
 - For important concurrent updates, carry a row version/ETag, compare it during the
@@ -510,6 +521,10 @@ and Subject is the English selector name.
 
 - Load the entity first. Return `404` if it does not exist.
 - Check dependent rows before delete or soft delete.
+- Close parent archive versus child create/update/restore races with one shared
+  database invariant strategy used by every participant. Apply the same rule to
+  child archive versus grandchild writes; an isolated `AnyAsync` precheck is only
+  business validation, not concurrency protection.
 - Use `AnyAsync` for foreign-key/dependency checks.
 - Decide whether soft-deleted dependent rows should block the delete. Be explicit in the query.
 - For restore operations, clear delete metadata such as `DeletedById`, `DeletedByPc`, and `DeletedOn`.
@@ -613,6 +628,8 @@ Add focused, behavior-based tests rather than tests coupled to method names:
   failures, atomicity, stable errors, and plural post-commit scheduling;
 - update handler returns not found, rejects duplicate values, and creates change logs;
 - archive/delete handler blocks the operation when related rows exist;
+- lifecycle concurrency evidence proves parent/child mutations select the same
+  resource/constraint and deterministic bulk ordering;
 - Restore clears delete metadata when restore is supported.
 - paged query returns correct metadata, status filtering, child count, search, and
   deterministic sorting;

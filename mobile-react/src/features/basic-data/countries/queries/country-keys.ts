@@ -5,6 +5,5 @@ export const countryKeys = {
   lists: () => [...countryKeys.all, 'list'] as const,
   list: (query: CountryPageQuery) => [...countryKeys.lists(), query] as const,
   lookup: () => [...countryKeys.all, 'lookup'] as const,
-  detail: (id: number) => [...countryKeys.all, 'detail', id] as const,
   reportCatalog: () => [...countryKeys.all, 'reports', 'catalog'] as const,
 };

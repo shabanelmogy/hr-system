@@ -145,6 +145,12 @@ public sealed class StateWriteStore(ApplicationDbContext context) : IStateWriteS
     public async Task<IReadOnlyList<State>> GetForUpdateAsync(IReadOnlyCollection<int> ids, CancellationToken cancellationToken) =>
         await context.States.Include(state => state.Country).Where(state => ids.Contains(state.Id)).ToListAsync(cancellationToken);
 
+    public Task<int?> GetCountryIdAsync(int stateId, CancellationToken cancellationToken) =>
+        context.States.AsNoTracking()
+            .Where(state => state.Id == stateId)
+            .Select(state => (int?)state.CountryId)
+            .FirstOrDefaultAsync(cancellationToken);
+
     public Task<bool> IsCountryActiveAsync(int countryId, CancellationToken cancellationToken) =>
         context.Countries.AnyAsync(country => country.Id == countryId && !country.IsDeleted, cancellationToken);
 

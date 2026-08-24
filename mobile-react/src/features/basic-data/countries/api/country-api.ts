@@ -27,8 +27,6 @@ export function toCountryPageQuery(query: CountryPageQuery): string {
     sortDirection: query.sortDirection,
   });
   if (query.search.trim()) parameters.set('search', query.search.trim());
-  if (query.currencyCode.trim()) parameters.set('currencyCode', query.currencyCode.trim().toUpperCase());
-  if (query.hasStates !== 'all') parameters.set('hasStates', String(query.hasStates === 'withStates'));
   return parameters.toString();
 }
 

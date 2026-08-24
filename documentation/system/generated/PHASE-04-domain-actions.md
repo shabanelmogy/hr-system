@@ -15,6 +15,8 @@ For create, bulk create, edit, archive, restore, bulk archive, import, report, a
 - Confirmation and dirty-exit behavior.
 - Request shape, normalization, validation, and maximum batch size.
 - Transaction boundary, audit record, background job, notification, and realtime behavior.
+- Shared concurrency resource/constraint for every dependency predicate, including
+  all parent, child, restore, move, and bulk participants plus lock ordering.
 - Cache invalidation and list-selection cleanup in both clients.
 - Success, partial failure, all-or-nothing, idempotent, and retry outcomes.
 
@@ -24,6 +26,10 @@ For create, bulk create, edit, archive, restore, bulk archive, import, report, a
 - [ ] Archived records cannot enter active-only flows.
 - [ ] Restore behavior is explicit and tested.
 - [ ] Bulk operations do not silently ignore invalid or duplicated identifiers.
+- [ ] Client bulk selection cannot exceed the API maximum; oversized selection is
+      rejected with feedback and the direct submit path rechecks it.
+- [ ] Parent/child lifecycle races are tested or otherwise proven at the database
+      boundary; isolated handler prechecks are not accepted as concurrency proof.
 - [ ] Required Import distinguishes local-invalid rows from the submitted batch,
       states whether the submitted batch is atomic, and never reports partial
       success unless the API contract explicitly supports it.
@@ -50,18 +56,18 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 3 | `b0ae30454b32e1209cd9b74f1bc82d45e58ae969a61381a25c64c86db7b09dfc` |
+| master | 3 | `3b1d97b7b5b8b6e365586be28116f39b8e3ffae0414257fca7abe5ece53fcc89` |
 | master | 4 | `a9c88864fafde572fc0ffc1502f1a5ccb2fc55fdbd77aefe2c54c33d143b9529` |
-| master | 6 | `e671cfed0bfb63b0063c4f83c86be605190925f9dc7e6b1ef6e335c26fb89c54` |
+| master | 6 | `b7fb453c6be690cf10f98e85664f30fb55fb590e628b0f8a0435f54cf67058ac` |
 | master | 7 | `8c0ba157ab3e6ca7bfa97bd23bdd022523f69dc7ac4386e25462b7ad667ba74b` |
-| master | 8 | `3ae10df4c368090fefdc97c36334b2baf8033ceb63c1eef8565258ee39ea3274` |
-| api | 6 | `8952e197e5708d48511b6ae5a0a36fcaeea05bd39c757596f0ad190592ef5a29` |
+| master | 8 | `a108ec6b97e876d70a3958b477a3e44dccfbb7e78698a236224a91f36ec2db6b` |
+| api | 6 | `bd3c45a99368c9ec22533cb308e8d4e81d0bdf89dad6e2e256d47128c466d32b` |
 | api | 7 | `1ab9fa036b11c40090cb0b49890916d71ab6eedaf0ee99815a641c4fcd123237` |
 | api | 8 | `19ba24881ed075978da2d89d9f5d6ac913ca8289d14d251464edfd93ab1e8c12` |
-| web | 6 | `5603515b843af92bfacc318fcc08638b9af594e0cf20dd1ced247f3391193d63` |
+| web | 6 | `361cc5de9174989d99221209f2fbc9bb8c19772025fb89d55e280e2ca0a3e425` |
 | web | 7 | `f9f1e9693346be686ff0effa80374e6f012a385ee00d622e1a3df1168dd8126a` |
 | web | 8 | `43a7e4cb95554e828d56afdc3c933a1b1f224531dc5829a1c6d0b31e25f632fe` |
-| web | 9 | `2e1b004b06ae6403aa3ffdae146f851381c08bcab5040da2a8fe50638904f045` |
-| mobile | 9 | `5ef93ec2560d73ca4fd0f404d414633343637e2b68174c82c86c059bc49493da` |
+| web | 9 | `4da29b144dca03553c2568393fde9b32e14b1782bcd53ce7244453d4c9510f97` |
+| mobile | 9 | `840b2ebd06549695d85807052d10597c1f0049a6b851ed4d84c50d89a1cae5a8` |
 | mobile | 10 | `7d90a6bd3148af61cc84222408c9349630432fd3c40780d755e1212ac0e76171` |
 | mobile | 11 | `6713a595a06dae100c2d8f6e08528cf24699bc5a12d243524b2c02d8a5d837e3` |

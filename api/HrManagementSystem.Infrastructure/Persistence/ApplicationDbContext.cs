@@ -234,6 +234,79 @@ public class ApplicationDbContext(
         return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
 
+    public async Task<TResult> ExecuteAtomicallyAsync<TResult>(
+        IReadOnlyCollection<string> lockResources,
+        Func<CancellationToken, Task<TResult>> operation,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(lockResources);
+        ArgumentNullException.ThrowIfNull(operation);
+
+        var orderedResources = lockResources
+            .Where(resource => !string.IsNullOrWhiteSpace(resource))
+            .Distinct(StringComparer.Ordinal)
+            .OrderBy(resource => resource, StringComparer.Ordinal)
+            .ToArray();
+
+        if (!Database.IsRelational())
+            return await operation(cancellationToken);
+
+        if (!string.Equals(
+                Database.ProviderName,
+                "Microsoft.EntityFrameworkCore.SqlServer",
+                StringComparison.Ordinal))
+        {
+            throw new NotSupportedException(
+                "Atomic resource locking is configured for the SQL Server provider only.");
+        }
+
+        if (Database.CurrentTransaction is not null)
+        {
+            await AcquireTransactionLocksAsync(orderedResources, cancellationToken);
+            return await operation(cancellationToken);
+        }
+
+        await using var transaction = await Database.BeginTransactionAsync(cancellationToken);
+        try
+        {
+            await AcquireTransactionLocksAsync(orderedResources, cancellationToken);
+            var result = await operation(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+            return result;
+        }
+        catch
+        {
+            try
+            {
+                await transaction.RollbackAsync(CancellationToken.None);
+            }
+            catch
+            {
+                // Preserve the original operation/commit exception.
+            }
+            throw;
+        }
+    }
+
+    private async Task AcquireTransactionLocksAsync(
+        IReadOnlyCollection<string> lockResources,
+        CancellationToken cancellationToken)
+    {
+        foreach (var resource in lockResources)
+        {
+            await Database.ExecuteSqlInterpolatedAsync($$"""
+                DECLARE @lockResult int;
+                EXEC @lockResult = sys.sp_getapplock
+                    @Resource = {{resource}},
+                    @LockMode = 'Exclusive',
+                    @LockOwner = 'Transaction',
+                    @LockTimeout = 15000;
+                IF @lockResult < 0
+                    THROW 51001, 'Failed to acquire a transaction resource lock.', 1;
+                """, cancellationToken);
+        }
+    }
+
     private void PrepareChanges()
     {
         EnforceAppendOnlySecurityAudit();
