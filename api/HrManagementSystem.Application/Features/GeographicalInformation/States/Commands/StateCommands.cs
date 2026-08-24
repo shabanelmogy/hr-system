@@ -17,6 +17,7 @@ public sealed record UpdateStateCommand(int Id, string NameAr, string NameEn, st
 public sealed record ArchiveStateCommand(int Id) : ICommand<Result>;
 public sealed record RestoreStateCommand(int Id) : ICommand<Result>;
 public sealed record BulkArchiveStatesCommand(IReadOnlyList<int> Ids) : ICommand<Result<BulkArchiveStatesResponse>>;
+public sealed record CreateStatesCommand(IReadOnlyList<CreateStateRequest> States) : ICommand<Result<CreateStatesResponse>>;
 
 public class StateMutationValidator<TMutation> : AbstractValidator<TMutation> where TMutation : StateMutation
 {
@@ -76,6 +77,22 @@ public sealed class BulkArchiveStatesCommandValidator : AbstractValidator<BulkAr
     }
 }
 
+public sealed class CreateStatesCommandValidator : AbstractValidator<CreateStatesCommand>
+{
+    public const int MaximumBatchSize = 100;
+
+    public CreateStatesCommandValidator(IStringLocalizer<CreateStateRequest> localizer)
+    {
+        RuleFor(command => command.States)
+            .Cascade(CascadeMode.Stop)
+            .NotEmpty().WithMessage(localizer[nameof(StateErrors.NoStatesProvided)])
+            .Must(states => states.Count <= MaximumBatchSize).WithMessage(localizer["StateBatchLimitExceeded"]);
+
+        RuleForEach(command => command.States)
+            .SetValidator(new StateMutationValidator<CreateStateRequest>(localizer));
+    }
+}
+
 public sealed class CreateStateCommandHandler(
     IStateWriteStore stateWriteStore,
     IStateReadStore stateReadStore,
@@ -101,6 +118,72 @@ public sealed class CreateStateCommandHandler(
             ?? throw new InvalidOperationException("The newly created State could not be read.");
         stateChangeScheduler.Schedule(new StateChange(response, "Add", null, currentActor.UserId, Guid.NewGuid()));
         return Result.Success(response);
+    }
+}
+
+public sealed class CreateStatesCommandHandler(
+    IStateWriteStore stateWriteStore,
+    IUnitOfWork unitOfWork,
+    IStateChangeScheduler stateChangeScheduler,
+    ICurrentActor currentActor,
+    IMapper mapper,
+    StateErrors stateErrors)
+    : ICommandHandler<CreateStatesCommand, Result<CreateStatesResponse>>
+{
+    public async Task<Result<CreateStatesResponse>> Handle(CreateStatesCommand request, CancellationToken cancellationToken)
+    {
+        if (request.States.Count == 0)
+            return Result.Failure<CreateStatesResponse>(stateErrors.NoStatesProvided);
+
+        var states = request.States
+            .Select(state => mapper.Map<State>((StateMutation)state))
+            .ToList();
+        if (!await stateWriteStore.AreCountriesActiveAsync(
+                states.Select(state => state.CountryId).ToList(),
+                cancellationToken))
+        {
+            return Result.Failure<CreateStatesResponse>(stateErrors.CountryNotFound);
+        }
+        if (HasDuplicates(states) ||
+            await stateWriteStore.HasAnyConflictAsync(states, cancellationToken))
+        {
+            return Result.Failure<CreateStatesResponse>(stateErrors.StateExists);
+        }
+
+        stateWriteStore.AddRange(states);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        stateChangeScheduler.Schedule(new StateChange(
+            null,
+            "BulkAdd",
+            states.Count,
+            currentActor.UserId,
+            Guid.NewGuid()));
+
+        return Result.Success(new CreateStatesResponse(states.Count));
+    }
+
+    private static bool HasDuplicates(IReadOnlyList<State> states)
+        => HasDuplicates(states.Select(state => (state.CountryId, state.NameAr))) ||
+           HasDuplicates(states.Select(state => (state.CountryId, state.NameEn))) ||
+           HasDuplicates(states.Select(state => (state.CountryId, state.Code)));
+
+    private static bool HasDuplicates(IEnumerable<(int CountryId, string Value)> values)
+    {
+        var seen = new HashSet<(int CountryId, string Value)>(CountryValueComparer.Instance);
+        return values.Any(value => !seen.Add(value));
+    }
+
+    private sealed class CountryValueComparer : IEqualityComparer<(int CountryId, string Value)>
+    {
+        public static readonly CountryValueComparer Instance = new();
+
+        public bool Equals((int CountryId, string Value) x, (int CountryId, string Value) y) =>
+            x.CountryId == y.CountryId &&
+            string.Equals(x.Value, y.Value, StringComparison.OrdinalIgnoreCase);
+
+        public int GetHashCode((int CountryId, string Value) item) =>
+            HashCode.Combine(item.CountryId, item.Value.ToLowerInvariant());
     }
 }
 

@@ -25,6 +25,7 @@ This is the applied evidence ledger for the current Countries feature. The detai
 | R-05 | Report behavior is connected | Crystal contract plus tenant-scoped ActiveReports template/data endpoints | Crystal default, published ActiveReports viewer, permission-protected reusable Designer | Report schema, API, query, and device handling | Verified; server-side ActiveReports rendering remains excluded |
 | R-06 | Realtime and notifications refresh clients | Post-commit Country job | Realtime query registry | Realtime registry and notification route mapping | Verified |
 | R-07 | English, Arabic, RTL, responsive, and accessible presentation | Localized server errors/messages | Translation files and shared responsive UI | Translation modules, theme, shared screen/list components | Verified by source; runtime matrix remains a release gate |
+| R-08 | Web-only XLSX Import is bounded, schema-valid, atomic, and safe under ambiguous responses | Atomic 1-100 bulk command without idempotency | Shared parser/card plus Country-owned mapping, duplicate rules, explicit row states, and reconciliation | Explicitly Excluded | Verified with focused tests |
 
 ## Shared contract snapshot
 
@@ -37,6 +38,7 @@ This is the applied evidence ledger for the current Countries feature. The detai
 | Sort allow-list | Names, alpha codes, currency, and created date as documented by the API profile |
 | Status | active, archived, or all |
 | Bulk archive | 1 to 100 distinct positive IDs, all-or-nothing validation, one commit and one scheduled job |
+| Bulk create/import | Canonical first-sheet XLSX headers, 5 MiB and 100 non-empty row preflight; local-invalid rows excluded; submitted valid rows atomic; no-response/5xx locks retry pending list reconciliation |
 | Side effects | Persist first; schedule notification/realtime work only after a successful commit |
 
 ## Evidence register
@@ -50,6 +52,7 @@ This is the applied evidence ledger for the current Countries feature. The detai
 | E-WEB-02 | Toolbar and grid options are reusable shared components | `web-next/src/shared/components/data-grid/toolbar/` |
 | E-WEB-03 | Page composition supports grid, cards, chart, report, and import | `CountriesMultiView.tsx` |
 | E-WEB-04 | Crystal remains default while SSR-safe shared ActiveReportsJS Viewer/Designer components load published or management templates from the current tenant; the starter is bound only to the approved relative Countries API source | `reports/pages/CountryReportPage.tsx`, Countries composition, `src/features/reporting/`, and `public/reports/countries/countries-directory.rdlx-json` |
+| E-WEB-05 | Import validates file metadata, canonical headers, value-only rows, bounds and duplicate scope, then distinguishes failed from uncertain submissions | `src/shared/services/excelService.ts`, `src/shared/components/file-upload/SpreadsheetImportCard.tsx`, and Countries `components/import-data/` |
 | E-API-07 | Report templates/revisions are tenant-filtered, drafts are absent from public reads, lifecycle writes use RowVersion, revisions are append-only, and the source catalog permits only `endpoint=/api/v1/countries/report-data` | `Domain/Application/Infrastructure/Api` ReportTemplates slices, `GetCountryReportDataQuery`, migration `20260823075732_AddTenantReportTemplates`, and `ReportTemplateFeatureTests.cs` |
 | E-MOB-01 | One controlled state owns the mobile server list | `mobile-react/src/shared/listing/useServerListState.ts` and `CountriesScreen.tsx` |
 | E-MOB-02 | Runtime schemas guard mobile API responses | `mobile-react/src/features/basic-data/countries/api/country-schemas.ts` |
@@ -72,7 +75,9 @@ These differences are presentation decisions. They do not change the shared API 
 | --- | --- | --- | --- |
 | C-F01 | Medium | Some web grid columns display sort affordances that the API does not support | Disable unsupported sort or extend the API allow-list with tests |
 | C-F02 | Medium | Cards and chart can hide the active search field/operator context | Keep active query controls visible or clearly summarize them in every view |
-| C-F03 | Medium | Web import does not preflight the API 100-row batch limit | Reject or split oversized files before mutation while retaining server validation |
+| C-F03 | Resolved | Web import now rejects more than 100 non-empty rows before mapping/mutation while retaining API validation | Preserve the shared parser and atomic server bound |
+| C-F06 | Resolved | Web import now validates extension/MIME/size, first-sheet presence, canonical ordered headers, duplicate headers, empty files, formulas, and unexpected columns | Keep the feature adapter limited to domain mapping and validation |
+| C-F07 | Resolved | Ambiguous bulk responses now lock the preview and reconcile through a refreshed Grid instead of offering blind retry | Add retry only if the API gains a reviewed idempotency contract |
 | C-F04 | Medium | Web has focused unit tests but lacks a complete Countries integration path | Add page-level search, paging, lifecycle, and view-switch coverage |
 | C-F05 | Resolved | ActiveReportsJS templates now persist per tenant with published/management separation, permissions, RowVersion, immutable revisions, safe definition validation, an approved source catalog, and a published Viewer. | Preserve this shared contract and add future feature sources only through reviewed server allow-list entries and tenant/scope tests. |
 | C-M01 | Medium | Currency and has-states filters are modeled on mobile but not exposed | Expose them or remove them from the presented filter contract |
@@ -84,7 +89,8 @@ These differences are presentation decisions. They do not change the shared API 
 | Layer | Check | Result |
 | --- | --- | --- |
 | API | Focused Country CQRS suite | 51 passed |
-| Web | Focused Countries Vitest files | 6 files, 15 tests passed |
+| Web | Shared/feature Import regression suite | 4 files, 30 tests passed on 2026-08-24 |
+| Web | Full tests and production build | 68 files/252 tests passed; 41 routes generated on 2026-08-24 |
 | Mobile | Country API test | 5 passed |
 | Mobile | Typecheck, architecture check, lint | Passed |
 | Documentation | Required-source validation and generated packet freshness | Passed for all 14 recipes on 2026-08-22 |
@@ -105,4 +111,6 @@ Focused results prove the reviewed paths, not every repository quality gate. Pro
 
 ## Handoff decision
 
-`Ready as the implementation reference with documented findings.` This does not close C-F01 through C-M03 or replace full release verification for a future feature.
+`Ready as the implementation reference with documented findings.` Import findings
+C-F03, C-F06, and C-F07 are closed. This does not close C-F01, C-F02, C-F04,
+C-M01 through C-M03, or replace full release verification for a future feature.

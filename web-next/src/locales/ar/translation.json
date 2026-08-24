@@ -168,8 +168,11 @@
   "CountryRestoredNotificationMessage": "تمت استعادة {{NameAr}}.",
   "StateNotificationTitle": "تحديث بيانات الولاية",
   "StateCreatedNotificationMessage": "تم إنشاء {{NameAr}}.",
+  "StatesCreatedNotificationMessage": "تم إنشاء {{Count}} ولاية.",
+  "StatesArchivedNotificationMessage": "تمت أرشفة {{Count}} ولاية.",
   "StateUpdatedNotificationMessage": "تم تحديث {{NameAr}}.",
   "StateDeletedNotificationMessage": "تم حذف {{NameAr}}.",
+  "StateArchivedNotificationMessage": "تمت أرشفة {{NameAr}}.",
   "StateRestoredNotificationMessage": "تمت استعادة {{NameAr}}.",
   "DistrictNotificationTitle": "تحديث بيانات المنطقة",
   "DistrictCreatedNotificationMessage": "تم إنشاء {{NameAr}}.",
@@ -826,7 +829,11 @@
     "all": "كل الدول",
     "recent30Days": "احدث (30 يوما)",
     "hasPhone": "مع كود الهاتف",
-    "hasCurrency": "مع كود العملة"
+    "hasCurrency": "مع كود العملة",
+    "import": {
+      "duplicateInFile": "هذا الصف مكرر لصف دولة آخر في الملف",
+      "importSuccess": "تم تحميل {{count}} دولة"
+    }
   },
   "states": {
     "dashboard": {
@@ -980,7 +987,23 @@
     "recent90Days": "احدث (90 يوما)",
     "recent120Days": "احدث (120 يوما)",
     "total": "المجموع",
-    "filtered": "ناتج البحث"
+    "filtered": "ناتج البحث",
+    "import": {
+      "stateRows": "{{count}} صفاً من المحافظات",
+      "columnsHint": "الأعمدة المتوقعة: الاسم بالعربية، الاسم بالإنجليزية، الرمز، الدولة (بالاسم العربي أو الإنجليزي)",
+      "uploading": "جارٍ تحميل المحافظات...",
+      "unknownCountry": "الدولة غير موجودة أو غير نشطة",
+      "duplicateInFile": "مكرر لصف آخر لنفس الدولة في هذا الملف",
+      "batchLimit": "الحد الأقصى المسموح به هو {{count}} محافظة لكل طلب",
+      "importSuccess": "تم تحميل {{count}} محافظة",
+      "countryLookup": {
+        "loading": "جارٍ تحميل قائمة الدول النشطة اللازمة للتحقق من الاستيراد...",
+        "ready": "قائمة الدول النشطة جاهزة.",
+        "empty": "لا توجد دول نشطة. أنشئ دولة أو استعدها قبل استيراد المحافظات.",
+        "forbidden": "يتطلب استيراد المحافظات صلاحية Countries:View للتحقق من أسماء الدول. اطلب هذه الصلاحية من المسؤول.",
+        "error": "تعذر تحميل قائمة الدول النشطة. لم يتم اعتبار أي صف ذا دولة غير معروفة. أعد محاولة تحميل القائمة."
+      }
+    }
   },
   "districts": {
     "dashboard": {
@@ -1455,16 +1478,24 @@
   "imports": {
     "dragDropText": "اسحب وافلت الملفات هنا او انقر للاختيار",
     "supportedFormats": "الصيغة المدعومة (.xlsx)",
+    "filePolicy": "ملفات XLSX فقط، حتى {{maxSizeMb}} ميجابايت و{{maxRows}} صف بيانات. تُستخدم ورقة العمل الأولى.",
+    "expectedHeaders": "العناوين المطلوبة في الصف الأول: {{headers}}",
     "selectSpreadsheet": "اختر ملف اكسل",
     "countryRows": "{{count}} صفوف دول",
     "uploadProgress": "تقدم الرفع: {{progress}}٪",
     "uploadData": "رفع البيانات",
+    "downloadTemplate": "تنزيل القالب",
     "clearData": "افراغ بيانات الجدول",
     "retryFailed": "إعادة محاولة الفاشل",
+    "retryLookup": "إعادة تحميل القائمة",
     "status": "الحالة",
+    "errorDetails": "تفاصيل التحقق",
     "pending": "قيد الانتظار",
+    "invalid": "غير صالح",
+    "submitted": "تم الإرسال",
     "uploaded": "تم الرفع",
     "failed": "فشل",
+    "uncertain": "يحتاج إلى تحقق",
     "row": "الصف",
     "selectedFile": " الملف المحدد",
     "noDataAvailable": "لا توجد بيانات",
@@ -1473,7 +1504,24 @@
     "fileParsed": "تمت قراءة ملف البيانات بنجاح",
     "fileTypeNotSupported": "ملفات .xlsx فقط هي المدعومة",
     "uploading": "جارٍ رفع الدول...",
-    "noValidRows": "لا توجد صفوف صالحة للرفع"
+    "noValidRows": "لا توجد صفوف صالحة للرفع",
+    "submissionUncertainTitle": "نتيجة الإرسال غير مؤكدة",
+    "submissionUncertain": "لم يصل رد الخادم. لا ترسل هذا الملف مرة أخرى قبل تحديث القائمة والتحقق مما إذا كانت السجلات قد أُنشئت.",
+    "reviewRecords": "مراجعة السجلات",
+    "errors": {
+      "unsupportedExtension": "ملفات .xlsx فقط هي المدعومة.",
+      "unsupportedMime": "الملف المحدد غير معروف كملف XLSX.",
+      "fileTooLarge": "يتجاوز الملف الحد الأقصى للحجم وهو {{maxSizeMb}} ميجابايت.",
+      "emptyFile": "لا يحتوي الملف على صفوف للاستيراد.",
+      "invalidWorkbook": "الملف المحدد ليس ملف XLSX صالحًا.",
+      "missingWorksheet": "لا يحتوي الملف على ورقة العمل الأولى المطلوبة.",
+      "duplicateHeaders": "يحتوي صف العناوين على أعمدة مكررة.",
+      "invalidHeaders": "صف العناوين غير صحيح. المتوقع: {{expectedHeaders}}.",
+      "unexpectedColumns": "يحتوي صف بيانات على قيم خارج الأعمدة الموثقة.",
+      "formulaNotAllowed": "لا يُسمح بخلايا المعادلات في ملفات الاستيراد. استبدل المعادلات بقيم.",
+      "rowLimitExceeded": "يتجاوز الملف حد الاستيراد البالغ {{maxRows}} صفًا.",
+      "parseFailed": "تعذرت قراءة الملف. نزّل قالبًا جديدًا وحاول مرة أخرى."
+    }
   },
   "crystalReports": {
     "title": "إدارة تقارير Crystal",

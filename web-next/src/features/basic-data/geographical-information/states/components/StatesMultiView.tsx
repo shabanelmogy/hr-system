@@ -13,13 +13,13 @@ import type {
 import type { StatePermissionSet } from "../utils/statePermissions";
 import {
   isStateManagementView,
-  stateManagementViews,
   type StateManagementView,
 } from "../utils/stateViews";
 import StatesCardView from "./StatesCardView";
 import StatesChartView from "./StatesChartView";
 import StateCardViewHeader from "./card-view/StateCardViewHeader";
 import StatesDataGrid from "./grid-view/StatesDataGrid";
+import ImportStates from "./import-data/ImportStates";
 import StateReportPage from "../reports/pages/StateReportPage";
 
 const sortableColumns = new Set<StateSortColumn>([
@@ -111,12 +111,17 @@ const StatesMultiView = ({
   const { t } = useTranslation();
   const [currentView, setCurrentView] = useState<StateManagementView>("grid");
   const [isFilterBarVisible, setIsFilterBarVisible] = useState(true);
+  const visibleView = currentView === "import" && !permissions.canCreate
+    ? "grid"
+    : currentView;
 
   const handleViewChange = useCallback((view: string) => {
     if (!isStateManagementView(view)) return;
-    if (view === "chart" && page !== 0) onPageChange(0);
-    setCurrentView(view);
-  }, [onPageChange, page]);
+    if (view !== "import" || permissions.canCreate) {
+      if (view === "chart" && page !== 0) onPageChange(0);
+      setCurrentView(view);
+    }
+  }, [onPageChange, page, permissions.canCreate]);
 
   const handlePaginationChange = useCallback((model: GridPaginationModel) => {
     if (model.pageSize !== pageSize) onPageSizeChange(model.pageSize);
@@ -129,7 +134,16 @@ const StatesMultiView = ({
     onSortChange(next.field as StateSortColumn, next.sort.toUpperCase() as "ASC" | "DESC");
   }, [onSortChange]);
 
+  const handleImportReconcile = useCallback(() => {
+    onRefresh();
+    setCurrentView("grid");
+  }, [onRefresh]);
+
   const hasActiveCriteria = searchValue.trim().length > 0 || filter !== "active";
+  const availableViews: StateManagementView[] = permissions.canCreate
+    ? ["grid", "cards", "chart", "report", "import"]
+    : ["grid", "cards", "chart", "report"];
+  const supportsFilterBar = visibleView !== "import";
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%" }}>
@@ -138,18 +152,18 @@ const StatesMultiView = ({
         title={t("states.viewTitle")}
         storageKey="states-view-layout"
         defaultView="grid"
-        availableViews={[...stateManagementViews]}
+        availableViews={availableViews}
         onAdd={permissions.canCreate ? onAdd : undefined}
         dataCount={totalCount}
         totalLabel={t("states.total")}
         onRefresh={onRefresh}
         onViewTypeChange={handleViewChange}
-        onFilter={() => setIsFilterBarVisible((visible) => !visible)}
+        onFilter={supportsFilterBar ? () => setIsFilterBarVisible((visible) => !visible) : undefined}
         isFilterBarVisible={isFilterBarVisible}
-        showActions={{ add: permissions.canCreate, refresh: true, export: false, filter: true }}
+        showActions={{ add: permissions.canCreate, refresh: true, export: false, filter: supportsFilterBar }}
       />
 
-      {isFilterBarVisible && (currentView === "cards" || currentView === "chart") && (
+      {isFilterBarVisible && (visibleView === "cards" || visibleView === "chart") && (
         <StateCardViewHeader
           searchTerm={searchValue}
           searchField={searchField}
@@ -177,12 +191,12 @@ const StatesMultiView = ({
         sx={{
           flex: 1,
           minHeight: 0,
-          overflowX: currentView === "cards" || currentView === "chart" ? "hidden" : "auto",
-          overflowY: currentView === "cards" || currentView === "chart" ? "hidden" : "auto",
+          overflowX: visibleView === "cards" || visibleView === "chart" ? "hidden" : "auto",
+          overflowY: visibleView === "cards" || visibleView === "chart" ? "hidden" : "auto",
           position: "relative",
         }}
       >
-        {currentView === "grid" && (
+        {visibleView === "grid" && (
           <StatesDataGrid
             states={gridStates}
             paginationMode={paginationMode}
@@ -219,7 +233,7 @@ const StatesMultiView = ({
             lastEditedId={lastEditedId}
           />
         )}
-        {currentView === "cards" && (
+        {visibleView === "cards" && (
           <StatesCardView
             states={states}
             loading={loading || isFetching}
@@ -244,7 +258,7 @@ const StatesMultiView = ({
             onSelectedStateIdsChange={onSelectedStateIdsChange}
           />
         )}
-        {currentView === "chart" && (
+        {visibleView === "chart" && (
           <StatesChartView
             states={states}
             totalCount={totalCount}
@@ -252,7 +266,10 @@ const StatesMultiView = ({
             onAdd={permissions.canCreate ? onAdd : undefined}
           />
         )}
-        {currentView === "report" && <StateReportPage showFilterBar={isFilterBarVisible} />}
+        {visibleView === "report" && <StateReportPage showFilterBar={isFilterBarVisible} />}
+        {visibleView === "import" && permissions.canCreate && (
+          <ImportStates onReconcile={handleImportReconcile} />
+        )}
       </Box>
     </Box>
   );

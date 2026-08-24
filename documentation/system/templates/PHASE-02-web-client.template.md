@@ -4,6 +4,10 @@
 
 Implement the canonical browser feature with one server-managed list state shared by all views.
 
+Execution references:
+`documentation/web-next/architecture/frontend-architecture-reference.md` and
+`documentation/web-next/features/server-managed-feature-reference.md`.
+
 ## Required structure
 
 - Thin App Router page importing the feature public API.
@@ -41,6 +45,42 @@ Implement the canonical browser feature with one server-managed list state share
 - [ ] Every implemented optional view is registered and tested; no feature-owned
       Chart, Report, Import, or Export implementation is left unreachable.
 - [ ] English, Arabic, RTL, keyboard access, and focus restoration are verified.
+
+## Import checks
+
+Apply these checks only when browser Import is Required. When it is Deferred or
+Excluded, record that decision and do not register an empty Import view.
+
+- [ ] Import registration uses the declared create permission and read-only guard;
+      the shared Filter action is omitted when the view has no criteria bar.
+- [ ] Accepted extension/MIME, file size, workbook/sheet, required headers,
+      duplicate headers, blank rows, and empty-file behavior are deterministic.
+- [ ] Preview rows use the shared form schema and normalization, show localized
+      row errors, and exclude local-invalid rows from submission.
+- [ ] Relationship lookups have explicit permission, loading, empty, and error
+      states and map display values to server identifiers without guessing.
+- [ ] The service sends the documented typed bulk envelope, enforces the client
+      limit, and treats the submitted valid batch according to API atomicity.
+- [ ] Retry semantics distinguish local parse errors, stable API validation or
+      conflict errors, and transient network failures.
+- [ ] Success invalidates the canonical feature query-key root, clears stale
+      selection, and preserves the expected active view.
+- [ ] Tests cover parsing, headers, exact request body, limits, field-scoped
+      duplicates, dependency lookups, permission/read-only state, API conflict,
+      retry, invalidation, English, Arabic, and RTL.
+
+Required browser Import follows one observable flow:
+`idle -> parsing -> preview -> submitting -> succeeded | failed`. Row state is
+`pending | invalid | submitted | uploaded | failed`. A retry submits only rows
+the documented contract considers eligible and never silently turns an atomic API
+failure into partial success.
+
+## Evidence to capture
+
+- Public route/API/permission/realtime/localization registrations.
+- Exact query and mutation serialization tests.
+- View registration and permission/read-only behavior for direct handlers.
+- Desktop/compact, EN/AR, RTL, keyboard, focus, loading/error/empty/retry evidence.
 
 ## Approved references
 

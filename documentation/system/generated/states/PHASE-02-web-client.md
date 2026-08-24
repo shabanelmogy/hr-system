@@ -6,6 +6,10 @@
 
 Implement the canonical browser feature with one server-managed list state shared by all views.
 
+Execution references:
+`documentation/web-next/architecture/frontend-architecture-reference.md` and
+`documentation/web-next/features/server-managed-feature-reference.md`.
+
 ## Required structure
 
 - Thin App Router page importing the feature public API.
@@ -44,6 +48,42 @@ Implement the canonical browser feature with one server-managed list state share
       Chart, Report, Import, or Export implementation is left unreachable.
 - [ ] English, Arabic, RTL, keyboard access, and focus restoration are verified.
 
+## Import checks
+
+Apply these checks only when browser Import is Required. When it is Deferred or
+Excluded, record that decision and do not register an empty Import view.
+
+- [ ] Import registration uses the declared create permission and read-only guard;
+      the shared Filter action is omitted when the view has no criteria bar.
+- [ ] Accepted extension/MIME, file size, workbook/sheet, required headers,
+      duplicate headers, blank rows, and empty-file behavior are deterministic.
+- [ ] Preview rows use the shared form schema and normalization, show localized
+      row errors, and exclude local-invalid rows from submission.
+- [ ] Relationship lookups have explicit permission, loading, empty, and error
+      states and map display values to server identifiers without guessing.
+- [ ] The service sends the documented typed bulk envelope, enforces the client
+      limit, and treats the submitted valid batch according to API atomicity.
+- [ ] Retry semantics distinguish local parse errors, stable API validation or
+      conflict errors, and transient network failures.
+- [ ] Success invalidates the canonical feature query-key root, clears stale
+      selection, and preserves the expected active view.
+- [ ] Tests cover parsing, headers, exact request body, limits, field-scoped
+      duplicates, dependency lookups, permission/read-only state, API conflict,
+      retry, invalidation, English, Arabic, and RTL.
+
+Required browser Import follows one observable flow:
+`idle -> parsing -> preview -> submitting -> succeeded | failed`. Row state is
+`pending | invalid | submitted | uploaded | failed`. A retry submits only rows
+the documented contract considers eligible and never silently turns an atomic API
+failure into partial success.
+
+## Evidence to capture
+
+- Public route/API/permission/realtime/localization registrations.
+- Exact query and mutation serialization tests.
+- View registration and permission/read-only behavior for direct handlers.
+- Desktop/compact, EN/AR, RTL, keyboard, focus, loading/error/empty/retry evidence.
+
 ## Approved references
 
 - **States cross-platform master review:** `../project/STATES_FEATURE_FULL_REVIEW.md` sections 3, 4, 6, 7
@@ -54,20 +94,20 @@ Implement the canonical browser feature with one server-managed list state share
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | states-master | 3 | `1bcee45daae927bacec3682c14a6330114ca29ffbcf6b489376cccf337a7d38f` |
-| states-master | 4 | `9d784c317c702d41f1d9282b7d153ea617fab527d8e80ef7222e65f18cd52fb0` |
+| states-master | 4 | `cb62a77c84913085b17954f7eb0fc5ae7d282a1cbd18a82286c9c0b6ea5684e0` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
-| states-master | 7 | `9e3df427e9a5cf7bec84a8f110739543a736248bb2b576225895c0f523e9de51` |
+| states-master | 7 | `6a8707cf3f36f91fe9a6fe41ab4c9e76cb37d1504a7bbbe13f284d266f61ed81` |
 | states-web | 1 | `b64d63147b922890e8547ac8a854c7a162075b945f1c34f8d6b1b27990790918` |
-| states-web | 2 | `b3c1ebb8ee137dda12d0fd7baaf36d0d205b7bd6ed29238aab0decc9dff502ed` |
+| states-web | 2 | `5715616f7749731d49b88637b1bdf8ddeb9d6d691bfa13552d58058a37aaed75` |
 | states-web | 3 | `95ff792642bfed9c3e2e6720b788ec6098addfe6017c36fe1bee99c216624b4b` |
 | states-web | 4 | `9acd30b3a04ad1773bd8ad2b59315180664111f18183ec6d977d3daed0fc3aac` |
 | states-web | 5 | `e2c31ffedf732830780e90c452034cc079d764043b9849daa6c64853da1fcfbc` |
-| states-web | 6 | `d12500e4febb37cccf52cb70d167f2b69e9a84793948328d0928459a19f787d2` |
+| states-web | 6 | `e8d419ebdf670d54113ac689fa0e42bb70202bc785662fb5e974a5dab1812425` |
 | states-web | 7 | `dd6b988a8e7b8b83010b144e56d1cec974980774b9fd9155dd966a6167bed42c` |
 | states-web | 8 | `dec0c122194d60ca08d8135c4d8fa24774fbecc3f5dc9d9fb4df340f9b3259c8` |
-| states-web | 9 | `3103392ff8db16be591f2bf6d1e3bc0abfba246c3b6421fc00b0af2afcbbb665` |
+| states-web | 9 | `b4892594b883341c8754301b6b316d035526f5600427bd489b0ab5a2d9523b6e` |
 | states-web | 10 | `3e502c9832ab020e30d883b7b57ffbec73936e1159832768a087ac1ed9da3522` |
-| states-web | 11 | `2ab0a028c3f86c5ff086568a448a36f9c9ba3eaccc909a2ffca3df2a691c39e4` |
+| states-web | 11 | `8bab328a97d1a74527df1250ace910a18956c669a58e812e6752dc3f25e13b76` |
 | states-web | 12 | `ecb38dd9b6149a025aa10b1edca9ed23050620cedf2f397b10ff34764e10874d` |
-| states-web | 13 | `48a89826eaa88cdbbfb10e23d72ae3e27889b82befa84294db8b5f2d1d1de232` |
-| states-web | 14 | `3dfbf0dde3dc0418dfa72481ca85dd39d0b073a438c87a8d14fcb623cd8ccc35` |
+| states-web | 13 | `5671fbc8a81d08cc98693593d2b9942989e69d1549444a1898d0c6452251fc8a` |
+| states-web | 14 | `24a28864f93adb1f877c2b27fd13309b3a8fe3231a7dee92d0380ee502e062e1` |

@@ -9,7 +9,7 @@ $ErrorActionPreference = "Stop"
 
 $systemRoot = $PSScriptRoot
 $manifestPath = Join-Path $systemRoot "recipe-manifest.json"
-$manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+$manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $repositoryRoot = [System.IO.Path]::GetFullPath((Join-Path $systemRoot $manifest.repositoryRoot))
 
 function Resolve-SystemPath {
@@ -44,8 +44,13 @@ function Get-TextHash {
     param([Parameter(Mandatory)][string]$Text)
 
     $bytes = [System.Text.Encoding]::UTF8.GetBytes((Get-NormalizedText -Text $Text))
-    $hash = [System.Security.Cryptography.SHA256]::HashData($bytes)
-    return [System.Convert]::ToHexString($hash).ToLowerInvariant()
+    $algorithm = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $hash = $algorithm.ComputeHash($bytes)
+    } finally {
+        $algorithm.Dispose()
+    }
+    return ([System.BitConverter]::ToString($hash)).Replace("-", "").ToLowerInvariant()
 }
 
 function Get-NumberedSection {
@@ -54,7 +59,7 @@ function Get-NumberedSection {
         [Parameter(Mandatory)][int]$SectionNumber
     )
 
-    $content = (Get-Content -LiteralPath $BookPath -Raw) -replace "`r`n", "`n"
+    $content = (Get-Content -LiteralPath $BookPath -Raw -Encoding UTF8) -replace "`r`n", "`n"
     $pattern = '(?ms)^##\s+(?<number>\d+)\.\s+.*?(?=^##\s+\d+\.|\z)'
     $match = [regex]::Matches($content, $pattern) |
         Where-Object { [int]$_.Groups['number'].Value -eq $SectionNumber } |
@@ -78,9 +83,38 @@ function Test-RequiredSources {
             throw "Required-file manifest is missing: $requiredManifestPath"
         }
 
-        $requiredManifest = Get-Content -LiteralPath $requiredManifestPath -Raw | ConvertFrom-Json
+        $requiredManifest = Get-Content -LiteralPath $requiredManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
         if ($requiredManifest.PSObject.Properties.Name -contains 'status' -and $requiredManifest.status -eq 'draft') {
             throw "Draft required-file manifest cannot be validated as final: $requiredManifestRelative"
+        }
+
+        if ($requiredManifest.PSObject.Properties.Name -contains 'implementationRequest') {
+            $implementationRequestRelative = [string]$requiredManifest.implementationRequest
+            if ([string]::IsNullOrWhiteSpace($implementationRequestRelative) -or
+                $implementationRequestRelative -match '[<>]') {
+                throw "Implementation request path is missing or contains a placeholder: $requiredManifestRelative"
+            }
+
+            $implementationRequestEntry = @($requiredManifest.requiredFiles | Where-Object {
+                [string]$_.path -eq $implementationRequestRelative
+            })
+            if ($implementationRequestEntry.Count -ne 1) {
+                throw "Implementation request must appear exactly once in requiredFiles: $implementationRequestRelative"
+            }
+
+            $implementationRequestPath = Assert-RepositoryPath -Path (Join-Path $repositoryRoot $implementationRequestRelative) -Label "Implementation request"
+            if (-not (Test-Path -LiteralPath $implementationRequestPath -PathType Leaf)) {
+                throw "Implementation request is missing: $implementationRequestRelative"
+            }
+
+            $implementationRequestContent = Get-Content -LiteralPath $implementationRequestPath -Raw -Encoding UTF8
+            $implementationRequestPlaceholders = @([regex]::Matches(
+                $implementationRequestContent,
+                '<[A-Za-z][^>\r\n]*>'))
+            if ($implementationRequestPlaceholders.Count -gt 0) {
+                $placeholderValues = @($implementationRequestPlaceholders | ForEach-Object Value | Select-Object -Unique)
+                throw "Implementation request contains unresolved placeholders [$($placeholderValues -join ', ')]: $implementationRequestRelative"
+            }
         }
 
         $duplicateRequiredIds = @($requiredManifest.requiredFiles | Group-Object id | Where-Object Count -gt 1)
@@ -187,7 +221,7 @@ foreach ($recipeEntry in $selectedRecipes) {
 
     $templatePath = Assert-RepositoryPath -Path (Resolve-SystemPath -RelativePath $recipeEntry.template) -Label "Recipe template"
     $outputPath = Assert-RepositoryPath -Path (Resolve-SystemPath -RelativePath $recipeEntry.output) -Label "Generated output"
-    $template = Get-Content -LiteralPath $templatePath -Raw
+    $template = Get-Content -LiteralPath $templatePath -Raw -Encoding UTF8
     if ($template.Contains("...")) {
         throw "Template '$($recipeEntry.template)' contains an ellipsis token. Replace it with an explicit instruction."
     }
@@ -209,7 +243,7 @@ foreach ($recipeEntry in $selectedRecipes) {
             continue
         }
 
-        $actual = Get-NormalizedText -Text (Get-Content -LiteralPath $outputPath -Raw)
+        $actual = Get-NormalizedText -Text (Get-Content -LiteralPath $outputPath -Raw -Encoding UTF8)
         if ($actual -cne $expected) {
             $failures.Add("Stale generated packet: $($recipeEntry.output)")
         }
@@ -218,7 +252,8 @@ foreach ($recipeEntry in $selectedRecipes) {
 
     $outputDirectory = Split-Path -Parent $outputPath
     New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
-    Set-Content -LiteralPath $outputPath -Value $expected -Encoding utf8NoBOM -NoNewline
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($outputPath, $expected, $utf8NoBom)
     Write-Host "Generated $($recipeEntry.output)"
 }
 

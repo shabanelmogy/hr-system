@@ -283,6 +283,48 @@
       "purpose": "Grid, cards, chart, report, and import composition"
     },
     {
+      "id": "web-import-view",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/components/import-data/ImportCountries.tsx",
+      "purpose": "Permission-aware Countries XLSX Import composition and uncertainty reconciliation"
+    },
+    {
+      "id": "web-import-controller",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/components/import-data/useCountryImport.ts",
+      "purpose": "Countries preview, validation, explicit row states, atomic submit, and invalidation"
+    },
+    {
+      "id": "web-import-profile",
+      "layer": "web-next",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/components/import-data/countryImport.ts",
+      "purpose": "Canonical headers, mapping, limits, template, and field-scoped duplicate rules"
+    },
+    {
+      "id": "web-import-profile-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/features/basic-data/geographical-information/countries/components/import-data/countryImport.test.ts",
+      "purpose": "Countries field-scoped duplicate preflight coverage"
+    },
+    {
+      "id": "web-shared-import-parser",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/services/excelService.ts",
+      "purpose": "Bounded value-only XLSX metadata, container, worksheet, header, formula, empty, and row validation"
+    },
+    {
+      "id": "web-shared-import-parser-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/shared/services/excelService.test.ts",
+      "purpose": "Reusable XLSX safety and ambiguous-submission classification coverage"
+    },
+    {
+      "id": "web-shared-import-card",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/components/file-upload/SpreadsheetImportCard.tsx",
+      "purpose": "Reusable accessible file policy, template, action, lock, and preview composition"
+    },
+    {
       "id": "web-active-report-designer",
       "layer": "web-next",
       "path": "web-next/src/features/basic-data/geographical-information/countries/reports/components/CountryActiveReportsDesigner.tsx",

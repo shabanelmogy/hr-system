@@ -31,6 +31,7 @@ export const states: StatesRoutes = {
   getById: (id: Id) => `${version}/states/${id}`,
   getWithDistricts: (id: Id) => `${version}/states/${id}/districts`,
   create: `${version}/states`,
+  bulkCreate: `${version}/states/bulk`,
   update: (id: Id) => `${version}/states/${id}`,
   archive: (id: Id) => `${version}/states/${id}`,
   bulkArchive: `${version}/states/bulk-archive`,

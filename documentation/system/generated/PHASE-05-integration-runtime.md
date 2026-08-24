@@ -18,11 +18,19 @@ Verify all applicable registrations:
 
 - [ ] API request and response samples match documented field names and paging metadata.
 - [ ] Browser and mobile requests serialize the same shared filters and sort tokens.
+- [ ] Every Required Import client sends the documented exact request body and
+      resolves dependency lookups through an authorized registered endpoint.
+- [ ] Import success uses the documented plural audit/notification/realtime action
+      and refreshes normal feature caches; conflict and network paths remain retryable as specified.
 - [ ] A successful mutation refreshes all open clients through their normal cache/realtime path.
 - [ ] Notification action URLs land on authorized routes in both clients.
 - [ ] Unauthorized, read-only, validation, not-found, conflict, and network failures render safely.
 - [ ] Production build configuration does not rely on local-only URLs or secrets.
 - [ ] Localization and RTL are tested in actual runtime layouts.
+
+Capture configuration and registration evidence separately from behavior tests.
+A file existing in the feature folder does not prove its route, DI, permission,
+realtime, notification, localization, report, or Import integration is reachable.
 
 ## Approved references
 
@@ -35,7 +43,7 @@ Verify all applicable registrations:
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 4 | `b23b2333eb1c612669ddd269677711f77cebee002628a2903f3e10262a5184f3` |
+| master | 4 | `a9c88864fafde572fc0ffc1502f1a5ccb2fc55fdbd77aefe2c54c33d143b9529` |
 | master | 5 | `2cdbe8144a3a162b37b15d5ab908390ccf64c964ac18cc1808813d84d45fc994` |
 | master | 6 | `e671cfed0bfb63b0063c4f83c86be605190925f9dc7e6b1ef6e335c26fb89c54` |
 | master | 7 | `8c0ba157ab3e6ca7bfa97bd23bdd022523f69dc7ac4386e25462b7ad667ba74b` |
@@ -45,7 +53,7 @@ Verify all applicable registrations:
 | api | 10 | `227e13a27928f6d22c69cfa2b190b987539127edff9229588fc481c425639ef3` |
 | web | 8 | `43a7e4cb95554e828d56afdc3c933a1b1f224531dc5829a1c6d0b31e25f632fe` |
 | web | 10 | `dfca66fe993ca501dfd506da6673879ea9c49d5f9fa8fcd1050486f4346ffaeb` |
-| web | 13 | `3d4ffdea15ae5bd3fde84ac212722f02339bd44568b04ac1b5f2041e24b61700` |
+| web | 13 | `7c7e9a1bc3046f0106740192bb9f3537822dcfa9bf984d268993ebd588c575ca` |
 | mobile | 2 | `21269af699d3bfad64b852c262d640017d620ac4165fa112561ef66626153552` |
 | mobile | 11 | `6713a595a06dae100c2d8f6e08528cf24699bc5a12d243524b2c02d8a5d837e3` |
 | mobile | 12 | `0f0448cb6bfbd6c14def633a07bb9148564323efd7e372d4f678a2a9f8d41153` |

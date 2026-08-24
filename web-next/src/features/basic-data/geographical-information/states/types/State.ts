@@ -56,6 +56,10 @@ export interface UpdateStateMutation {
 
 export interface BulkArchiveStatesResponse { archivedCount: number; }
 
+export interface CreateStatesRequest { states: CreateStateRequest[]; }
+
+export interface CreateStatesResponse { createdCount: number; }
+
 export type StateSortColumn = "nameEn" | "nameAr" | "code" | "country" | "createdOn";
 export type StateSearchField = "all" | "nameAr" | "nameEn" | "code" | "country";
 export type StateSearchOperator =

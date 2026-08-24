@@ -40,13 +40,17 @@ $pascalFeature = ($featureParts | ForEach-Object {
 }) -join ''
 $upperFeature = ($FeatureId -replace '-', '_').ToUpperInvariant()
 $artifactFileName = "$upperFeature-REVIEW-ARTIFACTS.md"
+$implementationRequestFileName = 'IMPLEMENTATION-REQUEST.md'
 $artifactRelativePath = "documentation/system/features/$FeatureId/$artifactFileName"
+$implementationRequestRelativePath = "documentation/system/features/$FeatureId/$implementationRequestFileName"
 $draftManifestRelativePath = "documentation/system/features/$FeatureId/required-files.draft.json"
 $registrationDraftRelativePath = "documentation/system/features/$FeatureId/recipe-registration.draft.json"
 $artifactPath = Join-Path $featureRoot $artifactFileName
+$implementationRequestPath = Join-Path $featureRoot $implementationRequestFileName
 $draftManifestPath = Join-Path $featureRoot 'required-files.draft.json'
 $registrationDraftPath = Join-Path $featureRoot 'recipe-registration.draft.json'
 $templatePath = Join-Path $systemRoot 'templates/FEATURE-REVIEW-ARTIFACTS.template.md'
+$implementationRequestTemplatePath = Join-Path $systemRoot 'templates/FEATURE-IMPLEMENTATION-REQUEST.template.md'
 
 $plannedBooks = [ordered]@{
     master = "documentation/project/${upperFeature}_FEATURE_FULL_REVIEW.md"
@@ -55,17 +59,26 @@ $plannedBooks = [ordered]@{
     mobile = "documentation/mobile-react/$FeatureId-mobile-reference.md"
 }
 
-$artifact = Get-Content -LiteralPath $templatePath -Raw
+$artifact = Get-Content -LiteralPath $templatePath -Raw -Encoding UTF8
 $artifact = $artifact.Replace('<Feature Name>', $FeatureName)
 $artifact = $artifact.Replace('<feature>', $FeatureId)
 $artifact = $artifact.Replace('<FEATURE>', $upperFeature)
 $artifact = $artifact.Replace('<YYYY-MM-DD>', (Get-Date).ToString('yyyy-MM-dd'))
+$artifact = $artifact.Replace('<repository-relative implementation request path>', $implementationRequestRelativePath)
 $artifact = $artifact.Replace('<repository-relative path>', $draftManifestRelativePath)
 $artifact = $artifact.Replace('<new feature | existing-feature review | existing-feature change>', 'new feature')
 $artifact = $artifact.Replace(
     '| Applied reference | `Countries`, `States`, or `<documented alternative>` |',
     "| Applied reference | ``$ReferenceFeature`` |"
 )
+
+$implementationRequest = Get-Content -LiteralPath $implementationRequestTemplatePath -Raw -Encoding UTF8
+$implementationRequest = $implementationRequest.Replace('<Feature Name>', $FeatureName)
+$implementationRequest = $implementationRequest.Replace('<feature>', $FeatureId)
+$implementationRequest = $implementationRequest.Replace('<ReferenceFeature>', $ReferenceFeature)
+$implementationRequest = $implementationRequest.Replace('<YYYY-MM-DD>', (Get-Date).ToString('yyyy-MM-dd'))
+$implementationRequest = $implementationRequest.Replace('<repository-relative review artifact path>', $artifactRelativePath)
+$implementationRequest = $implementationRequest.Replace('<repository-relative draft or final manifest path>', $draftManifestRelativePath)
 
 $draftManifest = [ordered]@{
     schemaVersion = 1
@@ -75,6 +88,7 @@ $draftManifest = [ordered]@{
     referenceFeature = $ReferenceFeature
     purpose = "Draft evidence plan for $FeatureName. This file is not registered until every final source exists."
     reviewArtifact = $artifactRelativePath
+    implementationRequest = $implementationRequestRelativePath
     plannedCanonicalBooks = $plannedBooks
     sourceCollections = @()
     requiredFiles = @(
@@ -89,11 +103,21 @@ $draftManifest = [ordered]@{
             layer = 'documentation'
             path = $artifactRelativePath
             purpose = 'Feature requirement, evidence, finding, and verification ledger'
+        },
+        [ordered]@{
+            id = 'implementation-request'
+            layer = 'documentation'
+            path = $implementationRequestRelativePath
+            purpose = 'Copy-ready feature scope, platform decisions, contracts, and quality gates'
         }
     )
     finalizationChecklist = @(
         'Replace every placeholder in the review artifact.',
+        'Complete every decision and remove every placeholder in IMPLEMENTATION-REQUEST.md before implementation.',
         'Add existing API, web, mobile, configuration, localization, and test sources.',
+        'Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.',
+        'When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.',
+        'Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.',
         'Add source collections with evidence-based minimum file counts.',
         'Create and complete the four planned canonical books.',
         'Rename this file to required-files.json only after every declared path exists.',
@@ -195,11 +219,14 @@ if (-not $PSCmdlet.ShouldProcess($featureRoot, "Create documentation scaffold fo
 }
 
 New-Item -ItemType Directory -Path $featureRoot | Out-Null
-Set-Content -LiteralPath $artifactPath -Value $artifact -Encoding utf8NoBOM -NoNewline
-Set-Content -LiteralPath $draftManifestPath -Value ($draftJson + "`n") -Encoding utf8NoBOM -NoNewline
-Set-Content -LiteralPath $registrationDraftPath -Value ($registrationDraftJson + "`n") -Encoding utf8NoBOM -NoNewline
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText($artifactPath, $artifact, $utf8NoBom)
+[System.IO.File]::WriteAllText($implementationRequestPath, $implementationRequest, $utf8NoBom)
+[System.IO.File]::WriteAllText($draftManifestPath, ($draftJson + "`n"), $utf8NoBom)
+[System.IO.File]::WriteAllText($registrationDraftPath, ($registrationDraftJson + "`n"), $utf8NoBom)
 
 Write-Host "Created $artifactRelativePath"
+Write-Host "Created $implementationRequestRelativePath"
 Write-Host "Created $draftManifestRelativePath"
 Write-Host "Created $registrationDraftRelativePath"
 Write-Host "Reference selected: $ReferenceFeature"

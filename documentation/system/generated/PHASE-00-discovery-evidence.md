@@ -6,6 +6,11 @@
 
 Freeze scope and gather evidence before implementation. Do not treat a neighboring feature as proof without checking its current source.
 
+Use `documentation/system/templates/FEATURE-IMPLEMENTATION-REQUEST.template.md`
+as the copy-ready scope contract and the review artifact as the evidence ledger.
+`Required` means current-release and gated, `Deferred` requires an owner/trigger,
+and `Excluded` means no runtime surface.
+
 ## Required outputs
 
 1. Copy `FEATURE-REVIEW-ARTIFACTS.template.md` to `features/<feature>/<FEATURE>-REVIEW-ARTIFACTS.md`.
@@ -13,8 +18,11 @@ Freeze scope and gather evidence before implementation. Do not treat a neighbori
 3. For a new feature, create `features/<feature>/required-files.draft.json`; do not register it while declared runtime files are missing. For an existing review, start from its final `required-files.json`.
 4. Before final registration, replace the draft with `required-files.json` containing only existing repository-relative paths and evidence-based source-collection minimums.
 5. Record API, web, and mobile routes, owners, permissions, list fields, actions, reports, imports, and child relationships.
-6. Separate verified current behavior, requested behavior, intentional platform differences, and unresolved findings.
-7. Record tests that prove each contract rather than only naming test folders.
+6. Classify Import independently for web and mobile as `Required`, `Deferred`, or
+   `Excluded`. Record the accepted format, data scope, dependency lookups, and the
+   reason for every platform difference.
+7. Separate verified current behavior, requested behavior, intentional platform differences, and unresolved findings.
+8. Record tests that prove each contract rather than only naming test folders.
 
 ## Discovery checklist
 
@@ -23,8 +31,14 @@ Freeze scope and gather evidence before implementation. Do not treat a neighbori
 - [ ] Web route, feature boundary, query state, views, forms, permissions, realtime, translations, and shared UI identified.
 - [ ] Mobile route, feature boundary, server-list state, forms, permissions, realtime, translations, responsive layout, RTL, and shared UI identified.
 - [ ] Shared HTTP field names, nullability, paging base, sort tokens, filters, errors, and lifecycle actions frozen.
+- [ ] Import is explicitly classified per client, and every Required Import path
+      has a named format, permission, bulk endpoint, and dependency source.
 - [ ] Known gaps are listed as findings and excluded from the copy baseline.
 - [ ] The generated phase packets and fingerprints belong to this feature, not to an unscoped reference output.
+- [ ] Every optional capability has one platform decision, data scope, reason, and
+      evidence path; no decision is inferred from the selected reference.
+- [ ] Verification gates are identified before coding, including manual and
+      environment-dependent checks.
 
 ## Approved references
 
@@ -40,15 +54,15 @@ Freeze scope and gather evidence before implementation. Do not treat a neighbori
 | master | 1 | `e0bdf1b56463e315f8026f3cc34150ade7ff7ad459b39b929a080021715cf766` |
 | master | 2 | `e8b7af8c80e80ab94dbbc0b987e511012d04403e23c172f1372d8ed04f87125d` |
 | master | 5 | `2cdbe8144a3a162b37b15d5ab908390ccf64c964ac18cc1808813d84d45fc994` |
-| master | 8 | `0249a7c61a24b0331816644cdbbcd3369b27e8945293b4dbd0e2766a8d375cc2` |
+| master | 8 | `3ae10df4c368090fefdc97c36334b2baf8033ceb63c1eef8565258ee39ea3274` |
 | master | 9 | `abba6bf0a3940b1b8b716d85be4964c054059387ffe9897256bd60f0093d141d` |
 | api | 1 | `32d383dbea72903c12b0dd2d1b90c2ba6a10d6621ed91ae24f466af2563cd9c7` |
 | api | 10 | `227e13a27928f6d22c69cfa2b190b987539127edff9229588fc481c425639ef3` |
 | api | 11 | `08b1f7e6b6ab5d9689bb020043c482e6c97e7f233e44fb535ff39881070075b3` |
 | web | 1 | `66a9531a90a5b8e58c45035848107d5c0dd756d800a174869bafef93437a7715` |
 | web | 2 | `07678043219ba47afeeb50860fd12813f00028c7ec72cca8630d3671314b8d32` |
-| web | 12 | `7f655066219089b3a56fe9c1d009830d6f176e529de009bd3c577aacc357a84e` |
-| web | 13 | `3d4ffdea15ae5bd3fde84ac212722f02339bd44568b04ac1b5f2041e24b61700` |
+| web | 12 | `5e43026062cf8d6ff83ff4f5fa227e049dac688c4730fec9a9937aa56a868727` |
+| web | 13 | `7c7e9a1bc3046f0106740192bb9f3537822dcfa9bf984d268993ebd588c575ca` |
 | mobile | 1 | `bf4af029074342fb9fc3f65bb2b6318e9d0c43f6ffd1402c2002116b569d0673` |
 | mobile | 14 | `b15ec26feac731016fd8046fd86d415a59c3a77bee168ed75179ae98b1b28e3d` |
 | mobile | 15 | `ce8ca1b504d5ecd725af6094f99b0eb4d45aac0bb272157ad9698c3fc3c6d549` |

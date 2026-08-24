@@ -8,7 +8,7 @@ The App Router adapter at `app/(main)/basic-data/(geographical-information)/stat
 
 ## 2. Browser transport
 
-`StateListItem`, detail, lookup, relation, request, page-query, and bulk-response types mirror the CQRS API. `StateService` normalizes names/code once, serializes the State query, and uses canonical State routes from `config/api/basicData.ts`.
+`StateListItem`, detail, lookup, relation, request, page-query, and bulk-response types mirror the CQRS API. Bulk create uses the named `CreateStatesRequest` envelope and serializes exactly `{ states: [...] }`, never a raw array. `StateService` normalizes names/code once, serializes the State query, and uses canonical State routes from `config/api/basicData.ts`.
 
 ## 3. Query model
 
@@ -44,8 +44,9 @@ added. Chart mode is Required and uses the same controlled criteria, resets to
 the first page when entered, and does not render pagination controls. Its notice
 and metric labels explicitly distinguish matching authoritative totals from
 first-page-scoped Country, State, District, and timeline data.
-Grid and Cards remain the paginated list surfaces. Import is Excluded because no
-State bulk-create contract exists.
+Grid and Cards remain the paginated list surfaces. Import is Required and uses
+the State bulk-create contract (`POST /api/v1/states/bulk`, `States:Create`,
+1-100 rows, atomic submit).
 
 States uses the shared global `views.*` names and shared padded view toggle rather
 than feature-owned label variants. Its Chart root provides responsive inner
@@ -118,6 +119,53 @@ The State permission matrix differentiates view, create, edit, archive, and rest
 
 The existing State basic-data route, permission policy, navigation configuration, and realtime registry are retained. `stateKeys.all` remains the public realtime prefix so a post-commit State event refreshes States and affected Country/District views.
 
+## 9b. Import contract
+
+The XLSX column order is:
+
+```text
+nameAr, nameEn, code, countryName
+```
+
+Download `states-import-template.xlsx` and treat row 1 as a required schema, not
+a disposable row. The shared browser parser accepts `.xlsx` with the canonical
+XLSX MIME, browser-empty MIME, or generic binary MIME up to 5 MiB; requires a
+real XLSX ZIP container; reads only the first worksheet; requires the exact
+case-sensitive headers above in order; and
+rejects duplicate headers, unexpected value columns, formulas, header-only files,
+and more than 100 non-empty data rows. Wholly blank rows are ignored while real
+worksheet row numbers are preserved for feedback.
+
+`countryName` accepts the parent Country English or Arabic name. State Import
+requires `States:Create` to submit and `Countries:View` to load the registered
+active lookup. Lookup loading, empty, forbidden, and transport-error states block
+submission and display their own localized message. They never produce an empty
+lookup or false “Country not found” rows. Only after lookup state is `ready` can
+an unmatched parent become `unknownCountry`; a lookup transport failure has its
+own explicit retry action.
+
+Rows whose Country cannot be resolved after readiness, that fail the shared State
+Zod schema, or that repeat the same field case-insensitively for the same Country
+stay local `invalid` rows. Arabic name, English name, and code are tracked
+independently, so cross-field equality is not a duplicate. Valid rows progress
+from `pending` to `submitted`, then to `uploaded` only after the atomic
+`{ states: [...] }` request succeeds and the States prefix is invalidated.
+
+The bulk endpoint has no idempotency key. A no-response/timeout or 5xx marks the
+submitted preview `uncertain`, locks file selection, clear, and resubmission, and
+offers a refreshed Grid reconciliation path. It does not offer “Retry failed.” A
+stable 4xx validation/conflict marks the submitted batch `failed`; select a
+corrected file or refresh before another attempt.
+
+Reuse `excelService.ts` and `SpreadsheetImportCard` for file safety, template,
+actions, and uncertainty feedback. Keep `stateImport.ts`, Country lookup mapping,
+Country-scoped duplicate rules, exact request mapping, and domain messages inside
+States. This ownership split—not a copy of Countries internals—is the pattern for
+future dependent imports.
+
+Import is web-only in States; mobile exposes neither document picking nor bulk
+create.
+
 ## 10. Crystal report integration
 
 `StateReportPage` follows Country report catalog and viewer behavior. It sends
@@ -137,7 +185,7 @@ use the documented State dataset fields rather than Country-only report fields.
 
 ## 11. Localization and RTL
 
-The `states` namespace has paired EN/AR search, status, lifecycle, report, empty/error, and accessibility labels. Names choose active locale/Theme direction without hard-coded left/right layout.
+The `states` namespace has paired EN/AR search, status, lifecycle, report, import, empty/error, and accessibility labels. Names choose active locale/Theme direction without hard-coded left/right layout.
 
 ## 12. Responsive and accessibility
 
@@ -145,11 +193,20 @@ Shared feature header/breadcrumb layout, DataGrid toolbar, MUI dialogs, cards, t
 
 ## 13. Test focus
 
-Add pure query serialization, State permission matrix, service route, and controller/view integration coverage as the implementation evolves. Existing generic server-list, toolbar, route, and realtime tests remain shared evidence.
+Shared parser tests prove file metadata, exact/headerless/reordered/duplicate
+headers, blank and empty files, formulas, unexpected columns, row limits, row
+numbers, and ambiguous-response classification. State Import tests prove lookup
+resolution and the explicit loading/empty/forbidden/error/ready state matrix;
+duplicate tests prove field-scoped, case-insensitive behavior per Country. The
+State service test asserts the exact normalized `{ states: [...] }` body for the
+bulk route. Keep controller/view integration, direct permission/read-only guards,
+locked uncertainty reconciliation, invalidation, and EN/AR/RTL coverage current.
+Existing generic server-list, toolbar, route, and realtime tests remain shared
+evidence.
 
 ## 14. State-specific differences from Countries
 
-States has required parent Country and active District archive checks; it has no currency, alpha code, phone, Country-state presence filters, XLSX bulk create/import, or global aggregate analytics. Its Crystal report uses State plus parent-Country dataset fields, and its Chart is intentionally first-page scoped with no pager. Do not copy Countries-only fields, report parameters, or findings.
+States has required parent Country and active District archive checks; it has no currency, alpha code, phone, Country-state presence filters, or global aggregate analytics. Unlike Countries, State import rows carry a parent-Country column that must resolve to an active Country. Its Crystal report uses State plus parent-Country dataset fields, and its Chart is intentionally first-page scoped with no pager. Do not copy Countries-only fields, report parameters, or findings.
 
 ## 15. Verification
 

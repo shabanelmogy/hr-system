@@ -6,8 +6,13 @@ This document is the architecture baseline for future frontend work. It covers o
 
 ## Feature Implementation Guides
 
+- [Feature Documentation System](../../system/README.md): operating modes,
+  copy-ready implementation request, evidence phases, regeneration, and handoff.
 - [Server-Managed Feature Frontend Reference](../features/server-managed-feature-reference.md): the canonical reusable pattern for master-data and business CRUD features.
 - [Countries Full-Stack Web and Mobile Implementation Profile](../features/countries-frontend-reference.md): the concrete shared API plus web/mobile Countries configuration and implementation notes for that general pattern.
+- [States Next.js Frontend Reference](../features/states-frontend-reference.md):
+  the parent-dependent applied reference; it is not evidence for unrelated fields
+  or views.
 
 ## Review Summary
 
@@ -171,6 +176,8 @@ npm.cmd run build
 
 ## Future Change Checklist
 
+- [ ] Start from the feature implementation request, review artifact, and affected generated phase packet.
+- [ ] Classify each optional view independently for web/mobile before adding a route or component.
 - [ ] Identify the owning feature before creating files.
 - [ ] Inspect existing shared components and tests before creating or replacing UI.
 - [ ] Preserve shared behavior and configure it through public props; document any explicit exception.

@@ -39,10 +39,20 @@ public sealed class StateCqrsArchitectureTests
         AssertHttpRoute<HttpGetAttribute>(nameof(StatesController.GetById), "{id:int}");
         AssertHttpRoute<HttpGetAttribute>(nameof(StatesController.GetWithDistricts), "{id:int}/districts");
         AssertHttpRoute<HttpPostAttribute>(nameof(StatesController.Create), null);
+        AssertHttpRoute<HttpPostAttribute>(nameof(StatesController.CreateBulk), "bulk");
         AssertHttpRoute<HttpPutAttribute>(nameof(StatesController.Update), "{id:int}");
         AssertHttpRoute<HttpDeleteAttribute>(nameof(StatesController.Archive), "{id:int}");
         AssertHttpRoute<HttpPostAttribute>(nameof(StatesController.BulkArchive), "bulk-archive");
         AssertHttpRoute<HttpPostAttribute>(nameof(StatesController.Restore), "{id:int}/restore");
+
+        var bulkCreate = typeof(StatesController).GetMethod(nameof(StatesController.CreateBulk))!;
+        Assert.Equal(Permissions.CreateStates, bulkCreate.GetCustomAttribute<HasPermissionAttribute>()?.Policy);
+        Assert.Contains(
+            bulkCreate.GetCustomAttributes<ProducesResponseTypeAttribute>(),
+            attribute => attribute.StatusCode == StatusCodes.Status201Created && attribute.Type == typeof(CreateStatesResponse));
+        Assert.Equal(
+            typeof(CreateStatesRequest),
+            bulkCreate.GetParameters()[0].ParameterType);
 
         var bulkArchive = typeof(StatesController).GetMethod(nameof(StatesController.BulkArchive))!;
         Assert.Equal(Permissions.DeleteStates, bulkArchive.GetCustomAttribute<HasPermissionAttribute>()?.Policy);
@@ -78,6 +88,7 @@ public sealed class StateCqrsArchitectureTests
         Assert.IsAssignableFrom<ICommand<Result<StateDetailResponse>>>(new UpdateStateCommand(1, "القاهرة", "Cairo", "CAI", 1));
         Assert.IsAssignableFrom<ICommand<Result>>(new ArchiveStateCommand(1));
         Assert.IsAssignableFrom<ICommand<Result<BulkArchiveStatesResponse>>>(new BulkArchiveStatesCommand([1]));
+        Assert.IsAssignableFrom<ICommand<Result<CreateStatesResponse>>>(new CreateStatesCommand([new CreateStateRequest("القاهرة", "Cairo", "CAI", 1)]));
         Assert.IsAssignableFrom<ICommand<Result>>(new RestoreStateCommand(1));
 
         AssertHandlerDependency<GetStatesQueryHandler, IStateReadStore>();
@@ -87,6 +98,8 @@ public sealed class StateCqrsArchitectureTests
         AssertHandlerDependency<CreateStateCommandHandler, IStateWriteStore>();
         AssertHandlerDependency<CreateStateCommandHandler, IStateReadStore>();
         AssertHandlerDependency<CreateStateCommandHandler, IStateChangeScheduler>();
+        AssertHandlerDependency<CreateStatesCommandHandler, IStateWriteStore>();
+        AssertHandlerDependency<CreateStatesCommandHandler, IStateChangeScheduler>();
         AssertHandlerDependency<UpdateStateCommandHandler, IStateAuditTrail>();
         AssertHandlerDependency<ArchiveStateCommandHandler, IStateWriteStore>();
         AssertHandlerDependency<BulkArchiveStatesCommandHandler, IStateWriteStore>();
@@ -108,9 +121,27 @@ public sealed class StateCqrsArchitectureTests
         });
         var batch = await new BulkArchiveStatesCommandValidator(new EchoLocalizer<CreateStateRequest>())
             .ValidateAsync(new BulkArchiveStatesCommand([0, 0]));
+        var bulkCreate = await new CreateStatesCommandValidator(new EchoLocalizer<CreateStateRequest>())
+            .ValidateAsync(new CreateStatesCommand([new CreateStateRequest("1", "1", "!!", -3)]));
 
         Assert.False(page.IsValid);
         Assert.False(batch.IsValid);
+        Assert.False(bulkCreate.IsValid);
+    }
+
+    [Fact]
+    public async Task BulkCreateValidator_EnforcesBatchBounds()
+    {
+        var empty = await new CreateStatesCommandValidator(new EchoLocalizer<CreateStateRequest>())
+            .ValidateAsync(new CreateStatesCommand([]));
+        var oversized = await new CreateStatesCommandValidator(new EchoLocalizer<CreateStateRequest>())
+            .ValidateAsync(new CreateStatesCommand(Enumerable
+                .Range(0, CreateStatesCommandValidator.MaximumBatchSize + 1)
+                .Select(index => new CreateStateRequest($"دولة {index}", $"State {index}", $"S{index:00}", 1))
+                .ToList()));
+
+        Assert.False(empty.IsValid);
+        Assert.False(oversized.IsValid);
     }
 
     [Fact]

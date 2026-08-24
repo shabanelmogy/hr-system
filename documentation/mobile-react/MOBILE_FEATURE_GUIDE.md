@@ -143,6 +143,37 @@ const query = useEmployees({
 - Guard direct mutation handlers as well as hiding/disabling buttons.
 - Confirmation dialogs stay open when the mutation fails.
 
+### Native Import decision
+
+Classify mobile Import as `Required`, `Deferred`, or `Excluded` independently from
+web. `Required` means the current release includes native runtime, localization,
+tests, and device evidence. `Deferred` needs an owner and reopening trigger with no
+reachable placeholder. `Excluded` needs a product reason and no Import route or UI.
+
+When mobile Import is Required:
+
+- use Expo/native document-picker and file-system APIs; do not copy a browser file
+  input, drag/drop component, `FileReader`, DOM API, or browser workbook worker;
+- enforce the approved extension/MIME and file-size bounds before parsing, process
+  value data only, and use a bounded parser that does not evaluate macros/formulas;
+- use the same exact API envelope, permissions, batch limits, normalization,
+  field/scope duplicate rules, dependency behavior, atomicity, stable errors, and
+  side-effect contract as other clients;
+- expose explicit picking, parsing, preview, submitting, success, failure,
+  cancellation, and uncertain-network states without losing actionable row errors;
+- avoid holding multiple full workbook copies in memory and define background,
+  interruption, and retry behavior for the supported devices;
+- localize EN/AR status/error text and verify RTL order, screen-reader labels,
+  focus, safe areas, orientation, and at least 44x44 touch targets;
+- test picker cancellation, unsupported/oversized/corrupt files, headers, row
+  validation, exact request serialization, dependency failure, API conflict,
+  timeout/retry, invalidation, and permission/read-only behavior.
+
+If the API instead owns multipart parsing, document upload progress, operation
+status polling, retention/cleanup, authentication refresh, cancellation, and safe
+recovery after the app is backgrounded. Do not silently mix native parsing with a
+server-job contract.
+
 ## 8. UI and styles
 
 - Compose shared fields, buttons, cards, feedback and pagination before creating a new primitive.

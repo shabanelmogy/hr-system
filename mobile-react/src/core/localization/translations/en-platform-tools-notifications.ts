@@ -234,6 +234,8 @@ export const enPlatformToolsNotifications = {
   CountryRestoredNotificationMessage: '{{NameEn}} was restored.',
   StateNotificationTitle: 'State update',
   StateCreatedNotificationMessage: '{{NameEn}} was created.',
+  StatesCreatedNotificationMessage: '{{Count}} states were created.',
+  StatesArchivedNotificationMessage: '{{Count}} states were archived.',
   StateUpdatedNotificationMessage: '{{NameEn}} was updated.',
   StateDeletedNotificationMessage: '{{NameEn}} was deleted.',
   StateArchivedNotificationMessage: '{{NameEn}} was archived.',

@@ -7,6 +7,7 @@ using HrManagementSystem.Application.Features.GeographicalInformation.States.Com
 using HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts;
 using HrManagementSystem.Application.Features.GeographicalInformation.States.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HrManagementSystem.Tests;
@@ -22,6 +23,7 @@ public sealed class StatesControllerCqrsTests
         var create = new CreateStateCommand("القاهرة", "Cairo", "CAI", 7);
         var update = new UpdateStateRequest("الجيزة", "Giza", "GIZ", 7);
         var bulk = new BulkArchiveStatesRequest([7, 8]);
+        var bulkCreate = new CreateStatesRequest([new CreateStateRequest("الإسكندرية", "Alexandria", "ALX", 7)]);
 
         Assert.IsType<OkObjectResult>(await controller.GetPage(pageQuery, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.GetLookup(7, CancellationToken.None));
@@ -29,6 +31,9 @@ public sealed class StatesControllerCqrsTests
         Assert.IsType<OkObjectResult>(await controller.GetById(7, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.GetWithDistricts(7, CancellationToken.None));
         Assert.IsType<CreatedAtActionResult>(await controller.Create(create, CancellationToken.None));
+        var created = Assert.IsType<ObjectResult>(await controller.CreateBulk(bulkCreate, CancellationToken.None));
+        Assert.Equal(StatusCodes.Status201Created, created.StatusCode);
+        Assert.Equal(1, Assert.IsType<CreateStatesResponse>(created.Value).CreatedCount);
         Assert.IsType<OkObjectResult>(await controller.Update(7, update, CancellationToken.None));
         Assert.IsType<NoContentResult>(await controller.Archive(7, CancellationToken.None));
         var archived = Assert.IsType<OkObjectResult>(await controller.BulkArchive(bulk, CancellationToken.None));
@@ -43,6 +48,11 @@ public sealed class StatesControllerCqrsTests
             request => Assert.Equal(7, Assert.IsType<GetStateByIdQuery>(request).Id),
             request => Assert.Equal(7, Assert.IsType<GetStateWithDistrictsQuery>(request).Id),
             request => Assert.Same(create, request),
+            request =>
+            {
+                var command = Assert.IsType<CreateStatesCommand>(request);
+                Assert.Equal(7, Assert.Single(command.States).CountryId);
+            },
             request =>
             {
                 var command = Assert.IsType<UpdateStateCommand>(request);
@@ -68,6 +78,7 @@ public sealed class StatesControllerCqrsTests
                 GetStateByIdQuery => Result.Success(Detail()),
                 GetStateWithDistrictsQuery => Result.Success(WithDistricts()),
                 CreateStateCommand => Result.Success(Detail()),
+                CreateStatesCommand => Result.Success(new CreateStatesResponse(1)),
                 UpdateStateCommand => Result.Success(Detail()),
                 ArchiveStateCommand => Result.Success(),
                 BulkArchiveStatesCommand => Result.Success(new BulkArchiveStatesResponse(2)),

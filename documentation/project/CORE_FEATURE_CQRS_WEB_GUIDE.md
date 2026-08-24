@@ -32,7 +32,8 @@ The following rules apply to every new core HR feature:
 6. `web-next/src/app` routes stay thin. Feature pages, hooks, forms, tables, cards,
    and dialogs belong to `web-next/src/features`.
 7. Grid and card views are the normal page baseline. Chart, report, map, timeline,
-   and import views are added only when the use case needs them.
+   and import views are added only when the use case needs them. Mark Import
+   `Required`, `Deferred`, or `Excluded` independently for web and mobile.
 8. Tenant and company scope is mandatory for tenant-owned HR data and must be
    enforced in every read and write, not inferred from a client-supplied ID.
 9. Realtime messages invalidate cached data; they are not an authoritative entity
@@ -209,6 +210,30 @@ column names.
 - FluentValidation handles malformed requests before the handler.
 - The handler still enforces business invariants and race-sensitive checks.
 - Never return an EF entity from Application or expose exception text to clients.
+
+### 4.4 Import and bulk-create contract
+
+When Import is Required, freeze the server contract before building a file UI:
+
+- exact endpoint, permission, request envelope, response, and success status;
+- typed JSON bulk input when a client owns parsing, or multipart only when the
+  server explicitly owns file parsing;
+- client and API batch limits, atomicity, idempotency, and retry outcomes;
+- field- and ownership-scoped duplicate rules, case sensitivity, relationship
+  validation, and stable validation/conflict errors;
+- one commit followed by plural audit, notification, and realtime scheduling.
+
+Controller/service tests assert the exact wire envelope. Handler/store tests cover
+empty and oversized batches, same-field request duplicates, case-only persistence
+conflicts, missing parent/dependency records, atomic failure, and commit-before-
+schedule ordering.
+
+If the endpoint has no idempotency key, a timeout or missing response is not a
+normal failed-row retry. The browser must mark the submitted rows uncertain,
+block resubmission of that preview, refresh the canonical list, and require the
+user to reconcile committed records before selecting a corrected file. A stable
+4xx validation/conflict remains failed and correctable; only a documented
+idempotency contract permits automatic retry.
 
 ## 5. Handler Ownership
 
@@ -435,7 +460,10 @@ Optional:
   [Crystal Report Manager Feature Integration Guide](CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md);
 - map only for geographic coordinates;
 - timeline/calendar only for time-based records;
-- import only with mapping, validation, preview, error export, and permission checks.
+- import only after its platform decision and exact API contract are recorded,
+  with mapping, validation, preview, localized row errors, dependency handling,
+  permission/read-only checks, atomicity, retry, and invalidation. Classify a
+  downloadable rejected-row artifact separately as Required, Deferred, or Excluded.
 
 All views share the same server query, filters, permissions, and selected record.
 Switching view must not silently change the data set.
@@ -518,11 +546,17 @@ Deliver one aggregate end to end before opening several unfinished screens.
 
 ### Discovery
 
+- start from the feature's generated `IMPLEMENTATION-REQUEST.md`, review artifact,
+  and phase 00 packet; complete every decision before runtime changes;
 - write the business invariants and user actions;
 - identify tenant/company ownership and permissions;
 - define list columns, filters, sort keys, and expected scale;
 - define archive/delete, concurrency, audit, and effective-date behavior;
 - decide which views have real business value;
+- record Import as Required, Deferred, or Excluded independently for web and
+  mobile. If Required, define format, template/headers, exact API envelope, limits,
+  duplicate and relationship rules, atomicity, permissions, side effects, retry,
+  localization, and verification;
 - record reporting as Required, Deferred, or Excluded. If Required, choose
   Managed Crystal or server-managed browser templates and document the dataset,
   filters, permissions, and deployment owner.
@@ -542,6 +576,9 @@ Deliver one aggregate end to end before opening several unfinished screens.
 11. When Managed Crystal is Required, add the allowlisted HR API dataset profile
     and matching Crystal runtime schema profile; do not add a feature-specific
     public render controller.
+12. When Import is Required, add the typed bulk command/handler/store/controller
+    contract, bounded validation, field-scoped duplicate and dependency checks,
+    plural post-commit side effects, and exact HTTP contract tests.
 
 ### Web
 
@@ -557,6 +594,26 @@ Deliver one aggregate end to end before opening several unfinished screens.
 10. Focused component/hook tests and required architecture checks.
 11. When Managed Crystal is Required, consume the shared Report Manager published
     catalog/render service by `entityKey`; never call the Crystal host directly.
+12. When browser Import is Required, add the registered permission-guarded view,
+    shared bounded XLSX parser/file card, feature-owned canonical headers and row
+    mapping, explicit dependency lookup states, exact typed request envelope,
+    localized row/uncertainty feedback, reconciliation/invalidation behavior, and
+    focused tests. Do not copy browser file APIs into Expo.
+
+### Mobile
+
+1. Physical Expo route, typed route constant, route-manifest permission, and navigation.
+2. Runtime Zod schemas and exact endpoint/query serialization.
+3. One controlled server-list state with one-based API conversion at the boundary.
+4. Shared native list/header/filter/form/feedback primitives and feature-owned adapters.
+5. Responsive table/cards and explicit loading/error/empty/retry behavior.
+6. Direct mutation guards for permission, lifecycle, and tenant read-only state.
+7. Realtime query-key registration and notification deep-link mapping.
+8. Paired EN/AR resources, RTL, safe areas, keyboard/orientation, touch, and accessibility.
+9. Focused API/schema/state/route/realtime/component tests followed by `npm run check`.
+10. When mobile Import is Required, use native picker/storage/parsing or an explicit
+    server-owned upload job, while preserving the shared API contract and device-safe
+    memory, interruption, cancellation, and retry behavior.
 
 ## 13. Definition of Done
 
@@ -573,6 +630,9 @@ Deliver one aggregate end to end before opening several unfinished screens.
 - required Managed Crystal reporting has a documented `entityKey`, filter
   allowlist, exact dataset schema, matching HR/Crystal runtime profiles, and
   tenant/company/ACL tests;
+- a required Import endpoint has an exact typed envelope, bounded atomic contract,
+  field-scoped duplicate and relationship checks, plural side effects, and HTTP,
+  handler, and persistence tests;
 - tests cover success, validation, duplicate, not-found, FK/dependency,
   cross-scope, concurrency, cancellation, and post-commit scheduling.
 
@@ -588,7 +648,25 @@ Deliver one aggregate end to end before opening several unfinished screens.
 - query invalidation and realtime refresh are tested;
 - a required Managed Crystal view lists only manager-owned published reports,
   localizes Title/Subject correctly, renders by report ID, and owns no list pager;
+- browser Import is explicitly Required, Deferred, or Excluded; a Required path
+  proves parsing, exact request serialization, bounds, duplicate scope,
+  dependencies, permissions, retry, EN/AR/RTL, and cache invalidation;
 - architecture, type, strict type, lint, tests, and production build pass.
+
+### Mobile
+
+- physical and typed routes, route policy, navigation, endpoint, query keys,
+  realtime, notification deep link, and localization are registered;
+- runtime schemas reject invalid transport data and request mapping matches the API;
+- list, forms, lifecycle, read-only, loading/error/empty/retry, and mutation
+  invalidation behave consistently with web where the platform contract is shared;
+- every optional capability is Required, Deferred, or Excluded independently;
+- a Required mobile Import uses native-safe APIs and proves picker/parser, exact
+  envelope, limits, duplicates, dependencies, permission, conflict, retry, and refresh;
+- phone/tablet, orientation, safe areas, keyboard, EN/AR, LTR/RTL, touch targets,
+  screen-reader order, and light/dark are reviewed;
+- `npm run check` passes, or every inherited/environment/manual blocker has an
+  explicit owner and release decision.
 
 Run the checks documented in:
 

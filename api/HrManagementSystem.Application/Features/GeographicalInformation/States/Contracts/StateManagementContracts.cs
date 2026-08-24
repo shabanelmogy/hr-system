@@ -22,6 +22,10 @@ public sealed record UpdateStateRequest(
     int CountryId)
     : StateMutation(NameAr, NameEn, Code, CountryId);
 
+public sealed record CreateStatesRequest(IReadOnlyList<CreateStateRequest> States);
+
+public sealed record CreateStatesResponse(int CreatedCount);
+
 public sealed record BulkArchiveStatesRequest(IReadOnlyList<int> Ids);
 
 public sealed record BulkArchiveStatesResponse(int ArchivedCount);

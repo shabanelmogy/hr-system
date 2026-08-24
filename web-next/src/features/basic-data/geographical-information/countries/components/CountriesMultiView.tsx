@@ -141,6 +141,11 @@ const CountriesMultiView = ({
     onSortChange(next.field as CountrySortColumn, next.sort.toUpperCase() as "ASC" | "DESC");
   }, [onSortChange]);
 
+  const handleImportReconcile = useCallback(() => {
+    onRefresh();
+    setCurrentView("grid");
+  }, [onRefresh]);
+
   const activeFilterCount = Number(filter !== "active");
   const hasActiveCriteria = searchValue.trim().length > 0 || activeFilterCount > 0;
   const availableViews: CountryView[] = permissions.canCreate
@@ -271,7 +276,9 @@ const CountriesMultiView = ({
           />
         )}
         {visibleView === "report" && <CountryReportPage showFilterBar={isFilterBarVisible} />}
-        {visibleView === "import" && permissions.canCreate && <ImportCountries />}
+        {visibleView === "import" && permissions.canCreate && (
+          <ImportCountries onReconcile={handleImportReconcile} />
+        )}
       </Box>
     </Box>
   );

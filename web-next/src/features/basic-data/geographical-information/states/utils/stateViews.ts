@@ -1,4 +1,4 @@
-export const stateManagementViews = ["grid", "cards", "chart", "report"] as const;
+export const stateManagementViews = ["grid", "cards", "chart", "report", "import"] as const;
 
 export type StateManagementView = (typeof stateManagementViews)[number];
 

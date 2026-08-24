@@ -14,4 +14,17 @@ describe("StateService", () => {
     await expect(StateService.archiveBulk([3, 7])).resolves.toEqual({ archivedCount: 2 });
     expect(post).toHaveBeenCalledWith(apiRoutes.states.bulkArchive, { ids: [3, 7] });
   });
+  it("posts the exact bulk create envelope with normalized rows", async () => {
+    post.mockResolvedValue({ createdCount: 1 });
+
+    await expect(StateService.createBulk([
+      { nameAr: " القاهرة ", nameEn: " Cairo ", code: " cai ", countryId: 7 },
+    ])).resolves.toEqual({ createdCount: 1 });
+
+    expect(post).toHaveBeenCalledWith(apiRoutes.states.bulkCreate, {
+      states: [
+        { nameAr: "القاهرة", nameEn: "Cairo", code: "CAI", countryId: 7 },
+      ],
+    });
+  });
 });

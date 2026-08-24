@@ -6,6 +6,10 @@
 
 Build the server contract first so both clients consume one stable model.
 
+Execution reference: `documentation/api/Feature_Module_Implementation_Checklist.md`.
+The applied feature profile supplies evidence; the generic checklist supplies the
+implementation discipline.
+
 ## Required decisions
 
 - Entity fields, normalized values, nullability, relationships, uniqueness, and archive semantics.
@@ -14,6 +18,13 @@ Build the server contract first so both clients consume one stable model.
 - Search field and operator allow-lists, including negative-search null behavior.
 - Stable validation, not-found, conflict, in-use, and authorization responses.
 - Commit order for audit, persistence, background scheduling, notification, and realtime publication.
+- When Import is Required: exact endpoint, permission, request envelope, response,
+  success status, batch limit, atomicity, and idempotency. Prefer a typed JSON bulk
+  envelope when the client owns file parsing; use multipart only when server-owned
+  file parsing is an explicit requirement.
+- When Import is Required: field-scoped and ownership-scoped duplicate rules,
+  case sensitivity, parent/dependency lookup behavior, stable row or batch errors,
+  and audit/notification/realtime side effects.
 
 ## Implementation order
 
@@ -30,8 +41,20 @@ Build the server contract first so both clients consume one stable model.
 - [ ] A client can implement the feature using only documented contracts.
 - [ ] Mutations commit once and schedule side effects after a successful commit.
 - [ ] Bulk actions state limits, duplicate-ID behavior, atomicity, and idempotency.
+- [ ] A Required Import documents one exact wire example and has a controller or
+      service test that asserts its request envelope and success response.
+- [ ] Required Import handler/store tests cover bounds, same-field duplicates,
+      relationship validation, case-only persistence conflicts, atomic failure,
+      commit-before-schedule ordering, and stable errors.
 - [ ] Every externally visible error has a stable code and localized message.
 - [ ] Tests cover default paging, search, sort, status, duplicates, archive guards, restore, and bulk behavior.
+
+## Evidence to capture
+
+- Exact route, permission, request/response examples, status codes, and stable errors.
+- Handler transaction order and the store queries that close race-sensitive rules.
+- Focused validator, handler, store, controller, localization, and side-effect tests.
+- Migration/index impact or an explicit no-migration decision.
 
 ## Approved references
 
@@ -43,15 +66,15 @@ Build the server contract first so both clients consume one stable model.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | states-master | 3 | `1bcee45daae927bacec3682c14a6330114ca29ffbcf6b489376cccf337a7d38f` |
-| states-master | 4 | `9d784c317c702d41f1d9282b7d153ea617fab527d8e80ef7222e65f18cd52fb0` |
+| states-master | 4 | `cb62a77c84913085b17954f7eb0fc5ae7d282a1cbd18a82286c9c0b6ea5684e0` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
 | states-api | 1 | `15d834bcb75fb59cc980cd3b79c748f1be10cae3708fbc8f16bb2cf5f1fe05fd` |
-| states-api | 2 | `a0d81d59b393752b1da9b83b766b01834e0146568e7bbacffd168ba66634652f` |
-| states-api | 3 | `48a7b9f439ef0ded4904ee351254b2f8d392224ca5598f72fd290f05cd3b3528` |
+| states-api | 2 | `11f8fd32cf2e1917fcbc35ea783d4f6f46e6df380bef0165ee054c636da37db1` |
+| states-api | 3 | `0385cf078edb08d33b9029d57b67bf2d6055a6bbef25d102ef84327700ea2271` |
 | states-api | 4 | `5436b2b4eb4947f63d84e03931b6030fd296510ca38beb398ce168a140ee52b8` |
-| states-api | 5 | `7a24944b7ecfa6276e2f6fd1201c54f3ca488e400930d2408f665f630035709f` |
-| states-api | 6 | `97e7703fbf9f0fa2eee2f1927c01c3e8c47dc983c6169ffc42bc09df2fd4853e` |
+| states-api | 5 | `c91714397ef3c223ce06d2cba96c7a7a45f739316f87265303fab23299437125` |
+| states-api | 6 | `0bf7b721bb2d1a4e0587c80652289834a868cc3e03a8c4376e1925457c5714cf` |
 | states-api | 7 | `79ef819ddb68cb8382bf2c5f313131548be7b4a66ed3ab6e53777108f1093f66` |
-| states-api | 8 | `5f502b1906084a55b3bbff646f16611cc3c88e03b432a210d739a729d0eca2aa` |
+| states-api | 8 | `4778b66ab2e8bc98acc1502c1988db12fa425ebdba2caebe7e6a0fa0ff427221` |
 | states-api | 9 | `19ad89693b2398543aff1b54378da61520f0171ab8d1e1e67f8b7627de4ff7a1` |
-| states-api | 10 | `86e2ea950a4ca4301825133cc4e23a5fb901d665a9105e81b22821a9080ef4d5` |
+| states-api | 10 | `67f990428b9dbca4718c2f98282eab7cbd9bb777971adb9c3614260407765e8c` |

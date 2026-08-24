@@ -86,6 +86,26 @@ public sealed class StatesController(ISender sender) : ControllerBase
             : result.ToProblem();
     }
 
+    /// <summary>Creates up to 100 states atomically under active countries.</summary>
+    [HttpPost("bulk")]
+    [HasPermission(Permissions.CreateStates)]
+    [ProducesResponseType(typeof(CreateStatesResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> CreateBulk(
+        [FromBody] CreateStatesRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(
+            new CreateStatesCommand(request.States),
+            cancellationToken);
+        return result.IsSuccess
+            ? StatusCode(StatusCodes.Status201Created, result.Value)
+            : result.ToProblem();
+    }
+
     /// <summary>Updates one active State.</summary>
     [HttpPut("{id:int}")]
     [HasPermission(Permissions.EditStates)]

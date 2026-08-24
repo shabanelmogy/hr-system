@@ -158,7 +158,7 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | Audit | DbContext + update trail | None | None |
 | Realtime production | Post-commit Hangfire job | Invalidate Countries + States | Invalidate `['countries']` |
 | Reports | Crystal remains separate; main API owns tenant-scoped report-template CQRS, revisions, approved data-source catalog, and Countries report data | Crystal viewer plus published ActiveReportsJS viewer and permission-protected shared Designer | Independent PDF/device workflow |
-| Import | Atomic bulk-create endpoint | XLSX parse/preview/submit | Not implemented |
+| Import | Atomic 1-100 bulk-create endpoint without an idempotency key | Shared bounded XLSX parse/template/preview, feature validation, locked uncertainty reconciliation | Explicitly Excluded |
 | Localization | EN/AR errors/notifications | EN/AR UI | EN/AR UI |
 
 ## 5. Source Evidence Register
@@ -288,7 +288,9 @@ pixel-identical UI.
 |---|---|---|---|
 | C-F01 | Web | ID, Phone and Updated grid columns expose unsupported sort affordance. | Set `sortable: false` for non-API sort columns. |
 | C-F02 | Web | Cards/Chart can inherit hidden field/operator criteria selected in Grid. | Expose or reset all active criteria per view. |
-| C-F03 | Web | Import has no localized client preflight for the 100-row endpoint maximum. | Validate before submit while preserving atomicity. |
+| C-F03 | Web | Resolved: shared XLSX parsing now rejects more than 100 non-empty data rows before mapping or mutation while the API keeps the authoritative atomic bound. | Preserve both client feedback and server validation. |
+| C-F06 | Web | Resolved: Import now validates extension/MIME/size, XLSX container, first-sheet presence, exact ordered headers, duplicate headers, empty files, formulas, and unexpected columns instead of blindly discarding row 1. | Keep feature headers/mapping separate from the shared parser. |
+| C-F07 | Web | Resolved: ambiguous no-response/5xx submissions are locked as uncertain and reconcile through a refreshed Grid; stable 4xx batches are failed and never conflated with uncertainty. | Do not add blind retry without API idempotency. |
 | C-F04 | Web tests | No complete controller/view/mutation integration coverage. | Add criteria, detail, permission, lifecycle and invalidation tests. |
 | C-F05 | Web reports | Resolved: ActiveReportsJS now has tenant-scoped template/revision persistence, published and management reads, explicit permissions, RowVersion, an approved source catalog, and a published viewer. | Preserve the shared reporting contract; register every future feature/data source in the server allow-list and prove tenant isolation. |
 | C-M01 | Mobile | Currency/state-presence criteria exist but are not exposed. | Expose or remove reserved criteria. |

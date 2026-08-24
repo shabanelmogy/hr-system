@@ -169,8 +169,11 @@
   "CountryRestoredNotificationMessage": "{{NameEn}} was restored.",
   "StateNotificationTitle": "State update",
   "StateCreatedNotificationMessage": "{{NameEn}} was created.",
+  "StatesCreatedNotificationMessage": "{{Count}} states were created.",
+  "StatesArchivedNotificationMessage": "{{Count}} states were archived.",
   "StateUpdatedNotificationMessage": "{{NameEn}} was updated.",
   "StateDeletedNotificationMessage": "{{NameEn}} was deleted.",
+  "StateArchivedNotificationMessage": "{{NameEn}} was archived.",
   "StateRestoredNotificationMessage": "{{NameEn}} was restored.",
   "DistrictNotificationTitle": "District update",
   "DistrictCreatedNotificationMessage": "{{NameEn}} was created.",
@@ -822,7 +825,11 @@
     "all": "All Countries",
     "recent30Days": "Recent (30 days)",
     "hasPhone": "Has Phone Code",
-    "hasCurrency": "Has Currency"
+    "hasCurrency": "Has Currency",
+    "import": {
+      "duplicateInFile": "Duplicate of another country row in this file",
+      "importSuccess": "{{count}} countries uploaded"
+    }
   },
   "states": {
     "dashboard": {
@@ -976,7 +983,23 @@
     "recent90Days": "Recent (90 days)",
     "recent120Days": "Recent (120 days)",
     "total": "Total",
-    "filtered": "Filtered"
+    "filtered": "Filtered",
+    "import": {
+      "stateRows": "{{count}} state rows",
+      "columnsHint": "Expected columns: Arabic Name, English Name, Code, Country (English or Arabic name)",
+      "uploading": "Uploading states...",
+      "unknownCountry": "Country not found or inactive",
+      "duplicateInFile": "Duplicate of another row for the same country in this file",
+      "batchLimit": "A maximum of {{count}} states can be uploaded per request",
+      "importSuccess": "{{count}} states uploaded",
+      "countryLookup": {
+        "loading": "Loading the active country lookup required to validate this import...",
+        "ready": "The active country lookup is ready.",
+        "empty": "No active countries are available. Create or restore a country before importing states.",
+        "forbidden": "States import requires Countries:View so country names can be validated. Ask an administrator for this permission.",
+        "error": "The active country lookup could not be loaded. No rows have been validated as unknown. Retry the lookup."
+      }
+    }
   },
   "districts": {
     "dashboard": {
@@ -1485,16 +1508,24 @@
   "imports": {
     "dragDropText": "Drag and drop your file here or click to browse",
     "supportedFormats": "Supported format (.xlsx)",
+    "filePolicy": "XLSX only, up to {{maxSizeMb}} MB and {{maxRows}} data rows. The first worksheet is used.",
+    "expectedHeaders": "Required headers in row 1: {{headers}}",
     "selectSpreadsheet": "Select an Excel spreadsheet",
     "countryRows": "{{count}} country rows",
     "uploadProgress": "Upload progress: {{progress}}%",
     "uploadData": "Upload Data",
+    "downloadTemplate": "Download Template",
     "clearData": "Clear Data Table",
     "retryFailed": "Retry Failed",
+    "retryLookup": "Retry lookup",
     "status": "Status",
+    "errorDetails": "Validation details",
     "pending": "Pending",
+    "invalid": "Invalid",
+    "submitted": "Submitted",
     "uploaded": "Uploaded",
     "failed": "Failed",
+    "uncertain": "Needs verification",
     "row": "Row",
     "selectedFile": "Selected File  ",
     "noDataAvailable": "No data available",
@@ -1503,7 +1534,24 @@
     "fileParsed": "Spreadsheet parsed successfully",
     "fileTypeNotSupported": "Only .xlsx files are supported",
     "uploading": "Uploading countries...",
-    "noValidRows": "No valid rows to upload"
+    "noValidRows": "No valid rows to upload",
+    "submissionUncertainTitle": "Submission result is uncertain",
+    "submissionUncertain": "The server response was not received. Do not submit this file again until you refresh the list and verify whether the records were created.",
+    "reviewRecords": "Review records",
+    "errors": {
+      "unsupportedExtension": "Only .xlsx files are supported.",
+      "unsupportedMime": "The selected file is not recognized as an XLSX workbook.",
+      "fileTooLarge": "The workbook exceeds the {{maxSizeMb}} MB size limit.",
+      "emptyFile": "The workbook has no import rows.",
+      "invalidWorkbook": "The selected file is not a valid XLSX workbook.",
+      "missingWorksheet": "The workbook does not contain the required first worksheet.",
+      "duplicateHeaders": "The header row contains duplicate columns.",
+      "invalidHeaders": "The header row is invalid. Expected: {{expectedHeaders}}.",
+      "unexpectedColumns": "A data row contains values outside the documented columns.",
+      "formulaNotAllowed": "Formula cells are not allowed in import workbooks. Replace formulas with values.",
+      "rowLimitExceeded": "The workbook exceeds the {{maxRows}}-row import limit.",
+      "parseFailed": "The workbook could not be read. Download a fresh template and try again."
+    }
   },
   "crystalReports": {
     "title": "Crystal Report Manager",

@@ -29,6 +29,7 @@ implementation details to guess.
 | List contract | Search, filters, sort fields, default sort, page-size limits |
 | Error contract | Stable codes, statuses, field errors, conflict behavior |
 | Views | Required Grid; mark every optional view Required, Deferred, or Excluded with its data scope and contract |
+| Import | Required, Deferred, or Excluded independently for web and mobile; if Required, name the format, exact API contract, limits, duplicate/relationship rules, atomicity, permissions, side effects, and retry behavior |
 | Cross-feature consumers | Deliberate public lookup or type APIs |
 
 The backend owns authorization, tenant isolation, invariants, uniqueness, and
@@ -43,6 +44,7 @@ src/features/<domain>/<feature>/
   components/            # Feature-owned UI
     grid-view/            # Grid columns, row actions, feature filters
     card-view/            # Optional feature cards
+    import-data/          # Optional; only when browser Import is Required
   hooks/                 # Query orchestration and controller hooks
   services/              # HTTP boundary and transport normalization
   types/                 # Transport, form, query, and view types
@@ -107,6 +109,9 @@ Rules:
 - Keep form values separate when controlled inputs need empty strings.
 - Normalize trimming, case, and blank-to-null once at the service boundary.
 - Map API field errors to form fields; keep business invariants on the server.
+- Model a Required Import request envelope as a named transport type and assert
+  the exact serialized body in a service test. Do not post a raw array when the
+  API owns a named collection envelope.
 - Use generated or automatic mapping only where it reduces code without hiding a
   real contract transformation.
 
@@ -464,9 +469,101 @@ not satisfy tenant-wide availability.
 
 ### Import/export
 
-Import requires create permission, local parsing feedback, row-level validation,
-an atomic bulk endpoint, and invalidation after success. Export must clearly state
-whether it exports the page, selected rows, or all matching server records.
+Classify Import independently for web and mobile as `Required`, `Deferred`, or
+`Excluded`. A browser workbook flow does not make native mobile Import required.
+Do not register an empty or unreachable Import view.
+
+The default browser ownership boundary is:
+
+```text
+file picker/drop zone
+  -> bounded value-only parser (never execute macros or formulas)
+  -> exact header validation
+  -> row normalization and shared schema validation
+  -> dependency resolution and request-level duplicate checks
+  -> localized preview
+  -> typed JSON bulk service
+  -> atomic API validation/persistence
+  -> post-commit invalidation and feedback
+```
+
+Choose server-owned multipart parsing only when file retention, centralized parser
+governance, very large files, asynchronous processing, or compliance scanning is a
+real requirement. Record upload storage, malware scanning, job status, retention,
+and cleanup in that contract. Do not combine client-parsed JSON and server-parsed
+multipart in one ambiguous endpoint.
+
+When browser Import is Required:
+
+- require the declared create permission and respect application read-only state;
+- document template download, accepted extension/MIME, file-size and row limits,
+  workbook/sheet selection, exact required headers, duplicate-header handling,
+  blank rows, and empty files;
+- parse locally only when that ownership is explicit, then normalize and validate
+  preview rows with the shared form schema and localized row-level feedback;
+- resolve parent/dependency display values through an authorized registered lookup
+  endpoint and render loading, empty, permission, and failure states;
+- submit only locally valid rows through a typed exact endpoint and JSON envelope,
+  unless server-owned multipart parsing was deliberately selected;
+- enforce client bounds for feedback while keeping API validation authoritative;
+- document field- and ownership-scoped duplicate rules, case sensitivity, batch
+  atomicity, idempotency, stable errors, and retry behavior;
+- invalidate the canonical feature query root and clear stale selection after
+  success through the normal mutation/realtime path;
+- localize English/Arabic copy and verify RTL, keyboard, focus restoration, and
+  screen-reader behavior.
+
+This repository provides the reusable browser boundary in
+`src/shared/services/excelService.ts` and
+`src/shared/components/file-upload/SpreadsheetImportCard.tsx`: bounded XLSX
+metadata/container checks, value-only first-worksheet parsing, canonical header and row
+limits, formula rejection, template download, accessible file selection,
+preview actions, and uncertainty feedback. Keep the feature-owned headers,
+row-to-request mapping, form-schema validation, duplicate scope, dependency
+lookup, exact service request, and localized domain messages inside the feature.
+Do not fork the shared picker/parser merely to change columns or labels.
+
+Use explicit view and row states. A useful view model is `idle`, `parsing`,
+`preview`, `submitting`, `succeeded`, `failed`, and `uncertain`; rows are
+`pending`, `invalid`, `submitted`, `uploaded`, `failed`, or `uncertain`. State
+names may differ, but the UI must not show a row as uploaded before the atomic
+server request succeeds. A dependency lookup must remain `loading`, `empty`,
+`forbidden`, or `failed` until it is ready; never reinterpret a non-ready lookup
+as a successful empty map or turn its rows into false “unknown parent” errors.
+
+Validate in this order so errors are deterministic:
+
+1. extension/MIME policy and file-size bound before parsing;
+2. workbook/sheet presence, exact headers, duplicate headers, and blank-file rules;
+3. field normalization and the same row schema used by create;
+4. parent/dependency mapping through an authorized lookup;
+5. request duplicates by exact field and domain scope;
+6. client batch limit;
+7. exact request serialization;
+8. API validation, persistence conflicts, transaction, and side effects.
+
+File extension and browser-provided MIME are usability checks, not a server trust
+boundary. Parse values only, never evaluate workbook macros or formulas, discard
+unneeded workbook metadata, and avoid logging row contents that may contain
+personal data. Use a worker or a server-owned asynchronous design when approved
+file bounds can block the main thread or exceed practical browser memory.
+
+Retry behavior must match the failure source:
+
+| Failure | Preserve | Retry rule |
+| --- | --- | --- |
+| File/parser/header | File name and localized error | Select/fix the source file; send no API request |
+| Local row validation/dependency | Preview and row errors | Submit only contract-eligible rows; never hide excluded rows |
+| Stable API validation/conflict | Entire submitted batch and server error | Treat an atomic batch as failed; correct or refresh before retry |
+| Network/timeout | Submitted preview and uncertainty state | Retry automatically only with an idempotency contract; otherwise lock resubmission and route the user to refresh/reconcile the canonical list first |
+| Success | Result count until acknowledged | Mark submitted rows uploaded, invalidate once, clear stale selection |
+
+A downloadable rejected-row/error artifact is a separate product choice. Mark it
+`Required`, `Deferred`, or `Excluded`; it is not a prerequisite for a valid Import
+view when inline row feedback satisfies the contract.
+
+Export must clearly state whether it exports the page, selected rows, or all
+matching server records.
 
 ## 9. Lifecycle, Permissions, and Scope
 
@@ -574,6 +671,8 @@ Pure tests:
 - server-list reducer, page bounds, debounce, and reset;
 - configured initial sort and reset back to it;
 - domain adapters and deterministic mock-data rules.
+- when Import is Required: parser/header/blank-row rules, normalization, client
+  bounds, field-scoped duplicates, and dependency mapping.
 
 Integration tests:
 
@@ -585,6 +684,9 @@ Integration tests:
 - lifecycle rows expose only valid actions;
 - background fetch does not present stale criteria as current;
 - EN/AR and RTL-critical controls render correctly.
+- when Import is Required: permission/read-only guards, exact HTTP request body,
+  dependency loading/failure, stable API conflicts, retry, cache invalidation,
+  preview feedback, and focus restoration.
 
 Then run the repository checks defined in the architecture reference: architecture,
 type checks, strict type checks, lint, full tests, and production build.
@@ -633,6 +735,9 @@ A feature follows this reference only when:
   explicit product exception is documented;
 - every approved optional view is registered and tested, with no unreachable
   feature-owned view implementation left behind;
+- Import is explicitly Required, Deferred, or Excluded per client; every Required
+  browser path proves parsing, exact transport, bounds, duplicate scope,
+  dependencies, atomicity, permissions, retry, localization, and invalidation;
 - every Report view records its engine. Managed Crystal views use the shared
   published catalog/render path and link their `entityKey` contract to the
   canonical manager guide;

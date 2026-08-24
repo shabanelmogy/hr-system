@@ -223,6 +223,12 @@ The write store intentionally loads archived rows for lifecycle commands and
 checks conflicts against active and archived rows. Dependency checks target
 active states and bulk checks execute against the full ID set.
 
+`POST /bulk` is atomic but does not define an idempotency key or replay token.
+Clients must not assume that a timeout means no rows committed: they reconcile a
+missing/5xx response against the canonical list before submitting the same source
+again. Deterministic validation/conflict responses remain safe failures after the
+server rolls back the batch.
+
 ## 7. Validation and Stable Errors
 
 Shared mutation validation enforces:

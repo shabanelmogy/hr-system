@@ -136,6 +136,9 @@ public sealed class StateWriteStore(ApplicationDbContext context) : IStateWriteS
 {
     public void Add(State state) => context.States.Add(state);
 
+    public void AddRange(IReadOnlyCollection<State> states) =>
+        context.States.AddRange(states);
+
     public Task<State?> GetForUpdateAsync(int id, CancellationToken cancellationToken) =>
         context.States.Include(state => state.Country).FirstOrDefaultAsync(state => state.Id == id, cancellationToken);
 
@@ -144,6 +147,17 @@ public sealed class StateWriteStore(ApplicationDbContext context) : IStateWriteS
 
     public Task<bool> IsCountryActiveAsync(int countryId, CancellationToken cancellationToken) =>
         context.Countries.AnyAsync(country => country.Id == countryId && !country.IsDeleted, cancellationToken);
+
+    public async Task<bool> AreCountriesActiveAsync(IReadOnlyCollection<int> countryIds, CancellationToken cancellationToken)
+    {
+        if (countryIds.Count == 0)
+            return true;
+
+        var distinctCountryIds = countryIds.Distinct().ToList();
+        var activeCount = await context.Countries
+            .CountAsync(country => distinctCountryIds.Contains(country.Id) && !country.IsDeleted, cancellationToken);
+        return activeCount == distinctCountryIds.Count;
+    }
 
     public Task<bool> HasActiveDistrictsAsync(int stateId, CancellationToken cancellationToken) =>
         context.Districts.AnyAsync(district => district.StateId == stateId && !district.IsDeleted, cancellationToken);
@@ -156,6 +170,29 @@ public sealed class StateWriteStore(ApplicationDbContext context) : IStateWriteS
             state.CountryId == candidate.CountryId &&
             (!excludedId.HasValue || state.Id != excludedId.Value) &&
             (state.NameAr == candidate.NameAr || state.NameEn == candidate.NameEn || state.Code == candidate.Code), cancellationToken);
+
+    public async Task<bool> HasAnyConflictAsync(IReadOnlyCollection<State> states, CancellationToken cancellationToken)
+    {
+        var countryIds = states.Select(state => state.CountryId).Distinct().ToList();
+        var nameArValues = states.Select(state => state.NameAr.ToUpperInvariant()).Distinct().ToList();
+        var nameEnValues = states.Select(state => state.NameEn.ToUpperInvariant()).Distinct().ToList();
+        var codeValues = states.Select(state => state.Code.ToUpperInvariant()).Distinct().ToList();
+
+        var existing = await context.States.AsNoTracking()
+            .Where(state =>
+                countryIds.Contains(state.CountryId) &&
+                (nameArValues.Contains(state.NameAr.ToUpper()) ||
+                 nameEnValues.Contains(state.NameEn.ToUpper()) ||
+                 codeValues.Contains(state.Code.ToUpper())))
+            .Select(state => new { state.CountryId, state.NameAr, state.NameEn, state.Code })
+            .ToListAsync(cancellationToken);
+
+        return existing.Any(row => states.Any(candidate =>
+            candidate.CountryId == row.CountryId &&
+            (string.Equals(candidate.NameAr, row.NameAr, StringComparison.OrdinalIgnoreCase) ||
+             string.Equals(candidate.NameEn, row.NameEn, StringComparison.OrdinalIgnoreCase) ||
+             string.Equals(candidate.Code, row.Code, StringComparison.OrdinalIgnoreCase))));
+    }
 }
 
 public sealed class StateAuditTrail(ApplicationDbContext context, ICurrentActor currentActor, TimeProvider timeProvider) : IStateAuditTrail

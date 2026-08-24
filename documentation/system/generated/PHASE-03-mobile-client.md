@@ -6,6 +6,8 @@
 
 Implement the Expo client as a native presentation of the shared contract, using the same server-list and lifecycle semantics as web.
 
+Execution reference: `documentation/mobile-react/MOBILE_FEATURE_GUIDE.md`.
+
 ## Required structure
 
 - Thin Expo Router file and a typed route constant.
@@ -26,7 +28,33 @@ Implement the Expo client as a native presentation of the shared contract, using
 
 ## Mobile-specific decisions
 
-Record whether detail requires a dedicated query, whether reports open or share locally, which filters are exposed on compact screens, and how forms handle offline or retry states. These decisions may differ from web but must be explicit.
+Record whether detail requires a dedicated query, whether reports open or share
+locally, which filters are exposed on compact screens, and how forms handle
+offline or retry states. Classify mobile Import as `Required`, `Deferred`, or
+`Excluded` independently from web and record the reason. These decisions may
+differ from web but must be explicit.
+
+When mobile Import is Required:
+
+- use a platform-safe document picker and storage API instead of copying browser
+  file-input or workbook code;
+- consume the same documented API envelope, limits, duplicate rules, dependency
+  lookups, atomicity, and stable errors as web;
+- provide native loading, preview, permission/read-only, retry, localization, RTL,
+  accessibility, and post-success invalidation behavior;
+- test picker cancellation, unsupported and oversized files, parsing, exact
+  request body, dependency failure, API conflict, retry, and cache refresh.
+
+When mobile Import is Deferred or Excluded, keep the decision in the feature
+profile and do not leave an unreachable route, component, or translation surface.
+
+## Evidence to capture
+
+- Physical route, typed route, route-manifest, navigation, endpoint, query-key,
+  realtime, notification deep-link, and localization registrations.
+- Runtime schema parsing and exact request/query serialization tests.
+- Phone/tablet, orientation, safe-area, keyboard, EN/AR, RTL, touch-target,
+  screen-reader, permission/read-only, network, retry, and empty-state evidence.
 
 ## Approved references
 
@@ -38,7 +66,7 @@ Record whether detail requires a dedicated query, whether reports open or share 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | master | 3 | `b0ae30454b32e1209cd9b74f1bc82d45e58ae969a61381a25c64c86db7b09dfc` |
-| master | 4 | `b23b2333eb1c612669ddd269677711f77cebee002628a2903f3e10262a5184f3` |
+| master | 4 | `a9c88864fafde572fc0ffc1502f1a5ccb2fc55fdbd77aefe2c54c33d143b9529` |
 | master | 6 | `e671cfed0bfb63b0063c4f83c86be605190925f9dc7e6b1ef6e335c26fb89c54` |
 | master | 7 | `8c0ba157ab3e6ca7bfa97bd23bdd022523f69dc7ac4386e25462b7ad667ba74b` |
 | mobile | 1 | `bf4af029074342fb9fc3f65bb2b6318e9d0c43f6ffd1402c2002116b569d0673` |

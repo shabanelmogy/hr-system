@@ -6,6 +6,10 @@
 
 Implement the canonical browser feature with one server-managed list state shared by all views.
 
+Execution references:
+`documentation/web-next/architecture/frontend-architecture-reference.md` and
+`documentation/web-next/features/server-managed-feature-reference.md`.
+
 ## Required structure
 
 - Thin App Router page importing the feature public API.
@@ -44,6 +48,42 @@ Implement the canonical browser feature with one server-managed list state share
       Chart, Report, Import, or Export implementation is left unreachable.
 - [ ] English, Arabic, RTL, keyboard access, and focus restoration are verified.
 
+## Import checks
+
+Apply these checks only when browser Import is Required. When it is Deferred or
+Excluded, record that decision and do not register an empty Import view.
+
+- [ ] Import registration uses the declared create permission and read-only guard;
+      the shared Filter action is omitted when the view has no criteria bar.
+- [ ] Accepted extension/MIME, file size, workbook/sheet, required headers,
+      duplicate headers, blank rows, and empty-file behavior are deterministic.
+- [ ] Preview rows use the shared form schema and normalization, show localized
+      row errors, and exclude local-invalid rows from submission.
+- [ ] Relationship lookups have explicit permission, loading, empty, and error
+      states and map display values to server identifiers without guessing.
+- [ ] The service sends the documented typed bulk envelope, enforces the client
+      limit, and treats the submitted valid batch according to API atomicity.
+- [ ] Retry semantics distinguish local parse errors, stable API validation or
+      conflict errors, and transient network failures.
+- [ ] Success invalidates the canonical feature query-key root, clears stale
+      selection, and preserves the expected active view.
+- [ ] Tests cover parsing, headers, exact request body, limits, field-scoped
+      duplicates, dependency lookups, permission/read-only state, API conflict,
+      retry, invalidation, English, Arabic, and RTL.
+
+Required browser Import follows one observable flow:
+`idle -> parsing -> preview -> submitting -> succeeded | failed`. Row state is
+`pending | invalid | submitted | uploaded | failed`. A retry submits only rows
+the documented contract considers eligible and never silently turns an atomic API
+failure into partial success.
+
+## Evidence to capture
+
+- Public route/API/permission/realtime/localization registrations.
+- Exact query and mutation serialization tests.
+- View registration and permission/read-only behavior for direct handlers.
+- Desktop/compact, EN/AR, RTL, keyboard, focus, loading/error/empty/retry evidence.
+
 ## Approved references
 
 - **Countries cross-platform master review:** `../project/COUNTRIES_FEATURE_FULL_REVIEW.md` sections 3, 4, 6, 7
@@ -54,7 +94,7 @@ Implement the canonical browser feature with one server-managed list state share
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | master | 3 | `b0ae30454b32e1209cd9b74f1bc82d45e58ae969a61381a25c64c86db7b09dfc` |
-| master | 4 | `b23b2333eb1c612669ddd269677711f77cebee002628a2903f3e10262a5184f3` |
+| master | 4 | `a9c88864fafde572fc0ffc1502f1a5ccb2fc55fdbd77aefe2c54c33d143b9529` |
 | master | 6 | `e671cfed0bfb63b0063c4f83c86be605190925f9dc7e6b1ef6e335c26fb89c54` |
 | master | 7 | `8c0ba157ab3e6ca7bfa97bd23bdd022523f69dc7ac4386e25462b7ad667ba74b` |
 | web | 1 | `66a9531a90a5b8e58c45035848107d5c0dd756d800a174869bafef93437a7715` |
@@ -65,9 +105,9 @@ Implement the canonical browser feature with one server-managed list state share
 | web | 6 | `5603515b843af92bfacc318fcc08638b9af594e0cf20dd1ced247f3391193d63` |
 | web | 7 | `f9f1e9693346be686ff0effa80374e6f012a385ee00d622e1a3df1168dd8126a` |
 | web | 8 | `43a7e4cb95554e828d56afdc3c933a1b1f224531dc5829a1c6d0b31e25f632fe` |
-| web | 9 | `0db892ec73f94ce8600765108ad41fd64cc85c1f726c6a60c7955cd80faa8091` |
+| web | 9 | `2e1b004b06ae6403aa3ffdae146f851381c08bcab5040da2a8fe50638904f045` |
 | web | 10 | `dfca66fe993ca501dfd506da6673879ea9c49d5f9fa8fcd1050486f4346ffaeb` |
 | web | 11 | `f957846d6351e68c251cca5257f0413128cf9b4100a6e722a4a7fe01cd7fb1f2` |
-| web | 12 | `7f655066219089b3a56fe9c1d009830d6f176e529de009bd3c577aacc357a84e` |
-| web | 13 | `3d4ffdea15ae5bd3fde84ac212722f02339bd44568b04ac1b5f2041e24b61700` |
+| web | 12 | `5e43026062cf8d6ff83ff4f5fa227e049dac688c4730fec9a9937aa56a868727` |
+| web | 13 | `7c7e9a1bc3046f0106740192bb9f3537822dcfa9bf984d268993ebd588c575ca` |
 | web | 14 | `80765976d54ff8e1c218832a3dbd4d3643fda41d5caa77f3878160e71213626c` |

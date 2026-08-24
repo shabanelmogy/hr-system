@@ -51,4 +51,12 @@ Create the draft evidence workspace first:
   -ReferenceFeature countries
 ```
 
-The scaffold creates an evidence artifact, `required-files.draft.json`, and a feature-scoped `recipe-registration.draft.json`; it does not weaken the global documentation check by registering paths that do not exist yet. After the implementation sources and four canonical profiles exist, replace the required-file draft with `required-files.json`, merge the reviewed registration draft into `system/recipe-manifest.json`, generate `system/generated/<feature>/PHASE-00` through `PHASE-06`, and finish the mandatory reconciliation phase.
+The scaffold creates a copy-ready `IMPLEMENTATION-REQUEST.md`, an evidence
+artifact, `required-files.draft.json`, and a feature-scoped
+`recipe-registration.draft.json`. Complete the request and evidence decisions
+before runtime work. The scaffold does not weaken the global documentation check
+by registering paths that do not exist yet. After the implementation sources and
+four canonical profiles exist, replace the required-file draft with
+`required-files.json`, merge the reviewed registration draft into
+`system/recipe-manifest.json`, generate `system/generated/<feature>/PHASE-00`
+through `PHASE-06`, and finish the mandatory reconciliation phase.

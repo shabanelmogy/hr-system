@@ -61,12 +61,14 @@ empty folders or mapping files just for symmetry.
 
 Use this order when creating a new feature:
 
-1. Define business invariants, ownership scope, permissions, list scale, and views.
+1. Define business invariants, ownership scope, permissions, list scale, views,
+   and an explicit Required/Deferred/Excluded Import decision per client.
 2. Entity: define domain state and behavior.
 3. Persistence: configure scope, fields, indexes, relationships, and concurrency.
 4. Responses and Application-owned read/write/scheduling ports.
 5. Queries and validators, including typed server paging/filtering/sorting.
-6. Commands and validators with separate create/update contracts.
+6. Commands and validators with separate create/update contracts and, when Import
+   is Required, one exact bounded bulk-create envelope.
 7. Handlers: own orchestration and return `Result`/`Result<T>`.
 8. Infrastructure stores and feature-owned post-commit job.
 9. Controller: inject `ISender`, send one request, and apply permissions.
@@ -132,8 +134,41 @@ builder.HasIndex(x => x.Alpha2Code)
 - Keep request DTOs simple. Put validation in validators, not in DTO constructors.
 - Use separate create and update request DTOs. Put the update identity in the route,
   not in either request body.
+- When Import is Required, use a named bulk request envelope and response. Record
+  the exact JSON body, success status, permission, maximum count, atomicity,
+  idempotency, and stable validation/conflict behavior. Use multipart only when
+  server-owned file parsing is an explicit requirement.
 - Use distinct list-item, detail, relation-detail, and lookup responses when their
   data shapes differ. Do not return an empty relation collection from list rows.
+
+For a Required client-parsed Import, freeze this matrix before implementation:
+
+| Contract item | Required answer |
+| --- | --- |
+| Endpoint | Method and versioned route |
+| Authorization | Tenant membership and exact create/import permission |
+| Request | Named envelope and item contract; no client-owned scope IDs |
+| Response | Created count or operation identity and exact success status |
+| Bounds | Minimum/maximum item count and payload-size policy |
+| Duplicate semantics | Exact fields, normalization, case, ownership/parent scope |
+| Relationships | Missing, inactive, foreign-scope, and unauthorized dependency results |
+| Transaction | Atomic or explicitly partial; commit count and rollback behavior |
+| Retry/idempotency | Operation key or explicit reconciliation requirement |
+| Side effects | Audit, plural notification, realtime resource/action, scheduling order |
+| Errors | Stable validation/conflict/forbidden codes and localized messages |
+
+Generic shape:
+
+```csharp
+public sealed record CreateFeatureItemsRequest(
+    IReadOnlyList<CreateFeatureRequest> Items);
+
+public sealed record CreateFeatureItemsResponse(int CreatedCount);
+```
+
+The public property name (`Items`, `States`, or another domain term) is part of the
+wire contract. Browser and mobile service tests assert the exact serialized
+envelope; controller tests assert model type, permission, status, and response.
 
 Example:
 
@@ -409,6 +444,28 @@ var exists = await _dbContext.Countries.AnyAsync(
     cancellationToken);
 ```
 
+For multi-field imports, collect and compare each unique field independently.
+`NameAr`, `NameEn`, and `Code` may share a text value unless the domain explicitly
+forbids cross-field equality. Apply the documented case and tenant/company/parent
+scope consistently in request checks, persistence prechecks, and database indexes.
+
+The atomic bulk handler order is:
+
+1. reject null/empty/oversized input through validation;
+2. normalize/map every item without trusting client scope;
+3. reject request-level same-field duplicates;
+4. validate all parent/dependency IDs in bounded set-based queries;
+5. check persistence conflicts in set-based, field-scoped queries;
+6. stage every entity and audit record;
+7. call `SaveChangesAsync` once;
+8. schedule one plural post-commit change only after save succeeds;
+9. return the exact created count.
+
+No entity, audit event, notification, or realtime publication may survive a failed
+atomic batch. If partial import is a real product requirement, define a different
+response model with per-row outcomes and an explicit transaction strategy instead
+of weakening the meaning of the atomic endpoint.
+
 Avoid:
 
 ```csharp
@@ -551,6 +608,9 @@ Add focused, behavior-based tests rather than tests coupled to method names:
 - detail and lookup follow their distinct lifecycle contracts;
 - create handler creates valid records, normalizes values, and rejects duplicates;
 - bulk handler rejects empty lists, request duplicates, and database duplicates;
+- required Import tests assert the exact controller request envelope/response,
+  client/API bounds, same-field and case-only duplicates, parent/dependency
+  failures, atomicity, stable errors, and plural post-commit scheduling;
 - update handler returns not found, rejects duplicate values, and creates change logs;
 - archive/delete handler blocks the operation when related rows exist;
 - Restore clears delete metadata when restore is supported.
@@ -656,5 +716,9 @@ integration, migration, or environment-dependent checks in phase 06.
   Crystal reports satisfy the shared manager guide, including matching HR API and
   Crystal runtime profiles; required browser templates use the separate
   `ReportTemplates` contract.
+- Import is explicitly Required, Deferred, or Excluded per client. A Required API
+  path has a named exact envelope, bounded atomic behavior, field- and scope-aware
+  duplicate/dependency checks, stable errors, plural side effects, and focused
+  controller, handler, and store tests.
 - Post-commit work is queued only after persistence succeeds.
 - If EF configuration changed, create or update a migration deliberately.

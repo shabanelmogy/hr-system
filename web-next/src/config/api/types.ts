@@ -15,6 +15,7 @@ export interface StatesRoutes {
   getById: (id: Id) => string;
   getWithDistricts: (id: Id) => string;
   create: string;
+  bulkCreate: string;
   update: (id: Id) => string;
   archive: (id: Id) => string;
   bulkArchive: string;

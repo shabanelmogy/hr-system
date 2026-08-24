@@ -1,5 +1,4 @@
 import DescriptionOutlined from "@mui/icons-material/DescriptionOutlined";
-import TableViewOutlined from "@mui/icons-material/TableViewOutlined";
 import {
   Box,
   CardContent,
@@ -9,26 +8,36 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { FileDropZone } from "@/shared/components/file-upload";
+import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { XLSX_FILE_ACCEPT } from "@/shared/services/excelService";
+import { FileDropZone } from "./FileDropZone";
 
-interface SpreadsheetFilePickerProps {
+export interface SpreadsheetImportFilePickerProps {
   selectedFile: File | null;
-  loading: boolean;
+  busy: boolean;
   progress: number;
-  rowCount: number;
+  maxSizeMb: number;
+  maxRows: number;
+  rowCountLabel: string;
+  hint: string;
+  icon: ReactNode;
   onFileSelect: (file: File) => void;
   validateFile: (file: File) => boolean;
 }
 
-const SpreadsheetFilePicker = ({
+export function SpreadsheetImportFilePicker({
   selectedFile,
-  loading,
+  busy,
   progress,
-  rowCount,
+  maxSizeMb,
+  maxRows,
+  rowCountLabel,
+  hint,
+  icon,
   onFileSelect,
   validateFile,
-}: SpreadsheetFilePickerProps) => {
+}: SpreadsheetImportFilePickerProps) {
   const { t } = useTranslation();
 
   const selectFile = (files: File[]) => {
@@ -40,13 +49,23 @@ const SpreadsheetFilePicker = ({
     <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
       <FileDropZone
         title={t("imports.dragDropText")}
-        description={t("imports.supportedFormats")}
+        description={t("imports.filePolicy", { maxSizeMb, maxRows })}
         ariaLabel={t("imports.selectSpreadsheet")}
-        accept=".xlsx"
-        disabled={loading}
-        icon={<TableViewOutlined />}
+        accept={XLSX_FILE_ACCEPT}
+        disabled={busy}
+        icon={icon}
         onFilesSelected={selectFile}
       />
+
+      {!selectedFile && !busy && (
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ display: "block", mt: 1 }}
+        >
+          {hint}
+        </Typography>
+      )}
 
       {selectedFile && (
         <Stack
@@ -61,14 +80,14 @@ const SpreadsheetFilePicker = ({
           </Typography>
           <Chip
             size="small"
-            label={t("imports.countryRows", { count: rowCount })}
+            label={rowCountLabel}
             color="primary"
             variant="outlined"
           />
         </Stack>
       )}
 
-      {loading && (
+      {busy && (
         <Box sx={{ mt: 2 }} aria-live="polite">
           {progress > 0 ? (
             <LinearProgress
@@ -85,6 +104,4 @@ const SpreadsheetFilePicker = ({
       )}
     </CardContent>
   );
-};
-
-export default SpreadsheetFilePicker;
+}

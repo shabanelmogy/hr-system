@@ -3,6 +3,8 @@ import apiService from "@/shared/services/apiService";
 import type {
   BulkArchiveStatesResponse,
   CreateStateRequest,
+  CreateStatesRequest,
+  CreateStatesResponse,
   StateDetail,
   StateLookup,
   StatePageQuery,
@@ -41,6 +43,16 @@ export class StateService {
 
   static create(request: CreateStateRequest): Promise<StateDetail> {
     return apiService.post<StateDetail>(apiRoutes.states.create, toStateRequest(request));
+  }
+
+  static createBulk(states: CreateStateRequest[]): Promise<CreateStatesResponse> {
+    const request: CreateStatesRequest = {
+      states: states.map(toStateRequest),
+    };
+    return apiService.post<CreateStatesResponse>(
+      apiRoutes.states.bulkCreate,
+      request,
+    );
   }
 
   static update({ id, request }: UpdateStateMutation): Promise<StateDetail> {

@@ -262,6 +262,8 @@ export const arPlatformToolsNotifications = {
   CountryRestoredNotificationMessage: 'تمت استعادة {{NameAr}}.',
   StateNotificationTitle: 'تحديث بيانات الولاية',
   StateCreatedNotificationMessage: 'تم إنشاء {{NameAr}}.',
+  StatesCreatedNotificationMessage: 'تم إنشاء {{Count}} ولاية.',
+  StatesArchivedNotificationMessage: 'تمت أرشفة {{Count}} ولاية.',
   StateUpdatedNotificationMessage: 'تم تحديث {{NameAr}}.',
   StateDeletedNotificationMessage: 'تم حذف {{NameAr}}.',
   StateArchivedNotificationMessage: 'تمت أرشفة {{NameAr}}.',

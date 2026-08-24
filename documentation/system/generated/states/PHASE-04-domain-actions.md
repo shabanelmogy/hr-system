@@ -24,8 +24,20 @@ For create, bulk create, edit, archive, restore, bulk archive, import, report, a
 - [ ] Archived records cannot enter active-only flows.
 - [ ] Restore behavior is explicit and tested.
 - [ ] Bulk operations do not silently ignore invalid or duplicated identifiers.
-- [ ] Import validates client limits before submitting and the API enforces its own limits.
+- [ ] Required Import distinguishes local-invalid rows from the submitted batch,
+      states whether the submitted batch is atomic, and never reports partial
+      success unless the API contract explicitly supports it.
+- [ ] Import validates client limits before submitting and the API independently enforces its own limits.
+- [ ] Import duplicate checks are field- and scope-specific, relationship lookups
+      are explicit, retry behavior is safe, and any rejected-row download is
+      separately classified as Required, Deferred, or Excluded.
 - [ ] Client feedback uses stable server errors and localized fallback messages.
+
+## Evidence to capture
+
+For every action, record one row linking its direct client handler, permission
+guard, API request, handler, transaction boundary, side-effect action, query-key
+invalidation, success test, and failure test. Use `N/A` only with a reason.
 
 ## Approved references
 
@@ -39,17 +51,17 @@ For create, bulk create, edit, archive, restore, bulk archive, import, report, a
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | states-master | 3 | `1bcee45daae927bacec3682c14a6330114ca29ffbcf6b489376cccf337a7d38f` |
-| states-master | 4 | `9d784c317c702d41f1d9282b7d153ea617fab527d8e80ef7222e65f18cd52fb0` |
+| states-master | 4 | `cb62a77c84913085b17954f7eb0fc5ae7d282a1cbd18a82286c9c0b6ea5684e0` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
-| states-master | 7 | `9e3df427e9a5cf7bec84a8f110739543a736248bb2b576225895c0f523e9de51` |
-| states-master | 8 | `4943e0d1fc6a2d0893837c810839ab2fb28cfadee58e6b7a57e1cd5e318e4699` |
-| states-api | 6 | `97e7703fbf9f0fa2eee2f1927c01c3e8c47dc983c6169ffc42bc09df2fd4853e` |
+| states-master | 7 | `6a8707cf3f36f91fe9a6fe41ab4c9e76cb37d1504a7bbbe13f284d266f61ed81` |
+| states-master | 8 | `e3b3334363a7838d07786d63c3d6d91ce0e5f26ae54aef07597ea29ad2fb4c85` |
+| states-api | 6 | `0bf7b721bb2d1a4e0587c80652289834a868cc3e03a8c4376e1925457c5714cf` |
 | states-api | 7 | `79ef819ddb68cb8382bf2c5f313131548be7b4a66ed3ab6e53777108f1093f66` |
-| states-api | 8 | `5f502b1906084a55b3bbff646f16611cc3c88e03b432a210d739a729d0eca2aa` |
-| states-web | 6 | `d12500e4febb37cccf52cb70d167f2b69e9a84793948328d0928459a19f787d2` |
+| states-api | 8 | `4778b66ab2e8bc98acc1502c1988db12fa425ebdba2caebe7e6a0fa0ff427221` |
+| states-web | 6 | `e8d419ebdf670d54113ac689fa0e42bb70202bc785662fb5e974a5dab1812425` |
 | states-web | 7 | `dd6b988a8e7b8b83010b144e56d1cec974980774b9fd9155dd966a6167bed42c` |
 | states-web | 8 | `dec0c122194d60ca08d8135c4d8fa24774fbecc3f5dc9d9fb4df340f9b3259c8` |
-| states-web | 9 | `3103392ff8db16be591f2bf6d1e3bc0abfba246c3b6421fc00b0af2afcbbb665` |
+| states-web | 9 | `b4892594b883341c8754301b6b316d035526f5600427bd489b0ab5a2d9523b6e` |
 | states-mobile | 9 | `c13868e55ed4b8222f0f9c3198da550e0d9ef4a8400fac18280850115b3cf1c0` |
 | states-mobile | 10 | `0c98fb8ba9d3ae023010173c1dec5c03cf83d196656377dcee0a9563155944fc` |
 | states-mobile | 11 | `a658c758cf1ad2b2ee4e64cfe6ecc5c5c16418220248aa4cd02df51a1ced4063` |

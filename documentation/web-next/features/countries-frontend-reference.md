@@ -545,6 +545,34 @@ with the same Zod schema as the form, and divided into local failures and valid
 rows. The API call is atomic for the submitted valid rows; local-invalid rows are
 not submitted. A server conflict marks the whole submitted batch failed.
 
+The implemented browser preflight is deterministic:
+
+- offer `countries-import-template.xlsx` with the canonical headers above;
+- accept `.xlsx` with the canonical XLSX MIME, browser-empty MIME, or generic
+  binary MIME, up to 5 MiB, and require a real XLSX ZIP container rather than a
+  renamed text/CSV file;
+- use only the first worksheet, require the exact case-sensitive header names in
+  the documented order, and reject duplicate headers, unexpected value columns,
+  formulas, a header-only workbook, or more than 100 non-empty data rows;
+- preserve worksheet row numbers while ignoring wholly blank rows;
+- apply form validation and field-scoped, case-insensitive duplicate checks for
+  Arabic name, English name, Alpha-2, and Alpha-3; repeated blank optional alpha
+  codes are allowed;
+- show explicit `pending`, `invalid`, `submitted`, `uploaded`, `failed`, and
+  `uncertain` row states with localized feedback.
+
+`excelService.ts`, `SpreadsheetImportCard`, and its picker/feedback children own
+the reusable file boundary. `countryImport.ts` owns the Countries headers,
+row mapping, limits, template filename, and duplicate scope. The import hook owns
+submission and invalidation. Do not copy these shared components into another
+feature; provide a feature-owned adapter instead.
+
+The bulk endpoint has no idempotency key. A no-response/timeout or 5xx after
+submission therefore marks submitted rows `uncertain`, locks that preview, and
+offers only a refreshed Grid reconciliation path. It never exposes “Retry failed”
+for an uncertain batch. A stable 4xx conflict is `failed` and requires correction
+or refresh before a new file is selected.
+
 Do not copy import into a feature unless its bulk endpoint defines maximum size,
 duplicate behavior, transaction scope, error presentation and cache refresh.
 
@@ -717,7 +745,9 @@ Replace every Countries-owned contract:
 |---|---|---|---|
 | C-F01 | P2 | ID, Phone and Updated columns currently inherit a Grid sort affordance even though the API sort allow-list excludes them. The controlled handler rejects the sort, but the affordance is misleading. | Set `sortable: false` on every column not accepted by the backend. |
 | C-F02 | P2 | Cards/Chart share the selected Grid search field/operator, but their header exposes only the search text. A user can switch views while a hidden field-specific condition remains active. | Every view must display or deliberately reset all active server criteria. |
-| C-F03 | P2 | Import relies on the API to reject more than 100 valid rows; the UI has no localized batch-size preflight. | Validate the endpoint maximum before sending and preserve the documented atomicity boundary. |
+| C-F03 | Resolved | Import now rejects more than 100 non-empty data rows during shared parsing and retains the API's authoritative 1-100 atomic bound. | Preserve the shared parser policy and API validation. |
+| C-F06 | Resolved | Countries previously skipped row 1 without validating its schema and checked only the filename extension. | Preserve template download plus extension/MIME/size/first-sheet/exact-header/duplicate-header/empty/formula/unexpected-column preflight. |
+| C-F07 | Resolved | Countries previously offered failed-row retry after an ambiguous network result. | Keep uncertain rows locked and reconcile the refreshed canonical list unless the API gains a reviewed idempotency contract. |
 | C-F04 | P2 | Frontend tests cover pure query mapping, request normalization, permissions, mock data, chart adapters and cell rendering, but not the complete controller/view/mutation flow. | Add integration coverage for criteria, permissions, detail failure, lifecycle dialogs and invalidation. |
 | C-M01 | P2 | Mobile models and serializes `currencyCode` and `hasStates`, but the screen exposes only status. The extra criteria are permanently fixed at defaults. | Either expose required filters through the controlled mobile filter UI or remove reserved criteria until the product contract requires them. |
 | C-M02 | P2 | Mobile defines `useCountry(id)` but view/edit pass the current list row directly to the form. This is safe only while the list DTO contains every form/detail field and is fresh enough. | Fetch and handle detail explicitly whenever list and detail contracts differ; persistent detail failure must block edit and expose Retry. |
@@ -739,6 +769,8 @@ pixel and interaction-for-interaction template.
 | Development mock selection | `utils/countryMockData.test.ts` |
 | Chart derivations and page scope | `components/chart-view/chartDataUtils.test.ts` |
 | Cell formatting | `components/grid-view/CountryCellRenderers.test.tsx` |
+| Shared XLSX safety contract | `shared/services/excelService.test.ts` |
+| Countries Import duplicate scope | `components/import-data/countryImport.test.ts` |
 | ActiveReportsJS templates | Shared service route tests, strict TypeScript compilation of SSR-safe Designer/Viewer wrappers, API safety/scope tests, and JSON parsing of the bound `public/reports/countries/countries-directory.rdlx-json` starter |
 | Mobile endpoint/query and response schemas | `mobile-react/src/features/basic-data/countries/api/__tests__/country-api.test.ts` |
 | Mobile shared list debounce/reset | `mobile-react/src/shared/listing/__tests__/useServerListState.test.ts` |

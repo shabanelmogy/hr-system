@@ -1,11 +1,16 @@
+import PublicOutlined from "@mui/icons-material/PublicOutlined";
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useCountryImport } from "./useCountryImport";
-import { useCountryColumns } from "./UseCountryColumns";
-import UploadSection from "./UploadSection";
-import LoadingAlert from "./LoadingAlert";
+import { useTranslation } from "react-i18next";
+import {
+  SpreadsheetImportCard,
+  SpreadsheetImportFeedback,
+} from "@/shared/components/file-upload";
 import CountryDataTable from "./CountryDataTable";
+import LoadingAlert from "./LoadingAlert";
 import NoDataMessage from "./NoDataMessage";
+import { useCountryColumns } from "./UseCountryColumns";
+import { useCountryImport } from "./useCountryImport";
 
 const AnimatedBox = styled(Box)({
   animation: "fadeIn 0.5s ease-in",
@@ -15,48 +20,63 @@ const AnimatedBox = styled(Box)({
   },
 });
 
-// Excel expected columns order (header row is ignored):
-// [nameAr, nameEn, alpha2Code, alpha3Code, phoneCode, currencyCode]
-const ImportCountries = () => {
+interface ImportCountriesProps {
+  onReconcile?: () => void;
+}
+
+const ImportCountries = ({ onReconcile }: ImportCountriesProps) => {
+  const { t } = useTranslation();
   const columns = useCountryColumns();
-  
   const {
     countries,
+    viewState,
+    viewMessage,
     loading,
     loadingText,
     showCounter,
     elapsedTime,
     selectedFile,
     uploadProgress,
-    failedCount,
     uploadableCount,
+    maximumBatchSize,
+    maximumFileSizeMb,
+    expectedHeaders,
     handleFileSelect,
     validateFile,
     uploadCountries,
     clearData,
+    downloadTemplate,
     SnackbarComponent,
   } = useCountryImport();
 
   return (
     <Box sx={{ maxWidth: 1600, margin: "auto", p: { xs: 2, sm: 3 } }}>
       <AnimatedBox>
-
-        {/* Upload Section */}
-        <UploadSection
+        <SpreadsheetImportCard
           selectedFile={selectedFile}
-          loading={loading}
-          loadingText={loadingText}
-          uploadProgress={uploadProgress}
-          countriesCount={countries.length}
-          failedCount={failedCount}
+          busy={loading}
+          progress={uploadProgress}
+          maxSizeMb={maximumFileSizeMb}
+          maxRows={maximumBatchSize}
+          rowCount={countries.length}
+          rowCountLabel={t("imports.countryRows", { count: countries.length })}
+          hint={t("imports.expectedHeaders", { headers: expectedHeaders })}
+          icon={<PublicOutlined />}
           uploadableCount={uploadableCount}
+          locked={viewState === "uncertain"}
           onFileSelect={handleFileSelect}
           validateFile={validateFile}
-          onUpload={uploadCountries}
+          onSubmit={uploadCountries}
           onClear={clearData}
+          onDownloadTemplate={downloadTemplate}
         />
 
-        {/* Status Messages */}
+        <SpreadsheetImportFeedback
+          viewState={viewState}
+          message={viewMessage}
+          onReconcile={onReconcile}
+        />
+
         <LoadingAlert
           loading={loading}
           loadingText={loadingText}
@@ -64,12 +84,8 @@ const ImportCountries = () => {
           elapsedTime={elapsedTime}
         />
 
-        {/* Data Table - Preview */}
         <CountryDataTable countries={countries} columns={columns} />
-
-        {/* No Data Message */}
-        <NoDataMessage show={countries.length === 0 && !loading} />
-        
+        <NoDataMessage show={viewState === "idle"} />
       </AnimatedBox>
       {SnackbarComponent}
     </Box>

@@ -4,6 +4,8 @@
 
 Implement the Expo client as a native presentation of the shared contract, using the same server-list and lifecycle semantics as web.
 
+Execution reference: `documentation/mobile-react/MOBILE_FEATURE_GUIDE.md`.
+
 ## Required structure
 
 - Thin Expo Router file and a typed route constant.
@@ -24,7 +26,33 @@ Implement the Expo client as a native presentation of the shared contract, using
 
 ## Mobile-specific decisions
 
-Record whether detail requires a dedicated query, whether reports open or share locally, which filters are exposed on compact screens, and how forms handle offline or retry states. These decisions may differ from web but must be explicit.
+Record whether detail requires a dedicated query, whether reports open or share
+locally, which filters are exposed on compact screens, and how forms handle
+offline or retry states. Classify mobile Import as `Required`, `Deferred`, or
+`Excluded` independently from web and record the reason. These decisions may
+differ from web but must be explicit.
+
+When mobile Import is Required:
+
+- use a platform-safe document picker and storage API instead of copying browser
+  file-input or workbook code;
+- consume the same documented API envelope, limits, duplicate rules, dependency
+  lookups, atomicity, and stable errors as web;
+- provide native loading, preview, permission/read-only, retry, localization, RTL,
+  accessibility, and post-success invalidation behavior;
+- test picker cancellation, unsupported and oversized files, parsing, exact
+  request body, dependency failure, API conflict, retry, and cache refresh.
+
+When mobile Import is Deferred or Excluded, keep the decision in the feature
+profile and do not leave an unreachable route, component, or translation surface.
+
+## Evidence to capture
+
+- Physical route, typed route, route-manifest, navigation, endpoint, query-key,
+  realtime, notification deep-link, and localization registrations.
+- Runtime schema parsing and exact request/query serialization tests.
+- Phone/tablet, orientation, safe-area, keyboard, EN/AR, RTL, touch-target,
+  screen-reader, permission/read-only, network, retry, and empty-state evidence.
 
 ## Approved references
 

@@ -6,6 +6,10 @@
 
 Build the server contract first so both clients consume one stable model.
 
+Execution reference: `documentation/api/Feature_Module_Implementation_Checklist.md`.
+The applied feature profile supplies evidence; the generic checklist supplies the
+implementation discipline.
+
 ## Required decisions
 
 - Entity fields, normalized values, nullability, relationships, uniqueness, and archive semantics.
@@ -14,6 +18,13 @@ Build the server contract first so both clients consume one stable model.
 - Search field and operator allow-lists, including negative-search null behavior.
 - Stable validation, not-found, conflict, in-use, and authorization responses.
 - Commit order for audit, persistence, background scheduling, notification, and realtime publication.
+- When Import is Required: exact endpoint, permission, request envelope, response,
+  success status, batch limit, atomicity, and idempotency. Prefer a typed JSON bulk
+  envelope when the client owns file parsing; use multipart only when server-owned
+  file parsing is an explicit requirement.
+- When Import is Required: field-scoped and ownership-scoped duplicate rules,
+  case sensitivity, parent/dependency lookup behavior, stable row or batch errors,
+  and audit/notification/realtime side effects.
 
 ## Implementation order
 
@@ -30,8 +41,20 @@ Build the server contract first so both clients consume one stable model.
 - [ ] A client can implement the feature using only documented contracts.
 - [ ] Mutations commit once and schedule side effects after a successful commit.
 - [ ] Bulk actions state limits, duplicate-ID behavior, atomicity, and idempotency.
+- [ ] A Required Import documents one exact wire example and has a controller or
+      service test that asserts its request envelope and success response.
+- [ ] Required Import handler/store tests cover bounds, same-field duplicates,
+      relationship validation, case-only persistence conflicts, atomic failure,
+      commit-before-schedule ordering, and stable errors.
 - [ ] Every externally visible error has a stable code and localized message.
 - [ ] Tests cover default paging, search, sort, status, duplicates, archive guards, restore, and bulk behavior.
+
+## Evidence to capture
+
+- Exact route, permission, request/response examples, status codes, and stable errors.
+- Handler transaction order and the store queries that close race-sensitive rules.
+- Focused validator, handler, store, controller, localization, and side-effect tests.
+- Migration/index impact or an explicit no-migration decision.
 
 ## Approved references
 
@@ -43,14 +66,14 @@ Build the server contract first so both clients consume one stable model.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | master | 3 | `b0ae30454b32e1209cd9b74f1bc82d45e58ae969a61381a25c64c86db7b09dfc` |
-| master | 4 | `b23b2333eb1c612669ddd269677711f77cebee002628a2903f3e10262a5184f3` |
+| master | 4 | `a9c88864fafde572fc0ffc1502f1a5ccb2fc55fdbd77aefe2c54c33d143b9529` |
 | master | 6 | `e671cfed0bfb63b0063c4f83c86be605190925f9dc7e6b1ef6e335c26fb89c54` |
 | api | 1 | `32d383dbea72903c12b0dd2d1b90c2ba6a10d6621ed91ae24f466af2563cd9c7` |
 | api | 2 | `afe1864abf7934444f9ea9b8b23456c10205bf6f59cdf60460c07fd71a5a5e8c` |
 | api | 3 | `1ed086d9c6342d4b59513fe93963fa4f837d0d896e5cfb9afa308ca8abebcecb` |
 | api | 4 | `8b127505d19c53adf6aa841529e5065220d1158e7679526b0bdd12fb28ed7ac7` |
 | api | 5 | `02e43688e2b00c35e8790993ecceb3bbc3346875252da1d5f903717c53a38529` |
-| api | 6 | `6f3fb6d8e004e407e57bb8e4c51596bd6d2de6377f7867c99b453ff882c3bc68` |
+| api | 6 | `8952e197e5708d48511b6ae5a0a36fcaeea05bd39c757596f0ad190592ef5a29` |
 | api | 7 | `1ab9fa036b11c40090cb0b49890916d71ab6eedaf0ee99815a641c4fcd123237` |
 | api | 8 | `19ba24881ed075978da2d89d9f5d6ac913ca8289d14d251464edfd93ab1e8c12` |
 | api | 9 | `d573f11dbd27c997e0f25cadcdbfb27a171809b7cd3ac088a355154f6c9c0105` |
