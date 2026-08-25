@@ -32,7 +32,7 @@ export function CountryReportView() {
   if (isLoading) {
     return (
       <AppCard padding="md" style={styles.card} variant="outlined">
-        <AppAlert severity="info">{t('common.loading')}</AppAlert>
+        <AppAlert severity="info">{t('feedback.loading')}</AppAlert>
       </AppCard>
     );
   }

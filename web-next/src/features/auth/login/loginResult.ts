@@ -24,6 +24,7 @@ const tenantSelectionSchema = z.object({
 
 const companySchema = z.object({
   id: z.number().int().positive(),
+  companyCode: z.string().trim().min(1),
   nameAr: z.string(),
   nameEn: z.string(),
 });

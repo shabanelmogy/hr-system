@@ -251,7 +251,7 @@ export function TenantAdminManagementScreen() {
         <AppStateView state="loading" />
       ) : queryError ? (
         <AppStateView
-          message={getErrorMessage(queryError, t('states.errorMessage'))}
+          message={getErrorMessage(queryError, t('feedback.unknownError'))}
           onRetry={() => void Promise.all([
             adminsQuery.refetch(),
             tenantsQuery.refetch(),

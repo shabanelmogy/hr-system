@@ -158,6 +158,32 @@ public sealed class BackgroundNotificationJobTests
         Assert.Equal(expectedSeverity, request.Severity);
     }
 
+    [Theory]
+    [InlineData("BulkAdd", "Districts.BulkCreated", "DistrictsCreatedNotificationMessage", NotificationSeverity.Success)]
+    [InlineData("BulkArchive", "Districts.BulkArchived", "DistrictsArchivedNotificationMessage", NotificationSeverity.Warning)]
+    public void DistrictBulkNotificationFactory_UsesPluralLocalizedMessageKeys(
+        string action,
+        string expectedEventType,
+        string expectedMessageKey,
+        NotificationSeverity expectedSeverity)
+    {
+        var request = NotificationPublishRequestFactory.Create(
+            Permissions.ViewDistricts,
+            "GeographicalInformation",
+            "District",
+            "Districts",
+            action,
+            new Dictionary<string, string> { ["Count"] = "2" },
+            null,
+            "/basic-data/districts",
+            "actor-1",
+            Guid.Parse("44444444-4444-4444-4444-444444444444"));
+
+        Assert.Equal(expectedEventType, request.EventType);
+        Assert.Equal(expectedMessageKey, request.MessageKey);
+        Assert.Equal(expectedSeverity, request.Severity);
+    }
+
     [Fact]
     public async Task CountryBulkArchiveJob_PublishesOneDurableNotificationAndGenericInvalidation()
     {

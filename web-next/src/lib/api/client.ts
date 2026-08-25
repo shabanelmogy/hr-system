@@ -69,7 +69,9 @@ class ApiClient {
           !isPublicAuthenticationRequest(url) &&
           typeof window !== "undefined"
         ) {
-          await this.logout();
+          // Revalidate before logging out. A request carrying the previous
+          // company token can complete after a successful company switch.
+          window.dispatchEvent(new CustomEvent(SESSION_CHANGED_EVENT));
         }
         return Promise.reject(error);
       }
@@ -247,6 +249,7 @@ export default apiClient;
 function isPublicAuthenticationRequest(url: string) {
   return [
     "/auth/login",
+    "/auth/selectTenant",
     "/auth/selectCompany",
     "/auth/register",
     "/auth/forgetPassword",

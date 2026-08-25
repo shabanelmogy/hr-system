@@ -27,11 +27,13 @@ export function GeographicalInformationScreen() {
           label: t('basicData.districts'),
           icon: 'location-outline',
           permissions: [permissions.ViewDistricts],
+          route: ROUTES.basicData.districts,
         },
         {
           label: t('basicData.addressTypes'),
           icon: 'home-outline',
           permissions: [permissions.ViewAddressTypes],
+          route: ROUTES.basicData.addressTypes,
         },
       ]}
       title={t('navigation.geographicalInformation')}

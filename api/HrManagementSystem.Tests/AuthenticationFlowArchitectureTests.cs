@@ -23,7 +23,7 @@ public sealed class AuthenticationFlowArchitectureTests
     public void AuthenticationContracts_ExposeOnlyTheirOwnFlow()
     {
         Assert.Equal(4, typeof(IAuthLoginService).GetMethods().Length);
-        Assert.Equal(3, typeof(IAuthSessionService).GetMethods().Length);
+        Assert.Equal(4, typeof(IAuthSessionService).GetMethods().Length);
         Assert.Equal(5, typeof(IAuthAccountService).GetMethods().Length);
     }
 

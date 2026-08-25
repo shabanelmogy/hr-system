@@ -26,6 +26,7 @@ export interface TenantSelectionResponse {
 
 export interface CompanyOption {
   id: number;
+  companyCode: string;
   nameAr: string;
   nameEn: string;
 }

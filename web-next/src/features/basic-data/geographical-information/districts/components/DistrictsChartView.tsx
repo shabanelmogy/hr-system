@@ -1,100 +1,109 @@
-import { Box, Grid } from '@mui/material';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { District } from '../types/District';
+import { Box, Grid } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";
+import type { DistrictListItem } from "../types/District";
 import {
-  ChartLegend,
-  DistrictCodeChart,
-  EmptyChartState,
-  getChartColors,
-  getActiveDistrictsCount,
-  getAverageDistrictsPerState,
-  getDistrictsWithCodesCount,
-  getTotalDistrictsCount,
-  getUniqueStatesCount,
-  LoadingChartState,
-  prepareDistrictCodeData,
-  prepareStateData,
-  prepareTimelineData,
   StateBarChart,
   StatePieChart,
+  DistrictsChart,
+  EmptyChartDistrict,
+  getChartColors,
+  LoadingChartDistrict,
+  prepareStateData,
+  prepareDistrictData,
+  prepareTimelineData,
   SummaryCards,
   TimelineChart,
-} from './chart-view';
+} from "./chart-view";
 
 interface DistrictsChartViewProps {
-  districts: District[];
+  districts: DistrictListItem[];
+  totalCount: number;
   loading: boolean;
   onAdd?: () => void;
 }
 
-const DistrictsChartView: React.FC<DistrictsChartViewProps> = ({
+const DistrictsChartView = ({
   districts,
+  totalCount,
   loading,
   onAdd,
-}) => {
-  const { t } = useTranslation();
+}: DistrictsChartViewProps) => {
+  const { i18n } = useTranslation();
+  const theme = useTheme();
 
-  // Handle loading state
-  if (loading) {
-    return <LoadingChartState t={t} />;
-  }
+  if (loading) return <LoadingChartDistrict />;
+  if (districts.length === 0) return <EmptyChartDistrict onAdd={onAdd} />;
 
-  // Handle empty state
-  if (!districts || districts.length === 0) {
-    return <EmptyChartState t={t} onAdd={onAdd} />;
-  }
-
-  // Prepare chart data
-  const stateData = prepareStateData(districts);
-  const codeData = prepareDistrictCodeData(districts);
+  const language = i18n.resolvedLanguage;
+  const stateData = prepareStateData(districts, language);
+  const districtData = prepareDistrictData(districts, language);
   const timelineData = prepareTimelineData(districts);
-  const colors = getChartColors();
-
-  // Calculate summary metrics
-  const totalDistricts = getTotalDistrictsCount(districts);
-  const totalStates = getUniqueStatesCount(districts);
-  const totalCodes = getDistrictsWithCodesCount(districts);
-  const activeDistricts = getActiveDistrictsCount(districts);
-  const avgPerState = getAverageDistrictsPerState(districts);
+  const colors = getChartColors(theme.palette.mode);
+  const visibleDistricts = districts.reduce((total, state) => total + state.addressesCount, 0);
+  const chartGridItemSx = {
+    display: "flex",
+    height: "100%",
+    minHeight: { xs: 280, md: 0 },
+    minWidth: 0,
+    "& > *": { width: "100%", height: "100%" },
+  } as const;
 
   return (
-    <Box sx={{ width: "100%" }}>
-      {/* Summary Cards */}
-      <SummaryCards
-        totalDistricts={totalDistricts}
-        totalStates={totalStates}
-        totalCodes={totalCodes}
-        activeDistricts={activeDistricts}
-        avgPerState={avgPerState}
-        t={t}
-      />
+    <Box
+      sx={{
+        boxSizing: "border-box",
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        minHeight: 0,
+        overflow: "hidden",
+        px: { xs: 0.5, md: 0.75 },
+        pt: 0.5,
+        width: "100%",
+        minWidth: 0,
+      }}
+    >
+      <Box sx={{ flexShrink: 0 }}>
+        <SummaryCards
+          totalMatchingDistricts={totalCount}
+          visibleDistricts={districts.length}
+          visibleStates={stateData.length}
+          visibleAddresses={visibleDistricts}
+        />
+      </Box>
 
-      {/* Charts */}
-      <Grid container spacing={3}>
-        {/* Districts by State - Bar Chart */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <StateBarChart data={stateData} t={t} />
+      <Grid
+        container
+        spacing={0.75}
+        sx={{
+          flex: 1,
+          minHeight: 0,
+          overflowY: "auto",
+          alignContent: { xs: "start", md: "stretch" },
+        }}
+      >
+        <Grid size={{ xs: 12, md: 6 }} sx={chartGridItemSx}>
+          <StateBarChart data={stateData} />
         </Grid>
 
-        {/* Districts by State - Pie Chart */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <StatePieChart data={stateData} colors={colors} t={t} />
+        <Grid size={{ xs: 12, md: 6 }} sx={chartGridItemSx}>
+          <StatePieChart data={stateData} colors={colors} />
         </Grid>
 
-        {/* District Code Prefixes */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <DistrictCodeChart data={codeData} t={t} />
+        <Grid
+          size={{ xs: 12, md: timelineData.length > 0 ? 6 : 12 }}
+          sx={chartGridItemSx}
+        >
+          <DistrictsChart data={districtData} />
         </Grid>
 
-        {/* Timeline */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <TimelineChart data={timelineData} t={t} />
-        </Grid>
+        {timelineData.length > 0 && (
+          <Grid size={{ xs: 12, md: 6 }} sx={chartGridItemSx}>
+            <TimelineChart data={timelineData} />
+          </Grid>
+        )}
       </Grid>
-
-      {/* Legend */}
-      <ChartLegend data={stateData} colors={colors} />
     </Box>
   );
 };

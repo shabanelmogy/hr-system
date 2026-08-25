@@ -14,7 +14,7 @@ export default function NotFoundScreen() {
         404
       </AppText>
       <AppText align="center" color="muted">
-        {t('states.emptyMessage')}
+        {t('feedback.notFoundMessage')}
       </AppText>
       <AppButton icon="home-outline" onPress={() => router.replace(asHref(ROUTES.home))}>
         {t('navigation.dashboard')}

@@ -178,7 +178,7 @@ export function LocalizationManagementScreen() {
         <AppStateView state="loading" />
       ) : entriesQuery.error ? (
         <AppStateView
-          message={getPlatformToolErrorMessage(entriesQuery.error, t('states.errorMessage'))}
+          message={getPlatformToolErrorMessage(entriesQuery.error, t('feedback.unknownError'))}
           onRetry={() => void entriesQuery.refetch()}
           state="error"
         />

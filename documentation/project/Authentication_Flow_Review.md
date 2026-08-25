@@ -338,6 +338,9 @@ function refreshAuthTokens(accessToken, refreshToken) {
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
 | POST | `/api/v1/auth/login` | ❌ Anonymous | Login with username/password |
+| POST | `/api/v1/auth/selectTenant` | ❌ Anonymous | Consume a one-time tenant-selection challenge |
+| POST | `/api/v1/auth/selectCompany` | ❌ Anonymous | Consume a one-time company-selection challenge |
+| POST | `/api/v1/auth/switchCompany` | ✅ Authorized | Replace the current session with one scoped to another accessible company |
 | POST | `/api/v1/auth/register` | ❌ Anonymous | Register new user |
 | POST | `/api/v1/auth/refreshToken` | ❌ Anonymous | Refresh access token |
 | POST | `/api/v1/auth/logout` | ❌ Anonymous | Revoke refresh token |
@@ -459,6 +462,8 @@ export const config = {
 - [ ] **Login** with valid credentials → redirects to home
 - [ ] **Login** with invalid credentials → shows error
 - [ ] **Login** with disabled account → shows "account disabled" error
+- [ ] **Multiple tenants/companies** → requires an explicit selection and rejects challenge replay
+- [ ] **Switch company** → updates header scope, clears scoped caches, and reconnects SignalR
 - [ ] **Access protected route** without login → redirects to login with `returnTo`
 - [ ] **Access protected route** with valid token → allows access
 - [ ] **Wait for token expiry** → auto-refreshes without logout

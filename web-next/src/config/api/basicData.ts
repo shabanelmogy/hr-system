@@ -1,4 +1,4 @@
-import type { CountriesRoutes, CrudRoutes, StatesRoutes, DistrictsRoutes, Id } from './types';
+import type { CountriesRoutes, AddressTypesRoutes, StatesRoutes, DistrictsRoutes, Id } from './types';
 import { version } from "./constants";
 
 export const countries: CountriesRoutes = {
@@ -14,12 +14,17 @@ export const countries: CountriesRoutes = {
   reportData: `${version}/countries/report-data`,
 };
 
-export const addressTypes: CrudRoutes = {
-  getAll: `${version}/addressTypes/getAll`,
-  getById: (id: Id) => `${version}/addressTypes/${id}`,
-  add: `${version}/addressTypes/add`,
-  update: `${version}/addressTypes/update`,
-  delete: (id: Id) => `${version}/addressTypes/delete/${id}`,
+export const addressTypes: AddressTypesRoutes = {
+  page: `${version}/addresstypes`,
+  lookup: `${version}/addresstypes/lookup`,
+  getById: (id: Id) => `${version}/addresstypes/${id}`,
+  getWithAddresses: (id: Id) => `${version}/addresstypes/${id}/addresses`,
+  create: `${version}/addresstypes`,
+  bulkCreate: `${version}/addresstypes/bulk`,
+  update: (id: Id) => `${version}/addresstypes/${id}`,
+  archive: (id: Id) => `${version}/addresstypes/${id}`,
+  bulkArchive: `${version}/addresstypes/bulk-archive`,
+  restore: (id: Id) => `${version}/addresstypes/${id}/restore`,
 };
 
 export const states: StatesRoutes = {
@@ -39,12 +44,17 @@ export const states: StatesRoutes = {
 };
 
 export const districts: DistrictsRoutes = {
-  getAll: `${version}/districts/getAll`,
+  page: `${version}/districts`,
+  lookup: (stateId?: Id) => stateId == null
+    ? `${version}/districts/lookup`
+    : `${version}/districts/lookup?stateId=${stateId}`,
+  byState: (stateId: Id) => `${version}/districts/by-state/${stateId}`,
   getById: (id: Id) => `${version}/districts/${id}`,
-  getAllByState: (stateId: Id) => `${version}/districts/getAllByState/by-state/${stateId}`,
-  getDistrictWithAddresses: (id: Id) => `${version}/districts/getDistrictWithAddresses/${id}/addresses`,
-  add: `${version}/districts/add`,
-  update: `${version}/districts/update`,
-  delete: (id: Id) => `${version}/districts/delete/${id}`,
-  getCount: `${version}/districts/getCount/count`,
+  getWithAddresses: (id: Id) => `${version}/districts/${id}/addresses`,
+  create: `${version}/districts`,
+  bulkCreate: `${version}/districts/bulk`,
+  update: (id: Id) => `${version}/districts/${id}`,
+  archive: (id: Id) => `${version}/districts/${id}`,
+  bulkArchive: `${version}/districts/bulk-archive`,
+  restore: (id: Id) => `${version}/districts/${id}/restore`,
 };

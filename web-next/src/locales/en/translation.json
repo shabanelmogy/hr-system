@@ -39,6 +39,9 @@
     "average": "Average",
     "poor": "Poor"
   },
+  "common": {
+    "retry": "Retry"
+  },
   "maps": {
     "title": "World Map",
     "globalPresence": "Global Presence",
@@ -367,6 +370,10 @@
     "selectCompanyDescription": "Choose the company you want to work with for this session.",
     "availableCompanies": "Available companies",
     "continueToCompany": "Continue",
+    "currentCompany": "Current company",
+    "switchCompany": "Switch company",
+    "companySwitched": "Company changed successfully.",
+    "companySwitchFailed": "Could not change the current company.",
     "selectTenant": "Select tenant",
     "selectTenantDescription": "Choose the tenant you want to work with for this session.",
     "availableTenants": "Available tenants",
@@ -589,18 +596,28 @@
       "totalAddressTypes": "Total Address Types",
       "completeProfiles": "Complete Profiles",
       "recentlyAdded": "Recently Added",
-      "avgNameLength": "Avg Name Length"
+      "avgNameLength": "Avg Name Length",
+      "totalMatching": "Matching Address Types",
+      "visibleAddressTypes": "Address Types on This Page",
+      "withAddressesOnPage": "With Addresses on This Page",
+      "withoutAddressesOnPage": "Without Addresses on This Page",
+      "dataQuality": "Data Quality"
     },
     "charts": {
       "byInitialLetter": "Address Types by Initial Letter",
       "languageDistribution": "Language Distribution",
       "nameLength": "Name Length Distribution",
-      "timeline": "Address Types Added Over Time"
+      "timeline": "Address Types Added Over Time",
+      "title": "Address Types Analytics",
+      "noData": "No Address Type Data Available"
     },
     "views": {
       "grid": "Grid",
       "chart": "Chart",
-      "card": "Card"
+      "card": "Card",
+      "cards": "Card View",
+      "report": "Report",
+      "import": "Import"
     },
     "title": "Address Types",
     "subTitle": "List of address types",
@@ -631,12 +648,44 @@
     "browseDescription": "address types with enhanced search and filtering",
     "searchPlaceHolder": "Search address types by name...",
     "addressType": "Address Type",
+    "addresses": "Addresses",
+    "cardSelectionAriaLabel": "Select {{name}}",
     "all": "All Address Types",
     "recent30Days": "Recent (30 days)",
     "viewSubtitle": "Add New AddressType",
     "editSubtitle": "Edit Current AddressType",
     "addSubtitle": "Add New AddressType",
-    "generateMockData": "Generate Mock Data"
+    "generateMockData": "Generate Mock Data",
+    "search": {
+      "placeholder": "Search Address Types",
+      "column": "Column",
+      "condition": "Condition",
+      "allColumns": "All columns",
+      "operators": {
+        "contains": "Contains",
+        "doesNotContain": "Does not contain",
+        "equals": "Equals",
+        "doesNotEqual": "Does not equal",
+        "startsWith": "Starts with",
+        "endsWith": "Ends with"
+      }
+    },
+    "status": {
+      "label": "Status",
+      "active": "Active",
+      "archived": "Archived",
+      "all": "All statuses"
+    },
+    "bulkArchiveAction": "Archive selected",
+    "permissionDenied": "You do not have permission to import Address Types.",
+    "reportCatalogError": "Could not load published reports.",
+    "reportUnavailable": "No published Address Type report is available.",
+    "import": {
+      "rows": "{{count}} address type rows",
+      "uploading": "Uploading Address Types...",
+      "duplicateInFile": "Duplicate of another address type row in this file",
+      "importSuccess": "{{count}} address types uploaded"
+    }
   },
   "countries": {
     "dashboard": {
@@ -1013,7 +1062,11 @@
       "dataQuality": "Data Quality",
       "totalStates": "Total States",
       "withCodes": "With Codes",
-      "activeDistricts": "Active Districts"
+      "activeDistricts": "Active Districts",
+      "totalMatching": "Matching Districts",
+      "visibleDistricts": "Districts on This Page",
+      "statesOnPage": "States on This Page",
+      "addressesOnPage": "Addresses on This Page"
     },
     "views": {
       "grid": "Grid View",
@@ -1031,7 +1084,12 @@
       "distributionMetric": "Distribution metric",
       "topStates": "Top States by District Count",
       "title": "Districts Analytics",
-      "timeline": "Districts Added Over Time"
+      "timeline": "Districts Added Over Time",
+      "districtsByStateDescription": "Loaded districts grouped by their parent state",
+      "stateShare": "State Share on This Page",
+      "addressesByDistrict": "Top Districts by Address Count",
+      "addressesByDistrictDescription": "Address totals for the loaded districts",
+      "noData": "No District Data Available"
     },
     "fetched": "District list fetched successfully",
     "title": "Districts",
@@ -1042,6 +1100,8 @@
     "addSubtitle": "Add new district",
     "state": "State",
     "stateName": "State Name",
+    "stateNameAr": "State name (Arabic)",
+    "stateNameEn": "State name (English)",
     "name": "District Name",
     "code": "District Code",
     "view": "View District",
@@ -1066,6 +1126,8 @@
     "noData": "No districts available",
     "noDataDescription": "Start by adding your first district",
     "districtsCount": "districts",
+    "addresses": "Addresses",
+    "addressesCount": "{{count}} addresses",
     "fetchError": "Failed to fetch districts",
     "createError": "Failed to create district",
     "updateError": "Failed to update district",
@@ -1082,6 +1144,47 @@
     "browseDescription": "districts with enhanced search and filtering",
     "searchPlaceHolder": "Search districts by name, code, or state...",
     "districts": "Districts",
+    "archiveError": "Failed to archive district",
+    "restoreError": "Failed to restore district",
+    "archived": "District archived successfully",
+    "restored": "District restored successfully",
+    "permissionDenied": "You do not have permission to perform this action",
+    "reportCatalogError": "The District report list could not be loaded. Add a published District Crystal Report and retry.",
+    "reportUnavailable": "No published Crystal Report is available for Districts. Publish one in Report Manager and grant Run access.",
+    "archiveTitle": "Archive district",
+    "archiveDescription": "Archive this district? Districts with active addresses cannot be archived.",
+    "restoreTitle": "Restore district",
+    "restoreDescription": "Restore this district under its active state?",
+    "bulkArchiveTitle": "Archive selected districts",
+    "bulkArchiveDescription": "Archive all selected districts? This is blocked when any selected district has active addresses.",
+    "bulkArchiveConfirm": "Archive {{count}} districts",
+    "bulkArchiveAction": "Archive selected ({{count}})",
+    "bulkArchiveSelectionRequired": "Select at least one active district to archive",
+    "bulkArchiveLimitExceeded": "Select no more than {{max}} districts per archive request.",
+    "bulkArchived": "Archived {{count}} districts",
+    "bulkArchiveError": "Unable to archive the selected districts",
+    "selectedCount": "{{count}} districts selected",
+    "cardSelectionAriaLabel": "Select {{name}}",
+    "status": {
+      "label": "Status",
+      "active": "Active",
+      "archived": "Archived",
+      "all": "All"
+    },
+    "search": {
+      "placeholder": "Search districts by name, code, or state",
+      "column": "Column",
+      "condition": "Condition",
+      "allColumns": "All columns",
+      "operators": {
+        "contains": "Contains",
+        "doesNotContain": "Does not contain",
+        "equals": "Equals",
+        "doesNotEqual": "Does not equal",
+        "startsWith": "Starts with",
+        "endsWith": "Ends with"
+      }
+    },
     "sort": {
       "name": "Name",
       "code": "Code",
@@ -1102,7 +1205,27 @@
     "recent90Days": "Recent (90 days)",
     "recent120Days": "Recent (120 days)",
     "total": "Total",
-    "filtered": "Filtered"
+    "listSummary": "Browse and manage {{count}} districts with server-side search and filtering",
+    "totalCount": "{{count}} districts",
+    "highlight": {
+      "new": "New",
+      "edited": "Updated"
+    },
+    "filtered": "Filtered",
+    "import": {
+      "districtRows": "{{count}} district rows",
+      "uploading": "Uploading districts...",
+      "unknownState": "State not found or inactive",
+      "duplicateInFile": "Duplicate of another row for the same State in this file",
+      "importSuccess": "{{count}} districts uploaded",
+      "stateLookup": {
+        "loading": "Loading the active State lookup required to validate this import...",
+        "ready": "The active State lookup is ready.",
+        "empty": "No active States are available. Add or restore a State before importing Districts.",
+        "forbidden": "District import requires States:View so State names can be validated. Ask an administrator for this permission.",
+        "error": "The active State lookup could not be loaded. No rows have been validated as unknown. Retry the lookup."
+      }
+    }
   },
   "roles": {
     "creatingRole": "Creating new role",

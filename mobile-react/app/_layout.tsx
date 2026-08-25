@@ -51,7 +51,7 @@ function RootNavigator() {
     ) : onboardingCompleted && status === 'unavailable' ? (
       <AppScreen contentContainerStyle={{ flex: 1 }} scroll={false}>
         <AppStateView
-          message={t('states.errorMessage')}
+          message={t('feedback.unknownError')}
           onRetry={() => void retry()}
           state="error"
           title={t('auth.serviceUnavailable')}

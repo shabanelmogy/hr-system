@@ -10,6 +10,7 @@ import apiClient from "@/lib/api/client";
 import { isPublicRoute, SESSION_CHANGED_EVENT } from "./constants";
 import { UNAVAILABLE_ROUTE } from "./route-access";
 import { SessionRequestState } from "./session-request-state";
+import { auth as authRoutes } from "@/config/api/auth";
 
 const sessionRevalidationIntervalMs = 5 * 60_000;
 const sessionExpiryBufferMs = 30_000;
@@ -22,9 +23,11 @@ type SessionContextValue = {
   user: SessionClaims | null;
   isLoading: boolean;
   isLoggingOut: boolean;
+  isSwitchingCompany: boolean;
   error: string | null;
   refresh: () => Promise<void>;
   logout: () => Promise<void>;
+  switchCompany: (companyId: number) => Promise<void>;
   /** Returns true if `roles` is empty (no restriction) or the user has at least one of the given roles (OR semantics). */
   hasRole: (roles: readonly string[]) => boolean;
   /** Returns true if `permissions` is empty (no restriction) or the user has at least one of the given permissions (OR semantics). */
@@ -40,8 +43,10 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<SessionClaims | null>(null);
   const [isLoading, setIsLoading] = useState(requiresSession);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isSwitchingCompany, setIsSwitchingCompany] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const refreshStateRef = useRef<SessionRequestState | null>(null);
+  const companySwitchTransitionRef = useRef(false);
   const logoutPromiseRef = useRef<Promise<void> | null>(null);
   const lastRefreshAtRef = useRef(0);
   const userRef = useRef<SessionClaims | null>(null);
@@ -74,7 +79,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
             setUser(null);
             setError(null);
             if (!isPublicRoute(currentPathname)) {
-              router.replace(loginUrlWithReturnTo() as Route);
+              window.dispatchEvent(new CustomEvent("auth:logout"));
             }
           }
           return;
@@ -138,7 +143,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const handleSessionChanged = () => {
-      void refresh();
+      if (!companySwitchTransitionRef.current) void refresh();
     };
 
     window.addEventListener(SESSION_CHANGED_EVENT, handleSessionChanged);
@@ -227,6 +232,52 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     return logoutPromise;
   }, [router]);
 
+  const switchCompany = useCallback(async (companyId: number) => {
+    const currentUser = userRef.current;
+    if (
+      !Number.isInteger(companyId) ||
+      companyId <= 0 ||
+      !currentUser?.companies.some((company) => company.id === companyId)
+    ) {
+      throw new Error("Invalid company selection");
+    }
+    if (companyId === currentUser.companyId) return;
+
+    companySwitchTransitionRef.current = true;
+    refreshStateRef.current!.invalidate();
+    setIsSwitchingCompany(true);
+    setError(null);
+    try {
+      const response = await fetch(authRoutes.switchCompany, {
+        method: "POST",
+        credentials: "same-origin",
+        cache: "no-store",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ companyId }),
+      });
+
+      if (response.status === 401) {
+        await logout();
+        throw new Error("Authentication session expired");
+      }
+      if (!response.ok) {
+        throw new Error(await readProblemMessage(response));
+      }
+
+      await refresh();
+      if (userRef.current?.companyId !== companyId) {
+        userRef.current = null;
+        setUser(null);
+        setError("Unable to verify the switched company session");
+        router.replace(unavailableUrlWithReturnTo() as Route);
+        throw new Error("Unable to verify the switched company session");
+      }
+    } finally {
+      companySwitchTransitionRef.current = false;
+      setIsSwitchingCompany(false);
+    }
+  }, [logout, refresh, router]);
+
   // Handle logout events dispatched by apiClient (e.g. on 401 interceptor)
   useEffect(() => {
     const handler = () => { void logout(); };
@@ -238,9 +289,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     user,
     isLoading,
     isLoggingOut,
+    isSwitchingCompany,
     error,
     refresh,
     logout,
+    switchCompany,
     hasRole: (roles) => {
       if (roles.length === 0) return true;
       return isAuthorized(user, { roles });
@@ -249,15 +302,20 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       if (permissions.length === 0) return true;
       return isAuthorized(user, { permissions });
     }
-  }), [isLoading, isLoggingOut, error, refresh, logout, user]);
+  }), [isLoading, isLoggingOut, isSwitchingCompany, error, refresh, logout, switchCompany, user]);
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 }
 
-function loginUrlWithReturnTo() {
-  if (typeof window === "undefined") return "/login";
-  const returnTo = `${window.location.pathname}${window.location.search}`;
-  return `/login?returnTo=${encodeURIComponent(returnTo)}`;
+async function readProblemMessage(response: Response) {
+  try {
+    const problem = await response.json() as { detail?: unknown; title?: unknown };
+    if (typeof problem.detail === "string" && problem.detail.trim()) return problem.detail;
+    if (typeof problem.title === "string" && problem.title.trim()) return problem.title;
+  } catch {
+    // The status text below remains a useful fallback for non-JSON proxy errors.
+  }
+  return response.statusText || `Request failed with status ${response.status}`;
 }
 
 function unavailableUrlWithReturnTo() {

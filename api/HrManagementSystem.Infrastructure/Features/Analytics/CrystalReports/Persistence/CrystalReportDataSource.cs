@@ -8,24 +8,36 @@ namespace HrManagementSystem.Infrastructure.Features.Analytics.CrystalReports.Pe
 public sealed class CrystalReportDataSource(ApplicationDbContext context)
     : ICrystalReportDataSource
 {
-    private static readonly string[] NameFilters =
-        ["NameAr", "NameEn", "CountryAr", "CountryEn", "StateAr", "StateEn"];
+    private static readonly IReadOnlyDictionary<string, string[]> ApprovedFilters =
+        new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["countries"] = ["NameAr", "NameEn", "CountryAr", "CountryEn"],
+            ["states"] = ["NameAr", "NameEn", "StateAr", "StateEn"],
+            ["districts"] = ["NameAr", "NameEn", "DistrictAr", "DistrictEn", "StateAr", "StateEn"],
+            ["addresstypes"] = ["NameAr", "NameEn", "AddressTypeAr", "AddressTypeEn"]
+        };
 
     public async Task<CrystalReportDataSet?> BuildAsync(
         string entityKey,
         IReadOnlyDictionary<string, string?> filters,
         CancellationToken cancellationToken)
     {
-        if (filters.Any(item =>
+        var normalizedEntityKey = entityKey.ToLowerInvariant();
+        if (!ApprovedFilters.TryGetValue(normalizedEntityKey, out var approvedFilters) ||
+            filters.Any(item =>
                 !string.IsNullOrWhiteSpace(item.Value) &&
-                !NameFilters.Contains(item.Key, StringComparer.OrdinalIgnoreCase)))
+                !approvedFilters.Contains(item.Key, StringComparer.OrdinalIgnoreCase)))
             return null;
 
-        return entityKey.ToLowerInvariant() switch
+        return normalizedEntityKey switch
         {
             "countries" => new CrystalReportDataSet(await BuildCountriesAsync(
                 filters, cancellationToken)),
             "states" => new CrystalReportDataSet(await BuildStatesAsync(
+                filters, cancellationToken)),
+            "districts" => new CrystalReportDataSet(await BuildDistrictsAsync(
+                filters, cancellationToken)),
+            "addresstypes" => new CrystalReportDataSet(await BuildAddressTypesAsync(
                 filters, cancellationToken)),
             _ => null
         };
@@ -123,6 +135,93 @@ public sealed class CrystalReportDataSource(ApplicationDbContext context)
         return WriteXml(table);
     }
 
+    private async Task<string> BuildDistrictsAsync(
+        IReadOnlyDictionary<string, string?> filters,
+        CancellationToken cancellationToken)
+    {
+        var nameAr = Filter(filters, "NameAr", "DistrictAr");
+        var nameEn = Filter(filters, "NameEn", "DistrictEn");
+        var stateAr = Filter(filters, "StateAr");
+        var stateEn = Filter(filters, "StateEn");
+        var districts = context.Districts.AsNoTracking().Where(district =>
+            !district.IsDeleted &&
+            !district.State!.IsDeleted &&
+            !district.State.Country!.IsDeleted);
+        if (nameAr is not null)
+            districts = districts.Where(district => district.NameAr == nameAr);
+        if (nameEn is not null)
+            districts = districts.Where(district => district.NameEn == nameEn);
+        if (stateAr is not null)
+            districts = districts.Where(district => district.State!.NameAr == stateAr);
+        if (stateEn is not null)
+            districts = districts.Where(district => district.State!.NameEn == stateEn);
+
+        var rows = await districts
+            .OrderBy(district => district.Id)
+            .Select(district => new DistrictRow(
+                district.Id,
+                district.NameAr,
+                district.NameEn,
+                district.Code,
+                district.StateId,
+                district.State!.NameAr,
+                district.State.NameEn,
+                district.Addresses.Count(address => !address.IsDeleted)))
+            .ToListAsync(cancellationToken);
+
+        var table = new DataTable("ReportData");
+        table.Columns.Add("DistrictId", typeof(int));
+        table.Columns.Add("DistrictAr", typeof(string));
+        table.Columns.Add("DistrictEn", typeof(string));
+        table.Columns.Add("DistrictCode", typeof(string));
+        table.Columns.Add("StateId", typeof(int));
+        table.Columns.Add("StateAr", typeof(string));
+        table.Columns.Add("StateEn", typeof(string));
+        table.Columns.Add("AddressesCount", typeof(int));
+        foreach (var row in rows)
+            table.Rows.Add(
+                row.DistrictId,
+                row.DistrictAr,
+                row.DistrictEn,
+                row.DistrictCode,
+                row.StateId,
+                row.StateAr,
+                row.StateEn,
+                row.AddressesCount);
+        return WriteXml(table);
+    }
+
+    private async Task<string> BuildAddressTypesAsync(
+        IReadOnlyDictionary<string, string?> filters,
+        CancellationToken cancellationToken)
+    {
+        var nameAr = Filter(filters, "NameAr", "AddressTypeAr");
+        var nameEn = Filter(filters, "NameEn", "AddressTypeEn");
+        var addressTypes = context.AddressTypes.AsNoTracking()
+            .Where(addressType => !addressType.IsDeleted);
+        if (nameAr is not null)
+            addressTypes = addressTypes.Where(addressType => addressType.NameAr == nameAr);
+        if (nameEn is not null)
+            addressTypes = addressTypes.Where(addressType => addressType.NameEn == nameEn);
+
+        var rows = await addressTypes.OrderBy(addressType => addressType.Id)
+            .Select(addressType => new AddressTypeRow(
+                addressType.Id,
+                addressType.NameAr,
+                addressType.NameEn,
+                addressType.Addresses.Count(address => !address.IsDeleted)))
+            .ToListAsync(cancellationToken);
+
+        var table = new DataTable("ReportData");
+        table.Columns.Add("AddressTypeId", typeof(int));
+        table.Columns.Add("AddressTypeAr", typeof(string));
+        table.Columns.Add("AddressTypeEn", typeof(string));
+        table.Columns.Add("AddressesCount", typeof(int));
+        foreach (var row in rows)
+            table.Rows.Add(row.AddressTypeId, row.AddressTypeAr, row.AddressTypeEn, row.AddressesCount);
+        return WriteXml(table);
+    }
+
     private static string? Filter(
         IReadOnlyDictionary<string, string?> filters,
         params string[] keys)
@@ -161,4 +260,20 @@ public sealed class CrystalReportDataSource(ApplicationDbContext context)
         int CountryId,
         string CountryAr,
         string CountryEn);
+
+    private sealed record DistrictRow(
+        int DistrictId,
+        string DistrictAr,
+        string DistrictEn,
+        string DistrictCode,
+        int StateId,
+        string StateAr,
+        string StateEn,
+        int AddressesCount);
+
+    private sealed record AddressTypeRow(
+        int AddressTypeId,
+        string AddressTypeAr,
+        string AddressTypeEn,
+        int AddressesCount);
 }

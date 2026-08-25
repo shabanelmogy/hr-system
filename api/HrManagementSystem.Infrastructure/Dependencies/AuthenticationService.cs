@@ -26,6 +26,7 @@ public static class AuthenticationService
         services.AddScoped<IUserSeatLimitService, UserSeatLimitService>();
         services.AddScoped<TenantRoleAssignmentService>();
         services.AddScoped<AuthCompanyAccessService>();
+        services.AddScoped<AuthenticationSelectionChallengeStore>();
         services.AddScoped<AuthEmailLinkBuilder>();
         services.AddScoped<RegistrationProfilePictureStore>();
         services.AddScoped<SessionRevocationNotifier>();

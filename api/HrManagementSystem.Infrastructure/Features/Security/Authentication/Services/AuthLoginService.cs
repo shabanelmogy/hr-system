@@ -19,6 +19,7 @@ public sealed class AuthLoginService(
     ISecurityAuditService securityAudit,
     IRealtimeChangeDispatcher realtimeChanges,
     ApplicationDbContext context,
+    AuthenticationSelectionChallengeStore selectionChallenges,
     TimeProvider timeProvider,
     AuthenticationFeaturePolicy authenticationFeatures) : IAuthLoginService
 {
@@ -124,6 +125,16 @@ public sealed class AuthLoginService(
         if (selection is null)
             return Result.Failure<LoginResult>(userErrors.InvalidTenantSelection);
 
+        if (!await selectionChallenges.ConsumeAsync(
+                selection.JwtId,
+                selection.UserId,
+                JwtClaimNames.TenantSelectionScope,
+                tenantId: null,
+                cancellationToken))
+        {
+            return Result.Failure<LoginResult>(userErrors.InvalidTenantSelection);
+        }
+
         var user = await userManager.Users
             .Include(candidate => candidate.RefreshTokens)
             .SingleOrDefaultAsync(candidate => candidate.Id == selection.UserId, cancellationToken);
@@ -148,6 +159,16 @@ public sealed class AuthLoginService(
         var selection = jwtProvider.ValidateCompanySelectionToken(request.CompanySelectionToken);
         if (selection is null)
             return Result.Failure<AuthResponse>(userErrors.InvalidCompanySelection);
+
+        if (!await selectionChallenges.ConsumeAsync(
+                selection.JwtId,
+                selection.UserId,
+                JwtClaimNames.CompanySelectionScope,
+                selection.TenantId,
+                cancellationToken))
+        {
+            return Result.Failure<AuthResponse>(userErrors.InvalidCompanySelection);
+        }
 
         var user = await userManager.Users
             .Include(candidate => candidate.RefreshTokens)
@@ -255,6 +276,13 @@ public sealed class AuthLoginService(
             return await CreateTenantLoginResultAsync(user, tenants[0].Id, cancellationToken);
 
         var selectionToken = jwtProvider.GenerateTenantSelectionToken(user);
+        await selectionChallenges.StoreAsync(
+            selectionToken.JwtId,
+            user.Id,
+            JwtClaimNames.TenantSelectionScope,
+            selectionToken.ExpiresAt,
+            tenantId: null,
+            cancellationToken);
         var response = new TenantSelectionRequiredResponse(
             IsAuthenticated: false,
             RequiresTenantSelection: true,
@@ -293,6 +321,13 @@ public sealed class AuthLoginService(
         }
 
         var selectionToken = jwtProvider.GenerateCompanySelectionToken(user, tenantId);
+        await selectionChallenges.StoreAsync(
+            selectionToken.JwtId,
+            user.Id,
+            JwtClaimNames.CompanySelectionScope,
+            selectionToken.ExpiresAt,
+            tenantId,
+            cancellationToken);
         var response = new CompanySelectionRequiredResponse(
             IsAuthenticated: false,
             RequiresCompanySelection: true,

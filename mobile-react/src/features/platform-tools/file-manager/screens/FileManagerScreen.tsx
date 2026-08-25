@@ -246,7 +246,7 @@ export function FileManagerScreen() {
         <AppStateView state="loading" />
       ) : filesQuery.error ? (
         <AppStateView
-          message={getPlatformToolErrorMessage(filesQuery.error, t('states.errorMessage'))}
+          message={getPlatformToolErrorMessage(filesQuery.error, t('feedback.unknownError'))}
           onRetry={() => void filesQuery.refetch()}
           state="error"
         />

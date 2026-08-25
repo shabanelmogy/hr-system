@@ -140,7 +140,7 @@ export function InvitationManagementScreen() {
         <AppStateView state="loading" />
       ) : queryError ? (
         <AppStateView
-          message={getErrorMessage(queryError, t('states.errorMessage'))}
+          message={getErrorMessage(queryError, t('feedback.unknownError'))}
           onRetry={() => void invitationsQuery.refetch()}
           state="error"
         />

@@ -60,7 +60,13 @@ export function RealtimeProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     const updateConnection = (appState: string) => {
-      void realtimeService.setEnabled(status === 'authenticated' && appState === 'active');
+      const shouldEnable = status === 'authenticated' && appState === 'active';
+      if (!shouldEnable) {
+        void realtimeService.setEnabled(false);
+        return;
+      }
+
+      void realtimeService.setEnabled(false).then(() => realtimeService.setEnabled(true));
     };
 
     updateConnection(AppState.currentState);
@@ -69,7 +75,7 @@ export function RealtimeProvider({ children }: PropsWithChildren) {
       subscription.remove();
       void realtimeService.setEnabled(false);
     };
-  }, [status]);
+  }, [session?.companyId, session?.tenantId, status]);
 
   useEffect(() => {
     const receiveEntityChanged = (...args: unknown[]) => {

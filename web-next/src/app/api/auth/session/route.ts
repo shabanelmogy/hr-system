@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { resolveSession } from "@/lib/auth/backend-session";
-import { clearAuthCookies, readAuthTokens, setAuthCookies } from "@/lib/auth/cookies";
+import { readAuthTokens, setAuthCookies } from "@/lib/auth/cookies";
 
 export async function GET(request: NextRequest) {
   const { accessToken, refreshToken, migrationPayload } = readAuthTokens(
@@ -19,12 +19,10 @@ export async function GET(request: NextRequest) {
   }
 
   if (resolved.status === "unauthenticated") {
-    const response = NextResponse.json(
+    return NextResponse.json(
       { isAuthenticated: false },
-      { status: 401 },
+      { status: 401, headers: { "cache-control": "no-store" } },
     );
-    clearAuthCookies(response);
-    return response;
   }
 
   const response = NextResponse.json(

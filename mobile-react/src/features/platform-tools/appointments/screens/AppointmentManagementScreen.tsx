@@ -243,7 +243,7 @@ export function AppointmentManagementScreen() {
           <AppStateView state="loading" />
         ) : appointmentsQuery.error ? (
           <AppStateView
-            message={getPlatformToolErrorMessage(appointmentsQuery.error, t('states.errorMessage'))}
+            message={getPlatformToolErrorMessage(appointmentsQuery.error, t('feedback.unknownError'))}
             onRetry={() => void appointmentsQuery.refetch()}
             state="error"
           />

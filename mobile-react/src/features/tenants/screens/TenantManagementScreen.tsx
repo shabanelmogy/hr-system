@@ -241,7 +241,7 @@ export function TenantManagementScreen() {
         <AppStateView state="loading" />
       ) : tenantsQuery.isError ? (
         <AppStateView
-          message={getErrorMessage(tenantsQuery.error, t('states.errorMessage'))}
+          message={getErrorMessage(tenantsQuery.error, t('feedback.unknownError'))}
           onRetry={() => void tenantsQuery.refetch()}
           state="error"
         />

@@ -21,6 +21,9 @@ const authResponseSchema: z.ZodType<AuthResponse> = z.object({
   tenantName: z.string().trim().min(1),
   tenantPlanName: z.string().trim().min(1),
   companyId: z.number().int().positive(),
+  companyCode: z.string().trim().min(1),
+  companyNameAr: z.string(),
+  companyNameEn: z.string(),
   token: z.string().min(1),
   tokenExpiration: dateString,
   refreshToken: z.string().min(1),
@@ -49,6 +52,7 @@ const companySelectionSchema: z.ZodType<CompanySelectionResponse> = z
       .array(
         z.object({
           id: z.number().int().positive(),
+          companyCode: z.string().trim().min(1),
           nameAr: z.string(),
           nameEn: z.string(),
         }),
@@ -65,12 +69,23 @@ const companySelectionSchema: z.ZodType<CompanySelectionResponse> = z
     }
   });
 
+const companyOptionSchema = z.object({
+  id: z.number().int().positive(),
+  companyCode: z.string().trim().min(1),
+  nameAr: z.string(),
+  nameEn: z.string(),
+});
+
 const sessionResponseSchema: z.ZodType<SessionResponse> = z.object({
   userId: z.string().min(1),
   tenantId: z.string().min(1),
   tenantName: z.string().trim().min(1),
   tenantPlanName: z.string().trim().min(1),
   companyId: z.number().int().positive(),
+  companyCode: z.string().trim().min(1),
+  companyNameAr: z.string(),
+  companyNameEn: z.string(),
+  companies: z.array(companyOptionSchema).min(1),
   userName: z.string().min(1),
   email: z.string(),
   firstName: z.string(),
@@ -81,6 +96,22 @@ const sessionResponseSchema: z.ZodType<SessionResponse> = z.object({
   tenantSubscriptionEndsOn: dateString.nullable(),
   tenantReadOnly: z.boolean(),
   expiresAt: z.number().positive(),
+}).superRefine((value, context) => {
+  const companyIds = new Set(value.companies.map((company) => company.id));
+  if (companyIds.size !== value.companies.length) {
+    context.addIssue({
+      code: 'custom',
+      path: ['companies'],
+      message: 'Company identifiers must be unique.',
+    });
+  }
+  if (!companyIds.has(value.companyId)) {
+    context.addIssue({
+      code: 'custom',
+      path: ['companyId'],
+      message: 'The current company must be available to the user.',
+    });
+  }
 });
 
 const userPhotoSchema = z.object({

@@ -1,6 +1,7 @@
 using HrManagementSystem.Application.Features.Security.Authentication.Contracts;
 using HrManagementSystem.Application.Features.Security.Authentication.Services;
 using HrManagementSystem.Application.Features.Tenancy.Services;
+using HrManagementSystem.Infrastructure.Features.Security.Authentication.Services;
 
 namespace HrManagementSystem.Api.Features.Security.Authentication.V1;
 
@@ -12,13 +13,15 @@ public class AuthController(
     IAuthSessionService sessionService,
     IAuthAccountService accountService,
     IJwtProvider jwtProvider,
-    ITenantAccessService tenantAccessService) : ControllerBase
+    ITenantAccessService tenantAccessService,
+    AuthCompanyAccessService companyAccessService) : ControllerBase
 {
     private readonly IAuthLoginService _loginService = loginService;
     private readonly IAuthSessionService _sessionService = sessionService;
     private readonly IAuthAccountService _accountService = accountService;
     private readonly IJwtProvider _jwtProvider = jwtProvider;
     private readonly ITenantAccessService _tenantAccessService = tenantAccessService;
+    private readonly AuthCompanyAccessService _companyAccessService = companyAccessService;
 
     [HttpPost]
     [AllowAnonymous]
@@ -54,6 +57,19 @@ public class AuthController(
         CancellationToken cancellationToken)
     {
         var result = await _loginService.SelectCompanyAsync(request, cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
+    [HttpPost]
+    [Authorize]
+    [EnableRateLimiting("authentication")]
+    public async Task<IActionResult> SwitchCompany(
+        [FromBody] SwitchCompanyRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await _sessionService.SwitchCompanyAsync(
+            request.CompanyId,
+            cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
@@ -106,19 +122,30 @@ public class AuthController(
         var expiration = User.FindFirstValue(JwtRegisteredClaimNames.Exp);
         _ = long.TryParse(expiration, out var expiresAtSeconds);
         var tenantId = User.FindFirstValue(JwtClaimNames.TenantId) ?? string.Empty;
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
+        var companyId = int.TryParse(User.FindFirstValue(JwtClaimNames.CompanyId), out var parsedCompanyId)
+            ? parsedCompanyId
+            : 0;
         var tenantAccess = await _tenantAccessService.GetAsync(tenantId, cancellationToken);
+        var companies = await _companyAccessService.GetAvailableCompaniesAsync(
+            userId,
+            tenantId,
+            cancellationToken);
+        var company = companies.SingleOrDefault(candidate => candidate.Id == companyId);
 
-        if (tenantAccess is null)
+        if (tenantAccess is null || company is null)
             return Unauthorized();
 
         var response = new SessionResponse(
-            User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty,
+            userId,
             tenantId,
             tenantAccess.TenantName,
             tenantAccess.PlanName,
-            int.TryParse(User.FindFirstValue(JwtClaimNames.CompanyId), out var companyId)
-                ? companyId
-                : 0,
+            companyId,
+            company.CompanyCode,
+            company.NameAr,
+            company.NameEn,
+            companies,
             User.FindFirstValue(ClaimTypes.Name) ?? string.Empty,
             User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
             User.FindFirstValue(MyClaims.firstname) ?? string.Empty,

@@ -60,6 +60,7 @@ public sealed class JwtProviderTests
         Assert.NotNull(validated);
         Assert.Equal(user.Id, validated.UserId);
         Assert.Equal(user.TenantId, validated.TenantId);
+        Assert.Equal(issued.JwtId, validated.JwtId);
         Assert.DoesNotContain(jwt.Claims, claim => claim.Type == JwtClaimNames.CompanyId);
         Assert.True(issued.ExpiresAt > DateTime.UtcNow);
     }
@@ -82,6 +83,7 @@ public sealed class JwtProviderTests
         Assert.NotNull(validated);
         Assert.Equal(user.Id, validated.UserId);
         Assert.Equal(user.SecurityStamp, validated.SecurityStamp);
+        Assert.Equal(issued.JwtId, validated.JwtId);
         Assert.DoesNotContain(jwt.Claims, claim => claim.Type == JwtClaimNames.TenantId);
         Assert.DoesNotContain(jwt.Claims, claim => claim.Type == JwtClaimNames.CompanyId);
         Assert.True(issued.ExpiresAt > DateTime.UtcNow);

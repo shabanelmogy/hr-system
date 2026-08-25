@@ -78,6 +78,17 @@ export const useStatesPermissions = () => {
   }), [hasPermission, isReadOnly]);
 };
 
+export const useDistrictsPermissions = () => {
+  const { hasPermission, isReadOnly } = usePermissions();
+
+  return useMemo(() => ({
+    canView: hasPermission("Districts:View"),
+    canCreate: !isReadOnly && hasPermission("Districts:Create"),
+    canEdit: !isReadOnly && hasPermission("Districts:Edit"),
+    canDelete: !isReadOnly && hasPermission("Districts:Delete"),
+  }), [hasPermission, isReadOnly]);
+};
+
 // Generic module permissions hook
 export const useModulePermissions = (module: PermissionModule) => {
   const { hasPermission, isReadOnly } = usePermissions();

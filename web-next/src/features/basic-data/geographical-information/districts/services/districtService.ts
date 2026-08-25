@@ -1,83 +1,76 @@
 import { apiRoutes } from "@/config";
 import apiService from "@/shared/services/apiService";
-import { extractValue, extractValues } from "@/shared/utils/ApiHelper";
-import { District, CreateDistrictRequest, UpdateDistrictRequest } from "../types/District";
+import type {
+  BulkArchiveDistrictsResponse,
+  CreateDistrictRequest,
+  CreateDistrictsRequest,
+  CreateDistrictsResponse,
+  DistrictDetail,
+  DistrictLookup,
+  DistrictPageQuery,
+  DistrictPageResponse,
+  DistrictWithAddresses,
+  UpdateDistrictMutation,
+} from "../types/District";
 
-// District Service
+export const toDistrictRequest = (district: CreateDistrictRequest): CreateDistrictRequest => ({
+  nameAr: district.nameAr.trim(),
+  nameEn: district.nameEn.trim(),
+  code: district.code.trim().toUpperCase(),
+  stateId: Number(district.stateId),
+});
+
 export class DistrictService {
-  static async getAll(): Promise<District[]> {
-    const response = await apiService.get(apiRoutes.districts.getAll);
-    const districts = extractValues<District>(response);
-    return districts.filter((district) => !district.isDeleted);
+  static getPage(query: DistrictPageQuery): Promise<DistrictPageResponse> {
+    return apiService.get<DistrictPageResponse>(apiRoutes.districts.page, { ...query });
   }
 
-  static async getById(id: string | number): Promise<District> {
-    const response = await apiService.get(apiRoutes.districts.getById(id));
-    return extractValue<District>(response);
+  static getLookup(stateId?: number): Promise<DistrictLookup[]> {
+    return apiService.get<DistrictLookup[]>(apiRoutes.districts.lookup(stateId));
   }
 
-  static async getAllByState(stateId: string | number): Promise<District[]> {
-    const response = await apiService.get(apiRoutes.districts.getAllByState(stateId));
-    const districts = extractValues<District>(response);
-    return districts.filter((district) => !district.isDeleted);
+  static getByState(stateId: number): Promise<DistrictLookup[]> {
+    return apiService.get<DistrictLookup[]>(apiRoutes.districts.byState(stateId));
   }
 
-  static async getDistrictWithAddresses(id: string | number): Promise<District> {
-    const response = await apiService.get(apiRoutes.districts.getDistrictWithAddresses(id));
-    return extractValue<District>(response);
+  static getById(id: number): Promise<DistrictDetail> {
+    return apiService.get<DistrictDetail>(apiRoutes.districts.getById(id));
   }
 
-  static async getCount(): Promise<number> {
-    const response = await apiService.get(apiRoutes.districts.getCount);
-    return extractValue<number>(response);
+  static getWithAddresses(id: number): Promise<DistrictWithAddresses> {
+    return apiService.get<DistrictWithAddresses>(apiRoutes.districts.getWithAddresses(id));
   }
 
-  static async create(districtData: CreateDistrictRequest): Promise<District> {
-    const response = await apiService.post(
-      apiRoutes.districts.add,
-      districtData
+  static create(request: CreateDistrictRequest): Promise<DistrictDetail> {
+    return apiService.post<DistrictDetail>(apiRoutes.districts.create, toDistrictRequest(request));
+  }
+
+  static createBulk(districts: CreateDistrictRequest[]): Promise<CreateDistrictsResponse> {
+    const request: CreateDistrictsRequest = {
+      districts: districts.map(toDistrictRequest),
+    };
+    return apiService.post<CreateDistrictsResponse>(
+      apiRoutes.districts.bulkCreate,
+      request,
     );
-    return extractValue<District>(response);
   }
 
-  static async update(districtData: UpdateDistrictRequest): Promise<District> {
-    const response = await apiService.put(
-      apiRoutes.districts.update,
-      districtData
-    );
-    return extractValue<District>(response);
+  static update({ id, request }: UpdateDistrictMutation): Promise<DistrictDetail> {
+    return apiService.put<DistrictDetail>(apiRoutes.districts.update(id), toDistrictRequest(request));
   }
 
-  static async delete(id: string | number): Promise<string | number> {
-    await apiService.delete(apiRoutes.districts.delete(id));
+  static async archive(id: number): Promise<number> {
+    await apiService.delete(apiRoutes.districts.archive(id));
     return id;
   }
 
-  static searchDistricts(districts: District[], searchTerm: string): District[] {
-    if (!searchTerm.trim()) {
-      return districts;
-    }
+  static async restore(id: number): Promise<number> {
+    await apiService.post(apiRoutes.districts.restore(id));
+    return id;
+  }
 
-    const term = searchTerm.toLowerCase().trim();
-    return districts.filter((district) => {
-      if (!district || district.isDeleted) return false;
-
-      // Search in district fields
-      const districtMatch = (
-        district.nameEn?.toLowerCase().includes(term) ||
-        district.nameAr?.includes(term) ||
-        district.code?.toLowerCase().includes(term)
-      );
-
-      // Search in state
-      const stateMatch = district.state ? (
-        district.state.nameEn?.toLowerCase().includes(term) ||
-        district.state.nameAr?.includes(term) ||
-        district.state.code?.toLowerCase().includes(term)
-      ) : false;
-
-      return districtMatch || stateMatch;
-    });
+  static archiveBulk(ids: number[]): Promise<BulkArchiveDistrictsResponse> {
+    return apiService.post<BulkArchiveDistrictsResponse>(apiRoutes.districts.bulkArchive, { ids });
   }
 }
 

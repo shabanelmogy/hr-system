@@ -211,7 +211,7 @@ export function RoleManagementScreen() {
         <AppStateView state="loading" />
       ) : rolesQuery.isError ? (
         <AppStateView
-          message={getErrorMessage(rolesQuery.error, t('states.errorMessage'))}
+          message={getErrorMessage(rolesQuery.error, t('feedback.unknownError'))}
           onRetry={() => void rolesQuery.refetch()}
           state="error"
         />

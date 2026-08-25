@@ -24,6 +24,24 @@ public sealed class RefreshTokenSessionPolicyTests
     }
 
     [Fact]
+    public void RevokeSession_RevokesOnlyTheReplacedActiveSession()
+    {
+        var replaced = CreateToken("replaced", Now.AddMinutes(-5), Now.AddDays(1));
+        var retained = CreateToken("retained", Now.AddMinutes(-5), Now.AddDays(1));
+        var replacedSessionId = replaced.SessionId;
+        var tokens = new List<RefreshToken> { replaced, retained };
+
+        RefreshTokenSessionPolicy.RevokeSession(
+            tokens,
+            replacedSessionId,
+            "Company switched",
+            Now);
+
+        Assert.Equal("Company switched", replaced.RevocationReason);
+        Assert.Null(retained.RevocationReason);
+    }
+
+    [Fact]
     public void Prune_RemovesStaleInactiveTokensAndKeepsActiveTokens()
     {
         var stale = CreateToken("stale", Now.AddHours(-3), Now.AddHours(-2));

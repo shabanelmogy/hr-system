@@ -2311,6 +2311,47 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.AuthenticationSelectionChallenge", b =>
+                {
+                    b.Property<string>("JwtId")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Scope")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("TenantId")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("JwtId");
+
+                    b.HasIndex("ExpiresOn");
+
+                    b.HasIndex("UserId", "Scope");
+
+                    b.ToTable("AuthenticationSelectionChallenges", (string)null);
+                });
+
             modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.UserCompanyAccess", b =>
                 {
                     b.Property<string>("UserId")
@@ -3273,6 +3314,17 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         });
 
                     b.Navigation("RefreshTokens");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.AuthenticationSelectionChallenge", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.UserCompanyAccess", b =>

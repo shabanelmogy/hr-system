@@ -389,7 +389,7 @@ export function UserManagementScreen() {
         <AppStateView state="loading" />
       ) : queryError ? (
         <AppStateView
-          message={getErrorMessage(queryError, t('states.errorMessage'))}
+          message={getErrorMessage(queryError, t('feedback.unknownError'))}
           onRetry={() => void usersQuery.refetch()}
           state="error"
         />

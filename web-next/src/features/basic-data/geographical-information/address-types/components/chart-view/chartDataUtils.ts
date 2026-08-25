@@ -117,4 +117,5 @@ export const getRecentAddressTypes = (addressTypes: AddressType[]): number => {
 import { getColorPalette } from '@/shared/components/charts';
 import { InitialLetterData, LanguageData, LengthData, TimelineData } from "./AddressTypeChart.types";
 
-export const getChartColors = (): string[] => getColorPalette('rainbow', 'light');
+export const getChartColors = (mode: "light" | "dark" = "light"): string[] =>
+  getColorPalette("rainbow", mode);

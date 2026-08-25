@@ -42,3 +42,9 @@ The application intentionally uses a simple rotation model rather than token-fam
 - Inactive token history is pruned to keep storage bounded. Active sessions are never removed by history pruning.
 
 This design avoids the operational complexity of full token-family tracking while still detecting the normal stolen-token reuse case. It does not provide complete ancestry tracking across many successive rotations; use token families only if the application's risk profile later requires that stronger guarantee.
+
+## Tenant and company selection
+
+Tenant- and company-selection JWTs are short-lived, scope-specific, and single-use. Their `jti` values are stored in `AuthenticationSelectionChallenges`; the matching row is deleted atomically on the first selection attempt. Deploy the `AddAuthenticationSelectionChallenges` migration before enabling this flow. Changing the configured selection-token lifetime does not make a consumed token reusable.
+
+Authenticated company switching rotates into a new session and revokes only the replaced session. It does not reuse a login selection token and it does not revoke the user's other devices or sessions.

@@ -23,6 +23,7 @@ import { AppBar, StyledToolbar } from "./TopBarStyles";
 import UserWelcome from "./UserWelcome";
 import { getNavigationConfig } from "../sidebar/navigationConfig";
 import { useTopBarPreferences } from "./useTopBarPreferences";
+import { CompanyContextSwitcher } from "@/features/tenant-access";
 
 const DisplayDebugger = dynamic(() => import("./DisplayDebugger"), { ssr: false });
 const GlobalSearchButton = dynamic(
@@ -164,6 +165,12 @@ const TopBar = ({
 
           {/* User Welcome - Desktop */}
           {isAuthenticated && (
+            <Box sx={{ display: { xs: "none", md: "flex" }, marginInlineEnd: 2, minWidth: 0 }}>
+              <CompanyContextSwitcher />
+            </Box>
+          )}
+
+          {isAuthenticated && (
             <Box
               sx={{
                 display: { xs: "none", md: "flex" },
@@ -202,6 +209,12 @@ const TopBar = ({
           </Box>
 
           {/* Mobile User Welcome */}
+          {isAuthenticated && (
+            <Box sx={{ display: { xs: "flex", md: "none" }, marginInlineEnd: 1, minWidth: 0 }}>
+              <CompanyContextSwitcher compact />
+            </Box>
+          )}
+
           {isAuthenticated && (
             <Box
               sx={{

@@ -26,15 +26,15 @@ export function AppStateView({ state, title, message, onRetry }: AppStateViewPro
 
   if (state === 'loading') {
     return (
-      <View accessibilityLabel={t('states.loading')} accessibilityRole="progressbar" style={styles.container}>
+      <View accessibilityLabel={t('feedback.loading')} accessibilityRole="progressbar" style={styles.container}>
         <ActivityIndicator color={theme.colors.primary} size="large" />
-        <AppText color="muted">{message ?? t('states.loading')}</AppText>
+        <AppText color="muted">{message ?? t('feedback.loading')}</AppText>
       </View>
     );
   }
 
-  const fallbackTitle = state === 'error' ? t('states.errorTitle') : t('states.emptyTitle');
-  const fallbackMessage = state === 'error' ? t('states.errorMessage') : t('states.emptyMessage');
+  const fallbackTitle = state === 'error' ? t('feedback.errorTitle') : t('feedback.emptyTitle');
+  const fallbackMessage = state === 'error' ? t('feedback.unknownError') : t('feedback.emptyMessage');
 
   return (
     <View accessibilityLiveRegion="polite" style={styles.container}>

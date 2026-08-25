@@ -2,9 +2,9 @@ using HrManagementSystem.Application.Features.GeographicalInformation.Districts.
 
 namespace HrManagementSystem.Application.Features.GeographicalInformation.Districts.Errors;
 
-public class DistrictErrors(IStringLocalizer<DistrictRequest> localizer)
+public class DistrictErrors(IStringLocalizer<CreateDistrictRequest> localizer)
 {
-    private readonly IStringLocalizer<DistrictRequest> _localizer = localizer;
+    private readonly IStringLocalizer<CreateDistrictRequest> _localizer = localizer;
 
     public Error DistrictExists =>
             new("District.Duplicated", _localizer[nameof(DistrictExists)], ErrorType.Conflict);
@@ -23,4 +23,7 @@ public class DistrictErrors(IStringLocalizer<DistrictRequest> localizer)
 
     public Error StateNotFound =>
             new("District.StateNotFound", _localizer[nameof(StateNotFound)], ErrorType.NotFound);
+
+    public Error NoDistrictsProvided =>
+            new("District.NoDistrictsProvided", _localizer[nameof(NoDistrictsProvided)], ErrorType.Validation);
 }

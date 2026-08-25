@@ -1,0 +1,301 @@
+{
+  "status": "draft",
+  "referenceFeature": "countries",
+  "instructions": "Merge these entries into recipe-manifest.json only after required-files.json and all four canonical books exist.",
+  "books": [
+    {
+      "id": "address-types-master",
+      "path": "../project/ADDRESS_TYPES_FEATURE_FULL_REVIEW.md",
+      "title": "Address Types cross-platform master review"
+    },
+    {
+      "id": "address-types-api",
+      "path": "../api/AddressTypes_API_Implementation_Profile.md",
+      "title": "Address Types API implementation profile"
+    },
+    {
+      "id": "address-types-web",
+      "path": "../web-next/features/address-types-frontend-reference.md",
+      "title": "Address Types Next.js implementation profile"
+    },
+    {
+      "id": "address-types-mobile",
+      "path": "../mobile-react/address-types-mobile-reference.md",
+      "title": "Address Types Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "features/address-types/required-files.json",
+  "recipes": [
+    {
+      "id": "address-types-phase-00-discovery-evidence",
+      "title": "Address Types Phase 00 - Discovery and Evidence",
+      "template": "templates/PHASE-00-discovery-evidence.template.md",
+      "output": "generated/address-types/PHASE-00-discovery-evidence.md",
+      "sources": [
+        {
+          "book": "address-types-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "address-types-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "address-types-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "address-types-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "address-types-phase-01-domain-api",
+      "title": "Address Types Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/address-types/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "address-types-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "address-types-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "address-types-phase-02-web-client",
+      "title": "Address Types Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/address-types/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "address-types-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "address-types-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "address-types-phase-03-mobile-client",
+      "title": "Address Types Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/address-types/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "address-types-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "address-types-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "address-types-phase-04-domain-actions",
+      "title": "Address Types Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/address-types/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "address-types-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "address-types-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "address-types-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "address-types-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "address-types-phase-05-integration-runtime",
+      "title": "Address Types Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/address-types/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "address-types-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "address-types-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "address-types-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "address-types-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "address-types-phase-06-final-reconciliation",
+      "title": "Address Types Phase 06 - Final Reconciliation",
+      "template": "templates/PHASE-06-final-reconciliation.template.md",
+      "output": "generated/address-types/PHASE-06-final-reconciliation.md",
+      "sources": [
+        {
+          "book": "address-types-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "address-types-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "address-types-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "address-types-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,59 +1,61 @@
-import { MetricCard } from '@/shared/components/cards';
-import { Assessment, Language, Schedule, TextFields } from '@mui/icons-material';
-import { Grid } from '@mui/material';
-import React from 'react';
-import { SummaryCardsProps } from './AddressTypeChart.types';
+import { MetricCard } from "@/shared/components/cards";
+import { Apartment, LocationOn, Visibility, Warehouse } from "@mui/icons-material";
+import { Grid } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import type { SummaryCardsProps } from "./AddressTypeChart.types";
 
-const SummaryCards: React.FC<SummaryCardsProps> = ({
-  totalAddressTypes,
-  completeAddressTypes,
-  recentAddressTypes,
-  averageNameLength,
-  t
-}) => {
+const SummaryCards = ({
+  totalMatchingAddressTypes,
+  visibleAddressTypes,
+  visibleWithAddresses,
+  visibleWithoutAddresses,
+}: SummaryCardsProps) => {
+  const { t } = useTranslation();
   const cards = [
     {
-      title: t("addressTypes.dashboard.totalAddressTypes") || "Total Address Types",
-      value: totalAddressTypes,
-      icon: Assessment,
-      color: 'primary' as const,
+      title: t("addressTypes.dashboard.totalMatching"),
+      value: totalMatchingAddressTypes,
+      icon: LocationOn,
+      color: "primary" as const,
     },
     {
-      title: t("addressTypes.dashboard.completeProfiles") || "Complete Profiles",
-      value: completeAddressTypes,
-      icon: Language,
-      color: 'success' as const,
+      title: t("addressTypes.dashboard.visibleAddressTypes"),
+      value: visibleAddressTypes,
+      icon: Visibility,
+      color: "info" as const,
     },
     {
-      title: t("addressTypes.dashboard.recentlyAdded") || "Recently Added",
-      value: recentAddressTypes,
-      icon: Schedule,
-      color: 'info' as const,
+      title: t("addressTypes.dashboard.withAddressesOnPage"),
+      value: visibleWithAddresses,
+      icon: Apartment,
+      color: "secondary" as const,
     },
     {
-      title: t("addressTypes.dashboard.avgNameLength") || "Avg Name Length",
-      value: averageNameLength,
-      icon: TextFields,
-      color: 'secondary' as const,
+      title: t("addressTypes.dashboard.withoutAddressesOnPage"),
+      value: visibleWithoutAddresses,
+      icon: Warehouse,
+      color: "success" as const,
     },
   ];
 
   return (
-    <Grid container spacing={3} sx={{ mb: 4 }}>
-      {cards.map((card, index) => (
-        <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
+    <Grid container spacing={0.75} sx={{ mb: 0.75 }}>
+      {cards.map((card) => (
+        <Grid
+          size={{ xs: 12, sm: 6, md: 3 }}
+          sx={{ display: "flex", minWidth: 0, "& > *": { width: "100%" } }}
+          key={card.title}
+        >
           <MetricCard
             title={card.title}
             value={card.value}
             icon={card.icon}
             color={card.color}
-            gradient={true}
-            size="medium"
+            gradient
+            size="small"
+            compact
             elevation={2}
-            formatValue={(value) => {
-              const numericValue = Number(value);
-              return card.title.includes("Length") ? `${numericValue.toFixed(1)} chars` : String(value);
-            }}
+            formatValue={(value) => String(value)}
           />
         </Grid>
       ))}

@@ -273,6 +273,13 @@ access; both direct handlers check tenant read-only before permission denial.
 - Add the EN and AR namespace together.
 - Put the keys in the matching paired resource modules under `core/localization/translations`; keep `en.ts` and `ar.ts` composition-only.
 - Localize labels, errors, empty/loading states, confirmation text and accessibility labels.
+- Shared components must use the shared `feedback` namespace for generic loading,
+  empty, error, and not-found states. Feature namespaces are only for messages
+  that name or describe that feature; never make a reusable screen render
+  `states.*`, `countries.*`, or another feature's text as a fallback.
+- Every literal `t('namespace.key')` in `app/` and `src/` must resolve in both
+  EN and AR. Keep the source-usage translation test green so a missing key can
+  never reach a device as its raw dotted identifier.
 - Use semantic accessibility roles/states and at least 44x44 touch targets.
 - Verify dynamic text, long Arabic labels and screen-reader order.
 

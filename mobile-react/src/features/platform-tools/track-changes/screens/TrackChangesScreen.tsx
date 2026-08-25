@@ -170,7 +170,7 @@ export function TrackChangesScreen() {
         <AppStateView state="loading" />
       ) : changesQuery.error ? (
         <AppStateView
-          message={getPlatformToolErrorMessage(changesQuery.error, t('states.errorMessage'))}
+          message={getPlatformToolErrorMessage(changesQuery.error, t('feedback.unknownError'))}
           onRetry={() => void changesQuery.refetch()}
           state="error"
         />

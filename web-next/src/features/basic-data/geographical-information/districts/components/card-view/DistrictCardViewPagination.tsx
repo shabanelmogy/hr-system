@@ -1,27 +1,27 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
 import { CardViewPagination as SharedCardViewPagination } from "@/shared/components/lists/card-view";
 import { DistrictCardViewPaginationProps } from "./DistrictCard.types";
+import { useTranslation } from "react-i18next";
 
-const DistrictCardViewPagination: React.FC<DistrictCardViewPaginationProps> = ({
+const DistrictCardViewPagination = ({
   page,
   rowsPerPage,
   totalItems,
   itemsPerPageOptions,
+  pinned,
   onPageChange,
   onRowsPerPageChange,
-}) => {
-  const { t } = useTranslation();
-
+}: DistrictCardViewPaginationProps) => {
+  const {t} = useTranslation();
   return (
     <SharedCardViewPagination
       page={page}
       rowsPerPage={rowsPerPage}
       totalItems={totalItems}
       itemsPerPageOptions={itemsPerPageOptions}
+      itemsLabel={t("districts.state")}
+      pinned={pinned}
       onPageChange={onPageChange}
       onRowsPerPageChange={onRowsPerPageChange}
-      itemsLabel={t("districts.districts") || "items"}
     />
   );
 };

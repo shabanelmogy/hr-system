@@ -3,6 +3,7 @@ import { version } from "./constants";
 export interface AuthRoutes {
   login: string;
   selectCompany: string;
+  switchCompany: string;
   selectTenant: string;
   refreshToken: string;
   register: string;
@@ -21,6 +22,7 @@ export const auth: AuthRoutes = {
   login: `${version}/auth/login`,
   selectTenant: `${version}/auth/selectTenant`,
   selectCompany: `${version}/auth/selectCompany`,
+  switchCompany: `${version}/auth/switchCompany`,
   refreshToken: `${version}/auth/refreshToken`,
   register: `${version}/auth/register`,
   changePassword: "/api/account-info/ChangePassword",

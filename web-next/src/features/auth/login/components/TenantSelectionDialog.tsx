@@ -38,7 +38,7 @@ export default function TenantSelectionDialog({
   const selectionToken = selection?.tenantSelectionToken ?? "";
   const selectedTenantId = selectedTenant.token === selectionToken
     ? selectedTenant.id
-    : selection?.tenants[0]?.id ?? "";
+    : "";
 
   return (
     <Dialog

@@ -1,47 +1,60 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Delete, Edit, Visibility } from "@mui/icons-material";
+import { Archive, Edit, Restore, Visibility } from "@mui/icons-material";
 import { CardActionButtons, type CardActionItem } from "@/shared/components/cards";
-import { permissions } from "@/lib/auth/permissions";
-import { useAuthorization } from "@/lib/auth/useAuthorization";
-import type { District } from "../../types/District";
+import type { DistrictListItem } from "../../types/District";
+import type { DistrictPermissionSet } from "../../utils/districtPermissions";
 
-const deleteDistrictPermissions = [permissions.DeleteDistricts] as const;
-
-export interface DistrictCardFooterProps {
-  district: District;
-  onView: (district: District) => void;
-  onEdit: (district: District) => void;
-  onDelete: (district: District) => void;
+interface DistrictCardFooterProps {
+  state: DistrictListItem;
+  onEdit: (state: DistrictListItem) => void;
+  onDelete: (state: DistrictListItem) => void;
+  onRestore: (state: DistrictListItem) => void;
+  onView: (state: DistrictListItem) => void;
+  permissions: DistrictPermissionSet;
 }
 
-const DistrictCardFooter: React.FC<DistrictCardFooterProps> = ({ district, onView, onEdit, onDelete }) => {
+const DistrictCardFooter: React.FC<DistrictCardFooterProps> = ({ state, onEdit, onDelete, onRestore, onView, permissions }) => {
   const { t } = useTranslation();
-  const { allowed: canDelete } = useAuthorization({ requiredPermissions: deleteDistrictPermissions });
-  const actions: CardActionItem[] = [
-    {
+  const actions: CardActionItem[] = [];
+
+  if (permissions.canView) {
+    actions.push({
       key: "view",
-      title: t("actions.view") || "View Details",
+      title: t("actions.view"),
       color: "info",
       icon: <Visibility sx={{ fontSize: 16 }} />,
-      onClick: () => onView(district),
-    },
-    {
+      onClick: () => onView(state),
+    });
+  }
+
+  if (permissions.canEdit && !state.isDeleted) {
+    actions.push({
       key: "edit",
-      title: t("actions.edit") || "Edit District",
+      title: t("actions.edit"),
       color: "primary",
       icon: <Edit sx={{ fontSize: 16 }} />,
-      onClick: () => onEdit(district),
-    },
-  ];
+      onClick: () => onEdit(state),
+    });
+  }
 
-  if (canDelete) {
+  if (permissions.canDelete && !state.isDeleted) {
     actions.push({
-      key: "delete",
-      title: t("actions.delete") || "Delete District",
-      color: "error",
-      icon: <Delete sx={{ fontSize: 16 }} />,
-      onClick: () => onDelete(district),
+      key: "archive",
+      title: t("actions.archive"),
+      color: "warning",
+      icon: <Archive sx={{ fontSize: 16 }} />,
+      onClick: () => onDelete(state),
+    });
+  }
+
+  if (permissions.canRestore && state.isDeleted) {
+    actions.push({
+      key: "restore",
+      title: t("actions.restore"),
+      color: "success",
+      icon: <Restore sx={{ fontSize: 16 }} />,
+      onClick: () => onRestore(state),
     });
   }
 

@@ -48,3 +48,10 @@ Rules:
 - At handoff, separate feature regressions, inherited repository failures,
   environment blockers, and manual release checks. A focused pass does not erase a
   failing full gate.
+
+## Reference implementation fidelity
+
+- When a user requires a feature to follow Countries, States, or another reviewed reference, treat the selected reference's current source as the implementation baseline, not merely a visual inspiration.
+- Before editing, identify and reuse the reference's controller hook, multi-view composition, shared `PageHeader`, `MyDataGrid` toolbar, card scaffold, pagination, loading/empty/error states, and verification tests. Adapt only feature-owned fields, API contracts, permissions, relationships, and explicitly decided views.
+- Do not replace an established reference structure with a custom page, local filtering/sorting, library-default controls, or look-alike card layout. A simpler implementation is not equivalent to the guide.
+- Before handoff, compare the rendered Grid, Cards, search/filter toolbar, paging, and each required view against the selected reference at the same viewport. Record any intentional difference in the applicable feature guide; unresolved visual differences are feature regressions, not polish work.

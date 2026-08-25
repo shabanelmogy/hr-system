@@ -2,6 +2,7 @@ namespace HrManagementSystem.Application.Features.Security.Authentication.Contra
 
 public sealed record CompanyOptionResponse(
     int Id,
+    string CompanyCode,
     string NameAr,
     string NameEn);
 
@@ -24,6 +25,18 @@ public sealed class SelectCompanyRequestValidator : AbstractValidator<SelectComp
             .NotEmpty()
             .WithMessage(localizer[Strings.Required]);
 
+        RuleFor(request => request.CompanyId)
+            .GreaterThan(0)
+            .WithMessage(localizer[Strings.Required]);
+    }
+}
+
+public sealed record SwitchCompanyRequest(int CompanyId);
+
+public sealed class SwitchCompanyRequestValidator : AbstractValidator<SwitchCompanyRequest>
+{
+    public SwitchCompanyRequestValidator(IStringLocalizer<SwitchCompanyRequest> localizer)
+    {
         RuleFor(request => request.CompanyId)
             .GreaterThan(0)
             .WithMessage(localizer[Strings.Required]);

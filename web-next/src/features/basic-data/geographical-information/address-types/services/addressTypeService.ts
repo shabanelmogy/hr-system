@@ -1,47 +1,44 @@
 import { apiRoutes } from "@/config";
 import apiService from "@/shared/services/apiService";
-import { extractValue, extractValues } from "@/shared/utils/ApiHelper";
-import { AddressType, CreateAddressTypeRequest, UpdateAddressTypeRequest } from "../types/AddressType";
+import type {
+  AddressType,
+  AddressTypeDetail,
+  AddressTypeLookup,
+  AddressTypePageQuery,
+  AddressTypePageResponse,
+  AddressTypeWithAddresses,
+  BulkArchiveAddressTypesResponse,
+  BulkCreateAddressTypesResponse,
+  CreateAddressTypeRequest,
+  UpdateAddressTypeRequest,
+} from "../types/AddressType";
 
-// AddressType Service
+function requestBody(request: CreateAddressTypeRequest): CreateAddressTypeRequest {
+  return { nameAr: request.nameAr.trim(), nameEn: request.nameEn.trim() };
+}
+
 export class AddressTypeService {
+  static getPage(query: AddressTypePageQuery): Promise<AddressTypePageResponse> {
+    return apiService.get<AddressTypePageResponse>(apiRoutes.addressTypes.page, query as unknown as Record<string, unknown>);
+  }
+  static getLookup(): Promise<AddressTypeLookup[]> { return apiService.get<AddressTypeLookup[]>(apiRoutes.addressTypes.lookup); }
+  static getById(id: string | number): Promise<AddressTypeDetail> { return apiService.get<AddressTypeDetail>(apiRoutes.addressTypes.getById(id)); }
+  static getWithAddresses(id: string | number): Promise<AddressTypeWithAddresses> { return apiService.get<AddressTypeWithAddresses>(apiRoutes.addressTypes.getWithAddresses(id)); }
+  static create(data: CreateAddressTypeRequest): Promise<AddressTypeDetail> { return apiService.post<AddressTypeDetail>(apiRoutes.addressTypes.create, requestBody(data)); }
+  static update(data: UpdateAddressTypeRequest): Promise<AddressTypeDetail> { return apiService.put<AddressTypeDetail>(apiRoutes.addressTypes.update(data.id), requestBody(data)); }
+  static async archive(id: string | number): Promise<string | number> { await apiService.delete(apiRoutes.addressTypes.archive(id)); return id; }
+  static async restore(id: string | number): Promise<string | number> { await apiService.post(apiRoutes.addressTypes.restore(id)); return id; }
+  static bulkCreate(items: CreateAddressTypeRequest[]): Promise<BulkCreateAddressTypesResponse> { return apiService.post<BulkCreateAddressTypesResponse>(apiRoutes.addressTypes.bulkCreate, { addressTypes: items.map(requestBody) }); }
+  static bulkArchive(ids: number[]): Promise<BulkArchiveAddressTypesResponse> { return apiService.post<BulkArchiveAddressTypesResponse>(apiRoutes.addressTypes.bulkArchive, { ids }); }
+  /** Legacy compatibility for existing cross-feature consumers. */
   static async getAll(): Promise<AddressType[]> {
-    const response = await apiService.get(apiRoutes.addressTypes.getAll);
-    const addressTypes = extractValues<AddressType>(response);
-    return addressTypes.filter((a) => !a.isDeleted);
+    const page = await this.getPage({ pageNumber: 1, pageSize: 5000, searchField: "all", searchOperator: "contains", status: "active", sortBy: "nameEn", sortDirection: "asc" });
+    return page.items;
   }
-
-  static async getById(id: string | number): Promise<AddressType> {
-    const response = await apiService.get(apiRoutes.addressTypes.getById(id));
-    return extractValue<AddressType>(response);
-  }
-
-  static async create(data: CreateAddressTypeRequest): Promise<AddressType> {
-    const response = await apiService.post(apiRoutes.addressTypes.add, data);
-    return extractValue<AddressType>(response);
-  }
-
-  static async update(data: UpdateAddressTypeRequest): Promise<AddressType> {
-    const response = await apiService.put(apiRoutes.addressTypes.update, data);
-    return extractValue<AddressType>(response);
-  }
-
-  static async delete(id: string | number): Promise<string | number> {
-    await apiService.delete(apiRoutes.addressTypes.delete(id));
-    return id;
-  }
-
-  static search(items: AddressType[], searchTerm: string): AddressType[] {
-    if (!searchTerm.trim()) return items;
-
-    const term = searchTerm.toLowerCase().trim();
-    return items.filter((item) => {
-      if (!item || item.isDeleted) return false;
-      return (
-        item.nameEn?.toLowerCase().includes(term) ||
-        item.nameAr?.includes(term)
-      );
-    });
+  static delete(id: string | number): Promise<string | number> { return this.archive(id); }
+  static search(items: AddressType[], term: string): AddressType[] {
+    const normalized = term.trim().toLocaleLowerCase("en-US");
+    return normalized ? items.filter((item) => item.nameEn.toLocaleLowerCase("en-US").includes(normalized) || item.nameAr.includes(term.trim())) : items;
   }
 }
 

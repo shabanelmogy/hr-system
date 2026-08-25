@@ -2,7 +2,6 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { SESSION_REFRESHED_HEADER } from "@/lib/auth/constants";
 import {
-  clearAuthCookies,
   isAuthPayload,
   readAuthTokens,
   sanitizeAuthPayload,
@@ -177,9 +176,10 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
       );
     }
     if (refreshResult.status === "rejected") {
-      const response = NextResponse.json({ title: "Unauthorized" }, { status: 401 });
-      clearAuthCookies(response);
-      return response;
+      return NextResponse.json(
+        { title: "Unauthorized" },
+        { status: 401, headers: { "cache-control": "no-store" } },
+      );
     }
 
     refreshedAuth = refreshResult.payload;
@@ -234,8 +234,10 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
     refreshedAuth ?? migrationPayload,
   );
   if (backendResponse.status === 401) {
-    console.warn(`${TAG} ❌ Clearing auth cookies — backend rejected the final access token`);
-    clearAuthCookies(response);
+    // A request started before a company switch can finish after the replacement
+    // cookies are stored. It must not clear the newer session. The verified
+    // session endpoint owns the final logout decision.
+    console.warn(`${TAG} ❌ Backend rejected this request; scheduling session revalidation`);
   }
   return response;
 }

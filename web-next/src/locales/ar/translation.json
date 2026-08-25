@@ -39,6 +39,9 @@
     "average": "متوسط",
     "poor": "ضعيف"
   },
+  "common": {
+    "retry": "إعادة المحاولة"
+  },
   "maps": {
     "title": "خريطة العالم",
     "globalPresence": "الانتشار العالمي",
@@ -367,6 +370,10 @@
     "selectCompanyDescription": "اختر الشركة التي تريد العمل عليها خلال هذه الجلسة.",
     "availableCompanies": "الشركات المتاحة",
     "continueToCompany": "متابعة",
+    "currentCompany": "الشركة الحالية",
+    "switchCompany": "تغيير الشركة",
+    "companySwitched": "تم تغيير الشركة بنجاح.",
+    "companySwitchFailed": "تعذر تغيير الشركة الحالية.",
     "selectTenant": "\u0627\u062e\u062a\u0631 \u0627\u0644\u0645\u0646\u0634\u0623\u0629",
     "selectTenantDescription": "\u0627\u062e\u062a\u0631 \u0627\u0644\u0645\u0646\u0634\u0623\u0629 \u0627\u0644\u062a\u064a \u062a\u0631\u064a\u062f \u0627\u0644\u0639\u0645\u0644 \u0639\u0644\u064a\u0647\u0627 \u062e\u0644\u0627\u0644 \u0647\u0630\u0647 \u0627\u0644\u062c\u0644\u0633\u0629.",
     "availableTenants": "\u0627\u0644\u0645\u0646\u0634\u0622\u062a \u0627\u0644\u0645\u062a\u0627\u062d\u0629",
@@ -593,18 +600,28 @@
       "totalAddressTypes": "إجمالي أنواع العناوين",
       "completeProfiles": "الملفات المكتملة",
       "recentlyAdded": "المضافة حديثاً",
-      "avgNameLength": "متوسط طول الاسم"
+      "avgNameLength": "متوسط طول الاسم",
+      "totalMatching": "أنواع العناوين المطابقة",
+      "visibleAddressTypes": "أنواع العناوين في هذه الصفحة",
+      "withAddressesOnPage": "المرتبطة بعناوين في هذه الصفحة",
+      "withoutAddressesOnPage": "غير المرتبطة بعناوين في هذه الصفحة",
+      "dataQuality": "جودة البيانات"
     },
     "charts": {
       "byInitialLetter": "أنواع العناوين حسب الحرف الأول",
       "languageDistribution": "توزيع اللغات",
       "nameLength": "توزيع طول الأسماء",
-      "timeline": "أنواع العناوين المضافة عبر الوقت"
+      "timeline": "أنواع العناوين المضافة عبر الوقت",
+      "title": "تحليلات أنواع العناوين",
+      "noData": "لا توجد بيانات أنواع عناوين متاحة"
     },
     "views": {
       "grid": "عرض الجدول",
       "chart": "الرسم البياني",
-      "card": "عرض البطاقات"
+      "card": "عرض البطاقات",
+      "cards": "عرض البطاقات",
+      "report": "التقرير",
+      "import": "استيراد"
     },
     "title": "انواع العناوين",
     "subTitle": "قائمة انواع العناوين",
@@ -635,12 +652,44 @@
     "browseDescription": "أنواع العناوين مع بحث وتصنيف محسن",
     "searchPlaceHolder": "ابحث في أنواع العناوين بالاسم...",
     "addressType": "نوع العنوان",
+    "addresses": "العناوين",
+    "cardSelectionAriaLabel": "تحديد {{name}}",
     "all": "كل أنواع العناوين",
     "recent30Days": "احدث (30 يوما)",
     "viewSubtitle": "إضافة نوع عنوان جديد",
     "editSubtitle": "تعديل نوع العنوان الحالى",
     "addSubtitle": "إضافة نوع عنوان جديد",
-    "generateMockData": "توليد بيانات تجريبية"
+    "generateMockData": "توليد بيانات تجريبية",
+    "search": {
+      "placeholder": "البحث في أنواع العناوين",
+      "column": "العمود",
+      "condition": "الشرط",
+      "allColumns": "كل الأعمدة",
+      "operators": {
+        "contains": "يحتوي على",
+        "doesNotContain": "لا يحتوي على",
+        "equals": "يساوي",
+        "doesNotEqual": "لا يساوي",
+        "startsWith": "يبدأ بـ",
+        "endsWith": "ينتهي بـ"
+      }
+    },
+    "status": {
+      "label": "الحالة",
+      "active": "نشط",
+      "archived": "مؤرشف",
+      "all": "كل الحالات"
+    },
+    "bulkArchiveAction": "أرشفة المحدد",
+    "permissionDenied": "ليس لديك صلاحية لاستيراد أنواع العناوين.",
+    "reportCatalogError": "تعذر تحميل التقارير المنشورة.",
+    "reportUnavailable": "لا يوجد تقرير منشور متاح لأنواع العناوين.",
+    "import": {
+      "rows": "{{count}} صف نوع عنوان",
+      "uploading": "جارٍ رفع أنواع العناوين...",
+      "duplicateInFile": "هذا الصف مكرر لصف نوع عنوان آخر في الملف",
+      "importSuccess": "تم رفع {{count}} نوع عنوان"
+    }
   },
   "countries": {
     "dashboard": {
@@ -1017,12 +1066,25 @@
       "dataQuality": "جودة البيانات",
       "totalStates": "إجمالي المحافظات",
       "withCodes": "مع الأكواد",
-      "activeDistricts": "الأحياء النشطة"
+      "activeDistricts": "الأحياء النشطة",
+      "totalMatching": "الأحياء المطابقة",
+      "visibleDistricts": "الأحياء في هذه الصفحة",
+      "statesOnPage": "المحافظات في هذه الصفحة",
+      "addressesOnPage": "العناوين في هذه الصفحة"
     },
     "views": {
       "grid": "عرض الجدول",
       "cards": "عرض البطاقات",
       "chart": "عرض الرسوم البيانية"
+    },
+    "charts": {
+      "districtsByState": "توزيع الأحياء حسب المحافظة",
+      "districtsByStateDescription": "الأحياء المحملة مجمعة حسب محافظتها",
+      "stateShare": "حصة المحافظة في هذه الصفحة",
+      "addressesByDistrict": "أعلى الأحياء حسب عدد العناوين",
+      "addressesByDistrictDescription": "إجمالي العناوين للأحياء المحملة",
+      "timeline": "الأحياء المضافة بمرور الوقت",
+      "noData": "لا توجد بيانات أحياء متاحة"
     },
     "title": "الأحياء",
     "viewTitle": "إدارة الأحياء",
@@ -1031,6 +1093,49 @@
     "addSubtitle": "إضافة حي جديد",
     "browseAndManage": "تصفح وادارة",
     "districts": "الأحياء",
+    "addresses": "العناوين",
+    "addressesCount": "{{count}} عناوين",
+    "archiveError": "فشل في أرشفة الحي",
+    "restoreError": "فشل في استعادة الحي",
+    "archived": "تمت أرشفة الحي بنجاح",
+    "restored": "تمت استعادة الحي بنجاح",
+    "permissionDenied": "ليست لديك صلاحية لتنفيذ هذا الإجراء",
+    "reportCatalogError": "تعذر تحميل قائمة تقارير الأحياء. أضف تقرير Crystal منشوراً للأحياء ثم أعد المحاولة.",
+    "reportUnavailable": "لا يوجد تقرير Crystal منشور للأحياء. انشر تقريراً من مدير التقارير وامنح صلاحية التشغيل.",
+    "archiveTitle": "أرشفة الحي",
+    "archiveDescription": "أرشفة هذا الحي؟ لا يمكن أرشفة حي يحتوي على عناوين نشطة.",
+    "restoreTitle": "استعادة الحي",
+    "restoreDescription": "استعادة هذا الحي ضمن محافظته النشطة؟",
+    "bulkArchiveTitle": "أرشفة الأحياء المحددة",
+    "bulkArchiveDescription": "أرشفة كل الأحياء المحددة؟ سيُرفض الطلب عند وجود حي يحتوي على عناوين نشطة.",
+    "bulkArchiveConfirm": "أرشفة {{count}} أحياء",
+    "bulkArchiveAction": "أرشفة المحدد ({{count}})",
+    "bulkArchiveSelectionRequired": "حدد حيًا نشطًا واحدًا على الأقل للأرشفة",
+    "bulkArchiveLimitExceeded": "حدد ما لا يزيد عن {{max}} أحياء في كل طلب.",
+    "bulkArchived": "تمت أرشفة {{count}} أحياء",
+    "bulkArchiveError": "تعذر أرشفة الأحياء المحددة",
+    "selectedCount": "تم تحديد {{count}} أحياء",
+    "cardSelectionAriaLabel": "تحديد {{name}}",
+    "status": {
+      "label": "الحالة",
+      "active": "نشط",
+      "archived": "مؤرشف",
+      "all": "الكل"
+    },
+    "search": {
+      "placeholder": "البحث باسم الحي أو رمزه أو محافظته",
+      "column": "العمود",
+      "condition": "الشرط",
+      "allColumns": "كل الأعمدة",
+      "operators": {
+        "contains": "يحتوي على",
+        "doesNotContain": "لا يحتوي على",
+        "equals": "يساوي",
+        "doesNotEqual": "لا يساوي",
+        "startsWith": "يبدأ بـ",
+        "endsWith": "ينتهي بـ"
+      }
+    },
     "searchPlaceHolder": "ابحث باسم الحي , رمز الحي , اسم المحافظة...",
     "sort": {
       "name": "الإسم",
@@ -1044,7 +1149,16 @@
       "hasState": "مع المحافظة"
     },
     "total": "المجموع",
+    "listSummary": "تصفح وأدر {{count}} أحياء ببحث وتصفية من الخادم",
+    "totalCount": "{{count}} أحياء",
+    "highlight": {
+      "new": "جديد",
+      "edited": "تم التحديث"
+    },
     "filtered": "ناتج البحث",
+    "stateName": "اسم المحافظة",
+    "stateNameAr": "اسم المحافظة بالعربية",
+    "stateNameEn": "اسم المحافظة بالإنجليزية",
     "state": "المحافظة",
     "code": "رمز الحي",
     "view": "عرض الحي",
@@ -1066,7 +1180,21 @@
     "mainSubTitle": "لا توجد أحياء متاحة لعرضها",
     "noDistrictsAvailable": "لا توجد أحياء متاحة",
     "noDistrictsAvailableDescription": "ابدء بإضافة حي جديد",
-    "addFirstDistrict": "إضافة حي جديد"
+    "addFirstDistrict": "إضافة حي جديد",
+    "import": {
+      "districtRows": "{{count}} صفاً من الأحياء",
+      "uploading": "جارٍ تحميل الأحياء...",
+      "unknownState": "المحافظة غير موجودة أو غير نشطة",
+      "duplicateInFile": "مكرر لصف آخر لنفس المحافظة في هذا الملف",
+      "importSuccess": "تم تحميل {{count}} حي",
+      "stateLookup": {
+        "loading": "جارٍ تحميل قائمة المحافظات النشطة اللازمة للتحقق من الاستيراد...",
+        "ready": "قائمة المحافظات النشطة جاهزة.",
+        "empty": "لا توجد محافظات نشطة. أضف محافظة أو استعدها قبل استيراد الأحياء.",
+        "forbidden": "يتطلب استيراد الأحياء صلاحية States:View للتحقق من أسماء المحافظات. اطلب هذه الصلاحية من المسؤول.",
+        "error": "تعذر تحميل قائمة المحافظات النشطة. لم يتم اعتبار أي صف ذا محافظة غير معروفة. أعد محاولة تحميل القائمة."
+      }
+    }
   },
   "roles": {
     "creatingRole": "جارى انشاء صلاحية جديد",

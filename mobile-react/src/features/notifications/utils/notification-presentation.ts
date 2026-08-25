@@ -50,8 +50,8 @@ const notificationRouteMap: Readonly<Record<string, AppRoute>> = {
   '/administration/users': ROUTES.administration.root,
   '/basic-data/countries': ROUTES.basicData.countries,
   '/basic-data/states': ROUTES.basicData.states,
-  '/basic-data/districts': ROUTES.basicData.geographicalInformation,
-  '/basic-data/address-types': ROUTES.basicData.geographicalInformation,
+  '/basic-data/districts': ROUTES.basicData.districts,
+  '/basic-data/address-types': ROUTES.basicData.addressTypes,
 };
 
 export function resolveNotificationActionRoute(value: string | null): AppRoute | null {

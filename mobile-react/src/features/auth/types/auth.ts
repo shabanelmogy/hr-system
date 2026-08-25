@@ -38,6 +38,9 @@ export interface AuthResponse {
   tenantName: string;
   tenantPlanName: string;
   companyId: number;
+  companyCode: string;
+  companyNameAr: string;
+  companyNameEn: string;
   token: string;
   tokenExpiration: string;
   refreshToken: string;
@@ -60,6 +63,7 @@ export interface TenantSelectionResponse {
 
 export interface CompanyOption {
   id: number;
+  companyCode: string;
   nameAr: string;
   nameEn: string;
 }
@@ -78,6 +82,10 @@ export interface SessionResponse {
   tenantName: string;
   tenantPlanName: string;
   companyId: number;
+  companyCode: string;
+  companyNameAr: string;
+  companyNameEn: string;
+  readonly companies: readonly CompanyOption[];
   userName: string;
   email: string;
   firstName: string;

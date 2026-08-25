@@ -34,8 +34,8 @@ describe("parseLoginResult", () => {
       companySelectionToken: "temporary-token",
       companySelectionTokenExpiration: "2026-08-11T12:00:00Z",
       companies: [
-        { id: 1, nameAr: "الشركة الأولى", nameEn: "First Company" },
-        { id: 2, nameAr: "الشركة الثانية", nameEn: "Second Company" },
+        { id: 1, companyCode: "COMP-1", nameAr: "الشركة الأولى", nameEn: "First Company" },
+        { id: 2, companyCode: "COMP-2", nameAr: "الشركة الثانية", nameEn: "Second Company" },
       ],
     };
 
@@ -51,7 +51,7 @@ describe("parseLoginResult", () => {
       requiresCompanySelection: true,
       companySelectionToken: "temporary-token",
       companySelectionTokenExpiration: "2026-08-11T12:00:00Z",
-      companies: [{ id: 1, nameAr: "شركة", nameEn: "Company" }],
+      companies: [{ id: 1, companyCode: "COMP-1", nameAr: "شركة", nameEn: "Company" }],
     })).toBeNull();
   });
 
@@ -62,8 +62,8 @@ describe("parseLoginResult", () => {
       companySelectionToken: "temporary-token",
       companySelectionTokenExpiration: "2026-08-11T12:00:00Z",
       companies: [
-        { id: 1, nameAr: "شركة", nameEn: "Company" },
-        { id: 1, nameAr: "شركة أخرى", nameEn: "Other Company" },
+        { id: 1, companyCode: "COMP-1", nameAr: "شركة", nameEn: "Company" },
+        { id: 1, companyCode: "COMP-1B", nameAr: "شركة أخرى", nameEn: "Other Company" },
       ],
     })).toBeNull();
   });

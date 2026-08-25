@@ -39,7 +39,7 @@ export function CompanySelectionDialog({
   const selectedCompanyId =
     selectedCompany.token === selectionToken
       ? selectedCompany.id
-      : (selection?.companies[0]?.id ?? null);
+      : null;
 
   const handleContinue = async () => {
     if (selectingCompanyId !== null || selectedCompanyId === null) {
@@ -86,7 +86,9 @@ export function CompanySelectionDialog({
 
       <View style={styles.companyList}>
         {selection?.companies.map((company) => {
-          const primaryName = language === 'ar' ? company.nameAr : company.nameEn;
+          const primaryName = (language === 'ar' ? company.nameAr : company.nameEn).trim() ||
+            (language === 'ar' ? company.nameEn : company.nameAr).trim() ||
+            company.companyCode;
           const secondaryName = language === 'ar' ? company.nameEn : company.nameAr;
           const selected = selectedCompanyId === company.id;
 

@@ -7,7 +7,11 @@ import {
   useState,
 } from 'react';
 
-import { ApiError, configureAxiosAuthentication } from '@/src/core/api';
+import {
+  ApiError,
+  beginAxiosAuthenticationTransition,
+  configureAxiosAuthentication,
+} from '@/src/core/api';
 import { queryClient } from '@/src/core/query/query-client';
 import { secureSession } from '@/src/core/storage/secure-storage';
 import { clearSensitiveFileCache } from '@/src/core/storage/sensitive-file-cache';
@@ -26,6 +30,8 @@ interface AuthContextValue {
   session: SessionResponse | null;
   signIn: (request: LoginRequest) => Promise<LoginOutcome>;
   selectCompany: (token: string, companyId: number) => Promise<void>;
+  switchCompany: (companyId: number) => Promise<void>;
+  isSwitchingCompany: boolean;
   selectTenant: (token: string, tenantId: string) => Promise<LoginOutcome>;
   signOut: () => Promise<void>;
   retry: () => Promise<void>;
@@ -37,6 +43,7 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 export function AuthProvider({ children }: PropsWithChildren) {
   const [status, setStatus] = useState<AuthStatus>('loading');
   const [session, setSession] = useState<SessionResponse | null>(null);
+  const [isSwitchingCompany, setIsSwitchingCompany] = useState(false);
 
   const handleAuthFailure = useCallback(() => {
     void Promise.all([secureSession.clear(), clearSensitiveFileCache()]);
@@ -95,6 +102,9 @@ export function AuthProvider({ children }: PropsWithChildren) {
     } catch (error) {
       if (!isTemporaryFailure(error)) {
         await secureSession.clear();
+        queryClient.clear();
+        setSession(null);
+        setStatus('unauthenticated');
         throw error;
       }
 
@@ -130,6 +140,23 @@ export function AuthProvider({ children }: PropsWithChildren) {
     await completeAuthentication(await authApi.selectCompany(token, companyId));
   };
 
+  const switchCompany = async (companyId: number) => {
+    if (!session || !session.companies.some((company) => company.id === companyId)) {
+      throw new Error('Invalid company selection.');
+    }
+    if (companyId === session.companyId) return;
+
+    const endAuthenticationTransition = beginAxiosAuthenticationTransition();
+    setIsSwitchingCompany(true);
+    try {
+      await queryClient.cancelQueries();
+      await completeAuthentication(await authApi.switchCompany(companyId));
+    } finally {
+      endAuthenticationTransition();
+      setIsSwitchingCompany(false);
+    }
+  };
+
   const signOut = async () => {
     try {
       await authApi.logout();
@@ -146,6 +173,8 @@ export function AuthProvider({ children }: PropsWithChildren) {
     session,
     signIn,
     selectCompany,
+    switchCompany,
+    isSwitchingCompany,
     selectTenant,
     signOut,
     retry: bootstrap,
@@ -177,6 +206,15 @@ function createProvisionalSession(response: AuthResponse): SessionResponse {
     tenantName: response.tenantName,
     tenantPlanName: response.tenantPlanName,
     companyId: response.companyId,
+    companyCode: response.companyCode,
+    companyNameAr: response.companyNameAr,
+    companyNameEn: response.companyNameEn,
+    companies: [{
+      id: response.companyId,
+      companyCode: response.companyCode,
+      nameAr: response.companyNameAr,
+      nameEn: response.companyNameEn,
+    }],
     userName: response.userName,
     email: '',
     firstName: response.firstName,

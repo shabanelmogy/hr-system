@@ -1,29 +1,26 @@
-import { PieChart } from '@/shared/components/charts';
-import { Card, CardContent, CardHeader } from '@mui/material';
-import React from 'react';
-import { LanguageDistributionChartProps } from './AddressTypeChart.types';
+import { PieChart } from "@/shared/components/charts";
+import { useTranslation } from "react-i18next";
+import type { LanguageDistributionChartProps } from "./AddressTypeChart.types";
 
-const LanguageDistributionChart: React.FC<LanguageDistributionChartProps> = ({ data, t }) => {
+const LanguageDistributionChart = ({ data, colors }: LanguageDistributionChartProps) => {
+  const { t } = useTranslation();
+
   return (
-    <Card elevation={2}>
-      <CardHeader
-        title={t("addressTypes.charts.languageDistribution") || "Language Distribution"}
-        slotProps={{ title: { variant: 'h6', fontWeight: 600 } }}
-      />
-      <CardContent>
-        <PieChart
-          data={data}
-          nameKey="name"
-          valueKey="value"
-          title=""
-          subtitle=""
-          height={300}
-          colors="rainbow"
-          showLegend={true}
-          showTooltip={true}
-        />
-      </CardContent>
-    </Card>
+    <PieChart
+      data={data}
+      title={t("addressTypes.charts.languageDistribution")}
+      nameKey="name"
+      valueKey="value"
+      height={280}
+      fullHeight
+      compact
+      colors={colors}
+      showLegend
+      showTooltip
+      showLabels
+      formatValue={(value) => String(value)}
+      formatLabel={(label) => String(label ?? "")}
+    />
   );
 };
 

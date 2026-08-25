@@ -313,7 +313,7 @@ export function AppMultiView<Item, ViewId extends string>({
 
         {isFetching ? (
           <View
-            accessibilityLabel={t('common.loading')}
+            accessibilityLabel={t('feedback.loading')}
             accessibilityLiveRegion="polite"
             pointerEvents="none"
             style={styles.fetchingIndicator}>

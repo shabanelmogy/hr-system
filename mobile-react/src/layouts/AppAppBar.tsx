@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { useAuth, useLogout } from '@/src/features/auth';
+import { CompanyContextSwitcher } from '@/src/features/tenant-access';
 import { AppIcon, AppIconButton, AppText } from '@/src/shared/components';
 
 export interface AppAppBarProps {
@@ -86,6 +87,7 @@ export function AppAppBar({
           </View>
 
           <View style={[styles.actions, { direction }]}>
+            {session ? <CompanyContextSwitcher compact={width < 720} /> : null}
             {showNotifications && onNotificationsPress ? (
               <View style={styles.notificationAction}>
                 <AppIconButton

@@ -79,18 +79,20 @@ public sealed class JwtProvider(
     public TenantSelectionTokenResult GenerateTenantSelectionToken(ApplicationUser user)
     {
         var expiresAt = DateTime.UtcNow.AddMinutes(_jwtSettings.TenantSelectionExpireInMinutes);
+        var jwtId = Guid.NewGuid().ToString("N");
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim(JwtClaimNames.SecurityStamp, user.SecurityStamp ?? string.Empty),
             new Claim(JwtClaimNames.Scope, JwtClaimNames.TenantSelectionScope),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N"))
+            new Claim(JwtRegisteredClaimNames.Jti, jwtId)
         };
 
         var token = CreateToken(claims, _jwtSettings.Audience, expiresAt);
         return new TenantSelectionTokenResult(
             new JwtSecurityTokenHandler().WriteToken(token),
-            expiresAt);
+            expiresAt,
+            jwtId);
     }
 
     public ValidatedTenantSelectionToken? ValidateTenantSelectionToken(string token)
@@ -111,9 +113,12 @@ public sealed class JwtProvider(
 
             var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
             var securityStamp = principal.FindFirstValue(JwtClaimNames.SecurityStamp);
-            return string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(securityStamp)
+            var jwtId = principal.FindFirstValue(JwtRegisteredClaimNames.Jti);
+            return string.IsNullOrWhiteSpace(userId) ||
+                   string.IsNullOrWhiteSpace(securityStamp) ||
+                   string.IsNullOrWhiteSpace(jwtId)
                 ? null
-                : new ValidatedTenantSelectionToken(userId, securityStamp);
+                : new ValidatedTenantSelectionToken(userId, securityStamp, jwtId);
         }
         catch
         {
@@ -124,19 +129,21 @@ public sealed class JwtProvider(
     public CompanySelectionTokenResult GenerateCompanySelectionToken(ApplicationUser user, string tenantId)
     {
         var expiresAt = DateTime.UtcNow.AddMinutes(_jwtSettings.CompanySelectionExpireInMinutes);
+        var jwtId = Guid.NewGuid().ToString("N");
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim(JwtClaimNames.TenantId, tenantId),
             new Claim(JwtClaimNames.SecurityStamp, user.SecurityStamp ?? string.Empty),
             new Claim(JwtClaimNames.Scope, JwtClaimNames.CompanySelectionScope),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N"))
+            new Claim(JwtRegisteredClaimNames.Jti, jwtId)
         };
 
         var token = CreateToken(claims, _jwtSettings.Audience, expiresAt);
         return new CompanySelectionTokenResult(
             new JwtSecurityTokenHandler().WriteToken(token),
-            expiresAt);
+            expiresAt,
+            jwtId);
     }
 
     public ValidatedCompanySelectionToken? ValidateCompanySelectionToken(string token)
@@ -158,12 +165,14 @@ public sealed class JwtProvider(
             var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
             var tenantId = principal.FindFirstValue(JwtClaimNames.TenantId);
             var securityStamp = principal.FindFirstValue(JwtClaimNames.SecurityStamp);
+            var jwtId = principal.FindFirstValue(JwtRegisteredClaimNames.Jti);
 
             return string.IsNullOrWhiteSpace(userId) ||
                    string.IsNullOrWhiteSpace(tenantId) ||
-                   string.IsNullOrWhiteSpace(securityStamp)
+                   string.IsNullOrWhiteSpace(securityStamp) ||
+                   string.IsNullOrWhiteSpace(jwtId)
                 ? null
-                : new ValidatedCompanySelectionToken(userId, tenantId, securityStamp);
+                : new ValidatedCompanySelectionToken(userId, tenantId, securityStamp, jwtId);
         }
         catch
         {

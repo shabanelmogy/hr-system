@@ -7,6 +7,7 @@ const AddressTypeCardViewPagination = ({
   rowsPerPage,
   totalItems,
   itemsPerPageOptions,
+  pinned,
   onPageChange,
   onRowsPerPageChange,
 }: AddressTypeCardViewPaginationProps) => {
@@ -18,6 +19,7 @@ const AddressTypeCardViewPagination = ({
       totalItems={totalItems}
       itemsPerPageOptions={itemsPerPageOptions}
       itemsLabel={t("addressTypes.addressType")}
+      pinned={pinned}
       onPageChange={onPageChange}
       onRowsPerPageChange={onRowsPerPageChange}
     />

@@ -101,6 +101,27 @@ export const authApi = {
     return parseAuthResponse(response);
   },
 
+  async switchCompany(companyId: number): Promise<AuthResponse> {
+    // A refresh that started before the transition can otherwise finish after the
+    // switch and overwrite the replacement credentials with the previous scope.
+    // The transition guard prevents new ordinary refreshes while this one settles.
+    if (refreshInFlight) {
+      try {
+        await refreshInFlight;
+      } catch {
+        // Let the switch request report the current connectivity/authentication
+        // result instead of failing because an unrelated request refreshed first.
+      }
+    }
+
+    const response = await apiService.post<unknown, { companyId: number }>(
+      AUTH_ENDPOINTS.switchCompany,
+      { companyId },
+      { allowWhenReadOnly: true, allowAuthTransitionRefresh: true },
+    );
+    return parseAuthResponse(response);
+  },
+
   async session(): Promise<SessionResponse> {
     const response = await apiService.get<unknown>(AUTH_ENDPOINTS.session);
     return parseSessionResponse(response);
@@ -157,7 +178,6 @@ async function performRefresh(): Promise<string | null> {
   } catch (error) {
     const apiError = toApiError(error);
     if (isDefinitiveAuthenticationFailure(apiError)) {
-      await secureSession.clear();
       return null;
     }
 

@@ -16,6 +16,7 @@ declare module 'axios' {
     skipAuth?: boolean;
     skipAuthRefresh?: boolean;
     allowWhenReadOnly?: boolean;
+    allowAuthTransitionRefresh?: boolean;
   }
 }
 
@@ -26,6 +27,33 @@ type RetriableRequestConfig = InternalAxiosRequestConfig & { _retry?: boolean };
 let refreshHandler: RefreshHandler | null = null;
 let authFailureHandler: AuthFailureHandler | null = null;
 let readOnlyGuard: { isReadOnly: () => boolean; onBlocked: () => void } | null = null;
+let authenticationTransitionDepth = 0;
+
+export function beginAxiosAuthenticationTransition(): () => void {
+  authenticationTransitionDepth += 1;
+  let completed = false;
+
+  return () => {
+    if (completed) return;
+    completed = true;
+    authenticationTransitionDepth = Math.max(0, authenticationTransitionDepth - 1);
+  };
+}
+
+export function isAxiosAuthenticationTransitionActive(): boolean {
+  return authenticationTransitionDepth > 0;
+}
+
+export function hasNewerStoredAccessToken(
+  requestAccessToken: string | null,
+  currentAccessToken: string | null,
+): boolean {
+  return Boolean(
+    requestAccessToken &&
+    currentAccessToken &&
+    requestAccessToken !== currentAccessToken,
+  );
+}
 
 export function configureAxiosAuthentication(options: {
   refresh: RefreshHandler;
@@ -98,6 +126,25 @@ axiosClient.interceptors.response.use(
     if (error.response?.status === 423) {
       readOnlyGuard?.onBlocked();
     }
+
+    const requestAccessToken = config
+      ? readBearerToken(config.headers.get('Authorization'))
+      : null;
+
+    if (
+      error.response?.status === 401 &&
+      config &&
+      !config.skipAuth &&
+      !config._retry
+    ) {
+      const currentAccessToken = await secureSession.getAccessToken();
+      if (hasNewerStoredAccessToken(requestAccessToken, currentAccessToken)) {
+        config._retry = true;
+        config.headers.set('Authorization', `Bearer ${currentAccessToken}`);
+        return axiosClient.request(config);
+      }
+    }
+
     const runRefresh = refreshHandler;
     const canRefresh =
       error.response?.status === 401 &&
@@ -105,6 +152,7 @@ axiosClient.interceptors.response.use(
       !config.skipAuth &&
       !config.skipAuthRefresh &&
       !config._retry &&
+      (authenticationTransitionDepth === 0 || config.allowAuthTransitionRefresh) &&
       runRefresh;
 
     if (!canRefresh) {
@@ -116,6 +164,15 @@ axiosClient.interceptors.response.use(
     try {
       const accessToken = await runRefresh();
       if (!accessToken) {
+        const currentAccessToken = await secureSession.getAccessToken();
+        if (hasNewerStoredAccessToken(requestAccessToken, currentAccessToken)) {
+          config._retry = true;
+          config.headers.set('Authorization', `Bearer ${currentAccessToken}`);
+          return axiosClient.request(config);
+        }
+        if (isAxiosAuthenticationTransitionActive()) {
+          return Promise.reject(toApiError(error));
+        }
         authFailureHandler?.();
         return Promise.reject(toApiError(error));
       }
@@ -159,4 +216,10 @@ export type ApiRequestConfig = AxiosRequestConfig;
 
 function isWriteMethod(method: string | undefined): boolean {
   return ['post', 'put', 'patch', 'delete'].includes(method?.toLowerCase() ?? '');
+}
+
+function readBearerToken(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const match = /^Bearer\s+(.+)$/i.exec(value.trim());
+  return match?.[1]?.trim() || null;
 }

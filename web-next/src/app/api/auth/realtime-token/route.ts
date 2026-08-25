@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { resolveSession } from "@/lib/auth/backend-session";
-import { clearAuthCookies, readAuthTokens, setAuthCookies } from "@/lib/auth/cookies";
+import { readAuthTokens, setAuthCookies } from "@/lib/auth/cookies";
 import { getBackendUrl } from "@/lib/env/server";
 
 const TAG = "[Realtime Token]";
@@ -24,16 +24,18 @@ export async function GET(request: NextRequest) {
   }
 
   if (resolved.status === "unauthenticated") {
-    const response = NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    clearAuthCookies(response);
-    return response;
+    return NextResponse.json(
+      { message: "Unauthorized" },
+      { status: 401, headers: { "cache-control": "no-store" } },
+    );
   }
 
   const currentAccessToken = resolved.authPayload?.token ?? accessToken;
   if (!currentAccessToken) {
-    const response = NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    clearAuthCookies(response);
-    return response;
+    return NextResponse.json(
+      { message: "Unauthorized" },
+      { status: 401, headers: { "cache-control": "no-store" } },
+    );
   }
 
   try {
@@ -49,7 +51,6 @@ export async function GET(request: NextRequest) {
         { message: backendResponse.status === 401 ? "Unauthorized" : "Realtime service unavailable" },
         { status: backendResponse.status === 401 ? 401 : 503 },
       );
-      if (backendResponse.status === 401) clearAuthCookies(response);
       return response;
     }
 

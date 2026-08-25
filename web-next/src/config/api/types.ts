@@ -22,10 +22,31 @@ export interface StatesRoutes {
   restore: (id: Id) => string;
 }
 
-export interface DistrictsRoutes extends CrudRoutes {
-  getAllByState: (stateId: Id) => string;
-  getDistrictWithAddresses: (id: Id) => string;
-  getCount: string;
+export interface DistrictsRoutes {
+  page: string;
+  lookup: (stateId?: Id) => string;
+  byState: (stateId: Id) => string;
+  getById: (id: Id) => string;
+  getWithAddresses: (id: Id) => string;
+  create: string;
+  bulkCreate: string;
+  update: (id: Id) => string;
+  archive: (id: Id) => string;
+  bulkArchive: string;
+  restore: (id: Id) => string;
+}
+
+export interface AddressTypesRoutes {
+  page: string;
+  lookup: string;
+  getById: (id: Id) => string;
+  getWithAddresses: (id: Id) => string;
+  create: string;
+  bulkCreate: string;
+  update: (id: Id) => string;
+  archive: (id: Id) => string;
+  bulkArchive: string;
+  restore: (id: Id) => string;
 }
 
 export interface RolesRoutes extends Omit<CrudRoutes, 'delete'> {

@@ -47,7 +47,7 @@ export function HealthCheckScreen() {
         <AppStateView state="loading" />
       ) : healthQuery.error || !report ? (
         <AppStateView
-          message={getPlatformToolErrorMessage(healthQuery.error, t('states.errorMessage'))}
+          message={getPlatformToolErrorMessage(healthQuery.error, t('feedback.unknownError'))}
           onRetry={() => void healthQuery.refetch()}
           state="error"
         />

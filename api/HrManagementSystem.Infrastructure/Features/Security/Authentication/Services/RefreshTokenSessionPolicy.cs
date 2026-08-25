@@ -22,6 +22,20 @@ public static class RefreshTokenSessionPolicy
             token.Revoke(reason, utcNow);
     }
 
+    public static void RevokeSession(
+        List<RefreshToken> tokens,
+        string sessionId,
+        string reason,
+        DateTime utcNow)
+    {
+        foreach (var token in tokens.Where(token =>
+                     token.IsActiveAt(utcNow) &&
+                     string.Equals(token.SessionId, sessionId, StringComparison.Ordinal)))
+        {
+            token.Revoke(reason, utcNow);
+        }
+    }
+
     public static void Prune(List<RefreshToken> tokens, DateTime utcNow)
     {
         var removeBefore = utcNow.Subtract(InactiveTokenRetention);

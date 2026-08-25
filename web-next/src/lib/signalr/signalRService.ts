@@ -1,4 +1,5 @@
 import * as signalR from "@microsoft/signalr";
+import { SESSION_CHANGED_EVENT } from "@/lib/auth/constants";
 
 const SIGNALR_TAG = "[SignalR]";
 const RESTART_DELAY_MS = 5_000;
@@ -172,7 +173,7 @@ class SignalRService {
     if (!response.ok) {
       if (response.status === 401 && typeof window !== "undefined") {
         this.cachedToken = null;
-        window.dispatchEvent(new CustomEvent("auth:logout"));
+        window.dispatchEvent(new CustomEvent(SESSION_CHANGED_EVENT));
       }
       throw new Error(`Realtime token request failed with status ${response.status}`);
     }

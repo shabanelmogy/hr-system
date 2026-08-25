@@ -70,7 +70,7 @@ export function HangfireDashboardScreen() {
         <AppStateView state="loading" />
       ) : jobsQuery.error || !dashboard ? (
         <AppStateView
-          message={getPlatformToolErrorMessage(jobsQuery.error, t('states.errorMessage'))}
+          message={getPlatformToolErrorMessage(jobsQuery.error, t('feedback.unknownError'))}
           onRetry={() => void jobsQuery.refetch()}
           state="error"
         />
@@ -151,7 +151,7 @@ export function HangfireDashboardScreen() {
           {dashboardLoading && !dashboardError ? (
             <View style={[styles.loadingOverlay, { backgroundColor: theme.colors.background }]}>
               <ActivityIndicator color={theme.colors.primary} size="large" />
-              <AppText color="muted">{t('states.loading')}</AppText>
+              <AppText color="muted">{t('feedback.loading')}</AppText>
             </View>
           ) : null}
           {dashboardError ? (

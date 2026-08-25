@@ -4,3 +4,5 @@ export { GeographicalInformationScreen } from './screens/GeographicalInformation
 export { OrganizationalStructureScreen } from './screens/OrganizationalStructureScreen';
 export { CountriesScreen } from './countries';
 export { StatesScreen } from './states';
+export { DistrictsScreen } from './districts';
+export { AddressTypesScreen } from './address-types';

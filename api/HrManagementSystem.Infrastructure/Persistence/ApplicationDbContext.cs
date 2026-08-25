@@ -64,6 +64,7 @@ public class ApplicationDbContext(
     public DbSet<Company> Companies { get; set; }
     public DbSet<UserTenantAccess> UserTenantAccesses { get; set; }
     public DbSet<UserCompanyAccess> UserCompanyAccesses { get; set; }
+    public DbSet<AuthenticationSelectionChallenge> AuthenticationSelectionChallenges { get; set; }
     public DbSet<UserInvitation> UserInvitations { get; set; }
     public DbSet<SecurityAuditEvent> SecurityAuditEvents { get; set; }
 

@@ -87,7 +87,7 @@ export function ApiEndpointsScreen() {
           {swaggerLoading && !swaggerError ? (
             <View style={[styles.loadingOverlay, { backgroundColor: theme.colors.background }]}>
               <ActivityIndicator color={theme.colors.primary} size="large" />
-              <AppText color="muted">{t('states.loading')}</AppText>
+              <AppText color="muted">{t('feedback.loading')}</AppText>
             </View>
           ) : null}
           {swaggerError ? (

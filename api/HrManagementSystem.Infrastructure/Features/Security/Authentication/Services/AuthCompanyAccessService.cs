@@ -105,9 +105,35 @@ public sealed class AuthCompanyAccessService(
             .ThenBy(access => access.Company.NameEn)
             .Select(access => new CompanyOptionResponse(
                 access.CompanyId,
+                access.Company.CompanyCode,
                 access.Company.NameAr,
                 access.Company.NameEn))
             .ToListAsync(cancellationToken);
+
+    public async Task<CompanyOptionResponse?> GetAvailableCompanyAsync(
+        string userId,
+        string tenantId,
+        int companyId,
+        CancellationToken cancellationToken)
+    {
+        if (!await HasTenantAccessAsync(userId, tenantId, cancellationToken))
+            return null;
+
+        return await context.UserCompanyAccesses
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .Where(access =>
+                access.UserId == userId &&
+                access.TenantId == tenantId &&
+                access.CompanyId == companyId &&
+                access.Company.IsActive)
+            .Select(access => new CompanyOptionResponse(
+                access.CompanyId,
+                access.Company.CompanyCode,
+                access.Company.NameAr,
+                access.Company.NameEn))
+            .SingleOrDefaultAsync(cancellationToken);
+    }
 
     public async Task AssignDefaultCompanyAsync(
         ApplicationUser user,

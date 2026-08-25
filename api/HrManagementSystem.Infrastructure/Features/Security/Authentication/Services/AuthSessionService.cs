@@ -23,8 +23,66 @@ public sealed class AuthSessionService(
         ApplicationUser user,
         string tenantId,
         int companyId,
+        CancellationToken cancellationToken) =>
+        await IssueSessionCoreAsync(
+            user,
+            tenantId,
+            companyId,
+            replacedSessionId: null,
+            previousCompanyId: null,
+            cancellationToken);
+
+    public async Task<Result<AuthResponse>> SwitchCompanyAsync(
+        int companyId,
         CancellationToken cancellationToken)
     {
+        var userId = currentActor.UserId;
+        var tenantId = currentActor.TenantId;
+        var previousCompanyId = currentActor.CompanyId;
+        var replacedSessionId = httpContextAccessor.HttpContext?.User
+            .FindFirstValue(JwtClaimNames.SessionId);
+
+        if (string.IsNullOrWhiteSpace(userId) ||
+            string.IsNullOrWhiteSpace(tenantId) ||
+            string.IsNullOrWhiteSpace(replacedSessionId) ||
+            previousCompanyId is null or <= 0 ||
+            companyId <= 0)
+        {
+            return Result.Failure<AuthResponse>(userErrors.InvalidJwtToken);
+        }
+
+        var user = await FindUserWithTokensAsync(userId, cancellationToken);
+        if (user is null || user.IsDisabled)
+            return Result.Failure<AuthResponse>(userErrors.InvalidJwtToken);
+
+        if (user.LockoutEnd > timeProvider.GetUtcNow())
+            return Result.Failure<AuthResponse>(userErrors.LockedUser);
+
+        return await IssueSessionCoreAsync(
+            user,
+            tenantId,
+            companyId,
+            replacedSessionId,
+            previousCompanyId,
+            cancellationToken);
+    }
+
+    private async Task<Result<AuthResponse>> IssueSessionCoreAsync(
+        ApplicationUser user,
+        string tenantId,
+        int companyId,
+        string? replacedSessionId,
+        int? previousCompanyId,
+        CancellationToken cancellationToken)
+    {
+        var company = await companyAccess.GetAvailableCompanyAsync(
+            user.Id,
+            tenantId,
+            companyId,
+            cancellationToken);
+        if (company is null)
+            return Result.Failure<AuthResponse>(userErrors.NoCompanyAccess);
+
         var sessionId = Guid.NewGuid().ToString("N");
         var accessToken = await jwtProvider.GenerateAccessTokenAsync(user, sessionId, companyId, tenantId);
         var now = timeProvider.GetUtcNow().UtcDateTime;
@@ -37,6 +95,14 @@ public sealed class AuthSessionService(
             CurrentIpAddress,
             CurrentUserAgent);
 
+        if (!string.IsNullOrWhiteSpace(replacedSessionId))
+        {
+            RefreshTokenSessionPolicy.RevokeSession(
+                user.RefreshTokens,
+                replacedSessionId,
+                "Company switched",
+                now);
+        }
         RefreshTokenSessionPolicy.Prune(user.RefreshTokens, now);
         user.RefreshTokens.Add(refreshToken.Token);
 
@@ -44,21 +110,26 @@ public sealed class AuthSessionService(
         if (!updateResult.Succeeded)
             return Result.Failure<AuthResponse>(userErrors.UpdateFailed);
 
-        await loginAudit.RecordLoginAsync(user.Id, companyId, cancellationToken);
+        if (replacedSessionId is null)
+            await loginAudit.RecordLoginAsync(user.Id, companyId, cancellationToken);
         await securityAudit.RecordAsync(new SecurityAuditRequest(
-            "Authentication.LoginSucceeded",
+            replacedSessionId is null
+                ? "Authentication.LoginSucceeded"
+                : "Authentication.CompanySwitched",
             "ApplicationUser",
             user.Id,
             TenantId: tenantId,
             CompanyId: companyId,
             Metadata: new Dictionary<string, string?>
             {
-                ["SessionId"] = sessionId
+                ["SessionId"] = sessionId,
+                ["PreviousSessionId"] = replacedSessionId,
+                ["PreviousCompanyId"] = previousCompanyId?.ToString(CultureInfo.InvariantCulture)
             }), cancellationToken);
         return Result.Success(CreateAuthResponse(
             user,
             tenantId,
-            companyId,
+            company,
             accessToken,
             refreshToken.RawToken,
             refreshToken.Token.ExpiresOn));
@@ -148,12 +219,12 @@ public sealed class AuthSessionService(
         if (!storedToken.IsActiveAt(now))
             return await HandleInactiveRefreshTokenAsync(user, storedToken);
 
-        var hasCompanyAccess = await companyAccess.HasCompanyAccessAsync(
+        var company = await companyAccess.GetAvailableCompanyAsync(
             user.Id,
             validatedAccessToken.TenantId,
             storedToken.CompanyId,
             cancellationToken);
-        if (!hasCompanyAccess)
+        if (company is null)
             return Result.Failure<AuthResponse>(userErrors.InvalidRefreshToken);
 
         var accessToken = await jwtProvider.GenerateAccessTokenAsync(
@@ -178,7 +249,7 @@ public sealed class AuthSessionService(
         return Result.Success(CreateAuthResponse(
             user,
             validatedAccessToken.TenantId,
-            storedToken.CompanyId,
+            company,
             accessToken,
             replacement.RawToken,
             replacement.Token.ExpiresOn));
@@ -290,7 +361,7 @@ public sealed class AuthSessionService(
     private static AuthResponse CreateAuthResponse(
         ApplicationUser user,
         string tenantId,
-        int companyId,
+        CompanyOptionResponse company,
         AccessTokenResult accessToken,
         string refreshToken,
         DateTime refreshTokenExpiration) =>
@@ -302,7 +373,10 @@ public sealed class AuthSessionService(
             tenantId,
             accessToken.TenantName,
             accessToken.TenantPlanName,
-            companyId,
+            company.Id,
+            company.CompanyCode,
+            company.NameAr,
+            company.NameEn,
             accessToken.Token,
             accessToken.ExpiresAt,
             refreshToken,

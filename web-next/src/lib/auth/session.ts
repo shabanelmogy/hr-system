@@ -1,9 +1,20 @@
+export type CompanyOption = {
+  id: number;
+  companyCode: string;
+  nameAr: string;
+  nameEn: string;
+};
+
 export type SessionClaims = {
   userId: string;
   tenantId: string;
   tenantName: string;
   tenantPlanName: string;
   companyId: number;
+  companyCode: string;
+  companyNameAr: string;
+  companyNameEn: string;
+  companies: CompanyOption[];
   userName: string;
   email: string;
   firstName: string;
@@ -33,6 +44,11 @@ export function isSessionClaims(value: unknown): value is SessionClaims {
     typeof candidate.companyId === "number" &&
     Number.isInteger(candidate.companyId) &&
     candidate.companyId > 0 &&
+    typeof candidate.companyCode === "string" &&
+    candidate.companyCode.trim().length > 0 &&
+    typeof candidate.companyNameAr === "string" &&
+    typeof candidate.companyNameEn === "string" &&
+    isCompanyOptions(candidate.companies, candidate.companyId) &&
     typeof candidate.userName === "string" &&
     candidate.userName.length > 0 &&
     typeof candidate.email === "string" &&
@@ -58,4 +74,32 @@ export function isSessionClaims(value: unknown): value is SessionClaims {
     Number.isFinite(candidate.expiresAt) &&
     candidate.expiresAt > Date.now()
   );
+}
+
+function isCompanyOptions(
+  value: unknown,
+  currentCompanyId: number | undefined,
+): value is CompanyOption[] {
+  if (!Array.isArray(value) || value.length === 0) return false;
+
+  const ids = new Set<number>();
+  for (const company of value) {
+    if (!company || typeof company !== "object") return false;
+    const candidate = company as Partial<CompanyOption>;
+    if (
+      typeof candidate.id !== "number" ||
+      !Number.isInteger(candidate.id) ||
+      candidate.id <= 0 ||
+      typeof candidate.companyCode !== "string" ||
+      candidate.companyCode.trim().length === 0 ||
+      typeof candidate.nameAr !== "string" ||
+      typeof candidate.nameEn !== "string" ||
+      ids.has(candidate.id)
+    ) {
+      return false;
+    }
+    ids.add(candidate.id);
+  }
+
+  return typeof currentCompanyId === "number" && ids.has(currentCompanyId);
 }

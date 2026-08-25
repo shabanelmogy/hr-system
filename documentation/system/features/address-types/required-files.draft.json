@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "status": "draft",
+  "feature": "address-types",
+  "featureName": "Address Types",
+  "referenceFeature": "countries",
+  "purpose": "Draft evidence plan for Address Types. This file is not registered until every final source exists.",
+  "reviewArtifact": "documentation/system/features/address-types/ADDRESS_TYPES-REVIEW-ARTIFACTS.md",
+  "implementationRequest": "documentation/system/features/address-types/IMPLEMENTATION-REQUEST.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/project/ADDRESS_TYPES_FEATURE_FULL_REVIEW.md",
+    "api": "documentation/api/AddressTypes_API_Implementation_Profile.md",
+    "web": "documentation/web-next/features/address-types-frontend-reference.md",
+    "mobile": "documentation/mobile-react/address-types-mobile-reference.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/system/features/address-types/ADDRESS_TYPES-REVIEW-ARTIFACTS.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/system/features/address-types/IMPLEMENTATION-REQUEST.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete every decision and remove every placeholder in IMPLEMENTATION-REQUEST.md before implementation.",
+    "Add existing API, web, mobile, configuration, localization, and test sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create and complete the four planned canonical books.",
+    "Rename this file to required-files.json only after every declared path exists.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json only after the four canonical books are complete.",
+    "Write generated packets under documentation/system/generated/address-types/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit handoff decision."
+  ]
+}

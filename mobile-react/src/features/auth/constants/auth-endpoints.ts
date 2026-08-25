@@ -12,6 +12,7 @@ export const AUTH_ENDPOINTS = {
   resendConfirmationEmail: 'auth/resendConfirmationEmail',
   selectTenant: 'auth/selectTenant',
   selectCompany: 'auth/selectCompany',
+  switchCompany: 'auth/switchCompany',
   refreshToken: 'auth/refreshToken',
   logout: 'auth/logOut',
   session: 'auth/session',

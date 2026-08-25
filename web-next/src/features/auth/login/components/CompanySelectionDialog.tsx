@@ -38,7 +38,7 @@ export default function CompanySelectionDialog({
   const selectionToken = selection?.companySelectionToken ?? "";
   const selectedCompanyId = selectedCompany.token === selectionToken
     ? selectedCompany.id
-    : selection?.companies[0]?.id ?? null;
+    : null;
 
   const handleCompanySelect = (companyId: number) => {
     // The token makes the selection reset naturally when a new login response arrives.
@@ -85,7 +85,9 @@ export default function CompanySelectionDialog({
         <List disablePadding aria-label={t("auth.availableCompanies")}>
           {selection?.companies.map((company) => {
             const selected = selectedCompanyId === company.id;
-            const primaryName = isArabic ? company.nameAr : company.nameEn;
+            const primaryName = (isArabic ? company.nameAr : company.nameEn).trim() ||
+              (isArabic ? company.nameEn : company.nameAr).trim() ||
+              company.companyCode;
             const secondaryName = isArabic ? company.nameEn : company.nameAr;
 
             return (

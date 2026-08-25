@@ -21,6 +21,15 @@ namespace CrystalReportGeneratorApi.Helpers.CrystalReport
                 {
                     "StateId", "StateAr", "StateEn", "StateCode",
                     "CountryId", "CountryAr", "CountryEn"
+                },
+                ["districts"] = new[]
+                {
+                    "DistrictId", "DistrictAr", "DistrictEn", "DistrictCode",
+                    "StateId", "StateAr", "StateEn", "AddressesCount"
+                },
+                ["addresstypes"] = new[]
+                {
+                    "AddressTypeId", "AddressTypeAr", "AddressTypeEn", "AddressesCount"
                 }
             };
 

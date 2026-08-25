@@ -25,39 +25,30 @@ export interface ChartLegendProps {
 }
 
 export interface EmptyChartStateProps {
-  t: (key: string) => string;
   onAdd?: () => void;
 }
 
 export interface InitialLetterChartProps {
   data: InitialLetterData[];
-  t: (key: string) => string;
 }
 
 export interface LanguageDistributionChartProps {
   data: LanguageData[];
-  t: (key: string) => string;
-}
-
-export interface LoadingChartStateProps {
-  t: (key: string) => string;
+  colors: string[];
 }
 
 export interface NameLengthChartProps {
   data: LengthData[];
-  t: (key: string) => string;
 }
 
 export interface SummaryCardsProps {
-  totalAddressTypes: number;
-  completeAddressTypes: number;
-  recentAddressTypes: number;
-  averageNameLength: number;
-  t: (key: string) => string;
+  totalMatchingAddressTypes: number;
+  visibleAddressTypes: number;
+  visibleWithAddresses: number;
+  visibleWithoutAddresses: number;
 }
 
 export interface TimelineChartProps {
   data: TimelineData[];
-  t: (key: string) => string;
 }
 

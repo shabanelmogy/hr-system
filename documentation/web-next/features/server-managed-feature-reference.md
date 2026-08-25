@@ -228,6 +228,22 @@ binding `isFilterBarVisible`; `HeaderActions` supplies the visual pressed state
 and accessible button behavior. Do not duplicate the button, its selected
 styling, or its accessibility attributes in each feature.
 
+### Reference implementation fidelity
+
+When a feature is required to follow Countries, States, or another reviewed
+reference, treat that feature's current source as the implementation baseline,
+not visual inspiration. Before editing, identify and reuse its controller hook,
+multi-view composition, `PageHeader`, `MyDataGrid` toolbar, `EntityCard` card
+scaffold, pagination, and loading/empty/error states. Adapt only feature-owned
+fields, transport contracts, permissions, relationships, and explicitly decided
+views.
+
+Do not replace an established reference structure with a custom page, local
+filter/sort controls, library-default widgets, or a look-alike card/chart/import
+layout. Before handoff, compare the rendered Grid, Cards, toolbar, paging, and
+each required view at the same viewport. Record an intentional difference in the
+feature profile; an unexplained visual difference is a feature regression.
+
 ### Grid
 
 Grid is the default required list view. Use server pagination and sorting. Wire
