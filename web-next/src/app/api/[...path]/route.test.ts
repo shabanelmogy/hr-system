@@ -4,6 +4,7 @@ import { NextRequest } from "next/server";
 vi.mock("server-only", () => ({}));
 vi.mock("@/lib/env/server", () => ({
   getBackendUrl: () => "https://api.example.test",
+  resolveRequestBackendUrl: () => "https://api.example.test",
 }));
 
 import { GET, POST } from "./route";

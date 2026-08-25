@@ -13,7 +13,7 @@ import {
   rewriteHangfireAntiforgeryCookie,
   rewriteHangfireLocation,
 } from "@/lib/api/hangfireProxy";
-import { getBackendUrl } from "@/lib/env/server";
+import { getBackendUrl, resolveRequestBackendUrl } from "@/lib/env/server";
 
 type RouteParameters = { params: Promise<{ path?: string[] }> };
 
@@ -48,13 +48,14 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
   const { accessToken, refreshToken, migrationPayload } = readAuthTokens(
     request.cookies,
   );
+  const targetBackendUrl = resolveRequestBackendUrl(request);
   const body = request.method === "GET" || request.method === "HEAD"
     ? undefined
     : await request.arrayBuffer();
 
   let backendResponse: Response;
   try {
-    backendResponse = await callBackend(request, path, accessToken, body);
+    backendResponse = await callBackend(request, path, accessToken, body, targetBackendUrl);
   } catch {
     return NextResponse.json(
       { title: "Hangfire dashboard is unavailable" },
@@ -64,7 +65,11 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
 
   let refreshedAuth: AuthPayload | null = null;
   if (backendResponse.status === 401 && accessToken && refreshToken) {
-    const refreshResult = await refreshAuthTokens(accessToken, refreshToken);
+    const refreshResult = await refreshAuthTokens(
+      accessToken,
+      refreshToken,
+      targetBackendUrl,
+    );
     if (refreshResult.status === "unavailable") {
       return NextResponse.json(
         { title: "Authentication service unavailable" },
@@ -80,6 +85,7 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
           path,
           refreshedAuth.token,
           body,
+          targetBackendUrl,
         );
       } catch {
         const response = NextResponse.json(
@@ -96,6 +102,7 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
     backendResponse,
     refreshedAuth ?? migrationPayload,
     request.method !== "HEAD",
+    targetBackendUrl,
   );
   if (backendResponse.status === 401 && !refreshedAuth) {
     clearAuthCookies(response);
@@ -108,8 +115,8 @@ async function callBackend(
   path: readonly string[],
   accessToken?: string,
   body?: ArrayBuffer,
+  backendBaseUrl: string = getBackendUrl(),
 ) {
-  const backendBaseUrl = getBackendUrl();
   const url = new URL(createHangfireBackendPath(path), backendBaseUrl);
   url.search = request.nextUrl.search;
 
@@ -146,6 +153,7 @@ async function createProxyResponse(
   backendResponse: Response,
   authPayload?: AuthPayload | null,
   includeBody = true,
+  backendBaseUrl: string = getBackendUrl(),
 ) {
   const headers = new Headers();
   backendResponse.headers.forEach((value, name) => {
@@ -156,7 +164,7 @@ async function createProxyResponse(
 
   const location = rewriteHangfireLocation(
     backendResponse.headers.get("location"),
-    getBackendUrl(),
+    backendBaseUrl,
   );
   if (location) headers.set("location", location);
 

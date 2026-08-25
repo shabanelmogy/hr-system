@@ -3,6 +3,10 @@
 import axios, { type AxiosError, type AxiosInstance, type AxiosRequestConfig, type Method } from "axios";
 import i18n from "i18next";
 import {
+  BACKEND_OVERRIDE_HEADER,
+  getStoredBackendOverride,
+} from "@/lib/api/backendOverride";
+import {
   SESSION_CHANGED_EVENT,
   SESSION_REFRESHED_HEADER,
 } from "@/lib/auth/constants";
@@ -43,6 +47,11 @@ class ApiClient {
 
     this.api.interceptors.request.use((config) => {
       config.headers.Culture = i18n.language || "en";
+
+      const backendOverride = getStoredBackendOverride();
+      if (backendOverride) {
+        config.headers.set(BACKEND_OVERRIDE_HEADER, backendOverride);
+      }
 
       if (typeof FormData !== "undefined" && config.data instanceof FormData) {
         config.headers.delete("Content-Type");

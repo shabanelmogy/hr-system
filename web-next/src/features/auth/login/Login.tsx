@@ -80,10 +80,8 @@ const Login = () => {
             overflow: "hidden",
             width: "100%",
             display: "flex",
-            flexDirection: "row",
+            flexDirection: { xs: "column", md: "row" },
             boxShadow: `0 10px 40px ${alpha(theme.palette.primary.main, 0.2)}`,
-            minHeight: { xs: "auto", sm: "auto" },
-            maxHeight: { md: "600px" },
           }}
         >
           {/* Left Panel - Branding */}

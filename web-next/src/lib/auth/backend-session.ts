@@ -31,12 +31,13 @@ const definitiveRefreshRejectionStatuses = new Set([400, 401, 403]);
 export async function resolveSession(
   accessToken?: string,
   refreshToken?: string,
+  backendUrl: string = getBackendUrl(),
 ): Promise<ResolvedSession> {
   if (!accessToken) {
     return { status: "unauthenticated" };
   }
 
-  const currentSession = await fetchVerifiedSession(accessToken);
+  const currentSession = await fetchVerifiedSession(accessToken, backendUrl);
 
   if (currentSession.status === "authenticated") {
     return currentSession;
@@ -48,12 +49,12 @@ export async function resolveSession(
     return { status: "unauthenticated" };
   }
 
-  const refreshResult = await refreshAuthTokens(accessToken, refreshToken);
+  const refreshResult = await refreshAuthTokens(accessToken, refreshToken, backendUrl);
 
   if (refreshResult.status === "unavailable") return { status: "unavailable" };
   if (refreshResult.status === "rejected") return { status: "unauthenticated" };
 
-  const refreshedSession = await fetchVerifiedSession(refreshResult.payload.token);
+  const refreshedSession = await fetchVerifiedSession(refreshResult.payload.token, backendUrl);
   if (refreshedSession.status === "unavailable") {
     return {
       status: "unavailable",
@@ -71,6 +72,7 @@ export async function resolveSession(
 export function refreshAuthTokens(
   accessToken: string,
   refreshToken: string,
+  backendUrl: string = getBackendUrl(),
 ): Promise<RefreshResult> {
   const key = createHash("sha256").update(refreshToken).digest("hex").slice(0, 12);
   const existingRequest = refreshRequests.get(key);
@@ -78,7 +80,7 @@ export function refreshAuthTokens(
     return existingRequest;
   }
 
-  const request = requestTokenRefresh(accessToken, refreshToken);
+  const request = requestTokenRefresh(accessToken, refreshToken, backendUrl);
   
   // Set cache immediately to avoid race condition
   refreshRequests.set(key, request);
@@ -96,16 +98,19 @@ export function refreshAuthTokens(
   return request;
 }
 
-async function fetchVerifiedSession(accessToken: string): Promise<SessionLookup> {
+async function fetchVerifiedSession(
+  accessToken: string,
+  backendUrl: string,
+): Promise<SessionLookup> {
   try {
-    const response = await fetch(`${getBackendUrl()}/api/v1/auth/session`, {
+    const response = await fetch(`${backendUrl}/api/v1/auth/session`, {
       headers: { authorization: `Bearer ${accessToken}` },
       cache: "no-store",
       signal: AbortSignal.timeout(sessionValidationTimeoutMs),
     });
 
     if (response.status === 404) {
-      return fetchValidatedClaimsFromCheckAuth(accessToken);
+      return fetchValidatedClaimsFromCheckAuth(accessToken, backendUrl);
     }
     if (response.status === 401 || response.status === 403) {
       return { status: "unauthenticated" };
@@ -128,9 +133,12 @@ async function fetchVerifiedSession(accessToken: string): Promise<SessionLookup>
   }
 }
 
-async function fetchValidatedClaimsFromCheckAuth(accessToken: string): Promise<SessionLookup> {
+async function fetchValidatedClaimsFromCheckAuth(
+  accessToken: string,
+  backendUrl: string,
+): Promise<SessionLookup> {
   try {
-    const response = await fetch(`${getBackendUrl()}/api/v1/auth/checkAuth/CheckAuth`, {
+    const response = await fetch(`${backendUrl}/api/v1/auth/checkAuth/CheckAuth`, {
       headers: { authorization: `Bearer ${accessToken}` },
       cache: "no-store",
       signal: AbortSignal.timeout(sessionValidationTimeoutMs),
@@ -246,9 +254,10 @@ function asStringArray(value: unknown): string[] {
 async function requestTokenRefresh(
   accessToken: string,
   refreshToken: string,
+  backendUrl: string,
 ): Promise<RefreshResult> {
   try {
-    const response = await fetch(`${getBackendUrl()}/api/v1/auth/refreshToken`, {
+    const response = await fetch(`${backendUrl}/api/v1/auth/refreshToken`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ token: accessToken, refreshToken }),

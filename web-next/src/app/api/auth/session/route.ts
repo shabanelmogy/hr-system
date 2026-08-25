@@ -2,12 +2,17 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { resolveSession } from "@/lib/auth/backend-session";
 import { readAuthTokens, setAuthCookies } from "@/lib/auth/cookies";
+import { resolveRequestBackendUrl } from "@/lib/env/server";
 
 export async function GET(request: NextRequest) {
   const { accessToken, refreshToken, migrationPayload } = readAuthTokens(
     request.cookies,
   );
-  const resolved = await resolveSession(accessToken, refreshToken);
+  const resolved = await resolveSession(
+    accessToken,
+    refreshToken,
+    resolveRequestBackendUrl(request),
+  );
 
   if (resolved.status === "unavailable") {
     const response = NextResponse.json(
