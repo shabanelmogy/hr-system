@@ -8,7 +8,7 @@ The physical route is `app/(main)/basic-data/geographical-information/states.tsx
 
 ## 2. Route and policy
 
-`RouteGuard(ROUTES.basicData.states)` enforces `States:View`. Typed route constants, the route policy, geographical navigation item, realtime registry, and notification action mapper are registered together.
+`RouteGuard(ROUTES.basicData.states)` enforces the `super_admin` route policy; action controls retain States permissions. Typed route constants, the Platform geography navigation item, realtime registry, and notification action mapper are registered together.
 
 ## 3. Runtime contract
 
@@ -94,7 +94,7 @@ Paired Arabic/English resources, live localization direction, shared AppScreen s
 
 ## 13. Notifications and realtime
 
-The `states` realtime resource invalidates `['states']`. `/basic-data/states` notification actions map to the direct States Expo route, so notifications and realtime point to the same feature.
+The `states` realtime resource invalidates `['states']`. `/super-admin/geography/states` notification actions map to the direct guarded States Expo route, so notifications and realtime point to the same Platform feature.
 
 ## 14. Tests
 

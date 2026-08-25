@@ -33,7 +33,7 @@
     { "id": "api-notification-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/BackgroundNotificationJobTests.cs", "purpose": "Plural State bulk notification contract" },
     { "id": "api-localization-en", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Localization/Resources/en-US.json", "purpose": "English State validation and notification strings" },
     { "id": "api-localization-ar", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Localization/Resources/ar-EG.json", "purpose": "Arabic State validation and notification strings" },
-    { "id": "web-route", "layer": "web-next", "path": "web-next/src/app/(main)/basic-data/(geographical-information)/states/page.tsx", "purpose": "Thin browser route" },
+    { "id": "web-route", "layer": "web-next", "path": "web-next/src/app/(main)/super-admin/geography/states/page.tsx", "purpose": "Thin super-admin browser route" },
     { "id": "web-page", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/states/pages/StatesPage.tsx", "purpose": "Browser composition" },
     { "id": "web-page-tests", "layer": "web-next-test", "path": "web-next/src/features/basic-data/geographical-information/states/pages/StatesPage.test.tsx", "purpose": "Controller/view/loading/form/bulk wiring coverage" },
     { "id": "web-multi-view", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/states/components/StatesMultiView.tsx", "purpose": "Approved Grid, Card, Chart, Report, and Import registration" },

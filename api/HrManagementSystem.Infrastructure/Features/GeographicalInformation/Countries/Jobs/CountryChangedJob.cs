@@ -40,7 +40,7 @@ public sealed class CountryChangedJob(
             request.Action,
             parameters,
             request.Country?.Id.ToString(CultureInfo.InvariantCulture),
-            "/basic-data/countries",
+            "/super-admin/geography/countries",
             request.ActorUserId,
             request.OperationId);
 

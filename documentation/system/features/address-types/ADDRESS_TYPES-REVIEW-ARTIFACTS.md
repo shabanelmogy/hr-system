@@ -9,10 +9,10 @@
 | Web route | `/basic-data/address-types` |
 | Mobile route | `/basic-data/geographical-information/address-types` |
 | Review owner | Codex |
-| Review date | 2026-08-24 |
+| Review date | 2026-08-25 |
 | Operating mode | Existing-feature refactor and mobile addition |
 | Documentation state | Final canonical books, required-file manifest, and registered recipes |
-| Applied reference | `countries` |
+| Applied reference | `countries` (architecture baseline only) |
 | Import | Required on Web and Mobile; XLSX parsed client-side to atomic JSON bulk create |
 | Reporting | Required; Managed Crystal |
 
@@ -88,12 +88,23 @@ deployment prerequisites.
 
 ## Integration register
 
-- API resource `address-types`; web and mobile stable query keys are feature-owned.
+- API resource `address-types`; web and mobile query keys are stable and
+  feature-owned. Successful company switching clears the full query cache; the
+  server actor, not a client key parameter, supplies active-company scope.
 - Notification action `/basic-data/address-types` maps to the geographical Expo route.
 - Expo adds typed route, policy, geographical-navigation item, public export,
   EN/AR translations, and realtime mapping.
 - Report profile changes require HR API + Crystal runtime deployment, manager
   import/publish, and role `Run` grant.
+
+Address Types are company-scoped (`TenantId` + `CompanyId`). The active-company
+actor is authoritative; clients do not send `companyId`. Existing global rows are
+cloned to every existing company by migration, while new companies start empty.
+Drain old Address Type Hangfire jobs before applying that migration, then require
+re-login and a company-context switch. A future public Job Portal may reuse
+candidate/person address types after server-side scope resolution from the
+published job or portal slug; it never trusts a client company ID. Job location
+remains Branch/Site/WorkLocation.
 
 ## Findings and handoffs
 
@@ -102,13 +113,15 @@ deployment prerequisites.
 | AT-F01 | High | Legacy API is unpaged and legacy web uses fake/local-list behavior; Expo feature is absent. | Feature implementation | Resolved by the feature-owned CQRS/API and five-view web/mobile implementations. |
 | AT-F02 | Manual release | An `.rpt` is insufficient without manager publication and `Run` grant. | Release owner | Keep as manual deployment check. |
 | AT-F03 | Regression prevention | Shared mobile feedback borrowed missing `states.*` keys, causing raw dotted identifiers on non-State screens. | Mobile platform | Resolved with a shared `feedback` namespace and literal-key EN/AR source-usage test. |
+| AT-F04 | High | Address create/update/restore could race Address Type archive because only the parent mutation owned the lifecycle lock. | API | Resolved by sharing the Address Type lock and rechecking the active parent inside each atomic child write. |
+| AT-F05 | Manual release | Existing global Address Types and their Address/log/notification references require a data-safe company expansion. | Release owner | Migration clones every existing type to each existing company and remaps dependents; drain old jobs, back up, review generated SQL, and apply in a maintenance window. |
 
 ## Verification
 
 | Layer | Command/check | Result | Date |
 | --- | --- | --- | --- |
-| Documentation | `Generate-Documentation.ps1`, then `Generate-Documentation.ps1 -Check` | Passed: Address Types phases 00-06 generated; 28 registered recipes checked | 2026-08-24 |
-| API | `dotnet test ... --filter "AddressTypeCqrsArchitectureTests|CrystalReportDataSourceTests"` | Passed: 8 tests; API/Application/Infrastructure compiled | 2026-08-24 |
+| Documentation | `Generate-Documentation.ps1`, then `Generate-Documentation.ps1 -Check` | Passed: phases regenerated; 35 registered recipes checked | 2026-08-25 |
+| API | `dotnet test HrManagementSystem.Tests.csproj --no-restore`; API project build; EF pending-model check | Passed: 351 tests; build has 0 warnings/errors; no pending model changes | 2026-08-25 |
 | Web | Address Type service test, strict type check, lint | Passed: 2 tests; strict type check; lint has existing repository warnings | 2026-08-24 |
 | Web full gate | `npm.cmd run check` | Inherited failure: existing architecture/circular-dependency violations outside Address Types | 2026-08-24 |
 | Mobile | typecheck, lint, architecture check, Jest | Passed: 35 suites / 104 tests, including EN/AR literal-key coverage | 2026-08-24 |

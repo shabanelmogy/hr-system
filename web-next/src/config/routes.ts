@@ -30,6 +30,7 @@ export interface BasicDataRoutes {
   districts: AppPath;
   countryReport: AppPath;
   globalPresence: AppPath;
+  companyGeographicScope: AppPath;
 }
 
 export interface AuthRoutes {
@@ -44,6 +45,11 @@ export interface SuperAdminRoutes {
   dashboard: AppPath;
   tenants: AppPath;
   tenantAdmins: AppPath;
+  geography: {
+    countries: AppPath;
+    states: AppPath;
+    districts: AppPath;
+  };
 }
 
 export interface AppRoutes {
@@ -103,6 +109,7 @@ export const appRoutes: AppRoutes = {
     districts: "/basic-data/districts",
     countryReport: "/basic-data/country-report",
     globalPresence: "/basic-data/global-presence",
+    companyGeographicScope: toAppPath("/basic-data/organizational-structure/geographic-scope"),
   },
 
   auth: {
@@ -119,6 +126,11 @@ export const appRoutes: AppRoutes = {
     dashboard: "/super-admin",
     tenants: "/super-admin/tenants",
     tenantAdmins: "/super-admin/tenant-admins",
+    geography: {
+      countries: "/super-admin/geography/countries",
+      states: "/super-admin/geography/states",
+      districts: "/super-admin/geography/districts",
+    },
   },
 
   kpis: "/kpis",

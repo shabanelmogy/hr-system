@@ -67,20 +67,10 @@ const DrawerContent = styled(Box)(() => ({
 }));
 
 // Scrollable area
-const ScrollableContent = styled(Box)(({ theme }) => ({
+const ScrollableContent = styled(Box)(() => ({
   flexGrow: 1,
   overflowY: "auto",
   overflowX: "hidden",
-  "&::-webkit-scrollbar": {
-    width: "6px",
-  },
-  "&::-webkit-scrollbar-thumb": {
-    background: alpha(theme.palette.text.primary, 0.2),
-    borderRadius: "3px",
-  },
-  "&::-webkit-scrollbar-track": {
-    background: alpha(theme.palette.text.primary, 0.05),
-  },
 }));
 
 const ToggleButton = styled(Button, {

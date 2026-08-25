@@ -31,7 +31,18 @@ public static class DefaultUsers
             throw new InvalidOperationException("The administrator role was not created.");
 
         var existingClaims = await roleManager.GetClaimsAsync(adminRole);
-        var permissions = Permissions.GetAllPermissions()
+        foreach (var claim in existingClaims.Where(claim =>
+                     claim.Type == Permissions.Type &&
+                     Permissions.GetPlatformGeographyPermissions().Contains(
+                         claim.Value,
+                         StringComparer.Ordinal)))
+        {
+            var removeResult = await roleManager.RemoveClaimAsync(adminRole, claim);
+            if (!removeResult.Succeeded)
+                throw new InvalidOperationException($"Unable to remove platform permission {claim.Value} from admin.");
+        }
+
+        var permissions = Permissions.GetTenantPermissions()
             .OfType<string>()
             .Distinct(StringComparer.Ordinal);
 
@@ -49,6 +60,33 @@ public static class DefaultUsers
 
             if (!result.Succeeded)
                 throw new InvalidOperationException($"Unable to seed permission {permission}.");
+        }
+    }
+
+    public static async Task SeedSuperAdminGeographyPermissionsAsync(
+        RoleManager<ApplicationRole> roleManager)
+    {
+        var normalizedRoleName = roleManager.NormalizeKey(AppRoles.super_admin);
+        var role = await roleManager.Roles.SingleOrDefaultAsync(candidate =>
+            candidate.IsSystem && candidate.NormalizedName == normalizedRoleName);
+        if (role is null)
+            throw new InvalidOperationException("The platform administrator role was not created.");
+
+        var existingClaims = await roleManager.GetClaimsAsync(role);
+        foreach (var permission in Permissions.GetPlatformGeographyPermissions())
+        {
+            if (existingClaims.Any(claim =>
+                    claim.Type == Permissions.Type &&
+                    claim.Value == permission))
+            {
+                continue;
+            }
+
+            var result = await roleManager.AddClaimAsync(
+                role,
+                new Claim(Permissions.Type, permission));
+            if (!result.Succeeded)
+                throw new InvalidOperationException($"Unable to seed platform permission {permission}.");
         }
     }
 

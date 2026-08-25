@@ -44,9 +44,9 @@ export function CountriesScreen() {
   const { i18n, t } = useTranslation();
   const { theme } = useAppTheme();
   const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
-  const { allowed: isCreateAuthorized } = useAuthorization({ requiredPermissions: [permissions.CreateCountries] });
-  const { allowed: isEditAuthorized } = useAuthorization({ requiredPermissions: [permissions.EditCountries] });
-  const { allowed: isDeleteAuthorized } = useAuthorization({ requiredPermissions: [permissions.DeleteCountries] });
+  const { allowed: isCreateAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.CreateCountries] });
+  const { allowed: isEditAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.EditCountries] });
+  const { allowed: isDeleteAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.DeleteCountries] });
   const { allowed: isReportAuthorized } = useAuthorization({ requiredPermissions: [permissions.ViewCrystalReports] });
   const canCreate = isCreateAuthorized && !isReadOnly;
   const canEdit = isEditAuthorized && !isReadOnly;

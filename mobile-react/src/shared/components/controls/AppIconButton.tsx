@@ -18,6 +18,7 @@ export function AppIconButton({
   pressedBackgroundColor,
   size = 20,
   disabled,
+  accessibilityState,
   style,
   ...props
 }: AppIconButtonProps) {
@@ -28,7 +29,7 @@ export function AppIconButton({
       {...props}
       accessibilityLabel={label}
       accessibilityRole="button"
-      accessibilityState={{ disabled: Boolean(disabled) }}
+      accessibilityState={{ ...accessibilityState, disabled: Boolean(disabled) }}
       disabled={disabled}
       hitSlop={8}
       style={(state) => [

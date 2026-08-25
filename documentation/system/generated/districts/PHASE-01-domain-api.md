@@ -88,6 +88,6 @@ implementation discipline.
 | districts-api | 5 | `817904cf7b037c0d4815e7389245629f1db4cbc6f435ac68ea4696789def8ff7` |
 | districts-api | 6 | `7cd07281bc0eacece3dce2b4cf4f612c5da3026182fe36b53aa11c23b157269e` |
 | districts-api | 7 | `0aae75ef226e7c43d3132c55e1a824affb1f208f419cf029abd4cef948fcf8f1` |
-| districts-api | 8 | `1d461e94cc1786628d3e9f43b059b9cb0a3205e0761c0146bfd731e4fb416dd6` |
+| districts-api | 8 | `808bf1aa73ef33b6517d65ccc0aa7d5595474cb438f80fb39f8338791b3d797e` |
 | districts-api | 9 | `0967a504ad230259d1b0ad0a4bf07bb0f0ba762151ccc5c045cc3fdcca5e7c74` |
 | districts-api | 10 | `0d23b350dbc4a7e62be4d8f701af945b5d9c43e5a2f852035b2cf9f909ae62a1` |

@@ -3,6 +3,7 @@ using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Address
 using HrManagementSystem.Application.Features.GeographicalInformation.Addresses.Services;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Addresses.Services;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.AddressTypes.Jobs;
+using HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Contracts;
 using HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Services;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.AddressTypes.Services;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Countries.Jobs;
@@ -10,6 +11,8 @@ using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Distric
 using HrManagementSystem.Application.Features.GeographicalInformation.Districts.Services;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Districts.Services;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.States.Jobs;
+using HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts;
+using HrManagementSystem.Application.Features.GeographicalInformation.Districts.Contracts;
 using HrManagementSystem.Application.Features.Platform.Notifications.Contracts;
 using HrManagementSystem.Application.Features.Platform.Notifications.Services;
 using HrManagementSystem.Infrastructure.Features.Platform.Notifications.Entities;
@@ -99,6 +102,19 @@ public sealed class BackgroundNotificationJobTests
         Assert.Contains("Action", properties);
         Assert.Contains("ActorUserId", properties);
         Assert.Contains("OperationId", properties);
+    }
+
+    [Theory]
+    [InlineData(typeof(AddressTypeChangedJobRequest))]
+    [InlineData(typeof(AddressChangedJobRequest))]
+    [InlineData(typeof(UserChangedJobRequest))]
+    [InlineData(typeof(AppointmentChangedJobRequest))]
+    public void CompanyOwnedJobRequests_IncludeTenantAndCompanyScope(Type requestType)
+    {
+        var properties = requestType.GetProperties().Select(property => property.Name).ToList();
+
+        Assert.Contains("TenantId", properties);
+        Assert.Contains("CompanyId", properties);
     }
 
     [Theory]
@@ -209,6 +225,52 @@ public sealed class BackgroundNotificationJobTests
         Assert.Equal("BulkArchive", change.Action);
         Assert.Null(change.EntityId);
         Assert.Equal(operationId, change.EventId);
+    }
+
+    [Fact]
+    public async Task GlobalGeographyJobs_LinkToPlatformAdministrationRoutes()
+    {
+        var notifications = new RecordingNotificationPublisher();
+        var realtime = new RecordingRealtimeEntityPublisher();
+
+        await new CountryChangedJob(notifications, realtime).ExecuteAsync(
+            new CountryChangedJobRequest(null, "BulkArchive", 1, "actor-1", Guid.NewGuid()),
+            CancellationToken.None);
+        await new StateManagementChangedJob(notifications, realtime).ExecuteAsync(
+            new StateChange(null, "BulkArchive", 1, "actor-1", Guid.NewGuid()),
+            CancellationToken.None);
+        await new DistrictManagementChangedJob(notifications, realtime).ExecuteAsync(
+            new DistrictChange(null, "BulkArchive", 1, "actor-1", Guid.NewGuid()),
+            CancellationToken.None);
+
+        Assert.Collection(
+            notifications.Requests,
+            request => Assert.Equal("/super-admin/geography/countries", request.ActionUrl),
+            request => Assert.Equal("/super-admin/geography/states", request.ActionUrl),
+            request => Assert.Equal("/super-admin/geography/districts", request.ActionUrl));
+    }
+
+    [Fact]
+    public async Task AddressTypeManagementJob_TargetsOnlyTheOwningCompany()
+    {
+        var operationId = Guid.Parse("55555555-5555-5555-5555-555555555555");
+        var notifications = new RecordingNotificationPublisher();
+        var realtime = new RecordingRealtimeEntityPublisher();
+        var job = new AddressTypeManagementChangedJob(notifications, realtime);
+
+        await job.ExecuteAsync(
+            new AddressTypeChange(null, "BulkAdd", 2, "actor-1", "tenant-1", 7, operationId),
+            CancellationToken.None);
+
+        var notification = Assert.Single(notifications.Requests);
+        Assert.Equal("tenant-1", notification.TenantId);
+        Assert.Equal(7, notification.CompanyId);
+
+        var change = Assert.Single(realtime.Requests);
+        Assert.Equal(RealtimeAudienceKind.CompanyPermission, change.Audience.Kind);
+        Assert.Equal("tenant-1", change.Audience.TenantId);
+        Assert.Equal(7, change.Audience.CompanyId);
+        Assert.Equal(Permissions.ViewAddressTypes, change.Audience.Permission);
     }
 
     [Fact]

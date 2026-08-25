@@ -24,6 +24,8 @@ export const permissions = {
   CreateCountries: 'Countries:Create',
   EditCountries: 'Countries:Edit',
   DeleteCountries: 'Countries:Delete',
+  ViewCompanyGeographicScope: 'CompanyGeographicScope:View',
+  ManageCompanyGeographicScope: 'CompanyGeographicScope:Manage',
   ViewCrystalReports: 'CrystalReports:View',
   CreateCrystalReports: 'CrystalReports:Create',
   DownloadCrystalReports: 'CrystalReports:Download',
@@ -128,6 +130,7 @@ export type PermissionModule =
   | 'Backups'
   | 'Categories'
   | 'Countries'
+  | 'CompanyGeographicScope'
   | 'CrystalReports'
   | 'Districts'
   | 'ChangeLogs'

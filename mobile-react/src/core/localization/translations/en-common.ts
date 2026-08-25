@@ -3,6 +3,7 @@ export const enCommon = {
     clear: 'Clear',
     appName: 'HR Management',
     retry: 'Try again',
+    refresh: 'Refresh',
     save: 'Save',
     cancel: 'Cancel',
     close: 'Close',

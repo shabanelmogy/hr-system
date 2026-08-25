@@ -4,7 +4,7 @@ Status: applied adaptive-list feature profile. Feature owner: `src/features/basi
 
 ## 1. Route and ownership
 
-The App Router adapter at `app/(main)/basic-data/(geographical-information)/states/page.tsx` imports only the States public API. Feature pages, components, hooks, services, types, and utilities remain inside States.
+The canonical App Router adapter at `app/(main)/super-admin/geography/states/page.tsx` imports only the States public API. The route is `super_admin` only; tenant Basic Data does not expose global State management. Feature pages, components, hooks, services, types, and utilities remain inside States.
 
 ## 2. Browser transport
 

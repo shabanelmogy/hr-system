@@ -1,9 +1,7 @@
 import CategoryIcon from "@mui/icons-material/Category";
-import AssessmentRoundedIcon from "@mui/icons-material/AssessmentRounded";
-import LocationCityIcon from "@mui/icons-material/LocationCity";
 import MapIcon from "@mui/icons-material/Map";
 import PublicIcon from "@mui/icons-material/Public";
-import TravelExploreRoundedIcon from "@mui/icons-material/TravelExploreRounded";
+import BusinessRoundedIcon from "@mui/icons-material/BusinessRounded";
 import type { ReactNode } from "react";
 import { appRoutes, type AppPath } from "@/config/routes";
 import { isAuthorized } from "@/lib/auth/authorization";
@@ -21,12 +19,18 @@ export interface BasicDataNavigationItem {
 }
 
 const geographicDataItems: readonly BasicDataNavigationItem[] = [
-  { id: "countries", titleKey: "menu.countries", descriptionKey: "menu.countriesDescription", href: appRoutes.basicData.countries, icon: <PublicIcon fontSize="small" />, permissions: [permissions.ViewCountries] },
-  { id: "states", titleKey: "menu.states", descriptionKey: "menu.statesDescription", href: appRoutes.basicData.states, icon: <LocationCityIcon fontSize="small" />, permissions: [permissions.ViewStates] },
-  { id: "districts", titleKey: "menu.districts", descriptionKey: "menu.districtsDescription", href: appRoutes.basicData.districts, icon: <MapIcon fontSize="small" />, permissions: [permissions.ViewDistricts] },
   { id: "address-types", titleKey: "menu.addressTypes", descriptionKey: "menu.addressTypesDescription", href: appRoutes.basicData.addressTypes, icon: <CategoryIcon fontSize="small" />, permissions: [permissions.ViewAddressTypes] },
-  { id: "country-report", titleKey: "menu.countryReport", descriptionKey: "menu.countryReportDescription", href: appRoutes.basicData.countryReport, icon: <AssessmentRoundedIcon fontSize="small" />, permissions: [permissions.ViewCountries] },
-  { id: "global-presence", titleKey: "menu.globalPresence", descriptionKey: "menu.globalPresenceDescription", href: appRoutes.basicData.globalPresence, icon: <TravelExploreRoundedIcon fontSize="small" />, permissions: [permissions.ViewCountries] },
+];
+
+const organizationalStructureItems: readonly BasicDataNavigationItem[] = [
+  {
+    id: "company-geographic-scope",
+    titleKey: "menu.companyGeographicScope",
+    descriptionKey: "menu.companyGeographicScopeDescription",
+    href: appRoutes.basicData.companyGeographicScope,
+    icon: <PublicIcon fontSize="small" />,
+    permissions: [permissions.ViewCompanyGeographicScope],
+  },
 ];
 
 export const getBasicDataNavigation = (): readonly BasicDataNavigationItem[] => [
@@ -38,6 +42,15 @@ export const getBasicDataNavigation = (): readonly BasicDataNavigationItem[] => 
     icon: <MapIcon fontSize="small" />,
     permissions: [],
     children: geographicDataItems,
+  },
+  {
+    id: "organizational-structure",
+    titleKey: "menu.organizationalStructure",
+    descriptionKey: "menu.organizationalStructureDescription",
+    href: appRoutes.basicData.index,
+    icon: <BusinessRoundedIcon fontSize="small" />,
+    permissions: [],
+    children: organizationalStructureItems,
   },
 ];
 

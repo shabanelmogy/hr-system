@@ -26,7 +26,9 @@ export const enNavigationSettings = {
     hangfireDashboard: 'Hangfire dashboard',
     overview: 'Overview',
     geographicalInformation: 'Geographical information',
+    globalGeography: 'Global geography',
     organizationalStructure: 'Organizational structure',
+    companyGeographicScope: 'Operating countries',
   },
   settings: {
     title: 'Settings',

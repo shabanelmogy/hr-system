@@ -10,6 +10,12 @@ export const subscriptionStatuses = [
 
 export type SubscriptionStatus = (typeof subscriptionStatuses)[number];
 
+export type TenantSortColumn = "name" | "identifier" | "createdOn";
+
+export interface TenantListFilters {
+  includeArchived: boolean;
+}
+
 export interface TenantManagementResponse {
   id: string;
   identifier: string;

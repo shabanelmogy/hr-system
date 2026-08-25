@@ -65,7 +65,7 @@ profile and do not leave an unreachable route, component, or translation surface
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 3 | `3b1d97b7b5b8b6e365586be28116f39b8e3ffae0414257fca7abe5ece53fcc89` |
+| master | 3 | `395aa4699680d7fd28eccd5dcbb3d59ead3d06fee4225844efb44d7a10e11c7d` |
 | master | 4 | `a9c88864fafde572fc0ffc1502f1a5ccb2fc55fdbd77aefe2c54c33d143b9529` |
 | master | 6 | `b7fb453c6be690cf10f98e85664f30fb55fb590e628b0f8a0435f54cf67058ac` |
 | master | 7 | `8c0ba157ab3e6ca7bfa97bd23bdd022523f69dc7ac4386e25462b7ad667ba74b` |

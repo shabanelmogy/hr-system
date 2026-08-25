@@ -163,16 +163,6 @@ function Timeline<TItem extends TimelineRecord = TimelineRecord>({
         maxHeight: Math.max(0, height - 30),
         overflowY: "auto",
         overflowX: "hidden",
-        "&::-webkit-scrollbar": { width: "6px" },
-        "&::-webkit-scrollbar-track": {
-          backgroundColor: theme.palette.grey[100],
-          borderRadius: "3px",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          backgroundColor: theme.palette.grey[400],
-          borderRadius: "3px",
-          "&:hover": { backgroundColor: theme.palette.grey[600] },
-        },
       }}
     >
       <Stack spacing={2}>

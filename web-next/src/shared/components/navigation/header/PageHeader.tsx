@@ -25,20 +25,38 @@ export type {
 function SimplePageHeader({
   title,
   subTitle,
+  actions,
   isDashboard = false,
 }: SimplePageHeaderProps) {
   const theme = useTheme();
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ mb: isDashboard ? 2 : 4 }}>
-      <Typography
-        variant="h5"
-        sx={{ color: theme.palette.info.light, fontWeight: "bold" }}
+    <Box sx={{ flexShrink: 0, mb: isDashboard ? 2 : 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: { md: "center" },
+          justifyContent: "space-between",
+          gap: 2,
+        }}
       >
-        {title}
-      </Typography>
-      {subTitle ? <Typography variant="body1">{subTitle}</Typography> : null}
+        <Box sx={{ minWidth: 0 }}>
+          <Typography
+            variant="h5"
+            sx={{ color: theme.palette.info.light, fontWeight: "bold" }}
+          >
+            {title}
+          </Typography>
+          {subTitle ? <Typography variant="body1">{subTitle}</Typography> : null}
+        </Box>
+        {actions ? (
+          <Box sx={{ flexShrink: 0, width: { xs: "100%", md: "auto" } }}>
+            {actions}
+          </Box>
+        ) : null}
+      </Box>
       {isDashboard ? (
         <Alert
           icon={<ConstructionIcon fontSize="inherit" />}

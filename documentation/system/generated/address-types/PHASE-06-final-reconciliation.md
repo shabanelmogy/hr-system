@@ -51,11 +51,11 @@ decision. A focused test pass alone is never a `Ready` decision.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| address-types-master | 8 | `0f8740b2ab2b64c995bf465b72c1e79a1bb8c80eee940666529a00eade35dfec` |
+| address-types-master | 8 | `d644b335ee5a2463885136b0a10c31dc4dd5af695866e6a2bbb825356a29fcfa` |
 | address-types-master | 9 | `d27f68fbce7c132d9111b39903b39f4ef64ade452789cfb3b25cff974a4742d2` |
 | address-types-master | 10 | `650db926fa75626216c197eadd1921f3da5ff22870c370e747998a8f118616c1` |
 | address-types-api | 10 | `a6b047ce552f06a101f0d842e1d2a5073f8422c48228f4a1f548e88a7a481079` |
-| address-types-api | 11 | `a25bcb2f5ce5439ae77ddbbcf3d2625ed52b69788c1696aecdae3d9bd49087d1` |
+| address-types-api | 11 | `545a74147c539ef7388c9f349fd4f3fcc94399ffa23988ee2e199395c87dbd8f` |
 | address-types-web | 12 | `79c8b65d2b3da2c9f670533292936c9cc7c268333fc03488b6e3f321ea75e4da` |
 | address-types-web | 13 | `2bd84244023861a16a3969ed4ce8128912ee46de5ae8b9cf76fe928dd7480d5f` |
 | address-types-web | 14 | `182eeaa92e4fb5eba01131311770bc0c9db3f31f0f6fdb0eb1b40d7dd5a73c50` |

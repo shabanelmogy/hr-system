@@ -23,6 +23,7 @@ export interface SimplePageHeaderProps {
   variant?: "simple";
   title: ReactNode;
   subTitle?: ReactNode;
+  actions?: ReactNode;
   isDashboard?: boolean;
 }
 

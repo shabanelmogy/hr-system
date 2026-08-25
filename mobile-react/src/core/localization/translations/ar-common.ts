@@ -1,5 +1,6 @@
 export const arCommon = {
   common: {
+    refresh: 'تحديث',
     clear: 'مسح',
     appName: 'إدارة الموارد البشرية',
     retry: 'إعادة المحاولة',

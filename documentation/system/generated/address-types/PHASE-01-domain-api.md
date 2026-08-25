@@ -78,16 +78,16 @@ implementation discipline.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| address-types-master | 3 | `b36372d67e68a04bdc80577cb3924b2c827a9f79ca78cede1a5a9d3fd6eb9a17` |
+| address-types-master | 3 | `7df320a1cdbe421b7edf28e7bb0ed7c4ad026ba0d76af15dbb1ff27080f10f13` |
 | address-types-master | 4 | `7308f8020bdbc0c722447f200a173af87d8fa4f5f3fb6bf250463bd9f057ef5a` |
 | address-types-master | 6 | `b36e3f0234da7c53263dc870165993e8cc3d645939e7d9b5c2d85d617ed9c5e9` |
-| address-types-api | 1 | `82e817a001e64716f1c5879ea68d64a015874e25e77a86065c74f88017daee49` |
-| address-types-api | 2 | `325a0fdd274fcf75cf33ea0527318607d8f9a03af6e456dfc4af0e2c569e7c2c` |
+| address-types-api | 1 | `a89af44849dac3d3d1cfa2eca1a0fda8d2484642a726a9b1bf1f84ca0a58a05d` |
+| address-types-api | 2 | `1ffc55f4458d992145d14f14a81ab724974a460b942b8790d71c7f15effbe126` |
 | address-types-api | 3 | `bcd99f29132d1bc904561f87c62f84127bb307981918d52179f86e32f813c9bf` |
 | address-types-api | 4 | `fa3b2aaf37e4e7975ad0c3ad214ffb80cc61734289b4bf72302f4a035ff92e73` |
-| address-types-api | 5 | `140dde23393ef1a59a375cb9ff8451da35be052d2a8ddd30cd36bf6d7dc370e3` |
-| address-types-api | 6 | `27226d777350f5085dd3bcc6e5fbd02201f64d7a9b545c24892f5922d869fe4f` |
+| address-types-api | 5 | `3235ba54a9a1ae537b56737b1450fd979d6cd325b1bf4fff7766acb9fe53322c` |
+| address-types-api | 6 | `547661ad62c069b0422d4ab8cd62d05730aee097aa745593612a67912ca82030` |
 | address-types-api | 7 | `ff2127841a678a5f0fbb58bd3cfcf06b6e6cea807adc3c2f1f1efc059e9455d7` |
 | address-types-api | 8 | `cdb4949380cc226db6ab4f53b730f5b4fd93333e08d1f8deef641ea2c1e2c358` |
-| address-types-api | 9 | `1ac96c85713de2f0bed38bf50037663761a77dcc2b16886f03b0a8c0adb5a44e` |
+| address-types-api | 9 | `9eac4ef8037553fd9cd38e3c7775bcb54bc0cc69d5623ebef2f804da7c5427a5` |
 | address-types-api | 10 | `a6b047ce552f06a101f0d842e1d2a5073f8422c48228f4a1f548e88a7a481079` |

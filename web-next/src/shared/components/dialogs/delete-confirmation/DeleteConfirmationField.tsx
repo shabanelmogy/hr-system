@@ -1,7 +1,7 @@
 import type { Ref } from "react";
 import { CheckCircleOutlined as VerifiedIcon } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
-import { MyTextField } from "@/shared/components/forms";
+import MyTextField from "@/shared/components/forms/text-fields/MyTextField";
 import { useTranslation } from "react-i18next";
 
 interface DeleteConfirmationFieldProps {

@@ -144,7 +144,7 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
 
             cancellationToken.ThrowIfCancellationRequested();
             var roleClaims = (await _roleManager.GetClaimsAsync(role)).Select(claim => claim.Value).ToHashSet();
-            var allClaims = Permissions.GetAllPermissions();
+            var allClaims = Permissions.GetTenantPermissions();
             var currentClaims = allClaims
                 .Select(permission => new CheckBoxViewModel
                 {
@@ -174,6 +174,13 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
             if (role == null)
                 return Result.Failure(_roleErrors.RoleNotFound);
 
+            var selectedClaims = rolerequest.RoleClaims?.Where(claim => claim.IsSelected).ToList() ?? [];
+            if (selectedClaims.Any(claim => !Permissions.IsTenantPermission(claim.DisplayValue)) ||
+                selectedClaims.Select(claim => claim.DisplayValue).Distinct(StringComparer.Ordinal).Count() != selectedClaims.Count)
+            {
+                return Result.Failure(_roleErrors.InvalidPermissions);
+            }
+
             var roleClaims = await _roleManager.GetClaimsAsync(role);
 
             foreach (var claim in roleClaims)
@@ -181,8 +188,6 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
                 cancellationToken.ThrowIfCancellationRequested();
                 await _roleManager.RemoveClaimAsync(role, claim);
             }
-
-            var selectedClaims = rolerequest.RoleClaims?.Where(claim => claim.IsSelected).ToList() ?? [];
 
             foreach (var claim in selectedClaims)
             {

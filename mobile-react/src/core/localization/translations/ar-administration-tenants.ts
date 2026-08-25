@@ -44,6 +44,7 @@ export const arAdministrationTenants = {
     noExpiringSubscriptions: 'لا توجد اشتراكات تنتهي خلال الثلاثين يوماً القادمة.',
     noTenants: 'لم تتم إضافة أي مستأجر بعد.',
     manageTenants: 'إدارة المستأجرين',
+    manageGlobalGeography: 'الجغرافيا العالمية',
   },
   tenantAdmins: {
     title: '\u0645\u0633\u0624\u0648\u0644\u0648 \u0627\u0644\u0645\u0646\u0634\u0622\u062a',

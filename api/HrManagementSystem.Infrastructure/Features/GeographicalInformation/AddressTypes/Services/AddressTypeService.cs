@@ -54,6 +54,10 @@ public class AddressTypeService(
     public async Task<Result<AddressTypeResponse>> AddAsync(AddressTypeRequest addressTypeRequest, CancellationToken cancellationToken = default)
     {
         var newAddressType = _mapper.Map<AddressType>(addressTypeRequest);
+        if (string.IsNullOrWhiteSpace(_currentActor.TenantId) || _currentActor.CompanyId is not > 0)
+            throw new InvalidOperationException("A tenant and company are required to create an Address Type.");
+        newAddressType.TenantId = _currentActor.TenantId;
+        newAddressType.CompanyId = _currentActor.CompanyId.Value;
 
         await _context.AddAsync(newAddressType, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
@@ -123,10 +127,17 @@ public class AddressTypeService(
 
     private void QueueAddressTypeChanged(AddressTypeResponse addressType, string action)
     {
+        var tenantId = _currentActor.TenantId;
+        var companyId = _currentActor.CompanyId;
+        if (string.IsNullOrWhiteSpace(tenantId) || !companyId.HasValue)
+            throw new InvalidOperationException("A tenant and company are required for Address Type notifications.");
+
         var request = new AddressTypeChangedJobRequest(
             addressType,
             action,
             _currentActor.UserId,
+            tenantId,
+            companyId.Value,
             Guid.NewGuid());
 
         BackgroundJob.Enqueue<AddressTypeChangedJob>(

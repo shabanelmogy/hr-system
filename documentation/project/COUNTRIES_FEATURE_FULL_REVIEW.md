@@ -19,7 +19,7 @@ Reviewed: 2026-08-23
 | General mobile guide | [Mobile Feature Guide](../mobile-react/MOBILE_FEATURE_GUIDE.md) |
 | Documentation workflow | [Feature Documentation System](../system/README.md) |
 | Legacy frontend | `web/` is reference-only and is not an implementation target |
-| API ownership | Global entity; authenticated active tenant membership still required |
+| API ownership | Global Platform catalog; `super_admin` role plus action permission required |
 | Clients | Canonical browser client and active Expo/React Native mobile client |
 | Required consistency | HTTP fields, validation semantics, permissions, lifecycle, paging, sorting, errors and invalidation |
 | Allowed platform variation | Layout, view set, page size, device integrations and control density |
@@ -82,7 +82,7 @@ the contracts and boundaries while substituting its own domain decisions.
 | Archive, bulk archive and restore | `Countries:Delete` |
 
 Both clients gate visible controls and direct handlers. The API controller and
-tenant-member policy remain the final authorization boundary.
+`super_admin` role guard plus action permission remain the final authorization boundary.
 
 ### HTTP endpoints
 
@@ -177,7 +177,7 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | Country scheduler/job | Notification/realtime integration |
 | Country CQRS tests | Handler, architecture and controller evidence |
 | `Domain/Application/Infrastructure/Api` ReportTemplates slices | Tenant-owned definitions, published/management split, permissions, optimistic concurrency, revisions, approved source catalog and migration |
-| `GetCountryReportDataQuery` and `GET /api/v1/countries/report-data` | Stable active-country JSON array behind tenant membership and `Countries:View` |
+| `GetCountryReportDataQuery` and `GET /api/v1/countries/report-data` | Stable active-country JSON array behind `super_admin` and `Countries:View` |
 | `ReportTemplateFeatureTests.cs` | Definition safety, tenant query-filter isolation, unloaded revision history and append-only revisions |
 
 ### Web-next

@@ -25,6 +25,7 @@ export const ROUTES = {
     districts: '/basic-data/geographical-information/districts',
     addressTypes: '/basic-data/geographical-information/address-types',
     organizationalStructure: '/basic-data/organizational-structure',
+    companyGeographicScope: '/basic-data/organizational-structure/geographic-scope',
   },
   extras: {
     root: '/extras',

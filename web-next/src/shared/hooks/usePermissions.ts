@@ -13,6 +13,7 @@ import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 
 const EMPTY_PERMISSIONS: readonly PermissionString[] = [];
 const EMPTY_ROLES: readonly string[] = [];
+const SUPER_ADMIN_ROLE = "super_admin";
 
 export const usePermissions = () => {
   const { user } = useSession();
@@ -55,38 +56,55 @@ export const usePermissions = () => {
 
 // Simplified Countries permissions hook
 export const useCountriesPermissions = () => {
-  const { hasPermission } = usePermissions();
+  const { hasGlobalGeographyPermission } = useGlobalGeographyPermissions();
   
   return useMemo(() => ({
-    canView: hasPermission("Countries:View"),
-    canCreate: hasPermission("Countries:Create"),
-    canEdit: hasPermission("Countries:Edit"),
-    canDelete: hasPermission("Countries:Delete"),
-    canRestore: hasPermission("Countries:Delete"),
-  }), [hasPermission]);
+    canView: hasGlobalGeographyPermission("Countries:View"),
+    canCreate: hasGlobalGeographyPermission("Countries:Create"),
+    canEdit: hasGlobalGeographyPermission("Countries:Edit"),
+    canDelete: hasGlobalGeographyPermission("Countries:Delete"),
+    canRestore: hasGlobalGeographyPermission("Countries:Delete"),
+  }), [hasGlobalGeographyPermission]);
 };
 
 // Simplified States permissions hook
 export const useStatesPermissions = () => {
-  const { hasPermission, isReadOnly } = usePermissions();
+  const { isReadOnly } = usePermissions();
+  const { hasGlobalGeographyPermission } = useGlobalGeographyPermissions();
   
   return useMemo(() => ({
-    canView: hasPermission("States:View"),
-    canCreate: !isReadOnly && hasPermission("States:Create"),
-    canEdit: !isReadOnly && hasPermission("States:Edit"),
-    canDelete: !isReadOnly && hasPermission("States:Delete"),
-  }), [hasPermission, isReadOnly]);
+    canView: hasGlobalGeographyPermission("States:View"),
+    canCreate: !isReadOnly && hasGlobalGeographyPermission("States:Create"),
+    canEdit: !isReadOnly && hasGlobalGeographyPermission("States:Edit"),
+    canDelete: !isReadOnly && hasGlobalGeographyPermission("States:Delete"),
+  }), [hasGlobalGeographyPermission, isReadOnly]);
 };
 
 export const useDistrictsPermissions = () => {
-  const { hasPermission, isReadOnly } = usePermissions();
+  const { isReadOnly } = usePermissions();
+  const { hasGlobalGeographyPermission } = useGlobalGeographyPermissions();
 
   return useMemo(() => ({
-    canView: hasPermission("Districts:View"),
-    canCreate: !isReadOnly && hasPermission("Districts:Create"),
-    canEdit: !isReadOnly && hasPermission("Districts:Edit"),
-    canDelete: !isReadOnly && hasPermission("Districts:Delete"),
-  }), [hasPermission, isReadOnly]);
+    canView: hasGlobalGeographyPermission("Districts:View"),
+    canCreate: !isReadOnly && hasGlobalGeographyPermission("Districts:Create"),
+    canEdit: !isReadOnly && hasGlobalGeographyPermission("Districts:Edit"),
+    canDelete: !isReadOnly && hasGlobalGeographyPermission("Districts:Delete"),
+  }), [hasGlobalGeographyPermission, isReadOnly]);
+};
+
+/** Super Admin owns the shared catalog; tenant roles require explicit claims. */
+export const useGlobalGeographyPermissions = () => {
+  const { hasPermission, userRoles } = usePermissions();
+  const isSuperAdmin = userRoles.some(
+    (role) => role.trim().toLowerCase() === SUPER_ADMIN_ROLE,
+  );
+
+  const hasGlobalGeographyPermission = useCallback(
+    (permission: PermissionString) => isSuperAdmin || hasPermission(permission),
+    [hasPermission, isSuperAdmin],
+  );
+
+  return { hasGlobalGeographyPermission };
 };
 
 // Generic module permissions hook

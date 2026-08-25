@@ -76,7 +76,7 @@ export function BasicDataLayout() {
         name={BASIC_DATA_SCREENS.geographicalInformation}
         options={{
           drawerItemStyle: canViewGeographicalInformation ? undefined : { display: 'none' },
-          title: t('navigation.geographicalInformation'),
+          title: t('navigation.globalGeography'),
           drawerIcon: ({ color, size }) => (
             <AppIcon color={color} name="earth-outline" size={size} />
           ),

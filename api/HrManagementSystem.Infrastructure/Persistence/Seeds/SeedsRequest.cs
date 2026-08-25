@@ -18,6 +18,7 @@ public static class SeedsRequest
         await DefaultTenants.SeedAsync(context, timeProvider);
         await DefaultRoles.SeedRolesAsync(roleManager);
         await DefaultUsers.SeedAdminPermissionsAsync(roleManager);
+        await DefaultUsers.SeedSuperAdminGeographyPermissionsAsync(roleManager);
         await DefaultUsers.SeedSuperAdminUserAsync(userManager, configuration);
         await DefaultUsers.SeedViewerUserAsync(userManager, configuration);
         await DefaultUsers.SeedAdminUserAsync(userManager, configuration);

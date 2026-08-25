@@ -32,12 +32,38 @@ describe("route access policies", () => {
     expect(canAccessRoute("/not-configured", session)).toBe(false);
   });
 
-  it("enforces permissions for nested routes", () => {
-    expect(canAccessRoute(`${appRoutes.basicData.countries}/new`, session)).toBe(false);
-    expect(canAccessRoute(`${appRoutes.basicData.countries}/new`, {
+  it("keeps legacy tenant geography management routes unavailable", () => {
+    const tenantCatalogSession = {
       ...session,
-      permissions: [permissions.ViewCountries],
+      roles: ["admin"],
+      permissions: [
+        permissions.ViewCountries,
+        permissions.ViewStates,
+        permissions.ViewDistricts,
+      ],
+    };
+
+    expect(canAccessRoute(appRoutes.basicData.countries, tenantCatalogSession)).toBe(false);
+    expect(canAccessRoute(`${appRoutes.basicData.countries}/new`, tenantCatalogSession)).toBe(false);
+    expect(canAccessRoute(appRoutes.basicData.states, tenantCatalogSession)).toBe(false);
+    expect(canAccessRoute(appRoutes.basicData.districts, tenantCatalogSession)).toBe(false);
+  });
+
+  it("allows only Super Admin to access global geography management", () => {
+    expect(canAccessRoute(appRoutes.superAdmin.geography.countries, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.superAdmin.geography.states, {
+      ...session,
+      roles: ["SUPER_ADMIN"],
     })).toBe(true);
+    expect(canAccessRoute(appRoutes.superAdmin.geography.districts, {
+      ...session,
+      roles: ["super_admin"],
+    })).toBe(true);
+    expect(canAccessRoute(appRoutes.basicData.countries, {
+      ...session,
+      roles: ["super_admin"],
+      permissions: [permissions.ViewCountries],
+    })).toBe(false);
   });
 
   it("requires ViewUsers for the invitations administration page", () => {
@@ -60,12 +86,12 @@ describe("route access policies", () => {
     expect(canAccessRoute(appRoutes.basicData.index, session)).toBe(false);
     expect(canAccessRoute(appRoutes.basicData.index, {
       ...session,
-      permissions: [permissions.ViewStates],
+      permissions: [permissions.ViewCompanyGeographicScope],
     })).toBe(true);
-    expect(canAccessRoute(appRoutes.basicData.countries, {
+    expect(canAccessRoute(appRoutes.basicData.companyGeographicScope, {
       ...session,
-      permissions: [permissions.ViewStates],
-    })).toBe(false);
+      permissions: [permissions.ViewCompanyGeographicScope],
+    })).toBe(true);
   });
 
   it("enforces administrator-only routes case-insensitively", () => {
@@ -89,7 +115,7 @@ describe("route access policies", () => {
   });
 
   it("covers every registered page policy", () => {
-    for (const policy of routePolicies) {
+    for (const policy of routePolicies.filter((policy) => !policy.deny)) {
       const authorizedSession = {
         ...session,
         roles: policy.roles ? [...policy.roles] : [],

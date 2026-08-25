@@ -22,9 +22,9 @@ const initialFilters: StateFilters = { status: 'active' };
 
 export function StatesScreen() {
   const { i18n, t } = useTranslation(); const { theme } = useAppTheme(); const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
-  const { allowed: isCreateAuthorized } = useAuthorization({ requiredPermissions: [permissions.CreateStates] });
-  const { allowed: isEditAuthorized } = useAuthorization({ requiredPermissions: [permissions.EditStates] });
-  const { allowed: isDeleteAuthorized } = useAuthorization({ requiredPermissions: [permissions.DeleteStates] });
+  const { allowed: isCreateAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.CreateStates] });
+  const { allowed: isEditAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.EditStates] });
+  const { allowed: isDeleteAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.DeleteStates] });
   const canCreate = isCreateAuthorized && !isReadOnly; const canEdit = isEditAuthorized && !isReadOnly; const canDelete = isDeleteAuthorized && !isReadOnly;
   const list = useServerListState<StateSortColumn, StateFilters>({ initialFilters, initialPageSize: 5, initialSort: { columnId: 'createdOn', direction: 'descending' } });
   const [searchField, setSearchField] = useState<StateSearchField>('all'); const [searchOperator, setSearchOperator] = useState<StateSearchOperator>('contains');

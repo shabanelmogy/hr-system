@@ -37,7 +37,7 @@ export function CountryImportView() {
   const { theme } = useAppTheme();
   const queryClient = useQueryClient();
   const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
-  const { allowed } = useAuthorization({ requiredPermissions: [permissions.CreateCountries] });
+  const { allowed } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.CreateCountries] });
   const mutation = useBulkCreateCountries();
   const [file, setFile] = useState<NativeSpreadsheetFile | null>(null);
   const [rows, setRows] = useState<CountryImportRow[]>([]);

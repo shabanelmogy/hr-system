@@ -20,15 +20,17 @@ import {
 } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { MyForm, MySelect, MyTextField } from "@/shared/components/forms";
 import { DeleteConfirmationDialog } from "@/shared/components/dialogs";
 import { ContentWrapper } from "@/shared/components/layout";
 import { PageHeader } from "@/shared/components/navigation/header";
-import { useTenantsQuery } from "@/features/tenants/useTenantsQuery";
-import type { TenantManagementResponse } from "@/features/tenants/types";
+import {
+  useTenantsQuery,
+  type TenantManagementResponse,
+} from "@/features/tenants";
 import { tenantAdminApi, tenantAdminKeys } from "./tenantAdminApi";
 import type {
   TenantAdminFormState,
@@ -239,7 +241,6 @@ function TenantAdminForm({
     register,
     handleSubmit,
     reset,
-    watch,
     setValue,
     formState: { errors, isDirty },
   } = useForm<TenantAdminFormState>({ defaultValues: defaults });
@@ -248,8 +249,8 @@ function TenantAdminForm({
     if (open) reset(defaults);
   }, [defaults, open, reset]);
 
-  const selectedTenantIds = watch("tenantIds");
-  const defaultTenantId = watch("defaultTenantId");
+  const selectedTenantIds = useWatch({ control, name: "tenantIds" });
+  const defaultTenantId = useWatch({ control, name: "defaultTenantId" });
   useEffect(() => {
     if (!selectedTenantIds.includes(defaultTenantId)) {
       setValue("defaultTenantId", selectedTenantIds[0] ?? "", {

@@ -9,7 +9,7 @@ namespace HrManagementSystem.Api.Features.GeographicalInformation.States.V1;
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute2)]
 [ApiController]
-[TenantMember]
+[Authorize(Roles = AppRoles.super_admin)]
 public sealed class StatesController(ISender sender) : ControllerBase
 {
     /// <summary>Returns a server-paged State collection with parent-country and lifecycle filtering.</summary>

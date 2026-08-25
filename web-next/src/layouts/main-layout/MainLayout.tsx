@@ -23,11 +23,18 @@ import ToolbarSpacer from "../components/top-bar/ToolbarSpacer";
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme();
   const { t } = useTranslation();
-  const { isLoggingOut } = useSession();
+  const { hasRole, isLoggingOut } = useSession();
   const pathname = usePathname();
   const dedicatedLayoutRoute =
     pathname === appRoutes.basicData.index ||
     pathname.startsWith(`${appRoutes.basicData.index}/`);
+  const isSuperAdminDashboard =
+    pathname === appRoutes.superAdmin.dashboard ||
+    (pathname === appRoutes.home && hasRole(["super_admin"]));
+  const fixedHeightRoute =
+    dedicatedLayoutRoute ||
+    isSuperAdminDashboard ||
+    pathname === appRoutes.superAdmin.tenants;
   const sidebarScope = dedicatedLayoutRoute ? appRoutes.basicData.index : "main";
   const [sidebarState, setSidebarState] = React.useState({
     scope: "main",
@@ -60,8 +67,8 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
           display: "flex",
           flexDirection: theme.direction === "rtl" ? "row-reverse" : "row",
           width: "100%",
-          minHeight: dedicatedLayoutRoute ? 0 : "100vh",
-          height: dedicatedLayoutRoute ? "100dvh" : undefined,
+          minHeight: fixedHeightRoute ? 0 : "100vh",
+          height: fixedHeightRoute ? "100dvh" : undefined,
           overflow: "hidden",
           bgcolor: "background.default",
           opacity: isLoggingOut ? 0 : 1,
@@ -89,7 +96,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
             flexGrow: 1,
             minWidth: 0,
             m: { xs: 1.5, sm: 2, md: 3 },
-            ...(dedicatedLayoutRoute && {
+            ...(fixedHeightRoute && {
               display: "flex",
               flexDirection: "column",
               minHeight: 0,
@@ -98,7 +105,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
           }}
         >
           <ToolbarSpacer sx={{ flexShrink: 0 }} />
-          {dedicatedLayoutRoute ? (
+          {fixedHeightRoute ? (
             <Box sx={{ display: "flex", flex: 1, flexDirection: "column", minHeight: 0 }}>
               {children}
             </Box>

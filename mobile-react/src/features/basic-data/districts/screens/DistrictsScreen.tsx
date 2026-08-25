@@ -22,9 +22,9 @@ const initialFilters: DistrictFilters = { status: 'active' };
 
 export function DistrictsScreen() {
   const { i18n, t } = useTranslation(); const { theme } = useAppTheme(); const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
-  const { allowed: isCreateAuthorized } = useAuthorization({ requiredPermissions: [permissions.CreateDistricts] });
-  const { allowed: isEditAuthorized } = useAuthorization({ requiredPermissions: [permissions.EditDistricts] });
-  const { allowed: isDeleteAuthorized } = useAuthorization({ requiredPermissions: [permissions.DeleteDistricts] });
+  const { allowed: isCreateAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.CreateDistricts] });
+  const { allowed: isEditAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.EditDistricts] });
+  const { allowed: isDeleteAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.DeleteDistricts] });
   const canCreate = isCreateAuthorized && !isReadOnly; const canEdit = isEditAuthorized && !isReadOnly; const canDelete = isDeleteAuthorized && !isReadOnly;
   const list = useServerListState<DistrictSortColumn, DistrictFilters>({ initialFilters, initialPageSize: 5, initialSort: { columnId: 'createdOn', direction: 'descending' } });
   const [searchField, setSearchField] = useState<DistrictSearchField>('all'); const [searchOperator, setSearchOperator] = useState<DistrictSearchOperator>('contains');

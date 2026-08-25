@@ -40,6 +40,7 @@ export const enAdministrationTenants = {
     noExpiringSubscriptions: 'No subscriptions expire in the next 30 days.',
     noTenants: 'No tenants have been created yet.',
     manageTenants: 'Manage tenants',
+    manageGlobalGeography: 'Global geography',
   },
   tenantAdmins: {
     title: 'Tenant administrators',

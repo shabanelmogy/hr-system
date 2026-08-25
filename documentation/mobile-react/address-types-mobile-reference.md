@@ -2,8 +2,8 @@
 
 ## 1. Feature boundary
 
-`src/features/basic-data/address-types` owns Address Type schemas, API, keys,
-views and full-screen form. The Expo route imports only its public root.
+`src/features/basic-data/address-types` owns company-scoped Address Type schemas,
+API, keys, views and full-screen form. The Expo route imports only its public root.
 
 ## 2. Route and authorization
 
@@ -19,9 +19,11 @@ Endpoint/query serializers match the server list and mutation envelopes exactly.
 
 ## 4. Query ownership
 
-Feature keys contain list, detail/lookup if needed, and report catalog branches.
-Successful create/update/archive/restore/bulk/import invalidates the Address Type
-root; realtime maps the same public prefix.
+Feature keys contain stable list, detail/lookup if needed, and report catalog
+branches. Successful create/update/archive/restore/bulk/import invalidates the
+Address Type root; realtime maps the same public prefix. The client sends no
+`companyId`; successful company switching clears the full query cache before reload,
+while server notifications remain scoped to the active company.
 
 ## 5. Server list
 
@@ -68,8 +70,15 @@ mode does not block rendering.
 
 ## 12. Notification and navigation
 
-The API action `/basic-data/address-types` maps to the typed geographical route.
+The API action `/basic-data/address-types` maps to the typed geographical route and
+is delivered only to the active company. Existing global rows are migrated into
+each existing company; new companies begin with an empty catalog.
 Basic Data navigation lists Address Types only through the canonical policy.
+
+A future public Job Portal must resolve tenant/company from the published job or
+portal slug before loading candidate/person Address Types. It must never trust a
+company ID supplied by the public client; job location continues to use the
+Branch/Site/WorkLocation model.
 
 ## 13. Localization and accessibility
 

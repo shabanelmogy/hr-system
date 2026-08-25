@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCountryLookup } from "../../../countries";
-import usePermissions from "@/shared/hooks/usePermissions";
+import { useGlobalGeographyPermissions } from "@/shared/hooks/usePermissions";
 import HandleApiError from "@/shared/services/apiError";
 import {
   downloadSpreadsheetImportTemplate,
@@ -54,10 +54,10 @@ export const useImportStates = () => {
   const startTimeRef = useRef<number | null>(null);
   const { t } = useTranslation();
   const { showSnackbar, SnackbarComponent } = useSnackbar();
-  const { hasPermission } = usePermissions();
+  const { hasGlobalGeographyPermission } = useGlobalGeographyPermissions();
   const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
-  const canViewCountries = hasPermission("Countries:View");
-  const canCreateStates = hasPermission("States:Create");
+  const canViewCountries = hasGlobalGeographyPermission("Countries:View");
+  const canCreateStates = hasGlobalGeographyPermission("States:Create");
   const invalidateStates = useInvalidateStates();
   const countryLookupQuery = useCountryLookup({
     enabled: canViewCountries,

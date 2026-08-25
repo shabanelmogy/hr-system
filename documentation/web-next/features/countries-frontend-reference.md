@@ -5,7 +5,7 @@
 | Status | Applied reference with documented follow-up findings |
 | Scope | Shared Countries API plus the `web-next` and `mobile-react` clients |
 | Reviewed | 2026-08-23 |
-| Web route | `/basic-data/countries` |
+| Web route | `/super-admin/geography/countries` |
 | Mobile route | `/basic-data/geographical-information/countries` |
 | Project master | [Countries Feature Full Review](../../project/COUNTRIES_FEATURE_FULL_REVIEW.md) |
 | Web guide | [Server-Managed Feature Frontend Reference](server-managed-feature-reference.md) |
@@ -39,7 +39,7 @@ semantics, but they do not need identical controls or screen composition.
 | Mobile optional UI shape | Independent PDF Report with preview/share; no import or chart |
 | Backend pattern | Global reference-data CQRS slice with explicit archive/restore |
 | Identifier | Positive integer `id` |
-| Scope | Global reference data; API access still requires an authenticated tenant member |
+| Scope | Global Platform reference data; API access requires `super_admin` plus action permission |
 | Lifecycle | Active, archived, restore; no hard-delete UI |
 | Web default list | UI page `0`, size `10`, `createdOn DESC`, status `active` |
 | Mobile default list | UI page `0`, Table size `5`, Card size `3`, `createdOn DESC`, status `active` |

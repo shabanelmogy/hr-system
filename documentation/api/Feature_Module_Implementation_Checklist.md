@@ -252,6 +252,11 @@ the write; the database unique index is the final race-safe guard.
 ## 7. Errors
 
 - Put feature-specific errors in `{FeatureName}Errors`.
+- Register `{FeatureName}Errors` in the composition root (`ErrorsService` or the
+  approved automatic registration path). MediatR discovers handlers but does not
+  automatically register arbitrary constructor dependencies.
+- Add a service-resolution smoke test for the error class or handler so a missing
+  DI registration fails in tests instead of returning `500` at runtime.
 - Use consistent error codes: `{FeatureName}.{Reason}`, for example `Country.CountryNotFound`.
 - Add matching keys for every error property in the localization files.
 - Use the error property name as the localization key when the error class uses `localizer[nameof(ErrorProperty)]`, for example `CountryNotFound`.
@@ -719,7 +724,9 @@ integration, migration, or environment-dependent checks in phase 06.
 - Build succeeds with `0 Error(s)`.
 - No namespace points to an old folder name.
 - Swagger XML docs resolve to the current namespace.
-- Feature is registered automatically by Scrutor or explicitly in dependency registration.
+- Feature services and every non-scanned handler dependency (including
+  `{FeatureName}Errors`) are registered automatically by the approved scanner or
+  explicitly in dependency registration, with a resolution smoke test.
 - Commands/queries and validators are discovered by Application assembly scanning.
 - A new controller injects `ISender` only and each action sends one request.
 - List endpoints apply feature-owned server filters and deterministic paging.

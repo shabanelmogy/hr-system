@@ -30,10 +30,8 @@ export interface MainDrawerRouteDefinition {
 }
 
 export const BASIC_DATA_VIEW_PERMISSIONS = [
-  permissions.ViewCountries,
-  permissions.ViewStates,
-  permissions.ViewDistricts,
   permissions.ViewAddressTypes,
+  permissions.ViewCompanyGeographicScope,
 ] as const;
 
 /**
@@ -54,17 +52,33 @@ export const routePolicies: readonly RoutePolicy[] = [
       { permissions: [permissions.ViewRoles] },
     ],
   },
-  { path: ROUTES.basicData.countries, permissions: [permissions.ViewCountries] },
-  { path: ROUTES.basicData.states, permissions: [permissions.ViewStates] },
-  { path: ROUTES.basicData.districts, permissions: [permissions.ViewDistricts] },
+  // Countries, States, and Districts are platform-managed reference data.
+  // Tenant administrators select their operating countries through the separate
+  // company geographic-scope workflow; they never manage this catalog directly.
+  { path: ROUTES.basicData.countries, roles: [appRoles.superAdmin] },
+  { path: ROUTES.basicData.states, roles: [appRoles.superAdmin] },
+  { path: ROUTES.basicData.districts, roles: [appRoles.superAdmin] },
   { path: ROUTES.basicData.addressTypes, permissions: [permissions.ViewAddressTypes] },
-  { path: ROUTES.basicData.geographicalInformation, permissions: BASIC_DATA_VIEW_PERMISSIONS },
-  { path: ROUTES.basicData.organizationalStructure, roles: [appRoles.admin] },
+  {
+    path: ROUTES.basicData.companyGeographicScope,
+    permissions: [permissions.ViewCompanyGeographicScope],
+  },
+  {
+    path: ROUTES.basicData.geographicalInformation,
+    anyOf: [
+      { roles: [appRoles.superAdmin] },
+      { permissions: [permissions.ViewAddressTypes] },
+    ],
+  },
+  {
+    path: ROUTES.basicData.organizationalStructure,
+    permissions: [permissions.ViewCompanyGeographicScope],
+  },
   {
     path: ROUTES.basicData.root,
     anyOf: [
       { permissions: BASIC_DATA_VIEW_PERMISSIONS },
-      { roles: [appRoles.admin] },
+      { roles: [appRoles.superAdmin] },
     ],
   },
   { path: ROUTES.extras.files, roles: [appRoles.admin] },
@@ -107,6 +121,11 @@ export const superAdminAllowedRoutes: readonly AppRoute[] = [
   ROUTES.superAdminDashboard,
   ROUTES.tenantManagement,
   ROUTES.tenantAdminManagement,
+  ROUTES.basicData.root,
+  ROUTES.basicData.geographicalInformation,
+  ROUTES.basicData.countries,
+  ROUTES.basicData.states,
+  ROUTES.basicData.districts,
 ];
 
 export const MAIN_DRAWER_ROUTES: readonly MainDrawerRouteDefinition[] = [

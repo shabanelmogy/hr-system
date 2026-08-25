@@ -2,7 +2,7 @@
 
 ## 1. Purpose and scope
 
-Districts is global geographical reference data below an active State. It is implemented in the API, Next.js, and Expo clients. Its fields are `NameAr`, `NameEn`, `Code`, and required `StateId`; it is not a copy of Countries or States and has no country, currency, or telephone fields. Web and mobile imports resolve the parent from a `stateName` spreadsheet column without adding that display-only field to the domain.
+Districts is global Platform geographical reference data below an active State and is managed only by `super_admin` with the applicable District permission. It is implemented in the API, Next.js, and Expo clients. Its fields are `NameAr`, `NameEn`, `Code`, and required `StateId`; it is not a copy of Countries or States and has no country, currency, or telephone fields. Web and mobile imports resolve the parent from a `stateName` spreadsheet column without adding that display-only field to the domain.
 
 ## 2. Audited baseline
 
@@ -17,6 +17,8 @@ Districts are global data. Create, update, and restore require an active parent 
 `/api/v1/districts` provides paged reads, lookup and by-state lookup, detail, addresses detail, create, atomic bulk create, update, archive, bulk archive, and restore. `POST /bulk` accepts the named `{ districts: [...] }` envelope under `Districts:Create`, validates at most 100 rows, active parent States, and field-scoped case-insensitive uniqueness within State, then returns `201 { createdCount }`. Reads accept bounded paging, District-only search fields (`all`, Arabic name, English name, code, State), six search operators, `active|archived|all`, State and address-presence filters, and allow-listed sorting. Mutation commands validate permissions, persistence conflicts, audit records, post-commit notifications, and SignalR `districts` invalidation. Managed Crystal reporting owns the District dataset; no legacy District report endpoint is added.
 
 ## 5. Browser implementation
+
+The canonical browser route is `/super-admin/geography/districts`.
 
 The Next.js route composes one server-list controller with the shared feature header, breadcrumb, aligned toolbar, Grid Options, Grid/Card/Chart/Report/Import modes, form, archive/restore/bulk dialogs, pagination, and current-page charts. Import parses a bounded XLSX locally, resolves active State names through the public States lookup, previews row status, and sends one atomic named JSON request. Report selects runnable published `districts` catalog entries and renders them through the shared managed Crystal viewer with bounded District/State filters.
 

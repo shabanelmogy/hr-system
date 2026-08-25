@@ -119,21 +119,25 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   );
 
   const resolvedLocaleText = useMemo(
-    () =>
-      localeText ??
-      (theme.direction === "rtl"
+    () => {
+      const directionLocale = theme.direction === "rtl"
         ? arSD.components.MuiDataGrid.defaultProps.localeText
-        : undefined),
+        : undefined;
+
+      return localeText
+        ? { ...directionLocale, ...localeText }
+        : directionLocale;
+    },
     [localeText, theme.direction],
   );
 
   const resolvedSlots = useMemo(
     () => ({
       toolbar: DataGridToolbar,
-      ...(showNavigationButtons ? { footer: GridFooter } : {}),
+      footer: GridFooter,
       ...slots,
     }),
-    [showNavigationButtons, slots],
+    [slots],
   );
 
   const shellContext = useMemo(

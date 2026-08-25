@@ -2,6 +2,9 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import MapIcon from "@mui/icons-material/Map";
+import PublicIcon from "@mui/icons-material/Public";
+import LocationCityIcon from "@mui/icons-material/LocationCity";
 
 import { appRoutes } from "@/config/routes";
 import {
@@ -35,6 +38,33 @@ export const getSuperAdminConfig = () =>
         createColoredIcon(<ManageAccountsIcon />, NavigationColors.PURPLE),
         appRoutes.superAdmin.tenantAdmins,
         [UserRoles.SUPER_ADMIN],
+      ),
+      createNavItem(
+        NavigationTitles.GLOBAL_GEOGRAPHY,
+        createColoredIcon(<MapIcon />, NavigationColors.LIGHT_PURPLE),
+        undefined,
+        [UserRoles.SUPER_ADMIN],
+        undefined,
+        [
+          createNavItem(
+            NavigationTitles.COUNTRIES,
+            createColoredIcon(<PublicIcon />, NavigationColors.PURPLE),
+            appRoutes.superAdmin.geography.countries,
+            [UserRoles.SUPER_ADMIN],
+          ),
+          createNavItem(
+            NavigationTitles.STATES,
+            createColoredIcon(<LocationCityIcon />, NavigationColors.PURPLE),
+            appRoutes.superAdmin.geography.states,
+            [UserRoles.SUPER_ADMIN],
+          ),
+          createNavItem(
+            NavigationTitles.DISTRICTS,
+            createColoredIcon(<MapIcon />, NavigationColors.PURPLE),
+            appRoutes.superAdmin.geography.districts,
+            [UserRoles.SUPER_ADMIN],
+          ),
+        ],
       ),
     ],
     [UserRoles.SUPER_ADMIN],

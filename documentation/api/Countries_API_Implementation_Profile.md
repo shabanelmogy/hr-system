@@ -6,7 +6,7 @@
 | API prefix | `/api/v1/countries` |
 | Domain owner | `GeographicalInformation/Countries` |
 | Identifier | Positive integer `Id` |
-| Ownership scope | Global reference data; access still requires active tenant membership |
+| Ownership scope | Global Platform reference data; access requires `super_admin` plus action permission |
 | Lifecycle | Active, archived, restore; no hard delete and no toggle endpoint |
 | Permissions | `Countries:View`, `Countries:Create`, `Countries:Edit`, `Countries:Delete` |
 | Persistence | EF Core/SQL Server through `ApplicationDbContext` and `IUnitOfWork` |
@@ -136,7 +136,7 @@ write bodies.
 ## 4. Controller and Permission Contract
 
 `CountriesController` is `[ApiController]`, API version `1.0`, uses the common
-versioned base route, requires `[TenantMember]`, injects only `ISender`, and sends
+versioned base route, requires `[Authorize(Roles = AppRoles.super_admin)]`, injects only `ISender`, and sends
 one request per action.
 
 | Method/path | Slice | Permission | Success |
@@ -282,7 +282,7 @@ state failures.
 - The job retries up to five times, publishes a localized notification to active
   recipients with `Countries:View`, then publishes a permission-scoped realtime
   entity change using the same operation ID.
-- Notification action URL is `/basic-data/countries`; mobile maps that action to
+- Notification action URL is `/super-admin/geography/countries`; mobile maps that action to
   its physical Countries route.
 - Single-item actions carry ID/names. Bulk actions carry count and no entity ID.
 
@@ -298,7 +298,7 @@ payload. A new resource must be added to each client's realtime query registry.
 - [ ] Ensure validation-query scanning finds the feature implementation.
 - [ ] Ensure Mapster scans the feature mapping assembly.
 - [ ] Add EN/AR localization keys for every validation/business error.
-- [ ] Add versioned thin controller with `[TenantMember]` and action permissions.
+- [ ] Add a versioned thin controller with `super_admin` role and action permissions.
 - [ ] Add API XML/controller documentation.
 - [ ] Add client realtime resource mappings and notification route adapters.
 
@@ -320,7 +320,7 @@ are tenant-owned. The main API, not the Crystal service, owns the reusable
 | Revision history | Create, update, publish, unpublish, archive, and restore append snapshots; revision entities are rejected if modified or deleted |
 | Definition safety | Maximum 1 MiB UTF-8, JSON object with non-empty `Name` and object `Body`, SHA-256 content hash, and rejection of credentials, database strings, absolute URLs, or unapproved endpoints |
 | Approved source | `GET /api/v1/report-templates/data-sources?featureKey=countries` declares JSON `endpoint=/api/v1/countries/report-data` |
-| Runtime data | `GET /api/v1/countries/report-data` requires tenant membership and `Countries:View`, returns active countries ordered by English name then ID, and contains no connection secrets |
+| Runtime data | `GET /api/v1/countries/report-data` requires `super_admin` and `Countries:View`, returns active countries ordered by English name then ID, and contains no connection secrets |
 | Persistence | `AddTenantReportTemplates` migration creates templates/revisions, tenant indexes, RowVersion columns, audit FKs and append-only application enforcement |
 
 The relative source path intentionally runs through the same-origin web API

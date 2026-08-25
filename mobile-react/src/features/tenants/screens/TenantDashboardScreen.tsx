@@ -65,9 +65,26 @@ export function TenantDashboardScreen() {
             {t('superAdminDashboard.subtitle')}
           </AppText>
         </View>
+      </View>
+
+      <View
+        accessibilityRole="toolbar"
+        style={[
+          styles.headerActions,
+          compact && styles.compactHeaderActions,
+          { direction },
+        ]}>
+        <AppButton
+          icon="earth-outline"
+          onPress={() => router.push(asHref(ROUTES.basicData.geographicalInformation))}
+          style={[styles.headerAction, compact && styles.compactHeaderAction]}
+          variant="outline">
+          {t('superAdminDashboard.manageGlobalGeography')}
+        </AppButton>
         <AppButton
           icon="business-outline"
-          onPress={() => router.push(asHref(ROUTES.tenantManagement))}>
+          onPress={() => router.push(asHref(ROUTES.tenantManagement))}
+          style={[styles.headerAction, compact && styles.compactHeaderAction]}>
           {t('superAdminDashboard.manageTenants')}
         </AppButton>
       </View>
@@ -363,16 +380,32 @@ function getErrorMessage(error: unknown, fallback: string): string {
 const styles = StyleSheet.create({
   heading: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 16,
-    marginBottom: 20,
+    gap: 12,
+    marginBottom: 12,
   },
   headingText: {
     flex: 1,
     minWidth: 220,
     gap: 4,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    gap: 10,
+    justifyContent: 'flex-end',
+    marginBottom: 20,
+    width: '100%',
+  },
+  compactHeaderActions: {
+    flexDirection: 'column',
+  },
+  headerAction: {
+    flex: 1,
+  },
+  compactHeaderAction: {
+    flex: 0,
+    width: '100%',
   },
   content: {
     gap: 16,

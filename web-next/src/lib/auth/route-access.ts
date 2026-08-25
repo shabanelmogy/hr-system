@@ -10,6 +10,7 @@ export type RoutePolicy = {
   path: string;
   roles?: readonly string[];
   permissions?: readonly PermissionString[];
+  deny?: boolean;
 };
 
 const adminRole = "admin";
@@ -22,6 +23,9 @@ const superAdminAllowedRoutes = [
   appRoutes.superAdmin.dashboard,
   appRoutes.superAdmin.tenants,
   appRoutes.superAdmin.tenantAdmins,
+  appRoutes.superAdmin.geography.countries,
+  appRoutes.superAdmin.geography.states,
+  appRoutes.superAdmin.geography.districts,
   UNAVAILABLE_ROUTE,
 ] as const;
 
@@ -32,6 +36,9 @@ export const routePolicies: readonly RoutePolicy[] = [
   { path: appRoutes.superAdmin.tenants, roles: [superAdminRole] },
   { path: appRoutes.superAdmin.tenantAdmins, roles: [superAdminRole] },
   { path: appRoutes.superAdmin.dashboard, roles: [superAdminRole] },
+  { path: appRoutes.superAdmin.geography.countries, roles: [superAdminRole] },
+  { path: appRoutes.superAdmin.geography.states, roles: [superAdminRole] },
+  { path: appRoutes.superAdmin.geography.districts, roles: [superAdminRole] },
   {
     path: rolePermissionsBase,
     permissions: [permissions.EditRoles],
@@ -51,29 +58,24 @@ export const routePolicies: readonly RoutePolicy[] = [
     path: appRoutes.basicData.globalPresence,
     permissions: [permissions.ViewCountries],
   },
-  {
-    path: appRoutes.basicData.countries,
-    permissions: [permissions.ViewCountries],
-  },
-  {
-    path: appRoutes.basicData.states,
-    permissions: [permissions.ViewStates],
-  },
+  // Legacy catalog URLs intentionally terminate before the Basic Data parent
+  // policy. Global catalog management now lives under /super-admin/geography.
+  { path: appRoutes.basicData.countries, deny: true },
+  { path: appRoutes.basicData.states, deny: true },
+  { path: appRoutes.basicData.districts, deny: true },
   {
     path: appRoutes.basicData.addressTypes,
     permissions: [permissions.ViewAddressTypes],
   },
   {
-    path: appRoutes.basicData.districts,
-    permissions: [permissions.ViewDistricts],
+    path: appRoutes.basicData.companyGeographicScope,
+    permissions: [permissions.ViewCompanyGeographicScope],
   },
   {
     path: appRoutes.basicData.index,
     permissions: [
-      permissions.ViewCountries,
-      permissions.ViewStates,
-      permissions.ViewDistricts,
       permissions.ViewAddressTypes,
+      permissions.ViewCompanyGeographicScope,
     ],
   },
   { path: appRoutes.extras.filesManager, roles: [adminRole] },
@@ -123,6 +125,7 @@ export function canAccessRoute(pathname: string, session: SessionClaims): boolea
 
   const rule = routePolicies.find(({ path }) => matchesRoute(pathname, path));
   if (!rule) return false;
+  if (rule.deny) return false;
   return isAuthorized(session, {
     roles: rule.roles,
     permissions: rule.permissions,

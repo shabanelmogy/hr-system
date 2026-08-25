@@ -29,6 +29,9 @@ export function CompanyContextSwitcher({ compact = false }: { compact?: boolean 
   const { showError, showSuccess, SnackbarComponent } = useNotifications();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const isArabic = i18n.resolvedLanguage?.startsWith("ar") ?? false;
+  const isSuperAdmin = user?.roles.some(
+    (role) => role.trim().toLowerCase() === "super_admin",
+  ) ?? false;
   const companies = user?.companies ?? [];
   const canSwitch = companies.length > 1;
   const currentName = useMemo(
@@ -41,7 +44,7 @@ export function CompanyContextSwitcher({ compact = false }: { compact?: boolean 
     [isArabic, user?.companyCode, user?.companyNameAr, user?.companyNameEn],
   );
 
-  if (!user || !currentName) return null;
+  if (!user || isSuperAdmin || !currentName) return null;
 
   const closeMenu = () => setAnchorEl(null);
   const openMenu = (event: MouseEvent<HTMLElement>) => {

@@ -7,7 +7,7 @@ import {
   alpha,
 } from "@mui/material";
 import type { TransitionProps } from "@mui/material/transitions";
-import { DiscardChangesDialog } from "@/shared/components/dialogs";
+import { DiscardChangesDialog } from "@/shared/components/dialogs/discard-changes/DiscardChangesDialog";
 import { FormProvider } from "./FormContext";
 import type { MyFormProps } from "./types";
 import { useFormDialogFocus } from "./useFormDialogFocus";

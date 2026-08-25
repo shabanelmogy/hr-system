@@ -133,6 +133,10 @@ const query = useEmployees({
 - Sort cycles natural -> ascending -> descending -> natural through `cycleSort`.
 - The API receives a one-based page; UI components remain zero-based.
 - When a view renders `AppDataTable` inside `AppMultiView`, disable the table's local pagination. For a standalone table, pass its controlled `serverState`.
+- When a table needs multi-row selection, use the optional controlled
+  `AppDataTable.rowSelection` contract instead of rebuilding checkbox cells.
+  The feature owns selected IDs and their lifecycle across search/page changes,
+  while the shared table owns the accessible selection column and touch target.
 
 ### Chart view contract
 

@@ -150,7 +150,9 @@ export function GridFooter() {
         justifyContent: "space-between",
       }}
     >
-      <Box aria-hidden="true" sx={{ flex: "0 0 150px" }} />
+      {showRecordNavigation ? (
+        <Box aria-hidden="true" sx={{ flex: "0 0 150px" }} />
+      ) : null}
 
       {showRecordNavigation ? (
         <Box
@@ -222,7 +224,7 @@ export function GridFooter() {
           alignItems: "center",
           justifyContent: "flex-end",
           gap: 2,
-          flex: "0 0 300px",
+          flex: showRecordNavigation ? "0 0 300px" : "1 1 auto",
         }}
       >
         <Typography
@@ -252,7 +254,9 @@ export function GridFooter() {
               overflow: "visible",
             },
             "& .MuiTablePagination-displayedRows": { display: "none" },
-            "& .MuiTablePagination-actions": { display: "none" },
+            "& .MuiTablePagination-actions": {
+              display: showRecordNavigation ? "none" : "flex",
+            },
             "& .MuiTablePagination-select": { minWidth: 60 },
             "& .MuiSelect-select": { paddingRight: "32px !important" },
             "& .MuiInputBase-root": {

@@ -270,5 +270,12 @@
     "CrystalReportConcurrencyConflict": "The Crystal report was changed by another request",
     "CrystalReportInvalidRole": "One or more selected roles are not available in the current tenant",
     "CrystalReportInvalidRights": "One or more Crystal report rights are invalid",
-    "CrystalReportVersionNotValidated": "Only a validated Crystal report version can be published"
+    "CrystalReportVersionNotValidated": "Only a validated Crystal report version can be published",
+    "CompanyContextRequired": "Select a company before managing its operating countries",
+    "CountriesUnavailable": "One or more selected operating countries are unavailable",
+    "CompanyCountriesRequired": "Select at least one operating country",
+    "CompanyCountriesLimitExceeded": "No more than 100 operating countries can be selected",
+    "CompanyCountryIdsMustBeDistinct": "Operating country IDs must be distinct",
+    "CompanyCountryIdsMustBePositive": "Operating country IDs must be positive",
+    "CompanyDefaultCountryMustBeSelected": "The default operating country must be selected"
 }

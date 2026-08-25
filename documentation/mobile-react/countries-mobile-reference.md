@@ -6,7 +6,7 @@
 | Physical route | `app/(main)/basic-data/geographical-information/countries.tsx` |
 | Typed route | `/basic-data/geographical-information/countries` |
 | Feature owner | `src/features/basic-data/countries` |
-| Access | `RouteGuard` plus `Countries:View` route policy |
+| Access | `RouteGuard` plus `super_admin` route policy; action permissions remain explicit |
 | Primary views | Server-managed Table and Cards |
 | Optional view | Independent PDF Report |
 | Form | Full-screen create/edit/view `AppForm` |
@@ -20,6 +20,10 @@ This is the exact mobile Countries implementation profile. Copy its route,
 feature/API/query ownership and shared-component composition; replace all
 Countries-specific fields, permissions, filters, lifecycle rules, report
 contracts and global-data assumptions for the next feature.
+
+Countries is a Platform catalog. The Super Admin dashboard exposes Global
+Geography; tenant administrators use Company Geographic Scope instead and cannot
+open this master screen even if an old token still contains Countries claims.
 
 ## 1. Exact Source Inventory
 

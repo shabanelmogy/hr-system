@@ -2,15 +2,17 @@
 
 ## 1. Route and public boundary
 
-The thin App Router page at `/basic-data/address-types` renders the Address Types
-feature public API. Navigation and route access require `AddressTypes:View`.
+The thin App Router page at `/basic-data/address-types` renders the company-scoped
+Address Types feature public API. Navigation and route access require
+`AddressTypes:View` plus an active company context.
 
 ## 2. Transport and types
 
 Feature types model list/detail/request/bulk/page separately. The service sends
 one-based query values, exact create/update/bulk envelopes, and normalizes names
-by trim. Query keys form an Address Types root that mutations and realtime
-invalidate.
+by trim. It never sends `companyId`; the authenticated active-company actor is
+authoritative. Address Type keys remain stable feature-owned keys; a successful
+company switch clears the full query cache before refetching under the new actor.
 
 ## 3. Server list
 
@@ -57,8 +59,9 @@ native MUI keyboard/focus behavior and visible non-color status labels.
 
 ## 10. Realtime
 
-`address-types` maps to the Address Type root query key. The notification route
-remains `/basic-data/address-types`.
+`address-types` maps to the stable Address Type root query key. The notification
+route remains `/basic-data/address-types`; server delivery is scoped to the active
+company, and company switching clears stale cached company data.
 
 ## 11. Tests
 

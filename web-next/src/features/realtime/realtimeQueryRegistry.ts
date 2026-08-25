@@ -1,6 +1,6 @@
 import { appointmentKeys } from "@/features/appointments";
-import { tenantAdminKeys } from "@/features/tenant-admins/tenantAdminApi";
-import { tenantKeys } from "@/features/tenants/tenantApi";
+import { tenantAdminKeys } from "@/features/tenant-admins";
+import { tenantKeys } from "@/features/tenants";
 import { addressTypeKeys } from "@/features/basic-data/geographical-information/address-types";
 import { countryKeys } from "@/features/basic-data/geographical-information/countries";
 import { districtKeys } from "@/features/basic-data/geographical-information/districts";

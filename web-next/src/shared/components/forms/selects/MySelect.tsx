@@ -305,17 +305,20 @@ const MySelect = <
             />
           )}
           renderOption={formMode
-            ? (optionProps, option) => (
-                <Box component="li" {...optionProps}>
-                  <Chip
-                    label={option.label}
-                    size="small"
-                    color={getChipColor(option)}
-                    variant="outlined"
-                    sx={{ marginInlineEnd: 1 }}
-                  />
-                </Box>
-              )
+            ? (optionProps, option) => {
+                const { key, ...listItemProps } = optionProps;
+                return (
+                  <Box component="li" key={key} {...listItemProps}>
+                    <Chip
+                      label={option.label}
+                      size="small"
+                      color={getChipColor(option)}
+                      variant="outlined"
+                      sx={{ marginInlineEnd: 1 }}
+                    />
+                  </Box>
+                );
+              }
             : undefined}
           noOptionsText={formMode
             ? loading

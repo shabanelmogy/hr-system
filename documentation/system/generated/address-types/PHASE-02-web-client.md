@@ -106,12 +106,12 @@ failure into partial success.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| address-types-master | 3 | `b36372d67e68a04bdc80577cb3924b2c827a9f79ca78cede1a5a9d3fd6eb9a17` |
+| address-types-master | 3 | `7df320a1cdbe421b7edf28e7bb0ed7c4ad026ba0d76af15dbb1ff27080f10f13` |
 | address-types-master | 4 | `7308f8020bdbc0c722447f200a173af87d8fa4f5f3fb6bf250463bd9f057ef5a` |
 | address-types-master | 6 | `b36e3f0234da7c53263dc870165993e8cc3d645939e7d9b5c2d85d617ed9c5e9` |
 | address-types-master | 7 | `78e6057906c656526f8fb427486cc0fcf24d5fd8fb865fdb58d0a786b9cce3ba` |
-| address-types-web | 1 | `20f0114170d4f9e0c389aeff622b0ebdb8464c5241125560c4db6e57cfbebec1` |
-| address-types-web | 2 | `1d6af8c97785f59dbffb686c63470a81bae194f7dee3ab98cd498a2ed06cb787` |
+| address-types-web | 1 | `b3020d62bc94049712c0a2f15d7435292ce16aaa254409856a6bf7c7405cc499` |
+| address-types-web | 2 | `28b4023af2a4131d5bca997bf32d61328902a654c1352dc25d4eb648b6ad91e6` |
 | address-types-web | 3 | `76508cf6e057734420a42ee5c3b082d8ddf4b1a8aa28856a035439be98853eb6` |
 | address-types-web | 4 | `74a70ebc353063732679fe669db2fb2c74d623c9d97c9367250827256f7ecbae` |
 | address-types-web | 5 | `21acae82c7c85f1f84ef36353e185a6766088f88de0f7cecc06f42c7e6cd5461` |
@@ -119,7 +119,7 @@ failure into partial success.
 | address-types-web | 7 | `fc67d7de0f0a34d6d50f7f0d8871c5114b873ca7abf672816e3273ffc1f8a2a8` |
 | address-types-web | 8 | `9105872832cbff57378bc222233612b39548d236abe7f34bb04952991ac33862` |
 | address-types-web | 9 | `78b529dec2a9aeea35eec3b2e8cd6963b1bcc4b1959f92e7911ae3eb75591bb1` |
-| address-types-web | 10 | `c8c17ac365971ab6a6b41820f9131d4c27b4e1d5197c1e24e8bfa2bbcc2ff87b` |
+| address-types-web | 10 | `c2cdf3771a6b183cb0847c55998197858b11f5c7cf93eb003ea42af587ed1dbd` |
 | address-types-web | 11 | `3b6884383b14ea1ad5e1db562d1962dd66bc5d5f3a9361710deaba26b89bad5a` |
 | address-types-web | 12 | `79c8b65d2b3da2c9f670533292936c9cc7c268333fc03488b6e3f321ea75e4da` |
 | address-types-web | 13 | `2bd84244023861a16a3969ed4ce8128912ee46de5ae8b9cf76fe928dd7480d5f` |

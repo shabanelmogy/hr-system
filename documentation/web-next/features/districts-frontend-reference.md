@@ -6,7 +6,7 @@ The Districts browser feature is a State-dependent reference-data implementation
 
 ## 2. Route and composition
 
-The thin app route renders `DistrictsPage`; the page owns dialogs and delegates all list behavior to `useDistrictGridLogic` and `DistrictsMultiView`.
+The thin app route at `app/(main)/super-admin/geography/districts/page.tsx` renders `DistrictsPage`; it is `super_admin` only. The page owns dialogs and delegates all list behavior to `useDistrictGridLogic` and `DistrictsMultiView`.
 
 ## 3. Transport and types
 
@@ -38,7 +38,7 @@ The form resolves active States only while open. Create/edit/view, archive, rest
 
 ## 10. Realtime and routing
 
-The feature registers the `districts` realtime key and the direct basic-data route. Notification routes target the direct Districts page.
+The feature registers the `districts` realtime key and the canonical `/super-admin/geography/districts` route. Notification routes target that Platform page; Expo maps it to its guarded native catalog route.
 
 ## 11. Localization, RTL, and accessibility
 

@@ -273,5 +273,12 @@
     "CrystalReportConcurrencyConflict": "تم تعديل تقرير Crystal بواسطة طلب آخر",
     "CrystalReportInvalidRole": "دور واحد أو أكثر غير متاح داخل المنشأة الحالية",
     "CrystalReportInvalidRights": "صلاحية واحدة أو أكثر من صلاحيات تقرير Crystal غير صالحة",
-    "CrystalReportVersionNotValidated": "لا يمكن نشر إلا نسخة تقرير Crystal تم التحقق منها"
+    "CrystalReportVersionNotValidated": "لا يمكن نشر إلا نسخة تقرير Crystal تم التحقق منها",
+    "CompanyContextRequired": "اختر شركة قبل إدارة دول التشغيل",
+    "CountriesUnavailable": "دولة واحدة أو أكثر من دول التشغيل المختارة غير متاحة",
+    "CompanyCountriesRequired": "اختر دولة تشغيل واحدة على الأقل",
+    "CompanyCountriesLimitExceeded": "لا يمكن اختيار أكثر من 100 دولة تشغيل",
+    "CompanyCountryIdsMustBeDistinct": "يجب ألا تتكرر معرفات دول التشغيل",
+    "CompanyCountryIdsMustBePositive": "يجب أن تكون معرفات دول التشغيل أرقامًا موجبة",
+    "CompanyDefaultCountryMustBeSelected": "يجب أن تكون دولة التشغيل الافتراضية ضمن الدول المختارة"
 }

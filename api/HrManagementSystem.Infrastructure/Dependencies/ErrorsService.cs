@@ -14,6 +14,7 @@ using HrManagementSystem.Application.Features.Security.Authorization.Errors;
 using HrManagementSystem.Application.Features.Security.Users.Errors;
 using HrManagementSystem.Application.Features.Analytics.ReportTemplates.Errors;
 using HrManagementSystem.Application.Features.Analytics.CrystalReports.Errors;
+using HrManagementSystem.Application.Features.OrganizationalStructure.CompanyGeographicScope.Errors;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
@@ -35,6 +36,7 @@ public static class ErrorsService
         service.AddScoped<DistrictErrors>();
         service.AddScoped<AddressErrors>();
         service.AddScoped<AddressTypeErrors>();
+        service.AddScoped<CompanyGeographicScopeErrors>();
         service.AddScoped<AppointmentErrors>();
         service.AddScoped<NotificationErrors>();
 

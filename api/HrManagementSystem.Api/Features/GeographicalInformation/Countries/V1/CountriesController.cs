@@ -18,7 +18,7 @@ namespace HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1;
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute2)]
 [ApiController]
-[TenantMember]
+[Authorize(Roles = AppRoles.super_admin)]
 public sealed class CountriesController(ISender sender) : ControllerBase
 {
     /// <summary>Returns a server-paged country collection with explicit status filtering.</summary>

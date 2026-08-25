@@ -6,7 +6,7 @@ Districts is an approved mobile Table/Cards/Chart/Report/Import feature under an
 
 ## 2. Guarded route
 
-`app/(main)/basic-data/geographical-information/districts.tsx` uses `RouteGuard` with `ROUTES.basicData.districts`; the geographical overview exposes it only with `Districts:View`.
+`app/(main)/basic-data/geographical-information/districts.tsx` uses `RouteGuard` with `ROUTES.basicData.districts`; the Platform geography overview exposes it only to `super_admin`, while action controls retain District permissions.
 
 ## 3. Runtime boundary
 

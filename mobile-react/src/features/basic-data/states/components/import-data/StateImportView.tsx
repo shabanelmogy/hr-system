@@ -42,8 +42,8 @@ export function StateImportView() {
   const { theme } = useAppTheme();
   const queryClient = useQueryClient();
   const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
-  const { allowed: canCreate } = useAuthorization({ requiredPermissions: [permissions.CreateStates] });
-  const { allowed: canViewCountries } = useAuthorization({ requiredPermissions: [permissions.ViewCountries] });
+  const { allowed: canCreate } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.CreateStates] });
+  const { allowed: canViewCountries } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.ViewCountries] });
   const countries = useQuery({ queryKey: countryKeys.lookup(), queryFn: countryApi.getLookup, enabled: canViewCountries, staleTime: 5 * 60_000 });
   const lookupState: LookupState = !canViewCountries ? 'forbidden' : countries.isLoading ? 'loading' : countries.isError ? 'error' : (countries.data?.length ?? 0) === 0 ? 'empty' : 'ready';
   const mutation = useBulkCreateStates();

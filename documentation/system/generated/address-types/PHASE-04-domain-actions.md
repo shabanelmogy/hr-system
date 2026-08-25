@@ -56,12 +56,12 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| address-types-master | 3 | `b36372d67e68a04bdc80577cb3924b2c827a9f79ca78cede1a5a9d3fd6eb9a17` |
+| address-types-master | 3 | `7df320a1cdbe421b7edf28e7bb0ed7c4ad026ba0d76af15dbb1ff27080f10f13` |
 | address-types-master | 4 | `7308f8020bdbc0c722447f200a173af87d8fa4f5f3fb6bf250463bd9f057ef5a` |
 | address-types-master | 6 | `b36e3f0234da7c53263dc870165993e8cc3d645939e7d9b5c2d85d617ed9c5e9` |
 | address-types-master | 7 | `78e6057906c656526f8fb427486cc0fcf24d5fd8fb865fdb58d0a786b9cce3ba` |
-| address-types-master | 8 | `0f8740b2ab2b64c995bf465b72c1e79a1bb8c80eee940666529a00eade35dfec` |
-| address-types-api | 6 | `27226d777350f5085dd3bcc6e5fbd02201f64d7a9b545c24892f5922d869fe4f` |
+| address-types-master | 8 | `d644b335ee5a2463885136b0a10c31dc4dd5af695866e6a2bbb825356a29fcfa` |
+| address-types-api | 6 | `547661ad62c069b0422d4ab8cd62d05730aee097aa745593612a67912ca82030` |
 | address-types-api | 7 | `ff2127841a678a5f0fbb58bd3cfcf06b6e6cea807adc3c2f1f1efc059e9455d7` |
 | address-types-api | 8 | `cdb4949380cc226db6ab4f53b730f5b4fd93333e08d1f8deef641ea2c1e2c358` |
 | address-types-web | 6 | `e31de5b161673fd29780835b82d2cabdad7aa5dfd0b8d35b981ccfeb1a468836` |

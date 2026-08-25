@@ -51,15 +51,15 @@ and `Excluded` means no runtime surface.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| states-master | 1 | `c0ee316628bce2cb59990a0123cbef713cda365cad5d37a39c78a8e1fcc64fe6` |
+| states-master | 1 | `0e192449a9ad82e9773069702c28c99efd04c63f5fcffe4ba0889edf26e14056` |
 | states-master | 2 | `f1462cfea2d924b4ae4a48a56f29a26faaa38ea195066212af66867ed1647ae1` |
 | states-master | 5 | `885ba01b409f605e650990d649c44935897caed196b1c3edaf44f56297bc25f6` |
-| states-master | 8 | `e3b3334363a7838d07786d63c3d6d91ce0e5f26ae54aef07597ea29ad2fb4c85` |
+| states-master | 8 | `103cda8ceabc6cdb194149434e646d558fac575baaa20e3f693ba7c38737ca22` |
 | states-master | 9 | `3bb32b0b771b82c4f9f9369d2aac0af5ad543878f7e223b3f4b989555486ff28` |
-| states-api | 1 | `15d834bcb75fb59cc980cd3b79c748f1be10cae3708fbc8f16bb2cf5f1fe05fd` |
+| states-api | 1 | `2395d7afcf495d57355e29724dc18f10fb01b10158e7e10992e3b4873f5a03fe` |
 | states-api | 10 | `67f990428b9dbca4718c2f98282eab7cbd9bb777971adb9c3614260407765e8c` |
 | states-api | 11 | `539f37f24d7580f0ff02e92c6172aa48665203d2179e10f21b91074b929472a8` |
-| states-web | 1 | `b64d63147b922890e8547ac8a854c7a162075b945f1c34f8d6b1b27990790918` |
+| states-web | 1 | `284abc272111e6e82feb45e7a332e8c1fb825eacd7c3472e7d088b0ed6b9cfa5` |
 | states-web | 2 | `5715616f7749731d49b88637b1bdf8ddeb9d6d691bfa13552d58058a37aaed75` |
 | states-web | 12 | `ecb38dd9b6149a025aa10b1edca9ed23050620cedf2f397b10ff34764e10874d` |
 | states-web | 13 | `6f4711600d21044390b0bccc326dadf61fbb4bb687b5c0b4aebe5f33772c42ca` |

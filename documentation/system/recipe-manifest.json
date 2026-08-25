@@ -82,13 +82,34 @@
       "id": "address-types-mobile",
       "path": "../mobile-react/address-types-mobile-reference.md",
       "title": "Address Types Expo implementation profile"
+    },
+    {
+      "id": "company-geographic-scope-master",
+      "path": "../project/COMPANY_GEOGRAPHIC_SCOPE_FEATURE_FULL_REVIEW.md",
+      "title": "Company Geographic Scope cross-platform master review"
+    },
+    {
+      "id": "company-geographic-scope-api",
+      "path": "../api/CompanyGeographicScope_API_Implementation_Profile.md",
+      "title": "Company Geographic Scope API implementation profile"
+    },
+    {
+      "id": "company-geographic-scope-web",
+      "path": "../web-next/features/company-geographic-scope-frontend-reference.md",
+      "title": "Company Geographic Scope Next.js implementation profile"
+    },
+    {
+      "id": "company-geographic-scope-mobile",
+      "path": "../mobile-react/company-geographic-scope-mobile-reference.md",
+      "title": "Company Geographic Scope Expo implementation profile"
     }
   ],
   "requiredFileManifests": [
     "features/countries/required-files.json",
     "features/states/required-files.json",
     "features/districts/required-files.json",
-    "features/address-types/required-files.json"
+    "features/address-types/required-files.json",
+    "features/company-geographic-scope/required-files.json"
   ],
   "recipes": [
     {
@@ -594,6 +615,84 @@
       { "book": "address-types-api", "sections": [10, 11] },
       { "book": "address-types-web", "sections": [12, 13, 14] },
       { "book": "address-types-mobile", "sections": [14, 15] }
+    ]
+  },
+  {
+    "id": "company-geographic-scope-phase-00-discovery-evidence",
+    "title": "Company Geographic Scope Phase 00 - Discovery and Evidence",
+    "template": "templates/PHASE-00-discovery-evidence.template.md",
+    "output": "generated/company-geographic-scope/PHASE-00-discovery-evidence.md",
+    "sources": [
+      { "book": "company-geographic-scope-master", "sections": [1, 2, 5, 8, 9] },
+      { "book": "company-geographic-scope-api", "sections": [1, 10, 11] },
+      { "book": "company-geographic-scope-web", "sections": [1, 2, 12, 13] },
+      { "book": "company-geographic-scope-mobile", "sections": [1, 14, 15] }
+    ]
+  },
+  {
+    "id": "company-geographic-scope-phase-01-domain-api",
+    "title": "Company Geographic Scope Phase 01 - Domain and API",
+    "template": "templates/PHASE-01-domain-api.template.md",
+    "output": "generated/company-geographic-scope/PHASE-01-domain-api.md",
+    "sources": [
+      { "book": "company-geographic-scope-master", "sections": [3, 4, 6] },
+      { "book": "company-geographic-scope-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+    ]
+  },
+  {
+    "id": "company-geographic-scope-phase-02-web-client",
+    "title": "Company Geographic Scope Phase 02 - Next.js Client",
+    "template": "templates/PHASE-02-web-client.template.md",
+    "output": "generated/company-geographic-scope/PHASE-02-web-client.md",
+    "sources": [
+      { "book": "company-geographic-scope-master", "sections": [3, 4, 6, 7] },
+      { "book": "company-geographic-scope-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+    ]
+  },
+  {
+    "id": "company-geographic-scope-phase-03-mobile-client",
+    "title": "Company Geographic Scope Phase 03 - Expo Mobile Client",
+    "template": "templates/PHASE-03-mobile-client.template.md",
+    "output": "generated/company-geographic-scope/PHASE-03-mobile-client.md",
+    "sources": [
+      { "book": "company-geographic-scope-master", "sections": [3, 4, 6, 7] },
+      { "book": "company-geographic-scope-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+    ]
+  },
+  {
+    "id": "company-geographic-scope-phase-04-domain-actions",
+    "title": "Company Geographic Scope Phase 04 - Domain Actions and Lifecycle",
+    "template": "templates/PHASE-04-domain-actions.template.md",
+    "output": "generated/company-geographic-scope/PHASE-04-domain-actions.md",
+    "sources": [
+      { "book": "company-geographic-scope-master", "sections": [3, 4, 6, 7, 8] },
+      { "book": "company-geographic-scope-api", "sections": [6, 7, 8] },
+      { "book": "company-geographic-scope-web", "sections": [6, 7, 8, 9] },
+      { "book": "company-geographic-scope-mobile", "sections": [9, 10, 11] }
+    ]
+  },
+  {
+    "id": "company-geographic-scope-phase-05-integration-runtime",
+    "title": "Company Geographic Scope Phase 05 - Integration and Runtime",
+    "template": "templates/PHASE-05-integration-runtime.template.md",
+    "output": "generated/company-geographic-scope/PHASE-05-integration-runtime.md",
+    "sources": [
+      { "book": "company-geographic-scope-master", "sections": [4, 5, 6, 7, 9] },
+      { "book": "company-geographic-scope-api", "sections": [8, 9, 10] },
+      { "book": "company-geographic-scope-web", "sections": [8, 10, 13] },
+      { "book": "company-geographic-scope-mobile", "sections": [2, 11, 12, 15] }
+    ]
+  },
+  {
+    "id": "company-geographic-scope-phase-06-final-reconciliation",
+    "title": "Company Geographic Scope Phase 06 - Final Reconciliation",
+    "template": "templates/PHASE-06-final-reconciliation.template.md",
+    "output": "generated/company-geographic-scope/PHASE-06-final-reconciliation.md",
+    "sources": [
+      { "book": "company-geographic-scope-master", "sections": [8, 9, 10] },
+      { "book": "company-geographic-scope-api", "sections": [10, 11] },
+      { "book": "company-geographic-scope-web", "sections": [12, 13, 14] },
+      { "book": "company-geographic-scope-mobile", "sections": [14, 15] }
     ]
   }
   ]

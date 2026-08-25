@@ -7,7 +7,7 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
     public void Configure(EntityTypeBuilder<Address> builder)
     {
         // Indexes
-        builder.HasIndex(a => a.AddressTypeId);
+        builder.HasIndex(a => new { a.TenantId, a.CompanyId, a.AddressTypeId });
         builder.HasIndex(a => a.DistrictId);
         builder.HasIndex(a => new { a.Latitude, a.Longitude });
 
@@ -54,7 +54,9 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
         // Relationships
         builder.HasOne(a => a.AddressType)         // Address has one AddressType
                .WithMany(at => at.Addresses)       // AddressType has many Addresses
-               .HasForeignKey(a => a.AddressTypeId)
+               .HasForeignKey(a => new { a.TenantId, a.CompanyId, a.AddressTypeId })
+               .HasPrincipalKey(at => new { at.TenantId, at.CompanyId, at.Id })
+               .OnDelete(DeleteBehavior.Restrict)
                .IsRequired(true);
 
         builder.HasOne(a => a.District)            // Address has one District

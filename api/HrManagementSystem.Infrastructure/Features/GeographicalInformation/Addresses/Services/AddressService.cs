@@ -1,5 +1,6 @@
 using HrManagementSystem.Application.Features.GeographicalInformation.Addresses.Services;
 using HrManagementSystem.Application.Features.GeographicalInformation.Addresses.Contracts;
+using HrManagementSystem.Application.Features.GeographicalInformation;
 using HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities;
 using HrManagementSystem.Application.Features.GeographicalInformation.Addresses.Errors;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Addresses.Jobs;
@@ -55,72 +56,160 @@ public class AddressService(
 
     public async Task<Result<AddressResponse>> AddAsync(AddressRequest addressRequest, CancellationToken cancellationToken = default)
     {
-        // Handle default address logic
-        if (addressRequest.IsDefault)
-        {
-            await UnsetOtherDefaultAddresses(cancellationToken);
-        }
+        AddressResponse? publishedResponse = null;
+        var result = await _context.ExecuteAtomicallyAsync(
+            [GeographicalLifecycleLocks.AddressType(addressRequest.AddressTypeId)],
+            async token =>
+            {
+                if (!await IsActiveAddressTypeAsync(addressRequest.AddressTypeId, token))
+                    return Result.Failure<AddressResponse>(_addressErrors.AddressTypeNotFound);
 
-        var newAddress = _mapper.Map<Address>(addressRequest);
+                if (addressRequest.IsDefault)
+                    await UnsetOtherDefaultAddresses(token);
 
-        await _context.AddAsync(newAddress, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+                var newAddress = _mapper.Map<Address>(addressRequest);
+                await _context.AddAsync(newAddress, token);
+                await _context.SaveChangesAsync(token);
 
-        var response = newAddress.Adapt<AddressResponse>();
+                publishedResponse = newAddress.Adapt<AddressResponse>();
+                return Result.Success(publishedResponse);
+            },
+            cancellationToken);
 
-        QueueAddressChanged(response, "Add");
+        if (publishedResponse is not null)
+            QueueAddressChanged(publishedResponse, "Add");
 
-        return Result.Success(response);
+        return result;
     }
 
     public async Task<Result<AddressResponse>> UpdateAsync(AddressRequest addressRequest, CancellationToken cancellationToken = default)
     {
-        var currentAddress = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == addressRequest.Id, cancellationToken);
-
-        if (currentAddress is null)
-            return Result.Failure<AddressResponse>(_addressErrors.AddressNotFound);
-
-        // Handle default address logic
-        if (addressRequest.IsDefault && !currentAddress.IsDefault)
+        while (true)
         {
-            await UnsetOtherDefaultAddresses(cancellationToken);
+            var expectedAddressTypeId = await _context.Addresses
+                .AsNoTracking()
+                .Where(address => address.Id == addressRequest.Id)
+                .Select(address => (int?)address.AddressTypeId)
+                .FirstOrDefaultAsync(cancellationToken);
+            if (!expectedAddressTypeId.HasValue)
+                return Result.Failure<AddressResponse>(_addressErrors.AddressNotFound);
+
+            var retryWithCurrentAddressType = false;
+            AddressResponse? publishedResponse = null;
+            var lockResources = new[] { expectedAddressTypeId.Value, addressRequest.AddressTypeId }
+                .Distinct()
+                .OrderBy(id => id)
+                .Select(GeographicalLifecycleLocks.AddressType)
+                .ToArray();
+            var result = await _context.ExecuteAtomicallyAsync(
+                lockResources,
+                async token =>
+                {
+                    var currentAddress = await _context.Addresses
+                        .FirstOrDefaultAsync(address => address.Id == addressRequest.Id, token);
+                    if (currentAddress is null)
+                        return Result.Failure<AddressResponse>(_addressErrors.AddressNotFound);
+                    if (currentAddress.AddressTypeId != expectedAddressTypeId.Value)
+                    {
+                        retryWithCurrentAddressType = true;
+                        return Result.Success(currentAddress.Adapt<AddressResponse>());
+                    }
+
+                    if (!await IsActiveAddressTypeAsync(addressRequest.AddressTypeId, token))
+                        return Result.Failure<AddressResponse>(_addressErrors.AddressTypeNotFound);
+
+                    if (addressRequest.IsDefault && !currentAddress.IsDefault)
+                        await UnsetOtherDefaultAddresses(token);
+
+                    var updatedAddress = addressRequest.Adapt<Address>();
+                    await _entityChangeLogService.CreateChangeLogAsync(
+                        addressRequest.Id,
+                        currentAddress,
+                        updatedAddress);
+
+                    _mapper.Map(addressRequest, currentAddress);
+                    _context.Update(currentAddress);
+                    await _context.SaveChangesAsync(token);
+
+                    publishedResponse = _mapper.Map<AddressResponse>(currentAddress);
+                    return Result.Success(publishedResponse);
+                },
+                cancellationToken);
+
+            if (retryWithCurrentAddressType)
+                continue;
+
+            if (publishedResponse is not null)
+                QueueAddressChanged(publishedResponse, "Update");
+
+            return result;
         }
-
-        var updatedAddress = addressRequest.Adapt<Address>();
-        await _entityChangeLogService.CreateChangeLogAsync(addressRequest.Id, currentAddress, updatedAddress);
-
-        _mapper.Map(addressRequest, currentAddress);
-        _context.Update(currentAddress);
-        await _context.SaveChangesAsync(cancellationToken);
-
-        var response = _mapper.Map<AddressResponse>(currentAddress);
-        QueueAddressChanged(response, "Update");
-
-        return Result.Success(response);
     }
 
     public async Task<Result> ToggleAsync(int id, CancellationToken cancellationToken = default)
     {
-        var address = await _context.Addresses.FindAsync(id);
+        while (true)
+        {
+            var expectedAddressTypeId = await _context.Addresses
+                .AsNoTracking()
+                .Where(address => address.Id == id)
+                .Select(address => (int?)address.AddressTypeId)
+                .FirstOrDefaultAsync(cancellationToken);
+            if (!expectedAddressTypeId.HasValue)
+                return Result.Failure(_addressErrors.AddressNotFound);
 
-        if (address is null)
-            return Result.Failure(_addressErrors.AddressNotFound);
+            var retryWithCurrentAddressType = false;
+            AddressResponse? publishedResponse = null;
+            string? publishedAction = null;
+            var result = await _context.ExecuteAtomicallyAsync(
+                [GeographicalLifecycleLocks.AddressType(expectedAddressTypeId.Value)],
+                async token =>
+                {
+                    var address = await _context.Addresses
+                        .FirstOrDefaultAsync(item => item.Id == id, token);
+                    if (address is null)
+                        return Result.Failure(_addressErrors.AddressNotFound);
+                    if (address.AddressTypeId != expectedAddressTypeId.Value)
+                    {
+                        retryWithCurrentAddressType = true;
+                        return Result.Success();
+                    }
 
-        // Prevent deletion of default address
-        if (address.IsDefault)
-            return Result.Failure(_addressErrors.DefaultAddressCannotBeDeleted);        
+                    if (address.IsDefault)
+                        return Result.Failure(_addressErrors.DefaultAddressCannotBeDeleted);
 
-        address.IsDeleted = !address.IsDeleted;
-        address.DeletedById = _currentActor.UserId;
-        address.DeletedByPc = Environment.MachineName;
-        address.DeletedOn = DateTime.UtcNow;
+                    if (address.IsDeleted && !await IsActiveAddressTypeAsync(address.AddressTypeId, token))
+                        return Result.Failure(_addressErrors.AddressTypeNotFound);
 
-        await _context.SaveChangesAsync(cancellationToken);
+                    address.IsDeleted = !address.IsDeleted;
+                    if (address.IsDeleted)
+                    {
+                        address.DeletedById = _currentActor.UserId;
+                        address.DeletedByPc = Environment.MachineName;
+                        address.DeletedOn = DateTime.UtcNow;
+                    }
+                    else
+                    {
+                        address.DeletedById = null;
+                        address.DeletedByPc = null;
+                        address.DeletedOn = null;
+                    }
 
-        var action = address.IsDeleted ? "Delete" : "Restore";
-        QueueAddressChanged(_mapper.Map<AddressResponse>(address), action);
+                    await _context.SaveChangesAsync(token);
+                    publishedAction = address.IsDeleted ? "Delete" : "Restore";
+                    publishedResponse = _mapper.Map<AddressResponse>(address);
+                    return Result.Success();
+                },
+                cancellationToken);
 
-        return Result.Success();
+            if (retryWithCurrentAddressType)
+                continue;
+
+            if (publishedResponse is not null && publishedAction is not null)
+                QueueAddressChanged(publishedResponse, publishedAction);
+
+            return result;
+        }
     }
 
     public async Task<Result<AddressesCountResponse>> GetCountAsync(CancellationToken cancellationToken = default)
@@ -166,4 +255,9 @@ public class AddressService(
             _context.UpdateRange(defaultAddresses);
         }
     }
+
+    private Task<bool> IsActiveAddressTypeAsync(int addressTypeId, CancellationToken cancellationToken) =>
+        _context.AddressTypes.AnyAsync(
+            addressType => addressType.Id == addressTypeId && !addressType.IsDeleted,
+            cancellationToken);
 }

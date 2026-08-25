@@ -36,7 +36,7 @@ public sealed class StateChangedJob(
                 ["NameEn"] = request.State.NameEn
             },
             request.State.Id.ToString(CultureInfo.InvariantCulture),
-            "/basic-data/states",
+            "/super-admin/geography/states",
             request.ActorUserId,
             request.OperationId);
 

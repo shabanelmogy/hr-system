@@ -30,7 +30,7 @@ export function canAccessRoute(
   if (
     session &&
     hasAnyRole(session.roles, [appRoles.superAdmin]) &&
-    !superAdminAllowedRoutes.some((path) => matchesRoute(pathname, path))
+    !isSuperAdminAllowedRoute(pathname)
   ) {
     return false;
   }
@@ -46,4 +46,12 @@ export function canAccessRoute(
     roles: policy.roles,
     permissions: policy.permissions,
   });
+}
+
+function isSuperAdminAllowedRoute(pathname: string): boolean {
+  return superAdminAllowedRoutes.some((path) =>
+    path === ROUTES.basicData.root || path === ROUTES.basicData.geographicalInformation
+      ? pathname === path
+      : matchesRoute(pathname, path),
+  );
 }

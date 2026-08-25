@@ -106,11 +106,11 @@ failure into partial success.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 3 | `3b1d97b7b5b8b6e365586be28116f39b8e3ffae0414257fca7abe5ece53fcc89` |
+| master | 3 | `395aa4699680d7fd28eccd5dcbb3d59ead3d06fee4225844efb44d7a10e11c7d` |
 | master | 4 | `a9c88864fafde572fc0ffc1502f1a5ccb2fc55fdbd77aefe2c54c33d143b9529` |
 | master | 6 | `b7fb453c6be690cf10f98e85664f30fb55fb590e628b0f8a0435f54cf67058ac` |
 | master | 7 | `8c0ba157ab3e6ca7bfa97bd23bdd022523f69dc7ac4386e25462b7ad667ba74b` |
-| web | 1 | `66a9531a90a5b8e58c45035848107d5c0dd756d800a174869bafef93437a7715` |
+| web | 1 | `379e8685bd53e584670fec8f36c9e7dd3cfa12238c6466320347a7f00cfc6fdc` |
 | web | 2 | `07678043219ba47afeeb50860fd12813f00028c7ec72cca8630d3671314b8d32` |
 | web | 3 | `8ed626078fb4bfcf82f49bef3053e0a706c11d9801738c6e797befd29b29df53` |
 | web | 4 | `d65a1f9e04c4f9445a29a6fd80d6416d04bedf0d32cafe2d997870c485938730` |

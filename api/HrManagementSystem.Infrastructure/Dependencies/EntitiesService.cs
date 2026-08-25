@@ -24,6 +24,8 @@ using HrManagementSystem.Application.Features.Analytics.CrystalReports.Abstracti
 using HrManagementSystem.Infrastructure.Features.Analytics.CrystalReports.Persistence;
 using HrManagementSystem.Infrastructure.Features.Analytics.CrystalReports.Security;
 using HrManagementSystem.Infrastructure.Features.Analytics.CrystalReports.Storage;
+using HrManagementSystem.Application.Features.OrganizationalStructure.CompanyGeographicScope.Abstractions;
+using HrManagementSystem.Infrastructure.Features.OrganizationalStructure.CompanyGeographicScope.Persistence;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
@@ -40,6 +42,7 @@ public static class EntitiesService
         services.AddScoped<ICrystalReportFileStorage, PrivateCrystalReportFileStorage>();
         services.AddScoped<ICrystalReportDataSource, CrystalReportDataSource>();
         services.AddScoped<ICurrentPermissionChecker, CurrentPermissionChecker>();
+        services.AddScoped<ICompanyGeographicScopeStore, CompanyGeographicScopeStore>();
         services.AddScoped<RealtimeEntityChangedJob>();
         services.AddScoped<CountryChangedJob>();
         services.AddScoped<ICountryReadStore, CountryReadStore>();

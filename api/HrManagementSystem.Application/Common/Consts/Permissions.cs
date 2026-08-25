@@ -34,6 +34,9 @@ public static class Permissions
     public const string EditCountries = "Countries:Edit";
     public const string DeleteCountries = "Countries:Delete";
 
+    public const string ViewCompanyGeographicScope = "CompanyGeographicScope:View";
+    public const string ManageCompanyGeographicScope = "CompanyGeographicScope:Manage";
+
     public const string ViewDistricts = "Districts:View";
     public const string CreateDistricts = "Districts:Create";
     public const string EditDistricts = "Districts:Edit";
@@ -76,6 +79,22 @@ public static class Permissions
     public const string CreateStates = "States:Create";
     public const string EditStates = "States:Edit";
     public const string DeleteStates = "States:Delete";
+
+    private static readonly HashSet<string> PlatformGeographyPermissions =
+    [
+        ViewCountries,
+        CreateCountries,
+        EditCountries,
+        DeleteCountries,
+        ViewStates,
+        CreateStates,
+        EditStates,
+        DeleteStates,
+        ViewDistricts,
+        CreateDistricts,
+        EditDistricts,
+        DeleteDistricts
+    ];
 
     public const string ViewSubCategories = "SubCategories:View";
     public const string CreateSubCategories = "SubCategories:Create";
@@ -175,5 +194,18 @@ public static class Permissions
             .Select(field => field.GetValue(null))
             .OfType<string>()
             .ToList();
+
+    public static IReadOnlyList<string> GetPlatformGeographyPermissions() =>
+        PlatformGeographyPermissions.Order(StringComparer.Ordinal).ToList();
+
+    public static IReadOnlyList<string> GetTenantPermissions() =>
+        GetAllPermissions()
+            .Where(permission => !PlatformGeographyPermissions.Contains(permission))
+            .ToList();
+
+    public static bool IsTenantPermission(string permission) =>
+        !string.IsNullOrWhiteSpace(permission) &&
+        GetAllPermissions().Contains(permission, StringComparer.Ordinal) &&
+        !PlatformGeographyPermissions.Contains(permission);
 
 }

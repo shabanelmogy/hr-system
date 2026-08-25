@@ -6,3 +6,4 @@ export { CountriesScreen } from './countries';
 export { StatesScreen } from './states';
 export { DistrictsScreen } from './districts';
 export { AddressTypesScreen } from './address-types';
+export { CompanyGeographicScopeScreen } from './company-geographic-scope';

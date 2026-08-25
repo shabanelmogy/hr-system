@@ -2,11 +2,11 @@
 
 Status: Canonical cross-platform implementation profile for Address Types.
 
-Reviewed: 2026-08-24
+Reviewed: 2026-08-25
 
 ## 1. Review manifest
 
-Address Types is global reference data that classifies Address records. It uses
+Address Types is company-scoped business data that classifies Address records. It uses
 Countries only as the flat-reference architecture baseline and the Managed Crystal
 integration guide for reporting. It is implemented in `api`, `web-next`, and
 `mobile-react`; the legacy `web/` client is not a target.
@@ -26,8 +26,8 @@ atomicity. UI mirrors those rules for clear feedback.
 
 Address Types have a positive integer ID, required trimmed `nameAr`/`nameEn`
 (2-100 allowed letters/spaces), a soft-archive flag, timestamps, and a one-to-many
-Address relationship. Names are independent global, case-insensitive uniqueness
-keys, including archived rows. The API list supplies `addressesCount` and detail
+Address relationship. Names are independently unique, case-insensitively, within
+the active company, including archived rows. The API list supplies `addressesCount` and detail
 has editable fields. Active Address rows block archive; restore is idempotent.
 Bulk archive takes 1-100 distinct positive IDs atomically.
 
@@ -84,10 +84,16 @@ role-authorized `.rpt` can be run.
 ## 8. Integrations
 
 Post-commit mutations issue plural notifications/realtime under resource
-`address-types` to the `AddressTypes:View` audience. Web invalidates the Address
-Type prefix. Expo maps the API notification URL to its geographical route and
-invalidates its feature key. Every label/error/action is paired EN/AR and follows
-the active direction.
+`address-types` to the active-company `AddressTypes:View` audience. Web and Expo
+invalidate their stable Address Type feature keys; a successful company switch
+clears the full query cache before refetching. The client never sends `companyId`;
+the authenticated active-company actor is authoritative. Existing global rows are cloned to every existing company
+by migration; new companies start empty unless a future template-copy policy is
+introduced. Drain old Address Type Hangfire jobs before applying the migration,
+then re-login and switch company context. A future public Job Portal resolves
+tenant/company from the published job or portal slug, never from a request-body
+`companyId`; it may then expose that company's candidate/person address types.
+Job location remains Branch/Site/WorkLocation rather than Address Type.
 
 ## 9. Required verification
 

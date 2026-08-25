@@ -2,7 +2,7 @@ using HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities;
 
 namespace HrManagementSystem.Domain.GeographicalInformation.AddressTypes.Entities;
 
-public class AddressType : AuditableEntity
+public class AddressType : CompanyAuditableEntity
 {
     public int Id { get; set; }
     public string NameEn { get; set; } = null!;

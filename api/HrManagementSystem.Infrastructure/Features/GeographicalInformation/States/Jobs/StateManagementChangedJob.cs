@@ -24,7 +24,7 @@ public sealed class StateManagementChangedJob(
             request.Action,
             parameters,
             request.State?.Id.ToString(CultureInfo.InvariantCulture),
-            "/basic-data/states",
+            "/super-admin/geography/states",
             request.ActorUserId,
             request.OperationId);
         var result = await notificationPublisher.PublishToPermissionAsync(notification, cancellationToken);

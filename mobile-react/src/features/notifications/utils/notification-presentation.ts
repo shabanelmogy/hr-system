@@ -48,6 +48,9 @@ export function formatRelativeTime(value: string, t: TFunction): string {
 
 const notificationRouteMap: Readonly<Record<string, AppRoute>> = {
   '/administration/users': ROUTES.administration.root,
+  '/basic-data/geographical-information/countries': ROUTES.basicData.countries,
+  '/basic-data/geographical-information/states': ROUTES.basicData.states,
+  '/basic-data/geographical-information/districts': ROUTES.basicData.districts,
   '/basic-data/countries': ROUTES.basicData.countries,
   '/basic-data/states': ROUTES.basicData.states,
   '/basic-data/districts': ROUTES.basicData.districts,

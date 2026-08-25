@@ -1,5 +1,6 @@
 // basicDataConfig.tsx
 import CategoryIcon from "@mui/icons-material/Category";
+import BusinessRoundedIcon from "@mui/icons-material/BusinessRounded";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import { appRoutes } from "@/config/routes";
 import {
@@ -25,46 +26,21 @@ export const getBasicDataConfig = () => {
 
   const geographicItems = [
     createNavItem(
-      NavigationTitles.COUNTRIES,
-      secondaryIcon(<CategoryIcon />),
-      appRoutes.basicData.countries,
-      undefined,
-      [permissions.ViewCountries]
-    ),
-    createNavItem(
-      NavigationTitles.STATES,
-      secondaryIcon(<LocationCityIcon />),
-      appRoutes.basicData.states,
-      undefined,
-      [permissions.ViewStates]
-    ),
-    createNavItem(
       NavigationTitles.ADDRESS_TYPES,
       secondaryIcon(<CategoryIcon />),
       appRoutes.basicData.addressTypes,
       undefined,
       [permissions.ViewAddressTypes]
     ),
+  ];
+
+  const organizationalStructureItems = [
     createNavItem(
-      NavigationTitles.DISTRICTS,
-      secondaryIcon(<LocationCityIcon />),
-      appRoutes.basicData.districts,
+      NavigationTitles.COMPANY_GEOGRAPHIC_SCOPE,
+      secondaryIcon(<BusinessRoundedIcon />),
+      appRoutes.basicData.companyGeographicScope,
       undefined,
-      [permissions.ViewDistricts]
-    ),
-    createNavItem(
-      NavigationTitles.COUNTRY_REPORT,
-      secondaryIcon(<CategoryIcon />),
-      appRoutes.basicData.countryReport,
-      undefined,
-      [permissions.ViewCountries]
-    ),
-    createNavItem(
-      NavigationTitles.GLOBAL_PRESENCE,
-      secondaryIcon(<LocationCityIcon />),
-      appRoutes.basicData.globalPresence,
-      undefined,
-      [permissions.ViewCountries]
+      [permissions.ViewCompanyGeographicScope],
     ),
   ];
 
@@ -73,8 +49,17 @@ export const getBasicDataConfig = () => {
     secondaryIcon(<LocationCityIcon />),
     undefined,
     undefined,
-    [permissions.ViewCountries],
+    [permissions.ViewAddressTypes],
     geographicItems
+  );
+
+  const organizationalStructureItem = createNavItem(
+    NavigationTitles.ORGANIZATIONAL_STRUCTURE,
+    secondaryIcon(<BusinessRoundedIcon />),
+    undefined,
+    undefined,
+    [permissions.ViewCompanyGeographicScope],
+    organizationalStructureItems,
   );
 
   return {
@@ -82,7 +67,7 @@ export const getBasicDataConfig = () => {
     NavigationSectionId.Basic_DATA,
     NavigationTitles.BASIC_DATA,
     sectionIcon,
-    [geographicDataItem]
+    [geographicDataItem, organizationalStructureItem]
     ),
     path: appRoutes.basicData.index,
   };

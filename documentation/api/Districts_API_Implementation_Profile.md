@@ -30,7 +30,7 @@ Writes run in the unit-of-work transaction and lock the parent State lifecycle r
 
 ## 8. HTTP boundary
 
-`DistrictsController` is versioned, tenant-member protected, permission-scoped, and depends only on `ISender`. Canonical endpoints are `GET /districts`, `GET /districts/lookup`, `GET /districts/by-state/{id}`, detail/address detail, create, `POST /districts/bulk` under `Districts:Create`, update, archive, `bulk-archive`, and restore.
+`DistrictsController` is versioned, `super_admin` protected, permission-scoped, and depends only on `ISender`. Canonical endpoints are `GET /districts`, `GET /districts/lookup`, `GET /districts/by-state/{id}`, detail/address detail, create, `POST /districts/bulk` under `Districts:Create`, update, archive, `bulk-archive`, and restore.
 
 ## 9. Dependency injection and persistence
 

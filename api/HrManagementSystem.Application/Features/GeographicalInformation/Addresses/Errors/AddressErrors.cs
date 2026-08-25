@@ -12,6 +12,9 @@ public class AddressErrors(IStringLocalizer<AddressRequest> localizer)
     public Error AddressNotFound =>
             new("Address.AddressNotFound", _localizer[nameof(AddressNotFound)], ErrorType.NotFound);
 
+    public Error AddressTypeNotFound =>
+            new("Address.InvalidAddressType", _localizer[Strings.InvalidAddressType], ErrorType.Validation);
+
     public Error AddressError =>
             new("Address.AddressError", _localizer[nameof(AddressError)], ErrorType.Unexpected);
 

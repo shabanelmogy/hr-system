@@ -8,6 +8,8 @@ import type { ManagementPageQuery, ManagementPageResponse } from "@/lib/api/pagi
 
 export const tenantKeys = {
   all: ["tenants"] as const,
+  pages: () => [...tenantKeys.all, "page"] as const,
+  page: (query: ManagementPageQuery) => [...tenantKeys.pages(), query] as const,
 };
 
 export const tenantApi = {

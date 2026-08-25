@@ -11,11 +11,16 @@ import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
+import { AppIconButton } from '@/src/shared/components/controls/AppIconButton';
 import { AppIcon } from '@/src/shared/components/icons/AppIcon';
 import { AppScreenFooterContext } from '@/src/shared/components/layout/AppScreenFooterContext';
 import { shouldPinPagination } from '@/src/shared/components/multi-view/paginationPlacement';
 import { AppPaginationNavigation } from '@/src/shared/components/pagination';
 import { AppText } from '@/src/shared/components/typography/AppText';
+import {
+  toggleDataTableRowSelection,
+  type AppDataTableRowKey,
+} from './rowSelection';
 
 export type AppDataTableSortValue = string | number | boolean | Date | null | undefined;
 
@@ -48,6 +53,15 @@ export interface AppDataTableServerState {
   onSortChange: (sort: AppDataTableSortState | null) => void;
 }
 
+export interface AppDataTableRowSelection<Row> {
+  selectedRowKeys: readonly AppDataTableRowKey[];
+  onSelectionChange: (selectedRowKeys: AppDataTableRowKey[]) => void;
+  header: string;
+  getAccessibilityLabel: (row: Row, selected: boolean) => string;
+  disabled?: boolean;
+  columnWidth?: number;
+}
+
 export interface AppDataTableProps<Row> {
   rows: readonly Row[];
   columns: readonly AppDataTableColumn<Row>[];
@@ -58,6 +72,8 @@ export interface AppDataTableProps<Row> {
   showPagination?: boolean;
   compactHeader?: boolean;
   resetKey?: string | number;
+  /** Optional controlled multi-row selection rendered as the first table column. */
+  rowSelection?: AppDataTableRowSelection<Row>;
   /** Controlled list state. Rows are treated as one server page and are not sorted or sliced locally. */
   serverState?: AppDataTableServerState;
 }
@@ -72,6 +88,7 @@ export function AppDataTable<Row>({
   showPagination = true,
   compactHeader = true,
   resetKey,
+  rowSelection,
   serverState,
 }: AppDataTableProps<Row>) {
   const { t, i18n } = useTranslation();
@@ -97,6 +114,40 @@ export function AppDataTable<Row>({
     () => pageSizeOptionsKey.split(',').filter(Boolean).map(Number),
     [pageSizeOptionsKey],
   );
+  const selectedRowKeys = rowSelection?.selectedRowKeys;
+  const selectedRowKeySet = useMemo(
+    () => new Set(selectedRowKeys ?? []),
+    [selectedRowKeys],
+  );
+  const resolvedColumns = useMemo<AppDataTableColumn<Row>[]>(() => {
+    if (!rowSelection) return [...columns];
+
+    return [
+      {
+        id: '__rowSelection',
+        header: rowSelection.header,
+        width: rowSelection.columnWidth ?? 76,
+        align: 'center',
+        render: (row) => {
+          const rowKey = getRowKey(row);
+          const selected = selectedRowKeySet.has(rowKey);
+
+          return (
+            <AppIconButton
+              accessibilityState={{ selected }}
+              disabled={rowSelection.disabled}
+              icon={selected ? 'checkbox' : 'square-outline'}
+              label={rowSelection.getAccessibilityLabel(row, selected)}
+              onPress={() => rowSelection.onSelectionChange(
+                toggleDataTableRowSelection(rowSelection.selectedRowKeys, rowKey),
+              )}
+            />
+          );
+        },
+      },
+      ...columns,
+    ];
+  }, [columns, getRowKey, rowSelection, selectedRowKeySet]);
 
   const collator = useMemo(
     () => new Intl.Collator(i18n.language, { numeric: true, sensitivity: 'base' }),
@@ -154,7 +205,10 @@ export function AppDataTable<Row>({
     pageRows.length,
     Boolean(footerHost),
   );
-  const tableWidth = columns.reduce((total, column) => total + (column.width ?? 150), 0);
+  const tableWidth = resolvedColumns.reduce(
+    (total, column) => total + (column.width ?? 150),
+    0,
+  );
   const pagination = useMemo(() => showPagination && totalRows > 0 ? (
     <View
       style={[
@@ -277,7 +331,7 @@ export function AppDataTable<Row>({
               compactHeader && styles.compactHeaderRow,
               { direction, backgroundColor: theme.colors.surfaceMuted },
             ]}>
-            {columns.map((column) => {
+            {resolvedColumns.map((column) => {
               const sortable = column.sortable ?? Boolean(column.sortValue);
               const activeDirection = activeSort?.columnId === column.id
                 ? activeSort.direction
@@ -362,7 +416,7 @@ export function AppDataTable<Row>({
             <View
               key={getRowKey(row)}
               style={[styles.row, { direction, backgroundColor: theme.colors.surface }]}>
-              {columns.map((column) => (
+              {resolvedColumns.map((column) => (
                 <View
                   key={column.id}
                   style={[

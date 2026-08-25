@@ -30,7 +30,7 @@
     { "id": "api-report-data", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs", "purpose": "Approved managed District report dataset and filters" },
     { "id": "api-report-data-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/CrystalReportDataSourceTests.cs", "purpose": "District report schema/filter evidence" },
     { "id": "crystal-runtime-profile", "layer": "api", "path": "api/CrystalReportGeneratorApi/Helpers/CrystalReport/ManagedReportRuntime.cs", "purpose": "Crystal runtime enforcement of the matching District dataset schema" },
-    { "id": "web-route", "layer": "web-next", "path": "web-next/src/app/(main)/basic-data/(geographical-information)/districts/page.tsx", "purpose": "Thin browser route" },
+    { "id": "web-route", "layer": "web-next", "path": "web-next/src/app/(main)/super-admin/geography/districts/page.tsx", "purpose": "Thin super-admin browser route" },
     { "id": "web-page", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/districts/pages/DistrictsPage.tsx", "purpose": "Browser composition and dialogs" },
     { "id": "web-list", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/districts/hooks/useDistrictGridLogic.ts", "purpose": "Server list controller" },
     { "id": "web-queries", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/districts/hooks/useDistrictQueries.ts", "purpose": "Query keys and lifecycle invalidation" },

@@ -12,4 +12,11 @@ public sealed record AddressTypeDetailResponse(int Id, string NameAr, string Nam
 public sealed record AddressTypeLookupResponse(int Id, string NameAr, string NameEn);
 public sealed record AddressTypeAddressListItem(int Id, string BuildingNumber, string Floor, string ApartmentNumber, string PostalCode, bool IsDefault, bool IsDeleted);
 public sealed record AddressTypeWithAddressesResponse(int Id, string NameAr, string NameEn, IReadOnlyList<AddressTypeAddressListItem> Addresses, DateTime CreatedOn, DateTime? UpdatedOn, bool IsDeleted);
-public sealed record AddressTypeChange(AddressTypeDetailResponse? AddressType, string Action, int? BulkCount, string? ActorUserId, Guid OperationId);
+public sealed record AddressTypeChange(
+    AddressTypeDetailResponse? AddressType,
+    string Action,
+    int? BulkCount,
+    string? ActorUserId,
+    string TenantId,
+    int CompanyId,
+    Guid OperationId);

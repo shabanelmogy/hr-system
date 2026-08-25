@@ -53,35 +53,6 @@ export const FormContent: React.FC<{ children?: React.ReactNode }> = ({ children
             ? "0 0 20px 20px"
             : "0 0 12px 12px"
           : "0",
-        "&::-webkit-scrollbar": { width: "10px" },
-        "&::-webkit-scrollbar-track": {
-          background: alpha(
-            theme.palette.divider,
-            theme.palette.mode === "dark" ? 0.2 : 0.1
-          ),
-          borderRadius: "5px",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          background: alpha(
-            theme.palette.primary.main,
-            theme.palette.mode === "dark" ? 0.5 : 0.3
-          ),
-          borderRadius: "5px",
-          "&:hover": {
-            background: alpha(
-              theme.palette.primary.main,
-              theme.palette.mode === "dark" ? 0.7 : 0.5
-            ),
-          },
-        },
-        scrollbarWidth: "thin",
-        scrollbarColor: `${alpha(
-          theme.palette.primary.main,
-          theme.palette.mode === "dark" ? 0.5 : 0.3
-        )} ${alpha(
-          theme.palette.divider,
-          theme.palette.mode === "dark" ? 0.2 : 0.1
-        )}`,
         "& .MuiTextField-root": {
           mb: 2.5,
           "& .MuiOutlinedInput-root": {

@@ -21,6 +21,9 @@ export function CompanyContextSwitcher({ compact = false }: { compact?: boolean 
   const { session, switchCompany, isSwitchingCompany } = useAuth();
   const [visible, setVisible] = useState(false);
   const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
+  const isSuperAdmin = session?.roles.some(
+    (role) => role.trim().toLowerCase() === 'super_admin',
+  ) ?? false;
   const companies = session?.companies ?? [];
   const canSwitch = companies.length > 1;
   const currentName = companyName(
@@ -30,7 +33,7 @@ export function CompanyContextSwitcher({ compact = false }: { compact?: boolean 
     language === 'ar',
   );
 
-  if (!session || !currentName) return null;
+  if (!session || isSuperAdmin || !currentName) return null;
 
   const open = () => {
     if (!canSwitch || isSwitchingCompany) return;

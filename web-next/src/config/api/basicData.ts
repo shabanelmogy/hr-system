@@ -58,3 +58,5 @@ export const districts: DistrictsRoutes = {
   bulkArchive: `${version}/districts/bulk-archive`,
   restore: (id: Id) => `${version}/districts/${id}/restore`,
 };
+
+export const companyGeographicScope = `${version}/company-geographic-scope`;

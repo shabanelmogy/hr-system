@@ -4,7 +4,7 @@ Status: applied API contract for States. Base route: `/api/v1/states`.
 
 ## 1. Boundary
 
-`StatesController` is a thin `ISender` adapter. It uses `ApiRoutes.BaseRoute2`, tenant membership, and States permission attributes. No controller action calls the legacy State service.
+`StatesController` is a thin `ISender` adapter. It uses `ApiRoutes.BaseRoute2`, the `super_admin` role guard, and States permission attributes. No controller action calls the legacy State service.
 
 ## 2. Transport contracts
 

@@ -103,9 +103,9 @@ public sealed class CrystalReportDataSourceTests
     {
         await using var context = CreateContext();
         context.AddressTypes.AddRange(
-            new AddressType { Id = 1, NameAr = "سكن", NameEn = "Residence" },
-            new AddressType { Id = 2, NameAr = "عمل", NameEn = "Work" },
-            new AddressType { Id = 3, NameAr = "مؤرشف", NameEn = "Archived", IsDeleted = true });
+            new AddressType { Id = 1, TenantId = "tenant", CompanyId = 1, NameAr = "سكن", NameEn = "Residence" },
+            new AddressType { Id = 2, TenantId = "tenant", CompanyId = 1, NameAr = "عمل", NameEn = "Work" },
+            new AddressType { Id = 3, TenantId = "tenant", CompanyId = 1, NameAr = "مؤرشف", NameEn = "Archived", IsDeleted = true });
         context.Addresses.AddRange(
             new Address { Id = 1, AddressTypeId = 1 },
             new Address { Id = 2, AddressTypeId = 1, IsDeleted = true },
@@ -134,18 +134,66 @@ public sealed class CrystalReportDataSourceTests
         Assert.Null(unsupportedFilter);
     }
 
+    [Fact]
+    public async Task BuildAsync_AddressTypesReportUsesOnlyTheActiveCompany()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
+            .Options;
+
+        await using (var firstCompany = CreateContext(options, "tenant", 1))
+        {
+            firstCompany.AddressTypes.Add(new AddressType
+            {
+                TenantId = "tenant",
+                CompanyId = 1,
+                NameAr = "الشركة الأولى",
+                NameEn = "First Company"
+            });
+            await firstCompany.SaveChangesAsync();
+        }
+
+        await using (var secondCompany = CreateContext(options, "tenant", 2))
+        {
+            secondCompany.AddressTypes.Add(new AddressType
+            {
+                TenantId = "tenant",
+                CompanyId = 2,
+                NameAr = "الشركة الثانية",
+                NameEn = "Second Company"
+            });
+            await secondCompany.SaveChangesAsync();
+        }
+
+        await using var reportContext = CreateContext(options, "tenant", 1);
+        var result = await new CrystalReportDataSource(reportContext).BuildAsync(
+            "addresstypes",
+            new Dictionary<string, string?>(),
+            CancellationToken.None);
+
+        Assert.NotNull(result);
+        Assert.Contains("First Company", result.Xml, StringComparison.Ordinal);
+        Assert.DoesNotContain("Second Company", result.Xml, StringComparison.Ordinal);
+    }
+
     private static ApplicationDbContext CreateContext()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
-        return new ApplicationDbContext(options, new TestCurrentActor(), TimeProvider.System);
+        return CreateContext(options, "tenant", 1);
     }
 
-    private sealed class TestCurrentActor : ICurrentActor
+    private static ApplicationDbContext CreateContext(
+        DbContextOptions<ApplicationDbContext> options,
+        string tenantId,
+        int companyId) =>
+        new(options, new TestCurrentActor(tenantId, companyId), TimeProvider.System);
+
+    private sealed class TestCurrentActor(string tenantId, int companyId) : ICurrentActor
     {
         public string? UserId => "admin";
-        public string? TenantId => "tenant";
-        public int? CompanyId => 1;
+        public string? TenantId { get; } = tenantId;
+        public int? CompanyId { get; } = companyId;
     }
 }

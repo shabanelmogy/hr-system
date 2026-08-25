@@ -22,7 +22,6 @@ import {
   AppIconButton,
   type AppIconName,
   AppListScreen,
-  AppPageHeader,
   AppScreen,
   AppStateView,
   AppStatusBadge,
@@ -222,21 +221,6 @@ export function TenantManagementScreen() {
           tintColor={theme.colors.primary}
         />
       }>
-      <AppPageHeader
-        action={(
-          <AppIconButton
-            color={theme.colors.onPrimary}
-            icon="add-outline"
-            label={t('tenantManagement.addTenant')}
-            onPress={openCreate}
-            pressedBackgroundColor={theme.colors.secondary}
-            style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
-          />
-        )}
-        subtitle={t('tenantManagement.subtitle')}
-        title={t('tenantManagement.title')}
-      />
-
       {tenantsQuery.isLoading ? (
         <AppStateView state="loading" />
       ) : tenantsQuery.isError ? (
@@ -259,6 +243,17 @@ export function TenantManagementScreen() {
           }}
           items={filteredTenants}
           onSearch={searchTenants}
+          searchActions={(
+            <AppIconButton
+              color={theme.colors.onPrimary}
+              icon="add-outline"
+              label={t('tenantManagement.addTenant')}
+              onPress={openCreate}
+              pressedBackgroundColor={theme.colors.secondary}
+              size={22}
+              style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
+            />
+          )}
           searchPlaceholder={t('tenantManagement.search')}
           showViewLabels
           views={[

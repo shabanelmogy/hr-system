@@ -11,27 +11,87 @@
 
 body {
   overflow-x: hidden;
-  overflow-y: auto !important;
 }
 
-/* تغيير عرض أو ارتفاع الـ scrollbar */
+/* Shared application scrollbar tokens. ThemeShell keeps data-theme in sync. */
+:root {
+  --app-scrollbar-size: 10px;
+  --app-scrollbar-track: rgba(15, 23, 42, 0.06);
+  --app-scrollbar-thumb: rgba(37, 99, 235, 0.46);
+  --app-scrollbar-thumb-hover: rgba(37, 99, 235, 0.7);
+  --app-scrollbar-thumb-active: rgba(29, 78, 216, 0.86);
+}
+
+html[data-theme="dark"] {
+  --app-scrollbar-track: rgba(148, 163, 184, 0.08);
+  --app-scrollbar-thumb: rgba(56, 189, 248, 0.45);
+  --app-scrollbar-thumb-hover: rgba(56, 189, 248, 0.7);
+  --app-scrollbar-thumb-active: rgba(125, 211, 252, 0.86);
+}
+
+html,
+body,
+* {
+  scrollbar-color: var(--app-scrollbar-thumb) var(--app-scrollbar-track);
+  scrollbar-width: thin;
+}
+
 ::-webkit-scrollbar {
-  width: 10px; /* للتمرير العمودي */
-  height: 10px; /* للتمرير الأفقي */
+  width: var(--app-scrollbar-size);
+  height: var(--app-scrollbar-size);
 }
 
-/* خلفية المسار */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--app-scrollbar-track);
+  border-radius: 999px;
 }
 
-/* لون المقبض */
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 5px;
+  min-height: 42px;
+  background: var(--app-scrollbar-thumb);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 999px;
 }
 
-/* عند المرور بالماوس */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--app-scrollbar-thumb-hover);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--app-scrollbar-thumb-active);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+@media (pointer: coarse) {
+  :root {
+    --app-scrollbar-size: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-width: 1px;
+  }
+}
+
+@media (forced-colors: active) {
+  html,
+  body,
+  * {
+    scrollbar-color: auto;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ButtonText;
+  }
 }

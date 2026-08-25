@@ -35,7 +35,7 @@ public sealed class DistrictChangedJob(
                 ["Code"] = request.District.Code
             },
             request.District.Id.ToString(CultureInfo.InvariantCulture),
-            "/basic-data/districts",
+            "/super-admin/geography/districts",
             request.ActorUserId,
             request.OperationId);
 

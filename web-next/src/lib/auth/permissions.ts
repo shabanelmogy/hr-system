@@ -24,6 +24,8 @@ export const permissions = {
   CreateCountries: "Countries:Create",
   EditCountries: "Countries:Edit",
   DeleteCountries: "Countries:Delete",
+  ViewCompanyGeographicScope: "CompanyGeographicScope:View",
+  ManageCompanyGeographicScope: "CompanyGeographicScope:Manage",
   ViewDistricts: "Districts:View",
   CreateDistricts: "Districts:Create",
   EditDistricts: "Districts:Edit",
@@ -135,6 +137,7 @@ export type PermissionModule =
   | "Backups"
   | "Categories"
   | "Countries"
+  | "CompanyGeographicScope"
   | "Districts"
   | "ChangeLogs"
   | "Hangfire"

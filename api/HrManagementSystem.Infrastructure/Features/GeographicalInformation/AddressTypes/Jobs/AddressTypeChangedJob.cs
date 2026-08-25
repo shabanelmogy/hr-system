@@ -11,6 +11,8 @@ public sealed record AddressTypeChangedJobRequest(
     AddressTypeResponse AddressType,
     string Action,
     string? ActorUserId,
+    string TenantId,
+    int CompanyId,
     Guid OperationId);
 
 [AutomaticRetry(Attempts = 5, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
@@ -36,23 +38,34 @@ public sealed class AddressTypeChangedJob(
             request.AddressType.Id.ToString(CultureInfo.InvariantCulture),
             "/basic-data/address-types",
             request.ActorUserId,
-            request.OperationId);
+            request.OperationId,
+            request.TenantId,
+            request.CompanyId);
 
         var result = await notificationPublisher.PublishToPermissionAsync(notification, cancellationToken);
         if (result.IsFailure)
             throw new InvalidOperationException($"Address type notification failed: {result.Error.Code}");
 
-        var count = await context.AddressTypes.AsNoTracking()
-            .CountAsync(addressType => !addressType.IsDeleted, cancellationToken);
+        var count = await context.AddressTypes.IgnoreQueryFilters().AsNoTracking()
+            .CountAsync(addressType =>
+                addressType.TenantId == request.TenantId &&
+                addressType.CompanyId == request.CompanyId &&
+                !addressType.IsDeleted,
+                cancellationToken);
 
-        var clients = hubContext.Clients.Group(
-            GeneralHubGroups.ForPermission(Permissions.ViewAddressTypes));
+        var clients = hubContext.Clients.Group(GeneralHubGroups.ForCompanyPermission(
+            request.TenantId,
+            request.CompanyId,
+            Permissions.ViewAddressTypes));
 
         await Task.WhenAll(
             clients.ReceiveAddressTypeUpdate(
                 Result.Success(new AddressTypesCountResponse(count, request.AddressType, request.Action))),
             realtimePublisher.PublishAsync(RealtimeChangeRequest.For<AddressType>(
-                RealtimeAudience.ForPermission(Permissions.ViewAddressTypes),
+                RealtimeAudience.ForCompanyPermission(
+                    request.TenantId,
+                    request.CompanyId,
+                    Permissions.ViewAddressTypes),
                 request.Action,
                 request.AddressType.Id.ToString(CultureInfo.InvariantCulture),
                 request.OperationId), cancellationToken));

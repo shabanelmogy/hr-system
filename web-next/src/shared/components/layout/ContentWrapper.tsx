@@ -1,7 +1,12 @@
 import { Box } from "@mui/material";
 import type { ReactNode } from "react";
 
-const ContentWrapper = ({ children }: { children: ReactNode }) => {
+interface ContentWrapperProps {
+  children: ReactNode;
+  fillAvailable?: boolean;
+}
+
+const ContentWrapper = ({ children, fillAvailable = false }: ContentWrapperProps) => {
   return (
     <Box
       sx={{
@@ -11,9 +16,16 @@ const ContentWrapper = ({ children }: { children: ReactNode }) => {
         width: "100%",
         minWidth: 0,
         maxWidth: "100%",
-        overflowX: "auto",
+        ...(fillAvailable && {
+          display: "flex",
+          flex: 1,
+          flexDirection: "column",
+          minHeight: 0,
+          overflow: "hidden",
+        }),
+        ...(!fillAvailable && { overflowX: "auto" }),
         transform: "translateZ(0)",
-        "& > *": { minWidth: "fit-content" },
+        "& > *": { minWidth: fillAvailable ? 0 : "fit-content" },
       }}
     >
       {children}

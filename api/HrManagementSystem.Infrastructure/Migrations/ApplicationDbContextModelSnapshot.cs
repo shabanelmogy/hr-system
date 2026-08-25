@@ -1070,6 +1070,9 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CreatedById")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -1109,6 +1112,11 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.Property<string>("UpdatedById")
                         .HasColumnType("nvarchar(450)");
 
@@ -1124,13 +1132,17 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasIndex("DeletedById");
 
-                    b.HasIndex("NameAr")
-                        .IsUnique();
-
-                    b.HasIndex("NameEn")
-                        .IsUnique();
+                    b.HasIndex("TenantId");
 
                     b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "NameAr")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "NameEn")
+                        .IsUnique();
 
                     b.ToTable("AddressTypes", t =>
                         {
@@ -1240,8 +1252,6 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressTypeId");
-
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("DeletedById");
@@ -1255,6 +1265,8 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.HasIndex("Latitude", "Longitude");
 
                     b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "AddressTypeId");
 
                     b.ToTable("Addresses", t =>
                         {
@@ -1673,6 +1685,88 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Companies", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.CompanyCountry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId")
+                        .IsUnique()
+                        .HasFilter("[IsDefault] = 1 AND [IsDeleted] = 0");
+
+                    b.HasIndex("TenantId", "CompanyId", "CountryId")
+                        .IsUnique();
+
+                    b.ToTable("CompanyCountries", (string)null);
                 });
 
             modelBuilder.Entity("HrManagementSystem.Domain.Platform.EntityChangeLogs.Entities.EntityChangeLog", b =>
@@ -3004,19 +3098,26 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("DeletedById");
 
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities.Address", b =>
                 {
-                    b.HasOne("HrManagementSystem.Domain.GeographicalInformation.AddressTypes.Entities.AddressType", "AddressType")
-                        .WithMany("Addresses")
-                        .HasForeignKey("AddressTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("CreatedById")
@@ -3045,6 +3146,13 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId")
                         .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.GeographicalInformation.AddressTypes.Entities.AddressType", "AddressType")
+                        .WithMany("Addresses")
+                        .HasForeignKey("TenantId", "CompanyId", "AddressTypeId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -3139,6 +3247,44 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UpdatedById");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.CompanyCountry", b =>
+                {
+                    b.HasOne("HrManagementSystem.Domain.GeographicalInformation.Countries.Entities.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Domain.Platform.EntityChangeLogs.Entities.EntityChangeLog", b =>

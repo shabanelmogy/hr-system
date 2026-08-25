@@ -161,6 +161,39 @@ public sealed class TenantRoleIsolationTests
     }
 
     [Fact]
+    public async Task RoleService_RejectsPlatformGeographyClaimsWithoutRemovingExistingClaims()
+    {
+        await using var context = CreateContext("tenant-a");
+        var ownRole = CustomRole("tenant-a", "Approver", "role-own");
+        context.Add(ownRole);
+        context.RoleClaims.Add(RoleClaim(ownRole.Id, Permissions.ViewRoles));
+        await context.SaveChangesAsync();
+        using var roleManager = CreateRoleManager(context);
+        var service = new RoleService(
+            roleManager,
+            new RoleErrors(new EchoLocalizer<RoleRequest>()),
+            new NullRealtimeDispatcher(),
+            new TestCurrentActor("actor", "tenant-a"));
+
+        var result = await service.UpdateRoleClaims(
+            new RoleRequest(
+                ownRole.Id,
+                ownRole.Name!,
+                [new CheckBoxViewModel
+                {
+                    DisplayValue = Permissions.ViewCountries,
+                    IsSelected = true
+                }]),
+            default);
+
+        Assert.True(result.IsFailure);
+        Assert.Equal("Role.InvalidPermissions", result.Error.Code);
+        Assert.Contains(
+            await roleManager.GetClaimsAsync(ownRole),
+            claim => claim.Type == Permissions.Type && claim.Value == Permissions.ViewRoles);
+    }
+
+    [Fact]
     public async Task Jwt_IncludesSystemAndSelectedTenantRolesOnly_AndExcludesDeletedCustomRoleClaims()
     {
         await using var context = CreateContext("tenant-a");

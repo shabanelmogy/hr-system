@@ -78,24 +78,40 @@ const breadcrumbsByPath: Record<string, readonly BreadcrumbItem[]> = {
   [ROUTES.basicData.geographicalInformation]: [
     homeItem,
     basicDataItem,
-    { key: 'geographical-information', labelKey: 'navigation.geographicalInformation' },
+    { key: 'geographical-information', labelKey: 'navigation.globalGeography' },
   ],
   [ROUTES.basicData.countries]: [
     homeItem,
     basicDataItem,
-    { key: 'geographical-information', labelKey: 'navigation.geographicalInformation', route: ROUTES.basicData.geographicalInformation },
+    { key: 'geographical-information', labelKey: 'navigation.globalGeography', route: ROUTES.basicData.geographicalInformation },
     { key: 'countries', labelKey: 'countries.title' },
   ],
   [ROUTES.basicData.states]: [
     homeItem,
     basicDataItem,
-    { key: 'geographical-information', labelKey: 'navigation.geographicalInformation', route: ROUTES.basicData.geographicalInformation },
+    { key: 'geographical-information', labelKey: 'navigation.globalGeography', route: ROUTES.basicData.geographicalInformation },
     { key: 'states', labelKey: 'states.title' },
+  ],
+  [ROUTES.basicData.districts]: [
+    homeItem,
+    basicDataItem,
+    { key: 'geographical-information', labelKey: 'navigation.globalGeography', route: ROUTES.basicData.geographicalInformation },
+    { key: 'districts', labelKey: 'districts.title' },
   ],
   [ROUTES.basicData.organizationalStructure]: [
     homeItem,
     basicDataItem,
     { key: 'organizational-structure', labelKey: 'navigation.organizationalStructure' },
+  ],
+  [ROUTES.basicData.companyGeographicScope]: [
+    homeItem,
+    basicDataItem,
+    {
+      key: 'organizational-structure',
+      labelKey: 'navigation.organizationalStructure',
+      route: ROUTES.basicData.organizationalStructure,
+    },
+    { key: 'company-geographic-scope', labelKey: 'navigation.companyGeographicScope' },
   ],
   [ROUTES.extras.root]: [homeItem, extrasItem],
   [ROUTES.extras.files]: [

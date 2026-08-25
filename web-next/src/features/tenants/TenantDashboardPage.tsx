@@ -2,28 +2,36 @@
 
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import ApartmentIcon from "@mui/icons-material/Apartment";
+import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
+import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import BusinessIcon from "@mui/icons-material/Business";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import EventIcon from "@mui/icons-material/Event";
+import HistoryIcon from "@mui/icons-material/History";
 import PeopleIcon from "@mui/icons-material/People";
+import PublicIcon from "@mui/icons-material/Public";
+import ScheduleIcon from "@mui/icons-material/Schedule";
 import {
   Alert,
+  Avatar,
   Box,
   Button,
   Card,
   CardContent,
   Chip,
   CircularProgress,
-  Divider,
   LinearProgress,
   Stack,
   Typography,
+  alpha,
+  useTheme,
 } from "@mui/material";
 import { useMemo, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
 
-import { appRoutes } from "@/config/routes";
+import { appRoutes, type AppPath } from "@/config/routes";
+import { MetricCard, type MetricColor } from "@/shared/components/cards";
 import { ContentWrapper } from "@/shared/components/layout";
 import { PageHeader } from "@/shared/components/navigation/header";
 import {
@@ -34,6 +42,14 @@ import {
 import { useTenantsQuery } from "./useTenantsQuery";
 
 const EXPIRING_WINDOW_DAYS = 30;
+const dashboardListSx = {
+  height: "100%",
+  minHeight: 0,
+  overflowX: "hidden",
+  overflowY: "auto",
+  pe: 0.5,
+  scrollbarGutter: "stable",
+} as const;
 
 export default function TenantDashboardPage() {
   const { t, i18n } = useTranslation();
@@ -42,63 +58,135 @@ export default function TenantDashboardPage() {
   const summary = useMemo(() => summarizeTenants(tenants), [tenants]);
 
   return (
-    <ContentWrapper>
+    <ContentWrapper fillAvailable>
       <PageHeader
         title={t("superAdminDashboard.title")}
         subTitle={t("superAdminDashboard.subtitle")}
+        actions={(
+          <Stack
+            component="nav"
+            aria-label={t("superAdminDashboard.title")}
+            direction={{ xs: "column", sm: "row" }}
+            spacing={1.5}
+            sx={{ width: "100%" }}
+          >
+            <DashboardActionButton
+              color="info"
+              href={appRoutes.superAdmin.geography.countries}
+              icon={<PublicIcon fontSize="small" />}
+              label={t("menu.globalGeography")}
+            />
+            <DashboardActionButton
+              color="primary"
+              filled
+              href={appRoutes.superAdmin.tenants}
+              icon={<ApartmentIcon fontSize="small" />}
+              label={t("superAdminDashboard.manageTenants")}
+            />
+          </Stack>
+        )}
       />
 
       {tenantsQuery.isLoading ? (
-        <Box sx={{ display: "grid", minHeight: 280, placeItems: "center" }}>
+        <Box sx={{ display: "grid", flex: 1, minHeight: 0, placeItems: "center" }}>
           <CircularProgress />
         </Box>
       ) : tenantsQuery.isError ? (
         <Alert severity="error">{getErrorMessage(tenantsQuery.error)}</Alert>
       ) : (
-        <Stack spacing={3}>
+        <Box
+          sx={{
+            display: "grid",
+            flex: 1,
+            gap: 2,
+            gridTemplateRows: {
+              xs: "96px minmax(160px, 0.95fr) minmax(168px, 1fr)",
+              md: "96px minmax(170px, 0.9fr) minmax(180px, 1fr)",
+            },
+            minHeight: 0,
+            overflow: "hidden",
+          }}
+        >
           <Box
             sx={{
               display: "grid",
               gap: 2,
-              gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))",
+              gridTemplateColumns: {
+                xs: "repeat(6, minmax(150px, 1fr))",
+                md: "repeat(6, minmax(0, 1fr))",
+              },
               minWidth: 0,
+              overflowX: { xs: "auto", md: "hidden" },
+              overflowY: "hidden",
+              pb: { xs: 0.5, md: 0 },
+              scrollSnapType: { xs: "inline proximity", md: "none" },
             }}
           >
-            <SummaryCard
-              color="primary.main"
-              icon={<ApartmentIcon />}
-              label={t("superAdminDashboard.totalTenants")}
+            <MetricCard
+              color="primary"
+              compact
+              gradient
+              icon={ApartmentIcon}
+              showTrend={false}
+              size="small"
+              title={t("superAdminDashboard.totalTenants")}
               value={summary.totalTenants}
+              sx={{ height: "100%", minWidth: 0, scrollSnapAlign: "start" }}
             />
-            <SummaryCard
-              color="success.main"
-              icon={<CheckCircleIcon />}
-              label={t("superAdminDashboard.enabledTenants")}
+            <MetricCard
+              color="success"
+              compact
+              gradient
+              icon={CheckCircleIcon}
+              showTrend={false}
+              size="small"
+              title={t("superAdminDashboard.enabledTenants")}
               value={summary.enabledTenants}
+              sx={{ height: "100%", minWidth: 0, scrollSnapAlign: "start" }}
             />
-            <SummaryCard
-              color="secondary.main"
-              icon={<AdminPanelSettingsIcon />}
-              label={t("superAdminDashboard.totalAdmins")}
+            <MetricCard
+              color="secondary"
+              compact
+              gradient
+              icon={AdminPanelSettingsIcon}
+              showTrend={false}
+              size="small"
+              title={t("superAdminDashboard.totalAdmins")}
               value={summary.admins}
+              sx={{ height: "100%", minWidth: 0, scrollSnapAlign: "start" }}
             />
-            <SummaryCard
-              color="info.main"
-              icon={<PeopleIcon />}
-              label={t("superAdminDashboard.totalUsers")}
+            <MetricCard
+              color="info"
+              compact
+              gradient
+              icon={PeopleIcon}
+              showTrend={false}
+              size="small"
+              title={t("superAdminDashboard.totalUsers")}
               value={summary.users}
+              sx={{ height: "100%", minWidth: 0, scrollSnapAlign: "start" }}
             />
-            <SummaryCard
-              color="warning.main"
-              icon={<BusinessIcon />}
-              label={t("superAdminDashboard.totalCompanies")}
+            <MetricCard
+              color="warning"
+              compact
+              gradient
+              icon={BusinessIcon}
+              showTrend={false}
+              size="small"
+              title={t("superAdminDashboard.totalCompanies")}
               value={summary.companies}
+              sx={{ height: "100%", minWidth: 0, scrollSnapAlign: "start" }}
             />
-            <SummaryCard
-              color="error.main"
-              icon={<EventIcon />}
-              label={t("superAdminDashboard.expiringSoon")}
+            <MetricCard
+              color="error"
+              compact
+              gradient
+              icon={EventIcon}
+              showTrend={false}
+              size="small"
+              title={t("superAdminDashboard.expiringSoon")}
               value={summary.expiringSoon.length}
+              sx={{ height: "100%", minWidth: 0, scrollSnapAlign: "start" }}
             />
           </Box>
 
@@ -106,16 +194,21 @@ export default function TenantDashboardPage() {
             sx={{
               display: "grid",
               gap: 2,
-              gridTemplateColumns: { xs: "1fr", lg: "minmax(0, 1fr) minmax(0, 1fr)" },
+              gridTemplateColumns: { xs: "1fr", md: "minmax(0, 1fr) minmax(0, 1fr)" },
+              gridTemplateRows: { xs: "repeat(2, minmax(150px, 1fr))", md: "minmax(0, 1fr)" },
+              height: "100%",
               minWidth: 0,
+              minHeight: 0,
+              overflowY: { xs: "auto", md: "hidden" },
+              scrollbarGutter: { xs: "stable", md: "auto" },
             }}
           >
-            <Card variant="outlined">
-              <CardContent>
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                  {t("superAdminDashboard.accountCapacity")}
-                </Typography>
-                <Stack spacing={3} sx={{ mt: 2.5 }}>
+            <DashboardPanel
+              color="primary"
+              icon={<AutoGraphIcon fontSize="small" />}
+              title={t("superAdminDashboard.accountCapacity")}
+            >
+              <Stack spacing={2} sx={{ height: "100%", justifyContent: "center" }}>
                   <CapacityRow
                     label={t("tenantManagement.admins")}
                     limit={summary.maxAdmins}
@@ -126,64 +219,54 @@ export default function TenantDashboardPage() {
                     limit={summary.maxUsers}
                     used={summary.users}
                   />
-                </Stack>
-              </CardContent>
-            </Card>
+              </Stack>
+            </DashboardPanel>
 
-            <Card variant="outlined">
-              <CardContent>
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                  {t("superAdminDashboard.subscriptionOverview")}
-                </Typography>
-                <Stack divider={<Divider flexItem />} sx={{ mt: 1.5 }}>
-                  {subscriptionStatuses.map((status) => (
-                    <Stack
-                      key={status}
-                      direction="row"
-                      sx={{
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        py: 1,
-                      }}
-                    >
-                      <Chip
-                        color={getStatusColor(status)}
-                        label={t(`tenantManagement.statuses.${status}`)}
-                        size="small"
-                        variant="outlined"
-                      />
-                      <Typography sx={{ fontWeight: 800 }}>{summary.statusCounts[status]}</Typography>
-                    </Stack>
-                  ))}
-                </Stack>
-              </CardContent>
-            </Card>
+            <DashboardPanel
+              color="secondary"
+              icon={<EventIcon fontSize="small" />}
+              title={t("superAdminDashboard.subscriptionOverview")}
+            >
+              <SubscriptionOverview
+                counts={summary.statusCounts}
+                total={summary.totalTenants}
+              />
+            </DashboardPanel>
           </Box>
 
           <Box
             sx={{
               display: "grid",
               gap: 2,
-              gridTemplateColumns: { xs: "1fr", lg: "minmax(0, 1fr) minmax(0, 1fr)" },
+              gridTemplateColumns: { xs: "1fr", md: "minmax(0, 1fr) minmax(0, 1fr)" },
+              gridTemplateRows: { xs: "repeat(2, minmax(150px, 1fr))", md: "minmax(0, 1fr)" },
+              height: "100%",
               minWidth: 0,
+              minHeight: 0,
+              overflowY: { xs: "auto", md: "hidden" },
+              scrollbarGutter: { xs: "stable", md: "auto" },
             }}
           >
-            <Card variant="outlined">
-              <CardContent>
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                  {t("superAdminDashboard.expiringSubscriptions")}
-                </Typography>
-                {summary.expiringSoon.length ? (
-                  <Stack divider={<Divider flexItem />} sx={{ mt: 1.5 }}>
-                    {summary.expiringSoon.slice(0, 5).map((tenant) => (
+            <DashboardPanel
+              color="warning"
+              icon={<ScheduleIcon fontSize="small" />}
+              title={t("superAdminDashboard.expiringSubscriptions")}
+            >
+              {summary.expiringSoon.length ? (
+                  <Box sx={dashboardListSx}>
+                    {summary.expiringSoon.map((tenant) => (
                       <Stack
                         key={tenant.id}
                         direction="row"
                         sx={{
                           alignItems: "center",
+                          bgcolor: "action.hover",
+                          borderRadius: 2,
                           gap: 2,
                           justifyContent: "space-between",
-                          py: 1.25,
+                          mb: 0.75,
+                          px: 1.25,
+                          py: 1,
                         }}
                       >
                         <Box sx={{ minWidth: 0 }}>
@@ -204,31 +287,34 @@ export default function TenantDashboardPage() {
                         </Box>
                       </Stack>
                     ))}
-                  </Stack>
+                  </Box>
                 ) : (
-                  <Alert severity="success" sx={{ mt: 2 }}>
+                  <Alert severity="success" sx={{ mt: 1 }}>
                     {t("superAdminDashboard.noExpiringSubscriptions")}
                   </Alert>
-                )}
-              </CardContent>
-            </Card>
+              )}
+            </DashboardPanel>
 
-            <Card variant="outlined">
-              <CardContent>
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                  {t("superAdminDashboard.recentTenants")}
-                </Typography>
-                {summary.recentTenants.length ? (
-                  <Stack divider={<Divider flexItem />} sx={{ mt: 1.5 }}>
+            <DashboardPanel
+              color="info"
+              icon={<HistoryIcon fontSize="small" />}
+              title={t("superAdminDashboard.recentTenants")}
+            >
+              {summary.recentTenants.length ? (
+                  <Box sx={dashboardListSx}>
                     {summary.recentTenants.map((tenant) => (
                       <Stack
                         key={tenant.id}
                         direction="row"
                         sx={{
                           alignItems: "center",
+                          bgcolor: "action.hover",
+                          borderRadius: 2,
                           gap: 2,
                           justifyContent: "space-between",
-                          py: 1.25,
+                          mb: 0.75,
+                          px: 1.25,
+                          py: 1,
                         }}
                       >
                         <Box sx={{ minWidth: 0 }}>
@@ -244,63 +330,270 @@ export default function TenantDashboardPage() {
                         />
                       </Stack>
                     ))}
-                  </Stack>
+                  </Box>
                 ) : (
-                  <Typography color="text.secondary" sx={{ mt: 2 }}>
+                  <Typography color="text.secondary" sx={{ mt: 1 }}>
                     {t("superAdminDashboard.noTenants")}
                   </Typography>
-                )}
-              </CardContent>
-            </Card>
+              )}
+            </DashboardPanel>
           </Box>
-
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button component={Link} href={appRoutes.superAdmin.tenants} variant="contained">
-              {t("superAdminDashboard.manageTenants")}
-            </Button>
-          </Box>
-        </Stack>
+        </Box>
       )}
     </ContentWrapper>
   );
 }
 
-function SummaryCard({
+function DashboardActionButton({
   color,
+  filled = false,
+  href,
   icon,
   label,
-  value,
 }: {
-  color: string;
+  color: MetricColor;
+  filled?: boolean;
+  href: AppPath;
   icon: ReactNode;
-  label: string;
-  value: number;
+  label: ReactNode;
 }) {
+  const theme = useTheme();
+  const palette = theme.palette[color];
+  const foreground = filled ? palette.contrastText : palette.main;
+
   return (
-    <Card variant="outlined">
-      <CardContent>
-        <Stack direction="row" sx={{ alignItems: "center", gap: 1.5 }}>
-          <Box
+    <Button
+      color={color}
+      component={Link}
+      disableElevation
+      endIcon={(
+        <ArrowForwardRoundedIcon
+          fontSize="small"
+          sx={{ transform: theme.direction === "rtl" ? "rotate(180deg)" : undefined }}
+        />
+      )}
+      href={href}
+      startIcon={(
+        <Box
+          sx={{
+            alignItems: "center",
+            bgcolor: filled ? alpha(palette.contrastText, 0.16) : alpha(palette.main, 0.12),
+            borderRadius: 1.75,
+            color: foreground,
+            display: "flex",
+            height: 34,
+            justifyContent: "center",
+            width: 34,
+          }}
+        >
+          {icon}
+        </Box>
+      )}
+      variant={filled ? "contained" : "outlined"}
+      sx={{
+        background: filled
+          ? `linear-gradient(135deg, ${palette.dark}, ${palette.main})`
+          : `linear-gradient(135deg, ${alpha(palette.main, 0.1)}, ${alpha(
+              theme.palette.background.paper,
+              0.92,
+            )})`,
+        borderColor: alpha(palette.main, 0.45),
+        borderRadius: 2.5,
+        boxShadow: filled
+          ? `0 8px 22px ${alpha(palette.main, 0.24)}`
+          : `0 6px 18px ${alpha(palette.main, 0.1)}`,
+        color: foreground,
+        flex: 1,
+        fontWeight: 800,
+        gap: 1,
+        justifyContent: "flex-start",
+        minHeight: 54,
+        minWidth: { sm: 216 },
+        px: 1.25,
+        textTransform: "none",
+        transition: theme.transitions.create(["background", "border-color", "box-shadow", "transform"]),
+        whiteSpace: "nowrap",
+        width: { xs: "100%", sm: "auto" },
+        "& .MuiButton-startIcon": { m: 0 },
+        "& .MuiButton-endIcon": { marginInlineEnd: 0, marginInlineStart: "auto" },
+        "&:hover": {
+          background: filled
+            ? `linear-gradient(135deg, ${palette.main}, ${palette.light})`
+            : `linear-gradient(135deg, ${alpha(palette.main, 0.16)}, ${alpha(
+                theme.palette.background.paper,
+                0.98,
+              )})`,
+          borderColor: palette.main,
+          boxShadow: `0 10px 26px ${alpha(palette.main, filled ? 0.3 : 0.16)}`,
+          transform: "translateY(-2px)",
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          transition: "none",
+          "&:hover": { transform: "none" },
+        },
+      }}
+    >
+      {label}
+    </Button>
+  );
+}
+
+function DashboardPanel({
+  color,
+  children,
+  icon,
+  title,
+}: {
+  color: MetricColor;
+  children: ReactNode;
+  icon: ReactNode;
+  title: ReactNode;
+}) {
+  const theme = useTheme();
+  const palette = theme.palette[color];
+
+  return (
+    <Card
+      variant="outlined"
+      sx={{
+        background: `linear-gradient(145deg, ${alpha(palette.main, 0.075)}, ${alpha(
+          theme.palette.background.paper,
+          0.98,
+        )} 42%)`,
+        borderColor: alpha(palette.main, 0.2),
+        borderRadius: 3,
+        boxShadow: `0 10px 30px ${alpha(palette.main, 0.07)}`,
+        display: "flex",
+        minHeight: 0,
+        overflow: "hidden",
+      }}
+    >
+      <CardContent
+        sx={{
+          display: "flex",
+          flex: 1,
+          flexDirection: "column",
+          minHeight: 0,
+          p: 1.5,
+          "&:last-child": { pb: 1.5 },
+        }}
+      >
+        <Stack
+          direction="row"
+          sx={{ alignItems: "center", flexShrink: 0, gap: 1, minHeight: 34 }}
+        >
+          <Avatar
+            variant="rounded"
             sx={{
-              alignItems: "center",
-              bgcolor: "action.hover",
-              borderRadius: 2,
-              color,
-              display: "flex",
-              height: 44,
-              justifyContent: "center",
-              width: 44,
+              bgcolor: alpha(palette.main, 0.12),
+              color: palette.main,
+              height: 34,
+              width: 34,
             }}
           >
             {icon}
-          </Box>
-          <Box sx={{ minWidth: 0 }}>
-            <Typography color="text.secondary" noWrap variant="body2">{label}</Typography>
-            <Typography sx={{ fontWeight: 800 }} variant="h5">{value}</Typography>
-          </Box>
+          </Avatar>
+          <Typography noWrap sx={{ fontWeight: 800 }} variant="subtitle1">
+            {title}
+          </Typography>
         </Stack>
+        <Box sx={{ flex: 1, minHeight: 0, mt: 1 }}>{children}</Box>
       </CardContent>
     </Card>
+  );
+}
+
+function SubscriptionOverview({
+  counts,
+  total,
+}: {
+  counts: Record<SubscriptionStatus, number>;
+  total: number;
+}) {
+  const { t } = useTranslation();
+  const theme = useTheme();
+  const statusColor = (status: SubscriptionStatus) => {
+    const color = getStatusColor(status);
+    return color === "default" ? theme.palette.grey[500] : theme.palette[color].main;
+  };
+
+  return (
+    <Stack sx={{ height: "100%", justifyContent: "center", minHeight: 0 }} spacing={1}>
+      <Stack direction="row" sx={{ alignItems: "baseline", justifyContent: "space-between" }}>
+        <Typography color="text.secondary" variant="caption">
+          {t("superAdminDashboard.totalTenants")}
+        </Typography>
+        <Typography sx={{ fontWeight: 900 }} variant="h6">
+          {total}
+        </Typography>
+      </Stack>
+
+      <Box
+        aria-label={t("superAdminDashboard.subscriptionOverview")}
+        sx={{
+          bgcolor: "action.hover",
+          borderRadius: 999,
+          display: "flex",
+          height: 9,
+          overflow: "hidden",
+          width: "100%",
+        }}
+      >
+        {total > 0
+          ? subscriptionStatuses.map((status) => {
+              const count = counts[status];
+              return count > 0 ? (
+                <Box
+                  key={status}
+                  title={`${t(`tenantManagement.statuses.${status}`)}: ${count}`}
+                  sx={{ bgcolor: statusColor(status), flexGrow: count, minWidth: 3 }}
+                />
+              ) : null;
+            })
+          : null}
+      </Box>
+
+      <Box
+        sx={{
+          display: "grid",
+          gap: 0.65,
+          gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+          minWidth: 0,
+        }}
+      >
+        {subscriptionStatuses.map((status) => (
+          <Stack
+            key={status}
+            direction="row"
+            sx={{
+              alignItems: "center",
+              bgcolor: alpha(statusColor(status), 0.075),
+              borderRadius: 1.5,
+              gap: 0.75,
+              minWidth: 0,
+              px: 0.8,
+              py: 0.55,
+            }}
+          >
+            <Box
+              sx={{
+                bgcolor: statusColor(status),
+                borderRadius: "50%",
+                flexShrink: 0,
+                height: 7,
+                width: 7,
+              }}
+            />
+            <Typography noWrap sx={{ flex: 1, minWidth: 0 }} variant="caption">
+              {t(`tenantManagement.statuses.${status}`)}
+            </Typography>
+            <Typography sx={{ fontWeight: 900 }} variant="caption">
+              {counts[status]}
+            </Typography>
+          </Stack>
+        ))}
+      </Box>
+    </Stack>
   );
 }
 
@@ -309,7 +602,7 @@ function CapacityRow({ label, used, limit }: { label: string; used: number; limi
   const percent = limit > 0 ? Math.min(100, Math.round((used / limit) * 100)) : 0;
 
   return (
-    <Stack spacing={1}>
+    <Stack spacing={0.8} sx={{ bgcolor: "action.hover", borderRadius: 2, px: 1.25, py: 1 }}>
       <Stack direction="row" sx={{ gap: 2, justifyContent: "space-between" }}>
         <Typography sx={{ fontWeight: 700 }}>{label}</Typography>
         <Typography color="text.secondary" variant="body2">
@@ -318,6 +611,7 @@ function CapacityRow({ label, used, limit }: { label: string; used: number; limi
       </Stack>
       <LinearProgress
         color={percent >= 90 ? "warning" : "primary"}
+        sx={{ borderRadius: 999, height: 7 }}
         value={percent}
         variant="determinate"
       />
@@ -352,11 +646,9 @@ function summarizeTenants(tenants: TenantManagementResponse[]) {
       .sort((left, right) =>
         new Date(left.subscriptionEndsOn!).getTime() - new Date(right.subscriptionEndsOn!).getTime()
       ),
-    recentTenants: [...tenants]
-      .sort((left, right) =>
-        new Date(right.createdOn).getTime() - new Date(left.createdOn).getTime()
-      )
-      .slice(0, 5),
+    recentTenants: [...tenants].sort((left, right) =>
+      new Date(right.createdOn).getTime() - new Date(left.createdOn).getTime()
+    ),
   };
 }
 

@@ -9,7 +9,7 @@ namespace HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1;
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute2)]
 [ApiController]
-[TenantMember]
+[Authorize(Roles = AppRoles.super_admin)]
 public sealed class DistrictsController(ISender sender) : ControllerBase
 {
     [HttpGet]

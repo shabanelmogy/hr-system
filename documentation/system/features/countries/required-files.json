@@ -249,8 +249,8 @@
     {
       "id": "web-route",
       "layer": "web-next",
-      "path": "web-next/src/app/(main)/basic-data/(geographical-information)/countries/page.tsx",
-      "purpose": "Thin App Router entry"
+      "path": "web-next/src/app/(main)/super-admin/geography/countries/page.tsx",
+      "purpose": "Thin super-admin App Router entry"
     },
     {
       "id": "web-public-api",

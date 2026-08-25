@@ -24,7 +24,7 @@ public sealed class DistrictManagementChangedJob(
             request.Action,
             parameters,
             request.District?.Id.ToString(CultureInfo.InvariantCulture),
-            "/basic-data/districts",
+            "/super-admin/geography/districts",
             request.ActorUserId,
             request.OperationId);
         var result = await notificationPublisher.PublishToPermissionAsync(notification, cancellationToken);

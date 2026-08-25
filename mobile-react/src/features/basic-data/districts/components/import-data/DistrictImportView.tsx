@@ -42,8 +42,8 @@ export function DistrictImportView() {
   const { theme } = useAppTheme();
   const queryClient = useQueryClient();
   const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
-  const { allowed: canCreate } = useAuthorization({ requiredPermissions: [permissions.CreateDistricts] });
-  const { allowed: canViewStates } = useAuthorization({ requiredPermissions: [permissions.ViewStates] });
+  const { allowed: canCreate } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.CreateDistricts] });
+  const { allowed: canViewStates } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.ViewStates] });
   const states = useQuery({
     queryKey: stateKeys.lookup(),
     queryFn: () => stateApi.getLookup(),

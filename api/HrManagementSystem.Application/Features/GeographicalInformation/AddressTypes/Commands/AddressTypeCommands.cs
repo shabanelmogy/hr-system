@@ -17,6 +17,18 @@ public sealed record RestoreAddressTypeCommand(int Id) : ICommand<Result>;
 public sealed record BulkArchiveAddressTypesCommand(IReadOnlyList<int> Ids) : ICommand<Result<BulkArchiveAddressTypesResponse>>;
 public sealed record CreateAddressTypesCommand(IReadOnlyList<CreateAddressTypeRequest> AddressTypes) : ICommand<Result<CreateAddressTypesResponse>>;
 
+internal static class AddressTypeCompanyScope
+{
+    public static void Apply(AddressType addressType, ICurrentActor actor)
+    {
+        if (string.IsNullOrWhiteSpace(actor.TenantId) || actor.CompanyId is not > 0)
+            throw new InvalidOperationException("A tenant and company are required to create an Address Type.");
+
+        addressType.TenantId = actor.TenantId;
+        addressType.CompanyId = actor.CompanyId.Value;
+    }
+}
+
 public class AddressTypeMutationValidator<TMutation> : AbstractValidator<TMutation> where TMutation : AddressTypeMutation
 {
     public AddressTypeMutationValidator(IStringLocalizer<AddressTypeRequest> localizer)
@@ -53,10 +65,11 @@ public sealed class CreateAddressTypeCommandHandler(IAddressTypeWriteStore write
     public async Task<Result<AddressTypeDetailResponse>> Handle(CreateAddressTypeCommand request, CancellationToken cancellationToken)
     {
         var addressType = mapper.Map<AddressType>((AddressTypeMutation)request);
+        AddressTypeCompanyScope.Apply(addressType, actor);
         if (await writeStore.HasConflictAsync(addressType, null, cancellationToken)) return Result.Failure<AddressTypeDetailResponse>(errors.AddressTypeExists);
         writeStore.Add(addressType); await unitOfWork.SaveChangesAsync(cancellationToken);
         var response = await readStore.GetByIdAsync(addressType.Id, cancellationToken) ?? throw new InvalidOperationException("The newly created Address Type could not be read.");
-        scheduler.Schedule(new AddressTypeChange(response, "Add", null, actor.UserId, Guid.NewGuid()));
+        scheduler.Schedule(new AddressTypeChange(response, "Add", null, actor.UserId, addressType.TenantId, addressType.CompanyId, Guid.NewGuid()));
         return Result.Success(response);
     }
 }
@@ -66,9 +79,11 @@ public sealed class CreateAddressTypesCommandHandler(IAddressTypeWriteStore writ
     {
         if (request.AddressTypes.Count == 0) return Result.Failure<CreateAddressTypesResponse>(errors.NoAddressTypesProvided);
         var addressTypes = request.AddressTypes.Select(item => mapper.Map<AddressType>((AddressTypeMutation)item)).ToList();
+        foreach (var addressType in addressTypes) AddressTypeCompanyScope.Apply(addressType, actor);
         if (HasDuplicates(addressTypes.Select(item => item.NameAr)) || HasDuplicates(addressTypes.Select(item => item.NameEn)) || await writeStore.HasAnyConflictAsync(addressTypes, null, cancellationToken)) return Result.Failure<CreateAddressTypesResponse>(errors.AddressTypeExists);
         writeStore.AddRange(addressTypes); await unitOfWork.SaveChangesAsync(cancellationToken);
-        scheduler.Schedule(new AddressTypeChange(null, "BulkAdd", addressTypes.Count, actor.UserId, Guid.NewGuid()));
+        var scope = addressTypes[0];
+        scheduler.Schedule(new AddressTypeChange(null, "BulkAdd", addressTypes.Count, actor.UserId, scope.TenantId, scope.CompanyId, Guid.NewGuid()));
         return Result.Success(new CreateAddressTypesResponse(addressTypes.Count));
     }
     private static bool HasDuplicates(IEnumerable<string> values) => values.GroupBy(value => value.Trim(), StringComparer.OrdinalIgnoreCase).Any(group => group.Count() > 1);
@@ -85,7 +100,7 @@ public sealed class UpdateAddressTypeCommandHandler(IAddressTypeWriteStore write
             var updated = mapper.Map<AddressType>((AddressTypeMutation)request);
             if (await writeStore.HasConflictAsync(updated, existing.Id, token)) return Result.Failure<AddressTypeDetailResponse>(errors.AddressTypeExists);
             auditTrail.RecordUpdate(existing, updated); mapper.Map((AddressTypeMutation)request, existing); await unitOfWork.SaveChangesAsync(token);
-            var response = mapper.Map<AddressTypeDetailResponse>(existing); change = new AddressTypeChange(response, "Update", null, actor.UserId, Guid.NewGuid());
+            var response = mapper.Map<AddressTypeDetailResponse>(existing); change = new AddressTypeChange(response, "Update", null, actor.UserId, existing.TenantId, existing.CompanyId, Guid.NewGuid());
             return Result.Success(response);
         }, cancellationToken);
         if (change is not null) scheduler.Schedule(change); return result;
@@ -102,7 +117,7 @@ public sealed class ArchiveAddressTypeCommandHandler(IAddressTypeWriteStore writ
             if (addressType is null) return Result.Failure(errors.AddressTypeNotFound); if (addressType.IsDeleted) return Result.Success();
             if (await writeStore.HasActiveAddressesAsync(addressType.Id, token)) return Result.Failure(errors.AddressTypeInUseByAddress);
             addressType.IsDeleted = true; addressType.DeletedById = actor.UserId; addressType.DeletedByPc = Environment.MachineName; addressType.DeletedOn = timeProvider.GetUtcNow().UtcDateTime; await unitOfWork.SaveChangesAsync(token);
-            change = new AddressTypeChange(mapper.Map<AddressTypeDetailResponse>(addressType), "Archive", null, actor.UserId, Guid.NewGuid()); return Result.Success();
+            change = new AddressTypeChange(mapper.Map<AddressTypeDetailResponse>(addressType), "Archive", null, actor.UserId, addressType.TenantId, addressType.CompanyId, Guid.NewGuid()); return Result.Success();
         }, cancellationToken);
         if (change is not null) scheduler.Schedule(change); return result;
     }
@@ -117,7 +132,7 @@ public sealed class RestoreAddressTypeCommandHandler(IAddressTypeWriteStore writ
             var addressType = await writeStore.GetForUpdateAsync(request.Id, token);
             if (addressType is null) return Result.Failure(errors.AddressTypeNotFound); if (!addressType.IsDeleted) return Result.Success();
             addressType.IsDeleted = false; addressType.DeletedById = null; addressType.DeletedByPc = null; addressType.DeletedOn = null; await unitOfWork.SaveChangesAsync(token);
-            change = new AddressTypeChange(mapper.Map<AddressTypeDetailResponse>(addressType), "Restore", null, actor.UserId, Guid.NewGuid()); return Result.Success();
+            change = new AddressTypeChange(mapper.Map<AddressTypeDetailResponse>(addressType), "Restore", null, actor.UserId, addressType.TenantId, addressType.CompanyId, Guid.NewGuid()); return Result.Success();
         }, cancellationToken);
         if (change is not null) scheduler.Schedule(change); return result;
     }
@@ -135,7 +150,7 @@ public sealed class BulkArchiveAddressTypesCommandHandler(IAddressTypeWriteStore
             var active = addressTypes.Where(item => !item.IsDeleted).ToArray(); if (active.Length == 0) return Result.Success(new BulkArchiveAddressTypesResponse(0));
             if (await writeStore.HasActiveAddressesAsync(active.Select(item => item.Id).ToArray(), token)) return Result.Failure<BulkArchiveAddressTypesResponse>(errors.AddressTypeInUseByAddress);
             var deletedOn = timeProvider.GetUtcNow().UtcDateTime; foreach (var item in active) { item.IsDeleted = true; item.DeletedById = actor.UserId; item.DeletedByPc = Environment.MachineName; item.DeletedOn = deletedOn; }
-            await unitOfWork.SaveChangesAsync(token); change = new AddressTypeChange(null, "BulkArchive", active.Length, actor.UserId, Guid.NewGuid()); return Result.Success(new BulkArchiveAddressTypesResponse(active.Length));
+            await unitOfWork.SaveChangesAsync(token); change = new AddressTypeChange(null, "BulkArchive", active.Length, actor.UserId, active[0].TenantId, active[0].CompanyId, Guid.NewGuid()); return Result.Success(new BulkArchiveAddressTypesResponse(active.Length));
         }, cancellationToken);
         if (change is not null) scheduler.Schedule(change); return result;
     }

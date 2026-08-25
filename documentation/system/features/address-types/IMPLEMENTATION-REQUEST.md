@@ -6,8 +6,8 @@
 | --- | --- |
 | Feature | `Address Types` (`address-types`) |
 | Operating mode | Existing-feature refactor and mobile addition |
-| Applied reference | `countries` (flat global reference data) |
-| Request date | `2026-08-24` |
+| Applied reference | `countries` (flat-reference architecture baseline only) |
+| Request date | `2026-08-25` |
 | Review artifact | `documentation/system/features/address-types/ADDRESS_TYPES-REVIEW-ARTIFACTS.md` |
 | Required-file manifest | `documentation/system/features/address-types/required-files.json` at finalization |
 
@@ -23,16 +23,24 @@ dependent Address lifecycle, report dataset, and import format.
 
 | Concern | Decision |
 | --- | --- |
-| Ownership and scope | Global reference data. It is not tenant- or company-owned; authenticated active tenant membership remains required. |
-| Fields and relationships | Positive integer ID; required `nameAr` and `nameEn`, each trimmed, 2-100 allowed-script letters/spaces. One Address Type has many Addresses. Names are unique independently across all rows, including archived rows, case-insensitively in application checks and by existing database indexes. |
+| Ownership and scope | Company-owned business data. `TenantId` + `CompanyId` are automatic server scope; the active company admin manages the catalog with AddressTypes permissions. Client requests never provide `companyId`. |
+| Fields and relationships | Positive integer ID; required `nameAr` and `nameEn`, each trimmed, 2-100 allowed-script letters/spaces. One Address Type has many Addresses. Names are unique independently within a company, including archived rows; composite scope protects Address foreign keys. |
 | Permissions and read-only | `AddressTypes:View` for list/detail; `AddressTypes:Create` for create and Import; `AddressTypes:Edit` for active update; `AddressTypes:Delete` for archive, restore, and bulk archive. Clients hide controls and guard handlers; API and tenant-read-only policy are authoritative. |
 | List contract | One-based API page, zero-based UI. Page size 1-5000; web default 10 and mobile table/cards 5/3. Search max 200 over `all`, `nameAr`, `nameEn`; six operators; `status` active/archived/all defaults active; sort `nameEn`, `nameAr`, `createdOn`, default `createdOn desc`, then deterministic ID. |
-| Lifecycle | Soft archive only. Active Address references block archive. Restore is idempotent. Bulk archive accepts 1-100 distinct positive IDs and is atomic; already archived IDs contribute zero. Address Type mutations and active-address checks use one lifecycle lock. |
+| Lifecycle | Soft archive only. Active Address references block archive. Restore is idempotent. Bulk archive accepts 1-100 distinct positive IDs and is atomic; already archived IDs contribute zero. Address Type archive/checks and Address create/update/restore use one lifecycle lock, with the target type rechecked inside the atomic operation. |
 | Web views | Grid, Cards, Chart, Managed Crystal Report, and XLSX Import are Required. |
 | Mobile views | Table, Cards, Chart, Managed Crystal Report, and native XLSX Import are Required. |
 | Reporting | Required, Managed Crystal. Entity key `addresstypes`; `ReportData(AddressTypeId:int, AddressTypeAr:string, AddressTypeEn:string, AddressesCount:int)`. Filters only `NameAr`/`NameEn`; feature View plus Crystal `View`/`Run` ACL applies. |
 | Import | Required on both clients. Browser/native parse XLSX to typed JSON then atomically call the HR API bulk endpoint. |
-| Realtime and notifications | Resource `address-types`, actions Add/Update/Archive/Restore/BulkAdd/BulkArchive, audience `AddressTypes:View`, deep link `/basic-data/address-types`, localized plural notification. |
+| Realtime and notifications | Resource `address-types`, actions Add/Update/Archive/Restore/BulkAdd/BulkArchive, active-company `AddressTypes:View` audience, deep link `/basic-data/address-types`, localized plural notification. |
+
+Existing global rows are cloned to all existing companies by the migration. New
+companies start empty unless a future template-copy policy is introduced. Drain
+old Address Type Hangfire jobs before applying the migration, then re-login and
+switch active company after deployment. A future public Job Portal may reuse
+company candidate/person-address types only after the server resolves scope from
+the published job or portal slug; it never trusts a body/query `companyId`. Job
+locations remain Branch/Site/WorkLocation.
 
 ## Import contract
 

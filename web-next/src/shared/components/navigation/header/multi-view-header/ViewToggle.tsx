@@ -27,7 +27,6 @@ export default function ViewToggle(props: ViewToggleProps) {
         minWidth: 0,
         maxWidth: "100%",
         overflowX: props.compact ? "visible" : "auto",
-        scrollbarWidth: "thin",
         boxShadow: props.compact ? `0 1px 3px ${theme.palette.divider}` : undefined,
         "& .MuiToggleButton-root": {
           border: `1px solid ${theme.palette.divider}`,

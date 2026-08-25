@@ -28,9 +28,9 @@ describe('route access manifest', () => {
     expect(canAccessRoute('/administration/role-permissions/role-1', session)).toBe(true);
   });
 
-  it('protects the countries route with the countries view permission', () => {
+  it('reserves the global Countries catalog for super administrators', () => {
     expect(canAccessRoute(ROUTES.basicData.countries, userWith({
-      permissionClaims: [permissions.ViewCountries],
+      roles: [appRoles.superAdmin],
     }))).toBe(true);
     expect(canAccessRoute(ROUTES.basicData.countries, userWith())).toBe(false);
     expect(canAccessRoute(ROUTES.basicData.countries, userWith({
@@ -52,10 +52,44 @@ describe('route access manifest', () => {
     })).toBe('authorized');
   });
 
-  it('protects the States route with the States view permission', () => {
-    expect(canAccessRoute(ROUTES.basicData.states, userWith({ permissionClaims: [permissions.ViewStates] }))).toBe(true);
+  it('reserves States and Districts catalog routes for super administrators', () => {
+    const superAdmin = userWith({ roles: [appRoles.superAdmin] });
+
+    expect(canAccessRoute(ROUTES.basicData.states, superAdmin)).toBe(true);
+    expect(canAccessRoute(ROUTES.basicData.districts, superAdmin)).toBe(true);
     expect(canAccessRoute(ROUTES.basicData.states, userWith())).toBe(false);
     expect(canAccessRoute(ROUTES.basicData.states, userWith({ permissionClaims: [permissions.ViewCountries] }))).toBe(false);
+  });
+
+  it('allows tenant administrators to use operating countries but not the global catalog', () => {
+    const tenantAdmin = userWith({
+      roles: [appRoles.admin],
+      permissionClaims: [
+        permissions.ViewCompanyGeographicScope,
+        permissions.ManageCompanyGeographicScope,
+        permissions.ViewCountries,
+        permissions.ViewStates,
+        permissions.ViewDistricts,
+      ],
+    });
+
+    expect(canAccessRoute(ROUTES.basicData.companyGeographicScope, tenantAdmin)).toBe(true);
+    expect(canAccessRoute(ROUTES.basicData.organizationalStructure, tenantAdmin)).toBe(true);
+    expect(canAccessRoute(ROUTES.basicData.countries, tenantAdmin)).toBe(false);
+    expect(canAccessRoute(ROUTES.basicData.states, tenantAdmin)).toBe(false);
+    expect(canAccessRoute(ROUTES.basicData.districts, tenantAdmin)).toBe(false);
+  });
+
+  it('allows only the global geography branch of Basic Data for super administrators', () => {
+    const superAdmin = userWith({ roles: [appRoles.superAdmin] });
+
+    expect(canAccessRoute(ROUTES.basicData.root, superAdmin)).toBe(true);
+    expect(canAccessRoute(ROUTES.basicData.geographicalInformation, superAdmin)).toBe(true);
+    expect(canAccessRoute(ROUTES.basicData.organizationalStructure, superAdmin)).toBe(false);
+    expect(canAccessRoute(ROUTES.basicData.addressTypes, userWith({
+      roles: [appRoles.superAdmin],
+      permissionClaims: [permissions.ViewAddressTypes],
+    }))).toBe(false);
   });
 
   it('keeps super administrators outside tenant-owned modules', () => {

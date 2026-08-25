@@ -1,55 +1,73 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import AddIcon from "@mui/icons-material/Add";
-import ApartmentIcon from "@mui/icons-material/Apartment";
-import EditIcon from "@mui/icons-material/Edit";
 import {
   Alert,
   Box,
   Button,
-  Card,
-  CardActions,
-  CardContent,
-  Chip,
   CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   FormControlLabel,
-  Stack,
   Switch,
-  Typography,
 } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useEffect, useMemo, useState } from "react";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { MySelect, MyTextField } from "@/shared/components/forms";
 import { ContentWrapper } from "@/shared/components/layout";
-import { PageHeader } from "@/shared/components/navigation/header";
+import {
+  getLastServerListPage,
+  useServerListState,
+} from "@/shared/hooks/useServerListState";
+import TenantManagementMultiView from "./components/TenantManagementMultiView";
 import { tenantApi, tenantKeys } from "./tenantApi";
+import { toTenantPageQuery } from "./tenantPageQuery";
 import {
   createTenantValidationSchema,
   type TenantFormState,
 } from "./tenantValidation";
-import { useTenantsQuery } from "./useTenantsQuery";
+import { useTenantPage } from "./useTenantsQuery";
 import {
   subscriptionStatuses,
-  type SubscriptionStatus,
+  type TenantListFilters,
   type TenantManagementRequest,
   type TenantManagementResponse,
+  type TenantSortColumn,
 } from "./types";
 
+const defaultTenantFilters: TenantListFilters = { includeArchived: false };
+
 export default function TenantManagementPage() {
-  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [editing, setEditing] = useState<TenantManagementResponse | null>(null);
   const [form, setForm] = useState<TenantFormState | null>(null);
+  const list = useServerListState<TenantSortColumn, TenantListFilters>({
+    defaultColumn: "name",
+    defaultSortDirection: "ASC",
+    defaultFilters: defaultTenantFilters,
+    defaultPageSize: 10,
+  });
+  const pageQuery = useMemo(
+    () => toTenantPageQuery(list.state, list.debouncedSearchValue),
+    [list.debouncedSearchValue, list.state],
+  );
+  const tenantsQuery = useTenantPage(pageQuery);
+  const tenants = tenantsQuery.data?.items ?? [];
+  const totalCount = tenantsQuery.data?.metaData.totalCount ?? 0;
+  const currentPage = list.state.page;
+  const currentPageSize = list.state.pageSize;
+  const setListPage = list.setPage;
 
-  const tenantsQuery = useTenantsQuery();
+  useEffect(() => {
+    if (!tenantsQuery.data) return;
+    const lastPage = getLastServerListPage(totalCount, currentPageSize);
+    if (currentPage > lastPage) setListPage(lastPage);
+  }, [currentPage, currentPageSize, setListPage, tenantsQuery.data, totalCount]);
 
   const saveMutation = useMutation({
     mutationFn: ({ id, request }: { id: string | null; request: TenantManagementRequest }) =>
@@ -86,38 +104,28 @@ export default function TenantManagementPage() {
   };
 
   return (
-    <ContentWrapper>
-      <PageHeader
-        title={t("tenantManagement.title")}
-        subTitle={t("tenantManagement.subtitle")}
+    <ContentWrapper fillAvailable>
+      <TenantManagementMultiView
+        tenants={tenants}
+        loading={tenantsQuery.isLoading}
+        isFetching={tenantsQuery.isFetching || list.isSearchPending}
+        error={tenantsQuery.error}
+        page={list.state.page}
+        pageSize={list.state.pageSize}
+        totalCount={totalCount}
+        searchValue={list.state.searchValue}
+        sortColumn={list.state.columnName}
+        sortDirection={list.state.sortDirection}
+        onAdd={openCreate}
+        onEdit={openEdit}
+        onRefresh={() => void tenantsQuery.refetch()}
+        onRetry={() => void tenantsQuery.refetch()}
+        onPageChange={list.setPage}
+        onPageSizeChange={list.setPageSize}
+        onSearchChange={list.setSearchValue}
+        onSortChange={list.setSort}
+        onReset={list.reset}
       />
-
-      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
-        <Button variant="contained" startIcon={<AddIcon />} onClick={openCreate}>
-          {t("tenantManagement.addTenant")}
-        </Button>
-      </Box>
-
-      {tenantsQuery.isLoading ? (
-        <Box sx={{ display: "grid", placeItems: "center", minHeight: 240 }}>
-          <CircularProgress />
-        </Box>
-      ) : tenantsQuery.isError ? (
-        <Alert severity="error">{getErrorMessage(tenantsQuery.error)}</Alert>
-      ) : (
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: 2,
-            minWidth: 0,
-          }}
-        >
-          {tenantsQuery.data?.map((tenant) => (
-            <TenantCard key={tenant.id} tenant={tenant} onEdit={() => openEdit(tenant)} />
-          ))}
-        </Box>
-      )}
 
       {form ? (
         <TenantDialog
@@ -130,79 +138,6 @@ export default function TenantManagementPage() {
         />
       ) : null}
     </ContentWrapper>
-  );
-}
-
-function TenantCard({
-  tenant,
-  onEdit,
-}: {
-  tenant: TenantManagementResponse;
-  onEdit: () => void;
-}) {
-  const { t } = useTranslation();
-  return (
-    <Card variant="outlined" sx={{ minWidth: 0 }}>
-      <CardContent>
-        <Stack
-          direction="row"
-          sx={{ alignItems: "flex-start", gap: 2, justifyContent: "space-between" }}
-        >
-          <Stack direction="row" sx={{ alignItems: "center", gap: 1.5, minWidth: 0 }}>
-            <ApartmentIcon color="primary" />
-            <Box sx={{ minWidth: 0 }}>
-              <Typography variant="h6" noWrap>{tenant.name}</Typography>
-              <Typography variant="body2" color="text.secondary" noWrap>
-                {tenant.identifier}
-              </Typography>
-            </Box>
-          </Stack>
-          <Chip
-            size="small"
-            color={getStatusColor(tenant.subscriptionStatus)}
-            label={t(`tenantManagement.statuses.${tenant.subscriptionStatus}`)}
-          />
-        </Stack>
-
-        <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1.5, mt: 2 }}>
-          <Metric label={t("tenantManagement.admins")} value={`${tenant.adminCount}/${tenant.maxAdmins}`} />
-          <Metric label={t("tenantManagement.users")} value={`${tenant.userCount}/${tenant.maxUsers}`} />
-          <Metric label={t("tenantManagement.companies")} value={tenant.companyCount} />
-          <Metric label={t("tenantManagement.totalAccounts")} value={tenant.totalUserCount} />
-        </Box>
-
-        <Stack spacing={0.5} sx={{ mt: 2 }}>
-          <Typography variant="body2">
-            {t("tenantManagement.plan")}: {tenant.planName || t("tenantManagement.noPlan")}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {formatDate(tenant.subscriptionStartedOn)} - {tenant.subscriptionEndsOn
-              ? formatDate(tenant.subscriptionEndsOn)
-              : t("tenantManagement.noEndDate")}
-          </Typography>
-          <Chip
-            sx={{ alignSelf: "flex-start", mt: 0.5 }}
-            size="small"
-            color={tenant.isActive ? "success" : "default"}
-            label={tenant.isActive ? t("tenantManagement.enabled") : t("tenantManagement.disabled")}
-          />
-        </Stack>
-      </CardContent>
-      <CardActions sx={{ justifyContent: "flex-end" }}>
-        <Button startIcon={<EditIcon />} onClick={onEdit}>
-          {t("tenantManagement.edit")}
-        </Button>
-      </CardActions>
-    </Card>
-  );
-}
-
-function Metric({ label, value }: { label: string; value: string | number }) {
-  return (
-    <Box>
-      <Typography variant="caption" color="text.secondary">{label}</Typography>
-      <Typography variant="h6">{value}</Typography>
-    </Box>
   );
 }
 
@@ -240,7 +175,6 @@ function TenantDialog({
     control,
     handleSubmit,
     register,
-    watch,
     formState: { errors },
   } = useForm<TenantFormState>({
     defaultValues: form,
@@ -248,7 +182,7 @@ function TenantDialog({
     reValidateMode: "onChange",
     resolver: zodResolver(schema),
   });
-  const subscriptionStartedOn = watch("subscriptionStartedOn");
+  const subscriptionStartedOn = useWatch({ control, name: "subscriptionStartedOn" });
 
   return (
     <Dialog open fullWidth maxWidth="md" onClose={onClose}>
@@ -470,18 +404,6 @@ function toRequest(form: TenantFormState, rowVersion?: string): TenantManagement
     notes: optional(form.notes),
     rowVersion: rowVersion ?? null,
   };
-}
-
-function formatDate(value: string): string {
-  return new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(new Date(value));
-}
-
-function getStatusColor(status: SubscriptionStatus): "default" | "success" | "warning" | "error" | "info" {
-  if (status === "active") return "success";
-  if (status === "trial") return "info";
-  if (status === "pastDue") return "warning";
-  if (status === "suspended" || status === "expired" || status === "cancelled") return "error";
-  return "default";
 }
 
 function getErrorMessage(error: unknown): string {

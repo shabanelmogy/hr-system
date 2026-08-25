@@ -30,11 +30,13 @@ function sessionWithPermissions(userPermissions: readonly string[]): SessionClai
 describe("Basic Data navigation permissions", () => {
   it("keeps only permitted children", () => {
     const result = getAuthorizedBasicDataNavigation(
-      sessionWithPermissions([permissions.ViewStates]),
+      sessionWithPermissions([permissions.ViewCompanyGeographicScope]),
     );
 
     expect(result).toHaveLength(1);
-    expect(result[0]?.children?.map((item) => item.id)).toEqual(["states"]);
+    expect(result[0]?.children?.map((item) => item.id)).toEqual([
+      "company-geographic-scope",
+    ]);
   });
 
   it("removes groups that have no permitted children", () => {

@@ -26,7 +26,9 @@ export const arNavigationSettings = {
     hangfireDashboard: 'مهام الخلفية',
     overview: 'نظرة عامة',
     geographicalInformation: 'البيانات الجغرافية',
+    globalGeography: 'الجغرافيا العالمية',
     organizationalStructure: 'الهيكل التنظيمي',
+    companyGeographicScope: 'دول التشغيل',
   },
   settings: {
     title: 'الإعدادات',

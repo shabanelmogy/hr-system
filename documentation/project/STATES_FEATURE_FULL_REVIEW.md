@@ -6,7 +6,7 @@ Countries is the architectural reference; States owns its own country and distri
 
 ## 1. Scope and ownership
 
-States is geographical reference data owned by `GeographicalInformation/States` in the API, `basic-data/geographical-information/states` in Next.js, and `basic-data/states` in Expo. Its public routes are `/api/v1/states`, `/basic-data/states`, and `/basic-data/geographical-information/states`.
+States is global Platform geographical reference data owned by `GeographicalInformation/States` in the API and reused by both clients. Its public routes are `/api/v1/states`, `/super-admin/geography/states` in Next.js, and `/basic-data/geographical-information/states` in Expo's super-admin-only geography module.
 
 ## 2. Discovery evidence
 
@@ -17,6 +17,9 @@ The prior API and browser feature were legacy service/client-list implementation
 `State` requires Arabic name, English name, code, and a parent `CountryId`. Names are 2-100 language-constrained characters and code is 2-10 valid State-code characters. `(NameAr, CountryId)`, `(NameEn, CountryId)`, and `(Code, CountryId)` are unique. The parent country must be active for create, update, and restore. A State with an active District cannot be archived. Country-dependent State writes share transaction-owned Country lifecycle resources with Country archive; State archive and District create/update/restore share State lifecycle resources. Districts are State-owned dependents; they are not copied from Countries.
 
 ## 4. Lifecycle and authorization
+
+Every endpoint first requires `super_admin`; action permissions then control view,
+create, edit, archive, restore, bulk actions, and Import.
 
 View, create, edit, and archive use `States:View`, `States:Create`, `States:Edit`, and `States:Delete`. Create and edit apply only to active records. Archive is idempotent but validates active District dependencies inside the shared State lock. Restore uses Delete permission and requires the parent Country to remain active inside the shared Country lock. Bulk archive accepts 1-100 distinct positive IDs, fails atomically for missing records or active Districts, and emits one post-commit change. Web selection rejects more than 100 eligible IDs with localized feedback and the direct handler rechecks the bound. Web XLSX import uses `States:Create` against `POST /api/v1/states/bulk` with the exact `{ "states": [...] }` envelope and also requires `Countries:View` for its active parent lookup. The import submit callback independently enforces read-only and `States:Create`; lookup authorization remains a separate requirement. The lookup's loading, empty, forbidden, and error states block submission instead of becoming false unknown-Country failures. The shared parser enforces XLSX MIME/extension/container, 5 MiB, first worksheet, canonical ordered headers, no formulas/unexpected columns, non-empty data, and at most 100 non-empty rows before mapping. Rows that fail local validation stay unsubmitted, and valid rows persist atomically under one `BulkAdd` change. Arabic name, English name, and code duplicates are checked independently and case-insensitively within each Country; equal text in different fields is allowed. The bulk route has no idempotency key, so ambiguous submissions lock retry and reconcile through the refreshed list. Mobile Import is Excluded by the current platform profile.
 
@@ -34,7 +37,10 @@ Next.js uses one `useServerListState` criteria controller plus the shared adapti
 
 ## 8. Realtime, localization, RTL, and accessibility
 
-The State change job schedules only after persistence succeeds, sends the `states` realtime resource, and uses `/basic-data/states` notification actions. Bulk create/archive select plural English/Arabic notification keys, while singular archive has its own localized key. Both clients invalidate the States prefix and the Expo notification mapper resolves the deep link to the States route. English and Arabic messages cover fields, validation, filters, lifecycle, empty/error/retry, report scope, and accessibility labels. Shared direction-aware layouts, safe areas, responsive cards, dialogs, tables, and labeled icon actions are used throughout.
+The canonical browser notification action is `/super-admin/geography/states`;
+Expo maps that Platform action to its guarded native States route.
+
+The State change job schedules only after persistence succeeds, sends the `states` realtime resource, and uses `/super-admin/geography/states` notification actions. Bulk create/archive select plural English/Arabic notification keys, while singular archive has its own localized key. Both clients invalidate the States prefix and the Expo notification mapper resolves the Platform deep link to the guarded native States route. English and Arabic messages cover fields, validation, filters, lifecycle, empty/error/retry, report scope, and accessibility labels. Shared direction-aware layouts, safe areas, responsive cards, dialogs, tables, and labeled icon actions are used throughout.
 
 ## 9. State-specific report decision
 

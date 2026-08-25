@@ -44,13 +44,13 @@ realtime, notification, localization, report, or Import integration is reachable
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | master | 4 | `a9c88864fafde572fc0ffc1502f1a5ccb2fc55fdbd77aefe2c54c33d143b9529` |
-| master | 5 | `2cdbe8144a3a162b37b15d5ab908390ccf64c964ac18cc1808813d84d45fc994` |
+| master | 5 | `bc5395fc0e8362797211912f6e6b9fa911c2e97797953a9effe73f2adff5a228` |
 | master | 6 | `b7fb453c6be690cf10f98e85664f30fb55fb590e628b0f8a0435f54cf67058ac` |
 | master | 7 | `8c0ba157ab3e6ca7bfa97bd23bdd022523f69dc7ac4386e25462b7ad667ba74b` |
 | master | 9 | `abba6bf0a3940b1b8b716d85be4964c054059387ffe9897256bd60f0093d141d` |
-| api | 8 | `19ba24881ed075978da2d89d9f5d6ac913ca8289d14d251464edfd93ab1e8c12` |
-| api | 9 | `d573f11dbd27c997e0f25cadcdbfb27a171809b7cd3ac088a355154f6c9c0105` |
-| api | 10 | `227e13a27928f6d22c69cfa2b190b987539127edff9229588fc481c425639ef3` |
+| api | 8 | `6ba0561bbba0e93a7ce34482ec27b468c6d56b5255c755acb11d8b29f74bb994` |
+| api | 9 | `c1c6f745e49d895fa7a91d52fd3616c3c0010c46c00cd5c472f2c7e65f1791d3` |
+| api | 10 | `4a41ffbc7aa486b4e9401a2ede459b9e1a905fa44b64c4fa765bc431341b8f84` |
 | web | 8 | `43a7e4cb95554e828d56afdc3c933a1b1f224531dc5829a1c6d0b31e25f632fe` |
 | web | 10 | `dfca66fe993ca501dfd506da6673879ea9c49d5f9fa8fcd1050486f4346ffaeb` |
 | web | 13 | `3a78555f943e8934b512813fb738bb774d429bbc68dff3ad58a9da46199f55fc` |

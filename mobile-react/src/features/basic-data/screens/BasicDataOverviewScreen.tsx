@@ -16,7 +16,7 @@ export function BasicDataOverviewScreen() {
 
   const sections = [
     {
-      title: t('navigation.geographicalInformation'),
+      title: t('navigation.globalGeography'),
       description: t('basicData.geographicalDescription'),
       icon: 'earth-outline' as const,
       route: ROUTES.basicData.geographicalInformation,
