@@ -124,6 +124,11 @@ export const permissions = {
   AccessChat: "Chat:Access",
   ModerateChat: "Chat:Moderate",
   ViewChatAnalytics: "Chat:ViewAnalytics",
+  ViewAttendanceDevices: "AttendanceDevices:View",
+  ManageAttendanceDevices: "AttendanceDevices:Manage",
+  ManageAttendanceDeviceCredentials: "AttendanceDevices:Credentials",
+  PullAttendanceDevices: "AttendanceDevices:Pull",
+  ViewAttendanceDeviceRaw: "AttendanceDevices:ViewRaw",
 } as const;
 
 export type PermissionString =
@@ -163,7 +168,8 @@ export type PermissionModule =
   | "ChatUsers"
   | "Conversations"
   | "Messages"
-  | "Chat";
+  | "Chat"
+  | "AttendanceDevices";
 
 export const getAllPermissions = (): PermissionString[] =>
   Object.values(permissions);

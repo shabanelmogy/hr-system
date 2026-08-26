@@ -853,6 +853,651 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.ToTable("Appointments");
                 });
 
+            modelBuilder.Entity("HrManagementSystem.Domain.Attendance.Devices.Entities.AttendanceAgent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastSeenAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("SecretHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("SecretPrefix")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("SecretHash")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "NormalizedName")
+                        .IsUnique();
+
+                    b.ToTable("AttendanceAgents", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Attendance.Devices.Entities.AttendanceDevice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid?>("AttendanceAgentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConnectionMode")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Host")
+                        .IsRequired()
+                        .HasMaxLength(253)
+                        .HasColumnType("nvarchar(253)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastPullAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastSeenAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<int>("Port")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProviderId")
+                        .IsRequired()
+                        .HasMaxLength(48)
+                        .HasColumnType("nvarchar(48)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("TimeZoneId")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "AttendanceAgentId");
+
+                    b.HasIndex("TenantId", "CompanyId", "BranchId");
+
+                    b.HasIndex("TenantId", "CompanyId", "Enabled");
+
+                    b.HasIndex("TenantId", "CompanyId", "NormalizedName")
+                        .IsUnique();
+
+                    b.ToTable("AttendanceDevices", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Attendance.Devices.Entities.DeviceCredential", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AttendanceDeviceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProtectedPayload")
+                        .IsRequired()
+                        .HasMaxLength(16000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "AttendanceDeviceId")
+                        .IsUnique();
+
+                    b.ToTable("AttendanceDeviceCredentials", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Attendance.Devices.Entities.DevicePullRun", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("AttemptCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AttendanceDeviceId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ClaimedByAttendanceAgentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DuplicateCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ErrorCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("FinishedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FromUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("InsertedCount")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LeaseExpiresAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("OperationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("OperationType")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<int>("ReadCount")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("SafeError")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("SkippedCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(24)
+                        .HasColumnType("nvarchar(24)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<DateTime?>("ToUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "AttendanceDeviceId", "OperationId")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "ClaimedByAttendanceAgentId", "LeaseExpiresAtUtc");
+
+                    b.HasIndex("TenantId", "CompanyId", "Status", "StartedAtUtc");
+
+                    b.ToTable("DevicePullRuns", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Attendance.Devices.Entities.RawAttendancePunch", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("AttendanceDeviceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ExternalCode")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("IdempotencyKey")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int>("InOutMode")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime>("OccurredAtDeviceLocal")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("OccurredAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProviderEventId")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime>("PulledAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("SafeRawPayload")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("VerifyMode")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkCode")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "AttendanceDeviceId", "IdempotencyKey")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "AttendanceDeviceId", "OccurredAtUtc");
+
+                    b.ToTable("RawAttendancePunches", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Attendance.Devices.Entities.RawDeviceUser", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("AttendanceDeviceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ExternalCode")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime>("PulledAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("SafeRawPayload")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "AttendanceDeviceId", "ExternalCode")
+                        .IsUnique();
+
+                    b.ToTable("RawDeviceUsers", (string)null);
+                });
+
             modelBuilder.Entity("HrManagementSystem.Domain.Catalog.Categories.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -1551,6 +2196,124 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         {
                             t.HasCheckConstraint("CHK_State_NameEn_EnglishOnly", "[NameEn] NOT LIKE '%[^A-Za-z ]%'");
                         });
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Branch", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BranchCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateOnly?>("ClosedOn")
+                        .HasColumnType("date");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(254)
+                        .HasColumnType("nvarchar(254)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsHeadquarters")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NameAr")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateOnly>("OpenedOn")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("TimeZoneId")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "BranchCode")
+                        .IsUnique();
+
+                    b.ToTable("Branches", (string)null);
                 });
 
             modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", b =>
@@ -2994,6 +3757,238 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HrManagementSystem.Domain.Attendance.Devices.Entities.AttendanceAgent", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Attendance.Devices.Entities.AttendanceDevice", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.Attendance.Devices.Entities.AttendanceAgent", "AttendanceAgent")
+                        .WithMany("Devices")
+                        .HasForeignKey("TenantId", "CompanyId", "AttendanceAgentId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId", "BranchId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("AttendanceAgent");
+
+                    b.Navigation("Branch");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Attendance.Devices.Entities.DeviceCredential", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.Attendance.Devices.Entities.AttendanceDevice", "AttendanceDevice")
+                        .WithOne("Credential")
+                        .HasForeignKey("HrManagementSystem.Domain.Attendance.Devices.Entities.DeviceCredential", "TenantId", "CompanyId", "AttendanceDeviceId")
+                        .HasPrincipalKey("HrManagementSystem.Domain.Attendance.Devices.Entities.AttendanceDevice", "TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AttendanceDevice");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Attendance.Devices.Entities.DevicePullRun", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.Attendance.Devices.Entities.AttendanceDevice", "AttendanceDevice")
+                        .WithMany("PullRuns")
+                        .HasForeignKey("TenantId", "CompanyId", "AttendanceDeviceId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AttendanceDevice");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Attendance.Devices.Entities.RawAttendancePunch", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.Attendance.Devices.Entities.AttendanceDevice", "AttendanceDevice")
+                        .WithMany("RawPunches")
+                        .HasForeignKey("TenantId", "CompanyId", "AttendanceDeviceId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AttendanceDevice");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Attendance.Devices.Entities.RawDeviceUser", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.Attendance.Devices.Entities.AttendanceDevice", "AttendanceDevice")
+                        .WithMany("RawUsers")
+                        .HasForeignKey("TenantId", "CompanyId", "AttendanceDeviceId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AttendanceDevice");
+                });
+
             modelBuilder.Entity("HrManagementSystem.Domain.Catalog.Categories.Entities.Category", b =>
                 {
                     b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
@@ -3224,6 +4219,36 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasForeignKey("UpdatedById");
 
                     b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Branch", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", b =>
@@ -3626,6 +4651,22 @@ namespace HrManagementSystem.Infrastructure.Migrations
             modelBuilder.Entity("HrManagementSystem.Domain.Analytics.Reports.Entities.ReportMaster", b =>
                 {
                     b.Navigation("ReportDetails");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Attendance.Devices.Entities.AttendanceAgent", b =>
+                {
+                    b.Navigation("Devices");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.Attendance.Devices.Entities.AttendanceDevice", b =>
+                {
+                    b.Navigation("Credential");
+
+                    b.Navigation("PullRuns");
+
+                    b.Navigation("RawPunches");
+
+                    b.Navigation("RawUsers");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Domain.Catalog.Categories.Entities.Category", b =>

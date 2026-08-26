@@ -369,3 +369,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Deployment artifact; stage it after `dotnet publish` with scripts/Build-AttendanceAgentDownload.ps1.
+artifacts/attendance-agent/*.zip
+artifacts/api-publish/

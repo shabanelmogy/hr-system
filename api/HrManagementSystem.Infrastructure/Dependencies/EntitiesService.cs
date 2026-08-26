@@ -26,6 +26,11 @@ using HrManagementSystem.Infrastructure.Features.Analytics.CrystalReports.Securi
 using HrManagementSystem.Infrastructure.Features.Analytics.CrystalReports.Storage;
 using HrManagementSystem.Application.Features.OrganizationalStructure.CompanyGeographicScope.Abstractions;
 using HrManagementSystem.Infrastructure.Features.OrganizationalStructure.CompanyGeographicScope.Persistence;
+using HrManagementSystem.Application.Features.Attendance.Devices.Contracts;
+using HrManagementSystem.Application.Features.Attendance.Devices.Commands;
+using HrManagementSystem.Infrastructure.Features.Attendance.Devices.Services;
+using HrManagementSystem.Infrastructure.Features.Attendance.Devices.Persistence;
+using HrManagementSystem.Infrastructure.Features.Attendance.Devices.Jobs;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
@@ -43,6 +48,17 @@ public static class EntitiesService
         services.AddScoped<ICrystalReportDataSource, CrystalReportDataSource>();
         services.AddScoped<ICurrentPermissionChecker, CurrentPermissionChecker>();
         services.AddScoped<ICompanyGeographicScopeStore, CompanyGeographicScopeStore>();
+        services.AddScoped<IAttendanceCredentialProtector, AttendanceDeviceCredentialProtector>();
+        services.AddScoped<IAttendanceAgentAuthenticator, AttendanceAgentAuthenticator>();
+        services.AddSingleton<IAttendanceAgentInstallationSettings, AttendanceAgentInstallationSettings>();
+        services.AddScoped<IAttendanceNetworkPolicy, AttendanceNetworkPolicy>();
+        services.AddScoped<AttendanceDeviceEffects>();
+        services.AddScoped<AttendanceDeviceStore>();
+        services.AddScoped<IAttendanceDeviceReadStore>(provider => provider.GetRequiredService<AttendanceDeviceStore>());
+        services.AddScoped<IAttendanceDeviceWriteStore>(provider => provider.GetRequiredService<AttendanceDeviceStore>());
+        services.AddScoped<IAttendanceRawStore, AttendanceRawStore>();
+        services.AddScoped<IAttendancePullScheduler, AttendancePullScheduler>();
+        services.AddScoped<AttendancePullJob>();
         services.AddScoped<RealtimeEntityChangedJob>();
         services.AddScoped<CountryChangedJob>();
         services.AddScoped<ICountryReadStore, CountryReadStore>();

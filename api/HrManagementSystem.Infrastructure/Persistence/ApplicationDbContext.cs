@@ -22,6 +22,7 @@ using HrManagementSystem.Domain.Platform.EntityChangeLogs.Entities;
 using HrManagementSystem.Domain.Platform.Files.Entities;
 using HrManagementSystem.Domain.Platform.SecurityAudits.Entities;
 using HrManagementSystem.Domain.Security.ApiKeys.Entities;
+using HrManagementSystem.Domain.Attendance.Devices.Entities;
 using HrManagementSystem.Domain.Security.Users.Enums;
 using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
 
@@ -68,6 +69,13 @@ public class ApplicationDbContext(
     public DbSet<AuthenticationSelectionChallenge> AuthenticationSelectionChallenges { get; set; }
     public DbSet<UserInvitation> UserInvitations { get; set; }
     public DbSet<SecurityAuditEvent> SecurityAuditEvents { get; set; }
+    public DbSet<AttendanceDevice> AttendanceDevices { get; set; }
+    public DbSet<AttendanceAgent> AttendanceAgents { get; set; }
+    public DbSet<Branch> Branches { get; set; }
+    public DbSet<DeviceCredential> AttendanceDeviceCredentials { get; set; }
+    public DbSet<RawDeviceUser> RawDeviceUsers { get; set; }
+    public DbSet<RawAttendancePunch> RawAttendancePunches { get; set; }
+    public DbSet<DevicePullRun> DevicePullRuns { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -87,7 +95,6 @@ public class ApplicationDbContext(
 
     private static void IgnoreUnpersistedOrganizationalEntities(ModelBuilder modelBuilder)
     {
-        modelBuilder.Ignore<Branch>();
         modelBuilder.Ignore<Department>();
         modelBuilder.Ignore<Division>();
         modelBuilder.Ignore<JobTitle>();

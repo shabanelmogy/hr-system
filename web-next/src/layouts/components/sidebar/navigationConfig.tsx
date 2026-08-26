@@ -3,6 +3,7 @@ import { getAdvancedToolsConfig } from "./configs/advancedToolsConfig";
 import { getBasicDataConfig } from "./configs/basicDataConfig";
 import { getUsersAndRolesConfig } from "./configs/usersAndRolesConfig";
 import { getSuperAdminConfig } from "./configs/superAdminConfig";
+import { getAttendanceConfig } from "./configs/attendanceConfig";
 import { filterNavigationConfig } from "./navigationUtils";
 
 // Import types and enums from separate file
@@ -24,6 +25,7 @@ export const getNavigationConfig = (
     ? [getSuperAdminConfig()]
     : [
         getBasicDataConfig(),
+        getAttendanceConfig(),
         getExtrasConfig(),
         getUsersAndRolesConfig(),
         getAdvancedToolsConfig(),

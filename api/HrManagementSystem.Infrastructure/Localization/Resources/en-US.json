@@ -277,5 +277,22 @@
     "CompanyCountriesLimitExceeded": "No more than 100 operating countries can be selected",
     "CompanyCountryIdsMustBeDistinct": "Operating country IDs must be distinct",
     "CompanyCountryIdsMustBePositive": "Operating country IDs must be positive",
-    "CompanyDefaultCountryMustBeSelected": "The default operating country must be selected"
+    "CompanyDefaultCountryMustBeSelected": "The default operating country must be selected",
+    "AttendanceDeviceNotFound": "The attendance device was not found",
+    "AttendanceDeviceDuplicate": "A device with this name already exists for the current company",
+    "AttendanceDeviceBusy": "The device cannot be changed while a pull is in progress",
+    "AttendanceDeviceDisabled": "The device is disabled",
+    "AttendanceDeviceInvalidBranch": "Select an active branch that belongs to the current company",
+    "AttendanceDeviceInvalidAgent": "Select an active attendance site agent that belongs to the current company",
+    "AttendanceDeviceAgentExists": "An attendance site agent with this name already exists",
+    "AttendanceDeviceUntrustedHost": "The device address or port is not approved for this environment",
+    "AttendanceDeviceScopeRequired": "Select a tenant and company before managing attendance devices",
+    "AttendanceDeviceCredentialUnavailable": "The saved device credential cannot be used",
+    "AttendanceDeviceProviderUnavailable": "This device provider is not installed or configured",
+    "AttendanceDeviceOperationConflict": "This operation identifier was already used for a different pull",
+    "AttendanceDeviceAgentLease": "This work item is no longer leased to the attendance site agent",
+    "AttendanceDeviceInvalidRequest": "Enter valid device connection information",
+    "AttendanceDeviceInvalidTimeZone": "Select a valid device time zone",
+    "AttendanceDeviceInvalidCredentials": "ZKTeco requires a non-negative numeric communication key only",
+    "AttendanceDeviceInvalidRange": "The date range must be valid UTC values with From before To"
 }

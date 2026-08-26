@@ -280,5 +280,22 @@
     "CompanyCountriesLimitExceeded": "لا يمكن اختيار أكثر من 100 دولة تشغيل",
     "CompanyCountryIdsMustBeDistinct": "يجب ألا تتكرر معرفات دول التشغيل",
     "CompanyCountryIdsMustBePositive": "يجب أن تكون معرفات دول التشغيل أرقامًا موجبة",
-    "CompanyDefaultCountryMustBeSelected": "يجب أن تكون دولة التشغيل الافتراضية ضمن الدول المختارة"
+    "CompanyDefaultCountryMustBeSelected": "يجب أن تكون دولة التشغيل الافتراضية ضمن الدول المختارة",
+    "AttendanceDeviceNotFound": "لم يتم العثور على جهاز الحضور",
+    "AttendanceDeviceDuplicate": "يوجد جهاز بهذا الاسم داخل الشركة الحالية",
+    "AttendanceDeviceBusy": "لا يمكن تعديل الجهاز أثناء تنفيذ عملية سحب",
+    "AttendanceDeviceDisabled": "الجهاز معطّل",
+    "AttendanceDeviceInvalidBranch": "اختر فرعًا نشطًا تابعًا للشركة الحالية",
+    "AttendanceDeviceInvalidAgent": "اختر وكيل موقع حضور نشطًا تابعًا للشركة الحالية",
+    "AttendanceDeviceAgentExists": "يوجد وكيل موقع حضور بنفس الاسم بالفعل",
+    "AttendanceDeviceUntrustedHost": "عنوان الجهاز أو منفذه غير مسموح به في هذه البيئة",
+    "AttendanceDeviceScopeRequired": "اختر Tenant وشركة قبل إدارة أجهزة الحضور",
+    "AttendanceDeviceCredentialUnavailable": "لا يمكن استخدام بيانات اعتماد الجهاز المحفوظة",
+    "AttendanceDeviceProviderUnavailable": "موفر الجهاز غير مثبت أو غير مهيأ",
+    "AttendanceDeviceOperationConflict": "تم استخدام معرّف العملية لطلب سحب مختلف",
+    "AttendanceDeviceAgentLease": "لم تعد مهمة السحب مؤجرة لوكيل موقع الحضور",
+    "AttendanceDeviceInvalidRequest": "أدخل بيانات اتصال جهاز صحيحة",
+    "AttendanceDeviceInvalidTimeZone": "اختر منطقة زمنية صحيحة للجهاز",
+    "AttendanceDeviceInvalidCredentials": "يتطلب ZKTeco مفتاح اتصال رقميًا غير سالب فقط",
+    "AttendanceDeviceInvalidRange": "يجب أن تكون الفترة قيم UTC صحيحة وأن يكون من قبل إلى"
 }

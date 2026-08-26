@@ -9,12 +9,9 @@ import {
 import {
   Button,
   FormControlLabel,
-  InputAdornment,
   Stack,
   Switch,
 } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
@@ -25,7 +22,7 @@ import {
   useWatch,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { MyForm, MyTextField } from "@/shared/components/forms";
+import { MyDateTimeField, MyForm, MyTextField } from "@/shared/components/forms";
 import type { AppointmentFormData } from "../../types/appointment";
 import { getAppointmentValidationSchema } from "../../validation/appointmentValidation";
 import AppointmentDeleteDialog from "./AppointmentDeleteDialog";
@@ -241,51 +238,27 @@ function AppointmentDateField({
   error,
   icon,
 }: AppointmentDateFieldProps) {
-  const textFieldProps = {
-    fullWidth: true,
-    size: "small" as const,
-    required: true,
-    error: Boolean(error),
-    helperText: error ?? " ",
-    slotProps: {
-      htmlInput: {
-        "aria-required": true,
-        "aria-invalid": Boolean(error),
-      },
-      input: {
-        startAdornment: <InputAdornment position="start">{icon}</InputAdornment>,
-      },
-    },
-  };
-
   return (
     <Controller
       name={name}
       control={control}
-      render={({ field }) =>
-        isAllDay ? (
-          <DatePicker
-            label={label}
-            value={field.value ? dayjs(field.value) : null}
-            onChange={(value) => field.onChange(value?.format("YYYY-MM-DD") ?? "")}
-            disabled={loading}
-            minDate={allowPast ? undefined : dayjs().startOf("day")}
-            format="DD/MM/YYYY"
-            slotProps={{ textField: textFieldProps }}
-          />
-        ) : (
-          <DateTimePicker
-            label={label}
-            value={field.value ? dayjs(field.value) : null}
-            onChange={(value) => field.onChange(value?.toISOString() ?? "")}
-            disabled={loading}
-            minDateTime={allowPast ? undefined : dayjs()}
-            ampm={false}
-            format="DD/MM/YYYY HH:mm"
-            slotProps={{ textField: textFieldProps }}
-          />
-        )
-      }
+      render={({ field }) => (
+        <MyDateTimeField
+          fieldName={name}
+          label={label}
+          value={field.value}
+          onChange={field.onChange}
+          onBlur={field.onBlur}
+          mode={isAllDay ? "date" : "date-time"}
+          disabled={loading}
+          required
+          error={Boolean(error)}
+          helperText={error ?? " "}
+          minDate={allowPast ? undefined : dayjs().startOf("day")}
+          minDateTime={allowPast ? undefined : dayjs()}
+          icon={icon}
+        />
+      )}
     />
   );
 }

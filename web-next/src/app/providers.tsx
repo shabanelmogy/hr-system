@@ -2,6 +2,8 @@
 
 import { useEffect, type ReactNode } from "react";
 import cookies from "js-cookie";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { SessionProvider } from "@/lib/auth/SessionContext";
 import i18n from "@/locales/i18n";
 import {
@@ -78,7 +80,9 @@ export function Providers({
       initialDirection={initialDirection}
     >
       <ThemeShell>
-        <SessionProvider>{children}</SessionProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <SessionProvider>{children}</SessionProvider>
+        </LocalizationProvider>
       </ThemeShell>
     </ThemePreferencesProvider>
   );

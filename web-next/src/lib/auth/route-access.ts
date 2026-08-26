@@ -105,6 +105,10 @@ export const routePolicies: readonly RoutePolicy[] = [
   { path: appRoutes.trends },
   { path: appRoutes.healthPipeline },
   { path: appRoutes.attendanceTrends },
+  {
+    path: appRoutes.attendanceDevices.index,
+    permissions: [permissions.ViewAttendanceDevices],
+  },
   { path: UNAVAILABLE_ROUTE },
 ];
 

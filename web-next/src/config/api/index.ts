@@ -9,6 +9,7 @@ import { tenants } from './tenants';
 import { tenantAdmins } from './tenantAdmins';
 import { reportTemplates } from './reportTemplates';
 import { crystalReports } from './crystalReports';
+import { attendanceDevices } from './attendanceDevices';
 
 export { version } from './constants';
 
@@ -32,6 +33,7 @@ export const apiRoutes = {
   tenantAdmins,
   reportTemplates,
   crystalReports,
+  attendanceDevices,
 };
 
 export default apiRoutes;

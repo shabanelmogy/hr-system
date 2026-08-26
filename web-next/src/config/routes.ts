@@ -72,6 +72,12 @@ export interface AppRoutes {
   trends: AppPath;
   healthPipeline: AppPath;
   attendanceTrends: AppPath;
+  attendanceDevices: {
+    index: AppPath;
+    users: AppPath;
+    punches: AppPath;
+    pullRuns: AppPath;
+  };
 }
 
 export const appRoutes: AppRoutes = {
@@ -137,6 +143,12 @@ export const appRoutes: AppRoutes = {
   trends: "/trends",
   healthPipeline: "/health-pipeline",
   attendanceTrends: "/attendance-trends",
+  attendanceDevices: {
+    index: toAppPath("/attendance-devices"),
+    users: toAppPath("/attendance-devices/users"),
+    punches: toAppPath("/attendance-devices/punches"),
+    pullRuns: toAppPath("/attendance-devices/pull-runs"),
+  },
 } as const;
 
 export type RouteKey = keyof AppRoutes;

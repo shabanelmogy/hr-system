@@ -37,6 +37,12 @@ public static class Permissions
     public const string ViewCompanyGeographicScope = "CompanyGeographicScope:View";
     public const string ManageCompanyGeographicScope = "CompanyGeographicScope:Manage";
 
+    public const string ViewAttendanceDevices = "AttendanceDevices:View";
+    public const string ManageAttendanceDevices = "AttendanceDevices:Manage";
+    public const string ManageAttendanceDeviceCredentials = "AttendanceDevices:Credentials";
+    public const string PullAttendanceDevices = "AttendanceDevices:Pull";
+    public const string ViewRawAttendanceDevices = "AttendanceDevices:ViewRaw";
+
     public const string ViewDistricts = "Districts:View";
     public const string CreateDistricts = "Districts:Create";
     public const string EditDistricts = "Districts:Edit";

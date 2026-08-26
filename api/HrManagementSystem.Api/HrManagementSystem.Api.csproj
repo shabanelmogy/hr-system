@@ -31,6 +31,8 @@
 
   <ItemGroup>
     <Content Include="Templates\**" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <!-- Large installer artifacts are copied after publish so they are not fingerprinted during every IDE build. -->
+    <Content Remove="wwwroot\downloads\attendance-agent\**\*" />
   </ItemGroup>
 
 </Project>

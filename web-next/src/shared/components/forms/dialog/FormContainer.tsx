@@ -206,6 +206,7 @@ export const FormContainer: React.FC<MyFormProps> = ({
           component="form"
           ref={formRef}
           onSubmit={submit}
+          noValidate
           sx={{
             flex: 1,
             display: "grid",

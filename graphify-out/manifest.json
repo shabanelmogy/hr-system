@@ -80,8 +80,8 @@
     "semantic_hash": "f69e3724f4b48cc6ade64fcd81c5ad40"
   },
   "web-next/next-env.d.ts": {
-    "mtime": 1787654644.6132576,
-    "ast_hash": "efd14dc72ac7952284b28b7299d54311",
+    "mtime": 1787730861.6145022,
+    "ast_hash": "b698cdd97fe8e3bd16dcd74899ad7cef",
     "semantic_hash": ""
   },
   "web-next/next.config.ts": {
@@ -315,8 +315,8 @@
     "semantic_hash": "39cb789f9497b235f54758c38f410806"
   },
   "web-next/src/app/api/[...path]/route.ts": {
-    "mtime": 1787639627.1401377,
-    "ast_hash": "c8bb82d58674fb99504e329339b170d1",
+    "mtime": 1787730861.6811893,
+    "ast_hash": "40a3eb0aec8224db870dad94d5a62dd8",
     "semantic_hash": ""
   },
   "web-next/src/app/api/auth/logout/route.ts": {
@@ -325,24 +325,24 @@
     "semantic_hash": "07331aaac853a84c01fb2f46e999bff6"
   },
   "web-next/src/app/api/auth/realtime-token/route.ts": {
-    "mtime": 1787639627.1411355,
-    "ast_hash": "4634796bf105db9ef9c8cbc76a53b3dc",
+    "mtime": 1787730861.6811893,
+    "ast_hash": "1c4b9881911b27639228ff9e94792f0f",
     "semantic_hash": ""
   },
   "web-next/src/app/api/auth/session/route.ts": {
-    "mtime": 1787639627.1411355,
-    "ast_hash": "4f77db5bab62d104529decfc607b7955",
+    "mtime": 1787730861.6811893,
+    "ast_hash": "254420d7611cf9efd476c6c80f5d8529",
     "semantic_hash": ""
   },
   "web-next/src/app/api/hubs/[...path]/route.ts": {
-    "mtime": 1786516749.5401542,
-    "ast_hash": "385e15f721f14a8d6f19d3918d98a2c1",
-    "semantic_hash": "385e15f721f14a8d6f19d3918d98a2c1"
+    "mtime": 1787730861.6811893,
+    "ast_hash": "6002b8e8f87c4bc5ea9c61cabbe785b3",
+    "semantic_hash": ""
   },
   "web-next/src/app/hangfire/[[...path]]/route.ts": {
-    "mtime": 1784462902.4132586,
-    "ast_hash": "c1722c7925bac03f2113d4d948a9dcfb",
-    "semantic_hash": "c1722c7925bac03f2113d4d948a9dcfb"
+    "mtime": 1787730861.7144408,
+    "ast_hash": "95c84affb6b88b9cbf6fc21770be4554",
+    "semantic_hash": ""
   },
   "web-next/src/app/layout.tsx": {
     "mtime": 1787397008.5851233,
@@ -635,9 +635,9 @@
     "semantic_hash": "0f3e8b576553e5d274e68d5d23282469"
   },
   "web-next/src/features/auth/login/Login.tsx": {
-    "mtime": 1786876283.4520254,
-    "ast_hash": "a00b6d80a7c89bfb64d4732afb5ce76f",
-    "semantic_hash": "a00b6d80a7c89bfb64d4732afb5ce76f"
+    "mtime": 1787730861.7144408,
+    "ast_hash": "0644872350bd9a2437d6349bf6cc6116",
+    "semantic_hash": ""
   },
   "web-next/src/features/auth/login/components/LeftPanel.tsx": {
     "mtime": 1784122543.4512627,
@@ -645,9 +645,9 @@
     "semantic_hash": "f658cb1da538a6b5d710379e50842eb8"
   },
   "web-next/src/features/auth/login/components/LoginForm.tsx": {
-    "mtime": 1786799179.165267,
-    "ast_hash": "5d50cd68545999f2a1357152cd2deae7",
-    "semantic_hash": "5d50cd68545999f2a1357152cd2deae7"
+    "mtime": 1787730861.7144408,
+    "ast_hash": "44b166448bc23e8e1bb3ee3d54447147",
+    "semantic_hash": ""
   },
   "web-next/src/features/auth/login/components/SocialLoginButtons.tsx": {
     "mtime": 1786443766.3075972,
@@ -2565,8 +2565,8 @@
     "semantic_hash": ""
   },
   "web-next/src/lib/api/client.ts": {
-    "mtime": 1787639627.6101274,
-    "ast_hash": "aa2446013c630b44223bbab32682fa0d",
+    "mtime": 1787730861.7144408,
+    "ast_hash": "7ac3bb9e12b172a9ce5b89a75b3041c2",
     "semantic_hash": ""
   },
   "web-next/src/lib/api/hangfireProxy.test.ts": {
@@ -2600,8 +2600,8 @@
     "semantic_hash": ""
   },
   "web-next/src/lib/auth/backend-session.ts": {
-    "mtime": 1787639627.6142192,
-    "ast_hash": "34f0db5a809894bacc36839a6630523f",
+    "mtime": 1787730861.7144408,
+    "ast_hash": "6d32932acc655178a3ff9dcfa8e8e3af",
     "semantic_hash": ""
   },
   "web-next/src/lib/auth/constants.test.ts": {
@@ -2670,9 +2670,9 @@
     "semantic_hash": "48f171aaf429e8a4b397fe93092c3447"
   },
   "web-next/src/lib/env/server.ts": {
-    "mtime": 1783927400.1739578,
-    "ast_hash": "7771dd9398cba921055e787e5fe1cafe",
-    "semantic_hash": "7771dd9398cba921055e787e5fe1cafe"
+    "mtime": 1787730861.7144408,
+    "ast_hash": "1cb3eb4f5978c8cb0b4dfc222ba6b651",
+    "semantic_hash": ""
   },
   "web-next/src/lib/signalr/SignalRProvider.tsx": {
     "mtime": 1787639627.6192038,
@@ -2690,13 +2690,13 @@
     "semantic_hash": "4ba4d8a82d7ac4b6dfb2b7eb04130990"
   },
   "web-next/src/locales/ar/translation.json": {
-    "mtime": 1787662235.1562307,
-    "ast_hash": "518105d5ee9faace153f6db09f5cdb19",
+    "mtime": 1787730861.7144408,
+    "ast_hash": "06627d272dfd558423007395a631dd09",
     "semantic_hash": ""
   },
   "web-next/src/locales/en/translation.json": {
-    "mtime": 1787662234.060053,
-    "ast_hash": "71f21cf4970f2dad6cdd483b7f53d10b",
+    "mtime": 1787730861.7144408,
+    "ast_hash": "994319e74679263c7d6f02f99c4bfaed",
     "semantic_hash": ""
   },
   "web-next/src/locales/i18n.ts": {
@@ -7515,9 +7515,9 @@
     "semantic_hash": "25c6782078a9375cc2ae1e5842d4deae"
   },
   "mobile-react/src/shared/components/multi-view/AppCollectionPagination.tsx": {
-    "mtime": 1787225853.3568685,
-    "ast_hash": "709da6879f6b134ac3477ccb3e43ded7",
-    "semantic_hash": "709da6879f6b134ac3477ccb3e43ded7"
+    "mtime": 1787665483.6334999,
+    "ast_hash": "cd8881ddbc29ebe6d5b6b7138b0f54e5",
+    "semantic_hash": ""
   },
   "mobile-react/src/shared/components/multi-view/AppMultiView.tsx": {
     "mtime": 1787639627.1391432,
@@ -9450,8 +9450,8 @@
     "semantic_hash": ""
   },
   "web-next/src/app/api/[...path]/route.test.ts": {
-    "mtime": 1787639627.1401377,
-    "ast_hash": "1e6294915a870afcd6d4774ed3776b7b",
+    "mtime": 1787730861.647719,
+    "ast_hash": "826539ef6b6cd80f80dc00d3054916e7",
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/states/components/chart-view/DistrictsChart.tsx": {
@@ -11912,6 +11912,31 @@
   "documentation/web-next/features/districts-frontend-reference.md": {
     "mtime": 1787646068.7223742,
     "ast_hash": "f5ef6fe64e5573e8e3cf6ce5b5da8b98",
+    "semantic_hash": ""
+  },
+  "web-next/src/features/auth/login/components/DemoLoginSection.tsx": {
+    "mtime": 1787730861.7144408,
+    "ast_hash": "89a46c277bd31cef50940c1076a82175",
+    "semantic_hash": ""
+  },
+  "web-next/src/features/auth/login/components/ServerUrlField.tsx": {
+    "mtime": 1787730861.7144408,
+    "ast_hash": "e2237d6734b6565374d5f567236f5e87",
+    "semantic_hash": ""
+  },
+  "web-next/src/lib/api/backendOverride.test.ts": {
+    "mtime": 1787730861.7144408,
+    "ast_hash": "da93af3609f8bbd8eddf2c449154310d",
+    "semantic_hash": ""
+  },
+  "web-next/src/lib/api/backendOverride.ts": {
+    "mtime": 1787730861.7144408,
+    "ast_hash": "c46aab59fff392d55d7d84848ac5a4e4",
+    "semantic_hash": ""
+  },
+  "HR-CONNECTION-ONLY-PROMPT.md": {
+    "mtime": 1787730192.6175506,
+    "ast_hash": "761352ea056c8a1265534567b1ff7b27",
     "semantic_hash": ""
   }
 }
