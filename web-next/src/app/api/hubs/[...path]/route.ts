@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { getBackendUrl } from "@/lib/env/server";
+import { resolveRequestBackendUrl } from "@/lib/env/server";
 
 type RouteParameters = { params: Promise<{ path: string[] }> };
 
@@ -21,7 +21,7 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
   const { path } = await parameters.params;
   const hubPath = path.join("/");
 
-  const backendUrl = new URL(`${getBackendUrl()}/hubs/${hubPath}`);
+  const backendUrl = new URL(`${resolveRequestBackendUrl(request)}/hubs/${hubPath}`);
   // Preserve all query parameters (access_token, negotiateVersion, id, etc.)
   backendUrl.search = request.nextUrl.search;
 

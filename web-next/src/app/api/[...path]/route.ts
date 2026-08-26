@@ -15,7 +15,7 @@ import {
   prepareBackendBody,
   type PreparedBackendBody,
 } from "@/lib/api/proxy-transport";
-import { getBackendUrl } from "@/lib/env/server";
+import { resolveRequestBackendUrl } from "@/lib/env/server";
 
 const TAG = "[📡 API Proxy]";
 const backendRequestTimeoutMs = 30_000;
@@ -52,7 +52,7 @@ async function callBackend(
   preparedBody: PreparedBackendBody,
 ) {
   const backendPath = resolveBackendPath(path);
-  const url = new URL(`${getBackendUrl()}/${backendPath}`);
+  const url = new URL(`${resolveRequestBackendUrl(request)}/${backendPath}`);
   url.search = request.nextUrl.search;
 
   const init: RequestInit & { duplex?: "half" } = {
@@ -153,6 +153,7 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
 
   const { path } = await parameters.params;
   const route = path.join("/");
+  const backendUrl = resolveRequestBackendUrl(request);
   const { accessToken, refreshToken, migrationPayload } = readAuthTokens(
     request.cookies,
   );
@@ -168,7 +169,7 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
     refreshToken &&
     shouldRefreshAccessToken(accessToken)
   ) {
-    const refreshResult = await refreshAuthTokens(accessToken, refreshToken);
+    const refreshResult = await refreshAuthTokens(accessToken, refreshToken, backendUrl);
     if (refreshResult.status === "unavailable") {
       return NextResponse.json(
         { title: "Authentication service unavailable" },
@@ -205,7 +206,7 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
     refreshToken
   ) {
     console.log(`${TAG} 🔄 Got 401, attempting token refresh for /api/${route}`);
-    const refreshResult = await refreshAuthTokens(accessToken, refreshToken);
+    const refreshResult = await refreshAuthTokens(accessToken, refreshToken, backendUrl);
     
     if (refreshResult.status === "unavailable") {
       console.warn(`${TAG} ❌ Auth service unavailable during refresh`);

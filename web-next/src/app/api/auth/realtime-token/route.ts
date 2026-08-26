@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { resolveSession } from "@/lib/auth/backend-session";
 import { readAuthTokens, setAuthCookies } from "@/lib/auth/cookies";
-import { getBackendUrl } from "@/lib/env/server";
+import { resolveRequestBackendUrl } from "@/lib/env/server";
 
 const TAG = "[Realtime Token]";
 
@@ -10,8 +10,9 @@ export async function GET(request: NextRequest) {
   const { accessToken, refreshToken, migrationPayload } = readAuthTokens(
     request.cookies,
   );
+  const backendBaseUrl = resolveRequestBackendUrl(request);
 
-  const resolved = await resolveSession(accessToken, refreshToken);
+  const resolved = await resolveSession(accessToken, refreshToken, backendBaseUrl);
 
   if (resolved.status === "unavailable") {
     console.warn(`${TAG} Auth service unavailable`);
@@ -39,7 +40,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const backendUrl = `${getBackendUrl()}/api/v1/auth/realtimeToken`;
+    const backendUrl = `${backendBaseUrl}/api/v1/auth/realtimeToken`;
     const backendResponse = await fetch(backendUrl, {
       headers: { authorization: `Bearer ${currentAccessToken}` },
       cache: "no-store",
