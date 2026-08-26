@@ -43,13 +43,6 @@ export function AppCollectionPagination({
         attached ? styles.attached : null,
       ]}>
       <View style={[styles.pageSizes, { direction }]}>
-        <AppText
-          color="muted"
-          numberOfLines={1}
-          style={styles.pageSizeLabel}
-          variant="caption">
-          {t('multiView.itemsPerPage')}
-        </AppText>
         {pageSizeOptions.map((option) => (
           <Pressable
             accessibilityLabel={t('multiView.usePageSize', { count: option })}
@@ -104,6 +97,5 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 0,
   },
   pageSizes: { flexDirection: 'row', alignItems: 'center', flexShrink: 1, gap: 3 },
-  pageSizeLabel: { flexShrink: 1 },
   pageSize: { minWidth: 26, minHeight: 28, alignItems: 'center', justifyContent: 'center' },
 });
