@@ -80,8 +80,8 @@
     "semantic_hash": "f69e3724f4b48cc6ade64fcd81c5ad40"
   },
   "web-next/next-env.d.ts": {
-    "mtime": 1787995538.210508,
-    "ast_hash": "29f60a376e12bf72b67d4994fcc84214",
+    "mtime": 1787730861.6145022,
+    "ast_hash": "b698cdd97fe8e3bd16dcd74899ad7cef",
     "semantic_hash": ""
   },
   "web-next/next.config.ts": {
@@ -355,8 +355,8 @@
     "semantic_hash": "6dad41ff1b2824bba0deabf851c32e86"
   },
   "web-next/src/app/providers.tsx": {
-    "mtime": 1787746398.624222,
-    "ast_hash": "190cb1a13e21b8a89583e777e50fe51d",
+    "mtime": 1787397008.5851233,
+    "ast_hash": "6994c560bc7864f93023dc5cc765c6d5",
     "semantic_hash": ""
   },
   "web-next/src/config/api/advanced.ts": {
@@ -390,8 +390,8 @@
     "semantic_hash": "00e74f4c991eeffb8e5b6659c1d88198"
   },
   "web-next/src/config/api/index.ts": {
-    "mtime": 1787732443.0148869,
-    "ast_hash": "6789f1ab280341045a2e4d7709ef1be2",
+    "mtime": 1787642962.1088593,
+    "ast_hash": "c3483abe6727fe1f484447de96c723f8",
     "semantic_hash": ""
   },
   "web-next/src/config/api/rolesUsers.ts": {
@@ -415,8 +415,8 @@
     "semantic_hash": "0a20aa52e1c620c8de4ff08e07ee6917"
   },
   "web-next/src/config/routes.ts": {
-    "mtime": 1787733079.6647952,
-    "ast_hash": "d0cd6911474809519e411c8da9c9a582",
+    "mtime": 1787645511.7842026,
+    "ast_hash": "f9452ad406791bd8e5c9803039d8268b",
     "semantic_hash": ""
   },
   "web-next/src/features/advanced-tools/external-tools/components/ExternalToolFrame.tsx": {
@@ -565,9 +565,9 @@
     "semantic_hash": "fc9ebefa2b3ec4c176c1829ccc626f00"
   },
   "web-next/src/features/appointments/components/dialogs/AppointmentDialog.tsx": {
-    "mtime": 1787746493.0297873,
-    "ast_hash": "01ea2790f74356d997af3a9a7663d59c",
-    "semantic_hash": ""
+    "mtime": 1784464170.6595876,
+    "ast_hash": "5a832fad6f49bb160ddb533dc1404db3",
+    "semantic_hash": "5a832fad6f49bb160ddb533dc1404db3"
   },
   "web-next/src/features/appointments/hooks/useAppointmentCalendar.ts": {
     "mtime": 1784468502.5254612,
@@ -2495,9 +2495,9 @@
     "semantic_hash": ""
   },
   "web-next/src/layouts/components/sidebar/navigationConfig.tsx": {
-    "mtime": 1787732469.0580678,
-    "ast_hash": "ca3d9b4ff8d0092f20c6c78f4059c41e",
-    "semantic_hash": ""
+    "mtime": 1786516750.0919507,
+    "ast_hash": "b948766c2f4091d0a2a00e7fb5082f5c",
+    "semantic_hash": "b948766c2f4091d0a2a00e7fb5082f5c"
   },
   "web-next/src/layouts/components/sidebar/navigationTypes.ts": {
     "mtime": 1787645544.059924,
@@ -2630,8 +2630,8 @@
     "semantic_hash": "7e3d0b43101c8bf14c3f783541aa2b1e"
   },
   "web-next/src/lib/auth/permissions.ts": {
-    "mtime": 1787732459.1268866,
-    "ast_hash": "b67a8b4bc9e9c55d11d78871b3dc6fff",
+    "mtime": 1787642963.5352972,
+    "ast_hash": "0435f122de402813869e9372809dd602",
     "semantic_hash": ""
   },
   "web-next/src/lib/auth/route-access.test.ts": {
@@ -2640,8 +2640,8 @@
     "semantic_hash": ""
   },
   "web-next/src/lib/auth/route-access.ts": {
-    "mtime": 1787732459.1268866,
-    "ast_hash": "631d097477d6ffcb24582bb1b6bbb3ed",
+    "mtime": 1787645743.0751946,
+    "ast_hash": "13eded705f14b5ad37d1fb8668573a7d",
     "semantic_hash": ""
   },
   "web-next/src/lib/auth/session-request-state.test.ts": {
@@ -2690,13 +2690,13 @@
     "semantic_hash": "4ba4d8a82d7ac4b6dfb2b7eb04130990"
   },
   "web-next/src/locales/ar/translation.json": {
-    "mtime": 1787750207.9952855,
-    "ast_hash": "8be1c5d681ad361c7c981493fb563cf7",
+    "mtime": 1787730861.7144408,
+    "ast_hash": "06627d272dfd558423007395a631dd09",
     "semantic_hash": ""
   },
   "web-next/src/locales/en/translation.json": {
-    "mtime": 1787750207.9912348,
-    "ast_hash": "7ebf90909843e2698686019ca68986bf",
+    "mtime": 1787730861.7144408,
+    "ast_hash": "994319e74679263c7d6f02f99c4bfaed",
     "semantic_hash": ""
   },
   "web-next/src/locales/i18n.ts": {
@@ -3170,8 +3170,8 @@
     "semantic_hash": "13671646d57917834ec87fdb724c4310"
   },
   "web-next/src/shared/components/forms/dialog/FormContainer.tsx": {
-    "mtime": 1787746202.2448545,
-    "ast_hash": "259fcf9e7fc2bbb52f6138b641bd1eb0",
+    "mtime": 1787663088.630012,
+    "ast_hash": "83bcada7bcf88e03ed5ff1eccf6ae25e",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/dialog/FormContent.tsx": {
@@ -3185,7 +3185,7 @@
     "semantic_hash": "c93e40e09c87ae4bfa5408e3630cbef5"
   },
   "web-next/src/shared/components/forms/dialog/FormFooter.tsx": {
-    "mtime": 1787745216.0083468,
+    "mtime": 1786532143.7108111,
     "ast_hash": "a3e9176cdd6e4dfb59c04c857812c7f1",
     "semantic_hash": "a3e9176cdd6e4dfb59c04c857812c7f1"
   },
@@ -3210,9 +3210,9 @@
     "semantic_hash": "92b20a7a89c1fbb0b878a05acbcc3e00"
   },
   "web-next/src/shared/components/forms/dialog/types.ts": {
-    "mtime": 1787745216.00735,
-    "ast_hash": "66479b89f05372df796fec04cba93412",
-    "semantic_hash": ""
+    "mtime": 1784118609.4185555,
+    "ast_hash": "881c133b44294ad2ad9fbc1fcbf5869f",
+    "semantic_hash": "881c133b44294ad2ad9fbc1fcbf5869f"
   },
   "web-next/src/shared/components/forms/dialog/useFormDialogFocus.ts": {
     "mtime": 1784366582.4465017,
@@ -3225,9 +3225,9 @@
     "semantic_hash": "74e5704be104c699016820d1503891bf"
   },
   "web-next/src/shared/components/forms/index.ts": {
-    "mtime": 1787746398.6232114,
-    "ast_hash": "8b015ac7c3b5bee977c53116bee63cc1",
-    "semantic_hash": ""
+    "mtime": 1786523878.5633252,
+    "ast_hash": "d3ef171aead1acd8eca9e62c62227152",
+    "semantic_hash": "d3ef171aead1acd8eca9e62c62227152"
   },
   "web-next/src/shared/components/forms/selects/MySelect.tsx": {
     "mtime": 1787650922.177853,
@@ -3300,9 +3300,9 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/layout/Section.tsx": {
-    "mtime": 1787745259.5209253,
-    "ast_hash": "88b18a6223a7a3086da76b9e6a018637",
-    "semantic_hash": ""
+    "mtime": 1784374377.5657182,
+    "ast_hash": "74589d310ef330d3881c1359b3990544",
+    "semantic_hash": "74589d310ef330d3881c1359b3990544"
   },
   "web-next/src/shared/components/layout/index.ts": {
     "mtime": 1786446924.6459396,
@@ -3860,8 +3860,8 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1787746398.5905552,
-    "ast_hash": "6452ff966697119991ef3b489c85a085",
+    "mtime": 1787639624.7894404,
+    "ast_hash": "dc070ac5144b869ef6b254ab599f5afa",
     "semantic_hash": ""
   },
   "README.md": {
@@ -4040,9 +4040,9 @@
     "semantic_hash": "148904ed8428e04c1f17ac7f2f3c1bc8"
   },
   "api/HrManagementSystem.Api/HrManagementSystem.Api.csproj": {
-    "mtime": 1787750618.8743594,
-    "ast_hash": "5441b94dc16fb6b59748d4326672fccb",
-    "semantic_hash": ""
+    "mtime": 1786790123.911269,
+    "ast_hash": "53a6a63e286c0ee3dfe9c5164f0f8534",
+    "semantic_hash": "53a6a63e286c0ee3dfe9c5164f0f8534"
   },
   "api/HrManagementSystem.Api/Program.cs": {
     "mtime": 1786532584.173744,
@@ -4055,13 +4055,13 @@
     "semantic_hash": "1636aff46e6104223d018cf75286927c"
   },
   "api/HrManagementSystem.Api/appsettings.Development.json": {
-    "mtime": 1787747307.4978087,
-    "ast_hash": "8d6e23e77c54bc747b0664cf9ac12b7e",
-    "semantic_hash": ""
+    "mtime": 1787482401.8166354,
+    "ast_hash": "616edc46a858e920b2984b08370ec1b5",
+    "semantic_hash": "616edc46a858e920b2984b08370ec1b5"
   },
   "api/HrManagementSystem.Api/appsettings.json": {
-    "mtime": 1787747307.4978087,
-    "ast_hash": "4865041d28376e2d080ac3179cbb7e6b",
+    "mtime": 1787493577.595532,
+    "ast_hash": "c6dd0c1372762d89b183218f854cc288",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Abstractions/Authentication/ICurrentActor.cs": {
@@ -4145,8 +4145,8 @@
     "semantic_hash": "983f7ca43e390cdcda787ce9c6e4db29"
   },
   "api/HrManagementSystem.Application/Common/Consts/Permissions.cs": {
-    "mtime": 1787732615.0157316,
-    "ast_hash": "40bb4584e0b22d12b5861e63f1a5b026",
+    "mtime": 1787645715.8009343,
+    "ast_hash": "1bfac411ffea7c2d380d720428e084b1",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Common/Consts/RegexPattern.cs": {
@@ -5245,13 +5245,13 @@
     "semantic_hash": "5c88480d21e56f104c1449b92ce25330"
   },
   "api/HrManagementSystem.Infrastructure/Dependencies/EntitiesService.cs": {
-    "mtime": 1787747149.844785,
-    "ast_hash": "8a67b42157ec706c0c6ca6fdf4437212",
+    "mtime": 1787642474.74938,
+    "ast_hash": "8a23ba9aef3de02b84874e218acbbefa",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Dependencies/ErrorsService.cs": {
-    "mtime": 1787740880.9142604,
-    "ast_hash": "d94541dd3dddfb06beea79a69996da53",
+    "mtime": 1787650391.823059,
+    "ast_hash": "140113fabf71b13f07fd1386d310ef80",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Dependencies/ExceptionService.cs": {
@@ -5300,8 +5300,8 @@
     "semantic_hash": "098c3b3aebdb1eb003b0a05eb71bed9f"
   },
   "api/HrManagementSystem.Infrastructure/DependencyInjection.cs": {
-    "mtime": 1787734735.1969838,
-    "ast_hash": "a2f9fb00ac15ee1a3c11a4719dbc798a",
+    "mtime": 1787492004.4347415,
+    "ast_hash": "a799462a1d376a4124751a0d07bd985f",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/Analytics/Dashboard/Services/DashboardService.cs": {
@@ -5675,13 +5675,13 @@
     "semantic_hash": "ccbe829a0673a66f8a3da09be6eadc53"
   },
   "api/HrManagementSystem.Infrastructure/Localization/Resources/ar-EG.json": {
-    "mtime": 1787747383.5832906,
-    "ast_hash": "1db203e73587369cc7c2c38e5f71c3fa",
+    "mtime": 1787642694.974778,
+    "ast_hash": "ae420e01b5853e28d48824d50dbfa2c9",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Localization/Resources/en-US.json": {
-    "mtime": 1787747383.5832906,
-    "ast_hash": "7dea9832f15648dba265135d12fa58f7",
+    "mtime": 1787642693.4821477,
+    "ast_hash": "22ccc19b8e8c78de7589f467d2546474",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Mapping/MappingConfigurations.cs": {
@@ -5689,14 +5689,119 @@
     "ast_hash": "2d1dfce0c20383380933ef0fdaa82224",
     "semantic_hash": "2d1dfce0c20383380933ef0fdaa82224"
   },
+  "api/HrManagementSystem.Infrastructure/Migrations/20250803182736_CreateDatabase.Designer.cs": {
+    "mtime": 1786265662.156386,
+    "ast_hash": "95e9c5d5b9788ff99768068842935311",
+    "semantic_hash": "95e9c5d5b9788ff99768068842935311"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20250803182736_CreateDatabase.cs": {
+    "mtime": 1783927398.6487634,
+    "ast_hash": "9cbccde8d99442f84d7383775479b381",
+    "semantic_hash": "9cbccde8d99442f84d7383775479b381"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20251016180547_addAppointmentTable.Designer.cs": {
+    "mtime": 1786265662.1614025,
+    "ast_hash": "3d1ba72f693faa69167aff8657ea72f7",
+    "semantic_hash": "3d1ba72f693faa69167aff8657ea72f7"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20251016180547_addAppointmentTable.cs": {
+    "mtime": 1783927398.6487634,
+    "ast_hash": "968c5ae4cdcf1d13948d36981b1e1242",
+    "semantic_hash": "968c5ae4cdcf1d13948d36981b1e1242"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260708120000_RemoveStateNameCheckConstraints.cs": {
+    "mtime": 1786265662.1624012,
+    "ast_hash": "f96aff9df7c925397ed9f59a5e5d8bee",
+    "semantic_hash": "f96aff9df7c925397ed9f59a5e5d8bee"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260711120000_HardenRefreshTokenSessions.cs": {
+    "mtime": 1786265662.1643927,
+    "ast_hash": "27e7ebc1126d708240e14020dc06202f",
+    "semantic_hash": "27e7ebc1126d708240e14020dc06202f"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260712120000_ProfilePicture_BlobToFilename.cs": {
+    "mtime": 1786265662.1653914,
+    "ast_hash": "1a68314702d5f43ad8b7ee440ad1c805",
+    "semantic_hash": "1a68314702d5f43ad8b7ee440ad1c805"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260713083847_modifyLogging.Designer.cs": {
+    "mtime": 1786265662.166899,
+    "ast_hash": "2769fdd8f0b2f6b99b75edc9f1956693",
+    "semantic_hash": "2769fdd8f0b2f6b99b75edc9f1956693"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260713083847_modifyLogging.cs": {
+    "mtime": 1783937943.0960605,
+    "ast_hash": "fd884dee2f95fa05556923031219f450",
+    "semantic_hash": "fd884dee2f95fa05556923031219f450"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260713100823_AddNotifications.Designer.cs": {
+    "mtime": 1786265662.189588,
+    "ast_hash": "f51c9efc4cd669b29aab67c62654b35f",
+    "semantic_hash": "f51c9efc4cd669b29aab67c62654b35f"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260713100823_AddNotifications.cs": {
+    "mtime": 1783937779.8747938,
+    "ast_hash": "0308c57d3ec1e8733a43d0c2e8407a53",
+    "semantic_hash": "0308c57d3ec1e8733a43d0c2e8407a53"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260713143000_FixCountryNotificationActionUrl.cs": {
+    "mtime": 1786265662.1905801,
+    "ast_hash": "b13a41bd53e5a67467a7fe9f0e2e3a3d",
+    "semantic_hash": "b13a41bd53e5a67467a7fe9f0e2e3a3d"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260715084244_SimplifyNotificationDelivery.Designer.cs": {
+    "mtime": 1786265662.231875,
+    "ast_hash": "3f1f712db2839645b932c628439b0818",
+    "semantic_hash": "3f1f712db2839645b932c628439b0818"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260715084244_SimplifyNotificationDelivery.cs": {
+    "mtime": 1784104964.3562202,
+    "ast_hash": "b170686f504dd5c2ab6752179461e4cb",
+    "semantic_hash": "b170686f504dd5c2ab6752179461e4cb"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260719160000_AlignAppointmentsContract.cs": {
+    "mtime": 1786265662.2328436,
+    "ast_hash": "fc4a5b11005ecb394ec6524fd7c94611",
+    "semantic_hash": "fc4a5b11005ecb394ec6524fd7c94611"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260801123243_AddTenantCompanyIsolation.Designer.cs": {
+    "mtime": 1786265662.243346,
+    "ast_hash": "2679e884c8b03048ca0a0a5f78636fa5",
+    "semantic_hash": "2679e884c8b03048ca0a0a5f78636fa5"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260801123243_AddTenantCompanyIsolation.cs": {
+    "mtime": 1785587588.7823217,
+    "ast_hash": "3f1b3407b96cae4d8ff8224d6de765c3",
+    "semantic_hash": "3f1b3407b96cae4d8ff8224d6de765c3"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260809075749_AddOrganizationalStructureFields.Designer.cs": {
+    "mtime": 1786265662.2538712,
+    "ast_hash": "297bc1f2cee497d435366e67a9e274ef",
+    "semantic_hash": "297bc1f2cee497d435366e67a9e274ef"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260809075749_AddOrganizationalStructureFields.cs": {
+    "mtime": 1786262308.5719795,
+    "ast_hash": "f1816fccad84355f10acad72a60bf46a",
+    "semantic_hash": "f1816fccad84355f10acad72a60bf46a"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260809083344_MoveDomainTypesToCleanArchitecture.Designer.cs": {
+    "mtime": 1786452134.1374323,
+    "ast_hash": "c95a593a992ee9098f0e7607292d1693",
+    "semantic_hash": "c95a593a992ee9098f0e7607292d1693"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260809083344_MoveDomainTypesToCleanArchitecture.cs": {
+    "mtime": 1786452134.1406424,
+    "ast_hash": "f9399d8081d1033b338ec542ae465124",
+    "semantic_hash": "f9399d8081d1033b338ec542ae465124"
+  },
   "api/HrManagementSystem.Infrastructure/Migrations/ApplicationDbContextModelSnapshot.cs": {
-    "mtime": 1787747284.0421112,
-    "ast_hash": "365b4ffb09328c4b2028055c4ee253d8",
+    "mtime": 1787648126.5125418,
+    "ast_hash": "5cd15fab953729342f1fe422ccd0b4e6",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Persistence/ApplicationDbContext.cs": {
-    "mtime": 1787743564.280521,
-    "ast_hash": "337cba76e0bf815eec7303e87b99db8b",
+    "mtime": 1787642473.618931,
+    "ast_hash": "2af605355ccfcae19114706572aa19e3",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Persistence/Configurations/OrganizationalStructure/CompanyConfiguration.cs": {
@@ -5860,9 +5965,9 @@
     "semantic_hash": "be25ee4d1521f9f1cbeedf39d6fc0a70"
   },
   "web-next/src/app/(main)/appointments/layout.tsx": {
-    "mtime": 1787746547.244111,
-    "ast_hash": "edda6cb58f5a3c68fbe61e3f73c0f4ef",
-    "semantic_hash": ""
+    "mtime": 1786445440.331757,
+    "ast_hash": "da7e5a878000d42818aa5ea8a37f19fa",
+    "semantic_hash": "da7e5a878000d42818aa5ea8a37f19fa"
   },
   "web-next/src/app/(main)/basic-data/layout.tsx": {
     "mtime": 1785590885.578565,
@@ -6178,6 +6283,16 @@
     "mtime": 1786448904.0830085,
     "ast_hash": "f011182930835e2cda0373b59cb54e68",
     "semantic_hash": "f011182930835e2cda0373b59cb54e68"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260811124252_ApplyPragmaticDomainFoundation.Designer.cs": {
+    "mtime": 1786452172.2882395,
+    "ast_hash": "a09c6bf00a9b684fadf48f9514ace9ac",
+    "semantic_hash": "a09c6bf00a9b684fadf48f9514ace9ac"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260811124252_ApplyPragmaticDomainFoundation.cs": {
+    "mtime": 1786452200.0480309,
+    "ast_hash": "8fd64d97639fae3f1f755a11d7baba84",
+    "semantic_hash": "8fd64d97639fae3f1f755a11d7baba84"
   },
   "api/HrManagementSystem.Tests/PragmaticDomainModelTests.cs": {
     "mtime": 1786452587.890898,
@@ -6723,6 +6838,11 @@
     "mtime": 1786872829.6921854,
     "ast_hash": "ed5930d4641fe3c963315071863a96e6",
     "semantic_hash": "ed5930d4641fe3c963315071863a96e6"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260811190000_AddTenantSubscriptionsAndSuperAdmin.cs": {
+    "mtime": 1786516748.3725212,
+    "ast_hash": "b1eb3c0bcdd7f19cb41b435a88e35346",
+    "semantic_hash": "b1eb3c0bcdd7f19cb41b435a88e35346"
   },
   "mobile-react/app/(main)/super-admin-dashboard.tsx": {
     "mtime": 1786516748.939653,
@@ -7799,6 +7919,76 @@
     "ast_hash": "1f022f1c807a88149e0f040f6fecc0f9",
     "semantic_hash": "1f022f1c807a88149e0f040f6fecc0f9"
   },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260814134339_AddMultiTenantAdminAssignments.Designer.cs": {
+    "mtime": 1786792731.3877385,
+    "ast_hash": "0eb0809ce7a683d482d8bbe5b0cd664d",
+    "semantic_hash": "0eb0809ce7a683d482d8bbe5b0cd664d"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260814134339_AddMultiTenantAdminAssignments.cs": {
+    "mtime": 1786792731.3887358,
+    "ast_hash": "3ba420c51b0fed8b0b78e70305296f98",
+    "semantic_hash": "3ba420c51b0fed8b0b78e70305296f98"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260814160505_modifytentant Settings.Designer.cs": {
+    "mtime": 1786792731.389732,
+    "ast_hash": "d745d3f1fd025eac7177a9cd9b1f5501",
+    "semantic_hash": "d745d3f1fd025eac7177a9cd9b1f5501"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260814160505_modifytentant Settings.cs": {
+    "mtime": 1786792731.389732,
+    "ast_hash": "d0277cc7c52404c2112cdcc505433fe6",
+    "semantic_hash": "d0277cc7c52404c2112cdcc505433fe6"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260814173223_P1TenantUserFoundation.Designer.cs": {
+    "mtime": 1786792731.390731,
+    "ast_hash": "9ab4989401784ecb9279b2b482bcae87",
+    "semantic_hash": "9ab4989401784ecb9279b2b482bcae87"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260814173223_P1TenantUserFoundation.cs": {
+    "mtime": 1786792731.3922389,
+    "ast_hash": "18bf9977f7eb0a1d69c0dfb67b553687",
+    "semantic_hash": "18bf9977f7eb0a1d69c0dfb67b553687"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260814181348_modifyTenant.Designer.cs": {
+    "mtime": 1786792731.3932407,
+    "ast_hash": "806a9ebcfdba14b75b7eec0b4603a0a0",
+    "semantic_hash": "806a9ebcfdba14b75b7eec0b4603a0a0"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260814181348_modifyTenant.cs": {
+    "mtime": 1786792731.3932407,
+    "ast_hash": "5e21f7ffa1d1a44e4b8537ba688bad35",
+    "semantic_hash": "5e21f7ffa1d1a44e4b8537ba688bad35"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260816084419_refactor-phase1.Designer.cs": {
+    "mtime": 1786869859.8101413,
+    "ast_hash": "3cf07eed8ae6dc8d3fbc86f53ee801f9",
+    "semantic_hash": "3cf07eed8ae6dc8d3fbc86f53ee801f9"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260816084419_refactor-phase1.cs": {
+    "mtime": 1786869859.800565,
+    "ast_hash": "82f2ba1ee8affad39e0dcd43751e125c",
+    "semantic_hash": "82f2ba1ee8affad39e0dcd43751e125c"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260816090545_AddUserInvitations.Designer.cs": {
+    "mtime": 1786871145.8532617,
+    "ast_hash": "42d9f6b7db7764cb3e820e190be8a20b",
+    "semantic_hash": "42d9f6b7db7764cb3e820e190be8a20b"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260816090545_AddUserInvitations.cs": {
+    "mtime": 1786871145.852264,
+    "ast_hash": "564e456de3c4755d3c41f61d61381464",
+    "semantic_hash": "564e456de3c4755d3c41f61d61381464"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260816093932_TenantScopedRoleIsolation.Designer.cs": {
+    "mtime": 1786873172.4042096,
+    "ast_hash": "70ca3fc99a3ec63dae0e0323a9279c69",
+    "semantic_hash": "70ca3fc99a3ec63dae0e0323a9279c69"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260816093932_TenantScopedRoleIsolation.cs": {
+    "mtime": 1786873239.1576593,
+    "ast_hash": "2a8208adeac9234557dd6c69f99359c3",
+    "semantic_hash": "2a8208adeac9234557dd6c69f99359c3"
+  },
   "api/HrManagementSystem.Infrastructure/Security/Authentication/AuthenticationFeaturePolicy.cs": {
     "mtime": 1786868910.454585,
     "ast_hash": "877f572b50eeb27a36c49bf7fc88cdf7",
@@ -7847,6 +8037,11 @@
   "api/HrManagementSystem.Tests/RefreshTokenSessionPolicyTests.cs": {
     "mtime": 1787639625.129093,
     "ast_hash": "c28ca34ce9209f285ac80c7a2bd3deaf",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Tests/TenantRoleIsolationTests.cs": {
+    "mtime": 1787645830.7928786,
+    "ast_hash": "1a3af213671c1e143aed6f4ac92601c3",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Tests/TenantUserFoundationTests.cs": {
@@ -8208,6 +8403,16 @@
     "mtime": 1787129145.0504246,
     "ast_hash": "35d7eba15db27f2875db4baf3883338d",
     "semantic_hash": "35d7eba15db27f2875db4baf3883338d"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260817213236_AddEntityChangeLogStringKeys.Designer.cs": {
+    "mtime": 1787129145.271003,
+    "ast_hash": "b07ca05d1e81a443efa7b3eba6c270fa",
+    "semantic_hash": "b07ca05d1e81a443efa7b3eba6c270fa"
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260817213236_AddEntityChangeLogStringKeys.cs": {
+    "mtime": 1787129145.4563167,
+    "ast_hash": "bba81d4a01b1c9426adf2a2cf5323604",
+    "semantic_hash": "bba81d4a01b1c9426adf2a2cf5323604"
   },
   "api/HrManagementSystem.Tests/EntityChangeLogServiceTests.cs": {
     "mtime": 1787129145.4563167,
@@ -9090,8 +9295,8 @@
     "semantic_hash": ""
   },
   "documentation/system/recipe-manifest.json": {
-    "mtime": 1787736251.4840746,
-    "ast_hash": "f14206d7e28eda27a7ba4d04f4d89adf",
+    "mtime": 1787644181.417933,
+    "ast_hash": "ee62bb22733d16b7bde212e5e4c8c0dc",
     "semantic_hash": ""
   },
   "mobile-react/app/(main)/basic-data/geographical-information/_layout.tsx": {
@@ -9715,72 +9920,72 @@
     "semantic_hash": ""
   },
   "documentation/system/generated/PHASE-00-discovery-evidence.md": {
-    "mtime": 1787736289.7944846,
+    "mtime": 1787655998.1962118,
     "ast_hash": "853c3effcd84547772977cb0804dda15",
     "semantic_hash": ""
   },
   "documentation/system/generated/PHASE-01-domain-api.md": {
-    "mtime": 1787736289.852963,
+    "mtime": 1787655998.2714734,
     "ast_hash": "b853e8c0160bb48e818f2620c03ae12b",
     "semantic_hash": ""
   },
   "documentation/system/generated/PHASE-02-web-client.md": {
-    "mtime": 1787736289.966224,
+    "mtime": 1787655998.370728,
     "ast_hash": "7c2a3ec4e6222b74b6bffbce38bd393c",
     "semantic_hash": ""
   },
   "documentation/system/generated/PHASE-03-mobile-client.md": {
-    "mtime": 1787736290.0280614,
+    "mtime": 1787655998.4495957,
     "ast_hash": "92e94abbd9b67dac22582ea5c81375cc",
     "semantic_hash": ""
   },
   "documentation/system/generated/PHASE-04-domain-actions.md": {
-    "mtime": 1787736290.0934384,
+    "mtime": 1787655998.5388854,
     "ast_hash": "95fbc2abe6e760506a893238413440e4",
     "semantic_hash": ""
   },
   "documentation/system/generated/PHASE-05-integration-runtime.md": {
-    "mtime": 1787736290.1507032,
+    "mtime": 1787655998.6172104,
     "ast_hash": "40fd2c61eeedf6f3d63326ddd6a81cb1",
     "semantic_hash": ""
   },
   "documentation/system/generated/PHASE-06-final-reconciliation.md": {
-    "mtime": 1787736290.2020602,
+    "mtime": 1787655998.6770432,
     "ast_hash": "44151b6dd717ba486de16f9cf3f0c2f6",
     "semantic_hash": ""
   },
   "documentation/system/generated/states/PHASE-00-discovery-evidence.md": {
-    "mtime": 1787736290.2359931,
+    "mtime": 1787655998.75287,
     "ast_hash": "cb186f36f40240c9d00741abf8f48580",
     "semantic_hash": ""
   },
   "documentation/system/generated/states/PHASE-01-domain-api.md": {
-    "mtime": 1787736290.259442,
+    "mtime": 1787655998.7787988,
     "ast_hash": "27452ecd682600f7601c508ddb8facf4",
     "semantic_hash": ""
   },
   "documentation/system/generated/states/PHASE-02-web-client.md": {
-    "mtime": 1787736290.2963407,
+    "mtime": 1787655998.8630874,
     "ast_hash": "447401ee3dda824c1e84cf653b8f2aeb",
     "semantic_hash": ""
   },
   "documentation/system/generated/states/PHASE-03-mobile-client.md": {
-    "mtime": 1787736290.3372152,
+    "mtime": 1787655998.9738412,
     "ast_hash": "8cee03ddfbc1f6ccd099fa1abe386f6c",
     "semantic_hash": ""
   },
   "documentation/system/generated/states/PHASE-04-domain-actions.md": {
-    "mtime": 1787736290.382643,
+    "mtime": 1787655999.0417073,
     "ast_hash": "9d4c96511ad6ae5ecb3a467ac8d880d4",
     "semantic_hash": ""
   },
   "documentation/system/generated/states/PHASE-05-integration-runtime.md": {
-    "mtime": 1787736290.4291327,
+    "mtime": 1787655999.132978,
     "ast_hash": "1ad3f79ca7cced876e8881d6ed13df1f",
     "semantic_hash": ""
   },
   "documentation/system/generated/states/PHASE-06-final-reconciliation.md": {
-    "mtime": 1787736290.4685633,
+    "mtime": 1787655999.209289,
     "ast_hash": "0c1dda009c7d21150326ce9333460e04",
     "semantic_hash": ""
   },
@@ -10089,6 +10294,41 @@
     "ast_hash": "7d9cacdd0b03f554846154042a2402d9",
     "semantic_hash": ""
   },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260823075732_AddTenantReportTemplates.Designer.cs": {
+    "mtime": 1787471852.1907082,
+    "ast_hash": "5d2bf92291302f9c40ed6b21fb7f04eb",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260823075732_AddTenantReportTemplates.cs": {
+    "mtime": 1787471852.189194,
+    "ast_hash": "4886a1c57e5b06b0b813945614430c6b",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260823094956_AddCrystalReportManager.Designer.cs": {
+    "mtime": 1787478596.4962585,
+    "ast_hash": "5a6c149d2d0b8f6bcae270a19647b905",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260823094956_AddCrystalReportManager.cs": {
+    "mtime": 1787478596.4952612,
+    "ast_hash": "c4a82a2b017142a2b1872db8c16fda42",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260823095008_AddCrystalReportManagerAdminPermissions.Designer.cs": {
+    "mtime": 1787478608.2589343,
+    "ast_hash": "489c612d0f1d3129e9ced760dc384348",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260823095008_AddCrystalReportManagerAdminPermissions.cs": {
+    "mtime": 1787478658.6066072,
+    "ast_hash": "44682b1c02a9b40d371a459158f302a5",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260823112901_AddReportTemplateAdminPermissions.cs": {
+    "mtime": 1787473800.198699,
+    "ast_hash": "3166d65c4134585da9b4b6d78857b8f5",
+    "semantic_hash": ""
+  },
   "api/HrManagementSystem.Infrastructure/Persistence/ApplicationDbContextDesignFactory.cs": {
     "mtime": 1787482480.980917,
     "ast_hash": "79d8a9d496e028d2de39c126105c1fe2",
@@ -10109,6 +10349,11 @@
     "ast_hash": "5bd29a4ac872ac471369a86e7a8c5760",
     "semantic_hash": ""
   },
+  "api/HrManagementSystem.Tests/CrystalReportManagerAdminPermissionsMigrationTests.cs": {
+    "mtime": 1787478765.4496307,
+    "ast_hash": "22bd83ccfda2222e1a12e6ea0d66db2c",
+    "semantic_hash": ""
+  },
   "api/HrManagementSystem.Tests/CrystalReportRendererClientTests.cs": {
     "mtime": 1787493642.3522449,
     "ast_hash": "0d67f2807ca864cb003de07166b2ace3",
@@ -10117,6 +10362,11 @@
   "api/HrManagementSystem.Tests/CrystalReportsControllerContractTests.cs": {
     "mtime": 1787492561.7866073,
     "ast_hash": "b1f3ce9c82ee87bbdecf891ba52f28c8",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Tests/ReportTemplateAdminPermissionsMigrationTests.cs": {
+    "mtime": 1787473898.991724,
+    "ast_hash": "141f5742199e025d554ce71bff75c381",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Tests/ReportTemplateFeatureTests.cs": {
@@ -10719,6 +10969,41 @@
     "ast_hash": "877b81dc71669c74e4c544df59186524",
     "semantic_hash": ""
   },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260825043501_AddAuthenticationSelectionChallenges.Designer.cs": {
+    "mtime": 1787639625.121004,
+    "ast_hash": "e171857dfbe5814dc927adfa39417ff9",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260825043501_AddAuthenticationSelectionChallenges.cs": {
+    "mtime": 1787639625.121004,
+    "ast_hash": "902d5f2f86ea039a093be3089b50af47",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260825072312_AddCompanyGeographicScope.Designer.cs": {
+    "mtime": 1787642593.0151515,
+    "ast_hash": "a6cada3915f32f3cc83a854932abde17",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260825072312_AddCompanyGeographicScope.cs": {
+    "mtime": 1787642692.1629307,
+    "ast_hash": "64c7e3f4b909e2f8721939678f43a9e2",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260825090000_MoveGeographyCatalogToPlatformAdministration.cs": {
+    "mtime": 1787645762.6812296,
+    "ast_hash": "1b70b4d6383b8af2369c9a14193842ed",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260825100000_MakeAddressTypesCompanyScoped.Designer.cs": {
+    "mtime": 1787648266.0836964,
+    "ast_hash": "fdf6f20b3bb0e8189f901c4008fcb900",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260825100000_MakeAddressTypesCompanyScoped.cs": {
+    "mtime": 1787648242.9762566,
+    "ast_hash": "f38defa9a4b7c8a9173353856200474c",
+    "semantic_hash": ""
+  },
   "api/HrManagementSystem.Infrastructure/Persistence/Configurations/OrganizationalStructure/CompanyCountryConfiguration.cs": {
     "mtime": 1787642457.482167,
     "ast_hash": "019aa8bd66ae2943127ded345a5faa80",
@@ -10739,6 +11024,11 @@
     "ast_hash": "6d9f8e0a25aef999f038f4f067172758",
     "semantic_hash": ""
   },
+  "api/HrManagementSystem.Tests/CompanyGeographicScopeTests.cs": {
+    "mtime": 1787650458.250886,
+    "ast_hash": "2d63389dec53c3724cf5517747cb74a7",
+    "semantic_hash": ""
+  },
   "api/HrManagementSystem.Tests/DistrictBulkCreateHandlerTests.cs": {
     "mtime": 1787639625.1280978,
     "ast_hash": "36a3551da34c7c606e5c9f02b4b58456",
@@ -10747,6 +11037,11 @@
   "api/HrManagementSystem.Tests/DistrictCqrsArchitectureTests.cs": {
     "mtime": 1787639625.1280978,
     "ast_hash": "baedd33e90648e321bbafad001f8166a",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Tests/PlatformGeographyAuthorizationTests.cs": {
+    "mtime": 1787645829.355672,
+    "ast_hash": "320bf47b102d219cae8e5e7e06a59445",
     "semantic_hash": ""
   },
   "documentation/system/features/address-types/recipe-registration.draft.json": {
@@ -11500,107 +11795,107 @@
     "semantic_hash": ""
   },
   "documentation/system/generated/address-types/PHASE-00-discovery-evidence.md": {
-    "mtime": 1787736290.7553391,
+    "mtime": 1787655999.6694717,
     "ast_hash": "5868b89376157bc15be221a9f465cdf7",
     "semantic_hash": ""
   },
   "documentation/system/generated/address-types/PHASE-01-domain-api.md": {
-    "mtime": 1787736290.7764933,
+    "mtime": 1787655999.7004437,
     "ast_hash": "55858b48dd2ee9196cee2d8690563f56",
     "semantic_hash": ""
   },
   "documentation/system/generated/address-types/PHASE-02-web-client.md": {
-    "mtime": 1787736290.8087618,
+    "mtime": 1787655999.7373452,
     "ast_hash": "993344cf94badf5557f06535163112b7",
     "semantic_hash": ""
   },
   "documentation/system/generated/address-types/PHASE-03-mobile-client.md": {
-    "mtime": 1787736290.8402922,
+    "mtime": 1787655999.7822554,
     "ast_hash": "8f762d67df6242f6e01370c2a5c86599",
     "semantic_hash": ""
   },
   "documentation/system/generated/address-types/PHASE-04-domain-actions.md": {
-    "mtime": 1787736290.8838854,
+    "mtime": 1787655999.8267143,
     "ast_hash": "55960194070a366146cc3971323f65a1",
     "semantic_hash": ""
   },
   "documentation/system/generated/address-types/PHASE-05-integration-runtime.md": {
-    "mtime": 1787736290.919209,
+    "mtime": 1787655999.9057736,
     "ast_hash": "7856615f2132e78cb10a2bca637cd8b2",
     "semantic_hash": ""
   },
   "documentation/system/generated/address-types/PHASE-06-final-reconciliation.md": {
-    "mtime": 1787736290.9548488,
+    "mtime": 1787655999.9800897,
     "ast_hash": "60438595c491ccbbb8ec5a95debd2a99",
     "semantic_hash": ""
   },
   "documentation/system/generated/company-geographic-scope/PHASE-00-discovery-evidence.md": {
-    "mtime": 1787736290.9987066,
+    "mtime": 1787656000.0429983,
     "ast_hash": "1368ee7e0d5a98a643c1db1aec8209e1",
     "semantic_hash": ""
   },
   "documentation/system/generated/company-geographic-scope/PHASE-01-domain-api.md": {
-    "mtime": 1787736291.0367522,
+    "mtime": 1787656000.0699127,
     "ast_hash": "e37dc6eb23e3a3a1a23545c17b36a84b",
     "semantic_hash": ""
   },
   "documentation/system/generated/company-geographic-scope/PHASE-02-web-client.md": {
-    "mtime": 1787736291.074679,
+    "mtime": 1787656000.1043408,
     "ast_hash": "037623d14d58d151b537e1ae7b9d6c61",
     "semantic_hash": ""
   },
   "documentation/system/generated/company-geographic-scope/PHASE-03-mobile-client.md": {
-    "mtime": 1787736291.1075952,
+    "mtime": 1787656000.1502168,
     "ast_hash": "1dca17aa7d62e90736ef48903f65626b",
     "semantic_hash": ""
   },
   "documentation/system/generated/company-geographic-scope/PHASE-04-domain-actions.md": {
-    "mtime": 1787736291.130788,
+    "mtime": 1787656000.2155836,
     "ast_hash": "da10d1037637866b88b56f9d73c03287",
     "semantic_hash": ""
   },
   "documentation/system/generated/company-geographic-scope/PHASE-05-integration-runtime.md": {
-    "mtime": 1787736291.1429396,
+    "mtime": 1787656000.2714324,
     "ast_hash": "dc331cf6e4553dde4de0338de3cc6a99",
     "semantic_hash": ""
   },
   "documentation/system/generated/company-geographic-scope/PHASE-06-final-reconciliation.md": {
-    "mtime": 1787736291.1720738,
+    "mtime": 1787656000.3248096,
     "ast_hash": "28588a53a35de8f07bd2c6498ebe5976",
     "semantic_hash": ""
   },
   "documentation/system/generated/districts/PHASE-00-discovery-evidence.md": {
-    "mtime": 1787736290.5041862,
+    "mtime": 1787655999.3364801,
     "ast_hash": "d986c3b8d532355cf5e4b4e9da3607dd",
     "semantic_hash": ""
   },
   "documentation/system/generated/districts/PHASE-01-domain-api.md": {
-    "mtime": 1787736290.5402226,
+    "mtime": 1787655999.370389,
     "ast_hash": "a3bcfcdaf98bcbe70684888cee6277e0",
     "semantic_hash": ""
   },
   "documentation/system/generated/districts/PHASE-02-web-client.md": {
-    "mtime": 1787736290.5879586,
+    "mtime": 1787655999.4220886,
     "ast_hash": "ff370194132bb535710f2e37dfd0e0c5",
     "semantic_hash": ""
   },
   "documentation/system/generated/districts/PHASE-03-mobile-client.md": {
-    "mtime": 1787736290.6402109,
+    "mtime": 1787655999.465973,
     "ast_hash": "5ab49cc102fe89d8e89684ed21605ebf",
     "semantic_hash": ""
   },
   "documentation/system/generated/districts/PHASE-04-domain-actions.md": {
-    "mtime": 1787736290.6839006,
+    "mtime": 1787655999.50838,
     "ast_hash": "72cd983d1fd23fa3f6888e23bbb3f734",
     "semantic_hash": ""
   },
   "documentation/system/generated/districts/PHASE-05-integration-runtime.md": {
-    "mtime": 1787736290.7098174,
+    "mtime": 1787655999.5632362,
     "ast_hash": "78119835f10e1761103b90507f7a70de",
     "semantic_hash": ""
   },
   "documentation/system/generated/districts/PHASE-06-final-reconciliation.md": {
-    "mtime": 1787736290.7300968,
+    "mtime": 1787655999.5891664,
     "ast_hash": "51312a5c70aaad804c6ed6747c4cc1f3",
     "semantic_hash": ""
   },
@@ -11642,436 +11937,6 @@
   "HR-CONNECTION-ONLY-PROMPT.md": {
     "mtime": 1787730192.6175506,
     "ast_hash": "761352ea056c8a1265534567b1ff7b27",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Api/Features/Attendance/Devices/V1/AttendanceAgentController.cs": {
-    "mtime": 1787747244.1469324,
-    "ast_hash": "0828735555e074fb1bca83a008982464",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Api/Features/Attendance/Devices/V1/AttendanceDeviceRawController.cs": {
-    "mtime": 1787732812.1769001,
-    "ast_hash": "8c4bde58b24347a779101aec19aec3d3",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Api/Features/Attendance/Devices/V1/AttendanceDevicesController.cs": {
-    "mtime": 1787743659.3341167,
-    "ast_hash": "7c084979f0bde2a6771aaf71cba142a8",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Application/Features/Attendance/Devices/Commands/AttendanceAgentProtocolCommands.cs": {
-    "mtime": 1787747307.4978087,
-    "ast_hash": "b3000c615ddaec21c4ab1fedea2d3774",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Application/Features/Attendance/Devices/Commands/AttendanceDeviceCommands.cs": {
-    "mtime": 1787747409.472129,
-    "ast_hash": "b89fc534e760b06e10cb315153057544",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Application/Features/Attendance/Devices/Commands/AttendanceDeviceEffects.cs": {
-    "mtime": 1787747214.4728992,
-    "ast_hash": "2008b550724f362c7c4e973151ad35b5",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Application/Features/Attendance/Devices/Commands/ExecuteAttendancePullCommand.cs": {
-    "mtime": 1787747417.356124,
-    "ast_hash": "85b0cfbe608c19e13ac710a495bfc3ff",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Application/Features/Attendance/Devices/Commands/RawAttendanceConversion.cs": {
-    "mtime": 1787734778.9304204,
-    "ast_hash": "2c1a318196467a8944c986c875766dbc",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Application/Features/Attendance/Devices/Contracts/AttendanceDeviceContracts.cs": {
-    "mtime": 1787747149.844785,
-    "ast_hash": "dbccf0e7f9b15c4818c417f6c272f302",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Application/Features/Attendance/Devices/Contracts/AttendanceDevicePorts.cs": {
-    "mtime": 1787747149.844785,
-    "ast_hash": "e7531d87e29e15e26cec67ca8234a289",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Application/Features/Attendance/Devices/Contracts/AttendanceProviderCatalog.cs": {
-    "mtime": 1787734587.2146158,
-    "ast_hash": "6a592387394f6c72cf5829a17a72c168",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Application/Features/Attendance/Devices/Contracts/AttendanceRawStore.cs": {
-    "mtime": 1787747117.774484,
-    "ast_hash": "0f570c5f5ae0d28c83c1a8e6122850c0",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Application/Features/Attendance/Devices/Errors/AttendanceDeviceErrors.cs": {
-    "mtime": 1787747214.4728992,
-    "ast_hash": "96b37dd298fe6352309a44346bf01939",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Application/Features/Attendance/Devices/Mapping/AttendanceDeviceMapping.cs": {
-    "mtime": 1787743659.333116,
-    "ast_hash": "ce34e21ec0241d5d0c6aa34a0bc00b40",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Application/Features/Attendance/Devices/Queries/AttendanceDeviceQueries.cs": {
-    "mtime": 1787743602.3848903,
-    "ast_hash": "8b20b41147e2a069b98d099219c1176a",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Application/Features/Attendance/Devices/Validation/AttendanceDeviceValidators.cs": {
-    "mtime": 1787747333.3334136,
-    "ast_hash": "8afed6b3d8ea8aec37a48b4a05d09958",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.AttendanceConnector/HrManagementSystem.AttendanceConnector.csproj": {
-    "mtime": 1787733010.4394333,
-    "ast_hash": "ce53db05929290db2a5200c7da342899",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.AttendanceConnector/Models/ConnectorModels.cs": {
-    "mtime": 1787734589.758454,
-    "ast_hash": "10f8cb17a4a36126ddbbd5306627121a",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.AttendanceConnector/Program.cs": {
-    "mtime": 1787734731.7929199,
-    "ast_hash": "24b09cb8bbd067cc31484f827965f586",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.AttendanceConnector/Services/ConnectorException.cs": {
-    "mtime": 1787734512.5079348,
-    "ast_hash": "1141a43ef49300d25d49ed127e33856c",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.AttendanceConnector/Services/ConnectorOptions.cs": {
-    "mtime": 1787735464.906088,
-    "ast_hash": "fcb2a0f045479b5d08d69b01fb61bb3c",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.AttendanceConnector/Services/DeviceDriverRegistry.cs": {
-    "mtime": 1787734589.758454,
-    "ast_hash": "a1e4f4e2f81c9fa4f552185cbae7957f",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.AttendanceConnector/Services/IDeviceDriver.cs": {
-    "mtime": 1787734512.5079348,
-    "ast_hash": "e8063efd4b697859db1e71f12e5497cd",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.AttendanceConnector/Services/ZkComDeviceDriver.cs": {
-    "mtime": 1787735503.5689871,
-    "ast_hash": "b92c66a51f5afc1cd52aa457efc29eec",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.AttendanceConnector/appsettings.json": {
-    "mtime": 1787735968.015005,
-    "ast_hash": "d80ffed95b64dd6ed793370a1364942e",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Domain/Attendance/Devices/Entities/AttendanceDevice.cs": {
-    "mtime": 1787747117.774484,
-    "ast_hash": "4381cfe61f21d825d03a2474f8d2ee1f",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Features/Attendance/Devices/Jobs/AttendancePullJob.cs": {
-    "mtime": 1787734904.846826,
-    "ast_hash": "64ff2e04ae77f66a0d56a15c981e97a7",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Features/Attendance/Devices/Jobs/AttendancePullScheduler.cs": {
-    "mtime": 1787734904.8784716,
-    "ast_hash": "1e31a1df6a9018d456dd8a319daab4e9",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Features/Attendance/Devices/Persistence/AttendanceDeviceConfiguration.cs": {
-    "mtime": 1787747117.774484,
-    "ast_hash": "df649106d020c987c279696cda415d40",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Features/Attendance/Devices/Persistence/AttendanceDeviceStore.cs": {
-    "mtime": 1787743659.3321033,
-    "ast_hash": "998627c6c79bf6fbdb6aef4204fcef09",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Features/Attendance/Devices/Persistence/AttendanceRawStore.cs": {
-    "mtime": 1787747149.844785,
-    "ast_hash": "dc0145af455e97882dd5507157ac9dd2",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Features/Attendance/Devices/Services/AttendanceAgentSupport.cs": {
-    "mtime": 1787747149.844785,
-    "ast_hash": "7d1b8eec359aa9e932b9754107b22708",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Features/Attendance/Devices/Services/AttendanceConnectorClient.cs": {
-    "mtime": 1787735437.0663865,
-    "ast_hash": "2e1de4617a6697f2e33da9d0271711d3",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Features/Attendance/Devices/Services/AttendanceDeviceSupport.cs": {
-    "mtime": 1787734733.262682,
-    "ast_hash": "8037e1bc487acdf652854b0cc934ba9a",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Migrations/20260826095902_createdatabase.Designer.cs": {
-    "mtime": 1787738342.4901125,
-    "ast_hash": "13a9f7dc6797b49b3d6e4be4633af1d3",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Migrations/20260826095902_createdatabase.cs": {
-    "mtime": 1787738342.4901125,
-    "ast_hash": "2c8e268d4535fae49ff342c3243a4db3",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Migrations/20260826112940_AddAttendanceSiteAgents.Designer.cs": {
-    "mtime": 1787743780.7820585,
-    "ast_hash": "38dbad5c93bf5493a8af529875788280",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Migrations/20260826112940_AddAttendanceSiteAgents.cs": {
-    "mtime": 1787743780.7805512,
-    "ast_hash": "04f434f6196a1f45a665dc806222358b",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Migrations/20260826122802_AddAttendanceAgentExecutionLeases.Designer.cs": {
-    "mtime": 1787747284.0421112,
-    "ast_hash": "76c4ea09c8419cda6c5af9a7fcedcbd2",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Migrations/20260826122802_AddAttendanceAgentExecutionLeases.cs": {
-    "mtime": 1787747284.0421112,
-    "ast_hash": "45a7a116ad58d84ffd1b3817d8e4da66",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Infrastructure/Persistence/Configurations/OrganizationalStructure/BranchConfiguration.cs": {
-    "mtime": 1787734450.0901423,
-    "ast_hash": "cd194e949cd761414162086f888fa7a3",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Tests/AttendanceDeviceRawDataTests.cs": {
-    "mtime": 1787735254.348068,
-    "ast_hash": "86871bf7d8ed1fdf717c39fbb8d1dcbe",
-    "semantic_hash": ""
-  },
-  "api/HrManagementSystem.Tests/AttendanceDevicesArchitectureTests.cs": {
-    "mtime": 1787735254.2987244,
-    "ast_hash": "aae593fe851cb6b602baaf7a9233d561",
-    "semantic_hash": ""
-  },
-  "api/scripts/Build-AttendanceAgentDownload.ps1": {
-    "mtime": 1787750618.8743594,
-    "ast_hash": "127336b920326b056c6468f79802b795",
-    "semantic_hash": ""
-  },
-  "documentation/system/features/attendance-devices/required-files.json": {
-    "mtime": 1787736271.0742977,
-    "ast_hash": "4886d86df0dff831e44824bfe0542448",
-    "semantic_hash": ""
-  },
-  "scripts/Start-AttendanceDevelopment.ps1": {
-    "mtime": 1787736345.4534047,
-    "ast_hash": "4369a5c1fec009e28dbf3bf6fd5553d4",
-    "semantic_hash": ""
-  },
-  "web-next/src/app/(main)/attendance-devices/page.tsx": {
-    "mtime": 1787732683.1601086,
-    "ast_hash": "fabbc3a364036254bea720f828f5423c",
-    "semantic_hash": ""
-  },
-  "web-next/src/app/(main)/attendance-devices/pull-runs/page.tsx": {
-    "mtime": 1787732683.1621034,
-    "ast_hash": "3ac0edfee981648f44d740c886a8db13",
-    "semantic_hash": ""
-  },
-  "web-next/src/app/(main)/attendance-devices/punches/page.tsx": {
-    "mtime": 1787732683.1611059,
-    "ast_hash": "b2e8e34648d23ce000971a0001cd22d2",
-    "semantic_hash": ""
-  },
-  "web-next/src/app/(main)/attendance-devices/users/page.tsx": {
-    "mtime": 1787732683.1611059,
-    "ast_hash": "17bf82c302eb766c60b1db9fc1a20d07",
-    "semantic_hash": ""
-  },
-  "web-next/src/config/api/attendanceDevices.ts": {
-    "mtime": 1787743867.924083,
-    "ast_hash": "35d62d8d0c2cd69802f12369bd0b6546",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/components/AttendanceAgentEnrollmentDialog.tsx": {
-    "mtime": 1787750195.9744234,
-    "ast_hash": "d61e9e0488493c905437957d35991f49",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/components/AttendanceModuleLayout.tsx": {
-    "mtime": 1787732587.007529,
-    "ast_hash": "44cb086ce120cd0eaba69c7b74bedae4",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/components/CredentialsDialog.tsx": {
-    "mtime": 1787736639.1983292,
-    "ast_hash": "2fb8bc04fe3cf8e7d28585eba28bf3da",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/components/DeviceFormDialog.tsx": {
-    "mtime": 1787745780.1872218,
-    "ast_hash": "fffd128d48340240d53d1b7f530e0ee9",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/components/RawGrid.tsx": {
-    "mtime": 1787735973.9625423,
-    "ast_hash": "4e851c4461a5b3df41e83b8f6d78b34a",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/hooks/useAttendanceDeviceQueries.ts": {
-    "mtime": 1787747617.28737,
-    "ast_hash": "90dd8e767afc12174fdd7c63a83f0d25",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/index.ts": {
-    "mtime": 1787732554.964141,
-    "ast_hash": "6eb9108cc2006d3f47218c6704c93273",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/pages/AttendanceDevicesPage.tsx": {
-    "mtime": 1787747789.58278,
-    "ast_hash": "d203a9ac709ece8042ab64f8afb93073",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/pages/AttendancePullRunsPage.tsx": {
-    "mtime": 1787734594.6948307,
-    "ast_hash": "febbc87ab89ea01ad24242f5ec644142",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/pages/AttendancePunchesPage.tsx": {
-    "mtime": 1787736097.8433096,
-    "ast_hash": "5d506e40a644b05e7fb6a6a2a37864db",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/pages/AttendanceUsersPage.tsx": {
-    "mtime": 1787734542.0600657,
-    "ast_hash": "1729f5f9f5fee0af252d8a057d1271f3",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/services/attendanceDeviceService.ts": {
-    "mtime": 1787743827.0169969,
-    "ast_hash": "356ef8b9ff58c3307f553ed6ef35256d",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/types/attendanceDevices.ts": {
-    "mtime": 1787747567.0122156,
-    "ast_hash": "69d09e68af969ea76f3dc46787a0e77f",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/utils/attendanceDeviceQuery.test.ts": {
-    "mtime": 1787732776.0147593,
-    "ast_hash": "70ea24d6d0924259009b1ba6a4a39029",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/utils/attendanceDeviceQuery.ts": {
-    "mtime": 1787732776.0051534,
-    "ast_hash": "954928bb2e36ac911408956a92be4cc3",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/utils/permissions.test.ts": {
-    "mtime": 1787732776.0147593,
-    "ast_hash": "e15e019599547cfda24e4b73c5d36708",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/utils/permissions.ts": {
-    "mtime": 1787732554.9631448,
-    "ast_hash": "19571761b951338b67267ba9c0c89727",
-    "semantic_hash": ""
-  },
-  "web-next/src/features/attendance-devices/utils/validation.ts": {
-    "mtime": 1787745588.8164618,
-    "ast_hash": "ef0ba9875b3cd842897722d15c94f795",
-    "semantic_hash": ""
-  },
-  "web-next/src/layouts/components/sidebar/configs/attendanceConfig.tsx": {
-    "mtime": 1787732713.5502782,
-    "ast_hash": "01eaf3d92cd218212a150391f81cf49b",
-    "semantic_hash": ""
-  },
-  "web-next/src/shared/components/forms/date-time/MyDateTimeField.tsx": {
-    "mtime": 1787746398.6211722,
-    "ast_hash": "16a8977a2535917c9464e48d8bc30878",
-    "semantic_hash": ""
-  },
-  "web-next/src/shared/components/forms/date-time/index.ts": {
-    "mtime": 1787746398.6222146,
-    "ast_hash": "e7241d20d017632441f63c917c39dd34",
-    "semantic_hash": ""
-  },
-  "documentation/api/AttendanceDevices_API_Implementation_Profile.md": {
-    "mtime": 1787743527.9421256,
-    "ast_hash": "c32112de5ce71c7fa09419ed71f75b6c",
-    "semantic_hash": ""
-  },
-  "documentation/mobile-react/attendance-devices-mobile-reference.md": {
-    "mtime": 1787735716.3303623,
-    "ast_hash": "b38375ab13ed64a5aeaa1994aeef1a16",
-    "semantic_hash": ""
-  },
-  "documentation/project/ATTENDANCE_DEVICES_FEATURE_FULL_REVIEW.md": {
-    "mtime": 1787743527.9421256,
-    "ast_hash": "2b6573123a762bc9df650e098f420025",
-    "semantic_hash": ""
-  },
-  "documentation/project/ATTENDANCE_SITE_AGENT_RUNBOOK.md": {
-    "mtime": 1787750618.8743594,
-    "ast_hash": "54a4aa10f2c776ca2694d1bb95647768",
-    "semantic_hash": ""
-  },
-  "documentation/system/features/attendance-devices/ATTENDANCE_DEVICES-REVIEW-ARTIFACTS.md": {
-    "mtime": 1787735801.942233,
-    "ast_hash": "c9f16e945c0400919625480dd0dbd4c2",
-    "semantic_hash": ""
-  },
-  "documentation/system/features/attendance-devices/IMPLEMENTATION-REQUEST.md": {
-    "mtime": 1787735762.5651283,
-    "ast_hash": "cc69c25de75641c97669c9dad8fe8319",
-    "semantic_hash": ""
-  },
-  "documentation/system/generated/attendance-devices/PHASE-00-discovery-evidence.md": {
-    "mtime": 1787736291.1876948,
-    "ast_hash": "7b28659a8e3d4d51947d15f366e4d88c",
-    "semantic_hash": ""
-  },
-  "documentation/system/generated/attendance-devices/PHASE-01-domain-api.md": {
-    "mtime": 1787736291.2118917,
-    "ast_hash": "ad4fc789e27892853896b21cb63d5d37",
-    "semantic_hash": ""
-  },
-  "documentation/system/generated/attendance-devices/PHASE-02-web-client.md": {
-    "mtime": 1787736291.245557,
-    "ast_hash": "8010a61d4332be2d994bafae9bad711b",
-    "semantic_hash": ""
-  },
-  "documentation/system/generated/attendance-devices/PHASE-03-mobile-client.md": {
-    "mtime": 1787736291.2896442,
-    "ast_hash": "b682a315171e852f5b7d22edb4afe252",
-    "semantic_hash": ""
-  },
-  "documentation/system/generated/attendance-devices/PHASE-04-domain-actions.md": {
-    "mtime": 1787736291.3285909,
-    "ast_hash": "e20b350d8485836c94639586137abbf2",
-    "semantic_hash": ""
-  },
-  "documentation/system/generated/attendance-devices/PHASE-05-integration-runtime.md": {
-    "mtime": 1787736291.3607912,
-    "ast_hash": "e7cea3845fb42d18fdca430d60b8133a",
-    "semantic_hash": ""
-  },
-  "documentation/system/generated/attendance-devices/PHASE-06-final-reconciliation.md": {
-    "mtime": 1787736291.3897889,
-    "ast_hash": "83dc05b88cdbac66c313cb4ccbada8ae",
-    "semantic_hash": ""
-  },
-  "documentation/web-next/features/attendance-devices-frontend-reference.md": {
-    "mtime": 1787743527.94347,
-    "ast_hash": "aefd18da54147358347123ceac4801ff",
     "semantic_hash": ""
   }
 }
