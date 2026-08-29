@@ -6,7 +6,11 @@ Districts is global State-dependent geographical reference data. It does not inh
 
 ## 2. Domain model
 
-`District` requires Arabic and English names, an uppercase code, and `StateId`. Address is its downstream dependency. Database uniqueness remains scoped by State.
+`District` requires printable Unicode display names, an uppercase code, and
+`StateId`. Names are 2-100 characters and may contain spaces, digits,
+punctuation, and any script; control characters and line breaks are rejected.
+The code is restricted to 2-10 ASCII letters, digits, or hyphens. Address is
+its downstream dependency. Database uniqueness remains scoped by State.
 
 ## 3. Transport contracts
 

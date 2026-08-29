@@ -60,7 +60,7 @@ and `Excluded` means no runtime surface.
 | address-types-api | 10 | `a6b047ce552f06a101f0d842e1d2a5073f8422c48228f4a1f548e88a7a481079` |
 | address-types-api | 11 | `545a74147c539ef7388c9f349fd4f3fcc94399ffa23988ee2e199395c87dbd8f` |
 | address-types-web | 1 | `b3020d62bc94049712c0a2f15d7435292ce16aaa254409856a6bf7c7405cc499` |
-| address-types-web | 2 | `28b4023af2a4131d5bca997bf32d61328902a654c1352dc25d4eb648b6ad91e6` |
+| address-types-web | 2 | `566c1bb2e2d57ebcaf5853637d29939bf6c53061d7ddff9fdb92740ec3ae4f66` |
 | address-types-web | 12 | `79c8b65d2b3da2c9f670533292936c9cc7c268333fc03488b6e3f321ea75e4da` |
 | address-types-web | 13 | `2bd84244023861a16a3969ed4ce8128912ee46de5ae8b9cf76fe928dd7480d5f` |
 | address-types-mobile | 1 | `0074ef0d666e3549c7f9c146a60607748e10d8def86f9c40691ce85485dd5f71` |

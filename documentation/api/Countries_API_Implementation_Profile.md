@@ -89,11 +89,11 @@ Registration and composition also require:
 | Property | Contract |
 |---|---|
 | `Id` | Database integer identity |
-| `NameAr`, `NameEn` | Required, maximum 100, unique individually |
+| `NameAr`, `NameEn` | Required, trimmed printable Unicode display names, 2-100 characters, unique individually; spaces, digits, and punctuation are allowed, while control characters and line breaks are rejected |
 | `Alpha2Code` | Nullable, maximum 2, filtered unique index |
 | `Alpha3Code` | Nullable, maximum 3, filtered unique index |
 | `PhoneCode` | Nullable, maximum 10 |
-| `CurrencyCode` | Nullable, maximum 3 |
+| `CurrencyCode` | Nullable, maximum 3 ASCII letters; normalized uppercase |
 | `States` | Required one-to-many relationship through `State.CountryId` |
 | Audit/lifecycle fields | Inherited created/updated/deleted metadata and `IsDeleted` |
 
@@ -104,7 +104,8 @@ record is restored or changed through an approved workflow.
 
 `CountryMappingConfig` is the mutation normalization boundary:
 
-- trim Arabic and English names;
+- trim printable Unicode Arabic/English display names; no language-specific
+  script restriction is applied;
 - trim and uppercase Alpha-2, Alpha-3 and currency;
 - trim phone code;
 - map blank optional values to `null`;
@@ -243,7 +244,9 @@ server rolls back the batch.
 
 Shared mutation validation enforces:
 
-- trimmed Arabic/English names, 2-100, language-specific regex;
+- trimmed printable Unicode display names, 2-100; spaces, digits, and
+  punctuation are allowed, while control characters and line breaks are
+  rejected;
 - optional Alpha-2/Alpha-3/currency exact lengths and regex;
 - optional phone length 1-10 and international-code regex;
 - positive route IDs;

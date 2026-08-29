@@ -1,4 +1,5 @@
 using HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Abstractions;
+using HrManagementSystem.Application.Features.GeographicalInformation.Validation;
 
 namespace HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Contracts;
 
@@ -13,28 +14,10 @@ public class AddressTypeRequestValidator : AbstractValidator<AddressTypeRequest>
         _localizer = localizer;
 
         RuleFor(a => a.NameEn)
-            .Trimmed()
-            .NotEmpty()
-            .WithName(Strings.NameEn)
-            .WithMessage(_localizer[Strings.Required])
-            .Length(2, 100)
-            .WithMessage(_localizer[Strings.MaxLengthError]);
-
-        RuleFor(a => a.NameEn)
-            .Matches(RegexPattern.EnglishLettersAndSpaces)
-            .WithMessage(_localizer[Strings.EnglishLetterOnly]);
+            .GeographicalName(_localizer, Strings.NameEn);
 
         RuleFor(a => a.NameAr)
-            .Trimmed()
-            .NotEmpty()
-            .WithName(Strings.NameAr)
-            .WithMessage(_localizer[Strings.Required])
-            .Length(2, 100)
-            .WithMessage(_localizer[Strings.MaxLengthError]);
-
-        RuleFor(a => a.NameAr)
-            .Matches(RegexPattern.ArabicLettersAndSpaces)
-            .WithMessage(_localizer[Strings.ArabicLetterOnly]);
+            .GeographicalName(_localizer, Strings.NameAr);
 
         RuleFor(a => a)
            .MustAsync(IsAddressTypeNameEnUniqueAsync)

@@ -1,4 +1,5 @@
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts;
+using HrManagementSystem.Application.Features.GeographicalInformation.Validation;
 
 namespace HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands;
 
@@ -9,24 +10,10 @@ public class CountryMutationValidator<TMutation> : AbstractValidator<TMutation>
         IStringLocalizer<CreateCountryRequest> localizer)
     {
         RuleFor(country => country.NameEn)
-            .Trimmed()
-            .NotEmpty()
-            .WithName(Strings.NameEn)
-            .WithMessage(localizer[Strings.Required])
-            .Length(2, 100)
-            .WithMessage(localizer[Strings.MaxLengthError])
-            .Matches(RegexPattern.EnglishLettersAndSpaces)
-            .WithMessage(localizer[Strings.EnglishLetterOnly]);
+            .GeographicalName(localizer, Strings.NameEn);
 
         RuleFor(country => country.NameAr)
-            .Trimmed()
-            .NotEmpty()
-            .WithName(Strings.NameAr)
-            .WithMessage(localizer[Strings.Required])
-            .Length(2, 100)
-            .WithMessage(localizer[Strings.MaxLengthError])
-            .Matches(RegexPattern.ArabicLettersAndSpaces)
-            .WithMessage(localizer[Strings.ArabicLetterOnly]);
+            .GeographicalName(localizer, Strings.NameAr);
 
         RuleFor(country => country.Alpha2Code)
             .Length(2)

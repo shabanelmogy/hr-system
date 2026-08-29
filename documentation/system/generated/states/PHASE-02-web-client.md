@@ -106,17 +106,17 @@ failure into partial success.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| states-master | 3 | `ecfe513471d47a6c3997811c416202b8f049beb6c5b1f79674db45a86f835e36` |
-| states-master | 4 | `a9d43a8825acc5cf672a1b9eaf65fbf8090c809e81ac83942387c34fdd7414c8` |
+| states-master | 3 | `d3d5f94f4788de672bd801f30787caae4daea1b39d5c03ecde71f602ab42b8fe` |
+| states-master | 4 | `5a6d15c81abe80fbc5e13715f385f8a978b6482153ba7cec90474f46b6886ebf` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
-| states-master | 7 | `ccdb4b0d23c807c41f0c7a9af54f7667d8a543ad0ce265df9b4e4f64c69a947e` |
+| states-master | 7 | `a0695f176343e9d5455803e4e75b9d913893c4f6d1a7626a53df6cb0ebc68e00` |
 | states-web | 1 | `284abc272111e6e82feb45e7a332e8c1fb825eacd7c3472e7d088b0ed6b9cfa5` |
 | states-web | 2 | `5715616f7749731d49b88637b1bdf8ddeb9d6d691bfa13552d58058a37aaed75` |
 | states-web | 3 | `95ff792642bfed9c3e2e6720b788ec6098addfe6017c36fe1bee99c216624b4b` |
 | states-web | 4 | `9acd30b3a04ad1773bd8ad2b59315180664111f18183ec6d977d3daed0fc3aac` |
 | states-web | 5 | `3860c4e595f0ca1a660e737d9c9fcfa5fd23a4366804014e8e36b8131645d26c` |
 | states-web | 6 | `c5dbf3d36f71536e19222be00289fa75416d1069692acfe82dd69be886a08eb4` |
-| states-web | 7 | `dd6b988a8e7b8b83010b144e56d1cec974980774b9fd9155dd966a6167bed42c` |
+| states-web | 7 | `85652ee3b5c1d7468a6c300167194b0d003b49da5f4751350ad169befcb018a5` |
 | states-web | 8 | `dec0c122194d60ca08d8135c4d8fa24774fbecc3f5dc9d9fb4df340f9b3259c8` |
 | states-web | 9 | `746099e532ae94bd3061c2ef0f9418838809d5c581bdd7444e64e3ef7948de7a` |
 | states-web | 10 | `3e502c9832ab020e30d883b7b57ffbec73936e1159832768a087ac1ed9da3522` |

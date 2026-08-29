@@ -287,6 +287,14 @@ export function FeatureForm({ entity, loading, mode, onClose, onSave }) {
 }
 ```
 
+Development forms may opt into the shared `AppForm` `mockDataAction`. It renders
+the localized Generate Mock Data action in the modal footer only when the
+feature passes a domain-owned generator. The action fills values for review,
+marks the form dirty, never submits or persists data, is disabled while the form
+or required parent lookup is unavailable, and must be gated with `__DEV__`.
+Samples and parent relationships remain feature-owned; do not generate an
+arbitrary generic object or use mock generation as a production seed path.
+
 ### Step 9 — Screen (`screens/{Feature}Screen.tsx`)
 
 The screen uses:

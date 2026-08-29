@@ -1,7 +1,6 @@
 // components/CountryForm.tsx
 import { MyForm, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
-import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
 import { Alert, Box, Button } from "@mui/material";
 import { useEffect, useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
@@ -155,20 +154,10 @@ const CountryForm = ({
       overlayActionType={getOverlayActionType()}
       overlayMessage={getOverlayMessage()}
       errors={getErrorMessages()}
-      footerLeft={
-        process.env.NODE_ENV !== "production" && isAddMode ? (
-          <Button
-            type="button"
-            variant="outlined"
-            color="secondary"
-            size="small"
-            startIcon={<CasinoOutlinedIcon />}
-            onClick={generateMockData}
-            disabled={loading}
-          >
-            {t("countries.generateMockData")}
-          </Button>
-        ) : null
+      mockDataAction={
+        process.env.NODE_ENV !== "production" && (isAddMode || isEditMode)
+          ? { onGenerate: generateMockData, disabled: loading }
+          : undefined
       }
     >
       {detailError ? (

@@ -46,6 +46,8 @@ public class AddressService(
     {
         var response = await _context.Addresses
                                     .Include(a => a.AddressType)
+                                    .Include(a => a.Country)
+                                    .Include(a => a.State)
                                     .Include(a => a.District)
                                     .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 
@@ -56,16 +58,17 @@ public class AddressService(
 
     public async Task<Result<AddressResponse>> AddAsync(AddressRequest addressRequest, CancellationToken cancellationToken = default)
     {
+        addressRequest = Normalize(addressRequest);
         AddressResponse? publishedResponse = null;
         var result = await _context.ExecuteAtomicallyAsync(
-            [GeographicalLifecycleLocks.AddressType(addressRequest.AddressTypeId)],
+            GetLockResources(addressRequest),
             async token =>
             {
+                var hierarchyError = await ValidateHierarchyAsync(addressRequest, token);
+                if (hierarchyError is not null)
+                    return Result.Failure<AddressResponse>(hierarchyError);
                 if (!await IsActiveAddressTypeAsync(addressRequest.AddressTypeId, token))
                     return Result.Failure<AddressResponse>(_addressErrors.AddressTypeNotFound);
-
-                if (addressRequest.IsDefault)
-                    await UnsetOtherDefaultAddresses(token);
 
                 var newAddress = _mapper.Map<Address>(addressRequest);
                 await _context.AddAsync(newAddress, token);
@@ -84,6 +87,7 @@ public class AddressService(
 
     public async Task<Result<AddressResponse>> UpdateAsync(AddressRequest addressRequest, CancellationToken cancellationToken = default)
     {
+        addressRequest = Normalize(addressRequest);
         while (true)
         {
             var expectedAddressTypeId = await _context.Addresses
@@ -100,6 +104,8 @@ public class AddressService(
                 .Distinct()
                 .OrderBy(id => id)
                 .Select(GeographicalLifecycleLocks.AddressType)
+                .Concat(GetLockResources(addressRequest)
+                    .Where(resource => !resource.StartsWith("GeographicalInformation:AddressType:", StringComparison.Ordinal)))
                 .ToArray();
             var result = await _context.ExecuteAtomicallyAsync(
                 lockResources,
@@ -118,8 +124,9 @@ public class AddressService(
                     if (!await IsActiveAddressTypeAsync(addressRequest.AddressTypeId, token))
                         return Result.Failure<AddressResponse>(_addressErrors.AddressTypeNotFound);
 
-                    if (addressRequest.IsDefault && !currentAddress.IsDefault)
-                        await UnsetOtherDefaultAddresses(token);
+                    var hierarchyError = await ValidateHierarchyAsync(addressRequest, token);
+                    if (hierarchyError is not null)
+                        return Result.Failure<AddressResponse>(hierarchyError);
 
                     var updatedAddress = addressRequest.Adapt<Address>();
                     await _entityChangeLogService.CreateChangeLogAsync(
@@ -175,11 +182,11 @@ public class AddressService(
                         return Result.Success();
                     }
 
-                    if (address.IsDefault)
-                        return Result.Failure(_addressErrors.DefaultAddressCannotBeDeleted);
-
                     if (address.IsDeleted && !await IsActiveAddressTypeAsync(address.AddressTypeId, token))
                         return Result.Failure(_addressErrors.AddressTypeNotFound);
+
+                    if (!address.IsDeleted && await IsAddressLinkedToOwnerAsync(address.Id, token))
+                        return Result.Failure(_addressErrors.AddressInUseByOtherEntities);
 
                     address.IsDeleted = !address.IsDeleted;
                     if (address.IsDeleted)
@@ -239,25 +246,82 @@ public class AddressService(
             job => job.ExecuteAsync(request, CancellationToken.None));
     }
 
-    private async Task UnsetOtherDefaultAddresses(CancellationToken cancellationToken = default)
-    {
-        var defaultAddresses = await _context.Addresses
-                                           .Where(a => a.IsDefault && !a.IsDeleted)
-                                           .ToListAsync(cancellationToken);
-
-        foreach (var address in defaultAddresses)
-        {
-            address.IsDefault = false;
-        }
-
-        if (defaultAddresses.Any())
-        {
-            _context.UpdateRange(defaultAddresses);
-        }
-    }
-
     private Task<bool> IsActiveAddressTypeAsync(int addressTypeId, CancellationToken cancellationToken) =>
         _context.AddressTypes.AnyAsync(
             addressType => addressType.Id == addressTypeId && !addressType.IsDeleted,
             cancellationToken);
+
+    private string[] GetLockResources(AddressRequest request)
+    {
+        var resources = new List<string>
+        {
+            GeographicalLifecycleLocks.Country(request.CountryId),
+            GeographicalLifecycleLocks.AddressType(request.AddressTypeId)
+        };
+
+        if (request.StateId.HasValue)
+            resources.Add(GeographicalLifecycleLocks.State(request.StateId.Value));
+        if (request.DistrictId.HasValue)
+            resources.Add(GeographicalLifecycleLocks.District(request.DistrictId.Value));
+
+        return resources.ToArray();
+    }
+
+    private async Task<Error?> ValidateHierarchyAsync(
+        AddressRequest request,
+        CancellationToken cancellationToken)
+    {
+        var countryIsActive = await _context.Countries
+            .AnyAsync(country => country.Id == request.CountryId && !country.IsDeleted, cancellationToken);
+        if (!countryIsActive)
+            return _addressErrors.InvalidCountry;
+
+        if (request.StateId.HasValue)
+        {
+            var stateIsValid = await _context.States
+                .AnyAsync(state => state.Id == request.StateId.Value &&
+                                   state.CountryId == request.CountryId &&
+                                   !state.IsDeleted,
+                    cancellationToken);
+            if (!stateIsValid)
+                return _addressErrors.InvalidState;
+        }
+
+        if (request.DistrictId.HasValue)
+        {
+            var districtIsValid = await _context.Districts
+                .AnyAsync(district => district.Id == request.DistrictId.Value &&
+                                      district.StateId == request.StateId &&
+                                      !district.IsDeleted &&
+                                      !district.State!.IsDeleted &&
+                                      district.State.CountryId == request.CountryId &&
+                                      !district.State.Country!.IsDeleted,
+                    cancellationToken);
+            if (!districtIsValid)
+                return _addressErrors.InvalidDistrict;
+        }
+
+        return null;
+    }
+
+    private async Task<bool> IsAddressLinkedToOwnerAsync(int addressId, CancellationToken cancellationToken) =>
+        await _context.Set<CompanyAddress>()
+            .AnyAsync(link => link.AddressId == addressId && !link.IsDeleted, cancellationToken) ||
+        await _context.Set<BranchAddress>()
+            .AnyAsync(link => link.AddressId == addressId && !link.IsDeleted, cancellationToken);
+
+    private static AddressRequest Normalize(AddressRequest request) => request with
+    {
+        City = Normalize(request.City),
+        StreetLine1 = Normalize(request.StreetLine1),
+        StreetLine2 = Normalize(request.StreetLine2),
+        BuildingNumber = Normalize(request.BuildingNumber),
+        Floor = Normalize(request.Floor),
+        ApartmentNumber = Normalize(request.ApartmentNumber),
+        PostalCode = Normalize(request.PostalCode),
+        AdditionalInfo = Normalize(request.AdditionalInfo)
+    };
+
+    private static string? Normalize(string? value) =>
+        string.IsNullOrWhiteSpace(value) ? null : value.Trim();
 }

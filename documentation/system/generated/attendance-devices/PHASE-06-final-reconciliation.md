@@ -51,12 +51,12 @@ decision. A focused test pass alone is never a `Ready` decision.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| attendance-devices-master | 8 | `8c570137ab0e423e63b23d84f9933f2c6675f723000dd948cf86cb2185fcb60a` |
+| attendance-devices-master | 8 | `2c39242a94953710b4485dd06279d1c3c95fb5b22a0914860b9c9a40d3f8c3c0` |
 | attendance-devices-master | 9 | `b595373da84cb1d4786a69231c4df208ce383549198d947e238e5ca1876f2ce2` |
-| attendance-devices-master | 10 | `a7d04ff8e71ff233acf12ea8007d1024364f8099206e13eef1cdab5c6da73384` |
-| attendance-devices-api | 10 | `9c74502942c3903fa9369c7e948976624dec6f63b07ab06e2272b1c152cea6ef` |
+| attendance-devices-master | 10 | `232015a2b2367bb5fbdf1c5a19a8e211fb10f237ebcd5cb1ead3b55da122ae75` |
+| attendance-devices-api | 10 | `ad145f088dff331f2b150b9d14a3ef8801af90074d3f9691ded837ea7f7c2fd8` |
 | attendance-devices-api | 11 | `9ea0355590bae25b350699fa29a7012af4e66d9ae0124fe8b1a2ffee864af9d7` |
-| attendance-devices-web | 12 | `ead58625f49408165651ab5ad16f7987cc2af7eef2ff82275d1ad7a57e2e32aa` |
+| attendance-devices-web | 12 | `4904496c797104ca58942aa579a0c3ec3c502d7e3cf11badcaad2da15ead466b` |
 | attendance-devices-web | 13 | `fc31618e8d985cd765e02700bcf99f1c7f58b119b3fa1ac2916ae9a4f7e38953` |
 | attendance-devices-web | 14 | `6b972b47ef51e99f0b627bf6d1db62532c616dc939530c049d39108ebed016c8` |
 | attendance-devices-mobile | 14 | `bf81e5505378e7fe18329aa7eb5595718b7d0942998e64cacb471df3fc3f49ba` |

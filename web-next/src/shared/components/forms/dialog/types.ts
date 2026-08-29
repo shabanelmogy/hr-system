@@ -1,5 +1,10 @@
 import type { ReactNode } from "react";
 
+export interface MockDataAction {
+  onGenerate: () => void;
+  disabled?: boolean;
+}
+
 export interface MyFormProps {
   open: boolean;
   onClose: () => void;
@@ -25,4 +30,6 @@ export interface MyFormProps {
   errors?: Record<string, string>;
   onErrorFound?: (errorField: string, fieldElement: HTMLElement) => void;
   footerLeft?: ReactNode;
+  /** Development-only action that fills the form without submitting it. */
+  mockDataAction?: MockDataAction;
 }

@@ -180,6 +180,8 @@ public sealed class StateBulkCreateHandlerTests
         public Task<bool> IsCountryActiveAsync(int countryId, CancellationToken cancellationToken) => Task.FromResult(true);
         public Task<bool> HasActiveDistrictsAsync(int stateId, CancellationToken cancellationToken) => Task.FromResult(false);
         public Task<bool> HasActiveDistrictsAsync(IReadOnlyCollection<int> stateIds, CancellationToken cancellationToken) => Task.FromResult(false);
+        public Task<bool> HasActiveAddressesAsync(int stateId, CancellationToken cancellationToken) => Task.FromResult(false);
+        public Task<bool> HasActiveAddressesAsync(IReadOnlyCollection<int> stateIds, CancellationToken cancellationToken) => Task.FromResult(false);
     }
 
     private sealed class RecordingUnitOfWork(List<string> lifecycle) : IUnitOfWork

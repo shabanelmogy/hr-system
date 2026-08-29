@@ -11,8 +11,8 @@
 | Implementation request | N/A — States predates the scaffolded request; this artifact and the four applied profiles hold its frozen decisions. |
 | Required manifest | `documentation/system/features/states/required-files.json` |
 | Canonical review | `documentation/project/STATES_FEATURE_FULL_REVIEW.md` |
-| Import decision | Web Required; mobile Excluded by current platform profile |
-| Import format | XLSX parsed in the browser; typed JSON bulk envelope sent to API |
+| Import decision | Web Required; mobile Required with the native shared XLSX boundary |
+| Import format | XLSX parsed through the browser/native shared boundary; typed JSON bulk envelope sent to API |
 
 ## Phase evidence
 
@@ -33,7 +33,7 @@
 | Parent relation | Country is required and must be active for create/update/restore; participating Country and State operations share one Country resource. |
 | Child relation | Active Districts block archive and bulk archive; participating State and District operations share one State resource. |
 | Search | State names, code, and Country name only; no Countries alpha/phone/currency fields. |
-| Bulk creation/import | Web XLSX import posts `{ "states": [...] }` to `POST /api/v1/states/bulk` (`States:Create`, 1-100 rows, atomic, one `BulkAdd` change) and requires `Countries:View` for parent resolution. Shared preflight validates XLSX metadata, first-sheet canonical headers, values-only safety, non-empty/100-row bounds, and feature mapping. Dependency states fail explicitly; ambiguous submissions lock and reconcile because the API has no idempotency key. Duplicate checks are case-insensitive, independent for Arabic name, English name, and code, and scoped to Country; mobile Import is Excluded. |
+| Bulk creation/import | Web and mobile XLSX import post `{ "states": [...] }` to `POST /api/v1/states/bulk` (`States:Create`, 1-100 rows, atomic, one `BulkAdd` change) and require `Countries:View` for parent resolution. Shared preflight validates XLSX metadata, first-sheet canonical headers, values-only safety, non-empty/100-row bounds, and feature mapping. Dependency states fail explicitly; ambiguous submissions lock and reconcile because the API has no idempotency key. Duplicate checks are case-insensitive, independent for Arabic name, English name, and code, and scoped to Country. |
 | Browser report | Crystal viewer catalog and generation contract are ready. The checked-in States report slot is empty, so browser Report mode shows a localized unavailable state until the owner adds a valid State `.rpt`. |
 | Mobile report | Current-page summary only until an Expo Crystal PDF viewer/download/share workflow is implemented. |
 | Charts | Required current-page view using the shared criteria and pagination; page scope is explicit. Global analytics remains excluded without an aggregate endpoint. |
@@ -44,9 +44,7 @@
 | --- | --- | --- |
 | S-F03 | Owner action | The State Crystal report template is intentionally not tracked in source. | Add a valid `.rpt` whose filename starts with `States` to the deployment-owned `Reports/States` folder on the Crystal host; the catalog and report contract will pick it up. |
 | S-F04 | Release gate | Automated checks cannot replace browser/device visual testing. | Execute the master review matrix before release. |
-| S-F10 | Repository gate | The existing web architecture check still reports four tenant/realtime cross-feature imports and one shared forms/dialogs cycle; none touches States Import. | Resolve in the owning tenant/realtime/shared refactor. |
-| S-F11 | Repository test | The full API suite has 306 passing tests and the pre-existing `TenantRoleIsolationTests.MigrationBackfill_DeduplicatesSharedRoleTenantBeforeAssigningCloneIds` text assertion failure. | Reconcile the migration assertion with its migration in the tenant-role workstream. |
-| S-F12 | Environment | Full-solution build cannot load the legacy Crystal project's `Microsoft.WebApplication.targets`; the primary HR API project builds with zero warnings/errors. | Build the Crystal project in a Visual Studio/MSBuild environment with Web Application targets, or migrate that project separately. |
+| S-F12 | Environment | Full-solution build cannot load the legacy Crystal project's `Microsoft.WebApplication.targets`; the primary HR API project builds successfully with no errors. The full-solution path also exposes two existing lowercase migration-name warnings. | Build the Crystal project in a Visual Studio/MSBuild environment with Web Application targets, or migrate that project separately. |
 
 ## Resolved findings
 
@@ -70,32 +68,33 @@
 | S-F22 | Countries and States now have page wiring, exact bulk-envelope, mutation-invalidation, column-contract, shared bulk-limit, and import-authorization regression coverage. |
 | S-F01 | A repository-wide consumer audit found no runtime caller for the legacy `IStateService`/`StateService`, so both were removed. The old `StateChangedJob` remains only to execute already-persisted Hangfire payloads; current code cannot schedule it. |
 | S-F23 | Mobile States now has screen criteria/view/form/action/permission coverage and mutation transport/invalidation tests; the unused detail hook/key were removed because list rows are form-authoritative. |
+| S-F24 | State/District/AddressType names now use one API/browser/mobile printable-Unicode rule with explicit tests; spaces, digits, punctuation, and mixed scripts are accepted, while control characters and line breaks are rejected. Technical codes retain their strict ASCII identifier rules. |
 
-## Verification results — 2026-08-24
+## Verification results — 2026-08-27
 
 | Gate | Result |
 | --- | --- |
 | Focused Country CQRS suite | Passed: 53 |
 | Focused State suite | Passed: 24 |
 | Primary HR API build | Passed: 0 warnings, 0 errors |
-| Full API tests | 306 passed, 1 inherited tenant-role migration assertion failed (`S-F11`) |
+| Full API tests | Passed: 349 |
 | Full solution build | Primary projects passed; legacy Crystal target unavailable (`S-F12`) |
 | Web normal and strict typechecks | Passed |
-| Web lint | Passed with 0 errors and 130 inherited warnings |
+| Web lint | Passed with 0 errors and 118 inherited warnings |
 | Web Countries/States regression coverage | Passed inside the full suite, including page wiring, query invalidation, columns, import, bulk selection, and service envelopes |
-| Web tests | Passed: 75 files, 262 tests |
-| Web production build | Passed: 41 routes generated |
-| Web architecture | Inherited failures recorded as `S-F10` |
-| Mobile check | Passed: architecture, typecheck, lint, and 17 files/58 tests |
-| Documentation generation/check | Passed for 14 recipes under PowerShell 7.6 and Windows PowerShell 5.1 |
+| Web tests | Passed: 86 files, 300 tests |
+| Web production build | Passed: 49 routes generated |
+| Web architecture | Passed |
+| Mobile check | Passed: architecture, typecheck, lint, and 41 suites/120 tests |
+| Documentation generation/check | Passed for 49 recipes |
 | Documentation local links | Passed for all 110 Markdown files |
 
 ## Completion checklist
 
 - [x] States focused tests and primary API project build complete.
-- [ ] Full solution/API suite clean; inherited blockers are `S-F11` and `S-F12`.
+- [ ] Full solution build clean; inherited environment blocker is `S-F12`.
 - [x] Web type/lint/tests/build complete.
-- [ ] Web architecture clean; inherited blocker is `S-F10`.
+- [x] Web architecture clean.
 - [x] Mobile check complete.
 - [x] Documentation and link validation complete.
 - [x] `git diff --check` complete.

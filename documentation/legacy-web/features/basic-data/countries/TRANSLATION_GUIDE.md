@@ -310,8 +310,8 @@ const translatedText = t("countries.title"); // Returns "Countries" or "الدو
     "required": "Required field",                   // "حقل مطلوب"
     "minLength": "Must be at least {{count}} characters", // "يجب أن يكون على الأقل {{count}} أحرف"
     "maxLength": "Must be {{count}} characters or less",  // "يجب أن يكون {{count}} أحرف أو أقل"
-    "invalidArabicName": "Name must contain Arabic letters only", // "يجب أن يحتوي الاسم على حروف عربية فقط"
-    "invalidEnglishName": "Name must contain English letters only" // "يجب أن يحتوي الاسم على حروف إنجليزية فقط"
+    "invalidArabicName": "Use printable text without line breaks or control characters", // "استخدم نصًا قابلًا للعرض بدون أسطر جديدة أو محارف تحكم"
+    "invalidEnglishName": "Use printable text without line breaks or control characters" // "استخدم نصًا قابلًا للعرض بدون أسطر جديدة أو محارف تحكم"
   }
 }
 ```

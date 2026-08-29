@@ -43,7 +43,7 @@ realtime, notification, localization, report, or Import integration is reachable
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 4 | `a9c88864fafde572fc0ffc1502f1a5ccb2fc55fdbd77aefe2c54c33d143b9529` |
+| master | 4 | `640408799d07c9939468c39e65e9d2601daa6e89d7896f24b13a924f4ecbb04d` |
 | master | 5 | `bc5395fc0e8362797211912f6e6b9fa911c2e97797953a9effe73f2adff5a228` |
 | master | 6 | `b7fb453c6be690cf10f98e85664f30fb55fb590e628b0f8a0435f54cf67058ac` |
 | master | 7 | `8c0ba157ab3e6ca7bfa97bd23bdd022523f69dc7ac4386e25462b7ad667ba74b` |

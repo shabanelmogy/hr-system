@@ -60,7 +60,7 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | company-geographic-scope-master | 4 | `8a793aa6af268801e0554b7339d3c2a20a793da042b2ada9e9688180a6e1331b` |
 | company-geographic-scope-master | 6 | `92d260cdc23463e140aee8d219007e899e8cae69c926cc42eefd62f198ac4f06` |
 | company-geographic-scope-master | 7 | `ac1df7984c1421dcc4decfb548cab2e1c25325bb3d8dfb0be5d5f83b305a926e` |
-| company-geographic-scope-master | 8 | `0012520feb870ae44a0e4e11bf75cf50f98a8a51d756a85ddbdeee5a443b9d0b` |
+| company-geographic-scope-master | 8 | `329d9fee13f010fada1cff1043d483944af37060e3d219399f1f50c462c58046` |
 | company-geographic-scope-api | 6 | `1bd412614faadc55361e9404e5ef7bbbfa550eea95aa859f57f7823579fca834` |
 | company-geographic-scope-api | 7 | `6029708d675d07c2d68b04b95cde352e14d8e33cd53477da1a1b62867bc5c2e3` |
 | company-geographic-scope-api | 8 | `bfa505287d661d283b0aa02f52e340f7d6fd52b22e9dfa42ad19350143811147` |

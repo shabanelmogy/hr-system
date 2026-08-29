@@ -171,6 +171,14 @@ public sealed class StateWriteStore(ApplicationDbContext context) : IStateWriteS
     public Task<bool> HasActiveDistrictsAsync(IReadOnlyCollection<int> stateIds, CancellationToken cancellationToken) =>
         context.Districts.AnyAsync(district => stateIds.Contains(district.StateId) && !district.IsDeleted, cancellationToken);
 
+    public Task<bool> HasActiveAddressesAsync(int stateId, CancellationToken cancellationToken) =>
+        context.Addresses.AnyAsync(address => address.StateId == stateId && !address.IsDeleted, cancellationToken);
+
+    public Task<bool> HasActiveAddressesAsync(IReadOnlyCollection<int> stateIds, CancellationToken cancellationToken) =>
+        context.Addresses.AnyAsync(
+            address => address.StateId.HasValue && stateIds.Contains(address.StateId.Value) && !address.IsDeleted,
+            cancellationToken);
+
     public Task<bool> HasConflictAsync(State candidate, int? excludedId, CancellationToken cancellationToken) =>
         context.States.AnyAsync(state =>
             state.CountryId == candidate.CountryId &&

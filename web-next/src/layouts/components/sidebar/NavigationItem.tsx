@@ -21,6 +21,7 @@ function NavigationItem({
   path,
   searchTerm,
   onNavigate,
+  onRequestOpen,
   roles = [],
   permissions = [],
   items = [],
@@ -32,13 +33,14 @@ function NavigationItem({
   path?: string;
   searchTerm: string;
   onNavigate: (path: string) => void;
+  onRequestOpen?: () => void;
   roles?: UserRoles[];
   permissions?: PermissionString[];
   items?: NavigationItemModel[];
 }) {
   const theme = useTheme();
-  const router = useRouter();
   const pathname = usePathname();
+  const router = useRouter();
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const hasChildren = items && items.length > 0;
@@ -70,14 +72,14 @@ function NavigationItem({
 
   const handleClick = () => {
     if (hasChildren) {
+      if (!open) {
+        onRequestOpen?.();
+        return;
+      }
       setExpanded(!expanded);
     } else if (normalizedPath) {
-      // Pass the path to onNavigate so we know which section to keep expanded
-      if (onNavigate) {
-        onNavigate(normalizedPath);
-      }
-
-      // Navigate to the page
+      // Keep the sidebar state in sync before navigating to the selected route.
+      onNavigate(normalizedPath);
       router.push(normalizedPath);
     }
   };
@@ -140,7 +142,7 @@ function NavigationItem({
             sx={{
               flex: open ? "1 1 auto" : "0 0 0",
               minWidth: 0,
-              maxWidth: open ? 144 : 0,
+              maxWidth: open ? "none" : 0,
               opacity: open ? 1 : 0,
               overflow: "hidden",
               textAlign: "start",
@@ -154,9 +156,11 @@ function NavigationItem({
                 },
               ),
               "& .MuiListItemText-primary": {
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
+                display: "block",
+                fontSize: "0.875rem",
+                lineHeight: 1.35,
+                overflowWrap: "anywhere",
+                whiteSpace: "normal",
               },
             }}
           />
@@ -203,6 +207,7 @@ function NavigationItem({
                 path={childItem.path}
                 searchTerm={searchTerm}
                 onNavigate={onNavigate}
+                onRequestOpen={onRequestOpen}
                 roles={childItem.roles || []}
                 permissions={childItem.permissions || []}
                 items={childItem.items || []}

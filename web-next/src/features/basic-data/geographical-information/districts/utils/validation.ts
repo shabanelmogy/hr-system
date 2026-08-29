@@ -1,31 +1,16 @@
 // District validation schemas
 import { z } from "zod";
-import {
-  arabicLettersAndSpacesPattern,
-  englishLettersAndSpacesPattern,
-  stateCodePattern,
-} from "@/features/basic-data/geographical-information/validation/patterns";
+import { stateCodePattern } from "@/features/basic-data/geographical-information/validation/patterns";
+import { createGeographicalNameSchema } from "@/features/basic-data/geographical-information/validation/nameValidation";
 import type { TFunction } from "i18next";
 
 export type DistrictValidationSchema = z.infer<ReturnType<typeof getDistrictValidationSchema>>;
 
 export const getDistrictValidationSchema = (t: TFunction) => {
   return z.object({
-    nameAr: z
-      .string()
-      .trim()
-      .min(1, t("validation.required"))
-      .min(2, t("validation.minLength", { count: 2 }))
-      .max(100, t("validation.maxLength", { count: 100 }))
-      .regex(arabicLettersAndSpacesPattern, t("validation.arabicOnly")),
+    nameAr: createGeographicalNameSchema(t),
 
-    nameEn: z
-      .string()
-      .trim()
-      .min(1, t("validation.required"))
-      .min(2, t("validation.minLength", { count: 2 }))
-      .max(100, t("validation.maxLength", { count: 100 }))
-      .regex(englishLettersAndSpacesPattern, t("validation.englishOnly")),
+    nameEn: createGeographicalNameSchema(t),
 
     code: z
       .string()

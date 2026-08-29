@@ -61,6 +61,7 @@ function NavigationSection({
   isExpanded,
   onToggle,
   onNavigate,
+  onRequestOpen,
 }: {
   section: NavigationSectionModel;
   open: boolean;
@@ -69,6 +70,7 @@ function NavigationSection({
   isExpanded: boolean;
   onToggle: (sectionId: string, forceState?: boolean) => void;
   onNavigate: (path: string) => void;
+  onRequestOpen?: () => void;
 }) {
   const theme = useTheme();
   const router = useRouter();
@@ -110,6 +112,11 @@ function NavigationSection({
     !searchTerm || sectionTitleMatches || hasMatchingItems;
 
   const handleSectionClick = () => {
+    if (!open && !section.path) {
+      onRequestOpen?.();
+      return;
+    }
+
     if (section.path) {
       onNavigate(section.path);
       router.push(normalizeAppPath(section.path));
@@ -194,7 +201,7 @@ function NavigationSection({
             sx={{
               flex: open ? "1 1 auto" : "0 0 0",
               minWidth: 0,
-              maxWidth: open ? 160 : 0,
+              maxWidth: open ? "none" : 0,
               opacity: open ? 1 : 0,
               overflow: "hidden",
               textAlign: "start",
@@ -208,9 +215,11 @@ function NavigationSection({
                 },
               ),
               "& .MuiListItemText-primary": {
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
+                display: "block",
+                fontSize: "0.875rem",
+                lineHeight: 1.35,
+                overflowWrap: "anywhere",
+                whiteSpace: "normal",
               },
             }}
           />
@@ -233,6 +242,7 @@ function NavigationSection({
               path={item.path}
               searchTerm={searchTerm}
               onNavigate={onNavigate}
+              onRequestOpen={onRequestOpen}
               roles={item.roles || []}
               permissions={item.permissions || []}
               items={item.items || []}

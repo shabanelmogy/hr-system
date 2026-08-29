@@ -10,7 +10,7 @@ export interface District {
 }
 export type DistrictDetail = Omit<District, 'addressesCount'>;
 export interface DistrictWithAddresses extends DistrictDetail { addresses: DistrictAddress[]; }
-export interface DistrictAddress { id: number; buildingNumber: string; floor: string; apartmentNumber: string; postalCode: string; isDefault: boolean; isDeleted: boolean; }
+export interface DistrictAddress { id: number; buildingNumber: string | null; floor: string | null; apartmentNumber: string | null; postalCode: string | null; isDeleted: boolean; }
 export interface DistrictLookup { id: number; nameAr: string; nameEn: string; code: string; stateId: number; }
 export interface DistrictRequest { nameAr: string; nameEn: string; code: string; stateId: number; }
 export interface BulkCreateDistrictsResponse { createdCount: number; }

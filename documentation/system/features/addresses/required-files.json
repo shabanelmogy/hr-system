@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "feature": "addresses",
+  "featureName": "Addresses",
+  "referenceFeature": "countries",
+  "purpose": "Evidence surface for the shared company-scoped Address domain, owner links, and deferred client integrations.",
+  "reviewArtifact": "documentation/system/features/addresses/ADDRESSES-REVIEW-ARTIFACTS.md",
+  "sourceCollections": [
+    {
+      "id": "api-domain",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Domain/GeographicalInformation/Addresses",
+      "minimumFiles": 4,
+      "purpose": "Address entity, purpose enum, and company/branch ownership links"
+    },
+    {
+      "id": "api-contracts",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Application/Features/GeographicalInformation/Addresses",
+      "minimumFiles": 5,
+      "purpose": "Address request/response, validation, errors, and service port"
+    },
+    {
+      "id": "api-persistence",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Addresses",
+      "minimumFiles": 3,
+      "purpose": "Address configuration, service, and post-commit job"
+    },
+    {
+      "id": "api-owner-persistence",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Persistence/Configurations/OrganizationalStructure",
+      "minimumFiles": 2,
+      "purpose": "CompanyAddress and BranchAddress persistence contracts"
+    }
+  ],
+  "requiredFiles": [
+    { "id": "root-agent", "layer": "configuration", "path": "AGENTS.md", "purpose": "Documentation update policy" },
+    { "id": "domain-guide", "layer": "documentation", "path": "documentation/project/GEOGRAPHICAL_INFORMATION_DOMAIN_GUIDE.md", "purpose": "Cross-domain ownership and integration map" },
+    { "id": "master", "layer": "documentation", "path": "documentation/project/ADDRESSES_DOMAIN_FULL_REVIEW.md", "purpose": "Address domain authority" },
+    { "id": "api-profile", "layer": "documentation", "path": "documentation/api/Addresses_API_Implementation_Profile.md", "purpose": "Address API contract" },
+    { "id": "web-profile", "layer": "documentation", "path": "documentation/web-next/features/addresses-frontend-reference.md", "purpose": "Deferred browser integration contract" },
+    { "id": "mobile-profile", "layer": "documentation", "path": "documentation/mobile-react/addresses-mobile-reference.md", "purpose": "Deferred Expo integration contract" },
+    { "id": "review-artifact", "layer": "documentation", "path": "documentation/system/features/addresses/ADDRESSES-REVIEW-ARTIFACTS.md", "purpose": "Evidence and handoff ledger" },
+    { "id": "entity", "layer": "api", "path": "api/HrManagementSystem.Domain/GeographicalInformation/Addresses/Entities/Address.cs", "purpose": "Flexible Address model" },
+    { "id": "purpose", "layer": "api", "path": "api/HrManagementSystem.Domain/GeographicalInformation/Addresses/Entities/AddressPurpose.cs", "purpose": "Owner-link purpose vocabulary" },
+    { "id": "company-link", "layer": "api", "path": "api/HrManagementSystem.Domain/GeographicalInformation/Addresses/Entities/CompanyAddress.cs", "purpose": "Company ownership link" },
+    { "id": "branch-link", "layer": "api", "path": "api/HrManagementSystem.Domain/GeographicalInformation/Addresses/Entities/BranchAddress.cs", "purpose": "Branch ownership link" },
+    { "id": "request", "layer": "api", "path": "api/HrManagementSystem.Application/Features/GeographicalInformation/Addresses/Contracts/AddressRequest.cs", "purpose": "Create/update request" },
+    { "id": "response", "layer": "api", "path": "api/HrManagementSystem.Application/Features/GeographicalInformation/Addresses/Contracts/AddressResponse.cs", "purpose": "Response contract" },
+    { "id": "validator", "layer": "api", "path": "api/HrManagementSystem.Application/Features/GeographicalInformation/Addresses/Contracts/AddressRequestValidator.cs", "purpose": "Hierarchy and coordinate validation" },
+    { "id": "address-config", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Addresses/Persistence/AddressConfiguration.cs", "purpose": "Address constraints and relations" },
+    { "id": "company-address-config", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Persistence/Configurations/OrganizationalStructure/CompanyAddressConfiguration.cs", "purpose": "Company link constraints" },
+    { "id": "branch-address-config", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Persistence/Configurations/OrganizationalStructure/BranchAddressConfiguration.cs", "purpose": "Branch link constraints" },
+    { "id": "migration", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Migrations/20260827082513_RefactorAddressesForGlobalGeography.cs", "purpose": "Development schema transition" }
+  ]
+}

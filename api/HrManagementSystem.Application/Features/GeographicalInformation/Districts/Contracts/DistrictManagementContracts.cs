@@ -55,11 +55,10 @@ public sealed record DistrictDetailResponse(
 
 public sealed record DistrictAddressListItem(
     int Id,
-    string BuildingNumber,
-    string Floor,
-    string ApartmentNumber,
-    string PostalCode,
-    bool IsDefault,
+    string? BuildingNumber,
+    string? Floor,
+    string? ApartmentNumber,
+    string? PostalCode,
     bool IsDeleted);
 
 public sealed record DistrictWithAddressesResponse(

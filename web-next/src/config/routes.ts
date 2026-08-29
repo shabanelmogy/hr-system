@@ -133,9 +133,9 @@ export const appRoutes: AppRoutes = {
     tenants: "/super-admin/tenants",
     tenantAdmins: "/super-admin/tenant-admins",
     geography: {
-      countries: "/super-admin/geography/countries",
-      states: "/super-admin/geography/states",
-      districts: "/super-admin/geography/districts",
+      countries: toAppPath("/super-admin/geography/countries"),
+      states: toAppPath("/super-admin/geography/states"),
+      districts: toAppPath("/super-admin/geography/districts"),
     },
   },
 

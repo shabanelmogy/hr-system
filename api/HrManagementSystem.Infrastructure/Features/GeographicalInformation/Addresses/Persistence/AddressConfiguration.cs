@@ -6,62 +6,78 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
 {
     public void Configure(EntityTypeBuilder<Address> builder)
     {
-        // Indexes
-        builder.HasIndex(a => new { a.TenantId, a.CompanyId, a.AddressTypeId });
-        builder.HasIndex(a => a.DistrictId);
-        builder.HasIndex(a => new { a.Latitude, a.Longitude });
+        builder.HasIndex(address => new { address.TenantId, address.CompanyId, address.AddressTypeId });
+        builder.HasIndex(address => address.CountryId);
+        builder.HasIndex(address => address.StateId);
+        builder.HasIndex(address => address.DistrictId);
+        builder.HasIndex(address => new { address.Latitude, address.Longitude });
+        builder.HasAlternateKey(address => new { address.TenantId, address.CompanyId, address.Id });
+        builder.Property(address => address.City)
+            .HasMaxLength(150);
 
-        // Properties
-        builder.Property(a => a.BuildingNumber)
-               .IsRequired()
-               .HasMaxLength(50);
+        builder.Property(address => address.StreetLine1)
+            .HasMaxLength(250);
 
-        builder.Property(a => a.Floor)
-               .IsRequired()
-               .HasMaxLength(10);
+        builder.Property(address => address.StreetLine2)
+            .HasMaxLength(250);
 
-        builder.Property(a => a.ApartmentNumber)
-               .IsRequired()
-               .HasMaxLength(20);
+        builder.Property(address => address.BuildingNumber)
+            .HasMaxLength(50);
 
-        builder.Property(a => a.PostalCode)
-               .IsRequired()
-               .HasMaxLength(20);
+        builder.Property(address => address.Floor)
+            .HasMaxLength(10);
 
-        builder.Property(a => a.AdditionalInfo)
-               .IsRequired()
-               .HasMaxLength(500);
+        builder.Property(address => address.ApartmentNumber)
+            .HasMaxLength(20);
 
-        builder.Property(a => a.Latitude)
-               .IsRequired()
-               .HasPrecision(18, 6);
+        builder.Property(address => address.PostalCode)
+            .HasMaxLength(20);
 
-        builder.Property(a => a.Longitude)
-               .IsRequired()
-               .HasPrecision(18, 6);
+        builder.Property(address => address.AdditionalInfo)
+            .HasMaxLength(500);
 
-        builder.Property(a => a.IsDefault)
-               .IsRequired()
-               .HasDefaultValue(false);
+        builder.Property(address => address.Latitude)
+            .HasPrecision(18, 6);
 
-        // Check constraints for geographic coordinates
-        builder.ToTable(tb =>
-               tb.HasCheckConstraint("CHK_Address_Latitude_Range", "[Latitude] >= -90 AND [Latitude] <= 90"));
+        builder.Property(address => address.Longitude)
+            .HasPrecision(18, 6);
 
-        builder.ToTable(tb =>
-               tb.HasCheckConstraint("CHK_Address_Longitude_Range", "[Longitude] >= -180 AND [Longitude] <= 180"));
+        builder.ToTable(table =>
+        {
+            table.HasCheckConstraint(
+                "CHK_Address_Latitude_Range",
+                "[Latitude] IS NULL OR ([Latitude] >= -90 AND [Latitude] <= 90)");
+            table.HasCheckConstraint(
+                "CHK_Address_Longitude_Range",
+                "[Longitude] IS NULL OR ([Longitude] >= -180 AND [Longitude] <= 180)");
+            table.HasCheckConstraint(
+                "CHK_Address_Coordinates_Paired",
+                "([Latitude] IS NULL AND [Longitude] IS NULL) OR ([Latitude] IS NOT NULL AND [Longitude] IS NOT NULL)");
+        });
 
-        // Relationships
-        builder.HasOne(a => a.AddressType)         // Address has one AddressType
-               .WithMany(at => at.Addresses)       // AddressType has many Addresses
-               .HasForeignKey(a => new { a.TenantId, a.CompanyId, a.AddressTypeId })
-               .HasPrincipalKey(at => new { at.TenantId, at.CompanyId, at.Id })
-               .OnDelete(DeleteBehavior.Restrict)
-               .IsRequired(true);
+        builder.HasOne(address => address.Country)
+            .WithMany(country => country.Addresses)
+            .HasForeignKey(address => address.CountryId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired();
 
-        builder.HasOne(a => a.District)            // Address has one District
-               .WithMany(d => d.Addresses)         // District has many Addresses
-               .HasForeignKey(a => a.DistrictId)
-               .IsRequired(true);
+        builder.HasOne(address => address.State)
+            .WithMany(state => state.Addresses)
+            .HasForeignKey(address => address.StateId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired(false);
+
+        builder.HasOne(address => address.District)
+            .WithMany(district => district.Addresses)
+            .HasForeignKey(address => address.DistrictId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired(false);
+
+        builder.HasOne(address => address.AddressType)
+            .WithMany(addressType => addressType.Addresses)
+            .HasForeignKey(address => new { address.TenantId, address.CompanyId, address.AddressTypeId })
+            .HasPrincipalKey(addressType => new { addressType.TenantId, addressType.CompanyId, addressType.Id })
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired();
     }
 }

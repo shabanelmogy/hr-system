@@ -16,6 +16,10 @@ Districts is an approved mobile Table/Cards/Chart/Report/Import feature under an
 
 District list rows contain State and `addressesCount`. Detail and address-detail shapes are separate; Address fields are not represented as State-style child Districts. Import rows contain display-only `stateName` only until it resolves to `stateId`.
 
+District names use the shared 2-100 printable-Unicode rule: spaces, digits,
+punctuation, and mixed scripts are allowed; control characters and line breaks
+are rejected. Codes remain 2-10 ASCII letters, digits, or hyphens.
+
 ## 5. Query keys and mutations
 
 `districtKeys` owns list, lookup, address-detail, and managed-report catalog cache keys. Mutations invalidate the District root after create/update/archive/restore/bulk archive/bulk create. Report catalog uses a stable five-minute query independently from the server list page.
@@ -34,7 +38,7 @@ The screen registers Table, Cards, Chart, Report, and permission-guarded Import.
 
 ## 9. Forms
 
-`DistrictForm` loads active States through the States lookup key/API only while the form is visible. Its controls respect read-only mode and use the shared full-screen mobile form.
+`DistrictForm` loads active States through the States lookup key/API only while the form is visible. In development, `AppForm` can fill a domain-owned sample with an active State parent; it never submits and is disabled until the lookup is ready. Its controls respect read-only mode and use the shared full-screen mobile form.
 
 ## 10. Lifecycle actions
 

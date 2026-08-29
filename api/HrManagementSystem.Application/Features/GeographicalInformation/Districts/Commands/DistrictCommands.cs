@@ -5,6 +5,7 @@ using HrManagementSystem.Application.Features.GeographicalInformation;
 using HrManagementSystem.Application.Features.GeographicalInformation.Districts.Abstractions;
 using HrManagementSystem.Application.Features.GeographicalInformation.Districts.Contracts;
 using HrManagementSystem.Application.Features.GeographicalInformation.Districts.Errors;
+using HrManagementSystem.Application.Features.GeographicalInformation.Validation;
 using HrManagementSystem.Domain.GeographicalInformation.Districts.Entities;
 using MapsterMapper;
 
@@ -26,13 +27,9 @@ public class DistrictMutationValidator<TMutation> : AbstractValidator<TMutation>
     public DistrictMutationValidator(IStringLocalizer<CreateDistrictRequest> localizer)
     {
         RuleFor(district => district.NameEn)
-            .Trimmed().NotEmpty().WithName(Strings.NameEn).WithMessage(localizer[Strings.Required])
-            .Length(2, 100).WithMessage(localizer[Strings.MaxLengthError])
-            .Matches(RegexPattern.EnglishLettersAndSpaces).WithMessage(localizer[Strings.EnglishLetterOnly]);
+            .GeographicalName(localizer, Strings.NameEn);
         RuleFor(district => district.NameAr)
-            .Trimmed().NotEmpty().WithName(Strings.NameAr).WithMessage(localizer[Strings.Required])
-            .Length(2, 100).WithMessage(localizer[Strings.MaxLengthError])
-            .Matches(RegexPattern.ArabicLettersAndSpaces).WithMessage(localizer[Strings.ArabicLetterOnly]);
+            .GeographicalName(localizer, Strings.NameAr);
         RuleFor(district => district.Code)
             .Trimmed().NotEmpty().WithName(Strings.Code).WithMessage(localizer[Strings.Required])
             .Length(2, 10).WithMessage(localizer[Strings.MaxLengthError])

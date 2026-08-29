@@ -128,7 +128,7 @@ export const permissions = {
   ManageAttendanceDevices: "AttendanceDevices:Manage",
   ManageAttendanceDeviceCredentials: "AttendanceDevices:Credentials",
   PullAttendanceDevices: "AttendanceDevices:Pull",
-  ViewAttendanceDeviceRaw: "AttendanceDevices:ViewRaw",
+  ViewRawAttendanceDevices: "AttendanceDevices:ViewRaw",
 } as const;
 
 export type PermissionString =

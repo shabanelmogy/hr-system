@@ -42,4 +42,10 @@ public sealed class StateValidationQueries(ApplicationDbContext context)
         context.States.AnyAsync(
             state => state.Id == id && !state.IsDeleted,
             cancellationToken);
+
+    public Task<int?> GetCountryIdAsync(int stateId, CancellationToken cancellationToken) =>
+        context.States
+            .Where(state => state.Id == stateId && !state.IsDeleted)
+            .Select(state => (int?)state.CountryId)
+            .FirstOrDefaultAsync(cancellationToken);
 }

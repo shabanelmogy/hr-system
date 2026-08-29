@@ -15,6 +15,15 @@ public class AddressErrors(IStringLocalizer<AddressRequest> localizer)
     public Error AddressTypeNotFound =>
             new("Address.InvalidAddressType", _localizer[Strings.InvalidAddressType], ErrorType.Validation);
 
+    public Error InvalidCountry =>
+            new("Address.InvalidCountry", _localizer[Strings.InvalidCountry], ErrorType.Validation);
+
+    public Error InvalidState =>
+            new("Address.InvalidState", _localizer[Strings.InvalidState], ErrorType.Validation);
+
+    public Error InvalidDistrict =>
+            new("Address.InvalidDistrict", _localizer[Strings.InvalidDistrict], ErrorType.Validation);
+
     public Error AddressError =>
             new("Address.AddressError", _localizer[nameof(AddressError)], ErrorType.Unexpected);
 
@@ -30,6 +39,4 @@ public class AddressErrors(IStringLocalizer<AddressRequest> localizer)
     public Error InvalidCoordinates =>
             new("Address.InvalidCoordinates", _localizer[nameof(InvalidCoordinates)], ErrorType.Validation);
 
-    public Error DefaultAddressCannotBeDeleted =>
-            new("Address.DefaultAddressCannotBeDeleted", _localizer[nameof(DefaultAddressCannotBeDeleted)], ErrorType.Validation);
 }

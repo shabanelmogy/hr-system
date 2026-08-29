@@ -624,8 +624,12 @@ and validates it from the authenticated context.
 - Fetch detail data when the list row does not satisfy the edit contract.
 - A detail-load failure is visible and blocks mutation until Retry succeeds.
 - Disable duplicate submission and show the shared pending overlay.
-- Development mock values may fill a form but never auto-submit or ship as
-  production seed behavior.
+- Development mock values use the shared `MyForm` `mockDataAction` contract and
+  the `actions.generateMockData` translation key. The shared footer button only
+  fills the active form, marks values dirty for review, never auto-submits, and
+  is not rendered by production feature configuration. Samples remain
+  feature-owned and must satisfy the feature schema; parent-dependent samples
+  must select an active parent from the loaded lookup before enabling the action.
 
 ## 11. Loading, Error, Empty, and Refresh States
 

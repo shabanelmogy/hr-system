@@ -28,6 +28,8 @@ Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain
 - Web States profile: [`web-next/features/states-frontend-reference.md`](web-next/features/states-frontend-reference.md)
 - Mobile States profile: [`mobile-react/states-mobile-reference.md`](mobile-react/states-mobile-reference.md)
 - Reusable documentation workflow: [`system/README.md`](system/README.md)
+- Geographical information domain guide: [`project/GEOGRAPHICAL_INFORMATION_DOMAIN_GUIDE.md`](project/GEOGRAPHICAL_INFORMATION_DOMAIN_GUIDE.md)
+- Addresses domain review: [`project/ADDRESSES_DOMAIN_FULL_REVIEW.md`](project/ADDRESSES_DOMAIN_FULL_REVIEW.md)
 
 ## Organization rules
 
@@ -37,6 +39,7 @@ Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain
 4. Treat `legacy-web/` as historical evidence, not as an implementation target.
 5. Do not edit files under `system/generated/` directly. Update canonical guides, the recipe manifest, or templates and regenerate them.
 6. Run `./documentation/system/Generate-Documentation.ps1 -Check` before handing off a documentation-system change.
+7. Every code change must update the canonical documentation for the affected domain in the same change. Record platform differences explicitly instead of leaving an undocumented gap.
 
 ## Adding a new feature review
 

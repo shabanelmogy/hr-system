@@ -116,7 +116,7 @@ non-destructive progress indicator at the view boundary.
 
 ## 7. Form and details
 
-`StateForm` uses React Hook Form/Zod and the Countries public lookup API for parent selection. Edit/view requests State detail, blocks submission on detail load failure, maps Country/duplicate API errors, and uses modal dirty/busy behavior. Code entry is normalized to uppercase at service/API boundaries.
+`StateForm` uses React Hook Form/Zod and the Countries public lookup API for parent selection. In development, its shared `MyForm` footer can fill a domain-owned State sample and an active Country; it never submits automatically and is disabled until the parent lookup is ready. Edit/view requests State detail, blocks submission on detail load failure, maps Country/duplicate API errors, and uses modal dirty/busy behavior. Names use the shared 2-100 printable-Unicode schema (spaces, digits, punctuation, and mixed scripts are allowed; control characters and line breaks are rejected). Code entry is normalized to uppercase at service/API boundaries and remains restricted to 2-10 ASCII letters, digits, or hyphens.
 
 ## 8. Actions and permissions
 

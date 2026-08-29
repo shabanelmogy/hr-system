@@ -181,8 +181,8 @@
         <list type="table">
           <listheader><term>Field</term><term>Required</term><term>Validation</term></listheader>
           <item><term>id</term>        <term>Optional</term><term>Send <c>null</c>, omit it, or send <c>0</c> for new records.</term></item>
-          <item><term>nameAr</term>    <term>✅</term><term>2–100 chars · Arabic letters only · unique within the same country.</term></item>
-          <item><term>nameEn</term>    <term>✅</term><term>2–100 chars · English letters only · unique within the same country.</term></item>
+          <item><term>nameAr</term>    <term>✅</term><term>2–100 printable Unicode characters; spaces, digits, punctuation, and mixed scripts allowed; control characters and line breaks rejected; unique within the same country.</term></item>
+          <item><term>nameEn</term>    <term>✅</term><term>2–100 printable Unicode characters; spaces, digits, punctuation, and mixed scripts allowed; control characters and line breaks rejected; unique within the same country.</term></item>
           <item><term>code</term>      <term>✅</term><term>2–10 chars · letters, digits, or hyphen · unique within the same country. Stored uppercase. e.g. CAI, RYD</term></item>
           <item><term>countryId</term> <term>✅</term><term>Valid non-deleted country ID. <b>DROPDOWN</b> — load from GET /api/v1/countries.</term></item>
         </list>

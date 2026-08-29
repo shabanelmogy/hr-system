@@ -43,14 +43,14 @@ realtime, notification, localization, report, or Import integration is reachable
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| attendance-devices-master | 4 | `883d12a168ad1f5a7d103912e0541748d3d3a692be6eea2417865a39f5e2ea18` |
+| attendance-devices-master | 4 | `7b3f937ee4ba3ffb1f67be08c46916c39fd143d4cac3a7f512036d64d99335a6` |
 | attendance-devices-master | 5 | `a8599be59e64807dfe1321db01ce8a1da59a23a09dd79e2d9bb38284ae21fe02` |
 | attendance-devices-master | 6 | `d4d02053ca38139b5ea51928c18352d2ad86e08b3b1308b3d3fa58fab55db761` |
 | attendance-devices-master | 7 | `433b3f83669c1abbc1d39bf7fc3c8bcf8b759e1311566bfeb4e0f5c248b302ec` |
 | attendance-devices-master | 9 | `b595373da84cb1d4786a69231c4df208ce383549198d947e238e5ca1876f2ce2` |
-| attendance-devices-api | 8 | `f78bbaac90ebc303e057c975714f5a06e0bf81574edf89265c4893e1609e09ab` |
+| attendance-devices-api | 8 | `f095dbda25c8be7e6b7e44d26f191811c9e48383311174b200d9968a5ab7aa51` |
 | attendance-devices-api | 9 | `0a86e958c61b0f6569cecb994467e0942249cdfdfc670af54a5ba7fff895ec19` |
-| attendance-devices-api | 10 | `9c74502942c3903fa9369c7e948976624dec6f63b07ab06e2272b1c152cea6ef` |
+| attendance-devices-api | 10 | `ad145f088dff331f2b150b9d14a3ef8801af90074d3f9691ded837ea7f7c2fd8` |
 | attendance-devices-web | 8 | `e0bf7f1dade9eb1795bf7dbd1cdd0db0104d3d7cfefdcb9400756a8f3cb89f1c` |
 | attendance-devices-web | 10 | `23f0dcc86d515444f8e139d037bc9a662737703b739aca8b7394a47c8138ffb9` |
 | attendance-devices-web | 13 | `fc31618e8d985cd765e02700bcf99f1c7f58b119b3fa1ac2916ae9a4f7e38953` |

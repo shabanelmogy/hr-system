@@ -11,6 +11,7 @@ export const enCommon = {
     previous: 'Previous',
     next: 'Next',
     required: 'Required',
+    generateMockData: 'Generate Mock Data',
   },
   confirmation: {
     reviewAction: 'Review this action before continuing.',
@@ -48,6 +49,7 @@ export const enCommon = {
     required: 'This field is required.',
     minLength: 'Must contain at least {{count}} characters.',
     maxLength: 'Must not exceed {{count}} characters.',
+    invalidText: 'Use printable text without line breaks or control characters.',
     invalidIdentifier:
       'Start with a letter or number and use only English letters, numbers, and hyphens.',
     invalidOption: 'Select a valid option.',

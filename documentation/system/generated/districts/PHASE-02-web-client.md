@@ -106,19 +106,19 @@ failure into partial success.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| districts-master | 3 | `4bdc52285d77adc542473adcc0cb47e9301fc9f8af81cb2e7f436e184e969967` |
+| districts-master | 3 | `7db1a7d82da3179a850933bc4c5ca70c2c552128be8b21b17a84b73cf938f939` |
 | districts-master | 4 | `73edb563ff159ccd70caafab0275db68887f98c3c3f22ecdfaaea7ee41b4fb2e` |
-| districts-master | 6 | `c5c725ff3b5be52349479c767800af9d5e02a1f5c680419181f6b170200e6bdf` |
+| districts-master | 6 | `bc842f66c8ecdd4133ee9a86a1901d41047bc8cc48ec01e8a302ca6ab510da07` |
 | districts-master | 7 | `b4ca77c0fab6365d8f5202566b41f614348b21781231cb9bc97e4bd62aa9cd4f` |
 | districts-web | 1 | `150f2646e4e4c492b2addcc6960dca2c9c6eb1cc303d235a7737764985a23072` |
 | districts-web | 2 | `65a9dcab8af8b0efaad40974a60066c7e3178c8987eca502da411df85adc81a9` |
-| districts-web | 3 | `3c86b2607438e7ce2d9251d55c475b59a331f322db1b20b87127cd912ede9849` |
+| districts-web | 3 | `11a359e6cc18a793ad19d995de906df194db113ea3edc67431f3f6170f73afa9` |
 | districts-web | 4 | `d908cb36e9c74e631ad24a35b130679e8a53b5bd254dba51c09ad452bd737bba` |
 | districts-web | 5 | `e9c863d337408d2cfe40e903e2e9ff1531110af86e352a7f824ecd90f3e99281` |
 | districts-web | 6 | `00dcf25c1144ba8ca5883de079af26cb60bfb6365a97577e254fd03b92bbd120` |
 | districts-web | 7 | `860a8dd4899597e60282b667535463fa9f0489249c5e8ab2b5bdaac2f2a0880f` |
 | districts-web | 8 | `be712da7a3d1189fdfda72359bb163b3f0693dd01c2f22edcf49b6b24526e239` |
-| districts-web | 9 | `d3542ae365eda4f903a44795f44fb17f7fd01f91e6ec304c47f23737163317c7` |
+| districts-web | 9 | `c8bdba1eea3298434fb27d599d1b0022157af7a347c461e789142ff6b60f2b88` |
 | districts-web | 10 | `07dc5e4839e2ea5afe7e0dac597585ad1749007fd1a22a343d4b59298372e00a` |
 | districts-web | 11 | `0ea33835c70bb6776a03030993884cb4ae114e6f75e00a12005201920afe7347` |
 | districts-web | 12 | `cf9b0888ef0144a75decf29a461edb753e1d68c5b8c12089d5d107157f157fe7` |

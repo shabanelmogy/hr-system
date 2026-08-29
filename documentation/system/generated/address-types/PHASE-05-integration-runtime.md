@@ -45,7 +45,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | --- | ---: | --- |
 | address-types-master | 4 | `7308f8020bdbc0c722447f200a173af87d8fa4f5f3fb6bf250463bd9f057ef5a` |
 | address-types-master | 5 | `c31995a8d7c1c03131d3084fd78c2df2bd9034552868155d478365f5045521e3` |
-| address-types-master | 6 | `b36e3f0234da7c53263dc870165993e8cc3d645939e7d9b5c2d85d617ed9c5e9` |
+| address-types-master | 6 | `38ba2cceb96c08e8c3815c45b40fc5ef311b74eb1e6e3095936183f7ac67aeb4` |
 | address-types-master | 7 | `78e6057906c656526f8fb427486cc0fcf24d5fd8fb865fdb58d0a786b9cce3ba` |
 | address-types-master | 9 | `d27f68fbce7c132d9111b39903b39f4ef64ade452789cfb3b25cff974a4742d2` |
 | address-types-api | 8 | `cdb4949380cc226db6ab4f53b730f5b4fd93333e08d1f8deef641ea2c1e2c358` |

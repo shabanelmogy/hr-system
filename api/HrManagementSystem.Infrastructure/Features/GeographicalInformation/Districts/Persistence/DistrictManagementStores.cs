@@ -206,7 +206,11 @@ public sealed class DistrictWriteStore(ApplicationDbContext context) : IDistrict
         context.Addresses.AnyAsync(address => address.DistrictId == districtId && !address.IsDeleted, cancellationToken);
 
     public Task<bool> HasActiveAddressesAsync(IReadOnlyCollection<int> districtIds, CancellationToken cancellationToken) =>
-        context.Addresses.AnyAsync(address => districtIds.Contains(address.DistrictId) && !address.IsDeleted, cancellationToken);
+        context.Addresses.AnyAsync(
+            address => address.DistrictId.HasValue &&
+                       districtIds.Contains(address.DistrictId.Value) &&
+                       !address.IsDeleted,
+            cancellationToken);
 }
 
 public sealed class DistrictAuditTrail(ApplicationDbContext context, ICurrentActor currentActor, TimeProvider timeProvider) : IDistrictAuditTrail

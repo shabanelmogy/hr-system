@@ -1,8 +1,7 @@
 import { styled } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import { Toolbar, ListItem } from "@mui/material";
-
-const drawerWidth = 240;
+import { expandedSidebarWidth } from "../sidebar/sidebarConstants";
 
 // AppBar styled component
 export const AppBar = styled(MuiAppBar, {
@@ -22,7 +21,7 @@ export const AppBar = styled(MuiAppBar, {
       : theme.transitions.duration.leavingScreen,
   }),
   [theme.breakpoints.up("md")]: open
-    ? { width: `calc(100vw - ${drawerWidth}px - 1px)` }
+    ? { width: `calc(100vw - ${expandedSidebarWidth}px - 1px)` }
     : {},
 }));
 
@@ -36,7 +35,7 @@ export const StyledToolbar = styled(Toolbar)<{ open?: boolean }>(({ theme, open 
   padding: theme.spacing(0, 2),
   margin: 0,
   [theme.breakpoints.up("md")]: open
-    ? { maxWidth: `calc(100vw - ${drawerWidth}px - 1px)` }
+    ? { maxWidth: `calc(100vw - ${expandedSidebarWidth}px - 1px)` }
     : {},
 }));
 

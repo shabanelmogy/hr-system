@@ -52,7 +52,7 @@
 | E-01 | Countries are global | `api/HrManagementSystem.Domain/GeographicalInformation/Countries/Entities/Country.cs` | Entity has no scope marker |
 | E-02 | States and Districts inherit global parent scope | `State.cs`, `District.cs`, their EF configurations | Global parent FKs and unique indexes inspected |
 | E-03 | Company data uses trusted automatic isolation | `ApplicationDbContext.ConfigureCompanyEntity` and `ApplyTenantIsolation` | Query/write filters inspected |
-| E-04 | Addresses are already company-owned | `api/HrManagementSystem.Domain/GeographicalInformation/Addresses/Entities/Address.cs` | `CompanyAuditableEntity` inheritance inspected |
+| E-04 | Addresses are company-owned and have explicit owner links | `Address.cs`, `CompanyAddress.cs`, `BranchAddress.cs` | Scope and purpose/primary link model inspected |
 | E-05 | Master geography authorization is not platform-only today | geography controllers, `TenantMember`, and client route access | Current tenant-admin/super-admin rules inspected |
 
 ## Read and write contract
@@ -98,9 +98,9 @@ Managed Crystal and browser report-template fields are N/A.
 | ID | Severity | Finding | Evidence | Owner | Resolution |
 | --- | --- | --- | --- | --- | --- |
 | F-01 | High | Global catalog CRUD was tenant-admin based and inaccessible to `super_admin` | Geography controllers and client route access | Platform security | Resolved by role-plus-permission API guards, Platform routes, and permission ownership migration |
-| F-02 | Medium | Existing companies have no defensible default Country | Company has currency/time-zone only | Migration/product owner | Backfill all active Countries; require explicit default on first save |
-| F-03 | Medium | Address validation must eventually enforce selected Country | Address links District while company scope is new | Address feature owner | Deferred until scope table and selectors are deployed |
-| F-04 | High | GET/PUT returned 500 because `CompanyGeographicScopeErrors` was required by both handlers but absent from production DI | Hosted API request and `ErrorsService` inspection | API | Resolved by explicit error registration plus a service-resolution regression test |
+| F-02 | Medium | Existing companies have no defensible default Country | Company has currency/time-zone only | Migration/product owner | Require a reviewed additive migration before production; current checkout has only the initial schema source |
+| F-03 | Medium | Operating-address writes must enforce selected Country scope | Address foundation now validates the global hierarchy; owner-link commands are still deferred | Address/Organizational Structure | Complete owner-link commands and consume Company Geographic Scope |
+| F-04 | High | GET/PUT returned 500 because `CompanyGeographicScopeErrors` was required by both handlers but absent from production DI | Hosted API request and `ErrorsService` inspection | API | Resolved by explicit error registration; dedicated regression test is not present in this checkout |
 
 ## Verification
 
@@ -108,11 +108,11 @@ Managed Crystal and browser report-template fields are N/A.
 | --- | --- | --- | --- |
 | Documentation baseline | `Generate-Documentation.ps1 -Check` | Passed, 28 recipes | `2026-08-25` |
 | API | API build and full test project | Passed; 352/352 tests including Platform ownership and DI regression | `2026-08-25` |
-| API | `CompanyGeographicScopeTests` | Passed; 7/7 including archived-link reselection and error-service resolution | `2026-08-25` |
+| API | Dedicated Company Geographic Scope tests | Not present in this checkout; remaining verification gap | `2026-08-27` |
 | Web | Strict typecheck, lint, tests, and production build | Passed; 282/282 tests and all 45 routes generated | `2026-08-25` |
 | Web | Architecture check | Blocked by pre-existing tenant/realtime and forms/dialog dependency findings | `2026-08-25` |
 | Mobile | `npm run check` | Passed; typecheck, lint, architecture, 112/112 tests | `2026-08-25` |
-| Documentation | Generate then `Generate-Documentation.ps1 -Check` | Passed; 35 recipes | `2026-08-25` |
+| Documentation | Generate then `Generate-Documentation.ps1 -Check` | Re-run after manifest/source reconciliation | `2026-08-27` |
 
 ## Final reconciliation
 

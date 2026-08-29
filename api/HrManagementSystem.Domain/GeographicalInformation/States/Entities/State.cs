@@ -1,3 +1,4 @@
+using HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.Districts.Entities;
 
@@ -12,4 +13,5 @@ public class State : AuditableEntity
     public int CountryId { get; set; }
     public Country? Country { get; set; }
     public virtual ICollection<District> Districts { get; set; } = [];
+    public virtual ICollection<Address> Addresses { get; set; } = [];
 }

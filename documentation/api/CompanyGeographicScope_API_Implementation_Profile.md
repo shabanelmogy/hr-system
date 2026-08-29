@@ -2,7 +2,7 @@
 
 ## 1. Exact Source Inventory
 
-The slice lives under `OrganizationalStructure/CompanyGeographicScope` in Application, Infrastructure, and API. Its domain link is `CompanyCountry`, its EF configuration is `CompanyCountryConfiguration`, and its migration is `20260825072312_AddCompanyGeographicScope`.
+The slice lives under `OrganizationalStructure/CompanyGeographicScope` in Application, Infrastructure, and API. Its domain link is `CompanyCountry`, its EF configuration is `CompanyCountryConfiguration`, and the current checked-in schema source is `20260826095902_createdatabase`.
 
 ## 2. Domain Contract
 
@@ -37,24 +37,22 @@ The versioned controller exposes GET and PUT at `/api/v1/company-geographic-scop
 `ApplicationDbContext` exposes `CompanyCountries`; `EntitiesService` registers
 `ICompanyGeographicScopeStore`, and `ErrorsService` registers
 `CompanyGeographicScopeErrors` for both MediatR handlers. The additive migration
-creates the table/indexes, backfills all active Countries for existing active
-Companies without a default, and inserts both permissions for system Admin roles
-idempotently. Applying the migration is an explicit deployment action.
+contains the table/indexes in the current development schema. A dedicated
+additive backfill/permission migration is not present in this checkout; any
+production rollout must create and review that migration before enabling the
+feature for existing databases.
 
 ## 10. Verification
 
-`CompanyGeographicScopeTests` covers serialization/lock order,
-validation-before-mutation, missing company context, validator rules, migration
-backfill/permission SQL, reselecting a soft-deleted link without violating
-uniqueness, and resolving the feature error dependency from the production DI
-registration. Platform authorization tests cover role-plus-permission guards and
-permission ownership. The API project builds successfully and the full API test
-project passes 352/352.
+No dedicated `CompanyGeographicScopeTests` or Platform authorization test file
+is present in this checkout. The feature remains covered by source-level API
+and client checks only; dedicated handler, migration, and authorization tests
+are an explicit remaining verification gap before production.
 
 ## 11. Consumer Rules
 
 Operating-address consumers query this aggregate. A Branch may choose any enabled Country and any valid child State/District independently of other branches. Nationality consumers must query the global active Country catalog instead. Server-side Branch/Address validation is required when those workflows are added.
 
 Global Country/State/District CRUD is not a tenant capability. Those controllers
-require the `super_admin` role plus their action permission; an idempotent data
-migration owns transferring the catalog permission claims to that system role.
+require the `super_admin` role plus their action permission. Permission ownership
+transfer must be delivered as a reviewed additive migration before production.

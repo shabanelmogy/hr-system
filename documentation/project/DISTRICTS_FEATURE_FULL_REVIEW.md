@@ -10,7 +10,7 @@ The pre-refactor API used `IDistrictService` with an unpaged controller. The bro
 
 ## 3. Domain and ownership decisions
 
-Districts are global data. Create, update, and restore require an active parent State. Names and code are normalized (trimmed; code uppercased) and unique within `StateId`. An active Address blocks archive and bulk archive. The State lifecycle resource is locked by all participating District lifecycle mutations to prevent parent/child races.
+Districts are global data. Create, update, and restore require an active parent State. Names are trimmed printable Unicode display names of 2-100 characters; spaces, digits, and punctuation are allowed, while control characters and line breaks are rejected. Code is normalized (trimmed; uppercased), restricted to 2-10 ASCII letters, digits, or hyphens, and all three values are unique within `StateId`. An active Address blocks archive and bulk archive. The State lifecycle resource is locked by all participating District lifecycle mutations to prevent parent/child races. Address may reference a District optionally, and the API validates the complete Country -> State -> District relationship when it is supplied.
 
 ## 4. API contract
 
@@ -20,11 +20,11 @@ Districts are global data. Create, update, and restore require an active parent 
 
 The canonical browser route is `/super-admin/geography/districts`.
 
-The Next.js route composes one server-list controller with the shared feature header, breadcrumb, aligned toolbar, Grid Options, Grid/Card/Chart/Report/Import modes, form, archive/restore/bulk dialogs, pagination, and current-page charts. Import parses a bounded XLSX locally, resolves active State names through the public States lookup, previews row status, and sends one atomic named JSON request. Report selects runnable published `districts` catalog entries and renders them through the shared managed Crystal viewer with bounded District/State filters.
+The Next.js route composes one server-list controller with the shared feature header, breadcrumb, aligned toolbar, Grid Options, Grid/Card/Chart/Report/Import modes, form, archive/restore/bulk dialogs, pagination, and current-page charts. The Add/Edit District State selector uses the localized `districts.state` and `districts.selectState` keys in both English and Arabic. Development forms can use the shared mock-data footer action to fill a District sample with an active State without submitting. Import parses a bounded XLSX locally, resolves active State names through the public States lookup, previews row status, and sends one atomic named JSON request. Report selects runnable published `districts` catalog entries and renders them through the shared managed Crystal viewer with bounded District/State filters.
 
 ## 6. Mobile implementation
 
-Expo has a guarded `/basic-data/geographical-information/districts` route. It uses runtime-validated API transport, the shared server list state, native Table/Cards/Chart/Report/Import views, a modal filter button for column/condition/status, State lookup form, permissions/read-only controls, archive/restore/bulk actions, translations, RTL, realtime cache invalidation, and notification deep links. Import uses the shared bounded native XLSX picker/parser and State lookup before the same atomic `{ districts }` request. Report uses the shared managed catalog/render client and securely cached PDF open/print/share behavior.
+Expo has a guarded `/basic-data/geographical-information/districts` route. It uses runtime-validated API transport, the shared server list state, native Table/Cards/Chart/Report/Import views, a modal filter button for column/condition/status, State lookup form, permissions/read-only controls, archive/restore/bulk actions, translations, RTL, realtime cache invalidation, and notification deep links. Its development form can use the shared non-submitting mock-data action, enabled only after the active State lookup is ready. Import uses the shared bounded native XLSX picker/parser and State lookup before the same atomic `{ districts }` request. Report uses the shared managed catalog/render client and securely cached PDF open/print/share behavior.
 
 ## 7. Intentional platform differences
 

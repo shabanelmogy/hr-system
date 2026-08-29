@@ -65,6 +65,11 @@ export interface AppFormProps extends PropsWithChildren<Omit<ViewProps, 'childre
   serverError?: string | null;
   contentContainerStyle?: StyleProp<ViewStyle>;
   footer?: ReactNode;
+  /** Development-only action that fills the form without submitting it. */
+  mockDataAction?: {
+    onGenerate: () => void;
+    disabled?: boolean;
+  };
   style?: StyleProp<ViewStyle>;
 }
 
@@ -89,6 +94,7 @@ export function AppForm({
   serverError,
   contentContainerStyle,
   footer,
+  mockDataAction,
   style,
   ...viewProps
 }: AppFormProps) {
@@ -214,8 +220,20 @@ export function AppForm({
     [errors, focusNextField, onClearFieldError, registerField],
   );
 
-  const actionFooter = footer ?? (onCancel || onSubmit ? (
+  const mockDataButton = mockDataAction ? (
+    <AppButton
+      disabled={mockDataAction.disabled || submitting || isReadOnly}
+      icon="dice-outline"
+      onPress={mockDataAction.onGenerate}
+      style={styles.action}
+      variant="outline">
+      {t('common.generateMockData')}
+    </AppButton>
+  ) : null;
+
+  const actionFooter = footer ?? (onCancel || onSubmit || mockDataButton ? (
     <View style={[styles.actions, { direction }]}>
+      {mockDataButton}
       {onCancel ? (
         <AppButton
           disabled={submitting}

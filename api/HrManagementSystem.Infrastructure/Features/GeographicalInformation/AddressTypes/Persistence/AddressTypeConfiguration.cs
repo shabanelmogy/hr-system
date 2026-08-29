@@ -14,14 +14,10 @@ public class AddressTypeConfiguration : IEntityTypeConfiguration<AddressType>
         builder.Property(a => a.NameEn)
                .IsRequired()
                .HasMaxLength(100);
-        builder.ToTable(tb =>
-                   tb.HasCheckConstraint("CHK_AddressType_NameEn_EnglishOnly", "[NameEn] NOT LIKE '%[^A-Za-z ]%'"));
 
         builder.Property(a => a.NameAr)
                .IsRequired()
                .HasMaxLength(100);
-        builder.ToTable(tb =>
-                  tb.HasCheckConstraint("CHK_AddressType_NameAr_ArabicOnly", "[NameAr] NOT LIKE N'%[^�-� ]%' COLLATE Arabic_CI_AS"));
 
     }
 }

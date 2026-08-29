@@ -47,7 +47,7 @@ describe('district API boundary', () => {
       createdOn: '2026-08-20T10:00:00Z',
       updatedOn: null,
       isDeleted: false,
-      addresses: [{ id: 2, buildingNumber: '10', floor: '2', apartmentNumber: '5', postalCode: '11728', isDefault: true, isDeleted: false }],
+      addresses: [{ id: 2, buildingNumber: '10', floor: '2', apartmentNumber: '5', postalCode: '11728', isDeleted: false }],
     };
 
     expect(districtWithAddressesSchema.parse(district)).toEqual(district);

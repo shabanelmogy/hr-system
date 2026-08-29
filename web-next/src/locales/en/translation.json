@@ -383,6 +383,7 @@
     "disable": "Disable",
     "enable": "Enable",
     "gridOptions": "Grid options",
+    "generateMockData": "Generate Mock Data",
     "unlock": "Unlock"
   },
   "auth": {
@@ -518,11 +519,12 @@
     "invalidEmail": "Invalid email",
     "minLength": "Must be at least {{count}} characters",
     "maxLength": "Must be {{count}} characters or less",
+    "invalidText": "Use printable text without line breaks or control characters",
     "pattern": "Invalid pattern",
     "minLengthError": "Must be at least {{count}} characters",
     "maxLengthError": "Must be {{count}} characters or less",
-    "invalidArabicName": "Name must contain Arabic letters only",
-    "invalidEnglishName": "Name must contain English letters only",
+    "invalidArabicName": "Name must contain printable text without line breaks or control characters",
+    "invalidEnglishName": "Name must contain printable text without line breaks or control characters",
     "invalidUsername": "Username must contain English letters or numbers only",
     "arabicOnly": "Arabic letters only allowed",
     "englishOnly": "English letters only allowed",

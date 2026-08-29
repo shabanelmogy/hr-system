@@ -199,7 +199,8 @@ public class ApplicationDbContext(
         var builder = modelBuilder.Entity<TEntity>();
         builder.Property(entity => entity.CompanyId).IsRequired();
         builder.HasIndex(entity => new { entity.TenantId, entity.CompanyId });
-        if (typeof(TEntity) != typeof(UserCompanyAccess))
+        if (typeof(TEntity) != typeof(UserCompanyAccess) &&
+            typeof(TEntity) != typeof(CompanyAddress))
         {
             builder.HasOne<Company>()
                 .WithMany()

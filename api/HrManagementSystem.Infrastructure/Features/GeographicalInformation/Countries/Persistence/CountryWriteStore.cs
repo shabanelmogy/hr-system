@@ -59,4 +59,18 @@ public sealed class CountryWriteStore(ApplicationDbContext context) : ICountryWr
         context.States.AnyAsync(
             state => countryIds.Contains(state.CountryId) && !state.IsDeleted,
             cancellationToken);
+
+    public Task<bool> HasActiveAddressesAsync(
+        int countryId,
+        CancellationToken cancellationToken) =>
+        context.Addresses.AnyAsync(
+            address => address.CountryId == countryId && !address.IsDeleted,
+            cancellationToken);
+
+    public Task<bool> HasActiveAddressesAsync(
+        IReadOnlyCollection<int> countryIds,
+        CancellationToken cancellationToken) =>
+        context.Addresses.AnyAsync(
+            address => countryIds.Contains(address.CountryId) && !address.IsDeleted,
+            cancellationToken);
 }

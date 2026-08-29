@@ -129,8 +129,12 @@ Create and update use the same mutable fields, but remain separate transport con
 }
 ```
 
-- `nameAr`: required, trimmed, 2–100 Arabic letters/spaces
-- `nameEn`: required, trimmed, 2–100 English letters/spaces
+- `nameAr`: required, trimmed, 2–100 printable Unicode characters; spaces,
+  digits, punctuation, and mixed scripts are allowed; control characters and
+  line breaks are rejected
+- `nameEn`: required, trimmed, 2–100 printable Unicode characters; spaces,
+  digits, punctuation, and mixed scripts are allowed; control characters and
+  line breaks are rejected
 - `alpha2Code`: optional, exactly 2 letters, stored uppercase
 - `alpha3Code`: optional, exactly 3 letters, stored uppercase
 - `phoneCode`: optional, 1–10 characters; digits with an optional leading `+`

@@ -1,4 +1,5 @@
 import React from "react";
+import CasinoOutlinedIcon from "@mui/icons-material/CasinoOutlined";
 import { Box, DialogActions, Button, CircularProgress, useTheme, alpha } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "./FormContext";
@@ -18,6 +19,7 @@ export const FormFooter: React.FC = () => {
     icon, 
     isViewMode,
     submitButtonText,
+    mockDataAction,
   } = useFormContext();
 
   if (hideFooter) return null;
@@ -36,7 +38,22 @@ export const FormFooter: React.FC = () => {
     >
       <DialogActions sx={{ px: 3, py: 2.5, gap: 1.5, margin: 0, justifyContent: "space-between" }}>
         {/* Left side — optional slot (e.g. mock data button) */}
-        <Box>{footerLeft}</Box>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+          {mockDataAction ? (
+            <Button
+              type="button"
+              variant="outlined"
+              color="secondary"
+              size="small"
+              startIcon={<CasinoOutlinedIcon />}
+              onClick={mockDataAction.onGenerate}
+              disabled={isSubmitting || mockDataAction.disabled}
+            >
+              {t("actions.generateMockData")}
+            </Button>
+          ) : null}
+          {footerLeft}
+        </Box>
 
         {/* Right side — Cancel + Save */}
         <Box sx={{ display: "flex", gap: 1.5 }}>

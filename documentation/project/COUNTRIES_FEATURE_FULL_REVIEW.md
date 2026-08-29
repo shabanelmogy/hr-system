@@ -53,6 +53,10 @@ Expo route + route policy
         -> shared API
 ```
 
+Development-only create/edit forms may use the shared web `MyForm` or mobile
+`AppForm` mock-data action. It fills feature-owned valid samples for review,
+never submits automatically, and is excluded from production behavior.
+
 It does not mean copying field names, global ownership, screenshots, every
 optional view or Countries' known gaps. A new feature is exact when it preserves
 the contracts and boundaries while substituting its own domain decisions.
@@ -67,10 +71,20 @@ the contracts and boundaries while substituting its own domain decisions.
 | Scope | Global reference data, not tenant/company-owned |
 | Read lifecycle | Active, archived or all |
 | Update lifecycle | Active only |
-| Archive | Idempotent; blocked by active states; shares a transaction-owned Country lifecycle resource with State writes |
+| Archive | Idempotent; blocked by active states or active addresses; shares a transaction-owned Country lifecycle resource with State and Address writes |
 | Bulk archive | 1-100 distinct positive IDs; all-or-nothing; archived IDs ignored in count; sorted lifecycle resources |
 | Restore | Idempotent and serialized with dependent State writes |
 | Delete model | Soft archive only; no hard delete/toggle |
+
+### Downstream address boundary
+
+`Address` is a company-scoped location record that references an active global
+Country as its required root. State and District are optional structured
+references, but when supplied they must belong to the selected Country through
+the State hierarchy. `CompanyCountry` controls operating scope and is not a
+copy of Country data; address-owner workflows must consult that scope before
+persisting a company or branch location. Currency remains Country metadata for
+the current release and is not an address field.
 
 ### Permissions
 
@@ -109,7 +123,7 @@ Both clients gate visible controls and direct handlers. The API controller and
 | Search field | Seven-field allow-list | User-selectable | API default `all` |
 | Operator | Six-operator allow-list | User-selectable | API default `contains` |
 | Status | active/archived/all | Grid Options/Cards/Chart criteria | Status filter modal |
-| Currency | Exact three letters | API-reserved; not exposed by current UI | Modeled but no visible control |
+| Currency | Optional exact three-letter ISO code | API-reserved; not exposed by current UI | Modeled but no visible control |
 | Has states | Optional boolean | API-reserved; not exposed by current UI | Modeled but no visible control |
 | Sort | Six-column allow-list plus deterministic ID | Default `createdOn DESC` | Default `createdOn DESC` |
 | Total | `metaData.totalCount` | Shared pager/chart total | Shared pager |
@@ -121,12 +135,17 @@ the complete dataset.
 
 | Field | Rule | Stored normalization |
 |---|---|---|
-| Arabic name | Required, 2-100 Arabic letters/spaces | Trim |
-| English name | Required, 2-100 English letters/spaces | Trim |
+| Arabic/display name | Required, 2-100 printable Unicode characters; spaces, digits, and punctuation are allowed; control characters and line breaks are rejected | Trim |
+| English/display name | Required, 2-100 printable Unicode characters; spaces, digits, and punctuation are allowed; control characters and line breaks are rejected | Trim |
 | Alpha-2 | Optional, exactly two letters | Trim, uppercase, blank -> null |
 | Alpha-3 | Optional, exactly three letters | Trim, uppercase, blank -> null |
 | Phone code | Optional, leading `+` plus digits, maximum 10 | Trim, blank -> null |
-| Currency | Optional, exactly three letters | Trim, uppercase, blank -> null |
+| Currency | Optional, exactly three ASCII letters | Trim, uppercase, blank -> null |
+
+`CurrencyCode` is deliberately an ISO integration value, not a Geography-owned
+currency master. Finance/Payroll will own the future Currency entity and the
+reviewed migration to `CurrencyId` when financial workflows need currency
+metadata, conversion, or effective dating.
 
 Arabic name, English name, Alpha-2 and Alpha-3 are unique, including archived
 rows. The handler checks conflicts and the database unique indexes close races.
@@ -158,7 +177,7 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | Audit | DbContext + update trail | None | None |
 | Realtime production | Post-commit Hangfire job | Invalidate Countries + States | Invalidate `['countries']` |
 | Reports | Crystal remains separate; main API owns tenant-scoped report-template CQRS, revisions, approved data-source catalog, and Countries report data | Crystal viewer plus published ActiveReportsJS viewer and permission-protected shared Designer | Independent PDF/device workflow |
-| Import | Atomic 1-100 bulk-create endpoint without an idempotency key | Shared bounded XLSX parse/template/preview, feature validation, locked uncertainty reconciliation | Explicitly Excluded |
+| Import | Atomic 1-100 bulk-create endpoint without an idempotency key | Shared bounded XLSX parse/template/preview, feature validation, locked uncertainty reconciliation | Shared bounded native XLSX parse/template/preview, feature validation, locked uncertainty reconciliation |
 | Localization | EN/AR errors/notifications | EN/AR UI | EN/AR UI |
 
 ## 5. Source Evidence Register

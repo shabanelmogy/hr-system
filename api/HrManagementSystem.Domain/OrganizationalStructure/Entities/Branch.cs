@@ -1,5 +1,6 @@
 using HrManagementSystem.Domain.Common.Entities;
 using HrManagementSystem.Domain.Common.Exceptions;
+using HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities;
 using HrManagementSystem.Domain.Employees.Entities;
 using static HrManagementSystem.Domain.Common.Guards.DomainGuard;
 
@@ -29,7 +30,6 @@ public class Branch : CompanyAuditableEntity
     public DateOnly OpenedOn { get; private set; }
     public DateOnly? ClosedOn { get; private set; }
     public Company Company { get; set; } = null!;
-    public int? AddressId { get; set; }
     public string? Email { get; set; }
     public string? Phone { get; set; }
     public int? ManagerId { get; set; }
@@ -39,6 +39,7 @@ public class Branch : CompanyAuditableEntity
 
     public ICollection<Department> Departments { get; set; } = [];
     public ICollection<Employee> Employees { get; set; } = [];
+    public ICollection<BranchAddress> Addresses { get; set; } = [];
 
     public void Close(DateOnly closedOn)
     {

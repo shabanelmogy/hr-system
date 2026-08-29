@@ -24,6 +24,9 @@ public class StateErrors(IStringLocalizer<CreateStateRequest> localizer)
     public Error StateInUseByCountry =>
             new("State.StateInUseByCountry", _localizer[nameof(StateInUseByCountry)], ErrorType.Validation);
 
+    public Error StateInUseByAddress =>
+            new("State.StateInUseByAddress", _localizer[nameof(StateInUseByAddress)], ErrorType.Validation);
+
     public Error CountryNotFound =>
             new("State.CountryNotFound", _localizer["CountryNotFound"], ErrorType.NotFound);
 

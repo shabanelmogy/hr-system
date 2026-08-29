@@ -65,9 +65,9 @@ profile and do not leave an unreachable route, component, or translation surface
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| address-types-master | 3 | `7df320a1cdbe421b7edf28e7bb0ed7c4ad026ba0d76af15dbb1ff27080f10f13` |
+| address-types-master | 3 | `99ee58c53437d2bdc78df5b577e6382aef5648325eaa6bf07ffb3386f38d8c00` |
 | address-types-master | 4 | `7308f8020bdbc0c722447f200a173af87d8fa4f5f3fb6bf250463bd9f057ef5a` |
-| address-types-master | 6 | `b36e3f0234da7c53263dc870165993e8cc3d645939e7d9b5c2d85d617ed9c5e9` |
+| address-types-master | 6 | `38ba2cceb96c08e8c3815c45b40fc5ef311b74eb1e6e3095936183f7ac67aeb4` |
 | address-types-master | 7 | `78e6057906c656526f8fb427486cc0fcf24d5fd8fb865fdb58d0a786b9cce3ba` |
 | address-types-mobile | 1 | `0074ef0d666e3549c7f9c146a60607748e10d8def86f9c40691ce85485dd5f71` |
 | address-types-mobile | 2 | `90348c7f9a0edf3bdd9ed0fc93ba14f932b2d50b4344841749965a2f5d7d5e87` |
@@ -76,7 +76,7 @@ profile and do not leave an unreachable route, component, or translation surface
 | address-types-mobile | 5 | `1fa855a19caa9d0080763f69f92fcf8af8ffc6c5aecd7ffef1b27fac25668d21` |
 | address-types-mobile | 6 | `2feafc9ba243e55820b691a1179d596bcd756f73b7c90793b902f75ed2fe87c4` |
 | address-types-mobile | 7 | `d9882f353f9ba8bee481890d92d881bd0f9b54e7318171657e3a4f24ffbcb9e9` |
-| address-types-mobile | 8 | `b2c372b06a1b46268447ca2f1163e3f799955b48d644c77fc1faedc582316594` |
+| address-types-mobile | 8 | `740c28baf6c58aad4bfbb9fddbfcbb0730ada8e6abf3f66b0c92e0f89561fc41` |
 | address-types-mobile | 9 | `1eb3eeeb4af6f72d4dc6b92406f29f8886c3b7d535241bdedf64b9fb3a2faa57` |
 | address-types-mobile | 10 | `be75a56fd912809ad9b5f8182a667a56fde2a1fabef7ac4db5eb3046e994e6cf` |
 | address-types-mobile | 11 | `6728484eaad5c096796aba4b1c30c8e72109a355c1b087d00688e38426f88e98` |

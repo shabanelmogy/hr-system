@@ -4,6 +4,7 @@ using HrManagementSystem.Application.Features.GeographicalInformation.Addresses.
 using HrManagementSystem.Domain.Common.Abstractions;
 using HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.AddressTypes.Entities;
+using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Addresses.Services;
 using HrManagementSystem.Infrastructure.Features.Platform.EntityChangeLogs.Services;
 using HrManagementSystem.Infrastructure.Persistence;
@@ -133,6 +134,11 @@ public sealed class AddressTypeCompanyIsolationTests
             NameEn = "Residence",
             IsDeleted = true
         };
+        context.Countries.Add(new Country
+        {
+            NameAr = "مصر",
+            NameEn = "Egypt"
+        });
         context.AddressTypes.Add(addressType);
         await context.SaveChangesAsync();
 
@@ -144,17 +150,21 @@ public sealed class AddressTypeCompanyIsolationTests
             new Mapper(new TypeAdapterConfig()));
 
         var result = await service.AddAsync(new AddressRequest(
-            0,
-            "10",
-            "2",
-            "5",
-            "12345",
-            string.Empty,
-            30,
-            31,
-            false,
-            addressType.Id,
-            1));
+            Id: 0,
+            CountryId: 1,
+            StateId: null,
+            DistrictId: null,
+            City: "Cairo",
+            StreetLine1: "10",
+            StreetLine2: null,
+            BuildingNumber: "2",
+            Floor: "5",
+            ApartmentNumber: null,
+            PostalCode: "12345",
+            AdditionalInfo: null,
+            Latitude: 30,
+            Longitude: 31,
+            AddressTypeId: addressType.Id));
 
         Assert.True(result.IsFailure);
         Assert.Equal("Address.InvalidAddressType", result.Error.Code);

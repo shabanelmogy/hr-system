@@ -6,5 +6,5 @@ export const getAttendancePermissions = (claims: readonly string[], isReadOnly: 
   canManage: !isReadOnly && hasPermission(claims, permissions.ManageAttendanceDevices),
   canCredentials: !isReadOnly && hasPermission(claims, permissions.ManageAttendanceDeviceCredentials),
   canPull: !isReadOnly && hasPermission(claims, permissions.PullAttendanceDevices),
-  canViewRaw: hasPermission(claims, permissions.ViewAttendanceDeviceRaw),
+  canViewRaw: hasPermission(claims, permissions.ViewRawAttendanceDevices),
 });

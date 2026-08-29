@@ -1,5 +1,6 @@
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Abstractions;
 using HrManagementSystem.Application.Features.GeographicalInformation.States.Abstractions;
+using HrManagementSystem.Application.Features.GeographicalInformation.Validation;
 
 namespace HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts;
 
@@ -19,24 +20,10 @@ public class StateRequestValidator : AbstractValidator<StateRequest>
         _localizer = localizer;
 
         RuleFor(s => s.NameEn)
-            .Trimmed()
-            .NotEmpty()
-            .WithName(Strings.NameEn)
-            .WithMessage(_localizer[Strings.Required])
-            .Length(2, 100)
-            .WithMessage(_localizer[Strings.MaxLengthError])
-            .Matches(RegexPattern.EnglishLettersAndSpaces)
-            .WithMessage(_localizer[Strings.EnglishLetterOnly]);
+            .GeographicalName(_localizer, Strings.NameEn);
 
         RuleFor(s => s.NameAr)
-            .Trimmed()
-            .NotEmpty()
-            .WithName(Strings.NameAr)
-            .WithMessage(_localizer[Strings.Required])
-            .Length(2, 100)
-            .WithMessage(_localizer[Strings.MaxLengthError])
-            .Matches(RegexPattern.ArabicLettersAndSpaces)
-            .WithMessage(_localizer[Strings.ArabicLetterOnly]);
+            .GeographicalName(_localizer, Strings.NameAr);
 
         RuleFor(s => s.Code)
             .Trimmed()

@@ -77,6 +77,25 @@
     { "id": "mobile-route-policy", "layer": "mobile-react", "path": "mobile-react/src/features/auth/rbac/route-manifest.ts", "purpose": "Districts permission route policy" },
     { "id": "mobile-realtime", "layer": "mobile-react", "path": "mobile-react/src/features/realtime/realtime-query-registry.ts", "purpose": "District realtime invalidation prefix" },
     { "id": "mobile-localization-en", "layer": "mobile-react", "path": "mobile-react/src/core/localization/translations/en-basic-data.ts", "purpose": "English District strings" },
-    { "id": "mobile-localization-ar", "layer": "mobile-react", "path": "mobile-react/src/core/localization/translations/ar-basic-data.ts", "purpose": "Arabic District strings" }
+    { "id": "mobile-localization-ar", "layer": "mobile-react", "path": "mobile-react/src/core/localization/translations/ar-basic-data.ts", "purpose": "Arabic District strings" },
+    { "id": "mobile-common-translations-en", "layer": "mobile-react", "path": "mobile-react/src/core/localization/translations/en-common.ts", "purpose": "Shared English Generate Mock Data action" },
+    { "id": "mobile-common-translations-ar", "layer": "mobile-react", "path": "mobile-react/src/core/localization/translations/ar-common.ts", "purpose": "Shared Arabic Generate Mock Data action" },
+    { "id": "geographical-name-validation", "layer": "shared-validation", "path": "api/HrManagementSystem.Application/Features/GeographicalInformation/Validation/GeographicalNameRules.cs", "purpose": "Shared printable-Unicode name invariant" },
+    { "id": "geographical-name-validation-test", "layer": "api-test", "path": "api/HrManagementSystem.Tests/GeographicalNameRulesTests.cs", "purpose": "Printable-Unicode names with spaces and digits, and control-character rejection" },
+    { "id": "web-geographical-name-validation", "layer": "web-next-shared", "path": "web-next/src/features/basic-data/geographical-information/validation/nameValidation.ts", "purpose": "Browser name validation aligned with API" },
+    { "id": "web-geographical-name-validation-test", "layer": "web-next-test", "path": "web-next/src/features/basic-data/geographical-information/validation/nameValidation.test.ts", "purpose": "Browser printable-Unicode name validation coverage" },
+    { "id": "mobile-geographical-name-validation", "layer": "mobile-react-shared", "path": "mobile-react/src/features/basic-data/validation/geographical-name.ts", "purpose": "Mobile name validation aligned with API" },
+    { "id": "mobile-geographical-name-validation-test", "layer": "mobile-react-test", "path": "mobile-react/src/features/basic-data/validation/geographical-name.test.ts", "purpose": "Mobile printable-Unicode name validation coverage" },
+    { "id": "web-form", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/districts/components/DistrictForm.tsx", "purpose": "State-dependent District form and development mock-data action" },
+    { "id": "web-mock-data", "layer": "web-next", "path": "web-next/src/features/basic-data/geographical-information/districts/utils/districtMockData.ts", "purpose": "Domain-valid development-only District samples" },
+    { "id": "mobile-mock-data", "layer": "mobile-react", "path": "mobile-react/src/features/basic-data/districts/utils/district-mock-data.ts", "purpose": "Domain-valid development-only District samples" },
+    { "id": "web-shared-mock-data", "layer": "web-next-shared", "path": "web-next/src/shared/utils/mockData.ts", "purpose": "Reusable bounded mock-sample selection" },
+    { "id": "web-shared-mock-data-tests", "layer": "web-next-test", "path": "web-next/src/shared/utils/mockData.test.ts", "purpose": "Mock-sample selection cycle coverage" },
+    { "id": "mobile-shared-mock-data", "layer": "mobile-react-shared", "path": "mobile-react/src/shared/utils/mockData.ts", "purpose": "Reusable bounded mock-sample selection" },
+    { "id": "mobile-shared-mock-data-tests", "layer": "mobile-react-test", "path": "mobile-react/src/shared/utils/mockData.test.ts", "purpose": "Mock-sample selection cycle coverage" },
+    { "id": "web-shared-form-types", "layer": "web-next-shared", "path": "web-next/src/shared/components/forms/dialog/types.ts", "purpose": "Shared non-submitting mock-data form contract" },
+    { "id": "web-shared-form-container", "layer": "web-next-shared", "path": "web-next/src/shared/components/forms/dialog/FormContainer.tsx", "purpose": "Shared form context propagation" },
+    { "id": "web-shared-form-footer", "layer": "web-next-shared", "path": "web-next/src/shared/components/forms/dialog/FormFooter.tsx", "purpose": "Shared localized Generate Mock Data action" },
+    { "id": "mobile-shared-form", "layer": "mobile-react-shared", "path": "mobile-react/src/shared/components/forms/AppForm.tsx", "purpose": "Shared localized non-submitting mock-data action" }
   ]
 }

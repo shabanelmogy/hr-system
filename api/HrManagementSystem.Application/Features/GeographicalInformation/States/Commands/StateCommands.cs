@@ -4,6 +4,7 @@ using HrManagementSystem.Application.Features.GeographicalInformation;
 using HrManagementSystem.Application.Features.GeographicalInformation.States.Abstractions;
 using HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts;
 using HrManagementSystem.Application.Features.GeographicalInformation.States.Errors;
+using HrManagementSystem.Application.Features.GeographicalInformation.Validation;
 using HrManagementSystem.Domain.GeographicalInformation.States.Entities;
 using MapsterMapper;
 
@@ -25,13 +26,9 @@ public class StateMutationValidator<TMutation> : AbstractValidator<TMutation> wh
     public StateMutationValidator(IStringLocalizer<CreateStateRequest> localizer)
     {
         RuleFor(state => state.NameEn)
-            .Trimmed().NotEmpty().WithName(Strings.NameEn).WithMessage(localizer[Strings.Required])
-            .Length(2, 100).WithMessage(localizer[Strings.MaxLengthError])
-            .Matches(RegexPattern.EnglishLettersAndSpaces).WithMessage(localizer[Strings.EnglishLetterOnly]);
+            .GeographicalName(localizer, Strings.NameEn);
         RuleFor(state => state.NameAr)
-            .Trimmed().NotEmpty().WithName(Strings.NameAr).WithMessage(localizer[Strings.Required])
-            .Length(2, 100).WithMessage(localizer[Strings.MaxLengthError])
-            .Matches(RegexPattern.ArabicLettersAndSpaces).WithMessage(localizer[Strings.ArabicLetterOnly]);
+            .GeographicalName(localizer, Strings.NameAr);
         RuleFor(state => state.Code)
             .Trimmed().NotEmpty().WithName(Strings.Code).WithMessage(localizer[Strings.Required])
             .Length(2, 10).WithMessage(localizer[Strings.MaxLengthError])
@@ -279,6 +276,8 @@ public sealed class ArchiveStateCommandHandler(
                 if (state.IsDeleted) return Result.Success();
                 if (await stateWriteStore.HasActiveDistrictsAsync(state.Id, token))
                     return Result.Failure(stateErrors.StateInUseByDistrict);
+                if (await stateWriteStore.HasActiveAddressesAsync(state.Id, token))
+                    return Result.Failure(stateErrors.StateInUseByAddress);
 
                 state.IsDeleted = true;
                 state.DeletedById = currentActor.UserId;
@@ -387,6 +386,8 @@ public sealed class BulkArchiveStatesCommandHandler(
                     return Result.Success(new BulkArchiveStatesResponse(0));
                 if (await stateWriteStore.HasActiveDistrictsAsync(activeStates.Select(state => state.Id).ToArray(), token))
                     return Result.Failure<BulkArchiveStatesResponse>(stateErrors.StateInUseByDistrict);
+                if (await stateWriteStore.HasActiveAddressesAsync(activeStates.Select(state => state.Id).ToArray(), token))
+                    return Result.Failure<BulkArchiveStatesResponse>(stateErrors.StateInUseByAddress);
 
                 var deletedOn = timeProvider.GetUtcNow().UtcDateTime;
                 foreach (var state in activeStates)

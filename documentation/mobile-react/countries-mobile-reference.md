@@ -271,16 +271,22 @@ empty state is localized; background fetching retains current rows.
 ## 9. Form and Validation Contract
 
 `CountryForm` uses `useZodForm`, React Hook Form `Controller`, `AppFormSection`
-and shared fields.
+and shared fields. In development, the shared `AppForm` footer can fill an
+internally consistent Country sample without submitting it; the action is absent
+from production builds.
 
 | Field | Rule | Request normalization |
 |---|---|---|
-| `nameAr` | 2-100 Arabic letters/spaces | trim |
-| `nameEn` | 2-100 English letters/spaces | trim |
+| `nameAr` | 2-100 printable Unicode characters; spaces, digits, and punctuation allowed; no script-only rule | trim |
+| `nameEn` | 2-100 printable Unicode characters; spaces, digits, and punctuation allowed; no script-only rule | trim |
 | `alpha2Code` | blank or exactly two English letters | trim; blank -> `null` |
 | `alpha3Code` | blank or exactly three English letters | trim; blank -> `null` |
 | `phoneCode` | blank or optional `+` plus up to ten digits | trim; blank -> `null` |
-| `currencyCode` | blank or exactly three English letters | trim; blank -> `null` |
+| `currencyCode` | blank or exactly three ASCII letters | trim; blank -> `null` |
+
+`currencyCode` is an optional ISO integration value. The future Currency master
+and financial relationships belong to Finance/Payroll; this mobile feature does
+not create or own a Currency entity.
 
 `autoCapitalize="characters"` assists code entry; the backend mapping is the
 final uppercase normalization boundary.

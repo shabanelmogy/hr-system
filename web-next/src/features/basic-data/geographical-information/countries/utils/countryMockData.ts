@@ -1,4 +1,5 @@
 import type { CountryFormData } from "../types/Country";
+import { getNextMockSample } from "@/shared/utils/mockData";
 
 const countryMockSamples: readonly CountryFormData[] = [
   { nameAr: "مصر", nameEn: "Egypt", alpha2Code: "EG", alpha3Code: "EGY", phoneCode: "20", currencyCode: "EGP" },
@@ -23,15 +24,7 @@ export function getNextCountryMockData(
   usedIndexes: Set<number>,
   random: () => number = Math.random,
 ): CountryFormData {
-  if (usedIndexes.size >= countryMockSamples.length) usedIndexes.clear();
-
-  const startIndex = Math.min(
-    Math.floor(random() * countryMockSamples.length),
-    countryMockSamples.length - 1,
-  );
-  let index = startIndex;
-  while (usedIndexes.has(index)) index = (index + 1) % countryMockSamples.length;
-
-  usedIndexes.add(index);
-  return { ...countryMockSamples[index] };
+  return {
+    ...getNextMockSample(countryMockSamples, usedIndexes, random),
+  };
 }

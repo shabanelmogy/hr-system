@@ -432,12 +432,17 @@ progress indicator at the view boundary.
 
 | UI field | Request field | Required | Client/server rule | Normalization |
 |---|---|---|---|---|
-| Arabic name | `nameAr` | Yes | 2-100 Arabic letters/spaces | Trim |
-| English name | `nameEn` | Yes | 2-100 English letters/spaces | Trim |
+| Arabic/display name | `nameAr` | Yes | 2-100 printable Unicode characters; spaces, digits, and punctuation allowed; no script-only rule | Trim |
+| English/display name | `nameEn` | Yes | 2-100 printable Unicode characters; spaces, digits, and punctuation allowed; no script-only rule | Trim |
 | Alpha-2 | `alpha2Code` | No | Exactly two ISO-style letters | Trim, uppercase, blank -> `null` |
 | Alpha-3 | `alpha3Code` | No | Exactly three ISO-style letters | Trim, uppercase, blank -> `null` |
 | Phone code | `phoneCode` | No | International phone-code pattern, max 10 | Trim, blank -> `null` |
-| Currency | `currencyCode` | No | Exactly three currency-code letters | Trim, uppercase, blank -> `null` |
+| Currency | `currencyCode` | No | Exactly three ASCII currency-code letters | Trim, uppercase, blank -> `null` |
+
+Country names use the shared printable-Unicode schema from
+`validation/nameValidation.ts`; `currencyCode` remains an optional ISO
+integration value owned by Geography only until Finance/Payroll introduces the
+reviewed Currency master migration.
 
 The server owns uniqueness for Arabic name, English name, Alpha-2 and Alpha-3.
 The database reinforces these with unique indexes, including filtered indexes
@@ -455,8 +460,9 @@ fields; other business failures remain visible API errors.
 
 The list row is not the authoritative edit contract. Edit and view load
 `CountryDetail`; the form resets when the mode or selected country changes.
-Development mock data may populate Add mode but never auto-submits and is absent
-from production behavior.
+Development mock data uses the shared `MyForm` footer action and may populate
+Add/Edit fields, but never auto-submits or persists. Country samples are
+internally consistent and are absent from production behavior.
 
 That paragraph describes the web contract. Mobile intentionally passes the
 selected `Country` list row into `CountryForm` because its list row contains every

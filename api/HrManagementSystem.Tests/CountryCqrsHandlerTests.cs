@@ -729,6 +729,7 @@ public sealed class CountryCqrsHandlerTests
         public Country? Country { get; private set; } = existing;
         public IReadOnlyList<Country> BulkCountries { get; init; } = [];
         public bool ActiveStates { get; init; }
+        public bool ActiveAddresses { get; init; }
 
         public void Add(Country country) { Country = country; lifecycle.Add("add"); }
         public void AddRange(IReadOnlyCollection<Country> countries) => lifecycle.Add("add-range");
@@ -748,6 +749,12 @@ public sealed class CountryCqrsHandlerTests
             IReadOnlyCollection<int> countryIds,
             CancellationToken token) =>
             Task.FromResult(ActiveStates);
+        public Task<bool> HasActiveAddressesAsync(int countryId, CancellationToken token) =>
+            Task.FromResult(ActiveAddresses);
+        public Task<bool> HasActiveAddressesAsync(
+            IReadOnlyCollection<int> countryIds,
+            CancellationToken token) =>
+            Task.FromResult(ActiveAddresses);
     }
 
     private sealed class RecordingDelegatingUnitOfWork(

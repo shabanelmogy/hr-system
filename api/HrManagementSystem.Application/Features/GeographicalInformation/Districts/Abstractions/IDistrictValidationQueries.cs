@@ -23,4 +23,6 @@ public interface IDistrictValidationQueries : IValidationQuery
         CancellationToken cancellationToken);
 
     Task<bool> DistrictExistsAsync(int id, CancellationToken cancellationToken);
+
+    Task<int?> GetStateIdAsync(int districtId, CancellationToken cancellationToken);
 }

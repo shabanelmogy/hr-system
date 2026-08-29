@@ -44,6 +44,17 @@ Rules:
 - During a new-feature draft, use the phase templates and the selected reference packets as navigation, never as implementation evidence. After canonical books are registered, generate the feature's own phases 00 through 06; phase 06 is mandatory for handoff.
 - Never edit `documentation/system/generated/` directly. Update a canonical numbered section, recipe template, or manifest and regenerate.
 - Keep runtime source in its owning application. Documentation manifests reference source files; they do not duplicate them.
+- Every domain change must update its owning canonical documentation in the same
+  change. At minimum, update the domain review and the affected API, web-next,
+  and mobile-react profiles; if a platform surface is intentionally absent,
+  record it explicitly as Required, Deferred, or Excluded. Update the relevant
+  required-file manifest, recipe registration, and generated phase packets when
+  the evidence surface or canonical rule changes.
+- The current geographical domain books are `documentation/project/COUNTRIES_FEATURE_FULL_REVIEW.md`,
+  `STATES_FEATURE_FULL_REVIEW.md`, `DISTRICTS_FEATURE_FULL_REVIEW.md`,
+  `ADDRESS_TYPES_FEATURE_FULL_REVIEW.md`, `COMPANY_GEOGRAPHIC_SCOPE_FEATURE_FULL_REVIEW.md`,
+  and `ADDRESSES_DOMAIN_FULL_REVIEW.md`. Keep these books synchronized with
+  source; do not treat generated packets as authored documentation.
 - Copy the selected reference's architecture and verification discipline, but do not copy reference-specific fields, ownership, optional views, or documented findings unless the new feature requires them.
 - At handoff, separate feature regressions, inherited repository failures,
   environment blockers, and manual release checks. A focused pass does not erase a

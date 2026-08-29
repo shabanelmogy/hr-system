@@ -1,3 +1,4 @@
+using HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.States.Entities;
 
 namespace HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
@@ -12,4 +13,5 @@ public class Country : AuditableEntity
     public string? PhoneCode { get; set; } 
     public string? CurrencyCode { get; set; }
     public virtual ICollection<State> States { get; set; } =[];
+    public virtual ICollection<Address> Addresses { get; set; } = [];
 }

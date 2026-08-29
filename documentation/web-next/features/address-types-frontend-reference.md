@@ -14,6 +14,10 @@ by trim. It never sends `companyId`; the authenticated active-company actor is
 authoritative. Address Type keys remain stable feature-owned keys; a successful
 company switch clears the full query cache before refetching under the new actor.
 
+The shared name schema accepts 2-100 printable Unicode characters, including
+spaces, digits, punctuation, and mixed scripts, and rejects control characters
+and line breaks.
+
 ## 3. Server list
 
 One controller owns zero-based page, page size, status, visible search column and
@@ -34,7 +38,9 @@ server total separately; it is non-paginated and exposes text alternatives.
 
 ## 6. Forms and lifecycle
 
-View, Create and active Edit use the two-name contract. Archive/bulk confirmations
+View, Create and active Edit use the two-name contract. Development Add/Edit forms
+may use the shared `MyForm` footer action to fill a feature-owned sample; the
+action never submits and is excluded from production. Archive/bulk confirmations
 stay open on failure; read-only and permission checks run in both visibility and
 handlers. Archived rows restore through Delete permission.
 

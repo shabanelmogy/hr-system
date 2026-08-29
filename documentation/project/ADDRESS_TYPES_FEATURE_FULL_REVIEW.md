@@ -25,8 +25,10 @@ atomicity. UI mirrors those rules for clear feedback.
 ## 3. Frozen shared contract
 
 Address Types have a positive integer ID, required trimmed `nameAr`/`nameEn`
-(2-100 allowed letters/spaces), a soft-archive flag, timestamps, and a one-to-many
-Address relationship. Names are independently unique, case-insensitively, within
+(2-100 printable Unicode display characters; spaces, digits, and punctuation are
+allowed, while control characters and line breaks are rejected), a soft-archive flag, timestamps, and a
+one-to-many Address relationship. Names are independently unique,
+case-insensitively, within
 the active company, including archived rows. The API list supplies `addressesCount` and detail
 has editable fields. Active Address rows block archive; restore is idempotent.
 Bulk archive takes 1-100 distinct positive IDs atomically.
@@ -67,6 +69,10 @@ loaded-page Chart, Report, native Import. Table/Grid and Cards share one
 server-managed list, filters, sort, status and total. Charts never present a
 current page as global analytics and own no pager. Reports and Import are
 independent non-list surfaces and work with an empty list.
+
+Development create/edit forms use the shared web `MyForm` or mobile `AppForm`
+mock-data action when enabled. It fills domain-owned bilingual samples only,
+never submits automatically, and is absent from production behavior.
 
 ## 7. Import and reporting
 

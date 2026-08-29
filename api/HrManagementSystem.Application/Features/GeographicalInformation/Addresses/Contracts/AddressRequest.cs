@@ -2,14 +2,18 @@ namespace HrManagementSystem.Application.Features.GeographicalInformation.Addres
 
 public record AddressRequest(
     int Id,
-    string BuildingNumber,
-    string Floor,
-    string ApartmentNumber,
-    string PostalCode,
-    string AdditionalInfo,
-    double Latitude,
-    double Longitude,
-    bool IsDefault,
-    int AddressTypeId,
-    int DistrictId
+    int CountryId,
+    int? StateId,
+    int? DistrictId,
+    string? City,
+    string? StreetLine1,
+    string? StreetLine2,
+    string? BuildingNumber,
+    string? Floor,
+    string? ApartmentNumber,
+    string? PostalCode,
+    string? AdditionalInfo,
+    double? Latitude,
+    double? Longitude,
+    int AddressTypeId
 );

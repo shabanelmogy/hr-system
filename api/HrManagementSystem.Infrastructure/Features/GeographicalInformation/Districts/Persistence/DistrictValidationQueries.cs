@@ -42,4 +42,10 @@ public sealed class DistrictValidationQueries(ApplicationDbContext context)
         context.Districts.AnyAsync(
             district => district.Id == id && !district.IsDeleted,
             cancellationToken);
+
+    public Task<int?> GetStateIdAsync(int districtId, CancellationToken cancellationToken) =>
+        context.Districts
+            .Where(district => district.Id == districtId && !district.IsDeleted)
+            .Select(district => (int?)district.StateId)
+            .FirstOrDefaultAsync(cancellationToken);
 }

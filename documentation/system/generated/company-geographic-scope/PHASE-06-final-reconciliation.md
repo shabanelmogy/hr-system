@@ -51,11 +51,11 @@ decision. A focused test pass alone is never a `Ready` decision.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| company-geographic-scope-master | 8 | `0012520feb870ae44a0e4e11bf75cf50f98a8a51d756a85ddbdeee5a443b9d0b` |
-| company-geographic-scope-master | 9 | `61725b58626a9845ce6356fe9efaa047c1d7bbeccfaff098c23b18459e0a7a93` |
-| company-geographic-scope-master | 10 | `c968bcad199d28a23bb61f4196acb83c4154367a15c35ce91e99283ee191f3f8` |
-| company-geographic-scope-api | 10 | `1b1990713b597c7179919e9edd107e6afd94e4fdab56d43a6ecc106196aff6c3` |
-| company-geographic-scope-api | 11 | `c813d712917bbeee3bd921e5b90d10086353b12b315760bcc77ff549c05a8a0c` |
+| company-geographic-scope-master | 8 | `329d9fee13f010fada1cff1043d483944af37060e3d219399f1f50c462c58046` |
+| company-geographic-scope-master | 9 | `6f82dda3cd7b7913292e19c29a73c22ef7e6f3ce34f33d7dbfe9f6c3bc41c6de` |
+| company-geographic-scope-master | 10 | `7cf1da710a21d34843d71b47d1f43837657d2f07bb096d64d0f6d670f4a89404` |
+| company-geographic-scope-api | 10 | `98dd4e90a24df5d8e4869c25a36763b5a61bea51696e7c160c8a2bebea1edd39` |
+| company-geographic-scope-api | 11 | `797db80cbe49171eb7ae69bd2515f9b2c2d5a19dc2cd1d8f1b17a416a6971a35` |
 | company-geographic-scope-web | 12 | `796a6cc0c0d2193aac1f8239ae0f4ac40efd409368e3f93eb5b95453340e6a5d` |
 | company-geographic-scope-web | 13 | `6068676e499370206d086a0edf49591a1176ebfddefd65abc609cd39f59c5086` |
 | company-geographic-scope-web | 14 | `285de84b0614d0af9983bd8916e249d98bc5c20deed54d58c08b0ea2181aaef7` |

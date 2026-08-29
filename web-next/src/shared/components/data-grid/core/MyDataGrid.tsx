@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import {
   alpha,
   type SxProps,
@@ -7,6 +6,7 @@ import {
 } from "@mui/material/styles";
 import {
   gridFilteredSortedRowIdsSelector,
+  type GridColDef,
   type GridRowClassNameParams,
   type GridRowId,
   type GridValidRowModel,
@@ -25,6 +25,8 @@ import {
 } from "@/shared/constants/pagination";
 
 const dataGridStyles: SxProps<Theme> = {
+  width: "100%",
+  minWidth: 0,
   "& .highlighted-row": {
     backgroundColor: "#ffe0b2 !important",
     fontWeight: "bold",
@@ -61,7 +63,20 @@ const dataGridStyles: SxProps<Theme> = {
       backgroundColor: (theme: Theme) => `${theme.palette.primary.light}40`,
     },
   },
+  "& .MuiDataGrid-columnHeaderTitle": {
+    overflow: "visible",
+    textOverflow: "clip",
+    whiteSpace: "nowrap",
+  },
 };
+
+function getColumnMinWidth(column: GridColDef) {
+  const header = column.headerName?.trim() || column.field;
+  const headerMinWidth = header.length * 8 + 32;
+  const contentMinWidth = column.type === "actions" ? 112 : 72;
+
+  return Math.max(column.minWidth ?? 0, headerMinWidth, contentMinWidth);
+}
 
 export default function MyDataGrid<TRow extends GridValidRowModel>({
   rows = [],
@@ -138,6 +153,11 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
       ...slots,
     }),
     [slots],
+  );
+
+  const resolvedColumns = useMemo(
+    () => columns.map((column) => ({ ...column, minWidth: getColumnMinWidth(column) })),
+    [columns],
   );
 
   const shellContext = useMemo(
@@ -298,27 +318,25 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
 
   return (
     <DataGridShellContext.Provider value={shellContext}>
-      <Box sx={{ minWidth: "1200px" }}>
-        <ClientDataGrid
-          {...dataGridProps}
-          rows={rows}
-          columns={columns}
-          apiRef={resolvedApiRef}
-          getRowId={getRowId}
-          getRowClassName={resolvedGetRowClassName}
-          initialState={resolvedInitialState}
-          localeText={resolvedLocaleText}
-          pageSizeOptions={pageSizeOptions}
-          pagination={pagination}
-          paginationMode={paginationMode}
-          rowCount={rowCount}
-          checkboxSelection={checkboxSelection}
-          showToolbar={showToolbar ?? Boolean(onToolbarAdd || showGridOptions || toolbarSearch || toolbarContent || gridOptionsContent)}
-          className={showNavigationButtons ? "" : "no-navigation"}
-          slots={resolvedSlots}
-          sx={resolvedSx}
-        />
-      </Box>
+      <ClientDataGrid
+        {...dataGridProps}
+        rows={rows}
+        columns={resolvedColumns}
+        apiRef={resolvedApiRef}
+        getRowId={getRowId}
+        getRowClassName={resolvedGetRowClassName}
+        initialState={resolvedInitialState}
+        localeText={resolvedLocaleText}
+        pageSizeOptions={pageSizeOptions}
+        pagination={pagination}
+        paginationMode={paginationMode}
+        rowCount={rowCount}
+        checkboxSelection={checkboxSelection}
+        showToolbar={showToolbar ?? Boolean(onToolbarAdd || showGridOptions || toolbarSearch || toolbarContent || gridOptionsContent)}
+        className={showNavigationButtons ? "" : "no-navigation"}
+        slots={resolvedSlots}
+        sx={resolvedSx}
+      />
     </DataGridShellContext.Provider>
   );
 }

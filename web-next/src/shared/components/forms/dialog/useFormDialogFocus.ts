@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef } from "react";
 import type { RefObject } from "react";
 
+const ERROR_ANIMATION_IDLE_DELAY = 500;
+
 interface UseFormDialogFocusOptions {
   open: boolean;
   isViewMode: boolean;
@@ -24,6 +26,7 @@ export function useFormDialogFocus({
 }: UseFormDialogFocusOptions) {
   const lastFocusedErrorRef = useRef<string | null>(null);
   const timersRef = useRef<Set<ReturnType<typeof setTimeout>>>(new Set());
+  const errorAnimationTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const schedule = useCallback((callback: () => void, delay: number) => {
     const timer = setTimeout(() => {
@@ -37,6 +40,9 @@ export function useFormDialogFocus({
     () => () => {
       timersRef.current.forEach(clearTimeout);
       timersRef.current.clear();
+      if (errorAnimationTimerRef.current) {
+        clearTimeout(errorAnimationTimerRef.current);
+      }
     },
     [],
   );
@@ -84,17 +90,55 @@ export function useFormDialogFocus({
     }, 100);
   }, [autoFocusFirst, errors, focusError, focusFieldName, formRef, isViewMode, schedule]);
 
+  const animateFirstError = useCallback(() => {
+    const form = formRef.current;
+    if (!form) return;
+
+    const errorField = Object.keys(errors)
+      .map((name) => ({ name, element: findNamedElement(form, name) }))
+      .find(
+        (candidate): candidate is { name: string; element: HTMLElement } =>
+          candidate.element != null,
+      );
+
+    if (!errorField) return;
+    animateErrorField(errorField.element, errorColor, schedule);
+  }, [errorColor, errors, formRef, schedule]);
+
   useEffect(() => {
     if (!open) {
       lastFocusedErrorRef.current = null;
+      if (errorAnimationTimerRef.current) {
+        clearTimeout(errorAnimationTimerRef.current);
+        errorAnimationTimerRef.current = null;
+      }
       return;
     }
     if (Object.keys(errors).length === 0) {
       lastFocusedErrorRef.current = null;
+      if (errorAnimationTimerRef.current) {
+        clearTimeout(errorAnimationTimerRef.current);
+        errorAnimationTimerRef.current = null;
+      }
       return;
     }
-    focusError();
-  }, [errors, focusError, open]);
+
+    if (errorAnimationTimerRef.current) {
+      clearTimeout(errorAnimationTimerRef.current);
+    }
+
+    errorAnimationTimerRef.current = setTimeout(() => {
+      errorAnimationTimerRef.current = null;
+      animateFirstError();
+    }, ERROR_ANIMATION_IDLE_DELAY);
+
+    return () => {
+      if (errorAnimationTimerRef.current) {
+        clearTimeout(errorAnimationTimerRef.current);
+        errorAnimationTimerRef.current = null;
+      }
+    };
+  }, [animateFirstError, errors, open]);
 
   return focusInitialField;
 }

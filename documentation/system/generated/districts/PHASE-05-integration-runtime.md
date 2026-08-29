@@ -44,8 +44,8 @@ realtime, notification, localization, report, or Import integration is reachable
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | districts-master | 4 | `73edb563ff159ccd70caafab0275db68887f98c3c3f22ecdfaaea7ee41b4fb2e` |
-| districts-master | 5 | `c9a9e7cd0f72efe48f84480b5b891adb3eae21ec4a30f42280dda0662fd722b4` |
-| districts-master | 6 | `c5c725ff3b5be52349479c767800af9d5e02a1f5c680419181f6b170200e6bdf` |
+| districts-master | 5 | `acc697a7d29a374cf2baaaf6678e2e1c3cfab296999f8afcadef2edb116b6e1c` |
+| districts-master | 6 | `bc842f66c8ecdd4133ee9a86a1901d41047bc8cc48ec01e8a302ca6ab510da07` |
 | districts-master | 7 | `b4ca77c0fab6365d8f5202566b41f614348b21781231cb9bc97e4bd62aa9cd4f` |
 | districts-master | 9 | `6266a855e1cd714553644fb584e857d8f02350ce0abec9a1904245cf0f63eeb5` |
 | districts-api | 8 | `808bf1aa73ef33b6517d65ccc0aa7d5595474cb438f80fb39f8338791b3d797e` |

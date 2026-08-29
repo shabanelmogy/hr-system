@@ -24,4 +24,10 @@ public interface ICountryWriteStore
     Task<bool> HasActiveStatesAsync(
         IReadOnlyCollection<int> countryIds,
         CancellationToken cancellationToken);
+
+    Task<bool> HasActiveAddressesAsync(int countryId, CancellationToken cancellationToken);
+
+    Task<bool> HasActiveAddressesAsync(
+        IReadOnlyCollection<int> countryIds,
+        CancellationToken cancellationToken);
 }

@@ -37,6 +37,8 @@ public sealed class BulkArchiveCountriesCommandHandler(
                 var activeIds = activeCountries.Select(country => country.Id).ToList();
                 if (await countryWriteStore.HasActiveStatesAsync(activeIds, token))
                     return Result.Failure<BulkArchiveCountriesResponse>(countryErrors.CountryInUseByState);
+                if (await countryWriteStore.HasActiveAddressesAsync(activeIds, token))
+                    return Result.Failure<BulkArchiveCountriesResponse>(countryErrors.CountryInUseByAddress);
 
                 var deletedOn = timeProvider.GetUtcNow().UtcDateTime;
                 foreach (var country in activeCountries)

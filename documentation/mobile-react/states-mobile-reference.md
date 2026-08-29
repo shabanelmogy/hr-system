@@ -12,7 +12,7 @@ The physical route is `app/(main)/basic-data/geographical-information/states.tsx
 
 ## 3. Runtime contract
 
-Zod parses page, detail, relation, lookup, and bulk response shapes. State list rows include the active District count and parent Country. Requests contain only name Arabic/English, code, and CountryId.
+Zod parses page, detail, relation, lookup, and bulk response shapes. State list rows include the active District count and parent Country. Requests contain only printable Unicode Arabic/English display names, code, and CountryId. Names are 2-100 characters and allow spaces, digits, punctuation, and mixed scripts; control characters and line breaks are rejected. Codes remain 2-10 ASCII letters, digits, or hyphens.
 
 ## 4. Endpoints
 
@@ -78,7 +78,7 @@ Report and Import from wrapping or overflowing below Chart.
 
 ## 9. Form
 
-The full-screen State form uses React Hook Form/Zod, validates State-specific fields, loads active Countries through the Countries public API, normalizes code, supports create/edit/view, and uses shared keyboard/safe-area/dirty/busy handling. The list row contains all State form fields, so no redundant detail hydration is required for edit.
+The full-screen State form uses React Hook Form/Zod, validates State-specific fields, loads active Countries through the Countries public API, normalizes code, supports create/edit/view, and uses shared keyboard/safe-area/dirty/busy handling. In development, `AppForm` can fill a domain-owned sample with an active Country parent; it never submits and is disabled until the lookup is ready. The list row contains all State form fields, so no redundant detail hydration is required for edit.
 
 ## 10. Permissions and lifecycle
 

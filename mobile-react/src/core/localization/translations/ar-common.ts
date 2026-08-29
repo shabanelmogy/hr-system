@@ -11,6 +11,7 @@ export const arCommon = {
     previous: 'السابق',
     next: 'التالي',
     required: 'مطلوب',
+    generateMockData: 'توليد بيانات تجريبية',
   },
   confirmation: {
     reviewAction: 'راجع هذا الإجراء قبل المتابعة.',
@@ -48,6 +49,7 @@ export const arCommon = {
     minLength: 'يجب ألا يقل عن {{count}} أحرف.',
     required: 'هذا الحقل مطلوب.',
     maxLength: 'يجب ألا يتجاوز {{count}} حرفًا.',
+    invalidText: 'استخدم نصًا قابلًا للعرض بدون أسطر جديدة أو محارف تحكم.',
     invalidIdentifier:
       'ابدأ بحرف أو رقم واستخدم الحروف الإنجليزية والأرقام والشرطات فقط.',
     invalidOption: 'اختر قيمة صحيحة.',

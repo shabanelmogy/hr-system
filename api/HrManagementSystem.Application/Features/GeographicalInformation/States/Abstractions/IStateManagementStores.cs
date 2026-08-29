@@ -36,6 +36,10 @@ public interface IStateWriteStore
     Task<bool> HasActiveDistrictsAsync(int stateId, CancellationToken cancellationToken);
 
     Task<bool> HasActiveDistrictsAsync(IReadOnlyCollection<int> stateIds, CancellationToken cancellationToken);
+
+    Task<bool> HasActiveAddressesAsync(int stateId, CancellationToken cancellationToken);
+
+    Task<bool> HasActiveAddressesAsync(IReadOnlyCollection<int> stateIds, CancellationToken cancellationToken);
 }
 
 public interface IStateChangeScheduler

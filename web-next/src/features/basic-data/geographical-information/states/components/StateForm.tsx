@@ -3,10 +3,11 @@ import { useCountryLookup } from "@/features/basic-data/geographical-information
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Box, Button } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { type Resolver, type SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import type { StateFormData, StateFormProps } from "../types/State";
+import { getNextStateMockData } from "../utils/stateMockData";
 import { getStateValidationSchema } from "../utils/validation";
 
 const emptyState: StateFormData = { nameAr: "", nameEn: "", code: "", countryId: 0 };
@@ -16,9 +17,10 @@ const StateForm = ({
 }: StateFormProps) => {
   const { t } = useTranslation();
   const isViewMode = dialogType === "view";
+  const usedMockIndexes = useRef(new Set<number>());
   const schema = getStateValidationSchema(t);
   const { data: countries = [], isLoading: countriesLoading } = useCountryLookup({ enabled: open });
-  const { handleSubmit, reset, control, setError, formState: { errors, isDirty } } = useForm<StateFormData>({
+  const { handleSubmit, reset, control, setValue, setError, formState: { errors, isDirty } } = useForm<StateFormData>({
     resolver: zodResolver(schema) as Resolver<StateFormData>, mode: "onChange", defaultValues: emptyState,
   });
   useEffect(() => {
@@ -28,6 +30,16 @@ const StateForm = ({
   }, [dialogType, open, reset, selectedState]);
   const errorMessages = Object.fromEntries(Object.entries(errors).flatMap(([key, error]) => error?.message ? [[key, String(error.message)]] : []));
   const countryOptions = countries.map((country) => ({ id: country.id, displayName: `${country.nameEn} (${country.nameAr})` }));
+  const generateMockData = () => {
+    const countryId = countryOptions[0]?.id;
+    if (!countryId) return;
+    const sample = getNextStateMockData(usedMockIndexes.current, countryId);
+    const options = { shouldDirty: true, shouldValidate: true };
+    setValue("nameAr", sample.nameAr, options);
+    setValue("nameEn", sample.nameEn, options);
+    setValue("code", sample.code, options);
+    setValue("countryId", sample.countryId, options);
+  };
   const submit: SubmitHandler<StateFormData> = async (data) => {
     if (detailError) return;
     try { await onSubmit(data); }
@@ -41,6 +53,11 @@ const StateForm = ({
     onSubmit={isViewMode ? undefined : handleSubmit(submit)} isSubmitting={loading} isDirty={isDirty} hideFooter={isViewMode || Boolean(detailError)}
     recordId={selectedState?.id} focusFieldName="nameAr" autoFocusFirst overlayActionType={dialogType === "add" ? "create" : "update"}
     overlayMessage={dialogType === "add" ? t("states.creatingState") : t("states.updatingState")} errors={errorMessages}
+    mockDataAction={
+      process.env.NODE_ENV !== "production" && (dialogType === "add" || dialogType === "edit")
+        ? { onGenerate: generateMockData, disabled: loading || countriesLoading || countryOptions.length === 0 }
+        : undefined
+    }
   >
     {detailError ? <Alert severity="error" action={onRetryDetails ? <Button color="inherit" size="small" onClick={onRetryDetails}>{t("common.retry")}</Button> : undefined}>{detailError}</Alert> : null}
     <Box sx={{ mt: 2 }}><MyTextField fieldName="nameAr" labelKey={t("general.nameAr")} loading={loading} errors={errors} control={control} placeholder={t("states.nameArPlaceholder")} maxLength={100} showCounter={!isViewMode} readOnly={isViewMode} /></Box>

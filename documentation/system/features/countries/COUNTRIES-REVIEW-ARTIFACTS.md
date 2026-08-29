@@ -25,7 +25,7 @@ This is the applied evidence ledger for the current Countries feature. The detai
 | R-05 | Report behavior is connected | Crystal contract plus tenant-scoped ActiveReports template/data endpoints | Crystal default, published ActiveReports viewer, permission-protected reusable Designer | Report schema, API, query, and device handling | Verified; server-side ActiveReports rendering remains excluded |
 | R-06 | Realtime and notifications refresh clients | Post-commit Country job | Realtime query registry | Realtime registry and notification route mapping | Verified |
 | R-07 | English, Arabic, RTL, responsive, and accessible presentation | Localized server errors/messages | Translation files and shared responsive UI | Translation modules, theme, shared screen/list components | Verified by source; runtime matrix remains a release gate |
-| R-08 | Web-only XLSX Import is bounded, schema-valid, atomic, and safe under ambiguous responses | Atomic 1-100 bulk command without idempotency | Shared parser/card plus Country-owned mapping, duplicate rules, explicit row states, and reconciliation | Explicitly Excluded | Verified with focused tests |
+| R-08 | XLSX Import is bounded, schema-valid, atomic, and safe under ambiguous responses | Atomic 1-100 bulk command without idempotency | Shared parser/card plus Country-owned mapping, duplicate rules, explicit row states, and reconciliation | Native shared parser/card plus Country-owned mapping, duplicate rules, explicit row states, and reconciliation | Verified with focused tests |
 
 ## Shared contract snapshot
 
@@ -63,7 +63,7 @@ This is the applied evidence ledger for the current Countries feature. The detai
 
 | Concern | Web | Mobile |
 | --- | --- | --- |
-| View set | Grid, cards, chart, report, import | Table, cards, report |
+| View set | Grid, cards, chart, report, import | Table, cards, chart, report, import |
 | Form presentation | Browser dialog/sheet composition | Full-screen shared form flow |
 | Report output | Browser report view and route | Device file/open/share handling |
 | Page size | Optimized for desktop grid/card density | Smaller table/card defaults for device width |
@@ -94,13 +94,13 @@ These differences are presentation decisions. They do not change the shared API 
 | Layer | Check | Result |
 | --- | --- | --- |
 | API | Focused Country CQRS suite | 53 passed on 2026-08-24 |
-| API | Full suite | 306 passed; one inherited tenant-role migration text assertion failed outside Countries/States |
+| API | Full suite | 349 passed on 2026-08-27 |
 | Web | Shared/feature Import regression suite | 4 files, 30 tests passed on 2026-08-24 |
-| Web | Full tests and production build | 75 files/262 tests passed; 41 routes generated on 2026-08-24 |
-| Mobile | Full suite | 17 files/58 tests passed, including Countries/States screen and mutation integration coverage |
+| Web | Full tests and production build | 86 files/300 tests passed; 49 routes generated on 2026-08-27 |
+| Mobile | Full suite | 41 suites/120 tests passed, including Countries/States screen and mutation integration coverage |
 | Mobile | Typecheck, architecture check, lint | Passed with no lint errors |
-| Documentation | Required-source validation and generated packet freshness | Passed for all 14 recipes on 2026-08-24 |
-| Web | ActiveReportsJS service tests, type-check/strict/lint, and bound starter JSON | Passed on 2026-08-23; architecture check remains blocked by four pre-existing unrelated boundary/cycle violations; no visual browser run in this change |
+| Documentation | Required-source validation and generated packet freshness | Passed for 49 recipes on 2026-08-27 |
+| Web | ActiveReportsJS service tests, type-check/strict/lint, architecture, and bound starter JSON | Passed; no visual browser run in this change |
 | API report templates | Isolated build, full tests, EF pending-model check | Passed on 2026-08-23: 0 build errors/warnings, 272/272 tests, no pending model changes; migration generated but not applied |
 
 Focused results prove the reviewed paths, not every repository quality gate. Production release still requires the complete commands listed in the canonical master review.

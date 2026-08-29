@@ -73,6 +73,12 @@ namespace HrManagementSystem.Application.Common.Consts
 
         public const string AddressType = nameof(AddressType);
 
+        public const string City = nameof(City);
+
+        public const string StreetLine1 = nameof(StreetLine1);
+
+        public const string StreetLine2 = nameof(StreetLine2);
+
         public const string AddressTypes = nameof(AddressTypes);
 
         public const string BuildingNumber = nameof(BuildingNumber);
@@ -93,11 +99,17 @@ namespace HrManagementSystem.Application.Common.Consts
 
         public const string InvalidLongitude = nameof(InvalidLongitude);
 
+        public const string InvalidCoordinates = nameof(InvalidCoordinates);
+
         public const string InvalidAddressType = nameof(InvalidAddressType);
 
         public const string District = nameof(District);
 
         public const string InvalidDistrict = nameof(InvalidDistrict);
+
+        public const string InvalidCountry = nameof(InvalidCountry);
+
+        public const string InvalidState = nameof(InvalidState);
 
         public const string RoleDuplicated = nameof(RoleDuplicated);
 

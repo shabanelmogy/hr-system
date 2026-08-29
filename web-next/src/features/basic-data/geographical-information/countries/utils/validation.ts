@@ -1,31 +1,20 @@
 import {
-  arabicLettersAndSpacesPattern,
   currencyCodePattern,
-  englishLettersAndSpacesPattern,
   internationalPhoneCodePattern,
   isoAlpha2CodePattern,
   isoAlpha3CodePattern,
 } from "@/features/basic-data/geographical-information/validation/patterns";
+import { createGeographicalNameSchema } from "@/features/basic-data/geographical-information/validation/nameValidation";
 import type { TFunction } from "i18next";
 import { z } from "zod";
 
 export const getCountryValidationSchema = (t: TFunction) => {
   return z.object({
     // Required: Arabic Name
-    nameAr: z
-      .string({ message: t("validation.required") })
-      .trim()
-      .min(2, t("validation.minLength", { count: 2 }))
-      .max(100, t("validation.maxLength", { count: 100 }))
-      .regex(arabicLettersAndSpacesPattern, t("validation.invalidArabicName")),
+    nameAr: createGeographicalNameSchema(t),
 
     // Required: English Name
-    nameEn: z
-      .string({ message: t("validation.required") })
-      .trim()
-      .min(2, t("validation.minLength", { count: 2 }))
-      .max(100, t("validation.maxLength", { count: 100 }))
-      .regex(englishLettersAndSpacesPattern, t("validation.invalidEnglishName")),
+    nameEn: createGeographicalNameSchema(t),
 
     // Optional: Alpha2 Code
     alpha2Code: z

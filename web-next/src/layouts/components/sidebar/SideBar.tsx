@@ -21,10 +21,10 @@ import NavigationSection from "./NavigationSection";
 import UserProfile from "./UserProfile";
 import { useSession } from "@/lib/auth/SessionContext";
 import { MyTextField } from "@/shared/components/forms";
+import { useSidebar } from "@/shared/contexts/SidebarContext";
 import type { NavigationItem, NavigationSection as NavigationSectionModel } from "./navigationTypes";
+import { compactSidebarWidth, expandedSidebarWidth } from "./sidebarConstants";
 // Drawer Sizes
-const drawerWidth = 240;
-const miniDrawerWidth = 64;
 
 // Search container
 const SearchContainer = styled("div")<{ open: boolean }>(({ theme, open }) => ({
@@ -129,13 +129,14 @@ function SideBar({
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const { user } = useSession();
+  const { setOpen } = useSidebar();
   const currentDrawerWidth = isSmallScreen
-    ? drawerWidth
+    ? expandedSidebarWidth
     : open
-      ? drawerWidth
+      ? expandedSidebarWidth
       : hideWhenClosed
         ? 0
-        : miniDrawerWidth;
+        : compactSidebarWidth;
   const hidden = hideWhenClosed && !open && !isSmallScreen;
   const widthTransition = theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
@@ -404,6 +405,7 @@ function SideBar({
                 isExpanded={!!expandedSections[section.id]}
                 onToggle={handleSectionToggle}
                 onNavigate={handleNavigate}
+                onRequestOpen={() => setOpen(true)}
               />
               {index < navigationSections.length - 1 &&
                 (!searchTerm ||

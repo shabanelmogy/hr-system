@@ -1,4 +1,5 @@
 using HrManagementSystem.Domain.Common.Entities;
+using HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities;
 using HrManagementSystem.Domain.Employees.Entities;
 using static HrManagementSystem.Domain.Common.Guards.DomainGuard;
 
@@ -35,11 +36,11 @@ public class Company : TenantAuditableEntity
     public string? Website { get; set; }
     public string? Logo { get; set; }
     public string? Background { get; set; }
-    public int? AddressId { get; set; }
     public bool IsActive { get; private set; }
 
     public ICollection<Branch> Branches { get; set; } = [];
     public ICollection<Employee> Employees { get; set; } = [];
+    public ICollection<CompanyAddress> Addresses { get; set; } = [];
 
     public void UpdateIdentity(
         string companyCode,

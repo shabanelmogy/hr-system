@@ -46,6 +46,7 @@ export const FormContainer: React.FC<MyFormProps> = ({
   errors = {},
   onErrorFound = undefined,
   footerLeft = null,
+  mockDataAction = undefined,
 }) => {
   const theme = useTheme();
   const dialogContentRef = useRef<HTMLDivElement>(null);
@@ -179,6 +180,7 @@ export const FormContainer: React.FC<MyFormProps> = ({
     errors,
     onErrorFound,
     footerLeft,
+    mockDataAction,
     dialogContentRef,
   };
 

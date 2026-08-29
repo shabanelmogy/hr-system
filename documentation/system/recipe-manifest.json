@@ -44,6 +44,26 @@
       "title": "States Expo implementation profile"
     },
     {
+      "id": "addresses-master",
+      "path": "../project/ADDRESSES_DOMAIN_FULL_REVIEW.md",
+      "title": "Addresses domain foundation review"
+    },
+    {
+      "id": "addresses-api",
+      "path": "../api/Addresses_API_Implementation_Profile.md",
+      "title": "Addresses API implementation profile"
+    },
+    {
+      "id": "addresses-web",
+      "path": "../web-next/features/addresses-frontend-reference.md",
+      "title": "Addresses Next.js integration profile"
+    },
+    {
+      "id": "addresses-mobile",
+      "path": "../mobile-react/addresses-mobile-reference.md",
+      "title": "Addresses Expo integration profile"
+    },
+    {
       "id": "districts-master",
       "path": "../project/DISTRICTS_FEATURE_FULL_REVIEW.md",
       "title": "Districts cross-platform master review"
@@ -127,6 +147,7 @@
   "requiredFileManifests": [
     "features/countries/required-files.json",
     "features/states/required-files.json",
+    "features/addresses/required-files.json",
     "features/districts/required-files.json",
     "features/address-types/required-files.json",
     "features/company-geographic-scope/required-files.json",
@@ -287,6 +308,84 @@
         { "book": "states-api", "sections": [10, 11] },
         { "book": "states-web", "sections": [12, 13, 14] },
         { "book": "states-mobile", "sections": [14, 15] }
+      ]
+    },
+    {
+      "id": "addresses-phase-00-discovery-evidence",
+      "title": "Addresses Phase 00 - Discovery and Evidence",
+      "template": "templates/PHASE-00-discovery-evidence.template.md",
+      "output": "generated/addresses/PHASE-00-discovery-evidence.md",
+      "sources": [
+        { "book": "addresses-master", "sections": [1, 6] },
+        { "book": "addresses-api", "sections": [1] },
+        { "book": "addresses-web", "sections": [1] },
+        { "book": "addresses-mobile", "sections": [1] }
+      ]
+    },
+    {
+      "id": "addresses-phase-01-domain-api",
+      "title": "Addresses Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/addresses/PHASE-01-domain-api.md",
+      "sources": [
+        { "book": "addresses-master", "sections": [1, 2, 4] },
+        { "book": "addresses-api", "sections": [1, 2, 3, 4, 5, 6] }
+      ]
+    },
+    {
+      "id": "addresses-phase-02-web-client",
+      "title": "Addresses Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/addresses/PHASE-02-web-client.md",
+      "sources": [
+        { "book": "addresses-master", "sections": [2, 5, 7] },
+        { "book": "addresses-web", "sections": [1, 2, 3, 4] }
+      ]
+    },
+    {
+      "id": "addresses-phase-03-mobile-client",
+      "title": "Addresses Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/addresses/PHASE-03-mobile-client.md",
+      "sources": [
+        { "book": "addresses-master", "sections": [2, 5, 7] },
+        { "book": "addresses-mobile", "sections": [1, 2, 3] }
+      ]
+    },
+    {
+      "id": "addresses-phase-04-domain-actions",
+      "title": "Addresses Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/addresses/PHASE-04-domain-actions.md",
+      "sources": [
+        { "book": "addresses-master", "sections": [2, 4, 5] },
+        { "book": "addresses-api", "sections": [3, 5, 6] },
+        { "book": "addresses-web", "sections": [2, 4] },
+        { "book": "addresses-mobile", "sections": [2, 3] }
+      ]
+    },
+    {
+      "id": "addresses-phase-05-integration-runtime",
+      "title": "Addresses Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/addresses/PHASE-05-integration-runtime.md",
+      "sources": [
+        { "book": "addresses-master", "sections": [4, 5, 6, 8] },
+        { "book": "addresses-api", "sections": [4, 5, 6] },
+        { "book": "addresses-web", "sections": [3, 4] },
+        { "book": "addresses-mobile", "sections": [2, 3] }
+      ]
+    },
+    {
+      "id": "addresses-phase-06-final-reconciliation",
+      "title": "Addresses Phase 06 - Final Reconciliation",
+      "template": "templates/PHASE-06-final-reconciliation.template.md",
+      "output": "generated/addresses/PHASE-06-final-reconciliation.md",
+      "sources": [
+        { "book": "addresses-master", "sections": [5, 6, 7, 8] },
+        { "book": "addresses-api", "sections": [4, 5, 6] },
+        { "book": "addresses-web", "sections": [3, 4] },
+        { "book": "addresses-mobile", "sections": [2, 3] }
       ]
     },
 {

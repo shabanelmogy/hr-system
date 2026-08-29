@@ -81,7 +81,7 @@ implementation discipline.
 | company-geographic-scope-master | 3 | `1eddc721d6657a5c21b9d719373cc2c21b1cd4c4e5da06db8520db87a76d2c77` |
 | company-geographic-scope-master | 4 | `8a793aa6af268801e0554b7339d3c2a20a793da042b2ada9e9688180a6e1331b` |
 | company-geographic-scope-master | 6 | `92d260cdc23463e140aee8d219007e899e8cae69c926cc42eefd62f198ac4f06` |
-| company-geographic-scope-api | 1 | `70e6bbb0a933a67859b7a4c5100882a9ae324d8c8d13867b2fa97c830695db5c` |
+| company-geographic-scope-api | 1 | `36c11f614a057bd97744bb17b06312435a14bead1f5983cc2b69c18750a4b8f5` |
 | company-geographic-scope-api | 2 | `4e9c08b13393e9449955418a49761396d4c8155152213af650203d7f465624c9` |
 | company-geographic-scope-api | 3 | `17c9f16744d3d47c1448c71cab1453c887fff297b9319616eed77258269fac29` |
 | company-geographic-scope-api | 4 | `fd4a36764b8d106f6b24d5eafa14e3522133abe45dd842c6e157c3dd61afc183` |
@@ -89,5 +89,5 @@ implementation discipline.
 | company-geographic-scope-api | 6 | `1bd412614faadc55361e9404e5ef7bbbfa550eea95aa859f57f7823579fca834` |
 | company-geographic-scope-api | 7 | `6029708d675d07c2d68b04b95cde352e14d8e33cd53477da1a1b62867bc5c2e3` |
 | company-geographic-scope-api | 8 | `bfa505287d661d283b0aa02f52e340f7d6fd52b22e9dfa42ad19350143811147` |
-| company-geographic-scope-api | 9 | `879c8cc480f90b5e5d6d75947b590ee079c5c9c93bce9214473adc92cecac7e5` |
-| company-geographic-scope-api | 10 | `1b1990713b597c7179919e9edd107e6afd94e4fdab56d43a6ecc106196aff6c3` |
+| company-geographic-scope-api | 9 | `d9e80dff2341a7925292988351d9a98f7d5efd74b7ca113d78ff1e770beca204` |
+| company-geographic-scope-api | 10 | `98dd4e90a24df5d8e4869c25a36763b5a61bea51696e7c160c8a2bebea1edd39` |

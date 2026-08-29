@@ -45,7 +45,11 @@ theme, RTL, text and accessibility behavior.
 
 ## 8. Form
 
-Full-screen create/edit/view validates two bilingual names. Read-only checks run
+Full-screen create/edit/view validates two bilingual printable-Unicode names
+(2-100 characters; spaces, digits, punctuation, and mixed scripts are allowed;
+control characters and line breaks are rejected). Development create/edit forms
+may use the shared `AppForm` mock-data action to fill a local sample without
+submitting; the action is absent from production. Read-only checks run
 before permission failure; modal primitives preserve dirty/busy behavior.
 
 ## 9. Lifecycle

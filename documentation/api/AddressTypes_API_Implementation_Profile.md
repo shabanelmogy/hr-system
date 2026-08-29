@@ -27,7 +27,9 @@ only active rows ordered Name EN then ID.
 
 ## 5. Command contract
 
-Create/update normalize fields, validate allowed scripts and 2-100 length, check
+Create/update normalize fields, validate printable Unicode names with 2-100
+length (spaces, digits, punctuation, and mixed scripts are allowed; control
+characters and line breaks are rejected), check
 independent name conflicts within the active company, save atomically, and
 schedule after commit.
 Archive and bulk archive check active Address references under the Address Type

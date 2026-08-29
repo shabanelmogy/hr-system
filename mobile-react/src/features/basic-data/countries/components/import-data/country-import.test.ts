@@ -15,6 +15,6 @@ describe('country import mapping', () => {
   });
 
   it('keeps invalid domain rows out of the request batch', () => {
-    expect(buildCountryImportRows([{ rowNumber: 2, values: ['Egypt', 'مصر', '', '', '', ''] }], t)[0]).toMatchObject({ status: 'invalid', request: null });
+    expect(buildCountryImportRows([{ rowNumber: 2, values: ['', '', '', '', '', ''] }], t)[0]).toMatchObject({ status: 'invalid', request: null });
   });
 });

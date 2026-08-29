@@ -43,8 +43,8 @@
 
 #### Technical Requirements:
 1. **Validation**
-   - English name: 2-100 characters, English letters only
-   - Arabic name: 2-100 characters, Arabic letters only
+   - English/display name: 2-100 printable Unicode characters; spaces, digits, punctuation, and mixed scripts are allowed; control characters and line breaks are rejected
+   - Arabic/display name: 2-100 printable Unicode characters; spaces, digits, punctuation, and mixed scripts are allowed; control characters and line breaks are rejected
    - Both names are required and unique
 
 2. **Security**

@@ -9,7 +9,7 @@ const districtDetailObjectSchema = z.object({
 });
 export const districtSchema: z.ZodType<District> = districtDetailObjectSchema.extend({ addressesCount: z.number().int().nonnegative() });
 export const districtDetailSchema: z.ZodType<DistrictDetail> = districtDetailObjectSchema;
-export const districtWithAddressesSchema: z.ZodType<DistrictWithAddresses> = districtDetailObjectSchema.extend({ addresses: z.array(z.object({ id: z.number().int().positive(), buildingNumber: z.string(), floor: z.string(), apartmentNumber: z.string(), postalCode: z.string(), isDefault: z.boolean(), isDeleted: z.boolean() })) });
+export const districtWithAddressesSchema: z.ZodType<DistrictWithAddresses> = districtDetailObjectSchema.extend({ addresses: z.array(z.object({ id: z.number().int().positive(), buildingNumber: z.string().nullable(), floor: z.string().nullable(), apartmentNumber: z.string().nullable(), postalCode: z.string().nullable(), isDeleted: z.boolean() })) });
 export const districtLookupSchema: z.ZodType<DistrictLookup[]> = z.array(z.object({ id: z.number().int().positive(), nameAr: z.string().min(1), nameEn: z.string().min(1), code: z.string().min(1), stateId: z.number().int().positive() }));
 export const districtPageSchema = z.object({ items: z.array(districtSchema), metaData: pageMetadataSchema });
 export const bulkArchiveDistrictsResultSchema = z.object({ archivedCount: z.number().int().nonnegative() });

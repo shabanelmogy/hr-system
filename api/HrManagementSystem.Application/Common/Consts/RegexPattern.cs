@@ -12,8 +12,6 @@ namespace HrManagementSystem.Application.Common.Consts
         public const string NationalId = "^[2,3]{1}[0-9]{13}$";
         public const string Email = "^[a-zA-Z0-9._%+]+@[a-zA-Z0-9]+(\\.[a-zA-Z]{2,})+$";
         public const string UploadedFile = "^[A-Za-z0-9_\\-.]*$";
-        public const string EnglishLettersAndSpaces = "^[A-Za-z\\s]+$";
-        public const string ArabicLettersAndSpaces = "^[\\p{IsArabic}\\s]+$";
         public const string IsoAlpha2Code = "^[A-Za-z]{2}$";
         public const string IsoAlpha3Code = "^[A-Za-z]{3}$";
         public const string InternationalPhoneCode = "^\\+?\\d{1,10}$";

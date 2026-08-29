@@ -78,11 +78,11 @@ implementation discipline.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| districts-master | 3 | `4bdc52285d77adc542473adcc0cb47e9301fc9f8af81cb2e7f436e184e969967` |
+| districts-master | 3 | `7db1a7d82da3179a850933bc4c5ca70c2c552128be8b21b17a84b73cf938f939` |
 | districts-master | 4 | `73edb563ff159ccd70caafab0275db68887f98c3c3f22ecdfaaea7ee41b4fb2e` |
-| districts-master | 6 | `c5c725ff3b5be52349479c767800af9d5e02a1f5c680419181f6b170200e6bdf` |
+| districts-master | 6 | `bc842f66c8ecdd4133ee9a86a1901d41047bc8cc48ec01e8a302ca6ab510da07` |
 | districts-api | 1 | `22b3bbfddbed6d5048acb0224ba4b08ff7d1e5f94af607e8dde95b758b0a4c9b` |
-| districts-api | 2 | `9521d8d8c039697bc5e0103ae6364762c8f6711dc05fa4233b7bdf2ef053213e` |
+| districts-api | 2 | `acbcd927908b4fa5a19ff18d896f39795c0dc4718aaa3f432142a7992f979e1d` |
 | districts-api | 3 | `01443e47ae5fa805afd6d2edc3e345b5610267819a78871360abf4367502b367` |
 | districts-api | 4 | `fc13063d8cc49f699f637ffa96865c841c4714251ecd728b8209172124fb7148` |
 | districts-api | 5 | `817904cf7b037c0d4815e7389245629f1db4cbc6f435ac68ea4696789def8ff7` |

@@ -5,6 +5,7 @@ using HrManagementSystem.Application.Features.GeographicalInformation;
 using HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Abstractions;
 using HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Contracts;
 using HrManagementSystem.Application.Features.GeographicalInformation.AddressTypes.Errors;
+using HrManagementSystem.Application.Features.GeographicalInformation.Validation;
 using HrManagementSystem.Domain.GeographicalInformation.AddressTypes.Entities;
 using MapsterMapper;
 
@@ -33,8 +34,8 @@ public class AddressTypeMutationValidator<TMutation> : AbstractValidator<TMutati
 {
     public AddressTypeMutationValidator(IStringLocalizer<AddressTypeRequest> localizer)
     {
-        RuleFor(item => item.NameEn).Trimmed().NotEmpty().WithName(Strings.NameEn).WithMessage(localizer[Strings.Required]).Length(2, 100).WithMessage(localizer[Strings.MaxLengthError]).Matches(RegexPattern.EnglishLettersAndSpaces).WithMessage(localizer[Strings.EnglishLetterOnly]);
-        RuleFor(item => item.NameAr).Trimmed().NotEmpty().WithName(Strings.NameAr).WithMessage(localizer[Strings.Required]).Length(2, 100).WithMessage(localizer[Strings.MaxLengthError]).Matches(RegexPattern.ArabicLettersAndSpaces).WithMessage(localizer[Strings.ArabicLetterOnly]);
+        RuleFor(item => item.NameEn).GeographicalName(localizer, Strings.NameEn);
+        RuleFor(item => item.NameAr).GeographicalName(localizer, Strings.NameAr);
     }
 }
 public sealed class CreateAddressTypeCommandValidator : AddressTypeMutationValidator<CreateAddressTypeCommand> { public CreateAddressTypeCommandValidator(IStringLocalizer<AddressTypeRequest> localizer) : base(localizer) { } }

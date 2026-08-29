@@ -20,7 +20,7 @@ List rows contain State fields, parent `SimpleCountryResponse`, active `District
 
 ## 5. Validation and normalization
 
-Command validators enforce Arabic and English names, State code, CountryId, Ids, and bulk bounds. Mapster trims names and uppercases code. Duplicate rules are field-specific and case-insensitive within one Country: Arabic names compare only with Arabic names, English names only with English names, and codes only with codes. The write store applies the same rule against active and archived rows so restore/update cannot create ambiguous records.
+Command validators enforce required printable Unicode display names, State code, CountryId, Ids, and bulk bounds. Names are 2-100 characters and may contain spaces, digits, punctuation, and any script; control characters and line breaks are rejected. State codes are 2-10 ASCII letters, digits, or hyphens. Mapster trims names and uppercases code. Duplicate rules are field-specific and case-insensitive within one Country: Arabic names compare only with Arabic names, English names only with English names, and codes only with codes. The write store applies the same rule against active and archived rows so restore/update cannot create ambiguous records.
 
 ## 6. Create, bulk create, and update
 

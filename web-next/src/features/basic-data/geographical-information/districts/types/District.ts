@@ -32,11 +32,10 @@ export interface DistrictLookup {
 
 export interface DistrictAddressListItem {
   id: number;
-  buildingNumber: string;
-  floor: string;
-  apartmentNumber: string;
-  postalCode: string;
-  isDefault: boolean;
+  buildingNumber: string | null;
+  floor: string | null;
+  apartmentNumber: string | null;
+  postalCode: string | null;
   isDeleted: boolean;
 }
 

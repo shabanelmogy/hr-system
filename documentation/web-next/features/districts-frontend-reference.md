@@ -12,6 +12,10 @@ The thin app route at `app/(main)/super-admin/geography/districts/page.tsx` rend
 
 `basicData.ts`, `types.ts`, `District.ts`, and `districtService.ts` match the District API page, lookup, detail, address-detail, lifecycle, named bulk-create, and bulk-archive contracts exactly.
 
+The shared name schema accepts 2-100 printable Unicode characters, including
+spaces, digits, punctuation, and mixed scripts, and rejects control characters
+and line breaks. District codes remain 2-10 ASCII letters, digits, or hyphens.
+
 ## 4. Server list state
 
 `districtPageQuery.ts` converts one-based API pages and serializes criteria. `useDistrictQueries.ts` holds page/detail/lookup keys and root invalidation; client-side filtering or fabricated totals are prohibited.
@@ -34,7 +38,7 @@ Charts use only the loaded page and show server total separately. Metrics are Di
 
 ## 9. Forms and lifecycle dialogs
 
-The form resolves active States only while open. Create/edit/view, archive, restore, and bulk archive use shared dialog patterns, permission gating, error feedback, and query invalidation.
+The form resolves active States only while open. In development, its shared `MyForm` footer can fill a domain-owned District sample and an active State; it never submits automatically and is disabled until the parent lookup is ready. The State selector uses the domain-scoped `districts.state` label and `districts.selectState` placeholder keys so English and Arabic labels remain correct. Create/edit/view, archive, restore, and bulk archive use shared dialog patterns, permission gating, error feedback, and query invalidation.
 
 ## 10. Realtime and routing
 

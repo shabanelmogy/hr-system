@@ -26,6 +26,12 @@ public sealed class CompanyConfiguration : IEntityTypeConfiguration<Company>
         builder.HasIndex(company => new { company.TenantId, company.NameAr }).IsUnique();
         builder.HasIndex(company => new { company.TenantId, company.CompanyCode }).IsUnique();
 
+        builder.HasMany(company => company.Addresses)
+            .WithOne(address => address.Company)
+            .HasForeignKey(address => new { address.TenantId, address.CompanyId })
+            .HasPrincipalKey(company => new { company.TenantId, company.Id })
+            .OnDelete(DeleteBehavior.Restrict);
+
         // Enable these navigations with their owning feature migrations.
         builder.Ignore(company => company.Branches);
         builder.Ignore(company => company.Employees);

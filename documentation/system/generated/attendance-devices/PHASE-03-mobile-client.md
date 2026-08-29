@@ -66,7 +66,7 @@ profile and do not leave an unreachable route, component, or translation surface
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | attendance-devices-master | 3 | `c6619586b58ca9eca3be36bb6d10bb72d97f3cdb67b4f49ebca55e90bc29ca5c` |
-| attendance-devices-master | 4 | `883d12a168ad1f5a7d103912e0541748d3d3a692be6eea2417865a39f5e2ea18` |
+| attendance-devices-master | 4 | `7b3f937ee4ba3ffb1f67be08c46916c39fd143d4cac3a7f512036d64d99335a6` |
 | attendance-devices-master | 6 | `d4d02053ca38139b5ea51928c18352d2ad86e08b3b1308b3d3fa58fab55db761` |
 | attendance-devices-master | 7 | `433b3f83669c1abbc1d39bf7fc3c8bcf8b759e1311566bfeb4e0f5c248b302ec` |
 | attendance-devices-mobile | 1 | `e4e99690aefc68e7b12dc0fd1f11d51b194d06c0e6448f9d3f2a37a289d1ffac` |

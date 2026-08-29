@@ -23,4 +23,6 @@ public interface IStateValidationQueries : IValidationQuery
         CancellationToken cancellationToken);
 
     Task<bool> StateExistsAsync(int id, CancellationToken cancellationToken);
+
+    Task<int?> GetCountryIdAsync(int stateId, CancellationToken cancellationToken);
 }

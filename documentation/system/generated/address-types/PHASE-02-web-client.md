@@ -106,16 +106,16 @@ failure into partial success.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| address-types-master | 3 | `7df320a1cdbe421b7edf28e7bb0ed7c4ad026ba0d76af15dbb1ff27080f10f13` |
+| address-types-master | 3 | `99ee58c53437d2bdc78df5b577e6382aef5648325eaa6bf07ffb3386f38d8c00` |
 | address-types-master | 4 | `7308f8020bdbc0c722447f200a173af87d8fa4f5f3fb6bf250463bd9f057ef5a` |
-| address-types-master | 6 | `b36e3f0234da7c53263dc870165993e8cc3d645939e7d9b5c2d85d617ed9c5e9` |
+| address-types-master | 6 | `38ba2cceb96c08e8c3815c45b40fc5ef311b74eb1e6e3095936183f7ac67aeb4` |
 | address-types-master | 7 | `78e6057906c656526f8fb427486cc0fcf24d5fd8fb865fdb58d0a786b9cce3ba` |
 | address-types-web | 1 | `b3020d62bc94049712c0a2f15d7435292ce16aaa254409856a6bf7c7405cc499` |
-| address-types-web | 2 | `28b4023af2a4131d5bca997bf32d61328902a654c1352dc25d4eb648b6ad91e6` |
+| address-types-web | 2 | `566c1bb2e2d57ebcaf5853637d29939bf6c53061d7ddff9fdb92740ec3ae4f66` |
 | address-types-web | 3 | `76508cf6e057734420a42ee5c3b082d8ddf4b1a8aa28856a035439be98853eb6` |
 | address-types-web | 4 | `74a70ebc353063732679fe669db2fb2c74d623c9d97c9367250827256f7ecbae` |
 | address-types-web | 5 | `21acae82c7c85f1f84ef36353e185a6766088f88de0f7cecc06f42c7e6cd5461` |
-| address-types-web | 6 | `e31de5b161673fd29780835b82d2cabdad7aa5dfd0b8d35b981ccfeb1a468836` |
+| address-types-web | 6 | `351cc55be82056a3c867c8a93c7556ab660bfcb3a61759ea273ac1a07cd3a281` |
 | address-types-web | 7 | `fc67d7de0f0a34d6d50f7f0d8871c5114b873ca7abf672816e3273ffc1f8a2a8` |
 | address-types-web | 8 | `9105872832cbff57378bc222233612b39548d236abe7f34bb04952991ac33862` |
 | address-types-web | 9 | `78b529dec2a9aeea35eec3b2e8cd6963b1bcc4b1959f92e7911ae3eb75591bb1` |

@@ -56,18 +56,18 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| states-master | 3 | `ecfe513471d47a6c3997811c416202b8f049beb6c5b1f79674db45a86f835e36` |
-| states-master | 4 | `a9d43a8825acc5cf672a1b9eaf65fbf8090c809e81ac83942387c34fdd7414c8` |
+| states-master | 3 | `d3d5f94f4788de672bd801f30787caae4daea1b39d5c03ecde71f602ab42b8fe` |
+| states-master | 4 | `5a6d15c81abe80fbc5e13715f385f8a978b6482153ba7cec90474f46b6886ebf` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
-| states-master | 7 | `ccdb4b0d23c807c41f0c7a9af54f7667d8a543ad0ce265df9b4e4f64c69a947e` |
+| states-master | 7 | `a0695f176343e9d5455803e4e75b9d913893c4f6d1a7626a53df6cb0ebc68e00` |
 | states-master | 8 | `103cda8ceabc6cdb194149434e646d558fac575baaa20e3f693ba7c38737ca22` |
 | states-api | 6 | `8b7e4031f6db8f552455841b3f9ea883aab5bd2755fcbe6f9d3ed776b8cbb796` |
 | states-api | 7 | `21b4aaa6465e8c038b67613a7d59733d4e06b8fea8172c1ba06d98f55e782ed4` |
 | states-api | 8 | `4778b66ab2e8bc98acc1502c1988db12fa425ebdba2caebe7e6a0fa0ff427221` |
 | states-web | 6 | `c5dbf3d36f71536e19222be00289fa75416d1069692acfe82dd69be886a08eb4` |
-| states-web | 7 | `dd6b988a8e7b8b83010b144e56d1cec974980774b9fd9155dd966a6167bed42c` |
+| states-web | 7 | `85652ee3b5c1d7468a6c300167194b0d003b49da5f4751350ad169befcb018a5` |
 | states-web | 8 | `dec0c122194d60ca08d8135c4d8fa24774fbecc3f5dc9d9fb4df340f9b3259c8` |
 | states-web | 9 | `746099e532ae94bd3061c2ef0f9418838809d5c581bdd7444e64e3ef7948de7a` |
-| states-mobile | 9 | `c13868e55ed4b8222f0f9c3198da550e0d9ef4a8400fac18280850115b3cf1c0` |
+| states-mobile | 9 | `974ae317e365f8838ed342fd4c3b51945da8867e4631c3a54b087706b202a48c` |
 | states-mobile | 10 | `0c98fb8ba9d3ae023010173c1dec5c03cf83d196656377dcee0a9563155944fc` |
 | states-mobile | 11 | `a658c758cf1ad2b2ee4e64cfe6ecc5c5c16418220248aa4cd02df51a1ced4063` |

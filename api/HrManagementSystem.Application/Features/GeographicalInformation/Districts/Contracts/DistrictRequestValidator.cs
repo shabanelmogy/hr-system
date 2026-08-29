@@ -1,5 +1,6 @@
 using HrManagementSystem.Application.Features.GeographicalInformation.Districts.Abstractions;
 using HrManagementSystem.Application.Features.GeographicalInformation.States.Abstractions;
+using HrManagementSystem.Application.Features.GeographicalInformation.Validation;
 
 namespace HrManagementSystem.Application.Features.GeographicalInformation.Districts.Contracts;
 
@@ -19,28 +20,10 @@ public class DistrictRequestValidator : AbstractValidator<DistrictRequest>
         _localizer = localizer;
 
         RuleFor(d => d.NameEn)
-            .Trimmed()
-            .NotEmpty()
-            .WithName(Strings.NameEn)
-            .WithMessage(_localizer[Strings.Required])
-            .Length(2, 100)
-            .WithMessage(_localizer[Strings.MaxLengthError]);
-
-        RuleFor(d => d.NameEn)
-            .Matches(RegexPattern.EnglishLettersAndSpaces)
-            .WithMessage(_localizer[Strings.EnglishLetterOnly]);
+            .GeographicalName(_localizer, Strings.NameEn);
 
         RuleFor(d => d.NameAr)
-            .Trimmed()
-            .NotEmpty()
-            .WithName(Strings.NameAr)
-            .WithMessage(_localizer[Strings.Required])
-            .Length(2, 100)
-            .WithMessage(_localizer[Strings.MaxLengthError]);
-
-        RuleFor(d => d.NameAr)
-            .Matches(RegexPattern.ArabicLettersAndSpaces)
-            .WithMessage(_localizer[Strings.ArabicLetterOnly]);
+            .GeographicalName(_localizer, Strings.NameAr);
 
         RuleFor(d => d.Code)
             .Trimmed()
@@ -48,7 +31,9 @@ public class DistrictRequestValidator : AbstractValidator<DistrictRequest>
             .WithName(Strings.Code)
             .WithMessage(_localizer[Strings.Required])
             .Length(2, 10)
-            .WithMessage(_localizer[Strings.MaxLengthError]);
+            .WithMessage(_localizer[Strings.MaxLengthError])
+            .Matches(RegexPattern.StateCode)
+            .WithMessage(_localizer[Strings.InvalidValues]);
 
         RuleFor(d => d.StateId)
             .GreaterThan(0)

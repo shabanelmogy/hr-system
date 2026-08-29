@@ -1,6 +1,6 @@
 import { MyForm, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -9,8 +9,7 @@ import {
   CreateAddressTypeRequest,
   AddressTypeFormProps,
 } from "../types/AddressType";
-import { Casino } from "@mui/icons-material";
-import { addressTypes } from "../utils/fakeData";
+import { getNextAddressTypeMockData } from "../utils/addressTypeMockData";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 
 const AddressTypeForm = ({
@@ -62,22 +61,7 @@ const AddressTypeForm = ({
   const usedIndexes = useRef(new Set<number>());
 
   const generateMockData = (): void => {
-    if (usedIndexes.current.size === addressTypes.length) {
-      usedIndexes.current.clear(); // Reset if all data has been used
-    }
-
-    let index: number;
-    do {
-      index = Math.floor(Math.random() * addressTypes.length);
-    } while (usedIndexes.current.has(index));
-    usedIndexes.current.add(index);
-
-    const addressType = addressTypes[index];
-
-    const mockData = {
-      nameEn: addressType.nameEn,
-      nameAr: addressType.nameAr,
-    };
+    const mockData = getNextAddressTypeMockData(usedIndexes.current);
 
     const mockOptions = { shouldDirty: true, shouldValidate: true };
     setValue("nameEn", mockData.nameEn, mockOptions);
@@ -163,20 +147,10 @@ const AddressTypeForm = ({
       overlayMessage={getOverlayMessage()}
       errors={getErrorMessages()}
       onErrorFound={handleErrorFound}
-      footerLeft={
-        (isAddMode || isEditMode) ? (
-          <Button
-            variant="outlined"
-            color="secondary"
-            startIcon={<Casino />}
-            onClick={generateMockData}
-            disabled={loading}
-            size="small"
-            sx={{ borderRadius: "10px", textTransform: "none", fontWeight: 500 }}
-          >
-            {t("addressTypes.generateMockData") || "🎲 Mock Data"}
-          </Button>
-        ) : null
+      mockDataAction={
+        process.env.NODE_ENV !== "production" && (isAddMode || isEditMode)
+          ? { onGenerate: generateMockData, disabled: loading }
+          : undefined
       }
     >
       {(isEditMode || isViewMode) && (

@@ -11,18 +11,15 @@ public class DistrictConfiguration : IEntityTypeConfiguration<District>
         builder.HasIndex(d => new { d.NameEn, d.StateId }).IsUnique();
         builder.HasIndex(d => new { d.Code, d.StateId }).IsUnique();
 
-        // Properties - Apply constraints for Arabic and English
+        // Names are Unicode data. Script-specific database constraints reject valid
+        // international names and belong in localized input guidance, not storage.
         builder.Property(d => d.NameEn)
                 .IsRequired()
                 .HasMaxLength(100);
-        builder.ToTable(tb =>
-                   tb.HasCheckConstraint("CHK_District_NameEn_EnglishOnly", "[NameEn] NOT LIKE '%[^A-Za-z ]%'"));
 
         builder.Property(d => d.NameAr)
                 .IsRequired()
                 .HasMaxLength(100);
-        builder.ToTable(tb =>
-                  tb.HasCheckConstraint("CHK_District_NameAr_ArabicOnly", "[NameAr] NOT LIKE N'%[^�-� ]%' COLLATE Arabic_CI_AS"));
 
         builder.Property(d => d.Code)
                 .IsRequired()

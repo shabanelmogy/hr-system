@@ -12,7 +12,13 @@ The feature preserves the global `Country -> State -> District` catalog and adds
 
 `CompanyCountry` means a Country in which the current company operates or may locate an address. It is not a private copy of Country data. Employee nationality always reads every active global Country and must never be filtered by this feature.
 
-Each Branch owns an independent Address. A branch may select any Country enabled for the company and then a State and District belonging to that Country. Two branches may be in different States or Countries. `DefaultCountryId` only pre-fills a new address form.
+Company and Branch location ownership is modeled through explicit `CompanyAddress`
+and `BranchAddress` links. Each link records a purpose and whether it is the
+primary location, so a company or branch can have multiple addresses without
+putting ownership or default semantics on the shared Address row. A branch may
+select any Country enabled for the company and then an optional State and
+District belonging to that Country. Two branches may be in different States or
+Countries. `DefaultCountryId` only pre-fills a new address form.
 
 ## 3. Frozen Contract
 
@@ -36,12 +42,12 @@ Web uses the shared Grid, toolbar/search, footer pagination, form, state, permis
 
 ## 8. Lifecycle and Migration
 
-Replacement activates selected historical links, soft-deletes removed links, clears the previous default, then sets the new default inside the serialized command transaction. The additive migration backfills every active Country for every active Company without guessing a default and grants the new permissions idempotently to system Admin roles.
+Replacement activates selected historical links, soft-deletes removed links, clears the previous default, then sets the new default inside the serialized command transaction. The current checkout contains CompanyCountries in the initial schema; a dedicated additive backfill/permission migration must be reviewed before applying this feature to an existing production database.
 
 ## 9. Risks and Deferred Work
 
-The master catalog is Platform-owned and available only to `super_admin`; tenant administrators configure operating Countries through this feature. Address/Branch write validation must consume Company Geographic Scope when those persisted workflows are implemented. Employee nationality must deliberately continue using the global Country lookup.
+The master catalog is Platform-owned and available only to `super_admin`; tenant administrators configure operating Countries through this feature. Address/Branch owner-link commands are the next integration surface and must consume Company Geographic Scope plus validate the full Country -> State -> District hierarchy server-side. Employee nationality must deliberately continue using the global Country lookup. An Address cannot be archived while an active CompanyAddress or BranchAddress link owns it.
 
 ## 10. Handoff Rule
 
-Future Branch or Address features must filter operating address choices by this aggregate, validate the selected hierarchy server-side, and treat the default as convenience only. Future Employee features must use the global active Country lookup for nationality. No consumer may infer that all branches share one location.
+Future Branch or Address features must filter operating address choices by this aggregate, validate the selected hierarchy server-side, create explicit purpose-based owner links, and treat the default as convenience only. Future Employee features must use the global active Country lookup for nationality. No consumer may infer that all branches share one location.

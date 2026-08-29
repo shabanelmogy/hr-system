@@ -78,14 +78,14 @@ implementation discipline.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| address-types-master | 3 | `7df320a1cdbe421b7edf28e7bb0ed7c4ad026ba0d76af15dbb1ff27080f10f13` |
+| address-types-master | 3 | `99ee58c53437d2bdc78df5b577e6382aef5648325eaa6bf07ffb3386f38d8c00` |
 | address-types-master | 4 | `7308f8020bdbc0c722447f200a173af87d8fa4f5f3fb6bf250463bd9f057ef5a` |
-| address-types-master | 6 | `b36e3f0234da7c53263dc870165993e8cc3d645939e7d9b5c2d85d617ed9c5e9` |
+| address-types-master | 6 | `38ba2cceb96c08e8c3815c45b40fc5ef311b74eb1e6e3095936183f7ac67aeb4` |
 | address-types-api | 1 | `a89af44849dac3d3d1cfa2eca1a0fda8d2484642a726a9b1bf1f84ca0a58a05d` |
 | address-types-api | 2 | `1ffc55f4458d992145d14f14a81ab724974a460b942b8790d71c7f15effbe126` |
 | address-types-api | 3 | `bcd99f29132d1bc904561f87c62f84127bb307981918d52179f86e32f813c9bf` |
 | address-types-api | 4 | `fa3b2aaf37e4e7975ad0c3ad214ffb80cc61734289b4bf72302f4a035ff92e73` |
-| address-types-api | 5 | `3235ba54a9a1ae537b56737b1450fd979d6cd325b1bf4fff7766acb9fe53322c` |
+| address-types-api | 5 | `894575c8bdc5eaaa64a6dc5c7b43d81fccb629ca33fc905ea1b26931f14c4628` |
 | address-types-api | 6 | `547661ad62c069b0422d4ab8cd62d05730aee097aa745593612a67912ca82030` |
 | address-types-api | 7 | `ff2127841a678a5f0fbb58bd3cfcf06b6e6cea807adc3c2f1f1efc059e9455d7` |
 | address-types-api | 8 | `cdb4949380cc226db6ab4f53b730f5b4fd93333e08d1f8deef641ea2c1e2c358` |

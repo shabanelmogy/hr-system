@@ -8,6 +8,9 @@ public static class GeographicalLifecycleLocks
     public static string State(int stateId) =>
         $"GeographicalInformation:State:{stateId}";
 
+    public static string District(int districtId) =>
+        $"GeographicalInformation:District:{districtId}";
+
     public static string AddressType(int addressTypeId) =>
         $"GeographicalInformation:AddressType:{addressTypeId}";
 }

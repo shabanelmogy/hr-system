@@ -1789,12 +1789,7 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.HasIndex("TenantId", "CompanyId", "NameEn")
                         .IsUnique();
 
-                    b.ToTable("AddressTypes", t =>
-                        {
-                            t.HasCheckConstraint("CHK_AddressType_NameAr_ArabicOnly", "[NameAr] NOT LIKE N'%[^�-� ]%' COLLATE Arabic_CI_AS");
-
-                            t.HasCheckConstraint("CHK_AddressType_NameEn_EnglishOnly", "[NameEn] NOT LIKE '%[^A-Za-z ]%'");
-                        });
+                    b.ToTable("AddressTypes");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities.Address", b =>
@@ -1806,7 +1801,6 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AdditionalInfo")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -1814,14 +1808,141 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ApartmentNumber")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("BuildingNumber")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DistrictId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Floor")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<double?>("Latitude")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("float(18)");
+
+                    b.Property<double?>("Longitude")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("float(18)");
+
+                    b.Property<string>("PostalCode")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int?>("StateId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StreetLine1")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("StreetLine2")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("DistrictId");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("Latitude", "Longitude");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "AddressTypeId");
+
+                    b.ToTable("Addresses", t =>
+                        {
+                            t.HasCheckConstraint("CHK_Address_Coordinates_Paired", "([Latitude] IS NULL AND [Longitude] IS NULL) OR ([Latitude] IS NOT NULL AND [Longitude] IS NOT NULL)");
+
+                            t.HasCheckConstraint("CHK_Address_Latitude_Range", "[Latitude] IS NULL OR ([Latitude] >= -90 AND [Latitude] <= 90)");
+
+                            t.HasCheckConstraint("CHK_Address_Longitude_Range", "[Longitude] IS NULL OR ([Longitude] >= -180 AND [Longitude] <= 180)");
+                        });
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities.BranchAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
 
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
@@ -1846,34 +1967,14 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DistrictId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Floor")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<bool>("IsDefault")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<double>("Latitude")
-                        .HasPrecision(18, 6)
-                        .HasColumnType("float(18)");
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("bit");
 
-                    b.Property<double>("Longitude")
-                        .HasPrecision(18, 6)
-                        .HasColumnType("float(18)");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int>("Purpose")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -1901,24 +2002,107 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasIndex("DeletedById");
 
-                    b.HasIndex("DistrictId");
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "AddressId");
+
+                    b.HasIndex("TenantId", "CompanyId", "BranchId", "Purpose")
+                        .IsUnique()
+                        .HasFilter("[IsPrimary] = 1 AND [IsDeleted] = 0");
+
+                    b.HasIndex("TenantId", "CompanyId", "BranchId", "AddressId", "Purpose")
+                        .IsUnique();
+
+                    b.ToTable("BranchAddresses", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities.CompanyAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Purpose")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
 
                     b.HasIndex("TenantId");
 
                     b.HasIndex("UpdatedById");
 
-                    b.HasIndex("Latitude", "Longitude");
-
                     b.HasIndex("TenantId", "CompanyId");
 
-                    b.HasIndex("TenantId", "CompanyId", "AddressTypeId");
+                    b.HasIndex("TenantId", "CompanyId", "Purpose")
+                        .IsUnique()
+                        .HasFilter("[IsPrimary] = 1 AND [IsDeleted] = 0");
 
-                    b.ToTable("Addresses", t =>
-                        {
-                            t.HasCheckConstraint("CHK_Address_Latitude_Range", "[Latitude] >= -90 AND [Latitude] <= 90");
+                    b.HasIndex("TenantId", "CompanyId", "AddressId", "Purpose")
+                        .IsUnique();
 
-                            t.HasCheckConstraint("CHK_Address_Longitude_Range", "[Longitude] >= -180 AND [Longitude] <= 180");
-                        });
+                    b.ToTable("CompanyAddresses", (string)null);
                 });
 
             modelBuilder.Entity("HrManagementSystem.Domain.GeographicalInformation.Countries.Entities.Country", b =>
@@ -2101,12 +2285,7 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.HasIndex("NameEn", "StateId")
                         .IsUnique();
 
-                    b.ToTable("Districts", t =>
-                        {
-                            t.HasCheckConstraint("CHK_District_NameAr_ArabicOnly", "[NameAr] NOT LIKE N'%[^�-� ]%' COLLATE Arabic_CI_AS");
-
-                            t.HasCheckConstraint("CHK_District_NameEn_EnglishOnly", "[NameEn] NOT LIKE '%[^A-Za-z ]%'");
-                        });
+                    b.ToTable("Districts");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Domain.GeographicalInformation.States.Entities.State", b =>
@@ -2192,10 +2371,7 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.HasIndex("NameEn", "CountryId")
                         .IsUnique();
 
-                    b.ToTable("States", t =>
-                        {
-                            t.HasCheckConstraint("CHK_State_NameEn_EnglishOnly", "[NameEn] NOT LIKE '%[^A-Za-z ]%'");
-                        });
+                    b.ToTable("States");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Branch", b =>
@@ -2205,9 +2381,6 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AddressId")
-                        .HasColumnType("int");
 
                     b.Property<string>("BranchCode")
                         .IsRequired()
@@ -2323,9 +2496,6 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AddressId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Background")
                         .HasColumnType("nvarchar(max)");
@@ -4113,6 +4283,12 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities.Address", b =>
                 {
+                    b.HasOne("HrManagementSystem.Domain.GeographicalInformation.Countries.Entities.Country", "Country")
+                        .WithMany("Addresses")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("CreatedById")
@@ -4125,7 +4301,13 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasOne("HrManagementSystem.Domain.GeographicalInformation.Districts.Entities.District", "District")
                         .WithMany("Addresses")
-                        .HasForeignKey("DistrictId");
+                        .HasForeignKey("DistrictId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("HrManagementSystem.Domain.GeographicalInformation.States.Entities.State", "State")
+                        .WithMany("Addresses")
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
                         .WithMany()
@@ -4153,7 +4335,100 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.Navigation("AddressType");
 
+                    b.Navigation("Country");
+
                     b.Navigation("District");
+
+                    b.Navigation("State");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities.BranchAddress", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities.Address", "Address")
+                        .WithMany("BranchAddresses")
+                        .HasForeignKey("TenantId", "CompanyId", "AddressId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Branch", "Branch")
+                        .WithMany("Addresses")
+                        .HasForeignKey("TenantId", "CompanyId", "BranchId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("Branch");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities.CompanyAddress", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", "Company")
+                        .WithMany("Addresses")
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities.Address", "Address")
+                        .WithMany("CompanyAddresses")
+                        .HasForeignKey("TenantId", "CompanyId", "AddressId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Domain.GeographicalInformation.Countries.Entities.Country", b =>
@@ -4187,7 +4462,9 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasOne("HrManagementSystem.Domain.GeographicalInformation.States.Entities.State", "State")
                         .WithMany("Districts")
-                        .HasForeignKey("StateId");
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
                         .WithMany()
@@ -4684,8 +4961,17 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Navigation("Addresses");
                 });
 
+            modelBuilder.Entity("HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities.Address", b =>
+                {
+                    b.Navigation("BranchAddresses");
+
+                    b.Navigation("CompanyAddresses");
+                });
+
             modelBuilder.Entity("HrManagementSystem.Domain.GeographicalInformation.Countries.Entities.Country", b =>
                 {
+                    b.Navigation("Addresses");
+
                     b.Navigation("States");
                 });
 
@@ -4696,7 +4982,19 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("HrManagementSystem.Domain.GeographicalInformation.States.Entities.State", b =>
                 {
+                    b.Navigation("Addresses");
+
                     b.Navigation("Districts");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Branch", b =>
+                {
+                    b.Navigation("Addresses");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", b =>
+                {
+                    b.Navigation("Addresses");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", b =>

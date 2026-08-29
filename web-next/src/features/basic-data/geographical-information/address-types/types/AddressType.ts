@@ -24,7 +24,7 @@ export interface AddressType {
 
 export type AddressTypeDetail = Omit<AddressType, "addressesCount">;
 export interface AddressTypeLookup { id: number; nameAr: string; nameEn: string; }
-export interface AddressTypeAddress { id: number; buildingNumber: string; floor: string; apartmentNumber: string; postalCode: string; isDefault: boolean; isDeleted: boolean; }
+export interface AddressTypeAddress { id: number; buildingNumber: string | null; floor: string | null; apartmentNumber: string | null; postalCode: string | null; isDeleted: boolean; }
 export interface AddressTypeWithAddresses extends AddressTypeDetail { addresses: AddressTypeAddress[]; }
 export interface CreateAddressTypeRequest { nameAr: string; nameEn: string; }
 /** Compatibility input for existing form consumers; the API receives the ID in the route. */

@@ -52,8 +52,8 @@ Authorization: Bearer <token>
 | Field | Type | Required | Constraints | UI Component |
 |-------|------|----------|-------------|--------------|
 | `id` | `int?` | Create: optional / `0`; update: required | Omit or send `0` for new records, existing ID for update | Hidden field |
-| `nameAr` | `string` | ✅ | 2–100 chars, Arabic letters only, unique within the same country | Text input (RTL) |
-| `nameEn` | `string` | ✅ | 2–100 chars, English letters only, unique within the same country | Text input (LTR) |
+| `nameAr` | `string` | ✅ | 2–100 printable Unicode characters; spaces, digits, punctuation, and mixed scripts allowed; unique within the same country | Text input (RTL) |
+| `nameEn` | `string` | ✅ | 2–100 printable Unicode characters; spaces, digits, punctuation, and mixed scripts allowed; unique within the same country | Text input (LTR) |
 | `code` | `string` | ✅ | 2–10 chars, unique within the same country (e.g. `CAI`, `RYD`) | Text input, maxLength=10 |
 | `countryId` | `int` | ✅ | Must be a valid, non-deleted country ID | **Dropdown** — load from Countries API |
 
@@ -246,8 +246,8 @@ Use this before loading districts for a specific state.
 
 | Field | Rule |
 |-------|------|
-| `nameEn` | Required, 2–100 chars, English letters only, unique within the same country |
-| `nameAr` | Required, 2–100 chars, Arabic letters only, unique within the same country |
+| `nameEn` | Required, 2–100 printable Unicode characters, unique within the same country; control characters and line breaks rejected |
+| `nameAr` | Required, 2–100 printable Unicode characters, unique within the same country; control characters and line breaks rejected |
 | `code` | Required, 2–10 chars, unique within the same country |
 | `countryId` | Required, must be > 0, must reference an existing non-deleted country |
 

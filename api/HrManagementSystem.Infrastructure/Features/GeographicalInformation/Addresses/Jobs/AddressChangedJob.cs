@@ -32,8 +32,11 @@ public sealed class AddressChangedJob(
             request.Action,
             new Dictionary<string, string>
             {
-                ["BuildingNumber"] = request.Address.BuildingNumber,
-                ["PostalCode"] = request.Address.PostalCode
+                ["BuildingNumber"] = request.Address.BuildingNumber ??
+                                      request.Address.StreetLine1 ??
+                                      request.Address.City ??
+                                      request.Address.Id.ToString(CultureInfo.InvariantCulture),
+                ["PostalCode"] = request.Address.PostalCode ?? string.Empty
             },
             request.Address.Id.ToString(CultureInfo.InvariantCulture),
             null,

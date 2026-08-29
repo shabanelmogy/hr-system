@@ -50,8 +50,8 @@ So that geographic data (states and their districts) is consistent and usable ac
 
 #### Technical Requirements:
 1. Validation
-   - English name (NameEn): required, 2–100 characters, English letters and spaces only
-   - Arabic name (NameAr): required, 2–100 characters, Arabic letters and spaces only
+   - English/display name (NameEn): required, 2–100 printable Unicode characters; spaces, digits, punctuation, and mixed scripts are allowed; control characters and line breaks are rejected
+   - Arabic/display name (NameAr): required, 2–100 printable Unicode characters; spaces, digits, punctuation, and mixed scripts are allowed; control characters and line breaks are rejected
    - Code: required, 2–10 characters
    - CountryId: required, must be > 0 and must reference an existing (non-deleted) country
    - Uniqueness per CountryId: NameEn, NameAr, and Code must be unique within the same country

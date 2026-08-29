@@ -14,6 +14,10 @@ The canonical books own factual rules:
 - `../api/States_API_Implementation_Profile.md`
 - `../web-next/features/states-frontend-reference.md`
 - `../mobile-react/states-mobile-reference.md`
+- `../project/ADDRESSES_DOMAIN_FULL_REVIEW.md`
+- `../api/Addresses_API_Implementation_Profile.md`
+- `../web-next/features/addresses-frontend-reference.md`
+- `../mobile-react/addresses-mobile-reference.md`
 
 `recipe-manifest.json` declares which numbered sections support each phase. `Generate-Documentation.ps1` hashes those sections and writes derivative packets into `generated/`. The generated packets are navigation and verification aids; they never replace the canonical books.
 
@@ -30,6 +34,9 @@ The canonical books own factual rules:
 | `features/countries/COUNTRIES-REVIEW-ARTIFACTS.md` | Completed Countries review evidence and handoff record |
 | `features/states/required-files.json` | Source/configuration evidence needed to review States end to end |
 | `features/states/STATES-REVIEW-ARTIFACTS.md` | States review evidence, State-specific decisions, and open findings |
+| `features/addresses/required-files.json` | Source/configuration evidence for the shared Address domain and owner links |
+| `features/addresses/ADDRESSES-REVIEW-ARTIFACTS.md` | Address design evidence, decisions, and deferred client surfaces |
+| `generated/addresses/` | Generated phase 00–06 packets for the Address domain foundation |
 
 ## Commands
 

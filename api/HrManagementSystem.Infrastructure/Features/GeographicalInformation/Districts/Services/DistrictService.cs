@@ -171,7 +171,7 @@ public class DistrictService(
                         return Result.Failure(_districtErrors.StateNotFound);
 
                     var isInAddress = await _context.Addresses
-                        .AnyAsync(address => address.DistrictId == id, token);
+                        .AnyAsync(address => address.DistrictId == id && !address.IsDeleted, token);
                     if (isInAddress)
                         return Result.Failure(_districtErrors.DistrictInUseByAddress);
 

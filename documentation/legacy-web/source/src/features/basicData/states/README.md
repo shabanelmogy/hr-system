@@ -70,8 +70,12 @@ The feature integrates with the backend API endpoints:
 ## Validation Rules
 
 Based on the backend StateRequestValidator:
-- **NameAr**: Required, 2-100 characters, Arabic letters only
-- **NameEn**: Required, 2-100 characters, English letters only
+- **NameAr**: Required, 2-100 printable Unicode characters; spaces, digits,
+  punctuation, and mixed scripts are allowed; control characters and line
+  breaks are rejected
+- **NameEn**: Required, 2-100 printable Unicode characters; spaces, digits,
+  punctuation, and mixed scripts are allowed; control characters and line
+  breaks are rejected
 - **Code**: Required, 2-10 characters
 - **CountryId**: Required, must be a valid country ID
 - **Uniqueness**: Names and codes must be unique within the same country

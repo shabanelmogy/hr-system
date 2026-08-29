@@ -26,8 +26,7 @@
     { "id": "api-command", "layer": "api", "path": "api/HrManagementSystem.Application/Features/OrganizationalStructure/CompanyGeographicScope/Commands/UpdateCompanyGeographicScopeCommand.cs", "purpose": "Atomic replacement and validation" },
     { "id": "api-query", "layer": "api", "path": "api/HrManagementSystem.Application/Features/OrganizationalStructure/CompanyGeographicScope/Queries/GetCompanyGeographicScopeQuery.cs", "purpose": "Trusted current-company read" },
     { "id": "api-store", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Features/OrganizationalStructure/CompanyGeographicScope/Persistence/CompanyGeographicScopeStore.cs", "purpose": "Global catalog overlay and scoped replacement" },
-    { "id": "api-migration", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Migrations/20260825072312_AddCompanyGeographicScope.cs", "purpose": "Additive table, backfill, and Admin permission grant" },
-    { "id": "api-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/CompanyGeographicScopeTests.cs", "purpose": "Handler, validation, context, and migration coverage" },
+    { "id": "api-migration", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Migrations/20260826095902_createdatabase.cs", "purpose": "Current schema source containing CompanyCountries" },
     { "id": "web-route", "layer": "web-next", "path": "web-next/src/app/(main)/basic-data/(organizational-structure)/organizational-structure/geographic-scope/page.tsx", "purpose": "Thin browser route" },
     { "id": "web-page", "layer": "web-next", "path": "web-next/src/features/basic-data/organizational-structure/company-geographic-scope/pages/CompanyGeographicScopePage.tsx", "purpose": "Reusable compact configuration form" },
     { "id": "web-service", "layer": "web-next", "path": "web-next/src/features/basic-data/organizational-structure/company-geographic-scope/services/companyGeographicScopeService.ts", "purpose": "Exact GET/PUT HTTP boundary" },
@@ -39,8 +38,6 @@
     { "id": "mobile-route-policy", "layer": "mobile-react", "path": "mobile-react/src/features/auth/rbac/route-manifest.ts", "purpose": "Canonical route authorization" },
     { "id": "mobile-en", "layer": "mobile-react", "path": "mobile-react/src/core/localization/translations/en-basic-data.ts", "purpose": "English feature copy" },
     { "id": "mobile-ar", "layer": "mobile-react", "path": "mobile-react/src/core/localization/translations/ar-basic-data.ts", "purpose": "Arabic feature copy" },
-    { "id": "platform-permission-migration", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Migrations/20260825090000_MoveGeographyCatalogToPlatformAdministration.cs", "purpose": "Idempotent platform permission ownership and notification URL migration" },
-    { "id": "platform-authorization-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/PlatformGeographyAuthorizationTests.cs", "purpose": "Role-plus-permission and migration boundary coverage" },
     { "id": "web-platform-country-route", "layer": "web-next", "path": "web-next/src/app/(main)/super-admin/geography/countries/page.tsx", "purpose": "Canonical Platform country route" },
     { "id": "mobile-platform-entry", "layer": "mobile-react", "path": "mobile-react/src/features/tenants/screens/TenantDashboardScreen.tsx", "purpose": "Visible Super Admin Global Geography entry" }
   ]

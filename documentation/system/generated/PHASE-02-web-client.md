@@ -106,8 +106,8 @@ failure into partial success.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 3 | `395aa4699680d7fd28eccd5dcbb3d59ead3d06fee4225844efb44d7a10e11c7d` |
-| master | 4 | `a9c88864fafde572fc0ffc1502f1a5ccb2fc55fdbd77aefe2c54c33d143b9529` |
+| master | 3 | `568e3d2c75c5638278267aac6b86e3f011aee7a067e6fbd63add8f2b1312f60b` |
+| master | 4 | `640408799d07c9939468c39e65e9d2601daa6e89d7896f24b13a924f4ecbb04d` |
 | master | 6 | `b7fb453c6be690cf10f98e85664f30fb55fb590e628b0f8a0435f54cf67058ac` |
 | master | 7 | `8c0ba157ab3e6ca7bfa97bd23bdd022523f69dc7ac4386e25462b7ad667ba74b` |
 | web | 1 | `379e8685bd53e584670fec8f36c9e7dd3cfa12238c6466320347a7f00cfc6fdc` |
@@ -115,7 +115,7 @@ failure into partial success.
 | web | 3 | `8ed626078fb4bfcf82f49bef3053e0a706c11d9801738c6e797befd29b29df53` |
 | web | 4 | `d65a1f9e04c4f9445a29a6fd80d6416d04bedf0d32cafe2d997870c485938730` |
 | web | 5 | `287e979faf77b6e82ba2ac96642f14d525cd2b12cc709cb6e14bc5e9bdaa2f8c` |
-| web | 6 | `361cc5de9174989d99221209f2fbc9bb8c19772025fb89d55e280e2ca0a3e425` |
+| web | 6 | `90759ad423b1224c2285653dcb646b68398ac0418ac66869a8c0d1dc04534ef4` |
 | web | 7 | `f9f1e9693346be686ff0effa80374e6f012a385ee00d622e1a3df1168dd8126a` |
 | web | 8 | `43a7e4cb95554e828d56afdc3c933a1b1f224531dc5829a1c6d0b31e25f632fe` |
 | web | 9 | `4da29b144dca03553c2568393fde9b32e14b1782bcd53ce7244453d4c9510f97` |

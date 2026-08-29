@@ -15,6 +15,9 @@ public class CountryErrors(IStringLocalizer<CreateCountryRequest> localizer)
     public Error CountryInUseByState =>
             new("Country.CountryInUseByState", _localizer[nameof(CountryInUseByState)], ErrorType.Validation);
 
+    public Error CountryInUseByAddress =>
+            new("Country.CountryInUseByAddress", _localizer[nameof(CountryInUseByAddress)], ErrorType.Validation);
+
     public Error NoCountriesProvided =>
             new("Country.NoCountriesProvided", _localizer[nameof(NoCountriesProvided)], ErrorType.Validation);
 }

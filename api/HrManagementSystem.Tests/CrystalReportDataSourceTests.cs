@@ -102,14 +102,15 @@ public sealed class CrystalReportDataSourceTests
     public async Task BuildAsync_UsesStableAddressTypeSchemaAndFilters()
     {
         await using var context = CreateContext();
+        context.Countries.Add(new Country { Id = 1, NameAr = "مصر", NameEn = "Egypt" });
         context.AddressTypes.AddRange(
             new AddressType { Id = 1, TenantId = "tenant", CompanyId = 1, NameAr = "سكن", NameEn = "Residence" },
             new AddressType { Id = 2, TenantId = "tenant", CompanyId = 1, NameAr = "عمل", NameEn = "Work" },
             new AddressType { Id = 3, TenantId = "tenant", CompanyId = 1, NameAr = "مؤرشف", NameEn = "Archived", IsDeleted = true });
         context.Addresses.AddRange(
-            new Address { Id = 1, AddressTypeId = 1 },
-            new Address { Id = 2, AddressTypeId = 1, IsDeleted = true },
-            new Address { Id = 3, AddressTypeId = 2 });
+            new Address { Id = 1, TenantId = "tenant", CompanyId = 1, CountryId = 1, AddressTypeId = 1 },
+            new Address { Id = 2, TenantId = "tenant", CompanyId = 1, CountryId = 1, AddressTypeId = 1, IsDeleted = true },
+            new Address { Id = 3, TenantId = "tenant", CompanyId = 1, CountryId = 1, AddressTypeId = 2 });
         await context.SaveChangesAsync();
         var source = new CrystalReportDataSource(context);
 
