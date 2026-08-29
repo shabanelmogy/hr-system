@@ -16,5 +16,6 @@ public interface ICompanyGeographicScopeStore
         int companyId,
         IReadOnlyCollection<int> countryIds,
         int defaultCountryId,
+        int registrationCountryId,
         CancellationToken cancellationToken);
 }

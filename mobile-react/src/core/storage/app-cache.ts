@@ -7,6 +7,7 @@ const cachedPreferenceKeys = [
   STORAGE_KEYS.language,
   STORAGE_KEYS.themeMode,
   STORAGE_KEYS.themePalette,
+  STORAGE_KEYS.mockDataEnabled,
   STORAGE_KEYS.onboardingCompleted,
 ] as const;
 

@@ -214,25 +214,28 @@ The scheduler must never run before a successful save.
 Lifecycle rules that read a dependency and then write must remain true under
 concurrent requests, not only within one handler call. `IUnitOfWork.ExecuteAtomicallyAsync`
 opens one database transaction and acquires deterministic transaction-owned SQL
-Server application locks. Country archive/restore and State create, bulk create,
-update, and restore share `GeographicalInformation:Country:<id>` resources. This
-serializes the active-Country/active-State invariant without relying on a stale
-pre-save check. Multi-resource locks are de-duplicated and sorted before they are
-acquired to avoid order-dependent deadlocks. In-memory test providers execute the
-same operation boundary without SQL Server locks.
+Server application locks. Country archive/restore, State create/bulk/update/restore,
+and Company Geographic Scope replacement share
+`GeographicalInformation:Country:<id>` resources. This serializes active Country
+invariants for State, Company registration, and Company operating scope without
+relying on stale pre-save checks. Multi-resource locks are de-duplicated and sorted
+before they are acquired to avoid order-dependent deadlocks. In-memory test
+providers execute the same operation boundary without SQL Server locks.
 
 | Command | Exact handler behavior |
 |---|---|
 | Create | Normalize/map candidate; query all uniqueness conflicts; add; save once; map detail; schedule `Add` |
 | Bulk create | Require 1-100; normalize all; reject request-local duplicate names/alpha codes case-insensitively; reject database conflicts; add range; save once; schedule one `BulkAdd` |
 | Update | Load tracked row including archived; reject missing/archived as not found; normalize candidate; reject conflicts excluding ID; record changed fields; map into tracked entity; save once; schedule `Update` |
-| Archive | Acquire the Country lifecycle lock; load tracked row; missing -> not found; archived -> idempotent success; reject active-state dependency; set delete metadata; save once; commit; schedule `Archive` |
-| Bulk archive | Require 1-100 distinct positive IDs; acquire sorted Country lifecycle locks; load all in one set; any missing -> fail all; ignore archived rows; all archived -> count 0 without save/job; reject any active-state dependency; apply one timestamp; save once; commit; schedule one `BulkArchive` |
+| Archive | Acquire the Country lifecycle lock; load tracked row; missing -> not found; archived -> idempotent success; reject active State, active Address, Company registration, or active Company operating-scope dependencies; set delete metadata; save once; commit; schedule `Archive` |
+| Bulk archive | Require 1-100 distinct positive IDs; acquire sorted Country lifecycle locks; load all in one set; any missing -> fail all; ignore archived rows; all archived -> count 0 without save/job; reject any active State, active Address, Company registration, or active Company operating-scope dependency; apply one timestamp; save once; commit; schedule one `BulkArchive` |
 | Restore | Acquire the Country lifecycle lock; load tracked row; missing -> not found; active -> idempotent success; clear delete metadata; save once; commit; schedule `Restore` |
 
 The write store intentionally loads archived rows for lifecycle commands and
-checks conflicts against active and archived rows. Dependency checks target
-active states and bulk checks execute against the full ID set.
+checks conflicts against active and archived rows. Dependency checks target active
+States, active Addresses, non-archived Company registration references, and active
+CompanyCountry links across all tenant query filters; bulk checks execute against
+the full ID set.
 
 `POST /bulk` is atomic but does not define an idempotency key or replay token.
 Clients must not assume that a timeout means no rows committed: they reconcile a
@@ -262,6 +265,7 @@ Expected business errors are feature-owned and localized in both
 | `400` | validation problem | Structural query/body failure |
 | `400` | `Country.NoCountriesProvided` | Empty bulk operation |
 | `400` | `Country.CountryInUseByState` | Archive dependency |
+| `400` | `Country.CountryInUseByCompany` | Legal registration or operating-scope archive dependency |
 | `404` | `Country.CountryNotFound` | Missing or unavailable lifecycle row |
 | `409` | `Country.Duplicated` | Handler conflict check |
 | `409` | `UniqueConstraintViolation` | Database uniqueness race translated centrally |

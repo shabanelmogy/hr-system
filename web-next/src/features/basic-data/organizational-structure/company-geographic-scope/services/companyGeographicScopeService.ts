@@ -11,6 +11,10 @@ export const companyGeographicScopeService = {
   },
 
   update(request: UpdateCompanyGeographicScopeRequest): Promise<CompanyGeographicScope> {
-    return apiService.put<CompanyGeographicScope>(apiRoutes.companyGeographicScope, request);
+    return apiService.put<CompanyGeographicScope>(apiRoutes.companyGeographicScope, {
+      countryIds: [...request.countryIds],
+      registrationCountryId: request.registrationCountryId,
+      defaultCountryId: request.defaultCountryId,
+    });
   },
 };

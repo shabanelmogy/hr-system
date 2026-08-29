@@ -7,13 +7,16 @@ public sealed record CompanyCountryOptionResponse(
     string? Alpha2Code,
     string? Alpha3Code,
     bool IsSelected,
-    bool IsDefault);
+    bool IsDefault,
+    bool IsRegistrationCountry);
 
 public sealed record CompanyGeographicScopeResponse(
     int CompanyId,
     int? DefaultCountryId,
+    int? RegistrationCountryId,
     IReadOnlyList<CompanyCountryOptionResponse> Countries);
 
 public sealed record UpdateCompanyGeographicScopeRequest(
     IReadOnlyList<int> CountryIds,
-    int DefaultCountryId);
+    int DefaultCountryId,
+    int RegistrationCountryId);

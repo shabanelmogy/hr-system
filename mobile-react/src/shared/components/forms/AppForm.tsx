@@ -11,7 +11,9 @@ import {
 import { type StyleProp, StyleSheet, View, type ViewProps, type ViewStyle } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import { spacing, useAppTheme } from '@/src/core/theme';
 import { useLocalization } from '@/src/core/localization';
+import { useMockDataPreferences } from '@/src/core/preferences';
 import { AppButton } from '@/src/shared/components/controls/AppButton';
 import { DiscardChangesDialog } from '@/src/shared/components/dialogs/discard-changes/DiscardChangesDialog';
 import { useDiscardChanges } from '@/src/shared/components/dialogs/discard-changes/useDiscardChanges';
@@ -99,7 +101,9 @@ export function AppForm({
   ...viewProps
 }: AppFormProps) {
   const { t } = useTranslation();
+  const { theme } = useAppTheme();
   const { direction } = useLocalization();
+  const { isMockDataEnabled } = useMockDataPreferences();
   const { isReadOnly } = useAppReadOnly();
   const fieldsRef = useRef<RegisteredField[]>([]);
   const errorsRef = useRef(errors);
@@ -220,20 +224,20 @@ export function AppForm({
     [errors, focusNextField, onClearFieldError, registerField],
   );
 
-  const mockDataButton = mockDataAction ? (
+  const mockDataButton = mockDataAction && isMockDataEnabled ? (
     <AppButton
       disabled={mockDataAction.disabled || submitting || isReadOnly}
+      fullWidth
       icon="dice-outline"
       onPress={mockDataAction.onGenerate}
-      style={styles.action}
+      style={[styles.mockDataButton, { backgroundColor: theme.colors.surfaceMuted }]}
       variant="outline">
       {t('common.generateMockData')}
     </AppButton>
   ) : null;
 
-  const actionFooter = footer ?? (onCancel || onSubmit || mockDataButton ? (
-    <View style={[styles.actions, { direction }]}>
-      {mockDataButton}
+  const primaryActions = onCancel || onSubmit ? (
+    <View style={[styles.primaryActions, { direction }]}>
       {onCancel ? (
         <AppButton
           disabled={submitting}
@@ -254,6 +258,13 @@ export function AppForm({
           {submitLabel ?? t('common.save')}
         </AppButton>
       ) : null}
+    </View>
+  ) : null;
+
+  const actionFooter = footer ?? (mockDataButton || primaryActions ? (
+    <View style={styles.actions}>
+      {mockDataButton ? <View style={styles.mockDataAction}>{mockDataButton}</View> : null}
+      {primaryActions}
     </View>
   ) : null);
 
@@ -332,12 +343,14 @@ export function useAppFormField(
 
 const styles = StyleSheet.create({
   actions: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    gap: 12,
+    width: '100%',
+    gap: spacing.sm,
   },
+  mockDataAction: { width: '100%' },
+  primaryActions: { flexDirection: 'row', justifyContent: 'flex-end', gap: spacing.sm, width: '100%' },
   action: {
     flex: 1,
     maxWidth: 220,
   },
+  mockDataButton: { width: '100%' },
 });

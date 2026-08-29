@@ -12,6 +12,7 @@ import { filterCompanyCountries } from "./companyGeographicScopeGridUtils";
 interface CompanyGeographicScopeDataGridProps {
   countries: CompanyCountryOption[];
   defaultCountryId: number;
+  registrationCountryId: number;
   searchTerm: string;
   onSearchTermChange: (value: string) => void;
 }
@@ -19,6 +20,7 @@ interface CompanyGeographicScopeDataGridProps {
 export default function CompanyGeographicScopeDataGrid({
   countries,
   defaultCountryId,
+  registrationCountryId,
   searchTerm,
   onSearchTermChange,
 }: CompanyGeographicScopeDataGridProps) {
@@ -30,6 +32,18 @@ export default function CompanyGeographicScopeDataGrid({
   );
 
   const columns = useMemo<GridColDef<CompanyCountryOption>[]>(() => [
+    {
+      field: "registration",
+      headerName: t("companyGeographicScope.registrationColumn"),
+      minWidth: 150,
+      sortable: false,
+      filterable: false,
+      align: "center",
+      headerAlign: "center",
+      renderCell: ({ row }) => row.id === registrationCountryId ? (
+        <Chip size="small" color="info" label={t("companyGeographicScope.registrationCountry")} />
+      ) : null,
+    },
     {
       field: "nameAr",
       headerName: t("general.nameAr"),
@@ -84,6 +98,7 @@ export default function CompanyGeographicScopeDataGrid({
     },
   ], [
     defaultCountryId,
+    registrationCountryId,
     t,
   ]);
 

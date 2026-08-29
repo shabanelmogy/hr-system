@@ -32,6 +32,8 @@
 | R-05 | Use reusable controls and permission/read-only guards | Project guides | Implemented | Implemented | Implemented | Complete |
 | R-06 | Keep employee nationality independent from operating geography | User clarification | Documented boundary | Documented boundary | Documented boundary | Complete |
 | R-07 | Allow each Branch to use a different State/District under any enabled operating Country | User clarification | Documented boundary | Documented boundary | Documented boundary | Complete |
+| R-08 | Keep Company legal registration Country distinct from the default operating Country | SAP/Odoo comparison and user decision | Implemented | Implemented | Implemented | Complete |
+| R-09 | Keep Work Location, target-population authorization, and effective dating out of runtime until an owning workflow exists | Architecture review | Deferred with trigger | Deferred with trigger | Deferred with trigger | Complete |
 
 ## Platform capability decisions
 
@@ -58,8 +60,10 @@
 ## Read and write contract
 
 GET returns one current-company aggregate with all active Countries ordered by
-`NameEn, Id`. PUT accepts 1-100 distinct IDs and one selected default. It validates
-all referenced Countries are active and replaces the active links atomically.
+`NameEn, Id`. PUT accepts 1-100 distinct IDs, one selected registration Country,
+and one selected operating default. It validates both special IDs belong to the
+selection, validates all referenced Countries are active, replaces the active
+links, and updates Company registration atomically.
 No paging, search, lifecycle endpoint, import, report, or client scope ID exists.
 
 The aggregate is consumed by operating-address selectors only. Nationality selectors
@@ -71,7 +75,7 @@ the default Country is a form default only and never a single-location constrain
 
 | State/action | View | Save | Read-only |
 | --- | --- | --- | --- |
-| No configured default (backfilled company) | View permission | Manage permission; first save requires default | Save blocked |
+| Missing registration/default (legacy company) | View permission | Manage permission; first save requires both | Save blocked |
 | Configured | View permission | Manage permission; atomic replacement | Save blocked |
 
 ## Integration register
@@ -98,7 +102,8 @@ Managed Crystal and browser report-template fields are N/A.
 | ID | Severity | Finding | Evidence | Owner | Resolution |
 | --- | --- | --- | --- | --- | --- |
 | F-01 | High | Global catalog CRUD was tenant-admin based and inaccessible to `super_admin` | Geography controllers and client route access | Platform security | Resolved by role-plus-permission API guards, Platform routes, and permission ownership migration |
-| F-02 | Medium | Existing companies have no defensible default Country | Company has currency/time-zone only | Migration/product owner | Require a reviewed additive migration before production; current checkout has only the initial schema source |
+| F-02 | Medium | Existing companies may have no defensible legal registration Country | Company has currency/time-zone and operating links only | Migration/product owner | Add nullable restrictive FK, backfill only from active operating default, and require registration on first valid save |
+| F-05 | Medium | SAP-grade Work Location and branch/location target-population access have no current owning workflow | No Company/Branch/Employee/Work Location management clients exist | Organizational Structure/Security | Deferred until the first employee assignment, attendance/geofencing, scheduling, or branch-restricted workflow; no placeholders |
 | F-03 | Medium | Operating-address writes must enforce selected Country scope | Address foundation now validates the global hierarchy; owner-link commands are still deferred | Address/Organizational Structure | Complete owner-link commands and consume Company Geographic Scope |
 | F-04 | High | GET/PUT returned 500 because `CompanyGeographicScopeErrors` was required by both handlers but absent from production DI | Hosted API request and `ErrorsService` inspection | API | Resolved by explicit error registration; dedicated regression test is not present in this checkout |
 
@@ -108,7 +113,7 @@ Managed Crystal and browser report-template fields are N/A.
 | --- | --- | --- | --- |
 | Documentation baseline | `Generate-Documentation.ps1 -Check` | Passed, 28 recipes | `2026-08-25` |
 | API | API build and full test project | Passed; 352/352 tests including Platform ownership and DI regression | `2026-08-25` |
-| API | Dedicated Company Geographic Scope tests | Not present in this checkout; remaining verification gap | `2026-08-27` |
+| API | `CompanyGeographicScopeTests` | Registration contract, persistence, restrictive FK, safe migration, and Country dependency coverage added; focused result recorded at final handoff | `2026-08-29` |
 | Web | Strict typecheck, lint, tests, and production build | Passed; 282/282 tests and all 45 routes generated | `2026-08-25` |
 | Web | Architecture check | Blocked by pre-existing tenant/realtime and forms/dialog dependency findings | `2026-08-25` |
 | Mobile | `npm run check` | Passed; typecheck, lint, architecture, 112/112 tests | `2026-08-25` |

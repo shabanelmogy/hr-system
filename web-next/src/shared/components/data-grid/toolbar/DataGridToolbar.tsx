@@ -52,7 +52,7 @@ export function DataGridToolbar() {
             minWidth: hasSearchSelectors
               ? { xs: 160, sm: 0, md: 540 }
               : { xs: 160, sm: 180, md: 260 },
-            overflow: "hidden",
+            overflow: "visible",
           }}
         >
           <Stack
@@ -125,6 +125,7 @@ export function DataGridToolbar() {
         sx={{
           display: "flex",
           alignItems: "center",
+          marginInlineStart: "auto",
           flexShrink: 0,
           flexWrap: "nowrap",
           gap: { xs: 0.25, sm: 0.5 },

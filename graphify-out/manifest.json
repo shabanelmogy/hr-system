@@ -415,8 +415,8 @@
     "semantic_hash": "0a20aa52e1c620c8de4ff08e07ee6917"
   },
   "web-next/src/config/routes.ts": {
-    "mtime": 1787733079.6647952,
-    "ast_hash": "d0cd6911474809519e411c8da9c9a582",
+    "mtime": 1787997429.078797,
+    "ast_hash": "0502a95a864918f64a55b58dcbfbc4f3",
     "semantic_hash": ""
   },
   "web-next/src/features/advanced-tools/external-tools/components/ExternalToolFrame.tsx": {
@@ -1000,9 +1000,9 @@
     "semantic_hash": "e777877fa173349d592fc962f1f4fadd"
   },
   "web-next/src/features/basic-data/geographical-information/address-types/components/AddressTypeForm.tsx": {
-    "mtime": 1786516749.5531619,
-    "ast_hash": "cdf6b6d49619f1ca6dfe1e4f3c32194f",
-    "semantic_hash": "cdf6b6d49619f1ca6dfe1e4f3c32194f"
+    "mtime": 1787997429.078797,
+    "ast_hash": "46bd1ca3139a605a8c1fcfa224baf457",
+    "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/address-types/components/AddressTypesCardView.tsx": {
     "mtime": 1787639627.1451972,
@@ -1165,8 +1165,8 @@
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/address-types/types/AddressType.ts": {
-    "mtime": 1787639627.2992146,
-    "ast_hash": "43e1275f4614533d0f9d6a85387470dd",
+    "mtime": 1787997429.078797,
+    "ast_hash": "e97c5aec632cfa9193dbda33bf9ffa4a",
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/address-types/utils/addressTypeUtils.ts": {
@@ -1180,9 +1180,9 @@
     "semantic_hash": "2d14ae458c938d3e1fc7ae3d4200ec01"
   },
   "web-next/src/features/basic-data/geographical-information/address-types/utils/validation.ts": {
-    "mtime": 1784116359.3360674,
-    "ast_hash": "53d04f997730747facf4c261b50562ec",
-    "semantic_hash": "53d04f997730747facf4c261b50562ec"
+    "mtime": 1787997429.078797,
+    "ast_hash": "83260b3c0872463d795effb0bb6e71f3",
+    "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/countries/components/CountriesCardView.tsx": {
     "mtime": 1787383206.5775821,
@@ -1200,9 +1200,9 @@
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/countries/components/CountryForm.tsx": {
-    "mtime": 1787213183.505551,
-    "ast_hash": "1773e05197b1e0cc2dd4abdc32d106f6",
-    "semantic_hash": "1773e05197b1e0cc2dd4abdc32d106f6"
+    "mtime": 1787997429.078797,
+    "ast_hash": "a6027a65cb68398392150d5329df2b2e",
+    "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/countries/components/card-view/CountryCard.tsx": {
     "mtime": 1787383206.5775821,
@@ -1405,9 +1405,9 @@
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/countries/utils/validation.ts": {
-    "mtime": 1784116353.45513,
-    "ast_hash": "be9206947feee4284ea9e0d21c5bb486",
-    "semantic_hash": "be9206947feee4284ea9e0d21c5bb486"
+    "mtime": 1787997429.078797,
+    "ast_hash": "022a7763b7e6dfcfb1ecc7a032eb6e3a",
+    "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/districts/components/DistrictDeleteDialog.tsx": {
     "mtime": 1784359635.024223,
@@ -1415,8 +1415,8 @@
     "semantic_hash": "b20abf04e3e799addcc64010c780739c"
   },
   "web-next/src/features/basic-data/geographical-information/districts/components/DistrictForm.tsx": {
-    "mtime": 1787639627.301209,
-    "ast_hash": "f443926e5c8e586b3bb41317bfa20fb2",
+    "mtime": 1787997429.078797,
+    "ast_hash": "313d5bcfcec9c8e07b0edb253bc11eb7",
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/districts/components/DistrictsCardView.tsx": {
@@ -1540,13 +1540,13 @@
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/districts/types/District.ts": {
-    "mtime": 1787639627.4729836,
-    "ast_hash": "0d66ec12b4bd2dd2d8757b3e2ceec489",
+    "mtime": 1787997429.078797,
+    "ast_hash": "b5a6bc0a510e291a0e02ae2ff4722132",
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/districts/utils/validation.ts": {
-    "mtime": 1787639627.604144,
-    "ast_hash": "a1d8a03fa7059c7d80c387c6235c1347",
+    "mtime": 1787997429.078797,
+    "ast_hash": "56a97d2f9cfec94e241cee2972b5d7a0",
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/global-presence/components/global-presence-row/GlobalPresenceMap.tsx": {
@@ -1580,9 +1580,9 @@
     "semantic_hash": "724526c74c205ad3d6b1944b3e5b6be3"
   },
   "web-next/src/features/basic-data/geographical-information/states/components/StateForm.tsx": {
-    "mtime": 1787383206.5775821,
-    "ast_hash": "4acd4d3a5ca659a09d6d68b3135db26e",
-    "semantic_hash": "4acd4d3a5ca659a09d6d68b3135db26e"
+    "mtime": 1787997429.078797,
+    "ast_hash": "2f64b0c79e10b8673be34a850f888707",
+    "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/states/components/StatesCardView.tsx": {
     "mtime": 1787383206.5775821,
@@ -1750,14 +1750,14 @@
     "semantic_hash": "7a18ff0c585b30457710fbea72148e0c"
   },
   "web-next/src/features/basic-data/geographical-information/states/utils/validation.ts": {
-    "mtime": 1784116355.0674386,
-    "ast_hash": "ea9100e0990882b1fef92e91c1e38d54",
-    "semantic_hash": "ea9100e0990882b1fef92e91c1e38d54"
+    "mtime": 1787997429.0872753,
+    "ast_hash": "289c3feb12e9140b70cb49b9ef1273c0",
+    "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/validation/patterns.ts": {
-    "mtime": 1783927400.10159,
-    "ast_hash": "9835d8f1976d0ad5b94e9ae097d9061a",
-    "semantic_hash": "9835d8f1976d0ad5b94e9ae097d9061a"
+    "mtime": 1787997429.0885592,
+    "ast_hash": "43072d236d13837ac303b91ac04b9d93",
+    "semantic_hash": ""
   },
   "web-next/src/features/file-manager/components/BackButton.tsx": {
     "mtime": 1783927400.10159,
@@ -2455,18 +2455,18 @@
     "semantic_hash": "e6c37bcac360ab96f523828059433e18"
   },
   "web-next/src/layouts/components/sidebar/NavigationItem.tsx": {
-    "mtime": 1786521135.412688,
-    "ast_hash": "4ab0245689916b1622a2d3c764c2d122",
-    "semantic_hash": "4ab0245689916b1622a2d3c764c2d122"
+    "mtime": 1787997429.0885592,
+    "ast_hash": "d39b0b513685fe359ca767214d239b0a",
+    "semantic_hash": ""
   },
   "web-next/src/layouts/components/sidebar/NavigationSection.tsx": {
-    "mtime": 1786521135.412688,
-    "ast_hash": "969e4810d9dda1382aade3571d1107ab",
-    "semantic_hash": "969e4810d9dda1382aade3571d1107ab"
+    "mtime": 1787997429.0885592,
+    "ast_hash": "580356b24d94335bd4a0665174ffd7a4",
+    "semantic_hash": ""
   },
   "web-next/src/layouts/components/sidebar/SideBar.tsx": {
-    "mtime": 1787661398.726697,
-    "ast_hash": "3d48715eb60a3aeae17d58fe1e7f75ad",
+    "mtime": 1787997429.0885592,
+    "ast_hash": "9b695f3d5193d85f030d57de775503cc",
     "semantic_hash": ""
   },
   "web-next/src/layouts/components/sidebar/UserProfile.tsx": {
@@ -2550,9 +2550,9 @@
     "semantic_hash": ""
   },
   "web-next/src/layouts/components/top-bar/TopBarStyles.tsx": {
-    "mtime": 1784020134.6073472,
-    "ast_hash": "66558d078125faaa51b84c0083a284b7",
-    "semantic_hash": "66558d078125faaa51b84c0083a284b7"
+    "mtime": 1787997429.0885592,
+    "ast_hash": "541b2382c72abfb824ccfb34d0eaa9c1",
+    "semantic_hash": ""
   },
   "web-next/src/layouts/components/top-bar/UserWelcome.tsx": {
     "mtime": 1784108275.7190535,
@@ -2630,8 +2630,8 @@
     "semantic_hash": "7e3d0b43101c8bf14c3f783541aa2b1e"
   },
   "web-next/src/lib/auth/permissions.ts": {
-    "mtime": 1787732459.1268866,
-    "ast_hash": "b67a8b4bc9e9c55d11d78871b3dc6fff",
+    "mtime": 1787997429.0885592,
+    "ast_hash": "56e44760966ba89789f55786cf35101c",
     "semantic_hash": ""
   },
   "web-next/src/lib/auth/route-access.test.ts": {
@@ -2690,13 +2690,13 @@
     "semantic_hash": "4ba4d8a82d7ac4b6dfb2b7eb04130990"
   },
   "web-next/src/locales/ar/translation.json": {
-    "mtime": 1787750207.9952855,
-    "ast_hash": "8be1c5d681ad361c7c981493fb563cf7",
+    "mtime": 1788002060.6079538,
+    "ast_hash": "39844d8adae3bb0804da0af2ee2f8af2",
     "semantic_hash": ""
   },
   "web-next/src/locales/en/translation.json": {
-    "mtime": 1787750207.9912348,
-    "ast_hash": "7ebf90909843e2698686019ca68986bf",
+    "mtime": 1788002060.6079538,
+    "ast_hash": "e3fdff22cfd4af559e33347384515e2d",
     "semantic_hash": ""
   },
   "web-next/src/locales/i18n.ts": {
@@ -2925,8 +2925,8 @@
     "semantic_hash": "bf3c2c8171d81f0074cf086c6fc6fd47"
   },
   "web-next/src/shared/components/data-grid/core/MyDataGrid.tsx": {
-    "mtime": 1787651459.7074337,
-    "ast_hash": "83ff7f8550537f9743ff43336f7d2d78",
+    "mtime": 1787997429.0935943,
+    "ast_hash": "3d78a6505b093cbd57d8be3ba14c781d",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/data-grid/core/context.ts": {
@@ -2985,9 +2985,9 @@
     "semantic_hash": "638e1e79e6ab80ea1e4764147d2d31d7"
   },
   "web-next/src/shared/components/data-grid/toolbar/DataGridToolbar.tsx": {
-    "mtime": 1787383206.611047,
-    "ast_hash": "9ae36532d8df59abfa09fcc495d7fb9b",
-    "semantic_hash": "9ae36532d8df59abfa09fcc495d7fb9b"
+    "mtime": 1788007426.7258909,
+    "ast_hash": "7509419e0651f1f1d20330ddb1baeff6",
+    "semantic_hash": ""
   },
   "web-next/src/shared/components/dialogs/confirmation/ConfirmationDialog.tsx": {
     "mtime": 1784360027.1949575,
@@ -3170,8 +3170,8 @@
     "semantic_hash": "13671646d57917834ec87fdb724c4310"
   },
   "web-next/src/shared/components/forms/dialog/FormContainer.tsx": {
-    "mtime": 1787746202.2448545,
-    "ast_hash": "259fcf9e7fc2bbb52f6138b641bd1eb0",
+    "mtime": 1787997429.094602,
+    "ast_hash": "272588c6fb0ae44e839741e35d7b75f6",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/dialog/FormContent.tsx": {
@@ -3185,9 +3185,9 @@
     "semantic_hash": "c93e40e09c87ae4bfa5408e3630cbef5"
   },
   "web-next/src/shared/components/forms/dialog/FormFooter.tsx": {
-    "mtime": 1787745216.0083468,
-    "ast_hash": "a3e9176cdd6e4dfb59c04c857812c7f1",
-    "semantic_hash": "a3e9176cdd6e4dfb59c04c857812c7f1"
+    "mtime": 1787997429.094602,
+    "ast_hash": "3451a36041ce382e7fe509ffe3f4742c",
+    "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/dialog/FormHeader.tsx": {
     "mtime": 1784366846.8328326,
@@ -3210,14 +3210,14 @@
     "semantic_hash": "92b20a7a89c1fbb0b878a05acbcc3e00"
   },
   "web-next/src/shared/components/forms/dialog/types.ts": {
-    "mtime": 1787745216.00735,
-    "ast_hash": "66479b89f05372df796fec04cba93412",
+    "mtime": 1787997429.094602,
+    "ast_hash": "ba364d813dbd19afd5a6d6bac8c4f0df",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/dialog/useFormDialogFocus.ts": {
-    "mtime": 1784366582.4465017,
-    "ast_hash": "52333d10db1251bb234600e9be848280",
-    "semantic_hash": "52333d10db1251bb234600e9be848280"
+    "mtime": 1787997429.094602,
+    "ast_hash": "2fa40126797eb6c2870d45fcf797fbb3",
+    "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/dialog/useFormDialogState.ts": {
     "mtime": 1784366974.7764916,
@@ -3860,8 +3860,8 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1787746398.5905552,
-    "ast_hash": "6452ff966697119991ef3b489c85a085",
+    "mtime": 1787997428.9589334,
+    "ast_hash": "d78b97ec28f778a5be39cf26ff64672b",
     "semantic_hash": ""
   },
   "README.md": {
@@ -4150,14 +4150,14 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Common/Consts/RegexPattern.cs": {
-    "mtime": 1786265227.2708156,
-    "ast_hash": "77b60c150b538b0d1cc0ba097984c7bd",
-    "semantic_hash": "77b60c150b538b0d1cc0ba097984c7bd"
+    "mtime": 1787997428.9589334,
+    "ast_hash": "56bcee075d03e092cefbb0030501f693",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Common/Consts/Strings.cs": {
-    "mtime": 1786520069.1359794,
-    "ast_hash": "dd9be5e7b3fbefa62b56b739dee04b1f",
-    "semantic_hash": "dd9be5e7b3fbefa62b56b739dee04b1f"
+    "mtime": 1787997428.9589334,
+    "ast_hash": "a8bd5f55d653a66765ddc541ae2a437a",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Common/Consts/TenantDefaults.cs": {
     "mtime": 1786265227.272812,
@@ -4465,9 +4465,9 @@
     "semantic_hash": "77ca6d1f0f227db129bf74220475a67a"
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/AddressTypes/Contracts/AddressTypeRequestValidator.cs": {
-    "mtime": 1786439896.505199,
-    "ast_hash": "05e5e774854730b090c2c89f3f55cea9",
-    "semantic_hash": "05e5e774854730b090c2c89f3f55cea9"
+    "mtime": 1787997428.9589334,
+    "ast_hash": "a2ecea8b3b3af63badcbe19786172626",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/AddressTypes/Contracts/AddressTypeResponse.cs": {
     "mtime": 1786265227.6144004,
@@ -4490,19 +4490,19 @@
     "semantic_hash": "3c5baefbb05dadaf6024c98eaf1a1cc8"
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Addresses/Contracts/AddressRequest.cs": {
-    "mtime": 1786265227.5117612,
-    "ast_hash": "bceeb7fe5dc5780f5fd2e15b444a8ccf",
-    "semantic_hash": "bceeb7fe5dc5780f5fd2e15b444a8ccf"
+    "mtime": 1787997428.9589334,
+    "ast_hash": "df8c05a519f48c646c06c9fe21f852d4",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Addresses/Contracts/AddressRequestValidator.cs": {
-    "mtime": 1786439896.5061984,
-    "ast_hash": "443c915aca9c3436681b40938a4fcf7e",
-    "semantic_hash": "443c915aca9c3436681b40938a4fcf7e"
+    "mtime": 1787997428.9589334,
+    "ast_hash": "af0daa6a81347701e280e2f803fbdec7",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Addresses/Contracts/AddressResponse.cs": {
-    "mtime": 1786265227.5127594,
-    "ast_hash": "ffa64b89e70b8bb46e501f1881599ca5",
-    "semantic_hash": "ffa64b89e70b8bb46e501f1881599ca5"
+    "mtime": 1787997428.9589334,
+    "ast_hash": "0747800eb92aa1f2f17dc6a90c33d272",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Addresses/Contracts/AddressesCountResponse.cs": {
     "mtime": 1786265227.5107436,
@@ -4510,8 +4510,8 @@
     "semantic_hash": "14f377812ee12990efe7818e2b7408c8"
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Addresses/Errors/AddressErrors.cs": {
-    "mtime": 1787649069.8445597,
-    "ast_hash": "3ba2a9aa1d1d18a83ae5bd0703910551",
+    "mtime": 1787997428.9589334,
+    "ast_hash": "9ed31acaa77f576a13626ce2009e7324",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Addresses/Services/IAddressService.cs": {
@@ -4535,14 +4535,14 @@
     "semantic_hash": "265831703976e4d4387d0d4853f4f3b0"
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Countries/Errors/CountryErrors.cs": {
-    "mtime": 1787147933.600747,
-    "ast_hash": "0e491d2f9bae24a2cf5d91c0cc03f32b",
-    "semantic_hash": "0e491d2f9bae24a2cf5d91c0cc03f32b"
+    "mtime": 1787997428.971947,
+    "ast_hash": "ae43a0458b3de355f8b16ee2c6f4011c",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Districts/Abstractions/IDistrictValidationQueries.cs": {
-    "mtime": 1786439874.6934738,
-    "ast_hash": "e4383b13a4672dde06b068bd4770947a",
-    "semantic_hash": "e4383b13a4672dde06b068bd4770947a"
+    "mtime": 1787997428.9729245,
+    "ast_hash": "e07086b6c75c2a7b49f252cc6204f017",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Districts/Contracts/DistrictRequest.cs": {
     "mtime": 1786265227.6354053,
@@ -4550,9 +4550,9 @@
     "semantic_hash": "061b02814453bd88ec33e7a8fb8ac245"
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Districts/Contracts/DistrictRequestValidator.cs": {
-    "mtime": 1786439896.5042021,
-    "ast_hash": "732562cc161cde0337a71d538319544e",
-    "semantic_hash": "732562cc161cde0337a71d538319544e"
+    "mtime": 1787997428.9732096,
+    "ast_hash": "9221b348d0d6e20c11fa90656ba46693",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Districts/Contracts/DistrictResponse.cs": {
     "mtime": 1786265227.6389282,
@@ -4575,9 +4575,9 @@
     "semantic_hash": "6a1055d004e86ce091de420cf20a3fac"
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/States/Abstractions/IStateValidationQueries.cs": {
-    "mtime": 1786439874.6924732,
-    "ast_hash": "da4f4f93a8d104ae18ebfc5d3d0deeea",
-    "semantic_hash": "da4f4f93a8d104ae18ebfc5d3d0deeea"
+    "mtime": 1787997428.9732096,
+    "ast_hash": "6e7ca3749cc27cfa37bc889670bf8d14",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/States/Contracts/SimpleStateResponse.cs": {
     "mtime": 1786265227.6474571,
@@ -4590,9 +4590,9 @@
     "semantic_hash": "537403f38f4034bcd772e9c5b0517afb"
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/States/Contracts/StateRequestValidator.cs": {
-    "mtime": 1786439896.5032177,
-    "ast_hash": "9c62c9cef93eea1d67fc61007c1903e1",
-    "semantic_hash": "9c62c9cef93eea1d67fc61007c1903e1"
+    "mtime": 1787997428.9732096,
+    "ast_hash": "97062c9d86f9be998dbce7afdf436c78",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/States/Contracts/StateResponse.cs": {
     "mtime": 1786265227.6494563,
@@ -4605,9 +4605,9 @@
     "semantic_hash": "f60c5041b766a2baaefc81a80b2d3b28"
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/States/Errors/StateErrors.cs": {
-    "mtime": 1787383205.679592,
-    "ast_hash": "64543effc5ed3cd0f8dc9b2ee320ec4b",
-    "semantic_hash": "64543effc5ed3cd0f8dc9b2ee320ec4b"
+    "mtime": 1787997428.9732096,
+    "ast_hash": "7473e9b166016a3e47f6652428b98ea3",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/Platform/EntityChangeLogs/Contracts/EntityChangeLogsRequest.cs": {
     "mtime": 1787129144.7913222,
@@ -5070,14 +5070,14 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Domain/GeographicalInformation/Addresses/Entities/Address.cs": {
-    "mtime": 1786265051.0094204,
-    "ast_hash": "76319920e11b7307bca58a3918e973c7",
-    "semantic_hash": "76319920e11b7307bca58a3918e973c7"
+    "mtime": 1787997428.9732096,
+    "ast_hash": "325aee6291947dc89a8118949d589907",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Domain/GeographicalInformation/Countries/Entities/Country.cs": {
-    "mtime": 1786265051.011415,
-    "ast_hash": "d31616b3492fcc7eaf680e4db2b2ab48",
-    "semantic_hash": "d31616b3492fcc7eaf680e4db2b2ab48"
+    "mtime": 1787997428.9787283,
+    "ast_hash": "192c6bf412543d3390a04e08151742d9",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Domain/GeographicalInformation/Districts/Entities/District.cs": {
     "mtime": 1786265051.0124164,
@@ -5085,9 +5085,9 @@
     "semantic_hash": "4517dd0b8dff25d474013113f840b468"
   },
   "api/HrManagementSystem.Domain/GeographicalInformation/States/Entities/State.cs": {
-    "mtime": 1786265051.0144072,
-    "ast_hash": "a02290481be2c5401883d8e1268406ba",
-    "semantic_hash": "a02290481be2c5401883d8e1268406ba"
+    "mtime": 1787997428.9787283,
+    "ast_hash": "a40e18665919e6056afe273e49fc92ee",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Domain/GlobalUsings.cs": {
     "mtime": 1786265013.313686,
@@ -5100,14 +5100,14 @@
     "semantic_hash": "70a7d78ea1bf481a7348383247832dd2"
   },
   "api/HrManagementSystem.Domain/OrganizationalStructure/Entities/Branch.cs": {
-    "mtime": 1786451852.3831668,
-    "ast_hash": "e629e776efec8d74a21e4defd8603e59",
-    "semantic_hash": "e629e776efec8d74a21e4defd8603e59"
+    "mtime": 1787997428.9787283,
+    "ast_hash": "18fbfd7f1203189465f123707f0125b3",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Domain/OrganizationalStructure/Entities/Company.cs": {
-    "mtime": 1786451852.3811662,
-    "ast_hash": "4cf4d5c4b10d96127b32c4818d8d6bb7",
-    "semantic_hash": "4cf4d5c4b10d96127b32c4818d8d6bb7"
+    "mtime": 1787997428.9787283,
+    "ast_hash": "5e461c1a28383fdea9e68b5a2e9af40d",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Domain/OrganizationalStructure/Entities/Department.cs": {
     "mtime": 1786451852.3841605,
@@ -5410,8 +5410,8 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/AddressTypes/Persistence/AddressTypeConfiguration.cs": {
-    "mtime": 1787648122.4271002,
-    "ast_hash": "2da56283bcf6606aeae736c07b0bfe22",
+    "mtime": 1787997428.9787283,
+    "ast_hash": "4590f6893ee4b6f4d9385ccfc54f0656",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/AddressTypes/Persistence/AddressTypeValidationQueries.cs": {
@@ -5425,18 +5425,18 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Addresses/Jobs/AddressChangedJob.cs": {
-    "mtime": 1786790123.9245539,
-    "ast_hash": "b5792dcb3d1cef81bc63294b6cf761a3",
-    "semantic_hash": "b5792dcb3d1cef81bc63294b6cf761a3"
+    "mtime": 1787997428.9787283,
+    "ast_hash": "5a6ef3b897cad54e43fccc309121e910",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Addresses/Persistence/AddressConfiguration.cs": {
-    "mtime": 1787648123.6094196,
-    "ast_hash": "8592af12ba7de7ed811af062db7b9ff6",
+    "mtime": 1787997428.9787283,
+    "ast_hash": "62b9c7a721ba3467a3d840aeb282cdfb",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Addresses/Services/AddressService.cs": {
-    "mtime": 1787649071.2162075,
-    "ast_hash": "fc376eddb9214e84744ebd9514f40fe9",
+    "mtime": 1787997428.9787283,
+    "ast_hash": "1cf573107938d33e1470e7a4ec04fb7a",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Countries/Jobs/CountryChangedJob.cs": {
@@ -5460,18 +5460,18 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Districts/Persistence/DistrictConfiguration.cs": {
-    "mtime": 1786265522.364812,
-    "ast_hash": "d7beb181ab0bf4d3a49b602b85bf126f",
-    "semantic_hash": "d7beb181ab0bf4d3a49b602b85bf126f"
+    "mtime": 1787997428.9787283,
+    "ast_hash": "bd06ec067b6f24d09d7c20232b11ecf1",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Districts/Persistence/DistrictValidationQueries.cs": {
-    "mtime": 1786439959.7070408,
-    "ast_hash": "75d33665ae92984547fd6a759755feb0",
-    "semantic_hash": "75d33665ae92984547fd6a759755feb0"
+    "mtime": 1787997428.987226,
+    "ast_hash": "42accd95b3d0a28060f4a4e6c9bf120e",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Districts/Services/DistrictService.cs": {
-    "mtime": 1787569354.0088015,
-    "ast_hash": "f0e0b7fef9c1ea8022800f86dff9e3c7",
+    "mtime": 1787997428.987226,
+    "ast_hash": "171bca28609842527ac37aa3c6539aab",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/States/Jobs/StateChangedJob.cs": {
@@ -5480,14 +5480,14 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/States/Persistence/StateConfiguration.cs": {
-    "mtime": 1786265522.3683348,
-    "ast_hash": "4b906415c5940d621be5011cfc5ad2a4",
-    "semantic_hash": "4b906415c5940d621be5011cfc5ad2a4"
+    "mtime": 1787997428.9884734,
+    "ast_hash": "56b85af45f0d63c0fe45075da671e6e8",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/States/Persistence/StateValidationQueries.cs": {
-    "mtime": 1786439959.7060387,
-    "ast_hash": "decf7dbcc47260c1c867b972d899b3ab",
-    "semantic_hash": "decf7dbcc47260c1c867b972d899b3ab"
+    "mtime": 1787997428.9884734,
+    "ast_hash": "bd32aa3e3c55fd9d831696ef01aea603",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/Platform/EntityChangeLogs/Services/EntityChangeLogService.cs": {
     "mtime": 1787129145.2685752,
@@ -5675,13 +5675,13 @@
     "semantic_hash": "ccbe829a0673a66f8a3da09be6eadc53"
   },
   "api/HrManagementSystem.Infrastructure/Localization/Resources/ar-EG.json": {
-    "mtime": 1787747383.5832906,
-    "ast_hash": "1db203e73587369cc7c2c38e5f71c3fa",
+    "mtime": 1787997428.9884734,
+    "ast_hash": "fb8f4fefbe2342c9e89fdc14690c28fe",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Localization/Resources/en-US.json": {
-    "mtime": 1787747383.5832906,
-    "ast_hash": "7dea9832f15648dba265135d12fa58f7",
+    "mtime": 1787997428.9884734,
+    "ast_hash": "9b8db641b116b3eccb7c3d58f31130f7",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Mapping/MappingConfigurations.cs": {
@@ -5690,19 +5690,19 @@
     "semantic_hash": "2d1dfce0c20383380933ef0fdaa82224"
   },
   "api/HrManagementSystem.Infrastructure/Migrations/ApplicationDbContextModelSnapshot.cs": {
-    "mtime": 1787747284.0421112,
-    "ast_hash": "365b4ffb09328c4b2028055c4ee253d8",
+    "mtime": 1787997428.9935126,
+    "ast_hash": "22b6b67ec8f3a33c148414c1734c6b54",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Persistence/ApplicationDbContext.cs": {
-    "mtime": 1787743564.280521,
-    "ast_hash": "337cba76e0bf815eec7303e87b99db8b",
+    "mtime": 1787997429.0145643,
+    "ast_hash": "546cc696efbfc29cd42f0758c5e7a001",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Persistence/Configurations/OrganizationalStructure/CompanyConfiguration.cs": {
-    "mtime": 1786264132.834476,
-    "ast_hash": "ea8879a7e3464d5780c8e14f96cb84eb",
-    "semantic_hash": "ea8879a7e3464d5780c8e14f96cb84eb"
+    "mtime": 1787997429.0145643,
+    "ast_hash": "55f7e26c5e8325f19e1e05b1650724ed",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Persistence/Configurations/Tenancy/TenantConfiguration.cs": {
     "mtime": 1786792731.4231641,
@@ -5915,8 +5915,8 @@
     "semantic_hash": "bf6d255ccf875021b7307e509942a32e"
   },
   "web-next/src/features/basic-data/navigation/basicDataNavigation.tsx": {
-    "mtime": 1787645653.3694632,
-    "ast_hash": "1cbcce25278622a3163029b743406e80",
+    "mtime": 1788006759.8071234,
+    "ast_hash": "41368e969cd74879364de74763f3929b",
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/pages/BasicDataHomePage.tsx": {
@@ -6535,8 +6535,8 @@
     "semantic_hash": "54dc64d62868350b1d819e47e2ac8e9a"
   },
   "web-next/src/features/basic-data/navigation/basicDataNavigation.test.tsx": {
-    "mtime": 1787645674.6008835,
-    "ast_hash": "257a1ef7fb113df1aa495d410db847a3",
+    "mtime": 1788006767.8543775,
+    "ast_hash": "818a69bae147adb2f470cf67da71aeea",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/layout/feature-module/FeatureModuleLayout.tsx": {
@@ -6900,9 +6900,9 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/forms/AppForm.tsx": {
-    "mtime": 1787132237.867108,
-    "ast_hash": "a53117589d160257c6c5f4a1d0da83eb",
-    "semantic_hash": "a53117589d160257c6c5f4a1d0da83eb"
+    "mtime": 1787997429.078797,
+    "ast_hash": "c5a7b3d50413db7d5f8b641fe90ef37a",
+    "semantic_hash": ""
   },
   "graphify-out/memory/query_20260811_192249_fix_web_super_admin_login_failing_with_http_307_an.md": {
     "mtime": 1786516748.623952,
@@ -8235,9 +8235,9 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Countries/Abstractions/ICountryWriteStore.cs": {
-    "mtime": 1787229889.6522665,
-    "ast_hash": "34cd863b064a90e2b3e17fb057315bd5",
-    "semantic_hash": "34cd863b064a90e2b3e17fb057315bd5"
+    "mtime": 1787997428.9589334,
+    "ast_hash": "c1f837b73e7b467e425ae2933028a9fb",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Countries/Commands/ArchiveCountry/ArchiveCountryCommand.cs": {
     "mtime": 1787146280.2386675,
@@ -8245,14 +8245,14 @@
     "semantic_hash": "c1651ae18be2511f0bac648c227dc30f"
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Countries/Commands/ArchiveCountry/ArchiveCountryCommandHandler.cs": {
-    "mtime": 1787569354.0058093,
-    "ast_hash": "ccb843b27a02ca18171fb3bb15befca1",
+    "mtime": 1787997428.9589334,
+    "ast_hash": "29d82c884addf17433261f577bcd6ddf",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Countries/Commands/CountryMutationValidator.cs": {
-    "mtime": 1787148317.3529565,
-    "ast_hash": "9ef41da0ec8d3131c61ba45da9c437ad",
-    "semantic_hash": "9ef41da0ec8d3131c61ba45da9c437ad"
+    "mtime": 1787997428.9685109,
+    "ast_hash": "974b4a1d49db2a73c07dc3b77e6a5b74",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Countries/Commands/CreateCountries/CreateCountriesCommand.cs": {
     "mtime": 1787146280.2386675,
@@ -8385,9 +8385,9 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryWriteStore.cs": {
-    "mtime": 1787229889.6542602,
-    "ast_hash": "ac64c587156ccfb60095f5386640740e",
-    "semantic_hash": "ac64c587156ccfb60095f5386640740e"
+    "mtime": 1787997428.9787283,
+    "ast_hash": "311d664797bb7200914552c5325338b7",
+    "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Hangfire/HangfireSessionAuthentication.cs": {
     "mtime": 1787142078.066642,
@@ -8410,8 +8410,8 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Tests/CountryCqrsHandlerTests.cs": {
-    "mtime": 1787569354.0780752,
-    "ast_hash": "81f815fe66130436f1c91addcc3f2841",
+    "mtime": 1787997429.0186124,
+    "ast_hash": "047e6879ebe2609a3eff85bf5cd33f92",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Tests/HangfireSessionAuthenticationTests.cs": {
@@ -8530,9 +8530,9 @@
     "semantic_hash": "776321be527a4297f40d3ee3f69eb1d8"
   },
   "web-next/src/features/basic-data/geographical-information/countries/utils/countryMockData.ts": {
-    "mtime": 1787148813.0281086,
-    "ast_hash": "a2a5e3e2dd926a29c37e6cf3de77c017",
-    "semantic_hash": "a2a5e3e2dd926a29c37e6cf3de77c017"
+    "mtime": 1787997429.078797,
+    "ast_hash": "88cd167bd2005675243d5421952ea529",
+    "semantic_hash": ""
   },
   "web-next/src/features/basic-data/geographical-information/countries/utils/countryPageQuery.test.ts": {
     "mtime": 1787383206.5775821,
@@ -8800,8 +8800,8 @@
     "semantic_hash": "247c621ba72d6f6193fd34d2336a8bc0"
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Countries/Commands/BulkArchiveCountries/BulkArchiveCountriesCommandHandler.cs": {
-    "mtime": 1787569354.0058093,
-    "ast_hash": "5a604c97e30a2889aaed8e81a2505943",
+    "mtime": 1787997428.9685109,
+    "ast_hash": "ecdff0422d05fb122f7aa93b8e984351",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Countries/Commands/BulkArchiveCountries/BulkArchiveCountriesCommandValidator.cs": {
@@ -8830,13 +8830,13 @@
     "semantic_hash": ""
   },
   "mobile-react/src/core/localization/translations/ar-basic-data.ts": {
-    "mtime": 1787655875.0252597,
-    "ast_hash": "09a585ed335da3537c6714be5823d8b8",
+    "mtime": 1787997429.06868,
+    "ast_hash": "47ba930f52f922bf1a66ae07126137f1",
     "semantic_hash": ""
   },
   "mobile-react/src/core/localization/translations/ar-common.ts": {
-    "mtime": 1787643965.137832,
-    "ast_hash": "6180f4807ac7564b22b2923156889ff9",
+    "mtime": 1787997429.06868,
+    "ast_hash": "9b623e966aad7318b9623417d97f9d9e",
     "semantic_hash": ""
   },
   "mobile-react/src/core/localization/translations/ar-navigation-settings.ts": {
@@ -8860,13 +8860,13 @@
     "semantic_hash": ""
   },
   "mobile-react/src/core/localization/translations/en-basic-data.ts": {
-    "mtime": 1787655872.7849429,
-    "ast_hash": "55c349c5d0492ec0c3af0bad0dc6d52b",
+    "mtime": 1787997429.06868,
+    "ast_hash": "51ecdca100bd7b34957734fac458a475",
     "semantic_hash": ""
   },
   "mobile-react/src/core/localization/translations/en-common.ts": {
-    "mtime": 1787643963.2393982,
-    "ast_hash": "c0d82ead17e1cebba42393926743b056",
+    "mtime": 1787997429.0706034,
+    "ast_hash": "4effb032929d3c153e36bce22265d34b",
     "semantic_hash": ""
   },
   "mobile-react/src/core/localization/translations/en-navigation-settings.ts": {
@@ -8920,8 +8920,8 @@
     "semantic_hash": "215f09f81802656c9e540883c9fef096"
   },
   "mobile-react/src/features/basic-data/countries/components/CountryForm.tsx": {
-    "mtime": 1787576955.551692,
-    "ast_hash": "412e859dd1951bb28a9112613c4d44bd",
+    "mtime": 1787997429.072288,
+    "ast_hash": "55ae58f18b2521b3d3e30233f652b94d",
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/countries/components/CountryReportView.tsx": {
@@ -9025,13 +9025,13 @@
     "semantic_hash": "9888d2c825e5a516a130ce6af18a1184"
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/States/Abstractions/IStateManagementStores.cs": {
-    "mtime": 1787569354.0068064,
-    "ast_hash": "8d29b442e8e59d33f8261d0a73b5ec99",
+    "mtime": 1787997428.9732096,
+    "ast_hash": "43813d2acb59046050ebbaf6fc6bce69",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/States/Commands/StateCommands.cs": {
-    "mtime": 1787569354.0078042,
-    "ast_hash": "14b13c214d262e7cd1d1d14d3a11973d",
+    "mtime": 1787997428.9732096,
+    "ast_hash": "96be761c81ae2f6e35b6e6b285b1eb6d",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/States/Contracts/StateManagementContracts.cs": {
@@ -9055,8 +9055,8 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/States/Persistence/StateManagementStores.cs": {
-    "mtime": 1787569354.010797,
-    "ast_hash": "85327adcb0fc224617e4a508d077662f",
+    "mtime": 1787997428.9884734,
+    "ast_hash": "a0772a795e9c165f4ac94311e246f61c",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Tests/StateCqrsArchitectureTests.cs": {
@@ -9080,18 +9080,18 @@
     "semantic_hash": ""
   },
   "documentation/system/features/countries/required-files.json": {
-    "mtime": 1787646116.1891134,
-    "ast_hash": "47600f27ef3ebde8f9cba68dc428ff4a",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "2dd607419810315fe5dfe5ead96626d6",
     "semantic_hash": ""
   },
   "documentation/system/features/states/required-files.json": {
-    "mtime": 1787646117.5142179,
-    "ast_hash": "1876523638507d09b7613f536ae0fd5f",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "74a04027450418202d44c7e7e7b63da5",
     "semantic_hash": ""
   },
   "documentation/system/recipe-manifest.json": {
-    "mtime": 1787736251.4840746,
-    "ast_hash": "f14206d7e28eda27a7ba4d04f4d89adf",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "982eb412f012e18edc8ca228b0915f32",
     "semantic_hash": ""
   },
   "mobile-react/app/(main)/basic-data/geographical-information/_layout.tsx": {
@@ -9145,8 +9145,8 @@
     "semantic_hash": "288cd8cce038679c1f226abd28ceb623"
   },
   "mobile-react/src/features/basic-data/states/components/StateForm.tsx": {
-    "mtime": 1787576957.3818173,
-    "ast_hash": "b052144e550184695ce00b061fcfd4da",
+    "mtime": 1787997429.072288,
+    "ast_hash": "7aac3d85249eb8e6ef17798d6ab092c5",
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/states/components/StateReportView.tsx": {
@@ -9310,8 +9310,8 @@
     "semantic_hash": ""
   },
   "documentation/README.md": {
-    "mtime": 1787569354.0780752,
-    "ast_hash": "f905c61e3794bae23a5436601ca321b3",
+    "mtime": 1787997429.0186124,
+    "ast_hash": "b96fd6e5a3e443bfd12c256c2b1fa113",
     "semantic_hash": ""
   },
   "documentation/api/Authentication_Configuration.md": {
@@ -9325,8 +9325,8 @@
     "semantic_hash": ""
   },
   "documentation/api/Controllers/Geographic/CountriesController.md": {
-    "mtime": 1787401462.274129,
-    "ast_hash": "5b09c2c6dbc0160071c2fd7c981273de",
+    "mtime": 1787997429.0215495,
+    "ast_hash": "179ac727943a438cdb919665a93c3597",
     "semantic_hash": ""
   },
   "documentation/api/Controllers/Geographic/DistrictsController.md": {
@@ -9335,13 +9335,13 @@
     "semantic_hash": ""
   },
   "documentation/api/Controllers/Geographic/StatesController.md": {
-    "mtime": 1787383206.2791278,
-    "ast_hash": "030936ebf89931bb7a08f39de15e055c",
+    "mtime": 1787997429.0218267,
+    "ast_hash": "568d1cfed42099a45f4c9001a9a608da",
     "semantic_hash": ""
   },
   "documentation/api/Countries_API_Implementation_Profile.md": {
-    "mtime": 1787645834.7860887,
-    "ast_hash": "868b0522bba2016be197f27500b56cb4",
+    "mtime": 1787997429.0218267,
+    "ast_hash": "db4f58552ec0221fc67a2660a459bd3a",
     "semantic_hash": ""
   },
   "documentation/api/Domain_Development_Guide.md": {
@@ -9390,8 +9390,8 @@
     "semantic_hash": ""
   },
   "documentation/api/States_API_Implementation_Profile.md": {
-    "mtime": 1787645882.7786367,
-    "ast_hash": "60fd6221d63caa79adf54be34ecd3a56",
+    "mtime": 1787997429.0218267,
+    "ast_hash": "d9597f52d9025eac71eb423cec5e583a",
     "semantic_hash": ""
   },
   "documentation/api/User Stories/GeographicManagement/Address-UserStory.md": {
@@ -9400,13 +9400,13 @@
     "semantic_hash": ""
   },
   "documentation/api/User Stories/GeographicManagement/AddressTypes-UserStory.md": {
-    "mtime": 1787383206.294148,
-    "ast_hash": "4efe791c5de712c4c50d9c61db547543",
+    "mtime": 1787997429.0218267,
+    "ast_hash": "1a509a0abe711cf103117193ca89d4f5",
     "semantic_hash": ""
   },
   "documentation/api/User Stories/GeographicManagement/State-UserStory.md": {
-    "mtime": 1787383206.294148,
-    "ast_hash": "e21a108a29391a17aaa6afa4ba4495b2",
+    "mtime": 1787997429.0218267,
+    "ast_hash": "5a1787a04230f37cebd4b3ea9d7a4848",
     "semantic_hash": ""
   },
   "documentation/api/User Stories/KanbanBoard/BoardTaskAttachment_UserStory.md": {
@@ -9520,8 +9520,8 @@
     "semantic_hash": ""
   },
   "documentation/legacy-web/features/basic-data/countries/TRANSLATION_GUIDE.md": {
-    "mtime": 1787383206.3097699,
-    "ast_hash": "1f653f084ff56eb9ab3254372615d5ea",
+    "mtime": 1787997429.0218267,
+    "ast_hash": "43f83cb8990d582415ffa6d304e52212",
     "semantic_hash": ""
   },
   "documentation/legacy-web/features/basic-data/countries/TYPES_GUIDE.md": {
@@ -9545,8 +9545,8 @@
     "semantic_hash": ""
   },
   "documentation/legacy-web/source/src/features/basicData/states/README.md": {
-    "mtime": 1787383206.3097699,
-    "ast_hash": "d4177b16a6d69764b787ebe75b912673",
+    "mtime": 1787997429.0218267,
+    "ast_hash": "c822a37b9b82bf46de84f9d024b6ceb9",
     "semantic_hash": ""
   },
   "documentation/legacy-web/source/src/shared/components/charts/README.md": {
@@ -9590,18 +9590,18 @@
     "semantic_hash": ""
   },
   "documentation/mobile-react/countries-mobile-reference.md": {
-    "mtime": 1787646081.3665829,
-    "ast_hash": "51679b4b942a19af810f04bd877e8692",
+    "mtime": 1787997429.0218267,
+    "ast_hash": "e2f8f9b6f3a81bd309ad499b3b9e8c49",
     "semantic_hash": ""
   },
   "documentation/mobile-react/mobile-feature-implementation-guide.md": {
-    "mtime": 1787573683.9602542,
-    "ast_hash": "2e0f0375a0dd3984798d994c39366ca9",
+    "mtime": 1787997429.0218267,
+    "ast_hash": "87bcd74aad5ff308f8bbc71aaf31c48f",
     "semantic_hash": ""
   },
   "documentation/mobile-react/states-mobile-reference.md": {
-    "mtime": 1787647044.3500285,
-    "ast_hash": "aa3cbb076d20650e38ae139bb3437ec8",
+    "mtime": 1787997429.0218267,
+    "ast_hash": "4581de7fc00058aa184951adc801489f",
     "semantic_hash": ""
   },
   "documentation/project/API_Proxy_Analysis.md": {
@@ -9625,8 +9625,8 @@
     "semantic_hash": ""
   },
   "documentation/project/COUNTRIES_FEATURE_FULL_REVIEW.md": {
-    "mtime": 1787645833.5241404,
-    "ast_hash": "1d614e6be30bc9565a64e95850ab298a",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "ffab3f13424e5538df64cd22cfb9fb67",
     "semantic_hash": ""
   },
   "documentation/project/EMAIL_CONFIRMATION_LINKS.md": {
@@ -9685,8 +9685,8 @@
     "semantic_hash": ""
   },
   "documentation/project/STATES_FEATURE_FULL_REVIEW.md": {
-    "mtime": 1787647043.2747138,
-    "ast_hash": "4cb53487ba28c4f9536e3e48983163db",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "93622d8ccfe16976350beaec6734a0df",
     "semantic_hash": ""
   },
   "documentation/project/Shared_Form_Layouts.md": {
@@ -9700,48 +9700,48 @@
     "semantic_hash": ""
   },
   "documentation/system/README.md": {
-    "mtime": 1787569354.412603,
-    "ast_hash": "630bd53aadf120234963793904d89379",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "7e26bb10327318505330fac42ac94d16",
     "semantic_hash": ""
   },
   "documentation/system/features/countries/COUNTRIES-REVIEW-ARTIFACTS.md": {
-    "mtime": 1787569354.412603,
-    "ast_hash": "0f2a7d5f70c82e82f7051fd061fba0f1",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "c70ef15a253d0573b790d3ff8fef6fcd",
     "semantic_hash": ""
   },
   "documentation/system/features/states/STATES-REVIEW-ARTIFACTS.md": {
-    "mtime": 1787569354.4281435,
-    "ast_hash": "c9a42e6486042eaa0bc2f128fac10eec",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "17565b96ce5afcc98d1f1c582378fc8c",
     "semantic_hash": ""
   },
   "documentation/system/generated/PHASE-00-discovery-evidence.md": {
-    "mtime": 1787736289.7944846,
-    "ast_hash": "853c3effcd84547772977cb0804dda15",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "4994638115b814f01838185da0828fcc",
     "semantic_hash": ""
   },
   "documentation/system/generated/PHASE-01-domain-api.md": {
-    "mtime": 1787736289.852963,
-    "ast_hash": "b853e8c0160bb48e818f2620c03ae12b",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "22bbaf1c819d40906258abeda52d7fb4",
     "semantic_hash": ""
   },
   "documentation/system/generated/PHASE-02-web-client.md": {
-    "mtime": 1787736289.966224,
-    "ast_hash": "7c2a3ec4e6222b74b6bffbce38bd393c",
+    "mtime": 1787997429.0372078,
+    "ast_hash": "9fcc0899ae1dfb3e0a6bb9b8cf84f570",
     "semantic_hash": ""
   },
   "documentation/system/generated/PHASE-03-mobile-client.md": {
-    "mtime": 1787736290.0280614,
-    "ast_hash": "92e94abbd9b67dac22582ea5c81375cc",
+    "mtime": 1787997429.0372078,
+    "ast_hash": "10738211424dc4b5516d0323e1c537b8",
     "semantic_hash": ""
   },
   "documentation/system/generated/PHASE-04-domain-actions.md": {
-    "mtime": 1787736290.0934384,
-    "ast_hash": "95fbc2abe6e760506a893238413440e4",
+    "mtime": 1787997429.039158,
+    "ast_hash": "5fd6382e9ddd436588756426e6ed87fc",
     "semantic_hash": ""
   },
   "documentation/system/generated/PHASE-05-integration-runtime.md": {
-    "mtime": 1787736290.1507032,
-    "ast_hash": "40fd2c61eeedf6f3d63326ddd6a81cb1",
+    "mtime": 1787997429.040167,
+    "ast_hash": "8553123fe3667693637b8fa141960172",
     "semantic_hash": ""
   },
   "documentation/system/generated/PHASE-06-final-reconciliation.md": {
@@ -9755,28 +9755,28 @@
     "semantic_hash": ""
   },
   "documentation/system/generated/states/PHASE-01-domain-api.md": {
-    "mtime": 1787736290.259442,
-    "ast_hash": "27452ecd682600f7601c508ddb8facf4",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "e9ac1580187d53b9b10768e938e0ec2b",
     "semantic_hash": ""
   },
   "documentation/system/generated/states/PHASE-02-web-client.md": {
-    "mtime": 1787736290.2963407,
-    "ast_hash": "447401ee3dda824c1e84cf653b8f2aeb",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "bf4890d2d42916b763007f75abafdd1c",
     "semantic_hash": ""
   },
   "documentation/system/generated/states/PHASE-03-mobile-client.md": {
-    "mtime": 1787736290.3372152,
-    "ast_hash": "8cee03ddfbc1f6ccd099fa1abe386f6c",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "eff0d6bf48d2881e886071bff541e737",
     "semantic_hash": ""
   },
   "documentation/system/generated/states/PHASE-04-domain-actions.md": {
-    "mtime": 1787736290.382643,
-    "ast_hash": "9d4c96511ad6ae5ecb3a467ac8d880d4",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "7b37bc81d3c73cbd9e5d8eb6043af4fc",
     "semantic_hash": ""
   },
   "documentation/system/generated/states/PHASE-05-integration-runtime.md": {
-    "mtime": 1787736290.4291327,
-    "ast_hash": "1ad3f79ca7cced876e8881d6ed13df1f",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "041cfc31a49b7c3bda18f139f7e1cff6",
     "semantic_hash": ""
   },
   "documentation/system/generated/states/PHASE-06-final-reconciliation.md": {
@@ -9830,18 +9830,18 @@
     "semantic_hash": ""
   },
   "documentation/web-next/features/countries-frontend-reference.md": {
-    "mtime": 1787645836.0405936,
-    "ast_hash": "83b995b81cc13d410b89e2a81301c00b",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "8e2ef7c21679bdac69459199bf792e81",
     "semantic_hash": ""
   },
   "documentation/web-next/features/server-managed-feature-reference.md": {
-    "mtime": 1787639626.0241675,
-    "ast_hash": "eb6ecbcf7c38dab07a92cbdfb3ef1e38",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "ba43be6421006b03abf268cf8655f58a",
     "semantic_hash": ""
   },
   "documentation/web-next/features/states-frontend-reference.md": {
-    "mtime": 1787646067.5596824,
-    "ast_hash": "3399a7c049fda889203be609fc21e9f4",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "2f40f84b27b1d37d77c233e893c3cfc5",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Api/Features/Analytics/CrystalReports/V1/CrystalReportsController.cs": {
@@ -10095,8 +10095,8 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Tests/CrystalReportDataSourceTests.cs": {
-    "mtime": 1787648671.4171612,
-    "ast_hash": "3b9817ab8e9c36ff4cdd37148949364f",
+    "mtime": 1787997429.0186124,
+    "ast_hash": "a399016bdca779c58a80b3092cecbd49",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Tests/CrystalReportDomainTests.cs": {
@@ -10235,13 +10235,13 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/GeographicalLifecycleLocks.cs": {
-    "mtime": 1787639624.8002663,
-    "ast_hash": "3e0e9504d0279f9e90eb2717da30338d",
+    "mtime": 1787997428.9732096,
+    "ast_hash": "35a5c0f94eabc1d983663fa1be2d6fca",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Tests/StateBulkCreateHandlerTests.cs": {
-    "mtime": 1787569354.0780752,
-    "ast_hash": "97bdacb17dbbcddf2cc60b13ec4c7052",
+    "mtime": 1787997429.0186124,
+    "ast_hash": "629df066497e95c07f44a2f4b9efd257",
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/countries/api/__tests__/country-bulk-api.test.ts": {
@@ -10270,8 +10270,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/countries/components/import-data/country-import.test.ts": {
-    "mtime": 1787577314.9399326,
-    "ast_hash": "16e5eedd6c439d84486c1e170481123f",
+    "mtime": 1787997429.072288,
+    "ast_hash": "b92ed56d3a2b9894ef112ba69b1ac6c7",
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/countries/components/import-data/country-import.ts": {
@@ -10290,8 +10290,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/countries/validation/country-request-schema.ts": {
-    "mtime": 1787576950.6252077,
-    "ast_hash": "7d88d15fb437dcc0db66db369cd133af",
+    "mtime": 1787997429.072288,
+    "ast_hash": "715b44019908cc137176934ce6913f28",
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/states/api/__tests__/state-bulk-api.test.ts": {
@@ -10340,8 +10340,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/states/validation/state-request-schema.ts": {
-    "mtime": 1787576953.8407185,
-    "ast_hash": "61ee89ab5329aa417ba3bec2460e6dbb",
+    "mtime": 1787997429.072288,
+    "ast_hash": "bcdcb8f5839c46ea02391bcd55f25f1d",
     "semantic_hash": ""
   },
   "mobile-react/src/features/reporting/crystal-reports/__tests__/crystal-report-api.test.ts": {
@@ -10605,13 +10605,13 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/AddressTypes/Commands/AddressTypeCommands.cs": {
-    "mtime": 1787648536.4903958,
-    "ast_hash": "990295a18cb2762485b40975c27aded0",
+    "mtime": 1787997428.9589334,
+    "ast_hash": "4ee403892fa8b6b046b5865d26b7020e",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/AddressTypes/Contracts/AddressTypeManagementContracts.cs": {
-    "mtime": 1787647895.2658935,
-    "ast_hash": "18c368e743f762301990dddb09fb82e9",
+    "mtime": 1787997428.9589334,
+    "ast_hash": "2ce893ddbd853f1a7c32ae8a0299d304",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/AddressTypes/Mapping/AddressTypeMappingConfig.cs": {
@@ -10630,13 +10630,13 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Districts/Commands/DistrictCommands.cs": {
-    "mtime": 1787639624.7972739,
-    "ast_hash": "fb8e369cadac9241861e5590488ebf52",
+    "mtime": 1787997428.9732096,
+    "ast_hash": "1e75b9e09e2eec6a422aaef517f8940f",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Districts/Contracts/DistrictManagementContracts.cs": {
-    "mtime": 1787639624.7972739,
-    "ast_hash": "05374bd493091518d7dfebf7cbcaeb04",
+    "mtime": 1787997428.9732096,
+    "ast_hash": "09225aa1c12332c415591d8bb0e64d0a",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Application/Features/GeographicalInformation/Districts/Mapping/DistrictMappingConfig.cs": {
@@ -10695,8 +10695,8 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Districts/Persistence/DistrictManagementStores.cs": {
-    "mtime": 1787639625.1130214,
-    "ast_hash": "84eeec9bc566a1c26aea735a05cf043c",
+    "mtime": 1787997428.9787283,
+    "ast_hash": "d7116c129b1e175269572c5e1d04a903",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Infrastructure/Features/OrganizationalStructure/CompanyGeographicScope/Persistence/CompanyGeographicScopeStore.cs": {
@@ -10725,8 +10725,8 @@
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Tests/AddressTypeCompanyIsolationTests.cs": {
-    "mtime": 1787649252.7344341,
-    "ast_hash": "0d37fc34677d06e3469e03874dfaad8d",
+    "mtime": 1787997429.0145643,
+    "ast_hash": "5a3b31eee07836b9cee1112f2741a50d",
     "semantic_hash": ""
   },
   "api/HrManagementSystem.Tests/AddressTypeCqrsArchitectureTests.cs": {
@@ -10760,18 +10760,18 @@
     "semantic_hash": ""
   },
   "documentation/system/features/address-types/required-files.json": {
-    "mtime": 1787639625.626301,
-    "ast_hash": "ac4b41c911f0e516eca90aa698fb437d",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "8d54f90bb1edf398069ed26ad0ba3ac0",
     "semantic_hash": ""
   },
   "documentation/system/features/company-geographic-scope/required-files.json": {
-    "mtime": 1787646137.3590145,
-    "ast_hash": "38f34e3ac95a865b7db2b0f81e52ed60",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "8f50813cc5a3ef77d77c225b90f8efed",
     "semantic_hash": ""
   },
   "documentation/system/features/districts/required-files.json": {
-    "mtime": 1787646118.880901,
-    "ast_hash": "d3f814f772dc6038305b6425a8b06d78",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "f91ad3beb68697bcc0ef84c4d157aa9b",
     "semantic_hash": ""
   },
   "mobile-react/app/(main)/basic-data/geographical-information/address-types.tsx": {
@@ -10845,8 +10845,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/address-types/components/AddressTypeForm.tsx": {
-    "mtime": 1787639626.2433631,
-    "ast_hash": "c119ee3619afa9d0d3c1d101fe774f19",
+    "mtime": 1787997429.0706034,
+    "ast_hash": "ced4d5d735a50aa33af435b2093c8d5c",
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/address-types/components/AddressTypeReportView.tsx": {
@@ -10865,8 +10865,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/address-types/components/import-data/address-type-import.test.ts": {
-    "mtime": 1787639626.2453637,
-    "ast_hash": "1db84127e99566b28e6af8f8d1c85cb1",
+    "mtime": 1787997429.07161,
+    "ast_hash": "c26a742855dc6043d9773b5ae8ee9baa",
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/address-types/components/import-data/address-type-import.ts": {
@@ -10910,8 +10910,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/address-types/validation/address-type-request-schema.ts": {
-    "mtime": 1787639626.6179833,
-    "ast_hash": "c9dc882ea0876b22a800b4b4ece261b1",
+    "mtime": 1787997429.072288,
+    "ast_hash": "6668cf548bfd6d9d2404bedd86d9d31e",
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/company-geographic-scope/api/company-geographic-scope-api.ts": {
@@ -10960,8 +10960,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/company-geographic-scope/screens/CompanyGeographicScopeScreen.tsx": {
-    "mtime": 1787655890.4511771,
-    "ast_hash": "095f0f6330175d9e17fa9ac45b5ac625",
+    "mtime": 1788002861.4768515,
+    "ast_hash": "2ae9cfd97ce68f877c1d0086ef6e9788",
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/company-geographic-scope/types/company-geographic-scope.ts": {
@@ -10975,8 +10975,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/districts/api/__tests__/district-api.test.ts": {
-    "mtime": 1787639626.6219718,
-    "ast_hash": "3493fc6611ef72daa6ba3282aac5c2b1",
+    "mtime": 1787997429.072288,
+    "ast_hash": "201303568a799b61c0f22bac12c46d7d",
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/districts/api/__tests__/district-bulk-api.test.ts": {
@@ -11000,8 +11000,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/districts/api/district-schemas.ts": {
-    "mtime": 1787639626.7405403,
-    "ast_hash": "d1c562258c3e156e952d82fcb936de7d",
+    "mtime": 1787997429.072288,
+    "ast_hash": "72f55c94e37e109cc2479712f83de5ef",
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/districts/components/DistrictCard.tsx": {
@@ -11015,8 +11015,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/districts/components/DistrictForm.tsx": {
-    "mtime": 1787639626.8590782,
-    "ast_hash": "3e0ddfe94637f58916371c86421c65d7",
+    "mtime": 1787997429.072288,
+    "ast_hash": "d0cbd5d505206dd5d64a8f08760ffdb5",
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/districts/components/DistrictReportView.tsx": {
@@ -11080,13 +11080,13 @@
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/districts/types/district.ts": {
-    "mtime": 1787639627.1181352,
-    "ast_hash": "7fcee5fd655199c27449283099c4d5f9",
+    "mtime": 1787997429.072288,
+    "ast_hash": "935cb00d1cb4519c8638cedc58e78fc1",
     "semantic_hash": ""
   },
   "mobile-react/src/features/basic-data/districts/validation/district-request-schema.ts": {
-    "mtime": 1787639627.1191297,
-    "ast_hash": "7ed2a08768be205ce5fc731a5b252701",
+    "mtime": 1787997429.072288,
+    "ast_hash": "29555345fc2f09f3d132abdd836426c7",
     "semantic_hash": ""
   },
   "mobile-react/src/features/tenant-access/CompanyContextSwitcher.tsx": {
@@ -11335,18 +11335,18 @@
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/organizational-structure/company-geographic-scope/components/CompanyGeographicScopeCardView.tsx": {
-    "mtime": 1787655867.5407262,
-    "ast_hash": "81717567ec2488f4760fd71d35afd47d",
+    "mtime": 1788003106.5426152,
+    "ast_hash": "21a90ca8257b4368b131aab9b4a42550",
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/organizational-structure/company-geographic-scope/components/CompanyGeographicScopeDataGrid.tsx": {
-    "mtime": 1787656037.909927,
-    "ast_hash": "6297fc0b0ab00668500a8827a510ece8",
+    "mtime": 1788005883.3851154,
+    "ast_hash": "cc5929c9c5f1c8394d4a7e7fb509bea4",
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/organizational-structure/company-geographic-scope/components/CompanyGeographicScopeMultiView.tsx": {
-    "mtime": 1787655771.7175987,
-    "ast_hash": "3db64097829239e1f9f01dd76adb5cde",
+    "mtime": 1788005890.4783978,
+    "ast_hash": "dc3984e68467d0e9db541de7fb9fb16a",
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/organizational-structure/company-geographic-scope/components/companyGeographicScopeGridUtils.test.ts": {
@@ -11370,8 +11370,8 @@
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/organizational-structure/company-geographic-scope/pages/CompanyGeographicScopePage.tsx": {
-    "mtime": 1787655885.6350706,
-    "ast_hash": "9fe1f277624aef159d8eda43f54f719b",
+    "mtime": 1788002793.5175352,
+    "ast_hash": "8ce3aeeddbf377d6771756032780f77e",
     "semantic_hash": ""
   },
   "web-next/src/features/basic-data/organizational-structure/company-geographic-scope/services/companyGeographicScopeService.ts": {
@@ -11425,23 +11425,23 @@
     "semantic_hash": ""
   },
   "documentation/api/AddressTypes_API_Implementation_Profile.md": {
-    "mtime": 1787649332.4254725,
-    "ast_hash": "0aa0f4bd6e7edbb3cc0139a910b15a70",
+    "mtime": 1787997429.0186124,
+    "ast_hash": "5f6284d74e6ea7a4f46815f162017e59",
     "semantic_hash": ""
   },
   "documentation/api/CompanyGeographicScope_API_Implementation_Profile.md": {
-    "mtime": 1787650535.895775,
-    "ast_hash": "e64bdbc47f130b1dc8c7f7c33ff86bc3",
+    "mtime": 1787997429.020549,
+    "ast_hash": "b9525e0f9da4d397f5eae7f40264c049",
     "semantic_hash": ""
   },
   "documentation/api/Districts_API_Implementation_Profile.md": {
-    "mtime": 1787645903.071761,
-    "ast_hash": "373475953633df956702ab3b19c35934",
+    "mtime": 1787997429.0218267,
+    "ast_hash": "55986dcb717a078724d76ee630a077aa",
     "semantic_hash": ""
   },
   "documentation/mobile-react/address-types-mobile-reference.md": {
-    "mtime": 1787649346.8216531,
-    "ast_hash": "9ec12e8203e78a7de0f919d080bf1641",
+    "mtime": 1787997429.0218267,
+    "ast_hash": "0220c6e15940554914d0ba776e3af11f",
     "semantic_hash": ""
   },
   "documentation/mobile-react/company-geographic-scope-mobile-reference.md": {
@@ -11450,23 +11450,23 @@
     "semantic_hash": ""
   },
   "documentation/mobile-react/districts-mobile-reference.md": {
-    "mtime": 1787645904.529491,
-    "ast_hash": "76e3be19a291bc955055e5da2abcadd7",
+    "mtime": 1787997429.0218267,
+    "ast_hash": "de7bf5b205341c4bbb968dd5faaf0486",
     "semantic_hash": ""
   },
   "documentation/project/ADDRESS_TYPES_FEATURE_FULL_REVIEW.md": {
-    "mtime": 1787649331.211504,
-    "ast_hash": "5ad4cd0c4c88b252af2546e3a1aaf264",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "1958660275d3b5e0d50b97e8bb52ea4a",
     "semantic_hash": ""
   },
   "documentation/project/COMPANY_GEOGRAPHIC_SCOPE_FEATURE_FULL_REVIEW.md": {
-    "mtime": 1787652218.0717692,
-    "ast_hash": "8de07a24e5080dcd413fce3f9900b50e",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "18de3fc847c9d46fadd8213c5be3c7cb",
     "semantic_hash": ""
   },
   "documentation/project/DISTRICTS_FEATURE_FULL_REVIEW.md": {
-    "mtime": 1787645901.6124287,
-    "ast_hash": "90c12eb587cc465a15c2d8c34a92225f",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "fd4d1a63c1a33a10d4a2e8b265ffc187",
     "semantic_hash": ""
   },
   "documentation/system/features/address-types/ADDRESS_TYPES-REVIEW-ARTIFACTS.md": {
@@ -11475,13 +11475,13 @@
     "semantic_hash": ""
   },
   "documentation/system/features/address-types/IMPLEMENTATION-REQUEST.md": {
-    "mtime": 1787649448.47728,
-    "ast_hash": "6f851f5e5e81d3c9626201e673ab78ad",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "577492c5836fb0663340bcfabb0030db",
     "semantic_hash": ""
   },
   "documentation/system/features/company-geographic-scope/COMPANY_GEOGRAPHIC_SCOPE-REVIEW-ARTIFACTS.md": {
-    "mtime": 1787650537.0625346,
-    "ast_hash": "bd6edb652939c087b6e9c7ebc94b2301",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "875ae145c3242f2862bfada470fbcd1e",
     "semantic_hash": ""
   },
   "documentation/system/features/company-geographic-scope/IMPLEMENTATION-REQUEST.md": {
@@ -11500,33 +11500,33 @@
     "semantic_hash": ""
   },
   "documentation/system/generated/address-types/PHASE-00-discovery-evidence.md": {
-    "mtime": 1787736290.7553391,
-    "ast_hash": "5868b89376157bc15be221a9f465cdf7",
+    "mtime": 1787997429.0411544,
+    "ast_hash": "111766e1f3d7d814b02a4d0b71ea50d9",
     "semantic_hash": ""
   },
   "documentation/system/generated/address-types/PHASE-01-domain-api.md": {
-    "mtime": 1787736290.7764933,
-    "ast_hash": "55858b48dd2ee9196cee2d8690563f56",
+    "mtime": 1787997429.0411544,
+    "ast_hash": "8ccffaed40b79158c8eb72d507d40ae2",
     "semantic_hash": ""
   },
   "documentation/system/generated/address-types/PHASE-02-web-client.md": {
-    "mtime": 1787736290.8087618,
-    "ast_hash": "993344cf94badf5557f06535163112b7",
+    "mtime": 1787997429.0411544,
+    "ast_hash": "8e88ff27fd8cabbdda02dc74a35c7fa4",
     "semantic_hash": ""
   },
   "documentation/system/generated/address-types/PHASE-03-mobile-client.md": {
-    "mtime": 1787736290.8402922,
-    "ast_hash": "8f762d67df6242f6e01370c2a5c86599",
+    "mtime": 1787997429.0421553,
+    "ast_hash": "222636a100505b4524e1c80d7cbc30d7",
     "semantic_hash": ""
   },
   "documentation/system/generated/address-types/PHASE-04-domain-actions.md": {
-    "mtime": 1787736290.8838854,
-    "ast_hash": "55960194070a366146cc3971323f65a1",
+    "mtime": 1787997429.043157,
+    "ast_hash": "e5898f94f9210737fff5df2cac31bf41",
     "semantic_hash": ""
   },
   "documentation/system/generated/address-types/PHASE-05-integration-runtime.md": {
-    "mtime": 1787736290.919209,
-    "ast_hash": "7856615f2132e78cb10a2bca637cd8b2",
+    "mtime": 1787997429.0441606,
+    "ast_hash": "b7bfb58bbef00491bbe16596c626b7af",
     "semantic_hash": ""
   },
   "documentation/system/generated/address-types/PHASE-06-final-reconciliation.md": {
@@ -11535,13 +11535,13 @@
     "semantic_hash": ""
   },
   "documentation/system/generated/company-geographic-scope/PHASE-00-discovery-evidence.md": {
-    "mtime": 1787736290.9987066,
-    "ast_hash": "1368ee7e0d5a98a643c1db1aec8209e1",
+    "mtime": 1787997429.0553267,
+    "ast_hash": "86413405cad47ed87f674bf960ae8eab",
     "semantic_hash": ""
   },
   "documentation/system/generated/company-geographic-scope/PHASE-01-domain-api.md": {
-    "mtime": 1787736291.0367522,
-    "ast_hash": "e37dc6eb23e3a3a1a23545c17b36a84b",
+    "mtime": 1787997429.0553267,
+    "ast_hash": "e2dd0e63500d0ad28bf51131f0ec438a",
     "semantic_hash": ""
   },
   "documentation/system/generated/company-geographic-scope/PHASE-02-web-client.md": {
@@ -11555,48 +11555,48 @@
     "semantic_hash": ""
   },
   "documentation/system/generated/company-geographic-scope/PHASE-04-domain-actions.md": {
-    "mtime": 1787736291.130788,
-    "ast_hash": "da10d1037637866b88b56f9d73c03287",
+    "mtime": 1787997429.0563066,
+    "ast_hash": "71ed7a45b9d1de64afdf2a3f2e1f7988",
     "semantic_hash": ""
   },
   "documentation/system/generated/company-geographic-scope/PHASE-05-integration-runtime.md": {
-    "mtime": 1787736291.1429396,
-    "ast_hash": "dc331cf6e4553dde4de0338de3cc6a99",
+    "mtime": 1787997429.0563066,
+    "ast_hash": "323a8ccbf105099e72ce5efa2057af5d",
     "semantic_hash": ""
   },
   "documentation/system/generated/company-geographic-scope/PHASE-06-final-reconciliation.md": {
-    "mtime": 1787736291.1720738,
-    "ast_hash": "28588a53a35de8f07bd2c6498ebe5976",
+    "mtime": 1787997429.0573132,
+    "ast_hash": "2ea6c05afd484a14ebb5d8d92144bae9",
     "semantic_hash": ""
   },
   "documentation/system/generated/districts/PHASE-00-discovery-evidence.md": {
-    "mtime": 1787736290.5041862,
-    "ast_hash": "d986c3b8d532355cf5e4b4e9da3607dd",
+    "mtime": 1787997429.0573132,
+    "ast_hash": "345947d605718db8fd17f9e84da96b2d",
     "semantic_hash": ""
   },
   "documentation/system/generated/districts/PHASE-01-domain-api.md": {
-    "mtime": 1787736290.5402226,
-    "ast_hash": "a3bcfcdaf98bcbe70684888cee6277e0",
+    "mtime": 1787997429.0581412,
+    "ast_hash": "04cfe5f1b91b9ca3195f0383fb5911e2",
     "semantic_hash": ""
   },
   "documentation/system/generated/districts/PHASE-02-web-client.md": {
-    "mtime": 1787736290.5879586,
-    "ast_hash": "ff370194132bb535710f2e37dfd0e0c5",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "ce2d464fd36fecc5bb7c624f57800ed1",
     "semantic_hash": ""
   },
   "documentation/system/generated/districts/PHASE-03-mobile-client.md": {
-    "mtime": 1787736290.6402109,
-    "ast_hash": "5ab49cc102fe89d8e89684ed21605ebf",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "6f59d5efd22c2e81edccb6d65a59f462",
     "semantic_hash": ""
   },
   "documentation/system/generated/districts/PHASE-04-domain-actions.md": {
-    "mtime": 1787736290.6839006,
-    "ast_hash": "72cd983d1fd23fa3f6888e23bbb3f734",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "d160f3b31d2c7c6aff0e902a0b9c6d7e",
     "semantic_hash": ""
   },
   "documentation/system/generated/districts/PHASE-05-integration-runtime.md": {
-    "mtime": 1787736290.7098174,
-    "ast_hash": "78119835f10e1761103b90507f7a70de",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "c80897d3e3652584e24d0ace156b127a",
     "semantic_hash": ""
   },
   "documentation/system/generated/districts/PHASE-06-final-reconciliation.md": {
@@ -11605,8 +11605,8 @@
     "semantic_hash": ""
   },
   "documentation/web-next/features/address-types-frontend-reference.md": {
-    "mtime": 1787649333.8224652,
-    "ast_hash": "996bfac670d42f926b452e95af23e014",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "9ac430f4e833449b30e832bb7333a576",
     "semantic_hash": ""
   },
   "documentation/web-next/features/company-geographic-scope-frontend-reference.md": {
@@ -11615,8 +11615,8 @@
     "semantic_hash": ""
   },
   "documentation/web-next/features/districts-frontend-reference.md": {
-    "mtime": 1787646068.7223742,
-    "ast_hash": "f5ef6fe64e5573e8e3cf6ce5b5da8b98",
+    "mtime": 1787997429.0586462,
+    "ast_hash": "5478197352196726d3635cdf3f5cc0ae",
     "semantic_hash": ""
   },
   "web-next/src/features/auth/login/components/DemoLoginSection.tsx": {
@@ -11865,8 +11865,8 @@
     "semantic_hash": ""
   },
   "documentation/system/features/attendance-devices/required-files.json": {
-    "mtime": 1787736271.0742977,
-    "ast_hash": "4886d86df0dff831e44824bfe0542448",
+    "mtime": 1787997429.0288484,
+    "ast_hash": "4323340de6de9fe8e2702b7a011e2ecd",
     "semantic_hash": ""
   },
   "scripts/Start-AttendanceDevelopment.ps1": {
@@ -11980,8 +11980,8 @@
     "semantic_hash": ""
   },
   "web-next/src/features/attendance-devices/utils/permissions.ts": {
-    "mtime": 1787732554.9631448,
-    "ast_hash": "19571761b951338b67267ba9c0c89727",
+    "mtime": 1787997429.078797,
+    "ast_hash": "cee96a8dfb7daf564e0744fa1aac3814",
     "semantic_hash": ""
   },
   "web-next/src/features/attendance-devices/utils/validation.ts": {
@@ -12035,43 +12035,258 @@
     "semantic_hash": ""
   },
   "documentation/system/generated/attendance-devices/PHASE-00-discovery-evidence.md": {
-    "mtime": 1787736291.1876948,
-    "ast_hash": "7b28659a8e3d4d51947d15f366e4d88c",
+    "mtime": 1787997429.0486784,
+    "ast_hash": "339f32b5181e661fda65ff1e8b647ea9",
     "semantic_hash": ""
   },
   "documentation/system/generated/attendance-devices/PHASE-01-domain-api.md": {
-    "mtime": 1787736291.2118917,
-    "ast_hash": "ad4fc789e27892853896b21cb63d5d37",
+    "mtime": 1787997429.0486784,
+    "ast_hash": "b467329b84d35bcc3d6262c0a7886f91",
     "semantic_hash": ""
   },
   "documentation/system/generated/attendance-devices/PHASE-02-web-client.md": {
-    "mtime": 1787736291.245557,
-    "ast_hash": "8010a61d4332be2d994bafae9bad711b",
+    "mtime": 1787997429.0486784,
+    "ast_hash": "cd8300c82384a0ebe5a5940d86b84d45",
     "semantic_hash": ""
   },
   "documentation/system/generated/attendance-devices/PHASE-03-mobile-client.md": {
-    "mtime": 1787736291.2896442,
-    "ast_hash": "b682a315171e852f5b7d22edb4afe252",
+    "mtime": 1787997429.0486784,
+    "ast_hash": "e6313f68ae3aca368af4062193110ef6",
     "semantic_hash": ""
   },
   "documentation/system/generated/attendance-devices/PHASE-04-domain-actions.md": {
-    "mtime": 1787736291.3285909,
-    "ast_hash": "e20b350d8485836c94639586137abbf2",
+    "mtime": 1787997429.0486784,
+    "ast_hash": "1ce29274fbf3737321608ec5e0819c57",
     "semantic_hash": ""
   },
   "documentation/system/generated/attendance-devices/PHASE-05-integration-runtime.md": {
-    "mtime": 1787736291.3607912,
-    "ast_hash": "e7cea3845fb42d18fdca430d60b8133a",
+    "mtime": 1787997429.0486784,
+    "ast_hash": "82b3193006a66a9575c8000d6030b96e",
     "semantic_hash": ""
   },
   "documentation/system/generated/attendance-devices/PHASE-06-final-reconciliation.md": {
-    "mtime": 1787736291.3897889,
-    "ast_hash": "83dc05b88cdbac66c313cb4ccbada8ae",
+    "mtime": 1787997429.0543046,
+    "ast_hash": "79bd6d94312cb0c66f4825d20975c8fb",
     "semantic_hash": ""
   },
   "documentation/web-next/features/attendance-devices-frontend-reference.md": {
     "mtime": 1787743527.94347,
     "ast_hash": "aefd18da54147358347123ceac4801ff",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Application/Features/GeographicalInformation/Validation/GeographicalNameRules.cs": {
+    "mtime": 1787997428.9732096,
+    "ast_hash": "d9ae0e6e446f870002c58461c1fefdd5",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Application/Features/GeographicalInformation/Validation/PrintableTextRules.cs": {
+    "mtime": 1787997428.9732096,
+    "ast_hash": "e8116ae12e04f930eb13dd991ad78c44",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Domain/GeographicalInformation/Addresses/Entities/AddressPurpose.cs": {
+    "mtime": 1787997428.9787283,
+    "ast_hash": "22b2e64489489eeddefc95860b5956f6",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Domain/GeographicalInformation/Addresses/Entities/BranchAddress.cs": {
+    "mtime": 1787997428.9787283,
+    "ast_hash": "31dd7524fb733b3467e2d573dfae7f36",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Domain/GeographicalInformation/Addresses/Entities/CompanyAddress.cs": {
+    "mtime": 1787997428.9787283,
+    "ast_hash": "4fbc0c175e537500d3d3cd27ebaa0daf",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260827082513_RefactorAddressesForGlobalGeography.Designer.cs": {
+    "mtime": 1787997428.9884734,
+    "ast_hash": "f61cbf5e7837fbec649476b1cbacb8f4",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Migrations/20260827082513_RefactorAddressesForGlobalGeography.cs": {
+    "mtime": 1787997428.9884734,
+    "ast_hash": "d25d531c6f1431d47861b2c4f73484ab",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Persistence/Configurations/OrganizationalStructure/BranchAddressConfiguration.cs": {
+    "mtime": 1787997429.0145643,
+    "ast_hash": "beec468496d427feb48b3755ad20bada",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Infrastructure/Persistence/Configurations/OrganizationalStructure/CompanyAddressConfiguration.cs": {
+    "mtime": 1787997429.0145643,
+    "ast_hash": "c5e7d5f26eab3c052c70eee5d92e11a3",
+    "semantic_hash": ""
+  },
+  "api/HrManagementSystem.Tests/GeographicalNameRulesTests.cs": {
+    "mtime": 1787997429.0186124,
+    "ast_hash": "36ff275fe2e37b63a10c71d9bafd558a",
+    "semantic_hash": ""
+  },
+  "documentation/system/features/addresses/required-files.json": {
+    "mtime": 1787997429.0288484,
+    "ast_hash": "f06ec01e43bcff3fa12cc59a1d167583",
+    "semantic_hash": ""
+  },
+  "mobile-react/src/features/basic-data/address-types/utils/address-type-mock-data.ts": {
+    "mtime": 1787997429.072288,
+    "ast_hash": "4b7a051aaf0a004d746bc2322feca5c8",
+    "semantic_hash": ""
+  },
+  "mobile-react/src/features/basic-data/countries/utils/country-mock-data.ts": {
+    "mtime": 1787997429.072288,
+    "ast_hash": "9c7ed755e90e237d174978b97dbc28a7",
+    "semantic_hash": ""
+  },
+  "mobile-react/src/features/basic-data/districts/utils/district-mock-data.ts": {
+    "mtime": 1787997429.072288,
+    "ast_hash": "d84bd24228e7945d1231177c2b58829a",
+    "semantic_hash": ""
+  },
+  "mobile-react/src/features/basic-data/states/utils/state-mock-data.ts": {
+    "mtime": 1787997429.072288,
+    "ast_hash": "f47a978eddc56e5f986d545b31e10886",
+    "semantic_hash": ""
+  },
+  "mobile-react/src/features/basic-data/validation/geographical-name.test.ts": {
+    "mtime": 1787997429.072288,
+    "ast_hash": "f039dbd79572c44ad48995332f1128fa",
+    "semantic_hash": ""
+  },
+  "mobile-react/src/features/basic-data/validation/geographical-name.ts": {
+    "mtime": 1787997429.078797,
+    "ast_hash": "7f814c60e384a055147d8524c72c9778",
+    "semantic_hash": ""
+  },
+  "mobile-react/src/shared/utils/mockData.test.ts": {
+    "mtime": 1787997429.078797,
+    "ast_hash": "eb015c9b3544720ed3e65dfe4c762aaf",
+    "semantic_hash": ""
+  },
+  "mobile-react/src/shared/utils/mockData.ts": {
+    "mtime": 1787997429.078797,
+    "ast_hash": "bf7dafee644da6652003c70ad897cf4d",
+    "semantic_hash": ""
+  },
+  "web-next/src/features/basic-data/geographical-information/address-types/utils/addressTypeMockData.test.ts": {
+    "mtime": 1787997429.078797,
+    "ast_hash": "899f307bf4e517efc03916fb75ed7549",
+    "semantic_hash": ""
+  },
+  "web-next/src/features/basic-data/geographical-information/address-types/utils/addressTypeMockData.ts": {
+    "mtime": 1787997429.078797,
+    "ast_hash": "59f66e2a76e99ff46001976c4cd0cc3f",
+    "semantic_hash": ""
+  },
+  "web-next/src/features/basic-data/geographical-information/districts/utils/districtMockData.test.ts": {
+    "mtime": 1787997429.078797,
+    "ast_hash": "3557e3fb5011da8373d7743072e33b37",
+    "semantic_hash": ""
+  },
+  "web-next/src/features/basic-data/geographical-information/districts/utils/districtMockData.ts": {
+    "mtime": 1787997429.078797,
+    "ast_hash": "8de194d8e804b7d43ad74f293d01f39c",
+    "semantic_hash": ""
+  },
+  "web-next/src/features/basic-data/geographical-information/states/utils/stateMockData.test.ts": {
+    "mtime": 1787997429.078797,
+    "ast_hash": "7f9cffd7dd317acf2204dafef48abded",
+    "semantic_hash": ""
+  },
+  "web-next/src/features/basic-data/geographical-information/states/utils/stateMockData.ts": {
+    "mtime": 1787997429.078797,
+    "ast_hash": "8ef519d02e959d54df65483394caed6b",
+    "semantic_hash": ""
+  },
+  "web-next/src/features/basic-data/geographical-information/validation/nameValidation.test.ts": {
+    "mtime": 1787997429.0872753,
+    "ast_hash": "32d4b38f80fe6f6b46c8ae45db794661",
+    "semantic_hash": ""
+  },
+  "web-next/src/features/basic-data/geographical-information/validation/nameValidation.ts": {
+    "mtime": 1787997429.0872753,
+    "ast_hash": "cd52c2a195b45addeb689a837ea07ae2",
+    "semantic_hash": ""
+  },
+  "web-next/src/layouts/components/sidebar/sidebarConstants.ts": {
+    "mtime": 1787997429.0885592,
+    "ast_hash": "5a295ea6b37f2e423944718f12d22333",
+    "semantic_hash": ""
+  },
+  "web-next/src/shared/utils/mockData.test.ts": {
+    "mtime": 1787997429.094602,
+    "ast_hash": "71a43ca75ce6389feee329afda2cdac5",
+    "semantic_hash": ""
+  },
+  "web-next/src/shared/utils/mockData.ts": {
+    "mtime": 1787997429.094602,
+    "ast_hash": "6b0bad0e27f830666eda3c977bf2339b",
+    "semantic_hash": ""
+  },
+  "documentation/api/Addresses_API_Implementation_Profile.md": {
+    "mtime": 1787997429.020549,
+    "ast_hash": "8c232e5cbe3a6b5fdcaabb7c42966247",
+    "semantic_hash": ""
+  },
+  "documentation/mobile-react/addresses-mobile-reference.md": {
+    "mtime": 1787997429.0218267,
+    "ast_hash": "2211386419b1fb7ab4e4c020960b7ae8",
+    "semantic_hash": ""
+  },
+  "documentation/project/ADDRESSES_DOMAIN_FULL_REVIEW.md": {
+    "mtime": 1787997429.0288484,
+    "ast_hash": "95b403622f64bf79f800df7d13c5145c",
+    "semantic_hash": ""
+  },
+  "documentation/project/GEOGRAPHICAL_INFORMATION_DOMAIN_GUIDE.md": {
+    "mtime": 1787997429.0288484,
+    "ast_hash": "ac2ee0c5bd8bd8ea1245b796a2d9f035",
+    "semantic_hash": ""
+  },
+  "documentation/system/features/addresses/ADDRESSES-REVIEW-ARTIFACTS.md": {
+    "mtime": 1787997429.0288484,
+    "ast_hash": "ab04461519fc59516aac06d361a24bbf",
+    "semantic_hash": ""
+  },
+  "documentation/system/generated/addresses/PHASE-00-discovery-evidence.md": {
+    "mtime": 1787997429.0460083,
+    "ast_hash": "bced8942090f3c26eaffc965ce05b2a3",
+    "semantic_hash": ""
+  },
+  "documentation/system/generated/addresses/PHASE-01-domain-api.md": {
+    "mtime": 1787997429.0461712,
+    "ast_hash": "e953f2bb724d47c41bab5b63de50ebd3",
+    "semantic_hash": ""
+  },
+  "documentation/system/generated/addresses/PHASE-02-web-client.md": {
+    "mtime": 1787997429.0461712,
+    "ast_hash": "84d2eb0d7b745473bf96085ea2ba4cd4",
+    "semantic_hash": ""
+  },
+  "documentation/system/generated/addresses/PHASE-03-mobile-client.md": {
+    "mtime": 1787997429.0461712,
+    "ast_hash": "d7fc9f1a78030aebb10d91fb27c0cef5",
+    "semantic_hash": ""
+  },
+  "documentation/system/generated/addresses/PHASE-04-domain-actions.md": {
+    "mtime": 1787997429.0486784,
+    "ast_hash": "f67762f422b4b3573180d2f9cb204bcc",
+    "semantic_hash": ""
+  },
+  "documentation/system/generated/addresses/PHASE-05-integration-runtime.md": {
+    "mtime": 1787997429.0486784,
+    "ast_hash": "6a59243b79e2f92abebedd1f2470f18a",
+    "semantic_hash": ""
+  },
+  "documentation/system/generated/addresses/PHASE-06-final-reconciliation.md": {
+    "mtime": 1787997429.0486784,
+    "ast_hash": "b5335072fce3bcc27ff53856b1322689",
+    "semantic_hash": ""
+  },
+  "documentation/web-next/features/addresses-frontend-reference.md": {
+    "mtime": 1787997429.0586462,
+    "ast_hash": "ac7b6c8dfd7a36bcc58725d90bbc1b5c",
     "semantic_hash": ""
   }
 }

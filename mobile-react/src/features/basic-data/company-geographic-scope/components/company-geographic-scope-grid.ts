@@ -27,12 +27,12 @@ export function normalizeCompanyCountryIds(ids: readonly AppDataTableRowKey[]) {
   return [...normalizedIds];
 }
 
-export function clearUnselectedDefaultCountry(
+export function clearUnselectedOperatingCountry(
   selectedCountryIds: readonly number[],
-  defaultCountryId: number,
+  countryId: number,
 ) {
-  return defaultCountryId > 0 && selectedCountryIds.includes(defaultCountryId)
-    ? defaultCountryId
+  return countryId > 0 && selectedCountryIds.includes(countryId)
+    ? countryId
     : 0;
 }
 

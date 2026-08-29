@@ -6,20 +6,24 @@ export interface CompanyCountryOption {
   alpha3Code: string | null;
   isSelected: boolean;
   isDefault: boolean;
+  isRegistrationCountry: boolean;
 }
 
 export interface CompanyGeographicScope {
   companyId: number;
   defaultCountryId: number | null;
+  registrationCountryId: number | null;
   countries: CompanyCountryOption[];
 }
 
 export interface UpdateCompanyGeographicScopeRequest {
   countryIds: number[];
+  registrationCountryId: number;
   defaultCountryId: number;
 }
 
 export interface CompanyGeographicScopeFormValues {
   countryIds: number[];
+  registrationCountryId: number;
   defaultCountryId: number;
 }

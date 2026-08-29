@@ -10,7 +10,7 @@ The public path is `/basic-data/organizational-structure/geographic-scope`. Rout
 
 ## 3. Runtime Contract
 
-The service calls the shared API route directly through the existing client and returns the aggregate response. PUT sends only `countryIds` and `defaultCountryId`; no scope identifiers are client-controlled.
+The service calls the shared API route directly through the existing client and returns the aggregate response. PUT sends only `countryIds`, `registrationCountryId`, and `defaultCountryId`; no scope identifiers are client-controlled.
 
 ## 4. Query Ownership
 
@@ -18,11 +18,11 @@ Feature-owned React Query keys wrap GET and PUT. Successful mutation invalidates
 
 ## 5. Form Contract
 
-React Hook Form and Zod require at least one distinct Country and a default contained in the selection. Shared `MySelect` controls write `defaultCountryId` through the Default Country selector and `countryIds` through the Operating Countries multi-select. The Default Country field appears first, remains disabled until an operating country is selected, and its options are restricted to the current operating selection. Removing the current default from the multi-select clears it and exposes the existing validation message.
+React Hook Form and Zod require at least one distinct Country plus registration and default Countries contained in the selection. Shared `MySelect` controls write `countryIds`, `registrationCountryId`, and `defaultCountryId`. Selector order is Operating Countries, Country of Registration, then Default Operating Country. Both single-selects remain disabled until an operating country is selected and expose only the current operating selection. Removing the current registration or default Country clears that field and exposes its field-level validation message.
 
 ## 6. Screen Composition
 
-The responsive configuration screen composes a shared `PageHeader` multi-view switcher, paired shared `MySelect` controls, `MyDataGrid`, `DataGridToolbar`, `SearchBar`, `CardViewHeader`, `EntityCard`, page/card states, buttons, and alerts. The selectors own the editable aggregate selection; Grid and Card adapters only present the selected subset and its default indicator. They do not duplicate the Countries collection Grid or its archive, lifecycle, server-search, or permission logic.
+The responsive configuration screen composes a shared `PageHeader` multi-view switcher, three shared `MySelect` controls, `MyDataGrid`, `DataGridToolbar`, `SearchBar`, `CardViewHeader`, `EntityCard`, page/card states, buttons, and alerts. The selectors own the editable aggregate selection; Grid and Card adapters only present the selected subset and its compact legal-registration/default-operating indicators. They do not duplicate the Countries collection Grid or its archive, lifecycle, server-search, or permission logic.
 
 The complete active Country catalog is already returned by the aggregate GET. The selectors use that catalog locally, while Grid and Cards display only the selected subset. Search, sorting, and Grid pagination over that subset are client-side. Grid and Cards share one local search term; Cards add localized client-side name ordering and intentionally do not paginate because the displayed aggregate selection is already fully loaded. The shared Grid footer remains responsible for Grid page size and navigation.
 
@@ -56,8 +56,8 @@ Configuration is Required and is presented through selectable Grid and Card view
 
 ## 13. Integration Rules
 
-Branch/Address forms may consume this query to constrain operating-location Countries. Their State/District queries follow the branch's chosen Country, not the company default. Employee nationality forms must keep using the global Country lookup.
+Branch/Address forms may consume this query to constrain operating-location Countries. Their State/District queries follow the branch's chosen Country, not the company default or registration Country. Company statutory forms use the registration Country. Employee nationality forms must keep using the global Country lookup.
 
 ## 14. Verification and Handoff
 
-Verification covers local search by both localized names and ISO codes, removing a current default through the multi-select, restricted default options, view-only behavior, and the exact aggregate PUT payload. Type checking and targeted linting must cover the feature adapter plus the shared components it composes.
+Verification covers local search by both localized names and ISO codes, removing a current registration/default through the multi-select, restricted special-country options, view-only behavior, and the exact aggregate PUT payload. Type checking and targeted linting must cover the feature adapter plus the shared components it composes.

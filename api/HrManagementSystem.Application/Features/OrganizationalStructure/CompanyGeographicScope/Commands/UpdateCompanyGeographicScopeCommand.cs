@@ -3,12 +3,14 @@ using HrManagementSystem.Application.Abstractions.Messaging;
 using HrManagementSystem.Application.Features.OrganizationalStructure.CompanyGeographicScope.Abstractions;
 using HrManagementSystem.Application.Features.OrganizationalStructure.CompanyGeographicScope.Contracts;
 using HrManagementSystem.Application.Features.OrganizationalStructure.CompanyGeographicScope.Errors;
+using HrManagementSystem.Application.Features.GeographicalInformation;
 
 namespace HrManagementSystem.Application.Features.OrganizationalStructure.CompanyGeographicScope.Commands;
 
 public sealed record UpdateCompanyGeographicScopeCommand(
     IReadOnlyList<int> CountryIds,
-    int DefaultCountryId)
+    int DefaultCountryId,
+    int RegistrationCountryId)
     : ICommand<Result<CompanyGeographicScopeResponse>>;
 
 public sealed class UpdateCompanyGeographicScopeCommandValidator
@@ -35,6 +37,11 @@ public sealed class UpdateCompanyGeographicScopeCommandValidator
             .GreaterThan(0)
             .Must((command, defaultCountryId) => command.CountryIds.Contains(defaultCountryId))
             .WithMessage(localizer["CompanyDefaultCountryMustBeSelected"]);
+
+        RuleFor(command => command.RegistrationCountryId)
+            .GreaterThan(0)
+            .Must((command, registrationCountryId) => command.CountryIds.Contains(registrationCountryId))
+            .WithMessage(localizer["CompanyRegistrationCountryMustBeSelected"]);
     }
 }
 
@@ -53,10 +60,13 @@ public sealed class UpdateCompanyGeographicScopeCommandHandler(
             return Result.Failure<CompanyGeographicScopeResponse>(errors.CompanyContextRequired);
 
         var companyId = currentActor.CompanyId.Value;
-        var lockResource = $"company-geographic-scope:{currentActor.TenantId}:{companyId}";
+        var lockResources = request.CountryIds
+            .Select(GeographicalLifecycleLocks.Country)
+            .Append($"company-geographic-scope:{currentActor.TenantId}:{companyId}")
+            .ToArray();
 
         return await unitOfWork.ExecuteAtomicallyAsync(
-            [lockResource],
+            lockResources,
             async token =>
             {
                 if (!await store.AreActiveCountriesAsync(request.CountryIds, token))
@@ -71,6 +81,7 @@ public sealed class UpdateCompanyGeographicScopeCommandHandler(
                     companyId,
                     request.CountryIds,
                     request.DefaultCountryId,
+                    request.RegistrationCountryId,
                     token);
                 await unitOfWork.SaveChangesAsync(token);
 

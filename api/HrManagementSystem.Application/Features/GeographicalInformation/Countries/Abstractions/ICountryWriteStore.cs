@@ -30,4 +30,10 @@ public interface ICountryWriteStore
     Task<bool> HasActiveAddressesAsync(
         IReadOnlyCollection<int> countryIds,
         CancellationToken cancellationToken);
+
+    Task<bool> HasCompanyUsageAsync(int countryId, CancellationToken cancellationToken);
+
+    Task<bool> HasCompanyUsageAsync(
+        IReadOnlyCollection<int> countryIds,
+        CancellationToken cancellationToken);
 }

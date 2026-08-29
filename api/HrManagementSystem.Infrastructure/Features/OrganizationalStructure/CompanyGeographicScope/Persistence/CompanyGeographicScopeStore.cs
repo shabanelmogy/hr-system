@@ -27,6 +27,11 @@ public sealed class CompanyGeographicScopeStore(
             .Where(link => link.IsDefault)
             .Select(link => (int?)link.CountryId)
             .SingleOrDefault();
+        var registrationCountryId = await context.Companies
+            .AsNoTracking()
+            .Where(company => company.Id == companyId)
+            .Select(company => company.RegistrationCountryId)
+            .SingleAsync(cancellationToken);
 
         var countries = await context.Countries
             .AsNoTracking()
@@ -51,10 +56,15 @@ public sealed class CompanyGeographicScopeStore(
                 country.Alpha2Code,
                 country.Alpha3Code,
                 selectedIds.Contains(country.Id),
-                defaultCountryId == country.Id))
+                defaultCountryId == country.Id,
+                registrationCountryId == country.Id))
             .ToList();
 
-        return new CompanyGeographicScopeResponse(companyId, defaultCountryId, options);
+        return new CompanyGeographicScopeResponse(
+            companyId,
+            defaultCountryId,
+            registrationCountryId,
+            options);
     }
 
     public async Task<bool> AreActiveCountriesAsync(
@@ -83,11 +93,15 @@ public sealed class CompanyGeographicScopeStore(
         int companyId,
         IReadOnlyCollection<int> countryIds,
         int defaultCountryId,
+        int registrationCountryId,
         CancellationToken cancellationToken)
     {
         var tenantId = currentActor.TenantId
             ?? throw new InvalidOperationException("A tenant is required to replace company geographic scope.");
         var selectedIds = countryIds.ToHashSet();
+        var company = await context.Companies
+            .SingleAsync(item => item.Id == companyId, cancellationToken);
+        company.SetRegistrationCountry(registrationCountryId);
         var existingLinks = await context.CompanyCountries
             .IgnoreQueryFilters()
             .Where(link => link.TenantId == tenantId && link.CompanyId == companyId)

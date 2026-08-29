@@ -1,6 +1,6 @@
 import type { CompanyCountryOption } from '../types/company-geographic-scope';
 import {
-  clearUnselectedDefaultCountry,
+  clearUnselectedOperatingCountry,
   filterCompanyCountries,
   normalizeCompanyCountryIds,
 } from './company-geographic-scope-grid';
@@ -14,6 +14,7 @@ const countries: CompanyCountryOption[] = [
     alpha3Code: 'EGY',
     isSelected: true,
     isDefault: true,
+    isRegistrationCountry: true,
   },
   {
     id: 2,
@@ -23,6 +24,7 @@ const countries: CompanyCountryOption[] = [
     alpha3Code: 'SAU',
     isSelected: false,
     isDefault: false,
+    isRegistrationCountry: false,
   },
 ];
 
@@ -37,8 +39,8 @@ describe('company geographic scope grid', () => {
     expect(normalizeCompanyCountryIds(['2', 1, 0, 'invalid', 2])).toEqual([2, 1]);
   });
 
-  it('clears the default when it is no longer an operating country', () => {
-    expect(clearUnselectedDefaultCountry([1], 2)).toBe(0);
-    expect(clearUnselectedDefaultCountry([1, 2], 2)).toBe(2);
+  it('clears derived countries when they are no longer operating countries', () => {
+    expect(clearUnselectedOperatingCountry([1], 2)).toBe(0);
+    expect(clearUnselectedOperatingCountry([1, 2], 2)).toBe(2);
   });
 });

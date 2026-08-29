@@ -73,4 +73,34 @@ public sealed class CountryWriteStore(ApplicationDbContext context) : ICountryWr
         context.Addresses.AnyAsync(
             address => countryIds.Contains(address.CountryId) && !address.IsDeleted,
             cancellationToken);
+
+    public async Task<bool> HasCompanyUsageAsync(
+        int countryId,
+        CancellationToken cancellationToken) =>
+        await context.Companies
+            .IgnoreQueryFilters()
+            .AnyAsync(
+                company => !company.IsDeleted && company.RegistrationCountryId == countryId,
+                cancellationToken) ||
+        await context.CompanyCountries
+            .IgnoreQueryFilters()
+            .AnyAsync(
+                link => !link.IsDeleted && link.CountryId == countryId,
+                cancellationToken);
+
+    public async Task<bool> HasCompanyUsageAsync(
+        IReadOnlyCollection<int> countryIds,
+        CancellationToken cancellationToken) =>
+        await context.Companies
+            .IgnoreQueryFilters()
+            .AnyAsync(
+                company => !company.IsDeleted &&
+                           company.RegistrationCountryId.HasValue &&
+                           countryIds.Contains(company.RegistrationCountryId.Value),
+                cancellationToken) ||
+        await context.CompanyCountries
+            .IgnoreQueryFilters()
+            .AnyAsync(
+                link => !link.IsDeleted && countryIds.Contains(link.CountryId),
+                cancellationToken);
 }

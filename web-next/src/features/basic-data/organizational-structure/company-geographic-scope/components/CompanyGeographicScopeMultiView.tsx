@@ -15,6 +15,7 @@ type CompanyGeographicScopeView = "grid" | "cards";
 interface CompanyGeographicScopeMultiViewProps {
   countries: CompanyCountryOption[];
   defaultCountryId: number;
+  registrationCountryId: number;
   selectionControls: ReactNode;
   isFetching?: boolean;
   onRefresh: () => void;
@@ -23,6 +24,7 @@ interface CompanyGeographicScopeMultiViewProps {
 export default function CompanyGeographicScopeMultiView({
   countries,
   defaultCountryId,
+  registrationCountryId,
   selectionControls,
   isFetching = false,
   onRefresh,
@@ -97,6 +99,7 @@ export default function CompanyGeographicScopeMultiView({
           <CompanyGeographicScopeDataGrid
             countries={countries}
             defaultCountryId={defaultCountryId}
+            registrationCountryId={registrationCountryId}
             searchTerm={searchTerm}
             onSearchTermChange={setSearchTerm}
           />
@@ -104,6 +107,7 @@ export default function CompanyGeographicScopeMultiView({
           <CompanyGeographicScopeCardView
             countries={filteredCountries}
             defaultCountryId={defaultCountryId}
+            registrationCountryId={registrationCountryId}
             searchTerm={searchTerm}
             onSearchTermChange={setSearchTerm}
             sortOrder={cardSortOrder}

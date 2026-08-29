@@ -51,13 +51,13 @@ decision. A focused test pass alone is never a `Ready` decision.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| company-geographic-scope-master | 8 | `329d9fee13f010fada1cff1043d483944af37060e3d219399f1f50c462c58046` |
-| company-geographic-scope-master | 9 | `6f82dda3cd7b7913292e19c29a73c22ef7e6f3ce34f33d7dbfe9f6c3bc41c6de` |
-| company-geographic-scope-master | 10 | `7cf1da710a21d34843d71b47d1f43837657d2f07bb096d64d0f6d670f4a89404` |
-| company-geographic-scope-api | 10 | `98dd4e90a24df5d8e4869c25a36763b5a61bea51696e7c160c8a2bebea1edd39` |
-| company-geographic-scope-api | 11 | `797db80cbe49171eb7ae69bd2515f9b2c2d5a19dc2cd1d8f1b17a416a6971a35` |
+| company-geographic-scope-master | 8 | `52c5729920d1a17b5253d2c31a2f15d5ec1b1ea1094504a0ad5bf48d986cb191` |
+| company-geographic-scope-master | 9 | `cec95e708c29472c9eb493b3248bad8bf3d2f03f86c2d81ead51363bb6669fab` |
+| company-geographic-scope-master | 10 | `814f512dc264261c757a6dec87e4b2e004029718a27d7e340aca4507034fe6b7` |
+| company-geographic-scope-api | 10 | `7bb642543a1e25d0ed34810ddec3200501d0f029ac0b06a33201ba704c22becd` |
+| company-geographic-scope-api | 11 | `f3728f5cba1b4ec17a1c850b8ad3e1dfdc7fde70b1858a7970142a8ed28d268d` |
 | company-geographic-scope-web | 12 | `796a6cc0c0d2193aac1f8239ae0f4ac40efd409368e3f93eb5b95453340e6a5d` |
-| company-geographic-scope-web | 13 | `6068676e499370206d086a0edf49591a1176ebfddefd65abc609cd39f59c5086` |
-| company-geographic-scope-web | 14 | `285de84b0614d0af9983bd8916e249d98bc5c20deed54d58c08b0ea2181aaef7` |
+| company-geographic-scope-web | 13 | `95a50fcc5496c5e3ab5742d0b18db75240d536e1655c4dd5b3029255d57fe60d` |
+| company-geographic-scope-web | 14 | `241430b12d32457900988dfe28d5539445a28e13ddc95884df31e0cb92d7af45` |
 | company-geographic-scope-mobile | 14 | `86c21a217f70553f80bf776d8079f1a71e47bd8b3e897ae0622393c7c217b679` |
-| company-geographic-scope-mobile | 15 | `b767fcba0ad7fe9bdf7849932dfda0e6a11627f7a25b97ba2b11c6b1efa23718` |
+| company-geographic-scope-mobile | 15 | `b7d0bebf0f119e3dc9159dd64888b92488a1807d11a3039191452ff5b083699b` |

@@ -1,5 +1,6 @@
 using HrManagementSystem.Domain.Common.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities;
+using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
 using HrManagementSystem.Domain.Employees.Entities;
 using static HrManagementSystem.Domain.Common.Guards.DomainGuard;
 
@@ -29,6 +30,8 @@ public class Company : TenantAuditableEntity
     public string? LegalName { get; set; }
     public string? RegistrationNumber { get; set; }
     public string? TaxNumber { get; set; }
+    public int? RegistrationCountryId { get; private set; }
+    public Country? RegistrationCountry { get; private set; }
     public string DefaultCurrencyCode { get; private set; } = "USD";
     public string TimeZoneId { get; private set; } = "UTC";
     public string? Email { get; set; }
@@ -59,4 +62,12 @@ public class Company : TenantAuditableEntity
     public void Activate() => IsActive = true;
 
     public void Deactivate() => IsActive = false;
+
+    public void SetRegistrationCountry(int countryId)
+    {
+        if (countryId <= 0)
+            throw new ArgumentOutOfRangeException(nameof(countryId));
+
+        RegistrationCountryId = countryId;
+    }
 }

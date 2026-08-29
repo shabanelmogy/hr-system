@@ -71,7 +71,7 @@ the contracts and boundaries while substituting its own domain decisions.
 | Scope | Global reference data, not tenant/company-owned |
 | Read lifecycle | Active, archived or all |
 | Update lifecycle | Active only |
-| Archive | Idempotent; blocked by active states or active addresses; shares a transaction-owned Country lifecycle resource with State and Address writes |
+| Archive | Idempotent; blocked by active states, active addresses, Company operating scope, or Company registration; shares a transaction-owned Country lifecycle resource with State, Address, and Company Geographic Scope writes |
 | Bulk archive | 1-100 distinct positive IDs; all-or-nothing; archived IDs ignored in count; sorted lifecycle resources |
 | Restore | Idempotent and serialized with dependent State writes |
 | Delete model | Soft archive only; no hard delete/toggle |
@@ -85,6 +85,12 @@ the State hierarchy. `CompanyCountry` controls operating scope and is not a
 copy of Country data; address-owner workflows must consult that scope before
 persisting a company or branch location. Currency remains Country metadata for
 the current release and is not an address field.
+
+`Company.RegistrationCountryId` separately represents the legal registration
+Country. A Country cannot be archived while any non-archived Company uses it for
+registration or any active CompanyCountry uses it for operating scope. The scope
+write acquires every selected Country lifecycle resource so this check remains
+true under concurrent requests.
 
 ### Permissions
 
@@ -157,6 +163,7 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | 400 | Validation problem | Keep form/list context and show actionable validation |
 | 400 | `Country.NoCountriesProvided` | Reject empty batch |
 | 400 | `Country.CountryInUseByState` | Explain archive dependency |
+| 400 | `Country.CountryInUseByCompany` | Explain legal-registration or operating-scope dependency |
 | 404 | `Country.CountryNotFound` | Detail/action unavailable |
 | 409 | `Country.Duplicated` | Web maps duplicate to fields; mobile currently shows mutation error toast |
 | 409 | `UniqueConstraintViolation` | Stable conflict, never provider text |
@@ -317,6 +324,7 @@ pixel-identical UI.
 | C-F04 | Web tests | Resolved: page wiring covers criteria/loading/action/form composition, service tests assert bulk bodies, and query-hook tests prove mutation invalidation order. | Keep representative integration wiring beside pure-unit coverage. |
 | C-F05 | Web reports | Resolved: ActiveReportsJS now has tenant-scoped template/revision persistence, published and management reads, explicit permissions, RowVersion, an approved source catalog, and a published viewer. | Preserve the shared reporting contract; register every future feature/data source in the server allow-list and prove tenant isolation. |
 | C-F08 | API lifecycle | Resolved: Country archive and State create/update/restore now share transaction-owned Country lifecycle resources, closing the stale dependency-check race. | Every dependent mutation must participate in the same database invariant boundary. |
+| C-F12 | API lifecycle | Resolved: Company registration/operating scope now blocks Country archive and scope writes share selected Country lifecycle resources. | Global master lifecycle must remain consistent with every tenant/company reference. |
 | C-F09 | Web bulk | Resolved: oversized eligible selections are rejected at 100 with localized feedback and rechecked by direct submit handlers. | Mirror API limits without truncation; keep API validation authoritative. |
 | C-F10 | Web loading | Resolved: background refetch preserves current Grid/Card/Chart content and shows a non-destructive progress indicator. | Never conflate initial loading with background fetching. |
 | C-F11 | Web import | Resolved: Country and State Import submit handlers enforce read-only and feature create permission directly; State keeps Countries lookup permission separate. | UI visibility is never the only mutation guard. |

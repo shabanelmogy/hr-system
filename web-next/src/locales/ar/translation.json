@@ -48,18 +48,22 @@
   },
   "companyGeographicScope": {
     "title": "دول التشغيل",
-    "description": "اختر الدول المتاحة للفروع ودولة الإدخال الافتراضية.",
-    "selectionSectionTitle": "اختر دول التشغيل والدولة الافتراضية",
+    "description": "اختر دول التشغيل ودولة التسجيل القانوني ودولة التشغيل الافتراضية.",
+    "selectionSectionTitle": "اختر دول التشغيل والتسجيل والدولة الافتراضية",
     "operatingCountries": "دول التشغيل",
+    "registrationCountry": "دولة التسجيل القانوني",
     "defaultOperatingCountry": "دولة التشغيل الافتراضية",
     "selectCountries": "اختر دولة واحدة أو أكثر",
     "selectDefaultCountry": "اختر الدولة الافتراضية",
+    "selectRegistrationCountry": "اختر دولة التسجيل القانوني",
     "selectOperatingCountriesFirst": "اختر دول التشغيل أولًا",
     "selectedCount": "المحدد: {{count}}",
     "selectedColumn": "التشغيل",
     "selected": "محددة",
     "notSelected": "غير محددة",
     "defaultColumn": "الافتراضية",
+    "registrationColumn": "التسجيل",
+    "registrationCountryHelp": "الدولة التي تُسجل فيها الشركة قانونيًا، ويجب أن تكون من دول التشغيل.",
     "currentDefault": "دولة التشغيل الافتراضية الحالية",
     "setAsDefault": "تعيين كافتراضية",
     "setCountryAsDefault": "تعيين {{country}} كدولة التشغيل الافتراضية",
@@ -76,6 +80,8 @@
     "validation": {
       "countriesRequired": "اختر دولة تشغيل واحدة على الأقل",
       "countryLimit": "لا يمكن اختيار أكثر من 100 دولة",
+      "registrationRequired": "اختر دولة التسجيل القانوني",
+      "registrationMustBeSelected": "يجب أن تكون دولة التسجيل القانوني ضمن دول التشغيل المختارة",
       "defaultRequired": "اختر دولة التشغيل الافتراضية",
       "defaultMustBeSelected": "يجب أن تكون الدولة الافتراضية ضمن الدول المختارة"
     }

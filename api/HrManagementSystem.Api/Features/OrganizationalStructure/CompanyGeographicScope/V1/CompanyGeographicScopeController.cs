@@ -35,7 +35,10 @@ public sealed class CompanyGeographicScopeController(ISender sender) : Controlle
         CancellationToken cancellationToken)
     {
         var result = await sender.Send(
-            new UpdateCompanyGeographicScopeCommand(request.CountryIds, request.DefaultCountryId),
+            new UpdateCompanyGeographicScopeCommand(
+                request.CountryIds,
+                request.DefaultCountryId,
+                request.RegistrationCountryId),
             cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }

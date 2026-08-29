@@ -58,6 +58,8 @@ export const arNavigationSettings = {
     },
     debugTools: 'البيانات المحلية',
     debugToolsHint: 'امسح البيانات المؤقتة وأعد تفضيلات التطبيق المحلية للوضع الافتراضي.',
+    mockData: 'إجراءات البيانات التجريبية',
+    mockDataHint: 'أظهر إجراءات التطوير التي تملأ النماذج بقيم تجريبية.',
     resetCache: 'إعادة ضبط الكاش المحلي',
     resetCacheTitle: 'إعادة ضبط كاش التطبيق؟',
     resetCacheDescription:

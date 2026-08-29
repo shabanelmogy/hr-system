@@ -33,7 +33,7 @@ import type {
 } from '../types/company-geographic-scope';
 import { createCompanyGeographicScopeFormSchema } from '../validation/company-geographic-scope-schema';
 import {
-  clearUnselectedDefaultCountry,
+  clearUnselectedOperatingCountry,
   filterCompanyCountries,
   normalizeCompanyCountryIds,
 } from '../components/company-geographic-scope-grid';
@@ -41,6 +41,7 @@ import { CompanyGeographicScopeCard } from '../components/CompanyGeographicScope
 
 const emptyValues: CompanyGeographicScopeFormValues = {
   countryIds: [],
+  registrationCountryId: 0,
   defaultCountryId: 0,
 };
 
@@ -63,6 +64,7 @@ export function CompanyGeographicScopeScreen() {
     formState: { errors, isDirty, isSubmitting },
   } = useZodForm<CompanyGeographicScopeFormValues>(schema, { defaultValues: emptyValues });
   const { field: countryIdsField } = useController({ control, name: 'countryIds' });
+  const { field: registrationCountryIdField } = useController({ control, name: 'registrationCountryId' });
   const { field: defaultCountryIdField } = useController({ control, name: 'defaultCountryId' });
   const query = useCompanyGeographicScope(canView);
   const mutation = useUpdateCompanyGeographicScope();
@@ -72,6 +74,7 @@ export function CompanyGeographicScopeScreen() {
     [countryIdsField.value],
   );
   const defaultCountryId = defaultCountryIdField.value ?? 0;
+  const registrationCountryId = registrationCountryIdField.value ?? 0;
   const fieldErrors = useMemo(() => toFormErrorMap(errors), [errors]);
   const language = i18n.resolvedLanguage?.startsWith('ar') ? 'ar' : 'en';
   const selectedCountries = useMemo(
@@ -91,6 +94,7 @@ export function CompanyGeographicScopeScreen() {
       countryIds: query.data.countries
         .filter((country) => country.isSelected)
         .map((country) => country.id),
+      registrationCountryId: query.data.registrationCountryId ?? 0,
       defaultCountryId: query.data.defaultCountryId ?? 0,
     });
   }, [query.data, reset]);
@@ -102,7 +106,15 @@ export function CompanyGeographicScopeScreen() {
       shouldTouch: true,
       shouldValidate: true,
     });
-    const nextDefaultCountryId = clearUnselectedDefaultCountry(countryIds, defaultCountryId);
+    const nextRegistrationCountryId = clearUnselectedOperatingCountry(countryIds, registrationCountryId);
+    if (nextRegistrationCountryId !== registrationCountryId) {
+      setValue('registrationCountryId', nextRegistrationCountryId, {
+        shouldDirty: true,
+        shouldTouch: true,
+        shouldValidate: true,
+      });
+    }
+    const nextDefaultCountryId = clearUnselectedOperatingCountry(countryIds, defaultCountryId);
     if (nextDefaultCountryId !== defaultCountryId) {
       setValue('defaultCountryId', nextDefaultCountryId, {
         shouldDirty: true,
@@ -110,7 +122,15 @@ export function CompanyGeographicScopeScreen() {
         shouldValidate: true,
       });
     }
-  }, [defaultCountryId, setValue]);
+  }, [defaultCountryId, registrationCountryId, setValue]);
+
+  const changeRegistrationCountry = useCallback((countryId: number) => {
+    setValue('registrationCountryId', countryId, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  }, [setValue]);
 
   const changeDefaultCountry = useCallback((countryId: number) => {
     setValue('defaultCountryId', countryId, {
@@ -135,6 +155,13 @@ export function CompanyGeographicScopeScreen() {
   );
 
   const columns = useMemo<AppDataTableColumn<CompanyCountryOption>[]>(() => [
+    {
+      id: 'registration',
+      header: t('companyGeographicScope.registrationColumn'),
+      width: 132,
+      align: 'center',
+      render: (country) => <AppText align="center" color={country.id === registrationCountryId ? 'primary' : 'muted'} variant="bodySmall">{country.id === registrationCountryId ? t('companyGeographicScope.registrationCountry') : '—'}</AppText>,
+    },
     {
       id: 'nameEn',
       header: t('countries.nameEn'),
@@ -172,6 +199,7 @@ export function CompanyGeographicScopeScreen() {
     },
   ], [
     defaultCountryId,
+    registrationCountryId,
     t,
   ]);
 
@@ -191,6 +219,7 @@ export function CompanyGeographicScopeScreen() {
         countryIds: saved.countries
           .filter((country) => country.isSelected)
           .map((country) => country.id),
+        registrationCountryId: saved.registrationCountryId ?? 0,
         defaultCountryId: saved.defaultCountryId ?? 0,
       });
       showToast.success(t('companyGeographicScope.saved'));
@@ -293,6 +322,19 @@ export function CompanyGeographicScopeScreen() {
             />
             <AppSelectField
               disabled={interactionDisabled || defaultCountryOptions.length === 0}
+              error={fieldErrors.registrationCountryId}
+              helperText={t('companyGeographicScope.registrationCountryHelp')}
+              label={t('companyGeographicScope.registrationCountry')}
+              leadingIcon="business-outline"
+              name="registrationCountryId"
+              onChange={changeRegistrationCountry}
+              options={defaultCountryOptions}
+              placeholder={t('companyGeographicScope.selectRegistrationCountry')}
+              required
+              value={registrationCountryId}
+            />
+            <AppSelectField
+              disabled={interactionDisabled || defaultCountryOptions.length === 0}
               error={fieldErrors.defaultCountryId}
               label={t('companyGeographicScope.defaultOperatingCountry')}
               leadingIcon="radio-button-on"
@@ -354,6 +396,7 @@ export function CompanyGeographicScopeScreen() {
                         <CompanyGeographicScopeCard
                           country={country}
                           isDefault={country.id === defaultCountryId}
+                          isRegistrationCountry={country.id === registrationCountryId}
                           key={country.id}
                         />
                       ))}

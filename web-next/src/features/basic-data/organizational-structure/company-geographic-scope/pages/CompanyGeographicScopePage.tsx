@@ -7,7 +7,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  FormHelperText,
   Paper,
   Stack,
 } from "@mui/material";
@@ -38,6 +37,7 @@ import type {
 
 const emptyValues: CompanyGeographicScopeFormValues = {
   countryIds: [],
+  registrationCountryId: 0,
   defaultCountryId: 0,
 };
 
@@ -54,16 +54,28 @@ export default function CompanyGeographicScopePage() {
       countryIds: z.array(z.number().int().positive())
         .min(1, t("companyGeographicScope.validation.countriesRequired"))
         .max(100, t("companyGeographicScope.validation.countryLimit")),
+      registrationCountryId: z.number().int().positive(
+        t("companyGeographicScope.validation.registrationRequired"),
+      ),
       defaultCountryId: z.number().int().positive(
         t("companyGeographicScope.validation.defaultRequired"),
       ),
-    }).refine(
-      (value) => value.countryIds.includes(value.defaultCountryId),
-      {
-        path: ["defaultCountryId"],
-        message: t("companyGeographicScope.validation.defaultMustBeSelected"),
-      },
-    ),
+    }).superRefine((value, context) => {
+      if (!value.countryIds.includes(value.registrationCountryId)) {
+        context.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["registrationCountryId"],
+          message: t("companyGeographicScope.validation.registrationMustBeSelected"),
+        });
+      }
+      if (!value.countryIds.includes(value.defaultCountryId)) {
+        context.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["defaultCountryId"],
+          message: t("companyGeographicScope.validation.defaultMustBeSelected"),
+        });
+      }
+    }),
     [t],
   );
 
@@ -72,7 +84,7 @@ export default function CompanyGeographicScopePage() {
     handleSubmit,
     reset,
     setValue,
-    formState: { errors, isDirty },
+    formState: { isDirty },
   } = useForm<CompanyGeographicScopeFormValues>({
     resolver: zodResolver(schema) as Resolver<CompanyGeographicScopeFormValues>,
     mode: "onChange",
@@ -84,6 +96,7 @@ export default function CompanyGeographicScopePage() {
     onSuccess: (scope) => {
       reset({
         countryIds: scope.countries.filter((country) => country.isSelected).map((country) => country.id),
+        registrationCountryId: scope.registrationCountryId ?? 0,
         defaultCountryId: scope.defaultCountryId ?? 0,
       });
       showSuccess(t("companyGeographicScope.saved"));
@@ -97,6 +110,7 @@ export default function CompanyGeographicScopePage() {
       countryIds: scopeQuery.data.countries
         .filter((country) => country.isSelected)
         .map((country) => country.id),
+      registrationCountryId: scopeQuery.data.registrationCountryId ?? 0,
       defaultCountryId: scopeQuery.data.defaultCountryId ?? 0,
     });
   }, [reset, scopeQuery.data]);
@@ -107,11 +121,17 @@ export default function CompanyGeographicScopePage() {
     [watchedCountryIds],
   );
   const defaultCountryId = useWatch({ control, name: "defaultCountryId" });
+  const registrationCountryId = useWatch({ control, name: "registrationCountryId" });
   useEffect(() => {
     if (defaultCountryId > 0 && !selectedCountryIds.includes(defaultCountryId)) {
       setValue("defaultCountryId", 0, { shouldDirty: true, shouldValidate: true });
     }
   }, [defaultCountryId, selectedCountryIds, setValue]);
+  useEffect(() => {
+    if (registrationCountryId > 0 && !selectedCountryIds.includes(registrationCountryId)) {
+      setValue("registrationCountryId", 0, { shouldDirty: true, shouldValidate: true });
+    }
+  }, [registrationCountryId, selectedCountryIds, setValue]);
 
   const countryOptions = useMemo(() => {
     const language = i18n.resolvedLanguage?.startsWith("ar") ? "ar" : "en";
@@ -198,9 +218,11 @@ export default function CompanyGeographicScopePage() {
               <CompanyGeographicScopeMultiView
                 countries={displayedCountries}
                 defaultCountryId={defaultCountryId}
+                registrationCountryId={registrationCountryId}
                 isFetching={scopeQuery.isFetching || updateMutation.isPending}
                 onRefresh={() => scopeQuery.refetch()}
                 selectionControls={(
+                  <>
                   <Stack
                     direction={{ xs: "column", md: "row" }}
                     spacing={{ xs: 1.5, md: 2 }}
@@ -230,7 +252,28 @@ export default function CompanyGeographicScopePage() {
                             shouldValidate: true,
                           });
                         }
+                        if (registrationCountryId > 0 && !nextIds.includes(registrationCountryId)) {
+                          setValue("registrationCountryId", 0, {
+                            shouldDirty: true,
+                            shouldTouch: true,
+                            shouldValidate: true,
+                          });
+                        }
                       }}
+                    />
+                    <MySelect
+                      control={control}
+                      name="registrationCountryId"
+                      dataSource={selectedCountryOptions}
+                      label={t("companyGeographicScope.registrationCountry")}
+                      valueMember="id"
+                      displayMember="name"
+                      required
+                      disabled={!canManage || isReadOnly || updateMutation.isPending || selectedCountryOptions.length === 0}
+                      placeholder={t("companyGeographicScope.selectRegistrationCountry")}
+                      helperText={t("companyGeographicScope.registrationCountryHelp")}
+                      noOptionsText={t("companyGeographicScope.selectOperatingCountriesFirst")}
+                      sx={{ flex: { md: "1 1 0" }, minWidth: 0, width: { xs: "100%", md: "auto" } }}
                     />
                     <MySelect
                       control={control}
@@ -246,19 +289,9 @@ export default function CompanyGeographicScopePage() {
                       sx={{ flex: { md: "1 1 0" }, minWidth: 0, width: { xs: "100%", md: "auto" } }}
                     />
                   </Stack>
+                  </>
                 )}
               />
-
-              {errors.countryIds?.message || errors.defaultCountryId?.message ? (
-                <Stack spacing={0.25}>
-                  {errors.countryIds?.message ? (
-                    <FormHelperText error>{errors.countryIds.message}</FormHelperText>
-                  ) : null}
-                  {errors.defaultCountryId?.message ? (
-                    <FormHelperText error>{errors.defaultCountryId.message}</FormHelperText>
-                  ) : null}
-                </Stack>
-              ) : null}
 
               <Stack
                 direction={{ xs: "column-reverse", sm: "row" }}

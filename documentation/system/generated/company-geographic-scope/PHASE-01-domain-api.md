@@ -78,16 +78,16 @@ implementation discipline.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| company-geographic-scope-master | 3 | `1eddc721d6657a5c21b9d719373cc2c21b1cd4c4e5da06db8520db87a76d2c77` |
-| company-geographic-scope-master | 4 | `8a793aa6af268801e0554b7339d3c2a20a793da042b2ada9e9688180a6e1331b` |
-| company-geographic-scope-master | 6 | `92d260cdc23463e140aee8d219007e899e8cae69c926cc42eefd62f198ac4f06` |
+| company-geographic-scope-master | 3 | `9ec15c72949a18d28967bf33b8be561db54b6bbe9511861f83fce9b7bbb4f182` |
+| company-geographic-scope-master | 4 | `8185c0aac290bcb1ea4cb2e37b929a12ecd0992abfd64e7ca399982ee2053de1` |
+| company-geographic-scope-master | 6 | `9af33779eb8e399a26aa1fbde2585ba40dcd0fad4f6223030372c15c0aec6c20` |
 | company-geographic-scope-api | 1 | `36c11f614a057bd97744bb17b06312435a14bead1f5983cc2b69c18750a4b8f5` |
-| company-geographic-scope-api | 2 | `4e9c08b13393e9449955418a49761396d4c8155152213af650203d7f465624c9` |
-| company-geographic-scope-api | 3 | `17c9f16744d3d47c1448c71cab1453c887fff297b9319616eed77258269fac29` |
-| company-geographic-scope-api | 4 | `fd4a36764b8d106f6b24d5eafa14e3522133abe45dd842c6e157c3dd61afc183` |
-| company-geographic-scope-api | 5 | `be0a25b6a0b38da0bdf640d835394bd958d9aa71838c671bf463625208e933ee` |
-| company-geographic-scope-api | 6 | `1bd412614faadc55361e9404e5ef7bbbfa550eea95aa859f57f7823579fca834` |
-| company-geographic-scope-api | 7 | `6029708d675d07c2d68b04b95cde352e14d8e33cd53477da1a1b62867bc5c2e3` |
+| company-geographic-scope-api | 2 | `91c5013c7ab8ad3c062b5f503b2b8c53451ed64ca4ae45a49e6211c05bbe53c8` |
+| company-geographic-scope-api | 3 | `baadd3e6f008d9e4228c16c7d037be7eff83f71e7db96439ff239ca80fb0e5cc` |
+| company-geographic-scope-api | 4 | `64117b4d243b4eb684ac7e6403e30060d0bfe54ba24a16583b694348d2d52fd2` |
+| company-geographic-scope-api | 5 | `0427dfe1b48c1c2124f6074d92bad806f29ba090f0fb020b62da79cfb05155b0` |
+| company-geographic-scope-api | 6 | `c139c71cf063df5fb71a7672b29958ccc7616ada201374b9539e2c60ac2149c9` |
+| company-geographic-scope-api | 7 | `aa0e0f87e1c8636f81cd1fa33aefcc0c4b9f11c0c72b584a51da9dbbb2c51c3c` |
 | company-geographic-scope-api | 8 | `bfa505287d661d283b0aa02f52e340f7d6fd52b22e9dfa42ad19350143811147` |
-| company-geographic-scope-api | 9 | `d9e80dff2341a7925292988351d9a98f7d5efd74b7ca113d78ff1e770beca204` |
-| company-geographic-scope-api | 10 | `98dd4e90a24df5d8e4869c25a36763b5a61bea51696e7c160c8a2bebea1edd39` |
+| company-geographic-scope-api | 9 | `4a37002841d902cf3ae667530b071adccedf2d9b0a68a674d1c275bdd5d387e5` |
+| company-geographic-scope-api | 10 | `7bb642543a1e25d0ed34810ddec3200501d0f029ac0b06a33201ba704c22becd` |

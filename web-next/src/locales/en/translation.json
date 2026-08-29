@@ -48,18 +48,22 @@
   },
   "companyGeographicScope": {
     "title": "Operating Countries",
-    "description": "Choose the countries available to branches and the initial default country.",
-    "selectionSectionTitle": "Select operating countries and a default country",
+    "description": "Choose the operating countries, legal registration country, and initial operating default.",
+    "selectionSectionTitle": "Select operating, registration, and default countries",
     "operatingCountries": "Operating countries",
+    "registrationCountry": "Country of registration",
     "defaultOperatingCountry": "Default operating country",
     "selectCountries": "Select one or more countries",
     "selectDefaultCountry": "Select the default country",
+    "selectRegistrationCountry": "Select the country of registration",
     "selectOperatingCountriesFirst": "Select operating countries first",
     "selectedCount": "Selected: {{count}}",
     "selectedColumn": "Operating",
     "selected": "Selected",
     "notSelected": "Not selected",
     "defaultColumn": "Default",
+    "registrationColumn": "Registration",
+    "registrationCountryHelp": "The country where this company is legally registered. It must be an operating country.",
     "currentDefault": "Current default country",
     "setAsDefault": "Set as default",
     "setCountryAsDefault": "Set {{country}} as the default operating country",
@@ -76,6 +80,8 @@
     "validation": {
       "countriesRequired": "Select at least one operating country",
       "countryLimit": "No more than 100 countries can be selected",
+      "registrationRequired": "Select the country of registration",
+      "registrationMustBeSelected": "The country of registration must be one of the selected operating countries",
       "defaultRequired": "Select a default operating country",
       "defaultMustBeSelected": "The default country must be one of the selected countries"
     }

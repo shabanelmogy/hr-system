@@ -39,6 +39,7 @@ interface BaseSelectProps<TOption extends object> {
   disabled?: boolean;
   required?: boolean;
   placeholder?: string;
+  helperText?: ReactNode;
   showClearButton?: boolean;
   limitTags?: number;
   all?: boolean;
@@ -133,6 +134,7 @@ const MySelect = <
     disabled = false,
     required = false,
     placeholder = "",
+    helperText,
     showClearButton = false,
     limitTags = 3,
     sx = {},
@@ -269,7 +271,7 @@ const MySelect = <
                   ? placeholder
                   : undefined}
               error={formMode ? Boolean(fieldError) : undefined}
-              helperText={formMode ? fieldError?.message : undefined}
+              helperText={formMode ? fieldError?.message ?? helperText : undefined}
               autoComplete={formMode ? "off" : undefined}
               slotProps={formMode
                 ? {
@@ -278,11 +280,11 @@ const MySelect = <
                       ...params.slotProps.htmlInput,
                       "aria-required": required || undefined,
                       "aria-invalid": Boolean(fieldError),
-                      "aria-describedby": fieldError
-                        ? `${fieldName}-error`
+                      "aria-describedby": fieldError || helperText
+                        ? `${fieldName}-helper-text`
                         : undefined,
                     },
-                    formHelperText: { id: `${fieldName}-error` },
+                    formHelperText: { id: `${fieldName}-helper-text` },
                     input: {
                       ...params.slotProps.input,
                       endAdornment: (

@@ -56,15 +56,15 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| company-geographic-scope-master | 3 | `1eddc721d6657a5c21b9d719373cc2c21b1cd4c4e5da06db8520db87a76d2c77` |
-| company-geographic-scope-master | 4 | `8a793aa6af268801e0554b7339d3c2a20a793da042b2ada9e9688180a6e1331b` |
-| company-geographic-scope-master | 6 | `92d260cdc23463e140aee8d219007e899e8cae69c926cc42eefd62f198ac4f06` |
-| company-geographic-scope-master | 7 | `ac1df7984c1421dcc4decfb548cab2e1c25325bb3d8dfb0be5d5f83b305a926e` |
-| company-geographic-scope-master | 8 | `329d9fee13f010fada1cff1043d483944af37060e3d219399f1f50c462c58046` |
-| company-geographic-scope-api | 6 | `1bd412614faadc55361e9404e5ef7bbbfa550eea95aa859f57f7823579fca834` |
-| company-geographic-scope-api | 7 | `6029708d675d07c2d68b04b95cde352e14d8e33cd53477da1a1b62867bc5c2e3` |
+| company-geographic-scope-master | 3 | `9ec15c72949a18d28967bf33b8be561db54b6bbe9511861f83fce9b7bbb4f182` |
+| company-geographic-scope-master | 4 | `8185c0aac290bcb1ea4cb2e37b929a12ecd0992abfd64e7ca399982ee2053de1` |
+| company-geographic-scope-master | 6 | `9af33779eb8e399a26aa1fbde2585ba40dcd0fad4f6223030372c15c0aec6c20` |
+| company-geographic-scope-master | 7 | `4aabfce40f78278ebe9253ba61344d31ffa99b0fc6fb6aca579a2125cdcac9c6` |
+| company-geographic-scope-master | 8 | `52c5729920d1a17b5253d2c31a2f15d5ec1b1ea1094504a0ad5bf48d986cb191` |
+| company-geographic-scope-api | 6 | `c139c71cf063df5fb71a7672b29958ccc7616ada201374b9539e2c60ac2149c9` |
+| company-geographic-scope-api | 7 | `aa0e0f87e1c8636f81cd1fa33aefcc0c4b9f11c0c72b584a51da9dbbb2c51c3c` |
 | company-geographic-scope-api | 8 | `bfa505287d661d283b0aa02f52e340f7d6fd52b22e9dfa42ad19350143811147` |
-| company-geographic-scope-web | 6 | `41d076d57d634f178516e7d44bd4130d65a077fd90b8af8ec4393639161199cd` |
+| company-geographic-scope-web | 6 | `156fd2d38448a65011a95c4ed1b37f631c20c4851be8ed6cd40976bd07856b88` |
 | company-geographic-scope-web | 7 | `a1d2dff67a286d586bbfc2a669c49253e86ee6f048e9ba66fc5a47911b4e7a8b` |
 | company-geographic-scope-web | 8 | `8b613d00bd6755da54d5ad7fd59560bf3ee5302139e4e91bf8dc6abf221a014d` |
 | company-geographic-scope-web | 9 | `51536e77c2451697af22e2e1645199cf228217eb192e7954d58827bdebfe0893` |

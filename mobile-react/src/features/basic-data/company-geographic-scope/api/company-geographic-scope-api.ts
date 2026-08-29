@@ -19,6 +19,7 @@ export const companyGeographicScopeApi = {
         companyGeographicScopeEndpoints.current,
         {
           countryIds: [...request.countryIds],
+          registrationCountryId: request.registrationCountryId,
           defaultCountryId: request.defaultCountryId,
         },
       ),

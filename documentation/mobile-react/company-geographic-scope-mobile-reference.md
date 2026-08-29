@@ -14,7 +14,7 @@ View requires `CompanyGeographicScope:View`. Mutation requires `CompanyGeographi
 
 ## 4. Runtime Validation
 
-The feature API treats network data as unknown and parses it with Zod before exposing typed data. PUT sends only selected Country IDs and the selected default.
+The feature API treats network data as unknown and parses it with Zod before exposing typed data. PUT sends only selected Country IDs, the selected registration Country, and the selected default operating Country.
 
 ## 5. Query Ownership
 
@@ -22,11 +22,11 @@ Stable feature query keys own GET and PUT. Successful save invalidates the aggre
 
 ## 6. Form Contract
 
-The Zod/RHF form requires 1-100 distinct positive IDs and a default within the selection. The shared multi-select writes `countryIds`; the shared single-select writes `defaultCountryId` and exposes only the selected operating Countries. Removing the current default from the multi-select clears it and exposes validation instead of silently choosing a different Country.
+The Zod/RHF form requires 1-100 distinct positive IDs plus registration and default Countries within the selection. The shared multi-select writes `countryIds`; shared single-selects write `registrationCountryId` and `defaultCountryId` and expose only selected operating Countries. Selector order is Operating Countries, Country of Registration, then Default Operating Country. Removing the current registration/default from the multi-select clears it and exposes validation instead of silently choosing a different Country.
 
 ## 7. Screen Composition
 
-The screen composes `AppScreen`, `AppCard`, `AppForm`, shared `AppMultiSelectField` and `AppSelectField`, shared `AppTextField` search, `AppMultiView`, `AppDataTable`, feature-owned operating-country cards, `AppStateView`, and `AppButton`. A single localized selector-section title explains the form; the route-owned app header/breadcrumb supplies page identity, so neither the screen nor its views duplicate it. Table and Card modes display only selected Countries and share the same complete GET aggregate, local search, default-status indicators, and client pagination. The empty state distinguishes an unconfigured selection from a search that filters a non-empty selection to zero rows. This local search/sort/page slicing is truthful and does not pretend that a server page is the complete catalog. The table uses five rows by default and Cards use three; switching modes resets the local page and applies that mode's page size.
+The screen composes `AppScreen`, `AppCard`, `AppForm`, shared `AppMultiSelectField` and `AppSelectField`, shared `AppTextField` search, `AppMultiView`, `AppDataTable`, feature-owned operating-country cards, `AppStateView`, and `AppButton`. A single localized selector-section title explains the form; the route-owned app header/breadcrumb supplies page identity, so neither the screen nor its views duplicate it. Table and Card modes display only selected Countries and share the same complete GET aggregate, local search, compact registration/default indicators, and client pagination. The empty state distinguishes an unconfigured selection from a search that filters a non-empty selection to zero rows. This local search/sort/page slicing is truthful and does not pretend that a server page is the complete catalog. The table uses five rows by default and Cards use three; switching modes resets the local page and applies that mode's page size.
 
 ## 8. Responsive and Direction Rules
 
@@ -58,7 +58,7 @@ Focused tests cover shared row-selection toggling plus localized-name/ISO search
 
 ## 15. Consumer and Handoff Rules
 
-Branch address screens use selected operating Countries, then derive State/District from the branch's own Country. Different branches may use different States or Countries. `DefaultCountryId` is only an initial value. Employee nationality always uses the complete active global Country catalog.
+Branch address screens use selected operating Countries, then derive State/District from the branch's own Country. Different branches may use different States or Countries. `DefaultCountryId` is only an initial value; `RegistrationCountryId` is legal-entity data and neither field restricts nationality. Employee nationality always uses the complete active global Country catalog.
 
 Country/State/District master screens belong to Platform navigation and require the
 `super_admin` role. Tenant Basic Data navigation exposes only this operating-scope

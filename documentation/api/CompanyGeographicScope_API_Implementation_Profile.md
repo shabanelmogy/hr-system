@@ -6,27 +6,27 @@ The slice lives under `OrganizationalStructure/CompanyGeographicScope` in Applic
 
 ## 2. Domain Contract
 
-`CompanyCountry` inherits `CompanyAuditableEntity` and owns `CountryId` plus `IsDefault`. Construction requires a positive Country ID. Activation restores a historical soft-deleted link; removal is represented by soft deletion.
+`CompanyCountry` inherits `CompanyAuditableEntity` and owns `CountryId` plus `IsDefault`. Construction requires a positive Country ID. Activation restores a historical soft-deleted link; removal is represented by soft deletion. `Company.RegistrationCountryId` independently references the global Country catalog and represents legal registration rather than an operating default.
 
 ## 3. Persistence Contract
 
-`CompanyCountries` has a restrictive Country FK, a unique `(TenantId, CompanyId, CountryId)` index, and a filtered unique active-default index on `(TenantId, CompanyId)`. Standard company and tenant query filters provide isolation.
+`CompanyCountries` has a restrictive Country FK, a unique `(TenantId, CompanyId, CountryId)` index, and a filtered unique active-default index on `(TenantId, CompanyId)`. `Companies.RegistrationCountryId` has its own restrictive Country FK and lookup index. Standard company and tenant query filters provide isolation.
 
 ## 4. Read Contract
 
-`GetCompanyGeographicScopeQuery` requires a trusted current tenant and company. The store loads all active global Countries ordered by English name then ID and overlays current-company `IsSelected` and `IsDefault` flags.
+`GetCompanyGeographicScopeQuery` requires a trusted current tenant and company. The store loads the current Company's nullable `RegistrationCountryId`, loads all active global Countries ordered by English name then ID, and overlays current-company `IsSelected`, `IsRegistrationCountry`, and `IsDefault` flags.
 
 ## 5. Write Contract
 
-`UpdateCompanyGeographicScopeCommand` accepts 1-100 distinct positive Country IDs and one selected default. The handler validates the actor context and every Country before mutation.
+`UpdateCompanyGeographicScopeCommand` accepts 1-100 distinct positive Country IDs, one selected legal registration Country, and one selected default operating Country. The handler validates the actor context, requires both special Countries to be members of the selection, and validates every Country is active before mutation.
 
 ## 6. Atomicity and Concurrency
 
-The handler uses the application lock `company-geographic-scope:{tenantId}:{companyId}`. It clears the old default and saves before replacement so the filtered unique index remains valid, then replaces links and saves within the command transaction.
+The handler uses the application lock `company-geographic-scope:{tenantId}:{companyId}`. It clears the old default and saves before replacement so the filtered unique index remains valid, then replaces links, updates `Company.RegistrationCountryId`, and saves within the command transaction.
 
 ## 7. Validation and Errors
 
-Missing actor company context fails closed with the stable forbidden error. Missing/inactive Country IDs return a stable conflict. FluentValidation rejects empty, excessive, duplicate, non-positive, or inconsistent default selections with localized EN/AR messages.
+Missing actor company context fails closed with the stable forbidden error. Missing/inactive Country IDs return a stable conflict. FluentValidation rejects empty, excessive, duplicate, non-positive, or inconsistent registration/default selections with localized EN/AR messages.
 
 ## 8. HTTP and Authorization
 
@@ -34,24 +34,31 @@ The versioned controller exposes GET and PUT at `/api/v1/company-geographic-scop
 
 ## 9. Composition and Migration
 
-`ApplicationDbContext` exposes `CompanyCountries`; `EntitiesService` registers
+`ApplicationDbContext` exposes `Companies` and `CompanyCountries`; `EntitiesService` registers
 `ICompanyGeographicScopeStore`, and `ErrorsService` registers
 `CompanyGeographicScopeErrors` for both MediatR handlers. The additive migration
 contains the table/indexes in the current development schema. A dedicated
-additive backfill/permission migration is not present in this checkout; any
-production rollout must create and review that migration before enabling the
-feature for existing databases.
+additive migration adds nullable `Companies.RegistrationCountryId`, a restrictive
+Country FK/index, and a deterministic backfill from the active default
+CompanyCountry only. Rows without a defensible active default remain null until
+the first authorized scope save; runtime writes require the field.
 
 ## 10. Verification
 
-No dedicated `CompanyGeographicScopeTests` or Platform authorization test file
-is present in this checkout. The feature remains covered by source-level API
-and client checks only; dedicated handler, migration, and authorization tests
-are an explicit remaining verification gap before production.
+`CompanyGeographicScopeTests` covers registration membership validation, exact
+controller command forwarding, separate registration/default persistence and
+projection, restrictive FK/index metadata, safe migration backfill SQL, and
+Country lifecycle dependency detection. Existing Platform authorization and
+controller contract suites retain the route/permission boundary.
 
 ## 11. Consumer Rules
 
-Operating-address consumers query this aggregate. A Branch may choose any enabled Country and any valid child State/District independently of other branches. Nationality consumers must query the global active Country catalog instead. Server-side Branch/Address validation is required when those workflows are added.
+Operating-address consumers query this aggregate. A Branch may choose any enabled Country and any valid child State/District independently of other branches. Company statutory consumers use `RegistrationCountryId`; operating-address defaults use `DefaultCountryId`. Nationality consumers must query the global active Country catalog instead. Server-side Branch/Address validation is required when those workflows are added.
+
+Standalone Work Location, branch/location target-population authorization, and
+effective-dated CompanyCountry/BranchAddress assignments remain Deferred until an
+owned runtime workflow exists. Branch already has independent lifecycle dates and
+Address ownership links, so no unused placeholder aggregate is introduced.
 
 Global Country/State/District CRUD is not a tenant capability. Those controllers
 require the `super_admin` role plus their action permission. Permission ownership

@@ -47,7 +47,6 @@ export function CountriesScreen() {
   const { allowed: isCreateAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.CreateCountries] });
   const { allowed: isEditAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.EditCountries] });
   const { allowed: isDeleteAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.DeleteCountries] });
-  const { allowed: isReportAuthorized } = useAuthorization({ requiredPermissions: [permissions.ViewCrystalReports] });
   const canCreate = isCreateAuthorized && !isReadOnly;
   const canEdit = isEditAuthorized && !isReadOnly;
   const canDelete = isDeleteAuthorized && !isReadOnly;
@@ -204,7 +203,7 @@ export function CountriesScreen() {
         { value: 'table', icon: 'grid-outline', label: t('multiView.table'), defaultPageSize: 5, render: (items) => <AppDataTable columns={columns} getRowKey={(country) => country.id} rows={items} showPagination={false} serverState={{ onPageChange: changePage, onPageSizeChange: changePageSize, onSortChange: changeSort, page: list.state.page, pageSize: list.state.pageSize, sort: list.state.sort, totalRows: countriesQuery.data?.metaData.totalCount ?? 0 }} /> },
         { value: 'cards', icon: 'albums-outline', label: t('multiView.cards'), defaultPageSize: 3, scrollable: true, render: (items) => <View style={styles.cards}>{items.map((country) => <CountryCard canDelete={canDelete} canEdit={canEdit} country={country} key={country.id} onArchive={(item) => setPendingAction({ kind: 'archive', country: item })} onEdit={(item) => openForm('edit', item)} onRestore={(item) => void restore(item)} onToggleSelection={toggleSelection} onView={(item) => openForm('view', item)} selected={selectedIds.includes(country.id)} />)}</View> },
         { value: 'chart', icon: 'stats-chart-outline', label: t('countries.chartView'), paginate: false, renderWhenEmpty: true, scrollable: true, render: (items) => <CountriesChartView countries={items} totalCount={countriesQuery.data?.metaData.totalCount ?? 0} /> },
-        ...(isReportAuthorized ? [{ value: 'report' as const, icon: 'document-text-outline' as const, label: t('countries.reportView'), paginate: false, renderWhenEmpty: true, render: () => <CountryReportView /> }] : []),
+        { value: 'report', icon: 'document-text-outline', label: t('countries.reportView'), paginate: false, renderWhenEmpty: true, render: () => <CountryReportView /> },
         ...(canCreate ? [{ value: 'import' as const, icon: 'cloud-upload-outline' as const, label: t('countries.importView'), paginate: false, renderWhenEmpty: true, scrollable: true, render: () => <CountryImportView /> }] : []),
       ]}
     />

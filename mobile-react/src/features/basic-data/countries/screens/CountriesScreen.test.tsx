@@ -253,14 +253,14 @@ describe('CountriesScreen', () => {
     await waitFor(() => expect(mockBulkArchive).toHaveBeenCalledWith([7]));
   });
 
-  it('hides mutation and report entry points when permissions are absent', async () => {
+  it('hides mutation entry points when permissions are absent but keeps the report tab available', async () => {
     mockAllowedPermissions.clear();
     await render(<CountriesScreen />);
 
     expect(screen.queryByTestId('icon-countries.addCountry')).toBeNull();
     expect(screen.queryByTestId('edit-7')).toBeNull();
     expect(screen.queryByTestId('archive-7')).toBeNull();
-    expect(screen.queryByTestId('country-report')).toBeNull();
+    expect(screen.getByTestId('country-report')).toBeTruthy();
     expect(screen.getByTestId('country-import-present').props.children).toBe('false');
   });
 });

@@ -18,6 +18,10 @@ Global Platform catalog
 Company-scoped classification
   AddressType
 
+Legal-entity geography
+  Company.RegistrationCountryId -> one global Country
+  CompanyCountry                -> enabled operating Countries + one default
+
 Company-scoped reusable address
   Address
     CompanyAddress      -> Company + purpose + primary flag
@@ -37,6 +41,7 @@ Company-scoped reusable address
 | CompanyAddress | Company domain | Tenant/company | Owns primary/purpose semantics for a company |
 | BranchAddress | Branch/Organization domain | Tenant/company | Owns primary/purpose semantics for a branch or work location |
 | CompanyCountry | Organizational Structure | Tenant/company | Selects operating countries; it is not a copy of Country |
+| Company.RegistrationCountryId | Company/legal entity | Tenant/company | Identifies the legal country of registration; it is not the default operating Country |
 
 ## Odoo comparison
 
@@ -55,10 +60,28 @@ bilingual fields, District master data, and Company Geographic Scope. It adopts
 Odoo's flexible address composition and owner-specific address usage without
 copying Odoo's partner model.
 
+## SAP SuccessFactors comparison
+
+SAP Employee Central separates the Legal Entity, which is registered in one
+Country, from Location, which represents a physical office where employees work.
+See the official [SAP Foundation Objects guide](https://learning.sap.com/courses/sap-successfactors-employee-central-core-administration/introducing-foundation-objects)
+and [Foundation Object association examples](https://help.sap.com/docs/successfactors-employee-central/implementing-employee-central-core/examples-of-foundation-object-associations).
+
+This project follows that boundary without copying SAP's configuration engine:
+`Company.RegistrationCountryId` is the legal country, `CompanyCountry` is the
+operating-country allowlist, Branch is an organizational unit, and the physical
+address remains a separate Address/owner-link concern. Employee nationality,
+residence, work country, payroll country, and legal registration country are
+independent concepts even when some initially share the same value.
+
 ## Integration rules
 
 - Company and legal-entity addresses use `CompanyAddress` with purposes such as
   `RegisteredOffice`, `Mailing`, and `Billing`.
+- `Company.RegistrationCountryId` is required by the Company Geographic Scope
+  write contract, must reference an active selected operating Country, and must
+  never be inferred at runtime from currency, timezone, address, nationality, or
+  `CompanyCountry.IsDefault`.
 - Branch and Work Location addresses use `BranchAddress` with `WorkLocation` as
   the normal purpose. A Branch timezone remains an explicit Branch property;
   Country must not be used as a timezone substitute.
@@ -76,6 +99,10 @@ copying Odoo's partner model.
 
 Required now:
 
+- Company legal registration Country is stored independently from the default
+  operating Country. Existing rows may remain temporarily null only when an
+  additive migration cannot defensibly backfill them; the first successful scope
+  save must supply it.
 - Country is required on every Address.
 - State and District are nullable and must belong to the selected parent chain.
 - City/locality and street lines are supported.
@@ -92,6 +119,15 @@ Required now:
 
 Deferred by design:
 
+- A standalone Work Location foundation entity. Until employee assignment,
+  working-hours, capacity, attendance, or geofencing requires its own lifecycle,
+  Branch remains the organizational unit and `BranchAddress` with
+  `AddressPurpose.WorkLocation` supplies the physical location.
+- Branch/location target-population authorization and `UserBranchAccess`. Add it
+  with the first branch-restricted workflow; do not put `BranchId` in the token.
+- Effective dating for operating-country, BranchAddress, and future Work Location
+  assignments. Branch already owns `OpenedOn`/`ClosedOn`; other dates are added
+  to the relationship that actually needs historical truth, not to Country master.
 - EmployeeAddress and EmergencyContactAddress APIs.
 - CompanyAddress and BranchAddress command/query endpoints.
 - Country-specific postal-code patterns and address-format rendering.

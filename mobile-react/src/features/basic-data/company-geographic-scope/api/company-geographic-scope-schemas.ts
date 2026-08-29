@@ -10,10 +10,12 @@ const companyCountryOptionSchema = z.object({
   alpha3Code: z.string().nullable(),
   isSelected: z.boolean(),
   isDefault: z.boolean(),
+  isRegistrationCountry: z.boolean(),
 });
 
 export const companyGeographicScopeSchema: z.ZodType<CompanyGeographicScope> = z.object({
   companyId: z.number().int().positive(),
   defaultCountryId: z.number().int().positive().nullable(),
+  registrationCountryId: z.number().int().positive().nullable(),
   countries: z.array(companyCountryOptionSchema),
 });

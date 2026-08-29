@@ -17,6 +17,11 @@ public sealed class CompanyConfiguration : IEntityTypeConfiguration<Company>
         builder.Property(company => company.LegalName).HasMaxLength(250);
         builder.Property(company => company.RegistrationNumber).HasMaxLength(100);
         builder.Property(company => company.TaxNumber).HasMaxLength(100);
+        builder.HasOne(company => company.RegistrationCountry)
+            .WithMany()
+            .HasForeignKey(company => company.RegistrationCountryId)
+            .OnDelete(DeleteBehavior.Restrict);
+        builder.HasIndex(company => company.RegistrationCountryId);
         builder.Property(company => company.DefaultCurrencyCode).HasMaxLength(3).IsRequired();
         builder.Property(company => company.TimeZoneId).HasMaxLength(100).IsRequired();
         builder.Property(company => company.Email).HasMaxLength(254);

@@ -39,6 +39,15 @@ export function ensureCountrySelected(
     : [...selectedCountryIds, countryId];
 }
 
+export function clearUnselectedOperatingCountry(
+  selectedCountryIds: readonly number[],
+  countryId: number,
+) {
+  return countryId > 0 && selectedCountryIds.includes(countryId)
+    ? countryId
+    : 0;
+}
+
 function normalizeSearchValue(value: string | null | undefined) {
   return value?.trim().toLocaleLowerCase() ?? "";
 }

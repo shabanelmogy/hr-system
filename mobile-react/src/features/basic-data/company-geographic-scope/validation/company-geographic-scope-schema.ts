@@ -6,14 +6,26 @@ export function createCompanyGeographicScopeFormSchema(t: TFunction) {
     countryIds: z.array(z.number().int().positive())
       .min(1, t('companyGeographicScope.validation.countriesRequired'))
       .max(100, t('companyGeographicScope.validation.countryLimit')),
+    registrationCountryId: z.number().int().positive(
+      t('companyGeographicScope.validation.registrationRequired'),
+    ),
     defaultCountryId: z.number().int().positive(
       t('companyGeographicScope.validation.defaultRequired'),
     ),
-  }).refine(
-    (value) => value.countryIds.includes(value.defaultCountryId),
-    {
-      path: ['defaultCountryId'],
-      message: t('companyGeographicScope.validation.defaultMustBeSelected'),
-    },
-  );
+  }).superRefine((value, context) => {
+    if (!value.countryIds.includes(value.registrationCountryId)) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['registrationCountryId'],
+        message: t('companyGeographicScope.validation.registrationMustBeSelected'),
+      });
+    }
+    if (!value.countryIds.includes(value.defaultCountryId)) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['defaultCountryId'],
+        message: t('companyGeographicScope.validation.defaultMustBeSelected'),
+      });
+    }
+  });
 }

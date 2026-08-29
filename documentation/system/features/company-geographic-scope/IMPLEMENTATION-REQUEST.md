@@ -18,7 +18,8 @@ Expo, and the centralized documentation system. Preserve the global
 Country -> State -> District catalog. Do not add `TenantId` or `CompanyId` to those
 master entities and do not touch `graphify-out`.
 
-The slice owns current-company allowed countries and one default country. State and
+The slice owns current-company allowed countries, one legal registration country,
+and one default operating country. State and
 District availability is derived from each selected Country. Global Country, State,
 and District catalog administration belongs exclusively to `super_admin` under
 Platform routes; tenant administrators configure only the current company's scope.
@@ -30,6 +31,8 @@ regardless of the current company's operating-country selection.
 Each Branch owns its own Address and may select any State/District beneath any
 Country enabled for the company. `DefaultCountryId` is only an initial-entry
 convenience; it does not force all branches into one Country, State, or District.
+`RegistrationCountryId` belongs to Company and controls future statutory/localized
+behavior; it is never inferred from the operating default.
 
 ## Frozen product decisions
 
@@ -38,11 +41,12 @@ convenience; it does not force all branches into one Country, State, or District
 | Ownership and scope | Company-owned `CompanyCountry`; trusted `TenantId` and `CompanyId` come only from `ICurrentActor` and EF scope filters. Global geography remains unscoped. |
 | Nationality boundary | Employee nationality is never filtered by `CompanyCountry`; it reads the complete active global Country catalog. |
 | Branch boundary | Every Branch selects its own allowed address hierarchy. The company default Country is not a branch-location restriction. |
-| Fields and relationships | `Id`, inherited tenant/company/audit fields, required `CountryId`, `IsDefault`; unique company/country link and at most one active default. |
+| Fields and relationships | `CompanyCountry` keeps required `CountryId` and `IsDefault`; `Company.RegistrationCountryId` is a separate restrictive global Country FK. Registration and default are both selected operating Countries. |
 | Permissions and read-only | `CompanyGeographicScope:View` and `CompanyGeographicScope:Manage`; tenant read-only blocks PUT before permission feedback. |
 | Read contract | One aggregate, not a paged list: every active Country with `IsSelected`/`IsDefault`, sorted by English name then ID. |
-| Write contract | Replace selected Country IDs atomically; 1-100 distinct active IDs; default is required and must be selected. No client-owned company or tenant ID. |
-| Lifecycle | Link rows are activated/deactivated by replacement. There is no public archive/restore or bulk endpoint. Existing-company migration backfills every active Country without guessing a default. |
+| Write contract | Replace selected Country IDs and update Company registration atomically; 1-100 distinct active IDs; registration and default are required and must be selected. No client-owned company or tenant ID. |
+| Lifecycle | Link rows are activated/deactivated by replacement. There is no public archive/restore or bulk endpoint. Registration migration backfills from an active default only and otherwise leaves null until the first valid save; it never guesses. |
+| SAP-aligned future boundary | Standalone Work Location, branch/location target-population access, and effective-dated operating/location assignments are Deferred until a real owning workflow exists. No placeholder tables/routes. |
 | Web views | Configuration form Required. Grid, Cards, Chart, Report, Import, and Export Excluded because this is not a collection-management feature. |
 | Mobile views | Native configuration screen Required. Table, Cards, Chart, Report, Import, and Export Excluded for the same reason. |
 | Reporting | Excluded; the feature configures visibility and owns no reportable business aggregate. |
@@ -59,13 +63,15 @@ PUT /api/v1/company-geographic-scope
 ```json
 {
   "countryIds": [65, 194],
+  "registrationCountryId": 65,
   "defaultCountryId": 65
 }
 ```
 
-The response contains the current `companyId`, nullable `defaultCountryId`, and
-all active global Countries with `id`, localized names/codes, `isSelected`, and
-`isDefault`. PUT returns the saved aggregate. Validation failures are 400;
+The response contains the current `companyId`, nullable `registrationCountryId`,
+nullable `defaultCountryId`, and all active global Countries with `id`, localized
+names/codes, `isSelected`, `isRegistrationCountry`, and `isDefault`. PUT returns
+the saved aggregate. Validation failures are 400;
 missing/inactive countries and concurrency conflicts are stable 409 responses.
 
 ## Required implementation

@@ -58,6 +58,8 @@ export const enNavigationSettings = {
     },
     debugTools: 'Local data',
     debugToolsHint: 'Clear cached data and restore local application preferences.',
+    mockData: 'Mock data actions',
+    mockDataHint: 'Show development-only actions that fill forms with sample values.',
     resetCache: 'Reset local cache',
     resetCacheTitle: 'Reset local application cache?',
     resetCacheDescription:

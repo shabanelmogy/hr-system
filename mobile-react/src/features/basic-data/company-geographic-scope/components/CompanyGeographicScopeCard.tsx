@@ -13,11 +13,13 @@ import type { CompanyCountryOption } from '../types/company-geographic-scope';
 interface CompanyGeographicScopeCardProps {
   country: CompanyCountryOption;
   isDefault: boolean;
+  isRegistrationCountry: boolean;
 }
 
 export function CompanyGeographicScopeCard({
   country,
   isDefault,
+  isRegistrationCountry,
 }: CompanyGeographicScopeCardProps) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
@@ -43,6 +45,11 @@ export function CompanyGeographicScopeCard({
         {isDefault ? (
           <AppText color="muted" variant="caption">
             {t('companyGeographicScope.defaultColumn')}
+          </AppText>
+        ) : null}
+        {isRegistrationCountry ? (
+          <AppText color="primary" variant="caption">
+            {t('companyGeographicScope.registrationCountry')}
           </AppText>
         ) : null}
       </View>

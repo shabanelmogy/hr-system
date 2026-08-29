@@ -8,6 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { LocalizationProvider, useLocalization } from '@/src/core/localization';
 import { OnboardingProvider } from '@/src/core/onboarding';
+import { MockDataPreferencesProvider } from '@/src/core/preferences';
 import { queryClient } from '@/src/core/query/query-client';
 import { AppThemeProvider } from '@/src/core/theme';
 import { AppFeedbackHost } from '@/src/shared/components/feedback/transient';
@@ -31,14 +32,16 @@ export function AppProviders({ children }: PropsWithChildren) {
         <SafeAreaProvider>
           <QueryClientProvider client={queryClient}>
             <LocalizationProvider>
-              <AppThemeProvider>
-                <OnboardingProvider>
-                  <DirectionRoot>
-                    {children}
-                    <AppFeedbackHost />
-                  </DirectionRoot>
-                </OnboardingProvider>
-              </AppThemeProvider>
+              <MockDataPreferencesProvider>
+                <AppThemeProvider>
+                  <OnboardingProvider>
+                    <DirectionRoot>
+                      {children}
+                      <AppFeedbackHost />
+                    </DirectionRoot>
+                  </OnboardingProvider>
+                </AppThemeProvider>
+              </MockDataPreferencesProvider>
             </LocalizationProvider>
           </QueryClientProvider>
         </SafeAreaProvider>

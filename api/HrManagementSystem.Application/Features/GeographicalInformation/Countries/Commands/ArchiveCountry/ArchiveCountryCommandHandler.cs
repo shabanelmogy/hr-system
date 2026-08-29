@@ -35,6 +35,8 @@ public sealed class ArchiveCountryCommandHandler(
                     return Result.Failure(countryErrors.CountryInUseByState);
                 if (await countryWriteStore.HasActiveAddressesAsync(country.Id, token))
                     return Result.Failure(countryErrors.CountryInUseByAddress);
+                if (await countryWriteStore.HasCompanyUsageAsync(country.Id, token))
+                    return Result.Failure(countryErrors.CountryInUseByCompany);
 
                 country.IsDeleted = true;
                 country.DeletedById = currentActor.UserId;

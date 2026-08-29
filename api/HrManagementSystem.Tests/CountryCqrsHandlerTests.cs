@@ -380,6 +380,34 @@ public sealed class CountryCqrsHandlerTests
     }
 
     [Fact]
+    public async Task Archive_BlocksCompanyRegistrationOrOperatingScopeDependency()
+    {
+        var lifecycle = new List<string>();
+        var writer = new RecordingWriteStore(
+            lifecycle,
+            new Country { Id = 9, NameAr = "مصر", NameEn = "Egypt" })
+        {
+            CompanyUsage = true
+        };
+        var scheduler = new RecordingScheduler(lifecycle);
+        var handler = new ArchiveCountryCommandHandler(
+            writer,
+            new RecordingUnitOfWork(lifecycle),
+            scheduler,
+            new TestCurrentActor(),
+            TimeProvider.System,
+            CreateErrors(),
+            CreateMapper());
+
+        var result = await handler.Handle(new ArchiveCountryCommand(9), CancellationToken.None);
+
+        Assert.True(result.IsFailure);
+        Assert.Equal("Country.CountryInUseByCompany", result.Error.Code);
+        Assert.Empty(lifecycle);
+        Assert.Empty(scheduler.Changes);
+    }
+
+    [Fact]
     public async Task BulkArchive_ArchivesOnlyActiveCountriesAndSchedulesOnceAfterCommit()
     {
         await using var context = CreateContext();
@@ -730,6 +758,7 @@ public sealed class CountryCqrsHandlerTests
         public IReadOnlyList<Country> BulkCountries { get; init; } = [];
         public bool ActiveStates { get; init; }
         public bool ActiveAddresses { get; init; }
+        public bool CompanyUsage { get; init; }
 
         public void Add(Country country) { Country = country; lifecycle.Add("add"); }
         public void AddRange(IReadOnlyCollection<Country> countries) => lifecycle.Add("add-range");
@@ -755,6 +784,12 @@ public sealed class CountryCqrsHandlerTests
             IReadOnlyCollection<int> countryIds,
             CancellationToken token) =>
             Task.FromResult(ActiveAddresses);
+        public Task<bool> HasCompanyUsageAsync(int countryId, CancellationToken token) =>
+            Task.FromResult(CompanyUsage);
+        public Task<bool> HasCompanyUsageAsync(
+            IReadOnlyCollection<int> countryIds,
+            CancellationToken token) =>
+            Task.FromResult(CompanyUsage);
     }
 
     private sealed class RecordingDelegatingUnitOfWork(

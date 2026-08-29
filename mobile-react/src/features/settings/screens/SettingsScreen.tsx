@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { type AppLanguage, useLocalization } from '@/src/core/localization';
 import { useOnboarding } from '@/src/core/onboarding';
+import { useMockDataPreferences } from '@/src/core/preferences';
 import { clearApplicationCache } from '@/src/core/storage/app-cache';
 import { type ThemeMode, useAppTheme } from '@/src/core/theme';
 import {
@@ -13,6 +14,7 @@ import {
   AppIcon,
   AppScreen,
   AppSegmentedControl,
+  AppSwitchField,
   AppText,
   AppThemePalettePicker,
 } from '@/src/shared/components';
@@ -21,6 +23,7 @@ export function SettingsScreen() {
   const { t } = useTranslation();
   const { language, setLanguage, direction } = useLocalization();
   const { mode, palette, setMode, setPalette, theme } = useAppTheme();
+  const { isMockDataEnabled, setMockDataEnabled } = useMockDataPreferences();
   const { reset: resetOnboarding } = useOnboarding();
   const [resetDialogVisible, setResetDialogVisible] = useState(false);
 
@@ -39,6 +42,7 @@ export function SettingsScreen() {
     setLanguage('en');
     setMode('system');
     setPalette('green');
+    setMockDataEnabled(true);
     setResetDialogVisible(false);
     await resetOnboarding();
   };
@@ -126,6 +130,15 @@ export function SettingsScreen() {
             </AppText>
           </View>
         </View>
+        {__DEV__ ? (
+          <AppSwitchField
+            description={t('settings.mockDataHint')}
+            icon="dice-outline"
+            label={t('settings.mockData')}
+            onValueChange={setMockDataEnabled}
+            value={isMockDataEnabled}
+          />
+        ) : null}
         <AppButton
           fullWidth
           icon="refresh-circle-outline"

@@ -10,6 +10,7 @@ import type { CompanyCountryOption } from "../types/CompanyGeographicScope";
 interface CompanyGeographicScopeCardViewProps {
   countries: CompanyCountryOption[];
   defaultCountryId: number;
+  registrationCountryId: number;
   loading?: boolean;
   searchTerm: string;
   onSearchTermChange: (value: string) => void;
@@ -20,6 +21,7 @@ interface CompanyGeographicScopeCardViewProps {
 export default function CompanyGeographicScopeCardView({
   countries,
   defaultCountryId,
+  registrationCountryId,
   loading = false,
   searchTerm,
   onSearchTermChange,
@@ -69,6 +71,7 @@ export default function CompanyGeographicScopeCardView({
         <Grid container spacing={{ xs: 1.5, sm: 2, md: 3 }}>
         {countries.map((country, index) => {
           const isDefault = country.id === defaultCountryId;
+          const isRegistrationCountry = country.id === registrationCountryId;
           const primaryName = theme.direction === "rtl" ? country.nameAr : country.nameEn;
           const secondaryName = theme.direction === "rtl" ? country.nameEn : country.nameAr;
 
@@ -88,6 +91,7 @@ export default function CompanyGeographicScopeCardView({
                     {country.alpha2Code ? <AppChip label={country.alpha2Code} colorKey="primary" variant="soft" monospace bold /> : null}
                     {country.alpha3Code ? <AppChip label={country.alpha3Code} colorKey="secondary" variant="soft" monospace bold /> : null}
                     <Chip size="small" color="success" label={t("companyGeographicScope.selected")} />
+                    {isRegistrationCountry ? <Chip size="small" color="info" label={t("companyGeographicScope.registrationCountry")} /> : null}
                     {isDefault ? <Chip size="small" color="primary" label={t("companyGeographicScope.defaultOperatingCountry")} /> : null}
                   </Stack>
                 )}

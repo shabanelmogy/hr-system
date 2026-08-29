@@ -56,13 +56,13 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 3 | `568e3d2c75c5638278267aac6b86e3f011aee7a067e6fbd63add8f2b1312f60b` |
+| master | 3 | `8514635d9b88b4e74c315a3f0b0860314393524012944996853cce1ab76195cd` |
 | master | 4 | `640408799d07c9939468c39e65e9d2601daa6e89d7896f24b13a924f4ecbb04d` |
 | master | 6 | `b7fb453c6be690cf10f98e85664f30fb55fb590e628b0f8a0435f54cf67058ac` |
 | master | 7 | `8c0ba157ab3e6ca7bfa97bd23bdd022523f69dc7ac4386e25462b7ad667ba74b` |
-| master | 8 | `a108ec6b97e876d70a3958b477a3e44dccfbb7e78698a236224a91f36ec2db6b` |
-| api | 6 | `bd3c45a99368c9ec22533cb308e8d4e81d0bdf89dad6e2e256d47128c466d32b` |
-| api | 7 | `c08a8502696b8c144ec7a0dddf90d1941eddeece53a3612740c9675957f41930` |
+| master | 8 | `f29c1f43d4c99ad67f8520f2bd4f2bc1af0abc7b40c7a9ab14e84c7d188f9952` |
+| api | 6 | `7a0068ac357a0f11efb5c80b77a0c24ccac4f86c4c981f24d6916fe168dd16a8` |
+| api | 7 | `d3c803b44c4e65794a60c9b31eeeab120922dc55a8da5e8c0de7e8a116913f93` |
 | api | 8 | `6ba0561bbba0e93a7ce34482ec27b468c6d56b5255c755acb11d8b29f74bb994` |
 | web | 6 | `90759ad423b1224c2285653dcb646b68398ac0418ac66869a8c0d1dc04534ef4` |
 | web | 7 | `f9f1e9693346be686ff0effa80374e6f012a385ee00d622e1a3df1168dd8126a` |
