@@ -11,7 +11,7 @@ import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 import { SearchBar } from "@/shared/components/lists/card-view/header-controls/SearchBar";
 import { GridOptionsButton } from "./GridOptionsButton";
 
-const toolbarControlHeight = 40;
+const toolbarControlHeight = 36;
 
 export function DataGridToolbar() {
   const {
@@ -23,19 +23,42 @@ export function DataGridToolbar() {
   } = useDataGridShell();
   const { t } = useTranslation();
   const { isReadOnly } = useAppReadOnly();
+  const hasSearchSelectors = Boolean(toolbarSearch?.column || toolbarSearch?.operator);
 
   return (
     <Stack
       direction="row"
       useFlexGap
-      sx={{ alignItems: "center", flexWrap: "wrap", gap: 0.5, p: 1 }}
+      sx={{
+        alignItems: "center",
+        flexWrap: "wrap",
+        gap: { xs: 0.25, sm: 0.5 },
+        p: { xs: 0.5, sm: 1 },
+        "@media (min-width: 600px)": {
+          flexWrap: hasSearchSelectors ? "wrap" : "nowrap",
+        },
+        ...(hasSearchSelectors
+          ? { "@media (min-width: 880px)": { flexWrap: "nowrap" } }
+          : {}),
+      }}
     >
       {toolbarSearch ? (
-        <Box sx={{ flex: "1 1 560px", maxWidth: { xs: "100%", lg: 780 }, minWidth: 260 }}>
+        <Box
+          sx={{
+            flex: hasSearchSelectors ? "1 1 540px" : "1 1 360px",
+            maxWidth: hasSearchSelectors
+              ? { xs: "100%", sm: 560, md: 640, lg: 760 }
+              : { xs: "100%", sm: 440, md: 520, lg: 640 },
+            minWidth: hasSearchSelectors
+              ? { xs: 160, sm: 0, md: 540 }
+              : { xs: 160, sm: 180, md: 260 },
+            overflow: "hidden",
+          }}
+        >
           <Stack
-            direction={{ xs: "column", md: "row" }}
+            direction={hasSearchSelectors ? { xs: "column", md: "row" } : { xs: "column", sm: "row" }}
             useFlexGap
-            sx={{ alignItems: { md: "center" }, gap: 0.5 }}
+            sx={{ alignItems: { sm: "center" }, gap: 0.5 }}
           >
             {toolbarSearch.column ? (
               <TextField
@@ -45,8 +68,9 @@ export function DataGridToolbar() {
                 value={toolbarSearch.column.value}
                 onChange={(event) => toolbarSearch.column?.onChange(event.target.value)}
                 sx={{
-                  flex: "0 0 155px",
-                  minWidth: 155,
+                  flex: { sm: "0 0 155px" },
+                  minWidth: { xs: 0, sm: 155 },
+                  width: { xs: "100%", sm: "auto" },
                   "& .MuiInputBase-root": { height: toolbarControlHeight },
                 }}
               >
@@ -65,8 +89,9 @@ export function DataGridToolbar() {
                 value={toolbarSearch.operator.value}
                 onChange={(event) => toolbarSearch.operator?.onChange(event.target.value)}
                 sx={{
-                  flex: "0 0 165px",
-                  minWidth: 165,
+                  flex: { sm: "0 0 165px" },
+                  minWidth: { xs: 0, sm: 165 },
+                  width: { xs: "100%", sm: "auto" },
                   "& .MuiInputBase-root": { height: toolbarControlHeight },
                 }}
               >
@@ -79,8 +104,9 @@ export function DataGridToolbar() {
             ) : null}
             <Box
               sx={{
-                flex: "1 1 220px",
-                minWidth: 220,
+                flex: { sm: "1 1 220px" },
+                minWidth: { xs: 0, sm: 220 },
+                width: { xs: "100%", sm: "auto" },
                 "& .MuiInputBase-root": { height: toolbarControlHeight },
               }}
             >
@@ -95,24 +121,50 @@ export function DataGridToolbar() {
           </Stack>
         </Box>
       ) : null}
-      {onToolbarAdd ? (
-        <>
-          <Button
-            onClick={onToolbarAdd}
-            disabled={isReadOnly}
-            startIcon={<AddIcon />}
-            size="small"
-          >
-            {t("actions.add")}
-          </Button>
-          <Divider orientation="vertical" flexItem />
-        </>
-      ) : null}
-      {!showGridOptions ? <GridToolbarColumnsButton /> : null}
-      {showColumnFilterButton ? <GridToolbarFilterButton /> : null}
-      {!showGridOptions ? <GridToolbarDensitySelector /> : null}
-      {toolbarContent}
-      {showGridOptions ? <GridOptionsButton label={t("actions.gridOptions")} /> : null}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          flexShrink: 0,
+          flexWrap: "nowrap",
+          gap: { xs: 0.25, sm: 0.5 },
+          minWidth: "max-content",
+          "& > .MuiButtonBase-root, & > .MuiButton-root": {
+            flexShrink: 0,
+            minWidth: "auto",
+            height: toolbarControlHeight,
+            px: { xs: 0.5, sm: 0.75 },
+            py: 0,
+            fontSize: { xs: "0.65rem", sm: "0.7rem" },
+            lineHeight: 1.2,
+            whiteSpace: "nowrap",
+            "& .MuiButton-startIcon": {
+              marginInlineEnd: 0.35,
+              marginInlineStart: 0,
+            },
+          },
+          "& > .MuiDivider-root": { mx: 0.25 },
+        }}
+      >
+        {onToolbarAdd ? (
+          <>
+            <Button
+              onClick={onToolbarAdd}
+              disabled={isReadOnly}
+              startIcon={<AddIcon />}
+              size="small"
+            >
+              {t("actions.add")}
+            </Button>
+            <Divider orientation="vertical" flexItem />
+          </>
+        ) : null}
+        {!showGridOptions ? <GridToolbarColumnsButton /> : null}
+        {showColumnFilterButton ? <GridToolbarFilterButton /> : null}
+        {!showGridOptions ? <GridToolbarDensitySelector /> : null}
+        {toolbarContent}
+        {showGridOptions ? <GridOptionsButton label={t("actions.gridOptions")} /> : null}
+      </Box>
     </Stack>
   );
 }

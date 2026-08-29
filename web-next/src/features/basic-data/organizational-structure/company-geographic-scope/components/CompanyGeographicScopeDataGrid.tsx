@@ -88,7 +88,7 @@ export default function CompanyGeographicScopeDataGrid({
   ]);
 
   return (
-    <ContentWrapper>
+    <ContentWrapper fillAvailable>
       <MyDataGrid
         rows={rows}
         columns={columns}
@@ -119,7 +119,9 @@ export default function CompanyGeographicScopeDataGrid({
           noResultsOverlayLabel: t("companyGeographicScope.noSearchResults"),
         }}
         sx={{
-          height: 470,
+          height: "100%",
+          minHeight: 0,
+          minWidth: 0,
           "& .MuiDataGrid-cell": { py: 0.5 },
           "& .MuiDataGrid-row": { minHeight: "44px !important" },
         }}

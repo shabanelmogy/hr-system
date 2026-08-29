@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { SessionClaims } from "@/lib/auth/session";
 import { permissions } from "@/lib/auth/permissions";
-import { getAuthorizedBasicDataNavigation } from "./basicDataNavigation";
+import { getAuthorizedBasicDataNavigation, getBasicDataNavigation } from "./basicDataNavigation";
 
 function sessionWithPermissions(userPermissions: readonly string[]): SessionClaims {
   return {
@@ -28,6 +28,12 @@ function sessionWithPermissions(userPermissions: readonly string[]): SessionClai
 }
 
 describe("Basic Data navigation permissions", () => {
+  it("keeps group items non-navigable so only the active leaf is selected", () => {
+    const result = getBasicDataNavigation();
+
+    expect(result.map((item) => item.href)).toEqual([undefined, undefined]);
+  });
+
   it("keeps only permitted children", () => {
     const result = getAuthorizedBasicDataNavigation(
       sessionWithPermissions([permissions.ViewCompanyGeographicScope]),

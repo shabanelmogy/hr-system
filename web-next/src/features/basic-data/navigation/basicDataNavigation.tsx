@@ -12,7 +12,7 @@ export interface BasicDataNavigationItem {
   id: string;
   titleKey: string;
   descriptionKey?: string;
-  href: AppPath;
+  href?: AppPath;
   icon: ReactNode;
   permissions: readonly PermissionString[];
   children?: readonly BasicDataNavigationItem[];
@@ -38,7 +38,6 @@ export const getBasicDataNavigation = (): readonly BasicDataNavigationItem[] => 
     id: "geographic-data",
     titleKey: "menu.geographicData",
     descriptionKey: "menu.geographicDataDescription",
-    href: appRoutes.basicData.index,
     icon: <MapIcon fontSize="small" />,
     permissions: [],
     children: geographicDataItems,
@@ -47,7 +46,6 @@ export const getBasicDataNavigation = (): readonly BasicDataNavigationItem[] => 
     id: "organizational-structure",
     titleKey: "menu.organizationalStructure",
     descriptionKey: "menu.organizationalStructureDescription",
-    href: appRoutes.basicData.index,
     icon: <BusinessRoundedIcon fontSize="small" />,
     permissions: [],
     children: organizationalStructureItems,

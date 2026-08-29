@@ -32,7 +32,7 @@ export default function CompanyGeographicScopeCardView({
   if (loading) return <CardViewSkeleton />;
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
+    <Box sx={{ display: "flex", flex: 1, flexDirection: "column", minHeight: 0, minWidth: 0, width: "100%" }}>
       <CardViewHeader
         title={t("companyGeographicScope.title")}
         mainChipLabel={t("companyGeographicScope.selectedCount", { count: countries.length })}
@@ -65,8 +65,8 @@ export default function CompanyGeographicScopeCardView({
               : "companyGeographicScope.selectOperatingCountriesFirst")}
           </Typography>
         </Paper>
-      ) : <Box sx={{ overflowX: "hidden", overflowY: "auto", p: { xs: 1, md: 1.5 } }}>
-        <Grid container spacing={3}>
+      ) : <Box sx={{ flex: 1, minHeight: 0, overflowX: "hidden", overflowY: "auto", minWidth: 0, p: { xs: 0.5, sm: 1, md: 1.5 } }}>
+        <Grid container spacing={{ xs: 1.5, sm: 2, md: 3 }}>
         {countries.map((country, index) => {
           const isDefault = country.id === defaultCountryId;
           const primaryName = theme.direction === "rtl" ? country.nameAr : country.nameEn;
@@ -80,6 +80,7 @@ export default function CompanyGeographicScopeCardView({
                 onMouseEnter={() => setHoveredCard(country.id)}
                 onMouseLeave={() => setHoveredCard(null)}
                 height={300}
+                sx={{ height: { xs: 260, sm: 280, md: 300 } }}
                 title={primaryName}
                 subtitle={secondaryName}
                 chips={(

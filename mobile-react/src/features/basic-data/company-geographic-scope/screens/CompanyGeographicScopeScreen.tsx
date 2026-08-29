@@ -279,18 +279,6 @@ export function CompanyGeographicScopeScreen() {
             <AppText variant="titleSmall" weight="700">
               {t('companyGeographicScope.selectionSectionTitle')}
             </AppText>
-            <AppSelectField
-              disabled={interactionDisabled || defaultCountryOptions.length === 0}
-              error={fieldErrors.defaultCountryId}
-              label={t('companyGeographicScope.defaultOperatingCountry')}
-              leadingIcon="radio-button-on"
-              name="defaultCountryId"
-              onChange={changeDefaultCountry}
-              options={defaultCountryOptions}
-              placeholder={t('companyGeographicScope.selectDefaultCountry')}
-              required
-              value={defaultCountryId}
-            />
             <AppMultiSelectField
               disabled={interactionDisabled}
               error={fieldErrors.countryIds}
@@ -302,6 +290,18 @@ export function CompanyGeographicScopeScreen() {
               placeholder={t('companyGeographicScope.selectCountries')}
               required
               values={selectedCountryIds}
+            />
+            <AppSelectField
+              disabled={interactionDisabled || defaultCountryOptions.length === 0}
+              error={fieldErrors.defaultCountryId}
+              label={t('companyGeographicScope.defaultOperatingCountry')}
+              leadingIcon="radio-button-on"
+              name="defaultCountryId"
+              onChange={changeDefaultCountry}
+              options={defaultCountryOptions}
+              placeholder={t('companyGeographicScope.selectDefaultCountry')}
+              required
+              value={defaultCountryId}
             />
             <AppTextField
               allowWhenReadOnly
@@ -373,14 +373,19 @@ export function CompanyGeographicScopeScreen() {
 const styles = StyleSheet.create({
   fields: {
     gap: spacing.md,
+    minWidth: 0,
+    width: '100%',
   },
   actions: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: spacing.sm,
     marginTop: spacing.xl,
   },
   action: {
     flex: 1,
+    minWidth: 0,
+    paddingHorizontal: spacing.sm,
   },
   cards: { gap: spacing.sm },
 });

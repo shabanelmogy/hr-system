@@ -40,7 +40,11 @@
     "poor": "ضعيف"
   },
   "common": {
-    "retry": "إعادة المحاولة"
+    "retry": "إعادة المحاولة",
+    "success": "تم بنجاح",
+    "error": "خطأ",
+    "warning": "تحذير",
+    "info": "معلومات"
   },
   "companyGeographicScope": {
     "title": "دول التشغيل",

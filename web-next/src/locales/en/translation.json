@@ -40,7 +40,11 @@
     "poor": "Poor"
   },
   "common": {
-    "retry": "Retry"
+    "retry": "Retry",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Information"
   },
   "companyGeographicScope": {
     "title": "Operating Countries",

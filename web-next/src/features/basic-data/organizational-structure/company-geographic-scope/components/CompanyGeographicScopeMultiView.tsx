@@ -46,7 +46,17 @@ export default function CompanyGeographicScopeMultiView({
   }, []);
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
+    <Box
+      sx={{
+        display: "flex",
+        flex: 1,
+        flexDirection: "column",
+        minHeight: 0,
+        minWidth: 0,
+        overflow: "hidden",
+        width: "100%",
+      }}
+    >
       <PageHeader
         variant="multi-view"
         title={t("companyGeographicScope.title")}
@@ -64,12 +74,24 @@ export default function CompanyGeographicScopeMultiView({
           label: t("companyGeographicScope.selectedCount", { count: countries.length }),
         }]}
       />
-      <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 700 }}>
+      <Typography
+        variant="subtitle1"
+        sx={{ mb: 1, fontWeight: 700, fontSize: { xs: "0.95rem", sm: "1rem" } }}
+      >
         {t("companyGeographicScope.selectionSectionTitle")}
       </Typography>
       {selectionControls}
 
-      <Box sx={{ position: "relative", minHeight: 0 }}>
+      <Box
+        sx={{
+          position: "relative",
+          display: "flex",
+          flex: 1,
+          minHeight: 0,
+          minWidth: 0,
+          overflow: "hidden",
+        }}
+      >
         {isFetching ? <LinearProgress aria-label={t("companyGeographicScope.loading")} sx={{ position: "absolute", insetInline: 0, top: 0, zIndex: 2 }} /> : null}
         {currentView === "grid" ? (
           <CompanyGeographicScopeDataGrid

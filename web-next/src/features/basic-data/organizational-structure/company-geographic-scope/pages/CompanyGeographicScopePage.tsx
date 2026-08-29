@@ -149,8 +149,29 @@ export default function CompanyGeographicScopePage() {
   }
 
   return (
-    <Stack spacing={2} sx={{ width: "100%", minWidth: 0 }}>
-      <Paper variant="outlined" sx={{ p: { xs: 2, md: 3 }, borderRadius: 2 }}>
+    <Stack
+      spacing={2}
+      sx={{
+        width: "100%",
+        height: "100%",
+        minHeight: 0,
+        minWidth: 0,
+        overflow: "hidden",
+      }}
+    >
+      <Paper
+        variant="outlined"
+        sx={{
+          p: { xs: 1.5, sm: 2, md: 3 },
+          borderRadius: 2,
+          display: "flex",
+          flex: 1,
+          flexDirection: "column",
+          minHeight: 0,
+          minWidth: 0,
+          overflow: "hidden",
+        }}
+      >
         {scopeQuery.isLoading ? (
           <Stack sx={{ minHeight: 220, alignItems: "center", justifyContent: "center" }}>
             <CircularProgress aria-label={t("companyGeographicScope.loading")} />
@@ -167,27 +188,24 @@ export default function CompanyGeographicScopePage() {
             {extractErrorMessage(scopeQuery.error)}
           </Alert>
         ) : (
-          <Box component="form" onSubmit={handleSubmit(submit)} noValidate>
-            <Stack spacing={2.25}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit(submit)}
+            noValidate
+            sx={{ display: "flex", flex: 1, flexDirection: "column", minHeight: 0 }}
+          >
+            <Stack spacing={2.25} sx={{ minHeight: 0, flex: 1 }}>
               <CompanyGeographicScopeMultiView
                 countries={displayedCountries}
                 defaultCountryId={defaultCountryId}
                 isFetching={scopeQuery.isFetching || updateMutation.isPending}
                 onRefresh={() => scopeQuery.refetch()}
                 selectionControls={(
-                  <Stack direction={{ xs: "column", md: "row" }} spacing={2} sx={{ mb: 2.25 }}>
-                    <MySelect
-                      control={control}
-                      name="defaultCountryId"
-                      dataSource={selectedCountryOptions}
-                      label={t("companyGeographicScope.defaultOperatingCountry")}
-                      valueMember="id"
-                      displayMember="name"
-                      required
-                      disabled={!canManage || isReadOnly || updateMutation.isPending || selectedCountryOptions.length === 0}
-                      placeholder={t("companyGeographicScope.selectDefaultCountry")}
-                      noOptionsText={t("companyGeographicScope.selectOperatingCountriesFirst")}
-                    />
+                  <Stack
+                    direction={{ xs: "column", md: "row" }}
+                    spacing={{ xs: 1.5, md: 2 }}
+                    sx={{ width: "100%", minWidth: 0, mb: 2.25 }}
+                  >
                     <MySelect
                       control={control}
                       name="countryIds"
@@ -200,6 +218,7 @@ export default function CompanyGeographicScopePage() {
                       disabled={!canManage || isReadOnly || updateMutation.isPending}
                       placeholder={t("companyGeographicScope.selectCountries")}
                       noOptionsText={t("companyGeographicScope.noCountries")}
+                      sx={{ flex: { md: "1 1 0" }, minWidth: 0, width: { xs: "100%", md: "auto" } }}
                       onChange={(_, selected) => {
                         const nextIds = Array.isArray(selected)
                           ? selected.map((country) => country.id)
@@ -212,6 +231,19 @@ export default function CompanyGeographicScopePage() {
                           });
                         }
                       }}
+                    />
+                    <MySelect
+                      control={control}
+                      name="defaultCountryId"
+                      dataSource={selectedCountryOptions}
+                      label={t("companyGeographicScope.defaultOperatingCountry")}
+                      valueMember="id"
+                      displayMember="name"
+                      required
+                      disabled={!canManage || isReadOnly || updateMutation.isPending || selectedCountryOptions.length === 0}
+                      placeholder={t("companyGeographicScope.selectDefaultCountry")}
+                      noOptionsText={t("companyGeographicScope.selectOperatingCountriesFirst")}
+                      sx={{ flex: { md: "1 1 0" }, minWidth: 0, width: { xs: "100%", md: "auto" } }}
                     />
                   </Stack>
                 )}
@@ -228,13 +260,17 @@ export default function CompanyGeographicScopePage() {
                 </Stack>
               ) : null}
 
-              <Stack direction="row" sx={{ justifyContent: "flex-end", gap: 1, flexWrap: "wrap" }}>
+              <Stack
+                direction={{ xs: "column-reverse", sm: "row" }}
+                sx={{ justifyContent: "flex-end", gap: 1, flexWrap: "wrap", flexShrink: 0 }}
+              >
                 {canManage ? (
                   <Button
                     type="submit"
                     variant="contained"
                     startIcon={updateMutation.isPending ? <CircularProgress size={18} color="inherit" /> : <SaveRoundedIcon />}
                     disabled={!isDirty || isReadOnly || updateMutation.isPending}
+                    sx={{ width: { xs: "100%", sm: "auto" } }}
                   >
                     {t("companyGeographicScope.save")}
                   </Button>
