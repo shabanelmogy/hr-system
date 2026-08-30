@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-29T12:46:47.580384+00:00",
+  "generated_at": "2026-08-30T11:03:33.401531+00:00",
   "nodes": {
     "api_hrmanagementsystem_infrastructure_security_authorization_filters_tenantmemberattribute_hrmanagementsystem_infrastructure_security_authorization_filters_tenantmemberattribute": {
       "code_fingerprint": "c688d01f21cf802ce06e8127e0616e83d139f1db2d949b03d8890a7fb4da571d",
@@ -12,7 +12,7 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.6633596,
+      "score": 0.64928305,
       "source_file": "api/HrManagementSystem.Infrastructure/Security/Authorization/Filters/TenantMemberAttribute.cs",
       "status": "tentative",
       "uses": 1
@@ -28,7 +28,7 @@
           "q": "when focus input keyboard cover input"
         }
       ],
-      "score": 0.662200856,
+      "score": 0.648148895,
       "source_file": "mobile-react/app.json",
       "status": "tentative",
       "uses": 1
@@ -44,7 +44,7 @@
           "q": "create dashborad and tenetamanagement in web-next and mobile"
         }
       ],
-      "score": 0.663257972,
+      "score": 0.649183579,
       "source_file": "mobile-react/src/features/tenants/screens/TenantDashboardScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -60,7 +60,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.66368469,
+      "score": 0.649601242,
       "source_file": "web-next/package.json",
       "status": "tentative",
       "uses": 1
@@ -76,7 +76,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.663501542,
+      "score": 0.64942198,
       "source_file": "web-next/README.md",
       "status": "tentative",
       "uses": 1
@@ -92,7 +92,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.663501542,
+      "score": 0.64942198,
       "source_file": "web-next/scripts/setup-local-https.ps1",
       "status": "tentative",
       "uses": 1
@@ -108,7 +108,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.66368469,
+      "score": 0.649601242,
       "source_file": "web-next/src/app/(auth)/login/page.tsx",
       "status": "tentative",
       "uses": 1
@@ -124,7 +124,7 @@
           "q": "fix style for buton : login as admin"
         }
       ],
-      "score": 0.662291026,
+      "score": 0.648237151,
       "source_file": "web-next/src/features/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
@@ -140,7 +140,7 @@
           "q": "Fix web super-admin login failing with HTTP 307 and React minWidth DOM warning on the tenant dashboard."
         }
       ],
-      "score": 0.663959554,
+      "score": 0.649870273,
       "source_file": "web-next/src/features/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
@@ -156,7 +156,7 @@
           "q": "fix style for buton : login as admin"
         }
       ],
-      "score": 0.662291026,
+      "score": 0.648237151,
       "source_file": "web-next/src/features/auth/login/Login.tsx",
       "status": "tentative",
       "uses": 1
@@ -177,7 +177,7 @@
           "q": "create dashborad and tenetamanagement in web-next and mobile"
         }
       ],
-      "score": 1.327217526,
+      "score": 1.299053852,
       "source_file": "web-next/src/features/tenants/TenantDashboardPage.tsx",
       "status": "preferred",
       "uses": 2
@@ -193,7 +193,7 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.6633596,
+      "score": 0.64928305,
       "source_file": "web-next/src/layouts/components/sidebar/navigationConfig.tsx",
       "status": "tentative",
       "uses": 1
@@ -214,7 +214,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 1.327644244,
+      "score": 1.299471515,
       "source_file": "web-next/src/proxy.ts",
       "status": "preferred",
       "uses": 2
