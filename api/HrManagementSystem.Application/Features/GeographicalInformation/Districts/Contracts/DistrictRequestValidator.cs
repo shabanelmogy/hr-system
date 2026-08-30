@@ -63,14 +63,14 @@ public class DistrictRequestValidator : AbstractValidator<DistrictRequest>
 
     private async Task<bool> IsDistrictNameEnUniqueAsync(DistrictRequest district, CancellationToken cancellationToken) =>
         !await _districtQueries.DistrictNameEnExistsAsync(
-            district.NameEn,
+            GeographicalNameRules.Normalize(district.NameEn),
             district.StateId,
             district.Id,
             cancellationToken);
 
     private async Task<bool> IsDistrictNameArUniqueAsync(DistrictRequest district, CancellationToken cancellationToken) =>
         !await _districtQueries.DistrictNameArExistsAsync(
-            district.NameAr,
+            GeographicalNameRules.Normalize(district.NameAr),
             district.StateId,
             district.Id,
             cancellationToken);

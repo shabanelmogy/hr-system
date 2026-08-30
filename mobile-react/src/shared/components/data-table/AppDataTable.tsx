@@ -6,7 +6,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Animated, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
@@ -58,14 +58,28 @@ export interface AppDataTableRowSelection<Row> {
   onSelectionChange: (selectedRowKeys: AppDataTableRowKey[]) => void;
   header: string;
   getAccessibilityLabel: (row: Row, selected: boolean) => string;
+  /** Optionally prevents selecting rows that cannot participate in a bulk action. */
+  isRowSelectable?: (row: Row) => boolean;
   disabled?: boolean;
   columnWidth?: number;
+}
+
+export interface AppDataTableFlash {
+  /** Key of the row to highlight after a successful update. */
+  rowKey: AppDataTableRowKey;
+  /** Change this value for every update, including repeated edits to the same row. */
+  token: string | number;
+  durationMs?: number;
 }
 
 export interface AppDataTableProps<Row> {
   rows: readonly Row[];
   columns: readonly AppDataTableColumn<Row>[];
   getRowKey: (row: Row) => string | number;
+  /** Automatically highlights the first visible row as the active record. */
+  autoActivateFirstRow?: boolean;
+  /** Called when a row becomes active by touch. */
+  onRowPress?: (row: Row) => void;
   defaultPageSize?: number;
   pageSizeOptions?: readonly number[];
   emptyMessage?: string;
@@ -74,6 +88,8 @@ export interface AppDataTableProps<Row> {
   resetKey?: string | number;
   /** Optional controlled multi-row selection rendered as the first table column. */
   rowSelection?: AppDataTableRowSelection<Row>;
+  /** Optional transient success highlight for a row that was just updated. */
+  flash?: AppDataTableFlash;
   /** Controlled list state. Rows are treated as one server page and are not sorted or sliced locally. */
   serverState?: AppDataTableServerState;
 }
@@ -82,6 +98,8 @@ export function AppDataTable<Row>({
   rows,
   columns,
   getRowKey,
+  autoActivateFirstRow = true,
+  onRowPress,
   defaultPageSize = 10,
   pageSizeOptions = [5, 10, 25],
   emptyMessage,
@@ -89,6 +107,7 @@ export function AppDataTable<Row>({
   compactHeader = true,
   resetKey,
   rowSelection,
+  flash,
   serverState,
 }: AppDataTableProps<Row>) {
   const { t, i18n } = useTranslation();
@@ -97,6 +116,11 @@ export function AppDataTable<Row>({
   const footerHost = useContext(AppScreenFooterContext);
   const footerOwner = useRef(Symbol('AppDataTable pagination'));
   const previousResetKey = useRef(resetKey);
+  const previousFlash = useRef<{ rowKey: AppDataTableRowKey; token: string | number } | undefined>(undefined);
+  const hasMountedRef = useRef(false);
+  const flashProgress = useRef(new Animated.Value(0)).current;
+  const [activeRowKey, setActiveRowKey] = useState<AppDataTableRowKey | null>(null);
+  const [activeFlashRowKey, setActiveFlashRowKey] = useState<AppDataTableRowKey | null>(null);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(defaultPageSize);
   const [sort, setSort] = useState<AppDataTableSortState | null>(null);
@@ -115,10 +139,48 @@ export function AppDataTable<Row>({
     [pageSizeOptionsKey],
   );
   const selectedRowKeys = rowSelection?.selectedRowKeys;
+  const flashRowKey = flash?.rowKey;
+  const flashToken = flash?.token;
+  const flashDurationMs = flash?.durationMs;
   const selectedRowKeySet = useMemo(
     () => new Set(selectedRowKeys ?? []),
     [selectedRowKeys],
   );
+
+  useEffect(() => {
+    // A view can be mounted with an already-existing flash state when the
+    // user switches between Grid and Cards. Mark it as seen without replaying
+    // the animation; only a later token change represents a new edit.
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      if (flashRowKey !== undefined && flashToken !== undefined) {
+        previousFlash.current = { rowKey: flashRowKey, token: flashToken };
+      }
+      return;
+    }
+    if (flashRowKey === undefined || flashToken === undefined) return;
+    const isSameFlash = previousFlash.current
+      && previousFlash.current.rowKey === flashRowKey
+      && Object.is(previousFlash.current.token, flashToken);
+    if (isSameFlash) return;
+
+    previousFlash.current = { rowKey: flashRowKey, token: flashToken };
+    setActiveRowKey(flashRowKey);
+    setActiveFlashRowKey(flashRowKey);
+    const duration = flashDurationMs ?? 1400;
+    const animation = Animated.sequence([
+      Animated.timing(flashProgress, { duration: Math.round(duration * 0.28), toValue: 1, useNativeDriver: false }),
+      Animated.timing(flashProgress, { duration: Math.round(duration * 0.72), toValue: 0, useNativeDriver: false }),
+    ]);
+    flashProgress.stopAnimation();
+    flashProgress.setValue(0);
+    animation.start(({ finished }) => {
+      if (finished) setActiveFlashRowKey((current) => current === flashRowKey ? null : current);
+    });
+
+    return () => animation.stop();
+  }, [flashDurationMs, flashProgress, flashRowKey, flashToken]);
+
   const resolvedColumns = useMemo<AppDataTableColumn<Row>[]>(() => {
     if (!rowSelection) return [...columns];
 
@@ -131,23 +193,28 @@ export function AppDataTable<Row>({
         render: (row) => {
           const rowKey = getRowKey(row);
           const selected = selectedRowKeySet.has(rowKey);
+          const selectable = rowSelection.isRowSelectable?.(row) ?? true;
 
           return (
             <AppIconButton
               accessibilityState={{ selected }}
-              disabled={rowSelection.disabled}
+              color={selected ? theme.colors.accent : undefined}
+              disabled={rowSelection.disabled || !selectable}
               icon={selected ? 'checkbox' : 'square-outline'}
               label={rowSelection.getAccessibilityLabel(row, selected)}
-              onPress={() => rowSelection.onSelectionChange(
-                toggleDataTableRowSelection(rowSelection.selectedRowKeys, rowKey),
-              )}
+              onPress={() => {
+                if (!selectable) return;
+                rowSelection.onSelectionChange(
+                  toggleDataTableRowSelection(rowSelection.selectedRowKeys, rowKey),
+                );
+              }}
             />
           );
         },
       },
       ...columns,
     ];
-  }, [columns, getRowKey, rowSelection, selectedRowKeySet]);
+  }, [columns, getRowKey, rowSelection, selectedRowKeySet, theme.colors.accent]);
 
   const collator = useMemo(
     () => new Intl.Collator(i18n.language, { numeric: true, sensitivity: 'base' }),
@@ -201,6 +268,24 @@ export function AppDataTable<Row>({
       : sortedRows,
     [activePage, activePageSize, showPagination, sortedRows, usesServerState],
   );
+
+  useEffect(() => {
+    if (!autoActivateFirstRow) {
+      setActiveRowKey(null);
+      return;
+    }
+
+    const firstRow = pageRows[0];
+    if (!firstRow) {
+      setActiveRowKey(null);
+      return;
+    }
+
+    const activeIsVisible = activeRowKey !== null
+      && pageRows.some((row) => getRowKey(row) === activeRowKey);
+    if (!activeIsVisible) setActiveRowKey(getRowKey(firstRow));
+  }, [activeRowKey, autoActivateFirstRow, getRowKey, pageRows]);
+
   const pinPagination = showPagination && shouldPinPagination(
     pageRows.length,
     Boolean(footerHost),
@@ -412,26 +497,58 @@ export function AppDataTable<Row>({
             })}
           </View>
 
-          {pageRows.map((row) => (
-            <View
-              key={getRowKey(row)}
-              style={[styles.row, { direction, backgroundColor: theme.colors.surface }]}>
-              {resolvedColumns.map((column) => (
-                <View
-                  key={column.id}
-                  style={[
-                    styles.cell,
-                    {
-                      width: column.width ?? 150,
-                      borderColor: theme.colors.border,
-                      alignItems: getCellAlignment(column.align, isRTL),
-                    },
-                  ]}>
-                  {column.render(row)}
-                </View>
-              ))}
-            </View>
-          ))}
+          {pageRows.map((row) => {
+            const rowKey = getRowKey(row);
+            const isActive = activeRowKey !== null && activeRowKey === rowKey;
+            const isSelected = selectedRowKeySet.has(rowKey);
+            const isFlashed = activeFlashRowKey !== null && activeFlashRowKey === rowKey;
+            const flashBackground = flashProgress.interpolate({
+              inputRange: [0, 0.35, 0.7, 1],
+              outputRange: [theme.colors.surface, toRgba(theme.colors.success, 0.16), toRgba(theme.colors.success, 0.3), theme.colors.surface],
+            });
+
+            return (
+            <Animated.View
+              key={rowKey}
+              style={[
+                styles.row,
+                {
+                  direction,
+                  backgroundColor: isFlashed
+                    ? flashBackground
+                    : isSelected
+                      ? toRgba(theme.colors.accent, 0.18)
+                      : isActive
+                        ? toRgba(theme.colors.secondary, 0.14)
+                      : theme.colors.surface,
+                  borderStartColor: isSelected ? theme.colors.accent : theme.colors.secondary,
+                  borderStartWidth: isSelected || isActive ? 3 : 0,
+                },
+              ]}>
+              <Pressable
+                onPress={() => {
+                  setActiveRowKey(rowKey);
+                  onRowPress?.(row);
+                }}
+                style={styles.rowPressable}>
+                {resolvedColumns.map((column) => (
+                  <View
+                    key={column.id}
+                    style={[
+                      styles.cell,
+                      {
+                        width: column.width ?? 150,
+                        borderColor: theme.colors.border,
+                        alignItems: getCellAlignment(column.align, isRTL),
+                      },
+                    ]}>
+                    {column.render(row)}
+                  </View>
+                ))}
+              </Pressable>
+            </Animated.View>
+            );
+          })}
         </View>
       </ScrollView>
 
@@ -440,9 +557,23 @@ export function AppDataTable<Row>({
   );
 }
 
+function toRgba(color: string, alpha: number): string {
+  const hex = color.trim().replace(/^#/, '');
+  if (/^[0-9a-f]{3}$/i.test(hex)) {
+    const [r, g, b] = hex.split('').map((value) => Number.parseInt(`${value}${value}`, 16));
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+  if (/^[0-9a-f]{6}$/i.test(hex)) {
+    const value = Number.parseInt(hex, 16);
+    return `rgba(${value >> 16}, ${(value >> 8) & 255}, ${value & 255}, ${alpha})`;
+  }
+  return color;
+}
+
 const styles = StyleSheet.create({
   root: { width: '100%', overflow: 'hidden', borderWidth: 1 },
   row: { minHeight: 52, flexDirection: 'row', alignItems: 'stretch' },
+  rowPressable: { flex: 1, flexDirection: 'row', alignItems: 'stretch' },
   cell: {
     minHeight: 52,
     justifyContent: 'center',

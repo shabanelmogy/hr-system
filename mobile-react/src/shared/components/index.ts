@@ -29,6 +29,7 @@ export * from './layout/AppScreen';
 export * from './multi-view';
 export * from './pagination';
 export * from './surfaces/AppCard';
+export * from './surfaces/AppDataCard';
 export * from './surfaces/AppMetricCard';
 export * from './surfaces/AppModal';
 export * from './typography/AppText';

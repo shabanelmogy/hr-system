@@ -223,12 +223,12 @@ export function useBulkArchiveFeatures() {
 ### Step 7 — Card Component (`components/{Feature}Card.tsx`)
 
 ```tsx
-import { AppCard, AppIcon, AppIconButton, AppStatusBadge, AppText } from '@/src/shared/components';
+import { AppDataCard, AppIcon, AppIconButton, AppStatusBadge, AppText } from '@/src/shared/components';
 
-export function FeatureCard({ item, canEdit, canDelete, onEdit, onArchive, onRestore, onView }) {
+export function FeatureCard({ item, active, canEdit, canDelete, selected, flash, flashToken, onEdit, onArchive, onRestore, onToggleSelection, onView }) {
   const archived = item.isDeleted;
   return (
-    <AppCard padding="sm">
+    <AppDataCard active={active} flash={flash} flashToken={flashToken} padding="sm" selected={selected}>
       <View style={styles.header}>
         <AppIcon ... />
         <View style={styles.name}>
@@ -238,11 +238,12 @@ export function FeatureCard({ item, canEdit, canDelete, onEdit, onArchive, onRes
         <AppStatusBadge color={archived ? theme.colors.warning : theme.colors.success} label={...} />
       </View>
       <View style={styles.actions}>
+        {canDelete && !archived ? <AppIconButton accessibilityState={{ selected }} color={selected ? theme.colors.accent : undefined} icon={selected ? 'checkbox' : 'square-outline'} onPress={() => onToggleSelection(item)} /> : null}
         <AppIconButton icon="eye-outline" onPress={() => onView(item)} />
         {canEdit && !archived ? <AppIconButton icon="create-outline" onPress={() => onEdit(item)} /> : null}
         {canDelete ? <AppIconButton icon={archived ? 'refresh-outline' : 'archive-outline'} onPress={() => archived ? onRestore(item) : onArchive(item)} /> : null}
       </View>
-    </AppCard>
+    </AppDataCard>
   );
 }
 ```
@@ -308,7 +309,7 @@ The screen uses:
 ```tsx
 import { toApiPageNumber, useServerListState } from '@/src/shared/listing';
 import {
-  AppButton, AppDataTable, AppIconButton, AppListScreen,
+  AppButton, AppDataTable, type AppDataTableFlash, AppIconButton, AppListScreen,
   AppPageHeader, AppScreen, AppStateView, ConfirmationDialog, showToast,
 } from '@/src/shared/components';
 
@@ -524,6 +525,98 @@ const clearBulkSelection = useCallback(() => { setSelectedIds([]); }, []);
 const changeSearch = useCallback((value) => { clearBulkSelection(); setListSearchInput(value); }, [...]);
 ```
 
+The shared table already provides the mobile equivalent of the web grid
+selection model. Do not add bespoke checkbox columns in feature screens. Keep
+the selected IDs controlled by the feature, disable rows that cannot participate
+in the action, and render the bulk Archive button through `aboveViews` so the
+same action is available from table and card views. Archive is the reversible
+delete lifecycle used by the current API; a hard delete requires an explicit
+API contract and separate authorization.
+
+```tsx
+const [selectedIds, setSelectedIds] = useState<number[]>([]);
+
+<AppDataTable
+  columns={columns}
+  getRowKey={(item) => item.id}
+  rowSelection={canDelete ? {
+    header: t('dataTable.select'),
+    selectedRowKeys: selectedIds,
+    isRowSelectable: (item) => !item.isDeleted,
+    getAccessibilityLabel: (item) => t('feature.selectItem', { name: item.nameEn }),
+    onSelectionChange: (keys) => setSelectedIds(
+      keys.filter((key): key is number => typeof key === 'number'),
+    ),
+  } : undefined}
+  rows={items}
+  showPagination={false}
+  serverState={serverState}
+/>
+```
+
+### Edit Flash Feedback
+
+After a successful edit, pass a new `AppDataTableFlash` token with the edited
+row key. The token must change even when the same row is edited repeatedly.
+`AppDataTable` and `AppDataCard` own the short animated success highlight and
+resolve it from the active theme, so feature code must not create timers,
+hard-coded colors, or duplicate row/card styling. Do not flash after a create
+when the newly created row is not guaranteed to be present on the current
+server page.
+
+```tsx
+const [flash, setFlash] = useState<AppDataTableFlash>();
+
+const editingId = formMode === 'edit' ? selected?.id ?? null : null;
+await saveMutation.mutateAsync({ id: editingId, request });
+if (editingId !== null) {
+  setFlash((current) => ({
+    rowKey: editingId,
+    token: (typeof current?.token === 'number' ? current.token : 0) + 1,
+  }));
+}
+```
+
+The selection and flash contracts are domain-neutral and exported from
+`src/shared/components/data-table`; extend those contracts before creating a
+feature-local table behavior.
+
+### Active row and card selection
+
+`AppDataTable` and `AppDataCard` deliberately separate three states:
+
+- **Active:** the first visible record is highlighted with the secondary theme
+  color (and a row/card accent). Touching a different record moves this visual
+  focus. It is not selected.
+- **Selected:** controlled by the feature's `selectedIds` and used by bulk
+  actions. It has a distinct palette accent-color treatment (`theme.colors.accent`)
+  and must not be inferred from the active record or hard-coded to blue/green.
+- **Flashing:** a short success animation after an edit, driven by the shared
+  `{ rowKey, token }` contract. Increment the token for repeated edits. A
+  mounted view marks an existing token as seen, so switching between Grid and
+  Cards never replays an old animation.
+
+Card views must expose the same selection affordance as table views and use the
+shared card surface rather than reimplementing colors or timers:
+
+```tsx
+{items.map((item, index) => (
+  <FeatureCard
+    key={item.id}
+    active={index === 0}
+    selected={selectedIds.includes(item.id)}
+    flash={flash?.rowKey === item.id}
+    flashToken={flash?.token}
+    onToggleSelection={toggleSelection}
+    item={item}
+  />
+))}
+```
+
+Do not auto-check the first row/card when bulk selection is enabled. This
+prevents an accidental archive/delete operation while still giving the user a
+clear current-record focus.
+
 ### Chart View
 
 Use the shared `AppChartCard`, `AppChartSummary`, `AppHorizontalBarChart`, and
@@ -589,7 +682,8 @@ renders regardless of list data and never owns list pagination:
 | `AppScreen` | Screen wrapper with safe area + RefreshControl |
 | `AppPageHeader` | Title + subtitle + action buttons |
 | `AppListScreen` | Search + filter + multi-view (unified layout) |
-| `AppDataTable` | Sortable table with server pagination |
+| `AppDataTable` | Sortable table with server pagination, active-first-row focus, controlled row selection, eligible-row guards, and themed edit flash |
+| `AppDataCard` | Shared card-view surface for active/selected states and the same themed edit flash |
 | `AppChartCard` | Compact shared chart panel |
 | `AppChartSummary` | Responsive page/global metric summary |
 | `AppHorizontalBarChart` | Accessible categorical comparison |
@@ -631,6 +725,9 @@ renders regardless of list data and never owns list pagination:
 - [ ] Detail query/key exists only when list rows are not authoritative for view/edit
 - [ ] Invalidating mutation wrapper
 - [ ] Card component with actions gated by permissions + isDeleted
+- [ ] Card component uses `AppDataCard` with `active`, controlled `selected`, and
+  the same edit `flash`/`flashToken` as the table; its checkbox is permission
+  guarded and never auto-checked
 - [ ] Form component with AppForm + AppFormSection + useZodForm + Controller
 - [ ] Screen uses `useServerListState` with initial sort/filters/pageSize
 - [ ] Screen uses `AppListScreen` with:
@@ -641,6 +738,8 @@ renders regardless of list data and never owns list pagination:
   - [ ] `showViewLabels`
   - [ ] `fillViewSelector` when all view buttons must share the full toolbar width
   - [ ] Table view with `AppDataTable` + `serverState`
+  - [ ] Table bulk selection uses shared `rowSelection` (no local checkbox column)
+  - [ ] `isRowSelectable` excludes archived/ineligible rows and selected IDs are type-normalized
   - [ ] Cards view with `scrollable: true` + `defaultPageSize: 3`
   - [ ] Chart decision recorded as Required/Deferred/Excluded
   - [ ] Required list-backed Chart labels loaded-page metrics and authoritative total separately
@@ -649,6 +748,9 @@ renders regardless of list data and never owns list pagination:
   - [ ] Required Managed Crystal view uses manager catalog/render by `entityKey`
   - [ ] Report view uses `paginate: false` + `renderWhenEmpty: true` and no pager
 - [ ] Bulk selection cleared on search/page/filter changes
+- [ ] Bulk action is permission/read-only guarded and uses the shared confirmation path
+- [ ] Successful edits pass a new `AppDataTableFlash` token; repeated edits flash again
+- [ ] Switching between Grid and Cards does not replay an existing flash token
 - [ ] Every serialized criterion has a visible control and reset path; no hidden filter state
 - [ ] Archive/restore gated by `isReadOnly` + `notifyBlockedAction`
 - [ ] `ConfirmationDialog` for archive + bulk archive
@@ -671,6 +773,10 @@ renders regardless of list data and never owns list pagination:
 - Do not skip Zod validation — parse every response
 - Do not put form logic in the screen — extract to a Form component with `useZodForm`
 - Do not forget `clearBulkSelection` when changing search/page/filters
+- Do not rebuild table checkbox columns or bulk-action selection locally; use
+  `AppDataTable.rowSelection` and `isRowSelectable`
+- Do not implement edit-flash timers or hard-coded row colors in feature code;
+  pass an incrementing `AppDataTableFlash` token
 - Do not keep API-supported criteria or detail hooks in client state when the current UI/runtime contract does not use them
 - Do not forget `_layout.tsx` in nested route directories — causes drawer item leak
 - Do not use `toolbarContent` on `AppMultiView` directly — use `AppListScreen` which wraps it

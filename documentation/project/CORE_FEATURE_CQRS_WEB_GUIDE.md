@@ -439,6 +439,18 @@ page only when record navigation crosses a page boundary, then selects the
 target record. Do not expose the UI-library default pager or change a server
 list to client mode merely to imitate the Districts footer.
 
+The reusable `MyDataGrid` also marks the first visible row as the active record
+on load and after the current active row leaves the loaded page. The active row
+is separate from checkbox selection used by bulk actions, so bulk-capable grids
+do not preselect a record for deletion. Record arrows use this active marker and
+start at the first item of a newly loaded page, including after a filter or
+server-page transition.
+
+After a successful edit, `MyDataGrid` briefly flashes the edited row with the
+shared success color and then leaves the normal edited marker until the shared
+CRUD cleanup clears it. The animation is disabled for users who request reduced
+motion; features must not recreate this feedback locally.
+
 The default adaptive boundary is 5000 rows. At or below the boundary, the data
 controller may load the complete filtered/sorted result and configure the same
 `MyDataGrid` with `paginationMode="client"`. Above it, the controller keeps

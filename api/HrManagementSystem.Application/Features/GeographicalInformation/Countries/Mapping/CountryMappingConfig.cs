@@ -1,4 +1,5 @@
 using HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts;
+using HrManagementSystem.Application.Features.GeographicalInformation.Validation;
 using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
 using Mapster;
 
@@ -9,8 +10,8 @@ public sealed class CountryMappingConfig : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<CountryMutation, Country>()
-            .Map(destination => destination.NameAr, source => source.NameAr.Trim())
-            .Map(destination => destination.NameEn, source => source.NameEn.Trim())
+            .Map(destination => destination.NameAr, source => GeographicalNameRules.Normalize(source.NameAr))
+            .Map(destination => destination.NameEn, source => GeographicalNameRules.Normalize(source.NameEn))
             .Map(destination => destination.Alpha2Code, source => NormalizeUpper(source.Alpha2Code))
             .Map(destination => destination.Alpha3Code, source => NormalizeUpper(source.Alpha3Code))
             .Map(destination => destination.PhoneCode, source => NormalizeOptional(source.PhoneCode))

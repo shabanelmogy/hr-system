@@ -10,6 +10,7 @@ import { toApiPageNumber, useServerListState } from '@/src/shared/listing';
 import {
   AppButton,
   AppDataTable,
+  type AppDataTableFlash,
   type AppDataTableColumn,
   AppIconButton,
   AppListScreen,
@@ -66,6 +67,7 @@ export function CountriesScreen() {
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [pendingAction, setPendingAction] = useState<PendingAction>(null);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [flash, setFlash] = useState<AppDataTableFlash>();
   const rows = countriesQuery.data?.items ?? [];
   const setListSearchInput = list.setSearchInput;
   const setListPage = list.setPage;
@@ -130,7 +132,11 @@ export function CountriesScreen() {
     const authorized = formMode === 'edit' ? isEditAuthorized : isCreateAuthorized;
     if (!authorized) return;
     try {
-      await saveMutation.mutateAsync({ id: formMode === 'edit' ? selectedCountry?.id ?? null : null, request });
+      const editingId = formMode === 'edit' ? selectedCountry?.id ?? null : null;
+      await saveMutation.mutateAsync({ id: editingId, request });
+      if (editingId !== null) {
+        setFlash((current) => ({ rowKey: editingId, token: (typeof current?.token === 'number' ? current.token : 0) + 1 }));
+      }
       closeForm();
       showToast.success(t('countries.saved'));
     } catch (error) {
@@ -200,8 +206,8 @@ export function CountriesScreen() {
       showResultCount={false}
       showViewLabels
       views={[
-        { value: 'table', icon: 'grid-outline', label: t('multiView.table'), defaultPageSize: 5, render: (items) => <AppDataTable columns={columns} getRowKey={(country) => country.id} rows={items} showPagination={false} serverState={{ onPageChange: changePage, onPageSizeChange: changePageSize, onSortChange: changeSort, page: list.state.page, pageSize: list.state.pageSize, sort: list.state.sort, totalRows: countriesQuery.data?.metaData.totalCount ?? 0 }} /> },
-        { value: 'cards', icon: 'albums-outline', label: t('multiView.cards'), defaultPageSize: 3, scrollable: true, render: (items) => <View style={styles.cards}>{items.map((country) => <CountryCard canDelete={canDelete} canEdit={canEdit} country={country} key={country.id} onArchive={(item) => setPendingAction({ kind: 'archive', country: item })} onEdit={(item) => openForm('edit', item)} onRestore={(item) => void restore(item)} onToggleSelection={toggleSelection} onView={(item) => openForm('view', item)} selected={selectedIds.includes(country.id)} />)}</View> },
+        { value: 'table', icon: 'grid-outline', label: t('multiView.table'), defaultPageSize: 5, render: (items) => <AppDataTable columns={columns} flash={flash} getRowKey={(country) => country.id} rowSelection={canDelete ? { getAccessibilityLabel: (country) => t('countries.selectCountry', { name: country.nameEn }), header: t('dataTable.select'), isRowSelectable: (country) => !country.isDeleted, onSelectionChange: (keys) => setSelectedIds(keys.filter((key): key is number => typeof key === 'number')), selectedRowKeys: selectedIds } : undefined} rows={items} showPagination={false} serverState={{ onPageChange: changePage, onPageSizeChange: changePageSize, onSortChange: changeSort, page: list.state.page, pageSize: list.state.pageSize, sort: list.state.sort, totalRows: countriesQuery.data?.metaData.totalCount ?? 0 }} /> },
+        { value: 'cards', icon: 'albums-outline', label: t('multiView.cards'), defaultPageSize: 3, scrollable: true, render: (items) => <View style={styles.cards}>{items.map((country, index) => <CountryCard active={index === 0} canDelete={canDelete} canEdit={canEdit} country={country} flash={flash?.rowKey === country.id} flashToken={flash?.token} key={country.id} onArchive={(item) => setPendingAction({ kind: 'archive', country: item })} onEdit={(item) => openForm('edit', item)} onRestore={(item) => void restore(item)} onToggleSelection={toggleSelection} onView={(item) => openForm('view', item)} selected={selectedIds.includes(country.id)} />)}</View> },
         { value: 'chart', icon: 'stats-chart-outline', label: t('countries.chartView'), paginate: false, renderWhenEmpty: true, scrollable: true, render: (items) => <CountriesChartView countries={items} totalCount={countriesQuery.data?.metaData.totalCount ?? 0} /> },
         { value: 'report', icon: 'document-text-outline', label: t('countries.reportView'), paginate: false, renderWhenEmpty: true, render: () => <CountryReportView /> },
         ...(canCreate ? [{ value: 'import' as const, icon: 'cloud-upload-outline' as const, label: t('countries.importView'), paginate: false, renderWhenEmpty: true, scrollable: true, render: () => <CountryImportView /> }] : []),

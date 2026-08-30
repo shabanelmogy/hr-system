@@ -147,6 +147,7 @@ export const enAdministrationTenants = {
     },
   },
   dataTable: {
+    select: 'Select',
     empty: 'No records found.',
     rowsPerPage: 'Rows',
     usePageSize: 'Show {{count}} rows per page',

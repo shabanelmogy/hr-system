@@ -29,8 +29,9 @@ public sealed class EgyptGeographicSeedTests
         Assert.Equal("Egypt", egypt.NameEn);
         Assert.Equal(27, states.Count);
         Assert.Equal(27, states.Select(state => state.Code).Distinct(StringComparer.Ordinal).Count());
-        Assert.Contains(states, state => state.Code == "C" && state.NameEn == "Cairo");
+        Assert.Contains(states, state => state.Code == "CAI" && state.NameEn == "Cairo");
         Assert.Contains(states, state => state.Code == "ALX" && state.NameAr == "الإسكندرية");
+        Assert.All(states, state => Assert.InRange(state.Code.Length, 2, 10));
         Assert.All(states, state => Assert.False(state.IsDeleted));
     }
 
@@ -100,7 +101,7 @@ public sealed class EgyptGeographicSeedTests
         var editedCairo = new State
         {
             CountryId = egypt.Id,
-            Code = "C",
+            Code = "CAI",
             NameAr = "القاهرة",
             NameEn = "Cairo custom",
             CreatedById = "seed-user"
@@ -110,9 +111,9 @@ public sealed class EgyptGeographicSeedTests
 
         await EgyptGeographicSeed.SeedAsync(context);
 
-        var state = await context.States.SingleAsync(item => item.Code == "C");
+        var state = await context.States.SingleAsync(item => item.Code == "CAI");
         Assert.Equal("Cairo custom", state.NameEn);
-        Assert.Equal("C", state.Code);
+        Assert.Equal("CAI", state.Code);
         Assert.Equal(27, await context.States.CountAsync());
     }
 

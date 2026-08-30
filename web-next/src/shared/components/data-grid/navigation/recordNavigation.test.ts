@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   getActiveRecordIndex,
   getPageForRecord,
+  getNextRecordIndex,
   getServerRecordIndex,
 } from "./recordNavigation";
 
@@ -27,6 +28,12 @@ describe("record navigation", () => {
   it("maps records to pages without a zero-page-size failure", () => {
     expect(getPageForRecord(11, 5)).toBe(2);
     expect(getPageForRecord(3, 0)).toBe(3);
+  });
+
+  it("starts next navigation at the first item when no active row is visible", () => {
+    expect(getNextRecordIndex(5, false, 1, 5, 12)).toBe(5);
+    expect(getNextRecordIndex(5, true, 1, 5, 12)).toBe(6);
+    expect(getNextRecordIndex(-1, false, 4, 5, 12)).toBe(11);
   });
 
   it("maps a selected server-page row to its authoritative record position", () => {

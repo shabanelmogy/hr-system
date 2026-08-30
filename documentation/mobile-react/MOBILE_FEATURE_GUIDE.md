@@ -92,7 +92,8 @@ this pattern. It demonstrates a feature-owned endpoint/schema boundary, stable q
 keys, one server list state shared by table and card views, table page size 5,
 card page size 3,
 Created On descending order, permission and tenant read-only guards, archive/restore,
-and atomic bulk archive. Copy the pattern, not Countries' global-data ownership;
+atomic bulk archive, controlled table selection, and themed edit flash feedback.
+Copy the pattern, not Countries' global-data ownership;
 tenant/company HR features must add their own trusted scope rules in the API.
 
 ```tsx
@@ -137,6 +138,63 @@ const query = useEmployees({
   `AppDataTable.rowSelection` contract instead of rebuilding checkbox cells.
   The feature owns selected IDs and their lifecycle across search/page changes,
   while the shared table owns the accessible selection column and touch target.
+- Use `rowSelection.isRowSelectable` for lifecycle rules (for example, active
+  rows can be archived while already archived rows are disabled). The bulk
+  action belongs in `AppListScreen.aboveViews`, remains permission/read-only
+  guarded, and must use the same confirmation and mutation path as the card
+  view. In this application “delete” is the reversible Archive operation;
+  do not introduce a hard-delete button unless the API contract explicitly
+  supports one.
+- Keep selection controlled by feature IDs, normalize table keys back to the
+  feature ID type, and clear them whenever search, filter, sort, page, or page
+  size changes. This prevents a bulk action from silently targeting rows that
+  are no longer visible or eligible.
+- `AppDataTable` highlights the first visible row with the themed secondary
+  color and moves that active highlight when a row is touched. Active is a
+  visual focus only; it must never pre-select a row for a destructive bulk
+  action. Selected rows use `theme.colors.accent`, so the treatment follows the
+  selected green/orange/blue/monochrome palette rather than a hard-coded color.
+- Card views use the shared `AppDataCard`: pass `active={index === 0}` for the
+  first visible card, `selected={selectedIds.includes(item.id)}` for controlled
+  bulk selection, and the same `flash` key/token used by the table. This keeps
+  table and card feedback consistent without feature-local timers or colors.
+- A successful edit may highlight its row through the shared `flash` contract.
+  Pass the edited row key and increment a numeric/string token for every save,
+  including repeated saves of the same row. `AppDataTable` and `AppDataCard`
+  own the transient themed animation; screens must not duplicate row/card
+  background timers or use hard-coded colors. Existing flash state is marked as
+  seen when a view is first mounted, so switching between Grid and Cards does
+  not replay an old flash; only a new token (the edit event) starts it.
+
+```tsx
+const [flash, setFlash] = useState<AppDataTableFlash>();
+
+// after a successful edit (not after create):
+if (editingId !== null) {
+  setFlash((current) => ({
+    rowKey: editingId,
+    token: (typeof current?.token === 'number' ? current.token : 0) + 1,
+  }));
+}
+
+<AppDataTable
+  columns={columns}
+  flash={flash}
+  getRowKey={(item) => item.id}
+  rowSelection={canDelete ? {
+    header: t('dataTable.select'),
+    selectedRowKeys: selectedIds,
+    isRowSelectable: (item) => !item.isDeleted,
+    getAccessibilityLabel: (item) => t('feature.selectItem', { name: item.nameEn }),
+    onSelectionChange: (keys) => setSelectedIds(
+      keys.filter((key): key is number => typeof key === 'number'),
+    ),
+  } : undefined}
+  rows={items}
+  showPagination={false}
+  serverState={serverState}
+/>
+```
 
 ### Chart view contract
 
@@ -284,6 +342,9 @@ access; both direct handlers check tenant read-only before permission denial.
 - Every literal `t('namespace.key')` in `app/` and `src/` must resolve in both
   EN and AR. Keep the source-usage translation test green so a missing key can
   never reach a device as its raw dotted identifier.
+- Keep generic table labels such as `dataTable.select` in the paired shared
+  translation resources; feature namespaces should contain only feature-specific
+  accessibility wording (for example, which country or state is being selected).
 - Use semantic accessibility roles/states and at least 44x44 touch targets.
 - Verify dynamic text, long Arabic labels and screen-reader order.
 

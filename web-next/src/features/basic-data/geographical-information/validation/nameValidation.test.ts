@@ -15,4 +15,8 @@ describe("geographical name validation", () => {
     expect(isValidGeographicalName("Cairo\nSouth")).toBe(false);
     expect(() => createGeographicalNameSchema(t).parse("Cairo\nSouth")).toThrow();
   });
+
+  it("trims and canonicalizes Unicode before enforcing length", () => {
+    expect(createGeographicalNameSchema(t).parse(" Cafe\u0301 ")).toBe("Café");
+  });
 });

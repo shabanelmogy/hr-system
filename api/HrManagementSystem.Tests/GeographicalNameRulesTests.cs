@@ -40,9 +40,38 @@ public sealed class GeographicalNameRulesTests
     }
 
     [Fact]
+    public void RejectsMalformedUtf16WithoutThrowing()
+    {
+        Assert.False(GeographicalNameRules.IsValid("\uD800"));
+    }
+
+    [Fact]
     public void RejectsBlankNames()
     {
         Assert.False(GeographicalNameRules.IsValid("   "));
+    }
+
+    [Fact]
+    public void Normalize_TrimsAndUsesCanonicalUnicodeForm()
+    {
+        var decomposed = "  Cafe\u0301  ";
+
+        Assert.Equal("Café", GeographicalNameRules.Normalize(decomposed));
+        Assert.True(GeographicalNameRules.IsValid(decomposed));
+    }
+
+    [Fact]
+    public void SharedValidator_CanonicalizesTheRequestBeforeLengthAndPersistenceChecks()
+    {
+        var request = new NameRequest("  Cafe\u0301  ");
+        var validator = new InlineValidator<NameRequest>();
+        validator.RuleFor(item => item.Name)
+            .GeographicalName(new EchoStringLocalizer(), nameof(NameRequest.Name));
+
+        var result = validator.Validate(request);
+
+        Assert.True(result.IsValid);
+        Assert.Equal("Café", request.Name);
     }
 
     private sealed record NameRequest(string Name);

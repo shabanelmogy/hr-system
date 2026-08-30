@@ -1,3 +1,4 @@
+using HrManagementSystem.Application.Features.GeographicalInformation.Validation;
 using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.States.Entities;
 
@@ -10,7 +11,7 @@ namespace HrManagementSystem.Infrastructure.Persistence.Seeds;
 /// </summary>
 public static class EgyptGeographicSeed
 {
-    public const string Version = "2026.08.30.1";
+    public const string Version = "2026.08.30.2";
 
     private const string EgyptAlpha2Code = "EG";
     private const string EgyptArabicName = "مصر";
@@ -24,7 +25,7 @@ public static class EgyptGeographicSeed
         new("BA", "البحر الأحمر", "Red Sea"),
         new("BH", "البحيرة", "Beheira"),
         new("BNS", "بني سويف", "Beni Suef"),
-        new("C", "القاهرة", "Cairo"),
+        new("CAI", "القاهرة", "Cairo"),
         new("DK", "الدقهلية", "Dakahlia"),
         new("DT", "دمياط", "Damietta"),
         new("FYM", "الفيوم", "Faiyum"),
@@ -191,11 +192,13 @@ public static class EgyptGeographicSeed
         string.Equals(NormalizeCode(value), expected, StringComparison.Ordinal);
 
     private static bool IsSameName(string? value, string expected) =>
-        string.Equals(Normalize(value), Normalize(expected), StringComparison.OrdinalIgnoreCase);
+        string.Equals(
+            GeographicalNameRules.Normalize(value),
+            GeographicalNameRules.Normalize(expected),
+            StringComparison.OrdinalIgnoreCase);
 
-    private static string Normalize(string? value) => value?.Trim() ?? string.Empty;
-
-    private static string NormalizeCode(string? value) => Normalize(value).ToUpperInvariant();
+    private static string NormalizeCode(string? value) =>
+        GeographicalNameRules.Normalize(value).ToUpperInvariant();
 
     private sealed record GovernorateDefinition(string Code, string NameAr, string NameEn);
 }

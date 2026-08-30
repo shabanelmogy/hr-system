@@ -1,4 +1,5 @@
 using HrManagementSystem.Application.Features.GeographicalInformation.Districts.Abstractions;
+using HrManagementSystem.Application.Features.GeographicalInformation.Validation;
 
 namespace HrManagementSystem.Infrastructure.Features.GeographicalInformation.Districts.Persistence;
 
@@ -9,34 +10,43 @@ public sealed class DistrictValidationQueries(ApplicationDbContext context)
         string name,
         int stateId,
         int? excludedId,
-        CancellationToken cancellationToken) =>
-        context.Districts.AnyAsync(
-            district => district.NameEn == name &&
+        CancellationToken cancellationToken)
+    {
+        var normalizedName = GeographicalNameRules.Normalize(name);
+        return context.Districts.AnyAsync(
+            district => district.NameEn == normalizedName &&
                         district.StateId == stateId &&
                         (!excludedId.HasValue || district.Id != excludedId.Value),
             cancellationToken);
+    }
 
     public Task<bool> DistrictNameArExistsAsync(
         string name,
         int stateId,
         int? excludedId,
-        CancellationToken cancellationToken) =>
-        context.Districts.AnyAsync(
-            district => district.NameAr == name &&
+        CancellationToken cancellationToken)
+    {
+        var normalizedName = GeographicalNameRules.Normalize(name);
+        return context.Districts.AnyAsync(
+            district => district.NameAr == normalizedName &&
                         district.StateId == stateId &&
                         (!excludedId.HasValue || district.Id != excludedId.Value),
             cancellationToken);
+    }
 
     public Task<bool> DistrictCodeExistsAsync(
         string code,
         int stateId,
         int? excludedId,
-        CancellationToken cancellationToken) =>
-        context.Districts.AnyAsync(
-            district => district.Code == code &&
+        CancellationToken cancellationToken)
+    {
+        var normalizedCode = NormalizeCode(code);
+        return context.Districts.AnyAsync(
+            district => district.Code == normalizedCode &&
                         district.StateId == stateId &&
                         (!excludedId.HasValue || district.Id != excludedId.Value),
             cancellationToken);
+    }
 
     public Task<bool> DistrictExistsAsync(int id, CancellationToken cancellationToken) =>
         context.Districts.AnyAsync(
@@ -48,4 +58,7 @@ public sealed class DistrictValidationQueries(ApplicationDbContext context)
             .Where(district => district.Id == districtId && !district.IsDeleted)
             .Select(district => (int?)district.StateId)
             .FirstOrDefaultAsync(cancellationToken);
+
+    private static string NormalizeCode(string? value) =>
+        string.IsNullOrWhiteSpace(value) ? string.Empty : value.Trim().ToUpperInvariant();
 }

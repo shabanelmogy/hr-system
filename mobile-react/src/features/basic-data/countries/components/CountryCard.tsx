@@ -3,13 +3,16 @@ import { useTranslation } from 'react-i18next';
 
 import { useAppTheme } from '@/src/core/theme';
 import type { Country } from '../types/country';
-import { AppCard, AppIcon, AppIconButton, AppStatusBadge, AppText } from '@/src/shared/components';
+import { AppDataCard, AppIcon, AppIconButton, AppStatusBadge, AppText } from '@/src/shared/components';
 
 interface CountryCardProps {
   country: Country;
   canEdit: boolean;
   canDelete: boolean;
   selected: boolean;
+  active?: boolean;
+  flash?: boolean;
+  flashToken?: string | number;
   onEdit: (country: Country) => void;
   onArchive: (country: Country) => void;
   onRestore: (country: Country) => void;
@@ -17,12 +20,12 @@ interface CountryCardProps {
   onToggleSelection: (country: Country) => void;
 }
 
-export function CountryCard({ country, canEdit, canDelete, selected, onEdit, onArchive, onRestore, onView, onToggleSelection }: CountryCardProps) {
+export function CountryCard({ country, canEdit, canDelete, selected, active = false, flash = false, flashToken, onEdit, onArchive, onRestore, onView, onToggleSelection }: CountryCardProps) {
   const { t } = useTranslation();
   const { theme } = useAppTheme();
   const archived = country.isDeleted;
   return (
-    <AppCard padding="sm" style={styles.card}>
+    <AppDataCard active={active} flash={flash} flashToken={flashToken} padding="sm" selected={selected} style={styles.card}>
       <View style={styles.header}>
         <View style={[styles.icon, { backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radius.sm }]}>
           <AppIcon color={theme.colors.primary} name="flag-outline" size={21} />
@@ -38,12 +41,12 @@ export function CountryCard({ country, canEdit, canDelete, selected, onEdit, onA
         <AppText color="muted" variant="caption">{t('countries.statesCount', { count: country.statesCount })}</AppText>
       </View>
       <View style={styles.actions}>
-        {canDelete && !archived ? <AppIconButton icon={selected ? 'checkbox' : 'square-outline'} label={t('countries.selectCountry', { name: country.nameEn })} onPress={() => onToggleSelection(country)} /> : null}
+        {canDelete && !archived ? <AppIconButton accessibilityState={{ selected }} color={selected ? theme.colors.accent : undefined} icon={selected ? 'checkbox' : 'square-outline'} label={t('countries.selectCountry', { name: country.nameEn })} onPress={() => onToggleSelection(country)} /> : null}
         <AppIconButton icon="eye-outline" label={t('countries.viewCountry')} onPress={() => onView(country)} />
         {canEdit && !archived ? <AppIconButton icon="create-outline" label={t('countries.editCountry')} onPress={() => onEdit(country)} /> : null}
         {canDelete ? <AppIconButton icon={archived ? 'refresh-outline' : 'archive-outline'} label={t(archived ? 'countries.restore' : 'countries.archive')} onPress={() => archived ? onRestore(country) : onArchive(country)} /> : null}
       </View>
-    </AppCard>
+    </AppDataCard>
   );
 }
 const styles = StyleSheet.create({

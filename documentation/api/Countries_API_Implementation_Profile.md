@@ -89,7 +89,7 @@ Registration and composition also require:
 | Property | Contract |
 |---|---|
 | `Id` | Database integer identity |
-| `NameAr`, `NameEn` | Required, trimmed printable Unicode display names, 2-100 characters, unique individually; spaces, digits, and punctuation are allowed, while control characters and line breaks are rejected |
+| `NameAr`, `NameEn` | Required, trimmed and Unicode-NFC normalized printable Unicode display names, 2-100 characters, unique individually; spaces, digits, and punctuation are allowed, while control characters and line breaks are rejected |
 | `Alpha2Code` | Nullable, maximum 2, filtered unique index |
 | `Alpha3Code` | Nullable, maximum 3, filtered unique index |
 | `PhoneCode` | Nullable, maximum 10 |
@@ -104,7 +104,7 @@ record is restored or changed through an approved workflow.
 
 `CountryMappingConfig` is the mutation normalization boundary:
 
-- trim printable Unicode Arabic/English display names; no language-specific
+- trim and Unicode-NFC normalize printable Unicode Arabic/English display names; no language-specific
   script restriction is applied;
 - trim and uppercase Alpha-2, Alpha-3 and currency;
 - trim phone code;

@@ -66,7 +66,7 @@ public class StateRequestValidator : AbstractValidator<StateRequest>
         if (string.IsNullOrWhiteSpace(state.NameEn) || state.CountryId <= 0)
             return true;
 
-        var nameEn = state.NameEn.Trim();
+        var nameEn = GeographicalNameRules.Normalize(state.NameEn);
         var stateId = state.Id;
 
         return !await _stateQueries.StateNameEnExistsAsync(
@@ -81,7 +81,7 @@ public class StateRequestValidator : AbstractValidator<StateRequest>
         if (string.IsNullOrWhiteSpace(state.NameAr) || state.CountryId <= 0)
             return true;
 
-        var nameAr = state.NameAr.Trim();
+        var nameAr = GeographicalNameRules.Normalize(state.NameAr);
         var stateId = state.Id;
 
         return !await _stateQueries.StateNameArExistsAsync(

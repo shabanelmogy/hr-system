@@ -146,7 +146,7 @@ public sealed class AddressGeographicIntegrityTests
                 CountryId = countryId,
                 NameAr = "القاهرة",
                 NameEn = "Cairo",
-                Code = "C"
+                Code = "CAI"
             };
             Context.States.Add(state);
             await Context.SaveChangesAsync();

@@ -260,6 +260,18 @@ Districts. Do not hide `GridFooter` navigation and replace it with a feature-loc
 pager. Configure server/client mode, controlled page, totals, and page-size options
 through `MyDataGrid` props.
 
+`MyDataGrid` marks the first visible row as the active record when data loads or
+when a page/filter leaves the previous active row unavailable. This active marker
+drives the shared record-navigation arrows. It is intentionally separate from
+checkbox selection: grids that use checkboxes for bulk actions do not silently
+select the first row for that bulk operation. Crossing a server page selects the
+first row on the new page (or the requested boundary record for First/Last), so
+navigation never starts from a stale row or the second item.
+
+The shared Grid also gives an edited row a brief success-color flash, while the
+existing edited-row tint remains available for the marker lifetime. The flash
+respects `prefers-reduced-motion` and is not implemented in feature-local CSS.
+
 This is a preservation rule, not a styling suggestion. The shared Grid footer,
 navigation, range/page-size behavior, responsive layout, and RTL handling are
 product-owned reusable behavior. A feature implementation or refactor must not

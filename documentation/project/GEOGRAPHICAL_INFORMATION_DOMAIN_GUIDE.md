@@ -118,14 +118,15 @@ Required now:
 - Latitude and longitude are nullable as a pair and range-checked.
 - `IsPrimary` belongs on owner links, not Address.
 - Display names (`NameAr`, `NameEn`, and Address Type names) are required,
-  trimmed, 2-100 characters, and may contain any printable Unicode script,
+  trimmed and Unicode-NFC normalized, 2-100 characters, and may contain any printable Unicode script,
   spaces, digits, and punctuation. Control characters, tabs, and line breaks
   are rejected consistently by API, browser, and mobile validation.
 - Technical identifiers keep their own rules: State/District codes are 2-10
   ASCII letters, digits, or hyphens; ISO alpha and currency codes are fixed
   ASCII letters; phone codes are an optional `+` followed by digits.
 - The additive Egypt baseline seed supplies ISO country `EG` and all 27 Egyptian
-  governorates as global reference data. It fills missing rows idempotently,
+  governorates as global reference data (Cairo uses the canonical `CAI` code).
+  It fills missing rows idempotently,
   preserves administrator edits and archived rows, and fails only on genuinely
   ambiguous conflicting Egypt records.
 
@@ -164,6 +165,7 @@ from silently reintroducing the English-only/Arabic-only rule.
 | Check | Status | Evidence |
 |---|---|---|
 | API has one shared printable-Unicode name rule | Done | `GeographicalNameRules.GeographicalName` |
+| API canonicalizes names with trim + Unicode NFC before persistence and uniqueness checks | Done | `GeographicalNameRules.Normalize`, geographic Mapster configurations, and request validators |
 | Countries validators use the shared rule | Done | `CountryMutationValidator` |
 | States validators use the shared rule | Done | `StateMutationValidator`, `StateRequestValidator` |
 | Districts validators use the shared rule | Done | `DistrictMutationValidator`, `DistrictRequestValidator` |

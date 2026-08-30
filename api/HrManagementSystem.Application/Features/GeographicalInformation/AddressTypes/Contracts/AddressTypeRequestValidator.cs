@@ -32,13 +32,13 @@ public class AddressTypeRequestValidator : AbstractValidator<AddressTypeRequest>
 
     private async Task<bool> IsAddressTypeNameEnUniqueAsync(AddressTypeRequest addressType, CancellationToken cancellationToken) =>
         !await _queries.AddressTypeNameEnExistsAsync(
-            addressType.NameEn,
+            GeographicalNameRules.Normalize(addressType.NameEn),
             addressType.Id,
             cancellationToken);
 
     private async Task<bool> IsAddressTypeNameArUniqueAsync(AddressTypeRequest addressType, CancellationToken cancellationToken) =>
         !await _queries.AddressTypeNameArExistsAsync(
-            addressType.NameAr,
+            GeographicalNameRules.Normalize(addressType.NameAr),
             addressType.Id,
             cancellationToken);
 }

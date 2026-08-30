@@ -20,6 +20,7 @@ import { useDataGridShell } from "../core/context";
 import {
   getActiveRecordIndex,
   getPageForRecord,
+  getNextRecordIndex,
   getServerRecordIndex,
 } from "./recordNavigation";
 
@@ -29,14 +30,19 @@ export function GridFooter() {
   const orderedIds = useGridSelector(apiRef, gridFilteredSortedRowIdsSelector);
   const selectedRows = useGridSelector(apiRef, gridRowSelectionIdsSelector);
   const paginationModel = useGridSelector(apiRef, gridPaginationModelSelector);
-  const { showRecordNavigation } = useDataGridShell();
+  const {
+    showRecordNavigation,
+    activeRowId,
+    setActiveRowId,
+    syncActiveRowSelection,
+  } = useDataGridShell();
   const { t } = useTranslation();
   const theme = useTheme();
   const pendingServerRecordRef = useRef<number | null>(null);
 
   const isRtl = theme.direction === "rtl";
   const isServerPagination = rootProps.paginationMode === "server";
-  const selectedId = selectedRows.keys().next().value;
+  const selectedId = activeRowId ?? selectedRows.keys().next().value;
   const totalRowCount =
     isServerPagination
       ? (rootProps.rowCount ?? orderedIds.length)
@@ -53,8 +59,10 @@ export function GridFooter() {
         orderedIds,
         selectedId,
         paginationModel.page,
-        paginationModel.pageSize,
-      );
+      paginationModel.pageSize,
+    );
+  const hasCurrentRecordOnPage =
+    selectedId != null && orderedIds.some((id) => String(id) === String(selectedId));
   const recordNumber = activeIndex < 0 ? 0 : activeIndex + 1;
   const totalPages = Math.max(
     1,
@@ -65,15 +73,19 @@ export function GridFooter() {
   const selectVisibleRow = useCallback((localIndex: number) => {
     if (localIndex < 0 || localIndex >= orderedIds.length) return undefined;
 
-    apiRef.current.setRowSelectionModel({
-      type: "include",
-      ids: new Set([orderedIds[localIndex]]),
-    });
+    const targetId = orderedIds[localIndex];
+    setActiveRowId(targetId);
+    if (syncActiveRowSelection) {
+      apiRef.current.setRowSelectionModel({
+        type: "include",
+        ids: new Set([targetId]),
+      });
+    }
 
     return setTimeout(() => {
       apiRef.current.scrollToIndexes({ rowIndex: localIndex });
     }, 150);
-  }, [apiRef, orderedIds]);
+  }, [apiRef, orderedIds, setActiveRowId, syncActiveRowSelection]);
 
   useEffect(() => {
     if (!isServerPagination || pendingServerRecordRef.current == null) return;
@@ -114,10 +126,13 @@ export function GridFooter() {
 
     const targetId = orderedIds[targetIndex];
     apiRef.current.setPage(targetPage);
-    apiRef.current.setRowSelectionModel({
-      type: "include",
-      ids: new Set([targetId]),
-    });
+    setActiveRowId(targetId);
+    if (syncActiveRowSelection) {
+      apiRef.current.setRowSelectionModel({
+        type: "include",
+        ids: new Set([targetId]),
+      });
+    }
 
     setTimeout(() => {
       apiRef.current.scrollToIndexes({
@@ -206,7 +221,17 @@ export function GridFooter() {
           <NavigationButton
             label={labels.next}
             disabled={activeIndex < 0 || activeIndex >= totalRowCount - 1}
-            onClick={() => navigateToIndex(activeIndex + 1)}
+            onClick={() =>
+              navigateToIndex(
+                getNextRecordIndex(
+                  activeIndex,
+                  hasCurrentRecordOnPage,
+                  paginationModel.page,
+                  paginationModel.pageSize,
+                  totalRowCount,
+                ),
+              )
+            }
             icon={<NextIcon />}
           />
           <NavigationButton

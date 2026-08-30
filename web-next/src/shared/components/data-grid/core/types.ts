@@ -39,6 +39,9 @@ export type MyDataGridProps<
   onToolbarAdd?: () => void;
   toolbarSearch?: DataGridToolbarSearchConfig;
   toolbarContent?: ReactNode;
+  /** Automatically marks the first visible row as the active record. */
+  autoActivateFirstRow?: boolean;
+  /** Mirrors the active record into DataGrid selection when bulk selection is not enabled. */
   autoSelectFirstRow?: boolean;
   lastAddedId?: GridRowId | null;
   lastEditedId?: GridRowId | null;

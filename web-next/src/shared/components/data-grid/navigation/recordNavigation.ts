@@ -22,6 +22,27 @@ export function getPageForRecord(recordIndex: number, pageSize: number) {
   return Math.floor(recordIndex / Math.max(1, pageSize));
 }
 
+/**
+ * Returns the next record target for the shared footer. When a page has not
+ * acquired an active row yet (for example during a server-page transition),
+ * navigation starts at that page's first item instead of skipping to item two.
+ */
+export function getNextRecordIndex(
+  activeIndex: number,
+  hasCurrentRecordOnPage: boolean,
+  page: number,
+  pageSize: number,
+  totalRowCount: number,
+) {
+  if (totalRowCount <= 0) return -1;
+
+  const target = hasCurrentRecordOnPage
+    ? activeIndex + 1
+    : Math.max(0, page) * Math.max(1, pageSize);
+
+  return Math.min(Math.max(0, target), totalRowCount - 1);
+}
+
 export function getServerRecordIndex(
   visibleIds: readonly GridRowId[],
   selectedId: GridRowId | undefined,

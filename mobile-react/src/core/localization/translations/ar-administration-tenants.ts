@@ -155,6 +155,7 @@ export const arAdministrationTenants = {
     },
   },
   dataTable: {
+    select: 'تحديد',
     first: '\u0627\u0644\u0635\u0641\u062d\u0629 \u0627\u0644\u0623\u0648\u0644\u0649',
     last: '\u0627\u0644\u0635\u0641\u062d\u0629 \u0627\u0644\u0623\u062e\u064a\u0631\u0629',
     empty: 'لا توجد سجلات.',

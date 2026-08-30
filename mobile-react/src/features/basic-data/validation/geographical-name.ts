@@ -10,7 +10,11 @@ export function isValidGeographicalName(value: string): boolean {
 export function createGeographicalNameSchema(t: TFunction) {
   return z.string()
     .trim()
-    .min(2, t('validation.minLength', { count: 2 }))
-    .max(100, t('validation.maxLength', { count: 100 }))
-    .refine((value) => !value || isValidGeographicalName(value), t('validation.invalidText'));
+    .transform((value) => value.normalize('NFC'))
+    .pipe(
+      z.string()
+        .min(2, t('validation.minLength', { count: 2 }))
+        .max(100, t('validation.maxLength', { count: 100 }))
+        .refine((value) => !value || isValidGeographicalName(value), t('validation.invalidText')),
+    );
 }

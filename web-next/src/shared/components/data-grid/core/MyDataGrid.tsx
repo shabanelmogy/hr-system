@@ -7,13 +7,14 @@ import {
 import {
   gridFilteredSortedRowIdsSelector,
   type GridColDef,
+  type GridEventListener,
   type GridRowClassNameParams,
   type GridRowId,
   type GridValidRowModel,
   useGridApiRef,
 } from "@mui/x-data-grid";
 import { arSD } from "@mui/x-data-grid/locales";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ClientDataGrid from "./ClientDataGrid";
 import { DataGridShellContext } from "./context";
 import type { MyDataGridProps } from "./types";
@@ -33,10 +34,21 @@ const dataGridStyles: SxProps<Theme> = {
   },
   "& .edited-row": {
     backgroundColor: (theme: Theme) =>
-      `${alpha(theme.palette.info.main, theme.palette.mode === "dark" ? 0.2 : 0.12)} !important`,
+      alpha(theme.palette.info.main, theme.palette.mode === "dark" ? 0.2 : 0.12),
+    animation: "my-data-grid-edit-flash 1.2s ease-in-out 2",
     "&:hover": {
       backgroundColor: (theme: Theme) =>
-        `${alpha(theme.palette.info.main, theme.palette.mode === "dark" ? 0.3 : 0.2)} !important`,
+        alpha(theme.palette.info.main, theme.palette.mode === "dark" ? 0.3 : 0.2),
+    },
+  },
+  "@keyframes my-data-grid-edit-flash": {
+    "0%, 100%": {
+      backgroundColor: (theme: Theme) =>
+        alpha(theme.palette.info.main, theme.palette.mode === "dark" ? 0.2 : 0.12),
+    },
+    "35%, 65%": {
+      backgroundColor: (theme: Theme) =>
+        alpha(theme.palette.success.main, theme.palette.mode === "dark" ? 0.5 : 0.28),
     },
   },
   "& .MuiDataGrid-footerContainer": {
@@ -63,10 +75,22 @@ const dataGridStyles: SxProps<Theme> = {
       backgroundColor: (theme: Theme) => `${theme.palette.primary.light}40`,
     },
   },
+  "& .MuiDataGrid-row.active-row": {
+    backgroundColor: (theme: Theme) => `${theme.palette.primary.main}12`,
+    boxShadow: (theme: Theme) => `inset 3px 0 0 ${theme.palette.primary.main}`,
+    "&:hover": {
+      backgroundColor: (theme: Theme) => `${theme.palette.primary.main}20`,
+    },
+  },
   "& .MuiDataGrid-columnHeaderTitle": {
     overflow: "visible",
     textOverflow: "clip",
     whiteSpace: "nowrap",
+  },
+  "@media (prefers-reduced-motion: reduce)": {
+    "& .edited-row": {
+      animation: "none",
+    },
   },
 };
 
@@ -90,6 +114,7 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   onToolbarAdd,
   toolbarSearch,
   toolbarContent,
+  autoActivateFirstRow = true,
   autoSelectFirstRow = true,
   lastAddedId = null,
   lastEditedId = null,
@@ -105,6 +130,7 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   showToolbar,
   slots,
   sx,
+  onRowClick,
   ...dataGridProps
 }: MyDataGridProps<TRow>) {
   const theme = useTheme();
@@ -112,6 +138,7 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   const resolvedApiRef = apiRef ?? internalApiRef;
   const handledOperationRef = useRef<string | null>(null);
   const initialSelectionDoneRef = useRef(false);
+  const [activeRowId, setActiveRowId] = useState<GridRowId | null>(null);
 
   const resolvedInitialState = useMemo(
     () => ({
@@ -169,6 +196,9 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
       onToolbarAdd,
       toolbarSearch,
       toolbarContent,
+      activeRowId,
+      setActiveRowId,
+      syncActiveRowSelection: !checkboxSelection,
     }),
     [
       dataGridProps.filterMode,
@@ -178,6 +208,8 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
       showNavigationButtons,
       toolbarContent,
       toolbarSearch,
+      activeRowId,
+      checkboxSelection,
     ],
   );
 
@@ -194,6 +226,9 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   const resolvedGetRowClassName = useCallback(
     (params: GridRowClassNameParams<TRow>) => {
       const classes = [getRowClassName?.(params) ?? ""];
+      if (idsEqual(params.id, activeRowId)) {
+        classes.push("active-row");
+      }
       if (idsEqual(params.id, lastAddedId)) {
         classes.push("highlighted-row");
       }
@@ -202,7 +237,15 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
       }
       return classes.filter(Boolean).join(" ");
     },
-    [getRowClassName, lastAddedId, lastEditedId],
+    [activeRowId, getRowClassName, lastAddedId, lastEditedId],
+  );
+
+  const resolvedOnRowClick = useCallback<GridEventListener<"rowClick">>(
+    (params, event, details) => {
+      setActiveRowId(params.id);
+      onRowClick?.(params, event, details);
+    },
+    [onRowClick],
   );
 
   useEffect(() => {
@@ -253,9 +296,12 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
     const targetId = orderedIds[targetIndex];
     const pageSize = api.state.pagination.paginationModel.pageSize;
     api.setPage(Math.floor(targetIndex / Math.max(1, pageSize)));
-    api.setRowSelectionModel({ type: "include", ids: new Set([targetId]) });
+    if (!checkboxSelection) {
+      api.setRowSelectionModel({ type: "include", ids: new Set([targetId]) });
+    }
 
     const scrollTimer = setTimeout(() => {
+      setActiveRowId(targetId);
       api.scrollToIndexes({
         rowIndex: targetIndex % Math.max(1, pageSize),
       });
@@ -268,6 +314,7 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
     lastAddedId,
     lastDeletedIndex,
     lastEditedId,
+    checkboxSelection,
     paginationMode,
     resolveRowId,
     resolvedApiRef,
@@ -275,39 +322,50 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   ]);
 
   useEffect(() => {
-    if (!autoSelectFirstRow) return;
     if (rows.length === 0) {
       initialSelectionDoneRef.current = false;
       return;
     }
-    if (
-      initialSelectionDoneRef.current ||
-      lastAddedId != null ||
-      lastEditedId != null ||
-      lastDeletedIndex != null
-    ) {
-      return;
-    }
+    if (!autoActivateFirstRow) return;
 
     const api = resolvedApiRef.current;
     if (!api) return;
 
-    const selectionTimer = setTimeout(() => {
-      if (api.getSelectedRows().size > 0) {
-        initialSelectionDoneRef.current = true;
+    const activationTimer = setTimeout(() => {
+      const orderedIds = gridFilteredSortedRowIdsSelector(resolvedApiRef);
+      const firstId = orderedIds[0] ?? resolveRowId(rows[0]);
+      const activeIsVisible = orderedIds.some((id) => idsEqual(id, activeRowId));
+
+      if (activeIsVisible) {
+        if (autoSelectFirstRow) initialSelectionDoneRef.current = true;
         return;
       }
 
-      const orderedIds = gridFilteredSortedRowIdsSelector(resolvedApiRef);
-      const firstId = orderedIds[0] ?? resolveRowId(rows[0]);
-      api.setRowSelectionModel({ type: "include", ids: new Set([firstId]) });
+      setActiveRowId(firstId);
       api.scrollToIndexes({ rowIndex: 0 });
-      initialSelectionDoneRef.current = true;
+
+      // Checkbox grids use row selection for bulk actions. Keep that selection
+      // empty while still exposing the first row as the active record.
+      if (
+        autoSelectFirstRow &&
+        !checkboxSelection &&
+        !initialSelectionDoneRef.current &&
+        lastAddedId == null &&
+        lastEditedId == null &&
+        lastDeletedIndex == null &&
+        api.getSelectedRows().size === 0
+      ) {
+        api.setRowSelectionModel({ type: "include", ids: new Set([firstId]) });
+        initialSelectionDoneRef.current = true;
+      }
     }, 150);
 
-    return () => clearTimeout(selectionTimer);
+    return () => clearTimeout(activationTimer);
   }, [
+    activeRowId,
+    autoActivateFirstRow,
     autoSelectFirstRow,
+    checkboxSelection,
     lastAddedId,
     lastDeletedIndex,
     lastEditedId,
@@ -325,6 +383,7 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
         apiRef={resolvedApiRef}
         getRowId={getRowId}
         getRowClassName={resolvedGetRowClassName}
+        onRowClick={resolvedOnRowClick}
         initialState={resolvedInitialState}
         localeText={resolvedLocaleText}
         pageSizeOptions={pageSizeOptions}
