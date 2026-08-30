@@ -14,4 +14,9 @@ public sealed class CompanyGeographicScopeErrors(
         "CompanyGeographicScope.CountriesUnavailable",
         localizer[nameof(CountriesUnavailable)],
         ErrorType.Conflict);
+
+    public Error CountriesInUseByAddresses => new(
+        "CompanyGeographicScope.CountriesInUseByAddresses",
+        localizer[nameof(CountriesInUseByAddresses)],
+        ErrorType.Conflict);
 }

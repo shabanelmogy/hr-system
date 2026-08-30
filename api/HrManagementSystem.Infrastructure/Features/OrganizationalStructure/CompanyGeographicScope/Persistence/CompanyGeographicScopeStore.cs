@@ -79,6 +79,22 @@ public sealed class CompanyGeographicScopeStore(
         return activeCount == distinctIds.Length;
     }
 
+    public Task<bool> HasActiveAddressesOutsideScopeAsync(
+        int companyId,
+        IReadOnlyCollection<int> countryIds,
+        CancellationToken cancellationToken)
+    {
+        var selectedIds = countryIds.Distinct().ToArray();
+
+        return context.Addresses
+            .AsNoTracking()
+            .AnyAsync(
+                address => address.CompanyId == companyId &&
+                           !address.IsDeleted &&
+                           !selectedIds.Contains(address.CountryId),
+                cancellationToken);
+    }
+
     public async Task ClearDefaultAsync(int companyId, CancellationToken cancellationToken)
     {
         var defaults = await context.CompanyCountries

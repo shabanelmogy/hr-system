@@ -56,13 +56,13 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| districts-master | 3 | `7db1a7d82da3179a850933bc4c5ca70c2c552128be8b21b17a84b73cf938f939` |
+| districts-master | 3 | `5ca94ec3dcf5147246fd66770d78b4faf5c354b8b539ffdc5985965498d4b9d2` |
 | districts-master | 4 | `73edb563ff159ccd70caafab0275db68887f98c3c3f22ecdfaaea7ee41b4fb2e` |
 | districts-master | 6 | `bc842f66c8ecdd4133ee9a86a1901d41047bc8cc48ec01e8a302ca6ab510da07` |
 | districts-master | 7 | `b4ca77c0fab6365d8f5202566b41f614348b21781231cb9bc97e4bd62aa9cd4f` |
 | districts-master | 8 | `8b2d2dd81761ee08dc4f372a5fed20353b60d2020d2680d5d0138459389b7bbd` |
-| districts-api | 6 | `7cd07281bc0eacece3dce2b4cf4f612c5da3026182fe36b53aa11c23b157269e` |
-| districts-api | 7 | `0aae75ef226e7c43d3132c55e1a824affb1f208f419cf029abd4cef948fcf8f1` |
+| districts-api | 6 | `e85e987e62cb205b6cc5a86b34fc905b3c977386331cdf9d5f931d1369c1c4cd` |
+| districts-api | 7 | `2feb4c7d8f96c8dd6ba0bc7494d972c5451aa12890e991504fa31b6778814a0b` |
 | districts-api | 8 | `808bf1aa73ef33b6517d65ccc0aa7d5595474cb438f80fb39f8338791b3d797e` |
 | districts-web | 6 | `00dcf25c1144ba8ca5883de079af26cb60bfb6365a97577e254fd03b92bbd120` |
 | districts-web | 7 | `860a8dd4899597e60282b667535463fa9f0489249c5e8ab2b5bdaac2f2a0880f` |

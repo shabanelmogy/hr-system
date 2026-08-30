@@ -3,9 +3,13 @@ using System.Runtime.CompilerServices;
 using FluentValidation;
 using HrManagementSystem.Api.Features.OrganizationalStructure.CompanyGeographicScope.V1;
 using HrManagementSystem.Application.Abstractions.Authentication;
+using HrManagementSystem.Application.Abstractions.Persistence;
 using HrManagementSystem.Application.Common.Errors;
+using HrManagementSystem.Application.Features.OrganizationalStructure.CompanyGeographicScope.Abstractions;
 using HrManagementSystem.Application.Features.OrganizationalStructure.CompanyGeographicScope.Commands;
 using HrManagementSystem.Application.Features.OrganizationalStructure.CompanyGeographicScope.Contracts;
+using HrManagementSystem.Application.Features.OrganizationalStructure.CompanyGeographicScope.Errors;
+using HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
 using HrManagementSystem.Domain.OrganizationalStructure.Entities;
 using HrManagementSystem.Infrastructure.Features.OrganizationalStructure.CompanyGeographicScope.Persistence;
@@ -25,6 +29,28 @@ namespace HrManagementSystem.Tests;
 
 public sealed class CompanyGeographicScopeTests
 {
+    [Fact]
+    public async Task Update_BlocksRemovingACountryUsedByAnActiveCompanyAddress()
+    {
+        var store = new RecordingScopeStore { HasAddressesOutsideScope = true };
+        var unitOfWork = new RecordingUnitOfWork();
+        var handler = new UpdateCompanyGeographicScopeCommandHandler(
+            store,
+            unitOfWork,
+            new TestCurrentActor("tenant-1", 1),
+            new CompanyGeographicScopeErrors(
+                new EchoLocalizer<UpdateCompanyGeographicScopeRequest>()));
+
+        var result = await handler.Handle(
+            new UpdateCompanyGeographicScopeCommand([10], 10, 10),
+            CancellationToken.None);
+
+        Assert.True(result.IsFailure);
+        Assert.Equal("CompanyGeographicScope.CountriesInUseByAddresses", result.Error.Code);
+        Assert.Equal(0, store.ReplaceCount);
+        Assert.Equal(0, unitOfWork.SaveCount);
+    }
+
     [Fact]
     public async Task Validator_RejectsRegistrationCountryOutsideOperatingScope()
     {
@@ -103,6 +129,24 @@ public sealed class CompanyGeographicScopeTests
         var countryWriteStore = new CountryWriteStore(context);
         Assert.True(await countryWriteStore.HasCompanyUsageAsync(10, CancellationToken.None));
         Assert.True(await countryWriteStore.HasCompanyUsageAsync(20, CancellationToken.None));
+
+        context.Addresses.Add(new Address
+        {
+            TenantId = "tenant-1",
+            CompanyId = company.Id,
+            CountryId = 20,
+            AddressTypeId = 1
+        });
+        await context.SaveChangesAsync();
+
+        Assert.True(await store.HasActiveAddressesOutsideScopeAsync(
+            company.Id,
+            [10],
+            CancellationToken.None));
+        Assert.False(await store.HasActiveAddressesOutsideScopeAsync(
+            company.Id,
+            [10, 20],
+            CancellationToken.None));
     }
 
     [Fact]
@@ -147,6 +191,57 @@ public sealed class CompanyGeographicScopeTests
         public LocalizedString this[string name] => new(name, name);
         public LocalizedString this[string name, params object[] arguments] => new(name, name);
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures) => [];
+    }
+
+    private sealed class RecordingScopeStore : ICompanyGeographicScopeStore
+    {
+        public bool HasAddressesOutsideScope { get; init; }
+        public int ReplaceCount { get; private set; }
+
+        public Task<CompanyGeographicScopeResponse> GetAsync(
+            int companyId,
+            CancellationToken cancellationToken) =>
+            Task.FromResult(new CompanyGeographicScopeResponse(companyId, 10, 10, []));
+
+        public Task<bool> AreActiveCountriesAsync(
+            IReadOnlyCollection<int> countryIds,
+            CancellationToken cancellationToken) => Task.FromResult(true);
+
+        public Task<bool> HasActiveAddressesOutsideScopeAsync(
+            int companyId,
+            IReadOnlyCollection<int> countryIds,
+            CancellationToken cancellationToken) => Task.FromResult(HasAddressesOutsideScope);
+
+        public Task ClearDefaultAsync(int companyId, CancellationToken cancellationToken) =>
+            Task.CompletedTask;
+
+        public Task ReplaceAsync(
+            int companyId,
+            IReadOnlyCollection<int> countryIds,
+            int defaultCountryId,
+            int registrationCountryId,
+            CancellationToken cancellationToken)
+        {
+            ReplaceCount++;
+            return Task.CompletedTask;
+        }
+    }
+
+    private sealed class RecordingUnitOfWork : IUnitOfWork
+    {
+        public int SaveCount { get; private set; }
+
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            SaveCount++;
+            return Task.FromResult(1);
+        }
+
+        public Task<TResult> ExecuteAtomicallyAsync<TResult>(
+            IReadOnlyCollection<string> lockResources,
+            Func<CancellationToken, Task<TResult>> operation,
+            CancellationToken cancellationToken = default) =>
+            operation(cancellationToken);
     }
 
     private sealed class RecordingSender : ISender

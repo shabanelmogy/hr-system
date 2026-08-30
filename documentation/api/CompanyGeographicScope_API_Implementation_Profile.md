@@ -22,11 +22,11 @@ The slice lives under `OrganizationalStructure/CompanyGeographicScope` in Applic
 
 ## 6. Atomicity and Concurrency
 
-The handler uses the application lock `company-geographic-scope:{tenantId}:{companyId}`. It clears the old default and saves before replacement so the filtered unique index remains valid, then replaces links, updates `Company.RegistrationCountryId`, and saves within the command transaction.
+The handler uses the application lock `company-geographic-scope:{tenantId}:{companyId}`. Under that lock it rejects a proposed selection that excludes a Country used by any active Address in the current company. It then clears the old default and saves before replacement so the filtered unique index remains valid, replaces links, updates `Company.RegistrationCountryId`, and saves within the command transaction. Address create/update/restore acquire the same scope resource, preventing a concurrent address write from escaping this check.
 
 ## 7. Validation and Errors
 
-Missing actor company context fails closed with the stable forbidden error. Missing/inactive Country IDs return a stable conflict. FluentValidation rejects empty, excessive, duplicate, non-positive, or inconsistent registration/default selections with localized EN/AR messages.
+Missing actor company context fails closed with the stable forbidden error. Missing/inactive Country IDs and removal of a Country used by an active company Address return stable conflicts. FluentValidation rejects empty, excessive, duplicate, non-positive, or inconsistent registration/default selections with localized EN/AR messages.
 
 ## 8. HTTP and Authorization
 
@@ -47,13 +47,14 @@ the first authorized scope save; runtime writes require the field.
 
 `CompanyGeographicScopeTests` covers registration membership validation, exact
 controller command forwarding, separate registration/default persistence and
-projection, restrictive FK/index metadata, safe migration backfill SQL, and
-Country lifecycle dependency detection. Existing Platform authorization and
+projection, restrictive FK/index metadata, safe migration backfill SQL,
+Country lifecycle dependency detection, and active-Address scope-removal
+protection. Existing Platform authorization and
 controller contract suites retain the route/permission boundary.
 
 ## 11. Consumer Rules
 
-Operating-address consumers query this aggregate. A Branch may choose any enabled Country and any valid child State/District independently of other branches. Company statutory consumers use `RegistrationCountryId`; operating-address defaults use `DefaultCountryId`. Nationality consumers must query the global active Country catalog instead. Server-side Branch/Address validation is required when those workflows are added.
+Operating-address consumers query this aggregate. A Branch may choose any enabled Country and any valid child State/District independently of other branches. Company statutory consumers use `RegistrationCountryId`; operating-address defaults use `DefaultCountryId`. Nationality consumers must query the global active Country catalog instead. The shared Address write boundary already enforces active operating scope and geographic hierarchy; future owner-link workflows add ownership and purpose policy rather than reimplementing those checks.
 
 Standalone Work Location, branch/location target-population authorization, and
 effective-dated CompanyCountry/BranchAddress assignments remain Deferred until an

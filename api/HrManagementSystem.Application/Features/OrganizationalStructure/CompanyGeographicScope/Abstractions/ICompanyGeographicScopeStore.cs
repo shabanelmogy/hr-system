@@ -10,6 +10,11 @@ public interface ICompanyGeographicScopeStore
         IReadOnlyCollection<int> countryIds,
         CancellationToken cancellationToken);
 
+    Task<bool> HasActiveAddressesOutsideScopeAsync(
+        int companyId,
+        IReadOnlyCollection<int> countryIds,
+        CancellationToken cancellationToken);
+
     Task ClearDefaultAsync(int companyId, CancellationToken cancellationToken);
 
     Task ReplaceAsync(

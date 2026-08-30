@@ -78,7 +78,7 @@ implementation discipline.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| states-master | 3 | `d3d5f94f4788de672bd801f30787caae4daea1b39d5c03ecde71f602ab42b8fe` |
+| states-master | 3 | `43ea42762d08c208b038c7153dceed19ac895f80b529c18126fca78ffc532b39` |
 | states-master | 4 | `5a6d15c81abe80fbc5e13715f385f8a978b6482153ba7cec90474f46b6886ebf` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
 | states-api | 1 | `2395d7afcf495d57355e29724dc18f10fb01b10158e7e10992e3b4873f5a03fe` |
@@ -86,7 +86,7 @@ implementation discipline.
 | states-api | 3 | `0385cf078edb08d33b9029d57b67bf2d6055a6bbef25d102ef84327700ea2271` |
 | states-api | 4 | `5436b2b4eb4947f63d84e03931b6030fd296510ca38beb398ce168a140ee52b8` |
 | states-api | 5 | `7547aea0698fd6a727fe01c605aec786ef768d02eee433372be30843e707ba44` |
-| states-api | 6 | `8b7e4031f6db8f552455841b3f9ea883aab5bd2755fcbe6f9d3ed776b8cbb796` |
+| states-api | 6 | `100f5727ce3e5e0e0cde9218293a9a96b5d7bd7346bbfc9e760110bc1096afad` |
 | states-api | 7 | `21b4aaa6465e8c038b67613a7d59733d4e06b8fea8172c1ba06d98f55e782ed4` |
 | states-api | 8 | `4778b66ab2e8bc98acc1502c1988db12fa425ebdba2caebe7e6a0fa0ff427221` |
 | states-api | 9 | `fa29e6b6d508b4adf2fbee147d4cdd2e0520800e9974aba97afacde7dd386ed5` |

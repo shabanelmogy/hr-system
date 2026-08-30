@@ -64,11 +64,19 @@ again inside its transaction and acquires the corresponding geographical
 lifecycle resources before writing. Country and State archive commands reject
 active Address references; District archive does the same. This prevents a
 valid address from being committed concurrently with an archived parent.
+Create, update, and restore also require an active `CompanyCountry` for the
+selected Country. They share the current company's geographic-scope lock with
+scope replacement. Restore additionally locks and revalidates the current
+AddressType and complete optional hierarchy before activation, retrying when
+its snapshot changes while locks are acquired.
 
 ## 6. Required future work
 
 Replace the compatibility service with Address CQRS reads/writes, then add
 owner-link commands with transaction locks for one-primary-per-owner-purpose.
-Every owner-link mutation must validate Company Geographic Scope where the
-owning domain requires an operating-country restriction and must publish cache
-and realtime invalidation only after commit.
+Every owner-link mutation must retain the operating-country validation already
+enforced by the Address write boundary and add its purpose-specific policy. In
+the Egypt profile, Registered Office and Work Location require governorate,
+city/region, street, and building number; postal code is optional and the ETA
+branch identifier is a separate tax field. Publish cache and realtime
+invalidation only after commit.

@@ -26,11 +26,11 @@ Create, atomic bulk create, update, archive, restore, and bulk archive are indiv
 
 ## 6. Validation and conflicts
 
-Names, code, State ID, query controls, bulk-create rows, and bulk IDs are validated. Create/update/bulk create verify active States and field-scoped conflicts. Bulk duplicates compare Arabic name, English name, and code only with the same field, case-insensitively, within `StateId`; the set-based persistence check closes the database race. Archive/bulk archive reject an active Address dependency; restore verifies the parent remains active.
+Names, code, State ID, query controls, bulk-create rows, and bulk IDs are validated. Create/update/bulk create verify active States and field-scoped conflicts. Bulk duplicates compare Arabic name, English name, and code only with the same field, case-insensitively, within `StateId`; the set-based persistence check closes the database race. Archive/bulk archive reject an active Address dependency; restore verifies the parent remains active. Update permits name/code changes under the same State but rejects State reassignment while an active Address depends on the District.
 
 ## 7. Transactions, audit, and realtime
 
-Writes run in the unit-of-work transaction and lock the parent State lifecycle resource. Bulk create locks each distinct parent State and either creates every row or none. Each successful change schedules post-commit work; bulk create emits one `BulkAdd` change with the count. The job emits localized notifications and a `districts` realtime resource event.
+Writes run in the unit-of-work transaction and lock the parent State lifecycle resource. Reparenting locks both the existing and requested State, retries when the parent snapshot changes, and rereads after save so the returned parent is current. Bulk create locks each distinct parent State and either creates every row or none. Each successful change schedules post-commit work; bulk create emits one `BulkAdd` change with the count. The job emits localized notifications and a `districts` realtime resource event.
 
 ## 8. HTTP boundary
 
@@ -42,7 +42,7 @@ Writes run in the unit-of-work transaction and lock the parent State lifecycle r
 
 ## 10. Tests
 
-`DistrictCqrsArchitectureTests` covers controller shape/routes/permissions, contracts, handler dependencies, validator failures, and mapping normalization. `DistrictBulkCreateHandlerTests` covers locks, active parents, same-file and stored conflicts, atomic save/schedule ordering, and the set-based store check. `CrystalReportDataSourceTests` covers the approved District dataset. Focused API tests execute these suites along with the primary API build.
+`DistrictCqrsArchitectureTests` covers controller shape/routes/permissions, contracts, handler dependencies, validator failures, and mapping normalization. `DistrictBulkCreateHandlerTests` covers locks, active parents, same-file and stored conflicts, atomic save/schedule ordering, and the set-based store check. `GeographicParentReassignmentHandlerTests` covers allowed same-parent edits and dependency-safe District reassignment. `CrystalReportDataSourceTests` covers the approved District dataset. Focused API tests execute these suites along with the primary API build.
 
 ## 11. Reporting boundary
 

@@ -27,8 +27,13 @@ Command validators enforce required printable Unicode display names, State code,
 Create and update require the requested Country to be active. Their dependency
 check and save run in one atomic unit under the same transaction-owned Country
 lifecycle resource used by Country archive. Update loads an including-Country
-State, rejects archived States, records only changed State business fields,
-saves through the unit of work, commits, and only then schedules the change.
+State, rejects archived States, and snapshots its existing parent. A same-parent
+rename/code edit is allowed. A Country reassignment locks both old and new
+Country resources and is rejected while the State has an active District or an
+active Address. The handler retries if the parent changed while the locks were
+acquired, records only changed State business fields, saves, rereads the row so
+the response contains the new parent, commits, and only then schedules the
+change.
 
 `POST states/bulk` accepts `{ "states": [/* 1-100 CreateStateRequest values */] }` and returns `CreateStatesResponse(CreatedCount)` with `201`. The command validates every row through the mutation validator, acquires the de-duplicated sorted Country lifecycle resources, then rejects with `State.CountryNotFound` when any requested Country is missing or inactive. It returns `State.Duplicated` when the batch repeats the same field case-insensitively under one Country, or when that same field conflicts case-insensitively with an existing State under the parent Country. Cross-field equality is allowed. Valid rows persist atomically in one save, commit, and schedule one `BulkAdd` change.
 
@@ -77,4 +82,4 @@ filter.
 
 ## 12. Tests and legacy note
 
-`StateCqrsArchitectureTests` verifies controller routes, message contracts, handler ports, mapping, and validators. `StatesControllerCqrsTests` verifies dispatch, the bulk envelope, and success status. `StateBulkCreateHandlerTests` proves cross-field values are allowed, same-field case-insensitive request duplicates fail, persistence checks remain field-scoped and case-insensitive, scheduling follows commit, and create/archive/restore select the required Country or State lifecycle resource. `BackgroundNotificationJobTests` proves plural bulk notification keys. The unused `IStateService` and `StateService` path was removed after a repository-wide consumer audit. `StateChangedJob` remains registered only as a compatibility executor for jobs persisted before the CQRS migration; no current producer schedules it, and it can be removed after the deployed Hangfire queues and retained job history no longer reference its serialized type.
+`StateCqrsArchitectureTests` verifies controller routes, message contracts, handler ports, mapping, and validators. `StatesControllerCqrsTests` verifies dispatch, the bulk envelope, and success status. `StateBulkCreateHandlerTests` proves cross-field values are allowed, same-field case-insensitive request duplicates fail, persistence checks remain field-scoped and case-insensitive, scheduling follows commit, and create/archive/restore select the required Country or State lifecycle resource. `GeographicParentReassignmentHandlerTests` proves same-parent edits remain allowed and dependent State reassignment is blocked. `BackgroundNotificationJobTests` proves plural bulk notification keys. The unused `IStateService` and `StateService` path was removed after a repository-wide consumer audit. `StateChangedJob` remains registered only as a compatibility executor for jobs persisted before the CQRS migration; no current producer schedules it, and it can be removed after the deployed Hangfire queues and retained job history no longer reference its serialized type.

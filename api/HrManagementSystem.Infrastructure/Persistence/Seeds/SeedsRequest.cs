@@ -22,6 +22,7 @@ public static class SeedsRequest
         await DefaultUsers.SeedSuperAdminUserAsync(userManager, configuration);
         await DefaultUsers.SeedViewerUserAsync(userManager, configuration);
         await DefaultUsers.SeedAdminUserAsync(userManager, configuration);
+        await EgyptGeographicSeed.SeedAsync(context);
         await DefaultCompanies.SeedAsync(context);
 
         return webApplication;

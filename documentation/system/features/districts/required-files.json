@@ -26,6 +26,7 @@
     { "id": "api-job", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Districts/Jobs/DistrictManagementChangedJob.cs", "purpose": "Post-commit notification and realtime delivery" },
     { "id": "api-di", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Dependencies/EntitiesService.cs", "purpose": "District CQRS dependency registration" },
     { "id": "api-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/DistrictCqrsArchitectureTests.cs", "purpose": "Contract, route, validation, mapping, and dependency coverage" },
+    { "id": "api-parent-reassignment-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/GeographicParentReassignmentHandlerTests.cs", "purpose": "Dependency-safe State and District parent reassignment coverage" },
     { "id": "api-bulk-create-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/DistrictBulkCreateHandlerTests.cs", "purpose": "Atomic bulk-create locks, parent validation, duplicate scope, commit ordering, and persistence conflict coverage" },
     { "id": "api-report-data", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs", "purpose": "Approved managed District report dataset and filters" },
     { "id": "api-report-data-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/CrystalReportDataSourceTests.cs", "purpose": "District report schema/filter evidence" },

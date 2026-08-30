@@ -290,6 +290,8 @@
     "CompanyCountryIdsMustBePositive": "يجب أن تكون معرفات دول التشغيل أرقامًا موجبة",
     "CompanyDefaultCountryMustBeSelected": "يجب أن تكون دولة التشغيل الافتراضية ضمن الدول المختارة",
     "CompanyRegistrationCountryMustBeSelected": "يجب أن تكون دولة التسجيل القانوني ضمن دول التشغيل المختارة",
+    "CountriesInUseByAddresses": "يجب إزالة أو أرشفة عناوين الشركة الفعالة في الدول المستبعدة قبل تغيير نطاق التشغيل",
+    "CountryOutsideOperatingScope": "الدولة المحددة ليست ضمن دول التشغيل النشطة لهذه الشركة.",
     "AttendanceDeviceNotFound": "لم يتم العثور على جهاز الحضور",
     "AttendanceDeviceDuplicate": "يوجد جهاز بهذا الاسم داخل الشركة الحالية",
     "AttendanceDeviceBusy": "لا يمكن تعديل الجهاز أثناء تنفيذ عملية سحب",

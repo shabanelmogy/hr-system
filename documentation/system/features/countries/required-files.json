@@ -73,6 +73,18 @@
       "purpose": "Applied API contract"
     },
     {
+      "id": "egypt-reference-seed",
+      "layer": "api",
+      "path": "api/HrManagementSystem.Infrastructure/Persistence/Seeds/EgyptGeographicSeed.cs",
+      "purpose": "Additive idempotent Egypt and 27-governorate deployment baseline"
+    },
+    {
+      "id": "egypt-reference-seed-tests",
+      "layer": "api-test",
+      "path": "api/HrManagementSystem.Tests/EgyptGeographicSeedTests.cs",
+      "purpose": "Egypt baseline completeness, idempotency, and administrator-data preservation coverage"
+    },
+    {
       "id": "web-profile",
       "layer": "documentation",
       "path": "documentation/web-next/features/countries-frontend-reference.md",

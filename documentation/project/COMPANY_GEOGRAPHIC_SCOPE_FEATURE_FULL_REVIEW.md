@@ -51,7 +51,10 @@ Web uses the shared Grid, toolbar/search, footer pagination, form, state, permis
 
 Replacement activates selected historical links, soft-deletes removed links,
 clears the previous default, sets the new default, and updates the Company's legal
-registration Country inside the serialized command transaction. The additive
+registration Country inside the serialized command transaction. Before any
+replacement, the command rejects a selection that would exclude a Country used
+by an active Address in the current company. Address writes and scope updates
+share the same company-scope lock, closing the concurrent write/removal race. The additive
 migration adds a nullable restrictive Country FK and backfills it only from an
 active default CompanyCountry. Companies without a defensible default remain null
 until an authorized first save supplies one; the migration never guesses from
@@ -59,7 +62,7 @@ currency, timezone, address, or tenant name.
 
 ## 9. Risks and Deferred Work
 
-The master catalog is Platform-owned and available only to `super_admin`; tenant administrators configure operating Countries, legal registration Country, and default operating Country through this feature. Address/Branch owner-link commands are the next integration surface and must consume Company Geographic Scope plus validate the full Country -> State -> District hierarchy server-side. Employee nationality must deliberately continue using the global Country lookup. An Address cannot be archived while an active CompanyAddress or BranchAddress link owns it.
+The master catalog is Platform-owned and available only to `super_admin`; tenant administrators configure operating Countries, legal registration Country, and default operating Country through this feature. Standalone Address create/update/restore already enforce Company Geographic Scope and the full Country -> State -> District hierarchy server-side. Address/Branch owner-link commands are the next integration surface and must add purpose-specific rules without duplicating that shared integrity logic. Employee nationality must deliberately continue using the global Country lookup. An Address cannot be archived while an active CompanyAddress or BranchAddress link owns it.
 
 SAP-style Work Location, branch/location target-population authorization, and
 effective-dated operating/location assignments are Deferred until a real employee,

@@ -214,6 +214,7 @@ public sealed class CreateDistrictsCommandHandler(
 
 public sealed class UpdateDistrictCommandHandler(
     IDistrictWriteStore districtWriteStore,
+    IDistrictReadStore districtReadStore,
     IUnitOfWork unitOfWork,
     IDistrictChangeScheduler districtChangeScheduler,
     IDistrictAuditTrail districtAuditTrail,
@@ -246,6 +247,11 @@ public sealed class UpdateDistrictCommandHandler(
                     }
                     if (!await districtWriteStore.IsStateActiveAsync(request.StateId, token))
                         return Result.Failure<DistrictDetailResponse>(districtErrors.StateNotFound);
+                    if (district.StateId != request.StateId &&
+                        await districtWriteStore.HasActiveAddressesAsync(district.Id, token))
+                    {
+                        return Result.Failure<DistrictDetailResponse>(districtErrors.DistrictInUseByAddress);
+                    }
 
                     var updatedDistrict = mapper.Map<District>((DistrictMutation)request);
                     if (await districtWriteStore.HasConflictAsync(updatedDistrict, district.Id, token))
@@ -254,7 +260,8 @@ public sealed class UpdateDistrictCommandHandler(
                     districtAuditTrail.RecordUpdate(district, updatedDistrict);
                     mapper.Map((DistrictMutation)request, district);
                     await unitOfWork.SaveChangesAsync(token);
-                    var response = mapper.Map<DistrictDetailResponse>(district);
+                    var response = await districtReadStore.GetByIdAsync(district.Id, token)
+                        ?? throw new InvalidOperationException("The updated District could not be read.");
                     change = new DistrictChange(response, "Update", null, currentActor.UserId, Guid.NewGuid());
                     return Result.Success(response);
                 },

@@ -28,6 +28,7 @@
     { "id": "api-stores", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/States/Persistence/StateManagementStores.cs", "purpose": "Read/write/audit ports" },
     { "id": "api-job", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/States/Jobs/StateManagementChangedJob.cs", "purpose": "Post-commit notification/realtime job" },
     { "id": "api-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/StateCqrsArchitectureTests.cs", "purpose": "CQRS architecture coverage" },
+    { "id": "api-parent-reassignment-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/GeographicParentReassignmentHandlerTests.cs", "purpose": "Dependency-safe State and District parent reassignment coverage" },
     { "id": "api-controller-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/StatesControllerCqrsTests.cs", "purpose": "Controller dispatch coverage" },
     { "id": "api-bulk-handler-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/StateBulkCreateHandlerTests.cs", "purpose": "Bulk duplicate scope, persistence conflict, commit, and scheduling coverage" },
     { "id": "api-notification-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/BackgroundNotificationJobTests.cs", "purpose": "Plural State bulk notification contract" },

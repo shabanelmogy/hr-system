@@ -78,7 +78,7 @@ implementation discipline.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| districts-master | 3 | `7db1a7d82da3179a850933bc4c5ca70c2c552128be8b21b17a84b73cf938f939` |
+| districts-master | 3 | `5ca94ec3dcf5147246fd66770d78b4faf5c354b8b539ffdc5985965498d4b9d2` |
 | districts-master | 4 | `73edb563ff159ccd70caafab0275db68887f98c3c3f22ecdfaaea7ee41b4fb2e` |
 | districts-master | 6 | `bc842f66c8ecdd4133ee9a86a1901d41047bc8cc48ec01e8a302ca6ab510da07` |
 | districts-api | 1 | `22b3bbfddbed6d5048acb0224ba4b08ff7d1e5f94af607e8dde95b758b0a4c9b` |
@@ -86,8 +86,8 @@ implementation discipline.
 | districts-api | 3 | `01443e47ae5fa805afd6d2edc3e345b5610267819a78871360abf4367502b367` |
 | districts-api | 4 | `fc13063d8cc49f699f637ffa96865c841c4714251ecd728b8209172124fb7148` |
 | districts-api | 5 | `817904cf7b037c0d4815e7389245629f1db4cbc6f435ac68ea4696789def8ff7` |
-| districts-api | 6 | `7cd07281bc0eacece3dce2b4cf4f612c5da3026182fe36b53aa11c23b157269e` |
-| districts-api | 7 | `0aae75ef226e7c43d3132c55e1a824affb1f208f419cf029abd4cef948fcf8f1` |
+| districts-api | 6 | `e85e987e62cb205b6cc5a86b34fc905b3c977386331cdf9d5f931d1369c1c4cd` |
+| districts-api | 7 | `2feb4c7d8f96c8dd6ba0bc7494d972c5451aa12890e991504fa31b6778814a0b` |
 | districts-api | 8 | `808bf1aa73ef33b6517d65ccc0aa7d5595474cb438f80fb39f8338791b3d797e` |
 | districts-api | 9 | `0967a504ad230259d1b0ad0a4bf07bb0f0ba762151ccc5c045cc3fdcca5e7c74` |
-| districts-api | 10 | `0d23b350dbc4a7e62be4d8f701af945b5d9c43e5a2f852035b2cf9f909ae62a1` |
+| districts-api | 10 | `36d563363a7c0b878ef54b12ab23dc6eb7e77e583b14c5199eeed69540539ee0` |

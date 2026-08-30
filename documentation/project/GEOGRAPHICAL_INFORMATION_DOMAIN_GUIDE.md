@@ -105,6 +105,14 @@ Required now:
   save must supply it.
 - Country is required on every Address.
 - State and District are nullable and must belong to the selected parent chain.
+- Address create, update, and restore require the Country to be in the current
+  company's active operating scope. Scope replacement is rejected when it would
+  exclude a Country used by an active Address; both paths share one serialized
+  company-scope resource.
+- State reassignment to another Country is rejected while it owns an active
+  District or active Address. District reassignment to another State is rejected
+  while it owns an active Address. Same-parent name/code maintenance remains
+  allowed.
 - City/locality and street lines are supported.
 - Postal details, building details, and coordinates are optional.
 - Latitude and longitude are nullable as a pair and range-checked.
@@ -116,6 +124,10 @@ Required now:
 - Technical identifiers keep their own rules: State/District codes are 2-10
   ASCII letters, digits, or hyphens; ISO alpha and currency codes are fixed
   ASCII letters; phone codes are an optional `+` followed by digits.
+- The additive Egypt baseline seed supplies ISO country `EG` and all 27 Egyptian
+  governorates as global reference data. It fills missing rows idempotently,
+  preserves administrator edits and archived rows, and fails only on genuinely
+  ambiguous conflicting Egypt records.
 
 Deferred by design:
 
@@ -131,6 +143,11 @@ Deferred by design:
 - EmployeeAddress and EmergencyContactAddress APIs.
 - CompanyAddress and BranchAddress command/query endpoints.
 - Country-specific postal-code patterns and address-format rendering.
+- Purpose-specific Egypt statutory validation belongs to owner-link commands,
+  not to every reusable Address. Registered Office and Work Location will
+  require Egypt, governorate, city/region, street, and building number; postal
+  code remains optional. ETA branch/tax registration identity is a dedicated tax
+  attribute and must not be inferred from the organizational `BranchCode`.
 - A Currency master entity and financial currency relationships are owned by
   Finance/Payroll, not Geography. Until that bounded context exists,
   `Country.CurrencyCode` is an optional normalized ISO integration value only;

@@ -287,6 +287,8 @@
     "CompanyCountryIdsMustBePositive": "Operating country IDs must be positive",
     "CompanyDefaultCountryMustBeSelected": "The default operating country must be selected",
     "CompanyRegistrationCountryMustBeSelected": "The registration country must be selected as an operating country",
+    "CountriesInUseByAddresses": "Remove or archive active company addresses in the excluded countries before changing the operating scope",
+    "CountryOutsideOperatingScope": "The selected country is not in this company's active operating countries.",
     "AttendanceDeviceNotFound": "The attendance device was not found",
     "AttendanceDeviceDuplicate": "A device with this name already exists for the current company",
     "AttendanceDeviceBusy": "The device cannot be changed while a pull is in progress",

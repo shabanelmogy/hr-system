@@ -67,6 +67,8 @@ public class AddressService(
                 var hierarchyError = await ValidateHierarchyAsync(addressRequest, token);
                 if (hierarchyError is not null)
                     return Result.Failure<AddressResponse>(hierarchyError);
+                if (!await IsActiveOperatingCountryAsync(addressRequest.CountryId, token))
+                    return Result.Failure<AddressResponse>(_addressErrors.CountryOutsideOperatingScope);
                 if (!await IsActiveAddressTypeAsync(addressRequest.AddressTypeId, token))
                     return Result.Failure<AddressResponse>(_addressErrors.AddressTypeNotFound);
 
@@ -90,22 +92,23 @@ public class AddressService(
         addressRequest = Normalize(addressRequest);
         while (true)
         {
-            var expectedAddressTypeId = await _context.Addresses
+            var expectedSnapshot = await _context.Addresses
                 .AsNoTracking()
                 .Where(address => address.Id == addressRequest.Id)
-                .Select(address => (int?)address.AddressTypeId)
+                .Select(address => new AddressLifecycleSnapshot(
+                    address.AddressTypeId,
+                    address.CountryId,
+                    address.StateId,
+                    address.DistrictId,
+                    address.IsDeleted))
                 .FirstOrDefaultAsync(cancellationToken);
-            if (!expectedAddressTypeId.HasValue)
+            if (expectedSnapshot is null)
                 return Result.Failure<AddressResponse>(_addressErrors.AddressNotFound);
 
-            var retryWithCurrentAddressType = false;
+            var retryWithCurrentSnapshot = false;
             AddressResponse? publishedResponse = null;
-            var lockResources = new[] { expectedAddressTypeId.Value, addressRequest.AddressTypeId }
-                .Distinct()
-                .OrderBy(id => id)
-                .Select(GeographicalLifecycleLocks.AddressType)
-                .Concat(GetLockResources(addressRequest)
-                    .Where(resource => !resource.StartsWith("GeographicalInformation:AddressType:", StringComparison.Ordinal)))
+            var lockResources = GetLockResources(expectedSnapshot)
+                .Concat(GetLockResources(addressRequest))
                 .ToArray();
             var result = await _context.ExecuteAtomicallyAsync(
                 lockResources,
@@ -115,18 +118,19 @@ public class AddressService(
                         .FirstOrDefaultAsync(address => address.Id == addressRequest.Id, token);
                     if (currentAddress is null)
                         return Result.Failure<AddressResponse>(_addressErrors.AddressNotFound);
-                    if (currentAddress.AddressTypeId != expectedAddressTypeId.Value)
+                    if (!MatchesSnapshot(currentAddress, expectedSnapshot))
                     {
-                        retryWithCurrentAddressType = true;
+                        retryWithCurrentSnapshot = true;
                         return Result.Success(currentAddress.Adapt<AddressResponse>());
                     }
-
-                    if (!await IsActiveAddressTypeAsync(addressRequest.AddressTypeId, token))
-                        return Result.Failure<AddressResponse>(_addressErrors.AddressTypeNotFound);
 
                     var hierarchyError = await ValidateHierarchyAsync(addressRequest, token);
                     if (hierarchyError is not null)
                         return Result.Failure<AddressResponse>(hierarchyError);
+                    if (!await IsActiveOperatingCountryAsync(addressRequest.CountryId, token))
+                        return Result.Failure<AddressResponse>(_addressErrors.CountryOutsideOperatingScope);
+                    if (!await IsActiveAddressTypeAsync(addressRequest.AddressTypeId, token))
+                        return Result.Failure<AddressResponse>(_addressErrors.AddressTypeNotFound);
 
                     var updatedAddress = addressRequest.Adapt<Address>();
                     await _entityChangeLogService.CreateChangeLogAsync(
@@ -143,7 +147,7 @@ public class AddressService(
                 },
                 cancellationToken);
 
-            if (retryWithCurrentAddressType)
+            if (retryWithCurrentSnapshot)
                 continue;
 
             if (publishedResponse is not null)
@@ -157,33 +161,50 @@ public class AddressService(
     {
         while (true)
         {
-            var expectedAddressTypeId = await _context.Addresses
+            var expectedSnapshot = await _context.Addresses
                 .AsNoTracking()
                 .Where(address => address.Id == id)
-                .Select(address => (int?)address.AddressTypeId)
+                .Select(address => new AddressLifecycleSnapshot(
+                    address.AddressTypeId,
+                    address.CountryId,
+                    address.StateId,
+                    address.DistrictId,
+                    address.IsDeleted))
                 .FirstOrDefaultAsync(cancellationToken);
-            if (!expectedAddressTypeId.HasValue)
+            if (expectedSnapshot is null)
                 return Result.Failure(_addressErrors.AddressNotFound);
 
-            var retryWithCurrentAddressType = false;
+            var retryWithCurrentSnapshot = false;
             AddressResponse? publishedResponse = null;
             string? publishedAction = null;
             var result = await _context.ExecuteAtomicallyAsync(
-                [GeographicalLifecycleLocks.AddressType(expectedAddressTypeId.Value)],
+                GetLockResources(expectedSnapshot),
                 async token =>
                 {
                     var address = await _context.Addresses
                         .FirstOrDefaultAsync(item => item.Id == id, token);
                     if (address is null)
                         return Result.Failure(_addressErrors.AddressNotFound);
-                    if (address.AddressTypeId != expectedAddressTypeId.Value)
+                    if (!MatchesSnapshot(address, expectedSnapshot))
                     {
-                        retryWithCurrentAddressType = true;
+                        retryWithCurrentSnapshot = true;
                         return Result.Success();
                     }
 
-                    if (address.IsDeleted && !await IsActiveAddressTypeAsync(address.AddressTypeId, token))
-                        return Result.Failure(_addressErrors.AddressTypeNotFound);
+                    if (address.IsDeleted)
+                    {
+                        var hierarchyError = await ValidateHierarchyAsync(
+                            address.CountryId,
+                            address.StateId,
+                            address.DistrictId,
+                            token);
+                        if (hierarchyError is not null)
+                            return Result.Failure(hierarchyError);
+                        if (!await IsActiveOperatingCountryAsync(address.CountryId, token))
+                            return Result.Failure(_addressErrors.CountryOutsideOperatingScope);
+                        if (!await IsActiveAddressTypeAsync(address.AddressTypeId, token))
+                            return Result.Failure(_addressErrors.AddressTypeNotFound);
+                    }
 
                     if (!address.IsDeleted && await IsAddressLinkedToOwnerAsync(address.Id, token))
                         return Result.Failure(_addressErrors.AddressInUseByOtherEntities);
@@ -209,7 +230,7 @@ public class AddressService(
                 },
                 cancellationToken);
 
-            if (retryWithCurrentAddressType)
+            if (retryWithCurrentSnapshot)
                 continue;
 
             if (publishedResponse is not null && publishedAction is not null)
@@ -252,17 +273,36 @@ public class AddressService(
             cancellationToken);
 
     private string[] GetLockResources(AddressRequest request)
+        => GetLockResources(
+            request.AddressTypeId,
+            request.CountryId,
+            request.StateId,
+            request.DistrictId);
+
+    private string[] GetLockResources(AddressLifecycleSnapshot snapshot)
+        => GetLockResources(
+            snapshot.AddressTypeId,
+            snapshot.CountryId,
+            snapshot.StateId,
+            snapshot.DistrictId);
+
+    private string[] GetLockResources(
+        int addressTypeId,
+        int countryId,
+        int? stateId,
+        int? districtId)
     {
         var resources = new List<string>
         {
-            GeographicalLifecycleLocks.Country(request.CountryId),
-            GeographicalLifecycleLocks.AddressType(request.AddressTypeId)
+            GeographicalLifecycleLocks.Country(countryId),
+            GeographicalLifecycleLocks.AddressType(addressTypeId),
+            GetCompanyGeographicScopeLockResource()
         };
 
-        if (request.StateId.HasValue)
-            resources.Add(GeographicalLifecycleLocks.State(request.StateId.Value));
-        if (request.DistrictId.HasValue)
-            resources.Add(GeographicalLifecycleLocks.District(request.DistrictId.Value));
+        if (stateId.HasValue)
+            resources.Add(GeographicalLifecycleLocks.State(stateId.Value));
+        if (districtId.HasValue)
+            resources.Add(GeographicalLifecycleLocks.District(districtId.Value));
 
         return resources.ToArray();
     }
@@ -270,31 +310,42 @@ public class AddressService(
     private async Task<Error?> ValidateHierarchyAsync(
         AddressRequest request,
         CancellationToken cancellationToken)
+        => await ValidateHierarchyAsync(
+            request.CountryId,
+            request.StateId,
+            request.DistrictId,
+            cancellationToken);
+
+    private async Task<Error?> ValidateHierarchyAsync(
+        int countryId,
+        int? stateId,
+        int? districtId,
+        CancellationToken cancellationToken)
     {
         var countryIsActive = await _context.Countries
-            .AnyAsync(country => country.Id == request.CountryId && !country.IsDeleted, cancellationToken);
+            .AnyAsync(country => country.Id == countryId && !country.IsDeleted, cancellationToken);
         if (!countryIsActive)
             return _addressErrors.InvalidCountry;
 
-        if (request.StateId.HasValue)
+        if (stateId.HasValue)
         {
             var stateIsValid = await _context.States
-                .AnyAsync(state => state.Id == request.StateId.Value &&
-                                   state.CountryId == request.CountryId &&
+                .AnyAsync(state => state.Id == stateId.Value &&
+                                   state.CountryId == countryId &&
                                    !state.IsDeleted,
                     cancellationToken);
             if (!stateIsValid)
                 return _addressErrors.InvalidState;
         }
 
-        if (request.DistrictId.HasValue)
+        if (districtId.HasValue)
         {
             var districtIsValid = await _context.Districts
-                .AnyAsync(district => district.Id == request.DistrictId.Value &&
-                                      district.StateId == request.StateId &&
+                .AnyAsync(district => district.Id == districtId.Value &&
+                                      district.StateId == stateId &&
                                       !district.IsDeleted &&
                                       !district.State!.IsDeleted &&
-                                      district.State.CountryId == request.CountryId &&
+                                      district.State.CountryId == countryId &&
                                       !district.State.Country!.IsDeleted,
                     cancellationToken);
             if (!districtIsValid)
@@ -303,6 +354,33 @@ public class AddressService(
 
         return null;
     }
+
+    private async Task<bool> IsActiveOperatingCountryAsync(
+        int countryId,
+        CancellationToken cancellationToken)
+    {
+        if (!_currentActor.CompanyId.HasValue || string.IsNullOrWhiteSpace(_currentActor.TenantId))
+            return false;
+
+        return await _context.CompanyCountries
+            .AnyAsync(
+                companyCountry =>
+                    companyCountry.TenantId == _currentActor.TenantId &&
+                    companyCountry.CompanyId == _currentActor.CompanyId.Value &&
+                    companyCountry.CountryId == countryId &&
+                    !companyCountry.IsDeleted,
+                cancellationToken);
+    }
+
+    private string GetCompanyGeographicScopeLockResource() =>
+        $"company-geographic-scope:{_currentActor.TenantId}:{_currentActor.CompanyId}";
+
+    private static bool MatchesSnapshot(Address address, AddressLifecycleSnapshot snapshot) =>
+        address.AddressTypeId == snapshot.AddressTypeId &&
+        address.CountryId == snapshot.CountryId &&
+        address.StateId == snapshot.StateId &&
+        address.DistrictId == snapshot.DistrictId &&
+        address.IsDeleted == snapshot.IsDeleted;
 
     private async Task<bool> IsAddressLinkedToOwnerAsync(int addressId, CancellationToken cancellationToken) =>
         await _context.Set<CompanyAddress>()
@@ -324,4 +402,11 @@ public class AddressService(
 
     private static string? Normalize(string? value) =>
         string.IsNullOrWhiteSpace(value) ? null : value.Trim();
+
+    private sealed record AddressLifecycleSnapshot(
+        int AddressTypeId,
+        int CountryId,
+        int? StateId,
+        int? DistrictId,
+        bool IsDeleted);
 }

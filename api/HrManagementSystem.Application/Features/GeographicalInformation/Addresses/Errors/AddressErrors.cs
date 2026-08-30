@@ -24,6 +24,12 @@ public class AddressErrors(IStringLocalizer<AddressRequest> localizer)
     public Error InvalidDistrict =>
             new("Address.InvalidDistrict", _localizer[Strings.InvalidDistrict], ErrorType.Validation);
 
+    public Error CountryOutsideOperatingScope =>
+            new(
+                "Address.CountryOutsideOperatingScope",
+                _localizer[nameof(CountryOutsideOperatingScope)],
+                ErrorType.Validation);
+
     public Error AddressError =>
             new("Address.AddressError", _localizer[nameof(AddressError)], ErrorType.Unexpected);
 

@@ -79,11 +79,18 @@ part of the persistence model so future APIs do not need to reintroduce
   optional District chain inside the transaction that writes the row. Address
   mutations share Country/State/District lifecycle locks with parent archive
   operations, so a parent cannot be archived around an address commit.
+- Create, update, and restore also require the selected Country to be in the
+  current company's active operating-country scope. Address mutations and scope
+  replacement share `company-geographic-scope:{tenantId}:{companyId}`, so an
+  address cannot be committed while its Country is concurrently removed from
+  that scope.
 - Country and State archive also reject active Address references; District
   archive keeps the existing active-Address dependency check.
-- Archiving Address is blocked by active owner links. The current toggle remains
-  available for the legacy service and must be replaced by explicit
-  Archive/Restore commands before production use.
+- Archiving Address is blocked by active owner links. Restore takes a stable
+  snapshot, locks AddressType, Country, optional State/District, and company
+  scope resources, then revalidates every dependency before activation. The
+  current toggle remains available for compatibility; explicit CQRS
+  Archive/Restore routes remain a future boundary cleanup.
 
 ## 5. Authorization and privacy
 
@@ -120,8 +127,12 @@ address fields and no longer expose the removed Address-level `IsDefault` flag.
 
 ## 8. Release gate
 
-Before production, complete owner-link commands, explicit Archive/Restore,
-Company Geographic Scope validation, Employee PII policy, country-specific
-address policies, and cross-platform forms. The current foundation is ready for
-Organizational Structure development only as long as new Company/Branch address
-work uses the link entities.
+Before production, complete owner-link commands, explicit CQRS Archive/Restore,
+Employee PII policy, purpose-specific country policies, and cross-platform
+forms. For Egypt, Registered Office and Work Location owner-link commands must
+require an Egyptian Country, Governorate/State, city/region, street line, and
+building number; postal code stays optional, and an ETA tax branch identifier
+must not be inferred from the general `BranchCode`. These requirements belong
+to the owner purpose, not every reusable Address. The current foundation is
+ready for Organizational Structure development only as long as new
+Company/Branch address work uses the link entities.

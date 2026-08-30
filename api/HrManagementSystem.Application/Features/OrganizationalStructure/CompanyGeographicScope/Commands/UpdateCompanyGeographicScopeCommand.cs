@@ -72,6 +72,9 @@ public sealed class UpdateCompanyGeographicScopeCommandHandler(
                 if (!await store.AreActiveCountriesAsync(request.CountryIds, token))
                     return Result.Failure<CompanyGeographicScopeResponse>(errors.CountriesUnavailable);
 
+                if (await store.HasActiveAddressesOutsideScopeAsync(companyId, request.CountryIds, token))
+                    return Result.Failure<CompanyGeographicScopeResponse>(errors.CountriesInUseByAddresses);
+
                 // Clear the old default first so the filtered unique index can never
                 // observe two active defaults while the replacement is saved.
                 await store.ClearDefaultAsync(companyId, token);

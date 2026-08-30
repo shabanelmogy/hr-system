@@ -213,6 +213,7 @@ public sealed class CreateStatesCommandHandler(
 
 public sealed class UpdateStateCommandHandler(
     IStateWriteStore stateWriteStore,
+    IStateReadStore stateReadStore,
     IUnitOfWork unitOfWork,
     IStateChangeScheduler stateChangeScheduler,
     IStateAuditTrail stateAuditTrail,
@@ -223,34 +224,58 @@ public sealed class UpdateStateCommandHandler(
 {
     public async Task<Result<StateDetailResponse>> Handle(UpdateStateCommand request, CancellationToken cancellationToken)
     {
-        StateChange? change = null;
-        var result = await unitOfWork.ExecuteAtomicallyAsync(
-            [GeographicalLifecycleLocks.Country(request.CountryId)],
-            async token =>
-            {
-                var state = await stateWriteStore.GetForUpdateAsync(request.Id, token);
-                if (state is null || state.IsDeleted)
-                    return Result.Failure<StateDetailResponse>(stateErrors.StateNotFound);
-                if (!await stateWriteStore.IsCountryActiveAsync(request.CountryId, token))
-                    return Result.Failure<StateDetailResponse>(stateErrors.CountryNotFound);
+        while (true)
+        {
+            var expectedCountryId = await stateWriteStore.GetCountryIdAsync(request.Id, cancellationToken);
+            if (!expectedCountryId.HasValue)
+                return Result.Failure<StateDetailResponse>(stateErrors.StateNotFound);
 
-                var updatedState = mapper.Map<State>((StateMutation)request);
-                if (await stateWriteStore.HasConflictAsync(updatedState, state.Id, token))
-                    return Result.Failure<StateDetailResponse>(stateErrors.StateExists);
+            var retryWithCurrentParent = false;
+            StateChange? change = null;
+            var result = await unitOfWork.ExecuteAtomicallyAsync(
+                [GeographicalLifecycleLocks.Country(expectedCountryId.Value), GeographicalLifecycleLocks.Country(request.CountryId)],
+                async token =>
+                {
+                    var state = await stateWriteStore.GetForUpdateAsync(request.Id, token);
+                    if (state is null || state.IsDeleted)
+                        return Result.Failure<StateDetailResponse>(stateErrors.StateNotFound);
+                    if (state.CountryId != expectedCountryId.Value)
+                    {
+                        retryWithCurrentParent = true;
+                        return Result.Success<StateDetailResponse>(null!);
+                    }
+                    if (!await stateWriteStore.IsCountryActiveAsync(request.CountryId, token))
+                        return Result.Failure<StateDetailResponse>(stateErrors.CountryNotFound);
+                    if (state.CountryId != request.CountryId)
+                    {
+                        if (await stateWriteStore.HasActiveDistrictsAsync(state.Id, token))
+                            return Result.Failure<StateDetailResponse>(stateErrors.StateInUseByDistrict);
+                        if (await stateWriteStore.HasActiveAddressesAsync(state.Id, token))
+                            return Result.Failure<StateDetailResponse>(stateErrors.StateInUseByAddress);
+                    }
 
-                stateAuditTrail.RecordUpdate(state, updatedState);
-                mapper.Map((StateMutation)request, state);
-                await unitOfWork.SaveChangesAsync(token);
-                var response = mapper.Map<StateDetailResponse>(state);
-                change = new StateChange(response, "Update", null, currentActor.UserId, Guid.NewGuid());
-                return Result.Success(response);
-            },
-            cancellationToken);
+                    var updatedState = mapper.Map<State>((StateMutation)request);
+                    if (await stateWriteStore.HasConflictAsync(updatedState, state.Id, token))
+                        return Result.Failure<StateDetailResponse>(stateErrors.StateExists);
 
-        if (change is not null)
-            stateChangeScheduler.Schedule(change);
+                    stateAuditTrail.RecordUpdate(state, updatedState);
+                    mapper.Map((StateMutation)request, state);
+                    await unitOfWork.SaveChangesAsync(token);
+                    var response = await stateReadStore.GetByIdAsync(state.Id, token)
+                        ?? throw new InvalidOperationException("The updated State could not be read.");
+                    change = new StateChange(response, "Update", null, currentActor.UserId, Guid.NewGuid());
+                    return Result.Success(response);
+                },
+                cancellationToken);
 
-        return result;
+            if (retryWithCurrentParent)
+                continue;
+
+            if (change is not null)
+                stateChangeScheduler.Schedule(change);
+
+            return result;
+        }
     }
 }
 

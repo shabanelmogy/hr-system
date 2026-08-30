@@ -86,8 +86,8 @@ implementation discipline.
 | company-geographic-scope-api | 3 | `baadd3e6f008d9e4228c16c7d037be7eff83f71e7db96439ff239ca80fb0e5cc` |
 | company-geographic-scope-api | 4 | `64117b4d243b4eb684ac7e6403e30060d0bfe54ba24a16583b694348d2d52fd2` |
 | company-geographic-scope-api | 5 | `0427dfe1b48c1c2124f6074d92bad806f29ba090f0fb020b62da79cfb05155b0` |
-| company-geographic-scope-api | 6 | `c139c71cf063df5fb71a7672b29958ccc7616ada201374b9539e2c60ac2149c9` |
-| company-geographic-scope-api | 7 | `aa0e0f87e1c8636f81cd1fa33aefcc0c4b9f11c0c72b584a51da9dbbb2c51c3c` |
+| company-geographic-scope-api | 6 | `4c7325830581e9f774857e293389ab0ef21a42011c58fb9c04dde46d4826e658` |
+| company-geographic-scope-api | 7 | `8b064dc66d590bb7728278089f799c6361489d43850fa7962ebd821d8dee4ab6` |
 | company-geographic-scope-api | 8 | `bfa505287d661d283b0aa02f52e340f7d6fd52b22e9dfa42ad19350143811147` |
 | company-geographic-scope-api | 9 | `4a37002841d902cf3ae667530b071adccedf2d9b0a68a674d1c275bdd5d387e5` |
-| company-geographic-scope-api | 10 | `7bb642543a1e25d0ed34810ddec3200501d0f029ac0b06a33201ba704c22becd` |
+| company-geographic-scope-api | 10 | `31ff1672a8154ab2c4f57b43f1935a3136a633e592fd72f384299835665e24b2` |

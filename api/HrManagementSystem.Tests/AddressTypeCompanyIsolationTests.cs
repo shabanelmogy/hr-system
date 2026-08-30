@@ -5,6 +5,7 @@ using HrManagementSystem.Domain.Common.Abstractions;
 using HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.AddressTypes.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
+using HrManagementSystem.Domain.OrganizationalStructure.Entities;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Addresses.Services;
 using HrManagementSystem.Infrastructure.Features.Platform.EntityChangeLogs.Services;
 using HrManagementSystem.Infrastructure.Persistence;
@@ -134,12 +135,19 @@ public sealed class AddressTypeCompanyIsolationTests
             NameEn = "Residence",
             IsDeleted = true
         };
-        context.Countries.Add(new Country
+        var country = new Country
         {
             NameAr = "مصر",
             NameEn = "Egypt"
-        });
+        };
+        context.Countries.Add(country);
         context.AddressTypes.Add(addressType);
+        await context.SaveChangesAsync();
+        context.CompanyCountries.Add(new CompanyCountry(country.Id, isDefault: true)
+        {
+            TenantId = "tenant-1",
+            CompanyId = 11
+        });
         await context.SaveChangesAsync();
 
         var service = new AddressService(

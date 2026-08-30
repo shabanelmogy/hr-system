@@ -53,6 +53,7 @@
     { "id": "address-config", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Addresses/Persistence/AddressConfiguration.cs", "purpose": "Address constraints and relations" },
     { "id": "company-address-config", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Persistence/Configurations/OrganizationalStructure/CompanyAddressConfiguration.cs", "purpose": "Company link constraints" },
     { "id": "branch-address-config", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Persistence/Configurations/OrganizationalStructure/BranchAddressConfiguration.cs", "purpose": "Branch link constraints" },
-    { "id": "migration", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Migrations/20260827082513_RefactorAddressesForGlobalGeography.cs", "purpose": "Development schema transition" }
+    { "id": "migration", "layer": "api", "path": "api/HrManagementSystem.Infrastructure/Migrations/20260827082513_RefactorAddressesForGlobalGeography.cs", "purpose": "Development schema transition" },
+    { "id": "integrity-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests/AddressGeographicIntegrityTests.cs", "purpose": "Operating-scope, hierarchy, restore, and lifecycle-lock integrity coverage" }
   ]
 }
