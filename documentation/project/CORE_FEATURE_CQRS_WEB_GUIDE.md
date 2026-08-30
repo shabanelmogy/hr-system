@@ -10,6 +10,13 @@ Mapster mappings, and web grid/card implementation described here. The other
 geographical-information features are still visual and migration references; do not
 copy their legacy service APIs or client-managed collections.
 
+The employee/functional-data model is frozen separately in
+[CORE_HR_DOMAIN_DESIGN_GUIDE.md](CORE_HR_DOMAIN_DESIGN_GUIDE.md). The minimal
+`Employee` snippets in this generic CQRS guide describe request/handler shape
+only; do not copy them as the final employee schema. Implement the frozen
+`Person` + company-scoped `Employee` + effective-dated Assignment/Contract model
+and its scope/invariant rules from that guide.
+
 Countries deliberately has no tenant/company ownership marker. Core HR aggregates
 must add tenant/company scope, scoped indexes, cross-scope tests, and concurrency or
 effective-date rules where applicable.
