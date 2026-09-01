@@ -71,6 +71,10 @@ lookups, shared preview/feedback, and `POST /{resource}/bulk` atomic submission.
 `FormContent`, `FormFooter`, `MyTextField`, and `MySelect` with a reusable Zod
 schema. Save remains enabled; errors render beneath fields and shared focus/dirty
 protection behavior is retained. Parent selectors load active same-company data.
+In non-production builds, add/edit mode also passes a shared `mockDataAction`
+to render `Generate Mock Data` in the form footer. The resource-aware generator
+fills valid sample values and active lookup ids without submitting; it is absent
+from view mode and production.
 
 ## 10. JobDescription decision dialog
 

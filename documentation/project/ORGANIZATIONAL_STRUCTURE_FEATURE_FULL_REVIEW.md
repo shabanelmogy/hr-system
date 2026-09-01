@@ -104,6 +104,13 @@ Grid is called Table on mobile; both clients provide Cards, an operational
 current-page Chart, a managed Crystal Report view, and an atomic XLSX Import
 view. Export is Excluded and no placeholder action is reachable.
 
+In development builds, every add/edit organizational form exposes the shared
+`Generate Mock Data` footer action. It fills only the active form and never
+submits or persists. Samples are resource-specific, and required relationship
+ids are resolved from the active same-company lookups; the action stays disabled
+until those lookups are available. View mode and production builds never expose
+the action.
+
 ## 10. Verification and release decision
 
 Focused API build and OrganizationalStructure/Pragmatic domain tests pass. The

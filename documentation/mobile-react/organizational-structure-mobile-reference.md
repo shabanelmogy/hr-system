@@ -63,7 +63,10 @@ filters resets the page and refreshes the canonical query.
 `OrganizationalStructureForm` uses shared mobile form shells and runtime Zod
 validation. Active parent lookups are loaded through feature hooks; department
 parent selection is filtered to prevent self-reference. Submit remains available
-and field errors are rendered inline.
+and field errors are rendered inline. In development, add/edit mode passes the
+shared `mockDataAction` to `AppForm`, so `Generate Mock Data` appears in the
+footer. Samples fill only the active form and resolve required relationships from
+active same-company lookups; the action is hidden in view and production builds.
 
 ## 10. JobDescription decisions
 

@@ -67,7 +67,7 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | organizational-structure-web | 6 | `9f3ee2ec7f93eca74063e2e7bd940a416c741f9f673c1dcf4ec87f91b8b1f5ea` |
 | organizational-structure-web | 7 | `8079e625c2cff443433359be277baccfd39cd512dd3cffd356e5b934d31637b2` |
 | organizational-structure-web | 8 | `81709390ab5691f03acc9dcd2b845f95f2a60c0ee2707ea8d96dcfc4efd4d812` |
-| organizational-structure-web | 9 | `166db66c92dbbfd3a6f34839133651d4eabd636d299dfb268a41ffbc239da615` |
-| organizational-structure-mobile | 9 | `1793f1025cef803a01348696202dd7ca3dc71a1ff7dce99fd35ae621b3d280df` |
+| organizational-structure-web | 9 | `e927d61cfecd602bd6ef280ad83f12cd1a9615a5e9753963a89f8cc8e4dd2033` |
+| organizational-structure-mobile | 9 | `a81ab1f68c57c31f0a4a4e83b9a035b17676c9c8098b2ab3ce74e33b1323c466` |
 | organizational-structure-mobile | 10 | `a63acd8c39188f4d933e677680fde79c2170aa45afe71c8cf4b896109c5bc06c` |
 | organizational-structure-mobile | 11 | `ec3e51c2ef99a1494eb03474652b596423e1d5fcc07a4ad7cf8066b0517e1b4e` |

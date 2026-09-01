@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { Controller, useWatch } from 'react-hook-form';
 import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +8,7 @@ import { AppForm, AppFormSection, AppSelectField, AppSwitchField, AppTextField }
 import { useOrganizationalLookup } from '../queries/use-organizational-structure';
 import type { OrganizationalResource, OrganizationalStructureItem, OrganizationalStructureRequest } from '../types/organizational-structure';
 import { createOrganizationalStructureSchema } from '../validation/organizational-structure-schema';
+import { getNextOrganizationalStructureMockData, organizationalStructureMockDependenciesReady } from '../utils/organizational-structure-mock-data';
 
 interface Props { resource: OrganizationalResource; item: OrganizationalStructureItem | null; mode: 'create' | 'edit' | 'view'; loading: boolean; onClose: () => void; onSave: (request: OrganizationalStructureRequest) => Promise<void>; }
 const numberText = (value?: number) => value == null ? '' : String(value);
@@ -27,7 +28,7 @@ export function OrganizationalStructureForm({ resource, item, mode, loading, onC
     requirementsEn: item?.requirementsEn ?? '', requirementsAr: item?.requirementsAr ?? '', requiredSkills: item?.requiredSkills ?? '', requiredEducation: item?.requiredEducation ?? '', minExperienceYears: numberText(item?.minExperienceYears),
     preferredQualificationsEn: item?.preferredQualificationsEn ?? '', preferredQualificationsAr: item?.preferredQualificationsAr ?? '', revisionNotes: item?.revisionNotes ?? '',
   }), [item, resource]);
-  const { clearErrors, control, handleSubmit, formState: { errors, isDirty, isSubmitting } } = useZodForm<FormValues>(schema, { defaultValues: defaults });
+  const { clearErrors, control, handleSubmit, setValue, formState: { errors, isDirty, isSubmitting } } = useZodForm<FormValues>(schema, { defaultValues: defaults });
   const branchId = useWatch({ control, name: 'branchId' });
   const branches = useOrganizationalLookup('branches', undefined, resource === 'departments');
   const parentDepartments = useOrganizationalLookup('departments', branchId, resource === 'departments' && branchId > 0);
@@ -36,6 +37,15 @@ export function OrganizationalStructureForm({ resource, item, mode, loading, onC
   const jobTitles = useOrganizationalLookup('job-titles', undefined, resource === 'positions');
   const jobLevels = useOrganizationalLookup('job-levels', undefined, resource === 'positions');
   const positions = useOrganizationalLookup('positions', undefined, resource === 'job-descriptions');
+  const usedMockIndexes = useRef(new Set<number>());
+  const mockLookups = {
+    branches: branches.data ?? [],
+    departments: departments.data ?? [],
+    divisions: divisions.data ?? [],
+    'job-titles': jobTitles.data ?? [],
+    'job-levels': jobLevels.data ?? [],
+    positions: positions.data ?? [],
+  };
   const options = (values = [] as { id: number; code: string; nameEn: string; nameAr: string }[]) => values.map((value) => ({ value: value.id, label: `${value.code} — ${value.nameEn} (${value.nameAr})`, icon: 'business-outline' as const }));
   const disabled = readOnly || loading;
   const field = (name: keyof FormValues, label: string, props: Record<string, unknown> = {}) => <Controller control={control} name={name} render={({ field: current }) => <AppTextField editable={!disabled} label={label} name={current.name} onBlur={current.onBlur} onChangeText={current.onChange} ref={current.ref} value={String(current.value ?? '')} {...props} />} />;
@@ -48,7 +58,67 @@ export function OrganizationalStructureForm({ resource, item, mode, loading, onC
     targetHeadcount: optionalNumber(values.targetHeadcount), minExperienceYears: optionalNumber(values.minExperienceYears),
     version: values.version.trim() || undefined,
   }));
-  return <AppForm contentContainerStyle={styles.content} errors={toFormErrorMap(errors)} icon={mode === 'create' ? 'add-circle-outline' : readOnly ? 'eye-outline' : 'create-outline'} isDirty={isDirty} onCancel={onClose} onClearFieldError={(name) => clearErrors(name as keyof FormValues)} onSubmit={readOnly ? undefined : submit} presentation="fullScreen" style={styles.form} submitting={loading || isSubmitting} submitLabel={t('common.save')} subtitle={t('organizationalStructure.formSubtitle')} title={t(`organizationalStructure.form.${mode}`, { resource: t(`organizationalStructure.resources.${resource}`) })} visible>
+  const generateMockData = () => {
+    const sample = getNextOrganizationalStructureMockData(resource, usedMockIndexes.current, mockLookups);
+    const options = { shouldDirty: true, shouldValidate: true };
+    setValue('code', sample.code, options);
+    setValue('nameAr', sample.nameAr, options);
+    setValue('nameEn', sample.nameEn, options);
+
+    if (resource === 'branches') {
+      setValue('timeZoneId', sample.timeZoneId ?? 'Africa/Cairo', options);
+      setValue('openedOn', sample.openedOn ?? new Date().toISOString().slice(0, 10), options);
+      setValue('email', sample.email ?? '', options);
+      setValue('phone', sample.phone ?? '', options);
+      setValue('isHeadquarters', sample.isHeadquarters ?? false, options);
+    }
+    if (resource === 'departments') {
+      setValue('branchId', sample.branchId ?? 0, options);
+      setValue('parentDepartmentId', sample.parentDepartmentId ?? 0, options);
+      setValue('costCenterCode', sample.costCenterCode ?? '', options);
+      setValue('descriptionAr', sample.descriptionAr ?? '', options);
+      setValue('descriptionEn', sample.descriptionEn ?? '', options);
+    }
+    if (resource === 'divisions') {
+      setValue('departmentId', sample.departmentId ?? 0, options);
+      setValue('costCenterCode', sample.costCenterCode ?? '', options);
+      setValue('descriptionAr', sample.descriptionAr ?? '', options);
+      setValue('descriptionEn', sample.descriptionEn ?? '', options);
+    }
+    if (resource === 'job-levels') {
+      setValue('levelOrder', String(sample.levelOrder ?? 0), options);
+      setValue('minSalary', String(sample.minSalary ?? 0), options);
+      setValue('maxSalary', String(sample.maxSalary ?? 0), options);
+      setValue('currencyCode', sample.currencyCode ?? 'EGP', options);
+      setValue('canManageOthers', sample.canManageOthers ?? false, options);
+      setValue('isManagementLevel', sample.isManagementLevel ?? false, options);
+      setValue('descriptionAr', sample.descriptionAr ?? '', options);
+      setValue('descriptionEn', sample.descriptionEn ?? '', options);
+    }
+    if (resource === 'positions') {
+      setValue('divisionId', sample.divisionId ?? 0, options);
+      setValue('jobTitleId', sample.jobTitleId ?? 0, options);
+      setValue('jobLevelId', sample.jobLevelId ?? 0, options);
+      setValue('targetHeadcount', String(sample.targetHeadcount ?? 0), options);
+    }
+    if (resource === 'job-descriptions') {
+      setValue('version', sample.version ?? sample.code, options);
+      setValue('positionId', sample.positionId ?? 0, options);
+      setValue('purposeAr', sample.purposeAr ?? '', options);
+      setValue('purposeEn', sample.purposeEn ?? '', options);
+      setValue('responsibilitiesAr', sample.responsibilitiesAr ?? '', options);
+      setValue('responsibilitiesEn', sample.responsibilitiesEn ?? '', options);
+      setValue('requirementsAr', sample.requirementsAr ?? '', options);
+      setValue('requirementsEn', sample.requirementsEn ?? '', options);
+      setValue('requiredSkills', sample.requiredSkills ?? '', options);
+      setValue('requiredEducation', sample.requiredEducation ?? '', options);
+      setValue('minExperienceYears', String(sample.minExperienceYears ?? 0), options);
+      setValue('preferredQualificationsAr', sample.preferredQualificationsAr ?? '', options);
+      setValue('preferredQualificationsEn', sample.preferredQualificationsEn ?? '', options);
+      setValue('revisionNotes', sample.revisionNotes ?? '', options);
+    }
+  };
+  return <AppForm contentContainerStyle={styles.content} errors={toFormErrorMap(errors)} icon={mode === 'create' ? 'add-circle-outline' : readOnly ? 'eye-outline' : 'create-outline'} isDirty={isDirty} mockDataAction={__DEV__ && !readOnly ? { onGenerate: generateMockData, disabled: loading || !organizationalStructureMockDependenciesReady(resource, mockLookups) } : undefined} onCancel={onClose} onClearFieldError={(name) => clearErrors(name as keyof FormValues)} onSubmit={readOnly ? undefined : submit} presentation="fullScreen" style={styles.form} submitting={loading || isSubmitting} submitLabel={t('common.save')} subtitle={t('organizationalStructure.formSubtitle')} title={t(`organizationalStructure.form.${mode}`, { resource: t(`organizationalStructure.resources.${resource}`) })} visible>
     <AppFormSection icon="pricetag-outline" title={t('organizationalStructure.identity')}>
       {field('code', t(resource === 'job-descriptions' ? 'organizationalStructure.fields.version' : 'organizationalStructure.fields.code'), { autoCapitalize: 'characters', required: true })}
       {field('nameEn', t('organizationalStructure.fields.nameEn'), { required: true })}{field('nameAr', t('organizationalStructure.fields.nameAr'), { required: true })}

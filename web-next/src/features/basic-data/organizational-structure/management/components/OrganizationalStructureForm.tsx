@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { type Resolver, type SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { MyForm, MySelect, MyTextField } from "@/shared/components/forms";
@@ -14,6 +14,10 @@ import type {
   OrganizationalStructureMutation,
 } from "../types/OrganizationalStructure";
 import { getOrganizationalStructureSchema } from "../validation/organizationalStructureSchema";
+import {
+  getNextOrganizationalStructureMockData,
+  organizationalStructureMockDependenciesReady,
+} from "../utils/organizationalStructureMockData";
 
 interface Props {
   open: boolean;
@@ -49,10 +53,11 @@ export default function OrganizationalStructureForm({
   const { t } = useTranslation();
   const isView = mode === "view";
   const schema = getOrganizationalStructureSchema(resource, t);
-  const { control, handleSubmit, reset, setError, formState: { errors, isDirty } } = useForm<OrganizationalStructureMutation>({
+  const { control, handleSubmit, reset, setError, setValue, formState: { errors, isDirty } } = useForm<OrganizationalStructureMutation>({
     resolver: zodResolver(schema) as Resolver<OrganizationalStructureMutation>,
     defaultValues: emptyValues,
   });
+  const usedMockIndexes = useRef(new Set<number>());
   const branchId = useWatch({ control, name: "branchId" });
 
   const branches = useOrganizationalLookup("branches", undefined, open && resource === "departments");
@@ -62,6 +67,15 @@ export default function OrganizationalStructureForm({
   const jobTitles = useOrganizationalLookup("job-titles", undefined, open && resource === "positions");
   const jobLevels = useOrganizationalLookup("job-levels", undefined, open && resource === "positions");
   const positions = useOrganizationalLookup("positions", undefined, open && resource === "job-descriptions");
+
+  const mockLookups = {
+    branches: branches.data ?? [],
+    departments: departments.data ?? [],
+    divisions: divisions.data ?? [],
+    "job-titles": jobTitles.data ?? [],
+    "job-levels": jobLevels.data ?? [],
+    positions: positions.data ?? [],
+  };
 
   useEffect(() => {
     if (open) reset(toFormValues(item));
@@ -99,6 +113,67 @@ export default function OrganizationalStructureForm({
     />
   );
 
+  const generateMockData = () => {
+    const sample = getNextOrganizationalStructureMockData(resource, usedMockIndexes.current, mockLookups);
+    const options = { shouldDirty: true, shouldValidate: true };
+    setValue("code", sample.code, options);
+    setValue("nameAr", sample.nameAr, options);
+    setValue("nameEn", sample.nameEn, options);
+
+    if (resource === "branches") {
+      setValue("timeZoneId", sample.timeZoneId ?? "Africa/Cairo", options);
+      setValue("openedOn", sample.openedOn ?? new Date().toISOString().slice(0, 10), options);
+      setValue("email", sample.email ?? "", options);
+      setValue("phone", sample.phone ?? "", options);
+      setValue("isHeadquarters", sample.isHeadquarters ?? false, options);
+    }
+    if (resource === "departments") {
+      setValue("branchId", sample.branchId ?? 0, options);
+      setValue("parentDepartmentId", sample.parentDepartmentId ?? 0, options);
+      setValue("costCenterCode", sample.costCenterCode ?? "", options);
+      setValue("descriptionAr", sample.descriptionAr ?? "", options);
+      setValue("descriptionEn", sample.descriptionEn ?? "", options);
+    }
+    if (resource === "divisions") {
+      setValue("departmentId", sample.departmentId ?? 0, options);
+      setValue("costCenterCode", sample.costCenterCode ?? "", options);
+      setValue("descriptionAr", sample.descriptionAr ?? "", options);
+      setValue("descriptionEn", sample.descriptionEn ?? "", options);
+    }
+    if (resource === "job-levels") {
+      setValue("levelOrder", sample.levelOrder ?? 0, options);
+      setValue("minSalary", sample.minSalary ?? 0, options);
+      setValue("maxSalary", sample.maxSalary ?? 0, options);
+      setValue("currencyCode", sample.currencyCode ?? "EGP", options);
+      setValue("canManageOthers", sample.canManageOthers ?? false, options);
+      setValue("isManagementLevel", sample.isManagementLevel ?? false, options);
+      setValue("descriptionAr", sample.descriptionAr ?? "", options);
+      setValue("descriptionEn", sample.descriptionEn ?? "", options);
+    }
+    if (resource === "positions") {
+      setValue("divisionId", sample.divisionId ?? 0, options);
+      setValue("jobTitleId", sample.jobTitleId ?? 0, options);
+      setValue("jobLevelId", sample.jobLevelId ?? 0, options);
+      setValue("targetHeadcount", sample.targetHeadcount ?? 0, options);
+    }
+    if (resource === "job-descriptions") {
+      setValue("version", sample.version ?? sample.code, options);
+      setValue("purposeAr", sample.purposeAr ?? "", options);
+      setValue("purposeEn", sample.purposeEn ?? "", options);
+      setValue("responsibilitiesAr", sample.responsibilitiesAr ?? "", options);
+      setValue("responsibilitiesEn", sample.responsibilitiesEn ?? "", options);
+      setValue("requirementsAr", sample.requirementsAr ?? "", options);
+      setValue("requirementsEn", sample.requirementsEn ?? "", options);
+      setValue("requiredSkills", sample.requiredSkills ?? "", options);
+      setValue("requiredEducation", sample.requiredEducation ?? "", options);
+      setValue("minExperienceYears", sample.minExperienceYears ?? 0, options);
+      setValue("preferredQualificationsAr", sample.preferredQualificationsAr ?? "", options);
+      setValue("preferredQualificationsEn", sample.preferredQualificationsEn ?? "", options);
+      setValue("revisionNotes", sample.revisionNotes ?? "", options);
+      setValue("positionId", sample.positionId ?? 0, options);
+    }
+  };
+
   return (
     <MyForm
       open={open} onClose={onClose} maxHeight="86vh"
@@ -109,6 +184,14 @@ export default function OrganizationalStructureForm({
       isDirty={isDirty} hideFooter={isView} focusFieldName="code" autoFocusFirst
       overlayActionType={mode === "add" ? "create" : "update"}
       overlayMessage={t("organizationalStructure.form.saving")} errors={errorMessages}
+      mockDataAction={
+        process.env.NODE_ENV !== "production" && !isView
+          ? {
+              onGenerate: generateMockData,
+              disabled: loading || !organizationalStructureMockDependenciesReady(resource, mockLookups),
+            }
+          : undefined
+      }
     >
       <Box sx={{ mt: 2, display: "grid", gap: 2 }}>
         {text("code", resource === "job-descriptions" ? t("organizationalStructure.fields.version") : t("organizationalStructure.fields.code"), { maxLength: resource === "job-descriptions" ? 30 : 50 })}
