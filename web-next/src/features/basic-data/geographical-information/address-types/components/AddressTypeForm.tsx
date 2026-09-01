@@ -2,7 +2,7 @@ import { MyForm, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box } from "@mui/material";
 import { useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { getAddressTypeValidationSchema } from "../utils/validation";
 import {
@@ -36,7 +36,7 @@ const AddressTypeForm = ({
     control,
     formState: { errors, isDirty },
   } = useForm<CreateAddressTypeRequest>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as Resolver<CreateAddressTypeRequest>,
     mode: "onChange",
     defaultValues: { nameAr: "", nameEn: "" },
   });
@@ -127,7 +127,7 @@ const AddressTypeForm = ({
       onSubmit={
         isViewMode
           ? undefined
-          : handleSubmit(async (data) => {
+          : handleSubmit(async (data: CreateAddressTypeRequest) => {
               try {
                 await onSubmit(data);
               } catch (error) {

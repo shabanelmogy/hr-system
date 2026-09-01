@@ -1,15 +1,28 @@
 using HrManagementSystem.Domain.Common.Entities;
+using static HrManagementSystem.Domain.Common.Guards.DomainGuard;
 
 namespace HrManagementSystem.Domain.OrganizationalStructure.Entities;
 
 public class JobTitle : CompanyAuditableEntity
 {
-    public int Id { get; set; }
-    public string TitleEn { get; set; } = string.Empty;
-    public string TitleAr { get; set; } = string.Empty;
-    public string JobTitleCode { get; set; } = string.Empty;
-    public bool IsActive { get; set; } = true;
+    private JobTitle()
+    {
+    }
 
-    public ICollection<JobDescription> JobDescriptions { get; set; } = [];
-    public ICollection<Position> Positions { get; set; } = [];
+    public JobTitle(string jobTitleCode, string titleEn, string titleAr) =>
+        UpdateIdentity(jobTitleCode, titleEn, titleAr);
+
+    public int Id { get; private set; }
+    public string TitleEn { get; private set; } = string.Empty;
+    public string TitleAr { get; private set; } = string.Empty;
+    public string JobTitleCode { get; private set; } = string.Empty;
+
+    public ICollection<Position> Positions { get; private set; } = [];
+
+    public void UpdateIdentity(string jobTitleCode, string titleEn, string titleAr)
+    {
+        JobTitleCode = Required(jobTitleCode, nameof(jobTitleCode)).ToUpperInvariant();
+        TitleEn = Required(titleEn, nameof(titleEn));
+        TitleAr = Required(titleAr, nameof(titleAr));
+    }
 }

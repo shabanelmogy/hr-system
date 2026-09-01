@@ -1,8 +1,45 @@
 {
-  "generated_at": "2026-08-30T11:03:33.401531+00:00",
+  "generated_at": "2026-08-31T08:51:53.681102+00:00",
   "nodes": {
+    "api_hrmanagementsystem_application_common_consts_permissions_hrmanagementsystem_application_common_consts_permissions": {
+      "code_fingerprint": "28d8660d494bdcb4fcc2395a6f6f626535d6fe4443f3bfb6a63d130c5e4f52b8",
+      "label": "Permissions",
+      "last": "2026-08-31T07:46:55.688848+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-31T07:46:55.688848+00:00",
+          "outcome": "useful",
+          "q": "اعمل migartion"
+        },
+        {
+          "date": "2026-08-31T07:31:46.656648+00:00",
+          "outcome": "useful",
+          "q": "انا سجلت دخول بالادمن والصفحات مش ظاهرة ؟"
+        }
+      ],
+      "score": 1.997673492,
+      "source_file": "api/HrManagementSystem.Application/Common/Consts/Permissions.cs",
+      "status": "preferred",
+      "uses": 2
+    },
+    "api_hrmanagementsystem_infrastructure_dependencies_databaseservice": {
+      "code_fingerprint": "e9317fea2ccf11dfaa35d11e45bfa8371686d66b4c8e7a3582f9defcc7739bd3",
+      "label": "DatabaseService.cs",
+      "last": "2026-08-31T07:46:55.688848+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-31T07:46:55.688848+00:00",
+          "outcome": "useful",
+          "q": "اعمل migartion"
+        }
+      ],
+      "score": 0.99895815,
+      "source_file": "api/HrManagementSystem.Infrastructure/Dependencies/DatabaseService.cs",
+      "status": "tentative",
+      "uses": 1
+    },
     "api_hrmanagementsystem_infrastructure_security_authorization_filters_tenantmemberattribute_hrmanagementsystem_infrastructure_security_authorization_filters_tenantmemberattribute": {
-      "code_fingerprint": "c688d01f21cf802ce06e8127e0616e83d139f1db2d949b03d8890a7fb4da571d",
+      "code_fingerprint": "002a0bd10e70acb38277f3af0ce313af14d29ecff62dc4d0318f6b5e15818867",
       "label": "TenantMemberAttribute",
       "last": "2026-08-11T18:26:28.622140+00:00",
       "provenance": [
@@ -12,13 +49,29 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.64928305,
+      "score": 0.635795121,
       "source_file": "api/HrManagementSystem.Infrastructure/Security/Authorization/Filters/TenantMemberAttribute.cs",
       "status": "tentative",
       "uses": 1
     },
+    "migration": {
+      "code_fingerprint": "",
+      "label": "Migration",
+      "last": "2026-08-31T07:46:55.688848+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-31T07:46:55.688848+00:00",
+          "outcome": "useful",
+          "q": "اعمل migartion"
+        }
+      ],
+      "score": 0.99895815,
+      "source_file": "",
+      "status": "tentative",
+      "uses": 1
+    },
     "mobile_react_app_android_softwarekeyboardlayoutmode": {
-      "code_fingerprint": "230d9f03708613017bf5a2284ce5b6eb8c16272e6e588db8923b4f54a0ed4518",
+      "code_fingerprint": "29eb9eb0d3bdc270377bfedbb4182ff6c2c777bd40c168f6c8a298c0f21f0381",
       "label": "softwareKeyboardLayoutMode",
       "last": "2026-08-11T16:37:30.882471+00:00",
       "provenance": [
@@ -28,13 +81,13 @@
           "q": "when focus input keyboard cover input"
         }
       ],
-      "score": 0.648148895,
+      "score": 0.634684526,
       "source_file": "mobile-react/app.json",
       "status": "tentative",
       "uses": 1
     },
     "mobile_react_src_features_tenants_screens_tenantdashboardscreen_tenantdashboardscreen": {
-      "code_fingerprint": "e8e8c214d93c65a4ee0c13251dbeeee95debc45fb69b892e8bd6158c5cb00dfa",
+      "code_fingerprint": "43cedcf2264476fe128a1d6b3406acddcbac43dbfc262121e735f8fe7d5d0821",
       "label": "TenantDashboardScreen()",
       "last": "2026-08-11T18:16:55.686631+00:00",
       "provenance": [
@@ -44,7 +97,7 @@
           "q": "create dashborad and tenetamanagement in web-next and mobile"
         }
       ],
-      "score": 0.649183579,
+      "score": 0.635697716,
       "source_file": "mobile-react/src/features/tenants/screens/TenantDashboardScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -60,13 +113,13 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.649601242,
+      "score": 0.636106703,
       "source_file": "web-next/package.json",
       "status": "tentative",
       "uses": 1
     },
     "web_next_readme_development": {
-      "code_fingerprint": "30825109585beac13f68e6ce5718b9338abe4c2f45cc7c84a600467d0ae653e0",
+      "code_fingerprint": "88055aff9e9e207e00fd8cb88b3a742c58649cc7eda19eab7f14092323665422",
       "label": "Development",
       "last": "2026-08-11T18:39:48.685616+00:00",
       "provenance": [
@@ -76,13 +129,13 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.64942198,
+      "score": 0.635931165,
       "source_file": "web-next/README.md",
       "status": "tentative",
       "uses": 1
     },
     "web_next_scripts_setup_local_https": {
-      "code_fingerprint": "6266c0738a946ae6534fa6580424c556696856d847fd0451c155da0badedd884",
+      "code_fingerprint": "76a8f8f757188a87806ac74ae9555538ba729196125477f79f276b410b5a364c",
       "label": "setup-local-https.ps1",
       "last": "2026-08-11T18:39:48.685616+00:00",
       "provenance": [
@@ -92,7 +145,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.64942198,
+      "score": 0.635931165,
       "source_file": "web-next/scripts/setup-local-https.ps1",
       "status": "tentative",
       "uses": 1
@@ -108,7 +161,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.649601242,
+      "score": 0.636106703,
       "source_file": "web-next/src/app/(auth)/login/page.tsx",
       "status": "tentative",
       "uses": 1
@@ -124,7 +177,7 @@
           "q": "fix style for buton : login as admin"
         }
       ],
-      "score": 0.648237151,
+      "score": 0.634770949,
       "source_file": "web-next/src/features/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
@@ -140,7 +193,7 @@
           "q": "Fix web super-admin login failing with HTTP 307 and React minWidth DOM warning on the tenant dashboard."
         }
       ],
-      "score": 0.649870273,
+      "score": 0.636370145,
       "source_file": "web-next/src/features/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
@@ -156,13 +209,29 @@
           "q": "fix style for buton : login as admin"
         }
       ],
-      "score": 0.648237151,
+      "score": 0.634770949,
       "source_file": "web-next/src/features/auth/login/Login.tsx",
       "status": "tentative",
       "uses": 1
     },
+    "web_next_src_features_basic_data_navigation_basicdatanavigation": {
+      "code_fingerprint": "dcc621b8b0e43b0f484f18ae7999056d9f99564d878f1d4f752073682c76151f",
+      "label": "basicDataNavigation.tsx",
+      "last": "2026-08-31T07:31:46.656648+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-31T07:31:46.656648+00:00",
+          "outcome": "useful",
+          "q": "انا سجلت دخول بالادمن والصفحات مش ظاهرة ؟"
+        }
+      ],
+      "score": 0.998715342,
+      "source_file": "web-next/src/features/basic-data/navigation/basicDataNavigation.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
     "web_next_src_features_tenants_tenantdashboardpage_tenantdashboardpage": {
-      "code_fingerprint": "c7b38daf59db19c660da165ca8910d78bd90e79f019306218647a6eaf934f293",
+      "code_fingerprint": "a0532019f0d89c8f458f50c71a5e3f886b37aa54c851902abad29415be63daf7",
       "label": "TenantDashboardPage()",
       "last": "2026-08-11T19:22:49.132059+00:00",
       "provenance": [
@@ -177,13 +246,13 @@
           "q": "create dashborad and tenetamanagement in web-next and mobile"
         }
       ],
-      "score": 1.299053852,
+      "score": 1.272067862,
       "source_file": "web-next/src/features/tenants/TenantDashboardPage.tsx",
       "status": "preferred",
       "uses": 2
     },
     "web_next_src_layouts_components_sidebar_navigationconfig_getnavigationconfig": {
-      "code_fingerprint": "27aa753a09a759e119fa16140cf9e5e25612a7ab297b44c2d803d1d69271acf3",
+      "code_fingerprint": "e930ceb813ca109db46846fed432ff7165329faf000bbc9f92f08538292158f9",
       "label": "getNavigationConfig()",
       "last": "2026-08-11T18:26:28.622140+00:00",
       "provenance": [
@@ -193,13 +262,13 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.64928305,
+      "score": 0.635795121,
       "source_file": "web-next/src/layouts/components/sidebar/navigationConfig.tsx",
       "status": "tentative",
       "uses": 1
     },
     "web_next_src_proxy_proxy": {
-      "code_fingerprint": "a78115a93377e739cc105b4e60592a1ae24fb16459e66582a5b6c9c286607e22",
+      "code_fingerprint": "550fb4dc7257f9a778f34305d69786dadff22521d38a0dbeba23ce7c8748574c",
       "label": "proxy()",
       "last": "2026-08-11T19:22:49.132059+00:00",
       "provenance": [
@@ -214,7 +283,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 1.299471515,
+      "score": 1.272476849,
       "source_file": "web-next/src/proxy.ts",
       "status": "preferred",
       "uses": 2

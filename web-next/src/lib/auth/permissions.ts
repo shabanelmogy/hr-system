@@ -26,6 +26,11 @@ export const permissions = {
   DeleteCountries: "Countries:Delete",
   ViewCompanyGeographicScope: "CompanyGeographicScope:View",
   ManageCompanyGeographicScope: "CompanyGeographicScope:Manage",
+  ViewOrganizationalStructure: "OrganizationalStructure:View",
+  CreateOrganizationalStructure: "OrganizationalStructure:Create",
+  EditOrganizationalStructure: "OrganizationalStructure:Edit",
+  DeleteOrganizationalStructure: "OrganizationalStructure:Delete",
+  ApproveJobDescriptions: "OrganizationalStructure:ApproveJobDescriptions",
   ViewDistricts: "Districts:View",
   CreateDistricts: "Districts:Create",
   EditDistricts: "Districts:Edit",
@@ -143,6 +148,7 @@ export type PermissionModule =
   | "Categories"
   | "Countries"
   | "CompanyGeographicScope"
+  | "OrganizationalStructure"
   | "Districts"
   | "ChangeLogs"
   | "Hangfire"

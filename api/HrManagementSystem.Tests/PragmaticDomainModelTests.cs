@@ -139,17 +139,17 @@ public sealed class PragmaticDomainModelTests
         var description = new JobDescription(1, "Accountant", "Accountant", "1.0");
         description.UpdateContent(
             "Own the ledger",
-            null,
+            "إدارة دفتر الأستاذ",
             "Close monthly books",
-            null,
+            "إقفال الدفاتر شهريًا",
             "Accounting degree",
-            null,
+            "مؤهل محاسبي",
             null,
             null,
             2);
 
         description.Approve(
-            7,
+            "employee-7",
             new DateOnly(2026, 9, 1),
             null,
             new DateTimeOffset(UtcNow));

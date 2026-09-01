@@ -72,10 +72,43 @@ export const routePolicies: readonly RoutePolicy[] = [
     permissions: [permissions.ViewCompanyGeographicScope],
   },
   {
+    path: appRoutes.basicData.organizationalStructure.branches,
+    permissions: [permissions.ViewOrganizationalStructure],
+  },
+  {
+    path: appRoutes.basicData.organizationalStructure.departments,
+    permissions: [permissions.ViewOrganizationalStructure],
+  },
+  {
+    path: appRoutes.basicData.organizationalStructure.divisions,
+    permissions: [permissions.ViewOrganizationalStructure],
+  },
+  {
+    path: appRoutes.basicData.organizationalStructure.jobTitles,
+    permissions: [permissions.ViewOrganizationalStructure],
+  },
+  {
+    path: appRoutes.basicData.organizationalStructure.jobLevels,
+    permissions: [permissions.ViewOrganizationalStructure],
+  },
+  {
+    path: appRoutes.basicData.organizationalStructure.positions,
+    permissions: [permissions.ViewOrganizationalStructure],
+  },
+  {
+    path: appRoutes.basicData.organizationalStructure.jobDescriptions,
+    permissions: [permissions.ViewOrganizationalStructure],
+  },
+  {
+    path: appRoutes.basicData.organizationalStructure.index,
+    permissions: [permissions.ViewOrganizationalStructure],
+  },
+  {
     path: appRoutes.basicData.index,
     permissions: [
       permissions.ViewAddressTypes,
       permissions.ViewCompanyGeographicScope,
+      permissions.ViewOrganizationalStructure,
     ],
   },
   { path: appRoutes.extras.filesManager, roles: [adminRole] },

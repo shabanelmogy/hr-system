@@ -2486,6 +2486,12 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.HasIndex("TenantId", "CompanyId", "BranchCode")
                         .IsUnique();
 
+                    b.HasIndex("TenantId", "CompanyId", "NameAr")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "NameEn")
+                        .IsUnique();
+
                     b.ToTable("Branches", (string)null);
                 });
 
@@ -2705,6 +2711,711 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("CompanyCountries", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Department", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CostCenterCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DepartmentCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("DescriptionAr")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("DescriptionEn")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NameAr")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int?>("ParentDepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "DepartmentCode")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "ParentDepartmentId");
+
+                    b.HasIndex("TenantId", "CompanyId", "BranchId", "NameAr")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "BranchId", "NameEn")
+                        .IsUnique();
+
+                    b.ToTable("Departments", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Division", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CostCenterCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DescriptionAr")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("DescriptionEn")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("DivisionCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NameAr")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "DivisionCode")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "DepartmentId", "NameAr")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "DepartmentId", "NameEn")
+                        .IsUnique();
+
+                    b.ToTable("Divisions", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.JobDescription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApprovedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTimeOffset?>("DecisionOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("DecisionReason")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateOnly?>("EffectiveDate")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("ExpiryDate")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("MinExperienceYears")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PositionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PreferredQualificationsAr")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("PreferredQualificationsEn")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("PurposeAr")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("PurposeEn")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("RequiredEducation")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("RequiredSkills")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("RequirementsAr")
+                        .HasMaxLength(8000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequirementsEn")
+                        .HasMaxLength(8000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResponsibilitiesAr")
+                        .HasMaxLength(8000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResponsibilitiesEn")
+                        .HasMaxLength(8000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RevisionNotes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("TitleAr")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("TitleEn")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("TenantId", "CompanyId", "Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "PositionId", "TitleAr")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "PositionId", "TitleEn")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "PositionId", "Version")
+                        .IsUnique();
+
+                    b.ToTable("JobDescriptions", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.JobLevel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("CanManageOthers")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CurrencyCode")
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DescriptionAr")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("DescriptionEn")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsManagementLevel")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LevelCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("LevelOrder")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("MaxSalary")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("MinSalary")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("NameAr")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "LevelCode")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "LevelOrder")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "NameAr")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "NameEn")
+                        .IsUnique();
+
+                    b.ToTable("JobLevels", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.JobTitle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("JobTitleCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("TitleAr")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("TitleEn")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "JobTitleCode")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "TitleAr")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "CompanyId", "TitleEn")
+                        .IsUnique();
+
+                    b.ToTable("JobTitles", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Position", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DivisionId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("JobLevelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobTitleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PositionCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int>("TargetHeadcount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "DivisionId");
+
+                    b.HasIndex("TenantId", "CompanyId", "JobLevelId");
+
+                    b.HasIndex("TenantId", "CompanyId", "JobTitleId");
+
+                    b.HasIndex("TenantId", "CompanyId", "PositionCode")
+                        .IsUnique();
+
+                    b.ToTable("Positions", (string)null);
                 });
 
             modelBuilder.Entity("HrManagementSystem.Domain.Platform.EntityChangeLogs.Entities.EntityChangeLog", b =>
@@ -4601,6 +5312,248 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Department", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Branch", "Branch")
+                        .WithMany("Departments")
+                        .HasForeignKey("TenantId", "CompanyId", "BranchId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Department", "ParentDepartment")
+                        .WithMany("ChildDepartments")
+                        .HasForeignKey("TenantId", "CompanyId", "ParentDepartmentId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("ParentDepartment");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Division", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Department", "Department")
+                        .WithMany("Divisions")
+                        .HasForeignKey("TenantId", "CompanyId", "DepartmentId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.JobDescription", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Position", "Position")
+                        .WithMany("JobDescriptions")
+                        .HasForeignKey("TenantId", "CompanyId", "PositionId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Position");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.JobLevel", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.JobTitle", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Position", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Division", "Division")
+                        .WithMany("Positions")
+                        .HasForeignKey("TenantId", "CompanyId", "DivisionId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.JobLevel", "JobLevel")
+                        .WithMany("Positions")
+                        .HasForeignKey("TenantId", "CompanyId", "JobLevelId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.JobTitle", "JobTitle")
+                        .WithMany("Positions")
+                        .HasForeignKey("TenantId", "CompanyId", "JobTitleId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Division");
+
+                    b.Navigation("JobLevel");
+
+                    b.Navigation("JobTitle");
+                });
+
             modelBuilder.Entity("HrManagementSystem.Domain.Platform.EntityChangeLogs.Entities.EntityChangeLog", b =>
                 {
                     b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
@@ -5002,11 +5955,40 @@ namespace HrManagementSystem.Infrastructure.Migrations
             modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Branch", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("Departments");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", b =>
                 {
                     b.Navigation("Addresses");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Department", b =>
+                {
+                    b.Navigation("ChildDepartments");
+
+                    b.Navigation("Divisions");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Division", b =>
+                {
+                    b.Navigation("Positions");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.JobLevel", b =>
+                {
+                    b.Navigation("Positions");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.JobTitle", b =>
+                {
+                    b.Navigation("Positions");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.OrganizationalStructure.Entities.Position", b =>
+                {
+                    b.Navigation("JobDescriptions");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", b =>

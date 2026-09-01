@@ -32,6 +32,7 @@ export interface MainDrawerRouteDefinition {
 export const BASIC_DATA_VIEW_PERMISSIONS = [
   permissions.ViewAddressTypes,
   permissions.ViewCompanyGeographicScope,
+  permissions.ViewOrganizationalStructure,
 ] as const;
 
 /**
@@ -64,6 +65,19 @@ export const routePolicies: readonly RoutePolicy[] = [
     permissions: [permissions.ViewCompanyGeographicScope],
   },
   {
+    path: ROUTES.basicData.organizationalStructureManagement,
+    permissions: [permissions.ViewOrganizationalStructure],
+  },
+  ...[
+    ROUTES.basicData.organizationalStructureBranches,
+    ROUTES.basicData.organizationalStructureDepartments,
+    ROUTES.basicData.organizationalStructureDivisions,
+    ROUTES.basicData.organizationalStructureJobTitles,
+    ROUTES.basicData.organizationalStructureJobLevels,
+    ROUTES.basicData.organizationalStructurePositions,
+    ROUTES.basicData.organizationalStructureJobDescriptions,
+  ].map((path) => ({ path, permissions: [permissions.ViewOrganizationalStructure] as const })),
+  {
     path: ROUTES.basicData.geographicalInformation,
     anyOf: [
       { roles: [appRoles.superAdmin] },
@@ -72,7 +86,10 @@ export const routePolicies: readonly RoutePolicy[] = [
   },
   {
     path: ROUTES.basicData.organizationalStructure,
-    permissions: [permissions.ViewCompanyGeographicScope],
+    anyOf: [
+      { permissions: [permissions.ViewCompanyGeographicScope] },
+      { permissions: [permissions.ViewOrganizationalStructure] },
+    ],
   },
   {
     path: ROUTES.basicData.root,

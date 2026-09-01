@@ -31,6 +31,18 @@ export interface BasicDataRoutes {
   countryReport: AppPath;
   globalPresence: AppPath;
   companyGeographicScope: AppPath;
+  organizationalStructure: OrganizationalStructureRoutes;
+}
+
+export interface OrganizationalStructureRoutes {
+  index: AppPath;
+  branches: AppPath;
+  departments: AppPath;
+  divisions: AppPath;
+  jobTitles: AppPath;
+  jobLevels: AppPath;
+  positions: AppPath;
+  jobDescriptions: AppPath;
 }
 
 export interface AuthRoutes {
@@ -116,6 +128,16 @@ export const appRoutes: AppRoutes = {
     countryReport: "/basic-data/country-report",
     globalPresence: "/basic-data/global-presence",
     companyGeographicScope: toAppPath("/basic-data/organizational-structure/geographic-scope"),
+    organizationalStructure: {
+      index: toAppPath("/basic-data/organizational-structure"),
+      branches: toAppPath("/basic-data/organizational-structure/branches"),
+      departments: toAppPath("/basic-data/organizational-structure/departments"),
+      divisions: toAppPath("/basic-data/organizational-structure/divisions"),
+      jobTitles: toAppPath("/basic-data/organizational-structure/job-titles"),
+      jobLevels: toAppPath("/basic-data/organizational-structure/job-levels"),
+      positions: toAppPath("/basic-data/organizational-structure/positions"),
+      jobDescriptions: toAppPath("/basic-data/organizational-structure/job-descriptions"),
+    },
   },
 
   auth: {

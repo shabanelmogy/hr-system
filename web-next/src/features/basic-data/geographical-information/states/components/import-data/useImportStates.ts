@@ -230,7 +230,11 @@ export const useImportStates = () => {
           const message = validation.error.issues.map((issue) => issue.message).join(" | ");
           updates.set(state.rowNumber, { status: "invalid", errorMessage: message });
           failures.push(`${t("imports.row")} ${state.rowNumber}: ${message}`);
-        } else if (registerStateImportValues(duplicateTracker, countryId, validation.data)) {
+        } else if (registerStateImportValues(duplicateTracker, countryId, {
+          nameAr: validation.data.nameAr ?? "",
+          nameEn: validation.data.nameEn ?? "",
+          code: validation.data.code,
+        })) {
           const message = t("states.import.duplicateInFile");
           updates.set(state.rowNumber, { status: "invalid", errorMessage: message });
           failures.push(`${t("imports.row")} ${state.rowNumber}: ${message}`);

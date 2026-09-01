@@ -29,17 +29,49 @@ public class Branch : CompanyAuditableEntity
     public string TimeZoneId { get; private set; } = "UTC";
     public DateOnly OpenedOn { get; private set; }
     public DateOnly? ClosedOn { get; private set; }
-    public Company Company { get; set; } = null!;
-    public string? Email { get; set; }
-    public string? Phone { get; set; }
-    public int? ManagerId { get; set; }
-    public Employee? Manager { get; set; }
-    public bool IsHeadquarters { get; set; }
+    public Company Company { get; private set; } = null!;
+    public string? Email { get; private set; }
+    public string? Phone { get; private set; }
+    public int? ManagerId { get; private set; }
+    public Employee? Manager { get; private set; }
+    public bool IsHeadquarters { get; private set; }
     public bool IsActive { get; private set; }
 
-    public ICollection<Department> Departments { get; set; } = [];
-    public ICollection<Employee> Employees { get; set; } = [];
-    public ICollection<BranchAddress> Addresses { get; set; } = [];
+    public ICollection<Department> Departments { get; private set; } = [];
+    public ICollection<Employee> Employees { get; private set; } = [];
+    public ICollection<BranchAddress> Addresses { get; private set; } = [];
+
+    public void UpdateIdentity(
+        string branchCode,
+        string nameEn,
+        string nameAr,
+        string timeZoneId,
+        DateOnly openedOn)
+    {
+        BranchCode = Required(branchCode, nameof(branchCode)).ToUpperInvariant();
+        NameEn = Required(nameEn, nameof(nameEn));
+        NameAr = Required(nameAr, nameof(nameAr));
+        TimeZoneId = Required(timeZoneId, nameof(timeZoneId));
+        OpenedOn = openedOn;
+
+        if (ClosedOn.HasValue && ClosedOn.Value < openedOn)
+        {
+            throw new DomainRuleException(
+                "Organization.Branch.InvalidClosureDate",
+                "A branch cannot close before it opens.");
+        }
+    }
+
+    public void UpdateContact(string? email, string? phone)
+    {
+        Email = Optional(email);
+        Phone = Optional(phone);
+    }
+
+    public void AssignManager(int? managerId) =>
+        ManagerId = PositiveOrNull(managerId, nameof(managerId));
+
+    public void SetHeadquarters(bool isHeadquarters) => IsHeadquarters = isHeadquarters;
 
     public void Close(DateOnly closedOn)
     {

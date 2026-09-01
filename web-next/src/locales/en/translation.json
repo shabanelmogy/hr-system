@@ -269,6 +269,8 @@
     "geographicDataDescription": "Countries, regions and reusable location references.",
     "organizationalStructure": "Organizational Structure",
     "organizationalStructureDescription": "Company-specific organization and operating settings.",
+    "organizationalStructureManagement": "Structure Directory",
+    "organizationalStructureManagementDescription": "Manage branches, departments, divisions, positions, job levels and job descriptions.",
     "companyGeographicScope": "Operating Countries",
     "companyGeographicScopeDescription": "Choose the countries available for this company's operations and addresses.",
     "countries": "Countries",
@@ -1803,6 +1805,88 @@
     "archiveError": "Unable to archive this report.",
     "downloadError": "Unable to download the report.",
     "rolesLoadError": "Unable to load roles for report permissions."
+  },
+  "organizationalStructure": {
+    "title": "Organizational Structure",
+    "resource": "Directory resource",
+    "currentCompany": "Current company",
+    "search": "Search by code or bilingual name...",
+    "searchColumn": "Column", "searchCondition": "Condition", "allColumns": "All columns",
+    "contains": "Contains", "doesNotContain": "Does not contain", "equals": "Equals", "doesNotEqual": "Does not equal", "startsWith": "Starts with", "endsWith": "Ends with",
+    "filters": "Filters", "filterOptions": "Search and filters", "filterOptionsDescription": "Choose where and how the organizational structure search is applied.",
+    "empty": "No organizational records match the current criteria.",
+    "fetchError": "The organizational structure could not be loaded.",
+    "archiveTitle": "Archive organizational record",
+    "archiveDescription": "Archive {{name}}? Active dependent records must be archived first.",
+    "restoreTitle": "Restore organizational record",
+    "restoreDescription": "Restore {{name}}? Its parent records must be active.",
+    "yes": "Yes",
+    "no": "No",
+    "resources": {
+      "branches": "Branches",
+      "departments": "Departments",
+      "divisions": "Divisions",
+      "job-titles": "Job titles",
+      "job-levels": "Job levels",
+      "positions": "Positions",
+      "job-descriptions": "Job descriptions"
+    },
+    "routeDescriptions": {
+      "branches": "Manage company branches and headquarters.",
+      "departments": "Manage departments and their branch hierarchy.",
+      "divisions": "Manage divisions within departments.",
+      "job-titles": "Manage reusable job title definitions.",
+      "job-levels": "Manage job levels, salary bands and management flags.",
+      "positions": "Manage approved positions and target headcount.",
+      "job-descriptions": "Manage versioned position job descriptions and approvals."
+    },
+    "status": { "active": "Active", "archived": "Archived", "all": "All", "draft": "Draft", "approved": "Approved", "rejected": "Rejected", "expired": "Expired" },
+    "fields": {
+      "code": "Code", "version": "Version", "nameEn": "English name", "nameAr": "Arabic name", "parent": "Parent", "status": "Status", "approvalStatus": "Approval status",
+      "parentDepartment": "Parent department", "costCenter": "Cost center code",
+      "descriptionAr": "Arabic description", "descriptionEn": "English description",
+      "timeZone": "Time zone", "openedOn": "Opened on", "email": "Email", "phone": "Phone",
+      "headquarters": "Headquarters", "levelOrder": "Level order", "minSalary": "Minimum salary",
+      "maxSalary": "Maximum salary", "currency": "Currency", "canManageOthers": "Can manage others",
+      "managementLevel": "Management level", "targetHeadcount": "Target headcount",
+      "purposeAr": "Arabic purpose", "purposeEn": "English purpose",
+      "responsibilitiesAr": "Arabic responsibilities", "responsibilitiesEn": "English responsibilities",
+      "requirementsAr": "Arabic requirements", "requirementsEn": "English requirements",
+      "requiredSkills": "Required skills", "requiredEducation": "Required education",
+      "experienceYears": "Minimum experience years", "preferredQualificationsAr": "Arabic preferred qualifications",
+      "preferredQualificationsEn": "English preferred qualifications", "revisionNotes": "Revision notes",
+      "effectiveDate": "Effective date", "expiryDate": "Expiry date", "decisionReason": "Rejection reason"
+    },
+    "form": {
+      "add": "Add {{resource}}", "edit": "Edit {{resource}}", "view": "View {{resource}}",
+      "subtitle": "Values are validated against the current company and active parent records.",
+      "saving": "Saving organizational record..."
+    },
+    "validation": {
+      "code": "Use letters, numbers, dots, underscores or hyphens only.",
+      "salaryRange": "Maximum salary must be greater than or equal to minimum salary."
+    },
+    "chart": {
+      "title": "Current page overview",
+      "pageScope": "This chart represents the current server-paged result. Positions show target headcount; other resources show record count."
+    },
+    "report": {
+      "catalogError": "The published organizational structure report list could not be loaded.",
+      "unavailable": "No published Crystal Report is available for this organizational resource."
+    },
+    "import": {
+      "rows": "Import rows ({{count}})",
+      "success": "{{count}} organizational records were imported successfully.",
+      "parentNotFound": "The parent code could not be resolved from active records.",
+      "lookupLoading": "Loading active parent records before import…",
+      "lookupError": "Active parent records could not be loaded. Retry before importing."
+    },
+    "jobDescriptionStatus": { "draft": "Draft", "approved": "Approved", "rejected": "Rejected", "expired": "Expired" },
+    "decision": {
+      "approve": "Approve", "reject": "Reject", "approveTitle": "Approve job description", "rejectTitle": "Reject job description",
+      "subtitle": "Record the controlled lifecycle decision for this draft version.", "saving": "Saving decision...",
+      "approved": "Job description approved.", "rejected": "Job description rejected.", "failed": "The job description decision could not be saved."
+    }
   },
   "attendanceDevices": {
     "title": "Attendance devices",

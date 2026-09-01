@@ -75,9 +75,21 @@ describe('route access manifest', () => {
 
     expect(canAccessRoute(ROUTES.basicData.companyGeographicScope, tenantAdmin)).toBe(true);
     expect(canAccessRoute(ROUTES.basicData.organizationalStructure, tenantAdmin)).toBe(true);
+    expect(canAccessRoute(ROUTES.basicData.organizationalStructureManagement, tenantAdmin)).toBe(false);
     expect(canAccessRoute(ROUTES.basicData.countries, tenantAdmin)).toBe(false);
     expect(canAccessRoute(ROUTES.basicData.states, tenantAdmin)).toBe(false);
     expect(canAccessRoute(ROUTES.basicData.districts, tenantAdmin)).toBe(false);
+  });
+
+  it('requires the organizational structure view permission for its management route', () => {
+    expect(canAccessRoute(
+      ROUTES.basicData.organizationalStructureManagement,
+      userWith({ permissionClaims: [permissions.ViewOrganizationalStructure] }),
+    )).toBe(true);
+    expect(canAccessRoute(
+      ROUTES.basicData.organizationalStructureManagement,
+      userWith({ permissionClaims: [permissions.ViewCompanyGeographicScope] }),
+    )).toBe(false);
   });
 
   it('allows only the global geography branch of Basic Data for super administrators', () => {

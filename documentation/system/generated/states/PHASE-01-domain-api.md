@@ -78,7 +78,7 @@ implementation discipline.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| states-master | 3 | `43ea42762d08c208b038c7153dceed19ac895f80b529c18126fca78ffc532b39` |
+| states-master | 3 | `11eb828b5ab01b440915284f32842ff110624d6f4f7a57b77d5dde5f7ce9ca4b` |
 | states-master | 4 | `5a6d15c81abe80fbc5e13715f385f8a978b6482153ba7cec90474f46b6886ebf` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
 | states-api | 1 | `2395d7afcf495d57355e29724dc18f10fb01b10158e7e10992e3b4873f5a03fe` |

@@ -56,7 +56,7 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| districts-master | 3 | `5ca94ec3dcf5147246fd66770d78b4faf5c354b8b539ffdc5985965498d4b9d2` |
+| districts-master | 3 | `923f376df8ba9dd4929c902b64805c838c20cc2ee6eafb6961157cb4484e8e8b` |
 | districts-master | 4 | `73edb563ff159ccd70caafab0275db68887f98c3c3f22ecdfaaea7ee41b4fb2e` |
 | districts-master | 6 | `bc842f66c8ecdd4133ee9a86a1901d41047bc8cc48ec01e8a302ca6ab510da07` |
 | districts-master | 7 | `b4ca77c0fab6365d8f5202566b41f614348b21781231cb9bc97e4bd62aa9cd4f` |

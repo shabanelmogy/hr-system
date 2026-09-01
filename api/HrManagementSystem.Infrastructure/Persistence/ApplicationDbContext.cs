@@ -72,6 +72,12 @@ public class ApplicationDbContext(
     public DbSet<AttendanceDevice> AttendanceDevices { get; set; }
     public DbSet<AttendanceAgent> AttendanceAgents { get; set; }
     public DbSet<Branch> Branches { get; set; }
+    public DbSet<Department> Departments { get; set; }
+    public DbSet<Division> Divisions { get; set; }
+    public DbSet<JobTitle> JobTitles { get; set; }
+    public DbSet<JobLevel> JobLevels { get; set; }
+    public DbSet<Position> Positions { get; set; }
+    public DbSet<JobDescription> JobDescriptions { get; set; }
     public DbSet<DeviceCredential> AttendanceDeviceCredentials { get; set; }
     public DbSet<RawDeviceUser> RawDeviceUsers { get; set; }
     public DbSet<RawAttendancePunch> RawAttendancePunches { get; set; }
@@ -95,12 +101,6 @@ public class ApplicationDbContext(
 
     private static void IgnoreUnpersistedOrganizationalEntities(ModelBuilder modelBuilder)
     {
-        modelBuilder.Ignore<Department>();
-        modelBuilder.Ignore<Division>();
-        modelBuilder.Ignore<JobTitle>();
-        modelBuilder.Ignore<Position>();
-        modelBuilder.Ignore<JobDescription>();
-        modelBuilder.Ignore<JobLevel>();
         modelBuilder.Ignore<Employee>();
         modelBuilder.Ignore<EmployeeAssignment>();
         modelBuilder.Ignore<EmployeeContract>();

@@ -26,6 +26,11 @@ export const permissions = {
   DeleteCountries: 'Countries:Delete',
   ViewCompanyGeographicScope: 'CompanyGeographicScope:View',
   ManageCompanyGeographicScope: 'CompanyGeographicScope:Manage',
+  ViewOrganizationalStructure: 'OrganizationalStructure:View',
+  CreateOrganizationalStructure: 'OrganizationalStructure:Create',
+  EditOrganizationalStructure: 'OrganizationalStructure:Edit',
+  DeleteOrganizationalStructure: 'OrganizationalStructure:Delete',
+  ApproveJobDescriptions: 'OrganizationalStructure:ApproveJobDescriptions',
   ViewCrystalReports: 'CrystalReports:View',
   CreateCrystalReports: 'CrystalReports:Create',
   DownloadCrystalReports: 'CrystalReports:Download',
@@ -131,6 +136,7 @@ export type PermissionModule =
   | 'Categories'
   | 'Countries'
   | 'CompanyGeographicScope'
+  | 'OrganizationalStructure'
   | 'CrystalReports'
   | 'Districts'
   | 'ChangeLogs'

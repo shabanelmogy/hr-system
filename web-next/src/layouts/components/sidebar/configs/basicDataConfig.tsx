@@ -35,6 +35,13 @@ export const getBasicDataConfig = () => {
   ];
 
   const organizationalStructureItems = [
+    createNavItem("organizationalStructure.resources.branches", secondaryIcon(<BusinessRoundedIcon />), appRoutes.basicData.organizationalStructure.branches, undefined, [permissions.ViewOrganizationalStructure]),
+    createNavItem("organizationalStructure.resources.departments", secondaryIcon(<BusinessRoundedIcon />), appRoutes.basicData.organizationalStructure.departments, undefined, [permissions.ViewOrganizationalStructure]),
+    createNavItem("organizationalStructure.resources.divisions", secondaryIcon(<BusinessRoundedIcon />), appRoutes.basicData.organizationalStructure.divisions, undefined, [permissions.ViewOrganizationalStructure]),
+    createNavItem("organizationalStructure.resources.job-titles", secondaryIcon(<BusinessRoundedIcon />), appRoutes.basicData.organizationalStructure.jobTitles, undefined, [permissions.ViewOrganizationalStructure]),
+    createNavItem("organizationalStructure.resources.job-levels", secondaryIcon(<BusinessRoundedIcon />), appRoutes.basicData.organizationalStructure.jobLevels, undefined, [permissions.ViewOrganizationalStructure]),
+    createNavItem("organizationalStructure.resources.positions", secondaryIcon(<BusinessRoundedIcon />), appRoutes.basicData.organizationalStructure.positions, undefined, [permissions.ViewOrganizationalStructure]),
+    createNavItem("organizationalStructure.resources.job-descriptions", secondaryIcon(<BusinessRoundedIcon />), appRoutes.basicData.organizationalStructure.jobDescriptions, undefined, [permissions.ViewOrganizationalStructure]),
     createNavItem(
       NavigationTitles.COMPANY_GEOGRAPHIC_SCOPE,
       secondaryIcon(<BusinessRoundedIcon />),
@@ -58,7 +65,7 @@ export const getBasicDataConfig = () => {
     secondaryIcon(<BusinessRoundedIcon />),
     undefined,
     undefined,
-    [permissions.ViewCompanyGeographicScope],
+    [permissions.ViewCompanyGeographicScope, permissions.ViewOrganizationalStructure],
     organizationalStructureItems,
   );
 

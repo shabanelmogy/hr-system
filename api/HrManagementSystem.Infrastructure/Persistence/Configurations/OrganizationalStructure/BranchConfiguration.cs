@@ -2,7 +2,7 @@ using HrManagementSystem.Domain.OrganizationalStructure.Entities;
 
 namespace HrManagementSystem.Infrastructure.Persistence.Configurations.OrganizationalStructure;
 
-/// <summary>Branch directory persistence. Employee/department workflows remain outside this slice.</summary>
+/// <summary>Company-scoped branch directory persistence.</summary>
 public sealed class BranchConfiguration : IEntityTypeConfiguration<Branch>
 {
     public void Configure(EntityTypeBuilder<Branch> builder)
@@ -15,10 +15,11 @@ public sealed class BranchConfiguration : IEntityTypeConfiguration<Branch>
         builder.Property(x => x.Email).HasMaxLength(254);
         builder.Property(x => x.Phone).HasMaxLength(50);
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.BranchCode }).IsUnique();
+        builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.NameEn }).IsUnique();
+        builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.NameAr }).IsUnique();
         builder.HasAlternateKey(x => new { x.TenantId, x.CompanyId, x.Id });
         builder.Ignore(x => x.Company);
         builder.Ignore(x => x.Manager);
         builder.Ignore(x => x.Employees);
-        builder.Ignore(x => x.Departments);
     }
 }

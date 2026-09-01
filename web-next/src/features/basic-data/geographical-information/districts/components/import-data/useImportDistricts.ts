@@ -230,7 +230,11 @@ export const useImportDistricts = () => {
           const message = validation.error.issues.map((issue) => issue.message).join(" | ");
           updates.set(district.rowNumber, { status: "invalid", errorMessage: message });
           failures.push(`${t("imports.row")} ${district.rowNumber}: ${message}`);
-        } else if (registerDistrictImportValues(duplicateTracker, stateId, validation.data)) {
+        } else if (registerDistrictImportValues(duplicateTracker, stateId, {
+          nameAr: validation.data.nameAr ?? "",
+          nameEn: validation.data.nameEn ?? "",
+          code: validation.data.code,
+        })) {
           const message = t("districts.import.duplicateInFile");
           updates.set(district.rowNumber, { status: "invalid", errorMessage: message });
           failures.push(`${t("imports.row")} ${district.rowNumber}: ${message}`);

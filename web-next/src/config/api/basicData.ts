@@ -60,3 +60,16 @@ export const districts: DistrictsRoutes = {
 };
 
 export const companyGeographicScope = `${version}/company-geographic-scope`;
+
+export const organizationalStructure = {
+  page: (resource: string) => `${version}/organizational-structure/${resource}`,
+  lookup: (resource: string) => `${version}/organizational-structure/${resource}/lookup`,
+  getById: (resource: string, id: Id) => `${version}/organizational-structure/${resource}/${id}`,
+  create: (resource: string) => `${version}/organizational-structure/${resource}`,
+  bulkCreate: (resource: string) => `${version}/organizational-structure/${resource}/bulk`,
+  update: (resource: string, id: Id) => `${version}/organizational-structure/${resource}/${id}`,
+  archive: (resource: string, id: Id) => `${version}/organizational-structure/${resource}/${id}`,
+  restore: (resource: string, id: Id) => `${version}/organizational-structure/${resource}/${id}/restore`,
+  approve: (id: Id) => `${version}/organizational-structure/job-descriptions/${id}/approve`,
+  reject: (id: Id) => `${version}/organizational-structure/job-descriptions/${id}/reject`,
+} as const;

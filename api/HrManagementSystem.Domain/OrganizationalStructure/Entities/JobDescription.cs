@@ -11,17 +11,17 @@ public class JobDescription : CompanyAuditableEntity
     {
     }
 
-    public JobDescription(int jobTitleId, string titleEn, string titleAr, string version)
+    public JobDescription(int positionId, string titleEn, string titleAr, string version)
     {
-        JobTitleId = Positive(jobTitleId, nameof(jobTitleId));
+        PositionId = Positive(positionId, nameof(positionId));
         TitleEn = Required(titleEn, nameof(titleEn));
         TitleAr = Required(titleAr, nameof(titleAr));
-        Version = Required(version, nameof(version));
+        Version = Required(version, nameof(version)).ToUpperInvariant();
     }
 
     public int Id { get; private set; }
-    public int JobTitleId { get; private set; }
-    public JobTitle JobTitle { get; set; } = null!;
+    public int PositionId { get; private set; }
+    public Position Position { get; private set; } = null!;
     public string TitleEn { get; private set; } = string.Empty;
     public string TitleAr { get; private set; } = string.Empty;
     public string Version { get; private set; } = string.Empty;
@@ -40,9 +40,19 @@ public class JobDescription : CompanyAuditableEntity
     public JobDescriptionStatus Status { get; private set; } = JobDescriptionStatus.Draft;
     public DateOnly? EffectiveDate { get; private set; }
     public DateOnly? ExpiryDate { get; private set; }
-    public int? ApprovedByEmployeeId { get; private set; }
+    public string? ApprovedByUserId { get; private set; }
     public DateTimeOffset? DecisionOn { get; private set; }
     public string? DecisionReason { get; private set; }
+
+    public void UpdateIdentity(int positionId, string titleEn, string titleAr, string version)
+    {
+        EnsureEditable();
+        PositionId = Positive(positionId, nameof(positionId));
+        TitleEn = Required(titleEn, nameof(titleEn));
+        TitleAr = Required(titleAr, nameof(titleAr));
+        Version = Required(version, nameof(version)).ToUpperInvariant();
+        MarkEdited();
+    }
 
     public void UpdateContent(
         string? purposeEn,
@@ -55,7 +65,7 @@ public class JobDescription : CompanyAuditableEntity
         string? requiredEducation,
         int? minExperienceYears)
     {
-        EnsureDraft();
+        EnsureEditable();
         if (minExperienceYears < 0)
             throw new ArgumentOutOfRangeException(nameof(minExperienceYears));
 
@@ -68,6 +78,7 @@ public class JobDescription : CompanyAuditableEntity
         RequiredSkills = Optional(requiredSkills);
         RequiredEducation = Optional(requiredEducation);
         MinExperienceYears = minExperienceYears;
+        MarkEdited();
     }
 
     public void UpdatePreferredQualifications(
@@ -75,19 +86,21 @@ public class JobDescription : CompanyAuditableEntity
         string? preferredQualificationsAr,
         string? revisionNotes)
     {
-        EnsureDraft();
+        EnsureEditable();
         PreferredQualificationsEn = Optional(preferredQualificationsEn);
         PreferredQualificationsAr = Optional(preferredQualificationsAr);
         RevisionNotes = Optional(revisionNotes);
+        MarkEdited();
     }
 
     public void Approve(
-        int approvedByEmployeeId,
+        string approvedByUserId,
         DateOnly effectiveDate,
         DateOnly? expiryDate,
         DateTimeOffset approvedOn)
     {
         EnsureDraft();
+        EnsureComplete();
         if (expiryDate.HasValue && expiryDate.Value < effectiveDate)
         {
             throw new DomainRuleException(
@@ -95,7 +108,7 @@ public class JobDescription : CompanyAuditableEntity
                 "The expiry date cannot be earlier than the effective date.");
         }
 
-        ApprovedByEmployeeId = Positive(approvedByEmployeeId, nameof(approvedByEmployeeId));
+        ApprovedByUserId = Required(approvedByUserId, nameof(approvedByUserId));
         EffectiveDate = effectiveDate;
         ExpiryDate = expiryDate;
         DecisionOn = approvedOn;
@@ -132,6 +145,38 @@ public class JobDescription : CompanyAuditableEntity
             throw new DomainRuleException(
                 "Organization.JobDescription.NotDraft",
                 "Only a draft job description can be changed.");
+        }
+    }
+
+    private void EnsureEditable()
+    {
+        if (Status is not (JobDescriptionStatus.Draft or JobDescriptionStatus.Rejected))
+        {
+            throw new DomainRuleException(
+                "Organization.JobDescription.NotEditable",
+                "Only a draft or rejected job description can be changed.");
+        }
+    }
+
+    private void MarkEdited()
+    {
+        if (Status == JobDescriptionStatus.Rejected)
+        {
+            Status = JobDescriptionStatus.Draft;
+            DecisionOn = null;
+            DecisionReason = null;
+        }
+    }
+
+    private void EnsureComplete()
+    {
+        if (PurposeEn is null || PurposeAr is null ||
+            ResponsibilitiesEn is null || ResponsibilitiesAr is null ||
+            RequirementsEn is null || RequirementsAr is null)
+        {
+            throw new DomainRuleException(
+                "Organization.JobDescription.Incomplete",
+                "Purpose, responsibilities, and requirements are required in both languages before approval.");
         }
     }
 }

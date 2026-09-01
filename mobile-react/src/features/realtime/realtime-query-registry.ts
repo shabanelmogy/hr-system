@@ -15,6 +15,7 @@ const queryKeys = {
   states: ['states'],
   districts: ['districts'],
   addressTypes: ['address-types'],
+  organizationalStructure: ['organizational-structure'],
 } as const satisfies Record<string, QueryKey>;
 
 const administrationQueryKeys: readonly QueryKey[] = [
@@ -36,6 +37,7 @@ const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
   states: [queryKeys.states],
   districts: [queryKeys.districts],
   'address-types': [queryKeys.addressTypes],
+  'organizational-structure': [queryKeys.organizationalStructure],
 };
 
 export function getRealtimeQueryKeys(resource: string): readonly QueryKey[] {
@@ -59,6 +61,7 @@ export function getAllRealtimeQueryKeys(): readonly QueryKey[] {
     queryKeys.states,
     queryKeys.districts,
     queryKeys.addressTypes,
+    queryKeys.organizationalStructure,
     ...administrationQueryKeys,
   ].forEach((queryKey) => {
     keys.set(JSON.stringify(queryKey), queryKey);

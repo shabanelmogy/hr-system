@@ -55,6 +55,7 @@ export enum NavigationTitles {
   COUNTRY_REPORT = "menu.countryReport",
   GLOBAL_PRESENCE = "menu.globalPresence",
   ORGANIZATIONAL_STRUCTURE = "menu.organizationalStructure",
+  ORGANIZATIONAL_STRUCTURE_MANAGEMENT = "menu.organizationalStructureManagement",
   COMPANY_GEOGRAPHIC_SCOPE = "menu.companyGeographicScope",
   ROLES_AND_USERS_MANAGEMENT = "menu.rolesAndUsersManagement",
   ROLES_MANAGEMENT = "menu.rolesManagement",

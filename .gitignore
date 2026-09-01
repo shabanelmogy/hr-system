@@ -1,3 +1,6 @@
 # Graphify local execution metadata
 graphify-out/cost.json
 graphify-out/cache/
+.codex-tmp
+.kiro
+.codex

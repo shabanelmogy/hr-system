@@ -5,12 +5,14 @@ import { addressTypeKeys } from "@/features/basic-data/geographical-information/
 import { countryKeys } from "@/features/basic-data/geographical-information/countries";
 import { districtKeys } from "@/features/basic-data/geographical-information/districts";
 import { stateKeys } from "@/features/basic-data/geographical-information/states";
+import { organizationalStructureKeys } from "@/features/basic-data/organizational-structure/management";
 
 type QueryKey = readonly unknown[];
 
 export const realtimeResources = {
   countries: "countries",
   states: "states",
+  organizationalStructure: "organizational-structure",
   districts: "districts",
   addressTypes: "address-types",
   addresses: "addresses",
@@ -27,6 +29,7 @@ export const realtimeResources = {
 const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
   [realtimeResources.countries]: [countryKeys.all, stateKeys.all],
   [realtimeResources.states]: [stateKeys.all, countryKeys.all, districtKeys.all],
+  [realtimeResources.organizationalStructure]: [organizationalStructureKeys.all],
   [realtimeResources.districts]: [districtKeys.all, stateKeys.all],
   [realtimeResources.addressTypes]: [addressTypeKeys.all],
   [realtimeResources.addresses]: [],

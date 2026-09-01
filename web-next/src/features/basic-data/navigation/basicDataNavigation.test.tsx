@@ -48,4 +48,21 @@ describe("Basic Data navigation permissions", () => {
   it("removes groups that have no permitted children", () => {
     expect(getAuthorizedBasicDataNavigation(sessionWithPermissions([]))).toEqual([]);
   });
+
+  it("exposes one organizational navigation leaf per entity", () => {
+    const result = getAuthorizedBasicDataNavigation(
+      sessionWithPermissions([permissions.ViewOrganizationalStructure]),
+    );
+    const organizationalGroup = result.find((item) => item.id === "organizational-structure");
+
+    expect(organizationalGroup?.children?.map((item) => item.id)).toEqual([
+      "organizational-structure-branches",
+      "organizational-structure-departments",
+      "organizational-structure-divisions",
+      "organizational-structure-job-titles",
+      "organizational-structure-job-levels",
+      "organizational-structure-positions",
+      "organizational-structure-job-descriptions",
+    ]);
+  });
 });

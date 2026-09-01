@@ -12,15 +12,53 @@ export function OrganizationalStructureScreen() {
       description={t('basicData.organizationDescription')}
       items={[
         {
+          label: t('organizationalStructure.resources.branches'),
+          icon: 'business-outline',
+          permissions: [permissions.ViewOrganizationalStructure],
+          route: ROUTES.basicData.organizationalStructureBranches,
+        },
+        {
+          label: t('organizationalStructure.resources.departments'),
+          icon: 'git-branch-outline',
+          permissions: [permissions.ViewOrganizationalStructure],
+          route: ROUTES.basicData.organizationalStructureDepartments,
+        },
+        {
+          label: t('organizationalStructure.resources.divisions'),
+          icon: 'git-branch-outline',
+          permissions: [permissions.ViewOrganizationalStructure],
+          route: ROUTES.basicData.organizationalStructureDivisions,
+        },
+        {
+          label: t('organizationalStructure.resources.job-titles'),
+          icon: 'briefcase-outline',
+          permissions: [permissions.ViewOrganizationalStructure],
+          route: ROUTES.basicData.organizationalStructureJobTitles,
+        },
+        {
+          label: t('organizationalStructure.resources.job-levels'),
+          icon: 'layers-outline',
+          permissions: [permissions.ViewOrganizationalStructure],
+          route: ROUTES.basicData.organizationalStructureJobLevels,
+        },
+        {
+          label: t('organizationalStructure.resources.positions'),
+          icon: 'briefcase-outline',
+          permissions: [permissions.ViewOrganizationalStructure],
+          route: ROUTES.basicData.organizationalStructurePositions,
+        },
+        {
+          label: t('organizationalStructure.resources.job-descriptions'),
+          icon: 'document-text-outline',
+          permissions: [permissions.ViewOrganizationalStructure],
+          route: ROUTES.basicData.organizationalStructureJobDescriptions,
+        },
+        {
           label: t('companyGeographicScope.title'),
           icon: 'earth-outline',
           permissions: [permissions.ViewCompanyGeographicScope],
           route: ROUTES.basicData.companyGeographicScope,
         },
-        { label: t('basicData.companies'), icon: 'business-outline' },
-        { label: t('basicData.branches'), icon: 'git-branch-outline' },
-        { label: t('basicData.departments'), icon: 'people-circle-outline' },
-        { label: t('basicData.jobs'), icon: 'briefcase-outline' },
       ]}
       title={t('navigation.organizationalStructure')}
     />

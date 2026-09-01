@@ -26,6 +26,9 @@ using HrManagementSystem.Infrastructure.Features.Analytics.CrystalReports.Securi
 using HrManagementSystem.Infrastructure.Features.Analytics.CrystalReports.Storage;
 using HrManagementSystem.Application.Features.OrganizationalStructure.CompanyGeographicScope.Abstractions;
 using HrManagementSystem.Infrastructure.Features.OrganizationalStructure.CompanyGeographicScope.Persistence;
+using HrManagementSystem.Application.Features.OrganizationalStructure.Management.Abstractions;
+using HrManagementSystem.Infrastructure.Features.OrganizationalStructure.Management;
+using HrManagementSystem.Infrastructure.Features.OrganizationalStructure.Management.Jobs;
 using HrManagementSystem.Application.Features.Attendance.Devices.Contracts;
 using HrManagementSystem.Application.Features.Attendance.Devices.Commands;
 using HrManagementSystem.Infrastructure.Features.Attendance.Devices.Services;
@@ -48,6 +51,9 @@ public static class EntitiesService
         services.AddScoped<ICrystalReportDataSource, CrystalReportDataSource>();
         services.AddScoped<ICurrentPermissionChecker, CurrentPermissionChecker>();
         services.AddScoped<ICompanyGeographicScopeStore, CompanyGeographicScopeStore>();
+        services.AddScoped<IOrganizationalStructureManagement, OrganizationalStructureManagement>();
+        services.AddScoped<IOrganizationalStructureChangeScheduler, OrganizationalStructureChangeScheduler>();
+        services.AddScoped<OrganizationalStructureChangedJob>();
         services.AddScoped<IAttendanceCredentialProtector, AttendanceDeviceCredentialProtector>();
         services.AddScoped<IAttendanceAgentAuthenticator, AttendanceAgentAuthenticator>();
         services.AddSingleton<IAttendanceAgentInstallationSettings, AttendanceAgentInstallationSettings>();

@@ -172,6 +172,7 @@ export const arAdministrationTenants = {
     chooseView: 'اختر طريقة العرض',
     table: 'جدول',
     cards: 'بطاقات',
+    chart: 'رسم بياني',
     results: 'نتائج',
     itemsPerPage: 'العناصر',
     usePageSize: 'عرض {{count}} عناصر في الصفحة',

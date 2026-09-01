@@ -164,6 +164,7 @@ export const enAdministrationTenants = {
     chooseView: 'Choose view',
     table: 'Table',
     cards: 'Cards',
+    chart: 'Chart',
     results: 'results',
     itemsPerPage: 'Items',
     usePageSize: 'Show {{count}} items per page',
