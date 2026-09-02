@@ -1,6 +1,5 @@
 import { MyForm, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -150,21 +149,19 @@ const RoleForm = ({
       )}
 
       {/* Required: Role Name */}
-      <Box sx={{ mt: 2 }}>
-        <MyTextField
-          fieldName="name"
-          labelKey={t("roles.name")}
-          inputRef={nameRef}
-          loading={loading}
-          errors={errors}
-          control={control}
-          maxValue={50}
-          placeholder={t("roles.namePlaceholder")}
-          showCounter={!isViewMode}
-          readOnly={isViewMode}
-          data-field-name="name" // Add this for better error field detection
-        />
-      </Box>
+      <MyTextField
+        fieldName="name"
+        labelKey={t("roles.name")}
+        inputRef={nameRef}
+        loading={loading}
+        errors={errors}
+        control={control}
+        maxValue={50}
+        placeholder={t("roles.namePlaceholder")}
+        showCounter={!isViewMode}
+        readOnly={isViewMode}
+        data-field-name="name" // Add this for better error field detection
+      />
     </MyForm>
   );
 };

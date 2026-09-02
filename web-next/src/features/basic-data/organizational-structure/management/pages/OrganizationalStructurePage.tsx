@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { permissions } from "@/lib/auth/permissions";
 import { usePermissions } from "@/shared/hooks/usePermissions";
 import { ConfirmationDialog } from "@/shared/components/dialogs";
+import { ContentWrapper } from "@/shared/components/layout";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
 import OrganizationalStructureForm from "../components/OrganizationalStructureForm";
 import OrganizationalStructureMultiView from "../components/OrganizationalStructureMultiView";
@@ -95,7 +96,7 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
   if (query.error) return <Box sx={{ p: 3 }}><Alert severity="error" action={<Button color="inherit" onClick={() => void query.refetch()}>{t("common.retry")}</Button>}>
     {extractErrorMessage(query.error) || t("organizationalStructure.fetchError")}</Alert></Box>;
 
-  return <>
+  return <ContentWrapper fillAvailable>
     <OrganizationalStructureMultiView
       resource={resource} items={query.data?.items ?? []} loading={query.isLoading} isFetching={query.isFetching}
       totalCount={query.data?.metaData.totalCount ?? 0} page={page} pageSize={pageSize}
@@ -127,5 +128,5 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
       confirmLabel={t(selected?.isDeleted ? "actions.restore" : "actions.archive")} cancelLabel={t("actions.cancel")} />
     {dialog === "approve" || dialog === "reject" ? <JobDescriptionDecisionDialog
       open mode={dialog} loading={mutationLoading} onClose={close} onSubmit={decide} /> : null}
-  </>;
+  </ContentWrapper>;
 }

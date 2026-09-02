@@ -1,6 +1,5 @@
 import { MyForm, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { useForm, type Resolver } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -157,20 +156,18 @@ const AddressTypeForm = ({
         <input type="hidden" value={selectedItem?.id || ""} readOnly />
       )}
 
-      <Box sx={{ mt: 2 }}>
-        <MyTextField
-          fieldName="nameAr"
-          labelKey={t("general.nameAr")}
-          loading={loading}
-          errors={errors}
-          control={control}
-          placeholder={t("addressTypes.nameArPlaceholder")}
-          maxLength={100}
-          showCounter={!isViewMode}
-          readOnly={isViewMode}
-          data-field-name="nameAr"
-        />
-      </Box>
+      <MyTextField
+        fieldName="nameAr"
+        labelKey={t("general.nameAr")}
+        loading={loading}
+        errors={errors}
+        control={control}
+        placeholder={t("addressTypes.nameArPlaceholder")}
+        maxLength={100}
+        showCounter={!isViewMode}
+        readOnly={isViewMode}
+        data-field-name="nameAr"
+      />
 
       <MyTextField
         fieldName="nameEn"

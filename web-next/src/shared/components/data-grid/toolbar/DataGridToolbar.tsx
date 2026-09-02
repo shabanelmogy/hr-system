@@ -38,7 +38,7 @@ export function DataGridToolbar() {
           flexWrap: hasSearchSelectors ? "wrap" : "nowrap",
         },
         ...(hasSearchSelectors
-          ? { "@media (min-width: 880px)": { flexWrap: "nowrap" } }
+          ? { "@media (min-width: 1200px)": { flexWrap: "nowrap" } }
           : {}),
       }}
     >
@@ -68,9 +68,9 @@ export function DataGridToolbar() {
                 value={toolbarSearch.column.value}
                 onChange={(event) => toolbarSearch.column?.onChange(event.target.value)}
                 sx={{
-                  flex: { sm: "0 0 155px" },
-                  minWidth: { xs: 0, sm: 155 },
-                  width: { xs: "100%", sm: "auto" },
+                  flex: { md: "0 0 155px" },
+                  minWidth: { xs: 0, md: 155 },
+                  width: { xs: "100%", md: "auto" },
                   "& .MuiInputBase-root": { height: toolbarControlHeight },
                 }}
               >
@@ -89,9 +89,9 @@ export function DataGridToolbar() {
                 value={toolbarSearch.operator.value}
                 onChange={(event) => toolbarSearch.operator?.onChange(event.target.value)}
                 sx={{
-                  flex: { sm: "0 0 165px" },
-                  minWidth: { xs: 0, sm: 165 },
-                  width: { xs: "100%", sm: "auto" },
+                  flex: { md: "0 0 165px" },
+                  minWidth: { xs: 0, md: 165 },
+                  width: { xs: "100%", md: "auto" },
                   "& .MuiInputBase-root": { height: toolbarControlHeight },
                 }}
               >
@@ -104,9 +104,9 @@ export function DataGridToolbar() {
             ) : null}
             <Box
               sx={{
-                flex: { sm: "1 1 220px" },
-                minWidth: { xs: 0, sm: 220 },
-                width: { xs: "100%", sm: "auto" },
+                flex: { md: "1 1 220px" },
+                minWidth: { xs: 0, md: 220 },
+                width: { xs: "100%", md: "auto" },
                 "& .MuiInputBase-root": { height: toolbarControlHeight },
               }}
             >

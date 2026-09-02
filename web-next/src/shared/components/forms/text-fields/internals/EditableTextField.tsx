@@ -37,6 +37,7 @@ export default function EditableTextField(props: EditableTextFieldProps) {
             <TextField
               {...props.getCommonProps(fieldValue, () => props.onClear(field.onChange))}
               {...field}
+              value={fieldValue}
               inputRef={mergeRefs(field.ref, props.inputRef)}
               error={props.error}
               helperText={props.helperText}

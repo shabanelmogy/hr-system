@@ -2,7 +2,7 @@ import { MyForm, MySelect, MyTextField } from "@/shared/components/forms";
 import { useCountryLookup } from "@/features/basic-data/geographical-information/countries";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, Box, Button } from "@mui/material";
+import { Alert, Button } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { type Resolver, type SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -60,7 +60,7 @@ const StateForm = ({
     }
   >
     {detailError ? <Alert severity="error" action={onRetryDetails ? <Button color="inherit" size="small" onClick={onRetryDetails}>{t("common.retry")}</Button> : undefined}>{detailError}</Alert> : null}
-    <Box sx={{ mt: 2 }}><MyTextField fieldName="nameAr" labelKey={t("general.nameAr")} loading={loading} errors={errors} control={control} placeholder={t("states.nameArPlaceholder")} maxLength={100} showCounter={!isViewMode} readOnly={isViewMode} /></Box>
+    <MyTextField fieldName="nameAr" labelKey={t("general.nameAr")} loading={loading} errors={errors} control={control} placeholder={t("states.nameArPlaceholder")} maxLength={100} showCounter={!isViewMode} readOnly={isViewMode} />
     <MyTextField fieldName="nameEn" labelKey={t("general.nameEn")} loading={loading} errors={errors} control={control} placeholder={t("states.nameEnPlaceholder")} maxLength={100} showCounter={!isViewMode} readOnly={isViewMode} />
     <MyTextField fieldName="code" labelKey={t("states.code")} loading={loading} errors={errors} control={control} placeholder={t("states.codePlaceholder")} maxLength={10} showCounter={!isViewMode} readOnly={isViewMode} />
     <MySelect name="countryId" label={t("general.country")} control={control} dataSource={countryOptions} valueMember="id" displayMember="displayName" loading={loading} errors={errors} placeholder={t("states.selectCountry")} isViewMode={isViewMode} disabled={loading || countriesLoading} showClearButton={!isViewMode} actualFieldName="countryId" />

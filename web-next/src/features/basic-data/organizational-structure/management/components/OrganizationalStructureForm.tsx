@@ -193,7 +193,7 @@ export default function OrganizationalStructureForm({
           : undefined
       }
     >
-      <Box sx={{ mt: 2, display: "grid", gap: 2 }}>
+      <Box sx={{ display: "grid" }}>
         {text("code", resource === "job-descriptions" ? t("organizationalStructure.fields.version") : t("organizationalStructure.fields.code"), { maxLength: resource === "job-descriptions" ? 30 : 50 })}
         {text("nameAr", t("general.nameAr"), { maxLength: 200 })}
         {text("nameEn", t("general.nameEn"), { maxLength: 200 })}

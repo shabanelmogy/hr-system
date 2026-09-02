@@ -34,9 +34,18 @@ export const FormContent: React.FC<{ children?: React.ReactNode }> = ({ children
         minHeight: 0,
         overflowY: "auto",
         overflowX: "hidden",
-        pt: 3,
-        pb: hideFooter ? 3 : 3,
+        // Keep a clear separation between the dialog header and the first field.
+        // The extra top inset also leaves room for the first field's validation
+        // helper text without making the controls themselves overly spaced.
+        pt: 4,
+        pb: 2.5,
         px: 3,
+        // MUI applies a more-specific adjacent-title rule that resets the
+        // first content padding to 0. Repeat the generated class so this
+        // shared inset wins for every dialog variant.
+        "&&&": {
+          paddingTop: 4,
+        },
         position: "relative",
         background:
           theme.palette.mode === "dark"
@@ -54,7 +63,15 @@ export const FormContent: React.FC<{ children?: React.ReactNode }> = ({ children
             : "0 0 12px 12px"
           : "0",
         "& .MuiTextField-root": {
-          mb: 2.5,
+          // MyTextField defaults to MUI's `normal` margin (16px top). Reset it
+          // here so the shared form controls own one predictable vertical gap.
+          mt: 0,
+          mb: 2,
+          "& .MuiFormHelperText-root": {
+            mt: 0.5,
+            mb: 0.5,
+            lineHeight: 1.35,
+          },
           "& .MuiOutlinedInput-root": {
             borderRadius: "12px",
             transition: "all 0.3s ease",
@@ -71,6 +88,12 @@ export const FormContent: React.FC<{ children?: React.ReactNode }> = ({ children
               )}`,
             },
           },
+        },
+        // MySelect renders an Autocomplete TextField inside a FormControl. Keep
+        // its spacing aligned with MyTextField without doubling the margin.
+        "& .MuiFormControl-root": {
+          mb: 2,
+          "& .MuiTextField-root": { mt: 0, mb: 0 },
         },
       }}
     >

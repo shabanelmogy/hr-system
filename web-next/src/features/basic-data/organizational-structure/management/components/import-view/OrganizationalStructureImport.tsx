@@ -119,7 +119,7 @@ export default function OrganizationalStructureImport({ resource }: Props) {
     { field: "errorMessage", headerName: t("imports.errorDetails"), renderCell: (value) => String(value ?? "—") },
   ], [t]);
   const uploadableCount = rows.filter((row) => row.status === "pending").length;
-  return <Box sx={{ maxWidth: 1600, margin: "auto", p: { xs: 2, sm: 3 } }}>
+  return <Box sx={{ boxSizing: "border-box", maxWidth: 1600, minWidth: 0, overflowX: "hidden", p: { xs: 1.5, sm: 2.5, md: 3 }, width: "100%", margin: "auto" }}>
     {parentResource && (parentLookup.isError || parentLookup.isLoading) ? <Alert severity={parentLookup.isError ? "error" : "info"}>{parentLookup.isError ? t("organizationalStructure.import.lookupError") : t("organizationalStructure.import.lookupLoading")}</Alert> : null}
     <SpreadsheetImportCard selectedFile={selectedFile} busy={viewState === "parsing" || viewState === "submitting"} progress={viewState === "submitting" ? 50 : 0} maxSizeMb={ORGANIZATIONAL_IMPORT_MAX_BYTES / (1024 * 1024)} maxRows={ORGANIZATIONAL_IMPORT_MAX_ROWS} rowCount={rows.length} rowCountLabel={t("organizationalStructure.import.rows", { count: rows.length })} hint={t("imports.expectedHeaders", { headers: headers.join(", ") })} icon={<UploadFileOutlined />} uploadableCount={uploadableCount} canSubmit={canCreate && !isReadOnly} onFileSelect={(file) => void handleFileSelect(file)} validateFile={validateFile} onSubmit={() => void submit()} onClear={clear} onDownloadTemplate={() => downloadSpreadsheetImportTemplate(headers, getOrganizationalImportTemplateFile(resource))} />
     <SpreadsheetImportFeedback viewState={viewState} message={viewMessage} />

@@ -1,7 +1,7 @@
 // components/CountryForm.tsx
 import { MyForm, MyTextField } from "@/shared/components/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, Box, Button } from "@mui/material";
+import { Alert, Button } from "@mui/material";
 import { useEffect, useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -175,19 +175,17 @@ const CountryForm = ({
       ) : null}
 
       {/* Required: Arabic Name */}
-      <Box sx={{ mt: 2 }}>
-        <MyTextField
-          fieldName="nameAr"
-          labelKey={t("general.nameAr")}
-          loading={loading}
-          errors={errors}
-          control={control}
-          placeholder={t("countries.nameArPlaceholder")}
-          maxLength={100}
-          showCounter={!isViewMode}
-          readOnly={isViewMode}
-        />
-      </Box>
+      <MyTextField
+        fieldName="nameAr"
+        labelKey={t("general.nameAr")}
+        loading={loading}
+        errors={errors}
+        control={control}
+        placeholder={t("countries.nameArPlaceholder")}
+        maxLength={100}
+        showCounter={!isViewMode}
+        readOnly={isViewMode}
+      />
 
       {/* Required: English Name */}
       <MyTextField

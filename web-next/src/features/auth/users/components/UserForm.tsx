@@ -362,21 +362,19 @@ const UserForm = ({
         <input type="hidden" value={selectedUser?.id || ""} readOnly />
       )}
       {/* Required: First Name */}
-      <Box sx={{ mt: 2 }}>
-        <MyTextField
-          fieldName="firstName"
-          labelKey={t("users.firstName")}
-          inputRef={firstNameRef}
-          loading={loading}
-          errors={errors}
-          control={control}
-          maxValue={50}
-          placeholder={t("users.firstNamePlaceholder")}
-          showCounter={!isViewMode}
-          readOnly={isViewMode}
-          data-field-name="firstName"
-        />
-      </Box>
+      <MyTextField
+        fieldName="firstName"
+        labelKey={t("users.firstName")}
+        inputRef={firstNameRef}
+        loading={loading}
+        errors={errors}
+        control={control}
+        maxValue={50}
+        placeholder={t("users.firstNamePlaceholder")}
+        showCounter={!isViewMode}
+        readOnly={isViewMode}
+        data-field-name="firstName"
+      />
       {/* Required: Last Name */}
       <MyTextField
         fieldName="lastName"
@@ -418,7 +416,7 @@ const UserForm = ({
         readOnly={isViewMode}
       />
       {/* Roles Multi-Select with API Data */}
-      <Box sx={{ mt: 2 }}>
+      <Box>
         <MySelect
           control={control}
           name="roles"

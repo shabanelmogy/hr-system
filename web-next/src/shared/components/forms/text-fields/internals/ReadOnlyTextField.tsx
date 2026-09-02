@@ -13,7 +13,7 @@ type ReadOnlyTextFieldProps = {
 
 export default function ReadOnlyTextField(props: ReadOnlyTextFieldProps) {
   const renderValue = (value: unknown) => (
-    <Box sx={{ width: "100%", mb: 2.5 }}>
+    <Box sx={{ width: "100%", mb: 2 }}>
       <Stack direction="row" sx={{ alignItems: "center" }} spacing={2}>
         <Typography variant="subtitle2" sx={{ color: "info.light", minWidth: 120, fontWeight: "bold" }}>
           {props.label}

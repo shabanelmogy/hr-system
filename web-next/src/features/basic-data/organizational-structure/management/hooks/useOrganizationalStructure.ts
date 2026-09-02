@@ -26,6 +26,11 @@ export const useOrganizationalLookup = (resource: OrganizationalResource, parent
   queryFn: () => organizationalStructureService.getLookup(resource, parentId),
   enabled,
   staleTime: 5 * 60_000,
+  // Parent records can be created from a different organizational route (or
+  // browser tab) while this form's previous lookup result is still fresh.
+  // Always revalidate when the dependent form mounts so new branches,
+  // departments, and divisions immediately enable their mock-data action.
+  refetchOnMount: "always",
 });
 
 const useInvalidateMutation = <TData, TVariables>(mutationFn: (variables: TVariables) => Promise<TData>) => {

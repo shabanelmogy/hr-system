@@ -44,7 +44,7 @@ export default function JobDescriptionDecisionDialog({ open, mode, loading, onCl
     onSubmit={handleSubmit(onSubmit)} autoFocusFirst errors={errorMessages}
     overlayActionType={mode} overlayMessage={t("organizationalStructure.decision.saving")}
   >
-    <Box sx={{ mt: 2, display: "grid", gap: 2 }}>
+    <Box sx={{ display: "grid" }}>
       {mode === "approve" ? <>
         <MyTextField fieldName="effectiveDate" labelKey={t("organizationalStructure.fields.effectiveDate")} control={control} errors={errors} loading={loading} type="date" showCounter={false} />
         <MyTextField fieldName="expiryDate" labelKey={t("organizationalStructure.fields.expiryDate")} control={control} errors={errors} loading={loading} type="date" showCounter={false} />
