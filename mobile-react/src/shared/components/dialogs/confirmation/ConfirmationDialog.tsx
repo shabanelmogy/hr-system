@@ -21,6 +21,7 @@ export interface ConfirmationDialogProps extends PropsWithChildren {
   cancelLabel?: string;
   confirmLabel?: string;
   icon?: AppIconName;
+  confirmIcon?: AppIconName;
   loading?: boolean;
   tone?: ConfirmationDialogTone;
 }
@@ -35,6 +36,7 @@ export function ConfirmationDialog({
   cancelLabel,
   confirmLabel,
   icon,
+  confirmIcon,
   loading = false,
   tone = 'default',
 }: ConfirmationDialogProps) {
@@ -81,7 +83,7 @@ export function ConfirmationDialog({
             {cancelLabel ?? t('common.cancel')}
           </AppButton>
           <AppButton
-            icon={tone === 'danger' ? 'trash-outline' : 'checkmark-outline'}
+            icon={confirmIcon ?? (tone === 'danger' ? 'trash-outline' : 'checkmark-outline')}
             loading={busy}
             onPress={() => void confirm()}
             variant={confirmVariant}>

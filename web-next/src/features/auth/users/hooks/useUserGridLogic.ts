@@ -1,4 +1,4 @@
-import type { UpdateUserRequest, User } from "../../types";
+import type { CreateUserRequest, UpdateUserRequest, User } from "../../types";
 import useApiHandler from "@/shared/hooks/useApiHandler";
 import { useGridCrudMarkerCleanup } from "@/shared/hooks/useGridCrudMarkerCleanup";
 import useNotifications from "@/shared/hooks/useNotifications";
@@ -24,6 +24,7 @@ const useUserGridLogic = () => {
   const fetchUsers = useUserStore((state) => state.fetchUsers);
   const fetchCompanyOptions = useUserStore((state) => state.fetchCompanyOptions);
   const users = useUserStore((state) => state.users);
+  const addUser = useUserStore((state) => state.addUser);
   const updateUser = useUserStore((state) => state.updateUser);
   const changeUserPassword = useUserStore((state) => state.changeUserPassword);
   const toggleUser = useUserStore((state) => state.toggleUser);
@@ -43,29 +44,51 @@ const useUserGridLogic = () => {
   }, []);
 
   const handleFormSubmit = useCallback(async (formData: UserFormData) => {
-    if (dialogType !== "edit" || !selectedUser) return;
-    const request = toUpdateUserRequest(selectedUser.id, formData);
-    const updated = await handleApiCall(
-      async () => {
-        const result = await updateUser(request);
-        const password = formData.password?.trim();
-        if (password) {
-          await changeUserPassword({
-            id: selectedUser.id,
-            newPassword: password,
-            confirmPassword: formData.confirmPassword ?? "",
-          });
-        }
-        return result;
-      },
-      t("users.updated"),
-      null,
-      true,
-    );
-    if (!updated) return;
-    setLastEditedId(updated.id);
-    closeDialog();
+    if (dialogType === "edit" && selectedUser) {
+      const request = toUpdateUserRequest(selectedUser.id, formData);
+      const updated = await handleApiCall(
+        async () => {
+          const result = await updateUser(request);
+          const password = formData.password?.trim();
+          if (password) {
+            await changeUserPassword({
+              id: selectedUser.id,
+              newPassword: password,
+              confirmPassword: formData.confirmPassword ?? "",
+            });
+          }
+          return result;
+        },
+        t("users.updated"),
+        null,
+        true,
+      );
+      if (!updated) return;
+      setLastEditedId(updated.id);
+      closeDialog();
+    } else if (dialogType === "add") {
+      const request: CreateUserRequest = {
+        firstName: formData.firstName.trim(),
+        lastName: formData.lastName.trim(),
+        userName: formData.userName.trim(),
+        email: formData.email.trim(),
+        password: formData.password?.trim() ?? "",
+        roles: formData.roles,
+        companyIds: formData.companyIds,
+        defaultCompanyId: formData.defaultCompanyId,
+      };
+      const created = await handleApiCall(
+        () => addUser(request),
+        t("users.created") || "User created successfully",
+        null,
+        true,
+      );
+      if (!created) return;
+      setLastAddedId(created.id);
+      closeDialog();
+    }
   }, [
+    addUser,
     changeUserPassword,
     closeDialog,
     dialogType,
@@ -84,10 +107,29 @@ const useUserGridLogic = () => {
     await handleApiCall(() => unLockUser(user.id), t("users.unlocked"));
   }, [handleApiCall, t, unLockUser]);
 
-  const handleRevokeToken = useCallback(async (user: User) => {
-    await handleApiCall(() => revokeToken(user.id), t("users.revoked"));
-  }, [handleApiCall, revokeToken, t]);
+  const [revokeTarget, setRevokeTarget] = useState<User | null>(null);
+  const [isRevoking, setIsRevoking] = useState(false);
 
+  const onRevoke = useCallback((user: User) => {
+    setRevokeTarget(user);
+  }, []);
+
+  const onConfirmRevoke = useCallback(async () => {
+    if (!revokeTarget) return;
+    setIsRevoking(true);
+    try {
+      await handleApiCall(() => revokeToken(revokeTarget.id), t("users.revoked"));
+      setRevokeTarget(null);
+    } finally {
+      setIsRevoking(false);
+    }
+  }, [handleApiCall, revokeTarget, revokeToken, t]);
+
+  const onCancelRevoke = useCallback(() => {
+    if (!isRevoking) setRevokeTarget(null);
+  }, [isRevoking]);
+
+  const onAdd = useCallback(() => openDialog("add"), [openDialog]);
   const onEdit = useCallback((user: User) => openDialog("edit", user), [openDialog]);
   const onView = useCallback((user: User) => openDialog("view", user), [openDialog]);
   const clearLastAdded = useCallback(() => setLastAddedId(null), []);
@@ -122,11 +164,16 @@ const useUserGridLogic = () => {
     apiRef,
     closeDialog,
     handleFormSubmit,
+    onAdd,
     onEdit,
     onView,
     onToggle: handleToggleUser,
     onUnlock: handleUnlockUser,
-    onRevoke: handleRevokeToken,
+    onRevoke,
+    revokeTarget,
+    isRevoking,
+    onConfirmRevoke,
+    onCancelRevoke,
     lastAddedId,
     lastEditedId,
     SnackbarComponent,

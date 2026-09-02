@@ -1,9 +1,13 @@
-using HrManagementSystem.Application.Features.Security.Authorization.Services;
-using HrManagementSystem.Application.Features.Security.Authorization.Contracts;
-
-using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
-using HrManagementSystem.Application.Features.Security.Authorization.Errors;
+using System.Globalization;
 using HrManagementSystem.Application.Common.Realtime;
+using HrManagementSystem.Application.Features.Platform.SecurityAudits.Contracts;
+using HrManagementSystem.Application.Features.Platform.SecurityAudits.Services;
+using HrManagementSystem.Application.Features.Security.Authorization.Contracts;
+using HrManagementSystem.Application.Features.Security.Authorization.Errors;
+using HrManagementSystem.Application.Features.Security.Authorization.Services;
+using HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities;
+using HrManagementSystem.Infrastructure.Features.Security.Authentication.Services;
+using HrManagementSystem.Infrastructure.Persistence;
 
 namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Services
 {
@@ -11,7 +15,12 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
         RoleManager<ApplicationRole> roleManager,
         RoleErrors roleErrors,
         IRealtimeChangeDispatcher realtimeChanges,
-        ICurrentActor currentActor) : IRoleService
+        ICurrentActor currentActor,
+        ApplicationDbContext context,
+        UserManager<ApplicationUser> userManager,
+        ISecurityAuditService securityAudit,
+        SessionRevocationNotifier revocationNotifier,
+        TimeProvider timeProvider) : IRoleService
     {
         private readonly RoleManager<ApplicationRole> _roleManager = roleManager;
         private readonly RoleErrors _roleErrors = roleErrors;
@@ -83,6 +92,18 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
                     role.IsDeleted,
                     null,
                     role.IsSystem);
+
+                await securityAudit.RecordAsync(new SecurityAuditRequest(
+                    "RoleCreated",
+                    "ApplicationRole",
+                    role.Id,
+                    TenantId: tenantId,
+                    Metadata: new Dictionary<string, string?>
+                    {
+                        ["RoleName"] = role.Name,
+                        ["IsSystem"] = role.IsSystem.ToString()
+                    }), cancellationToken);
+
                 DispatchChange("Create", role.Id);
                 return Result.Success(response);
             }
@@ -102,11 +123,24 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
             if (currentRole is null || IsSystemName(roleRequest.Name))
                 return Result.Failure(_roleErrors.RoleNotFound);
 
+            var previousName = currentRole.Name;
             currentRole.Name = roleRequest.Name.Trim();
 
             var result = await _roleManager.UpdateAsync(currentRole);
             if (result.Succeeded)
             {
+                var tenantId = RequiredTenantId();
+                await securityAudit.RecordAsync(new SecurityAuditRequest(
+                    "RoleUpdated",
+                    "ApplicationRole",
+                    currentRole.Id,
+                    TenantId: tenantId,
+                    Metadata: new Dictionary<string, string?>
+                    {
+                        ["PreviousName"] = previousName,
+                        ["NewName"] = currentRole.Name
+                    }), cancellationToken);
+
                 DispatchChange("Update", currentRole.Id);
                 return Result.Success();
             }
@@ -129,6 +163,29 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
                 var error = result.Errors.First();
                 return Result.Failure(new Error(error.Code, error.Description, ErrorType.Validation));
             }
+
+            var affectedCount = 0;
+            if (role.IsDeleted)
+            {
+                affectedCount = await InvalidateUsersInRoleAsync(
+                    role.Id,
+                    "Role deactivated",
+                    "Your session was revoked because your assigned role was deactivated.",
+                    cancellationToken);
+            }
+
+            var tenantId = RequiredTenantId();
+            await securityAudit.RecordAsync(new SecurityAuditRequest(
+                role.IsDeleted ? "RoleArchived" : "RoleRestored",
+                "ApplicationRole",
+                role.Id,
+                TenantId: tenantId,
+                Metadata: new Dictionary<string, string?>
+                {
+                    ["RoleName"] = role.Name,
+                    ["IsDeleted"] = role.IsDeleted.ToString(),
+                    ["AffectedUsersCount"] = affectedCount.ToString(CultureInfo.InvariantCulture)
+                }), cancellationToken);
 
             DispatchChange(role.IsDeleted ? "Delete" : "Restore", role.Id);
 
@@ -181,9 +238,11 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
                 return Result.Failure(_roleErrors.InvalidPermissions);
             }
 
-            var roleClaims = await _roleManager.GetClaimsAsync(role);
+            var previousClaims = (await _roleManager.GetClaimsAsync(role))
+                .Select(claim => claim.Value)
+                .ToHashSet();
 
-            foreach (var claim in roleClaims)
+            foreach (var claim in await _roleManager.GetClaimsAsync(role))
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await _roleManager.RemoveClaimAsync(role, claim);
@@ -195,8 +254,27 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
                 await _roleManager.AddClaimAsync(role, new Claim(Permissions.Type, claim.DisplayValue));
             }
 
-            DispatchChange("PermissionsChanged", role.Id);
+            var affectedCount = await InvalidateUsersInRoleAsync(
+                role.Id,
+                "Role permissions changed",
+                "Your session was revoked because your role permissions were updated.",
+                cancellationToken);
+
             var tenantId = RequiredTenantId();
+            await securityAudit.RecordAsync(new SecurityAuditRequest(
+                "RolePermissionsUpdated",
+                "ApplicationRole",
+                role.Id,
+                TenantId: tenantId,
+                Metadata: new Dictionary<string, string?>
+                {
+                    ["RoleName"] = role.Name,
+                    ["PreviousPermissions"] = string.Join(',', previousClaims.OrderBy(claim => claim, StringComparer.Ordinal)),
+                    ["NewPermissions"] = string.Join(',', selectedClaims.Select(claim => claim.DisplayValue).OrderBy(claim => claim, StringComparer.Ordinal)),
+                    ["AffectedUsersCount"] = affectedCount.ToString(CultureInfo.InvariantCulture)
+                }), cancellationToken);
+
+            DispatchChange("PermissionsChanged", role.Id);
             var eventId = Guid.NewGuid();
             realtimeChanges.Dispatch(new RealtimeChangeRequest(
                 RealtimeAudience.ForTenantPermission(tenantId, Permissions.ViewRoles),
@@ -212,6 +290,49 @@ namespace HrManagementSystem.Infrastructure.Features.Security.Authorization.Serv
                 eventId));
 
             return Result.Success();
+        }
+
+        private async Task<int> InvalidateUsersInRoleAsync(
+            string roleId,
+            string reason,
+            string notificationMessage,
+            CancellationToken cancellationToken)
+        {
+            var tenantId = RequiredTenantId();
+
+            var affectedUserIds = await (
+                from userRole in context.UserRoles
+                join user in context.Users on userRole.UserId equals user.Id
+                where userRole.RoleId == roleId && user.TenantId == tenantId
+                select user.Id)
+                .Distinct()
+                .ToListAsync(cancellationToken);
+
+            if (affectedUserIds.Count == 0)
+                return 0;
+
+            var now = timeProvider.GetUtcNow().UtcDateTime;
+
+            var users = await context.Users
+                .Include(user => user.RefreshTokens)
+                .Where(user => affectedUserIds.Contains(user.Id))
+                .ToListAsync(cancellationToken);
+
+            foreach (var user in users)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await userManager.UpdateSecurityStampAsync(user);
+
+                foreach (var token in user.RefreshTokens.Where(token => token.IsActiveAt(now)))
+                {
+                    token.Revoke(reason, now);
+                }
+
+                await userManager.UpdateAsync(user);
+                revocationNotifier.Queue(user.Id, notificationMessage);
+            }
+
+            return users.Count;
         }
 
         private void DispatchChange(string action, string roleId) =>

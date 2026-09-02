@@ -13,7 +13,7 @@ import {
   VpnKey,
   Security,
 } from "@mui/icons-material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import {
   getUserValidationSchema,
@@ -72,7 +72,7 @@ const UserForm = ({
   const isEditMode = dialogType === "edit";
   const isAddMode = dialogType === "add";
 
-  const schema = getUserValidationSchema(t);
+  const schema = useMemo(() => getUserValidationSchema(t, isEditMode), [t, isEditMode]);
 
   const {
     handleSubmit,
@@ -226,9 +226,10 @@ const UserForm = ({
 
       reset(userData);
 
-      
-      // Clear password errors after reset in edit mode
-      if (isEditMode) {
+      if (isAddMode) {
+        setShowPasswordSection(true);
+      } else if (isEditMode) {
+        setShowPasswordSection(false);
         setTimeout(() => {
           clearErrors(["password", "confirmPassword"]);
         }, 100);
@@ -239,6 +240,7 @@ const UserForm = ({
     dialogType,
     selectedUser,
     reset,
+    isAddMode,
     isEditMode,
     isViewMode,
     clearErrors,
@@ -254,7 +256,7 @@ const UserForm = ({
 
   // Get appropriate overlay message
   const getOverlayMessage = () => {
-    if (isAddMode) return t("users.sendingInvitation") || "Sending invitation...";
+    if (isAddMode) return t("users.creatingUser") || "Creating user...";
     if (isEditMode) return t("users.updatingUser") || "Updating user...";
     return t("users.savingUser") || "Saving user...";
   };
@@ -338,14 +340,14 @@ const UserForm = ({
           ? t("users.viewSubtitle") || "View user details"
           : isEditMode
           ? t("users.editSubtitle") || "Modify user information"
-          : t("users.inviteSubtitle") || "Send an account invitation"
+          : t("users.addSubtitle") || "Add new user"
       }
       submitButtonText={
         isViewMode
           ? undefined
           : isEditMode
           ? t("actions.update")
-          : t("users.sendInvitation")
+          : t("actions.add")
       }
       onSubmit={isViewMode ? undefined : handleSubmit(handleFormSubmit)}
       isSubmitting={loading}
@@ -509,8 +511,8 @@ const UserForm = ({
           </Alert>
         ) : null}
       </Box>
-      {/* Only existing users can have their password changed by an administrator. */}
-      {isEditMode && (
+      {/* Password section for add mode or edit mode */}
+      {(isAddMode || isEditMode) && (
         <Box sx={{ mt: 1 }}>
           <Divider sx={{ mb: 2 }}>
             <Typography variant="body2" sx={{
@@ -542,7 +544,7 @@ const UserForm = ({
             </Box>
           )}
 
-          {showPasswordSection && (
+          {(isAddMode || showPasswordSection) && (
             <Box>
               {/* Password Field */}
               <MyTextField
@@ -557,6 +559,7 @@ const UserForm = ({
                 showCounter={false}
                 readOnly={false}
                 type="password"
+                required={isAddMode}
               />
 
               {/* Password Strength Indicator */}
@@ -633,6 +636,7 @@ const UserForm = ({
                 showCounter={false}
                 readOnly={false}
                 type="password"
+                required={isAddMode}
               />
             </Box>
           )}

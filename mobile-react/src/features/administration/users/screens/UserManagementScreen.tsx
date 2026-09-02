@@ -32,6 +32,7 @@ import {
   AppListScreen,
   AppModal,
   AppPageHeader,
+  AppIcon,
   AppScreen,
   AppStateView,
   AppStatusBadge,
@@ -480,6 +481,13 @@ export function UserManagementScreen() {
       </AppModal>
 
       <ConfirmationDialog
+        confirmIcon={
+          pendingAction?.type === 'revoke'
+            ? 'exit-outline'
+            : pendingAction?.user.isDisabled
+              ? 'play-circle-outline'
+              : 'pause-circle-outline'
+        }
         confirmLabel={t(
           pendingAction?.type === 'revoke'
             ? 'userManagement.revokeSessions'
@@ -497,6 +505,13 @@ export function UserManagementScreen() {
             name: pendingAction ? `${pendingAction.user.firstName} ${pendingAction.user.lastName}` : '',
           },
         )}
+        icon={
+          pendingAction?.type === 'revoke'
+            ? 'exit-outline'
+            : pendingAction?.user.isDisabled
+              ? 'play-circle-outline'
+              : 'pause-circle-outline'
+        }
         loading={toggleMutation.isPending || revokeMutation.isPending}
         onCancel={() => setPendingAction(null)}
         onConfirm={confirmAccountAction}
@@ -511,7 +526,75 @@ export function UserManagementScreen() {
           ? 'danger'
           : pendingAction?.user.isDisabled ? 'default' : 'warning'}
         visible={pendingAction !== null}
-      />
+      >
+        {pendingAction ? (
+          <View style={styles.dialogBody}>
+            <View
+              style={[
+                styles.dialogUserCard,
+                {
+                  backgroundColor: theme.colors.surfaceMuted,
+                  borderColor: theme.colors.border,
+                },
+              ]}>
+              <ManagedUserAvatar
+                firstName={pendingAction.user.firstName}
+                lastName={pendingAction.user.lastName}
+                profilePicture={pendingAction.user.profilePicture}
+              />
+              <View style={styles.dialogUserInfo}>
+                <AppText variant="bodySmall" weight="700">
+                  {pendingAction.user.firstName} {pendingAction.user.lastName}
+                </AppText>
+                <AppText color="muted" variant="caption">
+                  {pendingAction.user.email}
+                </AppText>
+                {pendingAction.user.roles.length > 0 ? (
+                  <View style={styles.dialogRolesRow}>
+                    {pendingAction.user.roles.map((role) => (
+                      <AppStatusBadge
+                        color={theme.colors.primary}
+                        key={role}
+                        label={role}
+                        variant="soft"
+                      />
+                    ))}
+                  </View>
+                ) : null}
+              </View>
+            </View>
+
+            {pendingAction.type === 'revoke' ? (
+              <View
+                style={[
+                  styles.dialogNoticeBox,
+                  {
+                    backgroundColor: theme.colors.surfaceMuted,
+                    borderLeftColor: theme.colors.danger,
+                    borderLeftWidth: 4,
+                  },
+                ]}>
+                <View style={styles.dialogNoticeTitleRow}>
+                  <AppIcon
+                    color={theme.colors.danger}
+                    name="shield-outline"
+                    size={16}
+                  />
+                  <AppText color="danger" variant="label" weight="700">
+                    {t('userManagement.revokeNoticeTitle')}
+                  </AppText>
+                </View>
+                <AppText color="default" variant="bodySmall">
+                  {t('userManagement.revokeNoticeDetails')}
+                </AppText>
+                <AppText color="muted" variant="caption">
+                  {t('userManagement.revokeNoticeSafe')}
+                </AppText>
+              </View>
+            ) : null}
+          </View>
+        ) : null}
+      </ConfirmationDialog>
     </AppScreen>
   );
 }
@@ -531,4 +614,35 @@ const styles = StyleSheet.create({
   nameCell: { width: '100%', flexDirection: 'row', alignItems: 'center', gap: 8 },
   cards: { flexDirection: 'row', alignItems: 'stretch', flexWrap: 'wrap', gap: 12 },
   statsModal: { maxHeight: '95%' },
+  dialogBody: {
+    gap: 12,
+  },
+  dialogUserCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    padding: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  dialogUserInfo: {
+    flex: 1,
+    gap: 2,
+  },
+  dialogRolesRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginTop: 4,
+  },
+  dialogNoticeBox: {
+    padding: 12,
+    borderRadius: 8,
+    gap: 6,
+  },
+  dialogNoticeTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
 });
