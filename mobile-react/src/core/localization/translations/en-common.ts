@@ -13,6 +13,22 @@ export const enCommon = {
     required: 'Required',
     generateMockData: 'Generate Mock Data',
   },
+  actions: {
+    close: 'Close',
+    cancel: 'Cancel',
+    edit: 'Edit',
+  },
+  Action: {
+    Close: 'Close',
+  },
+  multiView: {
+    table: 'Table',
+    cards: 'Cards',
+    chart: 'Chart',
+    tree: 'Tree Diagram',
+    report: 'Report',
+    import: 'Import',
+  },
   confirmation: {
     reviewAction: 'Review this action before continuing.',
     failedTitle: 'The action could not be completed.',

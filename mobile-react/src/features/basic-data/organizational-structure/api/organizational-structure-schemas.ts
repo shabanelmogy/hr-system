@@ -9,7 +9,7 @@ export const organizationalStructureItemSchema: z.ZodType<OrganizationalStructur
   id: z.number().int().positive(), resource: resourceSchema, code: z.string().min(1), nameEn: z.string().min(1), nameAr: z.string().min(1),
   isDeleted: z.boolean(), createdOn: z.string().min(1), updatedOn: nullableString,
   descriptionEn: nullableString, descriptionAr: nullableString,
-  branchId: nullableNumber, parentDepartmentId: nullableNumber, departmentId: nullableNumber, divisionId: nullableNumber,
+  branchId: nullableNumber, parentDepartmentId: nullableNumber, parentCostCenterId: nullableNumber, departmentId: nullableNumber, divisionId: nullableNumber,
   jobTitleId: nullableNumber, jobLevelId: nullableNumber, positionId: nullableNumber, managerId: nullableNumber,
   branchNameEn: nullableString, branchNameAr: nullableString, parentNameEn: nullableString, parentNameAr: nullableString,
   departmentNameEn: nullableString, departmentNameAr: nullableString, divisionNameEn: nullableString, divisionNameAr: nullableString,
@@ -23,7 +23,11 @@ export const organizationalStructureItemSchema: z.ZodType<OrganizationalStructur
   requiredSkills: nullableString, requiredEducation: nullableString, minExperienceYears: nullableNumber, revisionNotes: nullableString,
   jobDescriptionStatus: z.union([z.number(), z.string()]).nullish().transform((value) => value ?? undefined),
   effectiveDate: nullableString, expiryDate: nullableString, decisionReason: nullableString,
-});
+  isCentralized: z.boolean().optional().default(false),
+  symbol: nullableString,
+  exchangeRateToDefault: nullableNumber,
+  isDefault: z.boolean().optional().default(false),
+}).passthrough() as z.ZodType<OrganizationalStructureItem>;
 export const organizationalStructurePageSchema = z.object({ items: z.array(organizationalStructureItemSchema), metaData: pageMetadataSchema });
 export const organizationalStructureLookupSchema: z.ZodType<OrganizationalStructureLookup[]> = z.array(z.object({
   id: z.number().int().positive(), code: z.string().min(1), nameEn: z.string().min(1), nameAr: z.string().min(1),

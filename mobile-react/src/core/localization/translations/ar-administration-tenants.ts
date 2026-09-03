@@ -173,6 +173,7 @@ export const arAdministrationTenants = {
     table: 'جدول',
     cards: 'بطاقات',
     chart: 'رسم بياني',
+    tree: 'المخطط الشجري',
     results: 'نتائج',
     itemsPerPage: 'العناصر',
     usePageSize: 'عرض {{count}} عناصر في الصفحة',

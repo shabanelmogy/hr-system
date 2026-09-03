@@ -129,9 +129,34 @@ Rules:
   type-check`; run `npm run check:architecture` when adding or moving feature
   boundaries. Do not start a dev server merely to validate static code.
 
+## Interactive diagrams, gestures, and physics-based drag-and-drop (mandatory)
+
+- For interactive tree diagrams, organizational charts, and canvas card dragging in `web-next`, use `framer-motion` as the project-standard gesture and animation engine.
+- Never use HTML5 native drag-and-drop (`draggable={true}`, `onDragOver`, etc.) for diagrams or complex cards. Native HTML5 drag triggers continuous re-renders, browser ghosting quirks, and conflicts with text selection.
+- Implementation pattern with `framer-motion`:
+  - Wrap cards with `<motion.div drag dragSnapToOrigin dragElastic={0.15} ...>`.
+  - Use `document.elementsFromPoint(x, y)` in `onDrag` / `onDragEnd` for exact, flicker-free target detection.
+  - Isolate all inner interactive buttons/links using `onPointerDown={(e) => e.stopPropagation()}` and `onMouseDown={(e) => e.stopPropagation()}` to prevent accidental drags.
+  - Precompute tree ancestors/descendants at `onDragStart` into a `Set` to keep live mouse movements O(1) without re-rendering the tree on mousemove.
+  - Always provide a direct accessible modal/dropdown action (e.g. "نقل الإدارة / Move") alongside drag-and-drop.
+
 ## Reference implementation fidelity
 
 - When a user requires a feature to follow Countries, States, or another reviewed reference, treat the selected reference's current source as the implementation baseline, not merely a visual inspiration.
 - Before editing, identify and reuse the reference's controller hook, multi-view composition, shared `PageHeader`, `MyDataGrid` toolbar, card scaffold, pagination, loading/empty/error states, and verification tests. Adapt only feature-owned fields, API contracts, permissions, relationships, and explicitly decided views.
 - Do not replace an established reference structure with a custom page, local filtering/sorting, library-default controls, or look-alike card layout. A simpler implementation is not equivalent to the guide.
 - Before handoff, compare the rendered Grid, Cards, search/filter toolbar, paging, and each required view against the selected reference at the same viewport. Record any intentional difference in the applicable feature guide; unresolved visual differences are feature regressions, not polish work.
+
+## Full-stack domain and UI parity (mandatory)
+
+- Never equate updating TypeScript types, DTOs, or database columns with UI implementation. Updating contracts without re-engineering the user interface to support the new capability is considered an incomplete and failing implementation.
+- When an entity or property transitions from a primitive string to structured nested lists or child collections (e.g. structured duty sections, weighted skills, repeatable education requirements), the UI form and detail views in BOTH `web-next` and `mobile-react` must be redesigned with dedicated interactive repeaters/builders (add, edit, remove, reorder), sub-forms, and visual chips/accordions. It is strictly forbidden to leave legacy flat text fields or expect the user to manually type JSON.
+- Any architectural mode, parent-child relationship, or business flag (such as centralized vs branch-scoped departments) must have an explicit visual control (e.g., Switch, Checkbox, Segmented control) with clear bilingual helper text and dynamic conditional visibility for dependent inputs. Never rely on implicit side effects (e.g. leaving a dropdown unselected).
+- Every domain modification requires verifying the live database schema (running and applying EF migrations via `dotnet ef database update`) before claiming completion.
+- Before reporting completion to the user, conduct a 5-point UI audit on BOTH Web and Mobile:
+  1. **Creation Journey:** Can the user input all new structured data through dedicated UI controls?
+  2. **Editing Journey:** Are structured collections loaded and editable without data loss?
+  3. **Viewing Journey:** Does view mode present structured badges, tables, or accordions?
+  4. **Listing & Filtering:** Are new states/flags reflected in DataGrid chips and Card layouts?
+  5. **Mock Data Generator:** Does mock data generator produce realistic structured instances?
+

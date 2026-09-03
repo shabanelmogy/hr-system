@@ -9,12 +9,12 @@ existing HR domain split instead of copying Odoo's single `hr.job` aggregate.
 ## 1. Scope and ownership
 
 The feature manages Branch, Department, Division, JobTitle, JobLevel, Position,
-and JobDescription under the current tenant and company. TenantId and CompanyId
+JobDescription, CostCenter, and Currency under the current tenant and company. TenantId and CompanyId
 are trusted from `ICurrentActor`/`ApplicationDbContext`; clients never submit
 scope values. The API route is `/api/v1/organizational-structure/{resource}`.
 The browser and native clients expose one guarded route/page per resource:
 `branches`, `departments`, `divisions`, `job-titles`, `job-levels`, `positions`,
-and `job-descriptions` under `/basic-data/organizational-structure/{resource}`.
+`job-descriptions`, `cost-centers`, and `currencies` under `/basic-data/organizational-structure/{resource}`.
 
 ## 2. Discovery and Odoo comparison
 
@@ -24,7 +24,9 @@ version. Odoo 19 models departments as a recursive company hierarchy and job
 records with department/company, description, requirements, and headcount. We
 adopted those rules while retaining JobTitle, JobLevel, and Position as separate
 local concepts because requisitions and employee workflows already depend on
-them. JobDescription is now a versioned child of Position.
+them. JobDescription is now a versioned child of Position. Cost centers and
+currencies are modeled as first-class company-scoped entities with hierarchical
+roll-ups and currency conversion.
 
 ## 3. Domain model and invariants
 
@@ -34,6 +36,9 @@ must be active and in the same company, and self/recursive ancestry is rejected.
 Division requires an active Department. Position requires active Division,
 JobTitle, and JobLevel. Branch supports identity/contact/headquarters operations.
 JobLevel enforces non-negative ordered salary bounds and a three-letter currency.
+CostCenter enforces recursive hierarchy, same-company parents, cycle guards, and
+top-level root nodes. Currency enforces 3-letter ISO-4217 uppercase code, unique
+per company, non-negative exchange rates, and single active default currency per company.
 
 ## 4. JobDescription and lifecycle
 
@@ -84,7 +89,13 @@ Server provider.
 Each web route uses the States-pattern shared Grid/Cards/current-page Chart/
 Report/Import composition: aligned ID/name/code/parent/date/status/action
 columns, server toolbar search with Reset and status Grid options, and the shared
-card/chart criteria header behind the PageHeader Filter action. Each native route
+card/chart criteria header behind the PageHeader Filter action. For departments
+and cost centers, interactive Tree View diagrams are provided, built using `framer-motion` for
+physics-based spring dragging (`dragSnapToOrigin`), 120 FPS target detection via
+`document.elementsFromPoint`, automatic hierarchy swap detection, and direct
+accessible Move dialog actions. In Department and Division forms, free-text Cost Center
+codes are replaced with active Cost Center select dropdowns; in Job Level forms, free-text
+currency codes are replaced with active Currency select dropdowns. Each native route
 uses shared Table/Cards/current-page Chart/Report/Import components. There is no
 cross-entity resource selector on a management page. Chart and Report labels
 explicitly describe page scope and matching total; Import is resource-specific.

@@ -37,6 +37,9 @@ public class JobDescription : CompanyAuditableEntity
     public string? RequiredSkills { get; private set; }
     public string? RequiredEducation { get; private set; }
     public int? MinExperienceYears { get; private set; }
+    public ICollection<JobDutySection> DutySections { get; private set; } = [];
+    public ICollection<JobSkillItem> Skills { get; private set; } = [];
+    public ICollection<JobEducationRequirement> EducationRequirements { get; private set; } = [];
     public JobDescriptionStatus Status { get; private set; } = JobDescriptionStatus.Draft;
     public DateOnly? EffectiveDate { get; private set; }
     public DateOnly? ExpiryDate { get; private set; }
@@ -90,6 +93,18 @@ public class JobDescription : CompanyAuditableEntity
         PreferredQualificationsEn = Optional(preferredQualificationsEn);
         PreferredQualificationsAr = Optional(preferredQualificationsAr);
         RevisionNotes = Optional(revisionNotes);
+        MarkEdited();
+    }
+
+    public void UpdateStructuredContent(
+        IEnumerable<JobDutySection>? dutySections,
+        IEnumerable<JobSkillItem>? skills,
+        IEnumerable<JobEducationRequirement>? educationRequirements)
+    {
+        EnsureEditable();
+        DutySections = dutySections?.ToList() ?? [];
+        Skills = skills?.ToList() ?? [];
+        EducationRequirements = educationRequirements?.ToList() ?? [];
         MarkEdited();
     }
 

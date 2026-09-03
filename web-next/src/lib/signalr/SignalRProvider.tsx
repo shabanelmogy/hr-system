@@ -42,7 +42,14 @@ export function SignalRProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (isLoading) return;
 
-    if (!authenticatedUserId) {
+    const isSuperAdmin = user?.roles?.some(
+      (role) => role.trim().toLowerCase() === "super_admin",
+    );
+    const hasCompanyAccess = Boolean(
+      user?.companyId && user.companyId > 0 && user?.tenantId,
+    );
+
+    if (!authenticatedUserId || isSuperAdmin || !hasCompanyAccess) {
       void signalRService.setEnabled(false);
       return;
     }
@@ -68,7 +75,7 @@ export function SignalRProvider({ children }: { children: ReactNode }) {
       cancelled = true;
       clearTimeout(timeoutId);
     };
-  }, [authenticatedUserId, isLoading, user?.companyId, user?.tenantId]);
+  }, [authenticatedUserId, isLoading, user?.companyId, user?.roles, user?.tenantId]);
 
   return (
     <SignalRContext.Provider value={connectionState}>

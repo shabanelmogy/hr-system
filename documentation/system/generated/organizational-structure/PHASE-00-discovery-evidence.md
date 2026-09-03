@@ -51,8 +51,8 @@ and `Excluded` means no runtime surface.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| organizational-structure-master | 1 | `9c32507e0ad6a6cbd43517e7ab3fd77c58a3f78f4cd55fc77ec303d5a0a38fad` |
-| organizational-structure-master | 2 | `6013cc32aed27abce80e48f431e515086c2e52978eaf17d0fdb51f9ad88bfa4e` |
+| organizational-structure-master | 1 | `7ccecd51bfdc9034111d5789ca6ff83b2124059cbca6cc9a69fd8d8f83e8754b` |
+| organizational-structure-master | 2 | `ff4399291653f7e253cc577eea31c21d204dc6503acaca730ed8f7f421c62d88` |
 | organizational-structure-master | 5 | `f6ce22854058c1886ebddf1698075291a68bb0e4c971a587028f433124d7055e` |
 | organizational-structure-master | 8 | `2d14109ce3bb4835c1ac94307acaf5e892e36ded76f27395197546348229812d` |
 | organizational-structure-master | 9 | `bae2687e1211329b805292f5be72567485077fedeee56abc8e97f72c4998e959` |

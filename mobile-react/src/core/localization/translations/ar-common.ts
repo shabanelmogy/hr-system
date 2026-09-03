@@ -13,6 +13,22 @@ export const arCommon = {
     required: 'مطلوب',
     generateMockData: 'توليد بيانات تجريبية',
   },
+  actions: {
+    close: 'إغلاق',
+    cancel: 'إلغاء',
+    edit: 'تعديل',
+  },
+  Action: {
+    Close: 'إغلاق',
+  },
+  multiView: {
+    table: 'الجدول',
+    cards: 'البطاقات',
+    chart: 'المخطط',
+    tree: 'المخطط الشجري',
+    report: 'التقرير',
+    import: 'استيراد',
+  },
   confirmation: {
     reviewAction: 'راجع هذا الإجراء قبل المتابعة.',
     failedTitle: 'تعذر إكمال الإجراء.',

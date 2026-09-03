@@ -63,6 +63,8 @@ describe("Basic Data navigation permissions", () => {
       "organizational-structure-job-levels",
       "organizational-structure-positions",
       "organizational-structure-job-descriptions",
+      "organizational-structure-cost-centers",
+      "organizational-structure-currencies",
     ]);
   });
 });

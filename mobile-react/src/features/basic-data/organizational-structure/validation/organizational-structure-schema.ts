@@ -1,5 +1,5 @@
+import { type TFunction } from 'i18next';
 import { z } from 'zod';
-import type { TFunction } from 'i18next';
 import type { OrganizationalResource } from '../types/organizational-structure';
 
 export const createOrganizationalStructureSchema = (resource: OrganizationalResource, t: TFunction) => z.object({
@@ -10,16 +10,38 @@ export const createOrganizationalStructureSchema = (resource: OrganizationalReso
   branchId: z.number().int().nonnegative(), parentDepartmentId: z.number().int().nonnegative(), departmentId: z.number().int().nonnegative(),
   divisionId: z.number().int().nonnegative(), jobTitleId: z.number().int().nonnegative(), jobLevelId: z.number().int().nonnegative(), positionId: z.number().int().nonnegative(),
   costCenterCode: z.string().max(50), timeZoneId: z.string().max(128), openedOn: z.string(), email: z.string(), phone: z.string().max(50),
-  isHeadquarters: z.boolean(), levelOrder: z.string(), minSalary: z.string(), maxSalary: z.string(), currencyCode: z.string().max(3),
+  isHeadquarters: z.boolean(), isCentralized: z.boolean(), levelOrder: z.string(), minSalary: z.string(), maxSalary: z.string(), currencyCode: z.string().max(3),
   canManageOthers: z.boolean(), isManagementLevel: z.boolean(), targetHeadcount: z.string(), version: z.string().max(30),
+  parentCostCenterId: z.number().int().nonnegative().optional(), symbol: z.string().max(10).optional(), exchangeRateToDefault: z.string().optional(), isDefault: z.boolean().optional(),
   purposeEn: z.string().max(4000), purposeAr: z.string().max(4000), responsibilitiesEn: z.string().max(8000), responsibilitiesAr: z.string().max(8000),
-  requirementsEn: z.string().max(8000), requirementsAr: z.string().max(8000), requiredSkills: z.string().max(4000), requiredEducation: z.string().max(2000),
+  requirementsEn: z.string().max(8000).optional(), requirementsAr: z.string().max(8000).optional(),
+  requiredSkills: z.string().max(4000).optional(), requiredEducation: z.string().max(2000).optional(),
   minExperienceYears: z.string(), preferredQualificationsEn: z.string().max(4000), preferredQualificationsAr: z.string().max(4000), revisionNotes: z.string().max(2000),
+  dutySections: z.array(z.object({
+    sectionTitleEn: z.string(),
+    sectionTitleAr: z.string(),
+    weightPercentage: z.number().optional(),
+    items: z.array(z.object({
+      textEn: z.string(),
+      textAr: z.string(),
+      order: z.number(),
+    })),
+  })).optional(),
+  skills: z.array(z.object({
+    skillName: z.string(),
+    proficiencyLevel: z.string(),
+    isMandatory: z.boolean(),
+  })).optional(),
+  educationRequirements: z.array(z.object({
+    degreeLevel: z.string(),
+    fieldOfStudy: z.string(),
+    isRequired: z.boolean(),
+  })).optional(),
 }).superRefine((values, context) => {
   const requireId = (field: 'branchId' | 'departmentId' | 'divisionId' | 'jobTitleId' | 'jobLevelId' | 'positionId') => {
     if (values[field] <= 0) context.addIssue({ code: 'custom', path: [field], message: t('validation.required') });
   };
-  if (resource === 'departments') requireId('branchId');
+  if (resource === 'departments' && !values.isCentralized) requireId('branchId');
   if (resource === 'divisions') requireId('departmentId');
   if (resource === 'positions') { requireId('divisionId'); requireId('jobTitleId'); requireId('jobLevelId'); }
   if (resource === 'job-descriptions') { requireId('positionId'); if (!values.version.trim()) context.addIssue({ code: 'custom', path: ['version'], message: t('validation.required') }); }

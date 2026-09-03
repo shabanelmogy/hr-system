@@ -1,4 +1,5 @@
 using HrManagementSystem.Domain.Common.Entities;
+using HrManagementSystem.Domain.Common.Exceptions;
 using HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
 using HrManagementSystem.Domain.Employees.Entities;
@@ -32,6 +33,10 @@ public class Company : TenantAuditableEntity
     public string? TaxNumber { get; set; }
     public int? RegistrationCountryId { get; private set; }
     public Country? RegistrationCountry { get; private set; }
+    public int? ParentCompanyId { get; private set; }
+    public Company? ParentCompany { get; private set; }
+    public ICollection<Company> Subsidiaries { get; private set; } = [];
+    public bool IsHoldingCompany => Subsidiaries.Count > 0 || !ParentCompanyId.HasValue;
     public string DefaultCurrencyCode { get; private set; } = "USD";
     public string TimeZoneId { get; private set; } = "UTC";
     public string? Email { get; set; }
@@ -69,5 +74,18 @@ public class Company : TenantAuditableEntity
             throw new ArgumentOutOfRangeException(nameof(countryId));
 
         RegistrationCountryId = countryId;
+    }
+
+    public void SetParentCompany(int? parentCompanyId)
+    {
+        var parentId = PositiveOrNull(parentCompanyId, nameof(parentCompanyId));
+        if (Id > 0 && parentId == Id)
+        {
+            throw new DomainRuleException(
+                "Company.CircularParent",
+                "A company cannot be its own parent company.");
+        }
+
+        ParentCompanyId = parentId;
     }
 }

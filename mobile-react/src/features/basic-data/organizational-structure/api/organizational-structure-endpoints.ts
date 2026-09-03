@@ -1,6 +1,6 @@
 import type { OrganizationalResource } from '../types/organizational-structure';
 
-const base = (resource: OrganizationalResource) => `/v1/organizational-structure/${resource}`;
+const base = (resource: OrganizationalResource) => `organizational-structure/${resource}`;
 export const organizationalStructureEndpoints = {
   base,
   bulk: (resource: OrganizationalResource) => `${base(resource)}/bulk`,

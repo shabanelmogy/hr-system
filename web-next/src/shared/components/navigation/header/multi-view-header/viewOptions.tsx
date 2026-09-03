@@ -1,4 +1,4 @@
-import { BarChart, TableChart, ViewModule } from "@mui/icons-material";
+import { AccountTree, BarChart, TableChart, ViewModule } from "@mui/icons-material";
 import type { TFunction } from "i18next";
 import type { ViewOption, ViewType } from "./types";
 
@@ -6,6 +6,7 @@ const defaultLabels: Record<string, string> = {
   grid: "Grid",
   cards: "Cards",
   chart: "Chart",
+  tree: "Tree",
   list: "List",
   smallList: "Small List",
   report: "Report",
@@ -18,6 +19,7 @@ function getViewIcon(view: ViewType) {
     grid: <TableChart />,
     cards: <ViewModule />,
     chart: <BarChart />,
+    tree: <AccountTree />,
     list: <ViewModule />,
     smallList: <ViewModule />,
   };

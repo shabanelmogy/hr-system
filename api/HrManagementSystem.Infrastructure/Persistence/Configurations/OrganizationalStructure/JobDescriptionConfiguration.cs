@@ -33,5 +33,21 @@ public sealed class JobDescriptionConfiguration : IEntityTypeConfiguration<JobDe
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.PositionId })
             .HasPrincipalKey(x => new { x.TenantId, x.CompanyId, x.Id })
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.OwnsMany(x => x.DutySections, sections =>
+        {
+            sections.ToJson();
+            sections.OwnsMany(s => s.Items);
+        });
+
+        builder.OwnsMany(x => x.Skills, skills =>
+        {
+            skills.ToJson();
+        });
+
+        builder.OwnsMany(x => x.EducationRequirements, reqs =>
+        {
+            reqs.ToJson();
+        });
     }
 }

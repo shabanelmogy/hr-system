@@ -6,16 +6,43 @@ export const organizationalResources = [
   "job-levels",
   "positions",
   "job-descriptions",
+  "cost-centers",
+  "currencies",
 ] as const;
 
 export type OrganizationalResource = (typeof organizationalResources)[number];
-export type OrganizationalView = "grid" | "cards" | "chart" | "report" | "import";
+export type OrganizationalView = "grid" | "cards" | "chart" | "tree" | "report" | "import";
 export type OrganizationalStatus = "active" | "archived" | "all" | "draft" | "approved" | "rejected" | "expired";
 export type OrganizationalSearchField = "all" | "nameAr" | "nameEn" | "code" | "parent";
 export type OrganizationalSearchOperator = "contains" | "doesNotContain" | "equals" | "doesNotEqual" | "startsWith" | "endsWith";
 
 export function organizationalResourceSupportsParent(resource: OrganizationalResource): boolean {
-  return resource === "departments" || resource === "divisions" || resource === "positions" || resource === "job-descriptions";
+  return resource === "departments" || resource === "divisions" || resource === "positions" || resource === "job-descriptions" || resource === "cost-centers";
+}
+
+export interface JobDutyItem {
+  textEn: string;
+  textAr: string;
+  order: number;
+}
+
+export interface JobDutySection {
+  sectionTitleEn: string;
+  sectionTitleAr: string;
+  weightPercentage?: number;
+  items: JobDutyItem[];
+}
+
+export interface JobSkillItem {
+  skillName: string;
+  proficiencyLevel: string;
+  isMandatory: boolean;
+}
+
+export interface JobEducationRequirement {
+  degreeLevel: string;
+  fieldOfStudy: string;
+  isRequired: boolean;
 }
 
 export interface OrganizationalStructureMutation {
@@ -38,6 +65,7 @@ export interface OrganizationalStructureMutation {
   email?: string;
   phone?: string;
   isHeadquarters?: boolean;
+  isCentralized?: boolean;
   levelOrder?: number;
   minSalary?: number;
   maxSalary?: number;
@@ -58,6 +86,13 @@ export interface OrganizationalStructureMutation {
   requiredEducation?: string;
   minExperienceYears?: number;
   revisionNotes?: string;
+  dutySections?: JobDutySection[];
+  skills?: JobSkillItem[];
+  educationRequirements?: JobEducationRequirement[];
+  parentCostCenterId?: number;
+  symbol?: string;
+  exchangeRateToDefault?: number;
+  isDefault?: boolean;
 }
 
 export interface OrganizationalStructureItem extends OrganizationalStructureMutation {
@@ -66,6 +101,7 @@ export interface OrganizationalStructureItem extends OrganizationalStructureMuta
   isDeleted: boolean;
   createdOn: string;
   updatedOn?: string;
+  isCentralized?: boolean;
   branchNameEn?: string;
   branchNameAr?: string;
   parentNameEn?: string;

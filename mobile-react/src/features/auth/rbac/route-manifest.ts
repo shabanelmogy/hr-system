@@ -76,6 +76,8 @@ export const routePolicies: readonly RoutePolicy[] = [
     ROUTES.basicData.organizationalStructureJobLevels,
     ROUTES.basicData.organizationalStructurePositions,
     ROUTES.basicData.organizationalStructureJobDescriptions,
+    ROUTES.basicData.organizationalStructureCostCenters,
+    ROUTES.basicData.organizationalStructureCurrencies,
   ].map((path) => ({ path, permissions: [permissions.ViewOrganizationalStructure] as const })),
   {
     path: ROUTES.basicData.geographicalInformation,

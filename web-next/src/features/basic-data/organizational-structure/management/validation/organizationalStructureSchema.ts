@@ -25,6 +25,7 @@ export const getOrganizationalStructureSchema = (resource: OrganizationalResourc
   email: z.string().email(t("validation.invalidEmail")).or(z.literal("")).optional(),
   phone: z.string().max(50).optional(),
   isHeadquarters: z.boolean().optional(),
+  isCentralized: z.boolean().optional(),
   levelOrder: optionalNumber,
   minSalary: optionalNumber,
   maxSalary: optionalNumber,
@@ -42,14 +43,37 @@ export const getOrganizationalStructureSchema = (resource: OrganizationalResourc
   preferredQualificationsEn: z.string().max(4000).optional(),
   preferredQualificationsAr: z.string().max(4000).optional(),
   requiredSkills: z.string().max(4000).optional(),
-  requiredEducation: z.string().max(2000).optional(),
   minExperienceYears: optionalNumber,
   revisionNotes: z.string().max(2000).optional(),
+  dutySections: z.array(z.object({
+    sectionTitleEn: z.string().default(""),
+    sectionTitleAr: z.string().default(""),
+    weightPercentage: z.number().optional(),
+    items: z.array(z.object({
+      textEn: z.string().default(""),
+      textAr: z.string().default(""),
+      order: z.number().default(0),
+    })).default([]),
+  })).optional(),
+  skills: z.array(z.object({
+    skillName: z.string().default(""),
+    proficiencyLevel: z.string().default("Intermediate"),
+    isMandatory: z.boolean().default(false),
+  })).optional(),
+  educationRequirements: z.array(z.object({
+    degreeLevel: z.string().default(""),
+    fieldOfStudy: z.string().default(""),
+    isRequired: z.boolean().default(true),
+  })).optional(),
+  parentCostCenterId: optionalId,
+  symbol: z.string().max(10).optional(),
+  exchangeRateToDefault: optionalNumber,
+  isDefault: z.boolean().optional(),
 }).superRefine((value, context) => {
   const requireId = (field: "branchId" | "departmentId" | "divisionId" | "jobTitleId" | "jobLevelId" | "positionId") => {
     if (!value[field]) context.addIssue({ code: "custom", path: [field], message: t("validation.required") });
   };
-  if (resource === "departments") requireId("branchId");
+  if (resource === "departments" && !value.isCentralized) requireId("branchId");
   if (resource === "divisions") requireId("departmentId");
   if (resource === "positions") {
     requireId("divisionId"); requireId("jobTitleId"); requireId("jobLevelId");

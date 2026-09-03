@@ -43,6 +43,18 @@ const jobDescriptionSamples: readonly OrganizationalStructureRequest[] = [
   { code: '1.0', version: '1.0', nameEn: 'HR Specialist', nameAr: 'أخصائي موارد بشرية', purposeEn: 'Support employee services and recruitment administration.', purposeAr: 'دعم خدمات الموظفين وإدارة عمليات التوظيف.', responsibilitiesEn: 'Coordinate interviews, maintain records, and support onboarding.', responsibilitiesAr: 'تنسيق المقابلات وحفظ السجلات ودعم التهيئة.', requirementsEn: 'Human resources experience and strong communication skills.', requirementsAr: 'خبرة في الموارد البشرية ومهارات تواصل قوية.', requiredSkills: 'Recruitment, Communication, HRIS', requiredEducation: 'Bachelor\'s degree', minExperienceYears: 2, preferredQualificationsEn: 'HR certification is preferred.', preferredQualificationsAr: 'يفضل الحصول على شهادة في الموارد البشرية.', revisionNotes: 'Initial approved-ready sample.' },
 ];
 
+const costCenterSamples: readonly OrganizationalStructureRequest[] = [
+  { code: 'CC-HQ', nameEn: 'Headquarters Cost Center', nameAr: 'مركز تكلفة الإدارة العامة', descriptionEn: 'Corporate central cost center.', descriptionAr: 'مركز التكلفة الرئيسي للمقر الإداري.' },
+  { code: 'CC-TECH', nameEn: 'Technology & Development', nameAr: 'مركز تكلفة التكنولوجيا والتطوير', descriptionEn: 'Technology and systems allocation.', descriptionAr: 'توزيعات الأنظمة وتكنولوجيا المعلومات.' },
+  { code: 'CC-OPS', nameEn: 'Operations & Logistics', nameAr: 'مركز تكلفة العمليات واللوجستيات', descriptionEn: 'Field and supply operations.', descriptionAr: 'عمليات التشغيل والإمداد.' },
+];
+
+const currencySamples: readonly OrganizationalStructureRequest[] = [
+  { code: 'USD', nameEn: 'US Dollar', nameAr: 'دولار أمريكي', symbol: '$', exchangeRateToDefault: 1, isDefault: true },
+  { code: 'EGP', nameEn: 'Egyptian Pound', nameAr: 'جنيه مصري', symbol: 'EGP', exchangeRateToDefault: 0.02, isDefault: false },
+  { code: 'SAR', nameEn: 'Saudi Riyal', nameAr: 'ريال سعودي', symbol: 'SAR', exchangeRateToDefault: 0.27, isDefault: false },
+];
+
 const firstId = (lookups: OrganizationalStructureMockLookups, resource: OrganizationalResource): number | undefined => lookups[resource]?.[0]?.id;
 
 /** Returns a development-only sample and resolves required relationships from active lookup data. */
@@ -55,6 +67,8 @@ export function getNextOrganizationalStructureMockData(resource: OrganizationalR
     case 'job-levels': return getNextMockSample(jobLevelSamples, usedIndexes);
     case 'positions': return { ...getNextMockSample(positionSamples, usedIndexes), divisionId: firstId(lookups, 'divisions'), jobTitleId: firstId(lookups, 'job-titles'), jobLevelId: firstId(lookups, 'job-levels') };
     case 'job-descriptions': return { ...getNextMockSample(jobDescriptionSamples, usedIndexes), positionId: firstId(lookups, 'positions') };
+    case 'cost-centers': return getNextMockSample(costCenterSamples, usedIndexes);
+    case 'currencies': return getNextMockSample(currencySamples, usedIndexes);
   }
 }
 

@@ -33,6 +33,8 @@ export const ROUTES = {
     organizationalStructureJobLevels: '/basic-data/organizational-structure/job-levels',
     organizationalStructurePositions: '/basic-data/organizational-structure/positions',
     organizationalStructureJobDescriptions: '/basic-data/organizational-structure/job-descriptions',
+    organizationalStructureCostCenters: '/basic-data/organizational-structure/cost-centers',
+    organizationalStructureCurrencies: '/basic-data/organizational-structure/currencies',
     companyGeographicScope: '/basic-data/organizational-structure/geographic-scope',
   },
   extras: {

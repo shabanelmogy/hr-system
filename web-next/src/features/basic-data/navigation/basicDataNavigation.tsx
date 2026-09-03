@@ -2,6 +2,8 @@ import CategoryIcon from "@mui/icons-material/Category";
 import MapIcon from "@mui/icons-material/Map";
 import PublicIcon from "@mui/icons-material/Public";
 import BusinessRoundedIcon from "@mui/icons-material/BusinessRounded";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import PaidIcon from "@mui/icons-material/Paid";
 import type { ReactNode } from "react";
 import { appRoutes, type AppPath } from "@/config/routes";
 import { isAuthorized } from "@/lib/auth/authorization";
@@ -77,6 +79,22 @@ const organizationalStructureItems: readonly BasicDataNavigationItem[] = [
     descriptionKey: "organizationalStructure.routeDescriptions.job-descriptions",
     href: appRoutes.basicData.organizationalStructure.jobDescriptions,
     icon: <BusinessRoundedIcon fontSize="small" />,
+    permissions: [permissions.ViewOrganizationalStructure],
+  },
+  {
+    id: "organizational-structure-cost-centers",
+    titleKey: "organizationalStructure.resources.cost-centers",
+    descriptionKey: "organizationalStructure.routeDescriptions.cost-centers",
+    href: appRoutes.basicData.organizationalStructure.costCenters,
+    icon: <AccountBalanceWalletIcon fontSize="small" />,
+    permissions: [permissions.ViewOrganizationalStructure],
+  },
+  {
+    id: "organizational-structure-currencies",
+    titleKey: "organizationalStructure.resources.currencies",
+    descriptionKey: "organizationalStructure.routeDescriptions.currencies",
+    href: appRoutes.basicData.organizationalStructure.currencies,
+    icon: <PaidIcon fontSize="small" />,
     permissions: [permissions.ViewOrganizationalStructure],
   },
   {

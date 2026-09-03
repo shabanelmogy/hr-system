@@ -38,10 +38,11 @@ export const notificationKeys = {
   unreadCount: () => [...notificationKeys.all, "unread-count"] as const,
 };
 
-export function useUnreadNotificationCount() {
+export function useUnreadNotificationCount(options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: notificationKeys.unreadCount(),
     queryFn: getUnreadNotificationCount,
+    enabled: options?.enabled ?? true,
     staleTime: 20_000,
     refetchInterval: 60_000,
     refetchOnWindowFocus: true,

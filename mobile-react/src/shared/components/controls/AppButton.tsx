@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from 'react';
+import React, { type PropsWithChildren } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   ActivityIndicator,
@@ -19,6 +19,7 @@ type GradientColors = readonly [ColorValue, ColorValue, ...ColorValue[]];
 
 export interface AppButtonProps extends Omit<PressableProps, 'children'> {
   variant?: AppButtonVariant;
+  size?: 'sm' | 'md';
   icon?: AppIconName;
   iconPosition?: 'start' | 'end';
   loading?: boolean;
@@ -30,6 +31,7 @@ export interface AppButtonProps extends Omit<PressableProps, 'children'> {
 export function AppButton({
   children,
   variant = 'primary',
+  size = 'md',
   icon,
   iconPosition = 'start',
   loading = false,
@@ -43,6 +45,7 @@ export function AppButton({
   const { theme } = useAppTheme();
   const { direction } = useLocalization();
   const isDisabled = disabled || loading;
+  const isSm = size === 'sm';
 
   const backgroundMap: Record<AppButtonVariant, string> = {
     primary: theme.colors.primary,
@@ -69,6 +72,7 @@ export function AppButton({
       disabled={isDisabled}
       style={(state) => [
         styles.button,
+        isSm ? styles.buttonSm : null,
         {
           direction,
           backgroundColor: gradientColors ? 'transparent' : backgroundMap[variant],
@@ -95,21 +99,37 @@ export function AppButton({
               style={StyleSheet.absoluteFill}
             />
           ) : null}
-          <View style={[styles.content, { direction }]}>
+          <View style={[styles.content, { direction }, isSm && styles.contentSm]}>
             {loading ? (
               <ActivityIndicator color={foregroundMap[variant]} size="small" />
             ) : icon && iconPosition === 'start' ? (
-              <AppIcon color={foregroundMap[variant]} name={icon} size={19} />
+              <AppIcon color={foregroundMap[variant]} name={icon} size={isSm ? 15 : 19} />
             ) : null}
-            <AppText
-              align="center"
-              color="default"
-              style={{ color: foregroundMap[variant] }}
-              weight="700">
-              {children}
-            </AppText>
+            {typeof children === 'string' || typeof children === 'number' ? (
+              <AppText
+                align="center"
+                color="default"
+                style={{ color: foregroundMap[variant] }}
+                variant={isSm ? 'caption' : 'body'}
+                weight="700">
+                {children}
+              </AppText>
+            ) : React.isValidElement(children) ? (
+              React.cloneElement(children as React.ReactElement<{ style?: any }>, {
+                style: [(children.props as any)?.style, { color: foregroundMap[variant] }],
+              })
+            ) : (
+              <AppText
+                align="center"
+                color="default"
+                style={{ color: foregroundMap[variant] }}
+                variant={isSm ? 'caption' : 'body'}
+                weight="700">
+                {children}
+              </AppText>
+            )}
             {!loading && icon && iconPosition === 'end' ? (
-              <AppIcon color={foregroundMap[variant]} name={icon} size={19} />
+              <AppIcon color={foregroundMap[variant]} name={icon} size={isSm ? 15 : 19} />
             ) : null}
           </View>
         </>
@@ -126,10 +146,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     justifyContent: 'center',
   },
+  buttonSm: {
+    minHeight: 32,
+    minWidth: 32,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+  },
   content: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
+  },
+  contentSm: {
+    gap: 4,
   },
 });

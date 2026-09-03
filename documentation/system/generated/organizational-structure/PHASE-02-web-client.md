@@ -106,10 +106,10 @@ failure into partial success.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| organizational-structure-master | 3 | `7752fcae21fe02783537e6b8887668c9875709af3a5629f05ddee9dca78de403` |
+| organizational-structure-master | 3 | `e45c90794d15330609e089c888b6a6af9df12bcf5a265e1f78d93e31f39b8a8c` |
 | organizational-structure-master | 4 | `0beaf7376a09bb7c622523a47042700f05bf8105485ff4f3fda6be4ed287136a` |
 | organizational-structure-master | 6 | `2fdee62992580c5d76fc63348edf52701b1e514b1c18ff8be30c53dda4d1b0bf` |
-| organizational-structure-master | 7 | `148433024e55eb81022d5badf23df9f09715eddddbbfbcc6abb8aa0b6c7bf7d8` |
+| organizational-structure-master | 7 | `d3371766bde33eeaa333e5abee156d13b95e6c35dae25ecc9ca097037434c07c` |
 | organizational-structure-web | 1 | `dec16b367ad0e7ee598602a3b86d72f5d965e129a3d82c0d65225d7319f07dd4` |
 | organizational-structure-web | 2 | `f57ca14074921b4ea9da2545d9b298eb63fa909e3d5933b1a8210ae83f19ceb5` |
 | organizational-structure-web | 3 | `fda58bfc44c4c869494ac460bd22aa8423254933c91085e2871ef325582e8d50` |

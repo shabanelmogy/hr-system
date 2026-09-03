@@ -78,6 +78,8 @@ public class ApplicationDbContext(
     public DbSet<JobLevel> JobLevels { get; set; }
     public DbSet<Position> Positions { get; set; }
     public DbSet<JobDescription> JobDescriptions { get; set; }
+    public DbSet<CostCenter> CostCenters { get; set; }
+    public DbSet<Currency> Currencies { get; set; }
     public DbSet<DeviceCredential> AttendanceDeviceCredentials { get; set; }
     public DbSet<RawDeviceUser> RawDeviceUsers { get; set; }
     public DbSet<RawAttendancePunch> RawAttendancePunches { get; set; }

@@ -1,3 +1,4 @@
+using HrManagementSystem.Domain.OrganizationalStructure.Entities;
 using HrManagementSystem.Domain.OrganizationalStructure.Enums;
 
 namespace HrManagementSystem.Application.Features.OrganizationalStructure.Management.Contracts;
@@ -41,7 +42,14 @@ public sealed record OrganizationalStructureMutation(
     string? RequiredSkills = null,
     string? RequiredEducation = null,
     int? MinExperienceYears = null,
-    string? RevisionNotes = null);
+    string? RevisionNotes = null,
+    IEnumerable<JobDutySection>? DutySections = null,
+    IEnumerable<JobSkillItem>? Skills = null,
+    IEnumerable<JobEducationRequirement>? EducationRequirements = null,
+    int? ParentCostCenterId = null,
+    string? Symbol = null,
+    decimal? ExchangeRateToDefault = null,
+    bool IsDefault = false);
 
 public sealed record OrganizationalStructureItem
 {
@@ -110,6 +118,14 @@ public sealed record OrganizationalStructureItem
     public string? ApprovedByUserId { get; init; }
     public DateTimeOffset? DecisionOn { get; init; }
     public string? DecisionReason { get; init; }
+    public bool IsCentralized { get; init; }
+    public IReadOnlyList<JobDutySection> DutySections { get; init; } = [];
+    public IReadOnlyList<JobSkillItem> Skills { get; init; } = [];
+    public IReadOnlyList<JobEducationRequirement> EducationRequirements { get; init; } = [];
+    public int? ParentCostCenterId { get; init; }
+    public string? Symbol { get; init; }
+    public decimal? ExchangeRateToDefault { get; init; }
+    public bool IsDefault { get; init; }
 }
 
 public sealed record OrganizationalStructureLookup(int Id, string Code, string NameEn, string NameAr);

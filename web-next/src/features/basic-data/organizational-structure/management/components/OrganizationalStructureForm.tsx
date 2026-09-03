@@ -1,9 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box } from "@mui/material";
+import { Box, FormControlLabel, Switch } from "@mui/material";
 import { useEffect, useRef } from "react";
-import { type Resolver, type SubmitHandler, useForm, useWatch } from "react-hook-form";
+import { Controller, type Resolver, type SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { MyForm, MySelect, MyTextField } from "@/shared/components/forms";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
@@ -18,6 +18,9 @@ import {
   getNextOrganizationalStructureMockData,
   organizationalStructureMockDependenciesReady,
 } from "../utils/organizationalStructureMockData";
+import { DutySectionsEditor } from "./job-description-editors/DutySectionsEditor";
+import { SkillsEditor } from "./job-description-editors/SkillsEditor";
+import { EducationRequirementsEditor } from "./job-description-editors/EducationRequirementsEditor";
 
 interface Props {
   open: boolean;
@@ -32,8 +35,9 @@ interface Props {
 const emptyValues: OrganizationalStructureMutation = {
   code: "", nameEn: "", nameAr: "", descriptionEn: "", descriptionAr: "",
   timeZoneId: "UTC", openedOn: new Date().toISOString().slice(0, 10),
-  isHeadquarters: false, canManageOthers: false, isManagementLevel: false,
+  isHeadquarters: false, isCentralized: false, canManageOthers: false, isManagementLevel: false,
   targetHeadcount: 0, levelOrder: 0,
+  dutySections: [], skills: [], educationRequirements: [],
 };
 
 const boolOptions = [
@@ -44,7 +48,11 @@ const boolOptions = [
 const toFormValues = (item?: OrganizationalStructureItem | null): OrganizationalStructureMutation => item ? {
   ...emptyValues,
   ...item,
+  isCentralized: item.isCentralized ?? (item.resource === "departments" ? !item.branchId : false),
   version: item.version ?? (item.resource === "job-descriptions" ? item.code : undefined),
+  dutySections: item.dutySections ?? [],
+  skills: item.skills ?? [],
+  educationRequirements: item.educationRequirements ?? [],
 } : emptyValues;
 
 export default function OrganizationalStructureForm({
@@ -59,14 +67,20 @@ export default function OrganizationalStructureForm({
   });
   const usedMockIndexes = useRef(new Set<number>());
   const branchId = useWatch({ control, name: "branchId" });
+  const isCentralized = useWatch({ control, name: "isCentralized" });
+  const dutySections = useWatch({ control, name: "dutySections" }) ?? [];
+  const skills = useWatch({ control, name: "skills" }) ?? [];
+  const educationRequirements = useWatch({ control, name: "educationRequirements" }) ?? [];
 
   const branches = useOrganizationalLookup("branches", undefined, open && resource === "departments");
   const departments = useOrganizationalLookup("departments", undefined, open && resource === "divisions");
-  const parentDepartments = useOrganizationalLookup("departments", branchId, open && resource === "departments" && Boolean(branchId));
+  const parentDepartments = useOrganizationalLookup("departments", branchId || undefined, open && resource === "departments");
   const divisions = useOrganizationalLookup("divisions", undefined, open && resource === "positions");
   const jobTitles = useOrganizationalLookup("job-titles", undefined, open && resource === "positions");
   const jobLevels = useOrganizationalLookup("job-levels", undefined, open && resource === "positions");
   const positions = useOrganizationalLookup("positions", undefined, open && resource === "job-descriptions");
+  const costCenters = useOrganizationalLookup("cost-centers", undefined, open && (resource === "departments" || resource === "divisions" || resource === "cost-centers"));
+  const currencies = useOrganizationalLookup("currencies", undefined, open && resource === "job-levels");
 
   const mockLookups = {
     branches: branches.data ?? [],
@@ -86,10 +100,19 @@ export default function OrganizationalStructureForm({
   const errorMessages = Object.fromEntries(Object.entries(errors).flatMap(([key, error]) =>
     error?.message ? [[key, String(error.message)]] : []));
   const submit: SubmitHandler<OrganizationalStructureMutation> = async (values) => {
-    try { await onSubmit(values); }
+    try {
+      const payload: OrganizationalStructureMutation = {
+        ...values,
+        branchId: values.isCentralized ? undefined : (values.branchId || undefined),
+      };
+      await onSubmit(payload);
+    }
     catch (error) {
       applyApiFieldErrors(error, setError, {
-        "OrganizationalStructure.Duplicate": ["code"],
+        "OrganizationalStructure.Duplicate": ["code", "nameAr", "nameEn"],
+        "OrganizationalStructure.DuplicateCode": ["code"],
+        "OrganizationalStructure.DuplicateNameEn": ["nameEn"],
+        "OrganizationalStructure.DuplicateNameAr": ["nameAr"],
         "OrganizationalStructure.ParentNotFound": ["branchId", "departmentId", "divisionId", "jobTitleId", "jobLevelId", "positionId"],
       });
     }
@@ -101,7 +124,7 @@ export default function OrganizationalStructureForm({
     />
   );
   const select = (
-    name: "branchId" | "parentDepartmentId" | "departmentId" | "divisionId" | "jobTitleId" | "jobLevelId" | "positionId",
+    name: "branchId" | "parentDepartmentId" | "parentCostCenterId" | "departmentId" | "divisionId" | "jobTitleId" | "jobLevelId" | "positionId",
     label: string,
     data: ReturnType<typeof options>,
     isLoading = false,
@@ -128,6 +151,7 @@ export default function OrganizationalStructureForm({
       setValue("isHeadquarters", sample.isHeadquarters ?? false, options);
     }
     if (resource === "departments") {
+      setValue("isCentralized", false, options);
       setValue("branchId", sample.branchId ?? 0, options);
       setValue("parentDepartmentId", sample.parentDepartmentId ?? 0, options);
       setValue("costCenterCode", sample.costCenterCode ?? "", options);
@@ -157,16 +181,41 @@ export default function OrganizationalStructureForm({
       setValue("targetHeadcount", sample.targetHeadcount ?? 0, options);
     }
     if (resource === "job-descriptions") {
-      setValue("version", sample.version ?? sample.code, options);
+      const suffix = Math.floor(Math.random() * 900 + 100);
+      setValue("code", `${sample.version ?? sample.code}.${suffix}`, options);
+      setValue("version", `${sample.version ?? sample.code}.${suffix}`, options);
+      setValue("nameAr", `${sample.nameAr} (${suffix})`, options);
+      setValue("nameEn", `${sample.nameEn} (${suffix})`, options);
       setValue("purposeAr", sample.purposeAr ?? "", options);
       setValue("purposeEn", sample.purposeEn ?? "", options);
-      setValue("responsibilitiesAr", sample.responsibilitiesAr ?? "", options);
-      setValue("responsibilitiesEn", sample.responsibilitiesEn ?? "", options);
-      setValue("requirementsAr", sample.requirementsAr ?? "", options);
-      setValue("requirementsEn", sample.requirementsEn ?? "", options);
-      setValue("requiredSkills", sample.requiredSkills ?? "", options);
-      setValue("requiredEducation", sample.requiredEducation ?? "", options);
-      setValue("minExperienceYears", sample.minExperienceYears ?? 0, options);
+      setValue("dutySections", [
+        {
+          sectionTitleAr: "المهام القيادية والإدارية",
+          sectionTitleEn: "Leadership & Management",
+          weightPercentage: 40,
+          items: [
+            { textAr: "قيادة وتوجيه الفريق لتحقيق المستهدفات", textEn: "Lead and mentor team to achieve departmental goals", order: 1 },
+            { textAr: "مراجعة تقارير الأداء ومؤشرات الإنجاز الدورية", textEn: "Review periodic performance reports and KPIs", order: 2 },
+          ],
+        },
+        {
+          sectionTitleAr: "التخطيط والتطوير الفني",
+          sectionTitleEn: "Planning & Technical Development",
+          weightPercentage: 60,
+          items: [
+            { textAr: "تطوير الحلول البرمجية وفق أعلى معايير الجودة", textEn: "Develop software solutions adhering to quality standards", order: 1 },
+          ],
+        },
+      ], options);
+      setValue("skills", [
+        { skillName: "C# / .NET Core", proficiencyLevel: "Expert", isMandatory: true },
+        { skillName: "React / Next.js", proficiencyLevel: "Advanced", isMandatory: true },
+        { skillName: "Problem Solving", proficiencyLevel: "Advanced", isMandatory: false },
+      ], options);
+      setValue("educationRequirements", [
+        { degreeLevel: "Bachelor's Degree", fieldOfStudy: "Computer Science / Software Engineering", isRequired: true },
+      ], options);
+      setValue("minExperienceYears", sample.minExperienceYears ?? 3, options);
       setValue("preferredQualificationsAr", sample.preferredQualificationsAr ?? "", options);
       setValue("preferredQualificationsEn", sample.preferredQualificationsEn ?? "", options);
       setValue("revisionNotes", sample.revisionNotes ?? "", options);
@@ -209,21 +258,106 @@ export default function OrganizationalStructureForm({
         </>}
 
         {resource === "departments" && <>
-          {select("branchId", t("organizationalStructure.resources.branches"), options(branches.data), branches.isLoading)}
+          <Controller
+            name="isCentralized"
+            control={control}
+            render={({ field }) => (
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={Boolean(field.value)}
+                    disabled={isView || loading}
+                    onChange={(e) => {
+                      const checked = e.target.checked;
+                      field.onChange(checked);
+                      if (checked) {
+                        setValue("branchId", 0, { shouldValidate: true, shouldDirty: true });
+                      }
+                    }}
+                    color="primary"
+                  />
+                }
+                label={t("organizationalStructure.fields.isCentralized")}
+                sx={{ mb: 1.5 }}
+              />
+            )}
+          />
+          {!isCentralized && select("branchId", t("organizationalStructure.resources.branches"), options(branches.data), branches.isLoading)}
           {select("parentDepartmentId", t("organizationalStructure.fields.parentDepartment"), options(parentDepartments.data?.filter((x) => x.id !== item?.id)), parentDepartments.isLoading)}
         </>}
         {resource === "divisions" && select("departmentId", t("organizationalStructure.resources.departments"), options(departments.data), departments.isLoading)}
         {(resource === "departments" || resource === "divisions") && <>
-          {text("costCenterCode", t("organizationalStructure.fields.costCenter"), { maxLength: 50 })}
+          {costCenters.data && costCenters.data.length > 0 ? (
+            <MySelect
+              name="costCenterCode"
+              label={t("organizationalStructure.fields.costCenter")}
+              control={control}
+              dataSource={costCenters.data.map((cc) => ({
+                value: cc.code,
+                label: `${cc.code} — ${cc.nameEn} (${cc.nameAr})`,
+              }))}
+              valueMember="value"
+              displayMember="label"
+              errors={errors}
+              isViewMode={isView}
+            />
+          ) : (
+            text("costCenterCode", t("organizationalStructure.fields.costCenter"), { maxLength: 50 })
+          )}
           {text("descriptionAr", t("organizationalStructure.fields.descriptionAr"), { multiline: true, rows: 3, maxLength: 2000 })}
           {text("descriptionEn", t("organizationalStructure.fields.descriptionEn"), { multiline: true, rows: 3, maxLength: 2000 })}
+        </>}
+
+        {resource === "cost-centers" && <>
+          {select("parentCostCenterId", t("organizationalStructure.fields.parentCostCenter"), options(costCenters.data?.filter((x) => x.id !== item?.id)), costCenters.isLoading)}
+          {text("descriptionAr", t("organizationalStructure.fields.descriptionAr"), { multiline: true, rows: 3, maxLength: 2000 })}
+          {text("descriptionEn", t("organizationalStructure.fields.descriptionEn"), { multiline: true, rows: 3, maxLength: 2000 })}
+        </>}
+
+        {resource === "currencies" && <>
+          {text("symbol", t("organizationalStructure.fields.symbol"), { maxLength: 10 })}
+          {text("exchangeRateToDefault", t("organizationalStructure.fields.exchangeRate"), { type: "number", minValue: 0.0001, showCounter: false })}
+          <Controller
+            name="isDefault"
+            control={control}
+            render={({ field }) => (
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={Boolean(field.value)}
+                    disabled={isView || loading}
+                    onChange={(e) => field.onChange(e.target.checked)}
+                    color="primary"
+                  />
+                }
+                label={t("organizationalStructure.fields.defaultCurrency")}
+                sx={{ mb: 1.5 }}
+              />
+            )}
+          />
         </>}
 
         {resource === "job-levels" && <>
           {text("levelOrder", t("organizationalStructure.fields.levelOrder"), { type: "number", minValue: 0, showCounter: false })}
           {text("minSalary", t("organizationalStructure.fields.minSalary"), { type: "number", minValue: 0, showCounter: false })}
           {text("maxSalary", t("organizationalStructure.fields.maxSalary"), { type: "number", minValue: 0, showCounter: false })}
-          {text("currencyCode", t("organizationalStructure.fields.currency"), { maxLength: 3 })}
+          {currencies.data && currencies.data.length > 0 ? (
+            <MySelect
+              name="currencyCode"
+              label={t("organizationalStructure.fields.currency")}
+              control={control}
+              dataSource={currencies.data.map((c) => ({
+                value: c.code,
+                label: `${c.code} — ${c.nameEn} (${c.nameAr})`,
+              }))}
+              valueMember="value"
+              displayMember="label"
+              errors={errors}
+              isViewMode={isView}
+            />
+          ) : (
+            text("currencyCode", t("organizationalStructure.fields.currency"), { maxLength: 3 })
+          )}
           <MySelect name="canManageOthers" label={t("organizationalStructure.fields.canManageOthers")} control={control}
             dataSource={boolOptions.map((x) => ({ ...x, label: t(x.label) }))} valueMember="value" displayMember="label" errors={errors} isViewMode={isView} />
           <MySelect name="isManagementLevel" label={t("organizationalStructure.fields.managementLevel")} control={control}
@@ -241,17 +375,30 @@ export default function OrganizationalStructureForm({
 
         {resource === "job-descriptions" && <>
           {select("positionId", t("organizationalStructure.resources.positions"), options(positions.data), positions.isLoading)}
-          {text("purposeAr", t("organizationalStructure.fields.purposeAr"), { multiline: true, rows: 3, maxLength: 4000 })}
-          {text("purposeEn", t("organizationalStructure.fields.purposeEn"), { multiline: true, rows: 3, maxLength: 4000 })}
-          {text("responsibilitiesAr", t("organizationalStructure.fields.responsibilitiesAr"), { multiline: true, rows: 4, maxLength: 8000 })}
-          {text("responsibilitiesEn", t("organizationalStructure.fields.responsibilitiesEn"), { multiline: true, rows: 4, maxLength: 8000 })}
-          {text("requirementsAr", t("organizationalStructure.fields.requirementsAr"), { multiline: true, rows: 4, maxLength: 8000 })}
-          {text("requirementsEn", t("organizationalStructure.fields.requirementsEn"), { multiline: true, rows: 4, maxLength: 8000 })}
-          {text("requiredSkills", t("organizationalStructure.fields.requiredSkills"), { multiline: true, rows: 3, maxLength: 4000 })}
-          {text("requiredEducation", t("organizationalStructure.fields.requiredEducation"), { multiline: true, rows: 2, maxLength: 2000 })}
+          {text("purposeAr", t("organizationalStructure.fields.purposeAr"), { multiline: true, rows: 2, maxLength: 4000 })}
+          {text("purposeEn", t("organizationalStructure.fields.purposeEn"), { multiline: true, rows: 2, maxLength: 4000 })}
+
+          <DutySectionsEditor
+            sections={dutySections}
+            onChange={(val) => setValue("dutySections", val, { shouldDirty: true, shouldValidate: true })}
+            disabled={isView || loading}
+          />
+
+          <SkillsEditor
+            skills={skills}
+            onChange={(val) => setValue("skills", val, { shouldDirty: true, shouldValidate: true })}
+            disabled={isView || loading}
+          />
+
+          <EducationRequirementsEditor
+            requirements={educationRequirements}
+            onChange={(val) => setValue("educationRequirements", val, { shouldDirty: true, shouldValidate: true })}
+            disabled={isView || loading}
+          />
+
           {text("minExperienceYears", t("organizationalStructure.fields.experienceYears"), { type: "number", minValue: 0, showCounter: false })}
-          {text("preferredQualificationsAr", t("organizationalStructure.fields.preferredQualificationsAr"), { multiline: true, rows: 3, maxLength: 4000 })}
-          {text("preferredQualificationsEn", t("organizationalStructure.fields.preferredQualificationsEn"), { multiline: true, rows: 3, maxLength: 4000 })}
+          {text("preferredQualificationsAr", t("organizationalStructure.fields.preferredQualificationsAr"), { multiline: true, rows: 2, maxLength: 4000 })}
+          {text("preferredQualificationsEn", t("organizationalStructure.fields.preferredQualificationsEn"), { multiline: true, rows: 2, maxLength: 4000 })}
           {text("revisionNotes", t("organizationalStructure.fields.revisionNotes"), { multiline: true, rows: 2, maxLength: 2000 })}
         </>}
       </Box>

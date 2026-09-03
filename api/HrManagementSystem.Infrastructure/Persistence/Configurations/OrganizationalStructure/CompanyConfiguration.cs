@@ -22,6 +22,11 @@ public sealed class CompanyConfiguration : IEntityTypeConfiguration<Company>
             .HasForeignKey(company => company.RegistrationCountryId)
             .OnDelete(DeleteBehavior.Restrict);
         builder.HasIndex(company => company.RegistrationCountryId);
+        builder.HasOne(company => company.ParentCompany)
+            .WithMany(company => company.Subsidiaries)
+            .HasForeignKey(company => company.ParentCompanyId)
+            .OnDelete(DeleteBehavior.Restrict);
+        builder.HasIndex(company => company.ParentCompanyId);
         builder.Property(company => company.DefaultCurrencyCode).HasMaxLength(3).IsRequired();
         builder.Property(company => company.TimeZoneId).HasMaxLength(100).IsRequired();
         builder.Property(company => company.Email).HasMaxLength(254);

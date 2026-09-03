@@ -80,6 +80,8 @@ export interface AppDataTableProps<Row> {
   autoActivateFirstRow?: boolean;
   /** Called when a row becomes active by touch. */
   onRowPress?: (row: Row) => void;
+  /** Called when a row is double pressed by touch. */
+  onRowDoublePress?: (row: Row) => void;
   defaultPageSize?: number;
   pageSizeOptions?: readonly number[];
   emptyMessage?: string;
@@ -100,6 +102,7 @@ export function AppDataTable<Row>({
   getRowKey,
   autoActivateFirstRow = true,
   onRowPress,
+  onRowDoublePress,
   defaultPageSize = 10,
   pageSizeOptions = [5, 10, 25],
   emptyMessage,
@@ -118,6 +121,7 @@ export function AppDataTable<Row>({
   const previousResetKey = useRef(resetKey);
   const previousFlash = useRef<{ rowKey: AppDataTableRowKey; token: string | number } | undefined>(undefined);
   const hasMountedRef = useRef(false);
+  const lastRowPressRef = useRef<{ rowKey: AppDataTableRowKey; time: number } | null>(null);
   const flashProgress = useRef(new Animated.Value(0)).current;
   const [activeRowKey, setActiveRowKey] = useState<AppDataTableRowKey | null>(null);
   const [activeFlashRowKey, setActiveFlashRowKey] = useState<AppDataTableRowKey | null>(null);
@@ -527,8 +531,19 @@ export function AppDataTable<Row>({
               ]}>
               <Pressable
                 onPress={() => {
-                  setActiveRowKey(rowKey);
-                  onRowPress?.(row);
+                  const now = Date.now();
+                  if (
+                    lastRowPressRef.current &&
+                    lastRowPressRef.current.rowKey === rowKey &&
+                    now - lastRowPressRef.current.time < 350
+                  ) {
+                    lastRowPressRef.current = null;
+                    onRowDoublePress?.(row);
+                  } else {
+                    lastRowPressRef.current = { rowKey, time: now };
+                    setActiveRowKey(rowKey);
+                    onRowPress?.(row);
+                  }
                 }}
                 style={styles.rowPressable}>
                 {resolvedColumns.map((column) => (

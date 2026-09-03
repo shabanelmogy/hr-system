@@ -45,7 +45,10 @@ const operators: OrganizationalSearchOperator[] = ["contains", "doesNotContain",
 export default function OrganizationalStructureDataGrid(props: Props) {
   const { t } = useTranslation();
   const getActions = useMemo(() => makeOrganizationalStructureActions({ t, resource: props.resource, canEdit: props.permissions.canEdit, canDelete: props.permissions.canDelete, canApprove: props.permissions.canApprove, onView: props.onView, onEdit: props.onEdit, onLifecycle: props.onLifecycle, onApprove: props.onApprove, onReject: props.onReject }), [props.onApprove, props.onEdit, props.onLifecycle, props.onReject, props.onView, props.permissions.canApprove, props.permissions.canDelete, props.permissions.canEdit, props.resource, t]);
-  const columns = useOrganizationalStructureColumns({ t, resource: props.resource, language: props.language, getActions });
+  const columns = useMemo(
+    () => useOrganizationalStructureColumns({ t, resource: props.resource, language: props.language, getActions, onView: props.onView }),
+    [getActions, props.language, props.onView, props.resource, t],
+  );
   const statusOptions: OrganizationalStatus[] = props.resource === "job-descriptions" ? ["active", "archived", "all", "draft", "approved", "rejected", "expired"] : ["active", "archived", "all"];
   const searchOptions = [
     { value: "all", label: t("organizationalStructure.allColumns") },
@@ -67,6 +70,7 @@ export default function OrganizationalStructureDataGrid(props: Props) {
         columns={columns}
         getRowId={(row) => row.id}
         loading={props.loading}
+        onRowDoubleClick={(params) => props.onView(params.row)}
         filterMode="server"
         sortingMode="server"
         sortModel={[{ field: props.sortBy, sort: props.sortDirection }]}

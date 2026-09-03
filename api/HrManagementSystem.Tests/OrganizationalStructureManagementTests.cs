@@ -169,6 +169,92 @@ public sealed class OrganizationalStructureManagementTests
         }
     }
 
+    [Fact]
+    public void Company_SetParentCompany_EnforcesHierarchyAndPreventsSelfParent()
+    {
+        var company = new Company("TECH", "Tech Corp", "شركة التقنية", "USD", "UTC");
+        Assert.True(company.IsHoldingCompany);
+        Assert.Null(company.ParentCompanyId);
+
+        company.SetParentCompany(5);
+        Assert.Equal(5, company.ParentCompanyId);
+
+        // Reflection to set Id to 5 to simulate persisted entity
+        typeof(Company).GetProperty(nameof(Company.Id))!.SetValue(company, 5);
+        var ex = Assert.Throws<DomainRuleException>(() => company.SetParentCompany(5));
+        Assert.Equal("Company.CircularParent", ex.Code);
+    }
+
+    [Fact]
+    public void Department_Centralized_AllowsNullBranchId()
+    {
+        var dept = new Department(null, "HR", "Human Resources", "الموارد البشرية");
+        Assert.True(dept.IsCentralized);
+        Assert.Null(dept.BranchId);
+
+        dept.MoveToBranch(10);
+        Assert.False(dept.IsCentralized);
+        Assert.Equal(10, dept.BranchId);
+
+        dept.MoveToBranch(null);
+        Assert.True(dept.IsCentralized);
+        Assert.Null(dept.BranchId);
+    }
+
+    [Fact]
+    public void JobDescription_StructuredContent_SupportsDutySectionsSkillsAndEducation()
+    {
+        var jd = new JobDescription(1, "Senior Developer", "مطور أول", "V1.0");
+
+        var sections = new List<JobDutySection>
+        {
+            new()
+            {
+                SectionTitleEn = "Development",
+                SectionTitleAr = "التطوير البرمجي",
+                WeightPercentage = 60,
+                Items = [new JobDutyItem { TextEn = "Write clean code", TextAr = "كتابة كود نظيف", Order = 1 }]
+            }
+        };
+
+        var skills = new List<JobSkillItem>
+        {
+            new() { SkillName = "C#", ProficiencyLevel = "Expert", IsMandatory = true }
+        };
+
+        var education = new List<JobEducationRequirement>
+        {
+            new() { DegreeLevel = "Bachelor", FieldOfStudy = "Computer Science", IsRequired = true }
+        };
+
+        jd.UpdateStructuredContent(sections, skills, education);
+
+        Assert.Single(jd.DutySections);
+        Assert.Equal(60, jd.DutySections.First().WeightPercentage);
+        Assert.Single(jd.Skills);
+        Assert.Equal("C#", jd.Skills.First().SkillName);
+        Assert.Single(jd.EducationRequirements);
+    }
+
+    [Fact]
+    public void EmployeeAssignment_ReportsToPosition_CanBeSetAndUpdated()
+    {
+        var assignment = new HrManagementSystem.Domain.Employees.Entities.EmployeeAssignment(
+            employeeId: 1,
+            positionId: 10,
+            branchId: 2,
+            departmentId: 3,
+            effectiveFrom: new DateOnly(2026, 1, 1),
+            isPrimary: true,
+            divisionId: null,
+            reportsToPositionId: 5);
+
+        Assert.Equal(5, assignment.ReportsToPositionId);
+
+        assignment.SetReportsToPosition(8);
+        Assert.Equal(8, assignment.ReportsToPositionId);
+    }
+
     private static void AssertCompositeForeignKey<TDependent, TPrincipal>(
         ApplicationDbContext context,
         params string[] expectedProperties)

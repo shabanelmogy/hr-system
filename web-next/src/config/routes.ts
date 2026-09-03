@@ -43,6 +43,8 @@ export interface OrganizationalStructureRoutes {
   jobLevels: AppPath;
   positions: AppPath;
   jobDescriptions: AppPath;
+  costCenters: AppPath;
+  currencies: AppPath;
 }
 
 export interface AuthRoutes {
@@ -137,6 +139,8 @@ export const appRoutes: AppRoutes = {
       jobLevels: toAppPath("/basic-data/organizational-structure/job-levels"),
       positions: toAppPath("/basic-data/organizational-structure/positions"),
       jobDescriptions: toAppPath("/basic-data/organizational-structure/job-descriptions"),
+      costCenters: toAppPath("/basic-data/organizational-structure/cost-centers"),
+      currencies: toAppPath("/basic-data/organizational-structure/currencies"),
     },
   },
 

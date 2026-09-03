@@ -65,10 +65,10 @@ profile and do not leave an unreachable route, component, or translation surface
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| organizational-structure-master | 3 | `7752fcae21fe02783537e6b8887668c9875709af3a5629f05ddee9dca78de403` |
+| organizational-structure-master | 3 | `e45c90794d15330609e089c888b6a6af9df12bcf5a265e1f78d93e31f39b8a8c` |
 | organizational-structure-master | 4 | `0beaf7376a09bb7c622523a47042700f05bf8105485ff4f3fda6be4ed287136a` |
 | organizational-structure-master | 6 | `2fdee62992580c5d76fc63348edf52701b1e514b1c18ff8be30c53dda4d1b0bf` |
-| organizational-structure-master | 7 | `148433024e55eb81022d5badf23df9f09715eddddbbfbcc6abb8aa0b6c7bf7d8` |
+| organizational-structure-master | 7 | `d3371766bde33eeaa333e5abee156d13b95e6c35dae25ecc9ca097037434c07c` |
 | organizational-structure-mobile | 1 | `c215c8134325e88449cdf71f3aef307e39768d74f52de24ad7e3080be347d8e9` |
 | organizational-structure-mobile | 2 | `47cebdf0a98ae323696ee1964ea27494638b937c1860d250e2baef9f4cb8d8f0` |
 | organizational-structure-mobile | 3 | `431d2d769e93c57be49557148504f109a9b97385604e86800de3ba8a08f77f34` |

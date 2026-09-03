@@ -1,4 +1,4 @@
-import { CardViewSkeleton } from "@/shared/components/lists/card-view";
+import { CardViewPagination, CardViewSkeleton } from "@/shared/components/lists/card-view";
 import { Box, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -7,7 +7,6 @@ import {
   EmptyState,
   NoResultsState,
   StateCard,
-  StateCardViewPagination,
 } from "./card-view";
 
 const pageSizeOptions = [5, 10, 25, 50];
@@ -117,11 +116,12 @@ const StatesCardView = ({
       </Box>
 
       <Box sx={{ flexShrink: 0, pt: 1.5, zIndex: 1 }}>
-        <StateCardViewPagination
+        <CardViewPagination
           page={page}
           rowsPerPage={pageSize}
           totalItems={totalCount}
           itemsPerPageOptions={pageSizeOptions}
+          itemsLabel={t("states.state")}
           pinned
           onPageChange={onPageChange}
           onRowsPerPageChange={onPageSizeChange}

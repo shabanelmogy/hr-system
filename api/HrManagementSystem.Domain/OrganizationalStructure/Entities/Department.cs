@@ -12,13 +12,13 @@ public class Department : CompanyAuditableEntity
     }
 
     public Department(
-        int branchId,
+        int? branchId,
         string departmentCode,
         string nameEn,
         string nameAr,
         int? parentDepartmentId = null)
     {
-        BranchId = Positive(branchId, nameof(branchId));
+        BranchId = PositiveOrNull(branchId, nameof(branchId));
         UpdateIdentity(departmentCode, nameEn, nameAr);
         ChangeParent(parentDepartmentId);
     }
@@ -33,8 +33,9 @@ public class Department : CompanyAuditableEntity
     public int? ParentDepartmentId { get; private set; }
     public Department? ParentDepartment { get; private set; }
     public ICollection<Department> ChildDepartments { get; private set; } = [];
-    public int BranchId { get; private set; }
-    public Branch Branch { get; private set; } = null!;
+    public int? BranchId { get; private set; }
+    public Branch? Branch { get; private set; }
+    public bool IsCentralized => !BranchId.HasValue;
     public int? ManagerId { get; private set; }
     public Employee? Manager { get; private set; }
 
@@ -60,8 +61,8 @@ public class Department : CompanyAuditableEntity
         ManagerId = PositiveOrNull(managerId, nameof(managerId));
     }
 
-    public void MoveToBranch(int branchId) =>
-        BranchId = Positive(branchId, nameof(branchId));
+    public void MoveToBranch(int? branchId) =>
+        BranchId = PositiveOrNull(branchId, nameof(branchId));
 
     public void ChangeParent(int? parentDepartmentId)
     {

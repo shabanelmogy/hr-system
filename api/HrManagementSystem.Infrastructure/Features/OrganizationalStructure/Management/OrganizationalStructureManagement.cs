@@ -24,7 +24,19 @@ public sealed class OrganizationalStructureManagement(
         ErrorType.NotFound);
     private static readonly Error Duplicate = new(
         "OrganizationalStructure.Duplicate",
-        "An item with the same code already exists in the current company.",
+        "An item with the same code or name already exists in the current scope.",
+        ErrorType.Conflict);
+    private static readonly Error DuplicateCode = new(
+        "OrganizationalStructure.DuplicateCode",
+        "An item with the same code or version already exists in the current scope.",
+        ErrorType.Conflict);
+    private static readonly Error DuplicateNameEn = new(
+        "OrganizationalStructure.DuplicateNameEn",
+        "An item with the same English name already exists in the current scope.",
+        ErrorType.Conflict);
+    private static readonly Error DuplicateNameAr = new(
+        "OrganizationalStructure.DuplicateNameAr",
+        "An item with the same Arabic name already exists in the current scope.",
         ErrorType.Conflict);
     private static readonly Error ParentNotFound = new(
         "OrganizationalStructure.ParentNotFound",
@@ -96,8 +108,9 @@ public sealed class OrganizationalStructureManagement(
         CancellationToken cancellationToken)
     {
         var normalized = OrganizationalResources.Normalize(resource);
-        if (await IdentityExistsAsync(normalized, request, null, cancellationToken))
-            return Result.Failure<OrganizationalStructureItem>(Duplicate);
+        var duplicateError = await CheckDuplicateAsync(normalized, request, null, cancellationToken);
+        if (duplicateError != null)
+            return Result.Failure<OrganizationalStructureItem>(duplicateError);
         if (!await ParentsAreValidAsync(normalized, request, null, cancellationToken))
             return Result.Failure<OrganizationalStructureItem>(ParentNotFound);
         if (normalized == OrganizationalResources.Branches && request.IsHeadquarters &&
@@ -107,6 +120,14 @@ public sealed class OrganizationalStructureManagement(
                 "OrganizationalStructure.HeadquartersExists",
                 "Only one active headquarters branch is allowed per company.",
                 ErrorType.Conflict));
+        }
+        if (normalized == OrganizationalResources.Currencies && request.IsDefault)
+        {
+            var existingDefaults = await context.Currencies
+                .Where(x => x.IsDefault)
+                .ToListAsync(cancellationToken);
+            foreach (var cur in existingDefaults)
+                cur.SetDefault(false);
         }
 
         try
@@ -211,13 +232,25 @@ public sealed class OrganizationalStructureManagement(
         if (entity is null || ((AuditableEntity)entity).IsDeleted)
             return Result.Failure<OrganizationalStructureItem>(NotFound);
 
-        if (await IdentityExistsAsync(normalized, request, id, cancellationToken))
-            return Result.Failure<OrganizationalStructureItem>(Duplicate);
+        var duplicateError = await CheckDuplicateAsync(normalized, request, id, cancellationToken);
+        if (duplicateError != null)
+            return Result.Failure<OrganizationalStructureItem>(duplicateError);
         if (!await ParentsAreValidAsync(normalized, request, id, cancellationToken))
             return Result.Failure<OrganizationalStructureItem>(ParentNotFound);
         if (normalized == OrganizationalResources.Departments &&
             !await DepartmentHierarchyIsValidAsync(id, request.ParentDepartmentId, cancellationToken))
             return Result.Failure<OrganizationalStructureItem>(InvalidHierarchy);
+        if (normalized == OrganizationalResources.CostCenters &&
+            !await CostCenterHierarchyIsValidAsync(id, request.ParentCostCenterId, cancellationToken))
+            return Result.Failure<OrganizationalStructureItem>(InvalidHierarchy);
+        if (normalized == OrganizationalResources.Currencies && request.IsDefault)
+        {
+            var otherDefaults = await context.Currencies
+                .Where(x => x.Id != id && x.IsDefault)
+                .ToListAsync(cancellationToken);
+            foreach (var cur in otherDefaults)
+                cur.SetDefault(false);
+        }
         if (normalized == OrganizationalResources.Branches && request.IsHeadquarters &&
             await context.Branches.AnyAsync(x => x.Id != id && !x.IsDeleted && x.IsHeadquarters, cancellationToken))
         {
@@ -367,7 +400,10 @@ public sealed class OrganizationalStructureManagement(
             Id = x.Id, Resource = resource, Code = x.DepartmentCode, NameEn = x.NameEn,
             NameAr = x.NameAr, IsDeleted = x.IsDeleted, CreatedOn = x.CreatedOn, UpdatedOn = x.UpdatedOn,
             DescriptionEn = x.DescriptionEn, DescriptionAr = x.DescriptionAr,
-            BranchId = x.BranchId, BranchNameEn = x.Branch.NameEn, BranchNameAr = x.Branch.NameAr,
+            BranchId = x.BranchId,
+            BranchNameEn = x.Branch == null ? null : x.Branch.NameEn,
+            BranchNameAr = x.Branch == null ? null : x.Branch.NameAr,
+            IsCentralized = !x.BranchId.HasValue,
             ParentDepartmentId = x.ParentDepartmentId,
             ParentNameEn = x.ParentDepartment == null ? null : x.ParentDepartment.NameEn,
             ParentNameAr = x.ParentDepartment == null ? null : x.ParentDepartment.NameAr,
@@ -379,7 +415,9 @@ public sealed class OrganizationalStructureManagement(
             NameAr = x.NameAr, IsDeleted = x.IsDeleted, CreatedOn = x.CreatedOn, UpdatedOn = x.UpdatedOn,
             DescriptionEn = x.DescriptionEn, DescriptionAr = x.DescriptionAr,
             DepartmentId = x.DepartmentId, DepartmentNameEn = x.Department.NameEn, DepartmentNameAr = x.Department.NameAr,
-            BranchId = x.Department.BranchId, BranchNameEn = x.Department.Branch.NameEn, BranchNameAr = x.Department.Branch.NameAr,
+            BranchId = x.Department.BranchId,
+            BranchNameEn = x.Department.Branch == null ? null : x.Department.Branch.NameEn,
+            BranchNameAr = x.Department.Branch == null ? null : x.Department.Branch.NameAr,
             ManagerId = x.ManagerId, CostCenterCode = x.CostCenterCode
         }),
         OrganizationalResources.JobTitles => context.JobTitles.AsNoTracking().Select(x => new OrganizationalStructureItem
@@ -402,7 +440,9 @@ public sealed class OrganizationalStructureManagement(
             NameAr = x.JobTitle.TitleAr, IsDeleted = x.IsDeleted, CreatedOn = x.CreatedOn, UpdatedOn = x.UpdatedOn,
             DivisionId = x.DivisionId, DivisionNameEn = x.Division.NameEn, DivisionNameAr = x.Division.NameAr,
             DepartmentId = x.Division.DepartmentId, DepartmentNameEn = x.Division.Department.NameEn, DepartmentNameAr = x.Division.Department.NameAr,
-            BranchId = x.Division.Department.BranchId, BranchNameEn = x.Division.Department.Branch.NameEn, BranchNameAr = x.Division.Department.Branch.NameAr,
+            BranchId = x.Division.Department.BranchId,
+            BranchNameEn = x.Division.Department.Branch == null ? null : x.Division.Department.Branch.NameEn,
+            BranchNameAr = x.Division.Department.Branch == null ? null : x.Division.Department.Branch.NameAr,
             JobTitleId = x.JobTitleId, JobTitleNameEn = x.JobTitle.TitleEn, JobTitleNameAr = x.JobTitle.TitleAr,
             JobLevelId = x.JobLevelId, JobLevelNameEn = x.JobLevel.NameEn, JobLevelNameAr = x.JobLevel.NameAr,
             TargetHeadcount = x.TargetHeadcount
@@ -423,7 +463,27 @@ public sealed class OrganizationalStructureManagement(
             RequiredSkills = x.RequiredSkills, RequiredEducation = x.RequiredEducation,
             MinExperienceYears = x.MinExperienceYears, RevisionNotes = x.RevisionNotes,
             JobDescriptionStatus = x.Status, EffectiveDate = x.EffectiveDate, ExpiryDate = x.ExpiryDate,
-            ApprovedByUserId = x.ApprovedByUserId, DecisionOn = x.DecisionOn, DecisionReason = x.DecisionReason
+            ApprovedByUserId = x.ApprovedByUserId, DecisionOn = x.DecisionOn, DecisionReason = x.DecisionReason,
+            DutySections = x.DutySections.ToList(),
+            Skills = x.Skills.ToList(),
+            EducationRequirements = x.EducationRequirements.ToList()
+        }),
+        OrganizationalResources.CostCenters => context.CostCenters.AsNoTracking().Select(x => new OrganizationalStructureItem
+        {
+            Id = x.Id, Resource = resource, Code = x.CostCenterCode, NameEn = x.NameEn,
+            NameAr = x.NameAr, IsDeleted = x.IsDeleted, CreatedOn = x.CreatedOn, UpdatedOn = x.UpdatedOn,
+            DescriptionEn = x.DescriptionEn, DescriptionAr = x.DescriptionAr,
+            ParentCostCenterId = x.ParentCostCenterId,
+            ParentNameEn = x.ParentCostCenter == null ? null : x.ParentCostCenter.NameEn,
+            ParentNameAr = x.ParentCostCenter == null ? null : x.ParentCostCenter.NameAr,
+            ManagerId = x.ManagerId
+        }),
+        OrganizationalResources.Currencies => context.Currencies.AsNoTracking().Select(x => new OrganizationalStructureItem
+        {
+            Id = x.Id, Resource = resource, Code = x.CurrencyCode, NameEn = x.NameEn,
+            NameAr = x.NameAr, IsDeleted = x.IsDeleted, CreatedOn = x.CreatedOn, UpdatedOn = x.UpdatedOn,
+            Symbol = x.Symbol, ExchangeRateToDefault = x.ExchangeRateToDefault,
+            IsDefault = x.IsDefault
         }),
         _ => throw new ArgumentOutOfRangeException(nameof(resource))
     };
@@ -442,11 +502,31 @@ public sealed class OrganizationalStructureManagement(
                 RequiredId(request.DivisionId, nameof(request.DivisionId)),
                 RequiredId(request.JobLevelId, nameof(request.JobLevelId)), request.TargetHeadcount ?? 0),
             OrganizationalResources.JobDescriptions => CreateJobDescription(request),
+            OrganizationalResources.CostCenters => CreateCostCenter(request),
+            OrganizationalResources.Currencies => CreateCurrency(request),
             _ => throw new ArgumentOutOfRangeException(nameof(resource))
         };
 
         context.Add(entity);
         return entity;
+    }
+
+    private static CostCenter CreateCostCenter(OrganizationalStructureMutation request)
+    {
+        var costCenter = new CostCenter(request.Code, request.NameEn, request.NameAr, request.ParentCostCenterId);
+        costCenter.UpdateDetails(request.DescriptionEn, request.DescriptionAr, request.ManagerId);
+        return costCenter;
+    }
+
+    private static Currency CreateCurrency(OrganizationalStructureMutation request)
+    {
+        return new Currency(
+            request.Code,
+            request.NameEn,
+            request.NameAr,
+            request.Symbol ?? request.Code,
+            request.ExchangeRateToDefault ?? 1.0m,
+            request.IsDefault);
     }
 
     private static Branch CreateBranch(OrganizationalStructureMutation request)
@@ -463,7 +543,7 @@ public sealed class OrganizationalStructureManagement(
     private static Department CreateDepartment(OrganizationalStructureMutation request)
     {
         var department = new Department(
-            RequiredId(request.BranchId, nameof(request.BranchId)),
+            request.BranchId,
             request.Code, request.NameEn, request.NameAr, request.ParentDepartmentId);
         department.UpdateDetails(request.DescriptionEn, request.DescriptionAr, request.CostCenterCode, request.ManagerId);
         return department;
@@ -511,7 +591,7 @@ public sealed class OrganizationalStructureManagement(
             case OrganizationalResources.Departments:
                 var department = (Department)entity;
                 department.UpdateIdentity(request.Code, request.NameEn, request.NameAr);
-                department.MoveToBranch(RequiredId(request.BranchId, nameof(request.BranchId)));
+                department.MoveToBranch(request.BranchId);
                 department.ChangeParent(request.ParentDepartmentId);
                 department.UpdateDetails(request.DescriptionEn, request.DescriptionAr, request.CostCenterCode, request.ManagerId);
                 break;
@@ -547,6 +627,18 @@ public sealed class OrganizationalStructureManagement(
                     request.NameEn, request.NameAr, request.Version ?? request.Code);
                 ApplyJobDescriptionContent(description, request);
                 break;
+            case OrganizationalResources.CostCenters:
+                var costCenter = (CostCenter)entity;
+                costCenter.UpdateIdentity(request.Code, request.NameEn, request.NameAr);
+                costCenter.ChangeParent(request.ParentCostCenterId);
+                costCenter.UpdateDetails(request.DescriptionEn, request.DescriptionAr, request.ManagerId);
+                break;
+            case OrganizationalResources.Currencies:
+                var currency = (Currency)entity;
+                currency.UpdateIdentity(request.Code, request.NameEn, request.NameAr, request.Symbol ?? request.Code);
+                currency.UpdateExchangeRate(request.ExchangeRateToDefault ?? 1.0m);
+                currency.SetDefault(request.IsDefault);
+                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(resource));
         }
@@ -561,6 +653,8 @@ public sealed class OrganizationalStructureManagement(
             request.RequiredSkills, request.RequiredEducation, request.MinExperienceYears);
         description.UpdatePreferredQualifications(
             request.PreferredQualificationsEn, request.PreferredQualificationsAr, request.RevisionNotes);
+        description.UpdateStructuredContent(
+            request.DutySections, request.Skills, request.EducationRequirements);
     }
 
     private Task<object?> GetEntityAsync(string resource, int id, CancellationToken cancellationToken) => resource switch
@@ -572,6 +666,8 @@ public sealed class OrganizationalStructureManagement(
         OrganizationalResources.JobLevels => FirstAsObjectAsync(context.JobLevels.Where(x => x.Id == id), cancellationToken),
         OrganizationalResources.Positions => FirstAsObjectAsync(context.Positions.Where(x => x.Id == id), cancellationToken),
         OrganizationalResources.JobDescriptions => FirstAsObjectAsync(context.JobDescriptions.Where(x => x.Id == id), cancellationToken),
+        OrganizationalResources.CostCenters => FirstAsObjectAsync(context.CostCenters.Where(x => x.Id == id), cancellationToken),
+        OrganizationalResources.Currencies => FirstAsObjectAsync(context.Currencies.Where(x => x.Id == id), cancellationToken),
         _ => throw new ArgumentOutOfRangeException(nameof(resource))
     };
 
@@ -584,11 +680,11 @@ public sealed class OrganizationalStructureManagement(
         int? currentId,
         CancellationToken cancellationToken) => resource switch
     {
-        OrganizationalResources.Branches or OrganizationalResources.JobTitles or OrganizationalResources.JobLevels => true,
+        OrganizationalResources.Branches or OrganizationalResources.JobTitles or OrganizationalResources.JobLevels or OrganizationalResources.Currencies => true,
         OrganizationalResources.Departments =>
-            request.BranchId.HasValue && await context.Branches.AnyAsync(x => x.Id == request.BranchId && !x.IsDeleted && x.IsActive, cancellationToken) &&
+            (!request.BranchId.HasValue || await context.Branches.AnyAsync(x => x.Id == request.BranchId && !x.IsDeleted && x.IsActive, cancellationToken)) &&
             (!request.ParentDepartmentId.HasValue || await context.Departments.AnyAsync(x =>
-                x.Id == request.ParentDepartmentId && x.Id != currentId && x.BranchId == request.BranchId && !x.IsDeleted, cancellationToken)),
+                x.Id == request.ParentDepartmentId && x.Id != currentId && !x.IsDeleted, cancellationToken)),
         OrganizationalResources.Divisions =>
             request.DepartmentId.HasValue && await context.Departments.AnyAsync(x => x.Id == request.DepartmentId && !x.IsDeleted, cancellationToken),
         OrganizationalResources.Positions =>
@@ -598,6 +694,9 @@ public sealed class OrganizationalStructureManagement(
             await context.JobLevels.AnyAsync(x => x.Id == request.JobLevelId && !x.IsDeleted, cancellationToken),
         OrganizationalResources.JobDescriptions =>
             request.PositionId.HasValue && await context.Positions.AnyAsync(x => x.Id == request.PositionId && !x.IsDeleted, cancellationToken),
+        OrganizationalResources.CostCenters =>
+            (!request.ParentCostCenterId.HasValue || await context.CostCenters.AnyAsync(x =>
+                x.Id == request.ParentCostCenterId && x.Id != currentId && !x.IsDeleted, cancellationToken)),
         _ => false
     };
 
@@ -617,6 +716,22 @@ public sealed class OrganizationalStructureManagement(
         return true;
     }
 
+    private async Task<bool> CostCenterHierarchyIsValidAsync(int costCenterId, int? parentId, CancellationToken cancellationToken)
+    {
+        var visited = new HashSet<int> { costCenterId };
+        var current = parentId;
+        while (current.HasValue)
+        {
+            if (!visited.Add(current.Value))
+                return false;
+            current = await context.CostCenters.AsNoTracking()
+                .Where(x => x.Id == current.Value)
+                .Select(x => x.ParentCostCenterId)
+                .FirstOrDefaultAsync(cancellationToken);
+        }
+        return true;
+    }
+
     private async Task<bool> HasActiveDependentsAsync(string resource, int id, CancellationToken cancellationToken) => resource switch
     {
         OrganizationalResources.Branches => await context.Departments.AnyAsync(x => x.BranchId == id && !x.IsDeleted, cancellationToken),
@@ -628,10 +743,13 @@ public sealed class OrganizationalStructureManagement(
         OrganizationalResources.JobLevels => await context.Positions.AnyAsync(x => x.JobLevelId == id && !x.IsDeleted, cancellationToken),
         OrganizationalResources.Positions => await context.JobDescriptions.AnyAsync(x => x.PositionId == id && !x.IsDeleted, cancellationToken),
         OrganizationalResources.JobDescriptions => false,
+        OrganizationalResources.CostCenters =>
+            await context.CostCenters.AnyAsync(x => x.ParentCostCenterId == id && !x.IsDeleted, cancellationToken),
+        OrganizationalResources.Currencies => false,
         _ => true
     };
 
-    private Task<bool> IdentityExistsAsync(
+    private async Task<Error?> CheckDuplicateAsync(
         string resource,
         OrganizationalStructureMutation request,
         int? excludedId,
@@ -647,7 +765,24 @@ public sealed class OrganizationalStructureManagement(
             query = query.Where(x => x.DepartmentId == request.DepartmentId);
         else if (resource == OrganizationalResources.JobDescriptions && request.PositionId.HasValue)
             query = query.Where(x => x.PositionId == request.PositionId);
-        return query.AnyAsync(x => x.Code == code || x.NameEn.ToUpper() == nameEn || x.NameAr.ToUpper() == nameAr, cancellationToken);
+
+        if (await query.AnyAsync(x => x.Code == code, cancellationToken))
+            return DuplicateCode;
+        if (await query.AnyAsync(x => x.NameEn.ToUpper() == nameEn, cancellationToken))
+            return DuplicateNameEn;
+        if (await query.AnyAsync(x => x.NameAr.ToUpper() == nameAr, cancellationToken))
+            return DuplicateNameAr;
+
+        return null;
+    }
+
+    private async Task<bool> IdentityExistsAsync(
+        string resource,
+        OrganizationalStructureMutation request,
+        int? excludedId,
+        CancellationToken cancellationToken)
+    {
+        return (await CheckDuplicateAsync(resource, request, excludedId, cancellationToken)) != null;
     }
 
     private static IQueryable<OrganizationalStructureItem> ApplyParentFilter(
@@ -657,6 +792,7 @@ public sealed class OrganizationalStructureManagement(
         OrganizationalResources.Divisions => query.Where(x => x.DepartmentId == parentId),
         OrganizationalResources.Positions => query.Where(x => x.DivisionId == parentId),
         OrganizationalResources.JobDescriptions => query.Where(x => x.PositionId == parentId),
+        OrganizationalResources.CostCenters => query.Where(x => x.ParentCostCenterId == parentId),
         _ => query
     };
 
@@ -729,6 +865,12 @@ public sealed class OrganizationalStructureManagement(
             .ThenByDescending(x => x.Id),
         (OrganizationalResources.JobDescriptions, false) => query
             .OrderBy(x => x.PositionCode ?? string.Empty)
+            .ThenBy(x => x.Id),
+        (OrganizationalResources.CostCenters, true) => query
+            .OrderByDescending(x => x.ParentNameEn ?? string.Empty)
+            .ThenByDescending(x => x.Id),
+        (OrganizationalResources.CostCenters, false) => query
+            .OrderBy(x => x.ParentNameEn ?? string.Empty)
             .ThenBy(x => x.Id),
         (_, true) => query.OrderByDescending(x => x.Id),
         _ => query.OrderBy(x => x.Id)
@@ -824,6 +966,11 @@ public sealed class OrganizationalStructureManagement(
             nameof(OrganizationalStructureItem.DivisionNameEn),
             nameof(OrganizationalStructureItem.DivisionNameAr)
         ],
+        OrganizationalResources.CostCenters =>
+        [
+            nameof(OrganizationalStructureItem.ParentNameEn),
+            nameof(OrganizationalStructureItem.ParentNameAr)
+        ],
         _ => []
     };
 
@@ -850,6 +997,8 @@ public sealed class OrganizationalStructureManagement(
         JobLevel x => x.Id,
         Position x => x.Id,
         JobDescription x => x.Id,
+        CostCenter x => x.Id,
+        Currency x => x.Id,
         _ => throw new ArgumentOutOfRangeException(nameof(entity))
     };
 
@@ -862,6 +1011,8 @@ public sealed class OrganizationalStructureManagement(
         JobLevel x => new(x.LevelCode, x.NameEn, x.NameAr, LevelOrder: x.LevelOrder),
         Position x => new(x.PositionCode, x.PositionCode, x.PositionCode, DivisionId: x.DivisionId, JobTitleId: x.JobTitleId, JobLevelId: x.JobLevelId),
         JobDescription x => new(x.Version, x.TitleEn, x.TitleAr, PositionId: x.PositionId, Version: x.Version),
+        CostCenter x => new(x.CostCenterCode, x.NameEn, x.NameAr, ParentCostCenterId: x.ParentCostCenterId),
+        Currency x => new(x.CurrencyCode, x.NameEn, x.NameAr, Symbol: x.Symbol, ExchangeRateToDefault: x.ExchangeRateToDefault, IsDefault: x.IsDefault),
         _ => throw new ArgumentOutOfRangeException(nameof(resource))
     };
 

@@ -192,8 +192,71 @@ export function getNextOrganizationalStructureMockData(
       };
     case "job-descriptions":
       return { ...getNextMockSample(jobDescriptionSamples, usedIndexes, random), positionId: firstId(lookups, "positions") };
+    case "cost-centers":
+      return getNextMockSample(costCenterSamples, usedIndexes, random);
+    case "currencies":
+      return getNextMockSample(currencySamples, usedIndexes, random);
   }
 }
+
+const costCenterSamples: readonly OrganizationalStructureMutation[] = [
+  {
+    code: "CC-HQ",
+    nameEn: "Headquarters Cost Center",
+    nameAr: "مركز تكلفة الإدارة العامة",
+    descriptionEn: "Corporate central administrative cost center.",
+    descriptionAr: "مركز التكلفة الرئيسي للمقر الإداري.",
+  },
+  {
+    code: "CC-TECH",
+    nameEn: "Technology & Software Development",
+    nameAr: "مركز تكلفة التكنولوجيا وتطوير البرمجيات",
+    descriptionEn: "Technology and systems budget allocation.",
+    descriptionAr: "توزيعات ميزانية التكنولوجيا وتطوير الأنظمة.",
+  },
+  {
+    code: "CC-SALES",
+    nameEn: "Commercial & Sales Operations",
+    nameAr: "مركز تكلفة العمليات التجارية والمبيعات",
+    descriptionEn: "Commercial activities and retail operations.",
+    descriptionAr: "العمليات التجارية وأنشطة المبيعات.",
+  },
+];
+
+const currencySamples: readonly OrganizationalStructureMutation[] = [
+  {
+    code: "USD",
+    nameEn: "US Dollar",
+    nameAr: "دولار أمريكي",
+    symbol: "$",
+    exchangeRateToDefault: 1,
+    isDefault: true,
+  },
+  {
+    code: "EGP",
+    nameEn: "Egyptian Pound",
+    nameAr: "جنيه مصري",
+    symbol: "EGP",
+    exchangeRateToDefault: 0.02,
+    isDefault: false,
+  },
+  {
+    code: "SAR",
+    nameEn: "Saudi Riyal",
+    nameAr: "ريال سعودي",
+    symbol: "SAR",
+    exchangeRateToDefault: 0.27,
+    isDefault: false,
+  },
+  {
+    code: "EUR",
+    nameEn: "Euro",
+    nameAr: "يورو",
+    symbol: "€",
+    exchangeRateToDefault: 1.08,
+    isDefault: false,
+  },
+];
 
 export function organizationalStructureMockDependenciesReady(
   resource: OrganizationalResource,

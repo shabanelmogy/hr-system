@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Button, Chip, Grid, LinearProgress, Stack, Typography } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BarChart, COLOR_PALETTES } from "@/shared/components/charts";
 import { EntityCard } from "@/shared/components/cards";
@@ -12,6 +12,8 @@ import OrganizationalStructureCardViewHeader from "./card-view/OrganizationalStr
 import OrganizationalStructureDataGrid from "./grid-view/OrganizationalStructureDataGrid";
 import OrganizationalStructureReport from "./report-view/OrganizationalStructureReport";
 import OrganizationalStructureImport from "./import-view/OrganizationalStructureImport";
+import DepartmentTreeDiagram from "./tree-view/DepartmentTreeDiagram";
+import CostCenterTreeDiagram from "./tree-view/CostCenterTreeDiagram";
 import {
   type OrganizationalResource,
   type OrganizationalSearchField,
@@ -52,6 +54,12 @@ interface Props {
   onReject: (item: OrganizationalStructureItem) => void;
   onRefresh: () => void;
   onReset: () => void;
+  onReparent?: (
+    sourceItem: OrganizationalStructureItem,
+    newParentId: number | null,
+    swapWithTarget?: OrganizationalStructureItem,
+  ) => Promise<void>;
+  onAddChild?: (parentItem: OrganizationalStructureItem) => void;
 }
 
 export default function OrganizationalStructureMultiView(props: Props) {
@@ -59,7 +67,7 @@ export default function OrganizationalStructureMultiView(props: Props) {
   const [view, setView] = useState<OrganizationalView>("grid");
   const [isFilterBarVisible, setIsFilterBarVisible] = useState(true);
   const visibleView = view === "import" && !props.permissions.canCreate ? "grid" : view;
-  const supportsFilterBar = visibleView !== "import";
+  const supportsFilterBar = visibleView !== "import" && visibleView !== "tree";
   const language = i18n.resolvedLanguage?.startsWith("ar") ? "ar" : "en";
   const name = useCallback((item: OrganizationalStructureItem) => language === "ar" ? item.nameAr : item.nameEn, [language]);
   const parentName = useCallback((item: OrganizationalStructureItem) => {
@@ -77,25 +85,44 @@ export default function OrganizationalStructureMultiView(props: Props) {
   const canDecide = useCallback((item: OrganizationalStructureItem) => props.resource === "job-descriptions" && props.permissions.canApprove && !item.isDeleted && (item.jobDescriptionStatus === 1 || String(item.jobDescriptionStatus).toLowerCase() === "draft"), [props.permissions.canApprove, props.resource]);
 
   const handleViewChange = (value: string) => {
-    if (value === "grid" || value === "cards" || value === "chart" || value === "report" || value === "import") {
+    if (value === "grid" || value === "cards" || value === "chart" || value === "tree" || value === "report" || value === "import") {
       if (value !== "import" || props.permissions.canCreate) {
         if (value === "chart" && props.page !== 0) props.onPageChange(0);
         setView(value);
       }
     }
   };
-  const chartData = props.items.map((item) => ({
+  const chartData = useMemo(() => props.items.map((item) => ({
     name: name(item),
     value: props.resource === "positions" ? item.targetHeadcount ?? 0 : 1,
-  }));
+  })), [name, props.items, props.resource]);
+
+  const availableViews = useMemo(() => {
+    const views: string[] = ["grid", "cards"];
+    if (props.resource === "departments" || props.resource === "cost-centers") {
+      views.push("tree");
+    }
+    views.push("chart", "report");
+    if (props.permissions.canCreate) {
+      views.push("import");
+    }
+    return views;
+  }, [props.permissions.canCreate, props.resource]);
 
   return (
     <Box sx={{ display: "flex", flex: 1, flexDirection: "column", height: "100%", minHeight: 0, minWidth: 0, overflow: "hidden", width: "100%" }}>
       <PageHeader
         variant="multi-view" title={t(`organizationalStructure.resources.${props.resource}`)}
-        storageKey={`organizational-structure-${props.resource}-view`} defaultView="grid"
-        availableViews={["grid", "cards", "chart", "report", ...(props.permissions.canCreate ? ["import" as const] : [])]}
-        viewLabels={{ grid: t("views.grid"), cards: t("views.cards"), chart: t("views.chart"), report: t("views.report"), import: t("views.import") }}
+        storageKey={`organizational-structure-${props.resource}-view`} defaultView={props.resource === "cost-centers" ? "tree" : "grid"}
+        availableViews={availableViews}
+        viewLabels={{
+          grid: t("views.grid"),
+          cards: t("views.cards"),
+          chart: t("views.chart"),
+          tree: t("views.tree"),
+          report: t("views.report"),
+          import: t("views.import"),
+        }}
         dataCount={props.totalCount} totalLabel={t(`organizationalStructure.resources.${props.resource}`)}
         onAdd={props.permissions.canCreate ? props.onAdd : undefined} onRefresh={props.onRefresh}
         onViewTypeChange={handleViewChange}
@@ -112,15 +139,17 @@ export default function OrganizationalStructureMultiView(props: Props) {
       /> : null}
 
       <Box sx={{
+        alignItems: "stretch",
+        display: "flex",
         flex: 1,
+        flexDirection: "column",
         minHeight: 0,
         minWidth: 0,
-        overflowX: visibleView === "cards" || visibleView === "chart" || visibleView === "report" || visibleView === "import" ? "hidden" : "auto",
-        overflowY: visibleView === "cards" || visibleView === "chart" || visibleView === "report" || visibleView === "import" ? "hidden" : "auto",
+        overflow: "hidden",
         position: "relative",
         width: "100%",
       }}>
-        {props.isFetching && !props.loading ? <LinearProgress sx={{ position: "absolute", top: 0, insetInline: 0, zIndex: 3 }} /> : null}
+        {props.isFetching ? <LinearProgress sx={{ height: 2, position: "absolute", top: 0, left: 0, right: 0, zIndex: 1 }} /> : null}
         {visibleView === "grid" && <OrganizationalStructureDataGrid
           resource={props.resource} items={props.items} loading={props.loading} totalCount={props.totalCount}
           page={props.page} pageSize={props.pageSize} search={props.search} status={props.status}
@@ -142,7 +171,7 @@ export default function OrganizationalStructureMultiView(props: Props) {
                 content={<Stack spacing={1} sx={{ minWidth: 0 }}><Typography variant="body2" color="text.secondary">{t("organizationalStructure.fields.parent")}</Typography><Typography>{parentName(item)}</Typography>
                   {item.targetHeadcount != null ? <Typography>{t("organizationalStructure.fields.targetHeadcount")}: {item.targetHeadcount}</Typography> : null}
                   {jobDescriptionStatus(item) ? <Chip size="small" label={jobDescriptionStatus(item)} /> : null}</Stack>}
-                footer={<Stack direction="row" spacing={0.5} useFlexGap sx={{ flexWrap: "wrap", justifyContent: "flex-end", rowGap: 0.5 }}><Button size="small" onClick={() => props.onView(item)}>{t("actions.view")}</Button>
+                footer={<Stack direction="row" spacing={0.5} useFlexGap sx={{ flexWrap: "wrap", justifyContent: "flex-end", rowGap: 0.5 }}><Button size="small" variant={props.resource === "job-descriptions" ? "contained" : "text"} color="primary" onClick={() => props.onView(item)}>{props.resource === "job-descriptions" ? t("organizationalStructure.jobDescriptionDetails.profileTitle") : t("actions.view")}</Button>
                   {props.permissions.canEdit && !item.isDeleted ? <Button size="small" onClick={() => props.onEdit(item)}>{t("actions.edit")}</Button> : null}
                   {props.permissions.canDelete ? <Button size="small" color={item.isDeleted ? "success" : "warning"} onClick={() => props.onLifecycle(item)}>{t(item.isDeleted ? "actions.restore" : "actions.archive")}</Button> : null}
                   {canDecide(item) ? <><Button size="small" color="success" onClick={() => props.onApprove(item)}>{t("organizationalStructure.decision.approve")}</Button><Button size="small" color="error" onClick={() => props.onReject(item)}>{t("organizationalStructure.decision.reject")}</Button></> : null}
@@ -152,6 +181,36 @@ export default function OrganizationalStructureMultiView(props: Props) {
           <CardViewPagination page={props.page} rowsPerPage={props.pageSize} totalItems={props.totalCount}
             itemsPerPageOptions={[5, 10, 25, 50]} pinned onPageChange={props.onPageChange} onRowsPerPageChange={props.onPageSizeChange} />
         </Box>}
+
+        {visibleView === "tree" && (
+          props.resource === "cost-centers" ? (
+            <CostCenterTreeDiagram
+              items={props.items}
+              loading={props.loading}
+              permissions={props.permissions}
+              onView={props.onView}
+              onEdit={props.onEdit}
+              onLifecycle={props.onLifecycle}
+              onAddChild={props.permissions.canCreate ? props.onAddChild : undefined}
+              onReparent={async (source, newParent) => {
+                if (props.onReparent) {
+                  await props.onReparent(source, newParent);
+                }
+              }}
+            />
+          ) : (
+            <DepartmentTreeDiagram
+              items={props.items}
+              loading={props.loading}
+              permissions={props.permissions}
+              onView={props.onView}
+              onEdit={props.onEdit}
+              onAdd={props.permissions.canCreate ? props.onAdd : undefined}
+              onAddChild={props.permissions.canCreate ? props.onAddChild : undefined}
+              onReparent={props.onReparent ?? (async () => {})}
+            />
+          )
+        )}
 
         {visibleView === "chart" && <Box sx={{ boxSizing: "border-box", display: "flex", flexDirection: "column", height: "100%", minHeight: 0, minWidth: 0, overflow: "hidden", p: { xs: 0.5, md: 1 }, width: "100%" }}>
           <BarChart data={chartData} title={t("organizationalStructure.chart.title")}
