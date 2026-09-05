@@ -9,4 +9,5 @@ export const organizationalStructureEndpoints = {
   restore: (resource: OrganizationalResource, id: number) => `${base(resource)}/${id}/restore`,
   approve: (id: number) => `${base('job-descriptions')}/${id}/approve`,
   reject: (id: number) => `${base('job-descriptions')}/${id}/reject`,
+  changeLogs: (resource: OrganizationalResource, id: number) => `${base(resource)}/${id}/change-logs`,
 };

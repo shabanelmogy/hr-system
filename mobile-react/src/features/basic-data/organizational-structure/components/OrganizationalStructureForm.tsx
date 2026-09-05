@@ -16,6 +16,7 @@ import { EducationRequirementsEditor } from './job-description-editors/Education
 interface Props { resource: OrganizationalResource; item: OrganizationalStructureItem | null; mode: 'create' | 'edit' | 'view'; loading: boolean; onClose: () => void; onSave: (request: OrganizationalStructureRequest) => Promise<void>; }
 const numberText = (value?: number) => value == null ? '' : String(value);
 const optionalNumber = (value: string) => value.trim() ? Number(value) : undefined;
+const createMockSuffix = () => Math.floor(Math.random() * 900 + 100);
 
 export function OrganizationalStructureForm({ resource, item, mode, loading, onClose, onSave }: Props) {
   const { t } = useTranslation(); const readOnly = mode === 'view';
@@ -115,7 +116,7 @@ export function OrganizationalStructureForm({ resource, item, mode, loading, onC
       setValue('targetHeadcount', String(sample.targetHeadcount ?? 0), options);
     }
     if (resource === 'job-descriptions') {
-      const suffix = Math.floor(Math.random() * 900 + 100);
+      const suffix = createMockSuffix();
       setValue('code', `${sample.version ?? sample.code}.${suffix}`, options);
       setValue('version', `${sample.version ?? sample.code}.${suffix}`, options);
       setValue('nameAr', `${sample.nameAr} (${suffix})`, options);

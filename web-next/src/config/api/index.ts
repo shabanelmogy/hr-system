@@ -10,6 +10,8 @@ import { tenantAdmins } from './tenantAdmins';
 import { reportTemplates } from './reportTemplates';
 import { crystalReports } from './crystalReports';
 import { attendanceDevices } from './attendanceDevices';
+import { recruitment } from './recruitment';
+import { fiscalYears } from './fiscalYears';
 
 export { version } from './constants';
 
@@ -35,6 +37,8 @@ export const apiRoutes = {
   reportTemplates,
   crystalReports,
   attendanceDevices,
+  recruitment,
+  fiscalYears,
 };
 
 export default apiRoutes;

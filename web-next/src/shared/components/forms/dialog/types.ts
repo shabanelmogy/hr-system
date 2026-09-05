@@ -14,6 +14,8 @@ export interface MyFormProps {
   onSubmit?: (event?: React.FormEvent) => void | Promise<void>;
   children?: ReactNode;
   isSubmitting?: boolean;
+  /** Blocks the primary mutation while prerequisite data is unavailable. */
+  submitDisabled?: boolean;
   /** Prevents accidental dismissal and disables unchanged saves when supplied. */
   isDirty?: boolean;
   icon?: ReactNode;

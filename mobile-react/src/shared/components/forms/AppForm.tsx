@@ -112,8 +112,10 @@ export function AppForm({
   const hasFocusedRef = useRef(false);
   const active = presentation === 'inline' || visible;
   const activeRef = useRef(active);
-  errorsRef.current = errors;
-  activeRef.current = active;
+  useEffect(() => {
+    errorsRef.current = errors;
+    activeRef.current = active;
+  }, [active, errors]);
   const {
     dialogVisible: discardDialogVisible,
     discard,
@@ -316,7 +318,9 @@ export function useAppFormField(
   const clearFieldError = context?.clearError;
   const focusNextField = context?.focusNextField;
   const focusRef = useRef(focus);
-  focusRef.current = focus;
+  useEffect(() => {
+    focusRef.current = focus;
+  }, [focus]);
   const field = useMemo<FocusableField>(() => ({ focus: () => focusRef.current() }), []);
   const enabled = options.enabled ?? true;
 

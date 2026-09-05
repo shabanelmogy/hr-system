@@ -3,7 +3,7 @@ import {
   DrawerItem,
   DrawerItemList,
   type DrawerContentComponentProps,
-} from '@react-navigation/drawer';
+} from 'expo-router/drawer';
 import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';

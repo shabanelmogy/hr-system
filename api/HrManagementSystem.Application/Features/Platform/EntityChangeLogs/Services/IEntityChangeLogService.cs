@@ -19,6 +19,18 @@ namespace HrManagementSystem.Application.Features.Platform.EntityChangeLogs.Serv
             CancellationToken cancellationToken = default)
             where TEntity : class;
 
+        Task<EntityChangeLogsRequest?> CreateChangeLogAsync(
+            int entityId,
+            string entityName,
+            object existingEntity,
+            object updatedEntity,
+            CancellationToken cancellationToken = default);
+
         Task<List<EntityChangeLogsResponse>> GetChangeLogKeyValuesAsync();
+
+        Task<List<EntityChangeLogsResponse>> GetChangeLogsByEntityAsync(
+            string entityName,
+            int entityId,
+            CancellationToken cancellationToken = default);
     }
 }

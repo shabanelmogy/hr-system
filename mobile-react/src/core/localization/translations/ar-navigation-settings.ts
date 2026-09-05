@@ -29,6 +29,9 @@ export const arNavigationSettings = {
     globalGeography: 'الجغرافيا العالمية',
     organizationalStructure: 'الهيكل التنظيمي',
     companyGeographicScope: 'دول التشغيل',
+    recruitment: 'التعيينات والتوظيف',
+    workforcePlanning: 'تخطيط القوى العاملة',
+    finance: 'المالية',
   },
   settings: {
     title: 'الإعدادات',

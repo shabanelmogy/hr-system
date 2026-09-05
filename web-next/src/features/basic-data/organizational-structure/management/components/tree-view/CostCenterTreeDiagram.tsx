@@ -39,6 +39,7 @@ import {
   ChevronRight,
   AccountTree,
   CalendarMonth,
+  History,
   Layers,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
@@ -58,6 +59,7 @@ interface CostCenterTreeDiagramProps {
   onAddChild?: (parentItem: OrganizationalStructureItem) => void;
   onEdit: (item: OrganizationalStructureItem) => void;
   onView?: (item: OrganizationalStructureItem) => void;
+  onViewLogs?: (item: OrganizationalStructureItem) => void;
   onLifecycle?: (item: OrganizationalStructureItem) => void;
   loading?: boolean;
 }
@@ -69,6 +71,7 @@ export default function CostCenterTreeDiagram({
   onAddChild,
   onEdit,
   onView,
+  onViewLogs,
   onLifecycle,
   loading = false,
 }: CostCenterTreeDiagramProps) {
@@ -456,6 +459,19 @@ export default function CostCenterTreeDiagram({
               sx={{ textTransform: "none", fontWeight: 700, borderRadius: 1.5 }}
             >
               {isAr ? "تعديل" : "Edit"}
+            </Button>
+          )}
+
+          {onViewLogs && (
+            <Button
+              size="small"
+              variant="outlined"
+              color="inherit"
+              startIcon={<History fontSize="small" />}
+              onClick={() => onViewLogs(selectedItem)}
+              sx={{ textTransform: "none", fontWeight: 700, borderRadius: 1.5 }}
+            >
+              {isAr ? "سجل التعديلات" : "Change Log"}
             </Button>
           )}
 

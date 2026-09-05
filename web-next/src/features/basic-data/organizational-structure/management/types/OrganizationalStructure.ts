@@ -167,3 +167,15 @@ export interface UpdateOrganizationalStructureMutation {
 }
 
 export interface OrganizationalStructureBulkCreateResponse { createdCount: number; }
+
+export interface OrganizationalChangeLogItem {
+  id?: string | number;
+  changeLogId: string | number;
+  entityName: string;
+  key: string;
+  oldValue: string;
+  newValue: string;
+  changedBy: string;
+  changedAt: string;
+  changedByPc: string;
+}

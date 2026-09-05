@@ -119,4 +119,15 @@ describe('route access manifest', () => {
       expect(getRoutePolicy(definition.path)).toBeDefined();
     }
   });
+
+  it('requires FiscalYears:View for shared Finance and its Fiscal Years route', () => {
+    const authorized = userWith({
+      permissionClaims: [permissions.ViewFiscalYears],
+    });
+
+    expect(canAccessRoute(ROUTES.finance.root, userWith())).toBe(false);
+    expect(canAccessRoute(ROUTES.finance.fiscalYears, userWith())).toBe(false);
+    expect(canAccessRoute(ROUTES.finance.root, authorized)).toBe(true);
+    expect(canAccessRoute(ROUTES.finance.fiscalYears, authorized)).toBe(true);
+  });
 });

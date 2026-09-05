@@ -14,7 +14,8 @@ public sealed class InterviewEvaluation : CompanyAuditableEntity
         decimal score,
         InterviewRecommendation recommendation,
         string? comments,
-        DateTimeOffset submittedOn)
+        DateTimeOffset submittedOn,
+        string? skillEvaluationsJson = null)
     {
         if (score is < 0 or > 100)
             throw new ArgumentOutOfRangeException(nameof(score), "The score must be between 0 and 100.");
@@ -24,6 +25,7 @@ public sealed class InterviewEvaluation : CompanyAuditableEntity
         Recommendation = Defined(recommendation, nameof(recommendation));
         Comments = Optional(comments);
         SubmittedOn = submittedOn;
+        SkillEvaluationsJson = skillEvaluationsJson;
     }
 
     public long Id { get; private set; }
@@ -33,4 +35,5 @@ public sealed class InterviewEvaluation : CompanyAuditableEntity
     public InterviewRecommendation Recommendation { get; private set; }
     public string? Comments { get; private set; }
     public DateTimeOffset SubmittedOn { get; private set; }
+    public string? SkillEvaluationsJson { get; private set; }
 }

@@ -1,5 +1,5 @@
 export interface TrackChangeLog {
-  id: string;
+  id?: string | number;
   changeLogId: string | number;
   entityName: string;
   key: string;

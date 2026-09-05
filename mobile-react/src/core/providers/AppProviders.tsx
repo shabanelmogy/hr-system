@@ -1,5 +1,5 @@
 import { QueryClientProvider } from '@tanstack/react-query';
-import { LocaleDirContext } from '@react-navigation/native';
+import { LocaleDirContext } from 'expo-router/react-navigation';
 import type { PropsWithChildren } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -10,15 +10,23 @@ import { LocalizationProvider, useLocalization } from '@/src/core/localization';
 import { OnboardingProvider } from '@/src/core/onboarding';
 import { MockDataPreferencesProvider } from '@/src/core/preferences';
 import { queryClient } from '@/src/core/query/query-client';
-import { AppThemeProvider } from '@/src/core/theme';
+import { AppThemeProvider, useAppTheme } from '@/src/core/theme';
 import { AppFeedbackHost } from '@/src/shared/components/feedback/transient';
 
 function DirectionRoot({ children }: PropsWithChildren) {
   const { direction } = useLocalization();
+  const { theme } = useAppTheme();
 
   return (
     <LocaleDirContext.Provider value={direction}>
-      <View style={[styles.root, { direction }]}>
+      <View
+        style={[
+          styles.root,
+          {
+            backgroundColor: theme.colors.background,
+            direction,
+          },
+        ]}>
         {children}
       </View>
     </LocaleDirContext.Provider>

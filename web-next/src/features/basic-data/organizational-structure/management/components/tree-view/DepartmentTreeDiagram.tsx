@@ -38,6 +38,7 @@ import {
   ExpandMore,
   Fullscreen,
   FullscreenExit,
+  History,
   North,
   Remove,
   Search,
@@ -63,6 +64,7 @@ interface Props {
   };
   onView: (item: OrganizationalStructureItem) => void;
   onEdit: (item: OrganizationalStructureItem) => void;
+  onViewLogs?: (item: OrganizationalStructureItem) => void;
   onReparent: (
     sourceItem: OrganizationalStructureItem,
     newParentId: number | null,
@@ -73,8 +75,17 @@ interface Props {
 }
 
 interface DepartmentTreeNode {
+  id: number;
   item: OrganizationalStructureItem;
   children: DepartmentTreeNode[];
+}
+
+function isDescendant(node: DepartmentTreeNode, targetId: number): boolean {
+  if (node.id === targetId) return true;
+  for (const child of node.children) {
+    if (isDescendant(child, targetId)) return true;
+  }
+  return false;
 }
 
 function buildTree(items: OrganizationalStructureItem[]): DepartmentTreeNode[] {
@@ -82,7 +93,7 @@ function buildTree(items: OrganizationalStructureItem[]): DepartmentTreeNode[] {
   const rootNodes: DepartmentTreeNode[] = [];
 
   for (const item of items) {
-    itemMap.set(item.id, { item, children: [] });
+    itemMap.set(item.id, { id: item.id, item, children: [] });
   }
 
   for (const item of items) {
@@ -125,6 +136,7 @@ export default function DepartmentTreeDiagram({
   permissions,
   onView,
   onEdit,
+  onViewLogs,
   onReparent,
   onAdd,
   onAddChild,
@@ -556,6 +568,19 @@ export default function DepartmentTreeDiagram({
                 >
                   <Visibility fontSize="inherit" />
                 </IconButton>
+                {onViewLogs && (
+                  <Tooltip title={t("actions.changeLog")}>
+                    <IconButton
+                      size="small"
+                      onPointerDown={(e) => e.stopPropagation()}
+                      onMouseDown={(e) => e.stopPropagation()}
+                      onClick={() => onViewLogs(item)}
+                      sx={{ color: "text.secondary", p: 0.3 }}
+                    >
+                      <History fontSize="inherit" />
+                    </IconButton>
+                  </Tooltip>
+                )}
                 {permissions.canEdit && (
                   <IconButton
                     size="small"

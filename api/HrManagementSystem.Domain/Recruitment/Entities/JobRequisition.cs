@@ -38,6 +38,10 @@ public sealed class JobRequisition : CompanyAuditableEntity
     public EmploymentType EmploymentType { get; private set; } = EmploymentType.FullTime;
     public WorkArrangement WorkArrangement { get; private set; } = WorkArrangement.OnSite;
     public DateOnly? TargetHireDate { get; private set; }
+    public RequisitionType Type { get; private set; } = RequisitionType.NewPosition;
+    public int? ReplacementEmployeeId { get; private set; }
+    public bool IsBudgeted { get; private set; } = true;
+    public string? BudgetJustification { get; private set; }
     public JobRequisitionStatus Status { get; private set; } = JobRequisitionStatus.Draft;
     public DateTimeOffset? SubmittedOn { get; private set; }
     public int? ReviewedByEmployeeId { get; private set; }
@@ -64,6 +68,19 @@ public sealed class JobRequisition : CompanyAuditableEntity
         DivisionId = normalizedDivisionId;
     }
 
+    public void SetBudgetAndType(
+        RequisitionType type,
+        int? replacementEmployeeId,
+        bool isBudgeted,
+        string? budgetJustification)
+    {
+        EnsureStatus(JobRequisitionStatus.Draft);
+        Type = Defined(type, nameof(type));
+        ReplacementEmployeeId = PositiveOrNull(replacementEmployeeId, nameof(replacementEmployeeId));
+        IsBudgeted = isBudgeted;
+        BudgetJustification = Optional(budgetJustification);
+    }
+
     public void Submit(DateTimeOffset submittedOn)
     {
         EnsureStatus(JobRequisitionStatus.Draft);
@@ -73,6 +90,20 @@ public sealed class JobRequisition : CompanyAuditableEntity
             throw new DomainRuleException(
                 "Recruitment.JobRequisition.BusinessReasonRequired",
                 "A business reason is required before submitting the requisition.");
+        }
+
+        if (!IsBudgeted && string.IsNullOrWhiteSpace(BudgetJustification))
+        {
+            throw new DomainRuleException(
+                "Recruitment.JobRequisition.BudgetJustificationRequired",
+                "A budget justification is required for unbudgeted job requisitions.");
+        }
+
+        if (Type == RequisitionType.Replacement && !ReplacementEmployeeId.HasValue)
+        {
+            throw new DomainRuleException(
+                "Recruitment.JobRequisition.ReplacementEmployeeRequired",
+                "A replacement employee must be specified for replacement requisitions.");
         }
 
         Status = JobRequisitionStatus.PendingApproval;

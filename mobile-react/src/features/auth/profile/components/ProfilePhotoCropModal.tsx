@@ -125,7 +125,8 @@ export function ProfilePhotoCropModal({
 
   useEffect(() => {
     gestureRef.current = { mode: 'idle' };
-    resetCrop();
+    const timer = setTimeout(resetCrop, 0);
+    return () => clearTimeout(timer);
   }, [resetCrop, source?.uri]);
 
   const changeZoom = useCallback((nextZoom: number, focus: Point = {
@@ -173,6 +174,9 @@ export function ProfilePhotoCropModal({
       }
     };
 
+    // PanResponder stores these callbacks for gesture events; it does not read
+    // their captured refs while this component renders.
+    // eslint-disable-next-line react-hooks/refs
     return PanResponder.create({
       onStartShouldSetPanResponder: () => !busy,
       onMoveShouldSetPanResponder: () => !busy,
@@ -462,7 +466,11 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   cropBorder: {
-    ...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
     borderWidth: 2,
     borderColor: CROP_GUIDE_COLORS.border,
     borderRadius: 999,

@@ -89,7 +89,8 @@ export function AuthProvider({ children }: PropsWithChildren) {
   );
 
   useEffect(() => {
-    void bootstrap();
+    const timer = setTimeout(() => void bootstrap(), 0);
+    return () => clearTimeout(timer);
   }, [bootstrap]);
 
   const completeAuthentication = async (response: AuthResponse) => {

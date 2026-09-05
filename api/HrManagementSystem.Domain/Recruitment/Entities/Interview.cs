@@ -112,7 +112,8 @@ public sealed class Interview : CompanyAuditableEntity
         decimal score,
         InterviewRecommendation recommendation,
         string? comments,
-        DateTimeOffset submittedOn)
+        DateTimeOffset submittedOn,
+        string? skillEvaluationsJson = null)
     {
         if (Status != InterviewStatus.Completed)
         {
@@ -147,7 +148,8 @@ public sealed class Interview : CompanyAuditableEntity
             score,
             Defined(recommendation, nameof(recommendation)),
             comments,
-            submittedOn));
+            submittedOn,
+            skillEvaluationsJson));
     }
 
     private void EnsureScheduled()

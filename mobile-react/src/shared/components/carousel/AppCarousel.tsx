@@ -32,15 +32,17 @@ export function AppCarousel<Item>({
     : undefined;
   const selectedItemHeight = selectedItemKey ? itemHeights[selectedItemKey] : undefined;
   const visibleIndexRef = useRef(safeSelectedIndex);
-  const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
-  const onViewableItemsChanged = useRef<
+  const [viewabilityConfig] = useState(() => ({ itemVisiblePercentThreshold: 60 }));
+  const [onViewableItemsChanged] = useState<
     NonNullable<FlatListProps<Item>['onViewableItemsChanged']>
-  >(({ viewableItems }) => {
+  >(() => ({ viewableItems }: Parameters<
+    NonNullable<FlatListProps<Item>['onViewableItemsChanged']>
+  >[0]) => {
     const nextItem = viewableItems.find((item) => item.isViewable && item.index !== null);
     if (nextItem?.index !== null && nextItem?.index !== undefined) {
       visibleIndexRef.current = nextItem.index;
     }
-  }).current;
+  });
 
   useEffect(() => {
     onIndexChangeRef.current = onIndexChange;

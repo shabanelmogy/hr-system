@@ -1,4 +1,5 @@
-import { Modal, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { Modal, ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@/src/core/theme';
 import {
@@ -21,6 +22,7 @@ interface Props {
   onEdit?: (item: OrganizationalStructureItem) => void;
   onApprove?: (item: OrganizationalStructureItem) => void;
   onReject?: (item: OrganizationalStructureItem) => void;
+  onViewLogs?: (item: OrganizationalStructureItem) => void;
 }
 
 export function JobDescriptionDetailsModal({
@@ -32,6 +34,7 @@ export function JobDescriptionDetailsModal({
   onEdit,
   onApprove,
   onReject,
+  onViewLogs,
 }: Props) {
   const { t, i18n } = useTranslation();
   const { theme } = useAppTheme();
@@ -407,6 +410,19 @@ export function JobDescriptionDetailsModal({
               variant="danger"
             >
               {t('organizationalStructure.decision.reject')}
+            </AppButton>
+          )}
+
+          {onViewLogs && (
+            <AppButton
+              icon="time-outline"
+              onPress={() => {
+                onClose();
+                onViewLogs(item);
+              }}
+              variant="outline"
+            >
+              {t('actions.changeLog')}
             </AppButton>
           )}
 

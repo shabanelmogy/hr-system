@@ -38,13 +38,14 @@ interface Props {
   onLifecycle: (item: OrganizationalStructureItem) => void;
   onApprove: (item: OrganizationalStructureItem) => void;
   onReject: (item: OrganizationalStructureItem) => void;
+  onViewLogs?: (item: OrganizationalStructureItem) => void;
 }
 
 const operators: OrganizationalSearchOperator[] = ["contains", "doesNotContain", "equals", "doesNotEqual", "startsWith", "endsWith"];
 
 export default function OrganizationalStructureDataGrid(props: Props) {
   const { t } = useTranslation();
-  const getActions = useMemo(() => makeOrganizationalStructureActions({ t, resource: props.resource, canEdit: props.permissions.canEdit, canDelete: props.permissions.canDelete, canApprove: props.permissions.canApprove, onView: props.onView, onEdit: props.onEdit, onLifecycle: props.onLifecycle, onApprove: props.onApprove, onReject: props.onReject }), [props.onApprove, props.onEdit, props.onLifecycle, props.onReject, props.onView, props.permissions.canApprove, props.permissions.canDelete, props.permissions.canEdit, props.resource, t]);
+  const getActions = useMemo(() => makeOrganizationalStructureActions({ t, resource: props.resource, canEdit: props.permissions.canEdit, canDelete: props.permissions.canDelete, canApprove: props.permissions.canApprove, onView: props.onView, onEdit: props.onEdit, onLifecycle: props.onLifecycle, onApprove: props.onApprove, onReject: props.onReject, onViewLogs: props.onViewLogs }), [props.onApprove, props.onEdit, props.onLifecycle, props.onReject, props.onView, props.onViewLogs, props.permissions.canApprove, props.permissions.canDelete, props.permissions.canEdit, props.resource, t]);
   const columns = useMemo(
     () => useOrganizationalStructureColumns({ t, resource: props.resource, language: props.language, getActions, onView: props.onView }),
     [getActions, props.language, props.onView, props.resource, t],

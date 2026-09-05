@@ -4,6 +4,7 @@ import type { FormEvent } from "react";
 interface UseFormDialogStateOptions {
   isDirty?: boolean;
   isSubmitting: boolean;
+  submitDisabled?: boolean;
   onClose: () => void;
   onSubmit?: (event?: FormEvent) => void | Promise<void>;
 }
@@ -11,6 +12,7 @@ interface UseFormDialogStateOptions {
 export function useFormDialogState({
   isDirty,
   isSubmitting,
+  submitDisabled = false,
   onClose,
   onSubmit,
 }: UseFormDialogStateOptions) {
@@ -44,7 +46,7 @@ export function useFormDialogState({
   const submit = useCallback(
     async (event: FormEvent) => {
       event.preventDefault();
-      if (!onSubmit || isSubmitting || submittingRef.current) return;
+      if (!onSubmit || submitDisabled || isSubmitting || submittingRef.current) return;
 
       submittingRef.current = true;
       setInternalSubmitting(true);
@@ -55,7 +57,7 @@ export function useFormDialogState({
         setInternalSubmitting(false);
       }
     },
-    [isSubmitting, onSubmit],
+    [isSubmitting, onSubmit, submitDisabled],
   );
 
   return {

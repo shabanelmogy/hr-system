@@ -142,7 +142,7 @@ export function CountriesScreen() {
     } catch (error) {
       showToast.error(error, t('countries.saveFailed'));
     }
-  }, [closeForm, formMode, isCreateAuthorized, isEditAuthorized, isReadOnly, notifyBlockedAction, saveMutation, selectedCountry?.id, t]);
+  }, [closeForm, formMode, isCreateAuthorized, isEditAuthorized, isReadOnly, notifyBlockedAction, saveMutation, selectedCountry, t]);
   const restore = useCallback(async (country: Country) => {
     if (isReadOnly) {
       notifyBlockedAction();

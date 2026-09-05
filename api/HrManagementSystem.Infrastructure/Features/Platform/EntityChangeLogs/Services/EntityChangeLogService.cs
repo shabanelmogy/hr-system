@@ -59,6 +59,31 @@ public class EntityChangeLogService : IEntityChangeLogService
             cancellationToken);
     }
 
+    public Task<EntityChangeLogsRequest?> CreateChangeLogAsync(
+        int entityId,
+        string entityName,
+        object existingEntity,
+        object updatedEntity,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(entityName);
+        if (existingEntity is null || updatedEntity is null)
+        {
+            throw new ArgumentNullException(nameof(existingEntity), "Entities cannot be null");
+        }
+
+        var entityType = existingEntity.GetType();
+        var oldValuesJson = GetValuesAsJson(existingEntity, updatedEntity, entityType, true);
+        var newValuesJson = GetValuesAsJson(existingEntity, updatedEntity, entityType, false);
+
+        if (string.IsNullOrEmpty(oldValuesJson) && string.IsNullOrEmpty(newValuesJson))
+        {
+            return Task.FromResult<EntityChangeLogsRequest?>(null);
+        }
+
+        return SaveChangeLogAsync(entityId, null, entityName, oldValuesJson, newValuesJson, cancellationToken);
+    }
+
     private async Task<EntityChangeLogsRequest?> CreateChangeLogAsync<TEntity>(
         int entityId,
         string? entityKey,
@@ -73,8 +98,8 @@ public class EntityChangeLogService : IEntityChangeLogService
             throw new ArgumentNullException(nameof(existingEntity), "Entities cannot be null");
         }
 
-        var oldValuesJson = GetValuesAsJson(existingEntity, updatedEntity, true);
-        var newValuesJson = GetValuesAsJson(existingEntity, updatedEntity, false);
+        var oldValuesJson = GetValuesAsJson(existingEntity, updatedEntity, typeof(TEntity), true);
+        var newValuesJson = GetValuesAsJson(existingEntity, updatedEntity, typeof(TEntity), false);
 
         // Return null if no changes are detected
         if (string.IsNullOrEmpty(oldValuesJson) && string.IsNullOrEmpty(newValuesJson))
@@ -82,6 +107,17 @@ public class EntityChangeLogService : IEntityChangeLogService
             return null;
         }
 
+        return await SaveChangeLogAsync(entityId, entityKey, entityName, oldValuesJson, newValuesJson, cancellationToken);
+    }
+
+    private async Task<EntityChangeLogsRequest?> SaveChangeLogAsync(
+        int entityId,
+        string? entityKey,
+        string entityName,
+        string? oldValuesJson,
+        string? newValuesJson,
+        CancellationToken cancellationToken)
+    {
         var changeLog = new EntityChangeLogsRequest
         {
             EntityId = entityId,
@@ -148,6 +184,66 @@ public class EntityChangeLogService : IEntityChangeLogService
         return result;
     }
 
+    public async Task<List<EntityChangeLogsResponse>> GetChangeLogsByEntityAsync(
+        string entityName,
+        int entityId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(entityName);
+
+        var normalizedEntityName = entityName.Trim();
+
+        var rawLogs = await (from log in _context.EntityChangeLogs.AsNoTracking()
+                             where log.EntityId == entityId &&
+                                   (log.EntityName == normalizedEntityName ||
+                                    (log.EntityName != null && log.EntityName.ToLower() == normalizedEntityName.ToLower()))
+                             join user in _context.Users.AsNoTracking()
+                             on log.ChangedById equals user.Id into userGroup
+                             from user in userGroup.DefaultIfEmpty()
+                             orderby log.ChangedAt descending
+                             select new
+                             {
+                                 log.Id,
+                                 log.EntityId,
+                                 log.EntityKey,
+                                 log.EntityName,
+                                 log.JsonOldValues,
+                                 log.JsonNewValues,
+                                 log.ChangedAt,
+                                 log.ChangedByPc,
+                                 UserName = user != null ? (user.UserName ?? "User") : "System"
+                             }).ToListAsync(cancellationToken);
+
+        var result = new List<EntityChangeLogsResponse>();
+
+        foreach (var log in rawLogs)
+        {
+            var oldValues = ParseJson(log.JsonOldValues ?? string.Empty);
+            var newValues = ParseJson(log.JsonNewValues ?? string.Empty);
+
+            var allKeys = oldValues.Select(x => x.Key).Union(newValues.Select(x => x.Key)).Distinct();
+
+            foreach (var key in allKeys)
+            {
+                var oldVal = oldValues.FirstOrDefault(x => x.Key == key).Value ?? string.Empty;
+                var newVal = newValues.FirstOrDefault(x => x.Key == key).Value ?? string.Empty;
+
+                result.Add(new EntityChangeLogsResponse(
+                    log.Id.ToString(CultureInfo.InvariantCulture),
+                    log.EntityName ?? normalizedEntityName,
+                    key,
+                    oldVal,
+                    newVal,
+                    log.UserName,
+                    log.ChangedAt,
+                    log.ChangedByPc ?? string.Empty
+                ));
+            }
+        }
+
+        return result;
+    }
+
     // Helper method to parse JSON into key-value pairs
     private static List<KeyValuePair<string, string>> ParseJson(string json)
     {
@@ -182,10 +278,10 @@ public class EntityChangeLogService : IEntityChangeLogService
     }
 
     // Helper method to get changed values as JSON, excluding navigation properties
-    private static string? GetValuesAsJson<TEntity>(TEntity existingEntity, TEntity updatedEntity, bool forOldValues) where TEntity : class
+    private static string? GetValuesAsJson(object existingEntity, object updatedEntity, Type entityType, bool forOldValues)
     {
         var differences = new Dictionary<string, object?>();
-        var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        var properties = entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
         foreach (var property in properties)
         {
@@ -221,7 +317,6 @@ public class EntityChangeLogService : IEntityChangeLogService
     // Helper method to determine if a property should be tracked
     private static bool IsTrackableProperty(PropertyInfo property)
     {
-        // Skip if it can't be read or is an ignored property
         if (!property.CanRead ||
             property.Name.Equals("Id", StringComparison.OrdinalIgnoreCase) ||
             property.Name.Equals("CreatedById", StringComparison.OrdinalIgnoreCase) ||

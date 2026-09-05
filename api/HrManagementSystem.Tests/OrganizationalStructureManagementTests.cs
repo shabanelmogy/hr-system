@@ -10,6 +10,7 @@ using HrManagementSystem.Domain.Common.Exceptions;
 using HrManagementSystem.Domain.OrganizationalStructure.Entities;
 using HrManagementSystem.Domain.OrganizationalStructure.Enums;
 using HrManagementSystem.Infrastructure.Features.OrganizationalStructure.Management;
+using HrManagementSystem.Infrastructure.Features.Platform.EntityChangeLogs.Services;
 using HrManagementSystem.Infrastructure.Persistence;
 using HrManagementSystem.Infrastructure.Security.Authorization.Filters;
 using Microsoft.EntityFrameworkCore;
@@ -136,11 +137,13 @@ public sealed class OrganizationalStructureManagementTests
             .UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=OrganizationalStructureTranslation;Trusted_Connection=True")
             .Options;
         using var context = CreateContext(options, "tenant-1", 11);
+        var actor = new TestCurrentActor("tenant-1", 11);
         var management = new OrganizationalStructureManagement(
             context,
-            new TestCurrentActor("tenant-1", 11),
+            actor,
             TimeProvider.System,
-            new NoOpScheduler());
+            new NoOpScheduler(),
+            new EntityChangeLogService(context, actor, TimeProvider.System));
         var buildPageQuery = typeof(OrganizationalStructureManagement).GetMethod(
             "BuildPageQuery",
             BindingFlags.Instance | BindingFlags.NonPublic);

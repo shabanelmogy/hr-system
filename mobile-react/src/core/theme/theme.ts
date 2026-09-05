@@ -1,4 +1,4 @@
-import type { Theme as NavigationTheme } from '@react-navigation/native';
+import type { Theme as NavigationTheme } from 'expo-router/react-navigation';
 
 export const spacing = {
   xs: 4,

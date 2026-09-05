@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Pressable,
   type StyleProp,
@@ -61,10 +61,6 @@ export function AppFilterButton<Value extends string | number>({
   const [open, setOpen] = useState(false);
   const [draftValues, setDraftValues] = useState<Value[]>([...values]);
 
-  useEffect(() => {
-    if (open) setDraftValues([...values]);
-  }, [open, values]);
-
   const toggle = (value: Value) => {
     setDraftValues((current) => {
       if (selectionMode === 'single') return current.includes(value) ? [] : [value];
@@ -102,7 +98,10 @@ export function AppFilterButton<Value extends string | number>({
         disabled={disabled}
         icon={icon}
         label={buttonLabel}
-        onPress={() => setOpen(true)}
+        onPress={() => {
+          setDraftValues([...values]);
+          setOpen(true);
+        }}
         size={24}
         style={[
           styles.button,

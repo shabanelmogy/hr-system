@@ -1,4 +1,4 @@
-import { DrawerActions } from '@react-navigation/native';
+import { DrawerActions } from 'expo-router/react-navigation';
 import { Drawer } from 'expo-router/drawer';
 import { useWindowDimensions } from 'react-native';
 import { useTranslation } from 'react-i18next';

@@ -15,3 +15,11 @@ export function useArchiveOrganizationalItem() { return useInvalidatingMutation(
 export function useRestoreOrganizationalItem() { return useInvalidatingMutation(({ resource, id }: { resource: OrganizationalResource; id: number }) => organizationalStructureApi.restore(resource, id)); }
 export function useApproveJobDescription() { return useInvalidatingMutation(({ id, effectiveDate, expiryDate }: { id: number; effectiveDate: string; expiryDate?: string }) => organizationalStructureApi.approve(id, { effectiveDate, expiryDate })); }
 export function useRejectJobDescription() { return useInvalidatingMutation(({ id, reason }: { id: number; reason: string }) => organizationalStructureApi.reject(id, reason)); }
+export function useOrganizationalChangeLogs(resource: OrganizationalResource, id?: number | null, enabled = true) {
+  return useQuery({
+    queryKey: id ? organizationalStructureKeys.changeLogs(resource, id) : ['disabled'],
+    queryFn: () => organizationalStructureApi.getChangeLogs(resource, id!),
+    enabled: Boolean(id && enabled),
+    staleTime: 60_000,
+  });
+}

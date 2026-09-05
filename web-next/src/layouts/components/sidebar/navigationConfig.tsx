@@ -4,6 +4,8 @@ import { getBasicDataConfig } from "./configs/basicDataConfig";
 import { getUsersAndRolesConfig } from "./configs/usersAndRolesConfig";
 import { getSuperAdminConfig } from "./configs/superAdminConfig";
 import { getAttendanceConfig } from "./configs/attendanceConfig";
+import { getRecruitmentConfig } from "./configs/recruitmentConfig";
+import { getFinanceConfig } from "./configs/financeConfig";
 import { filterNavigationConfig } from "./navigationUtils";
 
 // Import types and enums from separate file
@@ -25,6 +27,8 @@ export const getNavigationConfig = (
     ? [getSuperAdminConfig()]
     : [
         getBasicDataConfig(),
+        getFinanceConfig(),
+        getRecruitmentConfig(),
         getAttendanceConfig(),
         getExtrasConfig(),
         getUsersAndRolesConfig(),

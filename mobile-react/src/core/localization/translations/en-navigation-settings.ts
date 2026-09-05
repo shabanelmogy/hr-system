@@ -29,6 +29,9 @@ export const enNavigationSettings = {
     globalGeography: 'Global geography',
     organizationalStructure: 'Organizational structure',
     companyGeographicScope: 'Operating countries',
+    recruitment: 'Recruitment',
+    workforcePlanning: 'Workforce planning',
+    finance: 'Finance',
   },
   settings: {
     title: 'Settings',

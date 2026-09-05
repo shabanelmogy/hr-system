@@ -72,4 +72,5 @@ export const organizationalStructure = {
   restore: (resource: string, id: Id) => `${version}/organizational-structure/${resource}/${id}/restore`,
   approve: (id: Id) => `${version}/organizational-structure/job-descriptions/${id}/approve`,
   reject: (id: Id) => `${version}/organizational-structure/job-descriptions/${id}/reject`,
+  changeLogs: (resource: string, id: Id) => `${version}/organizational-structure/${resource}/${id}/change-logs`,
 } as const;

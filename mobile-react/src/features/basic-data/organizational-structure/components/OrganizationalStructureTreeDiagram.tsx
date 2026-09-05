@@ -34,6 +34,7 @@ export interface OrganizationalStructureTreeDiagramProps {
   onDelete?: (item: OrganizationalStructureItem) => void;
   onAddChild?: (item: OrganizationalStructureItem) => void;
   onReparent?: (item: OrganizationalStructureItem, newParentId: number | null) => Promise<void>;
+  onViewLogs?: (item: OrganizationalStructureItem) => void;
   canEdit?: boolean;
   canCreate?: boolean;
   canDelete?: boolean;
@@ -47,6 +48,7 @@ function DepartmentTreeDiagram({
   onDelete,
   onAddChild,
   onReparent,
+  onViewLogs,
   canEdit,
   canCreate,
   canDelete,
@@ -407,6 +409,22 @@ function DepartmentTreeDiagram({
                 {t('organizationalStructure.view')}
               </AppText>
             </Pressable>
+
+            {/* Change Log Button */}
+            {onViewLogs ? (
+              <Pressable
+                onPress={() => onViewLogs(item)}
+                style={[
+                  styles.actionButtonChip,
+                  { backgroundColor: theme.colors.surfaceMuted, borderColor: theme.colors.border },
+                ]}
+              >
+                <AppIcon color={theme.colors.textMuted} name="time-outline" size={14} />
+                <AppText color="muted" style={styles.actionButtonText}>
+                  {t('actions.changeLog')}
+                </AppText>
+              </Pressable>
+            ) : null}
 
             {/* Edit Button */}
             {canEdit && !item.isDeleted && onEdit ? (

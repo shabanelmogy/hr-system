@@ -1,6 +1,6 @@
 # States Expo Mobile Reference
 
-Status: applied Expo server-managed feature profile. Requires Expo SDK 54 conventions.
+Status: applied Expo server-managed feature profile. Requires Expo SDK 57 conventions.
 
 ## 1. Source inventory
 

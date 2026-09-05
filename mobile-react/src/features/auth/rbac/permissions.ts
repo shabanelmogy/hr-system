@@ -31,6 +31,22 @@ export const permissions = {
   EditOrganizationalStructure: 'OrganizationalStructure:Edit',
   DeleteOrganizationalStructure: 'OrganizationalStructure:Delete',
   ApproveJobDescriptions: 'OrganizationalStructure:ApproveJobDescriptions',
+  ViewRecruitment: 'Recruitment:View',
+  ManageJobRequisitions: 'Recruitment:ManageJobRequisitions',
+  ApproveJobRequisitions: 'Recruitment:ApproveJobRequisitions',
+  ManageJobOpenings: 'Recruitment:ManageJobOpenings',
+  ManageJobPostings: 'Recruitment:ManageJobPostings',
+  ManageCandidates: 'Recruitment:ManageCandidates',
+  ManageApplications: 'Recruitment:ManageApplications',
+  EvaluateInterviews: 'Recruitment:EvaluateInterviews',
+  ManageJobOffers: 'Recruitment:ManageJobOffers',
+  ApproveJobOffers: 'Recruitment:ApproveJobOffers',
+  HireCandidate: 'Recruitment:HireCandidate',
+  ViewFiscalYears: 'FiscalYears:View',
+  CreateFiscalYears: 'FiscalYears:Create',
+  EditFiscalYears: 'FiscalYears:Edit',
+  DeleteFiscalYears: 'FiscalYears:Delete',
+  ManageFiscalYearLifecycle: 'FiscalYears:ManageLifecycle',
   ViewCrystalReports: 'CrystalReports:View',
   CreateCrystalReports: 'CrystalReports:Create',
   DownloadCrystalReports: 'CrystalReports:Download',
@@ -137,6 +153,8 @@ export type PermissionModule =
   | 'Countries'
   | 'CompanyGeographicScope'
   | 'OrganizationalStructure'
+  | 'Recruitment'
+  | 'FiscalYears'
   | 'CrystalReports'
   | 'Districts'
   | 'ChangeLogs'

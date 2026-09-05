@@ -116,17 +116,38 @@ describe("route access policies", () => {
 
   it("covers every registered page policy", () => {
     for (const policy of routePolicies.filter((policy) => !policy.deny)) {
+      const firstReq = policy.anyOf?.[0];
       const authorizedSession = {
         ...session,
-        roles: policy.roles ? [...policy.roles] : [],
-        permissions: policy.permissions ? [...policy.permissions] : [],
+        roles: policy.roles ? [...policy.roles] : firstReq?.roles ? [...firstReq.roles] : [],
+        permissions: policy.permissions ? [...policy.permissions] : firstReq?.permissions ? [...firstReq.permissions] : [],
       };
 
       expect(canAccessRoute(policy.path, authorizedSession)).toBe(true);
 
-      if (policy.roles || policy.permissions) {
+      if (policy.roles || policy.permissions || policy.anyOf) {
         expect(canAccessRoute(policy.path, session)).toBe(false);
       }
     }
+  });
+
+  it("allows recruitment access to admin or users with ViewRecruitment", () => {
+    expect(canAccessRoute(appRoutes.recruitment, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.recruitment, {
+      ...session,
+      roles: ["admin"],
+    })).toBe(true);
+    expect(canAccessRoute(appRoutes.recruitment, {
+      ...session,
+      permissions: [permissions.ViewRecruitment],
+    })).toBe(true);
+  });
+
+  it("requires FiscalYears:View for the shared Finance fiscal-years route", () => {
+    expect(canAccessRoute(appRoutes.finance.fiscalYears, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.finance.fiscalYears, {
+      ...session,
+      permissions: [permissions.ViewFiscalYears],
+    })).toBe(true);
   });
 });

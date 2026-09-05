@@ -1,5 +1,5 @@
 import React from "react";
-import { Archive, CheckCircle, Edit, Restore, Visibility, Cancel } from "@mui/icons-material";
+import { Archive, CheckCircle, Edit, Restore, Visibility, Cancel, History } from "@mui/icons-material";
 import { GridActionsCellItem, type GridActionsCellItemProps } from "@mui/x-data-grid";
 import type { OrganizationalResource, OrganizationalStructureItem } from "../../types/OrganizationalStructure";
 
@@ -14,6 +14,7 @@ interface ActionFactoryProps {
   onLifecycle: (item: OrganizationalStructureItem) => void;
   onApprove: (item: OrganizationalStructureItem) => void;
   onReject: (item: OrganizationalStructureItem) => void;
+  onViewLogs?: (item: OrganizationalStructureItem) => void;
 }
 
 export const makeOrganizationalStructureActions = ({
@@ -27,6 +28,7 @@ export const makeOrganizationalStructureActions = ({
   onLifecycle,
   onApprove,
   onReject,
+  onViewLogs,
 }: ActionFactoryProps) =>
   (params: { row: OrganizationalStructureItem }): React.ReactElement<GridActionsCellItemProps>[] => {
     const item = params.row;
@@ -75,6 +77,16 @@ export const makeOrganizationalStructureActions = ({
           icon={<Cancel sx={{ color: "error.main" }} />}
           label={t("organizationalStructure.decision.reject")}
           onClick={() => onReject(item)}
+        />,
+      );
+    }
+    if (onViewLogs) {
+      actions.push(
+        <GridActionsCellItem
+          key={`logs-${item.id}`}
+          icon={<History sx={{ color: "text.secondary" }} />}
+          label={t("actions.changeLog")}
+          onClick={() => onViewLogs(item)}
         />,
       );
     }

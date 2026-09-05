@@ -2,7 +2,7 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
   type DrawerContentComponentProps,
-} from '@react-navigation/drawer';
+} from 'expo-router/drawer';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';

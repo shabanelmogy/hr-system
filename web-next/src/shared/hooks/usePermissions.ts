@@ -5,6 +5,7 @@ import {
   hasAllPermissions,
   hasAnyPermission,
   hasPermission,
+  permissions,
   type PermissionModule,
   type PermissionString,
 } from "@/lib/auth/permissions";
@@ -117,6 +118,28 @@ export const useModulePermissions = (module: PermissionModule) => {
     canEdit: !isReadOnly && hasPermission(`${module}:Edit` as PermissionString),
     canDelete: !isReadOnly && hasPermission(`${module}:Delete` as PermissionString),
   }), [hasPermission, isReadOnly, module]);
+};
+
+// Recruitment permissions hook
+export const useRecruitmentPermissions = () => {
+  const { hasPermission, isReadOnly } = usePermissions();
+
+  return useMemo(
+    () => ({
+      canView: hasPermission(permissions.ViewRecruitment),
+      canManageRequisitions: !isReadOnly && hasPermission(permissions.ManageJobRequisitions),
+      canApproveRequisitions: !isReadOnly && hasPermission(permissions.ApproveJobRequisitions),
+      canManageOpenings: !isReadOnly && hasPermission(permissions.ManageJobOpenings),
+      canManagePostings: !isReadOnly && hasPermission(permissions.ManageJobPostings),
+      canManageCandidates: !isReadOnly && hasPermission(permissions.ManageCandidates),
+      canManageApplications: !isReadOnly && hasPermission(permissions.ManageApplications),
+      canEvaluateInterviews: !isReadOnly && hasPermission(permissions.EvaluateInterviews),
+      canManageOffers: !isReadOnly && hasPermission(permissions.ManageJobOffers),
+      canApproveOffers: !isReadOnly && hasPermission(permissions.ApproveJobOffers),
+      canHire: !isReadOnly && hasPermission(permissions.HireCandidate),
+    }),
+    [hasPermission, isReadOnly]
+  );
 };
 
 export default usePermissions;

@@ -36,7 +36,7 @@ export function AppDataCard({
   ...cardProps
 }: PropsWithChildren<AppDataCardProps>) {
   const { theme } = useAppTheme();
-  const flashProgress = useRef(new Animated.Value(0)).current;
+  const [flashProgress] = useState(() => new Animated.Value(0));
   const previousFlash = useRef<{ active: boolean; token?: string | number }>({ active: false });
   const hasMountedRef = useRef(false);
   const [isFlashing, setIsFlashing] = useState(false);

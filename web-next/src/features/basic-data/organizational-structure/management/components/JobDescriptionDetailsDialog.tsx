@@ -25,6 +25,7 @@ import PsychologyRoundedIcon from "@mui/icons-material/PsychologyRounded";
 import GavelRoundedIcon from "@mui/icons-material/GavelRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import BusinessRoundedIcon from "@mui/icons-material/BusinessRounded";
+import HistoryRoundedIcon from "@mui/icons-material/HistoryRounded";
 import { useTranslation } from "react-i18next";
 import type { OrganizationalStructureItem } from "../types/OrganizationalStructure";
 
@@ -37,6 +38,7 @@ interface Props {
   onEdit?: (item: OrganizationalStructureItem) => void;
   onApprove?: (item: OrganizationalStructureItem) => void;
   onReject?: (item: OrganizationalStructureItem) => void;
+  onViewLogs?: (item: OrganizationalStructureItem) => void;
 }
 
 export default function JobDescriptionDetailsDialog({
@@ -48,6 +50,7 @@ export default function JobDescriptionDetailsDialog({
   onEdit,
   onApprove,
   onReject,
+  onViewLogs,
 }: Props) {
   const { t, i18n } = useTranslation();
   const isAr = i18n.language?.startsWith("ar");
@@ -516,6 +519,16 @@ export default function JobDescriptionDetailsDialog({
         </Box>
 
         <Box sx={{ display: "flex", gap: 1 }}>
+          {onViewLogs && (
+            <Button
+              variant="outlined"
+              color="inherit"
+              startIcon={<HistoryRoundedIcon />}
+              onClick={() => onViewLogs(item)}
+            >
+              {t("actions.changeLog")}
+            </Button>
+          )}
           {canEdit && onEdit && (
             <Button
               variant="outlined"

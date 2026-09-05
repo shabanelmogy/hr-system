@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 interface UseDiscardChangesOptions {
   isDirty?: boolean;
@@ -14,10 +14,6 @@ export function useDiscardChanges({
   onDiscard,
 }: UseDiscardChangesOptions) {
   const [dialogVisible, setDialogVisible] = useState(false);
-
-  useEffect(() => {
-    if (!active) setDialogVisible(false);
-  }, [active]);
 
   const requestClose = useCallback(() => {
     if (busy || !onDiscard) return;
@@ -39,7 +35,7 @@ export function useDiscardChanges({
   }, [busy, onDiscard]);
 
   return {
-    dialogVisible,
+    dialogVisible: active && dialogVisible,
     discard,
     keepEditing,
     requestClose,

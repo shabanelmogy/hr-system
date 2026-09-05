@@ -3,6 +3,7 @@ using HrManagementSystem.Application.Abstractions.Persistence;
 using HrManagementSystem.Domain.Common.Abstractions;
 using HrManagementSystem.Domain.Common.Entities;
 using HrManagementSystem.Domain.Employees.Entities;
+using HrManagementSystem.Domain.Finance.FiscalYears.Entities;
 using HrManagementSystem.Domain.OrganizationalStructure.Entities;
 using HrManagementSystem.Domain.Tenancy.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.Addresses.Entities;
@@ -10,6 +11,7 @@ using HrManagementSystem.Domain.GeographicalInformation.AddressTypes.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.Districts.Entities;
 using HrManagementSystem.Infrastructure.Features.Platform.Notifications.Entities;
+using HrManagementSystem.Domain.Recruitment.Entities;
 
 using HrManagementSystem.Domain.Analytics.Reports.Entities;
 using HrManagementSystem.Domain.Analytics.ReportTemplates.Entities;
@@ -85,6 +87,29 @@ public class ApplicationDbContext(
     public DbSet<RawAttendancePunch> RawAttendancePunches { get; set; }
     public DbSet<DevicePullRun> DevicePullRuns { get; set; }
 
+    public DbSet<Candidate> Candidates { get; set; }
+    public DbSet<JobRequisition> JobRequisitions { get; set; }
+    public DbSet<JobOpening> JobOpenings { get; set; }
+    public DbSet<JobPosting> JobPostings { get; set; }
+    public DbSet<EmploymentApplication> EmploymentApplications { get; set; }
+    public DbSet<ApplicationStatusHistory> ApplicationStatusHistories { get; set; }
+    public DbSet<Interview> Interviews { get; set; }
+    public DbSet<InterviewParticipant> InterviewParticipants { get; set; }
+    public DbSet<InterviewEvaluation> InterviewEvaluations { get; set; }
+    public DbSet<JobOffer> JobOffers { get; set; }
+
+    public DbSet<RecruitmentStage> RecruitmentStages { get; set; }
+    public DbSet<RejectionReason> RecruitmentRejectionReasons { get; set; }
+    public DbSet<RecruitmentSource> RecruitmentSources { get; set; }
+    public DbSet<EvaluationCriterion> RecruitmentEvaluationCriteria { get; set; }
+    public DbSet<RecruitmentPolicy> RecruitmentPolicies { get; set; }
+
+    public DbSet<Employee> Employees { get; set; }
+    public DbSet<EmployeeAssignment> EmployeeAssignments { get; set; }
+    public DbSet<EmployeeContract> EmployeeContracts { get; set; }
+    public DbSet<FiscalYear> FiscalYears { get; set; }
+    public DbSet<FiscalPeriod> FiscalPeriods { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         IgnoreUnpersistedOrganizationalEntities(modelBuilder);
@@ -92,8 +117,6 @@ public class ApplicationDbContext(
         modelBuilder.ApplyConfigurationsFromAssembly(
             HrManagementSystem.Infrastructure.AssemblyReference.Assembly);
         base.OnModelCreating(modelBuilder);
-        // Identity applies its global role-name index in base.OnModelCreating, so role isolation
-        // must be the final role mapping applied to the model.
         new Features.Security.Authentication.Persistence.ApplicationRoleConfiguration()
             .Configure(modelBuilder.Entity<ApplicationRole>());
         ConfigureAuditRelationships(modelBuilder);
@@ -103,9 +126,6 @@ public class ApplicationDbContext(
 
     private static void IgnoreUnpersistedOrganizationalEntities(ModelBuilder modelBuilder)
     {
-        modelBuilder.Ignore<Employee>();
-        modelBuilder.Ignore<EmployeeAssignment>();
-        modelBuilder.Ignore<EmployeeContract>();
     }
 
     private static void ConfigureAuditRelationships(ModelBuilder modelBuilder)

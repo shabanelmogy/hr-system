@@ -18,4 +18,15 @@ public class EntityChangeLogsController(IEntityChangeLogService entityChangeLogS
         var changeLogs = await _entityChangeLogService.GetChangeLogKeyValuesAsync();
         return Ok(changeLogs);
     }
+
+    [HttpGet("{entityName}/{entityId:int}")]
+    [HasPermission(Permissions.ViewChangeLogs)]
+    public async Task<IActionResult> GetEntityChangeLogs(
+        [FromRoute] string entityName,
+        [FromRoute] int entityId,
+        CancellationToken cancellationToken)
+    {
+        var changeLogs = await _entityChangeLogService.GetChangeLogsByEntityAsync(entityName, entityId, cancellationToken);
+        return Ok(changeLogs);
+    }
 }

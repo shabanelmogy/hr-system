@@ -65,10 +65,6 @@ export function GroupedFilesView({
   const internalScrollHeight = Math.max(320, Math.min(viewportHeight * 0.55, 560));
 
   useEffect(() => {
-    if (page !== safePage) setPage(safePage);
-  }, [page, safePage]);
-
-  useEffect(() => {
     scrollRef.current?.scrollTo({ animated: false, y: 0 });
   }, [pageSize, safePage, selectedGroupId, visibleGroupIds]);
 

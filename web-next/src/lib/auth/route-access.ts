@@ -10,6 +10,10 @@ export type RoutePolicy = {
   path: string;
   roles?: readonly string[];
   permissions?: readonly PermissionString[];
+  anyOf?: readonly {
+    roles?: readonly string[];
+    permissions?: readonly PermissionString[];
+  }[];
   deny?: boolean;
 };
 
@@ -142,6 +146,17 @@ export const routePolicies: readonly RoutePolicy[] = [
     path: appRoutes.attendanceDevices.index,
     permissions: [permissions.ViewAttendanceDevices],
   },
+  {
+    path: appRoutes.recruitment,
+    anyOf: [
+      { roles: [adminRole] },
+      { permissions: [permissions.ViewRecruitment] },
+    ],
+  },
+  {
+    path: appRoutes.finance.fiscalYears,
+    permissions: [permissions.ViewFiscalYears],
+  },
   { path: UNAVAILABLE_ROUTE },
 ];
 
@@ -163,6 +178,11 @@ export function canAccessRoute(pathname: string, session: SessionClaims): boolea
   const rule = routePolicies.find(({ path }) => matchesRoute(pathname, path));
   if (!rule) return false;
   if (rule.deny) return false;
+
+  if (rule.anyOf?.length) {
+    return rule.anyOf.some((requirement) => isAuthorized(session, requirement));
+  }
+
   return isAuthorized(session, {
     roles: rule.roles,
     permissions: rule.permissions,

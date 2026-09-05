@@ -218,10 +218,20 @@ const styles = StyleSheet.create({
   webViewContainer: { flex: 1, position: 'relative' },
   webView: { flex: 1 },
   loadingOverlay: {
-    ...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 12,
   },
-  errorOverlay: { ...StyleSheet.absoluteFillObject },
+  errorOverlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  },
 });

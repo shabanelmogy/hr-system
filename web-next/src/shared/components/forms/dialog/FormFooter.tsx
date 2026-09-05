@@ -16,6 +16,7 @@ export const FormFooter: React.FC = () => {
     footerLeft, 
     onClose, 
     isSubmitting,
+    submitDisabled,
     icon, 
     isViewMode,
     submitButtonText,
@@ -80,7 +81,7 @@ export const FormFooter: React.FC = () => {
           <Button
             type="submit"
             variant="contained"
-            disabled={isSubmitting || isReadOnly}
+            disabled={isSubmitting || submitDisabled || isReadOnly}
             startIcon={
               isSubmitting ? (
                 <CircularProgress size={18} color="inherit" />

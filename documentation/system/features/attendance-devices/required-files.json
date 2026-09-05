@@ -13,7 +13,7 @@
     { "id": "api-tests", "layer": "api-test", "path": "api/HrManagementSystem.Tests", "minimumFiles": 3, "purpose": "Attendance authorization, idempotency and architecture tests" },
     { "id": "web-feature", "layer": "web-next", "path": "web-next/src/features/attendance-devices", "minimumFiles": 12, "purpose": "Reusable device master/detail and raw server grids" },
     { "id": "web-routes", "layer": "web-next", "path": "web-next/src/app/(main)/attendance-devices", "minimumFiles": 4, "purpose": "Thin device, raw users, punches and pull runs routes" },
-    { "id": "mobile-deferred", "layer": "mobile-react", "path": "mobile-react", "minimumFiles": 1, "purpose": "Deferred; no placeholder route or runtime feature" }
+    { "id": "mobile-deferred", "layer": "mobile-react", "path": "mobile-react/src", "minimumFiles": 1, "purpose": "Deferred; no placeholder route or runtime feature" }
   ],
   "requiredFiles": [
     { "id": "request", "layer": "documentation", "path": "documentation/system/features/attendance-devices/IMPLEMENTATION-REQUEST.md", "purpose": "Frozen feature contract" },

@@ -1,7 +1,20 @@
 import { apiService, type PageResponse } from '@/src/core/api';
 import { organizationalStructureEndpoints } from './organizational-structure-endpoints';
-import { organizationalStructureBulkResponseSchema, organizationalStructureItemSchema, organizationalStructureLookupSchema, organizationalStructurePageSchema } from './organizational-structure-schemas';
-import type { OrganizationalResource, OrganizationalStructureItem, OrganizationalStructureLookup, OrganizationalStructureQuery, OrganizationalStructureRequest } from '../types/organizational-structure';
+import {
+  organizationalStructureBulkResponseSchema,
+  organizationalStructureItemSchema,
+  organizationalStructureLookupSchema,
+  organizationalStructurePageSchema,
+  organizationalChangeLogItemSchema,
+} from './organizational-structure-schemas';
+import type {
+  OrganizationalResource,
+  OrganizationalStructureItem,
+  OrganizationalStructureLookup,
+  OrganizationalStructureQuery,
+  OrganizationalStructureRequest,
+  OrganizationalChangeLogItem,
+} from '../types/organizational-structure';
 
 export function toOrganizationalStructureQuery(query: OrganizationalStructureQuery): string {
   const parameters = new URLSearchParams({
@@ -41,5 +54,10 @@ export const organizationalStructureApi = {
   },
   async reject(id: number, reason: string): Promise<OrganizationalStructureItem> {
     return organizationalStructureItemSchema.parse(await apiService.post<unknown, { reason: string }>(organizationalStructureEndpoints.reject(id), { reason }));
+  },
+  async getChangeLogs(resource: OrganizationalResource, id: number): Promise<OrganizationalChangeLogItem[]> {
+    const raw = await apiService.get<unknown>(organizationalStructureEndpoints.changeLogs(resource, id));
+    if (!Array.isArray(raw)) return [];
+    return raw.map((item) => organizationalChangeLogItemSchema.parse(item));
   },
 };

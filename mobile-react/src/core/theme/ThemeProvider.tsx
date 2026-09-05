@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SystemUI from 'expo-system-ui';
 import {
   createContext,
   type PropsWithChildren,
@@ -62,8 +63,14 @@ export function AppThemeProvider({ children }: PropsWithChildren) {
     void AsyncStorage.setItem(STORAGE_KEYS.themePalette, nextPalette);
   }, []);
 
-  const resolvedMode: ResolvedThemeMode = mode === 'system' ? (systemMode ?? 'light') : mode;
+  const resolvedMode: ResolvedThemeMode = mode === 'system'
+    ? (systemMode === 'dark' ? 'dark' : 'light')
+    : mode;
   const theme = getAppTheme(palette, resolvedMode);
+
+  useEffect(() => {
+    void SystemUI.setBackgroundColorAsync(theme.colors.background);
+  }, [theme.colors.background]);
 
   const value = useMemo<AppThemeContextValue>(
     () => ({

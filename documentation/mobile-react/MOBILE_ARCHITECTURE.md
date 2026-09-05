@@ -1,6 +1,6 @@
 # Mobile architecture
 
-This document defines the stable application boundaries for the Expo SDK 54 client. Read it together with [MOBILE_FEATURE_GUIDE.md](MOBILE_FEATURE_GUIDE.md) and [MOBILE_STYLE_GUIDE.md](MOBILE_STYLE_GUIDE.md) before adding a module.
+This document defines the stable application boundaries for the Expo SDK 57 client. Read it together with [MOBILE_FEATURE_GUIDE.md](MOBILE_FEATURE_GUIDE.md) and [MOBILE_STYLE_GUIDE.md](MOBILE_STYLE_GUIDE.md) before adding a module.
 
 ## Layer ownership
 
@@ -24,6 +24,7 @@ Run `npm run check:architecture` to enforce these boundaries. The checker is int
 - Drawer visibility calls the same `canAccessRoute` policy used by the guard; do not reproduce role or permission checks in navigation.
 - Unknown authenticated routes are denied by default.
 - Expo Router protected groups in `app/_layout.tsx` separate onboarding, public auth and authenticated application areas.
+- Expo Router 57 owns the navigation runtime. Application code imports navigation APIs from the matching `expo-router/*` entry point and never imports external `@react-navigation/*` packages directly.
 
 Current authenticated route modules:
 

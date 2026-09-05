@@ -23,6 +23,30 @@ export type ApiError = {
   errors: string[] | null;
 };
 
+export class ApiClientError extends Error implements ApiError {
+  status: number;
+  title: string;
+  detail?: string;
+  traceId?: string;
+  type?: string;
+  errorCodes?: string[];
+  fieldErrors: Record<string, string[]> | null;
+  errors: string[] | null;
+
+  constructor(apiError: ApiError) {
+    super(apiError.message || apiError.title || "An unexpected error occurred");
+    this.name = "ApiClientError";
+    this.status = apiError.status;
+    this.title = apiError.title;
+    this.detail = apiError.detail;
+    this.traceId = apiError.traceId;
+    this.type = apiError.type;
+    this.errorCodes = apiError.errorCodes;
+    this.fieldErrors = apiError.fieldErrors;
+    this.errors = apiError.errors;
+  }
+}
+
 type ReadOnlyGuard = {
   isReadOnly: () => boolean;
   onBlocked: () => void;
@@ -87,15 +111,15 @@ class ApiClient {
     );
   }
 
-  private processError(error: unknown): ApiError {
+  private processError(error: unknown): ApiClientError {
     if (!axios.isAxiosError(error) || !error.response) {
-      return {
+      return new ApiClientError({
         status: 0,
         title: "Network Error",
         message: "Failed to connect to the server",
         fieldErrors: null,
-        errors: null
-      };
+        errors: null,
+      });
     }
 
     const data = error.response.data as
@@ -109,7 +133,7 @@ class ApiClient {
       | undefined;
     const errors = normalizeApiErrors(data?.errors);
     const fieldErrors = normalizeFieldErrors(data?.errors);
-    return {
+    return new ApiClientError({
       status: error.response.status,
       title: data?.title ?? "Error",
       detail: data?.detail,
@@ -125,8 +149,8 @@ class ApiClient {
         data?.detail ??
         errors?.[0] ??
         data?.title ??
-        `Request failed with status ${error.response.status}`
-    };
+        `Request failed with status ${error.response.status}`,
+    });
   }
 
   configureReadOnlyGuard(guard: ReadOnlyGuard) {
@@ -223,8 +247,8 @@ function isWriteMethod(method: Method) {
   return ["post", "put", "patch", "delete"].includes(method.toLowerCase());
 }
 
-function createReadOnlyError(): ApiError {
-  return {
+function createReadOnlyError(): ApiClientError {
+  return new ApiClientError({
     status: 423,
     title: i18n.t("tenantAccess.title"),
     message: i18n.t("tenantAccess.readOnlyExplanation"),
@@ -232,7 +256,7 @@ function createReadOnlyError(): ApiError {
     type: "Tenant.SubscriptionReadOnly",
     fieldErrors: null,
     errors: null,
-  };
+  });
 }
 
 function getDataHeaders(data: unknown, headers: Record<string, string>) {

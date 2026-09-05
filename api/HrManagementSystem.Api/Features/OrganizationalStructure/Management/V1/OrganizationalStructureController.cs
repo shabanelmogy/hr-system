@@ -2,6 +2,7 @@ using HrManagementSystem.Application.Common.Paginations;
 using HrManagementSystem.Application.Features.OrganizationalStructure.Management.Commands;
 using HrManagementSystem.Application.Features.OrganizationalStructure.Management.Contracts;
 using HrManagementSystem.Application.Features.OrganizationalStructure.Management.Queries;
+using HrManagementSystem.Application.Features.Platform.EntityChangeLogs.Contracts;
 using MediatR;
 
 namespace HrManagementSystem.Api.Features.OrganizationalStructure.Management.V1;
@@ -37,6 +38,18 @@ public sealed class OrganizationalStructureController(ISender sender) : Controll
     public async Task<IActionResult> GetById(string resource, int id, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new GetOrganizationalStructureItemQuery(resource, id), cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
+    [HttpGet("{id:int}/change-logs")]
+    [HasPermission(Permissions.ViewOrganizationalStructure)]
+    [ProducesResponseType(typeof(IReadOnlyList<EntityChangeLogsResponse>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetChangeLogs(
+        [FromRoute] string resource,
+        [FromRoute] int id,
+        CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(new GetOrganizationalStructureChangeLogsQuery(resource, id), cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 

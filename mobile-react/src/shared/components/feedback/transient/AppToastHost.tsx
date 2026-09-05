@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import Toast, { type ToastConfig, type ToastConfigParams } from 'react-native-toast-message';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
@@ -25,7 +26,11 @@ const icons: Record<ToastKind, AppIconName> = {
 };
 
 export function AppToastHost() {
-  return <Toast config={toastConfig} position="top" topOffset={54} />;
+  const { top } = useSafeAreaInsets();
+  const { theme } = useAppTheme();
+  const topOffset = Math.max(top + theme.spacing.xs, theme.spacing.xxl);
+
+  return <Toast config={toastConfig} position="top" topOffset={topOffset} />;
 }
 
 function AppToast({

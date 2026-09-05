@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { pageMetadataSchema } from '@/src/core/api';
-import { organizationalResources, type OrganizationalStructureItem, type OrganizationalStructureLookup } from '../types/organizational-structure';
+import { organizationalResources, type OrganizationalStructureItem, type OrganizationalStructureLookup, type OrganizationalChangeLogItem } from '../types/organizational-structure';
 
 const nullableString = z.string().nullish().transform((value) => value ?? undefined);
 const nullableNumber = z.number().nullish().transform((value) => value ?? undefined);
@@ -33,3 +33,14 @@ export const organizationalStructureLookupSchema: z.ZodType<OrganizationalStruct
   id: z.number().int().positive(), code: z.string().min(1), nameEn: z.string().min(1), nameAr: z.string().min(1),
 }));
 export const organizationalStructureBulkResponseSchema = z.object({ createdCount: z.number().int().nonnegative() });
+export const organizationalChangeLogItemSchema: z.ZodType<OrganizationalChangeLogItem> = z.object({
+  id: z.union([z.string(), z.number()]).optional(),
+  changeLogId: z.union([z.string(), z.number()]),
+  entityName: z.string().optional(),
+  key: z.string(),
+  oldValue: z.string().optional(),
+  newValue: z.string().optional(),
+  changedBy: z.string(),
+  changedAt: z.string().min(1),
+  changedByPc: z.string().optional(),
+});

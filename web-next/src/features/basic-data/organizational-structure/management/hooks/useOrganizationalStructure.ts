@@ -11,6 +11,7 @@ export const organizationalStructureKeys = {
   all: ["organizational-structure"] as const,
   page: (query: OrganizationalStructurePageQuery) => [...organizationalStructureKeys.all, "page", query] as const,
   lookup: (resource: OrganizationalResource, parentId?: number) => [...organizationalStructureKeys.all, "lookup", resource, parentId ?? "all"] as const,
+  changeLogs: (resource: OrganizationalResource, id: number) => [...organizationalStructureKeys.all, "changeLogs", resource, id] as const,
 };
 
 export const useOrganizationalStructurePage = (query: OrganizationalStructurePageQuery, enabled = true) => useQuery({
@@ -62,3 +63,10 @@ export const useApproveJobDescription = () => useInvalidateMutation(
 export const useRejectJobDescription = () => useInvalidateMutation(
   (variables: { id: number; reason: string }) => organizationalStructureService.reject(variables.id, variables.reason),
 );
+
+export const useOrganizationalChangeLogs = (resource: OrganizationalResource, id?: number | null, enabled = true) => useQuery({
+  queryKey: id ? organizationalStructureKeys.changeLogs(resource, id) : ["disabled"],
+  queryFn: () => organizationalStructureService.getChangeLogs(resource, id!),
+  enabled: Boolean(id && enabled),
+  staleTime: 60_000,
+});

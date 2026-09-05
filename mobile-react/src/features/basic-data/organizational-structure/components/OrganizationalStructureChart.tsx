@@ -35,10 +35,6 @@ export function OrganizationalStructureChart({
   const { theme } = useAppTheme();
   const isAr = Boolean((i18n?.resolvedLanguage ?? i18n?.language ?? '')?.startsWith('ar'));
 
-  if (!items.length) {
-    return <AppStateView message={t('organizationalStructure.empty')} state="empty" />;
-  }
-
   // Compute child count for hierarchical resources (cost-centers, departments)
   const subCountsMap = useMemo(() => {
     const map = new Map<number, number>();
@@ -211,6 +207,10 @@ export function OrganizationalStructureChart({
     : isDepartment
     ? (isAr ? 'فروع فرعية' : 'sub-branches')
     : undefined;
+
+  if (!items.length) {
+    return <AppStateView message={t('organizationalStructure.empty')} state="empty" />;
+  }
 
   return (
     <View style={styles.root}>

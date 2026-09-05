@@ -129,7 +129,7 @@ export function TrackChangesScreen() {
             columns={columns}
             defaultPageSize={5}
             emptyMessage={t('platformTools.trackChanges.empty')}
-            getRowKey={(change) => change.id}
+            getRowKey={(change) => change.id ?? change.changeLogId}
             pageSizeOptions={[5, 10, 25]}
             rows={items}
           />
@@ -138,12 +138,14 @@ export function TrackChangesScreen() {
       {
         value: 'cards',
         carousel: true,
-        getItemKey: (change) => change.id,
+        getItemKey: (change) => change.id ?? change.changeLogId,
         label: t('multiView.cards'),
         icon: 'albums-outline',
         render: (items) => (
           <View style={styles.cards}>
-            {items.map((change) => <TrackChangeCard change={change} key={change.id} />)}
+            {items.map((change) => (
+              <TrackChangeCard change={change} key={change.id ?? change.changeLogId} />
+            ))}
           </View>
         ),
       },

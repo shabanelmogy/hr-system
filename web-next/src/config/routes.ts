@@ -92,6 +92,10 @@ export interface AppRoutes {
     punches: AppPath;
     pullRuns: AppPath;
   };
+  recruitment: AppPath;
+  finance: {
+    fiscalYears: AppPath;
+  };
 }
 
 export const appRoutes: AppRoutes = {
@@ -174,6 +178,10 @@ export const appRoutes: AppRoutes = {
     users: toAppPath("/attendance-devices/users"),
     punches: toAppPath("/attendance-devices/punches"),
     pullRuns: toAppPath("/attendance-devices/pull-runs"),
+  },
+  recruitment: toAppPath("/recruitment"),
+  finance: {
+    fiscalYears: toAppPath("/finance/fiscal-years"),
   },
 } as const;
 

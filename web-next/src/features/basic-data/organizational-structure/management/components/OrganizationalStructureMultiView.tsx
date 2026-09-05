@@ -52,6 +52,7 @@ interface Props {
   onLifecycle: (item: OrganizationalStructureItem) => void;
   onApprove: (item: OrganizationalStructureItem) => void;
   onReject: (item: OrganizationalStructureItem) => void;
+  onViewLogs?: (item: OrganizationalStructureItem) => void;
   onRefresh: () => void;
   onReset: () => void;
   onReparent?: (
@@ -158,7 +159,7 @@ export default function OrganizationalStructureMultiView(props: Props) {
           onPageChange={props.onPageChange} onPageSizeChange={props.onPageSizeChange} onSearchChange={props.onSearchChange}
           onSearchFieldChange={props.onSearchFieldChange} onSearchOperatorChange={props.onSearchOperatorChange} onStatusChange={props.onStatusChange}
           onSortChange={props.onSortChange} onReset={props.onReset} onView={props.onView} onEdit={props.onEdit} onLifecycle={props.onLifecycle}
-          onApprove={props.onApprove} onReject={props.onReject}
+          onApprove={props.onApprove} onReject={props.onReject} onViewLogs={props.onViewLogs}
         />}
 
         {visibleView === "cards" && <Box sx={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0, minWidth: 0, width: "100%" }}>
@@ -172,6 +173,7 @@ export default function OrganizationalStructureMultiView(props: Props) {
                   {item.targetHeadcount != null ? <Typography>{t("organizationalStructure.fields.targetHeadcount")}: {item.targetHeadcount}</Typography> : null}
                   {jobDescriptionStatus(item) ? <Chip size="small" label={jobDescriptionStatus(item)} /> : null}</Stack>}
                 footer={<Stack direction="row" spacing={0.5} useFlexGap sx={{ flexWrap: "wrap", justifyContent: "flex-end", rowGap: 0.5 }}><Button size="small" variant={props.resource === "job-descriptions" ? "contained" : "text"} color="primary" onClick={() => props.onView(item)}>{props.resource === "job-descriptions" ? t("organizationalStructure.jobDescriptionDetails.profileTitle") : t("actions.view")}</Button>
+                  {props.onViewLogs ? <Button size="small" color="inherit" onClick={() => props.onViewLogs?.(item)}>{t("actions.changeLog")}</Button> : null}
                   {props.permissions.canEdit && !item.isDeleted ? <Button size="small" onClick={() => props.onEdit(item)}>{t("actions.edit")}</Button> : null}
                   {props.permissions.canDelete ? <Button size="small" color={item.isDeleted ? "success" : "warning"} onClick={() => props.onLifecycle(item)}>{t(item.isDeleted ? "actions.restore" : "actions.archive")}</Button> : null}
                   {canDecide(item) ? <><Button size="small" color="success" onClick={() => props.onApprove(item)}>{t("organizationalStructure.decision.approve")}</Button><Button size="small" color="error" onClick={() => props.onReject(item)}>{t("organizationalStructure.decision.reject")}</Button></> : null}
@@ -190,6 +192,7 @@ export default function OrganizationalStructureMultiView(props: Props) {
               permissions={props.permissions}
               onView={props.onView}
               onEdit={props.onEdit}
+              onViewLogs={props.onViewLogs}
               onLifecycle={props.onLifecycle}
               onAddChild={props.permissions.canCreate ? props.onAddChild : undefined}
               onReparent={async (source, newParent) => {
@@ -205,6 +208,7 @@ export default function OrganizationalStructureMultiView(props: Props) {
               permissions={props.permissions}
               onView={props.onView}
               onEdit={props.onEdit}
+              onViewLogs={props.onViewLogs}
               onAdd={props.permissions.canCreate ? props.onAdd : undefined}
               onAddChild={props.permissions.canCreate ? props.onAddChild : undefined}
               onReparent={props.onReparent ?? (async () => {})}

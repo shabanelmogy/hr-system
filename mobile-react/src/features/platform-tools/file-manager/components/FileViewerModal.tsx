@@ -187,8 +187,8 @@ function VideoPreview({ source }: { source: AuthenticatedFileSource }) {
 
   return (
     <VideoView
-      allowsFullscreen
       contentFit="contain"
+      fullscreenOptions={{ enable: true }}
       nativeControls
       player={player}
       style={styles.media}

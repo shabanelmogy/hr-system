@@ -24,6 +24,11 @@ describe('realtime query registry', () => {
     expect(getRealtimeQueryKeys('states')).toEqual([['states']]);
   });
 
+  it('invalidates all Fiscal Years queries through the stable feature prefix', () => {
+    expect(isKnownRealtimeResource('fiscal-years')).toBe(true);
+    expect(getRealtimeQueryKeys('fiscal-years')).toEqual([['fiscal-years']]);
+  });
+
   it('deduplicates reconnect invalidation prefixes', () => {
     const serialized = getAllRealtimeQueryKeys().map((key) => JSON.stringify(key));
     expect(new Set(serialized).size).toBe(serialized.length);

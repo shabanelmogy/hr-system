@@ -1,6 +1,6 @@
 # Mobile styling guide
 
-This is the default styling contract for every feature in `mobile-react` (Expo SDK 54 / React Native 0.81). It keeps the app coherent across palettes, light/dark mode, screen sizes, and English/Arabic. When a feature needs an exception, document the reason in review and keep the exception local.
+This is the default styling contract for every feature in `mobile-react` (Expo SDK 57 / React Native 0.86). It keeps the app coherent across palettes, light/dark mode, screen sizes, and English/Arabic. When a feature needs an exception, document the reason in review and keep the exception local.
 
 ## Ownership hierarchy
 
@@ -129,5 +129,5 @@ Run the repository check, then manually verify representative loading, data, emp
 
 ## Platform references
 
-- [Expo SDK 54 reference](https://docs.expo.dev/versions/v54.0.0/)
-- [React Native 0.81 StyleSheet](https://reactnative.dev/docs/0.81/stylesheet)
+- [Expo SDK 57 reference](https://docs.expo.dev/versions/v57.0.0/)
+- [React Native 0.86 StyleSheet](https://reactnative.dev/docs/0.86/stylesheet)

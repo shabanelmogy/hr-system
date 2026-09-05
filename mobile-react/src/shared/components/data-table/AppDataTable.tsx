@@ -122,7 +122,7 @@ export function AppDataTable<Row>({
   const previousFlash = useRef<{ rowKey: AppDataTableRowKey; token: string | number } | undefined>(undefined);
   const hasMountedRef = useRef(false);
   const lastRowPressRef = useRef<{ rowKey: AppDataTableRowKey; time: number } | null>(null);
-  const flashProgress = useRef(new Animated.Value(0)).current;
+  const [flashProgress] = useState(() => new Animated.Value(0));
   const [activeRowKey, setActiveRowKey] = useState<AppDataTableRowKey | null>(null);
   const [activeFlashRowKey, setActiveFlashRowKey] = useState<AppDataTableRowKey | null>(null);
   const [page, setPage] = useState(0);
@@ -202,7 +202,7 @@ export function AppDataTable<Row>({
           return (
             <AppIconButton
               accessibilityState={{ selected }}
-              color={selected ? theme.colors.accent : undefined}
+              color={selected ? theme.colors.primary : undefined}
               disabled={rowSelection.disabled || !selectable}
               icon={selected ? 'checkbox' : 'square-outline'}
               label={rowSelection.getAccessibilityLabel(row, selected)}
@@ -218,7 +218,7 @@ export function AppDataTable<Row>({
       },
       ...columns,
     ];
-  }, [columns, getRowKey, rowSelection, selectedRowKeySet, theme.colors.accent]);
+  }, [columns, getRowKey, rowSelection, selectedRowKeySet, theme.colors.primary]);
 
   const collator = useMemo(
     () => new Intl.Collator(i18n.language, { numeric: true, sensitivity: 'base' }),
@@ -251,9 +251,10 @@ export function AppDataTable<Row>({
     if (activePage === safePage) return;
     if (usesServerState) {
       onServerPageChange?.(safePage);
-    } else {
-      setPage(safePage);
+      return;
     }
+    const timer = setTimeout(() => setPage(safePage), 0);
+    return () => clearTimeout(timer);
   }, [activePage, onServerPageChange, pageCount, usesServerState]);
 
   useEffect(() => {
@@ -261,9 +262,10 @@ export function AppDataTable<Row>({
     previousResetKey.current = resetKey;
     if (usesServerState) {
       onServerPageChange?.(0);
-    } else {
-      setPage(0);
+      return;
     }
+    const timer = setTimeout(() => setPage(0), 0);
+    return () => clearTimeout(timer);
   }, [onServerPageChange, resetKey, usesServerState]);
 
   const pageRows = useMemo(
@@ -274,20 +276,18 @@ export function AppDataTable<Row>({
   );
 
   useEffect(() => {
+    let nextActiveRowKey: AppDataTableRowKey | null = null;
     if (!autoActivateFirstRow) {
-      setActiveRowKey(null);
-      return;
+      nextActiveRowKey = null;
+    } else {
+      const firstRow = pageRows[0];
+      const activeIsVisible = activeRowKey !== null
+        && pageRows.some((row) => getRowKey(row) === activeRowKey);
+      nextActiveRowKey = activeIsVisible ? activeRowKey : firstRow ? getRowKey(firstRow) : null;
     }
-
-    const firstRow = pageRows[0];
-    if (!firstRow) {
-      setActiveRowKey(null);
-      return;
-    }
-
-    const activeIsVisible = activeRowKey !== null
-      && pageRows.some((row) => getRowKey(row) === activeRowKey);
-    if (!activeIsVisible) setActiveRowKey(getRowKey(firstRow));
+    if (Object.is(nextActiveRowKey, activeRowKey)) return;
+    const timer = setTimeout(() => setActiveRowKey(nextActiveRowKey), 0);
+    return () => clearTimeout(timer);
   }, [activeRowKey, autoActivateFirstRow, getRowKey, pageRows]);
 
   const pinPagination = showPagination && shouldPinPagination(
@@ -521,11 +521,11 @@ export function AppDataTable<Row>({
                   backgroundColor: isFlashed
                     ? flashBackground
                     : isSelected
-                      ? toRgba(theme.colors.accent, 0.18)
+                      ? toRgba(theme.colors.primary, 0.18)
                       : isActive
-                        ? toRgba(theme.colors.secondary, 0.14)
+                        ? toRgba(theme.colors.primary, 0.1)
                       : theme.colors.surface,
-                  borderStartColor: isSelected ? theme.colors.accent : theme.colors.secondary,
+                  borderStartColor: theme.colors.primary,
                   borderStartWidth: isSelected || isActive ? 3 : 0,
                 },
               ]}>

@@ -34,6 +34,9 @@ using HrManagementSystem.Application.Features.Attendance.Devices.Commands;
 using HrManagementSystem.Infrastructure.Features.Attendance.Devices.Services;
 using HrManagementSystem.Infrastructure.Features.Attendance.Devices.Persistence;
 using HrManagementSystem.Infrastructure.Features.Attendance.Devices.Jobs;
+using HrManagementSystem.Application.Features.Finance.FiscalYears.Abstractions;
+using HrManagementSystem.Infrastructure.Features.Finance.FiscalYears.Jobs;
+using HrManagementSystem.Infrastructure.Features.Finance.FiscalYears.Persistence;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
@@ -93,6 +96,11 @@ public static class EntitiesService
         services.AddScoped<UserChangedJob>();
         services.AddScoped<AppointmentChangedJob>();
         services.AddScoped<SessionRevokedJob>();
+        services.AddScoped<FiscalYearChangedJob>();
+        services.AddScoped<IFiscalYearReadStore, FiscalYearReadStore>();
+        services.AddScoped<IFiscalYearWriteStore, FiscalYearWriteStore>();
+        services.AddScoped<IFiscalYearAuditTrail, FiscalYearAuditTrail>();
+        services.AddScoped<IFiscalYearChangeScheduler, FiscalYearChangeScheduler>();
 
         services.Scan(scan => scan
             .FromAssemblies(HrManagementSystem.Infrastructure.AssemblyReference.Assembly)

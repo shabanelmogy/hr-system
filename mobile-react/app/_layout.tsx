@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@react-navigation/native';
+import { ThemeProvider } from 'expo-router/react-navigation';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
@@ -28,20 +28,12 @@ export default function RootLayout() {
 }
 
 function RootNavigator() {
-  const { navigationTheme, resolvedMode } = useAppTheme();
+  const { navigationTheme, theme } = useAppTheme();
   const { completed: onboardingCompleted, loading: onboardingLoading } = useOnboarding();
   const { status, retry } = useAuth();
   const { t } = useTranslation();
 
-  const statusBarUsesPrimaryBackground =
-    onboardingCompleted && (status === 'unauthenticated' || status === 'authenticated');
-  const statusBarStyle = statusBarUsesPrimaryBackground
-    ? resolvedMode === 'dark'
-      ? 'dark'
-      : 'light'
-    : resolvedMode === 'dark'
-      ? 'light'
-      : 'dark';
+  const statusBarStyle = theme.isDark ? 'light' : 'dark';
 
   const content =
     onboardingLoading || (onboardingCompleted && status === 'loading') ? (
@@ -58,7 +50,12 @@ function RootNavigator() {
         />
       </AppScreen>
     ) : (
-      <Stack screenOptions={{ headerShown: false }}>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          statusBarHidden: false,
+          statusBarStyle,
+        }}>
         <Stack.Protected guard={!onboardingCompleted}>
           <Stack.Screen name="onboarding" />
         </Stack.Protected>
@@ -74,7 +71,7 @@ function RootNavigator() {
   return (
     <ThemeProvider value={navigationTheme}>
       {content}
-      <StatusBar animated style={statusBarStyle} />
+      <StatusBar animated hidden={false} style={statusBarStyle} />
     </ThemeProvider>
   );
 }

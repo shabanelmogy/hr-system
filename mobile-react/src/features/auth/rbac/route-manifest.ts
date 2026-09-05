@@ -22,7 +22,9 @@ export interface MainDrawerRouteDefinition {
     | 'advanced-tools'
     | 'super-admin-dashboard'
     | 'tenant-management'
-    | 'tenant-admin-management';
+    | 'tenant-admin-management'
+    | 'recruitment'
+    | 'finance';
   path: AppRoute;
   titleKey: string;
   icon: AppIconName;
@@ -126,6 +128,9 @@ export const routePolicies: readonly RoutePolicy[] = [
       { permissions: [permissions.ViewHangfireDashboard] },
     ],
   },
+  { path: ROUTES.recruitment.root, permissions: [permissions.ViewRecruitment] },
+  { path: ROUTES.finance.fiscalYears, permissions: [permissions.ViewFiscalYears] },
+  { path: ROUTES.finance.root, permissions: [permissions.ViewFiscalYears] },
   { path: ROUTES.profile },
   { path: ROUTES.notifications, roles: [appRoles.admin, appRoles.user] },
   { path: ROUTES.home },
@@ -194,6 +199,21 @@ export const MAIN_DRAWER_ROUTES: readonly MainDrawerRouteDefinition[] = [
     icon: 'construct-outline',
     headerShown: false,
   },
+  {
+    name: 'recruitment',
+    path: ROUTES.recruitment.root,
+    titleKey: 'navigation.recruitment',
+    icon: 'briefcase-outline',
+    headerShown: false,
+  },
+  {
+    name: 'finance',
+    path: ROUTES.finance.fiscalYears,
+    titleKey: 'navigation.finance',
+    icon: 'calendar-outline',
+    headerShown: false,
+  },
+
   {
     name: 'super-admin-dashboard',
     path: ROUTES.superAdminDashboard,

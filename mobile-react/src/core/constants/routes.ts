@@ -59,6 +59,13 @@ export const ROUTES = {
       `/administration/role-permissions/${encodeURIComponent(roleId)}` as
         `/administration/role-permissions/${string}`,
   },
+  recruitment: {
+    root: '/recruitment',
+  },
+  finance: {
+    root: '/finance',
+    fiscalYears: '/finance/fiscal-years',
+  },
 } as const;
 
 export type AppRoute =
@@ -85,7 +92,9 @@ export type AppRoute =
   | typeof ROUTES.administration.invitations
   | typeof ROUTES.administration.roles
   | typeof ROUTES.administration.rolePermissionsRoot
-  | ReturnType<typeof ROUTES.administration.rolePermissions>;
+  | ReturnType<typeof ROUTES.administration.rolePermissions>
+  | typeof ROUTES.recruitment.root
+  | (typeof ROUTES.finance)[keyof typeof ROUTES.finance];
 
 // Expo regenerates typed route declarations after route files change.
 export const asHref = (route: AppRoute): Href => route as Href;

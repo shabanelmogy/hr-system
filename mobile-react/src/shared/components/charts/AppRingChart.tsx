@@ -44,11 +44,10 @@ export function AppRingChart({
   const ringRadius = ringSize * 0.4;
   const centerSize = ringSize * 0.58;
 
-  let cumulativeValue = 0;
-  const thresholds = items.map((item) => {
-    cumulativeValue += item.value;
-    return cumulativeValue;
-  });
+  const thresholds = items.reduce<number[]>((values, item) => {
+    values.push((values.at(-1) ?? 0) + item.value);
+    return values;
+  }, []);
 
   return (
     <View accessibilityLabel={accessibilitySummary} accessible style={styles.root}>

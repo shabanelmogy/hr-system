@@ -144,9 +144,10 @@ export function AppMultiView<Item, ViewId extends string>({
     if (activePage === safePage) return;
     if (usesServerPagination) {
       onServerPageChange?.(safePage);
-    } else {
-      setPage(safePage);
+      return;
     }
+    const timer = setTimeout(() => setPage(safePage), 0);
+    return () => clearTimeout(timer);
   }, [activePage, onServerPageChange, safePage, usesServerPagination]);
 
   useEffect(() => {
@@ -154,9 +155,10 @@ export function AppMultiView<Item, ViewId extends string>({
     previousResetKey.current = resetKey;
     if (usesServerPagination) {
       onServerPageChange?.(0);
-    } else {
-      setPage(0);
+      return;
     }
+    const timer = setTimeout(() => setPage(0), 0);
+    return () => clearTimeout(timer);
   }, [onServerPageChange, resetKey, usesServerPagination]);
 
   const handlePageSizeChange = useCallback((nextPageSize: number) => {

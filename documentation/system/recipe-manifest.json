@@ -162,6 +162,26 @@
       "id": "organizational-structure-mobile",
       "path": "../mobile-react/organizational-structure-mobile-reference.md",
       "title": "Organizational Structure Expo implementation profile"
+    },
+    {
+      "id": "fiscal-years-master",
+      "path": "../project/FISCAL_YEARS_FEATURE_FULL_REVIEW.md",
+      "title": "Fiscal Years cross-platform master review"
+    },
+    {
+      "id": "fiscal-years-api",
+      "path": "../api/FiscalYears_API_Implementation_Profile.md",
+      "title": "Fiscal Years API implementation profile"
+    },
+    {
+      "id": "fiscal-years-web",
+      "path": "../web-next/features/fiscal-years-frontend-reference.md",
+      "title": "Fiscal Years Next.js implementation profile"
+    },
+    {
+      "id": "fiscal-years-mobile",
+      "path": "../mobile-react/fiscal-years-mobile-reference.md",
+      "title": "Fiscal Years Expo implementation profile"
     }
   ],
   "requiredFileManifests": [
@@ -172,7 +192,8 @@
     "features/address-types/required-files.json",
     "features/company-geographic-scope/required-files.json",
     "features/attendance-devices/required-files.json",
-    "features/organizational-structure/required-files.json"
+    "features/organizational-structure/required-files.json",
+    "features/fiscal-years/required-files.json"
   ],
   "recipes": [
     {
@@ -927,12 +948,61 @@
     "output": "generated/organizational-structure/PHASE-05-integration-runtime.md",
     "sources": [{ "book": "organizational-structure-master", "sections": [4, 5, 6, 7, 9] }, { "book": "organizational-structure-api", "sections": [8, 9, 10] }, { "book": "organizational-structure-web", "sections": [8, 10, 13] }, { "book": "organizational-structure-mobile", "sections": [2, 11, 12, 15] }]
   },
-  {
-    "id": "organizational-structure-phase-06-final-reconciliation",
+    {
+      "id": "organizational-structure-phase-06-final-reconciliation",
     "title": "Organizational Structure Phase 06 - Final Reconciliation",
     "template": "templates/PHASE-06-final-reconciliation.template.md",
     "output": "generated/organizational-structure/PHASE-06-final-reconciliation.md",
-    "sources": [{ "book": "organizational-structure-master", "sections": [8, 9, 10] }, { "book": "organizational-structure-api", "sections": [10, 11] }, { "book": "organizational-structure-web", "sections": [12, 13, 14] }, { "book": "organizational-structure-mobile", "sections": [14, 15] }]
-  }
+      "sources": [{ "book": "organizational-structure-master", "sections": [8, 9, 10] }, { "book": "organizational-structure-api", "sections": [10, 11] }, { "book": "organizational-structure-web", "sections": [12, 13, 14] }, { "book": "organizational-structure-mobile", "sections": [14, 15] }]
+    },
+    {
+      "id": "fiscal-years-phase-00-discovery-evidence",
+      "title": "Fiscal Years Phase 00 - Discovery and Evidence",
+      "template": "templates/PHASE-00-discovery-evidence.template.md",
+      "output": "generated/fiscal-years/PHASE-00-discovery-evidence.md",
+      "sources": [{ "book": "fiscal-years-master", "sections": [1, 2, 5, 8, 9] }, { "book": "fiscal-years-api", "sections": [1, 10, 11] }, { "book": "fiscal-years-web", "sections": [1, 2, 12, 13] }, { "book": "fiscal-years-mobile", "sections": [1, 14, 15] }]
+    },
+    {
+      "id": "fiscal-years-phase-01-domain-api",
+      "title": "Fiscal Years Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/fiscal-years/PHASE-01-domain-api.md",
+      "sources": [{ "book": "fiscal-years-master", "sections": [3, 4, 6] }, { "book": "fiscal-years-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }]
+    },
+    {
+      "id": "fiscal-years-phase-02-web-client",
+      "title": "Fiscal Years Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/fiscal-years/PHASE-02-web-client.md",
+      "sources": [{ "book": "fiscal-years-master", "sections": [3, 4, 6, 7] }, { "book": "fiscal-years-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }]
+    },
+    {
+      "id": "fiscal-years-phase-03-mobile-client",
+      "title": "Fiscal Years Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/fiscal-years/PHASE-03-mobile-client.md",
+      "sources": [{ "book": "fiscal-years-master", "sections": [3, 4, 6, 7] }, { "book": "fiscal-years-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }]
+    },
+    {
+      "id": "fiscal-years-phase-04-domain-actions",
+      "title": "Fiscal Years Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/fiscal-years/PHASE-04-domain-actions.md",
+      "sources": [{ "book": "fiscal-years-master", "sections": [3, 4, 6, 7, 8] }, { "book": "fiscal-years-api", "sections": [6, 7, 8] }, { "book": "fiscal-years-web", "sections": [6, 7, 8, 9] }, { "book": "fiscal-years-mobile", "sections": [9, 10, 11] }]
+    },
+    {
+      "id": "fiscal-years-phase-05-integration-runtime",
+      "title": "Fiscal Years Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/fiscal-years/PHASE-05-integration-runtime.md",
+      "sources": [{ "book": "fiscal-years-master", "sections": [4, 5, 6, 7, 9] }, { "book": "fiscal-years-api", "sections": [8, 9, 10] }, { "book": "fiscal-years-web", "sections": [8, 10, 13] }, { "book": "fiscal-years-mobile", "sections": [2, 11, 12, 15] }]
+    },
+    {
+      "id": "fiscal-years-phase-06-final-reconciliation",
+      "title": "Fiscal Years Phase 06 - Final Reconciliation",
+      "template": "templates/PHASE-06-final-reconciliation.template.md",
+      "output": "generated/fiscal-years/PHASE-06-final-reconciliation.md",
+      "sources": [{ "book": "fiscal-years-master", "sections": [8, 9, 10] }, { "book": "fiscal-years-api", "sections": [10, 11] }, { "book": "fiscal-years-web", "sections": [12, 13, 14] }, { "book": "fiscal-years-mobile", "sections": [14, 15] }]
+    }
   ]
 }

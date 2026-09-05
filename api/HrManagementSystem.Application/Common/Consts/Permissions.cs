@@ -43,6 +43,26 @@ public static class Permissions
     public const string DeleteOrganizationalStructure = "OrganizationalStructure:Delete";
     public const string ApproveJobDescriptions = "OrganizationalStructure:ApproveJobDescriptions";
 
+    // Recruitment Permissions
+    public const string ViewRecruitment = "Recruitment:View";
+    public const string ManageJobRequisitions = "Recruitment:ManageJobRequisitions";
+    public const string ApproveJobRequisitions = "Recruitment:ApproveJobRequisitions";
+    public const string ManageJobOpenings = "Recruitment:ManageJobOpenings";
+    public const string ManageJobPostings = "Recruitment:ManageJobPostings";
+    public const string ManageCandidates = "Recruitment:ManageCandidates";
+    public const string ManageApplications = "Recruitment:ManageApplications";
+    public const string EvaluateInterviews = "Recruitment:EvaluateInterviews";
+    public const string ManageJobOffers = "Recruitment:ManageJobOffers";
+    public const string ApproveJobOffers = "Recruitment:ApproveJobOffers";
+    public const string HireCandidate = "Recruitment:HireCandidate";
+
+    // Workforce planning and financial calendar permissions
+    public const string ViewFiscalYears = "FiscalYears:View";
+    public const string CreateFiscalYears = "FiscalYears:Create";
+    public const string EditFiscalYears = "FiscalYears:Edit";
+    public const string DeleteFiscalYears = "FiscalYears:Delete";
+    public const string ManageFiscalYearLifecycle = "FiscalYears:ManageLifecycle";
+
     public const string ViewAttendanceDevices = "AttendanceDevices:View";
     public const string ManageAttendanceDevices = "AttendanceDevices:Manage";
     public const string ManageAttendanceDeviceCredentials = "AttendanceDevices:Credentials";

@@ -31,6 +31,7 @@ export const FormContainer: React.FC<MyFormProps> = ({
   onSubmit,
   children = null,
   isSubmitting = false,
+  submitDisabled = false,
   isDirty,
   icon = null,
   maxWidth = "sm",
@@ -62,6 +63,7 @@ export const FormContainer: React.FC<MyFormProps> = ({
   } = useFormDialogState({
     isDirty,
     isSubmitting,
+    submitDisabled,
     onClose,
     onSubmit,
   });
@@ -165,6 +167,7 @@ export const FormContainer: React.FC<MyFormProps> = ({
     subtitle,
     submitButtonText,
     isSubmitting: submissionPending,
+    submitDisabled,
     isDirty,
     icon,
     maxWidth,

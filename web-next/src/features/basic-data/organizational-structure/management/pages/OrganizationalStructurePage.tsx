@@ -12,6 +12,7 @@ import OrganizationalStructureForm from "../components/OrganizationalStructureFo
 import OrganizationalStructureMultiView from "../components/OrganizationalStructureMultiView";
 import JobDescriptionDecisionDialog from "../components/JobDescriptionDecisionDialog";
 import JobDescriptionDetailsDialog from "../components/JobDescriptionDetailsDialog";
+import { EntityChangeLogDialog } from "@/shared/components/audit-log";
 import {
   useApproveJobDescription,
   useArchiveOrganizationalItem,
@@ -20,6 +21,7 @@ import {
   useRestoreOrganizationalItem,
   useRejectJobDescription,
   useUpdateOrganizationalItem,
+  useOrganizationalChangeLogs,
 } from "../hooks/useOrganizationalStructure";
 import type {
   OrganizationalResource,
@@ -30,10 +32,10 @@ import type {
   OrganizationalStructureMutation,
 } from "../types/OrganizationalStructure";
 
-type DialogMode = "add" | "edit" | "view" | "lifecycle" | "approve" | "reject" | null;
+type DialogMode = "add" | "edit" | "view" | "lifecycle" | "approve" | "reject" | "logs" | null;
 
 export default function OrganizationalStructurePage({ resource }: { resource: OrganizationalResource }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { hasPermission } = usePermissions();
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
@@ -64,6 +66,7 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
     sortDirection,
   }), [resource, page, pageSize, search, searchField, searchOperator, status, sortBy, sortDirection]);
   const query = useOrganizationalStructurePage(queryArgs, canView);
+  const changeLogsQuery = useOrganizationalChangeLogs(resource, selected?.id, dialog === "logs");
   const createMutation = useCreateOrganizationalItem();
   const updateMutation = useUpdateOrganizationalItem();
   const archiveMutation = useArchiveOrganizationalItem();
@@ -207,6 +210,7 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
       onLifecycle={(item) => { setSelected(item); setDialog("lifecycle"); }}
       onApprove={(item) => { setSelected(item); setDialog("approve"); }}
       onReject={(item) => { setSelected(item); setDialog("reject"); }}
+      onViewLogs={(item) => { setSelected(item); setDialog("logs"); }}
       onRefresh={() => void query.refetch()}
       onReset={resetList}
       onReparent={handleReparent}
@@ -235,6 +239,22 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
           setSelected(item);
           setDialog("reject");
         }}
+        onViewLogs={(item) => {
+          setSelected(item);
+          setDialog("logs");
+        }}
+      />
+    ) : null}
+    {dialog === "logs" && selected ? (
+      <EntityChangeLogDialog
+        open
+        onClose={close}
+        entityCode={selected.code}
+        entityName={i18n.language?.startsWith("ar") ? selected.nameAr : selected.nameEn}
+        logs={changeLogsQuery.data}
+        loading={changeLogsQuery.isLoading}
+        error={changeLogsQuery.error}
+        onRetry={() => void changeLogsQuery.refetch()}
       />
     ) : null}
     <ConfirmationDialog open={dialog === "lifecycle"} onClose={close} onConfirm={() => void lifecycle()}

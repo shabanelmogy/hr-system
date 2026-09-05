@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 
 import {
   createServerListState,
@@ -22,7 +22,7 @@ export function useServerListState<ColumnId extends string, Filters>({
   initialSort = null,
   searchDebounceMs = 350,
 }: UseServerListStateOptions<ColumnId, Filters>) {
-  const initialStateRef = useRef(
+  const [initialState] = useState(() =>
     createServerListState<ColumnId, Filters>({
       pageSize: initialPageSize,
       filters: initialFilters,
@@ -30,8 +30,8 @@ export function useServerListState<ColumnId extends string, Filters>({
       sort: initialSort,
     }),
   );
-  const [state, dispatch] = useReducer(serverListReducer<ColumnId, Filters>, initialStateRef.current);
-  const [searchInput, setSearchInput] = useState(initialStateRef.current.search);
+  const [state, dispatch] = useReducer(serverListReducer<ColumnId, Filters>, initialState);
+  const [searchInput, setSearchInput] = useState(initialState.search);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -65,9 +65,9 @@ export function useServerListState<ColumnId extends string, Filters>({
   }, [state.sort]);
 
   const reset = useCallback(() => {
-    setSearchInput(initialStateRef.current.search);
-    dispatch({ type: 'reset', state: initialStateRef.current });
-  }, []);
+    setSearchInput(initialState.search);
+    dispatch({ type: 'reset', state: initialState });
+  }, [initialState]);
 
   return useMemo(() => ({
     state,

@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
-import { getTrackChanges } from "../services/trackChangeService";
+import { getTrackChanges, getEntityChangeLogs } from "../services/trackChangeService";
 import type { TrackChangeLog } from "../types/trackChange";
 
 const trackChangeKeys = {
@@ -19,5 +19,19 @@ export default function useTrackChangesQuery(
     queryKey: trackChangeKeys.all,
     queryFn: getTrackChanges,
     staleTime: options?.staleTime ?? 5 * 60 * 1000,
+  });
+}
+
+export function useEntityChangeLogsQuery(
+  resource?: string,
+  id?: number | string | null,
+  options?: TrackChangesQueryOptions,
+) {
+  return useQuery({
+    ...options,
+    queryKey: ["organizational-structure", resource, id, "change-logs"] as const,
+    queryFn: () => getEntityChangeLogs(resource!, id!),
+    enabled: Boolean(resource && id) && (options?.enabled ?? true),
+    staleTime: options?.staleTime ?? 30 * 1000,
   });
 }

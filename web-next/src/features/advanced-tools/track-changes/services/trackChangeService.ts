@@ -7,6 +7,16 @@ export async function getTrackChanges(): Promise<TrackChangeLog[]> {
   return normalizeTrackChanges(unwrapResponse(response));
 }
 
+export async function getEntityChangeLogs(
+  resource: string,
+  id: number | string,
+): Promise<TrackChangeLog[]> {
+  const response = await apiService.get(
+    `/api/v1/organizational-structure/${resource}/${id}/change-logs`,
+  );
+  return normalizeTrackChanges(unwrapResponse(response));
+}
+
 export function normalizeTrackChanges(data: unknown): TrackChangeLog[] {
   if (!Array.isArray(data)) return [];
 

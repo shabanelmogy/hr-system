@@ -11,6 +11,8 @@ export enum NavigationSectionId {
   CHART_EXAMPLES = "chartExamples",
   ADVANCED_TOOLS = "advancedTools",
   HR_MANAGEMENT = "hrManagement",
+  RECRUITMENT = "recruitment",
+  FINANCE = "finance",
   KANBAN = "kanban",
   EXTRAS = "extras",
 }
@@ -84,6 +86,9 @@ export enum NavigationTitles {
 
   // HR Management
   HR_MANAGEMENT = "menu.hrManagement",
+  RECRUITMENT = "menu.recruitment",
+  FINANCE = "menu.finance",
+  FISCAL_YEARS = "menu.fiscalYears",
   KANBAN = "menu.kanban",
   KANBAN_BOARDS = "menu.kanbanBoards",
 }
