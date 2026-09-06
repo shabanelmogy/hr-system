@@ -131,6 +131,7 @@ export const routePolicies: readonly RoutePolicy[] = [
   { path: ROUTES.recruitment.root, permissions: [permissions.ViewRecruitment] },
   { path: ROUTES.finance.fiscalYears, permissions: [permissions.ViewFiscalYears] },
   { path: ROUTES.finance.root, permissions: [permissions.ViewFiscalYears] },
+  { path: ROUTES.workforcePlanning, permissions: [permissions.ViewWorkforcePlans] },
   { path: ROUTES.profile },
   { path: ROUTES.notifications, roles: [appRoles.admin, appRoles.user] },
   { path: ROUTES.home },

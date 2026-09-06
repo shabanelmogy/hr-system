@@ -331,6 +331,20 @@ export const PUBLIC_ROUTES = [
 **Solution:** Optimistic logout + middleware cookie cleanup  
 **Impact:** Instant logout redirect
 
+### **Fix 6: Bounded SignalR Query Token** (Sep 2026)
+**Problem:** Copying every role and permission into the browser SignalR token
+grew the connection query beyond default IIS request-filtering limits and the hub
+returned `404` before application routing.
+
+**Solution:** The realtime JWT now carries only identity/session context. After
+active-session validation, the API hydrates current system roles, selected-tenant
+roles, and known permissions from the database before `GeneralHub` assigns
+groups.
+
+**Impact:** Token size no longer grows with the permission catalog, revoked or
+changed role assignments are refreshed on reconnect, and the existing Web and
+Mobile SignalR clients require no transport or UI change.
+
 ---
 
 ## 📊 Performance Metrics

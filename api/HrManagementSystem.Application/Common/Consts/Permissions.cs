@@ -63,6 +63,24 @@ public static class Permissions
     public const string DeleteFiscalYears = "FiscalYears:Delete";
     public const string ManageFiscalYearLifecycle = "FiscalYears:ManageLifecycle";
 
+    public const string ViewWorkforcePlans = "WorkforcePlans:View";
+    public const string CreateWorkforcePlans = "WorkforcePlans:Create";
+    public const string EditWorkforcePlans = "WorkforcePlans:Edit";
+    public const string DeleteWorkforcePlans = "WorkforcePlans:Delete";
+    public const string ApproveWorkforcePlans = "WorkforcePlans:Approve";
+    public const string ViewWorkforceBudgets = "WorkforceBudgets:View";
+    public const string ManageWorkforceBudgets = "WorkforceBudgets:Manage";
+    public const string ApproveWorkforceBudgets = "WorkforceBudgets:Approve";
+    public const string ViewPositionEnvelopes = "PositionEnvelopes:View";
+    public const string ViewEnvelopeAmendments = "EnvelopeAmendments:View";
+    public const string CreateEnvelopeAmendments = "EnvelopeAmendments:Create";
+    public const string ApproveEnvelopeAmendments = "EnvelopeAmendments:Approve";
+    public const string ViewStaffingRequests = "StaffingRequests:View";
+    public const string CreateStaffingRequests = "StaffingRequests:Create";
+    public const string ApproveStaffingRequests = "StaffingRequests:Approve";
+    public const string ViewWorkforceTrace = "WorkforcePlanning:ViewTrace";
+    public const string ViewWorkforceFinancials = "WorkforcePlanning:ViewFinancials";
+
     public const string ViewAttendanceDevices = "AttendanceDevices:View";
     public const string ManageAttendanceDevices = "AttendanceDevices:Manage";
     public const string ManageAttendanceDeviceCredentials = "AttendanceDevices:Credentials";

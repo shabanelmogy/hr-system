@@ -6,6 +6,7 @@ import { arAuthProfileOnboarding } from './ar-auth-profile-onboarding';
 import { arPlatformToolsNotifications } from './ar-platform-tools-notifications';
 import { arBasicData } from './ar-basic-data';
 import { arFiscalYears } from './ar-fiscal-years';
+import { arWorkforcePlanning } from './ar-workforce-planning';
 
 export const ar = {
   ...arCommon,
@@ -16,4 +17,5 @@ export const ar = {
   ...arBasicData,
   ...arRecruitment,
   ...arFiscalYears,
+  ...arWorkforcePlanning,
 };

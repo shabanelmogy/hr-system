@@ -71,6 +71,16 @@ lookups, shared preview/feedback, and `POST /{resource}/bulk` atomic submission.
 `FormContent`, `FormFooter`, `MyTextField`, and `MySelect` with a reusable Zod
 schema. Save remains enabled; errors render beneath fields and shared focus/dirty
 protection behavior is retained. Parent selectors load active same-company data.
+Optional numeric, identifier, and boolean inputs use Zod preprocessors whose
+inner schemas are explicitly optional through the shared
+`zodFormPrimitives`; a missing field must not be interpreted as `nonoptional`
+by Zod 4. The architecture gate rejects the unsafe transformed-union pattern in
+future validation files. The Branch regression fixture verifies that generated
+sample data produces no errors for fields owned by other resources. The shared
+header error count is an interactive summary listing each field label and
+message. React Hook Form errors are normalized by the shared recursive
+`toFormErrorMessages()` helper so nested errors cannot disappear from that
+summary; validation failures are never represented by an unexplained number.
 In non-production builds, add/edit mode also passes a shared `mockDataAction`
 to render `Generate Mock Data` in the form footer. The resource-aware generator
 fills valid sample values and active lookup ids without submitting; it is absent
@@ -86,7 +96,10 @@ only exposes these actions when the approval permission and resource/status allo
 
 Shared confirmation dialogs guard archive/restore. Success, failure, loading, and
 empty states use translation keys; no browser alert/confirm/native validation is
-used.
+used. Create/update failures preserve the complete `ApiClientError` when invoking
+the shared error dialog, so HTTP status, API messages, error codes, and trace ids
+remain available. Known field-scoped failures are also mapped back underneath the
+corresponding shared form field, including an existing-headquarters conflict.
 
 ## 12. Localization and accessibility
 

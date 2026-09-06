@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-05T17:46:14.804515+00:00",
+  "generated_at": "2026-09-06T09:36:51.233887+00:00",
   "nodes": {
     "api_hrmanagementsystem_application_common_consts_permissions_hrmanagementsystem_application_common_consts_permissions": {
-      "code_fingerprint": "c4a81554ef8016ecb9f2abe689b0f97b4f61fc6c3dd7dd9facd33927bbcb6761",
+      "code_fingerprint": "6e84f5c9335657fef9ca41c5a9a2e8f052143ae7e51a05b69334e899b18e971b",
       "label": "Permissions",
       "last": "2026-08-31T07:46:55.688848+00:00",
       "provenance": [
@@ -17,7 +17,7 @@
           "q": "انا سجلت دخول بالادمن والصفحات مش ظاهرة ؟"
         }
       ],
-      "score": 1.764531121,
+      "score": 1.737821712,
       "source_file": "api/HrManagementSystem.Application/Common/Consts/Permissions.cs",
       "status": "preferred",
       "uses": 2
@@ -33,7 +33,7 @@
           "q": "اعمل migartion"
         }
       ],
-      "score": 0.882372796,
+      "score": 0.869016468,
       "source_file": "api/HrManagementSystem.Infrastructure/Dependencies/DatabaseService.cs",
       "status": "tentative",
       "uses": 1
@@ -49,7 +49,7 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.561593415,
+      "score": 0.55309267,
       "source_file": "api/HrManagementSystem.Infrastructure/Security/Authorization/Filters/TenantMemberAttribute.cs",
       "status": "tentative",
       "uses": 1
@@ -65,7 +65,7 @@
           "q": "اعمل migartion"
         }
       ],
-      "score": 0.882372796,
+      "score": 0.869016468,
       "source_file": "",
       "status": "tentative",
       "uses": 1
@@ -81,7 +81,7 @@
           "q": "when focus input keyboard cover input"
         }
       ],
-      "score": 0.560612434,
+      "score": 0.552126538,
       "source_file": "mobile-react/app.json",
       "status": "tentative",
       "uses": 1
@@ -97,7 +97,7 @@
           "q": "create dashborad and tenetamanagement in web-next and mobile"
         }
       ],
-      "score": 0.561507378,
+      "score": 0.553007936,
       "source_file": "mobile-react/src/features/tenants/screens/TenantDashboardScreen.tsx",
       "status": "tentative",
       "uses": 1
@@ -113,7 +113,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.561868633,
+      "score": 0.553363723,
       "source_file": "web-next/package.json",
       "status": "tentative",
       "uses": 1
@@ -129,7 +129,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.561713581,
+      "score": 0.553211018,
       "source_file": "web-next/README.md",
       "status": "tentative",
       "uses": 1
@@ -145,7 +145,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.561713581,
+      "score": 0.553211018,
       "source_file": "web-next/scripts/setup-local-https.ps1",
       "status": "tentative",
       "uses": 1
@@ -161,7 +161,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.561868633,
+      "score": 0.553363723,
       "source_file": "web-next/src/app/(auth)/login/page.tsx",
       "status": "tentative",
       "uses": 1
@@ -177,7 +177,7 @@
           "q": "fix style for buton : login as admin"
         }
       ],
-      "score": 0.560688771,
+      "score": 0.55220172,
       "source_file": "web-next/src/features/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
@@ -193,7 +193,7 @@
           "q": "Fix web super-admin login failing with HTTP 307 and React minWidth DOM warning on the tenant dashboard."
         }
       ],
-      "score": 0.56210133,
+      "score": 0.553592897,
       "source_file": "web-next/src/features/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
@@ -209,7 +209,7 @@
           "q": "fix style for buton : login as admin"
         }
       ],
-      "score": 0.560688771,
+      "score": 0.55220172,
       "source_file": "web-next/src/features/auth/login/Login.tsx",
       "status": "tentative",
       "uses": 1
@@ -225,7 +225,7 @@
           "q": "انا سجلت دخول بالادمن والصفحات مش ظاهرة ؟"
         }
       ],
-      "score": 0.882158325,
+      "score": 0.868805244,
       "source_file": "web-next/src/features/basic-data/navigation/basicDataNavigation.tsx",
       "status": "tentative",
       "uses": 1
@@ -246,13 +246,13 @@
           "q": "create dashborad and tenetamanagement in web-next and mobile"
         }
       ],
-      "score": 1.123608707,
+      "score": 1.106600833,
       "source_file": "web-next/src/features/tenants/TenantDashboardPage.tsx",
       "status": "preferred",
       "uses": 2
     },
     "web_next_src_layouts_components_sidebar_navigationconfig_getnavigationconfig": {
-      "code_fingerprint": "b4ddbd630b1f7214d4ee305fab89d784c1a41900e0772d280c11a941b2713cec",
+      "code_fingerprint": "ef1ccdaeea6aa4870eefc86dd4c86b559b7979509ef3a3cc20d1d07112258f60",
       "label": "getNavigationConfig()",
       "last": "2026-08-11T18:26:28.622140+00:00",
       "provenance": [
@@ -262,7 +262,7 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.561593415,
+      "score": 0.55309267,
       "source_file": "web-next/src/layouts/components/sidebar/navigationConfig.tsx",
       "status": "tentative",
       "uses": 1
@@ -283,7 +283,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 1.123969963,
+      "score": 1.10695662,
       "source_file": "web-next/src/proxy.ts",
       "status": "preferred",
       "uses": 2

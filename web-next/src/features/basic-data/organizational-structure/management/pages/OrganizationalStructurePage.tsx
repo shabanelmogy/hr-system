@@ -8,6 +8,7 @@ import { usePermissions } from "@/shared/hooks/usePermissions";
 import { ConfirmationDialog } from "@/shared/components/dialogs";
 import { ContentWrapper } from "@/shared/components/layout";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
+import { showToast } from "@/shared/components/feedback/transient";
 import OrganizationalStructureForm from "../components/OrganizationalStructureForm";
 import OrganizationalStructureMultiView from "../components/OrganizationalStructureMultiView";
 import JobDescriptionDecisionDialog from "../components/JobDescriptionDecisionDialog";
@@ -77,22 +78,41 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
   const close = () => { if (!mutationLoading) { setDialog(null); setSelected(null); } };
   const submit = async (values: OrganizationalStructureMutation) => {
     const request = resource === "job-descriptions" ? { ...values, version: values.code } : values;
-    if (dialog === "edit" && selected) await updateMutation.mutateAsync({ resource, id: selected.id, request });
-    else await createMutation.mutateAsync({ resource, request });
-    close();
+    if (dialog === "edit" && selected) {
+      await updateMutation.mutateAsync({ resource, id: selected.id, request });
+      showToast.success(t("organizationalStructure.updated"));
+    } else {
+      await createMutation.mutateAsync({ resource, request });
+      showToast.success(t("organizationalStructure.created"));
+    }
+    setDialog(null);
+    setSelected(null);
   };
   const lifecycle = async () => {
     if (!selected) return;
     const variables = { resource, id: selected.id };
-    if (selected.isDeleted) await restoreMutation.mutateAsync(variables);
-    else await archiveMutation.mutateAsync(variables);
-    close();
+    if (selected.isDeleted) {
+      await restoreMutation.mutateAsync(variables);
+      showToast.success(t("organizationalStructure.restored"));
+    } else {
+      await archiveMutation.mutateAsync(variables);
+      showToast.success(t("organizationalStructure.archived"));
+    }
+    setDialog(null);
+    setSelected(null);
   };
   const decide = async (values: { effectiveDate: string; expiryDate: string; reason: string }) => {
     if (!selected) return;
-    if (dialog === "approve") await approveMutation.mutateAsync({ id: selected.id, effectiveDate: values.effectiveDate, expiryDate: values.expiryDate || undefined });
-    if (dialog === "reject") await rejectMutation.mutateAsync({ id: selected.id, reason: values.reason });
-    close();
+    if (dialog === "approve") {
+      await approveMutation.mutateAsync({ id: selected.id, effectiveDate: values.effectiveDate, expiryDate: values.expiryDate || undefined });
+      showToast.success(t("organizationalStructure.decision.approved"));
+    }
+    if (dialog === "reject") {
+      await rejectMutation.mutateAsync({ id: selected.id, reason: values.reason });
+      showToast.success(t("organizationalStructure.decision.rejected"));
+    }
+    setDialog(null);
+    setSelected(null);
   };
   const handleReparent = async (
     sourceItem: OrganizationalStructureItem,

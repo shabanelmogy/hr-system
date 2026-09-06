@@ -49,10 +49,37 @@ function featureGroup(filePath) {
 const graph = new Map(sourceFiles.map((filePath) => [filePath, []]));
 const importPattern = /(?:from|import)\s*["']([^"']+)["']/g;
 const violations = [];
+const formSafetyViolations = [];
+const cacheSafetyViolations = [];
 
 for (const filePath of sourceFiles) {
   const source = fs.readFileSync(filePath, "utf8");
   let match;
+
+  const relativePath = path.relative(sourceRoot, filePath);
+  const isValidationSource = /(?:validation|schema)/i.test(relativePath);
+  const transformedUndefinedUnion = /z\.union\s*\(\s*\[[\s\S]*?z\.undefined\s*\(\s*\)[\s\S]*?\]\s*\)\s*\.transform\s*\(/;
+  if (isValidationSource && transformedUndefinedUnion.test(source)) {
+    formSafetyViolations.push(
+      `${relativePath}: use an explicitly optional inner schema from shared/validation/zodFormPrimitives instead of transforming a union with z.undefined()`,
+    );
+  }
+
+  const manuallyProjectedFormErrors = /Object\.fromEntries\s*\(\s*Object\.entries\s*\([^)]*errors/i;
+  if (source.includes("<MyForm") && manuallyProjectedFormErrors.test(source)) {
+    formSafetyViolations.push(
+      `${relativePath}: use toFormErrorMessages() so nested form errors remain visible`,
+    );
+  }
+
+  if (
+    relativePath.split(path.sep).join("/") === "shared/config/queryClient.ts" &&
+    /refetchOnMount\s*:\s*false/.test(source)
+  ) {
+    cacheSafetyViolations.push(
+      `${relativePath}: the global query client must refetch stale data on mount; override individual genuinely static queries instead`,
+    );
+  }
 
   while ((match = importPattern.exec(source))) {
     const target = resolveImport(filePath, match[1]);
@@ -108,7 +135,7 @@ for (const filePath of sourceFiles) {
   if (!states.has(filePath)) visit(filePath);
 }
 
-if (violations.length || cycles.size) {
+if (violations.length || cycles.size || formSafetyViolations.length || cacheSafetyViolations.length) {
   if (violations.length) {
     console.error("Forbidden architecture dependencies:");
     for (const violation of violations) console.error(`  ${violation}`);
@@ -117,7 +144,15 @@ if (violations.length || cycles.size) {
     console.error("Circular dependencies:");
     for (const cycle of cycles) console.error(`  ${cycle}`);
   }
+  if (formSafetyViolations.length) {
+    console.error("Unsafe form validation patterns:");
+    for (const violation of formSafetyViolations) console.error(`  ${violation}`);
+  }
+  if (cacheSafetyViolations.length) {
+    console.error("Unsafe query cache configuration:");
+    for (const violation of cacheSafetyViolations) console.error(`  ${violation}`);
+  }
   process.exit(1);
 }
 
-console.log("Architecture checks passed: dependency direction and cycles are clean.");
+console.log("Architecture checks passed: dependency direction, cycles, form validation safety, and query cache consistency are clean.");

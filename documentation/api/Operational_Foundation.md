@@ -43,6 +43,8 @@ External websites are not health dependencies. A Google or public-internet failu
 
 Both settings are enabled in local Development. Hosted environments default to disabled so multiple API instances do not race while applying migrations or seeds. Apply production migrations as a deployment step, or explicitly opt in for a controlled single-instance deployment.
 
+System-role permission reconciliation remains active when `SeedOnStartup` is disabled. That path first creates any missing built-in `super_admin`, `admin`, and `user` roles, then reconciles their owned permissions. It is therefore safe after recreating an already-migrated database and remains idempotent across later startups. It does not create bootstrap users, companies, geography, or sample data; those remain controlled by `SeedOnStartup`.
+
 ## Configuration validation
 
 JWT, Hangfire, CORS, mail, frontend URL, and database connection settings are validated during startup. Hosted configuration must provide valid values before the API begins serving requests. Development secrets may remain in development-only configuration, but production secrets belong in environment variables or a secret store.

@@ -328,5 +328,20 @@
     "FiscalYearCreatedNotificationMessage": "تم إنشاء السنة المالية {Code}",
     "FiscalYearUpdatedNotificationMessage": "تم تحديث السنة المالية {Code}",
     "FiscalYearArchivedNotificationMessage": "تمت أرشفة السنة المالية {Code}",
-    "FiscalYearRestoredNotificationMessage": "تمت استعادة السنة المالية {Code}"
+    "FiscalYearRestoredNotificationMessage": "تمت استعادة السنة المالية {Code}",
+    "WorkforcePlanNotFound": "لم يتم العثور على خطة القوى العاملة",
+    "WorkforcePlanDuplicateCode": "يوجد بالفعل كود خطة بنفس السنة المالية",
+    "WorkforcePlanFiscalYearNotFound": "لم يتم العثور على السنة المالية",
+    "WorkforcePlanFiscalYearNotEditable": "يجب أن تكون السنة المالية مسودة أو مفتوحة لتعديل خطة القوى العاملة",
+    "WorkforcePlanFiscalYearMustBeOpen": "يجب أن تكون السنة المالية مفتوحة لتنفيذ هذه العملية",
+    "WorkforcePlanPositionNotFound": "لم يتم العثور على الوظيفة المحددة",
+    "WorkforcePlanBranchNotFound": "لم يتم العثور على الفرع المحدد أو أنه غير نشط",
+    "WorkforcePlanDuplicateLine": "لا يمكن إضافة نفس الوظيفة والفرع مرتين",
+    "WorkforcePlanPositionBranchMismatch": "الفرع المستهدف لا يتوافق مع قسم الوظيفة",
+    "WorkforcePlanPeriodNotFound": "الفترة المحددة ليست ضمن السنة المالية",
+    "WorkforcePlanCompanyContextRequired": "اختر شركة قبل إدارة خطط القوى العاملة",
+    "WorkforcePlanInvalidStatusTransition": "لا يسمح بهذا الانتقال في حالة خطة القوى العاملة",
+    "WorkforcePlanNotArchivable": "يمكن أرشفة خطط القوى العاملة المسودة أو المرفوضة فقط",
+    "WorkforcePlanNotRestorable": "يمكن استعادة خطط القوى العاملة المؤرشفة إذا كانت مسودة أو مرفوضة فقط",
+    "WorkforcePlanConcurrencyConflict": "تم تعديل خطة القوى العاملة بواسطة طلب آخر"
 }

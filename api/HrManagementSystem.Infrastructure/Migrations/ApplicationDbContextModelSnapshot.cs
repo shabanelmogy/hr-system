@@ -2126,8 +2126,6 @@ namespace HrManagementSystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("TenantId", "CompanyId", "Id");
-
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("DeletedById");
@@ -6292,6 +6290,344 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.ToTable("Tenants", (string)null);
                 });
 
+            modelBuilder.Entity("HrManagementSystem.Domain.WorkforcePlanning.Entities.WorkforcePlan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTimeOffset?>("ActivatedOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("ApprovedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("ApprovedOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DecisionReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int>("FiscalYearId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PlanCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("PlanSeriesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("PreviousRevisionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RejectedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("RejectedOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("RevisionNumber")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubmittedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("SubmittedOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset?>("SupersededOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("TitleAr")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("TitleEn")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "FiscalYearId")
+                        .IsUnique()
+                        .HasDatabaseName("UX_WorkforcePlans_OneEffectivePerFiscalYear")
+                        .HasFilter("[Status] = 4 AND [ActivatedOn] IS NOT NULL AND [SupersededOn] IS NULL AND [IsDeleted] = 0");
+
+                    b.HasIndex("TenantId", "CompanyId", "FiscalYearId", "PlanCode", "RevisionNumber")
+                        .IsUnique();
+
+                    b.ToTable("WorkforcePlans", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.WorkforcePlanning.Entities.WorkforcePlanLine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("BaselineAsOfDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("BaselineHeadcount")
+                        .HasColumnType("int")
+                        .HasColumnName("CurrentHeadcount");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DivisionId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Justification")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int>("NewHireSlots")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PositionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReplacementSlots")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int?>("TargetBranchId")
+                        .HasColumnType("int")
+                        .HasColumnName("BranchId");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorkforcePlanId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "DepartmentId");
+
+                    b.HasIndex("TenantId", "CompanyId", "DivisionId");
+
+                    b.HasIndex("TenantId", "CompanyId", "PositionId");
+
+                    b.HasIndex("TenantId", "CompanyId", "TargetBranchId");
+
+                    b.HasIndex("TenantId", "CompanyId", "WorkforcePlanId", "PositionId");
+
+                    b.ToTable("WorkforcePlanLines", (string)null);
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.WorkforcePlanning.Entities.WorkforcePlanLinePeriodTarget", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FiscalPeriodId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("NewHireSlots")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReplacementSlots")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorkforcePlanLineId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("TenantId", "CompanyId", "Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "FiscalPeriodId");
+
+                    b.HasIndex("TenantId", "CompanyId", "WorkforcePlanLineId", "FiscalPeriodId")
+                        .IsUnique();
+
+                    b.ToTable("WorkforcePlanLinePeriodTargets", (string)null);
+                });
+
             modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Platform.Notifications.Entities.Notification", b =>
                 {
                     b.Property<long>("Id")
@@ -9056,6 +9392,155 @@ namespace HrManagementSystem.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HrManagementSystem.Domain.WorkforcePlanning.Entities.WorkforcePlan", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.Finance.FiscalYears.Entities.FiscalYear", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId", "FiscalYearId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.WorkforcePlanning.Entities.WorkforcePlanLine", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Department", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId", "DepartmentId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Division", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId", "DivisionId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Position", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId", "PositionId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Branch", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId", "TargetBranchId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("HrManagementSystem.Domain.WorkforcePlanning.Entities.WorkforcePlan", "WorkforcePlan")
+                        .WithMany("Lines")
+                        .HasForeignKey("TenantId", "CompanyId", "WorkforcePlanId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("WorkforcePlan");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.WorkforcePlanning.Entities.WorkforcePlanLinePeriodTarget", b =>
+                {
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("HrManagementSystem.Domain.Tenancy.Entities.Tenant", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.HasOne("HrManagementSystem.Domain.OrganizationalStructure.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.Finance.FiscalYears.Entities.FiscalPeriod", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId", "FiscalPeriodId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HrManagementSystem.Domain.WorkforcePlanning.Entities.WorkforcePlanLine", "WorkforcePlanLine")
+                        .WithMany("PeriodTargets")
+                        .HasForeignKey("TenantId", "CompanyId", "WorkforcePlanLineId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("WorkforcePlanLine");
+                });
+
             modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Platform.Notifications.Entities.Notification", b =>
                 {
                     b.HasOne("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", "ActorUser")
@@ -9460,6 +9945,16 @@ namespace HrManagementSystem.Infrastructure.Migrations
                     b.Navigation("Evaluations");
 
                     b.Navigation("Participants");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.WorkforcePlanning.Entities.WorkforcePlan", b =>
+                {
+                    b.Navigation("Lines");
+                });
+
+            modelBuilder.Entity("HrManagementSystem.Domain.WorkforcePlanning.Entities.WorkforcePlanLine", b =>
+                {
+                    b.Navigation("PeriodTargets");
                 });
 
             modelBuilder.Entity("HrManagementSystem.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", b =>

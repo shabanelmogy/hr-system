@@ -41,14 +41,16 @@ by a frequency change remain soft-archived and can be restored by a later draft
 update without creating duplicate codes. Domain methods own reconstruction and
 lifecycle.
 
-Lifecycle is `Draft -> Open -> Closing -> Closed -> Locked`. Draft is the only
-editable and archivable state. Locked is final in this release. Repeating an action
-already at its target is a no-op; skipped transitions fail.
+Lifecycle is `Draft -> Open -> Closing -> Closed -> Locked`, with controlled
+exceptions `Closed -> Open` and `Locked -> Open` for an authorized reopen. Reopening also returns every
+generated period to Open, preserves the audit history, and does not make the year
+identity/calendar editable; Draft remains the only editable and archivable state.
+Repeating an action already at its target is a no-op; skipped transitions fail.
 
 ## 4. API and persistence contract
 
 The versioned surface is `/api/v1/fiscal-years` with page, lookup, detail, create,
-update, archive, restore, open, begin-closing, close, and lock operations. All
+update, archive, restore, open, begin-closing, close, lock, and reopen operations. All
 actions use MediatR commands/queries from a thin controller and require
 `TenantMember` plus a feature permission.
 
@@ -59,9 +61,10 @@ restored over a newer calendar. Update, restore, and lifecycle operations use
 RowVersion. Audit persistence is part of the transaction; Hangfire/realtime is
 scheduled after commit only.
 
-EF migration `20260905180523_AddFiscalYears` creates `FiscalYears` and
-`FiscalPeriods`, composite tenant/company relationships, unique code/sequence
-indexes, RowVersion columns, and the five ADMIN permission claims.
+The consolidated EF baseline migration `20260906112413_create-database` creates
+`FiscalYears` and `FiscalPeriods`, composite tenant/company relationships,
+unique code/sequence indexes, and RowVersion columns. Fiscal Year permissions
+are assigned through the runtime system-role seeding path.
 
 ## 5. Authorization and ownership
 
@@ -104,7 +107,16 @@ selected states come from the active theme palette.
 ## 8. Lifecycle, integration, and UI audit
 
 The API scheduler publishes resource `fiscal-years`; Web and Mobile map it to the
-root Fiscal Year query key. Route and permission parity tests cover visibility.
+root Fiscal Year query key. Mutations invalidate the same family, while the
+cross-feature lookup explicitly refetches on mount in both clients. This closes
+the inactive-cache path in which a newly created year could be absent when the
+user later entered Workforce Planning. Route and permission parity tests cover
+visibility.
+
+Closed rows expose both explicit Reopen and Lock actions, while Locked rows expose
+Reopen, in Web Grid/Cards and Mobile Table/Cards. The confirmation explains the selected action;
+the request uses the latest RowVersion and `ManageLifecycle`, and the successful
+transaction records the previous status and `Open` before post-commit cache/realtime refresh.
 
 Five-point audit:
 
@@ -141,7 +153,8 @@ Five-point audit:
 
 Fiscal Years is releasable after an authenticated manual smoke test in both
 clients. Report and API/Web import are Deferred until the Workforce Budget dataset
-is defined; mobile import, charts, bulk lifecycle, reopen, and unlock are Excluded.
+is defined; mobile import, charts, and bulk lifecycle are Excluded. Reopen is a
+Required single-record lifecycle action on API, Web, and Mobile.
 No placeholder UI exists for those decisions.
 
 The next implementation slice is Workforce Plans and Workforce Budgets, followed

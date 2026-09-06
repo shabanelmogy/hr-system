@@ -41,6 +41,7 @@ The HrManagementSystem uses a **JWT + Refresh Token** authentication architectur
 | **Auth Controller** | `Features/Security/Authentication/Controllers/V1/AuthController.cs` | REST endpoints (login, refresh, session, etc.) |
 | **Auth Service** | `Features/Security/Authentication/Services/AuthService.cs` | Business logic (user validation, token issuance) |
 | **JWT Provider** | `Infrastructure/Security/Authentication/JwtProvider.cs` | JWT generation & validation |
+| **Realtime Claims Loader** | `Infrastructure/Security/Authentication/RealtimePrincipalClaimsLoader.cs` | Hydrates current roles and permissions after realtime session validation |
 | **Refresh Token Protector** | (inferred) | Hashing, rotation, replay detection for refresh tokens |
 
 ---
@@ -351,6 +352,21 @@ function refreshAuthTokens(accessToken, refreshToken) {
 | POST | `/api/v1/auth/resendConfirmationEmail` | ❌ Anonymous | Resend confirmation email |
 | POST | `/api/v1/auth/forgetPassword` | ❌ Anonymous | Request password reset code |
 | POST | `/api/v1/auth/resetPassword` | ❌ Anonymous | Reset password with code |
+
+### Realtime token and hub authorization
+
+`GET /api/v1/auth/realtimeToken` issues a short-lived, audience- and
+scope-specific JWT containing only identity and session context. Roles,
+permissions, tenant-role identifiers, email, and tenant display fields are not
+copied into it because browser SignalR transports send the token in the query
+string and hosted IIS request filtering rejects oversized URLs.
+
+The realtime bearer handler first performs the normal active-session checks,
+then loads current roles and known permissions for the selected tenant from the
+database. `GeneralHub` resolves its groups only after that enrichment. Permission
+or role changes therefore take effect on the next connection without expanding
+the query-string token. Raising the server URL limit is defense in depth only,
+not the architectural remedy.
 
 ---
 

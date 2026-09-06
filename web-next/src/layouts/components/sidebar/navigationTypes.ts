@@ -89,6 +89,7 @@ export enum NavigationTitles {
   RECRUITMENT = "menu.recruitment",
   FINANCE = "menu.finance",
   FISCAL_YEARS = "menu.fiscalYears",
+  WORKFORCE_PLANS = "menu.workforcePlans",
   KANBAN = "menu.kanban",
   KANBAN_BOARDS = "menu.kanbanBoards",
 }

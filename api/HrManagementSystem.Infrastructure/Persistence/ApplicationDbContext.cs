@@ -12,6 +12,7 @@ using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
 using HrManagementSystem.Domain.GeographicalInformation.Districts.Entities;
 using HrManagementSystem.Infrastructure.Features.Platform.Notifications.Entities;
 using HrManagementSystem.Domain.Recruitment.Entities;
+using HrManagementSystem.Domain.WorkforcePlanning.Entities;
 
 using HrManagementSystem.Domain.Analytics.Reports.Entities;
 using HrManagementSystem.Domain.Analytics.ReportTemplates.Entities;
@@ -109,6 +110,9 @@ public class ApplicationDbContext(
     public DbSet<EmployeeContract> EmployeeContracts { get; set; }
     public DbSet<FiscalYear> FiscalYears { get; set; }
     public DbSet<FiscalPeriod> FiscalPeriods { get; set; }
+    public DbSet<WorkforcePlan> WorkforcePlans { get; set; }
+    public DbSet<WorkforcePlanLine> WorkforcePlanLines { get; set; }
+    public DbSet<WorkforcePlanLinePeriodTarget> WorkforcePlanLinePeriodTargets { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

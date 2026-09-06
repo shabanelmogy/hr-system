@@ -4,6 +4,7 @@ import { tenantKeys } from "@/features/tenants";
 import { addressTypeKeys } from "@/features/basic-data/geographical-information/address-types";
 import { countryKeys } from "@/features/basic-data/geographical-information/countries";
 import { fiscalYearKeys } from "@/features/finance/fiscal-years";
+import { workforcePlanKeys } from "@/features/workforce-planning";
 import { districtKeys } from "@/features/basic-data/geographical-information/districts";
 import { stateKeys } from "@/features/basic-data/geographical-information/states";
 import { organizationalStructureKeys } from "@/features/basic-data/organizational-structure/management";
@@ -13,6 +14,7 @@ type QueryKey = readonly unknown[];
 export const realtimeResources = {
   countries: "countries",
   fiscalYears: "fiscal-years",
+  workforcePlans: "workforce-plans",
   states: "states",
   organizationalStructure: "organizational-structure",
   districts: "districts",
@@ -31,6 +33,7 @@ export const realtimeResources = {
 const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
   [realtimeResources.countries]: [countryKeys.all, stateKeys.all],
   [realtimeResources.fiscalYears]: [fiscalYearKeys.all],
+  [realtimeResources.workforcePlans]: [workforcePlanKeys.all],
   [realtimeResources.states]: [stateKeys.all, countryKeys.all, districtKeys.all],
   [realtimeResources.organizationalStructure]: [organizationalStructureKeys.all],
   [realtimeResources.districts]: [districtKeys.all, stateKeys.all],

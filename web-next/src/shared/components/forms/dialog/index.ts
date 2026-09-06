@@ -3,5 +3,6 @@ export { FormContent } from "./FormContent";
 export { FormProvider, useFormContext } from "./FormContext";
 export { FormFooter } from "./FormFooter";
 export { FormHeader } from "./FormHeader";
+export { getFormErrorSummary, toFormErrorMessages } from "./formErrorSummary";
 export { default as MyForm } from "./MyForm";
 export type * from "./types";

@@ -77,7 +77,7 @@ export interface FiscalYearPageQuery {
 }
 
 export type FiscalYearPageResponse = ManagementPageResponse<FiscalYearListItem>;
-export type FiscalYearLifecycleAction = "open" | "beginClosing" | "close" | "lock";
+export type FiscalYearLifecycleAction = "open" | "beginClosing" | "close" | "lock" | "reopen";
 
 export interface FiscalYearPermissions {
   canView: boolean;

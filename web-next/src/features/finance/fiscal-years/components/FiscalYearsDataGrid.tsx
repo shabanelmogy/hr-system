@@ -1,12 +1,13 @@
 import { ContentWrapper } from "@/shared/components/layout";
 import { MyDataGrid } from "@/shared/components/data-grid";
 import { ResetButton } from "@/shared/components/lists/card-view/header-controls/ResetButton";
-import { Archive, Edit, LockClock, Restore, Visibility } from "@mui/icons-material";
+import { Archive, Edit, LockClock, LockOpen, Restore, Visibility } from "@mui/icons-material";
 import { Chip, Divider, ListItemIcon, ListItemText, MenuItem, Radio } from "@mui/material";
 import { GridActionsCellItem, type GridColDef, type GridPaginationModel, type GridSortModel } from "@mui/x-data-grid";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import type { FiscalYearLifecycleFilter, FiscalYearListItem, FiscalYearPermissions, FiscalYearRecordStatus, FiscalYearSearchField, FiscalYearSearchOperator, FiscalYearSortColumn } from "../types/FiscalYear";
+import type { FiscalYearLifecycleAction, FiscalYearLifecycleFilter, FiscalYearListItem, FiscalYearPermissions, FiscalYearRecordStatus, FiscalYearSearchField, FiscalYearSearchOperator, FiscalYearSortColumn } from "../types/FiscalYear";
+import { getAvailableFiscalYearLifecycleActions } from "../utils/fiscalYearLifecycle";
 
 interface Props {
   rows: FiscalYearListItem[]; loading: boolean; page: number; pageSize: number; totalCount: number;
@@ -15,7 +16,7 @@ interface Props {
   onSearchChange: (value: string) => void; onSearchFieldChange: (value: FiscalYearSearchField) => void; onSearchOperatorChange: (value: FiscalYearSearchOperator) => void;
   onRecordStatusChange: (value: FiscalYearRecordStatus) => void; onLifecycleStatusChange: (value: FiscalYearLifecycleFilter) => void; onReset: () => void;
   onPaginationChange: (model: GridPaginationModel) => void; onSortChange: (model: GridSortModel) => void;
-  onView: (item: FiscalYearListItem) => void; onEdit: (item: FiscalYearListItem) => void; onArchive: (item: FiscalYearListItem) => void; onRestore: (item: FiscalYearListItem) => void; onLifecycle: (item: FiscalYearListItem) => void;
+  onView: (item: FiscalYearListItem) => void; onEdit: (item: FiscalYearListItem) => void; onArchive: (item: FiscalYearListItem) => void; onRestore: (item: FiscalYearListItem) => void; onLifecycle: (item: FiscalYearListItem, action: FiscalYearLifecycleAction) => void;
 }
 
 export default function FiscalYearsDataGrid(props: Props) {
@@ -31,7 +32,8 @@ export default function FiscalYearsDataGrid(props: Props) {
     { field: "actions", type: "actions", headerName: t("actions.buttons"), width: 185, getActions: ({ row }) => [
       <GridActionsCellItem key="view" icon={<Visibility />} label={t("actions.view")} onClick={() => props.onView(row)} showInMenu={false} />,
       <GridActionsCellItem key="edit" icon={<Edit />} label={t("actions.edit")} disabled={!props.permissions.canEdit || row.isDeleted || row.status !== 1} onClick={() => props.onEdit(row)} showInMenu={false} />,
-      <GridActionsCellItem key="lifecycle" icon={<LockClock />} label={t("fiscalYears.actions.lifecycle")} disabled={!props.permissions.canManageLifecycle || row.isDeleted || row.status === 5} onClick={() => props.onLifecycle(row)} showInMenu />,
+      ...getAvailableFiscalYearLifecycleActions(row.status).map(action =>
+        <GridActionsCellItem key={`lifecycle-${action}`} icon={action === "reopen" ? <LockOpen /> : <LockClock />} label={t(`fiscalYears.lifecycle.${action}`)} disabled={!props.permissions.canManageLifecycle || row.isDeleted} onClick={() => props.onLifecycle(row, action)} showInMenu />),
       row.isDeleted
         ? <GridActionsCellItem key="restore" icon={<Restore />} label={t("actions.restore")} disabled={!props.permissions.canDelete} onClick={() => props.onRestore(row)} showInMenu />
         : <GridActionsCellItem key="archive" icon={<Archive />} label={t("actions.archive")} disabled={!props.permissions.canDelete || row.status !== 1} onClick={() => props.onArchive(row)} showInMenu />,

@@ -45,7 +45,11 @@
     "error": "Error",
     "warning": "Warning",
     "info": "Information",
-    "close": "Close"
+    "close": "Close",
+    "validationErrors": "Validation errors",
+    "validationErrorCount_one": "{{count}} error",
+    "validationErrorCount_other": "{{count}} errors",
+    "reviewValidationErrors": "Review {{count}} validation errors"
   },
   "companyGeographicScope": {
     "title": "Operating Countries",
@@ -319,7 +323,8 @@
     "recruitment": "Recruitment",
     "workforcePlanning": "Workforce Planning",
     "finance": "Finance",
-    "fiscalYears": "Fiscal Years"
+    "fiscalYears": "Fiscal Years",
+    "workforcePlans": "Workforce Plans"
   },
   "appointments": {
     "loading": "Loading appointments...",
@@ -1845,12 +1850,17 @@
     "filterOptionsDescription": "Choose where and how the organizational structure search is applied.",
     "empty": "No organizational records match the current criteria.",
     "fetchError": "The organizational structure could not be loaded.",
+    "saveError": "The organizational record could not be saved.",
     "archiveTitle": "Archive organizational record",
     "archiveDescription": "Archive {{name}}? Active dependent records must be archived first.",
     "restoreTitle": "Restore organizational record",
     "restoreDescription": "Restore {{name}}? Its parent records must be active.",
     "yes": "Yes",
     "no": "No",
+    "created": "The organizational record was created successfully.",
+    "updated": "The organizational record was updated successfully.",
+    "archived": "The organizational record was archived successfully.",
+    "restored": "The organizational record was restored successfully.",
     "resources": {
       "branches": "Branches",
       "departments": "Departments",
@@ -2152,7 +2162,7 @@
     },
     "sort": { "startDate": "Start date", "endDate": "End date", "code": "Code", "nameAr": "Arabic name", "nameEn": "English name", "status": "Status", "createdOn": "Created on" },
     "actions": { "add": "Add fiscal year", "lifecycle": "Advance lifecycle", "reset": "Reset filters" },
-    "lifecycle": { "open": "Open year", "beginClosing": "Begin closing", "close": "Close year", "lock": "Lock year" },
+    "lifecycle": { "open": "Open year", "beginClosing": "Begin closing", "close": "Close year", "lock": "Lock year", "reopen": "Reopen year" },
     "form": { "addTitle": "Add Fiscal Year", "editTitle": "Edit Fiscal Year", "viewTitle": "Fiscal Year Details", "subtitle": "Define the financial calendar used by workforce plans and budgets.", "endDateHelper": "Calculated automatically to cover exactly twelve months.", "periodsHelper": "Monthly or quarterly periods are generated automatically and become read-only after the year is opened." },
     "periods": { "title": "Generated periods", "count": "{{count}} periods", "item": "Period {{sequence}}" },
     "validation": { "code": "Enter a valid code of 2–20 letters, numbers, dots, slashes, underscores, or hyphens.", "name": "Enter a valid name of 2–100 characters.", "startDate": "Select the start date.", "endDate": "Select the end date.", "duration": "The fiscal year must cover exactly twelve months." },
@@ -2161,8 +2171,32 @@
     "messages": { "created": "Fiscal year {{code}} was created.", "updated": "Fiscal year {{code}} was updated.", "archived": "Fiscal year archived.", "restored": "Fiscal year restored.", "lifecycleChanged": "Fiscal year moved to {{status}}.", "fetchError": "Unable to load fiscal years.", "createError": "Unable to create the fiscal year.", "updateError": "Unable to update the fiscal year.", "archiveError": "Unable to archive the fiscal year.", "restoreError": "Unable to restore the fiscal year.", "lifecycleError": "Unable to advance the fiscal year lifecycle." },
     "confirm": {
       "archiveTitle": "Archive fiscal year?", "archiveDescription": "Only draft fiscal years can be archived.", "restoreTitle": "Restore fiscal year?", "restoreDescription": "The draft financial calendar will become active again.",
-      "openTitle": "Open fiscal year?", "openDescription": "The calendar becomes available to workforce plans and can no longer be edited.", "beginClosingTitle": "Begin fiscal-year closing?", "beginClosingDescription": "The year enters a controlled closing phase.", "closeTitle": "Close fiscal year?", "closeDescription": "All generated periods will be closed.", "lockTitle": "Lock fiscal year?", "lockDescription": "Locking is final in this release and prevents further lifecycle changes."
+      "openTitle": "Open fiscal year?", "openDescription": "The calendar becomes available to workforce plans and can no longer be edited.", "beginClosingTitle": "Begin fiscal-year closing?", "beginClosingDescription": "The year enters a controlled closing phase.", "closeTitle": "Close fiscal year?", "closeDescription": "All generated periods will be closed.", "lockTitle": "Lock fiscal year?", "lockDescription": "The year and all its periods will be locked against operational changes. An authorized lifecycle manager can still reopen it.", "reopenTitle": "Reopen fiscal year?", "reopenDescription": "This returns either a Closed or Locked year and all its periods to Open while preserving the audit history."
     }
+  },
+  "workforcePlanning": {
+    "title": "Workforce Plans",
+    "totalLabel": "workforce plans",
+    "fields": { "planCode": "Plan code", "fiscalYear": "Fiscal year", "titleEn": "English title", "titleAr": "Arabic title", "description": "Description", "position": "Position", "targetBranch": "Target branch", "targetHeadcount": "Expected employees at year end", "plannedHiringSlots": "Total people to recruit", "justification": "Reason for the need", "fiscalPeriod": "Hiring period", "newHireSlots": "New positions (growth)", "replacementSlots": "Replacement positions", "revision": "Revision", "lines": "Lines", "status": "Status", "decisionReason": "Rejection reason" },
+    "status": { "draft": "Draft", "submitted": "Submitted", "underReview": "Under review", "approved": "Approved", "rejected": "Rejected", "superseded": "Superseded" },
+    "recordStatus": { "active": "Active records", "archived": "Archived", "all": "All records" },
+    "search": { "placeholder": "Search workforce plans..." },
+    "form": { "addTitle": "Create Workforce Plan", "editTitle": "Edit Workforce Plan", "viewTitle": "Workforce Plan Details", "subtitle": "Capture controlled workforce demand for a draft or open fiscal year.", "branchHelper": "Leave empty only for a company-wide position." },
+    "lines": { "title": "Plan lines", "add": "Add line", "item": "Line {{number}}", "count": "{{count}} lines" },
+    "periodTargets": { "title": "When do you expect to hire?", "add": "Add hiring period" },
+    "actions": { "add": "Add workforce plan", "moveUp": "Move up", "moveDown": "Move down", "submit": "Submit", "beginReview": "Begin review", "approve": "Approve", "reject": "Reject", "createRevision": "Create revision", "archive": "Archive", "restore": "Restore" },
+    "filters": { "status": "Plan status", "recordStatus": "Records" },
+    "sort": { "createdOn": "Created date", "planCode": "Plan code", "titleEn": "English title", "titleAr": "Arabic title", "status": "Status" },
+    "baseline": { "count": "Current employees: {{count}}", "asOf": "Calculated on {{date}}" },
+    "summary": { "currentEmployees": "Current employees: {{count}}", "expectedEmployees": "Expected employees at year end: {{count}}", "totalHiring": "Total people to recruit: {{count}}", "baselineOnSave": "The system will calculate current employees when you save" },
+    "revisions": { "title": "Revision history and comparison", "item": "Revision {{revision}} • {{slots}} slots", "delta": "Change from revision {{revision}}: {{count}} hiring slots", "short": "Revision {{revision}}" },
+    "slots": { "count": "Total people to recruit: {{count}}", "new": "New positions: {{count}}", "replacement": "Replacements: {{count}}" },
+    "effective": "Effective plan",
+    "validation": { "planCode": "Enter a valid plan code.", "fiscalYear": "Select a fiscal year.", "title": "Enter a title from 2 to 200 characters.", "description": "Use at most 2000 characters.", "position": "Select a position.", "period": "Add at least one valid hiring period.", "lines": "Add at least one plan line.", "nonNegative": "Use a non-negative number.", "reason": "Enter a clear rejection reason.", "duplicatePeriod": "Each hiring period can appear only once in a line.", "newHirePeriodTotals": "Distribute every new position across the hiring periods.", "replacementPeriodTotals": "Distribute every replacement position across the hiring periods." },
+    "empty": { "title": "No workforce plans yet", "subtitle": "Create the first plan to capture workforce demand." },
+    "noResults": { "title": "No matching workforce plans", "subtitle": "Change or clear the current filters." },
+    "messages": { "fetchError": "Unable to load workforce plans.", "created": "Plan {{code}} was created.", "updated": "Plan {{code}} was updated.", "submitted": "Plan {{code}} was submitted.", "reviewStarted": "Review started for plan {{code}}.", "approved": "Plan {{code}} was approved.", "rejected": "Plan {{code}} was rejected.", "revisionCreated": "Revision {{revision}} was created.", "archived": "The workforce plan was archived.", "restored": "Plan {{code}} was restored.", "createError": "Unable to create the workforce plan.", "updateError": "Unable to update the workforce plan.", "archiveError": "Unable to archive the workforce plan.", "restoreError": "Unable to restore the workforce plan.", "lifecycleError": "Unable to complete the plan action." },
+    "confirm": { "submitTitle": "Submit workforce plan?", "submitDescription": "The draft becomes read-only and enters the approval workflow.", "beginReviewTitle": "Begin plan review?", "beginReviewDescription": "The submitted plan moves to the controlled review stage.", "approveTitle": "Approve workforce plan?", "approveDescription": "Approval confirms this workforce demand for the open fiscal year.", "rejectTitle": "Reject workforce plan?", "rejectDescription": "State a clear reason so the planner can revise and resubmit.", "createRevisionTitle": "Create a new revision?", "createRevisionDescription": "A new editable draft will be copied from this revision.", "archiveTitle": "Archive workforce plan?", "archiveDescription": "Only draft or rejected plans can be archived. The record remains available in the archive.", "restoreTitle": "Restore workforce plan?", "restoreDescription": "The archived draft or rejected plan will return to active records." }
   },
   "Action": {
     "Close": "Close"

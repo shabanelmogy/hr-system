@@ -95,6 +95,11 @@ public sealed class FiscalYearsController(ISender sender) : ControllerBase
     public Task<IActionResult> Lock([FromRoute] int id, [FromBody] FiscalYearConcurrencyRequest request, CancellationToken cancellationToken) =>
         ChangeLifecycle(id, request, FiscalYearLifecycleAction.Lock, cancellationToken);
 
+    [HttpPost("{id:int}/reopen")]
+    [HasPermission(Permissions.ManageFiscalYearLifecycle)]
+    public Task<IActionResult> Reopen([FromRoute] int id, [FromBody] FiscalYearConcurrencyRequest request, CancellationToken cancellationToken) =>
+        ChangeLifecycle(id, request, FiscalYearLifecycleAction.Reopen, cancellationToken);
+
     private Task<IActionResult> ChangeLifecycle(int id, FiscalYearConcurrencyRequest request, FiscalYearLifecycleAction action, CancellationToken cancellationToken) =>
         SendLifecycleResult(new ChangeFiscalYearLifecycleCommand(id, request.RowVersion, action), cancellationToken);
 

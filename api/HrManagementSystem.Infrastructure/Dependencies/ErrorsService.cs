@@ -17,6 +17,7 @@ using HrManagementSystem.Application.Features.Analytics.CrystalReports.Errors;
 using HrManagementSystem.Application.Features.OrganizationalStructure.CompanyGeographicScope.Errors;
 using HrManagementSystem.Application.Features.Attendance.Devices.Errors;
 using HrManagementSystem.Application.Features.Finance.FiscalYears.Errors;
+using HrManagementSystem.Application.Features.WorkforcePlanning.Errors;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
@@ -43,6 +44,7 @@ public static class ErrorsService
         service.AddScoped<NotificationErrors>();
         service.AddScoped<AttendanceDeviceErrors>();
         service.AddScoped<FiscalYearErrors>();
+        service.AddScoped<WorkforcePlanErrors>();
 
         return service;
     }

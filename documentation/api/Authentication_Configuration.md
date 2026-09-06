@@ -48,3 +48,25 @@ This design avoids the operational complexity of full token-family tracking whil
 Tenant- and company-selection JWTs are short-lived, scope-specific, and single-use. Their `jti` values are stored in `AuthenticationSelectionChallenges`; the matching row is deleted atomically on the first selection attempt. Deploy the `AddAuthenticationSelectionChallenges` migration before enabling this flow. Changing the configured selection-token lifetime does not make a consumed token reusable.
 
 Authenticated company switching rotates into a new session and revokes only the replaced session. It does not reuse a login selection token and it does not revoke the user's other devices or sessions.
+
+## SignalR realtime authentication
+
+Browser SignalR transports place the bearer token in the `access_token` query
+parameter. The dedicated realtime JWT must therefore remain bounded and contains
+only identity and session context: user name/identifier, session identifier,
+security stamp, tenant identifier, and company identifier. It must not copy role,
+permission, tenant-role, email, or tenant display-name claims from the normal
+access token.
+
+After the realtime JWT signature, audience, scope, expiry, and active session are
+validated, `RealtimePrincipalClaimsLoader` reads the user's current system roles,
+active roles for the selected tenant, and known permission claims from the
+database. `GeneralHub` then builds its role, tenant-role, permission, tenant, and
+company groups from that hydrated principal. This keeps authorization current
+when role assignments change and prevents permission growth from exceeding IIS
+URL/query-string limits.
+
+Do not treat increasing IIS `maxUrl` or `maxQueryString` as the primary fix. The
+token-size regression test must remain below 2,048 characters even when the
+source access principal contains hundreds of permissions. No database migration
+is required for this authentication flow.

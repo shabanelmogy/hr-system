@@ -30,6 +30,8 @@ export interface MyFormProps {
   overlayActionType?: string | null;
   overlayMessage?: string | null;
   errors?: Record<string, string>;
+  /** Human-readable labels used by the validation error summary. */
+  errorLabels?: Record<string, string>;
   onErrorFound?: (errorField: string, fieldElement: HTMLElement) => void;
   footerLeft?: ReactNode;
   /** Development-only action that fills the form without submitting it. */

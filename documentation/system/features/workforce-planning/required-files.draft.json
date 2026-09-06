@@ -1,0 +1,137 @@
+{
+    "schemaVersion":  1,
+    "status":  "draft",
+    "feature":  "workforce-planning",
+    "featureName":  "Workforce Planning",
+    "referenceFeature":  "states",
+    "purpose":  "Draft evidence plan for Workforce Planning. This file is not registered until every final source exists.",
+    "reviewArtifact":  "documentation/system/features/workforce-planning/WORKFORCE_PLANNING-REVIEW-ARTIFACTS.md",
+    "implementationRequest":  "documentation/system/features/workforce-planning/IMPLEMENTATION-REQUEST.md",
+    "plannedCanonicalBooks":  {
+                                  "master":  "documentation/project/WORKFORCE_PLANNING_FEATURE_FULL_REVIEW.md",
+                                  "api":  "documentation/api/WorkforcePlanning_API_Implementation_Profile.md",
+                                  "web":  "documentation/web-next/features/workforce-planning-frontend-reference.md",
+                                  "mobile":  "documentation/mobile-react/workforce-planning-mobile-reference.md"
+                              },
+    "sourceCollections":  [
+                          {
+                              "id":  "api-domain",
+                              "layer":  "api",
+                              "path":  "api/HrManagementSystem.Domain/WorkforcePlanning",
+                              "minimumFiles":  2,
+                              "purpose":  "Workforce Plan aggregate, child entities, and lifecycle enum"
+                          },
+                          {
+                              "id":  "api-application",
+                              "layer":  "api",
+                              "path":  "api/HrManagementSystem.Application/Features/WorkforcePlanning",
+                              "minimumFiles":  7,
+                              "purpose":  "Contracts, CQRS handlers, errors, ports, locking, and realtime effects"
+                          },
+                          {
+                              "id":  "api-infrastructure",
+                              "layer":  "api",
+                              "path":  "api/HrManagementSystem.Infrastructure/Features/WorkforcePlanning",
+                              "minimumFiles":  1,
+                              "purpose":  "Bounded read/write stores and baseline calculation"
+                          },
+                          {
+                              "id":  "web-feature",
+                              "layer":  "web-next",
+                              "path":  "web-next/src/features/workforce-planning",
+                              "minimumFiles":  10,
+                              "purpose":  "Next.js page, grid, cards, governed form, service, hooks, contracts, and validation"
+                          },
+                          {
+                              "id":  "mobile-feature",
+                              "layer":  "mobile-react",
+                              "path":  "mobile-react/src/features/workforce-planning",
+                              "minimumFiles":  10,
+                              "purpose":  "Expo screen, table/cards, filter, form, runtime schemas, API, queries, contracts, and validation"
+                          }
+                          ],
+    "requiredFiles":  [
+                          {
+                              "id":  "root-agent-guidance",
+                              "layer":  "configuration",
+                              "path":  "AGENTS.md",
+                              "purpose":  "Repository-wide feature and documentation rules"
+                          },
+                          {
+                              "id":  "review-artifact",
+                              "layer":  "documentation",
+                              "path":  "documentation/system/features/workforce-planning/WORKFORCE_PLANNING-REVIEW-ARTIFACTS.md",
+                              "purpose":  "Feature requirement, evidence, finding, and verification ledger"
+                          },
+                          {
+                              "id":  "implementation-request",
+                              "layer":  "documentation",
+                              "path":  "documentation/system/features/workforce-planning/IMPLEMENTATION-REQUEST.md",
+                              "purpose":  "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+                          },
+                          {
+                              "id":  "master-review",
+                              "layer":  "documentation",
+                              "path":  "documentation/project/WORKFORCE_PLANNING_FEATURE_FULL_REVIEW.md",
+                              "purpose":  "Cross-platform Phase 1 authority and later phase boundary"
+                          },
+                          {
+                              "id":  "api-profile",
+                              "layer":  "documentation",
+                              "path":  "documentation/api/WorkforcePlanning_API_Implementation_Profile.md",
+                              "purpose":  "Workforce Plan API and persistence contract"
+                          },
+                          {
+                              "id":  "web-profile",
+                              "layer":  "documentation",
+                              "path":  "documentation/web-next/features/workforce-planning-frontend-reference.md",
+                              "purpose":  "Workforce Plan browser contract"
+                          },
+                          {
+                              "id":  "mobile-profile",
+                              "layer":  "documentation",
+                              "path":  "documentation/mobile-react/workforce-planning-mobile-reference.md",
+                              "purpose":  "Workforce Plan Expo contract"
+                          },
+                          {
+                              "id":  "api-controller",
+                              "layer":  "api",
+                              "path":  "api/HrManagementSystem.Api/Features/WorkforcePlanning/V1/WorkforcePlansController.cs",
+                              "purpose":  "Thin HTTP and permission boundary"
+                          },
+                          {
+                              "id":  "api-configuration",
+                              "layer":  "api",
+                              "path":  "api/HrManagementSystem.Infrastructure/Persistence/Configurations/WorkforcePlanning/WorkforcePlanConfiguration.cs",
+                              "purpose":  "Composite relationships and unique effective-plan invariant"
+                          },
+                          {
+                              "id":  "api-domain-tests",
+                              "layer":  "test",
+                              "path":  "api/HrManagementSystem.Tests/WorkforcePlanDomainTests.cs",
+                              "purpose":  "Lifecycle and period invariant tests"
+                          },
+                          {
+                              "id":  "api-persistence-tests",
+                              "layer":  "test",
+                              "path":  "api/HrManagementSystem.Tests/WorkforcePlanPersistenceTests.cs",
+                              "purpose":  "Baseline, revision ordering, and index-model tests"
+                          }
+                      ],
+    "finalizationChecklist":  [
+                                  "Replace every placeholder in the review artifact.",
+                                  "Complete every decision and remove every placeholder in IMPLEMENTATION-REQUEST.md before implementation.",
+                                  "Add existing API, web, mobile, configuration, localization, and test sources.",
+                                  "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+                                  "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+                                  "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+                                  "Add source collections with evidence-based minimum file counts.",
+                                  "Create and complete the four planned canonical books.",
+                                  "Rename this file to required-files.json only after every declared path exists.",
+                                  "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+                                  "Merge recipe-registration.draft.json into recipe-manifest.json only after the four canonical books are complete.",
+                                  "Write generated packets under documentation/system/generated/workforce-planning/.",
+                                  "Run generation and then Generate-Documentation.ps1 -Check.",
+                                  "Complete phase 06 with an explicit handoff decision."
+                              ]
+}

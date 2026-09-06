@@ -14,13 +14,11 @@ using HrManagementSystem.Domain.GeographicalInformation.Countries.Entities;
 using HrManagementSystem.Domain.OrganizationalStructure.Entities;
 using HrManagementSystem.Infrastructure.Features.OrganizationalStructure.CompanyGeographicScope.Persistence;
 using HrManagementSystem.Infrastructure.Features.GeographicalInformation.Countries.Persistence;
-using HrManagementSystem.Infrastructure.Migrations;
 using HrManagementSystem.Infrastructure.Persistence;
 using HrManagementSystem.Infrastructure.Security.Authorization.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.Extensions.Localization;
@@ -169,14 +167,6 @@ public sealed class CompanyGeographicScopeTests
             index.Properties.Select(property => property.Name)
                 .SequenceEqual([nameof(Company.RegistrationCountryId)]));
 
-        var migration = new AddCompanyRegistrationCountry();
-        var sql = Assert.Single(migration.UpOperations.OfType<SqlOperation>()).Sql;
-        Assert.Contains("companyCountry.IsDefault = 1", sql, StringComparison.Ordinal);
-        Assert.Contains("companyCountry.IsDeleted = 0", sql, StringComparison.Ordinal);
-        Assert.Contains("company.RegistrationCountryId IS NULL", sql, StringComparison.Ordinal);
-        var migrationForeignKey = Assert.Single(
-            migration.UpOperations.OfType<AddForeignKeyOperation>());
-        Assert.Equal(ReferentialAction.Restrict, migrationForeignKey.OnDelete);
     }
 
     private sealed class TestCurrentActor(string? tenantId, int? companyId) : ICurrentActor

@@ -6,6 +6,7 @@ import { fiscalYearDetailSchema, fiscalYearPageSchema } from '../fiscal-year-sch
 import { toFiscalYearPageQuery } from '../fiscal-year-api';
 import { createFiscalYearSchema } from '../../validation/fiscal-year-schema';
 import { buildFiscalPeriodPreview } from '../../utils/fiscal-period-preview';
+import { getAvailableFiscalYearLifecycleActions } from '../../utils/fiscal-year-lifecycle';
 
 const fiscalYear = {
   id: 7,
@@ -44,6 +45,9 @@ describe('Fiscal Years API boundary', () => {
     expect(fiscalYearEndpoints.restore(7)).toBe('fiscal-years/7/restore');
     expect(fiscalYearEndpoints.beginClosing(7)).toBe('fiscal-years/7/begin-closing');
     expect(fiscalYearEndpoints.lock(7)).toBe('fiscal-years/7/lock');
+    expect(fiscalYearEndpoints.reopen(7)).toBe('fiscal-years/7/reopen');
+    expect([1, 2, 3, 4, 5].map(status => getAvailableFiscalYearLifecycleActions(status as 1 | 2 | 3 | 4 | 5)))
+      .toEqual([['open'], ['beginClosing'], ['close'], ['reopen', 'lock'], ['reopen']]);
   });
 
   it('requires complete page and detail contracts including generated periods', () => {

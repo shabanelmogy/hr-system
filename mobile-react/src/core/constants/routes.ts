@@ -66,6 +66,7 @@ export const ROUTES = {
     root: '/finance',
     fiscalYears: '/finance/fiscal-years',
   },
+  workforcePlanning: '/workforce-planning',
 } as const;
 
 export type AppRoute =
@@ -94,6 +95,7 @@ export type AppRoute =
   | typeof ROUTES.administration.rolePermissionsRoot
   | ReturnType<typeof ROUTES.administration.rolePermissions>
   | typeof ROUTES.recruitment.root
+  | typeof ROUTES.workforcePlanning
   | (typeof ROUTES.finance)[keyof typeof ROUTES.finance];
 
 // Expo regenerates typed route declarations after route files change.

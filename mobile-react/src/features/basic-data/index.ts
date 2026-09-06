@@ -8,3 +8,5 @@ export { StatesScreen } from './states';
 export { DistrictsScreen } from './districts';
 export { AddressTypesScreen } from './address-types';
 export { CompanyGeographicScopeScreen } from './company-geographic-scope';
+export { useOrganizationalLookup } from './organizational-structure/queries/use-organizational-structure';
+export type { OrganizationalStructureLookup } from './organizational-structure/types/organizational-structure';

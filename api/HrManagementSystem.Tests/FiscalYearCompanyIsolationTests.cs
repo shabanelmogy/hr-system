@@ -140,6 +140,46 @@ public sealed class FiscalYearCompanyIsolationTests
     }
 
     [Fact]
+    public async Task ReopenHandler_CommitsAuditAndSchedulesCompanyScopedRefresh()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
+            .Options;
+        var actor = new TestActor("tenant-1", 11);
+        await using var context = new ApplicationDbContext(options, actor, TimeProvider.System);
+        var fiscalYear = Create("FY-2027", "tenant-1", 11);
+        fiscalYear.Open();
+        fiscalYear.BeginClosing();
+        fiscalYear.Close();
+        fiscalYear.Lock();
+        context.FiscalYears.Add(fiscalYear);
+        await context.SaveChangesAsync();
+        var scheduler = new RecordingScheduler();
+        var handler = new ChangeFiscalYearLifecycleCommandHandler(
+            new FiscalYearWriteStore(context),
+            new FiscalYearReadStore(context),
+            new FiscalYearAuditTrail(context, actor, TimeProvider.System),
+            context,
+            scheduler,
+            actor,
+            new FiscalYearErrors(new EchoLocalizer<CreateFiscalYearRequest>()));
+
+        var result = await handler.Handle(new ChangeFiscalYearLifecycleCommand(
+            fiscalYear.Id,
+            Convert.ToBase64String(fiscalYear.RowVersion),
+            FiscalYearLifecycleAction.Reopen), CancellationToken.None);
+
+        Assert.True(result.IsSuccess);
+        Assert.Equal(FiscalYearStatus.Open, fiscalYear.Status);
+        Assert.All(fiscalYear.Periods, period => Assert.Equal(FiscalPeriodStatus.Open, period.Status));
+        var audit = Assert.Single(context.EntityChangeLogs);
+        Assert.Contains("Locked", audit.JsonOldValues, StringComparison.Ordinal);
+        Assert.Contains("Open", audit.JsonNewValues, StringComparison.Ordinal);
+        Assert.Equal(("tenant-1", 11, "Update"),
+            (scheduler.Change!.TenantId, scheduler.Change.CompanyId, scheduler.Change.Action));
+    }
+
+    [Fact]
     public async Task UpdateHandler_PreservesPersistedPeriodsWhenFrequencyIsUnchanged()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()

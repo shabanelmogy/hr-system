@@ -93,6 +93,7 @@ export interface AppRoutes {
     pullRuns: AppPath;
   };
   recruitment: AppPath;
+  workforcePlans: AppPath;
   finance: {
     fiscalYears: AppPath;
   };
@@ -180,6 +181,7 @@ export const appRoutes: AppRoutes = {
     pullRuns: toAppPath("/attendance-devices/pull-runs"),
   },
   recruitment: toAppPath("/recruitment"),
+  workforcePlans: toAppPath("/workforce-planning/plans"),
   finance: {
     fiscalYears: toAppPath("/finance/fiscal-years"),
   },

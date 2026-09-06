@@ -27,7 +27,8 @@ tenant/company scope.
 
 React Query owns page/detail reads, mutations, and root invalidation. Stable keys
 start with `fiscal-years` so realtime and reconnect invalidation stay independent
-of individual hook implementations.
+of individual hook implementations. The lookup explicitly refetches on mount
+because it supplies downstream workflows such as Workforce Planning.
 
 ## 6. Server list state
 
@@ -61,8 +62,10 @@ never manually edited or sent as JSON.
 ## 11. View and lifecycle workflow
 
 View mode renders read-only fields and generated period cards. Shared confirmation
-dialogs handle archive, restore, and the next valid lifecycle action. Shared toast
-feedback reports success and mapped API failure.
+dialogs handle archive, restore, and valid lifecycle actions. Closed rows expose
+separate Reopen and Lock actions; Locked rows expose a warning-backed Reopen action. Reopen uses RowVersion and
+leaves calendar identity fields read-only. Shared toast feedback reports success
+and mapped API failure.
 
 ## 12. Permissions and read-only mode
 

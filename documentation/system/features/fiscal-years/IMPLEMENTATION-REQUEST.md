@@ -58,11 +58,13 @@ the Fiscal Year detail workflow and have no independent route or mutation UI.
 - `Begin closing`: `Open -> Closing`.
 - `Close`: `Closing -> Closed`.
 - `Lock`: `Closed -> Locked`.
+- `Reopen`: `Closed -> Open` or `Locked -> Open`; all active generated periods return to `Open`.
 - Archive is allowed only for `Draft`; archived Draft rows can be restored.
 - Lifecycle actions are idempotent only when the row is already in the requested
   target state; skipped transitions fail with a stable business error.
-- Locked Fiscal Years are immutable. Reopening and unlocking are Excluded until
-  Finance defines a controlled exception/approval policy.
+- Closed and Locked Fiscal Years remain immutable. Reopen is the controlled exception: it
+  requires `ManageLifecycle`, the latest RowVersion, explicit confirmation, an
+  atomic company-calendar transaction, lifecycle audit, and post-commit realtime.
 
 ## API contract
 
@@ -82,6 +84,7 @@ the current company context.
 | POST | `/api/v1/fiscal-years/{id}/begin-closing` | `FiscalYears:ManageLifecycle` | `200` detail |
 | POST | `/api/v1/fiscal-years/{id}/close` | `FiscalYears:ManageLifecycle` | `200` detail |
 | POST | `/api/v1/fiscal-years/{id}/lock` | `FiscalYears:ManageLifecycle` | `200` detail |
+| POST | `/api/v1/fiscal-years/{id}/reopen` | `FiscalYears:ManageLifecycle` | `200` detail |
 
 Create body:
 

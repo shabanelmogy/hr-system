@@ -12,6 +12,7 @@ import { crystalReports } from './crystalReports';
 import { attendanceDevices } from './attendanceDevices';
 import { recruitment } from './recruitment';
 import { fiscalYears } from './fiscalYears';
+import { workforcePlanning } from './workforcePlanning';
 
 export { version } from './constants';
 
@@ -39,6 +40,7 @@ export const apiRoutes = {
   attendanceDevices,
   recruitment,
   fiscalYears,
+  workforcePlanning,
 };
 
 export default apiRoutes;

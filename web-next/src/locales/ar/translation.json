@@ -45,7 +45,15 @@
     "error": "خطأ",
     "warning": "تحذير",
     "info": "معلومات",
-    "close": "إغلاق"
+    "close": "إغلاق",
+    "validationErrors": "أخطاء التحقق",
+    "validationErrorCount_zero": "لا توجد أخطاء",
+    "validationErrorCount_one": "خطأ واحد",
+    "validationErrorCount_two": "خطآن",
+    "validationErrorCount_few": "{{count}} أخطاء",
+    "validationErrorCount_many": "{{count}} خطأ",
+    "validationErrorCount_other": "{{count}} خطأ",
+    "reviewValidationErrors": "عرض أخطاء التحقق وعددها {{count}}"
   },
   "companyGeographicScope": {
     "title": "دول التشغيل",
@@ -318,7 +326,8 @@
     "recruitment": "التعيينات والتوظيف",
     "workforcePlanning": "تخطيط القوى العاملة",
     "finance": "المالية",
-    "fiscalYears": "السنوات المالية"
+    "fiscalYears": "السنوات المالية",
+    "workforcePlans": "خطط القوى العاملة"
   },
   "appointments": {
     "loading": "جارٍ تحميل المواعيد...",
@@ -1818,12 +1827,17 @@
     "filterOptionsDescription": "اختر مكان وطريقة تطبيق البحث في الهيكل التنظيمي.",
     "empty": "لا توجد سجلات تنظيمية مطابقة للمعايير الحالية.",
     "fetchError": "تعذر تحميل الهيكل التنظيمي.",
+    "saveError": "تعذر حفظ السجل التنظيمي.",
     "archiveTitle": "أرشفة سجل تنظيمي",
     "archiveDescription": "هل تريد أرشفة {{name}}؟ يجب أرشفة السجلات التابعة النشطة أولًا.",
     "restoreTitle": "استعادة سجل تنظيمي",
     "restoreDescription": "هل تريد استعادة {{name}}؟ يجب أن تكون السجلات الأب نشطة.",
     "yes": "نعم",
     "no": "لا",
+    "created": "تم إنشاء السجل التنظيمي بنجاح.",
+    "updated": "تم تحديث السجل التنظيمي بنجاح.",
+    "archived": "تمت أرشفة السجل التنظيمي بنجاح.",
+    "restored": "تمت استعادة السجل التنظيمي بنجاح.",
     "resources": {
       "branches": "الفروع",
       "departments": "الإدارات",
@@ -2115,7 +2129,7 @@
     "totalLabel": "سنوات مالية",
     "fields": { "code": "الكود", "startDate": "تاريخ البداية", "endDate": "تاريخ النهاية", "frequency": "دورية الفترات", "periods": "الفترات", "status": "الحالة" },
     "frequency": { "monthly": "شهرية", "quarterly": "ربع سنوية" },
-    "status": { "all": "كل الحالات", "draft": "مسودة", "open": "مفتوحة", "closing": "قيد الإقفال", "closed": "مقفلة", "locked": "مقفولة نهائيًا" },
+    "status": { "all": "كل الحالات", "draft": "مسودة", "open": "مفتوحة", "closing": "قيد الإقفال", "closed": "تم الإقفال", "locked": "مقفولة" },
     "recordStatus": { "active": "السجلات النشطة", "archived": "السجلات المؤرشفة", "all": "كل السجلات" },
     "filters": { "recordStatus": "حالة السجل", "lifecycle": "حالة الدورة" },
     "search": {
@@ -2125,7 +2139,7 @@
     },
     "sort": { "startDate": "تاريخ البداية", "endDate": "تاريخ النهاية", "code": "الكود", "nameAr": "الاسم العربي", "nameEn": "الاسم الإنجليزي", "status": "الحالة", "createdOn": "تاريخ الإنشاء" },
     "actions": { "add": "إضافة سنة مالية", "lifecycle": "نقل الحالة", "reset": "إعادة ضبط الفلاتر" },
-    "lifecycle": { "open": "فتح السنة", "beginClosing": "بدء الإقفال", "close": "إقفال السنة", "lock": "القفل النهائي" },
+    "lifecycle": { "open": "فتح السنة", "beginClosing": "بدء الإقفال", "close": "إقفال السنة", "lock": "تثبيت الإقفال", "reopen": "إعادة فتح السنة" },
     "form": { "addTitle": "إضافة سنة مالية", "editTitle": "تعديل سنة مالية", "viewTitle": "تفاصيل السنة المالية", "subtitle": "تعريف التقويم المالي المستخدم في خطط القوى العاملة والميزانيات.", "endDateHelper": "يُحسب تلقائيًا ليغطي اثني عشر شهرًا بالضبط.", "periodsHelper": "تُنشأ الفترات الشهرية أو ربع السنوية تلقائيًا وتصبح للقراءة فقط بعد فتح السنة." },
     "periods": { "title": "الفترات المُنشأة", "count": "{{count}} فترة", "item": "الفترة {{sequence}}" },
     "validation": { "code": "أدخل كودًا صحيحًا من 2 إلى 20 حرفًا أو رقمًا أو رمزًا مسموحًا.", "name": "أدخل اسمًا صحيحًا من 2 إلى 100 حرف.", "startDate": "اختر تاريخ البداية.", "endDate": "اختر تاريخ النهاية.", "duration": "يجب أن تغطي السنة المالية اثني عشر شهرًا بالضبط." },
@@ -2134,8 +2148,32 @@
     "messages": { "created": "تم إنشاء السنة المالية {{code}}.", "updated": "تم تحديث السنة المالية {{code}}.", "archived": "تمت أرشفة السنة المالية.", "restored": "تمت استعادة السنة المالية.", "lifecycleChanged": "تم نقل السنة المالية إلى {{status}}.", "fetchError": "تعذر تحميل السنوات المالية.", "createError": "تعذر إنشاء السنة المالية.", "updateError": "تعذر تحديث السنة المالية.", "archiveError": "تعذر أرشفة السنة المالية.", "restoreError": "تعذر استعادة السنة المالية.", "lifecycleError": "تعذر نقل حالة السنة المالية." },
     "confirm": {
       "archiveTitle": "أرشفة السنة المالية؟", "archiveDescription": "يمكن أرشفة السنوات المالية في حالة المسودة فقط.", "restoreTitle": "استعادة السنة المالية؟", "restoreDescription": "سيعود التقويم المالي المسودة إلى السجلات النشطة.",
-      "openTitle": "فتح السنة المالية؟", "openDescription": "سيصبح التقويم متاحًا لخطط القوى العاملة ولن يمكن تعديل بياناته.", "beginClosingTitle": "بدء إقفال السنة المالية؟", "beginClosingDescription": "ستدخل السنة مرحلة إقفال محكومة.", "closeTitle": "إقفال السنة المالية؟", "closeDescription": "سيتم إقفال جميع الفترات المُنشأة.", "lockTitle": "قفل السنة المالية نهائيًا؟", "lockDescription": "القفل نهائي في هذا الإصدار ويمنع أي تغييرات لاحقة على دورة الحالة."
+      "openTitle": "فتح السنة المالية؟", "openDescription": "سيصبح التقويم متاحًا لخطط القوى العاملة ولن يمكن تعديل بياناته.", "beginClosingTitle": "بدء إقفال السنة المالية؟", "beginClosingDescription": "ستدخل السنة مرحلة إقفال محكومة.", "closeTitle": "إقفال السنة المالية؟", "closeDescription": "سيتم إقفال جميع الفترات المُنشأة.", "lockTitle": "تثبيت إقفال السنة المالية؟", "lockDescription": "سيتم قفل السنة وكل فتراتها لمنع التغييرات التشغيلية، ويمكن للمستخدم المخول إعادة فتحها لاحقًا.", "reopenTitle": "إعادة فتح السنة المالية؟", "reopenDescription": "سيتم إعادة فتح السنة سواء كانت في حالة تم الإقفال أو مقفولة، وستعود كل فتراتها إلى الحالة المفتوحة مع الاحتفاظ بسجل التدقيق."
     }
+  },
+  "workforcePlanning": {
+    "title": "خطط القوى العاملة",
+    "totalLabel": "خطط القوى العاملة",
+    "fields": { "planCode": "كود الخطة", "fiscalYear": "السنة المالية", "titleEn": "العنوان بالإنجليزية", "titleAr": "العنوان بالعربية", "description": "الوصف", "position": "الوظيفة", "targetBranch": "الفرع المستهدف", "targetHeadcount": "العدد المتوقع بنهاية السنة", "plannedHiringSlots": "إجمالي المطلوب توظيفه", "justification": "سبب الاحتياج", "fiscalPeriod": "فترة التوظيف", "newHireSlots": "وظائف جديدة (زيادة العدد)", "replacementSlots": "وظائف إحلال (بدلاء)", "revision": "الإصدار", "lines": "البنود", "status": "الحالة", "decisionReason": "سبب الرفض" },
+    "status": { "draft": "مسودة", "submitted": "مقدمة", "underReview": "قيد المراجعة", "approved": "معتمدة", "rejected": "مرفوضة", "superseded": "مستبدلة" },
+    "recordStatus": { "active": "السجلات النشطة", "archived": "مؤرشفة", "all": "كل السجلات" },
+    "search": { "placeholder": "ابحث في خطط القوى العاملة..." },
+    "form": { "addTitle": "إنشاء خطة قوى عاملة", "editTitle": "تعديل خطة القوى العاملة", "viewTitle": "تفاصيل خطة القوى العاملة", "subtitle": "تسجيل احتياج القوى العاملة بشكل محكوم لسنة مالية مسودة أو مفتوحة.", "branchHelper": "اتركه فارغًا فقط إذا كانت الوظيفة على مستوى الشركة." },
+    "lines": { "title": "بنود الخطة", "add": "إضافة بند", "item": "البند {{number}}", "count": "{{count}} بنود" },
+    "periodTargets": { "title": "متى تتوقع التوظيف؟", "add": "إضافة فترة توظيف" },
+    "actions": { "add": "إضافة خطة قوى عاملة", "moveUp": "تحريك لأعلى", "moveDown": "تحريك لأسفل", "submit": "تقديم", "beginReview": "بدء المراجعة", "approve": "اعتماد", "reject": "رفض", "createRevision": "إنشاء إصدار جديد", "archive": "أرشفة", "restore": "استعادة" },
+    "filters": { "status": "حالة الخطة", "recordStatus": "السجلات" },
+    "sort": { "createdOn": "تاريخ الإنشاء", "planCode": "كود الخطة", "titleEn": "العنوان الإنجليزي", "titleAr": "العنوان العربي", "status": "الحالة" },
+    "baseline": { "count": "عدد الموظفين الحالي: {{count}}", "asOf": "تم الاحتساب في {{date}}" },
+    "summary": { "currentEmployees": "عدد الموظفين الحالي: {{count}}", "expectedEmployees": "العدد المتوقع بنهاية السنة: {{count}}", "totalHiring": "إجمالي المطلوب توظيفه: {{count}}", "baselineOnSave": "سيحسب النظام عدد الموظفين الحالي عند الحفظ" },
+    "revisions": { "title": "سجل الإصدارات والمقارنة", "item": "الإصدار {{revision}} • {{slots}} شواغر", "delta": "التغير عن الإصدار {{revision}}: {{count}} شواغر تعيين", "short": "الإصدار {{revision}}" },
+    "slots": { "count": "إجمالي المطلوب توظيفه: {{count}}", "new": "وظائف جديدة: {{count}}", "replacement": "إحلال: {{count}}" },
+    "effective": "الخطة السارية",
+    "validation": { "planCode": "أدخل كود خطة صحيحًا.", "fiscalYear": "اختر سنة مالية.", "title": "أدخل عنوانًا من 2 إلى 200 حرف.", "description": "استخدم 2000 حرف كحد أقصى.", "position": "اختر وظيفة.", "period": "أضف فترة توظيف صحيحة واحدة على الأقل.", "lines": "أضف بندًا واحدًا على الأقل.", "nonNegative": "استخدم رقمًا غير سالب.", "reason": "أدخل سبب رفض واضحًا.", "duplicatePeriod": "لا يمكن تكرار نفس فترة التوظيف داخل البند.", "newHirePeriodTotals": "وزّع كل الوظائف الجديدة على فترات التوظيف.", "replacementPeriodTotals": "وزّع كل وظائف الإحلال على فترات التوظيف." },
+    "empty": { "title": "لا توجد خطط قوى عاملة بعد", "subtitle": "أنشئ الخطة الأولى لتسجيل احتياج القوى العاملة." },
+    "noResults": { "title": "لا توجد خطط مطابقة", "subtitle": "غيّر عوامل التصفية الحالية أو امسحها." },
+    "messages": { "fetchError": "تعذر تحميل خطط القوى العاملة.", "created": "تم إنشاء الخطة {{code}}.", "updated": "تم تحديث الخطة {{code}}.", "submitted": "تم تقديم الخطة {{code}}.", "reviewStarted": "بدأت مراجعة الخطة {{code}}.", "approved": "تم اعتماد الخطة {{code}}.", "rejected": "تم رفض الخطة {{code}}.", "revisionCreated": "تم إنشاء الإصدار {{revision}}.", "archived": "تمت أرشفة خطة القوى العاملة.", "restored": "تمت استعادة الخطة {{code}}.", "createError": "تعذر إنشاء خطة القوى العاملة.", "updateError": "تعذر تحديث خطة القوى العاملة.", "archiveError": "تعذر أرشفة خطة القوى العاملة.", "restoreError": "تعذر استعادة خطة القوى العاملة.", "lifecycleError": "تعذر إتمام إجراء الخطة." },
+    "confirm": { "submitTitle": "تقديم خطة القوى العاملة؟", "submitDescription": "ستصبح المسودة للقراءة فقط وتدخل دورة الاعتماد.", "beginReviewTitle": "بدء مراجعة الخطة؟", "beginReviewDescription": "ستنتقل الخطة المقدمة إلى مرحلة المراجعة المحكومة.", "approveTitle": "اعتماد خطة القوى العاملة؟", "approveDescription": "يؤكد الاعتماد احتياج القوى العاملة لهذه السنة المالية المفتوحة.", "rejectTitle": "رفض خطة القوى العاملة؟", "rejectDescription": "اكتب سببًا واضحًا ليتمكن المخطط من التعديل وإعادة التقديم.", "createRevisionTitle": "إنشاء إصدار جديد؟", "createRevisionDescription": "سيتم نسخ إصدار مسودة جديد قابل للتعديل من هذا الإصدار.", "archiveTitle": "أرشفة خطة القوى العاملة؟", "archiveDescription": "يمكن أرشفة الخطة المسودة أو المرفوضة فقط، وستظل محفوظة في الأرشيف.", "restoreTitle": "استعادة خطة القوى العاملة؟", "restoreDescription": "ستعود الخطة المؤرشفة المسودة أو المرفوضة إلى السجلات النشطة." }
   },
   "Action": {
     "Close": "إغلاق"

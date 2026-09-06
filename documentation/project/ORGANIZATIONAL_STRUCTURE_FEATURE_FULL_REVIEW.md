@@ -122,6 +122,17 @@ ids are resolved from the active same-company lookups; the action stays disabled
 until those lookups are available. View mode and production builds never expose
 the action.
 
+Web validation treats absent optional identifiers, numbers, and booleans as
+valid Zod 4 inputs through the shared form-schema primitives, and the automated
+architecture check rejects the unsafe transformed-union pattern. A Branch form
+must therefore validate only its three required
+identity fields plus any invalid values the user actually entered, rather than
+reporting hidden fields from other organizational resources. The shared form
+header exposes its error count as a bilingual, accessible summary of field labels
+and messages; recursive shared error normalization also retains errors from
+nested collections. Mobile validation already used its independent runtime
+schema and requires no behavior change for this Web-only defect.
+
 ## 10. Verification and release decision
 
 Focused API build and OrganizationalStructure/Pragmatic domain tests pass. The

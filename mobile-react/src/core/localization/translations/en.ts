@@ -6,6 +6,7 @@ import { enAuthProfileOnboarding } from './en-auth-profile-onboarding';
 import { enPlatformToolsNotifications } from './en-platform-tools-notifications';
 import { enBasicData } from './en-basic-data';
 import { enFiscalYears } from './en-fiscal-years';
+import { enWorkforcePlanning } from './en-workforce-planning';
 
 export const en = {
   ...enCommon,
@@ -16,4 +17,5 @@ export const en = {
   ...enBasicData,
   ...enRecruitment,
   ...enFiscalYears,
+  ...enWorkforcePlanning,
 };

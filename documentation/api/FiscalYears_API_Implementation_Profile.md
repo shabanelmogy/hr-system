@@ -10,7 +10,8 @@ scope and handlers reject missing company context.
 
 `FiscalYear` owns `FiscalPeriod`. It validates an exact twelve-month interval,
 normalizes the code, generates 12 monthly or 4 quarterly children, and protects
-Draft/Open/Closing/Closed/Locked transitions. Period mutation is internal.
+Draft/Open/Closing/Closed/Locked transitions plus controlled Closed-to-Open and
+Locked-to-Open reopen transitions. Period mutation is internal.
 
 ## 3. Persistence model
 
@@ -41,6 +42,8 @@ unique-index collisions on period code/sequence during a normal draft edit.
 
 Create starts Draft. Only Draft can update/archive. Restore accepts archived Draft
 and rechecks active date overlap. Open, begin-closing, close, and lock are ordered.
+Reopen accepts Closed or Locked and returns the aggregate and every active generated
+period to Open without making calendar fields editable.
 Target-state repeats are idempotent and do not create audit/realtime noise.
 
 ## 7. Transactions, locks, and audit
@@ -54,8 +57,8 @@ successful commit and sends resource `fiscal-years`.
 
 `FiscalYearsController` is a thin MediatR controller under API v1 and
 `TenantMember`. View protects list/lookup/detail; Create protects POST; Edit
-protects PUT; Delete protects archive/restore; ManageLifecycle protects the four
-status actions.
+protects PUT; Delete protects archive/restore; ManageLifecycle protects the five
+status actions, including `POST /{id}/reopen`.
 
 ## 9. Errors and localization
 
@@ -65,7 +68,7 @@ and concurrency conflict. English and Arabic resources contain user-facing text.
 
 ## 10. Verification
 
-Domain tests cover monthly/quarterly generation, lifecycle, immutability, exact
+Domain tests cover monthly/quarterly generation, reopen/re-close, lifecycle, immutability, exact
 duration, period identity preservation, and archived-period restoration. Controller
 tests cover every CQRS dispatch, the explicit kebab-case route
 `api/v{version:apiVersion}/fiscal-years`, permission, TenantMember, and success

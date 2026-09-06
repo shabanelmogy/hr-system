@@ -1,6 +1,6 @@
 "use client";
 
-import { MyDateTimeField, MyForm, MySelect, MyTextField } from "@/shared/components/forms";
+import { MyDateTimeField, MyForm, MySelect, MyTextField, toFormErrorMessages } from "@/shared/components/forms";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Box, Button, Chip, Divider, Stack, Typography } from "@mui/material";
@@ -58,8 +58,7 @@ export default function FiscalYearForm({ open, mode, item, loading = false, deta
     }
   }, [form, readOnly, startDate]);
 
-  const messages = Object.fromEntries(Object.entries(form.formState.errors)
-    .flatMap(([key, value]) => value?.message ? [[key, String(value.message)]] : []));
+  const messages = toFormErrorMessages(form.formState.errors);
   const frequencyOptions = frequencies.map(option => ({ id: option.id, label: t(option.labelKey) }));
   const displayedPeriods = useMemo(
     () => readOnly

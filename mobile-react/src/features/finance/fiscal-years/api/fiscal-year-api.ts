@@ -1,7 +1,7 @@
 import { apiService, type PageResponse } from '@/src/core/api';
 import { fiscalYearEndpoints } from './fiscal-year-endpoints';
-import { fiscalYearDetailSchema, fiscalYearPageSchema } from './fiscal-year-schemas';
-import type { FiscalYear, FiscalYearDetail, FiscalYearLifecycleAction, FiscalYearPageQuery, FiscalYearRequest } from '../types/fiscal-year';
+import { fiscalYearDetailSchema, fiscalYearLookupSchema, fiscalYearPageSchema } from './fiscal-year-schemas';
+import type { FiscalYear, FiscalYearDetail, FiscalYearLifecycleAction, FiscalYearLookup, FiscalYearPageQuery, FiscalYearRequest } from '../types/fiscal-year';
 
 export function toFiscalYearPageQuery(query: FiscalYearPageQuery) {
   const params = new URLSearchParams({ pageNumber: String(query.pageNumber), pageSize: String(query.pageSize), searchField: query.searchField, searchOperator: query.searchOperator, recordStatus: query.recordStatus, lifecycleStatus: query.lifecycleStatus, sortBy: query.sortBy, sortDirection: query.sortDirection });
@@ -12,6 +12,7 @@ const normalize = (request: FiscalYearRequest): FiscalYearRequest => ({ ...reque
 export const fiscalYearApi = {
   async getPage(query: FiscalYearPageQuery): Promise<PageResponse<FiscalYear>> { return fiscalYearPageSchema.parse(await apiService.get<unknown>(`${fiscalYearEndpoints.base}?${toFiscalYearPageQuery(query)}`)); },
   async getById(id: number): Promise<FiscalYearDetail> { return fiscalYearDetailSchema.parse(await apiService.get<unknown>(fiscalYearEndpoints.byId(id))); },
+  async getLookup(): Promise<FiscalYearLookup[]> { return fiscalYearLookupSchema.parse(await apiService.get<unknown>(fiscalYearEndpoints.lookup)); },
   async create(request: FiscalYearRequest): Promise<FiscalYearDetail> { return fiscalYearDetailSchema.parse(await apiService.post<unknown, FiscalYearRequest>(fiscalYearEndpoints.base, normalize(request))); },
   async update(id: number, request: FiscalYearRequest, rowVersion: string): Promise<FiscalYearDetail> { return fiscalYearDetailSchema.parse(await apiService.put<unknown, FiscalYearRequest & { rowVersion: string }>(fiscalYearEndpoints.byId(id), { ...normalize(request), rowVersion })); },
   async archive(id: number): Promise<void> { await apiService.delete<unknown>(fiscalYearEndpoints.byId(id)); },

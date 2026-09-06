@@ -5,7 +5,8 @@ import { Box, FormControlLabel, Switch } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { Controller, type Resolver, type SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { MyForm, MySelect, MyTextField } from "@/shared/components/forms";
+import { MyForm, MySelect, MyTextField, toFormErrorMessages } from "@/shared/components/forms";
+import { showToast } from "@/shared/components/feedback/transient";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import { useOrganizationalLookup } from "../hooks/useOrganizationalStructure";
 import type {
@@ -45,15 +46,58 @@ const boolOptions = [
   { value: false, label: "organizationalStructure.no" },
 ] as const;
 
-const toFormValues = (item?: OrganizationalStructureItem | null): OrganizationalStructureMutation => item ? {
-  ...emptyValues,
-  ...item,
-  isCentralized: item.isCentralized ?? (item.resource === "departments" ? !item.branchId : false),
-  version: item.version ?? (item.resource === "job-descriptions" ? item.code : undefined),
-  dutySections: item.dutySections ?? [],
-  skills: item.skills ?? [],
-  educationRequirements: item.educationRequirements ?? [],
-} : emptyValues;
+const toFormValues = (item?: OrganizationalStructureItem | null): OrganizationalStructureMutation => {
+  if (!item) return emptyValues;
+  return {
+    code: item.code ?? "",
+    nameEn: item.nameEn ?? "",
+    nameAr: item.nameAr ?? "",
+    descriptionEn: item.descriptionEn ?? "",
+    descriptionAr: item.descriptionAr ?? "",
+    branchId: item.branchId ?? undefined,
+    parentDepartmentId: item.parentDepartmentId ?? undefined,
+    departmentId: item.departmentId ?? undefined,
+    divisionId: item.divisionId ?? undefined,
+    jobTitleId: item.jobTitleId ?? undefined,
+    jobLevelId: item.jobLevelId ?? undefined,
+    positionId: item.positionId ?? undefined,
+    managerId: item.managerId ?? undefined,
+    parentCostCenterId: item.parentCostCenterId ?? undefined,
+    costCenterCode: item.costCenterCode ?? "",
+    timeZoneId: item.timeZoneId ?? "UTC",
+    openedOn: item.openedOn ?? new Date().toISOString().slice(0, 10),
+    email: item.email ?? "",
+    phone: item.phone ?? "",
+    isHeadquarters: Boolean(item.isHeadquarters),
+    isCentralized: item.isCentralized ?? (item.resource === "departments" ? !item.branchId : false),
+    canManageOthers: Boolean(item.canManageOthers),
+    isManagementLevel: Boolean(item.isManagementLevel),
+    levelOrder: item.levelOrder ?? 0,
+    minSalary: item.minSalary ?? undefined,
+    maxSalary: item.maxSalary ?? undefined,
+    currencyCode: item.currencyCode ?? "",
+    targetHeadcount: item.targetHeadcount ?? 0,
+    version: item.version ?? (item.resource === "job-descriptions" ? item.code : ""),
+    purposeEn: item.purposeEn ?? "",
+    purposeAr: item.purposeAr ?? "",
+    responsibilitiesEn: item.responsibilitiesEn ?? "",
+    responsibilitiesAr: item.responsibilitiesAr ?? "",
+    requirementsEn: item.requirementsEn ?? "",
+    requirementsAr: item.requirementsAr ?? "",
+    preferredQualificationsEn: item.preferredQualificationsEn ?? "",
+    preferredQualificationsAr: item.preferredQualificationsAr ?? "",
+    requiredSkills: item.requiredSkills ?? "",
+    requiredEducation: item.requiredEducation ?? "",
+    minExperienceYears: item.minExperienceYears ?? undefined,
+    revisionNotes: item.revisionNotes ?? "",
+    symbol: item.symbol ?? "",
+    exchangeRateToDefault: item.exchangeRateToDefault ?? 1,
+    isDefault: Boolean(item.isDefault),
+    dutySections: item.dutySections ?? [],
+    skills: item.skills ?? [],
+    educationRequirements: item.educationRequirements ?? [],
+  };
+};
 
 export default function OrganizationalStructureForm({
   open, mode, resource, item, loading, onClose, onSubmit,
@@ -97,12 +141,22 @@ export default function OrganizationalStructureForm({
 
   const options = (values = [] as { id: number; code: string; nameEn: string; nameAr: string }[]) =>
     values.map((value) => ({ id: value.id, displayName: `${value.code} — ${value.nameEn} (${value.nameAr})` }));
-  const errorMessages = Object.fromEntries(Object.entries(errors).flatMap(([key, error]) =>
-    error?.message ? [[key, String(error.message)]] : []));
+  const errorMessages = toFormErrorMessages(errors);
+  const errorLabels: Record<string, string> = {
+    code: resource === "job-descriptions" ? t("organizationalStructure.fields.version") : t("organizationalStructure.fields.code"),
+    nameAr: t("general.nameAr"),
+    nameEn: t("general.nameEn"),
+    timeZoneId: t("organizationalStructure.fields.timeZone"),
+    openedOn: t("organizationalStructure.fields.openedOn"),
+    email: t("organizationalStructure.fields.email"),
+    phone: t("organizationalStructure.fields.phone"),
+    isHeadquarters: t("organizationalStructure.fields.headquarters"),
+  };
   const submit: SubmitHandler<OrganizationalStructureMutation> = async (values) => {
     try {
       const payload: OrganizationalStructureMutation = {
         ...values,
+        version: resource === "job-descriptions" ? (values.code || values.version) : values.version,
         branchId: values.isCentralized ? undefined : (values.branchId || undefined),
       };
       await onSubmit(payload);
@@ -114,7 +168,9 @@ export default function OrganizationalStructureForm({
         "OrganizationalStructure.DuplicateNameEn": ["nameEn"],
         "OrganizationalStructure.DuplicateNameAr": ["nameAr"],
         "OrganizationalStructure.ParentNotFound": ["branchId", "departmentId", "divisionId", "jobTitleId", "jobLevelId", "positionId"],
+        "OrganizationalStructure.HeadquartersExists": ["isHeadquarters"],
       });
+      showToast.error(error, t("organizationalStructure.saveError"));
     }
   };
   const text = (name: keyof OrganizationalStructureMutation, label: string, props: Record<string, unknown> = {}) => (
@@ -232,7 +288,7 @@ export default function OrganizationalStructureForm({
       onSubmit={isView ? undefined : handleSubmit(submit)} isSubmitting={loading}
       isDirty={isDirty} hideFooter={isView} focusFieldName="code" autoFocusFirst
       overlayActionType={mode === "add" ? "create" : "update"}
-      overlayMessage={t("organizationalStructure.form.saving")} errors={errorMessages}
+      overlayMessage={t("organizationalStructure.form.saving")} errors={errorMessages} errorLabels={errorLabels}
       mockDataAction={
         process.env.NODE_ENV !== "production" && !isView
           ? {

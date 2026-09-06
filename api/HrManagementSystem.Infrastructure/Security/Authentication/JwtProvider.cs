@@ -46,25 +46,21 @@ public sealed class JwtProvider(
 
     public string GenerateRealtimeToken(ClaimsPrincipal principal)
     {
+        // Browser SignalR transports send bearer tokens in the query string.
+        // Keep this token deliberately small and hydrate authorization claims
+        // from the database after the session has been validated.
         var requiredClaims = new[]
         {
             ClaimTypes.NameIdentifier,
             ClaimTypes.Name,
-            ClaimTypes.Email,
             JwtClaimNames.SessionId,
             JwtClaimNames.SecurityStamp,
             JwtClaimNames.TenantId,
-            JwtClaimNames.TenantName,
-            JwtClaimNames.TenantPlanName,
             JwtClaimNames.CompanyId
         };
 
         var claims = principal.Claims
-            .Where(claim =>
-                requiredClaims.Contains(claim.Type) ||
-                claim.Type == ClaimTypes.Role ||
-                claim.Type == Permissions.Type ||
-                claim.Type == JwtClaimNames.TenantRoleId)
+            .Where(claim => requiredClaims.Contains(claim.Type))
             .Select(claim => new Claim(claim.Type, claim.Value))
             .ToList();
 

@@ -157,6 +157,10 @@ export const routePolicies: readonly RoutePolicy[] = [
     path: appRoutes.finance.fiscalYears,
     permissions: [permissions.ViewFiscalYears],
   },
+  {
+    path: appRoutes.workforcePlans,
+    permissions: [permissions.ViewWorkforcePlans],
+  },
   { path: UNAVAILABLE_ROUTE },
 ];
 

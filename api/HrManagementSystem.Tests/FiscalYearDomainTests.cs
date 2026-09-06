@@ -63,6 +63,57 @@ public sealed class FiscalYearDomainTests
     }
 
     [Fact]
+    public void LockedYear_CanBeReopenedAndClosedAgain()
+    {
+        var year = Create(FiscalPeriodFrequency.Monthly);
+        year.Open();
+        year.BeginClosing();
+        year.Close();
+        year.Lock();
+
+        Assert.True(year.Reopen());
+        Assert.Equal(FiscalYearStatus.Open, year.Status);
+        Assert.All(year.Periods, period => Assert.Equal(FiscalPeriodStatus.Open, period.Status));
+
+        Assert.True(year.BeginClosing());
+        Assert.True(year.Close());
+        Assert.True(year.Lock());
+    }
+
+    [Fact]
+    public void ClosedYear_CanBeReopenedWithoutFinalLock()
+    {
+        var year = Create(FiscalPeriodFrequency.Quarterly);
+        year.Open();
+        year.BeginClosing();
+        year.Close();
+
+        Assert.True(year.Reopen());
+        Assert.Equal(FiscalYearStatus.Open, year.Status);
+        Assert.All(year.Periods, period => Assert.Equal(FiscalPeriodStatus.Open, period.Status));
+    }
+
+    [Fact]
+    public void Reopen_RejectsAnyStateOtherThanClosedLockedOrAlreadyOpen()
+    {
+        var draft = Create(FiscalPeriodFrequency.Monthly);
+        Assert.Throws<DomainRuleException>(() => draft.Reopen());
+
+        var open = Create(FiscalPeriodFrequency.Monthly);
+        open.Open();
+        Assert.False(open.Reopen());
+
+        var closed = Create(FiscalPeriodFrequency.Monthly);
+        closed.Open();
+        closed.BeginClosing();
+        closed.Close();
+        Assert.True(closed.Reopen());
+
+        closed.BeginClosing();
+        Assert.Throws<DomainRuleException>(() => closed.Reopen());
+    }
+
+    [Fact]
     public void OpenYear_CannotBeEditedOrArchived()
     {
         var year = Create(FiscalPeriodFrequency.Monthly);

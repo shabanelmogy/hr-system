@@ -31,6 +31,7 @@ public static class AuthenticationService
         services.AddScoped<RegistrationProfilePictureStore>();
         services.AddScoped<SessionRevocationNotifier>();
         services.AddScoped<IJwtProvider, JwtProvider>();
+        services.AddScoped<RealtimePrincipalClaimsLoader>();
         services.AddScoped<IAuthEmailService, AuthEmailService>();
         services.AddScoped<ILoginAuditService, LoginAuditService>();
         services.AddSingleton<AuthenticationFeaturePolicy>();
@@ -117,7 +118,7 @@ public static class AuthenticationService
 
                     return Task.CompletedTask;
                 },
-                OnTokenValidated = ValidateSessionAsync
+                OnTokenValidated = ValidateRealtimeSessionAsync
             };
         });
 
@@ -219,5 +220,29 @@ public static class AuthenticationService
         {
             context.Fail("The session is no longer active.");
         }
+    }
+
+    private static async Task ValidateRealtimeSessionAsync(TokenValidatedContext context)
+    {
+        await ValidateSessionAsync(context);
+        if (context.Result?.Succeeded == false)
+            return;
+
+        var principal = context.Principal;
+        var userId = principal?.FindFirstValue(ClaimTypes.NameIdentifier);
+        var tenantId = principal?.FindFirstValue(JwtClaimNames.TenantId);
+        if (principal is null || string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(tenantId))
+        {
+            context.Fail("The realtime token is missing required authorization context.");
+            return;
+        }
+
+        var loader = context.HttpContext.RequestServices
+            .GetRequiredService<RealtimePrincipalClaimsLoader>();
+        await loader.LoadAsync(
+            principal,
+            userId,
+            tenantId,
+            context.HttpContext.RequestAborted);
     }
 }

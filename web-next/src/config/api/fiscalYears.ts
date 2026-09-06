@@ -15,4 +15,5 @@ export const fiscalYears = {
   beginClosing: (id: Id) => `${base}/${id}/begin-closing`,
   close: (id: Id) => `${base}/${id}/close`,
   lock: (id: Id) => `${base}/${id}/lock`,
+  reopen: (id: Id) => `${base}/${id}/reopen`,
 } as const;

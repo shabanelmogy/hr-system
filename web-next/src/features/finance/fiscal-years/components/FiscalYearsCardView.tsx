@@ -1,15 +1,16 @@
 import { EntityCard, CardActionButtons, type CardActionItem } from "@/shared/components/cards";
 import { EmptyState, NoResultsState } from "@/shared/components/feedback/states";
 import { CardViewPagination, CardViewSkeleton } from "@/shared/components/lists/card-view";
-import { Archive, CalendarMonth, Edit, LockClock, Restore, Visibility } from "@mui/icons-material";
+import { Archive, CalendarMonth, Edit, LockClock, LockOpen, Restore, Visibility } from "@mui/icons-material";
 import { Box, Chip, Grid, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import type { FiscalYearListItem, FiscalYearPermissions } from "../types/FiscalYear";
+import type { FiscalYearLifecycleAction, FiscalYearListItem, FiscalYearPermissions } from "../types/FiscalYear";
+import { getAvailableFiscalYearLifecycleActions } from "../utils/fiscalYearLifecycle";
 
 interface Props {
   items: FiscalYearListItem[]; loading: boolean; page: number; pageSize: number; totalCount: number; hasCriteria: boolean; permissions: FiscalYearPermissions;
   onPageChange: (page: number) => void; onPageSizeChange: (size: number) => void; onClear: () => void; onAdd: () => void;
-  onView: (item: FiscalYearListItem) => void; onEdit: (item: FiscalYearListItem) => void; onArchive: (item: FiscalYearListItem) => void; onRestore: (item: FiscalYearListItem) => void; onLifecycle: (item: FiscalYearListItem) => void;
+  onView: (item: FiscalYearListItem) => void; onEdit: (item: FiscalYearListItem) => void; onArchive: (item: FiscalYearListItem) => void; onRestore: (item: FiscalYearListItem) => void; onLifecycle: (item: FiscalYearListItem, action: FiscalYearLifecycleAction) => void;
 }
 
 export default function FiscalYearsCardView(props: Props) {
@@ -24,7 +25,7 @@ export default function FiscalYearsCardView(props: Props) {
         const actions: CardActionItem[] = [
           { key: "view", title: t("actions.view"), color: "info", icon: <Visibility fontSize="small" />, onClick: () => props.onView(item) },
           { key: "edit", title: t("actions.edit"), color: "primary", icon: <Edit fontSize="small" />, onClick: () => props.onEdit(item), disabled: !props.permissions.canEdit || item.isDeleted || item.status !== 1 },
-          { key: "lifecycle", title: t("fiscalYears.actions.lifecycle"), color: "success", icon: <LockClock fontSize="small" />, onClick: () => props.onLifecycle(item), disabled: !props.permissions.canManageLifecycle || item.isDeleted || item.status === 5 },
+          ...getAvailableFiscalYearLifecycleActions(item.status).map(action => ({ key: `lifecycle-${action}`, title: t(`fiscalYears.lifecycle.${action}`), color: action === "reopen" ? "warning" as const : "success" as const, icon: action === "reopen" ? <LockOpen fontSize="small" /> : <LockClock fontSize="small" />, onClick: () => props.onLifecycle(item, action), disabled: !props.permissions.canManageLifecycle || item.isDeleted })),
           item.isDeleted
             ? { key: "restore", title: t("actions.restore"), color: "success", icon: <Restore fontSize="small" />, onClick: () => props.onRestore(item), disabled: !props.permissions.canDelete }
             : { key: "archive", title: t("actions.archive"), color: "warning", icon: <Archive fontSize="small" />, onClick: () => props.onArchive(item), disabled: !props.permissions.canDelete || item.status !== 1 },

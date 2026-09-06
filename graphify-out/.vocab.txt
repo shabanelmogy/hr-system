@@ -35,6 +35,7 @@ adornment
 advanced
 affects
 after
+agent
 agents
 ago
 alert
@@ -164,6 +165,7 @@ boundary
 bounds
 box
 branch
+branches
 breadcrumb
 breadcrumbs
 break
@@ -288,6 +290,7 @@ comparison
 compiler
 complete
 completed
+completes
 completion
 compliance
 component
@@ -347,6 +350,7 @@ cookies
 copy
 core
 correction
+correctly
 correlation
 cors
 cost
@@ -365,6 +369,7 @@ creates
 creating
 credential
 credentials
+criterion
 critical
 cron
 crop
@@ -403,6 +408,7 @@ decline
 declined
 decode
 decorative
+dedicated
 default
 defaults
 deferred
@@ -483,6 +489,7 @@ domain
 done
 donut
 dotnet
+down
 download
 draft
 draw
@@ -495,6 +502,7 @@ duplicate
 duplicates
 durable
 during
+duty
 dynamic
 each
 echo
@@ -503,6 +511,8 @@ edit
 editable
 edited
 editing
+editor
+education
 effective
 effects
 egypt
@@ -521,12 +531,14 @@ end
 endpoint
 endpoints
 enforce
+enforces
 engagement
 engines
 english
 enhanced
 enqueue
 ensure
+enter
 enterprise
 entities
 entity
@@ -597,6 +609,7 @@ factory
 fail
 failed
 failing
+fails
 failure
 fake
 faker
@@ -623,6 +636,7 @@ find
 findings
 fingerprints
 first
+fiscal
 fix
 fixed
 fixture
@@ -742,6 +756,7 @@ hello
 helper
 helpers
 hides
+hierarchy
 highlight
 highlighted
 hire
@@ -843,6 +858,7 @@ invoked
 ios
 iso
 isolated
+isolates
 isolation
 issue
 issued
@@ -855,6 +871,7 @@ jest
 job
 jobs
 jordan
+journey
 json
 jsx
 jwt
@@ -904,6 +921,7 @@ limiting
 limits
 line
 linear
+lines
 link
 linked
 linking
@@ -989,6 +1007,7 @@ middleware
 migrate
 migrated
 migration
+migrations
 mime
 min
 minimum
@@ -1037,6 +1056,7 @@ network
 neutral
 never
 new
+newest
 newly
 newtonsoft
 nex
@@ -1133,6 +1153,7 @@ parallel
 parameter
 parameters
 params
+parent
 parity
 parse
 part
@@ -1177,6 +1198,9 @@ pin
 pipeline
 placeholder
 plan
+planned
+planning
+plans
 platform
 playback
 playbook
@@ -1212,6 +1236,7 @@ presentation
 preservation
 preserves
 preset
+prevents
 preview
 principal
 print
@@ -1369,11 +1394,13 @@ restart
 restore
 restores
 restrict
+resubmitted
 result
 results
 retries
 retry
 return
+returned
 returns
 reusable
 reuse
@@ -1465,6 +1492,7 @@ selected
 selection
 selector
 selects
+self
 semantic
 send
 sender
@@ -1516,6 +1544,7 @@ size
 sizes
 skeleton
 skill
+skills
 skip
 skipped
 skips
@@ -1524,7 +1553,9 @@ slashes
 slice
 slide
 sln
+slots
 slug
+smoke
 smtp
 snapshot
 social
@@ -1553,6 +1584,7 @@ src
 ssl
 stable
 stack
+stage
 stale
 stamps
 standard
@@ -1583,6 +1615,7 @@ string
 strings
 structural
 structure
+structured
 style
 styled
 styles
@@ -1595,6 +1628,7 @@ subcategories
 subcategory
 subcommands
 submit
+submittable
 subscribe
 subscription
 success
@@ -1602,7 +1636,10 @@ successful
 summarize
 summary
 super
+supersede
+support
 supports
+surface
 suspend
 svg
 swagger
@@ -1639,6 +1676,7 @@ than
 the
 their
 theme
+then
 theory
 these
 thin
@@ -1670,6 +1708,7 @@ tools
 tooltip
 top
 total
+totals
 track
 trackable
 tracked
@@ -1684,6 +1723,7 @@ transcribe
 transient
 transition
 transitions
+translatable
 translate
 translation
 translator
@@ -1703,6 +1743,7 @@ try
 tsconfig
 tsx
 turbopack
+twice
 txt
 type
 typecheck
@@ -1712,6 +1753,7 @@ typescript
 unambiguous
 unavailable
 undefined
+under
 unicode
 unique
 unit
@@ -1815,7 +1857,9 @@ words
 work
 workbook
 workflow
+workforce
 worklets
+works
 world
 wrapper
 write
@@ -1824,9 +1868,42 @@ wrong
 xlsx
 xml
 xunit
+year
+years
 you
 zatca
 zip
 zod
 zone
 zustand
+إلزامية
+الآن
+الأمن
+الأولى
+الاتصال
+الاختبارات
+البسيط
+البصمة
+البيانات
+التخزين
+التعديل
+التنفيذ
+الخام
+القبول
+المرحلة
+المرحلي
+المطلوب
+المطلوبة
+النطاق
+الواجهة
+تعليمات
+خارج
+خطة
+داخل
+ربط
+قبل
+ماكينات
+معمارية
+هذه
+وشروط
+وعرض

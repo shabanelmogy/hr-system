@@ -1,4 +1,4 @@
-import { MyForm, MySelect, MyTextField } from "@/shared/components/forms";
+import { MyForm, MySelect, MyTextField, toFormErrorMessages } from "@/shared/components/forms";
 import { useStateLookup } from "@/features/basic-data/geographical-information/states";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,7 +28,7 @@ const DistrictForm = ({
     if (dialogType === "add") { reset(emptyDistrict); return; }
     if (selectedDistrict) reset({ nameAr: selectedDistrict.nameAr, nameEn: selectedDistrict.nameEn, code: selectedDistrict.code, stateId: selectedDistrict.stateId });
   }, [dialogType, open, reset, selectedDistrict]);
-  const errorMessages = Object.fromEntries(Object.entries(errors).flatMap(([key, error]) => error?.message ? [[key, String(error.message)]] : []));
+  const errorMessages = toFormErrorMessages(errors);
   const stateOptions = states.map((state) => ({ id: state.id, displayName: `${state.nameEn} (${state.nameAr})` }));
   const generateMockData = () => {
     const stateId = stateOptions[0]?.id;

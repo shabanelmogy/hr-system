@@ -47,6 +47,23 @@ export const permissions = {
   EditFiscalYears: 'FiscalYears:Edit',
   DeleteFiscalYears: 'FiscalYears:Delete',
   ManageFiscalYearLifecycle: 'FiscalYears:ManageLifecycle',
+  ViewWorkforcePlans: 'WorkforcePlans:View',
+  CreateWorkforcePlans: 'WorkforcePlans:Create',
+  EditWorkforcePlans: 'WorkforcePlans:Edit',
+  DeleteWorkforcePlans: 'WorkforcePlans:Delete',
+  ApproveWorkforcePlans: 'WorkforcePlans:Approve',
+  ViewWorkforceBudgets: 'WorkforceBudgets:View',
+  ManageWorkforceBudgets: 'WorkforceBudgets:Manage',
+  ApproveWorkforceBudgets: 'WorkforceBudgets:Approve',
+  ViewPositionEnvelopes: 'PositionEnvelopes:View',
+  ViewEnvelopeAmendments: 'EnvelopeAmendments:View',
+  CreateEnvelopeAmendments: 'EnvelopeAmendments:Create',
+  ApproveEnvelopeAmendments: 'EnvelopeAmendments:Approve',
+  ViewStaffingRequests: 'StaffingRequests:View',
+  CreateStaffingRequests: 'StaffingRequests:Create',
+  ApproveStaffingRequests: 'StaffingRequests:Approve',
+  ViewWorkforceTrace: 'WorkforcePlanning:ViewTrace',
+  ViewWorkforceFinancials: 'WorkforcePlanning:ViewFinancials',
   ViewCrystalReports: 'CrystalReports:View',
   CreateCrystalReports: 'CrystalReports:Create',
   DownloadCrystalReports: 'CrystalReports:Download',
@@ -155,6 +172,12 @@ export type PermissionModule =
   | 'OrganizationalStructure'
   | 'Recruitment'
   | 'FiscalYears'
+  | 'WorkforcePlans'
+  | 'WorkforceBudgets'
+  | 'PositionEnvelopes'
+  | 'EnvelopeAmendments'
+  | 'StaffingRequests'
+  | 'WorkforcePlanning'
   | 'CrystalReports'
   | 'Districts'
   | 'ChangeLogs'

@@ -6,24 +6,30 @@ public static class DefaultRoles
 {
     public static async Task SeedRolesAsync(RoleManager<ApplicationRole> roleManager)
     {
-        if (!await SystemRoleExistsAsync(roleManager, AppRoles.super_admin))
-        {
-            await roleManager.CreateAsync(new ApplicationRole(AppRoles.super_admin) { IsSystem = true });
-        }
+        await EnsureSystemRoleAsync(roleManager, AppRoles.super_admin);
+        await EnsureSystemRoleAsync(roleManager, AppRoles.admin);
+        await EnsureSystemRoleAsync(roleManager, AppRoles.user, isDefault: true);
+    }
 
-        if (!await SystemRoleExistsAsync(roleManager, AppRoles.admin))
-        {
-            await roleManager.CreateAsync(new ApplicationRole(AppRoles.admin) { IsSystem = true });
-        }
+    private static async Task EnsureSystemRoleAsync(
+        RoleManager<ApplicationRole> roleManager,
+        string roleName,
+        bool isDefault = false)
+    {
+        if (await SystemRoleExistsAsync(roleManager, roleName))
+            return;
 
-        if (!await SystemRoleExistsAsync(roleManager, AppRoles.user))
+        var result = await roleManager.CreateAsync(new ApplicationRole(roleName)
         {
-            await roleManager.CreateAsync(new ApplicationRole
-            {
-                Name = AppRoles.user,
-                IsSystem = true,
-                IsDefault = true
-            });
+            IsSystem = true,
+            IsDefault = isDefault
+        });
+
+        if (!result.Succeeded)
+        {
+            throw new InvalidOperationException(
+                $"Unable to create system role {roleName}: " +
+                string.Join(", ", result.Errors.Select(error => error.Description)));
         }
     }
 

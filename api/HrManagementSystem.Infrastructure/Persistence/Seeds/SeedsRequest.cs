@@ -4,6 +4,18 @@ namespace HrManagementSystem.Infrastructure.Persistence.Seeds;
 
 public static class SeedsRequest
 {
+    public static async Task<WebApplication> AddSystemRolePermissionSeeds(
+        this WebApplication webApplication)
+    {
+        var scopeFactory = webApplication.Services.GetRequiredService<IServiceScopeFactory>();
+        using var scope = scopeFactory.CreateScope();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+
+        await SeedSystemRolesAndPermissionsAsync(roleManager);
+
+        return webApplication;
+    }
+
     public static async Task<WebApplication> AddSeedsRequest(this WebApplication webApplication)
     {
         var scopeFactory = webApplication.Services.GetRequiredService<IServiceScopeFactory>();
@@ -16,9 +28,7 @@ public static class SeedsRequest
         var timeProvider = scope.ServiceProvider.GetRequiredService<TimeProvider>();
 
         await DefaultTenants.SeedAsync(context, timeProvider);
-        await DefaultRoles.SeedRolesAsync(roleManager);
-        await DefaultUsers.SeedAdminPermissionsAsync(roleManager);
-        await DefaultUsers.SeedSuperAdminGeographyPermissionsAsync(roleManager);
+        await SeedSystemRolesAndPermissionsAsync(roleManager);
         await DefaultUsers.SeedSuperAdminUserAsync(userManager, configuration);
         await DefaultUsers.SeedViewerUserAsync(userManager, configuration);
         await DefaultUsers.SeedAdminUserAsync(userManager, configuration);
@@ -26,5 +36,13 @@ public static class SeedsRequest
         await DefaultCompanies.SeedAsync(context);
 
         return webApplication;
+    }
+
+    public static async Task SeedSystemRolesAndPermissionsAsync(
+        RoleManager<ApplicationRole> roleManager)
+    {
+        await DefaultRoles.SeedRolesAsync(roleManager);
+        await DefaultUsers.SeedAdminPermissionsAsync(roleManager);
+        await DefaultUsers.SeedSuperAdminGeographyPermissionsAsync(roleManager);
     }
 }

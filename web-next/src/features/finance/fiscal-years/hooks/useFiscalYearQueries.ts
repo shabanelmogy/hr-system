@@ -22,8 +22,18 @@ export const useFiscalYearPage = (query: FiscalYearPageQuery) =>
 export const useFiscalYear = (id?: number | null, enabled = true) =>
   useQuery({ queryKey: fiscalYearKeys.detail(id ?? 0), queryFn: () => FiscalYearService.getById(id!), enabled: enabled && !!id });
 
+export const fiscalYearLookupQueryOptions = () => ({
+  queryKey: fiscalYearKeys.lookup(),
+  queryFn: FiscalYearService.getLookup,
+  staleTime: 60_000,
+  // The app disables mount refetching globally. Fiscal Years are a live
+  // cross-feature dependency, so cached lookup data must be reconciled whenever
+  // a dependent workflow (such as Workforce Planning) is entered.
+  refetchOnMount: "always" as const,
+});
+
 export const useFiscalYearLookup = () =>
-  useQuery({ queryKey: fiscalYearKeys.lookup(), queryFn: FiscalYearService.getLookup, staleTime: 60_000 });
+  useQuery(fiscalYearLookupQueryOptions());
 
 function useInvalidatingMutation<TData, TVariables>(
   mutationFn: (variables: TVariables) => Promise<TData>,

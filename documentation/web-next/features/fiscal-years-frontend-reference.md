@@ -51,7 +51,10 @@ Only Draft is offered for edit/archive.
 ## 9. Detail and lifecycle
 
 View mode is read-only and lists generated periods. Shared confirmation dialogs
-own archive, restore, open, begin-closing, close, and lock confirmation. No native
+own archive, restore, open, begin-closing, close, lock, and reopen confirmation.
+Closed rows expose separate translated Reopen and Lock actions; Locked rows expose
+Reopen. The selected action sends RowVersion,
+returns the year/periods to Open, and leaves calendar fields read-only. No native
 alert, confirm, or browser validation is used.
 
 ## 10. Permissions and read-only mode
@@ -75,7 +78,10 @@ invalid field receives focus, and accessible labels identify status/action icons
 
 API endpoint config, route registry, auth permission parity, sidebar navigation,
 and realtime query registry are required evidence. Resource `fiscal-years`
-invalidates the complete feature key family.
+invalidates the complete feature key family. The Fiscal Year lookup is a live
+cross-feature dependency and explicitly refetches on every mount, which is
+stricter than the application's global stale-on-mount reconciliation. A reopened
+year therefore returns to Workforce Planning without an inactive-cache gap.
 
 ## 14. Verification and optional capabilities
 

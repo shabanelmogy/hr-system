@@ -1,13 +1,18 @@
-import React from "react";
-import { DialogTitle, Box, Typography, IconButton, useTheme, alpha } from "@mui/material";
+import React, { useState } from "react";
+import { DialogTitle, Box, Typography, IconButton, ButtonBase, Popover, useTheme, alpha } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 import { useFormContext } from "./FormContext";
 import { getFormModeIcon } from "./formModeIcon";
+import { getFormErrorSummary } from "./formErrorSummary";
 
 export const FormHeader: React.FC = () => {
   const theme = useTheme();
-  const { title, subtitle, variant, icon, recordId, errors, onClose, isSubmitting, isViewMode } = useFormContext();
-  const errorCount = Object.keys(errors || {}).length;
+  const { t } = useTranslation();
+  const { title, subtitle, variant, icon, recordId, errors, errorLabels, onClose, isSubmitting, isViewMode } = useFormContext();
+  const [errorAnchor, setErrorAnchor] = useState<HTMLElement | null>(null);
+  const errorSummary = getFormErrorSummary(errors || {}, errorLabels);
+  const errorCount = errorSummary.length;
 
   return (
     <DialogTitle
@@ -134,7 +139,12 @@ export const FormHeader: React.FC = () => {
         )}
 
         {errorCount > 0 && (
-          <Box
+          <ButtonBase
+            type="button"
+            aria-label={t("common.reviewValidationErrors", { count: errorCount })}
+            aria-haspopup="dialog"
+            aria-expanded={Boolean(errorAnchor)}
+            onClick={(event) => setErrorAnchor(event.currentTarget)}
             sx={{
               display: "flex",
               alignItems: "center",
@@ -154,11 +164,34 @@ export const FormHeader: React.FC = () => {
                 fontWeight: 600,
               }}
             >
-              {errorCount}{" "}
-              {errorCount === 1 ? "error" : "errors"}
+              {t("common.validationErrorCount", { count: errorCount })}
             </Typography>
-          </Box>
+          </ButtonBase>
         )}
+
+        <Popover
+          open={Boolean(errorAnchor)}
+          anchorEl={errorAnchor}
+          onClose={() => setErrorAnchor(null)}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          transformOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          <Box sx={{ p: 2, width: 320, maxWidth: "calc(100vw - 32px)" }}>
+            <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 700 }}>
+              {t("common.validationErrors")}
+            </Typography>
+            {errorSummary.map((error) => (
+              <Box key={error.field} sx={{ mb: 1, "&:last-child": { mb: 0 } }}>
+                <Typography variant="caption" sx={{ display: "block", fontWeight: 700 }}>
+                  {error.label}
+                </Typography>
+                <Typography variant="body2" color="error.main">
+                  {error.message}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        </Popover>
 
         <IconButton
           onClick={onClose}

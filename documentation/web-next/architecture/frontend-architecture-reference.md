@@ -127,6 +127,39 @@ Examples of protected reusable behavior include `MyDataGrid` with `GridFooter`,
 `CardViewPagination`, `PageHeader`, the shared card scaffold, form/dialog shells,
 and shared loading/error/empty states.
 
+### Form validation safety
+
+- Optional values emitted by text, number, and select controls must use the
+  shared primitives in `src/shared/validation/zodFormPrimitives.ts`. Their
+  preprocessors normalize blank control values and their inner Zod schemas are
+  explicitly optional, so omitted object keys remain optional after transforms.
+- Do not model an optional control by transforming a union containing
+  `z.undefined()`. With transformed schemas, accepting `undefined` as a value is
+  not equivalent to making an object key optional and can produce hidden
+  `expected nonoptional` errors.
+- Every React Hook Form consumer of `MyForm` must pass errors through
+  `toFormErrorMessages()`. This preserves nested array/object paths and makes the
+  shared header summary show the same complete error set as the field controls.
+- Feature forms should supply translated `errorLabels` for their user-facing
+  fields. Unmapped errors remain visible as a technical field path rather than
+  being silently omitted.
+
+### Query cache consistency
+
+- The shared QueryClient must keep `refetchOnMount: true`. A mutation or realtime
+  event may invalidate a query while its owning screen is unmounted; remounting
+  that screen must reconcile the stale cache with the server.
+- Every successful mutation invalidates the stable root key for its entity and
+  all dependent query families. Cross-feature consumers import those keys/hooks
+  through the feature's public API rather than duplicating cache keys.
+- A query may opt out of mount refetching only when its data is genuinely static
+  for the session and the exception is local, documented, and tested. Never
+  disable mount refetching globally to reduce request volume; use `staleTime` for
+  that purpose.
+- Business-critical cross-feature lookups may use `refetchOnMount: "always"`
+  when they must be reconciled on every workflow entry even while technically
+  fresh. Fiscal Years uses this policy because Workforce Planning depends on it.
+
 Current examples:
 
 - Geographical pages live under `src/features/basic-data/geographical-information`.
@@ -172,7 +205,11 @@ npm.cmd test -- --run
 npm.cmd run build
 ```
 
-`check:architecture` is implemented in `scripts/check-architecture.mjs` and checks dependency direction and import cycles. Any new exception must be justified in code review and reflected here.
+`check:architecture` is implemented in `scripts/check-architecture.mjs` and
+checks dependency direction, import cycles, unsafe transformed-optional Zod
+schemas, manual top-level-only `MyForm` error projection, and global disabling
+of stale-query refetch on mount. Any new exception must be justified in code
+review and reflected here.
 
 ## Future Change Checklist
 
@@ -184,6 +221,9 @@ npm.cmd run build
 - [ ] Keep the App Router adapter thin.
 - [ ] Keep feature code independent from layouts and routes.
 - [ ] Confirm shared code has no feature-specific imports.
+- [ ] Build optional control schemas from the shared Zod form primitives.
+- [ ] Flatten `MyForm` errors through `toFormErrorMessages()` and provide translated field labels.
+- [ ] Invalidate stable root/dependency keys after mutations and verify stale inactive data refetches on remount.
 - [ ] Use the established lowercase directory and PascalCase component naming.
 - [ ] Add or update a feature `index.ts` only when a public cross-feature API is needed.
 - [ ] Run the architecture, type, lint, test, and build checks.

@@ -66,6 +66,25 @@ public sealed class FiscalYear : CompanyAuditableEntity
         FiscalYearStatus.Locked,
         period => period.Lock());
 
+    public bool Reopen()
+    {
+        if (Status == FiscalYearStatus.Open)
+            return false;
+
+        if (Status is not FiscalYearStatus.Closed and not FiscalYearStatus.Locked)
+        {
+            throw new DomainRuleException(
+                "Finance.FiscalYear.InvalidStatusTransition",
+                $"The fiscal year cannot move from {Status} to {FiscalYearStatus.Open}.");
+        }
+
+        foreach (var period in _periods.Where(period => !period.IsDeleted))
+            period.Open();
+
+        Status = FiscalYearStatus.Open;
+        return true;
+    }
+
     public void EnsureCanArchive() =>
         EnsureDraft("Finance.FiscalYear.NotArchivable", "Only a draft fiscal year can be archived.");
 

@@ -4,7 +4,7 @@ import { Box, LinearProgress, MenuItem, TextField } from "@mui/material";
 import type { GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { FiscalYearLifecycleFilter, FiscalYearListItem, FiscalYearPermissions, FiscalYearRecordStatus, FiscalYearSearchField, FiscalYearSearchOperator, FiscalYearSortColumn } from "../types/FiscalYear";
+import type { FiscalYearLifecycleAction, FiscalYearLifecycleFilter, FiscalYearListItem, FiscalYearPermissions, FiscalYearRecordStatus, FiscalYearSearchField, FiscalYearSearchOperator, FiscalYearSortColumn } from "../types/FiscalYear";
 import FiscalYearsCardView from "./FiscalYearsCardView";
 import FiscalYearsDataGrid from "./FiscalYearsDataGrid";
 
@@ -12,7 +12,7 @@ interface Props {
   items: FiscalYearListItem[]; loading: boolean; fetching: boolean; page: number; pageSize: number; totalCount: number; permissions: FiscalYearPermissions;
   searchValue: string; searchField: FiscalYearSearchField; searchOperator: FiscalYearSearchOperator; sortColumn: FiscalYearSortColumn; sortDirection: "ASC" | "DESC"; recordStatus: FiscalYearRecordStatus; lifecycleStatus: FiscalYearLifecycleFilter;
   onPageChange: (value: number) => void; onPageSizeChange: (value: number) => void; onSearchChange: (value: string) => void; onSearchFieldChange: (value: FiscalYearSearchField) => void; onSearchOperatorChange: (value: FiscalYearSearchOperator) => void; onSortChange: (column: FiscalYearSortColumn, direction: "ASC" | "DESC") => void; onRecordStatusChange: (value: FiscalYearRecordStatus) => void; onLifecycleStatusChange: (value: FiscalYearLifecycleFilter) => void; onReset: () => void; onRefresh: () => void; onAdd: () => void;
-  onView: (item: FiscalYearListItem) => void; onEdit: (item: FiscalYearListItem) => void; onArchive: (item: FiscalYearListItem) => void; onRestore: (item: FiscalYearListItem) => void; onLifecycle: (item: FiscalYearListItem) => void;
+  onView: (item: FiscalYearListItem) => void; onEdit: (item: FiscalYearListItem) => void; onArchive: (item: FiscalYearListItem) => void; onRestore: (item: FiscalYearListItem) => void; onLifecycle: (item: FiscalYearListItem, action: FiscalYearLifecycleAction) => void;
 }
 
 export default function FiscalYearsMultiView(props: Props) {

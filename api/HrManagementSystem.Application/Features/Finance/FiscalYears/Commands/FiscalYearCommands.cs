@@ -41,7 +41,8 @@ public enum FiscalYearLifecycleAction
     Open,
     BeginClosing,
     Close,
-    Lock
+    Lock,
+    Reopen
 }
 
 public sealed record ChangeFiscalYearLifecycleCommand(
@@ -306,6 +307,7 @@ public sealed class ChangeFiscalYearLifecycleCommandHandler(
                         FiscalYearLifecycleAction.BeginClosing => fiscalYear.BeginClosing(),
                         FiscalYearLifecycleAction.Close => fiscalYear.Close(),
                         FiscalYearLifecycleAction.Lock => fiscalYear.Lock(),
+                        FiscalYearLifecycleAction.Reopen => fiscalYear.Reopen(),
                         _ => throw new ArgumentOutOfRangeException(nameof(request.Action))
                     };
 

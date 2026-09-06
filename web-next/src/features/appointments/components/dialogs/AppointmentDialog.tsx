@@ -22,7 +22,7 @@ import {
   useWatch,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { MyDateTimeField, MyForm, MyTextField } from "@/shared/components/forms";
+import { MyDateTimeField, MyForm, MyTextField, toFormErrorMessages } from "@/shared/components/forms";
 import type { AppointmentFormData } from "../../types/appointment";
 import { getAppointmentValidationSchema } from "../../validation/appointmentValidation";
 import AppointmentDeleteDialog from "./AppointmentDeleteDialog";
@@ -65,13 +65,7 @@ export default function AppointmentDialog({
     defaultValues,
   });
   const isAllDay = useWatch({ control, name: "isAllDay" });
-  const errorMessages = Object.fromEntries(
-    Object.entries(errors)
-      .filter((entry): entry is [string, { message: string }] =>
-        typeof entry[1]?.message === "string",
-      )
-      .map(([field, error]) => [field, error.message]),
-  );
+  const errorMessages = toFormErrorMessages(errors);
 
   useEffect(() => {
     if (open) reset(defaultValues);

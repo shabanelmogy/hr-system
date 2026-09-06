@@ -1,5 +1,6 @@
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
+import AccountTreeRoundedIcon from "@mui/icons-material/AccountTreeRounded";
 import { appRoutes } from "@/config/routes";
 import { permissions } from "@/lib/auth/permissions";
 import { createColoredIcon, createNavItem, createNavSection } from "../navigationUtils";
@@ -15,7 +16,13 @@ export const getFinanceConfig = () => createNavSection(
     appRoutes.finance.fiscalYears,
     undefined,
     [permissions.ViewFiscalYears],
+  ), createNavItem(
+    NavigationTitles.WORKFORCE_PLANS,
+    createColoredIcon(<AccountTreeRoundedIcon />, NavigationColors.LIGHT_PURPLE),
+    appRoutes.workforcePlans,
+    undefined,
+    [permissions.ViewWorkforcePlans],
   )],
   undefined,
-  [permissions.ViewFiscalYears],
+  [permissions.ViewFiscalYears, permissions.ViewWorkforcePlans],
 );

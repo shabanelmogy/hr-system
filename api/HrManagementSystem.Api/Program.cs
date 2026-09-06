@@ -134,6 +134,8 @@ app.UseRequestLocalization(localizationOptions);
 
 if (databaseSettings.SeedOnStartup)
     await app.AddSeedsRequest();
+else
+    await app.AddSystemRolePermissionSeeds();
 
 #endregion
 

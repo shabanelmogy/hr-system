@@ -37,6 +37,9 @@ using HrManagementSystem.Infrastructure.Features.Attendance.Devices.Jobs;
 using HrManagementSystem.Application.Features.Finance.FiscalYears.Abstractions;
 using HrManagementSystem.Infrastructure.Features.Finance.FiscalYears.Jobs;
 using HrManagementSystem.Infrastructure.Features.Finance.FiscalYears.Persistence;
+using HrManagementSystem.Application.Features.WorkforcePlanning.Abstractions;
+using HrManagementSystem.Application.Features.WorkforcePlanning.Commands;
+using HrManagementSystem.Infrastructure.Features.WorkforcePlanning.Persistence;
 
 namespace HrManagementSystem.Infrastructure.Dependencies;
 
@@ -101,6 +104,9 @@ public static class EntitiesService
         services.AddScoped<IFiscalYearWriteStore, FiscalYearWriteStore>();
         services.AddScoped<IFiscalYearAuditTrail, FiscalYearAuditTrail>();
         services.AddScoped<IFiscalYearChangeScheduler, FiscalYearChangeScheduler>();
+        services.AddScoped<IWorkforcePlanReadStore, WorkforcePlanReadStore>();
+        services.AddScoped<IWorkforcePlanWriteStore, WorkforcePlanWriteStore>();
+        services.AddScoped<WorkforcePlanEffects>();
 
         services.Scan(scan => scan
             .FromAssemblies(HrManagementSystem.Infrastructure.AssemblyReference.Assembly)

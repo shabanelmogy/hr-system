@@ -27,7 +27,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | R-01 | Company-scoped Fiscal Year with generated monthly/quarterly periods | User-approved architecture and implementation request | Required | Required | Required | Frozen |
 | R-02 | Non-overlapping dates and unique code within trusted company | Implementation request | Required | Mirror for UX | Mirror for UX | Frozen |
-| R-03 | Draft/Open/Closing/Closed/Locked lifecycle with optimistic concurrency | Implementation request | Required | Required | Required | Frozen |
+| R-03 | Draft/Open/Closing/Closed/Locked lifecycle, controlled Closed/Locked-to-Open reopen, and optimistic concurrency | Implementation request | Required | Required | Required | Frozen |
 | R-04 | Finance owns the shared calendar; Workforce Planning, Payroll, Attendance reporting, and Recruitment may only consume eligible years | Cross-module ownership review | Required boundary | Finance navigation | Finance navigation | Frozen |
 | R-05 | Exact server paging/search/filter/sort shared by clients | Countries reference plus implementation request | Required | Required | Required | Frozen |
 | R-06 | EN/AR, RTL, responsive, accessible, permission/read-only workflows | Repository guides | Required errors | Required | Required | Frozen |
@@ -101,8 +101,8 @@
 | Draft active | View | Create | Edit | Delete | N/A | Open | View only |
 | Open | View | Create | No | No | N/A | Begin closing | View only |
 | Closing | View | Create | No | No | N/A | Close | View only |
-| Closed | View | Create | No | No | N/A | Lock | View only |
-| Locked | View | Create | No | No | N/A | No | View only |
+| Closed | View | Create | No | No | N/A | Reopen to Open or Lock | View only |
+| Locked | View | Create | No | No | N/A | Reopen to Open | View only |
 | Archived Draft | View | Create | No | Idempotent | Delete | No | View only |
 
 ## Integration register
@@ -162,12 +162,12 @@ manifest.
 
 | Layer | Command or check | Result | Date |
 | --- | --- | --- | --- |
-| Documentation baseline | `./documentation/system/Generate-Documentation.ps1 -Check` | Passed for all 63 registered recipes, including the 7 Fiscal Years phases | 2026-09-05 |
-| API | API build; 18 focused Fiscal Year tests; full suite | Passed; full suite 410/410 | 2026-09-05 |
-| Database | Migration update plus pending-model check | Applied `20260905180523_AddFiscalYears`; no pending model changes | 2026-09-05 |
-| Web | Feature lint, architecture, types, tests, production build | Passed; full Vitest 333/333; route `/finance/fiscal-years` emitted | 2026-09-05 |
+| Documentation baseline | Fiscal Years manifest check; `./documentation/system/Generate-Documentation.ps1 -Check` | All 65 Fiscal Years required files exist; global generation is blocked by the user-deleted geography migration `20260827082513_RefactorAddressesForGlobalGeography.cs` | 2026-09-06 |
+| API | API build; focused Fiscal Year tests; full suite | Focused 23/23 passed, including Closed and Locked reopen; full suite 429/430 with the inherited `OrganizationalStructureManagementTests.UpdateAsync_Branch_WorksCorrectly` company-isolation failure | 2026-09-06 |
+| Database | Consolidated baseline migration plus pending-model check | Fiscal Years schema is represented by `20260906112413_create-database`; the Reopen change is code-only and needs no new migration | 2026-09-06 |
+| Web | Feature lint, architecture, types, tests, production build | Passed; full Vitest 349/349; route `/finance/fiscal-years` emitted | 2026-09-06 |
 | Web full strict | `npm run type-check:strict` | Inherited failures in Organizational Structure and Basic Data; none in Fiscal Years | 2026-09-05 |
-| Mobile | Feature lint, types, architecture, focused tests, Android Expo export | Passed; focused 21/21 and Expo 57 bundle exported | 2026-09-05 |
+| Mobile | Feature lint, types, architecture, focused tests, full Jest suite | Fiscal Years and translation parity passed; full suite 146/148 with unrelated Recruitment translation debt and a concurrent tree timeout; the tree suite passed 7/7 standalone | 2026-09-06 |
 | Mobile full tests | `npm test` | 143 passed; inherited Recruitment translation failure and shared-tree timeout | 2026-09-05 |
 | UI audit | Creation, editing, viewing, listing/filtering, mock data on Web/Mobile | Passed source/contract audit; live authenticated viewport/device smoke is manual | 2026-09-05 |
 

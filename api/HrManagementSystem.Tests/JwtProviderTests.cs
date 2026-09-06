@@ -90,11 +90,11 @@ public sealed class JwtProviderTests
     }
 
     [Fact]
-    public void RealtimeToken_PreservesPermissionAndRoleClaimsForHubAudienceAssignment()
+    public void RealtimeToken_OmitsAuthorizationExpansionClaimsAndStaysBelowIisQueryLimit()
     {
         var provider = CreateProvider();
-        var principal = new ClaimsPrincipal(new ClaimsIdentity(
-        [
+        var sourceClaims = new List<Claim>
+        {
             new Claim(ClaimTypes.NameIdentifier, "user-id"),
             new Claim(ClaimTypes.Name, "user"),
             new Claim(ClaimTypes.Email, "user@example.com"),
@@ -106,22 +106,23 @@ public sealed class JwtProviderTests
             new Claim(JwtClaimNames.TenantRoleId, "tenant-role-id"),
             new Claim(Permissions.Type, Permissions.ViewCountries),
             new Claim(Permissions.Type, Permissions.ViewStates)
-        ], "Bearer"));
+        };
+        sourceClaims.AddRange(Enumerable.Range(1, 500)
+            .Select(index => new Claim(Permissions.Type, $"FutureFeature{index}:Manage")));
+        var principal = new ClaimsPrincipal(new ClaimsIdentity(sourceClaims, "Bearer"));
 
-        var jwt = new JwtSecurityTokenHandler().ReadJwtToken(
-            provider.GenerateRealtimeToken(principal));
-        var permissions = jwt.Claims
-            .Where(claim => claim.Type == Permissions.Type)
-            .Select(claim => claim.Value)
-            .ToHashSet(StringComparer.Ordinal);
+        var token = provider.GenerateRealtimeToken(principal);
+        var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
 
-        Assert.Equal(
-            new HashSet<string>([Permissions.ViewCountries, Permissions.ViewStates]),
-            permissions);
+        Assert.True(token.Length < 2_048, $"Realtime token length was {token.Length} characters.");
+        Assert.DoesNotContain(jwt.Claims, claim => claim.Type == Permissions.Type);
+        Assert.DoesNotContain(jwt.Claims, claim => claim.Type == ClaimTypes.Role);
+        Assert.DoesNotContain(jwt.Claims, claim => claim.Type == JwtClaimNames.TenantRoleId);
+        Assert.DoesNotContain(jwt.Claims, claim => claim.Type == ClaimTypes.Email);
         Assert.Contains(jwt.Claims, claim =>
-            claim.Type == ClaimTypes.Role && claim.Value == AppRoles.super_admin);
+            claim.Type == ClaimTypes.NameIdentifier && claim.Value == "user-id");
         Assert.Contains(jwt.Claims, claim =>
-            claim.Type == JwtClaimNames.TenantRoleId && claim.Value == "tenant-role-id");
+            claim.Type == JwtClaimNames.Scope && claim.Value == JwtClaimNames.RealtimeScope);
     }
 
     private static JwtProvider CreateProvider()

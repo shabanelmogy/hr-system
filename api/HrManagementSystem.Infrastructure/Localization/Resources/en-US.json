@@ -325,5 +325,20 @@
     "FiscalYearCreatedNotificationMessage": "Fiscal year {Code} was created",
     "FiscalYearUpdatedNotificationMessage": "Fiscal year {Code} was updated",
     "FiscalYearArchivedNotificationMessage": "Fiscal year {Code} was archived",
-    "FiscalYearRestoredNotificationMessage": "Fiscal year {Code} was restored"
+    "FiscalYearRestoredNotificationMessage": "Fiscal year {Code} was restored",
+    "WorkforcePlanNotFound": "The workforce plan was not found",
+    "WorkforcePlanDuplicateCode": "A plan with this code already exists for the fiscal year",
+    "WorkforcePlanFiscalYearNotFound": "The fiscal year was not found",
+    "WorkforcePlanFiscalYearNotEditable": "The fiscal year must be draft or open to edit its workforce plan",
+    "WorkforcePlanFiscalYearMustBeOpen": "The fiscal year must be open for this operation",
+    "WorkforcePlanPositionNotFound": "The selected position was not found",
+    "WorkforcePlanBranchNotFound": "The selected branch was not found or is inactive",
+    "WorkforcePlanDuplicateLine": "The same position and branch cannot be added twice",
+    "WorkforcePlanPositionBranchMismatch": "The target branch does not match the position's department",
+    "WorkforcePlanPeriodNotFound": "The selected fiscal period was not found in the fiscal year",
+    "WorkforcePlanCompanyContextRequired": "Select a company before managing workforce plans",
+    "WorkforcePlanInvalidStatusTransition": "This workforce plan status transition is not allowed",
+    "WorkforcePlanNotArchivable": "Only draft or rejected workforce plans can be archived",
+    "WorkforcePlanNotRestorable": "Only archived draft or rejected workforce plans can be restored",
+    "WorkforcePlanConcurrencyConflict": "The workforce plan was changed by another request"
 }

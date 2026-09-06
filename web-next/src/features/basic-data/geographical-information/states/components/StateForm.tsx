@@ -1,4 +1,4 @@
-import { MyForm, MySelect, MyTextField } from "@/shared/components/forms";
+import { MyForm, MySelect, MyTextField, toFormErrorMessages } from "@/shared/components/forms";
 import { useCountryLookup } from "@/features/basic-data/geographical-information/countries";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,7 +28,7 @@ const StateForm = ({
     if (dialogType === "add") { reset(emptyState); return; }
     if (selectedState) reset({ nameAr: selectedState.nameAr, nameEn: selectedState.nameEn, code: selectedState.code, countryId: selectedState.countryId });
   }, [dialogType, open, reset, selectedState]);
-  const errorMessages = Object.fromEntries(Object.entries(errors).flatMap(([key, error]) => error?.message ? [[key, String(error.message)]] : []));
+  const errorMessages = toFormErrorMessages(errors);
   const countryOptions = countries.map((country) => ({ id: country.id, displayName: `${country.nameEn} (${country.nameAr})` }));
   const generateMockData = () => {
     const countryId = countryOptions[0]?.id;

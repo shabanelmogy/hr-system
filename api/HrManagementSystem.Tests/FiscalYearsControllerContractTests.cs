@@ -43,6 +43,7 @@ public sealed class FiscalYearsControllerContractTests
         Assert.IsType<OkObjectResult>(await controller.BeginClosing(7, concurrency, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.Close(7, concurrency, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.Lock(7, concurrency, CancellationToken.None));
+        Assert.IsType<OkObjectResult>(await controller.Reopen(7, concurrency, CancellationToken.None));
 
         Assert.Collection(
             sender.Requests,
@@ -56,7 +57,8 @@ public sealed class FiscalYearsControllerContractTests
             request => AssertLifecycle(request, FiscalYearLifecycleAction.Open),
             request => AssertLifecycle(request, FiscalYearLifecycleAction.BeginClosing),
             request => AssertLifecycle(request, FiscalYearLifecycleAction.Close),
-            request => AssertLifecycle(request, FiscalYearLifecycleAction.Lock));
+            request => AssertLifecycle(request, FiscalYearLifecycleAction.Lock),
+            request => AssertLifecycle(request, FiscalYearLifecycleAction.Reopen));
     }
 
     [Fact]
@@ -80,6 +82,7 @@ public sealed class FiscalYearsControllerContractTests
         AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.BeginClosing), "{id:int}/begin-closing", Permissions.ManageFiscalYearLifecycle);
         AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Close), "{id:int}/close", Permissions.ManageFiscalYearLifecycle);
         AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Lock), "{id:int}/lock", Permissions.ManageFiscalYearLifecycle);
+        AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Reopen), "{id:int}/reopen", Permissions.ManageFiscalYearLifecycle);
     }
 
     private static void AssertLifecycle(object request, FiscalYearLifecycleAction action)

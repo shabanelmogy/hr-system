@@ -258,6 +258,54 @@ public sealed class OrganizationalStructureManagementTests
         Assert.Equal(8, assignment.ReportsToPositionId);
     }
 
+    [Fact]
+    public async Task UpdateAsync_Department_WorksCorrectly()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
+            .Options;
+        await using var context = CreateContext(options, "tenant-1", 11);
+        var actor = new TestCurrentActor("tenant-1", 11);
+        var management = new OrganizationalStructureManagement(
+            context,
+            actor,
+            TimeProvider.System,
+            new NoOpScheduler(),
+            new EntityChangeLogService(context, actor, TimeProvider.System));
+
+        var createResult = await management.CreateAsync("departments", new OrganizationalStructureMutation(
+            "DEP1", "Engineering", "الهندسة"), CancellationToken.None);
+        Assert.True(createResult.IsSuccess);
+
+        var updateResult = await management.UpdateAsync("departments", createResult.Value.Id, new OrganizationalStructureMutation(
+            "DEP1", "Engineering Updated", "الهندسة محدثة"), CancellationToken.None);
+        Assert.True(updateResult.IsSuccess);
+    }
+
+    [Fact]
+    public async Task UpdateAsync_Branch_WorksCorrectly()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
+            .Options;
+        await using var context = CreateContext(options, "tenant-1", 11);
+        var actor = new TestCurrentActor("tenant-1", 11);
+        var management = new OrganizationalStructureManagement(
+            context,
+            actor,
+            TimeProvider.System,
+            new NoOpScheduler(),
+            new EntityChangeLogService(context, actor, TimeProvider.System));
+
+        var createResult = await management.CreateAsync("branches", new OrganizationalStructureMutation(
+            "BR1", "Main Branch", "الفرع الرئيسي"), CancellationToken.None);
+        Assert.True(createResult.IsSuccess);
+
+        var updateResult = await management.UpdateAsync("branches", createResult.Value.Id, new OrganizationalStructureMutation(
+            "BR1", "Main Branch Updated", "الفرع الرئيسي محدث"), CancellationToken.None);
+        Assert.True(updateResult.IsSuccess);
+    }
+
     private static void AssertCompositeForeignKey<TDependent, TPrincipal>(
         ApplicationDbContext context,
         params string[] expectedProperties)

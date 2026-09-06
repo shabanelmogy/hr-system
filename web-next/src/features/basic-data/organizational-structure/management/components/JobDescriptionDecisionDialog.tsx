@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import { useEffect } from "react";
 import { type Resolver, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { MyForm, MyTextField } from "@/shared/components/forms";
+import { MyForm, MyTextField, toFormErrorMessages } from "@/shared/components/forms";
 import {
   getJobDescriptionApprovalSchema,
   getJobDescriptionRejectionSchema,
@@ -33,8 +33,7 @@ export default function JobDescriptionDecisionDialog({ open, mode, loading, onCl
   useEffect(() => {
     if (open) reset({ effectiveDate: today(), expiryDate: "", reason: "" });
   }, [mode, open, reset]);
-  const errorMessages = Object.fromEntries(Object.entries(errors).flatMap(([key, error]) =>
-    error?.message ? [[key, String(error.message)]] : []));
+  const errorMessages = toFormErrorMessages(errors);
 
   return <MyForm
     open={open} onClose={onClose} maxWidth="sm" isSubmitting={loading} isDirty={isDirty}
