@@ -2,6 +2,7 @@ using FluentValidation;
 using HrManagementSystem.Application.Abstractions.Authentication;
 using HrManagementSystem.Application.Abstractions.Messaging;
 using HrManagementSystem.Application.Abstractions.Persistence;
+using HrManagementSystem.Application.Common.Consts;
 using HrManagementSystem.Application.Features.WorkforcePlanning.Abstractions;
 using HrManagementSystem.Application.Features.WorkforcePlanning.Contracts;
 using HrManagementSystem.Application.Features.WorkforcePlanning.Errors;
@@ -324,8 +325,12 @@ public sealed class ApproveWorkforcePlanCommandHandler(IWorkforcePlanWriteStore 
             var fiscalYear = await store.GetFiscalYearAsync(plan.FiscalYearId, token);
             if (fiscalYear is null) return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearNotFound);
             store.ApplyRowVersion(plan, command.RowVersion);
-            try { plan.Approve(clock.GetUtcNow(), actor.UserId ?? string.Empty, string.Equals(fiscalYear.Status, nameof(FiscalYearStatus.Open), StringComparison.Ordinal)); }
+            // Temporary policy: the built-in admin may approve its own plan until dedicated
+            // approval permissions with separation-of-duties are introduced.
+            var allowSelfApproval = actor.IsInRole(AppRoles.admin);
+            try { plan.Approve(clock.GetUtcNow(), actor.UserId ?? string.Empty, string.Equals(fiscalYear.Status, nameof(FiscalYearStatus.Open), StringComparison.Ordinal), allowSelfApproval); }
             catch (DomainRuleException exception) when (exception.Code == "WorkforcePlan.FiscalYearMustBeOpen") { return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearMustBeOpen); }
+            catch (DomainRuleException exception) when (exception.Code == "WorkforcePlan.SelfApproval") { return Result.Failure<WorkforcePlanDetailResponse>(errors.SelfApproval); }
             catch (DomainRuleException) { return Result.Failure<WorkforcePlanDetailResponse>(errors.InvalidTransition); }
             await uow.SaveChangesAsync(token);
             return Result.Success((await reads.GetByIdAsync(plan.Id, token))!);

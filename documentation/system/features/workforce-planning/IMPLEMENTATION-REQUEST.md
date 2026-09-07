@@ -1,8 +1,10 @@
 # Workforce Planning Implementation Request
 
-Status: Phase 1 source implemented and corrected; database completion is pending a
-user-created `FixWorkforcePlanningPhase1Integrity` migration. Later phases remain
-governed by the frozen contract and gates below.
+Status: Phases 0 through 6 are source-complete with additive migrations applied;
+automated API/Web/Mobile checks are recorded. Browser and Mobile visual/simulator
+smoke was intentionally not run per the user request. Phase 7 documentation is
+registered; generation uses the consolidated baseline migration that contains the global geography transition.
+The frozen contract and gates below remain the release reference.
 
 ## Request metadata
 
@@ -13,7 +15,8 @@ governed by the frozen contract and gates below.
 | Applied reference | `states` for parent-dependent lifecycle and cross-platform discipline |
 | Request date | `2026-09-06` |
 | Review artifact | `documentation/system/features/workforce-planning/WORKFORCE_PLANNING-REVIEW-ARTIFACTS.md` |
-| Required-file manifest | `documentation/system/features/workforce-planning/required-files.draft.json` until runtime evidence exists |
+| Review guide | `documentation/project/WORKFORCE_PLANNING_V1_ALL_PHASES_REVIEW_GUIDE.md` |
+| Required-file manifest | `documentation/system/features/workforce-planning/required-files.json` (final) |
 | Runtime policy | No client-selected tenant/company scope; no direct page-to-API calls; no monolithic workforce service |
 
 ## Product boundary
@@ -77,7 +80,7 @@ Payroll Actuals, and Import/Export are Deferred or Excluded as recorded below.
 
 - Every write is a typed MediatR command with a co-located FluentValidation validator. Every read is a bounded query with an `AsNoTracking` read projection.
 - Workforce Planning owns planning aggregates and orchestration ports; Recruitment owns requisition/opening/application/offer commands; Employees owns Employee/Assignment/Contract creation. No `IWorkforcePlanningService` or cross-aggregate entity passing is allowed.
-- Controllers inject `ISender` only. Errors are stable, localized, and field-addressable. Exact permissions are frozen as `WorkforcePlans:View/Create/Edit/Approve`, `WorkforceBudgets:View/Manage/Approve`, `PositionEnvelopes:View`, `EnvelopeAmendments:View/Create/Approve`, `StaffingRequests:View/Create/Approve`, `Recruitment:ManageRequisitions`, `JobOffers:Approve`, `Employees:Hire`, `WorkforcePlanning:ViewTrace`, and `WorkforcePlanning:ViewFinancials`.
+- Controllers inject `ISender` only. Errors are stable, localized, and field-addressable. Exact permissions are frozen as `WorkforcePlans:View/Create/Edit/Approve`, `WorkforceBudgets:View/Manage`, `PositionEnvelopes:View`, `EnvelopeAmendments:View/Create/Approve`, `StaffingRequests:View/Create/Approve`, `Recruitment:ManageRequisitions`, `JobOffers:Approve`, `Employees:Hire`, `WorkforcePlanning:ViewTrace`, and `WorkforcePlanning:ViewFinancials`. In Phase 2, budget approval is temporarily restricted to the built-in `admin` role; introducing a delegable `WorkforceBudgets:Approve` permission is Deferred.
 - Trace reads use typed/allow-listed entity kinds, bounded page/node counts, company scope, optional authorized branch filtering, and financial redaction when `ViewFinancials` is absent. They must not perform N+1 loading.
 
 ## Client contract

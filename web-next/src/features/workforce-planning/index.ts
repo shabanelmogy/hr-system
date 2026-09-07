@@ -1,3 +1,16 @@
 export { default as WorkforcePlansPage } from "./pages/WorkforcePlansPage";
+export { default as WorkforceBudgetsPage } from "./pages/WorkforceBudgetsPage";
+export { default as PositionEnvelopesPage } from "./pages/PositionEnvelopesPage";
+export { default as StaffingRequestsPage } from "./pages/StaffingRequestsPage";
+export { default as EnvelopeAmendmentsPage } from "./pages/EnvelopeAmendmentsPage";
+export { default as WorkforceTracePage } from "./pages/WorkforceTracePage";
+export { default as WorkforcePlanningLayout } from "./layout/WorkforcePlanningLayout";
+export { default as WorkforcePlanningHomePage } from "./pages/WorkforcePlanningHomePage";
 export * from "./hooks/useWorkforcePlanQueries";
+export * from "./hooks/useWorkforceBudgetQueries";
+export * from "./hooks/useStaffingQueries";
+export * from "./hooks/useWorkforceTraceQueries";
 export * from "./types/WorkforcePlan";
+export * from "./types/WorkforceBudget";
+export * from "./types/Staffing";
+export * from "./types/WorkforceTrace";

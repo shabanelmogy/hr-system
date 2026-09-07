@@ -2,6 +2,7 @@ using HrManagementSystem.Domain.Employees.Entities;
 using HrManagementSystem.Domain.OrganizationalStructure.Entities;
 using HrManagementSystem.Domain.Recruitment.Entities;
 using HrManagementSystem.Domain.Recruitment.Enums;
+using HrManagementSystem.Domain.WorkforcePlanning.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -21,9 +22,19 @@ public sealed class JobRequisitionConfiguration : IEntityTypeConfiguration<JobRe
         builder.Property(x => x.Type).HasDefaultValue(RequisitionType.NewPosition);
         builder.Property(x => x.IsBudgeted).HasDefaultValue(true);
         builder.Property(x => x.BudgetJustification).HasMaxLength(2000);
+        builder.Property(x => x.PlanningSource).HasConversion<int>().HasDefaultValue(PlanningSource.Legacy);
+        builder.Ignore(x => x.ReleasablePositions);
 
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.RequisitionNumber }).IsUnique();
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.Status });
+        builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.StaffingRequestId });
+
+        builder.HasOne<StaffingRequest>()
+            .WithMany()
+            .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.StaffingRequestId })
+            .HasPrincipalKey(x => new { x.TenantId, x.CompanyId, x.Id })
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne<Position>()
             .WithMany()

@@ -107,6 +107,13 @@ public static class EntitiesService
         services.AddScoped<IWorkforcePlanReadStore, WorkforcePlanReadStore>();
         services.AddScoped<IWorkforcePlanWriteStore, WorkforcePlanWriteStore>();
         services.AddScoped<WorkforcePlanEffects>();
+        services.AddScoped<IWorkforceBudgetReadStore, WorkforceBudgetReadStore>();
+        services.AddScoped<IWorkforceBudgetWriteStore, WorkforceBudgetWriteStore>();
+        services.AddScoped<WorkforceBudgetEffects>();
+        services.AddScoped<IStaffingReadStore, StaffingReadStore>();
+        services.AddScoped<IStaffingWriteStore, StaffingWriteStore>();
+        services.AddScoped<StaffingEffects>();
+        services.AddScoped<IWorkforceTraceReadStore, WorkforceTraceReadStore>();
 
         services.Scan(scan => scan
             .FromAssemblies(HrManagementSystem.Infrastructure.AssemblyReference.Assembly)

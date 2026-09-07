@@ -60,6 +60,12 @@ public sealed class JobRequisitionsController(IRecruitmentService recruitmentSer
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
+    [HttpGet("staffing-request-options")]
+    [HasPermission(Permissions.ManageJobRequisitions)]
+    [ProducesResponseType(typeof(IReadOnlyList<ApprovedStaffingRequestOptionDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetStaffingRequestOptions(CancellationToken cancellationToken) =>
+        Ok(await _recruitmentService.GetApprovedStaffingRequestOptionsAsync(cancellationToken));
+
     [HttpPost]
     [HasPermission(Permissions.ManageJobRequisitions)]
     [ProducesResponseType(typeof(JobRequisitionDto), StatusCodes.Status201Created)]
@@ -95,6 +101,15 @@ public sealed class JobRequisitionsController(IRecruitmentService recruitmentSer
     public async Task<IActionResult> Reject(int id, [FromBody] RejectRequisitionRequest request, CancellationToken cancellationToken)
     {
         var result = await _recruitmentService.RejectJobRequisitionAsync(id, request.Reason, cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
+    [HttpPost("{id:int}/cancel")]
+    [HasPermission(Permissions.ManageJobRequisitions)]
+    [ProducesResponseType(typeof(JobRequisitionDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Cancel(int id, [FromBody] RejectRequisitionRequest request, CancellationToken cancellationToken)
+    {
+        var result = await _recruitmentService.CancelJobRequisitionAsync(id, request.Reason, cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 }

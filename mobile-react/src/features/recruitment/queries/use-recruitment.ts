@@ -19,6 +19,7 @@ export const recruitmentKeys = {
   requisitions: (params?: { search?: string; status?: JobRequisitionStatus }) =>
     [...recruitmentKeys.all, 'requisitions', params] as const,
   requisition: (id: number) => [...recruitmentKeys.all, 'requisition', id] as const,
+  staffingRequestOptions: () => [...recruitmentKeys.all, 'staffing-request-options'] as const,
   settings: () => [...recruitmentKeys.all, 'settings'] as const,
   applications: (params?: {
     jobOpeningId?: number;
@@ -27,6 +28,7 @@ export const recruitmentKeys = {
     search?: string;
   }) => [...recruitmentKeys.all, 'applications', params] as const,
   application: (id: number) => [...recruitmentKeys.all, 'application', id] as const,
+  offers: (params?: { pageNumber?: number; pageSize?: number; applicationId?: number; status?: number }) => [...recruitmentKeys.all, 'offers', params] as const,
 };
 
 export function useRecruitmentSummary() {
@@ -106,6 +108,10 @@ export function useApplication(id: number) {
     queryFn: () => recruitmentApi.getApplicationById(id),
     enabled: id > 0,
   });
+}
+
+export function useJobOffers(params?: { pageNumber?: number; pageSize?: number; applicationId?: number; status?: number }) {
+  return useQuery({ queryKey: recruitmentKeys.offers(params), queryFn: () => recruitmentApi.getOffers(params) });
 }
 
 export function useChangeApplicationStage() {
@@ -240,18 +246,51 @@ export function useIssueJobOffer() {
   });
 }
 
+export function useSubmitJobOffer() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: number) => recruitmentApi.submitOffer(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: recruitmentKeys.all });
+    },
+  });
+}
+
+export function useApproveJobOffer() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: number) => recruitmentApi.approveOffer(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: recruitmentKeys.all });
+    },
+  });
+}
+
+export function useRejectJobOffer() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, reason }: { id: number; reason: string }) =>
+      recruitmentApi.rejectOffer(id, reason),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: recruitmentKeys.all });
+    },
+  });
+}
+
 export function useHireCandidate() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({
       id,
+      employeeNumber,
       hireDate,
-      notes,
+      idempotencyKey,
     }: {
       id: number;
+      employeeNumber?: string;
       hireDate?: string;
-      notes?: string;
-    }) => recruitmentApi.hireCandidate(id, { hireDate, notes }),
+      idempotencyKey?: string;
+    }) => recruitmentApi.hireCandidate(id, { employeeNumber, hireDate, idempotencyKey }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: recruitmentKeys.all });
     },
@@ -297,6 +336,30 @@ export function useCreateJobRequisition() {
   });
 }
 
+export function useApprovedStaffingRequestOptions(enabled = true) {
+  return useQuery({
+    queryKey: recruitmentKeys.staffingRequestOptions(),
+    queryFn: () => recruitmentApi.getApprovedStaffingRequestOptions(),
+    enabled,
+  });
+}
+
+export function useSubmitJobRequisition() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: number) => recruitmentApi.submitRequisition(id),
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: recruitmentKeys.all }); },
+  });
+}
+
+export function useCancelJobRequisition() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, reason }: { id: number; reason: string }) => recruitmentApi.cancelRequisition(id, reason),
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: recruitmentKeys.all }); },
+  });
+}
+
 export function useApproveJobRequisition() {
   const queryClient = useQueryClient();
   return useMutation({
@@ -336,4 +399,3 @@ export function useUpdateRecruitmentSettings() {
     },
   });
 }
-

@@ -130,4 +130,33 @@ describe('route access manifest', () => {
     expect(canAccessRoute(ROUTES.finance.root, authorized)).toBe(true);
     expect(canAccessRoute(ROUTES.finance.fiscalYears, authorized)).toBe(true);
   });
+
+  it('allows the Workforce Planning workspace for any module view permission', () => {
+    const staffingViewer = userWith({
+      permissionClaims: [permissions.ViewStaffingRequests],
+    });
+
+    expect(canAccessRoute(ROUTES.workforcePlanning.index, userWith())).toBe(false);
+    expect(canAccessRoute(ROUTES.workforcePlanning.index, staffingViewer)).toBe(true);
+    expect(canAccessRoute(ROUTES.workforcePlanning.staffingRequests, staffingViewer)).toBe(true);
+  });
+
+  it('keeps Workforce Planning leaf permissions isolated', () => {
+    const planViewer = userWith({
+      permissionClaims: [permissions.ViewWorkforcePlans],
+    });
+
+    expect(canAccessRoute(ROUTES.workforcePlanning.plans, planViewer)).toBe(true);
+    expect(canAccessRoute(ROUTES.workforcePlanning.budgets, planViewer)).toBe(false);
+    expect(canAccessRoute(ROUTES.workforcePlanning.trace, planViewer)).toBe(false);
+  });
+
+  it('registers Workforce Planning as a standalone drawer module', () => {
+    const workforceRoute = MAIN_DRAWER_ROUTES.find(
+      (definition) => definition.name === 'workforce-planning',
+    );
+
+    expect(workforceRoute?.path).toBe(ROUTES.workforcePlanning.index);
+    expect(workforceRoute?.headerShown).toBe(false);
+  });
 });

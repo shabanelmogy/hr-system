@@ -24,6 +24,7 @@ export interface MainDrawerRouteDefinition {
     | 'tenant-management'
     | 'tenant-admin-management'
     | 'recruitment'
+    | 'workforce-planning'
     | 'finance';
   path: AppRoute;
   titleKey: string;
@@ -131,7 +132,23 @@ export const routePolicies: readonly RoutePolicy[] = [
   { path: ROUTES.recruitment.root, permissions: [permissions.ViewRecruitment] },
   { path: ROUTES.finance.fiscalYears, permissions: [permissions.ViewFiscalYears] },
   { path: ROUTES.finance.root, permissions: [permissions.ViewFiscalYears] },
-  { path: ROUTES.workforcePlanning, permissions: [permissions.ViewWorkforcePlans] },
+  { path: ROUTES.workforcePlanning.plans, permissions: [permissions.ViewWorkforcePlans] },
+  { path: ROUTES.workforcePlanning.budgets, permissions: [permissions.ViewWorkforceBudgets] },
+  { path: ROUTES.workforcePlanning.positionEnvelopes, permissions: [permissions.ViewPositionEnvelopes] },
+  { path: ROUTES.workforcePlanning.staffingRequests, permissions: [permissions.ViewStaffingRequests] },
+  { path: ROUTES.workforcePlanning.envelopeAmendments, permissions: [permissions.ViewEnvelopeAmendments] },
+  { path: ROUTES.workforcePlanning.trace, permissions: [permissions.ViewWorkforceTrace] },
+  {
+    path: ROUTES.workforcePlanning.index,
+    anyOf: [
+      { permissions: [permissions.ViewWorkforcePlans] },
+      { permissions: [permissions.ViewWorkforceBudgets] },
+      { permissions: [permissions.ViewPositionEnvelopes] },
+      { permissions: [permissions.ViewStaffingRequests] },
+      { permissions: [permissions.ViewEnvelopeAmendments] },
+      { permissions: [permissions.ViewWorkforceTrace] },
+    ],
+  },
   { path: ROUTES.profile },
   { path: ROUTES.notifications, roles: [appRoles.admin, appRoles.user] },
   { path: ROUTES.home },
@@ -198,6 +215,13 @@ export const MAIN_DRAWER_ROUTES: readonly MainDrawerRouteDefinition[] = [
     path: ROUTES.advancedTools.root,
     titleKey: 'navigation.advancedTools',
     icon: 'construct-outline',
+    headerShown: false,
+  },
+  {
+    name: 'workforce-planning',
+    path: ROUTES.workforcePlanning.index,
+    titleKey: 'navigation.workforcePlanning',
+    icon: 'briefcase-outline',
     headerShown: false,
   },
   {

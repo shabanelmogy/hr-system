@@ -29,6 +29,9 @@ export const recruitmentEndpoints = {
   offers: {
     base: 'recruitment/offers',
     byId: (id: number) => `recruitment/offers/${id}`,
+    submit: (id: number) => `recruitment/offers/${id}/submit`,
+    approve: (id: number) => `recruitment/offers/${id}/approve`,
+    reject: (id: number) => `recruitment/offers/${id}/reject`,
     issue: (id: number) => `recruitment/offers/${id}/issue`,
     accept: (id: number) => `recruitment/offers/${id}/accept`,
     decline: (id: number) => `recruitment/offers/${id}/decline`,
@@ -37,8 +40,11 @@ export const recruitmentEndpoints = {
     base: 'recruitment/requisitions',
     byId: (id: number) => `recruitment/requisitions/${id}`,
     headcountSummary: (positionId: number) => `recruitment/requisitions/positions/${positionId}/headcount-summary`,
+    staffingRequestOptions: 'recruitment/requisitions/staffing-request-options',
+    submit: (id: number) => `recruitment/requisitions/${id}/submit`,
     approve: (id: number) => `recruitment/requisitions/${id}/approve`,
     reject: (id: number) => `recruitment/requisitions/${id}/reject`,
+    cancel: (id: number) => `recruitment/requisitions/${id}/cancel`,
   },
   settings: {
     base: 'recruitment/settings',

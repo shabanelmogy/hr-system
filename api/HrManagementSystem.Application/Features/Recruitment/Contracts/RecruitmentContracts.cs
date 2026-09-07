@@ -72,6 +72,10 @@ public sealed record JobRequisitionDto
     public string? DivisionNameAr { get; init; }
     public int RequestedByEmployeeId { get; init; }
     public int RequestedPositions { get; init; }
+    public int? StaffingRequestId { get; init; }
+    public PlanningSource PlanningSource { get; init; } = PlanningSource.Legacy;
+    public int HiredPositions { get; init; }
+    public int RemainingPositions { get; init; }
     public string BusinessReason { get; init; } = string.Empty;
     public EmploymentType EmploymentType { get; init; }
     public WorkArrangement WorkArrangement { get; init; }
@@ -102,7 +106,21 @@ public sealed record JobRequisitionMutation(
     RequisitionType Type = RequisitionType.NewPosition,
     int? ReplacementEmployeeId = null,
     bool? IsBudgeted = null,
-    string? BudgetJustification = null);
+    string? BudgetJustification = null,
+    int? StaffingRequestId = null);
+
+public sealed record ApprovedStaffingRequestOptionDto(
+    int Id,
+    string EnvelopeCode,
+    int PositionId,
+    int? BranchId,
+    int DepartmentId,
+    int DivisionId,
+    int RemainingAllocatable,
+    int RemainingToHire,
+    decimal EstimatedFiscalYearCostPerSlot,
+    string CurrencyCode,
+    DateOnly TargetStartDate);
 
 // --- Job Opening Contracts ---
 public sealed record JobOpeningDto
@@ -356,6 +374,16 @@ public sealed record JobOfferDto
     public DateTimeOffset? ExpiresOn { get; init; }
     public DateTimeOffset? RespondedOn { get; init; }
     public string? ResponseReason { get; init; }
+    public decimal AnnualSalarySnapshot { get; init; }
+    public decimal FiscalYearCostSnapshot { get; init; }
+    public decimal ReservationDelta { get; init; }
+    public string? CalculationPolicyVersion { get; init; }
+    public DateTimeOffset? ApprovalSubmittedOn { get; init; }
+    public string? ApprovalSubmittedById { get; init; }
+    public DateTimeOffset? ApprovedOn { get; init; }
+    public string? ApprovedById { get; init; }
+    public string? ApprovalDecisionReason { get; init; }
+    public IReadOnlyList<JobOfferApprovalHistoryDto> ApprovalHistory { get; init; } = [];
     public DateTime CreatedOn { get; init; }
 }
 
@@ -374,6 +402,15 @@ public sealed record JobOfferMutation(
     string? TermsAndConditions = null,
     DateTimeOffset? ExpiresOn = null);
 
+public sealed record JobOfferApprovalHistoryDto(
+    int Id,
+    string Action,
+    string ActorUserId,
+    DateTimeOffset OccurredOn,
+    JobOfferStatus FromStatus,
+    JobOfferStatus ToStatus,
+    string? Reason);
+
 // --- Recruitment Dashboard & Kanban ---
 public sealed record RecruitmentDashboardSummaryDto
 {
@@ -387,7 +424,8 @@ public sealed record RecruitmentDashboardSummaryDto
 
 public sealed record HireCandidateMutation(
     string EmployeeNumber,
-    DateOnly HireDate);
+    DateOnly HireDate,
+    string? IdempotencyKey = null);
 
 // --- Recruitment Settings Contracts ---
 public sealed record RecruitmentSettingsDto

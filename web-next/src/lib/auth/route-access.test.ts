@@ -150,4 +150,26 @@ describe("route access policies", () => {
       permissions: [permissions.ViewFiscalYears],
     })).toBe(true);
   });
+
+  it("allows the Workforce Planning workspace for any module view permission", () => {
+    const staffingViewer = {
+      ...session,
+      permissions: [permissions.ViewStaffingRequests],
+    };
+
+    expect(canAccessRoute(appRoutes.workforcePlanning.index, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.workforcePlanning.index, staffingViewer)).toBe(true);
+    expect(canAccessRoute(appRoutes.workforcePlanning.staffingRequests, staffingViewer)).toBe(true);
+  });
+
+  it("keeps Workforce Planning leaf permissions isolated", () => {
+    const planViewer = {
+      ...session,
+      permissions: [permissions.ViewWorkforcePlans],
+    };
+
+    expect(canAccessRoute(appRoutes.workforcePlanning.plans, planViewer)).toBe(true);
+    expect(canAccessRoute(appRoutes.workforcePlanning.budgets, planViewer)).toBe(false);
+    expect(canAccessRoute(appRoutes.workforcePlanning.trace, planViewer)).toBe(false);
+  });
 });

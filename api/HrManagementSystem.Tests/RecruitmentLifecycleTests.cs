@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 
 using HrManagementSystem.Domain.OrganizationalStructure.Entities;
+using HrManagementSystem.Domain.Recruitment.Entities;
 
 namespace HrManagementSystem.Tests;
 
@@ -24,6 +25,37 @@ public sealed class RecruitmentLifecycleTests
         string? UserId,
         string? TenantId,
         int? CompanyId) : ICurrentActor;
+
+    [Fact]
+    public async Task HireApplication_WithoutAcceptedOfferFailsWithoutMutation()
+    {
+        var actor = new TestCurrentActor("hiring-manager", "tenant-1", 1);
+        await using var context = CreateInMemoryDbContext(Guid.NewGuid().ToString(), actor);
+        var application = new EmploymentApplication(
+            candidateId: 1,
+            jobOpeningId: 1,
+            source: ApplicationSource.CareersPortal,
+            createdOn: DateTimeOffset.UtcNow)
+        {
+            TenantId = "tenant-1",
+            CompanyId = 1,
+            CreatedById = "candidate-service"
+        };
+        context.EmploymentApplications.Add(application);
+        await context.SaveChangesAsync();
+
+        var service = new RecruitmentService(context, actor, NullLogger<RecruitmentService>.Instance);
+        var result = await service.HireApplicationAsync(application.Id, new HireCandidateMutation(
+            EmployeeNumber: "EMP-NOT-ACCEPTED",
+            HireDate: DateOnly.FromDateTime(DateTime.UtcNow),
+            IdempotencyKey: "hire-without-offer"));
+
+        Assert.True(result.IsFailure);
+        Assert.Equal("Recruitment.Hire.AcceptedOfferRequired", result.Error.Code);
+        Assert.Equal(ApplicationStatus.Draft, application.Status);
+        Assert.Null(application.EmployeeId);
+        Assert.Empty(await context.Employees.ToListAsync());
+    }
 
     [Fact]
     public async Task EndToEnd_RecruitmentLifecycle_Succeeds()
@@ -180,6 +212,17 @@ public sealed class RecruitmentLifecycleTests
         Assert.True(offerResult.IsSuccess);
         var offerId = offerResult.Value.Id;
 
+        var submittedOfferResult = await service.SubmitJobOfferAsync(offerId);
+        Assert.True(submittedOfferResult.IsSuccess);
+        Assert.Equal(JobOfferStatus.PendingApproval, submittedOfferResult.Value.Status);
+
+        // Approval requires a different actor: the submitter cannot approve their own offer.
+        var approverActor = new TestCurrentActor("approver-1", "tenant-1", 1);
+        var approvalService = new RecruitmentService(context, approverActor, logger);
+        var approvedOfferResult = await approvalService.ApproveJobOfferAsync(offerId);
+        Assert.True(approvedOfferResult.IsSuccess);
+        Assert.Equal(JobOfferStatus.Approved, approvedOfferResult.Value.Status);
+
         var issuedOfferResult = await service.IssueJobOfferAsync(offerId);
         Assert.True(issuedOfferResult.IsSuccess);
         Assert.Equal(JobOfferStatus.Issued, issuedOfferResult.Value.Status);
@@ -191,11 +234,23 @@ public sealed class RecruitmentLifecycleTests
         // 8. One-Click Hire Application
         var hireResult = await service.HireApplicationAsync(applicationId, new HireCandidateMutation(
             EmployeeNumber: "EMP-092026-001",
-            HireDate: DateOnly.FromDateTime(DateTime.UtcNow)));
+            HireDate: DateOnly.FromDateTime(DateTime.UtcNow),
+            IdempotencyKey: "hire-lifecycle-application-1"));
 
         Assert.True(hireResult.IsSuccess);
         Assert.Equal(ApplicationStatus.Hired, hireResult.Value.Status);
         Assert.NotNull(hireResult.Value.EmployeeId);
+
+        // 9. Idempotent retry returns the same employee without duplicates.
+        var retryHireResult = await service.HireApplicationAsync(applicationId, new HireCandidateMutation(
+            EmployeeNumber: "EMP-092026-001",
+            HireDate: DateOnly.FromDateTime(DateTime.UtcNow),
+            IdempotencyKey: "hire-lifecycle-application-1"));
+
+        Assert.True(retryHireResult.IsSuccess);
+        Assert.Equal(ApplicationStatus.Hired, retryHireResult.Value.Status);
+        Assert.Equal(hireResult.Value.EmployeeId, retryHireResult.Value.EmployeeId);
+        Assert.Equal(1, await context.Employees.CountAsync(e => e.EmployeeNumber == "EMP-092026-001"));
 
         // Verify Real Employee, Assignment, and Contract persisted in Database
         var createdEmployee = await context.Employees

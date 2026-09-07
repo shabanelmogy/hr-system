@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@/src/core/theme';
 import { AppIcon, AppStatusBadge, AppText } from '@/src/shared/components';
-import { JobRequisitionDto, JobRequisitionStatus, RequisitionType } from '../types';
+import { JobRequisitionDto, JobRequisitionStatus, PlanningSource, RequisitionType } from '../types';
 
 interface JobRequisitionCardProps {
   requisition: JobRequisitionDto;
@@ -130,12 +130,16 @@ export function JobRequisitionCard({
               fontSize: 11,
             }}
           >
-            {requisition.isBudgeted
-              ? t('recruitment.requisitions.budgeted', 'مدرج بالموازنة')
-              : t('recruitment.requisitions.unbudgeted', 'غير مدرج بالموازنة')}
+            {requisition.planningSource === PlanningSource.Planned
+              ? `${t('recruitment.requisitions.planned', 'مخطط')} · SR-${requisition.staffingRequestId}`
+              : t('recruitment.requisitions.legacy', 'قديم')}
           </AppText>
         </View>
       </View>
+
+      <AppText variant="caption" style={{ color: theme.colors.textMuted }}>
+        {t('recruitment.requisitions.remainingPositions', { count: requisition.remainingPositions })}
+      </AppText>
 
       {/* Business Reason snippet */}
       {Boolean(requisition.businessReason) && (

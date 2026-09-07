@@ -98,6 +98,7 @@ public class ApplicationDbContext(
     public DbSet<InterviewParticipant> InterviewParticipants { get; set; }
     public DbSet<InterviewEvaluation> InterviewEvaluations { get; set; }
     public DbSet<JobOffer> JobOffers { get; set; }
+    public DbSet<JobOfferApprovalHistory> JobOfferApprovalHistory { get; set; }
 
     public DbSet<RecruitmentStage> RecruitmentStages { get; set; }
     public DbSet<RejectionReason> RecruitmentRejectionReasons { get; set; }
@@ -113,6 +114,12 @@ public class ApplicationDbContext(
     public DbSet<WorkforcePlan> WorkforcePlans { get; set; }
     public DbSet<WorkforcePlanLine> WorkforcePlanLines { get; set; }
     public DbSet<WorkforcePlanLinePeriodTarget> WorkforcePlanLinePeriodTargets { get; set; }
+    public DbSet<WorkforceBudget> WorkforceBudgets { get; set; }
+    public DbSet<WorkforceBudgetLine> WorkforceBudgetLines { get; set; }
+    public DbSet<WorkforceBudgetPeriodAllocation> WorkforceBudgetPeriodAllocations { get; set; }
+    public DbSet<PositionEnvelope> PositionEnvelopes { get; set; }
+    public DbSet<EnvelopeAmendment> EnvelopeAmendments { get; set; }
+    public DbSet<StaffingRequest> StaffingRequests { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

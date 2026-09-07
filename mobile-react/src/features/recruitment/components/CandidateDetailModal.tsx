@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@/src/core/theme';
@@ -17,6 +17,9 @@ interface CandidateDetailModalProps {
   onSuccess?: () => void;
 }
 
+let hireKeySequence = 0;
+const createHireIdempotencyKey = (applicationId: number) => `hire-${applicationId}-${++hireKeySequence}`;
+
 export function CandidateDetailModal({
   application,
   visible,
@@ -30,6 +33,8 @@ export function CandidateDetailModal({
   const hireMutation = useHireCandidate();
 
   const [confirmHireVisible, setConfirmHireVisible] = useState(false);
+  const hireIdempotencyKey = useRef<string | null>(null);
+  const hireKeyApplicationId = useRef<number | null>(null);
 
   if (!application) return null;
 
@@ -46,15 +51,23 @@ export function CandidateDetailModal({
     .toUpperCase();
 
   const handleConfirmHire = async () => {
+    const idempotencyKey = hireKeyApplicationId.current === application.id && hireIdempotencyKey.current
+      ? hireIdempotencyKey.current
+      : createHireIdempotencyKey(application.id);
+    hireKeyApplicationId.current = application.id;
+    hireIdempotencyKey.current = idempotencyKey;
     try {
       await hireMutation.mutateAsync({
         id: application.id,
         hireDate: new Date().toISOString().split('T')[0],
-        notes: 'Hired directly through Mobile Recruitment Portal',
+        employeeNumber: `EMP-${new Date().getFullYear()}-${application.id}`,
+        idempotencyKey,
       });
 
       showToast.success(t('recruitment.candidate.hiredSuccess', 'تم تعيين المرشح بنجاح كموظف رسمي!'));
       setConfirmHireVisible(false);
+      hireIdempotencyKey.current = null;
+      hireKeyApplicationId.current = null;
       onSuccess?.();
       onClose();
     } catch (error) {
@@ -183,7 +196,7 @@ export function CandidateDetailModal({
                 {t('common.close', 'إغلاق / Close')}
               </AppButton>
 
-              {application.status !== ApplicationStatus.Hired && perms.canHire && (
+              {application.status === ApplicationStatus.OfferAccepted && perms.canHire && (
                 <AppButton
                   variant="primary"
                   icon="checkmark-circle-outline"
@@ -192,6 +205,7 @@ export function CandidateDetailModal({
                   {t('recruitment.actions.hireCandidate', 'تعيين كموظف / Hire Candidate')}
                 </AppButton>
               )}
+              {application.status !== ApplicationStatus.OfferAccepted && application.status !== ApplicationStatus.Hired && perms.canHire ? <AppText variant="caption" color="muted">{t('recruitment.candidate.acceptedOfferRequired')}</AppText> : null}
             </View>
           </View>
         </View>

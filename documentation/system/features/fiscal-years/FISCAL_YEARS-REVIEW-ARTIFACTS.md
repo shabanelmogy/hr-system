@@ -162,7 +162,7 @@ manifest.
 
 | Layer | Command or check | Result | Date |
 | --- | --- | --- | --- |
-| Documentation baseline | Fiscal Years manifest check; `./documentation/system/Generate-Documentation.ps1 -Check` | All 65 Fiscal Years required files exist; global generation is blocked by the user-deleted geography migration `20260827082513_RefactorAddressesForGlobalGeography.cs` | 2026-09-06 |
+| Documentation baseline | Fiscal Years manifest check; `./documentation/system/Generate-Documentation.ps1 -Check` | All Fiscal Years required files exist; the consolidated baseline `20260906112413_create-database.cs` contains the global geography transition | 2026-09-07 |
 | API | API build; focused Fiscal Year tests; full suite | Focused 23/23 passed, including Closed and Locked reopen; full suite 429/430 with the inherited `OrganizationalStructureManagementTests.UpdateAsync_Branch_WorksCorrectly` company-isolation failure | 2026-09-06 |
 | Database | Consolidated baseline migration plus pending-model check | Fiscal Years schema is represented by `20260906112413_create-database`; the Reopen change is code-only and needs no new migration | 2026-09-06 |
 | Web | Feature lint, architecture, types, tests, production build | Passed; full Vitest 349/349; route `/finance/fiscal-years` emitted | 2026-09-06 |

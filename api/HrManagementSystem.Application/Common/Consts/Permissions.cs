@@ -70,7 +70,6 @@ public static class Permissions
     public const string ApproveWorkforcePlans = "WorkforcePlans:Approve";
     public const string ViewWorkforceBudgets = "WorkforceBudgets:View";
     public const string ManageWorkforceBudgets = "WorkforceBudgets:Manage";
-    public const string ApproveWorkforceBudgets = "WorkforceBudgets:Approve";
     public const string ViewPositionEnvelopes = "PositionEnvelopes:View";
     public const string ViewEnvelopeAmendments = "EnvelopeAmendments:View";
     public const string CreateEnvelopeAmendments = "EnvelopeAmendments:Create";

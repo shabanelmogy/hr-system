@@ -45,6 +45,9 @@ public sealed class CurrentActor(IHttpContextAccessor httpContextAccessor) :
         return new ActorScope(() => _override.Value = previous);
     }
 
+    public bool IsInRole(string role) =>
+        httpContextAccessor.HttpContext?.User.IsInRole(role) ?? false;
+
     private sealed record ActorOverride(string UserId, string TenantId, int? CompanyId);
 
     private sealed class ActorScope(Action restore) : IDisposable

@@ -3,8 +3,8 @@ import { Modal, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@/src/core/theme';
 import { AppButton, AppIcon, AppText, showToast } from '@/src/shared/components';
-import { useCreateJobOffer, useIssueJobOffer } from '../queries/use-recruitment';
-import { EmploymentType, WorkArrangement } from '../types';
+import { useCreateJobOffer, useSubmitJobOffer } from '../queries/use-recruitment';
+import { EmploymentType, PayFrequency, WorkArrangement } from '../types';
 
 interface JobOfferModalProps {
   visible: boolean;
@@ -28,7 +28,7 @@ export function JobOfferModal({
   const { t } = useTranslation();
   const { theme } = useAppTheme();
   const createOfferMutation = useCreateJobOffer();
-  const issueOfferMutation = useIssueJobOffer();
+  const submitOfferMutation = useSubmitJobOffer();
 
   const [salary, setSalary] = useState('25000');
   const [currency, setCurrency] = useState('EGP');
@@ -47,25 +47,26 @@ export function JobOfferModal({
         departmentId,
         baseSalary: numSalary,
         currencyCode: currency,
-        payFrequency: 0, // Monthly
+        payFrequency: PayFrequency.Monthly,
         employmentType: EmploymentType.FullTime,
         workArrangement: WorkArrangement.Hybrid,
         proposedStartDate: twoWeeksLater.toISOString().split('T')[0],
         termsAndConditions: 'Standard 3-month probation period.',
       });
 
-      // Auto issue offer
-      await issueOfferMutation.mutateAsync(offer.id);
+      // Submit the new Draft for approval; issuing remains a separate
+      // Approved-only action exposed by the governed offer lifecycle.
+      await submitOfferMutation.mutateAsync(offer.id);
 
-      showToast.success(t('recruitment.offers.offerCreatedSuccess', 'تم إصدار عرض العمل بنجاح'));
+      showToast.success(t('recruitment.offers.offerCreatedSuccess', 'تم إنشاء العرض وإرساله للاعتماد بنجاح'));
       onSuccess?.();
       onClose();
     } catch (error) {
-      showToast.error(error, t('common.error', 'حدث خطأ أثناء إصدار العرض'));
+      showToast.error(error, t('common.error', 'حدث خطأ أثناء إنشاء العرض'));
     }
   };
 
-  const isPending = createOfferMutation.isPending || issueOfferMutation.isPending;
+  const isPending = createOfferMutation.isPending || submitOfferMutation.isPending;
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
@@ -137,7 +138,7 @@ export function JobOfferModal({
               onPress={handleCreateOffer}
               icon="send-outline"
             >
-              {t('recruitment.actions.makeOffer', 'إصدار العرض / Issue Offer')}
+              {t('recruitment.offers.submitForApproval', 'إرسال العرض للاعتماد / Submit for approval')}
             </AppButton>
           </View>
         </View>

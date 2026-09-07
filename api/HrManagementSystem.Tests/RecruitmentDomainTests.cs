@@ -168,6 +168,8 @@ public sealed class RecruitmentDomainTests
     public void Offer_CannotBeAcceptedAfterExpiry()
     {
         var offer = CreateOffer();
+        offer.SubmitForApproval(Now, "submitter-1", 300_000, 150_000, 0, "2026-09-V1");
+        offer.Approve(Now.AddHours(1), "approver-1");
         offer.Issue(Now, Now.AddDays(7));
 
         var exception = Assert.Throws<DomainRuleException>(() => offer.Accept(Now.AddDays(8)));
@@ -181,12 +183,37 @@ public sealed class RecruitmentDomainTests
     public void Offer_AcceptsAValidCandidateResponse()
     {
         var offer = CreateOffer();
+        offer.SubmitForApproval(Now, "submitter-1", 300_000, 150_000, 0, "2026-09-V1");
+        offer.Approve(Now.AddHours(1), "approver-1");
         offer.Issue(Now, Now.AddDays(7));
 
         offer.Accept(Now.AddDays(2));
 
         Assert.Equal(JobOfferStatus.Accepted, offer.Status);
         Assert.Equal(Now.AddDays(2), offer.RespondedOn);
+    }
+
+    [Fact]
+    public void Offer_CannotIssueFromDraftWithoutApproval()
+    {
+        var offer = CreateOffer();
+
+        var exception = Assert.Throws<DomainRuleException>(() => offer.Issue(Now, Now.AddDays(7)));
+
+        Assert.Equal("Recruitment.JobOffer.InvalidStatusTransition", exception.Code);
+        Assert.Equal(JobOfferStatus.Draft, offer.Status);
+    }
+
+    [Fact]
+    public void Offer_CreatorCannotApproveTheSameOffer()
+    {
+        var offer = CreateOffer();
+        offer.SubmitForApproval(Now, "submitter-1", 300_000, 150_000, 0, "2026-09-V1");
+
+        var exception = Assert.Throws<DomainRuleException>(() => offer.Approve(Now.AddHours(1), "submitter-1"));
+
+        Assert.Equal("Recruitment.JobOffer.SelfApproval", exception.Code);
+        Assert.Equal(JobOfferStatus.PendingApproval, offer.Status);
     }
 
     [Fact]

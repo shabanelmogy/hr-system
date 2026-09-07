@@ -93,8 +93,10 @@ function NavigationItem({
         <ListItemButton
           dir={theme.direction}
           onClick={handleClick}
+          aria-label={open ? undefined : title}
           sx={[
             {
+              flex: "0 0 auto",
               minHeight: 48,
               paddingInlineStart: theme.spacing(4),
               textAlign: "start",
@@ -140,6 +142,7 @@ function NavigationItem({
           <ListItemText
             primary={titleComponent || title}
             sx={{
+              display: open ? undefined : "none",
               flex: open ? "1 1 auto" : "0 0 0",
               minWidth: 0,
               maxWidth: open ? "none" : 0,

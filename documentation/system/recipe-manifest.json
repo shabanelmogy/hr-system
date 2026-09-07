@@ -182,6 +182,26 @@
       "id": "fiscal-years-mobile",
       "path": "../mobile-react/fiscal-years-mobile-reference.md",
       "title": "Fiscal Years Expo implementation profile"
+    },
+    {
+      "id": "workforce-planning-master",
+      "path": "../project/WORKFORCE_PLANNING_FEATURE_FULL_REVIEW.md",
+      "title": "Workforce Planning cross-platform master review"
+    },
+    {
+      "id": "workforce-planning-api",
+      "path": "../api/WorkforcePlanning_API_Implementation_Profile.md",
+      "title": "Workforce Planning API implementation profile"
+    },
+    {
+      "id": "workforce-planning-web",
+      "path": "../web-next/features/workforce-planning-frontend-reference.md",
+      "title": "Workforce Planning Next.js implementation profile"
+    },
+    {
+      "id": "workforce-planning-mobile",
+      "path": "../mobile-react/workforce-planning-mobile-reference.md",
+      "title": "Workforce Planning Expo implementation profile"
     }
   ],
   "requiredFileManifests": [
@@ -193,7 +213,8 @@
     "features/company-geographic-scope/required-files.json",
     "features/attendance-devices/required-files.json",
     "features/organizational-structure/required-files.json",
-    "features/fiscal-years/required-files.json"
+    "features/fiscal-years/required-files.json",
+    "features/workforce-planning/required-files.json"
   ],
   "recipes": [
     {
@@ -202,10 +223,41 @@
       "template": "templates/PHASE-00-discovery-evidence.template.md",
       "output": "generated/PHASE-00-discovery-evidence.md",
       "sources": [
-        { "book": "master", "sections": [1, 2, 5, 8, 9] },
-        { "book": "api", "sections": [1, 10, 11] },
-        { "book": "web", "sections": [1, 2, 12, 13] },
-        { "book": "mobile", "sections": [1, 14, 15] }
+        {
+          "book": "master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -214,8 +266,29 @@
       "template": "templates/PHASE-01-domain-api.template.md",
       "output": "generated/PHASE-01-domain-api.md",
       "sources": [
-        { "book": "master", "sections": [3, 4, 6] },
-        { "book": "api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+        {
+          "book": "master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
       ]
     },
     {
@@ -224,8 +297,34 @@
       "template": "templates/PHASE-02-web-client.template.md",
       "output": "generated/PHASE-02-web-client.md",
       "sources": [
-        { "book": "master", "sections": [3, 4, 6, 7] },
-        { "book": "web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+        {
+          "book": "master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
       ]
     },
     {
@@ -234,8 +333,35 @@
       "template": "templates/PHASE-03-mobile-client.template.md",
       "output": "generated/PHASE-03-mobile-client.md",
       "sources": [
-        { "book": "master", "sections": [3, 4, 6, 7] },
-        { "book": "mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+        {
+          "book": "master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -244,10 +370,41 @@
       "template": "templates/PHASE-04-domain-actions.template.md",
       "output": "generated/PHASE-04-domain-actions.md",
       "sources": [
-        { "book": "master", "sections": [3, 4, 6, 7, 8] },
-        { "book": "api", "sections": [6, 7, 8] },
-        { "book": "web", "sections": [6, 7, 8, 9] },
-        { "book": "mobile", "sections": [9, 10, 11] }
+        {
+          "book": "master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
       ]
     },
     {
@@ -256,10 +413,41 @@
       "template": "templates/PHASE-05-integration-runtime.template.md",
       "output": "generated/PHASE-05-integration-runtime.md",
       "sources": [
-        { "book": "master", "sections": [4, 5, 6, 7, 9] },
-        { "book": "api", "sections": [8, 9, 10] },
-        { "book": "web", "sections": [8, 10, 13] },
-        { "book": "mobile", "sections": [2, 11, 12, 15] }
+        {
+          "book": "master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
       ]
     },
     {
@@ -268,10 +456,36 @@
       "template": "templates/PHASE-06-final-reconciliation.template.md",
       "output": "generated/PHASE-06-final-reconciliation.md",
       "sources": [
-        { "book": "master", "sections": [8, 9, 10] },
-        { "book": "api", "sections": [10, 11] },
-        { "book": "web", "sections": [12, 13, 14] },
-        { "book": "mobile", "sections": [14, 15] }
+        {
+          "book": "master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -280,10 +494,41 @@
       "template": "templates/PHASE-00-discovery-evidence.template.md",
       "output": "generated/states/PHASE-00-discovery-evidence.md",
       "sources": [
-        { "book": "states-master", "sections": [1, 2, 5, 8, 9] },
-        { "book": "states-api", "sections": [1, 10, 11] },
-        { "book": "states-web", "sections": [1, 2, 12, 13] },
-        { "book": "states-mobile", "sections": [1, 14, 15] }
+        {
+          "book": "states-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "states-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "states-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "states-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -292,8 +537,29 @@
       "template": "templates/PHASE-01-domain-api.template.md",
       "output": "generated/states/PHASE-01-domain-api.md",
       "sources": [
-        { "book": "states-master", "sections": [3, 4, 6] },
-        { "book": "states-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+        {
+          "book": "states-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "states-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
       ]
     },
     {
@@ -302,8 +568,34 @@
       "template": "templates/PHASE-02-web-client.template.md",
       "output": "generated/states/PHASE-02-web-client.md",
       "sources": [
-        { "book": "states-master", "sections": [3, 4, 6, 7] },
-        { "book": "states-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+        {
+          "book": "states-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "states-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
       ]
     },
     {
@@ -312,8 +604,35 @@
       "template": "templates/PHASE-03-mobile-client.template.md",
       "output": "generated/states/PHASE-03-mobile-client.md",
       "sources": [
-        { "book": "states-master", "sections": [3, 4, 6, 7] },
-        { "book": "states-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+        {
+          "book": "states-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "states-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -322,10 +641,41 @@
       "template": "templates/PHASE-04-domain-actions.template.md",
       "output": "generated/states/PHASE-04-domain-actions.md",
       "sources": [
-        { "book": "states-master", "sections": [3, 4, 6, 7, 8] },
-        { "book": "states-api", "sections": [6, 7, 8] },
-        { "book": "states-web", "sections": [6, 7, 8, 9] },
-        { "book": "states-mobile", "sections": [9, 10, 11] }
+        {
+          "book": "states-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "states-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "states-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "states-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
       ]
     },
     {
@@ -334,10 +684,43 @@
       "template": "templates/PHASE-05-integration-runtime.template.md",
       "output": "generated/states/PHASE-05-integration-runtime.md",
       "sources": [
-        { "book": "states-master", "sections": [4, 5, 6, 7, 8] },
-        { "book": "states-api", "sections": [8, 9, 10] },
-        { "book": "states-web", "sections": [8, 9, 10, 13] },
-        { "book": "states-mobile", "sections": [2, 11, 12, 13, 15] }
+        {
+          "book": "states-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "states-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "states-web",
+          "sections": [
+            8,
+            9,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "states-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            13,
+            15
+          ]
+        }
       ]
     },
     {
@@ -346,10 +729,36 @@
       "template": "templates/PHASE-06-final-reconciliation.template.md",
       "output": "generated/states/PHASE-06-final-reconciliation.md",
       "sources": [
-        { "book": "states-master", "sections": [8, 9, 10] },
-        { "book": "states-api", "sections": [10, 11] },
-        { "book": "states-web", "sections": [12, 13, 14] },
-        { "book": "states-mobile", "sections": [14, 15] }
+        {
+          "book": "states-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "states-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "states-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "states-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -358,10 +767,31 @@
       "template": "templates/PHASE-00-discovery-evidence.template.md",
       "output": "generated/addresses/PHASE-00-discovery-evidence.md",
       "sources": [
-        { "book": "addresses-master", "sections": [1, 6] },
-        { "book": "addresses-api", "sections": [1] },
-        { "book": "addresses-web", "sections": [1] },
-        { "book": "addresses-mobile", "sections": [1] }
+        {
+          "book": "addresses-master",
+          "sections": [
+            1,
+            6
+          ]
+        },
+        {
+          "book": "addresses-api",
+          "sections": [
+            1
+          ]
+        },
+        {
+          "book": "addresses-web",
+          "sections": [
+            1
+          ]
+        },
+        {
+          "book": "addresses-mobile",
+          "sections": [
+            1
+          ]
+        }
       ]
     },
     {
@@ -370,8 +800,25 @@
       "template": "templates/PHASE-01-domain-api.template.md",
       "output": "generated/addresses/PHASE-01-domain-api.md",
       "sources": [
-        { "book": "addresses-master", "sections": [1, 2, 4] },
-        { "book": "addresses-api", "sections": [1, 2, 3, 4, 5, 6] }
+        {
+          "book": "addresses-master",
+          "sections": [
+            1,
+            2,
+            4
+          ]
+        },
+        {
+          "book": "addresses-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
       ]
     },
     {
@@ -380,8 +827,23 @@
       "template": "templates/PHASE-02-web-client.template.md",
       "output": "generated/addresses/PHASE-02-web-client.md",
       "sources": [
-        { "book": "addresses-master", "sections": [2, 5, 7] },
-        { "book": "addresses-web", "sections": [1, 2, 3, 4] }
+        {
+          "book": "addresses-master",
+          "sections": [
+            2,
+            5,
+            7
+          ]
+        },
+        {
+          "book": "addresses-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4
+          ]
+        }
       ]
     },
     {
@@ -390,8 +852,22 @@
       "template": "templates/PHASE-03-mobile-client.template.md",
       "output": "generated/addresses/PHASE-03-mobile-client.md",
       "sources": [
-        { "book": "addresses-master", "sections": [2, 5, 7] },
-        { "book": "addresses-mobile", "sections": [1, 2, 3] }
+        {
+          "book": "addresses-master",
+          "sections": [
+            2,
+            5,
+            7
+          ]
+        },
+        {
+          "book": "addresses-mobile",
+          "sections": [
+            1,
+            2,
+            3
+          ]
+        }
       ]
     },
     {
@@ -400,10 +876,36 @@
       "template": "templates/PHASE-04-domain-actions.template.md",
       "output": "generated/addresses/PHASE-04-domain-actions.md",
       "sources": [
-        { "book": "addresses-master", "sections": [2, 4, 5] },
-        { "book": "addresses-api", "sections": [3, 5, 6] },
-        { "book": "addresses-web", "sections": [2, 4] },
-        { "book": "addresses-mobile", "sections": [2, 3] }
+        {
+          "book": "addresses-master",
+          "sections": [
+            2,
+            4,
+            5
+          ]
+        },
+        {
+          "book": "addresses-api",
+          "sections": [
+            3,
+            5,
+            6
+          ]
+        },
+        {
+          "book": "addresses-web",
+          "sections": [
+            2,
+            4
+          ]
+        },
+        {
+          "book": "addresses-mobile",
+          "sections": [
+            2,
+            3
+          ]
+        }
       ]
     },
     {
@@ -412,10 +914,37 @@
       "template": "templates/PHASE-05-integration-runtime.template.md",
       "output": "generated/addresses/PHASE-05-integration-runtime.md",
       "sources": [
-        { "book": "addresses-master", "sections": [4, 5, 6, 8] },
-        { "book": "addresses-api", "sections": [4, 5, 6] },
-        { "book": "addresses-web", "sections": [3, 4] },
-        { "book": "addresses-mobile", "sections": [2, 3] }
+        {
+          "book": "addresses-master",
+          "sections": [
+            4,
+            5,
+            6,
+            8
+          ]
+        },
+        {
+          "book": "addresses-api",
+          "sections": [
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "book": "addresses-web",
+          "sections": [
+            3,
+            4
+          ]
+        },
+        {
+          "book": "addresses-mobile",
+          "sections": [
+            2,
+            3
+          ]
+        }
       ]
     },
     {
@@ -424,585 +953,1935 @@
       "template": "templates/PHASE-06-final-reconciliation.template.md",
       "output": "generated/addresses/PHASE-06-final-reconciliation.md",
       "sources": [
-        { "book": "addresses-master", "sections": [5, 6, 7, 8] },
-        { "book": "addresses-api", "sections": [4, 5, 6] },
-        { "book": "addresses-web", "sections": [3, 4] },
-        { "book": "addresses-mobile", "sections": [2, 3] }
+        {
+          "book": "addresses-master",
+          "sections": [
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "addresses-api",
+          "sections": [
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "book": "addresses-web",
+          "sections": [
+            3,
+            4
+          ]
+        },
+        {
+          "book": "addresses-mobile",
+          "sections": [
+            2,
+            3
+          ]
+        }
       ]
     },
-{
-    "id": "districts-phase-00-discovery-evidence",
-    "title": "Districts Phase 00 - Discovery and Evidence",
-    "template": "templates/PHASE-00-discovery-evidence.template.md",
-    "output": "generated/districts/PHASE-00-discovery-evidence.md",
-    "sources": [
-      {
-        "book": "districts-master",
-        "sections": [
-          1,
-          2,
-          5,
-          8,
-          9
-        ]
-      },
-      {
-        "book": "districts-api",
-        "sections": [
-          1,
-          10,
-          11
-        ]
-      },
-      {
-        "book": "districts-web",
-        "sections": [
-          1,
-          2,
-          12,
-          13
-        ]
-      },
-      {
-        "book": "districts-mobile",
-        "sections": [
-          1,
-          14,
-          15
-        ]
-      }
-    ]
-  },
-  {
-    "id": "districts-phase-01-domain-api",
-    "title": "Districts Phase 01 - Domain and API",
-    "template": "templates/PHASE-01-domain-api.template.md",
-    "output": "generated/districts/PHASE-01-domain-api.md",
-    "sources": [
-      {
-        "book": "districts-master",
-        "sections": [
-          3,
-          4,
-          6
-        ]
-      },
-      {
-        "book": "districts-api",
-        "sections": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10
-        ]
-      }
-    ]
-  },
-  {
-    "id": "districts-phase-02-web-client",
-    "title": "Districts Phase 02 - Next.js Client",
-    "template": "templates/PHASE-02-web-client.template.md",
-    "output": "generated/districts/PHASE-02-web-client.md",
-    "sources": [
-      {
-        "book": "districts-master",
-        "sections": [
-          3,
-          4,
-          6,
-          7
-        ]
-      },
-      {
-        "book": "districts-web",
-        "sections": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          13,
-          14
-        ]
-      }
-    ]
-  },
-  {
-    "id": "districts-phase-03-mobile-client",
-    "title": "Districts Phase 03 - Expo Mobile Client",
-    "template": "templates/PHASE-03-mobile-client.template.md",
-    "output": "generated/districts/PHASE-03-mobile-client.md",
-    "sources": [
-      {
-        "book": "districts-master",
-        "sections": [
-          3,
-          4,
-          6,
-          7
-        ]
-      },
-      {
-        "book": "districts-mobile",
-        "sections": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          13,
-          14,
-          15
-        ]
-      }
-    ]
-  },
-  {
-    "id": "districts-phase-04-domain-actions",
-    "title": "Districts Phase 04 - Domain Actions and Lifecycle",
-    "template": "templates/PHASE-04-domain-actions.template.md",
-    "output": "generated/districts/PHASE-04-domain-actions.md",
-    "sources": [
-      {
-        "book": "districts-master",
-        "sections": [
-          3,
-          4,
-          6,
-          7,
-          8
-        ]
-      },
-      {
-        "book": "districts-api",
-        "sections": [
-          6,
-          7,
-          8
-        ]
-      },
-      {
-        "book": "districts-web",
-        "sections": [
-          6,
-          7,
-          8,
-          9
-        ]
-      },
-      {
-        "book": "districts-mobile",
-        "sections": [
-          9,
-          10,
-          11
-        ]
-      }
-    ]
-  },
-  {
-    "id": "districts-phase-05-integration-runtime",
-    "title": "Districts Phase 05 - Integration and Runtime",
-    "template": "templates/PHASE-05-integration-runtime.template.md",
-    "output": "generated/districts/PHASE-05-integration-runtime.md",
-    "sources": [
-      {
-        "book": "districts-master",
-        "sections": [
-          4,
-          5,
-          6,
-          7,
-          9
-        ]
-      },
-      {
-        "book": "districts-api",
-        "sections": [
-          8,
-          9,
-          10
-        ]
-      },
-      {
-        "book": "districts-web",
-        "sections": [
-          8,
-          10,
-          13
-        ]
-      },
-      {
-        "book": "districts-mobile",
-        "sections": [
-          2,
-          11,
-          12,
-          15
-        ]
-      }
-    ]
-  },
-  {
-    "id": "districts-phase-06-final-reconciliation",
-    "title": "Districts Phase 06 - Final Reconciliation",
-    "template": "templates/PHASE-06-final-reconciliation.template.md",
-    "output": "generated/districts/PHASE-06-final-reconciliation.md",
-    "sources": [
-      {
-        "book": "districts-master",
-        "sections": [
-          8,
-          9,
-          10
-        ]
-      },
-      {
-        "book": "districts-api",
-        "sections": [
-          10,
-          11
-        ]
-      },
-      {
-        "book": "districts-web",
-        "sections": [
-          12,
-          13,
-          14
-        ]
-      },
-      {
-        "book": "districts-mobile",
-        "sections": [
-          14,
-          15
-        ]
-      }
-    ]
-  },
-  {
-    "id": "address-types-phase-00-discovery-evidence",
-    "title": "Address Types Phase 00 - Discovery and Evidence",
-    "template": "templates/PHASE-00-discovery-evidence.template.md",
-    "output": "generated/address-types/PHASE-00-discovery-evidence.md",
-    "sources": [
-      { "book": "address-types-master", "sections": [1, 2, 5, 8, 9] },
-      { "book": "address-types-api", "sections": [1, 10, 11] },
-      { "book": "address-types-web", "sections": [1, 2, 12, 13] },
-      { "book": "address-types-mobile", "sections": [1, 14, 15] }
-    ]
-  },
-  {
-    "id": "address-types-phase-01-domain-api",
-    "title": "Address Types Phase 01 - Domain and API",
-    "template": "templates/PHASE-01-domain-api.template.md",
-    "output": "generated/address-types/PHASE-01-domain-api.md",
-    "sources": [
-      { "book": "address-types-master", "sections": [3, 4, 6] },
-      { "book": "address-types-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
-    ]
-  },
-  {
-    "id": "address-types-phase-02-web-client",
-    "title": "Address Types Phase 02 - Next.js Client",
-    "template": "templates/PHASE-02-web-client.template.md",
-    "output": "generated/address-types/PHASE-02-web-client.md",
-    "sources": [
-      { "book": "address-types-master", "sections": [3, 4, 6, 7] },
-      { "book": "address-types-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
-    ]
-  },
-  {
-    "id": "address-types-phase-03-mobile-client",
-    "title": "Address Types Phase 03 - Expo Mobile Client",
-    "template": "templates/PHASE-03-mobile-client.template.md",
-    "output": "generated/address-types/PHASE-03-mobile-client.md",
-    "sources": [
-      { "book": "address-types-master", "sections": [3, 4, 6, 7] },
-      { "book": "address-types-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
-    ]
-  },
-  {
-    "id": "address-types-phase-04-domain-actions",
-    "title": "Address Types Phase 04 - Domain Actions and Lifecycle",
-    "template": "templates/PHASE-04-domain-actions.template.md",
-    "output": "generated/address-types/PHASE-04-domain-actions.md",
-    "sources": [
-      { "book": "address-types-master", "sections": [3, 4, 6, 7, 8] },
-      { "book": "address-types-api", "sections": [6, 7, 8] },
-      { "book": "address-types-web", "sections": [6, 7, 8, 9] },
-      { "book": "address-types-mobile", "sections": [9, 10, 11] }
-    ]
-  },
-  {
-    "id": "address-types-phase-05-integration-runtime",
-    "title": "Address Types Phase 05 - Integration and Runtime",
-    "template": "templates/PHASE-05-integration-runtime.template.md",
-    "output": "generated/address-types/PHASE-05-integration-runtime.md",
-    "sources": [
-      { "book": "address-types-master", "sections": [4, 5, 6, 7, 9] },
-      { "book": "address-types-api", "sections": [8, 9, 10] },
-      { "book": "address-types-web", "sections": [8, 10, 13] },
-      { "book": "address-types-mobile", "sections": [2, 11, 12, 15] }
-    ]
-  },
-  {
-    "id": "address-types-phase-06-final-reconciliation",
-    "title": "Address Types Phase 06 - Final Reconciliation",
-    "template": "templates/PHASE-06-final-reconciliation.template.md",
-    "output": "generated/address-types/PHASE-06-final-reconciliation.md",
-    "sources": [
-      { "book": "address-types-master", "sections": [8, 9, 10] },
-      { "book": "address-types-api", "sections": [10, 11] },
-      { "book": "address-types-web", "sections": [12, 13, 14] },
-      { "book": "address-types-mobile", "sections": [14, 15] }
-    ]
-  },
-  {
-    "id": "company-geographic-scope-phase-00-discovery-evidence",
-    "title": "Company Geographic Scope Phase 00 - Discovery and Evidence",
-    "template": "templates/PHASE-00-discovery-evidence.template.md",
-    "output": "generated/company-geographic-scope/PHASE-00-discovery-evidence.md",
-    "sources": [
-      { "book": "company-geographic-scope-master", "sections": [1, 2, 5, 8, 9] },
-      { "book": "company-geographic-scope-api", "sections": [1, 10, 11] },
-      { "book": "company-geographic-scope-web", "sections": [1, 2, 12, 13] },
-      { "book": "company-geographic-scope-mobile", "sections": [1, 14, 15] }
-    ]
-  },
-  {
-    "id": "company-geographic-scope-phase-01-domain-api",
-    "title": "Company Geographic Scope Phase 01 - Domain and API",
-    "template": "templates/PHASE-01-domain-api.template.md",
-    "output": "generated/company-geographic-scope/PHASE-01-domain-api.md",
-    "sources": [
-      { "book": "company-geographic-scope-master", "sections": [3, 4, 6] },
-      { "book": "company-geographic-scope-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
-    ]
-  },
-  {
-    "id": "company-geographic-scope-phase-02-web-client",
-    "title": "Company Geographic Scope Phase 02 - Next.js Client",
-    "template": "templates/PHASE-02-web-client.template.md",
-    "output": "generated/company-geographic-scope/PHASE-02-web-client.md",
-    "sources": [
-      { "book": "company-geographic-scope-master", "sections": [3, 4, 6, 7] },
-      { "book": "company-geographic-scope-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
-    ]
-  },
-  {
-    "id": "company-geographic-scope-phase-03-mobile-client",
-    "title": "Company Geographic Scope Phase 03 - Expo Mobile Client",
-    "template": "templates/PHASE-03-mobile-client.template.md",
-    "output": "generated/company-geographic-scope/PHASE-03-mobile-client.md",
-    "sources": [
-      { "book": "company-geographic-scope-master", "sections": [3, 4, 6, 7] },
-      { "book": "company-geographic-scope-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
-    ]
-  },
-  {
-    "id": "company-geographic-scope-phase-04-domain-actions",
-    "title": "Company Geographic Scope Phase 04 - Domain Actions and Lifecycle",
-    "template": "templates/PHASE-04-domain-actions.template.md",
-    "output": "generated/company-geographic-scope/PHASE-04-domain-actions.md",
-    "sources": [
-      { "book": "company-geographic-scope-master", "sections": [3, 4, 6, 7, 8] },
-      { "book": "company-geographic-scope-api", "sections": [6, 7, 8] },
-      { "book": "company-geographic-scope-web", "sections": [6, 7, 8, 9] },
-      { "book": "company-geographic-scope-mobile", "sections": [9, 10, 11] }
-    ]
-  },
-  {
-    "id": "company-geographic-scope-phase-05-integration-runtime",
-    "title": "Company Geographic Scope Phase 05 - Integration and Runtime",
-    "template": "templates/PHASE-05-integration-runtime.template.md",
-    "output": "generated/company-geographic-scope/PHASE-05-integration-runtime.md",
-    "sources": [
-      { "book": "company-geographic-scope-master", "sections": [4, 5, 6, 7, 9] },
-      { "book": "company-geographic-scope-api", "sections": [8, 9, 10] },
-      { "book": "company-geographic-scope-web", "sections": [8, 10, 13] },
-      { "book": "company-geographic-scope-mobile", "sections": [2, 11, 12, 15] }
-    ]
-  },
-  {
-    "id": "company-geographic-scope-phase-06-final-reconciliation",
-    "title": "Company Geographic Scope Phase 06 - Final Reconciliation",
-    "template": "templates/PHASE-06-final-reconciliation.template.md",
-    "output": "generated/company-geographic-scope/PHASE-06-final-reconciliation.md",
-    "sources": [
-      { "book": "company-geographic-scope-master", "sections": [8, 9, 10] },
-      { "book": "company-geographic-scope-api", "sections": [10, 11] },
-      { "book": "company-geographic-scope-web", "sections": [12, 13, 14] },
-      { "book": "company-geographic-scope-mobile", "sections": [14, 15] }
-    ]
-  },
-  {
-    "id": "attendance-devices-phase-00-discovery-evidence",
-    "title": "Attendance Devices Phase 00 - Discovery and Evidence",
-    "template": "templates/PHASE-00-discovery-evidence.template.md",
-    "output": "generated/attendance-devices/PHASE-00-discovery-evidence.md",
-    "sources": [{ "book": "attendance-devices-master", "sections": [1, 2, 5, 8, 9] }, { "book": "attendance-devices-api", "sections": [1, 10, 11] }, { "book": "attendance-devices-web", "sections": [1, 2, 12, 13] }, { "book": "attendance-devices-mobile", "sections": [1, 14, 15] }]
-  },
-  {
-    "id": "attendance-devices-phase-01-domain-api",
-    "title": "Attendance Devices Phase 01 - Domain and API",
-    "template": "templates/PHASE-01-domain-api.template.md",
-    "output": "generated/attendance-devices/PHASE-01-domain-api.md",
-    "sources": [{ "book": "attendance-devices-master", "sections": [3, 4, 6] }, { "book": "attendance-devices-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }]
-  },
-  {
-    "id": "attendance-devices-phase-02-web-client",
-    "title": "Attendance Devices Phase 02 - Next.js Client",
-    "template": "templates/PHASE-02-web-client.template.md",
-    "output": "generated/attendance-devices/PHASE-02-web-client.md",
-    "sources": [{ "book": "attendance-devices-master", "sections": [3, 4, 6, 7] }, { "book": "attendance-devices-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }]
-  },
-  {
-    "id": "attendance-devices-phase-03-mobile-client",
-    "title": "Attendance Devices Phase 03 - Expo Mobile Client (deferred)",
-    "template": "templates/PHASE-03-mobile-client.template.md",
-    "output": "generated/attendance-devices/PHASE-03-mobile-client.md",
-    "sources": [{ "book": "attendance-devices-master", "sections": [3, 4, 6, 7] }, { "book": "attendance-devices-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }]
-  },
-  {
-    "id": "attendance-devices-phase-04-domain-actions",
-    "title": "Attendance Devices Phase 04 - Domain Actions and Lifecycle",
-    "template": "templates/PHASE-04-domain-actions.template.md",
-    "output": "generated/attendance-devices/PHASE-04-domain-actions.md",
-    "sources": [{ "book": "attendance-devices-master", "sections": [3, 4, 6, 7, 8] }, { "book": "attendance-devices-api", "sections": [6, 7, 8] }, { "book": "attendance-devices-web", "sections": [6, 7, 8, 9] }, { "book": "attendance-devices-mobile", "sections": [9, 10, 11] }]
-  },
-  {
-    "id": "attendance-devices-phase-05-integration-runtime",
-    "title": "Attendance Devices Phase 05 - Integration and Runtime",
-    "template": "templates/PHASE-05-integration-runtime.template.md",
-    "output": "generated/attendance-devices/PHASE-05-integration-runtime.md",
-    "sources": [{ "book": "attendance-devices-master", "sections": [4, 5, 6, 7, 9] }, { "book": "attendance-devices-api", "sections": [8, 9, 10] }, { "book": "attendance-devices-web", "sections": [8, 10, 13] }, { "book": "attendance-devices-mobile", "sections": [2, 11, 12, 15] }]
-  },
-  {
-    "id": "attendance-devices-phase-06-final-reconciliation",
-    "title": "Attendance Devices Phase 06 - Final Reconciliation",
-    "template": "templates/PHASE-06-final-reconciliation.template.md",
-    "output": "generated/attendance-devices/PHASE-06-final-reconciliation.md",
-    "sources": [{ "book": "attendance-devices-master", "sections": [8, 9, 10] }, { "book": "attendance-devices-api", "sections": [10, 11] }, { "book": "attendance-devices-web", "sections": [12, 13, 14] }, { "book": "attendance-devices-mobile", "sections": [14, 15] }]
-  },
-  {
-    "id": "organizational-structure-phase-00-discovery-evidence",
-    "title": "Organizational Structure Phase 00 - Discovery and Evidence",
-    "template": "templates/PHASE-00-discovery-evidence.template.md",
-    "output": "generated/organizational-structure/PHASE-00-discovery-evidence.md",
-    "sources": [{ "book": "organizational-structure-master", "sections": [1, 2, 5, 8, 9] }, { "book": "organizational-structure-api", "sections": [1, 10, 11] }, { "book": "organizational-structure-web", "sections": [1, 2, 12, 13] }, { "book": "organizational-structure-mobile", "sections": [1, 14, 15] }]
-  },
-  {
-    "id": "organizational-structure-phase-01-domain-api",
-    "title": "Organizational Structure Phase 01 - Domain and API",
-    "template": "templates/PHASE-01-domain-api.template.md",
-    "output": "generated/organizational-structure/PHASE-01-domain-api.md",
-    "sources": [{ "book": "organizational-structure-master", "sections": [3, 4, 6] }, { "book": "organizational-structure-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }]
-  },
-  {
-    "id": "organizational-structure-phase-02-web-client",
-    "title": "Organizational Structure Phase 02 - Next.js Client",
-    "template": "templates/PHASE-02-web-client.template.md",
-    "output": "generated/organizational-structure/PHASE-02-web-client.md",
-    "sources": [{ "book": "organizational-structure-master", "sections": [3, 4, 6, 7] }, { "book": "organizational-structure-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }]
-  },
-  {
-    "id": "organizational-structure-phase-03-mobile-client",
-    "title": "Organizational Structure Phase 03 - Expo Mobile Client",
-    "template": "templates/PHASE-03-mobile-client.template.md",
-    "output": "generated/organizational-structure/PHASE-03-mobile-client.md",
-    "sources": [{ "book": "organizational-structure-master", "sections": [3, 4, 6, 7] }, { "book": "organizational-structure-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }]
-  },
-  {
-    "id": "organizational-structure-phase-04-domain-actions",
-    "title": "Organizational Structure Phase 04 - Domain Actions and Lifecycle",
-    "template": "templates/PHASE-04-domain-actions.template.md",
-    "output": "generated/organizational-structure/PHASE-04-domain-actions.md",
-    "sources": [{ "book": "organizational-structure-master", "sections": [3, 4, 6, 7, 8] }, { "book": "organizational-structure-api", "sections": [6, 7, 8] }, { "book": "organizational-structure-web", "sections": [6, 7, 8, 9] }, { "book": "organizational-structure-mobile", "sections": [9, 10, 11] }]
-  },
-  {
-    "id": "organizational-structure-phase-05-integration-runtime",
-    "title": "Organizational Structure Phase 05 - Integration and Runtime",
-    "template": "templates/PHASE-05-integration-runtime.template.md",
-    "output": "generated/organizational-structure/PHASE-05-integration-runtime.md",
-    "sources": [{ "book": "organizational-structure-master", "sections": [4, 5, 6, 7, 9] }, { "book": "organizational-structure-api", "sections": [8, 9, 10] }, { "book": "organizational-structure-web", "sections": [8, 10, 13] }, { "book": "organizational-structure-mobile", "sections": [2, 11, 12, 15] }]
-  },
+    {
+      "id": "districts-phase-00-discovery-evidence",
+      "title": "Districts Phase 00 - Discovery and Evidence",
+      "template": "templates/PHASE-00-discovery-evidence.template.md",
+      "output": "generated/districts/PHASE-00-discovery-evidence.md",
+      "sources": [
+        {
+          "book": "districts-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "districts-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "districts-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "districts-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "districts-phase-01-domain-api",
+      "title": "Districts Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/districts/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "districts-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "districts-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "districts-phase-02-web-client",
+      "title": "Districts Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/districts/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "districts-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "districts-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "districts-phase-03-mobile-client",
+      "title": "Districts Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/districts/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "districts-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "districts-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "districts-phase-04-domain-actions",
+      "title": "Districts Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/districts/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "districts-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "districts-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "districts-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "districts-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "districts-phase-05-integration-runtime",
+      "title": "Districts Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/districts/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "districts-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "districts-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "districts-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "districts-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "districts-phase-06-final-reconciliation",
+      "title": "Districts Phase 06 - Final Reconciliation",
+      "template": "templates/PHASE-06-final-reconciliation.template.md",
+      "output": "generated/districts/PHASE-06-final-reconciliation.md",
+      "sources": [
+        {
+          "book": "districts-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "districts-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "districts-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "districts-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "address-types-phase-00-discovery-evidence",
+      "title": "Address Types Phase 00 - Discovery and Evidence",
+      "template": "templates/PHASE-00-discovery-evidence.template.md",
+      "output": "generated/address-types/PHASE-00-discovery-evidence.md",
+      "sources": [
+        {
+          "book": "address-types-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "address-types-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "address-types-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "address-types-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "address-types-phase-01-domain-api",
+      "title": "Address Types Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/address-types/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "address-types-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "address-types-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "address-types-phase-02-web-client",
+      "title": "Address Types Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/address-types/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "address-types-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "address-types-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "address-types-phase-03-mobile-client",
+      "title": "Address Types Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/address-types/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "address-types-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "address-types-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "address-types-phase-04-domain-actions",
+      "title": "Address Types Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/address-types/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "address-types-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "address-types-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "address-types-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "address-types-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "address-types-phase-05-integration-runtime",
+      "title": "Address Types Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/address-types/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "address-types-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "address-types-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "address-types-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "address-types-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "address-types-phase-06-final-reconciliation",
+      "title": "Address Types Phase 06 - Final Reconciliation",
+      "template": "templates/PHASE-06-final-reconciliation.template.md",
+      "output": "generated/address-types/PHASE-06-final-reconciliation.md",
+      "sources": [
+        {
+          "book": "address-types-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "address-types-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "address-types-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "address-types-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-geographic-scope-phase-00-discovery-evidence",
+      "title": "Company Geographic Scope Phase 00 - Discovery and Evidence",
+      "template": "templates/PHASE-00-discovery-evidence.template.md",
+      "output": "generated/company-geographic-scope/PHASE-00-discovery-evidence.md",
+      "sources": [
+        {
+          "book": "company-geographic-scope-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "company-geographic-scope-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "company-geographic-scope-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "company-geographic-scope-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-geographic-scope-phase-01-domain-api",
+      "title": "Company Geographic Scope Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/company-geographic-scope/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "company-geographic-scope-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "company-geographic-scope-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-geographic-scope-phase-02-web-client",
+      "title": "Company Geographic Scope Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/company-geographic-scope/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "company-geographic-scope-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "company-geographic-scope-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-geographic-scope-phase-03-mobile-client",
+      "title": "Company Geographic Scope Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/company-geographic-scope/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "company-geographic-scope-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "company-geographic-scope-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-geographic-scope-phase-04-domain-actions",
+      "title": "Company Geographic Scope Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/company-geographic-scope/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "company-geographic-scope-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "company-geographic-scope-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "company-geographic-scope-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "company-geographic-scope-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-geographic-scope-phase-05-integration-runtime",
+      "title": "Company Geographic Scope Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/company-geographic-scope/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "company-geographic-scope-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "company-geographic-scope-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "company-geographic-scope-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "company-geographic-scope-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-geographic-scope-phase-06-final-reconciliation",
+      "title": "Company Geographic Scope Phase 06 - Final Reconciliation",
+      "template": "templates/PHASE-06-final-reconciliation.template.md",
+      "output": "generated/company-geographic-scope/PHASE-06-final-reconciliation.md",
+      "sources": [
+        {
+          "book": "company-geographic-scope-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "company-geographic-scope-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "company-geographic-scope-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "company-geographic-scope-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attendance-devices-phase-00-discovery-evidence",
+      "title": "Attendance Devices Phase 00 - Discovery and Evidence",
+      "template": "templates/PHASE-00-discovery-evidence.template.md",
+      "output": "generated/attendance-devices/PHASE-00-discovery-evidence.md",
+      "sources": [
+        {
+          "book": "attendance-devices-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "attendance-devices-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "attendance-devices-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "attendance-devices-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attendance-devices-phase-01-domain-api",
+      "title": "Attendance Devices Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/attendance-devices/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "attendance-devices-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "attendance-devices-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attendance-devices-phase-02-web-client",
+      "title": "Attendance Devices Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/attendance-devices/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "attendance-devices-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "attendance-devices-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attendance-devices-phase-03-mobile-client",
+      "title": "Attendance Devices Phase 03 - Expo Mobile Client (deferred)",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/attendance-devices/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "attendance-devices-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "attendance-devices-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attendance-devices-phase-04-domain-actions",
+      "title": "Attendance Devices Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/attendance-devices/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "attendance-devices-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "attendance-devices-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "attendance-devices-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "attendance-devices-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attendance-devices-phase-05-integration-runtime",
+      "title": "Attendance Devices Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/attendance-devices/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "attendance-devices-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "attendance-devices-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "attendance-devices-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "attendance-devices-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attendance-devices-phase-06-final-reconciliation",
+      "title": "Attendance Devices Phase 06 - Final Reconciliation",
+      "template": "templates/PHASE-06-final-reconciliation.template.md",
+      "output": "generated/attendance-devices/PHASE-06-final-reconciliation.md",
+      "sources": [
+        {
+          "book": "attendance-devices-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "attendance-devices-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "attendance-devices-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "attendance-devices-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "organizational-structure-phase-00-discovery-evidence",
+      "title": "Organizational Structure Phase 00 - Discovery and Evidence",
+      "template": "templates/PHASE-00-discovery-evidence.template.md",
+      "output": "generated/organizational-structure/PHASE-00-discovery-evidence.md",
+      "sources": [
+        {
+          "book": "organizational-structure-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "organizational-structure-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "organizational-structure-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "organizational-structure-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "organizational-structure-phase-01-domain-api",
+      "title": "Organizational Structure Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/organizational-structure/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "organizational-structure-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "organizational-structure-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "organizational-structure-phase-02-web-client",
+      "title": "Organizational Structure Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/organizational-structure/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "organizational-structure-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "organizational-structure-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "organizational-structure-phase-03-mobile-client",
+      "title": "Organizational Structure Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/organizational-structure/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "organizational-structure-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "organizational-structure-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "organizational-structure-phase-04-domain-actions",
+      "title": "Organizational Structure Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/organizational-structure/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "organizational-structure-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "organizational-structure-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "organizational-structure-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "organizational-structure-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "organizational-structure-phase-05-integration-runtime",
+      "title": "Organizational Structure Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/organizational-structure/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "organizational-structure-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "organizational-structure-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "organizational-structure-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "organizational-structure-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
     {
       "id": "organizational-structure-phase-06-final-reconciliation",
-    "title": "Organizational Structure Phase 06 - Final Reconciliation",
-    "template": "templates/PHASE-06-final-reconciliation.template.md",
-    "output": "generated/organizational-structure/PHASE-06-final-reconciliation.md",
-      "sources": [{ "book": "organizational-structure-master", "sections": [8, 9, 10] }, { "book": "organizational-structure-api", "sections": [10, 11] }, { "book": "organizational-structure-web", "sections": [12, 13, 14] }, { "book": "organizational-structure-mobile", "sections": [14, 15] }]
+      "title": "Organizational Structure Phase 06 - Final Reconciliation",
+      "template": "templates/PHASE-06-final-reconciliation.template.md",
+      "output": "generated/organizational-structure/PHASE-06-final-reconciliation.md",
+      "sources": [
+        {
+          "book": "organizational-structure-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "organizational-structure-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "organizational-structure-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "organizational-structure-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
     },
     {
       "id": "fiscal-years-phase-00-discovery-evidence",
       "title": "Fiscal Years Phase 00 - Discovery and Evidence",
       "template": "templates/PHASE-00-discovery-evidence.template.md",
       "output": "generated/fiscal-years/PHASE-00-discovery-evidence.md",
-      "sources": [{ "book": "fiscal-years-master", "sections": [1, 2, 5, 8, 9] }, { "book": "fiscal-years-api", "sections": [1, 10, 11] }, { "book": "fiscal-years-web", "sections": [1, 2, 12, 13] }, { "book": "fiscal-years-mobile", "sections": [1, 14, 15] }]
+      "sources": [
+        {
+          "book": "fiscal-years-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "fiscal-years-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "fiscal-years-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "fiscal-years-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
     },
     {
       "id": "fiscal-years-phase-01-domain-api",
       "title": "Fiscal Years Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
       "output": "generated/fiscal-years/PHASE-01-domain-api.md",
-      "sources": [{ "book": "fiscal-years-master", "sections": [3, 4, 6] }, { "book": "fiscal-years-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }]
+      "sources": [
+        {
+          "book": "fiscal-years-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "fiscal-years-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
     },
     {
       "id": "fiscal-years-phase-02-web-client",
       "title": "Fiscal Years Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
       "output": "generated/fiscal-years/PHASE-02-web-client.md",
-      "sources": [{ "book": "fiscal-years-master", "sections": [3, 4, 6, 7] }, { "book": "fiscal-years-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }]
+      "sources": [
+        {
+          "book": "fiscal-years-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "fiscal-years-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
     },
     {
       "id": "fiscal-years-phase-03-mobile-client",
       "title": "Fiscal Years Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
       "output": "generated/fiscal-years/PHASE-03-mobile-client.md",
-      "sources": [{ "book": "fiscal-years-master", "sections": [3, 4, 6, 7] }, { "book": "fiscal-years-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }]
+      "sources": [
+        {
+          "book": "fiscal-years-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "fiscal-years-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
     },
     {
       "id": "fiscal-years-phase-04-domain-actions",
       "title": "Fiscal Years Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
       "output": "generated/fiscal-years/PHASE-04-domain-actions.md",
-      "sources": [{ "book": "fiscal-years-master", "sections": [3, 4, 6, 7, 8] }, { "book": "fiscal-years-api", "sections": [6, 7, 8] }, { "book": "fiscal-years-web", "sections": [6, 7, 8, 9] }, { "book": "fiscal-years-mobile", "sections": [9, 10, 11] }]
+      "sources": [
+        {
+          "book": "fiscal-years-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "fiscal-years-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "fiscal-years-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "fiscal-years-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
     },
     {
       "id": "fiscal-years-phase-05-integration-runtime",
       "title": "Fiscal Years Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
       "output": "generated/fiscal-years/PHASE-05-integration-runtime.md",
-      "sources": [{ "book": "fiscal-years-master", "sections": [4, 5, 6, 7, 9] }, { "book": "fiscal-years-api", "sections": [8, 9, 10] }, { "book": "fiscal-years-web", "sections": [8, 10, 13] }, { "book": "fiscal-years-mobile", "sections": [2, 11, 12, 15] }]
+      "sources": [
+        {
+          "book": "fiscal-years-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "fiscal-years-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "fiscal-years-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "fiscal-years-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
     },
     {
       "id": "fiscal-years-phase-06-final-reconciliation",
       "title": "Fiscal Years Phase 06 - Final Reconciliation",
       "template": "templates/PHASE-06-final-reconciliation.template.md",
       "output": "generated/fiscal-years/PHASE-06-final-reconciliation.md",
-      "sources": [{ "book": "fiscal-years-master", "sections": [8, 9, 10] }, { "book": "fiscal-years-api", "sections": [10, 11] }, { "book": "fiscal-years-web", "sections": [12, 13, 14] }, { "book": "fiscal-years-mobile", "sections": [14, 15] }]
+      "sources": [
+        {
+          "book": "fiscal-years-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "fiscal-years-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "fiscal-years-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "fiscal-years-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workforce-planning-phase-00-discovery-evidence",
+      "title": "Workforce Planning Phase 00 - Discovery and Evidence",
+      "template": "templates/PHASE-00-discovery-evidence.template.md",
+      "output": "generated/workforce-planning/PHASE-00-discovery-evidence.md",
+      "sources": [
+        {
+          "book": "workforce-planning-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "workforce-planning-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "workforce-planning-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "workforce-planning-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workforce-planning-phase-01-domain-api",
+      "title": "Workforce Planning Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/workforce-planning/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "workforce-planning-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "workforce-planning-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workforce-planning-phase-02-web-client",
+      "title": "Workforce Planning Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/workforce-planning/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "workforce-planning-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "workforce-planning-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workforce-planning-phase-03-mobile-client",
+      "title": "Workforce Planning Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/workforce-planning/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "workforce-planning-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "workforce-planning-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workforce-planning-phase-04-domain-actions",
+      "title": "Workforce Planning Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/workforce-planning/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "workforce-planning-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "workforce-planning-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "workforce-planning-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "workforce-planning-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workforce-planning-phase-05-integration-runtime",
+      "title": "Workforce Planning Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/workforce-planning/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "workforce-planning-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "workforce-planning-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "workforce-planning-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "workforce-planning-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workforce-planning-phase-06-final-reconciliation",
+      "title": "Workforce Planning Phase 06 - Final Reconciliation",
+      "template": "templates/PHASE-06-final-reconciliation.template.md",
+      "output": "generated/workforce-planning/PHASE-06-final-reconciliation.md",
+      "sources": [
+        {
+          "book": "workforce-planning-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "workforce-planning-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "workforce-planning-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "workforce-planning-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
     }
   ]
 }

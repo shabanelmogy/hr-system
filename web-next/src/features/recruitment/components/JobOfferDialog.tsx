@@ -9,7 +9,7 @@ import { MyForm, MyTextField, MySelect } from "@/shared/components/forms";
 import { showToast } from "@/shared/components/feedback/transient/showToast";
 import { jobOfferSchema, type JobOfferFormData } from "../validation/recruitmentValidation";
 import { PayFrequency, EmploymentType, WorkArrangement } from "../types";
-import { useCreateJobOffer, useIssueJobOffer } from "../hooks/useRecruitment";
+import { useCreateJobOffer, useSubmitJobOffer } from "../hooks/useRecruitment";
 
 interface JobOfferDialogProps {
   open: boolean;
@@ -30,7 +30,7 @@ export default function JobOfferDialog({
 }: JobOfferDialogProps) {
   const { t } = useTranslation();
   const createOfferMutation = useCreateJobOffer();
-  const issueOfferMutation = useIssueJobOffer();
+  const submitOfferMutation = useSubmitJobOffer();
 
   const twoWeeksLater = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
 
@@ -64,18 +64,18 @@ export default function JobOfferDialog({
         payFrequency: data.payFrequency,
         employmentType: EmploymentType.FullTime,
         workArrangement: WorkArrangement.Hybrid,
-        proposedStartDate: data.proposedStartDate,
-        termsAndConditions: data.termsAndConditions,
-      });
+      proposedStartDate: data.proposedStartDate,
+      termsAndConditions: data.termsAndConditions,
+    });
 
-      // Auto issue offer
-      await issueOfferMutation.mutateAsync(offer.id);
+      // Governance: offers start as Draft; issuing requires approval first.
+      await submitOfferMutation.mutateAsync(offer.id);
 
-      showToast.success(t("recruitment.offers.offerCreatedSuccess", "تم إصدار عرض العمل بنجاح"));
+      showToast.success(t("recruitment.offers.offerSubmittedSuccess", "تم إنشاء العرض وإرساله للاعتماد بنجاح"));
       reset();
       onClose();
     } catch (err: any) {
-      showToast.error(err, t("common.error", "حدث خطأ أثناء إصدار عرض العمل"));
+      showToast.error(err, t("common.error", "حدث خطأ أثناء إنشاء عرض العمل"));
     }
   };
 
@@ -92,7 +92,7 @@ export default function JobOfferDialog({
       open={open}
       title={t("recruitment.offers.createTitle", "إصدار عرض عمل رسمي / Make Job Offer")}
       subtitle={t("recruitment.offers.createSubtitle", "تحديد الراتب الأساسي وتاريخ بدء العمل والشروط")}
-      isSubmitting={createOfferMutation.isPending || issueOfferMutation.isPending}
+      isSubmitting={createOfferMutation.isPending || submitOfferMutation.isPending}
       onSubmit={handleSubmit(onSubmit as any) as any}
       onClose={onClose}
     >

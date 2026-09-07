@@ -68,7 +68,8 @@ const DrawerContent = styled(Box)(() => ({
 
 // Scrollable area
 const ScrollableContent = styled(Box)(() => ({
-  flexGrow: 1,
+  flex: "1 1 auto",
+  minHeight: 0,
   overflowY: "auto",
   overflowX: "hidden",
 }));

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -58,6 +58,11 @@ export default function CandidateDetailDialog({
   const [employeeNumber, setEmployeeNumber] = useState(
     `EMP-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, "0")}-${Math.floor(100 + Math.random() * 900)}`
   );
+  const hireIdempotencyKey = useRef<string>(`hire-${application?.id ?? 0}-${crypto.randomUUID()}`);
+  useEffect(() => {
+    hireIdempotencyKey.current = `hire-${application?.id ?? 0}-${crypto.randomUUID()}`;
+    setIsHiring(false);
+  }, [application?.id]);
 
   const hireMutation = useHireApplication();
   const rejectMutation = useRejectApplication();
@@ -71,10 +76,12 @@ export default function CandidateDetailDialog({
         data: {
           employeeNumber,
           hireDate: new Date().toISOString().split("T")[0],
+          idempotencyKey: hireIdempotencyKey.current,
         },
       });
       showToast.success(t("recruitment.pipeline.hireSuccess", "تم تعيين المرشح بنجاح وإغلاق مسار التوظيف"));
       setIsHiring(false);
+      hireIdempotencyKey.current = `hire-${application.id}-${crypto.randomUUID()}`;
       onClose();
     } catch (err: any) {
       showToast.error(err, t("common.error", "حدث خطأ أثناء التعيين"));
@@ -390,7 +397,10 @@ export default function CandidateDetailDialog({
           </Button>
         )}
 
-        {application.status !== ApplicationStatus.Hired && !isHiring && perms.canHire && (
+        {application.status !== ApplicationStatus.OfferAccepted && application.status !== ApplicationStatus.Hired && perms.canHire && (
+          <Typography variant="caption" color="text.secondary">{t("recruitment.hire.acceptedOfferRequired", "Hiring is available only after the candidate accepts an offer.")}</Typography>
+        )}
+        {application.status === ApplicationStatus.OfferAccepted && !isHiring && perms.canHire && (
           <Button
             variant="contained"
             color="success"

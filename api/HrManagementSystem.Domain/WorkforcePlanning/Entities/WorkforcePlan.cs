@@ -115,13 +115,13 @@ public sealed class WorkforcePlan : CompanyAuditableEntity
         Status = WorkforcePlanStatus.UnderReview;
     }
 
-    public void Approve(DateTimeOffset approvedOn, string approvedById, bool fiscalYearIsOpen)
+    public void Approve(DateTimeOffset approvedOn, string approvedById, bool fiscalYearIsOpen, bool allowSelfApproval = false)
     {
         if (!fiscalYearIsOpen)
             throw new DomainRuleException("WorkforcePlan.FiscalYearMustBeOpen", "A plan can only be approved while its fiscal year is open.");
         EnsureStatus(WorkforcePlanStatus.UnderReview);
         var approver = Required(approvedById, nameof(approvedById));
-        if (string.Equals(approver, CreatedById, StringComparison.OrdinalIgnoreCase))
+        if (!allowSelfApproval && string.Equals(approver, CreatedById, StringComparison.OrdinalIgnoreCase))
             throw new DomainRuleException("WorkforcePlan.SelfApproval", "The plan creator cannot approve the same plan.");
         ApprovedOn = approvedOn;
         ApprovedById = approver;

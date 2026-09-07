@@ -7,5 +7,7 @@ public enum JobOfferStatus
     Accepted = 3,
     Declined = 4,
     Withdrawn = 5,
-    Expired = 6
+    Expired = 6,
+    PendingApproval = 7,
+    Approved = 8
 }

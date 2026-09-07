@@ -55,6 +55,16 @@ export interface AuthRoutes {
   crystalReportsPage: AppPath;
 }
 
+export interface WorkforcePlanningRoutes {
+  index: AppPath;
+  plans: AppPath;
+  budgets: AppPath;
+  positionEnvelopes: AppPath;
+  staffingRequests: AppPath;
+  envelopeAmendments: AppPath;
+  trace: AppPath;
+}
+
 export interface SuperAdminRoutes {
   dashboard: AppPath;
   tenants: AppPath;
@@ -93,7 +103,7 @@ export interface AppRoutes {
     pullRuns: AppPath;
   };
   recruitment: AppPath;
-  workforcePlans: AppPath;
+  workforcePlanning: WorkforcePlanningRoutes;
   finance: {
     fiscalYears: AppPath;
   };
@@ -181,7 +191,15 @@ export const appRoutes: AppRoutes = {
     pullRuns: toAppPath("/attendance-devices/pull-runs"),
   },
   recruitment: toAppPath("/recruitment"),
-  workforcePlans: toAppPath("/workforce-planning/plans"),
+  workforcePlanning: {
+    index: toAppPath("/workforce-planning"),
+    plans: toAppPath("/workforce-planning/plans"),
+    budgets: toAppPath("/workforce-planning/budgets"),
+    positionEnvelopes: toAppPath("/workforce-planning/position-envelopes"),
+    staffingRequests: toAppPath("/workforce-planning/staffing-requests"),
+    envelopeAmendments: toAppPath("/workforce-planning/envelope-amendments"),
+    trace: toAppPath("/workforce-planning/trace"),
+  },
   finance: {
     fiscalYears: toAppPath("/finance/fiscal-years"),
   },

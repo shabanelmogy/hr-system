@@ -69,14 +69,7 @@ export enum InterviewEvaluationRecommendation {
   StrongNoHire = 5,
 }
 
-export enum JobOfferStatus {
-  Draft = 1,
-  Issued = 2,
-  Accepted = 3,
-  Declined = 4,
-  Withdrawn = 5,
-  Expired = 6,
-}
+export enum JobOfferStatus {Draft = 1,Issued = 2,Accepted = 3,Declined = 4,Withdrawn = 5,Expired = 6,PendingApproval = 7,Approved = 8,}
 
 export enum EmploymentType {
   FullTime = 1,
@@ -221,6 +214,7 @@ export interface JobOfferDto {
   id: number;
   offerNumber: string;
   employmentApplicationId: number;
+  candidateName?: string;
   positionId: number;
   positionTitleAr: string;
   positionTitleEn: string;
@@ -233,10 +227,30 @@ export interface JobOfferDto {
   employmentType: number;
   workArrangement: number;
   proposedStartDate: string;
-  expiryDate?: string;
+  expiresOn?: string;
   termsAndConditions?: string;
   issuedOn?: string;
   createdOn: string;
+  annualSalarySnapshot?: number;
+  fiscalYearCostSnapshot?: number;
+  reservationDelta?: number;
+  calculationPolicyVersion?: string;
+  approvalSubmittedOn?: string;
+  approvalSubmittedById?: string;
+  approvedOn?: string;
+  approvedById?: string;
+  approvalDecisionReason?: string;
+  approvalHistory?: JobOfferApprovalHistoryDto[];
+}
+
+export interface JobOfferApprovalHistoryDto {
+  id: number;
+  action: string;
+  actorUserId: string;
+  occurredOn: string;
+  fromStatus: JobOfferStatus;
+  toStatus: JobOfferStatus;
+  reason?: string;
 }
 
 export interface ApplicationTimelineDto {
@@ -317,6 +331,10 @@ export interface JobRequisitionDto {
   divisionNameAr?: string;
   requestedByEmployeeId: number;
   requestedPositions: number;
+  staffingRequestId?: number | null;
+  planningSource: PlanningSource;
+  hiredPositions: number;
+  remainingPositions: number;
   businessReason: string;
   employmentType: EmploymentType;
   workArrangement: WorkArrangement;
@@ -335,9 +353,9 @@ export interface JobRequisitionDto {
 }
 
 export interface JobRequisitionMutation {
-  positionId: number;
-  branchId: number;
-  departmentId: number;
+  positionId?: number;
+  branchId?: number;
+  departmentId?: number;
   divisionId?: number;
   requestedPositions: number;
   businessReason: string;
@@ -348,6 +366,26 @@ export interface JobRequisitionMutation {
   replacementEmployeeId?: number | null;
   isBudgeted?: boolean;
   budgetJustification?: string | null;
+  staffingRequestId?: number;
+}
+
+export enum PlanningSource {
+  Planned = 1,
+  Legacy = 2,
+}
+
+export interface ApprovedStaffingRequestOptionDto {
+  id: number;
+  envelopeCode: string;
+  positionId: number;
+  branchId?: number | null;
+  departmentId: number;
+  divisionId: number;
+  remainingAllocatable: number;
+  remainingToHire: number;
+  estimatedFiscalYearCostPerSlot: number;
+  currencyCode: string;
+  targetStartDate: string;
 }
 
 export interface RecruitmentStageConfig {

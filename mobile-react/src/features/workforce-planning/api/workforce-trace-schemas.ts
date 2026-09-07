@@ -1,0 +1,7 @@
+import { z } from 'zod';
+import { pageMetadataSchema } from '@/src/core/api';
+
+const nodeSchema = z.object({ key: z.string(), kind: z.string(), title: z.string(), status: z.string().nullable().optional(), occurredOn: z.string().nullable().optional(), fiscalCost: z.number().nullable().optional(), currencyCode: z.string().nullable().optional() });
+export const workforceTraceSchema = z.object({ nodes: z.array(nodeSchema), edges: z.array(z.object({ fromKey: z.string(), toKey: z.string(), relation: z.string() })) });
+export const commitmentRowSchema = z.object({ fiscalYearId: z.number(), positionEnvelopeId: z.number(), envelopeCode: z.string(), workforceBudgetId: z.number(), budgetCode: z.string(), workforcePlanId: z.number(), planCode: z.string(), positionId: z.number(), branchId: z.number().nullable().optional(), authorizedHeadcount: z.number(), reservedHeadcount: z.number(), hiredHeadcount: z.number(), availableHeadcount: z.number(), authorizedSalaryCost: z.number().nullable().optional(), reservedSalaryCost: z.number().nullable().optional(), contractedSalaryCost: z.number().nullable().optional(), availableSalaryCost: z.number().nullable().optional(), currencyCode: z.string().nullable().optional(), staffingRequests: z.number(), requisitions: z.number(), openings: z.number(), offers: z.number(), hires: z.number() });
+export const commitmentPageSchema = z.object({ items: z.array(commitmentRowSchema), metaData: pageMetadataSchema });

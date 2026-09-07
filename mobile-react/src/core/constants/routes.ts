@@ -66,7 +66,15 @@ export const ROUTES = {
     root: '/finance',
     fiscalYears: '/finance/fiscal-years',
   },
-  workforcePlanning: '/workforce-planning',
+  workforcePlanning: {
+    index: '/workforce-planning',
+    plans: '/workforce-planning/plans',
+    budgets: '/workforce-planning/budgets',
+    positionEnvelopes: '/workforce-planning/position-envelopes',
+    staffingRequests: '/workforce-planning/staffing-requests',
+    envelopeAmendments: '/workforce-planning/envelope-amendments',
+    trace: '/workforce-planning/trace',
+  },
 } as const;
 
 export type AppRoute =
@@ -95,7 +103,7 @@ export type AppRoute =
   | typeof ROUTES.administration.rolePermissionsRoot
   | ReturnType<typeof ROUTES.administration.rolePermissions>
   | typeof ROUTES.recruitment.root
-  | typeof ROUTES.workforcePlanning
+  | (typeof ROUTES.workforcePlanning)[keyof typeof ROUTES.workforcePlanning]
   | (typeof ROUTES.finance)[keyof typeof ROUTES.finance];
 
 // Expo regenerates typed route declarations after route files change.

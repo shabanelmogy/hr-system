@@ -158,8 +158,39 @@ export const routePolicies: readonly RoutePolicy[] = [
     permissions: [permissions.ViewFiscalYears],
   },
   {
-    path: appRoutes.workforcePlans,
+    path: appRoutes.workforcePlanning.plans,
     permissions: [permissions.ViewWorkforcePlans],
+  },
+  {
+    path: appRoutes.workforcePlanning.budgets,
+    permissions: [permissions.ViewWorkforceBudgets],
+  },
+  {
+    path: appRoutes.workforcePlanning.positionEnvelopes,
+    permissions: [permissions.ViewPositionEnvelopes],
+  },
+  {
+    path: appRoutes.workforcePlanning.staffingRequests,
+    permissions: [permissions.ViewStaffingRequests],
+  },
+  {
+    path: appRoutes.workforcePlanning.envelopeAmendments,
+    permissions: [permissions.ViewEnvelopeAmendments],
+  },
+  {
+    path: appRoutes.workforcePlanning.trace,
+    permissions: [permissions.ViewWorkforceTrace],
+  },
+  {
+    path: appRoutes.workforcePlanning.index,
+    anyOf: [
+      { permissions: [permissions.ViewWorkforcePlans] },
+      { permissions: [permissions.ViewWorkforceBudgets] },
+      { permissions: [permissions.ViewPositionEnvelopes] },
+      { permissions: [permissions.ViewStaffingRequests] },
+      { permissions: [permissions.ViewEnvelopeAmendments] },
+      { permissions: [permissions.ViewWorkforceTrace] },
+    ],
   },
   { path: UNAVAILABLE_ROUTE },
 ];

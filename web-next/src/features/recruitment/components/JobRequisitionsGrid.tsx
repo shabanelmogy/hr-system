@@ -38,7 +38,7 @@ import {
   useRejectJobRequisition,
   useSubmitJobRequisition,
 } from "../hooks/useRecruitment";
-import { JobRequisitionDto, JobRequisitionStatus, EmploymentType, WorkArrangement, RequisitionType } from "../types";
+import { JobRequisitionDto, JobRequisitionStatus, EmploymentType, WorkArrangement, PlanningSource, RequisitionType } from "../types";
 import { useRecruitmentPermissions } from "@/shared/hooks/usePermissions";
 import { showToast } from "@/shared/components/feedback/transient/showToast";
 
@@ -362,9 +362,9 @@ export default function JobRequisitionsGrid({
                         variant="outlined"
                       />
                     )}
-                    {req.isBudgeted ? (
+                    {req.planningSource === PlanningSource.Planned ? (
                       <Chip
-                        label={t("recruitment.requisitions.budgeted", "مدرج بالموازنة")}
+                        label={`${t("recruitment.requisitions.planned")} · SR-${req.staffingRequestId}`}
                         size="small"
                         color="success"
                         variant="outlined"
@@ -372,13 +372,14 @@ export default function JobRequisitionsGrid({
                       />
                     ) : (
                       <Chip
-                        label={t("recruitment.requisitions.unbudgeted", "غير مدرج بالموازنة")}
+                        label={t("recruitment.requisitions.legacy")}
                         size="small"
                         color="warning"
                         variant="filled"
                         sx={{ fontWeight: 700 }}
                       />
                     )}
+                    <Chip label={t("recruitment.requisitions.remainingPositions", { count: req.remainingPositions })} size="small" variant="outlined" />
                   </Box>
 
                   {/* Business Reason and Budget Justification */}

@@ -1,4 +1,5 @@
 using HrManagementSystem.Domain.Common.Exceptions;
+using HrManagementSystem.Domain.Employees.Entities;
 using HrManagementSystem.Domain.Recruitment.Enums;
 using static HrManagementSystem.Domain.Common.Guards.DomainGuard;
 
@@ -57,6 +58,12 @@ public sealed class EmploymentApplication : CompanyAuditableEntity
     public int JobOpeningId { get; private set; }
     public int? JobPostingId { get; private set; }
     public int? EmployeeId { get; private set; }
+    public Employee? HiredEmployee { get; private set; }
+    /// <summary>
+    /// Client supplied replay key recorded with the successful hire. It is
+    /// scoped by tenant/company and is intentionally immutable after hire.
+    /// </summary>
+    public string? HireIdempotencyKey { get; private set; }
     public ApplicationSource Source { get; private set; }
     public ApplicationStatus Status { get; private set; } = ApplicationStatus.Draft;
     public string? CoverLetter { get; private set; }
@@ -132,10 +139,35 @@ public sealed class EmploymentApplication : CompanyAuditableEntity
         TransitionTo(ApplicationStatus.Withdrawn, changedOn, Required(reason, nameof(reason)));
 
     public void MarkHired(int employeeId, DateTimeOffset changedOn, int changedByEmployeeId)
+        => MarkHired(employeeId, changedOn, changedByEmployeeId, null);
+
+    public void MarkHired(
+        int employeeId,
+        DateTimeOffset changedOn,
+        int changedByEmployeeId,
+        string? hireIdempotencyKey)
     {
         var normalizedEmployeeId = Positive(employeeId, nameof(employeeId));
         TransitionTo(ApplicationStatus.Hired, changedOn, changedByEmployeeId: changedByEmployeeId);
         EmployeeId = normalizedEmployeeId;
+        HireIdempotencyKey = Optional(hireIdempotencyKey);
+    }
+
+    /// <summary>
+    /// Marks the application hired while the employee identity is still a
+    /// temporary EF key. The configured relationship lets EF propagate the
+    /// generated employee key during the same SaveChanges operation.
+    /// </summary>
+    public void MarkHiredForPendingEmployee(
+        Employee employee,
+        DateTimeOffset changedOn,
+        int changedByEmployeeId,
+        string? hireIdempotencyKey)
+    {
+        ArgumentNullException.ThrowIfNull(employee);
+        TransitionTo(ApplicationStatus.Hired, changedOn, changedByEmployeeId: changedByEmployeeId);
+        HiredEmployee = employee;
+        HireIdempotencyKey = Optional(hireIdempotencyKey);
     }
 
     private void TransitionTo(

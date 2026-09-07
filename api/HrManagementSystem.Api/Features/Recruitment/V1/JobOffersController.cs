@@ -61,6 +61,33 @@ public sealed class JobOffersController(IRecruitmentService recruitmentService) 
             : result.ToProblem();
     }
 
+    [HttpPost("{id:int}/submit")]
+    [HasPermission(Permissions.ManageJobOffers)]
+    [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Submit(int id, CancellationToken cancellationToken)
+    {
+        var result = await _recruitmentService.SubmitJobOfferAsync(id, cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
+    [HttpPost("{id:int}/approve")]
+    [HasPermission(Permissions.ApproveJobOffers)]
+    [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Approve(int id, CancellationToken cancellationToken)
+    {
+        var result = await _recruitmentService.ApproveJobOfferAsync(id, cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
+    [HttpPost("{id:int}/reject")]
+    [HasPermission(Permissions.ApproveJobOffers)]
+    [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Reject(int id, [FromBody] DeclineOfferRequest request, CancellationToken cancellationToken)
+    {
+        var result = await _recruitmentService.RejectJobOfferAsync(id, request.Reason, cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
     [HttpPost("{id:int}/issue")]
     [HasPermission(Permissions.ManageJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]

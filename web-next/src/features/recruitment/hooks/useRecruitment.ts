@@ -24,6 +24,7 @@ export const recruitmentKeys = {
   interviews: (params?: Record<string, unknown>) => [...recruitmentKeys.all, "interviews", params] as const,
   offers: (params?: Record<string, unknown>) => [...recruitmentKeys.all, "offers", params] as const,
   requisitions: (params?: Record<string, unknown>) => [...recruitmentKeys.all, "requisitions", params] as const,
+  staffingRequestOptions: () => [...recruitmentKeys.all, "staffing-request-options"] as const,
 };
 
 // --- Queries ---
@@ -269,6 +270,31 @@ export const useIssueJobOffer = () => {
   });
 };
 
+export const useSubmitJobOffer = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: number) => RecruitmentService.submitJobOffer(id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: recruitmentKeys.all }),
+  });
+};
+
+export const useApproveJobOffer = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: number) => RecruitmentService.approveJobOffer(id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: recruitmentKeys.all }),
+  });
+};
+
+export const useRejectJobOffer = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, reason }: { id: number; reason: string }) =>
+      RecruitmentService.rejectJobOffer(id, reason),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: recruitmentKeys.all }),
+  });
+};
+
 export const useAcceptJobOffer = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -296,6 +322,14 @@ export const usePositionHeadcountSummary = (
     enabled: !!positionId && (options?.enabled ?? true),
   });
 };
+
+export const useApprovedStaffingRequestOptions = (enabled = true) =>
+  useQuery({
+    queryKey: recruitmentKeys.staffingRequestOptions(),
+    queryFn: () => RecruitmentService.getApprovedStaffingRequestOptions(),
+    enabled,
+    staleTime: 30_000,
+  });
 
 export const useCreateJobRequisition = () => {
   const queryClient = useQueryClient();
@@ -330,6 +364,15 @@ export const useRejectJobRequisition = () => {
   });
 };
 
+export const useCancelJobRequisition = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, reason }: { id: number; reason: string }) =>
+      RecruitmentService.cancelJobRequisition(id, reason),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: recruitmentKeys.all }),
+  });
+};
+
 export const useOrgLookup = (
   resource: "branches" | "departments" | "positions",
   enabled = true
@@ -359,5 +402,3 @@ export const useUpdateRecruitmentSettingsMutation = () => {
     },
   });
 };
-
-

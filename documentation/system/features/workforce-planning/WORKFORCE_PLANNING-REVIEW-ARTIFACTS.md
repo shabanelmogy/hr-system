@@ -15,9 +15,10 @@ It separates verified repository behavior from the frozen requested contract.
 | Review date | `2026-09-06` |
 | Operating mode | New feature |
 | Applied reference | `states` |
-| Documentation state | Phase 1 Workforce Plans corrected across API, Web, and Mobile; database gate awaits a user-created migration; final only after the full chain and phase 06 |
+| Documentation state | Final manifest and recipe registration complete; Phases 0–6 source/migrations and automated checks recorded; browser/mobile visual smoke not run per user request; generation uses the consolidated baseline migration |
 | Implementation request | `documentation/system/features/workforce-planning/IMPLEMENTATION-REQUEST.md` |
-| Required-file manifest | `documentation/system/features/workforce-planning/required-files.draft.json` |
+| Review guide | `documentation/project/WORKFORCE_PLANNING_V1_ALL_PHASES_REVIEW_GUIDE.md` |
+| Required-file manifest | `documentation/system/features/workforce-planning/required-files.json` |
 
 ## Verified current repository evidence
 
@@ -33,7 +34,7 @@ It separates verified repository behavior from the frozen requested contract.
 | E-08 | Current HireApplicationAsync performs multiple SaveChangesAsync calls and uses DateTime.UtcNow. | `RecruitmentService.HireApplicationAsync` | Phase 5 replaces this slice with one idempotent atomic command and TimeProvider. |
 | E-09 | ApplicationDbContext exposes deterministic SQL Server transaction locks through ExecuteAtomicallyAsync. | `ApplicationDbContext.ExecuteAtomicallyAsync`, `IUnitOfWork` | Atomic hire and capacity reservations use this existing port. |
 | E-10 | Position stores a company-scoped TargetHeadcount and DivisionId. | `api/HrManagementSystem.Domain/OrganizationalStructure/Entities/Position.cs` | Plan baseline and Envelope authorization are separate snapshots; Position.TargetHeadcount is not silently synchronized. |
-| E-11 | Workforce Plans now provide the full Draft -> Submitted -> UnderReview -> Approved/Rejected lifecycle, row-version protected actions, revision history, an automatic branch/date-aware employee baseline, separate new-position and replacement demand, derived target/total figures, server realtime dispatch, shared Grid/Cards and governed forms on Web, equivalent table/cards/forms/actions on Mobile, runtime response schemas, and focused domain/persistence tests. | `api/.../WorkforcePlanning/*`, `web-next/src/features/workforce-planning/*`, `mobile-react/src/features/workforce-planning/*`, `WorkforcePlanDomainTests.cs`, `WorkforcePlanPersistenceTests.cs` | Phase 1 source is ready for its database gate; do not begin budget/envelope runtime until the corrective migration is created and applied by the user. |
+| E-11 | Workforce Plans now provide the full Draft -> Submitted -> UnderReview -> Approved/Rejected lifecycle, row-version protected actions, revision history, an automatic branch/date-aware employee baseline, separate new-position and replacement demand, derived target/total figures, server realtime dispatch, shared Grid/Cards and governed forms on Web, equivalent table/cards/forms/actions on Mobile, runtime response schemas, and focused domain/persistence tests. Non-admin creators cannot self-approve; the built-in `admin` role has a temporary explicit exception. | `api/.../WorkforcePlanning/*`, `web-next/src/features/workforce-planning/*`, `mobile-react/src/features/workforce-planning/*`, `WorkforcePlanDomainTests.cs`, `WorkforcePlanApproveHandlerTests.cs`, `WorkforcePlanPersistenceTests.cs` | Phase 1 source is ready for its database gate; do not begin budget/envelope runtime until the corrective migration is created and applied by the user. |
 | E-12 | Live create diagnostics found legacy required columns (`EstimatedSalary`, `EstimatedRecruitmentCost`, `Q1Target`-`Q4Target`) and nullability drift on the pre-existing `WorkforcePlanLines` table. The current model snapshot cannot auto-detect these database-only leftovers. | SQL Server `INFORMATION_SCHEMA.COLUMNS`; create trace `0HNOBVED2P27D:00000001` | A user-created manual corrective migration is required before Phase 1 database acceptance. |
 
 ## Frozen requirement matrix
@@ -128,7 +129,7 @@ Planned additive migrations are `AddWorkforcePlanningPlans`,
 
 | Gate item | Result | Evidence |
 | --- | --- | --- |
-| Documentation baseline check | Pass | `Generate-Documentation.ps1 -Check` passed |
+| Documentation baseline check | Pass (feature-scoped) | `Generate-Documentation.ps1 -Recipe workforce-planning -Check` passed for all 7 Workforce recipes; global check still reports stale `organizational-structure/PHASE-00-discovery-evidence.md` |
 | Reference selection | Pass | States profiles and Fiscal Years review read and recorded |
 | Current source inventory | Pass | Evidence E-01 through E-11 |
 | Contract contradictions removed | Pass | No Exceptional PlanningSource; plan has no authoritative money; activation/amendment lifecycle frozen |
@@ -138,9 +139,25 @@ Planned additive migrations are `AddWorkforcePlanningPlans`,
 | User approval | Received | User requested step-by-step implementation after plan review |
 
 Gate 0 remains complete. Phase 1 domain, API, realtime, Web, Mobile, localization,
-and focused-test source is implemented and corrected. Its database gate is Pending:
-the user must create, review, and apply `FixWorkforcePlanningPhase1Integrity`, then
-run the pending-model check and a live create/edit/lifecycle smoke test. The draft
-manifest remains unregistered until that gate and the later full-chain evidence
-surface are complete. Phase 2 budget/envelope runtime must not start before this
-database gate passes.
+and focused-test source is implemented and corrected. The later Phase 2 migration
+is applied in the configured database and EF currently reports no pending model
+changes, superseding the earlier Phase 1 database-pending note. The draft manifest
+remains unregistered until the Phase 2 authenticated smoke gate and the later
+full-chain evidence surface are complete.
+
+## Phase 2 source evidence (2026-09-06)
+
+| Evidence ID | Verified behavior | Source and symbol |
+| --- | --- | --- |
+| E-13 | Budget lifecycle is `Draft/Rejected -> Submitted -> Approved/Rejected` with system `Approved -> Superseded`; `Closed` has no public action; Draft/Rejected editable, Approved/Superseded/Closed immutable. | `api/HrManagementSystem.Domain/WorkforcePlanning/Entities/WorkforceBudget.cs`, `Enums/WorkforceBudgetStatus.cs` |
+| E-14 | One budget line per active plan line with server-copied org snapshots; `AuthorizedHeadcount <= PlannedHiringSlots`; per-period headcount/salary/recruitment sums reconcile independently and exactly in `decimal(18,2)`. | `WorkforceBudget.AddLine`, `WorkforceBudgetLine.ValidateAllocations`, `Commands/WorkforceBudgetCommands.cs` (`ApplyLines`, `Revalidate`) |
+| E-15 | Approval is one transaction/one save: approve+activate budget, activate plan, supersede previous effective pair, materialize one zero-usage envelope per line; fault injection leaves zero dispatches. | `ApproveWorkforceBudgetCommandHandler`, `PositionEnvelope.FromBudgetLine`, `WorkforceBudgetHandlerTests` |
+| E-16 | Envelopes are system-created only; deterministic `EnvelopeCode` (`BudgetCode-P{PlanLineId}`); negative derived capacity throws instead of clamping; no mutation routes or UI. | `Entities/PositionEnvelope.cs`, `PositionEnvelopesController.cs` (GET only), Web/Mobile envelope views |
+| E-17 | Web budgets/envelopes and Mobile budgets/envelopes journeys use the shared form-dialog/grid/cards/filter/repeater/confirmation primitives with EN/AR RTL parity and dependency-aware mock data. | `web-next/src/features/workforce-planning/*WorkforceBudget*`, `*Envelope*`, `mobile-react/src/features/workforce-planning/**` |
+| E-18 | Historical Phase 2 validation snapshot after the migration and pagination fix: API build, focused Workforce/budget tests, Web checks, Mobile checks, database model check, and budget API tests were recorded as passing. At that time the global documentation check still referenced the pre-squash Addresses migration; the consolidated baseline and feature-scoped Workforce generation now resolve that reference. | Command outputs recorded in the Phase 2 handoff |
+| E-19 | Phase 2 budget approval is restricted directly to the built-in `admin` role in API, Web, and Mobile. `WorkforceBudgets:Approve` is not exposed or reconciled; a delegable approval permission is Deferred. | `WorkforceBudgetsController.Approve`, `WorkforceBudgetsPage`, `WorkforceBudgetsScreen`, `WorkforceBudgetsControllerContractTests` |
+| E-20 | An executable phases 0–7 review guide now records automated, database, permission, Web, Mobile, concurrency, reconciliation, and release gates. | `documentation/project/WORKFORCE_PLANNING_V1_ALL_PHASES_REVIEW_GUIDE.md` |
+| E-21 | Live local startup exposed a missing `WorkforceBudgetErrors` dependency registration that prevented the API host from building its service provider. The catalog is now registered and covered by a focused DI regression test. On isolated LocalDB databases, authenticated direct API and HTTPS Next proxy smoke calls for budgets, source plans, and envelopes—including `pageSize=5000`—all return HTTP 200 without a trace error. Manual visual Web and device Mobile smoke remain pending. | `Infrastructure/Dependencies/ErrorsService.cs`, `WorkforcePlanningDependencyRegistrationTests.cs`, local isolated smoke output |
+| E-22 | Workforce Planning is a standalone permission-aware module on Web and Mobile, separate from Finance and Recruitment. The shared module shell exposes a root overview and exact-permission leaf navigation for Plans, Budgets, Authorized Position Capacity, Staffing Requests, Capacity Amendments, and Planning Trace & Commitments. Finance retains Fiscal Years only. | `web-next/src/features/workforce-planning/layout/WorkforcePlanningLayout.tsx`, `web-next/src/features/workforce-planning/navigation/workforcePlanningNavigation.tsx`, `mobile-react/src/features/workforce-planning/layout/WorkforcePlanningLayout.tsx`, Web/Mobile route manifests and focused navigation/access tests |
+
+Phase 2 is `Source Complete / Database Applied / Smoke Pending`. Migration `20260906204810_create-workflow-budget` is applied to the configured database and EF reports no pending model changes. Phase 3 must not begin until live budget/envelope smoke tests pass.

@@ -34,6 +34,9 @@ public sealed class JobRequisition : CompanyAuditableEntity
     public int? DivisionId { get; private set; }
     public int RequestedByEmployeeId { get; private set; }
     public int RequestedPositions { get; private set; }
+    public int? StaffingRequestId { get; private set; }
+    public PlanningSource PlanningSource { get; private set; } = PlanningSource.Legacy;
+    public int HiredPositions { get; private set; }
     public string BusinessReason { get; private set; } = string.Empty;
     public EmploymentType EmploymentType { get; private set; } = EmploymentType.FullTime;
     public WorkArrangement WorkArrangement { get; private set; } = WorkArrangement.OnSite;
@@ -47,6 +50,42 @@ public sealed class JobRequisition : CompanyAuditableEntity
     public int? ReviewedByEmployeeId { get; private set; }
     public DateTimeOffset? ReviewedOn { get; private set; }
     public string? DecisionReason { get; private set; }
+
+    public int ReleasablePositions
+    {
+        get
+        {
+            var remaining = RequestedPositions - HiredPositions;
+            if (remaining < 0)
+                throw new DomainRuleException(
+                    "Recruitment.JobRequisition.NegativeCapacity",
+                    "A requisition cannot have more hires than requested positions.");
+            return remaining;
+        }
+    }
+
+    public void LinkToStaffingRequest(int staffingRequestId)
+    {
+        EnsureStatus(JobRequisitionStatus.Draft);
+        StaffingRequestId = Positive(staffingRequestId, nameof(staffingRequestId));
+        PlanningSource = PlanningSource.Planned;
+        IsBudgeted = true;
+        BudgetJustification = null;
+    }
+
+    public void RegisterHire()
+    {
+        if (Status != JobRequisitionStatus.Approved)
+            ThrowInvalidTransition(JobRequisitionStatus.Fulfilled);
+        if (HiredPositions >= RequestedPositions)
+            throw new DomainRuleException(
+                "Recruitment.JobRequisition.NoAvailablePositions",
+                "The requisition has no remaining positions to hire.");
+
+        HiredPositions++;
+        if (HiredPositions == RequestedPositions)
+            MarkFulfilled();
+    }
 
     public void UpdateDetails(
         string businessReason,
@@ -137,7 +176,8 @@ public sealed class JobRequisition : CompanyAuditableEntity
     {
         if (Status is not (JobRequisitionStatus.Draft or
             JobRequisitionStatus.PendingApproval or
-            JobRequisitionStatus.Approved))
+            JobRequisitionStatus.Approved or
+            JobRequisitionStatus.Rejected))
             ThrowInvalidTransition(JobRequisitionStatus.Cancelled);
 
         var normalizedReason = Required(reason, nameof(reason));

@@ -26,6 +26,12 @@ const basicDataItem: BreadcrumbItem = {
   route: ROUTES.basicData.root,
 };
 
+const workforcePlanningItem: BreadcrumbItem = {
+  key: 'workforce-planning',
+  labelKey: 'navigation.workforcePlanning',
+  route: ROUTES.workforcePlanning.index,
+};
+
 const extrasItem: BreadcrumbItem = {
   key: 'extras',
   labelKey: 'navigation.extras',
@@ -75,6 +81,13 @@ const breadcrumbsByPath: Record<string, readonly BreadcrumbItem[]> = {
     { key: 'modal', labelKey: 'modal.title' },
   ],
   [ROUTES.basicData.root]: [homeItem, basicDataItem],
+  [ROUTES.workforcePlanning.index]: [homeItem, workforcePlanningItem],
+  [ROUTES.workforcePlanning.plans]: [homeItem, workforcePlanningItem, { key: 'workforce-plans', labelKey: 'workforcePlanning.plans' }],
+  [ROUTES.workforcePlanning.budgets]: [homeItem, workforcePlanningItem, { key: 'workforce-budgets', labelKey: 'workforcePlanning.budgets' }],
+  [ROUTES.workforcePlanning.positionEnvelopes]: [homeItem, workforcePlanningItem, { key: 'position-envelopes', labelKey: 'workforcePlanning.authorizedPositionCapacity' }],
+  [ROUTES.workforcePlanning.staffingRequests]: [homeItem, workforcePlanningItem, { key: 'staffing-requests', labelKey: 'workforcePlanning.staffingRequests' }],
+  [ROUTES.workforcePlanning.envelopeAmendments]: [homeItem, workforcePlanningItem, { key: 'envelope-amendments', labelKey: 'workforcePlanning.capacityAmendments' }],
+  [ROUTES.workforcePlanning.trace]: [homeItem, workforcePlanningItem, { key: 'workforce-trace', labelKey: 'workforcePlanning.planningTraceCommitments' }],
   [ROUTES.basicData.geographicalInformation]: [
     homeItem,
     basicDataItem,

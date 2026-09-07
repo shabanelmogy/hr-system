@@ -191,7 +191,17 @@ foreach ($book in $manifest.books) {
     }
 }
 
-$selectedRecipes = @($manifest.recipes | Where-Object { $Recipe -eq "all" -or $_.id -eq $Recipe })
+$selectedRecipes = @(
+    if ($Recipe -eq "all") {
+        $manifest.recipes
+    } elseif ($Recipe -eq "workforce-planning") {
+        # Feature bundle selector: keep feature-scoped recipe IDs while allowing
+        # one command to regenerate all Workforce Planning phase packets.
+        $manifest.recipes | Where-Object { $_.id -like "workforce-planning-phase-*" }
+    } else {
+        $manifest.recipes | Where-Object { $_.id -eq $Recipe }
+    }
+)
 if ($selectedRecipes.Count -eq 0) {
     $available = ($manifest.recipes.id -join ", ")
     throw "Unknown recipe '$Recipe'. Available recipes: all, $available"

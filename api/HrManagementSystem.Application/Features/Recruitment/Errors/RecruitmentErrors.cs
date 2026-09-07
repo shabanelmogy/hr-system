@@ -83,4 +83,44 @@ public static class RecruitmentErrors
         "Recruitment.InvalidOperation",
         "The requested recruitment lifecycle operation is invalid in the current state.",
         ErrorType.Validation);
+
+    public static readonly Error StaffingRequestRequired = new(
+        "Recruitment.StaffingRequestRequired",
+        "Select an approved staffing request with remaining capacity.",
+        ErrorType.Validation);
+
+    public static readonly Error StaffingRequestNotApproved = new(
+        "Recruitment.StaffingRequestNotApproved",
+        "The selected staffing request is not approved or no longer has enough quota.",
+        ErrorType.Validation);
+
+    public static readonly Error StaffingRequestRequiresBranch = new(
+        "Recruitment.StaffingRequestRequiresBranch",
+        "The selected staffing request must belong to a branch before a requisition can be created.",
+        ErrorType.Validation);
+
+    public static readonly Error RequisitionHasActiveOpenings = new(
+        "Recruitment.RequisitionHasActiveOpenings",
+        "Close or cancel the active job openings before cancelling the requisition.",
+        ErrorType.Validation);
+
+    public static readonly Error JobOfferSelfApproval = new(
+        "Recruitment.JobOffer.SelfApproval",
+        "The offer creator cannot approve the same offer.",
+        ErrorType.Validation);
+
+    public static readonly Error JobOfferPlanningCapacity = new(
+        "Recruitment.JobOffer.PlanningCapacity",
+        "The offer does not match the staffing request currency or available salary capacity.",
+        ErrorType.Validation);
+
+    public static readonly Error AcceptedOfferRequired = new(
+        "Recruitment.Hire.AcceptedOfferRequired",
+        "Hiring requires a valid accepted job offer.",
+        ErrorType.Validation);
+
+    public static readonly Error EmployeeNumberAlreadyExists = new(
+        "Recruitment.Hire.EmployeeNumberAlreadyExists",
+        "The employee number is already in use.",
+        ErrorType.Conflict);
 }

@@ -4,13 +4,20 @@ using HrManagementSystem.Application.Common.Paginations;
 using HrManagementSystem.Application.Features.Recruitment.Abstractions;
 using HrManagementSystem.Application.Features.Recruitment.Contracts;
 using HrManagementSystem.Application.Features.Recruitment.Errors;
+using HrManagementSystem.Application.Features.WorkforcePlanning;
 using HrManagementSystem.Domain.Common.Entities;
+using HrManagementSystem.Domain.Common.Exceptions;
 using HrManagementSystem.Domain.Employees.Entities;
 using HrManagementSystem.Domain.Employees.Enums;
+using HrManagementSystem.Domain.Finance.FiscalYears.Enums;
 using HrManagementSystem.Domain.Recruitment.Entities;
 using HrManagementSystem.Domain.Recruitment.Enums;
+using HrManagementSystem.Domain.WorkforcePlanning.Enums;
+using HrManagementSystem.Domain.WorkforcePlanning;
+using HrManagementSystem.Domain.WorkforcePlanning.Entities;
 using HrManagementSystem.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace HrManagementSystem.Infrastructure.Features.Recruitment.Services;
@@ -18,10 +25,15 @@ namespace HrManagementSystem.Infrastructure.Features.Recruitment.Services;
 public class RecruitmentService(
     ApplicationDbContext context,
     ICurrentActor currentActor,
-    ILogger<RecruitmentService> logger) : IRecruitmentService
+    ILogger<RecruitmentService> logger,
+    IConfiguration? configuration = null,
+    TimeProvider? timeProvider = null) : IRecruitmentService
 {
     private readonly ApplicationDbContext _context = context;
     private readonly ICurrentActor _currentActor = currentActor;
+    private readonly bool _requireStaffingRequest = configuration?.GetValue<bool>(
+        "WorkforcePlanning:RequireStaffingRequestForNewRequisitions") ?? false;
+    private readonly TimeProvider _clock = timeProvider ?? TimeProvider.System;
     private readonly ILogger<RecruitmentService> _logger = logger;
 
     private int ResolveActorEmployeeId()
@@ -289,6 +301,10 @@ public class RecruitmentService(
                                DivisionNameAr = div != null ? div.NameAr : null,
                                RequestedByEmployeeId = r.RequestedByEmployeeId,
                                RequestedPositions = r.RequestedPositions,
+                               StaffingRequestId = r.StaffingRequestId,
+                               PlanningSource = r.PlanningSource,
+                               HiredPositions = r.HiredPositions,
+                               RemainingPositions = r.RequestedPositions - r.HiredPositions,
                                BusinessReason = r.BusinessReason,
                                EmploymentType = r.EmploymentType,
                                WorkArrangement = r.WorkArrangement,
@@ -354,6 +370,10 @@ public class RecruitmentService(
                               DivisionNameAr = div != null ? div.NameAr : null,
                               RequestedByEmployeeId = r.RequestedByEmployeeId,
                               RequestedPositions = r.RequestedPositions,
+                              StaffingRequestId = r.StaffingRequestId,
+                              PlanningSource = r.PlanningSource,
+                              HiredPositions = r.HiredPositions,
+                              RemainingPositions = r.RequestedPositions - r.HiredPositions,
                               BusinessReason = r.BusinessReason,
                               EmploymentType = r.EmploymentType,
                               WorkArrangement = r.WorkArrangement,
@@ -393,45 +413,98 @@ public class RecruitmentService(
         if (position is null)
             return Result.Failure<PositionHeadcountSummaryDto>(RecruitmentErrors.PositionNotFound);
 
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-
-        // Active employees with primary assignment in this position
+        var today = DateOnly.FromDateTime(_clock.GetUtcNow().UtcDateTime);
         var activeHeadcount = await _context.EmployeeAssignments.AsNoTracking()
             .CountAsync(a => a.PositionId == positionId && a.IsPrimary && (a.EffectiveTo == null || a.EffectiveTo >= today), cancellationToken);
 
-        // Positions requested in pending/approved/open requisitions
-        var pendingRequisitionsCount = await _context.JobRequisitions.AsNoTracking()
-            .Where(r => r.PositionId == positionId &&
-                        (r.Status == JobRequisitionStatus.Draft ||
-                         r.Status == JobRequisitionStatus.PendingApproval ||
-                         r.Status == JobRequisitionStatus.Approved))
-            .SumAsync(r => (int?)r.RequestedPositions, cancellationToken) ?? 0;
+        var capacity = await (from envelope in _context.PositionEnvelopes.AsNoTracking()
+                              join budget in _context.WorkforceBudgets.AsNoTracking()
+                                  on envelope.WorkforceBudgetId equals budget.Id
+                              join fiscalYear in _context.FiscalYears.AsNoTracking()
+                                  on envelope.FiscalYearId equals fiscalYear.Id
+                              where envelope.PositionId == positionId
+                                    && budget.Status == WorkforceBudgetStatus.Approved
+                                    && budget.ActivatedOn.HasValue
+                                    && !budget.SupersededOn.HasValue
+                                    && fiscalYear.Status == FiscalYearStatus.Open
+                              select envelope)
+            .GroupBy(_ => 1)
+            .Select(group => new
+            {
+                Authorized = group.Sum(envelope => envelope.AuthorizedHeadcount),
+                Reserved = group.Sum(envelope => envelope.ReservedHeadcount),
+                Hired = group.Sum(envelope => envelope.HiredHeadcount)
+            })
+            .FirstOrDefaultAsync(cancellationToken);
 
-        var availableHeadcount = Math.Max(0, position.TargetHeadcount - (activeHeadcount + pendingRequisitionsCount));
+        var targetHeadcount = capacity?.Authorized ?? position.TargetHeadcount;
+        var pendingRequisitionsCount = capacity?.Reserved ?? 0;
+        var availableHeadcount = capacity is null
+            ? position.TargetHeadcount - activeHeadcount
+            : capacity.Authorized - capacity.Reserved - capacity.Hired;
+        if (availableHeadcount < 0)
+            return Result.Failure<PositionHeadcountSummaryDto>(RecruitmentErrors.InvalidOperation);
 
         var summary = new PositionHeadcountSummaryDto(
             PositionId: position.Id,
             PositionCode: position.PositionCode,
             JobTitleEn: position.JobTitleEn,
             JobTitleAr: position.JobTitleAr,
-            TargetHeadcount: position.TargetHeadcount,
+            TargetHeadcount: targetHeadcount,
             ActiveHeadcount: activeHeadcount,
             PendingRequisitionsCount: pendingRequisitionsCount,
             AvailableHeadcount: availableHeadcount,
-            ExceedsHeadcount: (activeHeadcount + pendingRequisitionsCount) >= position.TargetHeadcount);
+            ExceedsHeadcount: availableHeadcount == 0);
 
         return Result.Success(summary);
     }
 
+    public async Task<IReadOnlyList<ApprovedStaffingRequestOptionDto>> GetApprovedStaffingRequestOptionsAsync(
+        CancellationToken cancellationToken = default) =>
+         await (from request in _context.StaffingRequests.AsNoTracking()
+               join envelope in _context.PositionEnvelopes.AsNoTracking()
+                   on request.EnvelopeId equals envelope.Id
+               join budget in _context.WorkforceBudgets.AsNoTracking()
+                   on envelope.WorkforceBudgetId equals budget.Id
+               join fiscalYear in _context.FiscalYears.AsNoTracking()
+                   on envelope.FiscalYearId equals fiscalYear.Id
+               where request.Status == StaffingRequestStatus.Approved &&
+                     budget.Status == WorkforceBudgetStatus.Approved &&
+                     budget.ActivatedOn.HasValue &&
+                     !budget.SupersededOn.HasValue &&
+                     fiscalYear.Status == FiscalYearStatus.Open &&
+                      request.RequestedHeadcount > request.AllocatedRequisitionPositions
+               orderby request.TargetStartDate, envelope.EnvelopeCode
+               select new ApprovedStaffingRequestOptionDto(
+                   request.Id,
+                   envelope.EnvelopeCode,
+                   envelope.PositionId,
+                   envelope.BranchId,
+                   envelope.DepartmentId,
+                   envelope.DivisionId,
+                   request.RequestedHeadcount - request.AllocatedRequisitionPositions,
+                   request.RequestedHeadcount - request.HiredPositions,
+                   request.EstimatedFiscalYearCostPerSlot,
+                   request.CurrencyCode,
+                   request.TargetStartDate))
+            .Take(200)
+            .ToListAsync(cancellationToken);
+
     public async Task<Result<JobRequisitionDto>> CreateJobRequisitionAsync(JobRequisitionMutation mutation, CancellationToken cancellationToken = default)
     {
+        if (mutation.StaffingRequestId.HasValue)
+            return await CreatePlannedJobRequisitionAsync(mutation, cancellationToken);
+
+        if (_requireStaffingRequest)
+            return Result.Failure<JobRequisitionDto>(RecruitmentErrors.StaffingRequestRequired);
+
         var position = await _context.Positions.AsNoTracking()
             .FirstOrDefaultAsync(p => p.Id == mutation.PositionId, cancellationToken);
 
         if (position is null)
             return Result.Failure<JobRequisitionDto>(RecruitmentErrors.PositionNotFound);
 
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        var today = DateOnly.FromDateTime(_clock.GetUtcNow().UtcDateTime);
 
         // Headcount governance calculation
         var activeHeadcount = await _context.EmployeeAssignments.AsNoTracking()
@@ -476,7 +549,7 @@ public class RecruitmentService(
             }
         }
 
-        var reqNumber = $"REQ-{DateTime.UtcNow:yyyyMM}-{Guid.NewGuid().ToString()[..4].ToUpper()}";
+        var reqNumber = $"REQ-{_clock.GetUtcNow():yyyyMM}-{Guid.NewGuid().ToString()[..4].ToUpper()}";
         var requestedByEmployeeId = ResolveActorEmployeeId();
 
         var requisition = new JobRequisition(
@@ -507,13 +580,102 @@ public class RecruitmentService(
         return await GetJobRequisitionByIdAsync(requisition.Id, cancellationToken);
     }
 
+    private async Task<Result<JobRequisitionDto>> CreatePlannedJobRequisitionAsync(
+        JobRequisitionMutation mutation,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(_currentActor.TenantId) || _currentActor.CompanyId is not > 0)
+            return Result.Failure<JobRequisitionDto>(RecruitmentErrors.CompanyContextRequired);
+
+        var staffingRequestId = mutation.StaffingRequestId!.Value;
+        var tenantId = _currentActor.TenantId;
+        var companyId = _currentActor.CompanyId.Value;
+        var staffingRequestLock = $"WorkforcePlanning:StaffingRequests:{tenantId}:{companyId}:{staffingRequestId}";
+        var createResult = await _context.ExecuteAtomicallyAsync(
+            [
+                $"Recruitment:Requisitions:{tenantId}:{companyId}",
+                staffingRequestLock,
+                WorkforcePlanLocks.Company(tenantId, companyId)
+            ],
+            async token =>
+            {
+                var staffingRequest = await _context.StaffingRequests
+                    .FirstOrDefaultAsync(request => request.Id == staffingRequestId, token);
+                if (staffingRequest is null ||
+                    staffingRequest.Status != StaffingRequestStatus.Approved ||
+                    staffingRequest.RemainingAllocatable < mutation.RequestedPositions)
+                {
+                    return Result.Failure<int>(RecruitmentErrors.StaffingRequestNotApproved);
+                }
+
+                var envelope = await _context.PositionEnvelopes
+                    .FirstOrDefaultAsync(item => item.Id == staffingRequest.EnvelopeId, token);
+                if (envelope is null)
+                    return Result.Failure<int>(RecruitmentErrors.StaffingRequestNotApproved);
+                var budgetIsEffective = await _context.WorkforceBudgets.AsNoTracking()
+                    .AnyAsync(budget => budget.Id == envelope.WorkforceBudgetId
+                        && budget.Status == WorkforceBudgetStatus.Approved
+                        && budget.ActivatedOn.HasValue
+                        && !budget.SupersededOn.HasValue, token);
+                var fiscalYearIsOpen = await _context.FiscalYears.AsNoTracking()
+                    .AnyAsync(year => year.Id == envelope.FiscalYearId && year.Status == FiscalYearStatus.Open, token);
+                if (!budgetIsEffective || !fiscalYearIsOpen)
+                    return Result.Failure<int>(RecruitmentErrors.StaffingRequestNotApproved);
+                if (!envelope.BranchId.HasValue)
+                    return Result.Failure<int>(RecruitmentErrors.StaffingRequestRequiresBranch);
+
+                if (mutation.Type == RequisitionType.Replacement)
+                {
+                    if (!mutation.ReplacementEmployeeId.HasValue ||
+                        !await _context.Employees.AsNoTracking().AnyAsync(
+                            employee => employee.Id == mutation.ReplacementEmployeeId.Value,
+                            token))
+                    {
+                        return Result.Failure<int>(RecruitmentErrors.ReplacementEmployeeRequired);
+                    }
+                }
+
+                var now = _clock.GetUtcNow().UtcDateTime;
+                var requisition = new JobRequisition(
+                    $"REQ-{now:yyyyMM}-{Guid.NewGuid().ToString()[..4].ToUpperInvariant()}",
+                    envelope.PositionId,
+                    envelope.BranchId.Value,
+                    envelope.DepartmentId,
+                    ResolveActorEmployeeId(),
+                    mutation.RequestedPositions);
+                requisition.UpdateDetails(
+                    mutation.BusinessReason,
+                    mutation.EmploymentType,
+                    mutation.WorkArrangement,
+                    mutation.TargetHireDate,
+                    envelope.DivisionId);
+                requisition.SetBudgetAndType(
+                    mutation.Type,
+                    mutation.ReplacementEmployeeId,
+                    true,
+                    null);
+                requisition.LinkToStaffingRequest(staffingRequest.Id);
+                SetScope(requisition);
+
+                staffingRequest.RegisterAllocation(mutation.RequestedPositions);
+                _context.JobRequisitions.Add(requisition);
+                await _context.SaveChangesAsync(token);
+                return Result.Success(requisition.Id);
+            },
+            cancellationToken);
+
+        if (createResult.IsFailure)
+            return Result.Failure<JobRequisitionDto>(createResult.Error);
+        return await GetJobRequisitionByIdAsync(createResult.Value, cancellationToken);
+    }
+
     public async Task<Result<JobRequisitionDto>> SubmitJobRequisitionAsync(int id, CancellationToken cancellationToken = default)
     {
         var requisition = await _context.JobRequisitions.FindAsync([id], cancellationToken);
         if (requisition is null)
             return Result.Failure<JobRequisitionDto>(RecruitmentErrors.JobRequisitionNotFound);
 
-        requisition.Submit(DateTimeOffset.UtcNow);
+        requisition.Submit(_clock.GetUtcNow());
         await _context.SaveChangesAsync(cancellationToken);
 
         return await GetJobRequisitionByIdAsync(requisition.Id, cancellationToken);
@@ -525,7 +687,7 @@ public class RecruitmentService(
         if (requisition is null)
             return Result.Failure<JobRequisitionDto>(RecruitmentErrors.JobRequisitionNotFound);
 
-        requisition.Approve(ResolveActorEmployeeId(), DateTimeOffset.UtcNow);
+        requisition.Approve(ResolveActorEmployeeId(), _clock.GetUtcNow());
         await _context.SaveChangesAsync(cancellationToken);
 
         return await GetJobRequisitionByIdAsync(requisition.Id, cancellationToken);
@@ -537,10 +699,93 @@ public class RecruitmentService(
         if (requisition is null)
             return Result.Failure<JobRequisitionDto>(RecruitmentErrors.JobRequisitionNotFound);
 
-        requisition.Reject(ResolveActorEmployeeId(), reason, DateTimeOffset.UtcNow);
+        requisition.Reject(ResolveActorEmployeeId(), reason, _clock.GetUtcNow());
         await _context.SaveChangesAsync(cancellationToken);
 
         return await GetJobRequisitionByIdAsync(requisition.Id, cancellationToken);
+    }
+
+    public async Task<Result<JobRequisitionDto>> CancelJobRequisitionAsync(
+        int id,
+        string reason,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(_currentActor.TenantId) || _currentActor.CompanyId is not > 0)
+            return Result.Failure<JobRequisitionDto>(RecruitmentErrors.CompanyContextRequired);
+        var normalizedReason = reason?.Trim() ?? string.Empty;
+        if (normalizedReason.Length == 0 || normalizedReason.Length > 1000)
+            return Result.Failure<JobRequisitionDto>(RecruitmentErrors.InvalidOperation);
+
+        var tenantId = _currentActor.TenantId;
+        var companyId = _currentActor.CompanyId.Value;
+        var preRequisition = await _context.JobRequisitions.AsNoTracking()
+            .FirstOrDefaultAsync(item => item.Id == id, cancellationToken);
+        if (preRequisition is null)
+            return Result.Failure<JobRequisitionDto>(RecruitmentErrors.JobRequisitionNotFound);
+
+        var lockResources = new List<string> { $"Recruitment:Requisitions:{tenantId}:{companyId}:{id}" };
+        if (preRequisition.PlanningSource == PlanningSource.Planned && preRequisition.StaffingRequestId is > 0)
+        {
+            var preStaffing = await _context.StaffingRequests.AsNoTracking()
+                .FirstOrDefaultAsync(item => item.Id == preRequisition.StaffingRequestId.Value, cancellationToken);
+            if (preStaffing is not null)
+            {
+                lockResources.Add($"WorkforcePlanning:StaffingRequests:{tenantId}:{companyId}:{preStaffing.Id}");
+                lockResources.Add($"WorkforcePlanning:Envelopes:{tenantId}:{companyId}:{preStaffing.EnvelopeId}");
+            }
+        }
+
+        Result<int> cancelResult;
+        try
+        {
+            cancelResult = await _context.ExecuteAtomicallyAsync(
+                lockResources,
+                async token =>
+                {
+                    var requisition = await _context.JobRequisitions
+                        .FirstOrDefaultAsync(item => item.Id == id, token);
+                    if (requisition is null)
+                        return Result.Failure<int>(RecruitmentErrors.JobRequisitionNotFound);
+
+                    var hasActiveOpening = await _context.JobOpenings.AsNoTracking().AnyAsync(
+                        opening => opening.JobRequisitionId == id &&
+                            (opening.Status == JobOpeningStatus.Draft ||
+                             opening.Status == JobOpeningStatus.Open ||
+                             opening.Status == JobOpeningStatus.Paused),
+                        token);
+                    if (hasActiveOpening)
+                        return Result.Failure<int>(RecruitmentErrors.RequisitionHasActiveOpenings);
+                    if (requisition.Status is not (JobRequisitionStatus.Draft or JobRequisitionStatus.PendingApproval or JobRequisitionStatus.Approved or JobRequisitionStatus.Rejected))
+                        return Result.Failure<int>(RecruitmentErrors.InvalidOperation);
+
+                    StaffingRequest? staffingRequest = null;
+                    if (requisition.PlanningSource == PlanningSource.Planned && requisition.StaffingRequestId.HasValue)
+                    {
+                        staffingRequest = await _context.StaffingRequests
+                            .FirstOrDefaultAsync(request => request.Id == requisition.StaffingRequestId.Value, token);
+                        if (staffingRequest is null || staffingRequest.Status != StaffingRequestStatus.Approved)
+                            return Result.Failure<int>(RecruitmentErrors.StaffingRequestNotApproved);
+                    }
+
+                    // Let the transaction roll back if a domain invariant is
+                    // violated after a tracked staffing mutation.
+                    var releasablePositions = requisition.ReleasablePositions;
+                    if (staffingRequest is not null && releasablePositions > 0)
+                        staffingRequest.ReleaseAllocation(releasablePositions);
+                    requisition.Cancel(normalizedReason);
+                    await _context.SaveChangesAsync(token);
+                    return Result.Success(requisition.Id);
+                },
+                cancellationToken);
+        }
+        catch (DomainRuleException)
+        {
+            return Result.Failure<JobRequisitionDto>(RecruitmentErrors.InvalidOperation);
+        }
+
+        if (cancelResult.IsFailure)
+            return Result.Failure<JobRequisitionDto>(cancelResult.Error);
+        return await GetJobRequisitionByIdAsync(cancelResult.Value, cancellationToken);
     }
 
     // ==========================================
@@ -617,8 +862,8 @@ public class RecruitmentService(
                                    a.Status != ApplicationStatus.Hired)
                            })
             .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync(cancellationToken);
+             .Take(pageSize)
+             .ToListAsync(cancellationToken);
 
         var meta = new MetaData
         {
@@ -704,7 +949,7 @@ public class RecruitmentService(
 
     public async Task<Result<JobOpeningDto>> CreateJobOpeningAsync(JobOpeningMutation mutation, CancellationToken cancellationToken = default)
     {
-        var openingNumber = $"JOB-{DateTime.UtcNow:yyyyMM}-{Guid.NewGuid().ToString()[..4].ToUpper()}";
+        var openingNumber = $"JOB-{_clock.GetUtcNow():yyyyMM}-{Guid.NewGuid().ToString()[..4].ToUpper()}";
 
         int reqId = mutation.JobRequisitionId;
         var existingReq = reqId > 0
@@ -745,7 +990,7 @@ public class RecruitmentService(
         if (opening is null)
             return Result.Failure<JobOpeningDto>(RecruitmentErrors.JobOpeningNotFound);
 
-        opening.Open(DateTimeOffset.UtcNow);
+        opening.Open(_clock.GetUtcNow());
         await _context.SaveChangesAsync(cancellationToken);
 
         return await GetJobOpeningByIdAsync(opening.Id, cancellationToken);
@@ -769,7 +1014,7 @@ public class RecruitmentService(
         if (opening is null)
             return Result.Failure<JobOpeningDto>(RecruitmentErrors.JobOpeningNotFound);
 
-        opening.Close(reason, DateTimeOffset.UtcNow);
+        opening.Close(reason, _clock.GetUtcNow());
         await _context.SaveChangesAsync(cancellationToken);
 
         return await GetJobOpeningByIdAsync(opening.Id, cancellationToken);
@@ -955,7 +1200,7 @@ public class RecruitmentService(
         if (posting is null)
             return Result.Failure<JobPostingDto>(RecruitmentErrors.JobPostingNotFound);
 
-        posting.Publish(DateTimeOffset.UtcNow);
+        posting.Publish(_clock.GetUtcNow());
         await _context.SaveChangesAsync(cancellationToken);
 
         return await GetJobPostingByIdAsync(posting.Id, cancellationToken);
@@ -967,7 +1212,7 @@ public class RecruitmentService(
         if (posting is null)
             return Result.Failure<JobPostingDto>(RecruitmentErrors.JobPostingNotFound);
 
-        posting.Close(DateTimeOffset.UtcNow);
+        posting.Close(_clock.GetUtcNow());
         await _context.SaveChangesAsync(cancellationToken);
 
         return await GetJobPostingByIdAsync(posting.Id, cancellationToken);
@@ -1201,7 +1446,7 @@ public class RecruitmentService(
         if (candidate is null)
             return Result.Failure<EmploymentApplicationDto>(RecruitmentErrors.CandidateNotFound);
 
-        var now = DateTimeOffset.UtcNow;
+        var now = _clock.GetUtcNow();
         var app = new EmploymentApplication(
             mutation.CandidateId,
             mutation.JobOpeningId,
@@ -1238,7 +1483,7 @@ public class RecruitmentService(
         if (app is null)
             return Result.Failure<EmploymentApplicationDto>(RecruitmentErrors.EmploymentApplicationNotFound);
 
-        var now = DateTimeOffset.UtcNow;
+        var now = _clock.GetUtcNow();
         var actorId = ResolveActorEmployeeId();
 
         switch (targetStatus)
@@ -1290,87 +1535,208 @@ public class RecruitmentService(
 
     public async Task<Result<EmploymentApplicationDto>> HireApplicationAsync(int id, HireCandidateMutation mutation, CancellationToken cancellationToken = default)
     {
-        var app = await _context.EmploymentApplications
-            .Include(a => a.StatusHistory)
-            .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
-
-        if (app is null)
-            return Result.Failure<EmploymentApplicationDto>(RecruitmentErrors.EmploymentApplicationNotFound);
-
-        var opening = await _context.JobOpenings.FindAsync([app.JobOpeningId], cancellationToken);
-        if (opening is null)
-            return Result.Failure<EmploymentApplicationDto>(RecruitmentErrors.JobOpeningNotFound);
-
-        var now = DateTimeOffset.UtcNow;
+        var tenantId = _currentActor.TenantId ?? string.Empty;
+        var companyId = _currentActor.CompanyId ?? 0;
+        if (string.IsNullOrWhiteSpace(tenantId) || companyId <= 0)
+            return Result.Failure<EmploymentApplicationDto>(RecruitmentErrors.CompanyContextRequired);
+        var idempotencyHint = mutation.IdempotencyKey?.Trim();
+        if (idempotencyHint?.Length > 128)
+            return Result.Failure<EmploymentApplicationDto>(RecruitmentErrors.InvalidOperation);
+        var employeeNumberHint = !string.IsNullOrWhiteSpace(mutation.EmployeeNumber)
+            ? mutation.EmployeeNumber.Trim().ToUpperInvariant()
+            : string.Empty;
+        var lockResources = new List<string>
+        {
+            $"Recruitment:Hires:{tenantId}:{companyId}",
+            WorkforcePlanLocks.Company(tenantId, companyId),
+            $"Recruitment:Applications:{tenantId}:{companyId}:{id}",
+            $"Recruitment:Idempotency:{tenantId}:{companyId}:{idempotencyHint ?? "none"}",
+            $"Recruitment:Employees:Number:{tenantId}:{companyId}:{employeeNumberHint}",
+        };
+        // Resolve the full hire lineage before opening the transaction so all
+        // competing mutations (offer, opening, requisition, staffing request,
+        // and envelope) use the same deterministic lock ordering. The
+        // operation re-reads every row after acquiring these locks.
+        var preApplication = await _context.EmploymentApplications.AsNoTracking()
+            .FirstOrDefaultAsync(application => application.Id == id, cancellationToken);
+        if (preApplication is not null)
+        {
+            var preOffer = await _context.JobOffers.AsNoTracking()
+                .FirstOrDefaultAsync(offer => offer.EmploymentApplicationId == id && offer.Status == JobOfferStatus.Accepted, cancellationToken);
+            var preOpening = await _context.JobOpenings.AsNoTracking()
+                .FirstOrDefaultAsync(opening => opening.Id == preApplication.JobOpeningId, cancellationToken);
+            var preRequisition = preOpening is null
+                ? null
+                : await _context.JobRequisitions.AsNoTracking()
+                    .FirstOrDefaultAsync(requisition => requisition.Id == preOpening.JobRequisitionId, cancellationToken);
+            var preStaffing = preRequisition?.StaffingRequestId is > 0
+                ? await _context.StaffingRequests.AsNoTracking()
+                    .FirstOrDefaultAsync(request => request.Id == preRequisition.StaffingRequestId.Value, cancellationToken)
+                : null;
+            var preEnvelope = preStaffing is null
+                ? null
+                : await _context.PositionEnvelopes.AsNoTracking()
+                    .FirstOrDefaultAsync(envelope => envelope.Id == preStaffing.EnvelopeId, cancellationToken);
+            if (preOffer is not null)
+                lockResources.Add($"Recruitment:Offers:{tenantId}:{companyId}:{preOffer.Id}");
+            if (preOpening is not null)
+                lockResources.Add($"Recruitment:Openings:{tenantId}:{companyId}:{preOpening.Id}");
+            if (preRequisition is not null)
+                lockResources.Add($"Recruitment:Requisitions:{tenantId}:{companyId}:{preRequisition.Id}");
+            if (preStaffing is not null)
+                lockResources.Add($"WorkforcePlanning:StaffingRequests:{tenantId}:{companyId}:{preStaffing.Id}");
+            if (preEnvelope is not null)
+                lockResources.Add($"WorkforcePlanning:Envelopes:{tenantId}:{companyId}:{preEnvelope.Id}");
+        }
+        var now = _clock.GetUtcNow();
         var actorId = ResolveActorEmployeeId();
 
-        // Advance to OfferAccepted if in previous valid pipeline stages
-        if (app.Status == ApplicationStatus.Interviewed)
-        {
-            app.RecordOfferIssued(now, actorId);
-            app.RecordOfferAccepted(now);
-        }
-        else if (app.Status == ApplicationStatus.OfferIssued)
-        {
-            app.RecordOfferAccepted(now);
-        }
+        var result = await _context.ExecuteAtomicallyAsync(
+            lockResources,
+            async token =>
+            {
+                if (!string.IsNullOrWhiteSpace(idempotencyHint))
+                {
+                    var replay = await _context.EmploymentApplications
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(a => a.HireIdempotencyKey == idempotencyHint, token);
+                    if (replay is not null)
+                    {
+                        if (replay.Id != id)
+                            return Result.Failure<int>(RecruitmentErrors.InvalidOperation);
+                        if (replay.EmployeeId is > 0)
+                            return Result.Success(replay.Id);
+                    }
+                }
 
-        // Fetch candidate details
-        var candidate = await _context.Candidates.FindAsync([app.CandidateId], cancellationToken);
-        if (candidate is null)
-            return Result.Failure<EmploymentApplicationDto>(RecruitmentErrors.CandidateNotFound);
+                var app = await _context.EmploymentApplications
+                    .Include(a => a.StatusHistory)
+                    .FirstOrDefaultAsync(a => a.Id == id, token);
+                if (app is null)
+                    return Result.Failure<int>(RecruitmentErrors.EmploymentApplicationNotFound);
 
-        // Fetch accepted offer for terms and proposed date
-        var acceptedOffer = await _context.JobOffers
-            .FirstOrDefaultAsync(o => o.EmploymentApplicationId == app.Id &&
-                (o.Status == JobOfferStatus.Accepted || o.Status == JobOfferStatus.Issued), cancellationToken);
+                // Idempotent retry: an already-hired application returns its employee.
+                if (app.Status == ApplicationStatus.Hired)
+                    return Result.Success(app.Id);
 
-        var hireDate = mutation.HireDate != default
-            ? mutation.HireDate
-            : (acceptedOffer?.ProposedStartDate ?? DateOnly.FromDateTime(DateTime.UtcNow));
-        var employeeNumber = !string.IsNullOrWhiteSpace(mutation.EmployeeNumber)
-            ? mutation.EmployeeNumber.Trim().ToUpperInvariant()
-            : $"EMP-{hireDate.Year}{hireDate.Month:D2}-{candidate.Id:D4}";
+                if (app.Status != ApplicationStatus.OfferAccepted)
+                    return Result.Failure<int>(RecruitmentErrors.AcceptedOfferRequired);
 
-        // 1. Create real Employee in Employees table
-        var employee = new Employee(employeeNumber, candidate.FirstName, candidate.LastName, hireDate, candidate.Id);
-        SetScope(employee);
-        employee.Activate(hireDate);
-        _context.Employees.Add(employee);
-        await _context.SaveChangesAsync(cancellationToken);
+                var acceptedOffer = await _context.JobOffers
+                    .FirstOrDefaultAsync(o => o.EmploymentApplicationId == app.Id &&
+                        o.Status == JobOfferStatus.Accepted, token);
+                if (acceptedOffer is null)
+                    return Result.Failure<int>(RecruitmentErrors.AcceptedOfferRequired);
 
-        // 2. Create primary EmployeeAssignment in EmployeeAssignments table
-        var assignment = new EmployeeAssignment(
-            employee.Id,
-            opening.PositionId,
-            opening.BranchId,
-            opening.DepartmentId,
-            hireDate,
-            isPrimary: true,
-            divisionId: opening.DivisionId);
-        SetScope(assignment);
-        _context.EmployeeAssignments.Add(assignment);
+                var candidate = await _context.Candidates.FindAsync([app.CandidateId], token);
+                if (candidate is null)
+                    return Result.Failure<int>(RecruitmentErrors.CandidateNotFound);
 
-        // 3. Create EmployeeContract in EmployeeContracts table
-        var contractType = acceptedOffer?.EmploymentType == EmploymentType.PartTime
-            ? EmployeeContractType.Temporary
-            : EmployeeContractType.Permanent;
-        var contract = new EmployeeContract(
-            employee.Id,
-            $"CON-{employee.EmployeeNumber}",
-            contractType,
-            hireDate,
-            endDate: null);
-        SetScope(contract);
-        contract.Activate(hireDate);
-        _context.EmployeeContracts.Add(contract);
+                var opening = await _context.JobOpenings.FirstOrDefaultAsync(o => o.Id == app.JobOpeningId, token);
+                if (opening is null)
+                    return Result.Failure<int>(RecruitmentErrors.JobOpeningNotFound);
+                if (opening.Status is not (JobOpeningStatus.Open or JobOpeningStatus.Paused) || opening.AvailablePositions <= 0)
+                    return Result.Failure<int>(RecruitmentErrors.InvalidOperation);
 
-        // 4. Update Application & Opening
-        app.MarkHired(employee.Id, now, actorId);
-        opening.RegisterHire(now);
+                var requisition = await _context.JobRequisitions.FirstOrDefaultAsync(r => r.Id == opening.JobRequisitionId, token);
+                if (requisition is null)
+                    return Result.Failure<int>(RecruitmentErrors.JobRequisitionNotFound);
+                if (requisition.Status != JobRequisitionStatus.Approved || requisition.ReleasablePositions <= 0)
+                    return Result.Failure<int>(RecruitmentErrors.InvalidOperation);
 
-        await _context.SaveChangesAsync(cancellationToken);
-        return await GetApplicationByIdAsync(app.Id, cancellationToken);
+                StaffingRequest? staffingRequest = null;
+                PositionEnvelope? envelope = null;
+                if (requisition.PlanningSource == PlanningSource.Planned && requisition.StaffingRequestId.HasValue)
+                {
+                    staffingRequest = await _context.StaffingRequests.FirstOrDefaultAsync(request => request.Id == requisition.StaffingRequestId.Value, token);
+                    if (staffingRequest is null)
+                        return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                    if (!string.Equals(staffingRequest.CurrencyCode, acceptedOffer.CurrencyCode, StringComparison.OrdinalIgnoreCase))
+                        return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                    envelope = await _context.PositionEnvelopes.FirstOrDefaultAsync(item => item.Id == staffingRequest.EnvelopeId, token);
+                    if (envelope is null)
+                        return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                }
+
+                var hireDate = mutation.HireDate != default
+                    ? mutation.HireDate
+                    : acceptedOffer.ProposedStartDate;
+                var employeeNumber = employeeNumberHint.Length > 0
+                    ? employeeNumberHint
+                    : $"EMP-{hireDate.Year}{hireDate.Month:D2}-{candidate.Id:D4}";
+
+                var existingEmployee = await _context.Employees
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(e => e.EmployeeNumber == employeeNumber, token);
+                if (existingEmployee is not null && existingEmployee.Id != app.EmployeeId)
+                    return Result.Failure<int>(RecruitmentErrors.EmployeeNumberAlreadyExists);
+
+                // Capacity is validated before any mutation so a failure leaves no tracked side effects.
+                var fiscalCost = acceptedOffer.FiscalYearCostSnapshot;
+                if (envelope is not null)
+                {
+                    if (envelope.ReservedHeadcount < 1 || envelope.ReservedSalaryBudget < fiscalCost)
+                        return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                    if (staffingRequest is not null && staffingRequest.RemainingToHire < 1)
+                        return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                }
+
+                // Attach the employee graph before the single SaveChanges call.
+                // EF orders the identity insert first and fixes the dependent
+                // foreign keys through these navigations.
+                var employee = new Employee(employeeNumber, candidate.FirstName, candidate.LastName, hireDate, candidate.Id);
+                SetScope(employee);
+                employee.Activate(hireDate);
+                var assignment = EmployeeAssignment.ForPendingEmployee(
+                    opening.PositionId,
+                    opening.BranchId,
+                    opening.DepartmentId,
+                    hireDate,
+                    true,
+                    opening.DivisionId);
+                SetScope(assignment);
+                var contractType = acceptedOffer.EmploymentType == EmploymentType.PartTime
+                    ? EmployeeContractType.Temporary
+                    : EmployeeContractType.Permanent;
+                var contract = EmployeeContract.ForPendingEmployee(
+                    $"CON-{employeeNumber}",
+                    contractType,
+                    hireDate,
+                    null);
+                SetScope(contract);
+                contract.Activate(hireDate);
+                employee.Assignments.Add(assignment);
+                employee.Contracts.Add(contract);
+                _context.Employees.Add(employee);
+
+                try
+                {
+                    if (envelope is not null)
+                    {
+                        envelope.ConsumeReserved(1, fiscalCost);
+                        // A lower-than-estimate offer did not release its negative
+                        // delta at approval. Release that unused salary slice only
+                        // after the reserved slot has been consumed.
+                        if (acceptedOffer.ReservationDelta < 0)
+                            envelope.AdjustReservedSalary(acceptedOffer.ReservationDelta);
+                    }
+                    staffingRequest?.RegisterHire(1);
+                    requisition.RegisterHire();
+                    opening.RegisterHire(now);
+                    app.MarkHiredForPendingEmployee(employee, now, actorId, idempotencyHint);
+                }
+                catch (DomainRuleException)
+                {
+                    return Result.Failure<int>(RecruitmentErrors.InvalidOperation);
+                }
+
+                await _context.SaveChangesAsync(token);
+                return Result.Success(app.Id);
+            },
+            cancellationToken);
+        if (result.IsFailure)
+            return Result.Failure<EmploymentApplicationDto>(result.Error);
+        return await GetApplicationByIdAsync(result.Value, cancellationToken);
     }
 
     // ==========================================
@@ -1557,7 +1923,7 @@ public class RecruitmentService(
         // Advance application to InterviewScheduled if it was Shortlisted
         if (application.Status == ApplicationStatus.Shortlisted)
         {
-            application.ScheduleInterview(DateTimeOffset.UtcNow, ResolveActorEmployeeId());
+            application.ScheduleInterview(_clock.GetUtcNow(), ResolveActorEmployeeId());
         }
 
         SetScope(interview);
@@ -1588,7 +1954,7 @@ public class RecruitmentService(
         if (interview is null)
             return Result.Failure<InterviewDto>(RecruitmentErrors.InterviewNotFound);
 
-        interview.Complete(DateTimeOffset.UtcNow);
+        interview.Complete(_clock.GetUtcNow());
 
         // Update application to Interviewed if in InterviewScheduled
         var app = await _context.EmploymentApplications
@@ -1597,7 +1963,7 @@ public class RecruitmentService(
 
         if (app is not null && app.Status == ApplicationStatus.InterviewScheduled)
         {
-            app.RecordInterviewCompleted(DateTimeOffset.UtcNow, ResolveActorEmployeeId());
+            app.RecordInterviewCompleted(_clock.GetUtcNow(), ResolveActorEmployeeId());
         }
 
         await _context.SaveChangesAsync(cancellationToken);
@@ -1647,7 +2013,7 @@ public class RecruitmentService(
             finalScore,
             mutation.Recommendation,
             mutation.Comments,
-            DateTimeOffset.UtcNow,
+            _clock.GetUtcNow(),
             skillJson);
 
         await _context.SaveChangesAsync(cancellationToken);
@@ -1777,12 +2143,50 @@ public class RecruitmentService(
                                IssuedOn = o.IssuedOn,
                                ExpiresOn = o.ExpiresOn,
                                RespondedOn = o.RespondedOn,
-                               ResponseReason = o.ResponseReason,
-                               CreatedOn = o.CreatedOn
-                           })
-            .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync(cancellationToken);
+                                ResponseReason = o.ResponseReason,
+                                AnnualSalarySnapshot = o.AnnualSalarySnapshot,
+                                FiscalYearCostSnapshot = o.FiscalYearCostSnapshot,
+                                ReservationDelta = o.ReservationDelta,
+                                CalculationPolicyVersion = o.CalculationPolicyVersion,
+                                ApprovalSubmittedOn = o.ApprovalSubmittedOn,
+                                ApprovalSubmittedById = o.ApprovalSubmittedById,
+                                ApprovedOn = o.ApprovedOn,
+                                ApprovedById = o.ApprovedById,
+                              ApprovalDecisionReason = o.ApprovalDecisionReason,
+                              CreatedOn = o.CreatedOn
+                          })
+             .Skip((pageNumber - 1) * pageSize)
+             .Take(pageSize)
+             .ToListAsync(cancellationToken);
+
+        // Approval history is append-only and loaded in one bounded batch so
+        // offer management pages never issue an N+1 query per card.
+        var offerIds = items.Select(item => item.Id).ToArray();
+        if (offerIds.Length > 0)
+        {
+            var histories = await _context.JobOfferApprovalHistory.AsNoTracking()
+                .Where(entry => offerIds.Contains(entry.JobOfferId))
+                .OrderBy(entry => entry.OccurredOn)
+                .Select(entry => new
+                {
+                    entry.JobOfferId,
+                    History = new JobOfferApprovalHistoryDto(
+                        entry.Id,
+                        entry.Action,
+                        entry.ActorUserId,
+                        entry.OccurredOn,
+                        entry.FromStatus,
+                        entry.ToStatus,
+                        entry.Reason)
+                })
+                .ToListAsync(cancellationToken);
+            var historyByOffer = histories.GroupBy(entry => entry.JobOfferId)
+                .ToDictionary(group => group.Key, group => (IReadOnlyList<JobOfferApprovalHistoryDto>)group.Select(entry => entry.History).ToList());
+            items = items.Select(item => item with
+            {
+                ApprovalHistory = historyByOffer.TryGetValue(item.Id, out var history) ? history : []
+            }).ToList();
+        }
 
         var meta = new MetaData
         {
@@ -1838,31 +2242,64 @@ public class RecruitmentService(
                               ExpiresOn = o.ExpiresOn,
                               RespondedOn = o.RespondedOn,
                               ResponseReason = o.ResponseReason,
+                              AnnualSalarySnapshot = o.AnnualSalarySnapshot,
+                              FiscalYearCostSnapshot = o.FiscalYearCostSnapshot,
+                              ReservationDelta = o.ReservationDelta,
+                              CalculationPolicyVersion = o.CalculationPolicyVersion,
+                              ApprovalSubmittedOn = o.ApprovalSubmittedOn,
+                              ApprovalSubmittedById = o.ApprovalSubmittedById,
+                              ApprovedOn = o.ApprovedOn,
+                              ApprovedById = o.ApprovedById,
+                              ApprovalDecisionReason = o.ApprovalDecisionReason,
                               CreatedOn = o.CreatedOn
                           }).FirstOrDefaultAsync(cancellationToken);
 
-        return item is not null
-            ? Result.Success(item)
-            : Result.Failure<JobOfferDto>(RecruitmentErrors.JobOfferNotFound);
+        if (item is null)
+            return Result.Failure<JobOfferDto>(RecruitmentErrors.JobOfferNotFound);
+
+        var history = await _context.JobOfferApprovalHistory.AsNoTracking()
+            .Where(entry => entry.JobOfferId == id)
+            .OrderBy(entry => entry.OccurredOn)
+            .Select(entry => new JobOfferApprovalHistoryDto(
+                entry.Id,
+                entry.Action,
+                entry.ActorUserId,
+                entry.OccurredOn,
+                entry.FromStatus,
+                entry.ToStatus,
+                entry.Reason))
+            .ToListAsync(cancellationToken);
+        return Result.Success(item with { ApprovalHistory = history });
     }
 
     public async Task<Result<JobOfferDto>> CreateJobOfferAsync(JobOfferMutation mutation, CancellationToken cancellationToken = default)
     {
-        var offerNumber = $"OFF-{DateTime.UtcNow:yyyyMM}-{Guid.NewGuid().ToString()[..4].ToUpper()}";
+        var application = await _context.EmploymentApplications.AsNoTracking()
+            .FirstOrDefaultAsync(item => item.Id == mutation.EmploymentApplicationId, cancellationToken);
+        if (application is null)
+            return Result.Failure<JobOfferDto>(RecruitmentErrors.EmploymentApplicationNotFound);
+        if (application.Status != ApplicationStatus.Interviewed)
+            return Result.Failure<JobOfferDto>(RecruitmentErrors.InvalidOperation);
+        var opening = await _context.JobOpenings.AsNoTracking()
+            .FirstOrDefaultAsync(item => item.Id == application.JobOpeningId, cancellationToken);
+        if (opening is null)
+            return Result.Failure<JobOfferDto>(RecruitmentErrors.JobOpeningNotFound);
+
+        var offerNumber = $"OFF-{_clock.GetUtcNow():yyyyMM}-{Guid.NewGuid().ToString()[..4].ToUpper()}";
 
         var offer = new JobOffer(
             offerNumber,
             mutation.EmploymentApplicationId,
-            mutation.PositionId,
-            mutation.BranchId,
-            mutation.DepartmentId,
+            opening.PositionId,
+            opening.BranchId,
+            opening.DepartmentId,
             mutation.BaseSalary,
             mutation.CurrencyCode,
             mutation.PayFrequency,
             mutation.EmploymentType,
             mutation.WorkArrangement,
             mutation.ProposedStartDate,
-            mutation.DivisionId);
+            opening.DivisionId);
 
         if (!string.IsNullOrWhiteSpace(mutation.TermsAndConditions))
         {
@@ -1883,13 +2320,221 @@ public class RecruitmentService(
         return await GetJobOfferByIdAsync(offer.Id, cancellationToken);
     }
 
+    public async Task<Result<JobOfferDto>> SubmitJobOfferAsync(int id, CancellationToken cancellationToken = default)
+    {
+        var actorUserId = _currentActor.UserId ?? string.Empty;
+        if (actorUserId.Length == 0 || string.IsNullOrWhiteSpace(_currentActor.TenantId) || _currentActor.CompanyId is not > 0)
+            return Result.Failure<JobOfferDto>(RecruitmentErrors.CompanyContextRequired);
+
+        var approvalLocks = new List<string>
+        {
+            $"Recruitment:Offers:{_currentActor.TenantId}:{_currentActor.CompanyId}:{id}",
+            WorkforcePlanLocks.Company(_currentActor.TenantId!, _currentActor.CompanyId!.Value),
+        };
+        var preApprovalOffer = await _context.JobOffers.AsNoTracking()
+            .FirstOrDefaultAsync(item => item.Id == id, cancellationToken);
+        if (preApprovalOffer is not null)
+        {
+            var preApprovalApplication = await _context.EmploymentApplications.AsNoTracking()
+                .FirstOrDefaultAsync(item => item.Id == preApprovalOffer.EmploymentApplicationId, cancellationToken);
+            var preApprovalOpening = preApprovalApplication is null
+                ? null
+                : await _context.JobOpenings.AsNoTracking()
+                    .FirstOrDefaultAsync(item => item.Id == preApprovalApplication.JobOpeningId, cancellationToken);
+            var preApprovalRequisition = preApprovalOpening is null
+                ? null
+                : await _context.JobRequisitions.AsNoTracking()
+                    .FirstOrDefaultAsync(item => item.Id == preApprovalOpening.JobRequisitionId, cancellationToken);
+            var preApprovalStaffing = preApprovalRequisition?.StaffingRequestId is > 0
+                ? await _context.StaffingRequests.AsNoTracking()
+                    .FirstOrDefaultAsync(item => item.Id == preApprovalRequisition.StaffingRequestId.Value, cancellationToken)
+                : null;
+            if (preApprovalStaffing is not null)
+                approvalLocks.Add($"WorkforcePlanning:StaffingRequests:{_currentActor.TenantId}:{_currentActor.CompanyId}:{preApprovalStaffing.Id}");
+            if (preApprovalStaffing is not null)
+                approvalLocks.Add($"WorkforcePlanning:Envelopes:{_currentActor.TenantId}:{_currentActor.CompanyId}:{preApprovalStaffing.EnvelopeId}");
+        }
+
+        var result = await _context.ExecuteAtomicallyAsync(
+            approvalLocks,
+            async token =>
+            {
+                var offer = await _context.JobOffers.FirstOrDefaultAsync(item => item.Id == id, token);
+                if (offer is null)
+                    return Result.Failure<int>(RecruitmentErrors.JobOfferNotFound);
+                var application = await _context.EmploymentApplications.AsNoTracking().FirstOrDefaultAsync(item => item.Id == offer.EmploymentApplicationId, token);
+                var opening = application is null ? null : await _context.JobOpenings.AsNoTracking().FirstOrDefaultAsync(item => item.Id == application.JobOpeningId, token);
+                var requisition = opening is null ? null : await _context.JobRequisitions.AsNoTracking().FirstOrDefaultAsync(item => item.Id == opening.JobRequisitionId, token);
+                if (requisition is null)
+                    return Result.Failure<int>(RecruitmentErrors.InvalidOperation);
+
+                var annualSalary = AnnualizeOfferSalary(offer.BaseSalary, offer.PayFrequency);
+                var fiscalCost = annualSalary;
+                var delta = 0m;
+                if (requisition.PlanningSource == PlanningSource.Planned && requisition.StaffingRequestId.HasValue)
+                {
+                    var staffingRequest = await _context.StaffingRequests.AsNoTracking().FirstOrDefaultAsync(request => request.Id == requisition.StaffingRequestId.Value, token);
+                    if (staffingRequest is null || !string.Equals(staffingRequest.CurrencyCode, offer.CurrencyCode, StringComparison.OrdinalIgnoreCase))
+                        return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                    var envelope = await _context.PositionEnvelopes.AsNoTracking().FirstOrDefaultAsync(item => item.Id == staffingRequest.EnvelopeId, token);
+                    var fiscalYear = envelope is null ? null : await _context.FiscalYears.AsNoTracking().FirstOrDefaultAsync(item => item.Id == envelope.FiscalYearId, token);
+                    if (fiscalYear is null)
+                        return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                    fiscalCost = WorkforceCostPolicy.ComputeFiscalCostPerSlot(annualSalary, offer.ProposedStartDate, fiscalYear.StartDate, fiscalYear.EndDate);
+                    delta = fiscalCost - staffingRequest.EstimatedFiscalYearCostPerSlot;
+                }
+
+                offer.SubmitForApproval(_clock.GetUtcNow(), actorUserId, annualSalary, fiscalCost, delta, WorkforceCostPolicy.PolicyVersion);
+                AddOfferHistory(offer, "Submitted", actorUserId, JobOfferStatus.Draft, JobOfferStatus.PendingApproval, null);
+                await _context.SaveChangesAsync(token);
+                return Result.Success(offer.Id);
+            }, cancellationToken);
+        if (result.IsFailure)
+            return Result.Failure<JobOfferDto>(result.Error);
+        return await GetJobOfferByIdAsync(result.Value, cancellationToken);
+    }
+
+    public async Task<Result<JobOfferDto>> ApproveJobOfferAsync(int id, CancellationToken cancellationToken = default)
+    {
+        var actorUserId = _currentActor.UserId ?? string.Empty;
+        if (actorUserId.Length == 0 || string.IsNullOrWhiteSpace(_currentActor.TenantId) || _currentActor.CompanyId is not > 0)
+            return Result.Failure<JobOfferDto>(RecruitmentErrors.CompanyContextRequired);
+        var tenantId = _currentActor.TenantId!;
+        var companyId = _currentActor.CompanyId!.Value;
+        var approvalLocks = new List<string>
+        {
+            $"Recruitment:Offers:{tenantId}:{companyId}:{id}",
+            WorkforcePlanLocks.Company(tenantId, companyId),
+        };
+        var preOffer = await _context.JobOffers.AsNoTracking().FirstOrDefaultAsync(item => item.Id == id, cancellationToken);
+        if (preOffer is not null)
+        {
+            approvalLocks.Add($"Recruitment:Applications:{tenantId}:{companyId}:{preOffer.EmploymentApplicationId}");
+            var preApplication = await _context.EmploymentApplications.AsNoTracking()
+                .FirstOrDefaultAsync(item => item.Id == preOffer.EmploymentApplicationId, cancellationToken);
+            var preOpening = preApplication is null ? null : await _context.JobOpenings.AsNoTracking()
+                .FirstOrDefaultAsync(item => item.Id == preApplication.JobOpeningId, cancellationToken);
+            var preRequisition = preOpening is null ? null : await _context.JobRequisitions.AsNoTracking()
+                .FirstOrDefaultAsync(item => item.Id == preOpening.JobRequisitionId, cancellationToken);
+            var preStaffing = preRequisition?.StaffingRequestId is > 0
+                ? await _context.StaffingRequests.AsNoTracking().FirstOrDefaultAsync(item => item.Id == preRequisition.StaffingRequestId.Value, cancellationToken)
+                : null;
+            if (preOpening is not null) approvalLocks.Add($"Recruitment:Openings:{tenantId}:{companyId}:{preOpening.Id}");
+            if (preRequisition is not null) approvalLocks.Add($"Recruitment:Requisitions:{tenantId}:{companyId}:{preRequisition.Id}");
+            if (preStaffing is not null)
+            {
+                approvalLocks.Add($"WorkforcePlanning:StaffingRequests:{tenantId}:{companyId}:{preStaffing.Id}");
+                approvalLocks.Add($"WorkforcePlanning:Envelopes:{tenantId}:{companyId}:{preStaffing.EnvelopeId}");
+            }
+        }
+
+        var result = await _context.ExecuteAtomicallyAsync(
+            approvalLocks,
+            async token =>
+            {
+                var offer = await _context.JobOffers.FirstOrDefaultAsync(item => item.Id == id, token);
+                if (offer is null)
+                    return Result.Failure<int>(RecruitmentErrors.JobOfferNotFound);
+                if (offer.Status != JobOfferStatus.PendingApproval)
+                    return Result.Failure<int>(RecruitmentErrors.InvalidOperation);
+                if (string.Equals(actorUserId, offer.ApprovalSubmittedById, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(actorUserId, offer.CreatedById, StringComparison.OrdinalIgnoreCase))
+                    return Result.Failure<int>(RecruitmentErrors.JobOfferSelfApproval);
+
+                var application = await _context.EmploymentApplications.AsNoTracking().FirstOrDefaultAsync(item => item.Id == offer.EmploymentApplicationId, token);
+                if (application is null)
+                    return Result.Failure<int>(RecruitmentErrors.EmploymentApplicationNotFound);
+                var opening = await _context.JobOpenings.AsNoTracking().FirstOrDefaultAsync(item => item.Id == application.JobOpeningId, token);
+                if (opening is null)
+                    return Result.Failure<int>(RecruitmentErrors.JobOpeningNotFound);
+                var requisition = await _context.JobRequisitions.AsNoTracking().FirstOrDefaultAsync(item => item.Id == opening.JobRequisitionId, token);
+                if (requisition is null)
+                    return Result.Failure<int>(RecruitmentErrors.JobRequisitionNotFound);
+                PositionEnvelope? envelope = null;
+                if (requisition.PlanningSource == PlanningSource.Planned && requisition.StaffingRequestId.HasValue)
+                {
+                    var staffingRequest = await _context.StaffingRequests.AsNoTracking().FirstOrDefaultAsync(request => request.Id == requisition.StaffingRequestId.Value, token);
+                    if (staffingRequest is null)
+                        return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                    if (!string.Equals(staffingRequest.CurrencyCode, offer.CurrencyCode, StringComparison.OrdinalIgnoreCase))
+                        return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                    envelope = await _context.PositionEnvelopes.FirstOrDefaultAsync(item => item.Id == staffingRequest.EnvelopeId, token);
+                    if (envelope is null)
+                        return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                    if (offer.ReservationDelta > 0 && envelope.AvailableSalaryBudget < offer.ReservationDelta)
+                        return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                    if (offer.ReservationDelta < 0 && envelope.ReservedSalaryBudget < -offer.ReservationDelta)
+                        return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                }
+                try { offer.Approve(_clock.GetUtcNow(), actorUserId); }
+                catch (DomainRuleException exception) when (exception.Code == "Recruitment.JobOffer.SelfApproval")
+                { return Result.Failure<int>(RecruitmentErrors.JobOfferSelfApproval); }
+                catch (DomainRuleException)
+                { return Result.Failure<int>(RecruitmentErrors.InvalidOperation); }
+                if (envelope is not null)
+                {
+                    try
+                    {
+                        // Positive deltas reserve additional salary. Negative
+                        // deltas intentionally remain in the original staffing
+                        // reservation and are released at hire, after the slot
+                        // is consumed, so another offer cannot race the refund.
+                        if (offer.ReservationDelta > 0)
+                            envelope.AdjustReservedSalary(offer.ReservationDelta);
+                    }
+                    catch (DomainRuleException) { return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity); }
+                }
+                AddOfferHistory(offer, "Approved", actorUserId, JobOfferStatus.PendingApproval, JobOfferStatus.Approved, null);
+                await _context.SaveChangesAsync(token);
+                return Result.Success(offer.Id);
+            }, cancellationToken);
+        if (result.IsFailure)
+            return Result.Failure<JobOfferDto>(result.Error);
+        return await GetJobOfferByIdAsync(result.Value, cancellationToken);
+    }
+
+    public async Task<Result<JobOfferDto>> RejectJobOfferAsync(int id, string reason, CancellationToken cancellationToken = default)
+    {
+        var actorUserId = _currentActor.UserId ?? string.Empty;
+        if (actorUserId.Length == 0 || string.IsNullOrWhiteSpace(_currentActor.TenantId) || _currentActor.CompanyId is not > 0)
+            return Result.Failure<JobOfferDto>(RecruitmentErrors.CompanyContextRequired);
+        var normalizedReason = reason?.Trim() ?? string.Empty;
+        if (normalizedReason.Length == 0 || normalizedReason.Length > 1000)
+            return Result.Failure<JobOfferDto>(RecruitmentErrors.InvalidOperation);
+
+        var result = await _context.ExecuteAtomicallyAsync(
+            [$"Recruitment:Offers:{_currentActor.TenantId}:{_currentActor.CompanyId}:{id}"],
+            async token =>
+            {
+                var offer = await _context.JobOffers.FirstOrDefaultAsync(item => item.Id == id, token);
+                if (offer is null)
+                    return Result.Failure<int>(RecruitmentErrors.JobOfferNotFound);
+                var previousStatus = offer.Status;
+                try
+                {
+                    offer.RejectApproval(_clock.GetUtcNow(), actorUserId, normalizedReason);
+                }
+                catch (DomainRuleException)
+                {
+                    return Result.Failure<int>(RecruitmentErrors.InvalidOperation);
+                }
+                AddOfferHistory(offer, "Rejected", actorUserId, previousStatus, JobOfferStatus.Draft, normalizedReason);
+                await _context.SaveChangesAsync(token);
+                return Result.Success(offer.Id);
+            },
+            cancellationToken);
+        if (result.IsFailure)
+            return Result.Failure<JobOfferDto>(result.Error);
+        return await GetJobOfferByIdAsync(result.Value, cancellationToken);
+    }
+
     public async Task<Result<JobOfferDto>> IssueJobOfferAsync(int id, CancellationToken cancellationToken = default)
     {
         var offer = await _context.JobOffers.FindAsync([id], cancellationToken);
         if (offer is null)
             return Result.Failure<JobOfferDto>(RecruitmentErrors.JobOfferNotFound);
 
-        var now = DateTimeOffset.UtcNow;
+        var now = _clock.GetUtcNow();
         offer.Issue(now, now.AddDays(14));
 
         // Advance application to OfferIssued
@@ -1906,13 +2551,37 @@ public class RecruitmentService(
         return await GetJobOfferByIdAsync(offer.Id, cancellationToken);
     }
 
+    private static decimal AnnualizeOfferSalary(decimal salary, PayFrequency frequency) =>
+        WorkforceCostPolicy.NormalizeAnnualSalary(frequency switch
+        {
+            PayFrequency.Hourly => salary * 2080m,
+            PayFrequency.Daily => salary * 260m,
+            PayFrequency.Weekly => salary * 52m,
+            PayFrequency.Monthly => salary * 12m,
+            PayFrequency.Annual => salary,
+            _ => throw new ArgumentOutOfRangeException(nameof(frequency))
+        });
+
+    private void AddOfferHistory(
+        JobOffer offer,
+        string action,
+        string actorUserId,
+        JobOfferStatus fromStatus,
+        JobOfferStatus toStatus,
+        string? reason)
+    {
+        var history = new JobOfferApprovalHistory(offer.Id, action, actorUserId, _clock.GetUtcNow(), fromStatus, toStatus, reason);
+        SetScope(history);
+        _context.JobOfferApprovalHistory.Add(history);
+    }
+
     public async Task<Result<JobOfferDto>> AcceptJobOfferAsync(int id, CancellationToken cancellationToken = default)
     {
         var offer = await _context.JobOffers.FindAsync([id], cancellationToken);
         if (offer is null)
             return Result.Failure<JobOfferDto>(RecruitmentErrors.JobOfferNotFound);
 
-        var now = DateTimeOffset.UtcNow;
+        var now = _clock.GetUtcNow();
         offer.Accept(now);
 
         var app = await _context.EmploymentApplications
@@ -1930,24 +2599,98 @@ public class RecruitmentService(
 
     public async Task<Result<JobOfferDto>> DeclineJobOfferAsync(int id, string reason, CancellationToken cancellationToken = default)
     {
-        var offer = await _context.JobOffers.FindAsync([id], cancellationToken);
-        if (offer is null)
-            return Result.Failure<JobOfferDto>(RecruitmentErrors.JobOfferNotFound);
+        var actorUserId = _currentActor.UserId ?? string.Empty;
+        if (actorUserId.Length == 0 || string.IsNullOrWhiteSpace(_currentActor.TenantId) || _currentActor.CompanyId is not > 0)
+            return Result.Failure<JobOfferDto>(RecruitmentErrors.CompanyContextRequired);
+        var normalizedReason = reason?.Trim() ?? string.Empty;
+        if (normalizedReason.Length == 0 || normalizedReason.Length > 1000)
+            return Result.Failure<JobOfferDto>(RecruitmentErrors.InvalidOperation);
 
-        var now = DateTimeOffset.UtcNow;
-        offer.Decline(reason, now);
-
-        var app = await _context.EmploymentApplications
-            .Include(a => a.StatusHistory)
-            .FirstOrDefaultAsync(a => a.Id == offer.EmploymentApplicationId, cancellationToken);
-
-        if (app is not null && app.Status == ApplicationStatus.OfferIssued)
+        var tenantId = _currentActor.TenantId!;
+        var companyId = _currentActor.CompanyId!.Value;
+        var declineLocks = new List<string>
         {
-            app.RecordOfferDeclined(reason, now);
+            $"Recruitment:Offers:{tenantId}:{companyId}:{id}",
+            WorkforcePlanLocks.Company(tenantId, companyId),
+        };
+        var preOffer = await _context.JobOffers.AsNoTracking().FirstOrDefaultAsync(item => item.Id == id, cancellationToken);
+        if (preOffer is not null)
+        {
+            declineLocks.Add($"Recruitment:Applications:{tenantId}:{companyId}:{preOffer.EmploymentApplicationId}");
+            var preApplication = await _context.EmploymentApplications.AsNoTracking()
+                .FirstOrDefaultAsync(item => item.Id == preOffer.EmploymentApplicationId, cancellationToken);
+            var preOpening = preApplication is null ? null : await _context.JobOpenings.AsNoTracking()
+                .FirstOrDefaultAsync(item => item.Id == preApplication.JobOpeningId, cancellationToken);
+            var preRequisition = preOpening is null ? null : await _context.JobRequisitions.AsNoTracking()
+                .FirstOrDefaultAsync(item => item.Id == preOpening.JobRequisitionId, cancellationToken);
+            var preStaffing = preRequisition?.StaffingRequestId is > 0
+                ? await _context.StaffingRequests.AsNoTracking().FirstOrDefaultAsync(item => item.Id == preRequisition.StaffingRequestId.Value, cancellationToken)
+                : null;
+            if (preOpening is not null) declineLocks.Add($"Recruitment:Openings:{tenantId}:{companyId}:{preOpening.Id}");
+            if (preRequisition is not null) declineLocks.Add($"Recruitment:Requisitions:{tenantId}:{companyId}:{preRequisition.Id}");
+            if (preStaffing is not null)
+            {
+                declineLocks.Add($"WorkforcePlanning:StaffingRequests:{tenantId}:{companyId}:{preStaffing.Id}");
+                declineLocks.Add($"WorkforcePlanning:Envelopes:{tenantId}:{companyId}:{preStaffing.EnvelopeId}");
+            }
         }
 
-        await _context.SaveChangesAsync(cancellationToken);
-        return await GetJobOfferByIdAsync(offer.Id, cancellationToken);
+        var result = await _context.ExecuteAtomicallyAsync(
+            declineLocks,
+            async token =>
+            {
+                var offer = await _context.JobOffers.FirstOrDefaultAsync(item => item.Id == id, token);
+                if (offer is null)
+                    return Result.Failure<int>(RecruitmentErrors.JobOfferNotFound);
+                var now = _clock.GetUtcNow();
+                var app = await _context.EmploymentApplications
+                    .Include(application => application.StatusHistory)
+                    .FirstOrDefaultAsync(application => application.Id == offer.EmploymentApplicationId, token);
+                PositionEnvelope? envelope = null;
+                if (app is not null)
+                {
+                    var opening = await _context.JobOpenings.AsNoTracking().FirstOrDefaultAsync(item => item.Id == app.JobOpeningId, token);
+                    var requisition = opening is null ? null : await _context.JobRequisitions.AsNoTracking()
+                        .FirstOrDefaultAsync(item => item.Id == opening.JobRequisitionId, token);
+                    if (requisition?.PlanningSource == PlanningSource.Planned && requisition.StaffingRequestId.HasValue)
+                    {
+                        var staffing = await _context.StaffingRequests.AsNoTracking()
+                            .FirstOrDefaultAsync(item => item.Id == requisition.StaffingRequestId.Value, token);
+                        if (staffing is null)
+                            return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                        envelope = await _context.PositionEnvelopes.FirstOrDefaultAsync(item => item.Id == staffing.EnvelopeId, token);
+                        if (envelope is null)
+                            return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                        if (offer.ReservationDelta > 0 && envelope.ReservedSalaryBudget < offer.ReservationDelta)
+                            return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                    }
+                }
+
+                try
+                {
+                    offer.Decline(normalizedReason, now);
+                    if (app is not null && app.Status == ApplicationStatus.OfferIssued)
+                        app.RecordOfferDeclined(normalizedReason, now);
+                    if (envelope is not null && offer.ReservationDelta > 0)
+                        envelope.AdjustReservedSalary(-offer.ReservationDelta);
+                }
+                catch (DomainRuleException exception) when (exception.Code is "PositionEnvelope.OverRelease" or "PositionEnvelope.InsufficientBudget")
+                {
+                    return Result.Failure<int>(RecruitmentErrors.JobOfferPlanningCapacity);
+                }
+                catch (DomainRuleException)
+                {
+                    return Result.Failure<int>(RecruitmentErrors.InvalidOperation);
+                }
+
+                AddOfferHistory(offer, "Declined", actorUserId, JobOfferStatus.Issued, JobOfferStatus.Declined, normalizedReason);
+                await _context.SaveChangesAsync(token);
+                return Result.Success(offer.Id);
+            },
+            cancellationToken);
+        if (result.IsFailure)
+            return Result.Failure<JobOfferDto>(result.Error);
+        return await GetJobOfferByIdAsync(result.Value, cancellationToken);
     }
 
     // ==========================================

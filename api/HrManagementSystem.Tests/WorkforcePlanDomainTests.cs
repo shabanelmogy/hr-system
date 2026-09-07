@@ -49,6 +49,22 @@ public sealed class WorkforcePlanDomainTests
     }
 
     [Fact]
+    public void Approve_AllowsSelfApprovalWhenExplicitlyPermitted()
+    {
+        var plan = CreatePlan();
+        plan.CreatedById = "planner";
+        var line = plan.AddLine(10, null, 20, 30, 2, new DateOnly(2027, 1, 1), 2, 0, null);
+        line.AddPeriodTarget(100, 2, 0);
+        plan.Submit(DateTimeOffset.UtcNow, "planner");
+        plan.BeginReview();
+
+        plan.Approve(DateTimeOffset.UtcNow, "planner", true, allowSelfApproval: true);
+
+        Assert.Equal(WorkforcePlanStatus.Approved, plan.Status);
+        Assert.Equal("planner", plan.ApprovedById);
+    }
+
+    [Fact]
     public void Approve_RequiresThePlanToEnterReviewFirst()
     {
         var plan = CreateSubmittablePlan();

@@ -54,7 +54,6 @@ export const permissions = {
   ApproveWorkforcePlans: 'WorkforcePlans:Approve',
   ViewWorkforceBudgets: 'WorkforceBudgets:View',
   ManageWorkforceBudgets: 'WorkforceBudgets:Manage',
-  ApproveWorkforceBudgets: 'WorkforceBudgets:Approve',
   ViewPositionEnvelopes: 'PositionEnvelopes:View',
   ViewEnvelopeAmendments: 'EnvelopeAmendments:View',
   CreateEnvelopeAmendments: 'EnvelopeAmendments:Create',

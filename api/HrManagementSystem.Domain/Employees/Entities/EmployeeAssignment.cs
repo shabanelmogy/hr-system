@@ -30,6 +30,32 @@ public class EmployeeAssignment : CompanyAuditableEntity
         IsPrimary = isPrimary;
     }
 
+    /// <summary>
+    /// Creates an assignment for a not-yet-persisted employee. EF fixes the
+    /// temporary foreign key when the assignment is attached through the
+    /// employee's Assignments collection in the same unit of work.
+    /// </summary>
+    public static EmployeeAssignment ForPendingEmployee(
+        int positionId,
+        int branchId,
+        int departmentId,
+        DateOnly effectiveFrom,
+        bool isPrimary,
+        int? divisionId = null)
+    {
+        var assignment = new EmployeeAssignment
+        {
+            EmployeeId = 0,
+            PositionId = Positive(positionId, nameof(positionId)),
+            BranchId = Positive(branchId, nameof(branchId)),
+            DepartmentId = Positive(departmentId, nameof(departmentId)),
+            DivisionId = PositiveOrNull(divisionId, nameof(divisionId)),
+            EffectiveFrom = effectiveFrom,
+            IsPrimary = isPrimary,
+        };
+        return assignment;
+    }
+
     public int Id { get; private set; }
     public int EmployeeId { get; private set; }
     public int PositionId { get; private set; }

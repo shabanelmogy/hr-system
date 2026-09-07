@@ -45,6 +45,8 @@ public static class ErrorsService
         service.AddScoped<AttendanceDeviceErrors>();
         service.AddScoped<FiscalYearErrors>();
         service.AddScoped<WorkforcePlanErrors>();
+        service.AddScoped<WorkforceBudgetErrors>();
+        service.AddScoped<StaffingErrors>();
 
         return service;
     }

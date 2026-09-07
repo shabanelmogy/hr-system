@@ -12,6 +12,7 @@ export enum NavigationSectionId {
   ADVANCED_TOOLS = "advancedTools",
   HR_MANAGEMENT = "hrManagement",
   RECRUITMENT = "recruitment",
+  WORKFORCE_PLANNING = "workforcePlanning",
   FINANCE = "finance",
   KANBAN = "kanban",
   EXTRAS = "extras",
@@ -87,9 +88,15 @@ export enum NavigationTitles {
   // HR Management
   HR_MANAGEMENT = "menu.hrManagement",
   RECRUITMENT = "menu.recruitment",
+  WORKFORCE_PLANNING = "menu.workforcePlanning",
   FINANCE = "menu.finance",
   FISCAL_YEARS = "menu.fiscalYears",
   WORKFORCE_PLANS = "menu.workforcePlans",
+  WORKFORCE_BUDGETS = "menu.workforceBudgets",
+  POSITION_ENVELOPES = "menu.positionEnvelopes",
+  STAFFING_REQUESTS = "menu.staffingRequests",
+  ENVELOPE_AMENDMENTS = "menu.envelopeAmendments",
+  WORKFORCE_TRACE = "menu.workforceTrace",
   KANBAN = "menu.kanban",
   KANBAN_BOARDS = "menu.kanbanBoards",
 }

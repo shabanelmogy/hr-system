@@ -20,10 +20,12 @@ public interface IRecruitmentService
     Task<PageResponse<JobRequisitionDto>> GetJobRequisitionsPageAsync(int pageNumber, int pageSize, string? search, JobRequisitionStatus? status, CancellationToken cancellationToken = default);
     Task<Result<JobRequisitionDto>> GetJobRequisitionByIdAsync(int id, CancellationToken cancellationToken = default);
     Task<Result<PositionHeadcountSummaryDto>> GetPositionHeadcountSummaryAsync(int positionId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<ApprovedStaffingRequestOptionDto>> GetApprovedStaffingRequestOptionsAsync(CancellationToken cancellationToken = default);
     Task<Result<JobRequisitionDto>> CreateJobRequisitionAsync(JobRequisitionMutation mutation, CancellationToken cancellationToken = default);
     Task<Result<JobRequisitionDto>> SubmitJobRequisitionAsync(int id, CancellationToken cancellationToken = default);
     Task<Result<JobRequisitionDto>> ApproveJobRequisitionAsync(int id, CancellationToken cancellationToken = default);
     Task<Result<JobRequisitionDto>> RejectJobRequisitionAsync(int id, string reason, CancellationToken cancellationToken = default);
+    Task<Result<JobRequisitionDto>> CancelJobRequisitionAsync(int id, string reason, CancellationToken cancellationToken = default);
 
     // Job Openings
     Task<PageResponse<JobOpeningDto>> GetJobOpeningsPageAsync(int pageNumber, int pageSize, string? search, JobOpeningStatus? status, int? departmentId, CancellationToken cancellationToken = default);
@@ -63,6 +65,9 @@ public interface IRecruitmentService
     Task<PageResponse<JobOfferDto>> GetJobOffersPageAsync(int pageNumber, int pageSize, int? applicationId, JobOfferStatus? status, CancellationToken cancellationToken = default);
     Task<Result<JobOfferDto>> GetJobOfferByIdAsync(int id, CancellationToken cancellationToken = default);
     Task<Result<JobOfferDto>> CreateJobOfferAsync(JobOfferMutation mutation, CancellationToken cancellationToken = default);
+    Task<Result<JobOfferDto>> SubmitJobOfferAsync(int id, CancellationToken cancellationToken = default);
+    Task<Result<JobOfferDto>> ApproveJobOfferAsync(int id, CancellationToken cancellationToken = default);
+    Task<Result<JobOfferDto>> RejectJobOfferAsync(int id, string reason, CancellationToken cancellationToken = default);
     Task<Result<JobOfferDto>> IssueJobOfferAsync(int id, CancellationToken cancellationToken = default);
     Task<Result<JobOfferDto>> AcceptJobOfferAsync(int id, CancellationToken cancellationToken = default);
     Task<Result<JobOfferDto>> DeclineJobOfferAsync(int id, string reason, CancellationToken cancellationToken = default);

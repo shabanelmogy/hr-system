@@ -1,4 +1,5 @@
 using HrManagementSystem.Domain.Recruitment.Entities;
+using HrManagementSystem.Domain.Employees.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,12 +15,16 @@ public sealed class EmploymentApplicationConfiguration : IEntityTypeConfiguratio
 
         builder.Property(x => x.ExpectedSalaryCurrencyCode).HasMaxLength(3);
         builder.Property(x => x.ExpectedSalary).HasPrecision(18, 2);
+        builder.Property(x => x.HireIdempotencyKey).HasMaxLength(128);
 
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.CandidateId, x.JobOpeningId })
             .HasFilter("[Status] IN (1, 2, 3, 4, 5, 6, 7, 8, 9)")
             .IsUnique();
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.Status });
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.JobOpeningId });
+        builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.HireIdempotencyKey })
+            .HasFilter("[HireIdempotencyKey] IS NOT NULL")
+            .IsUnique();
 
         builder.HasOne<Candidate>()
             .WithMany()
@@ -31,6 +36,13 @@ public sealed class EmploymentApplicationConfiguration : IEntityTypeConfiguratio
             .WithMany()
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.JobOpeningId })
             .HasPrincipalKey(o => new { o.TenantId, o.CompanyId, o.Id })
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(x => x.HiredEmployee)
+            .WithMany()
+            .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.EmployeeId })
+            .HasPrincipalKey(x => new { x.TenantId, x.CompanyId, x.Id })
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne<JobPosting>()

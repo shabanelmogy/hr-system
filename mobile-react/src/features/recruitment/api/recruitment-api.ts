@@ -52,6 +52,16 @@ export const recruitmentApi = {
     return apiService.get<JobOpeningDto>(recruitmentEndpoints.openings.byId(id));
   },
 
+  async getOffers(params?: { pageNumber?: number; pageSize?: number; applicationId?: number; status?: number }): Promise<PageResponse<JobOfferDto>> {
+    const query = new URLSearchParams();
+    if (params?.pageNumber) query.set('pageNumber', String(params.pageNumber));
+    if (params?.pageSize) query.set('pageSize', String(params.pageSize));
+    if (params?.applicationId) query.set('applicationId', String(params.applicationId));
+    if (params?.status !== undefined) query.set('status', String(params.status));
+    const qs = query.toString();
+    return apiService.get<PageResponse<JobOfferDto>>(`${recruitmentEndpoints.offers.base}${qs ? `?${qs}` : ''}`);
+  },
+
   async openOpening(id: number): Promise<JobOpeningDto> {
     return apiService.post<JobOpeningDto, undefined>(recruitmentEndpoints.openings.open(id), undefined);
   },
@@ -194,9 +204,30 @@ export const recruitmentApi = {
     );
   },
 
+  async submitOffer(id: number): Promise<JobOfferDto> {
+    return apiService.post<JobOfferDto, undefined>(
+      recruitmentEndpoints.offers.submit(id),
+      undefined
+    );
+  },
+
+  async approveOffer(id: number): Promise<JobOfferDto> {
+    return apiService.post<JobOfferDto, undefined>(
+      recruitmentEndpoints.offers.approve(id),
+      undefined
+    );
+  },
+
+  async rejectOffer(id: number, reason: string): Promise<JobOfferDto> {
+    return apiService.post<JobOfferDto, { reason: string }>(
+      recruitmentEndpoints.offers.reject(id),
+      { reason }
+    );
+  },
+
   async hireCandidate(
     id: number,
-    request: { hireDate?: string; notes?: string }
+    request: { employeeNumber?: string; hireDate?: string; idempotencyKey?: string }
   ): Promise<void> {
     return apiService.post<void, typeof request>(
       recruitmentEndpoints.applications.hire(id),
@@ -232,11 +263,21 @@ export const recruitmentApi = {
     );
   },
 
+  async getApprovedStaffingRequestOptions(): Promise<import('../types').ApprovedStaffingRequestOptionDto[]> {
+    return apiService.get<import('../types').ApprovedStaffingRequestOptionDto[]>(
+      recruitmentEndpoints.requisitions.staffingRequestOptions
+    );
+  },
+
   async createRequisition(request: JobRequisitionMutation): Promise<JobRequisitionDto> {
     return apiService.post<JobRequisitionDto, JobRequisitionMutation>(
       recruitmentEndpoints.requisitions.base,
       request
     );
+  },
+
+  async submitRequisition(id: number): Promise<JobRequisitionDto> {
+    return apiService.post<JobRequisitionDto, undefined>(recruitmentEndpoints.requisitions.submit(id), undefined);
   },
 
   async approveRequisition(id: number): Promise<JobRequisitionDto> {
@@ -250,6 +291,12 @@ export const recruitmentApi = {
     return apiService.post<JobRequisitionDto, { reason: string }>(
       recruitmentEndpoints.requisitions.reject(id),
       { reason }
+    );
+  },
+
+  async cancelRequisition(id: number, reason: string): Promise<JobRequisitionDto> {
+    return apiService.post<JobRequisitionDto, { reason: string }>(
+      recruitmentEndpoints.requisitions.cancel(id), { reason }
     );
   },
 

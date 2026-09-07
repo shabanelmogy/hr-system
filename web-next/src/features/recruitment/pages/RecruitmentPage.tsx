@@ -21,6 +21,7 @@ import JobRequisitionDialog from "../components/JobRequisitionDialog";
 import NewApplicationDialog from "../components/NewApplicationDialog";
 import ScheduleInterviewDialog from "../components/ScheduleInterviewDialog";
 import JobOfferDialog from "../components/JobOfferDialog";
+import JobOffersGrid from "../components/JobOffersGrid";
 import InterviewEvaluationDialog from "../components/InterviewEvaluationDialog";
 import RecruitmentService from "../services/recruitmentService";
 import { showToast } from "@/shared/components/feedback/transient/showToast";
@@ -35,7 +36,7 @@ export default function RecruitmentPage() {
   const perms = useRecruitmentPermissions();
 
   // Tab State
-  const [activeTab, setActiveTab] = useState<"openings" | "requisitions" | "settings">("openings");
+  const [activeTab, setActiveTab] = useState<"openings" | "requisitions" | "offers" | "settings">("openings");
 
   // Selection State
   const [selectedOpeningId, setSelectedOpeningId] = useState<number | null>(null);
@@ -178,6 +179,9 @@ export default function RecruitmentPage() {
           iconPosition="start"
           label={t("recruitment.tabs.requisitions", "طلبات الاحتياج الوظيفي / Job Requisitions")}
         />
+        {perms.canView && (
+          <Tab value="offers" icon={<WorkOutlineRoundedIcon />} iconPosition="start" label={t("recruitment.tabs.offers", "العروض الوظيفية / Job Offers")} />
+        )}
         {(perms.canManageOpenings || perms.canManageRequisitions) && (
           <Tab
             value="settings"
@@ -256,6 +260,8 @@ export default function RecruitmentPage() {
           onOpenJobOpeningFromRequisition={handleOpenOpeningFromRequisition}
         />
       )}
+
+      {activeTab === "offers" && <JobOffersGrid />}
 
       {activeTab === "settings" && (
         <RecruitmentSettingsView />

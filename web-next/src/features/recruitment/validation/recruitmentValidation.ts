@@ -23,10 +23,7 @@ export const jobOpeningSchema = z.object({
 export type JobOpeningFormData = z.infer<typeof jobOpeningSchema>;
 
 export const jobRequisitionSchema = z.object({
-  positionId: z.coerce.number().min(1, "Position is required"),
-  branchId: z.coerce.number().min(1, "Branch is required"),
-  departmentId: z.coerce.number().min(1, "Department is required"),
-  divisionId: z.coerce.number().optional(),
+  staffingRequestId: z.coerce.number().min(1, "Select an approved staffing request"),
   requestedPositions: z.coerce.number().min(1, "Must request at least 1 position"),
   businessReason: z.string().trim().min(3, "Business reason is required"),
   employmentType: z.coerce.number().default(EmploymentType.FullTime),
@@ -34,8 +31,6 @@ export const jobRequisitionSchema = z.object({
   targetHireDate: z.string().optional(),
   type: z.coerce.number().default(RequisitionType.NewPosition),
   replacementEmployeeId: z.coerce.number().optional(),
-  isBudgeted: z.boolean().default(true),
-  budgetJustification: z.string().trim().optional(),
 });
 
 export type JobRequisitionFormData = z.infer<typeof jobRequisitionSchema>;

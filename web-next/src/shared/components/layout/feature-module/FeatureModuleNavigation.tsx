@@ -152,7 +152,7 @@ export default function FeatureModuleNavigation({
           onNavigate={onNavigate}
         />
         <Divider sx={{ mx: 1, my: 0.5 }} />
-        <Box sx={{ minHeight: 0, overflowY: "auto", overflowX: "hidden" }}>
+        <Box sx={{ minHeight: 0, flex: 1, overflowY: "auto", overflowX: "hidden" }}>
           {compactItems.map((item) => (
             <CompactNavigationLink
               key={item.id}
@@ -269,6 +269,7 @@ function CompactNavigationLink({
           minHeight: 44,
           mx: "auto",
           my: 0.5,
+          flex: "0 0 auto",
           justifyContent: "center",
           borderRadius: 1,
           color: active ? "primary.main" : "text.secondary",

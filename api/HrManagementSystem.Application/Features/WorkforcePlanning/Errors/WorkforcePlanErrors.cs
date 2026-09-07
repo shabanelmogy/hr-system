@@ -16,6 +16,7 @@ public sealed class WorkforcePlanErrors(IStringLocalizer<CreateWorkforcePlanRequ
     public Error PeriodNotFound => new("WorkforcePlan.PeriodNotFound", localizer["WorkforcePlanPeriodNotFound"], ErrorType.Validation);
     public Error CompanyContextRequired => new("WorkforcePlan.CompanyContextRequired", localizer["WorkforcePlanCompanyContextRequired"], ErrorType.Forbidden);
     public Error InvalidTransition => new("WorkforcePlan.InvalidStatusTransition", localizer["WorkforcePlanInvalidStatusTransition"], ErrorType.Validation);
+    public Error SelfApproval => new("WorkforcePlan.SelfApproval", localizer["WorkforcePlanSelfApproval"], ErrorType.Validation);
     public Error NotArchivable => new("WorkforcePlan.NotArchivable", localizer["WorkforcePlanNotArchivable"], ErrorType.Validation);
     public Error NotRestorable => new("WorkforcePlan.NotRestorable", localizer["WorkforcePlanNotRestorable"], ErrorType.Validation);
     public Error ConcurrencyConflict => new("WorkforcePlan.ConcurrencyConflict", localizer["WorkforcePlanConcurrencyConflict"], ErrorType.Conflict);

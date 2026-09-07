@@ -5,4 +5,6 @@ public interface ICurrentActor
     string? UserId { get; }
     string? TenantId { get; }
     int? CompanyId { get; }
+
+    bool IsInRole(string role) => false;
 }

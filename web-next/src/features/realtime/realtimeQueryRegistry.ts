@@ -5,6 +5,7 @@ import { addressTypeKeys } from "@/features/basic-data/geographical-information/
 import { countryKeys } from "@/features/basic-data/geographical-information/countries";
 import { fiscalYearKeys } from "@/features/finance/fiscal-years";
 import { workforcePlanKeys } from "@/features/workforce-planning";
+import { envelopeAmendmentKeys, positionEnvelopeKeys, staffingRequestKeys, workforceBudgetKeys, workforceTraceKeys } from "@/features/workforce-planning";
 import { districtKeys } from "@/features/basic-data/geographical-information/districts";
 import { stateKeys } from "@/features/basic-data/geographical-information/states";
 import { organizationalStructureKeys } from "@/features/basic-data/organizational-structure/management";
@@ -15,6 +16,11 @@ export const realtimeResources = {
   countries: "countries",
   fiscalYears: "fiscal-years",
   workforcePlans: "workforce-plans",
+  workforceBudgets: "workforce-budgets",
+  positionEnvelopes: "position-envelopes",
+  envelopeAmendments: "envelope-amendments",
+  staffingRequests: "staffing-requests",
+  workforceTrace: "workforce-trace",
   states: "states",
   organizationalStructure: "organizational-structure",
   districts: "districts",
@@ -34,6 +40,11 @@ const queryKeysByResource: Readonly<Record<string, readonly QueryKey[]>> = {
   [realtimeResources.countries]: [countryKeys.all, stateKeys.all],
   [realtimeResources.fiscalYears]: [fiscalYearKeys.all],
   [realtimeResources.workforcePlans]: [workforcePlanKeys.all],
+  [realtimeResources.workforceBudgets]: [workforceBudgetKeys.all],
+  [realtimeResources.positionEnvelopes]: [positionEnvelopeKeys.all],
+  [realtimeResources.envelopeAmendments]: [envelopeAmendmentKeys.all, positionEnvelopeKeys.all],
+  [realtimeResources.staffingRequests]: [staffingRequestKeys.all, positionEnvelopeKeys.all],
+  [realtimeResources.workforceTrace]: [workforceTraceKeys.all, positionEnvelopeKeys.all, workforceBudgetKeys.all],
   [realtimeResources.states]: [stateKeys.all, countryKeys.all, districtKeys.all],
   [realtimeResources.organizationalStructure]: [organizationalStructureKeys.all],
   [realtimeResources.districts]: [districtKeys.all, stateKeys.all],

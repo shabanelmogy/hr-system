@@ -147,8 +147,10 @@ function NavigationSection({
       >
         <ListItemButton
           onClick={handleSectionClick}
+          aria-label={open ? undefined : t(section.title)}
           sx={[
             {
+              flex: "0 0 auto",
               minHeight: 48,
               px: 2.5,
               textAlign: "start",
@@ -199,6 +201,7 @@ function NavigationSection({
               />
             }
             sx={{
+              display: open ? undefined : "none",
               flex: open ? "1 1 auto" : "0 0 0",
               minWidth: 0,
               maxWidth: open ? "none" : 0,

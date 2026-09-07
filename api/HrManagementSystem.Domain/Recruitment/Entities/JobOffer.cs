@@ -1,5 +1,6 @@
 using HrManagementSystem.Domain.Common.Exceptions;
 using HrManagementSystem.Domain.Recruitment.Enums;
+using HrManagementSystem.Domain.WorkforcePlanning.Entities;
 using static HrManagementSystem.Domain.Common.Guards.DomainGuard;
 
 namespace HrManagementSystem.Domain.Recruitment.Entities;
@@ -61,6 +62,58 @@ public sealed class JobOffer : CompanyAuditableEntity
     public DateTimeOffset? ExpiresOn { get; private set; }
     public DateTimeOffset? RespondedOn { get; private set; }
     public string? ResponseReason { get; private set; }
+    public decimal AnnualSalarySnapshot { get; private set; }
+    public decimal FiscalYearCostSnapshot { get; private set; }
+    public decimal ReservationDelta { get; private set; }
+    public string? CalculationPolicyVersion { get; private set; }
+    public DateTimeOffset? ApprovalSubmittedOn { get; private set; }
+    public string? ApprovalSubmittedById { get; private set; }
+    public DateTimeOffset? ApprovedOn { get; private set; }
+    public string? ApprovedById { get; private set; }
+    public string? ApprovalDecisionReason { get; private set; }
+
+    public void SubmitForApproval(
+        DateTimeOffset submittedOn,
+        string submittedById,
+        decimal annualSalarySnapshot,
+        decimal fiscalYearCostSnapshot,
+        decimal reservationDelta,
+        string calculationPolicyVersion)
+    {
+        EnsureStatus(JobOfferStatus.Draft);
+        AnnualSalarySnapshot = WorkforceBudget.NormalizeMoney(NonNegative(annualSalarySnapshot, nameof(annualSalarySnapshot)));
+        FiscalYearCostSnapshot = WorkforceBudget.NormalizeMoney(NonNegative(fiscalYearCostSnapshot, nameof(fiscalYearCostSnapshot)));
+        ReservationDelta = WorkforceBudget.NormalizeMoney(reservationDelta);
+        CalculationPolicyVersion = Required(calculationPolicyVersion, nameof(calculationPolicyVersion));
+        ApprovalSubmittedOn = submittedOn;
+        ApprovalSubmittedById = Required(submittedById, nameof(submittedById));
+        ApprovalDecisionReason = null;
+        Status = JobOfferStatus.PendingApproval;
+    }
+
+    public void Approve(DateTimeOffset approvedOn, string approvedById)
+    {
+        EnsureStatus(JobOfferStatus.PendingApproval);
+        var approver = Required(approvedById, nameof(approvedById));
+        if (string.Equals(approver, ApprovalSubmittedById, StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(approver, CreatedById, StringComparison.OrdinalIgnoreCase))
+        {
+            throw new DomainRuleException("Recruitment.JobOffer.SelfApproval", "The offer creator cannot approve the same offer.");
+        }
+        ApprovedOn = approvedOn;
+        ApprovedById = approver;
+        ApprovalDecisionReason = null;
+        Status = JobOfferStatus.Approved;
+    }
+
+    public void RejectApproval(DateTimeOffset rejectedOn, string rejectedById, string reason)
+    {
+        EnsureStatus(JobOfferStatus.PendingApproval);
+        Required(rejectedById, nameof(rejectedById));
+        ApprovalDecisionReason = Required(reason, nameof(reason));
+        RespondedOn = rejectedOn;
+        Status = JobOfferStatus.Draft;
+    }
 
     public void UpdateTerms(
         decimal baseSalary,
@@ -84,7 +137,7 @@ public sealed class JobOffer : CompanyAuditableEntity
 
     public void Issue(DateTimeOffset issuedOn, DateTimeOffset expiresOn)
     {
-        EnsureStatus(JobOfferStatus.Draft);
+        EnsureStatus(JobOfferStatus.Approved);
 
         if (expiresOn <= issuedOn)
         {

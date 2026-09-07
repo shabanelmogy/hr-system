@@ -179,6 +179,18 @@ export default class RecruitmentService {
     return await apiService.post<JobOfferDto>(apiRoutes.recruitment.offers.issue(id));
   }
 
+  static async submitJobOffer(id: number): Promise<JobOfferDto> {
+    return await apiService.post<JobOfferDto>(apiRoutes.recruitment.offers.submit(id));
+  }
+
+  static async approveJobOffer(id: number): Promise<JobOfferDto> {
+    return await apiService.post<JobOfferDto>(apiRoutes.recruitment.offers.approve(id));
+  }
+
+  static async rejectJobOffer(id: number, reason: string): Promise<JobOfferDto> {
+    return await apiService.post<JobOfferDto>(apiRoutes.recruitment.offers.reject(id), { reason });
+  }
+
   static async acceptJobOffer(id: number): Promise<JobOfferDto> {
     return await apiService.post<JobOfferDto>(apiRoutes.recruitment.offers.accept(id));
   }
@@ -203,6 +215,12 @@ export default class RecruitmentService {
     );
   }
 
+  static async getApprovedStaffingRequestOptions(): Promise<import("../types").ApprovedStaffingRequestOptionDto[]> {
+    return await apiService.get<import("../types").ApprovedStaffingRequestOptionDto[]>(
+      apiRoutes.recruitment.requisitions.staffingRequestOptions
+    );
+  }
+
   static async createJobRequisition(data: JobRequisitionMutation): Promise<JobRequisitionDto> {
     return await apiService.post<JobRequisitionDto>(apiRoutes.recruitment.requisitions.create, data);
   }
@@ -217,6 +235,10 @@ export default class RecruitmentService {
 
   static async rejectJobRequisition(id: number, reason: string): Promise<JobRequisitionDto> {
     return await apiService.post<JobRequisitionDto>(apiRoutes.recruitment.requisitions.reject(id), { reason });
+  }
+
+  static async cancelJobRequisition(id: number, reason: string): Promise<JobRequisitionDto> {
+    return await apiService.post<JobRequisitionDto>(apiRoutes.recruitment.requisitions.cancel(id), { reason });
   }
 
   static async getOrgLookup(
@@ -238,4 +260,3 @@ export default class RecruitmentService {
     return await apiService.put<import("../types/recruitmentSettingsTypes").RecruitmentSettingsDto>(apiRoutes.recruitment.settings.base, data);
   }
 }
-
