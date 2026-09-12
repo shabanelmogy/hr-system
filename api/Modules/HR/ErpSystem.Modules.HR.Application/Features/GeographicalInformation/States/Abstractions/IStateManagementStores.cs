@@ -1,0 +1,53 @@
+using ErpSystem.Modules.HR.Application.Common.Paginations;
+using ErpSystem.Modules.HR.Application.Features.GeographicalInformation.States.Contracts;
+using ErpSystem.Modules.HR.Application.Features.GeographicalInformation.States.Queries;
+using ErpSystem.Modules.HR.Domain.GeographicalInformation.States.Entities;
+
+namespace ErpSystem.Modules.HR.Application.Features.GeographicalInformation.States.Abstractions;
+
+public interface IStateReadStore
+{
+    Task<PageResponse<StateListItemResponse>> GetPageAsync(GetStatesQuery query, CancellationToken cancellationToken);
+    Task<StateDetailResponse?> GetByIdAsync(int id, CancellationToken cancellationToken);
+    Task<StateWithDistrictsResponse?> GetWithDistrictsByIdAsync(int id, CancellationToken cancellationToken);
+    Task<IReadOnlyList<StateLookupResponse>> GetLookupAsync(int? countryId, CancellationToken cancellationToken);
+}
+
+public interface IStateWriteStore
+{
+    void Add(State state);
+
+    void AddRange(IReadOnlyCollection<State> states);
+
+    Task<State?> GetForUpdateAsync(int id, CancellationToken cancellationToken);
+
+    Task<IReadOnlyList<State>> GetForUpdateAsync(IReadOnlyCollection<int> ids, CancellationToken cancellationToken);
+
+    Task<int?> GetCountryIdAsync(int stateId, CancellationToken cancellationToken);
+
+    Task<bool> HasConflictAsync(State candidate, int? excludedId, CancellationToken cancellationToken);
+
+    Task<bool> HasAnyConflictAsync(IReadOnlyCollection<State> states, CancellationToken cancellationToken);
+
+    Task<bool> AreCountriesActiveAsync(IReadOnlyCollection<int> countryIds, CancellationToken cancellationToken);
+
+    Task<bool> IsCountryActiveAsync(int countryId, CancellationToken cancellationToken);
+
+    Task<bool> HasActiveDistrictsAsync(int stateId, CancellationToken cancellationToken);
+
+    Task<bool> HasActiveDistrictsAsync(IReadOnlyCollection<int> stateIds, CancellationToken cancellationToken);
+
+    Task<bool> HasActiveAddressesAsync(int stateId, CancellationToken cancellationToken);
+
+    Task<bool> HasActiveAddressesAsync(IReadOnlyCollection<int> stateIds, CancellationToken cancellationToken);
+}
+
+public interface IStateChangeScheduler
+{
+    void Schedule(StateChange change);
+}
+
+public interface IStateAuditTrail
+{
+    void RecordUpdate(State existingState, State updatedState);
+}

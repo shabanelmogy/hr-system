@@ -1,10 +1,14 @@
 
-export function extractValue<T>(response: any): T {
-  if (response?.value && response?.isSuccess) {
-    return response.value;
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+export function extractValue<T>(response: unknown): T {
+  if (isRecord(response) && response.isSuccess === true && "value" in response) {
+    return response.value as T;
   }
-  if (response?.data) {
-    return response.data;
+  if (isRecord(response) && "data" in response && response.data !== undefined) {
+    return response.data as T;
   }
   return response as T;
 }
@@ -12,10 +16,10 @@ export function extractValue<T>(response: any): T {
 /**
  * Extracts an array of values from an API response.
  */
-export function extractValues<T>(response: any): T[] {
+export function extractValues<T>(response: unknown): T[] {
   const extracted = extractValue<T[]>(response);
-  if (Array.isArray(extracted) && extracted.length > 0 && (extracted[0] as any)?.value !== undefined) {
-    return extracted.map((item: any) => extractValue<T>(item));
+  if (Array.isArray(extracted) && extracted.length > 0 && isRecord(extracted[0]) && "value" in extracted[0]) {
+    return extracted.map((item) => extractValue<T>(item));
   }
   return extracted || [];
 }

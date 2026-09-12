@@ -60,11 +60,11 @@ Do NOT implement: Staffing Requests, Envelope Amendments, Recruitment linkage, O
 
 - Commands+validators: `Create/Update/Submit/Approve/RejectWorkforceBudgetCommand`. Create body example and immutability rules are in contract section 6 — follow them verbatim (camelCase JSON, no tenant/company fields; update keeps code/plan/year/revision immutable; reject requires reason).
 - Queries: `GetWorkforceBudgets` (page/search/Status/FiscalYearId/PlanId/sort), `GetWorkforceBudgetById` (full nested detail), `GetBudgetSourcePlans` + `GetBudgetSourcePlanById` (eligible approved plans + lines/targets/periods/snapshots for the allocation UI), `GetPositionEnvelopes` (page/search + FiscalYear/Budget/Plan/Branch/Department/Position/current-historical filters), `GetPositionEnvelopeById` (lineage + capacity). All `AsNoTracking`, bounded pages, allow-listed sorts, no N+1, company-scoped, stable not-found.
-- Suggested ownership: `Contracts/WorkforceBudgetContracts.cs`, `Commands/WorkforceBudgetCommands.cs`, `Queries/WorkforceBudgetQueries.cs`, `Abstractions/IWorkforceBudgetStores.cs`, `Errors/WorkforceBudgetErrors.cs`, Infrastructure `Features/WorkforcePlanning/Persistence/WorkforceBudgetStores.cs` — adapt to the existing Phase 1 layout (`api/HrManagementSystem.Application/Features/WorkforcePlanning/...`). Mirror the Phase 1 file naming you find there:
-- Domain: `api/HrManagementSystem.Domain/WorkforcePlanning/Entities/WorkforcePlan.cs`, `Enums/WorkforcePlanStatus.cs`
-- Application: `api/HrManagementSystem.Application/Features/WorkforcePlanning/...`
-- API controller: `api/HrManagementSystem.Api/Features/WorkforcePlanning/V1/WorkforcePlansController.cs`
-- Persistence configs under `api/HrManagementSystem.Infrastructure/Persistence/Configurations/WorkforcePlanning/`.
+- Suggested ownership: `Contracts/WorkforceBudgetContracts.cs`, `Commands/WorkforceBudgetCommands.cs`, `Queries/WorkforceBudgetQueries.cs`, `Abstractions/IWorkforceBudgetStores.cs`, `Errors/WorkforceBudgetErrors.cs`, Infrastructure `Features/WorkforcePlanning/Persistence/WorkforceBudgetStores.cs` — adapt to the existing Phase 1 layout (`api/Modules/HR/ErpSystem.Modules.HR.Application/Features/WorkforcePlanning/...`). Mirror the Phase 1 file naming you find there:
+- Domain: `api/Modules/HR/ErpSystem.Modules.HR.Domain/WorkforcePlanning/Entities/WorkforcePlan.cs`, `Enums/WorkforcePlanStatus.cs`
+- Application: `api/Modules/HR/ErpSystem.Modules.HR.Application/Features/WorkforcePlanning/...`
+- API controller: `api/ErpSystem.Api/Features/WorkforcePlanning/V1/WorkforcePlansController.cs`
+- Persistence configs under `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/Configurations/WorkforcePlanning/`.
 - DbSets + configs for `WorkforceBudgets`, `WorkforceBudgetLines`, `WorkforceBudgetPeriodAllocations`, `PositionEnvelopes`: composite tenant/company keys (fail closed), Restrict on Plan/Year/Period/Position/Branch/Department/Division + Budget-to-Plan + Envelope-to-Budget/Line, Cascade Budget->Lines->Allocations, `decimal(18,2)`, integer enums, audited RowVersion, unique indexes (code/year, one budget per plan revision, one effective budget per company/year, one allocation per line/period, one envelope per line, envelope code per company).
 - Routes (thin controllers, `ISender` only):
 - `GET/POST /api/v1/workforce-planning/budgets`, `GET/PUT /api/v1/workforce-planning/budgets/{id}`, `POST .../{id}/submit|approve|reject`, `GET .../budgets/source-plans`, `GET .../budgets/source-plans/{planId}`, `GET /api/v1/workforce-planning/position-envelopes`, `GET .../position-envelopes/{id}`.
@@ -104,8 +104,8 @@ Do NOT implement: Staffing Requests, Envelope Amendments, Recruitment linkage, O
 - Mobile: runtime schema parsing + exact payloads; invalidation + permission/read-only gating; create/edit/view preservation + mock data; plans reachable/unchanged, budgets+envelopes reachable; EN/AR/RTL + compact screens.
 - Run narrow tests first, then at minimum:
 ```powershell
-dotnet build api/HrManagementSystem.Api/HrManagementSystem.Api.csproj --no-restore
-dotnet test api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore
+dotnet build api/ErpSystem.Api/ErpSystem.Api.csproj --no-restore
+dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore
 npm run type-check --prefix web-next
 npm run check:architecture --prefix web-next
 npm run typecheck --prefix mobile-react

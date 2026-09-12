@@ -1,17 +1,29 @@
 // src/Utilites/CustomHooks/useGridExport.js
 import { useState, useCallback } from "react";
-import { exportGridToExcel } from "../services/exportToExcel";
+import type { GridApiRef } from "../services/exportToExcel";
+
+type ExportOptions = {
+  selectedOnly?: boolean;
+  fileName?: string;
+  sheetName?: string;
+};
+type GridExportOptions = {
+  apiRef: GridApiRef;
+  showSnackbar?: (severity: string, messages: string[], title: string) => void;
+  t: (key: string, fallback?: string) => string;
+  defaultFileName?: string;
+};
 
 const useGridExport = ({
   apiRef,
   showSnackbar,
   t,
   defaultFileName = "export",
-}: any) => {
+}: GridExportOptions) => {
   const [isExporting, setIsExporting] = useState(false);
 
   const exportToExcel = useCallback(
-    async (options: any = {}) => {
+    async (options: ExportOptions = {}) => {
       const {
         selectedOnly = false,
         fileName = defaultFileName,
@@ -23,6 +35,7 @@ const useGridExport = ({
       try {
         setIsExporting(true);
 
+        const { exportGridToExcel } = await import("../services/exportToExcel");
         const success = exportGridToExcel(apiRef, {
           selectedOnly,
           fileName: selectedOnly ? `${fileName}_selected` : fileName,

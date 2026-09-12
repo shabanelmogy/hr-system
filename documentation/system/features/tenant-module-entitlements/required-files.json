@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "feature": "tenant-module-entitlements",
+  "featureName": "Tenant module entitlements",
+  "referenceFeature": "countries",
+  "purpose": "Final evidence manifest for tenant commercial module grants, RBAC intersection, and Odoo-style launchers.",
+  "reviewArtifact": "documentation/system/features/tenant-module-entitlements/TENANT_MODULE_ENTITLEMENTS-REVIEW-ARTIFACTS.md",
+  "implementationRequest": "documentation/system/features/tenant-module-entitlements/IMPLEMENTATION-REQUEST.md",
+  "canonicalBooks": {
+    "master": "documentation/project/TENANT_MODULE_ENTITLEMENTS_FEATURE_FULL_REVIEW.md",
+    "api": "documentation/api/TenantModuleEntitlements_API_Implementation_Profile.md",
+    "web": "documentation/web-next/features/tenant-module-entitlements-frontend-reference.md",
+    "mobile": "documentation/mobile-react/tenant-module-entitlements-mobile-reference.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "api-module-catalog",
+      "layer": "api",
+      "minimumFiles": 4,
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Modularity"
+    },
+    {
+      "id": "web-modules-feature",
+      "layer": "web",
+      "minimumFiles": 5,
+      "path": "web-next/src/platform/modules"
+    },
+    {
+      "id": "mobile-modules-feature",
+      "layer": "mobile",
+      "minimumFiles": 6,
+      "path": "mobile-react/src/platform/modules"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide implementation and documentation rules"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/system/features/tenant-module-entitlements/IMPLEMENTATION-REQUEST.md",
+      "purpose": "Frozen scope and quality gates"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/system/features/tenant-module-entitlements/TENANT_MODULE_ENTITLEMENTS-REVIEW-ARTIFACTS.md",
+      "purpose": "Requirements, evidence, findings, and verification"
+    },
+    {
+      "id": "master-book",
+      "layer": "documentation",
+      "path": "documentation/project/TENANT_MODULE_ENTITLEMENTS_FEATURE_FULL_REVIEW.md",
+      "purpose": "Cross-platform authority"
+    },
+    {
+      "id": "api-book",
+      "layer": "documentation",
+      "path": "documentation/api/TenantModuleEntitlements_API_Implementation_Profile.md",
+      "purpose": "API authority"
+    },
+    {
+      "id": "web-book",
+      "layer": "documentation",
+      "path": "documentation/web-next/features/tenant-module-entitlements-frontend-reference.md",
+      "purpose": "Web authority"
+    },
+    {
+      "id": "mobile-book",
+      "layer": "documentation",
+      "path": "documentation/mobile-react/tenant-module-entitlements-mobile-reference.md",
+      "purpose": "Mobile authority"
+    },
+    {
+      "id": "module-definition",
+      "layer": "api",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Modularity/ModuleDefinition.cs",
+      "purpose": "Stable catalog contract"
+    },
+    {
+      "id": "hr-module-definition",
+      "layer": "api",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR/HrModuleDefinition.cs",
+      "purpose": "HR submodule and permission ownership"
+    },
+    {
+      "id": "catalog-service",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Modules/ModuleCatalogPolicy.cs",
+      "purpose": "Installed and accessible catalog projection"
+    },
+    {
+      "id": "entitlement-service",
+      "layer": "api",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Tenancy/Services/TenantModuleEntitlementService.cs",
+      "purpose": "Differential persistence and database permission checks"
+    },
+    {
+      "id": "entitlement-migration",
+      "layer": "database",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Migrations/20260909122310_AddTenantModuleEntitlements.cs",
+      "purpose": "Schema and compatibility seed"
+    },
+    {
+      "id": "modules-controller",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Modules/V1/ModulesController.cs",
+      "purpose": "Catalog endpoints"
+    },
+    {
+      "id": "api-regression-test",
+      "layer": "test",
+      "path": "api/ErpSystem.Tests/TenantUserFoundationTests.cs",
+      "purpose": "HR plus Accounting persistence regression"
+    },
+    {
+      "id": "web-launcher",
+      "layer": "web",
+      "path": "web-next/src/shared/components/layout/module-launcher/ModuleLauncher.tsx",
+      "purpose": "Shared Odoo-style launcher"
+    },
+    {
+      "id": "web-apps-route",
+      "layer": "web",
+      "path": "web-next/src/app/(main)/apps/page.tsx",
+      "purpose": "Applications entry route"
+    },
+    {
+      "id": "web-submodule-route",
+      "layer": "web",
+      "path": "web-next/src/app/(main)/apps/[moduleCode]/[submoduleCode]/page.tsx",
+      "purpose": "Validated submodule entry"
+    },
+    {
+      "id": "web-entitlement-helper",
+      "layer": "web",
+      "path": "web-next/src/platform/tenants/entitlements.ts",
+      "purpose": "Immutable tenant selection behavior"
+    },
+    {
+      "id": "web-regression-test",
+      "layer": "test",
+      "path": "web-next/src/platform/tenants/entitlements.test.ts",
+      "purpose": "Accounting selection preservation"
+    },
+    {
+      "id": "mobile-launcher",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/modules/presentation/screens/ModuleLauncherScreen.tsx",
+      "purpose": "Native Odoo-style launcher"
+    },
+    {
+      "id": "mobile-submodule-route",
+      "layer": "mobile",
+      "path": "mobile-react/app/(main)/apps/[moduleCode]/[submoduleCode].tsx",
+      "purpose": "Thin Expo submodule route"
+    },
+    {
+      "id": "mobile-entitlement-helper",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenants/domain/policies/tenant-entitlements.ts",
+      "purpose": "Immutable tenant selection behavior"
+    },
+    {
+      "id": "mobile-regression-test",
+      "layer": "test",
+      "path": "mobile-react/src/platform/tenants/domain/policies/tenant-entitlements.test.ts",
+      "purpose": "Accounting selection preservation"
+    }
+  ]
+}

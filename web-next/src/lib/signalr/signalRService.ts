@@ -183,12 +183,17 @@ class SignalRService {
       throw new Error("Realtime token response did not contain a token");
     }
 
-    if (this.enabled && tokenVersion === this.tokenVersion) {
-      this.cachedToken = {
-        value: payload.token,
-        expiresAt: getJwtExpiration(payload.token),
-      };
+    // A token request may finish after logout or a company switch. Returning
+    // it would let SignalR authenticate the next connection with the previous
+    // context even though we intentionally skipped caching it.
+    if (!this.enabled || tokenVersion !== this.tokenVersion) {
+      throw new Error("Realtime token request became stale");
     }
+
+    this.cachedToken = {
+      value: payload.token,
+      expiresAt: getJwtExpiration(payload.token),
+    };
     return payload.token;
   }
 

@@ -1,5 +1,5 @@
 -- =====================================================
--- Database Performance Indexes for HR Management System
+-- Database Performance Indexes for ERP System
 -- =====================================================
 -- Purpose: Optimize authentication and login performance
 -- Expected Impact: 5-10 seconds faster login

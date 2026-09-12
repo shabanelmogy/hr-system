@@ -21,7 +21,7 @@ const SignalRContext = createContext<SignalRContextValue>({
 });
 
 export function SignalRProvider({ children }: { children: ReactNode }) {
-  const { user, isLoading } = useSession();
+  const { user, isLoading, isSwitchingCompany, isLoggingOut } = useSession();
   const authenticatedUserId = user?.userId;
   const [connectionState, setConnectionState] = useState<SignalRContextValue>({
     isConnected: false,
@@ -40,6 +40,10 @@ export function SignalRProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
+    if (isSwitchingCompany || isLoggingOut) {
+      void signalRService.setEnabled(false);
+      return;
+    }
     if (isLoading) return;
 
     const isSuperAdmin = user?.roles?.some(
@@ -75,7 +79,7 @@ export function SignalRProvider({ children }: { children: ReactNode }) {
       cancelled = true;
       clearTimeout(timeoutId);
     };
-  }, [authenticatedUserId, isLoading, user?.companyId, user?.roles, user?.tenantId]);
+  }, [authenticatedUserId, isLoading, isSwitchingCompany, isLoggingOut, user?.companyId, user?.roles, user?.tenantId]);
 
   return (
     <SignalRContext.Provider value={connectionState}>

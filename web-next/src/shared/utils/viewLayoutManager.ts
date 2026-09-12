@@ -40,7 +40,8 @@ export const generateStorageKey = (module: string, page: string, userId: string 
 };
 
 // Responsive layout helpers
-export const getResponsiveLayout = (breakpoints: any) => {
+export type ViewBreakpoints = { isSm?: boolean; isMd?: boolean; isLg?: boolean };
+export const getResponsiveLayout = (breakpoints: ViewBreakpoints) => {
   const { isSm, isMd, isLg } = breakpoints;
   
   if (isSm) return "smallList";
@@ -64,6 +65,10 @@ export class ViewLayoutManager {
   // Get all saved view layouts for the current user/session
   getAllSavedLayouts() {
     const layouts: Record<string, string> = {};
+
+    if (typeof window === "undefined") {
+      return layouts;
+    }
     
     try {
       for (let i = 0; i < localStorage.length; i++) {
@@ -117,17 +122,21 @@ export class ViewLayoutManager {
   }
 
   // Import view layout preferences
-  importPreferences(jsonData) {
+  importPreferences(jsonData: unknown) {
     try {
-      const data = typeof jsonData === "string" ? JSON.parse(jsonData) : jsonData;
-      
-      if (!data.layouts || typeof data.layouts !== "object") {
+      const data: unknown = typeof jsonData === "string" ? JSON.parse(jsonData) : jsonData;
+      if (typeof data !== "object" || data === null || !("layouts" in data)) {
+        throw new Error("Invalid import data format");
+      }
+      const layouts = data.layouts;
+
+      if (!layouts || typeof layouts !== "object") {
         throw new Error("Invalid import data format");
       }
       
       let importedCount = 0;
       
-      Object.entries(data.layouts).forEach(([key, value]) => {
+      Object.entries(layouts).forEach(([key, value]) => {
         if (key.startsWith(`${this.prefix}-view-layout-`) && typeof value === "string") {
           localStorage.setItem(key, value);
           importedCount++;
@@ -165,23 +174,23 @@ export class ViewLayoutManager {
 }
 
 // Default instance
-export const defaultViewLayoutManager = new ViewLayoutManager("hr-system");
+export const defaultViewLayoutManager = new ViewLayoutManager("erp-system");
 
 // Utility functions for common operations
 export const viewLayoutUtils = {
   // Generate a storage key for a specific page
-  getStorageKey: (pageName, userId = null) => 
-    generateStorageKey("hr-system", pageName, userId),
+  getStorageKey: (pageName: string, userId: string | number | null = null) =>
+    generateStorageKey("erp-system", pageName, userId),
   
   // Get responsive default layout
-  getResponsiveDefault: (breakpoints) => getResponsiveLayout(breakpoints),
+  getResponsiveDefault: (breakpoints: ViewBreakpoints) => getResponsiveLayout(breakpoints),
   
   // Validate layout
-  validate: (layout, validLayouts) => isValidLayout(layout, validLayouts),
+  validate: (layout: string, validLayouts?: string[]) => isValidLayout(layout, validLayouts),
   
   // Get layout configuration
-  getConfig: (configName = "standard") => VIEW_LAYOUT_CONFIGS[configName] || VIEW_LAYOUT_CONFIGS.standard,
+  getConfig: (configName: keyof typeof VIEW_LAYOUT_CONFIGS = "standard") => VIEW_LAYOUT_CONFIGS[configName] || VIEW_LAYOUT_CONFIGS.standard,
   
   // Create responsive layout function
-  createResponsiveLayoutFn: (breakpoints) => () => getResponsiveLayout(breakpoints),
+  createResponsiveLayoutFn: (breakpoints: ViewBreakpoints) => () => getResponsiveLayout(breakpoints),
 };

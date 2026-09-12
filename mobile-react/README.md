@@ -1,6 +1,6 @@
-# HR Management Mobile
+# ERP System Mobile
 
-Expo SDK 57 application for the HR Management System (React Native 0.86 and React 19.2).
+Expo SDK 57 application for the ERP System (React Native 0.86 and React 19.2).
 
 ## Commands
 

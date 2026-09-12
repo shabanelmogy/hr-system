@@ -180,7 +180,7 @@ query.
 ### 6.2 Add the HR API dataset profile
 
 Extend the allowlisted `ICrystalReportDataSource` implementation at
-`api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs`.
+`api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs`.
 
 The profile must:
 
@@ -225,7 +225,7 @@ the deployment path to a client.
 
 ## 7. Web feature integration
 
-Use the shared exports from `web-next/src/features/reporting`:
+Use the shared exports from `web-next/src/shared/reporting`:
 
 - `crystalReportService.listPublished(entityKey)`;
 - `crystalReportService.render(reportId, { language, filters })`;
@@ -255,7 +255,7 @@ Do not use the legacy public `report/info` or `report/generate` endpoints,
 Mobile must use the same HR API published catalog and render endpoint as web. The
 first mobile Crystal consumer (Countries) introduced the shared reporting
 boundary; every other feature consumes reports only through its curated public
-API at `mobile-react/src/features/reporting`:
+API at `mobile-react/src/platform/reporting`:
 
 - `crystalReportsApi.listPublished(entityKey)` parses
   `GET /api/v1/crystal-reports?entityKey={key}` with
@@ -373,25 +373,25 @@ granted, and both allowlisted runtime profiles support its `entityKey`.
 ## 12. Implementation anchors
 
 - Public controller:
-  `api/HrManagementSystem.Api/Features/Analytics/CrystalReports/V1/CrystalReportsController.cs`
+  `api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/Analytics/CrystalReports/V1/CrystalReportsController.cs`
 - Application contracts and handlers:
-  `api/HrManagementSystem.Application/Features/Analytics/CrystalReports`
+  `api/Modules/HR/ErpSystem.Modules.HR.Application/Features/Analytics/CrystalReports`
 - Dataset provider:
-  `api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs`
+  `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs`
 - Internal runtime profile:
   `api/CrystalReportGeneratorApi/Helpers/CrystalReport/ManagedReportRuntime.cs`
 - Internal render adapter:
   `api/CrystalReportGeneratorApi/Controllers/InternalReportRenderController.cs`
 - Web routes and shared service:
   `web-next/src/config/api/crystalReports.ts` and
-  `web-next/src/features/reporting/crystal-report-manager/services.ts`
+  `web-next/src/shared/reporting/crystal-report-manager/services.ts`
 - Applied web consumers:
-  `web-next/src/features/basic-data/geographical-information/countries/reports` and
-  `web-next/src/features/basic-data/geographical-information/states/reports`
+  `web-next/src/modules/hr/basic-data/geographical-information/countries/reports` and
+  `web-next/src/modules/hr/basic-data/geographical-information/states/reports`
 - Mobile shared service and schemas:
-  `mobile-react/src/features/reporting/crystal-reports/crystal-report-api.ts` and
-  `mobile-react/src/features/reporting/crystal-reports/crystal-report-schemas.ts`
+  `mobile-react/src/platform/reporting/data/remote/crystal-report-remote-data-source.ts` and
+  `mobile-react/src/platform/reporting/data/remote/crystal-report-schemas.ts`
 - Applied mobile consumer:
-  `mobile-react/src/features/basic-data/countries/components/CountryReportView.tsx`
+  `mobile-react/src/modules/hr/basic-data/countries/presentation/components/CountryReportView.tsx`
 - Manager administration page:
-  `web-next/src/features/reporting/crystal-report-manager/CrystalReportManagerPage.tsx`
+  `web-next/src/shared/reporting/crystal-report-manager/CrystalReportManagerPage.tsx`

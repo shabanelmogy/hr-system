@@ -4,11 +4,13 @@ import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
 import 'react-native-reanimated';
 
+import '@/src/shell';
+
 import { AppProviders } from '@/src/core/providers/AppProviders';
 import { useOnboarding } from '@/src/core/onboarding';
 import { useAppTheme } from '@/src/core/theme';
-import { AuthProvider, useAuth } from '@/src/features/auth';
-import { RealtimeProvider } from '@/src/features/realtime';
+import { AuthProvider, useAuth } from '@/src/platform/auth';
+import { RealtimeProvider } from '@/src/platform/realtime';
 import { AppScreen, AppStateView } from '@/src/shared/components';
 
 export const unstable_settings = {

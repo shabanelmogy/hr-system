@@ -18,7 +18,7 @@ device, and submits a sanitized result.
    publish folder:
 
    ```powershell
-   dotnet publish .\HrManagementSystem.Api\HrManagementSystem.Api.csproj -c Release -o .\artifacts\api-publish
+   dotnet publish .\ErpSystem.Api\ErpSystem.Api.csproj -c Release -o .\artifacts\api-publish
    .\scripts\Build-AttendanceAgentDownload.ps1 `
      -PublishedAgentPath G:\test\ZK-READER\connector\publish\win-x86 `
      -ApiPublishPath .\artifacts\api-publish

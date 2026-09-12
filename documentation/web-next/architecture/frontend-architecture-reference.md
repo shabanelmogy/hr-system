@@ -1,6 +1,6 @@
 # Frontend Architecture Reference
 
-Status: Applied to `web-next`.
+Status: Applied to `web-next`; modular migration phases 1-8 foundation completed 2026-09-10.
 
 This document is the architecture baseline for future frontend work. It covers ownership, dependency direction, routing, naming, and scalability. It does not define authentication behavior, API implementation, UI design, or performance policy.
 
@@ -13,6 +13,12 @@ This document is the architecture baseline for future frontend work. It covers o
 - [States Next.js Frontend Reference](../features/states-frontend-reference.md):
   the parent-dependent applied reference; it is not evidence for unrelated fields
   or views.
+- [Business Feature Template](business-feature-template.md): the standard query,
+  validation, form, feedback and module-ownership shape, applied to Fiscal Years.
+- [Frontend Module Generator](module-generator.md): module scaffold contract and
+  the Accounting/Chart-of-Accounts backend-contract constraint.
+- [Performance Baseline](performance-baseline.md): production First Load and
+  lazy-chunk measurements after the modular migration.
 
 ## Review Summary
 
@@ -40,31 +46,136 @@ Low-priority cleanup that was addressed:
 - Moved global-presence dashboard ownership from `home` to geographical information.
 - Replaced layout-owned content wrapping with a shared layout utility.
 
+## Modular ownership baseline
+
+The target ownership structure is now physically applied. The legacy
+`src/features` and `src/layouts` roots are absent and remain guarded as migration
+tripwires; business code lives under `src/modules`, product platform capabilities
+under `src/platform`, and application chrome under `src/shell`.
+
+| Owner | Current directories | Dependency notes |
+| --- | --- | --- |
+| Platform | `advanced-tools`, `auth`, `file-manager`, `global-search`, `modules`, `notifications`, `realtime`, `tenant-access`, `tenant-admins`, `tenants` | Depends only on shared/low-level infrastructure. Business modules register integrations such as realtime invalidation into Platform public APIs. |
+| HR | `appointments`, `attendance-devices`, `basic-data`, `finance/fiscal-years`, `home`, `recruitment`, `workforce-planning` | Matches the server HR module catalog. Fiscal Years belongs to HR `workforce`, not Accounting. |
+| Accounting | module definition and module-local infrastructure | The server Accounting module currently publishes no business submodules. Do not invent frontend business routes before the backend contract exists. |
+| Shell | sidebar, top bar, layout, route guard | Consumes Platform public APIs and shared UI only; it does not import business-module internals. |
+| Shared | domain-neutral UI/infrastructure plus `reporting` | Must remain business-neutral. Domain report pages stay with their module owner. |
+
+`check:architecture` analyzes static imports and literal dynamic `import("...")`
+expressions, validates module directories, rejects code returning to legacy
+`src/features`/`src/layouts`, validates dependency direction, and enforces public
+`index.ts` boundaries across owners.
+
+### Shared module shell behavior
+
+`shared/components/layout/feature-module/FeatureModuleLayout` is the reusable
+module shell for overview, list, and detail routes. It owns the responsive
+navigation drawer, breadcrumbs, active-trail selection, and the bounded content
+panel. The content panel uses `overflow-y: auto` so long overview/card pages keep
+their scroll inside the shell; feature pages must keep child grids and data
+panels at `min-height: 0` so they do not create a second body scrollbar. The
+navigation helper prefers the deepest matching route when legacy prefixes
+overlap. Consumers provide translated labels and module-owned items; they do
+not recreate the drawer or apply domain-specific route matching.
+
+The shell is compatible with RTL and narrow viewports. On screens below `md`,
+the temporary drawer is above the fixed top bar and the top bar collapses the
+brand text while preserving accessible icon labels and context actions. Focused
+coverage lives in `shared/components/layout/feature-module/navigation.test.ts`
+and the consuming Basic Data, Workforce Planning, and Attendance layouts are
+the compatibility examples.
+
+### User and company context lifecycle
+
+`SessionContext` owns the abort controller and generation gate for session and
+company transitions. When the user, tenant, or company changes, requests from
+the previous identity are aborted and their results cannot publish into the new
+identity. The API client remains gated until the transition has completed; it
+does not replay a request that was started under the previous context.
+
+`MainShell` remounts the QueryClient and feature subtree with the complete
+user/tenant/company identity key during a switch or logout. This clears query
+cache and feature-local stores before the new subtree mounts, so a previous
+company's data cannot remain visible while the next context is loading.
+
+The shared `UnsavedChangesProvider` exposes
+`requestDiscard(): Promise<boolean>`. Same-tab links, sidebar items, module
+launchers, and company switching use this promise before navigation. A busy
+form submission refuses navigation, and a pending confirmation resolves
+`false` when its provider unmounts. Browser same-document Back/Forward uses
+Navigation API cancelable `navigate` events, cancelled before Next handles the
+route. One confirmation retains the first destination key during repeated
+traversals; acceptance calls `traverseTo(key)` exactly once. Dirty/clean changes
+never push, replace or remove history entries. Pending decisions cannot replay
+after disposal or a change of origin. The existing shared dialog provides RTL,
+translated labels and keyboard support; no new consumer options are required.
+`FormContainer` registers dirty/pending submissions; company and module switchers
+continue to call `requestDiscard()` before changing context.
+
+Compatibility: this browser-history guarantee requires Navigation API and a
+cancelable same-document event. Older browsers retain application-link guards
+and full-document beforeunload protection, but same-document browser traversal
+is not guaranteed there. No unsafe popstate restoration fallback is installed.
+`historyTraversalGuard.test.ts` covers repeated traversal, cancellation, exact
+multi-step and forward destinations, disposal and changed origins. A local real
+Chromium harness verified no router popstate before approval, one exact accepted
+traversal and unchanged history length. Full authenticated ERP journeys remain
+a manual release check when the backend is unavailable.
+
+Company-switch verification suppresses per-attempt failure redirects. Only the
+final unsuccessful verification redirects to service-unavailable; a session 401
+terminates verification through logout. Stale generations cannot overwrite the
+verification result; a concurrent logout invalidates the switch via its epoch.
+
+### On-demand feature tooling
+
+Heavy export dependencies are loaded only when the export action is invoked.
+`useGridExport` keeps its existing consumer-facing behavior while importing
+the spreadsheet tool on demand, so ordinary list and dashboard routes do not
+pay the export bundle cost. The export path retains the shared loading and
+error states and is covered by its focused hook checks.
+
+### Route and entitlement ownership baseline
+
+- `/attendance-trends` is owned by HR `analytics`; prefix matching must not
+  classify it as `attendance`.
+- `/administration/crystal-reports` keeps its legacy URL but is owned by HR
+  `analytics`, matching the server's `CrystalReports:*` permission catalog.
+- Sidebar module filtering and route authorization use the same module-access
+  predicate. Permission filtering must preserve leaf navigation items rather than
+  converting them into empty containers that the module filter removes.
+- Route prefixes, launcher presentation, entry candidates, permissions metadata,
+  navigation metadata, dependencies, and lazy translation namespaces belong to
+  the frontend module definition in `src/modules/<module>/moduleDefinition.tsx`.
+- HR business navigation is authored in `src/modules/hr/navigation/*.tsx` and
+  exposed through `hrModuleDefinition.navigation`; the shell consumes that
+  public definition instead of keeping a second business-navigation registry.
+  Submodule menus derive their links from the same definitions and use the
+  longest matching route prefix. Neutral navigation types and factories live
+  under `src/shared/components/layout/navigation`; the shell only keeps a
+  compatibility re-export for moved icons. `src/app/(main)/navigationConfig.test.tsx`
+  is the integration coverage for this composition.
+- Server `/modules/accessible` remains authoritative for purchased/enabled
+  modules and user permission filtering. The frontend registry only intersects
+  those server results with capabilities present in the current build.
+
 ## Target Structure
+
+The applied physical structure is:
 
 ```text
 src/
   app/                         # Next.js App Router only; thin route adapters
-  features/                    # Business capabilities and feature-owned UI
-    <feature>/
-      pages/                   # Route-level feature components
-      components/              # Feature-specific UI
-      hooks/                   # Feature-specific hooks
-      services/                # Feature-specific API/service logic
-      types/                   # Feature-specific types
-      utils/                   # Feature-specific helpers
-      index.ts                 # Deliberate public feature API
-  layouts/                     # Application shells and shell-owned UI
-  shared/
-    components/                # Domain-neutral reusable UI
-    contexts/                  # Cross-cutting React contexts
-    hooks/                     # Domain-neutral hooks
-    services/                  # Domain-neutral services
-    utils/                     # Domain-neutral helpers
-  lib/                         # Application infrastructure and integrations
-  config/                      # Route, API, and environment configuration
-  theme/                       # Theme and design-system integration
-  types/                       # Global declarations only
+  platform/                    # identity, tenancy, entitlements, platform services
+  modules/
+    hr/                        # HR-owned business capabilities
+    accounting/                # Accounting-owned business capabilities
+  shell/                       # top bar, sidebar, app/module launch composition
+  shared/                      # domain-neutral reusable UI and infrastructure
+  lib/                         # low-level integrations
+  config/                      # routes, API and environment configuration
+  theme/
+  types/
 ```
 
 ## Dependency Direction
@@ -72,9 +183,10 @@ src/
 Allowed direction:
 
 ```text
-app -> features, layouts, shared, lib, config, theme
-layouts -> feature public APIs, shared, lib, config, theme
-features -> shared, lib, config, theme, same-feature modules
+app -> module/platform composition roots, shell, shared, lib, config, theme
+shell -> platform public APIs, shared, lib, config, theme
+modules -> platform public APIs, shared, lib, config, theme, same-module features
+platform -> shared, lib, config, theme
 shared -> lib, config, theme
 lib -> config and infrastructure dependencies
 config -> external/configuration dependencies only
@@ -82,13 +194,14 @@ config -> external/configuration dependencies only
 
 Rules:
 
-1. `src/app` contains route adapters, metadata, loading, error, and not-found boundaries. Business UI belongs in `src/features`.
-2. `src/features` must never import from `src/app` or `src/layouts`.
-3. `src/shared` must never import a feature, layout, or route module.
-4. Cross-feature and layout-to-feature imports are allowed only through the target feature's deliberate `index.ts` public API.
-5. Shared services must remain domain-neutral. Feature registration belongs to the feature that owns it.
-6. Do not create imports through a broad root barrel when a domain barrel or direct module import is clearer.
-7. New code must not introduce circular dependencies.
+1. `src/app` contains route adapters, composition registration, metadata, loading, error, and not-found boundaries. Business UI belongs in `src/modules`.
+2. Business modules must never import from `src/app` or `src/shell`.
+3. Platform must never import business modules. Business-owned registrations call a Platform public contract instead.
+4. `src/shared` must never import Platform, Shell, a business module, or route module.
+5. Cross-owner imports target deliberate `index.ts` public APIs.
+6. Shared services must remain domain-neutral. Business registration belongs to the module that owns it.
+7. Do not create imports through a broad root barrel when a domain barrel or direct module import is clearer.
+8. New code must not introduce circular dependencies.
 
 ## Feature Ownership
 
@@ -162,14 +275,15 @@ and shared loading/error/empty states.
 
 Current examples:
 
-- Geographical pages live under `src/features/basic-data/geographical-information`.
+- Geographical pages live under `src/modules/hr/basic-data/geographical-information`.
 - Global presence is owned by geographical information.
-- Home dashboard composition lives under `src/features/home`.
-- File listing and media preview live under `src/features/file-manager`.
+- Home dashboard composition lives under `src/modules/hr/home`.
+- File listing and media preview live under `src/platform/file-manager`.
 - Advanced tools are split by capability into `external-tools`, `localization`, and `track-changes`; reusable code stays inside the owning subfeature unless it is domain-neutral and used elsewhere.
-- Notification API access, query state, realtime handling, and UI live under `src/features/notifications`.
-- User-profile API access and query hooks live under `src/features/auth/profile`.
-- Cross-domain report viewers and report API access live under `src/features/reporting`; domain report pages remain with their owning domain feature.
+- Notification API access, query state, realtime handling, and UI live under `src/platform/notifications`.
+- User-profile API access and query hooks live under `src/platform/auth/profile`.
+- Cross-domain report viewers and report API access live under `src/shared/reporting`; domain report pages remain with their owning module feature.
+- Fiscal Years live under `src/modules/hr/finance/fiscal-years` because the server HR module catalog assigns `FiscalYears:*` to the `workforce` submodule.
 - Generic SignalR connection infrastructure lives under `src/lib/signalr`.
 - Reusable content wrapping and sidebar context live under `src/shared`.
 
@@ -201,29 +315,33 @@ npm.cmd run check:architecture
 npm.cmd run type-check
 npm.cmd run type-check:strict
 npm.cmd run lint -- --quiet
-npm.cmd test -- --run
+npm.cmd run test:module-generator
+npm.cmd test
 npm.cmd run build
+npm.cmd run measure:build
 ```
 
-`check:architecture` is implemented in `scripts/check-architecture.mjs` and
-checks dependency direction, import cycles, unsafe transformed-optional Zod
-schemas, manual top-level-only `MyForm` error projection, and global disabling
-of stale-query refetch on mount. Any new exception must be justified in code
-review and reflected here.
+`check:architecture` is implemented in `scripts/check-architecture.mjs` with
+ownership declarations in `scripts/module-boundaries.mjs`. It checks static and
+literal dynamic dependency direction, target module completeness, declared
+cross-owner dependencies, public APIs, import cycles, unsafe
+transformed-optional Zod schemas, manual top-level-only `MyForm` error projection,
+and global disabling of stale-query refetch on mount. Any new exception must be
+justified in code review and reflected here.
 
 ## Future Change Checklist
 
 - [ ] Start from the feature implementation request, review artifact, and affected generated phase packet.
 - [ ] Classify each optional view independently for web/mobile before adding a route or component.
-- [ ] Identify the owning feature before creating files.
+- [ ] Identify the owning module/platform capability before creating files.
 - [ ] Inspect existing shared components and tests before creating or replacing UI.
 - [ ] Preserve shared behavior and configure it through public props; document any explicit exception.
 - [ ] Keep the App Router adapter thin.
-- [ ] Keep feature code independent from layouts and routes.
+- [ ] Keep business code independent from Shell and App Router internals.
 - [ ] Confirm shared code has no feature-specific imports.
 - [ ] Build optional control schemas from the shared Zod form primitives.
 - [ ] Flatten `MyForm` errors through `toFormErrorMessages()` and provide translated field labels.
 - [ ] Invalidate stable root/dependency keys after mutations and verify stale inactive data refetches on remount.
 - [ ] Use the established lowercase directory and PascalCase component naming.
-- [ ] Add or update a feature `index.ts` only when a public cross-feature API is needed.
+- [ ] Add or update a feature/module `index.ts` only when a public boundary is needed.
 - [ ] Run the architecture, type, lint, test, and build checks.

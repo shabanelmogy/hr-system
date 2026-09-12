@@ -1,3 +1,3 @@
-import { InvitationAcceptanceScreen } from '@/src/features/auth';
+import { InvitationAcceptanceScreen } from '@/src/platform/auth';
 
 export default InvitationAcceptanceScreen;

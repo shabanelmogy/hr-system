@@ -1,0 +1,12 @@
+{
+  "name": "Human Resources",
+  "submodules": {
+    "basic-data": "Basic data",
+    "recruitment": "Recruitment",
+    "workforce": "Workforce planning",
+    "attendance": "Attendance",
+    "analytics": "Analytics",
+    "administration": "Administration",
+    "collaboration": "Collaboration"
+  }
+}

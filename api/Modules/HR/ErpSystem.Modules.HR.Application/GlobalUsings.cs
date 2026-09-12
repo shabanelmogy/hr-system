@@ -1,0 +1,11 @@
+global using System.Globalization;
+global using System.Text;
+global using FluentValidation;
+global using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
+global using ErpSystem.Modules.HR.Application.Common.Consts;
+global using ErpSystem.Modules.HR.Application.Common.Errors;
+global using ErpSystem.Modules.HR.Application.Common.Extensions;
+global using ErpSystem.Modules.HR.Application.Common.Files;
+global using ErpSystem.Modules.HR.Application.Common.Settings;
+global using ErpSystem.Modules.Platform.Contracts.Authentication.Tokens;
+global using Microsoft.Extensions.Localization;

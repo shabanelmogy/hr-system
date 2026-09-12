@@ -52,7 +52,7 @@ and `Excluded` means no runtime surface.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | addresses-master | 1 | `75e97dda56319742c7d1cc6ff3146ab382fa198888f10d13a884f7dc6d767c50` |
-| addresses-master | 6 | `092efe579125795dd3e96f224fb296b90ea0ad86eab17f9eaef9924f667150b1` |
+| addresses-master | 6 | `6c4af3ebfa83c14e3d2e2cfe0d70d525099836e2de00ce2db01b52fa9921a7f6` |
 | addresses-api | 1 | `e5a5160752a3f23ed76c056cf8b871640f291ab2bad5db097d1439c49f22daff` |
 | addresses-web | 1 | `eb5da2402bb94c969e2b61f85de4e7a52a394b1fc808a321e929a3257d8d1b3b` |
 | addresses-mobile | 1 | `76ed40a2410aebdffd449bbc75169f0a943b541e69dd029a0029fa2fee3abf35` |

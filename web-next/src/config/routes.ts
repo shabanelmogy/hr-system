@@ -51,6 +51,7 @@ export interface AuthRoutes {
   rolesPage: AppPath;
   usersPage: AppPath;
   invitationsPage: AppPath;
+  offlineOperationsPage: AppPath;
   rolePermissionsPage: (id: string) => AppPath;
   crystalReportsPage: AppPath;
 }
@@ -86,6 +87,8 @@ export interface AppRoutes {
   acceptInvitation: "/accept-invitation";
   changePassword: "/change-password";
   home: "/";
+  apps: AppPath;
+  module: (moduleCode: string) => AppPath;
   profile: "/profile";
   extras: ExtrasRoutes;
   advancedTools: AdvancedToolsRoutes;
@@ -119,6 +122,8 @@ export const appRoutes: AppRoutes = {
   acceptInvitation: "/accept-invitation",
   changePassword: "/change-password",
   home: "/",
+  apps: toAppPath("/apps"),
+  module: (moduleCode) => toAppPath(`/apps/${moduleCode}`),
   profile: "/profile",
 
   extras: {
@@ -163,6 +168,7 @@ export const appRoutes: AppRoutes = {
     rolesPage: "/administration/roles",
     usersPage: "/administration/users",
     invitationsPage: toAppPath("/administration/invitations"),
+    offlineOperationsPage: toAppPath("/administration/offline-operations"),
     rolePermissionsPage: (id) =>
       toAppPath(`/administration/manage-role-permissions/${id}`),
     // Cast while Next's generated typed-route declarations catch up to this new App Router page.

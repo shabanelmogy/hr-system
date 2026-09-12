@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { CompanyGeographicScopePage } from "@/features/basic-data/organizational-structure/company-geographic-scope";
+import { CompanyGeographicScopePage } from "@/modules/hr/basic-data/organizational-structure/company-geographic-scope";
 
 export const metadata: Metadata = {
-  title: "Company Geographic Scope | HR Management System",
+  title: "Company Geographic Scope | ERP System",
   description: "Configure the current company's operating countries.",
 };
 

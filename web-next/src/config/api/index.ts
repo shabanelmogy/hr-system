@@ -13,6 +13,8 @@ import { attendanceDevices } from './attendanceDevices';
 import { recruitment } from './recruitment';
 import { fiscalYears } from './fiscalYears';
 import { workforcePlanning } from './workforcePlanning';
+import { modules } from './modules';
+import { offlineOperations } from './offlineOperations';
 
 export { version } from './constants';
 
@@ -41,6 +43,8 @@ export const apiRoutes = {
   recruitment,
   fiscalYears,
   workforcePlanning,
+  modules,
+  offlineOperations,
 };
 
 export default apiRoutes;

@@ -4,7 +4,7 @@ Status: applied Expo server-managed feature profile. Requires Expo SDK 57 conven
 
 ## 1. Source inventory
 
-The physical route is `app/(main)/basic-data/geographical-information/states.tsx`. The feature owns `src/features/basic-data/states/{api,queries,types,components,screens,index.ts}` and uses only shared mobile primitives plus Countries’ deliberate public API for parent lookup.
+The physical route is `app/(main)/basic-data/geographical-information/states.tsx`. The feature owns `src/modules/hr/basic-data/states/{domain,application,data,presentation,index.ts}` and uses only shared mobile primitives plus Countries’ deliberate public API for parent lookup.
 
 ## 2. Route and policy
 

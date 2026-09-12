@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Register | HR Management System",
-  description: "HR Management System page for Register."
+  title: "Register | ERP System",
+  description: "ERP System page for Register."
 };
 
-import PageComponent from "@/features/auth/register/Register";
+import PageComponent from "@/platform/auth/register/Register";
 import { publicSelfRegistrationEnabled } from "@/config/publicEnv";
 import { appRoutes } from "@/config/routes";
 import { redirect } from "next/navigation";

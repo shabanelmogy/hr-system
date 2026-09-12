@@ -1,4 +1,4 @@
-# HR Management System Frontend
+# ERP System Frontend
 
 `web-next/` is the canonical and supported frontend for this repository.
 
@@ -28,4 +28,24 @@ a global `mkcert` command is not required. Existing certificate files are moved
 to timestamped `.stale-*` backups before replacement.
 
 See [`../documentation/web-next/architecture/frontend-architecture-reference.md`](../documentation/web-next/architecture/frontend-architecture-reference.md) for the frontend architecture conventions.
+
+## Modular architecture checks
+
+The application uses the applied `src/platform`, `src/modules`, `src/shell` and
+`src/shared` boundaries. Before completing structural work run:
+
+```bash
+npm run check:architecture
+npm run type-check
+npm run type-check:strict
+npm run lint -- --quiet
+npm run test:module-generator
+npm test
+npm run build
+npm run measure:build
+```
+
+Create a new frontend module boundary with `npm run generate:module -- --slug
+<folder> --code <backend-code> --name "<display name>"`. Registration is only
+valid after the matching backend module catalog code exists.
 

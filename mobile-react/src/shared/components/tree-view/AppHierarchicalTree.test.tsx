@@ -11,7 +11,7 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 }));
 
 jest.mock('react-native-keyboard-controller', () => {
-  const { View } = require('react-native');
+  const { View } = jest.requireActual<typeof import('react-native')>('react-native');
   return {
     KeyboardAvoidingView: View,
     KeyboardAwareScrollView: View,

@@ -63,14 +63,14 @@ authorization are separate Organizational Structure work.
 
 | Evidence ID | Claim | File and symbol | Verification |
 | --- | --- | --- | --- |
-| E-01 | Current HR CQRS baseline is Countries | `api/HrManagementSystem.Api/Features/GeographicalInformation/Countries/V1/CountriesController.cs` | Source inspection |
-| E-02 | Trusted tenant/company scope is available | `api/HrManagementSystem.Application/Abstractions/Authentication/ICurrentActor.cs` | Source inspection |
-| E-03 | EF globally filters company-owned entities | `api/HrManagementSystem.Infrastructure/Persistence/ApplicationDbContext.cs::ConfigureCompanyEntity` | Source inspection |
+| E-01 | Current HR CQRS baseline is Countries | `api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs` | Source inspection |
+| E-02 | Trusted tenant/company scope is available | `api/Modules/HR/ErpSystem.Modules.HR.Application/Abstractions/Authentication/ICurrentActor.cs` | Source inspection |
+| E-03 | EF globally filters company-owned entities | `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/ApplicationDbContext.cs::ConfigureCompanyEntity` | Source inspection |
 | E-04 | Branch is persisted and device selection is scope-validated | `ApplicationDbContext.cs`, `BranchConfiguration.cs`, `AttendanceDeviceConfiguration.cs` | Migration and source inspection |
 | E-05 | Only ZKTeco COM is a functioning source provider | `G:/test/ZK-READER/connector/Services/DeviceDriverRegistry.cs` | Source inspection |
 | E-06 | ZKTeco requires an x86 Windows companion | `G:/test/ZK-READER/connector/ZkConnector.csproj` | Source inspection |
 | E-07 | Existing reusable web server Grid is product-owned | `web-next/src/shared/components/data-grid/core/MyDataGrid.tsx` | Source inspection |
-| E-08 | Security audit metadata rejects secret-like keys | `api/HrManagementSystem.Infrastructure/Features/Platform/SecurityAudits/Services/SecurityAuditService.cs` | Source inspection |
+| E-08 | Security audit metadata rejects secret-like keys | `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Platform/SecurityAudits/Services/SecurityAuditService.cs` | Source inspection |
 
 ## Read and list contract
 
@@ -147,7 +147,7 @@ or report permission for this integration slice.
 | --- | --- | --- | --- | --- | --- |
 | F-01 | Medium | Branch management and per-branch authorization are not included | Optional foreign key/lookup exists but no management UI or permission model | Organizational Structure | Deliver Branch vertical slice and access policy |
 | F-02 | High | Source Connector has no authentication and hard-coded URL/CORS | `G:/test/ZK-READER/connector/Program.cs` | Attendance Devices | Replace in HR companion; browser never calls it |
-| F-03 | High | Repository API settings contain literal SQL credentials | `api/HrManagementSystem.Api/appsettings.json` | Platform operations | Rotate/remove in a separate security change; never copy pattern |
+| F-03 | High | Repository API settings contain literal SQL credentials | `api/ErpSystem.Api/appsettings.json` | Platform operations | Rotate/remove in a separate security change; never copy pattern |
 | F-04 | Medium | Real providers except ZKTeco lack implemented adapters or vendor access | source vendor catalog | Integrations | Keep unavailable until adapter readiness is proven |
 
 ## Verification

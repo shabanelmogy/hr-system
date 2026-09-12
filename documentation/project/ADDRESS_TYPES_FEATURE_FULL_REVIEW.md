@@ -2,14 +2,14 @@
 
 Status: Canonical cross-platform implementation profile for Address Types.
 
-Reviewed: 2026-08-25
+Reviewed: 2026-09-08
 
 ## 1. Review manifest
 
 Address Types is company-scoped business data that classifies Address records. It uses
 Countries only as the flat-reference architecture baseline and the Managed Crystal
 integration guide for reporting. It is implemented in `api`, `web-next`, and
-`mobile-react`; the legacy `web/` client is not a target.
+`mobile-react`; the retired Vite client is not a target.
 
 ## 2. Architecture boundary
 
@@ -107,6 +107,10 @@ API handler/controller/report tests, focused web and mobile tests, project
 quality gates, docs generation/check, and diff check are required. Manual
 release validation must deploy both report profiles, import/publish the report,
 and grant `Run`; it is not satisfiable by source code alone.
+
+The 2026-09-08 Web review memoized the feature item projection and narrowed
+multi-view callback dependencies. This is a lifecycle/performance correction only;
+the Address Type API contract, ownership, permissions, and UI capability remain unchanged.
 
 ## 10. Handoff decision
 

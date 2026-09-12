@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useRef, useCallback } from "react";
+import { useState, useMemo, useRef, useCallback } from "react";
 import {
   Box,
   Paper,
@@ -79,7 +79,7 @@ export default function SplitTreeView<T>({
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Build tree hierarchy
-  const { tree, itemMap } = useMemo(() => {
+  const { tree } = useMemo(() => {
     const map = new Map<number | string, TreeNode<T>>();
     items.forEach((item) => {
       const id = getId(item);
@@ -98,7 +98,7 @@ export default function SplitTreeView<T>({
       }
     });
 
-    return { tree: roots, itemMap: map };
+    return { tree: roots };
   }, [items, getId, getParentId]);
 
   // Selected item object
@@ -145,27 +145,26 @@ export default function SplitTreeView<T>({
     return set;
   }, [items, getId, searchTerm, searchFilter, getCode, getName]);
 
-  // Auto-expand ancestors of matching items when searching
-  React.useEffect(() => {
-    if (matchingIds.size > 0) {
-      setExpandedNodes((prev) => {
-        const next = new Set(prev);
-        matchingIds.forEach((id) => {
-          let curr = items.find((x) => getId(x) === id);
-          while (curr) {
-            const pId = getParentId(curr);
-            if (pId != null && pId !== 0 && pId !== "") {
-              next.add(pId);
-              curr = items.find((x) => getId(x) === pId);
-            } else {
-              break;
-            }
-          }
-        });
-        return next;
-      });
-    }
-  }, [matchingIds, items, getId, getParentId]);
+  // Search matches reveal their ancestors without mutating the user's manual expansion state.
+  const matchingAncestorIds = useMemo(() => {
+    const ancestors = new Set<number | string>();
+    matchingIds.forEach((id) => {
+      let current = items.find((item) => getId(item) === id);
+      while (current) {
+        const parentId = getParentId(current);
+        if (parentId == null || parentId === 0 || parentId === "") break;
+        ancestors.add(parentId);
+        current = items.find((item) => getId(item) === parentId);
+      }
+    });
+    return ancestors;
+  }, [getId, getParentId, items, matchingIds]);
+
+  const effectiveExpandedNodes = useMemo(() => {
+    const next = new Set(expandedNodes);
+    matchingAncestorIds.forEach((id) => next.add(id));
+    return next;
+  }, [expandedNodes, matchingAncestorIds]);
 
   const toggleExpand = (id: number | string) => {
     setExpandedNodes((prev) => {
@@ -282,7 +281,7 @@ export default function SplitTreeView<T>({
   const renderRecursiveNode = (node: TreeNode<T>) => {
     if (!renderNode) return null;
     const id = getId(node.item);
-    const isExpanded = expandedNodes.has(id);
+    const isExpanded = effectiveExpandedNodes.has(id);
     const hasKids = node.children.length > 0;
     const isSelected = selectedId === id;
     const isDragging = draggingItem ? getId(draggingItem) === id : false;
@@ -607,7 +606,7 @@ export default function SplitTreeView<T>({
               onMove={onMove}
               onEdit={onEdit}
               canDrag={canDrag}
-              expandedNodes={expandedNodes}
+              expandedNodes={effectiveExpandedNodes}
               onToggleExpand={toggleExpand}
               matchingIds={matchingIds}
               getDescendantIds={getDescendantIds}

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.Platform</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.Platform</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Modularity\ErpSystem.BuildingBlocks.Modularity.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Platform.Application\ErpSystem.Modules.Platform.Application.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Platform.Infrastructure\ErpSystem.Modules.Platform.Infrastructure.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Platform.Presentation\ErpSystem.Modules.Platform.Presentation.csproj" />
+  </ItemGroup>
+</Project>

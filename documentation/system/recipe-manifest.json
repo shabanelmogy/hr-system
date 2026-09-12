@@ -202,6 +202,26 @@
       "id": "workforce-planning-mobile",
       "path": "../mobile-react/workforce-planning-mobile-reference.md",
       "title": "Workforce Planning Expo implementation profile"
+    },
+    {
+      "id": "tenant-module-entitlements-master",
+      "path": "../project/TENANT_MODULE_ENTITLEMENTS_FEATURE_FULL_REVIEW.md",
+      "title": "Tenant module entitlements cross-platform master review"
+    },
+    {
+      "id": "tenant-module-entitlements-api",
+      "path": "../api/TenantModuleEntitlements_API_Implementation_Profile.md",
+      "title": "Tenant module entitlements API implementation profile"
+    },
+    {
+      "id": "tenant-module-entitlements-web",
+      "path": "../web-next/features/tenant-module-entitlements-frontend-reference.md",
+      "title": "Tenant module entitlements Next.js implementation profile"
+    },
+    {
+      "id": "tenant-module-entitlements-mobile",
+      "path": "../mobile-react/tenant-module-entitlements-mobile-reference.md",
+      "title": "Tenant module entitlements Expo implementation profile"
     }
   ],
   "requiredFileManifests": [
@@ -214,7 +234,8 @@
     "features/attendance-devices/required-files.json",
     "features/organizational-structure/required-files.json",
     "features/fiscal-years/required-files.json",
-    "features/workforce-planning/required-files.json"
+    "features/workforce-planning/required-files.json",
+    "features/tenant-module-entitlements/required-files.json"
   ],
   "recipes": [
     {
@@ -2881,6 +2902,84 @@
             15
           ]
         }
+      ]
+    },
+    {
+      "id": "tenant-module-entitlements-phase-00-discovery-evidence",
+      "title": "Tenant module entitlements Phase 00 - Discovery and Evidence",
+      "template": "templates/PHASE-00-discovery-evidence.template.md",
+      "output": "generated/tenant-module-entitlements/PHASE-00-discovery-evidence.md",
+      "sources": [
+        { "book": "tenant-module-entitlements-master", "sections": [1, 2, 5, 8, 9] },
+        { "book": "tenant-module-entitlements-api", "sections": [1, 10, 11] },
+        { "book": "tenant-module-entitlements-web", "sections": [1, 2, 12, 13] },
+        { "book": "tenant-module-entitlements-mobile", "sections": [1, 14, 15] }
+      ]
+    },
+    {
+      "id": "tenant-module-entitlements-phase-01-domain-api",
+      "title": "Tenant module entitlements Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/tenant-module-entitlements/PHASE-01-domain-api.md",
+      "sources": [
+        { "book": "tenant-module-entitlements-master", "sections": [3, 4, 6] },
+        { "book": "tenant-module-entitlements-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+      ]
+    },
+    {
+      "id": "tenant-module-entitlements-phase-02-web-client",
+      "title": "Tenant module entitlements Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/tenant-module-entitlements/PHASE-02-web-client.md",
+      "sources": [
+        { "book": "tenant-module-entitlements-master", "sections": [3, 4, 6, 7] },
+        { "book": "tenant-module-entitlements-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+      ]
+    },
+    {
+      "id": "tenant-module-entitlements-phase-03-mobile-client",
+      "title": "Tenant module entitlements Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/tenant-module-entitlements/PHASE-03-mobile-client.md",
+      "sources": [
+        { "book": "tenant-module-entitlements-master", "sections": [3, 4, 6, 7] },
+        { "book": "tenant-module-entitlements-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+      ]
+    },
+    {
+      "id": "tenant-module-entitlements-phase-04-domain-actions",
+      "title": "Tenant module entitlements Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/tenant-module-entitlements/PHASE-04-domain-actions.md",
+      "sources": [
+        { "book": "tenant-module-entitlements-master", "sections": [3, 4, 6, 7, 8] },
+        { "book": "tenant-module-entitlements-api", "sections": [6, 7, 8] },
+        { "book": "tenant-module-entitlements-web", "sections": [6, 7, 8, 9] },
+        { "book": "tenant-module-entitlements-mobile", "sections": [9, 10, 11] }
+      ]
+    },
+    {
+      "id": "tenant-module-entitlements-phase-05-integration-runtime",
+      "title": "Tenant module entitlements Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/tenant-module-entitlements/PHASE-05-integration-runtime.md",
+      "sources": [
+        { "book": "tenant-module-entitlements-master", "sections": [4, 5, 6, 7, 9] },
+        { "book": "tenant-module-entitlements-api", "sections": [8, 9, 10] },
+        { "book": "tenant-module-entitlements-web", "sections": [8, 10, 13] },
+        { "book": "tenant-module-entitlements-mobile", "sections": [2, 11, 12, 15] }
+      ]
+    },
+    {
+      "id": "tenant-module-entitlements-phase-06-final-reconciliation",
+      "title": "Tenant module entitlements Phase 06 - Final Reconciliation",
+      "template": "templates/PHASE-06-final-reconciliation.template.md",
+      "output": "generated/tenant-module-entitlements/PHASE-06-final-reconciliation.md",
+      "sources": [
+        { "book": "tenant-module-entitlements-master", "sections": [8, 9, 10] },
+        { "book": "tenant-module-entitlements-api", "sections": [10, 11] },
+        { "book": "tenant-module-entitlements-web", "sections": [12, 13, 14] },
+        { "book": "tenant-module-entitlements-mobile", "sections": [14, 15] }
       ]
     }
   ]

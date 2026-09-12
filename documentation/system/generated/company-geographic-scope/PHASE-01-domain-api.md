@@ -79,7 +79,7 @@ implementation discipline.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | company-geographic-scope-master | 3 | `9ec15c72949a18d28967bf33b8be561db54b6bbe9511861f83fce9b7bbb4f182` |
-| company-geographic-scope-master | 4 | `8185c0aac290bcb1ea4cb2e37b929a12ecd0992abfd64e7ca399982ee2053de1` |
+| company-geographic-scope-master | 4 | `91771c4ee3bfa569933528e6b5c71b64a66f0d5b0c536ef31efeec8e682178af` |
 | company-geographic-scope-master | 6 | `9af33779eb8e399a26aa1fbde2585ba40dcd0fad4f6223030372c15c0aec6c20` |
 | company-geographic-scope-api | 1 | `36c11f614a057bd97744bb17b06312435a14bead1f5983cc2b69c18750a4b8f5` |
 | company-geographic-scope-api | 2 | `91c5013c7ab8ad3c062b5f503b2b8c53451ed64ca4ae45a49e6211c05bbe53c8` |

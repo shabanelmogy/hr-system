@@ -2,7 +2,7 @@
 
 ## 1. Feature boundary
 
-Source lives under `src/features/finance/fiscal-years`; Expo Router files
+Source lives under `src/modules/hr/finance/fiscal-years`; Expo Router files
 are thin route guards. API, runtime schemas, types, queries, validation, filter,
 form, and screen remain feature owned.
 

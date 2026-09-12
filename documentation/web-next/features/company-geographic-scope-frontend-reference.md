@@ -2,7 +2,7 @@
 
 ## 1. Feature Inventory
 
-The owner is `src/features/basic-data/organizational-structure/company-geographic-scope`; the thin App Router adapter is `src/app/(main)/basic-data/(organizational-structure)/organizational-structure/geographic-scope/page.tsx`.
+The owner is `web-next/src/modules/hr/basic-data/organizational-structure/company-geographic-scope`; the thin App Router adapter is `web-next/src/app/(main)/basic-data/(organizational-structure)/organizational-structure/geographic-scope/page.tsx`.
 
 ## 2. Route and Access
 

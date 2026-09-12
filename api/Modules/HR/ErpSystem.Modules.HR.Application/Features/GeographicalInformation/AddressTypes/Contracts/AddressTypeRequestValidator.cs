@@ -1,0 +1,44 @@
+using ErpSystem.Modules.HR.Application.Features.GeographicalInformation.AddressTypes.Abstractions;
+using ErpSystem.Modules.HR.Application.Features.GeographicalInformation.Validation;
+
+namespace ErpSystem.Modules.HR.Application.Features.GeographicalInformation.AddressTypes.Contracts;
+
+public class AddressTypeRequestValidator : AbstractValidator<AddressTypeRequest>
+{
+    private readonly IAddressTypeValidationQueries _queries;
+    private readonly IStringLocalizer<AddressTypeRequest> _localizer;
+
+    public AddressTypeRequestValidator(IAddressTypeValidationQueries queries, IStringLocalizer<AddressTypeRequest> localizer)
+    {
+        _queries = queries;
+        _localizer = localizer;
+
+        RuleFor(a => a.NameEn)
+            .GeographicalName(_localizer, Strings.NameEn);
+
+        RuleFor(a => a.NameAr)
+            .GeographicalName(_localizer, Strings.NameAr);
+
+        RuleFor(a => a)
+           .MustAsync(IsAddressTypeNameEnUniqueAsync)
+           .WithName(Strings.NameEn)
+           .WithMessage(_localizer[Strings.DuplicatedValue]);
+
+        RuleFor(a => a)
+           .MustAsync(IsAddressTypeNameArUniqueAsync)
+           .WithName(Strings.NameAr)
+           .WithMessage(_localizer[Strings.DuplicatedValue]);
+    }
+
+    private async Task<bool> IsAddressTypeNameEnUniqueAsync(AddressTypeRequest addressType, CancellationToken cancellationToken) =>
+        !await _queries.AddressTypeNameEnExistsAsync(
+            GeographicalNameRules.Normalize(addressType.NameEn),
+            addressType.Id,
+            cancellationToken);
+
+    private async Task<bool> IsAddressTypeNameArUniqueAsync(AddressTypeRequest addressType, CancellationToken cancellationToken) =>
+        !await _queries.AddressTypeNameArExistsAsync(
+            GeographicalNameRules.Normalize(addressType.NameAr),
+            addressType.Id,
+            cancellationToken);
+}

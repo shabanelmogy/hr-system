@@ -1,0 +1,33 @@
+{
+    "moduleName":  "Platform",
+    "docSlug":  "platform",
+    "databaseSchema":  "platform",
+    "version":  "1.0.0",
+    "requiredModuleDependencies":  [
+
+                                   ],
+    "optionalModuleDependencies":  [
+
+                                   ],
+    "isUserVisible":  false,
+    "allowsTenantEntitlement":  false,
+    "lifecycle":  "active",
+    "status":  "foundation",
+    "runtimePaths":  {
+                         "root":  "api/Modules/Platform",
+                         "contracts":  "api/Modules/Platform/ErpSystem.Modules.Platform.Contracts",
+                         "domain":  "api/Modules/Platform/ErpSystem.Modules.Platform.Domain",
+                         "application":  "api/Modules/Platform/ErpSystem.Modules.Platform.Application",
+                         "infrastructure":  "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure",
+                         "presentation":  "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation",
+                         "bootstrap":  "api/Modules/Platform/ErpSystem.Modules.Platform"
+                     },
+    "documentationPaths":  {
+                               "root":  "documentation/modules/platform",
+                               "api":  "documentation/modules/platform/api/README.md",
+                               "webNext":  "documentation/modules/platform/web-next/README.md",
+                               "mobileReact":  "documentation/modules/platform/mobile-react/README.md",
+                               "features":  "documentation/modules/platform/features/README.md",
+                               "phases":  "documentation/modules/platform/phases/README.md"
+                           }
+}

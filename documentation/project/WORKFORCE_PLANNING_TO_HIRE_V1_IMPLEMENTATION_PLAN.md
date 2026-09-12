@@ -475,7 +475,7 @@ RequestedHeadcount + TotalEstimatedFiscalYearCost
 #### الأوامر النهائية
 
 ```powershell
-dotnet test api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj
+dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj
 
 Set-Location web-next
 npm run check

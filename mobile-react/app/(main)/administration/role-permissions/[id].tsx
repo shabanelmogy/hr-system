@@ -1,8 +1,8 @@
 import { useLocalSearchParams } from 'expo-router';
 
 import { ROUTES } from '@/src/core/constants/routes';
-import { RolePermissionsScreen } from '@/src/features/administration';
-import { RouteGuard } from '@/src/features/auth';
+import { RolePermissionsScreen } from '@/src/platform/administration';
+import { RouteGuard } from '@/src/platform/auth';
 
 export default function RolePermissionsRoute() {
   const params = useLocalSearchParams<{ id?: string | string[] }>();

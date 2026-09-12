@@ -1,5 +1,5 @@
 {
-  "name": "hrmanagementsystem-next",
+  "name": "erp-system-web",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -17,6 +17,9 @@
     "lint": "eslint .",
     "test": "vitest run",
     "check:architecture": "node scripts/check-architecture.mjs",
+    "measure:build": "node scripts/measure-build.mjs",
+    "generate:module": "node scripts/generate-module.mjs",
+    "test:module-generator": "node scripts/generate-module.selftest.mjs",
     "type-check": "tsc --noEmit",
     "type-check:strict": "tsc --noEmit -p tsconfig.strict.json",
     "check": "npm run check:architecture && npm run lint && npm run type-check && npm run type-check:strict"

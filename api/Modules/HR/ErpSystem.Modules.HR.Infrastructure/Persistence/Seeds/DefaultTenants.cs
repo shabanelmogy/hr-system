@@ -1,0 +1,27 @@
+using ErpSystem.Modules.HR.Domain.Tenancy.Entities;
+
+namespace ErpSystem.Modules.HR.Infrastructure.Persistence.Seeds;
+
+public static class DefaultTenants
+{
+    public static async Task SeedAsync(
+        ApplicationDbContext context,
+        TimeProvider timeProvider,
+        CancellationToken cancellationToken = default)
+    {
+        if (await context.Tenants.AnyAsync(
+                tenant => tenant.Id == TenantDefaults.DefaultId,
+                cancellationToken))
+        {
+            return;
+        }
+
+        context.Tenants.Add(new Tenant(
+            TenantDefaults.DefaultId,
+            TenantDefaults.DefaultIdentifier,
+            TenantDefaults.DefaultName,
+            timeProvider.GetUtcNow().UtcDateTime));
+
+        await context.SaveChangesAsync(cancellationToken);
+    }
+}

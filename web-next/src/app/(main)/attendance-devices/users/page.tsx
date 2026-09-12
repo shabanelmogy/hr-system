@@ -1,2 +1,2 @@
-import { AttendanceUsersPage } from "@/features/attendance-devices";
+import { AttendanceUsersPage } from "@/modules/hr/attendance-devices";
 export default function Page() { return <AttendanceUsersPage />; }

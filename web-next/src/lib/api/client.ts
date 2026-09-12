@@ -1,6 +1,6 @@
 "use client";
 
-import axios, { type AxiosError, type AxiosInstance, type AxiosRequestConfig, type Method } from "axios";
+import axios, { type AxiosError, type AxiosInstance, type AxiosRequestConfig, type GenericAbortSignal, type Method } from "axios";
 import i18n from "i18next";
 import {
   BACKEND_OVERRIDE_HEADER,
@@ -54,12 +54,17 @@ type ReadOnlyGuard = {
 
 type AppRequestConfig = AxiosRequestConfig & {
   allowWhenReadOnly?: boolean;
+  allowDuringContextTransition?: boolean;
 };
 
 class ApiClient {
   private readonly api: AxiosInstance;
   private navigatingToLogin = false;
   private readOnlyGuard: ReadOnlyGuard | null = null;
+  private requestContextController = new AbortController();
+  private contextTransitionGate: Promise<void> | null = null;
+  private resolveContextTransition: (() => void) | null = null;
+  private contextTransitionDepth = 0;
 
   constructor() {
     this.api = axios.create({
@@ -86,10 +91,12 @@ class ApiClient {
 
     this.api.interceptors.response.use(
       (response) => {
+        if (response.config.signal?.aborted) throw new axios.CanceledError("Work context changed");
         notifySessionRefresh(response.headers[SESSION_REFRESHED_HEADER]);
         return response;
       },
       async (error: AxiosError) => {
+        if (error.config?.signal?.aborted) return Promise.reject(new axios.CanceledError("Work context changed"));
         notifySessionRefresh(
           error.response?.headers[SESSION_REFRESHED_HEADER],
         );
@@ -161,7 +168,35 @@ class ApiClient {
     };
   }
 
-  private async request<T = any>(method: Method, endpoint: string, config: AppRequestConfig = {}) {
+  /** Abort requests that belong to the previous tenant/company work context. */
+  rotateRequestContext() {
+    this.requestContextController.abort("work-context-changed");
+    this.requestContextController = new AbortController();
+  }
+
+  /** Pause new API work until the server session reflects the new company. */
+  beginContextTransition() {
+    this.contextTransitionDepth += 1;
+    if (this.contextTransitionDepth !== 1) return;
+    this.contextTransitionGate = new Promise<void>((resolve) => {
+      this.resolveContextTransition = resolve;
+    });
+  }
+
+  endContextTransition() {
+    if (this.contextTransitionDepth === 0) return;
+    this.contextTransitionDepth -= 1;
+    if (this.contextTransitionDepth > 0) return;
+    this.resolveContextTransition?.();
+    this.resolveContextTransition = null;
+    this.contextTransitionGate = null;
+  }
+
+  private async request<T = unknown>(method: Method, endpoint: string, config: AppRequestConfig = {}) {
+    if (this.contextTransitionGate && !config.allowDuringContextTransition) {
+      // Never replay work created by the previous screen using new cookies.
+      throw new axios.CanceledError("Work context is changing");
+    }
     if (
       isWriteMethod(method) &&
       !config.allowWhenReadOnly &&
@@ -173,15 +208,22 @@ class ApiClient {
 
     const axiosConfig = { ...config };
     delete axiosConfig.allowWhenReadOnly;
+    delete axiosConfig.allowDuringContextTransition;
+    axiosConfig.signal = mergeAbortSignals(
+      axiosConfig.signal,
+      this.requestContextController.signal,
+    );
     try {
       const response = await this.api.request<T>({ method, url: endpoint, ...axiosConfig });
+      if (axiosConfig.signal.aborted) throw new axios.CanceledError("Work context changed");
       return response.data;
     } catch (error) {
+      if (axios.isCancel(error)) throw error;
       throw this.processError(error);
     }
   }
 
-  get<T = any>(endpoint: string, params: Record<string, unknown> = {}) {
+  get<T = unknown>(endpoint: string, params: Record<string, unknown> = {}) {
     return this.request<T>("GET", endpoint, { params });
   }
 
@@ -193,7 +235,7 @@ class ApiClient {
     });
   }
 
-  post<T = any>(endpoint: string, data?: unknown, headers: Record<string, string> = {}) {
+  post<T = unknown>(endpoint: string, data?: unknown, headers: Record<string, string> = {}) {
     return this.request<T>("POST", endpoint, { data, headers: getDataHeaders(data, headers) });
   }
 
@@ -207,15 +249,15 @@ class ApiClient {
     });
   }
 
-  put<T = any>(endpoint: string, data?: unknown, headers: Record<string, string> = {}) {
+  put<T = unknown>(endpoint: string, data?: unknown, headers: Record<string, string> = {}) {
     return this.request<T>("PUT", endpoint, { data, headers: getDataHeaders(data, headers) });
   }
 
-  patch<T = any>(endpoint: string, data?: unknown, headers: Record<string, string> = {}) {
+  patch<T = unknown>(endpoint: string, data?: unknown, headers: Record<string, string> = {}) {
     return this.request<T>("PATCH", endpoint, { data, headers: getDataHeaders(data, headers) });
   }
 
-  delete<T = any>(endpoint: string, data?: unknown) {
+  delete<T = unknown>(endpoint: string, data?: unknown) {
     return this.request<T>("DELETE", endpoint, { data });
   }
 
@@ -238,9 +280,21 @@ class ApiClient {
     // Navigation is owned by Next.js; retained temporarily for callers during module migration.
   }
 
-  externalAuth<T = any>(endpoint: string, data: unknown) {
+  externalAuth<T = unknown>(endpoint: string, data: unknown) {
     return this.post<T>(endpoint, data);
   }
+}
+
+function mergeAbortSignals(
+  callerSignal: GenericAbortSignal | undefined,
+  contextSignal: AbortSignal,
+): GenericAbortSignal {
+  if (!callerSignal) return contextSignal;
+  if (callerSignal === contextSignal) return contextSignal;
+  // Axios types the standard signal structurally as GenericAbortSignal. Runtime
+  // callers pass AbortSignal instances, so the cast only restores DOM members
+  // that Axios intentionally omits from its public config type.
+  return AbortSignal.any([callerSignal as AbortSignal, contextSignal]);
 }
 
 function isWriteMethod(method: Method) {

@@ -39,7 +39,7 @@ interaction state, and clear error recovery.
 ## 2. Ownership and Directory Structure
 
 ```text
-src/features/<domain>/<feature>/
+src/modules/<module>/<feature>/
   pages/                 # Route-level feature composition
   components/            # Feature-owned UI
     grid-view/            # Grid columns, row actions, feature filters
@@ -452,7 +452,7 @@ const reports = useQuery({
 ```
 
 - use the shared `crystalReportService` and `ReportViewer` exports from
-  `src/features/reporting`;
+  `src/shared/reporting`;
 - list through `GET /api/v1/crystal-reports?entityKey={entityKey}`;
 - render through `POST /api/v1/crystal-reports/{reportId}/render` with only the
   report ID, `ar`/`en`, and feature-approved bounded filters;

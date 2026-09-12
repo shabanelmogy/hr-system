@@ -1,0 +1,9 @@
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Exclude generated, build, cache, vendor, and binary output only"
+paths = [
+  '''(?i)(^|/)(\.git|\.codex|\.codex-tmp|\.kiro|\.vs|node_modules|bin|obj|dist|build|out|coverage|\.next|\.turbo|\.cache|\.jest-cache|graphify-out|artifacts|packages|wwwroot/downloads)(/|$)''',
+  '''(?i)\.(7z|dll|exe|gz|jar|nupkg|pdb|png|jpg|jpeg|gif|ico|pdf|zip)$'''
+]

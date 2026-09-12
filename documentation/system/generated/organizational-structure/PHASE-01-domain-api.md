@@ -79,7 +79,7 @@ implementation discipline.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | organizational-structure-master | 3 | `e45c90794d15330609e089c888b6a6af9df12bcf5a265e1f78d93e31f39b8a8c` |
-| organizational-structure-master | 4 | `0beaf7376a09bb7c622523a47042700f05bf8105485ff4f3fda6be4ed287136a` |
+| organizational-structure-master | 4 | `834005c26053eb5eee6e85e186c98953501eda8584fb9e30055ec9bd16391cb8` |
 | organizational-structure-master | 6 | `2fdee62992580c5d76fc63348edf52701b1e514b1c18ff8be30c53dda4d1b0bf` |
 | organizational-structure-api | 1 | `b8c989473a06ddbe6a84a443aaac33642b06ab953cb22b6c2f51f1ce60e2adaf` |
 | organizational-structure-api | 2 | `27a7d756ca282d4db9b1ab92e5b5df45479c9f85baf87951fcdf7a45b808d95a` |

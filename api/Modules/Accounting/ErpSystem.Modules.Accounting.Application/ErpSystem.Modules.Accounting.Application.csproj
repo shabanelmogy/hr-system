@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.Accounting.Application</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.Accounting.Application</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+    <PackageReference Include="MediatR" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Application\ErpSystem.BuildingBlocks.Application.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Messaging\ErpSystem.BuildingBlocks.Messaging.csproj" />
+    <ProjectReference Include="..\..\Contacts\ErpSystem.Modules.Contacts.Contracts\ErpSystem.Modules.Contacts.Contracts.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Accounting.Contracts\ErpSystem.Modules.Accounting.Contracts.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Accounting.Domain\ErpSystem.Modules.Accounting.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

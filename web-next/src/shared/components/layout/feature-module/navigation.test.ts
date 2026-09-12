@@ -52,4 +52,19 @@ describe("feature module navigation", () => {
       "states",
     ]);
   });
+
+  it("prefers the deepest matching trail when prefixes overlap", () => {
+    const overlapping: readonly FeatureModuleNavigationItem[] = [
+      { id: "broad", label: "Broad", href: path("/basic-data"), icon: null },
+      {
+        id: "nested",
+        label: "Nested",
+        icon: null,
+        children: [{ id: "exact", label: "Exact", href: path("/basic-data/countries"), icon: null }],
+      },
+    ];
+
+    expect(findActiveNavigationTrail(overlapping, "/basic-data/countries").map((item) => item.id))
+      .toEqual(["nested", "exact"]);
+  });
 });

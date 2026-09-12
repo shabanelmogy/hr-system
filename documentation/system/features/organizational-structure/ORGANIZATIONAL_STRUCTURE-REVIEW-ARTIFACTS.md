@@ -10,7 +10,7 @@ Use this file as the evidence ledger for one feature. Replace every bracketed va
 | API route | `/api/v1/organizational-structure/{resource}` |
 | Web route | `/basic-data/organizational-structure/{branches|departments|divisions|job-titles|job-levels|positions|job-descriptions}` |
 | Mobile route | `/basic-data/organizational-structure/{branches|departments|divisions|job-titles|job-levels|positions|job-descriptions}` |
-| Review owner | `HR Management System maintainers` |
+| Review owner | `ERP System maintainers` |
 | Review date | `2026-08-30` |
 | Implementation request | `documentation/system/features/organizational-structure/IMPLEMENTATION-REQUEST.md` |
 | Required-file manifest | `documentation/system/features/organizational-structure/required-files.json` |
@@ -53,8 +53,8 @@ unused runtime implementation.
 
 | Evidence ID | Claim | File and symbol | Verification |
 | --- | --- | --- | --- |
-| E-01 | The existing folder contains seven organizational directory entities plus Company and CompanyCountry. | `api/HrManagementSystem.Domain/OrganizationalStructure` | Source inspection and Graphify query. |
-| E-02 | JobDescription is a Position-scoped version with explicit approval/rejection lifecycle. | `api/HrManagementSystem.Domain/OrganizationalStructure/Entities/JobDescription.cs` | Source inspection and focused domain tests. |
+| E-01 | The existing folder contains seven organizational directory entities plus Company and CompanyCountry. | `api/Modules/HR/ErpSystem.Modules.HR.Domain/OrganizationalStructure` | Source inspection and Graphify query. |
+| E-02 | JobDescription is a Position-scoped version with explicit approval/rejection lifecycle. | `api/Modules/HR/ErpSystem.Modules.HR.Domain/OrganizationalStructure/Entities/JobDescription.cs` | Source inspection and focused domain tests. |
 | E-03 | All seven organizational resources are persisted with composite company-scoped relationships. | `ApplicationDbContext`, OrganizationalStructure configurations, migration | API build and model tests. |
 | E-04 | Odoo 19 uses a recursive Department tree and rejects cycles. | Odoo 19 `addons/hr/models/hr_department.py` | Official source review, 2026-08-30. |
 | E-05 | Odoo 19 keeps description, requirements, headcount, department, and company on `hr.job`. | Odoo 19 `addons/hr/models/hr_job.py` | Official source review, 2026-08-30. |
@@ -123,7 +123,7 @@ client invalidation. Record any deliberate departure.
 
 When reporting is Required, identify the engine and link its canonical guide.
 Managed Crystal reports must follow
-[`documentation/project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md`](../../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md).
+[`documentation/project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md`](../../../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md).
 Do not combine Managed Crystal `.rpt` records with ActiveReports/RDLX
 `ReportTemplates`.
 
@@ -164,7 +164,7 @@ connection string, tenant ID, or company ID.
 | Layer | Command or check | Result | Date |
 | --- | --- | --- | --- |
 | Documentation | `./documentation/system/Generate-Documentation.ps1 -Check` | `Passed after registering four canonical books, final manifest, and seven recipes` | `2026-08-31` |
-| API | `dotnet build api/HrManagementSystem.Api/HrManagementSystem.Api.csproj --no-restore`; `dotnet test api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore` | `Build passed; full API suite passed 380/380; focused OrganizationalStructure suite passed 6/6 and includes 210 SQL Server translation combinations` | `2026-08-31` |
+| API | `dotnet build api/ErpSystem.Api/ErpSystem.Api.csproj --no-restore`; `dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore` | `Build passed; full API suite passed 380/380; focused OrganizationalStructure suite passed 6/6 and includes 210 SQL Server translation combinations` | `2026-08-31` |
 | Web | `npm run check:architecture`; `npm run lint`; `npm run test`; `npm run type-check`; `npm run build`; authenticated local API-proxy request | `Architecture/lint/type-check/build passed; Vitest previously passed 310/310; production route table includes the management route; initial Branches request through the local web proxy returned HTTP 200` | `2026-08-31` |
 | Mobile | `npm run typecheck`; `npm run check:architecture`; `npm run lint`; `npm run test -- --runInBand` | `TypeScript, architecture, lint, and full Jest suite passed (43 suites / 125 tests)` | `2026-08-31` |
 

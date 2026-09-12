@@ -1,16 +1,16 @@
-# Authentication Flow Review — HrManagementSystem
+# Authentication Flow Review — ERP System
 
 **Date:** January 2025  
 **Frontend:** Next.js (App Router) - `web-next/`  
-**Backend:** ASP.NET Core Web API - `api/HrManagementSystem.Api/`
+**Backend:** ASP.NET Core Web API - `api/ErpSystem.Api/`
 
-> **Frontend ownership:** `web-next/` is the canonical frontend and deployment target. The Vite application in `web/` is legacy, frozen except for migration/removal work, and scheduled for removal after migration validation.
+> **Frontend ownership:** `web-next/` is the canonical frontend and deployment target. The former Vite client is retired and is not an implementation target.
 
 ---
 
 ## 📋 Overview
 
-The HrManagementSystem uses a **JWT + Refresh Token** authentication architecture with:
+The ERP System uses a **JWT + Refresh Token** authentication architecture with:
 - **Access tokens** (short-lived, ~15-60 minutes)
 - **Refresh tokens** (long-lived, 14 days)
 - **HttpOnly cookies** for token storage (secure, not accessible via JavaScript)
@@ -27,14 +27,14 @@ The HrManagementSystem uses a **JWT + Refresh Token** authentication architectur
 | Component | Path | Purpose |
 |-----------|------|---------|
 | **Middleware** | `src/proxy.ts` | Intercepts all requests, validates/refreshes tokens |
-| **Session Context** | `src/lib/auth/session-context.tsx` | Client-side session state (React Context) |
+| **Session Context** | `src/lib/auth/SessionContext.tsx` | Client-side session state (React Context) |
 | **Backend Session** | `src/lib/auth/backend-session.ts` | Server-side token validation & refresh logic |
 | **Cookies** | `src/lib/auth/cookies.ts` | Cookie management (set/clear auth tokens) |
 | **Session API Route** | `src/app/api/auth/session/route.ts` | Client-facing session endpoint |
-| **Login Form Hook** | `src/features/auth/login/hooks/useLoginForm.ts` | Login form logic & submission |
+| **Login Form Hook** | `web-next/src/platform/auth/login/hooks/useLoginForm.ts` | Login form logic & submission |
 | **API Client** | `src/lib/api/client.ts` | Axios wrapper with interceptors |
 
-### Backend (api/HrManagementSystem)
+### Backend (`api/ErpSystem.Api`)
 
 | Component | Path | Purpose |
 |-----------|------|---------|
@@ -417,6 +417,18 @@ NEXT_PUBLIC_API_URL=https://api.example.com
 BACKEND_URL=https://api.example.com  # server-side only
 ```
 
+For Visual Studio local development, use the local API through the Next.js
+proxy:
+
+```env
+BACKEND_URL=http://localhost:5293
+NEXT_PUBLIC_API_URL=http://localhost:5293/api/v1
+```
+
+`JwtProvider` is registered as one scoped concrete service and both
+`IJwtProvider` and `IRealtimeTokenProvider` resolve that same instance. Keep
+the concrete registration because the realtime contract resolves it directly.
+
 **Cookie names (constants.ts):**
 ```typescript
 export const ACCESS_TOKEN_COOKIE = "access_token";
@@ -498,18 +510,18 @@ export const config = {
 - `web-next/src/proxy.ts` — Middleware entry point
 - `web-next/src/lib/auth/backend-session.ts` — Token validation & refresh
 - `web-next/src/lib/auth/cookies.ts` — Cookie management
-- `web-next/src/lib/auth/session-context.tsx` — React session state
+- `web-next/src/lib/auth/SessionContext.tsx` — React session state
 - `web-next/src/lib/auth/constants.ts` — Cookie names, public routes
 - `web-next/src/lib/api/client.ts` — Axios interceptors
 - `web-next/src/app/api/auth/session/route.ts` — Session API route
-- `web-next/src/features/auth/login/hooks/useLoginForm.ts` — Login logic
+- `web-next/src/platform/auth/login/hooks/useLoginForm.ts` — Login logic
 
 ### Backend Files
-- `api/HrManagementSystem.Api/Features/Security/Authentication/V1/AuthController.cs`
-- `api/HrManagementSystem.Infrastructure/Features/Security/Authentication/Services/AuthService.cs`
-- `api/HrManagementSystem.Infrastructure/Security/Authentication/JwtProvider.cs`
-- `api/HrManagementSystem.Application/Features/Security/Authentication/Contracts/AuthResponse.cs`
-- `api/HrManagementSystem.Application/Features/Security/Authentication/Contracts/LoginRequest.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/Security/Authentication/V1/AuthController.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Security/Authentication/Services/AuthLoginService.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Security/Authentication/JwtProvider.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Application/Features/Security/Authentication/Contracts/AuthResponse.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Application/Features/Security/Authentication/Contracts/LoginRequest.cs`
 
 ---
 
@@ -566,7 +578,7 @@ User clicks logout → Fire logout API (don't wait) → Immediate redirect to /l
    response.headers.set("Expires", "0");
    ```
 
-3. **Clear Session State** (`lib/auth/session-context.tsx`)
+3. **Clear Session State** (`lib/auth/SessionContext.tsx`)
    ```typescript
    const logout = useCallback(() => setUser(null), []);
    ```
@@ -580,7 +592,7 @@ User clicks logout → Call logout API and WAIT → Cookies cleared → Clear se
 ### Files Modified
 - ✅ `web-next/src/lib/api/client.ts` — Await logout completion before redirect
 - ✅ `web-next/src/app/api/auth/logout/route.ts` — Add cache-control headers
-- ✅ `web-next/src/lib/auth/session-context.tsx` — Add logout method to clear state
+- ✅ `web-next/src/lib/auth/SessionContext.tsx` — Add logout method to clear state
 
 ### Testing Checklist
 - [x] Click logout → redirected to `/login` immediately

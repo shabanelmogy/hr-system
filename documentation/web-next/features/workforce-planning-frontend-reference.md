@@ -80,3 +80,6 @@ The Web Phase 1 surface is source-complete. Live create/edit/lifecycle and realt
 ## 18. Phase 5–6 trace and governance
 
 Offer UI actions are explicit Submit, Approve, Reject, Issue, Accept and Decline actions; no create flow auto-issues an offer. The trace page uses the shared PageHeader/Card/feedback primitives, Zod parsing of `unknown`, server queries, a framer-motion timeline, and an accessible ordered-card alternative. Financial amounts are displayed only when the API includes them; the client never attempts to redact a leaked value. Source checks are complete; authenticated browser smoke remains a manual release gate and is intentionally not run in this pass.
+
+Offer creation sends only commercial terms and the application identity. Organization
+placement is rendered from server data and cannot be overridden by the browser.

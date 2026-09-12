@@ -6,12 +6,12 @@ import { useTranslation } from 'react-i18next';
 import { asHref, ROUTES } from '@/src/core/constants/routes';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
-import { canAccessRoute, MAIN_DRAWER_ROUTES, useAuth } from '@/src/features/auth';
-import { useUnreadNotificationCount } from '@/src/features/notifications';
-import { TenantAccessProvider } from '@/src/features/tenant-access';
-import { AppDrawerContent } from '@/src/layouts/drawer';
-import { MainLayout } from '@/src/layouts/main/MainLayout';
-import { AppNavigationHeader } from '@/src/layouts/navigation/AppNavigationHeader';
+import { canAccessRoute, MAIN_DRAWER_ROUTES, useAuth } from '@/src/platform/auth';
+import { useUnreadNotificationCount } from '@/src/platform/notifications';
+import { OfflineOperationsPolicyProvider } from '@/src/platform/offline-operations';
+import { TenantAccessProvider } from '@/src/platform/tenant-access';
+import { AppDrawerContent, MainLayout } from '@/src/shell/layouts';
+import { AppNavigationHeader } from '@/src/platform/navigation';
 import { AppIcon } from '@/src/shared/components';
 
 export default function ProtectedRouteLayout() {
@@ -26,8 +26,9 @@ export default function ProtectedRouteLayout() {
     : t('navigation.notifications');
 
   return (
-    <TenantAccessProvider>
-      <MainLayout>
+    <OfflineOperationsPolicyProvider>
+      <TenantAccessProvider>
+        <MainLayout>
         <Drawer
           drawerContent={(props) => <AppDrawerContent {...props} />}
           screenOptions={({ navigation }) => ({
@@ -88,7 +89,8 @@ export default function ProtectedRouteLayout() {
             }}
           />
         </Drawer>
-      </MainLayout>
-    </TenantAccessProvider>
+        </MainLayout>
+      </TenantAccessProvider>
+    </OfflineOperationsPolicyProvider>
   );
 }

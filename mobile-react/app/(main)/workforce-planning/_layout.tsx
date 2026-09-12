@@ -1,3 +1,3 @@
-import { WorkforcePlanningLayout } from '@/src/features/workforce-planning';
+import { WorkforcePlanningLayout } from '@/src/modules/hr/workforce-planning';
 
 export default WorkforcePlanningLayout;

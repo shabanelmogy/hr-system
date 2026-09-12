@@ -1,0 +1,29 @@
+{
+  "moduleName": "HR",
+  "docSlug": "hr",
+  "databaseSchema": "hr",
+  "version": "1.0.0",
+  "requiredModuleDependencies": ["platform"],
+  "optionalModuleDependencies": [],
+  "isUserVisible": true,
+  "allowsTenantEntitlement": true,
+  "lifecycle": "active",
+  "status": "foundation",
+  "runtimePaths": {
+    "root": "api/Modules/HR",
+    "contracts": "api/Modules/HR/ErpSystem.Modules.HR.Contracts",
+    "domain": "api/Modules/HR/ErpSystem.Modules.HR.Domain",
+    "application": "api/Modules/HR/ErpSystem.Modules.HR.Application",
+    "infrastructure": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure",
+    "presentation": "api/Modules/HR/ErpSystem.Modules.HR.Presentation",
+    "bootstrap": "api/Modules/HR/ErpSystem.Modules.HR"
+  },
+  "documentationPaths": {
+    "root": "documentation/modules/hr",
+    "api": "documentation/modules/hr/api/README.md",
+    "webNext": "documentation/modules/hr/web-next/README.md",
+    "mobileReact": "documentation/modules/hr/mobile-react/README.md",
+    "features": "documentation/modules/hr/features/README.md",
+    "phases": "documentation/modules/hr/phases/README.md"
+  }
+}

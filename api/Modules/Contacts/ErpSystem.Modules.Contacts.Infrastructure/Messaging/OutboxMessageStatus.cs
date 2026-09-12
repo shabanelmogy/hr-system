@@ -1,0 +1,10 @@
+namespace ErpSystem.Modules.Contacts.Infrastructure.Messaging;
+
+public enum OutboxMessageStatus
+{
+    Pending = 0,
+    Processing = 1,
+    Published = 2,
+    Failed = 3,
+    Dead = 4
+}

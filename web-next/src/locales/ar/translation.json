@@ -56,6 +56,48 @@
     "validationErrorCount_other": "{{count}} خطأ",
     "reviewValidationErrors": "عرض أخطاء التحقق وعددها {{count}}"
   },
+  "offlineOperations": {
+    "title": "العمليات دون اتصال",
+    "subtitle": "التحكم في العمليات التي تسمح بها المنصة للعمل دون اتصال ضمن المستأجر والشركة النشطين.",
+    "scopeTitle": "نطاق السياسة النشط",
+    "tenantScopeValue": "المستأجر: {{name}} — المعرّف: {{id}}",
+    "companyScopeValue": "الشركة: {{name}} — المعرّف: {{id}}",
+    "loading": "جارٍ تحميل سياسة الخادم...",
+    "source": {
+      "serverPolicy": "سياسة الخادم"
+    },
+    "serverAuthorityNotice": "واجهة Platform API هي مصدر الحقيقة. لا تسمح هذه الشاشة إلا بالأوضاع التي يعلنها الخادم ويدعمها عميل الويب الحالي بأمان.",
+    "scopeMismatch": "السياسة المحمّلة لا تطابق نطاق المستأجر والشركة النشط. تم تعطيل التعديل؛ أعد التحميل بعد اكتمال تبديل السياق.",
+    "readOnlyNotice": "هذا المستأجر في وضع القراءة فقط. يمكنك مراجعة السياسة، لكن تعديلها غير متاح.",
+    "incompatiblePolicy": "تم تعطيل التعديل لأن سياسة الخادم تفتقد قدرة يتوقعها عميل الويب الحالي أو تحتوي وضعًا معروفًا خارج حدود الأمان التي يدعمها العميل.",
+    "saveSuccess": "تم تحديث سياسة العمليات دون اتصال.",
+    "saveFailed": "تعذر تحديث سياسة العمليات دون اتصال.",
+    "loadFailed": "تعذر تحميل سياسة العمليات دون اتصال.",
+    "conflictReloaded": "عدّل مسؤول آخر هذه السياسة. تم تحميل أحدث نسخة من الخادم؛ راجعها قبل إعادة المحاولة.",
+    "reset": "إعادة الضبط إلى الاتصال فقط",
+    "resetConfirmTitle": "إعادة ضبط سياسة العمليات دون اتصال؟",
+    "resetConfirmDescription": "سيتم استبدال سياسة الخادم كاملة للمستأجر والشركة النشطين وتعيين كل قدرة يعلنها الخادم إلى وضع الاتصال فقط. لن يؤدي ذلك إلى تمكين أي سلوك دون اتصال.",
+    "cancel": "إلغاء",
+    "unknownCapability": "أعلن الخادم هذه القدرة، لكن عميل الويب الحالي لا ينفذها.",
+    "unsupportedCapability": "هذه قدرة من الخادم أحدث من عميل الويب الحالي. يتم الاحتفاظ بقيمتها الحالية عند الحفظ العادي ولا يمكن تعديلها من هنا.",
+    "incompatibleCapability": "الوضع المضبوط غير مسموح به معًا ضمن قدرة الخادم وحدود الأمان لعميل الويب الحالي. يظهر للتشخيص فقط ولا يمكن تعديله.",
+    "incompatibleCurrentMode": "غير متوافق: {{mode}}",
+    "capabilities": {
+      "countriesRead": "الدول — قراءة دون اتصال",
+      "countriesReadDescription": "السماح بقراءة بيانات الدول المرجعية المخزنة محليًا عند عدم توفر الخادم.",
+      "workforcePlanUpdateDraft": "خطة القوى العاملة — تحديث دون اتصال",
+      "workforcePlanUpdateDraftDescription": "التحكم في معالجة المسودات أو الأوامر دون اتصال لتحديثات خطط القوى العاملة المعتمدة من الخادم."
+    },
+    "modes": {
+      "onlineOnly": "عبر الإنترنت فقط",
+      "offlineRead": "قراءة دون اتصال",
+      "offlineDraft": "مسودة دون اتصال",
+      "offlineCommand": "أمر دون اتصال"
+    },
+    "lastUpdated": "آخر تحديث: {{date}} — بواسطة {{user}}",
+    "never": "لم يتم التعديل بعد",
+    "system": "النظام"
+  },
   "companyGeographicScope": {
     "title": "دول التشغيل",
     "description": "اختر دول التشغيل ودولة التسجيل القانوني ودولة التشغيل الافتراضية.",
@@ -183,7 +225,7 @@
     "whatsApp": "واتساب",
     "technicalDetails": "التفاصيل التقنية (بيئة التطوير فقط)",
     "close": "إغلاق",
-    "errorReport": "تقرير خطأ نظام إدارة الموارد البشرية",
+    "errorReport": "تقرير خطأ نظام ERP",
     "unknownMessage": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى."
   },
   "notifications": {
@@ -255,7 +297,7 @@
   "UserUnlockedNotificationMessage": "تم إلغاء قفل المستخدم {{UserName}}.",
   "menu": {
     "basicDataGroup": "مجموعة بيانات",
-    "basicDataDescription": "إدارة البيانات المرجعية المشتركة في نظام الموارد البشرية.",
+    "basicDataDescription": "إدارة البيانات المرجعية المشتركة في نظام ERP.",
     "basicDataNavigation": "تنقل البيانات الأساسية",
     "openBasicDataNavigation": "فتح تنقل البيانات الأساسية",
     "closeBasicDataNavigation": "إغلاق تنقل البيانات الأساسية",
@@ -297,6 +339,7 @@
     "usersManagement": "ادارة المستخدمين",
     "invitationsManagement": "إدارة الدعوات",
     "crystalReportsManagement": "تقارير Crystal",
+    "offlineOperations": "العمليات دون اتصال",
     "superAdmin": "مدير النظام",
     "superAdminDashboard": "لوحة التحكم",
     "globalGeography": "البيانات الجغرافية العالمية",
@@ -1699,6 +1742,7 @@
     "contactName": "اسم جهة الاتصال",
     "contactPhone": "هاتف جهة الاتصال",
     "notes": "ملاحظات",
+    "entitlements": "التطبيقات والوحدات المشتراة",
     "tenantEnabled": "السماح بتسجيل دخول المستأجر",
     "enabled": "مفعّل",
     "disabled": "معطّل",
@@ -2492,6 +2536,7 @@
       "foldInKanban": "طوي العمود افتراضياً في لوحة الكانبان (Folded in Kanban)",
       "autoEmail": "إرسال إشعار بريدي تلقائي للمرشح عند نقله لهذه المرحلة",
       "emailTemplate": "نص قالب البريد الإلكتروني التلقائي",
+      "emailTemplatePlaceholder": "أدخل نص الرسالة التي ستصل للمرشح...",
       "reasonsTitle": "أسباب الرفض والاستبعاد (Refuse / Rejection Reasons)",
       "reasonsSubtitle": "توثيق أسباب استبعاد المرشحين بدقة لمنع التقدير العشوائي، مع إمكانية إرسال إيميل اعتذار مهني تلقائي مثل أودو",
       "newReasonBtn": "إضافة سبب رفض",
@@ -2510,6 +2555,8 @@
       "emailTemplateTitle": "قالب رسالة الاعتذار التلقائية للمرشح:",
       "emailSubjectAr": "عنوان البريد (بالعربية)",
       "emailBodyAr": "نص الرسالة (بالعربية)",
+      "emailSubjectEn": "عنوان البريد (بالإنجليزية)",
+      "emailBodyEn": "نص الرسالة (بالإنجليزية)",
       "sourcesTitle": "قنوات ومصادر التوظيف (Sourcing Channels)",
       "sourcesSubtitle": "إدارة وتتبع القنوات والمنصات التي تستقطب منها الشركة مرشحيها وحساب معدل نجاح كل قناة",
       "newSourceBtn": "إضافة قناة جديدة",
@@ -2550,6 +2597,8 @@
       "critLead": "القيادة والعمل الجماعي",
       "criterionWeight": "الوزن النسبي (%)",
       "criterionDescAr": "وصف وإرشادات التقييم للمحاور",
+      "criterionDescEn": "وصف وإرشادات التقييم (بالإنجليزية)",
+      "criterionDescriptionPlaceholder": "ما الذي يجب على المحاور التركيز عليه لقياس هذا المعيار؟",
       "mandatoryCriterion": "معيار إلزامي (يجب على كل مقيّم رصد درجة له لإنهاء المقابلة)",
       "generalTitle": "الإعدادات العامة وسياسات الحوكمة (General Governance)",
       "generalSubtitle": "ضبط القواعد والسياسات المؤسسية للرواتب، السعة، صلاحيات العروض، والربط التلقائي",
@@ -2567,7 +2616,57 @@
       "publicPortalDesc": "إتاحة التقديم المباشر للمرشحين ورفع السيرة الذاتية عبر رابط الشركة الخارجي",
       "resetDefaults": "استعادة الإعدادات الافتراضية",
       "savedSuccess": "تم حفظ إعدادات وسياسات التوظيف بنجاح!",
-      "confirmReset": "هل أنت متأكد من استعادة كافة إعدادات التوظيف الافتراضية؟"
+      "confirmReset": "هل أنت متأكد من استعادة كافة إعدادات التوظيف الافتراضية؟",
+      "defaultEmailSubjectAr": "تحديث بخصوص طلب التوظيف",
+      "defaultEmailSubjectEn": "Update regarding your application",
+      "defaultEmailBodyAr": "نشكرك على اهتمامك ووقتك معنا، ونعتذر عن عدم المضي قدماً في طلبك لهذه الفرصة.",
+      "defaultEmailBodyEn": "Thank you for your interest and time. We are unable to proceed with your application at this time.",
+      "validation": {
+        "required": "هذا الحقل ثنائي اللغة مطلوب.",
+        "sequence": "يجب ألا يقل الترتيب عن 1.",
+        "weight": "يجب أن يكون الوزن بين 1 و100.",
+        "offerExpiry": "يجب أن تكون صلاحية العرض بين يوم واحد و365 يوماً.",
+        "probation": "اختر مدة تجربة مدعومة.",
+        "email": "أدخل عنوان بريد استقبال صحيحاً."
+      },
+      "currencies": {
+        "egp": "EGP - الجنيه المصري",
+        "sar": "SAR - الريال السعودي",
+        "aed": "AED - الدرهم الإماراتي",
+        "usd": "USD - الدولار الأمريكي",
+        "eur": "EUR - اليورو"
+      },
+      "probationOptions": {
+        "one": "شهر واحد",
+        "three": "3 أشهر (المعتاد قانونياً)",
+        "six": "6 أشهر"
+      }
+    }
+  },
+  "modules": {
+    "title": "التطبيقات",
+    "description": "اختر تطبيقاً ثم افتح إحدى الوحدات المفعلة فيه.",
+    "submoduleDescription": "اختر وحدة مفعلة للمتابعة.",
+    "open": "فتح التطبيق",
+    "overview": "نظرة عامة على التطبيقات",
+    "currentApplication": "التطبيق الحالي",
+    "switchApplication": "تبديل التطبيق",
+    "hr": "الموارد البشرية",
+    "accounting": "الحسابات",
+    "empty": "لا توجد تطبيقات مفعلة لهذا المستأجر.",
+    "accountingEmpty": "تم تثبيت الحسابات، ولا توجد وحدات أعمال متاحة بعد.",
+    "genericEmpty": "تم تثبيت التطبيق، ولا توجد وحدات متاحة بعد.",
+    "noAvailableFeatures": "هذه الوحدة مفعلة، لكن لا توجد شاشة متاحة حاليًا تتوافق مع صلاحياتك.",
+    "submodules": {
+      "hr": {
+        "basic-data": "البيانات الأساسية",
+        "recruitment": "التوظيف",
+        "workforce": "تخطيط القوى العاملة",
+        "attendance": "الحضور والانصراف",
+        "analytics": "التحليلات",
+        "administration": "الإدارة",
+        "collaboration": "التعاون"
+      }
     }
   }
 }

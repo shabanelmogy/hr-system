@@ -1,6 +1,6 @@
 import { ROUTES } from '@/src/core/constants/routes';
-import { RoleManagementScreen } from '@/src/features/administration';
-import { RouteGuard } from '@/src/features/auth';
+import { RoleManagementScreen } from '@/src/platform/administration';
+import { RouteGuard } from '@/src/platform/auth';
 
 export default function RoleManagementRoute() {
   return (

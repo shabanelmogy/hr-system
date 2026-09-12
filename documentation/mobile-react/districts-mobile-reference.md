@@ -10,7 +10,7 @@ Districts is an approved mobile Table/Cards/Chart/Report/Import feature under an
 
 ## 3. Runtime boundary
 
-`district-endpoints.ts`, `district-api.ts`, and Zod schemas match the current API. URL serialization includes only bounded query fields and optional State/address-presence filters. Atomic import uses `POST districts/bulk` with exactly `{ districts: [...] }` and parses `{ createdCount }`.
+Districts now follows the canonical Clean Architecture template established by Countries: `domain` owns models/policies/repository ports, `application` owns use cases, `data/remote` owns endpoint and Zod transport validation, `data/repositories` implements the port, `composition` wires runtime dependencies, and `presentation` owns hooks/screens/components. URL serialization includes only bounded query fields and optional State/address-presence filters. Atomic import uses `POST districts/bulk` with exactly `{ districts: [...] }` and parses `{ createdCount }`.
 
 ## 4. Domain types
 
@@ -22,7 +22,7 @@ are rejected. Codes remain 2-10 ASCII letters, digits, or hyphens.
 
 ## 5. Query keys and mutations
 
-`districtKeys` owns list, lookup, address-detail, and managed-report catalog cache keys. Mutations invalidate the District root after create/update/archive/restore/bulk archive/bulk create. Report catalog uses a stable five-minute query independently from the server list page.
+Presentation-owned `districtKeys` owns list, lookup, address-detail, and managed-report catalog cache keys. Hooks call application use cases through the repository boundary rather than a transport API singleton. Mutations invalidate the District root after create/update/archive/restore/bulk archive/bulk create. Report catalog uses a stable five-minute query independently from the server list page. All District writes remain online-authoritative; no outbox or offline mutation is enabled.
 
 ## 6. Server-managed list
 
@@ -38,7 +38,7 @@ The screen registers Table, Cards, Chart, Report, and permission-guarded Import.
 
 ## 9. Forms
 
-`DistrictForm` loads active States through the States lookup key/API only while the form is visible. In development, `AppForm` can fill a domain-owned sample with an active State parent; it never submits and is disabled until the lookup is ready. Its controls respect read-only mode and use the shared full-screen mobile form.
+`DistrictForm` loads active States only through the public repository-backed `useStateLookup` contract from the States feature. It never imports States transport files or private query keys. In development, `AppForm` can fill a domain-owned sample with an active State parent; it never submits and is disabled until the lookup is ready. Its controls respect read-only mode and use the shared full-screen mobile form.
 
 ## 10. Lifecycle actions
 
@@ -66,4 +66,4 @@ Cards and table actions have translated labels, controls meet shared touch targe
 
 ## 15. Verification
 
-Run mobile typecheck, lint, architecture check, Jest tests, translation parity, and direct route-policy checks after District changes. Manually test phone/tablet portrait and landscape, EN/AR and RTL, text scaling, light/dark, all permissions, read-only behavior, Import picker cancellation/file/header/formula/row/dependency/conflict/uncertain states, and Report permission/catalog/render/open/print/share/cache-cleanup states.
+Focused automated coverage includes domain request normalization, application delegation/normalization, repository online-authoritative enforcement, remote serialization/schema boundaries, bulk transport, import parsing, and representative screen composition. Run mobile typecheck, lint, architecture check, Jest tests, translation parity, and direct route-policy checks after District changes. Manually test phone/tablet portrait and landscape, EN/AR and RTL, text scaling, light/dark, all permissions, read-only behavior, Import picker cancellation/file/header/formula/row/dependency/conflict/uncertain states, and Report permission/catalog/render/open/print/share/cache-cleanup states.

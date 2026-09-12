@@ -1,6 +1,6 @@
 import { ROUTES } from '@/src/core/constants/routes';
-import { RouteGuard } from '@/src/features/auth';
-import { NotificationsScreen } from '@/src/features/notifications';
+import { RouteGuard } from '@/src/platform/auth';
+import { NotificationsScreen } from '@/src/platform/notifications';
 
 export default function NotificationsRoute() {
   return (

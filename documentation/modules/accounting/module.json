@@ -1,0 +1,30 @@
+{
+  "moduleName": "Accounting",
+  "docSlug": "accounting",
+  "databaseSchema": "acc",
+  "version": "1.0.0",
+  "requiredModuleDependencies": [],
+  "optionalModuleDependencies": ["contacts"],
+  "isUserVisible": true,
+  "allowsTenantEntitlement": true,
+  "lifecycle": "active",
+  "status": "foundation",
+  "runtimePaths": {
+    "root": "api/Modules/Accounting",
+    "contracts": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Contracts",
+    "domain": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain",
+    "application": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application",
+    "infrastructure": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure",
+    "presentation": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Presentation",
+    "bootstrap": "api/Modules/Accounting/ErpSystem.Modules.Accounting"
+  },
+  "documentationPaths": {
+    "root": "documentation/modules/accounting",
+    "api": "documentation/modules/accounting/api/README.md",
+    "webNext": "documentation/modules/accounting/web-next/README.md",
+    "mobileReact": "documentation/modules/accounting/mobile-react/README.md",
+    "features": "documentation/modules/accounting/features/README.md",
+    "phases": "documentation/modules/accounting/phases/README.md",
+    "phaseSourceAr": "documentation/modules/accounting/phases/SOURCE-PLAN_AR.md"
+  }
+}

@@ -31,7 +31,7 @@ governance, Hire, Trace, or Plan-versus-Commitment.
   recreated. Correct authored Workforce Planning documentation during handoff;
   do not recreate those historical migrations.
 - The consolidated baseline
-  `api/HrManagementSystem.Infrastructure/Migrations/20260906112413_create-database.cs`
+  `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Migrations/20260906112413_create-database.cs`
   resolves the former Addresses migration reference and contains the global
   geography transition. Workforce-scoped generation and its check pass; a global
   documentation check may still report a stale organizational-structure packet.
@@ -502,8 +502,8 @@ the existing Plan journey.
 Run the narrow tests first, then at minimum:
 
 ```powershell
-dotnet build api/HrManagementSystem.Api/HrManagementSystem.Api.csproj --no-restore
-dotnet test api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore
+dotnet build api/ErpSystem.Api/ErpSystem.Api.csproj --no-restore
+dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore
 npm run type-check --prefix web-next
 npm run check:architecture --prefix web-next
 npm run typecheck --prefix mobile-react

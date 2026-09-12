@@ -1,8 +1,8 @@
 [CmdletBinding()]
 param(
     [switch]$IncludeWeb,
-    [string]$ApiProject = "api/HrManagementSystem.Api/HrManagementSystem.Api.csproj",
-    [string]$ConnectorProject = "api/HrManagementSystem.AttendanceConnector/HrManagementSystem.AttendanceConnector.csproj",
+    [string]$ApiProject = "api/ErpSystem.Api/ErpSystem.Api.csproj",
+    [string]$ConnectorProject = "api/ErpSystem.AttendanceConnector/ErpSystem.AttendanceConnector.csproj",
     [string]$WebDirectory = "web-next"
 )
 

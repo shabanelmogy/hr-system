@@ -4,7 +4,7 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║  Districts Controller — External XML Documentation                          ║
 ║  Base URL  : /api/v1/districts                                              ║
-║  Namespace : HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1                              ║
+║  Namespace : ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Districts.V1                              ║
 ║  Guide     : documentation/api/Controllers/Geographic/DistrictsController.md║
 ║  Dropdown  : stateId → load from GET /api/v1/states/by-country/{countryId} ║
 ║  Cascading : Country → State → District                                     ║
@@ -18,7 +18,7 @@
          GET /api/v1/districts
          Permission : Districts:View
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetAll(System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Districts.V1.DistrictsController.GetAll(System.Threading.CancellationToken)">
 
       <summary>Get all districts with their parent state info.</summary>
 
@@ -59,7 +59,7 @@
          Permission : Districts:View
          ⚡ Use this to populate the Districts dropdown after a state is selected.
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetAllByState(System.Int32,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Districts.V1.DistrictsController.GetAllByState(System.Int32,System.Threading.CancellationToken)">
 
       <summary>Get all active districts for a specific state.</summary>
 
@@ -103,7 +103,7 @@
          GET /api/v1/districts/{id}
          Permission : Districts:View
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetByID(System.Int32,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Districts.V1.DistrictsController.GetByID(System.Int32,System.Threading.CancellationToken)">
 
       <summary>Get a single district by ID.</summary>
 
@@ -143,7 +143,7 @@
          GET /api/v1/districts/{id}/addresses
          Permission : Districts:View
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetDistrictWithAddresses(System.Int32,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Districts.V1.DistrictsController.GetDistrictWithAddresses(System.Int32,System.Threading.CancellationToken)">
 
       <summary>Get a district with its full addresses list populated.</summary>
 
@@ -168,7 +168,7 @@
          POST /api/v1/districts
          Permission : Districts:Create
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.Add(HrManagementSystem.Application.Features.GeographicalInformation.Districts.Contracts.DistrictRequest,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Districts.V1.DistrictsController.Add(ErpSystem.Modules.HR.Application.Features.GeographicalInformation.Districts.Contracts.DistrictRequest,System.Threading.CancellationToken)">
 
       <summary>Create a new district.</summary>
 
@@ -217,7 +217,7 @@
          PUT /api/v1/districts
          Permission : Districts:Edit
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.Update(HrManagementSystem.Application.Features.GeographicalInformation.Districts.Contracts.DistrictRequest,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Districts.V1.DistrictsController.Update(ErpSystem.Modules.HR.Application.Features.GeographicalInformation.Districts.Contracts.DistrictRequest,System.Threading.CancellationToken)">
 
       <summary>Update an existing district.</summary>
 
@@ -259,7 +259,7 @@
          Permission : Districts:Delete
          ⚠ Soft delete — toggles IsDeleted. Call again to restore.
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.Delete(System.Int32,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Districts.V1.DistrictsController.Delete(System.Int32,System.Threading.CancellationToken)">
 
       <summary>Toggle soft-delete state of a district (delete or restore).</summary>
 
@@ -291,7 +291,7 @@
          GET /api/v1/districts/count
          Permission : Districts:View
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Districts.V1.DistrictsController.GetCount(System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Districts.V1.DistrictsController.GetCount(System.Threading.CancellationToken)">
 
       <summary>Get the total count of active (non-deleted) districts.</summary>
 

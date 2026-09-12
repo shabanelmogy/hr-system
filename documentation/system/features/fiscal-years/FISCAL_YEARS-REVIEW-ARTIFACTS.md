@@ -8,7 +8,7 @@
 | API route | `/api/v1/fiscal-years` |
 | Web route | `/finance/fiscal-years` |
 | Mobile route | `/finance/fiscal-years` |
-| Review owner | `HR Management System implementation team` |
+| Review owner | `ERP System implementation team` |
 | Review date | `2026-09-05` |
 | Implementation request | `documentation/system/features/fiscal-years/IMPLEMENTATION-REQUEST.md` |
 | Required-file manifest | `documentation/system/features/fiscal-years/required-files.json` |

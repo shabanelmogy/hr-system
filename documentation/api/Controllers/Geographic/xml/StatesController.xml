@@ -4,7 +4,7 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║  States Controller — External XML Documentation                             ║
 ║  Base URL  : /api/v1/states                                                 ║
-║  Namespace : HrManagementSystem.Api.Features.GeographicalInformation.States.V1                              ║
+║  Namespace : ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.States.V1                              ║
 ║  Guide     : documentation/api/Controllers/Geographic/StatesController.md   ║
 ║  Dropdown  : countryId → load from GET /api/v1/countries                   ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -17,7 +17,7 @@
          GET /api/v1/states
          Permission : States:View
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetAll(System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.States.V1.StatesController.GetAll(System.Threading.CancellationToken)">
 
       <summary>Get all states with their parent country info.</summary>
 
@@ -58,7 +58,7 @@
          Permission : States:View
          ⚡ Use this to populate the States dropdown after a country is selected.
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetAllByCountry(System.Int32,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.States.V1.StatesController.GetAllByCountry(System.Int32,System.Threading.CancellationToken)">
 
       <summary>Get all active states for a specific country.</summary>
 
@@ -102,7 +102,7 @@
          GET /api/v1/states/{id}
          Permission : States:View
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetByID(System.Int32,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.States.V1.StatesController.GetByID(System.Int32,System.Threading.CancellationToken)">
 
       <summary>Get a single state by ID.</summary>
 
@@ -142,7 +142,7 @@
          Permission : States:View
          ⚡ Use this to populate the Districts dropdown after a state is selected.
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetStateWithDistricts(System.Int32,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.States.V1.StatesController.GetStateWithDistricts(System.Int32,System.Threading.CancellationToken)">
 
       <summary>Get an active state with its active districts list populated.</summary>
 
@@ -170,7 +170,7 @@
          POST /api/v1/states
          Permission : States:Create
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.Add(HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts.StateRequest,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.States.V1.StatesController.Add(ErpSystem.Modules.HR.Application.Features.GeographicalInformation.States.Contracts.StateRequest,System.Threading.CancellationToken)">
 
       <summary>Create a new state.</summary>
 
@@ -219,7 +219,7 @@
          PUT /api/v1/states
          Permission : States:Edit
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.Update(HrManagementSystem.Application.Features.GeographicalInformation.States.Contracts.StateRequest,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.States.V1.StatesController.Update(ErpSystem.Modules.HR.Application.Features.GeographicalInformation.States.Contracts.StateRequest,System.Threading.CancellationToken)">
 
       <summary>Update an existing state.</summary>
 
@@ -261,7 +261,7 @@
          Permission : States:Delete
          ⚠ Soft delete — toggles IsDeleted. Call again to restore.
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.Delete(System.Int32,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.States.V1.StatesController.Delete(System.Int32,System.Threading.CancellationToken)">
 
       <summary>Toggle soft-delete state of a state (delete or restore).</summary>
 
@@ -293,7 +293,7 @@
          GET /api/v1/states/count
          Permission : States:View
          ══════════════════════════════════════════════════════════════════════ -->
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.States.V1.StatesController.GetCount(System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.States.V1.StatesController.GetCount(System.Threading.CancellationToken)">
 
       <summary>Get the total count of active (non-deleted) states.</summary>
 

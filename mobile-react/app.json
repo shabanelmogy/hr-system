@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "HR Management",
-    "slug": "hr-management-mobile",
+    "name": "ERP System",
+    "slug": "erp-system-mobile",
     "version": "1.0.0",
     "orientation": "default",
     "icon": "./assets/images/icon.png",
-    "scheme": "hrmanagement",
+    "scheme": "erpsystem",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.hrmanagementsystem.mobile",
+      "bundleIdentifier": "com.erpsystem.mobile",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true
       }
@@ -23,7 +23,7 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.hrmanagementsystem.mobile"
+      "package": "com.erpsystem.mobile"
     },
     "web": {
       "output": "static",
@@ -73,8 +73,8 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Allow HR Management to select a profile photo.",
-          "cameraPermission": "Allow HR Management to take a profile photo.",
+          "photosPermission": "Allow ERP System to select a profile photo.",
+          "cameraPermission": "Allow ERP System to take a profile photo.",
           "microphonePermission": false
         }
       ]

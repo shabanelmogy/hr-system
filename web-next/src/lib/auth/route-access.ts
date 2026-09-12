@@ -5,6 +5,7 @@ import { isAuthorized } from "./authorization";
 
 export const UNAVAILABLE_ROUTE = "/route-unavailable";
 export const HANGFIRE_PROXY_ROUTE = "/hangfire";
+export const APPS_ROUTE = "/apps";
 
 export type RoutePolicy = {
   path: string;
@@ -35,6 +36,7 @@ const superAdminAllowedRoutes = [
 
 export const routePolicies: readonly RoutePolicy[] = [
   { path: appRoutes.home },
+  { path: APPS_ROUTE },
   { path: appRoutes.profile },
   { path: appRoutes.changePassword },
   { path: appRoutes.superAdmin.tenants, roles: [superAdminRole] },
@@ -50,6 +52,7 @@ export const routePolicies: readonly RoutePolicy[] = [
   { path: appRoutes.auth.rolesPage, permissions: [permissions.ViewRoles] },
   { path: appRoutes.auth.usersPage, permissions: [permissions.ViewUsers] },
   { path: appRoutes.auth.invitationsPage, permissions: [permissions.ViewUsers] },
+  { path: appRoutes.auth.offlineOperationsPage, permissions: [permissions.ManageOfflineOperations] },
   {
     path: appRoutes.auth.crystalReportsPage,
     permissions: [permissions.ManageCrystalReportAccess],

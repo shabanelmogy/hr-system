@@ -1,9 +1,36 @@
-import React, { createContext, useContext, useCallback, useEffect, useState } from "react";
+import React, { createContext, useContext, useCallback, useState } from "react";
 import { useMediaQuery, useTheme } from "@mui/material";
 import { defaultViewLayoutManager, viewLayoutUtils } from "../utils/viewLayoutManager";
 
+type GlobalPreferences = {
+  autoSave: boolean;
+  autoSaveDelay: number;
+  useResponsiveDefaults: boolean;
+  debugMode: boolean;
+};
+type LayoutHookOptions = {
+  autoSaveDelay?: number;
+  getResponsiveDefault?: (() => string) | null;
+  onLayoutChange?: (newLayout: string, oldLayout: string) => void;
+  debug?: boolean;
+};
+type ViewLayoutContextValue = {
+  globalPreferences: GlobalPreferences;
+  layoutStats: ReturnType<typeof defaultViewLayoutManager.getStatistics> | null;
+  breakpoints: { isSm: boolean; isMd: boolean; isLg: boolean; isXl: boolean };
+  getResponsiveDefault: () => string;
+  createViewLayoutHook: (storageKey: string, options?: LayoutHookOptions) => { storageKey: string; options: LayoutHookOptions };
+  clearAllLayouts: () => number;
+  exportPreferences: () => string;
+  importPreferences: (jsonData: unknown) => number;
+  getAllLayouts: () => Record<string, string>;
+  updatePreferences: (newPreferences: Partial<GlobalPreferences>) => void;
+  utils: typeof viewLayoutUtils;
+  manager: typeof defaultViewLayoutManager;
+};
+
 // Create the context
-const ViewLayoutContext = createContext<any>(null);
+const ViewLayoutContext = createContext<ViewLayoutContextValue | null>(null);
 
 // Custom hook to use the view layout context
 export const useViewLayoutContext = () => {
@@ -30,18 +57,13 @@ export const ViewLayoutProvider = ({ children }: { children: React.ReactNode }) 
   });
 
   // Statistics about saved layouts
-  const [layoutStats, setLayoutStats] = useState(null);
+  const [layoutStats, setLayoutStats] = useState(() => defaultViewLayoutManager.getStatistics());
 
   // Update statistics
   const updateStats = useCallback(() => {
     const stats = defaultViewLayoutManager.getStatistics();
     setLayoutStats(stats);
   }, []);
-
-  // Initialize statistics on mount
-  useEffect(() => {
-    updateStats();
-  }, [updateStats]);
 
   // Get responsive breakpoints
   const getBreakpoints = useCallback(() => ({
@@ -58,12 +80,12 @@ export const ViewLayoutProvider = ({ children }: { children: React.ReactNode }) 
   }, [globalPreferences.useResponsiveDefaults, getBreakpoints]);
 
   // Create a view layout hook with global settings
-  const createViewLayoutHook = useCallback((storageKey: string, options: any = {}) => {
+  const createViewLayoutHook = useCallback((storageKey: string, options: LayoutHookOptions = {}) => {
     const mergedOptions = {
       autoSaveDelay: globalPreferences.autoSaveDelay,
       getResponsiveDefault: globalPreferences.useResponsiveDefaults ? getResponsiveDefault : null,
       debug: globalPreferences.debugMode,
-      onLayoutChange: (newLayout: any, oldLayout: any) => {
+      onLayoutChange: (newLayout: string, oldLayout: string) => {
         // Update statistics when layout changes
         updateStats();
         
@@ -96,7 +118,7 @@ export const ViewLayoutProvider = ({ children }: { children: React.ReactNode }) 
     }, []),
 
     // Import preferences
-    importPreferences: useCallback((jsonData: any) => {
+    importPreferences: useCallback((jsonData: unknown) => {
       const count = defaultViewLayoutManager.importPreferences(jsonData);
       updateStats();
       return count;
@@ -108,7 +130,7 @@ export const ViewLayoutProvider = ({ children }: { children: React.ReactNode }) 
     }, []),
 
     // Update global preferences
-    updatePreferences: useCallback((newPreferences) => {
+    updatePreferences: useCallback((newPreferences: Partial<GlobalPreferences>) => {
       setGlobalPreferences(prev => ({ ...prev, ...newPreferences }));
     }, []),
   };

@@ -1,0 +1,166 @@
+using ErpSystem.Modules.HR.Application.Features.Catalog.Categories.Services;
+using ErpSystem.Modules.HR.Application.Features.Catalog.Categories.Contracts;
+using ErpSystem.Modules.HR.Application.Features.Catalog.Categories.Errors;
+using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
+
+using ErpSystem.Modules.HR.Domain.Catalog.Categories.Entities;
+using ErpSystem.Modules.HR.Application.Features.Catalog.SubCategories.Contracts;
+using ErpSystem.Modules.HR.Application.Common.Realtime;
+using ErpSystem.Modules.HR.Infrastructure.Features.Catalog;
+
+namespace ErpSystem.Modules.HR.Infrastructure.Features.Catalog.Categories.Services;
+
+public class CategoryService(
+    IMapper mapper,
+    ApplicationDbContext context,
+    IEntityChangeLogService entityChangeLogService,
+    ICurrentActor currentActor,
+    CategoryErrors categoryErrors,
+    HybridCache hybridCache,
+    IRealtimeChangeDispatcher realtimeChanges) : ICategoryService
+{
+    private readonly IMapper _mapper = mapper;
+    private readonly ApplicationDbContext _context = context;
+    private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
+    private readonly ICurrentActor _currentActor = currentActor;
+    private readonly CategoryErrors _categoryErrors = categoryErrors;
+    private readonly HybridCache _hybridCache = hybridCache;
+
+    private const string CacheKeyPrefix = "AvailableCategories";
+
+
+    public async Task<IEnumerable<CategoryResponse>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await _hybridCache.GetOrCreateAsync(
+            CompanyScopedCatalogCacheKey.Create(CacheKeyPrefix, _currentActor),
+            async _ => await _context.Categories
+                .AsNoTracking()
+                .Where(c => !c.IsDeleted)
+                .Select(c => new CategoryResponse(
+                    c.Id,
+                    c.NameAr,
+                    c.NameEn,
+                    c.CategorySubcategories
+                        .Where(cs => cs.SubCategory != null && !cs.SubCategory.IsDeleted)
+                        .Select(cs => new SimpleSubCategoryResponse(
+                            cs.SubCategory!.Id,
+                            cs.SubCategory.NameAr,
+                            cs.SubCategory.NameEn,
+                            cs.SubCategory.IsDeleted
+                        ))
+                        .ToList(),
+                    c.CreatedOn,
+                    c.UpdatedOn,
+                    c.IsDeleted
+                ))
+                .ToListAsync(cancellationToken),
+            cancellationToken: cancellationToken);
+    }
+
+    public async Task<Result<CategoryResponse>> GetAsync(int id, CancellationToken cancellationToken)
+    {
+        var category = await _context.Categories
+            .AsNoTracking()
+            .Include(c => c.CategorySubcategories)
+            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+
+        if (category is null)
+            return Result.Failure<CategoryResponse>(_categoryErrors.CategoryNotFound);
+
+        var response = _mapper.Map<CategoryResponse>(category);
+        return Result.Success(response);
+    }
+
+    public async Task<Result<CategoryResponse>> AddAsync(CategoryRequest request, CancellationToken cancellationToken = default)
+    {
+        // Map the request to a new category
+        var newCategory = _mapper.Map<Category>(request);
+
+        // Save the category only (without subcategories)
+        await _context.Categories.AddAsync(newCategory, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        // Clear cache after adding a new category
+        await _hybridCache.RemoveAsync(CompanyScopedCatalogCacheKey.Create(CacheKeyPrefix, _currentActor), cancellationToken);
+
+        // Map the result to a response object
+        var response = _mapper.Map<CategoryResponse>(newCategory);
+
+        DispatchChange("Create", newCategory);
+
+        return Result.Success(response);
+    }
+
+    public async Task<Result<CategoryResponse>> UpdateAsync(CategoryRequest request, CancellationToken cancellationToken = default)
+    {
+        var currentCategory = await _context.Categories
+            .Include(c => c.CategorySubcategories)
+            .FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
+
+        if (currentCategory == null)
+            return Result.Failure<CategoryResponse>(_categoryErrors.CategoryNotFound);
+
+        //TODO : Why Make Issue When Edit Like (Crystal to Crystal1)
+        var updatedCategory = _mapper.Map<Category>(request);
+        await _entityChangeLogService.CreateChangeLogAsync(request.Id, currentCategory, updatedCategory);
+
+        _mapper.Map(request, currentCategory);
+
+        _context.Update(currentCategory);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        await _hybridCache.RemoveAsync(CompanyScopedCatalogCacheKey.Create(CacheKeyPrefix, _currentActor), cancellationToken);
+
+        var response = await _context.Categories
+            .AsNoTracking()
+            .Where(category => category.Id == currentCategory.Id)
+            .ProjectToType<CategoryResponse>()
+            .SingleAsync(cancellationToken);
+
+        DispatchChange("Update", currentCategory);
+
+        return Result.Success(response);
+    }
+
+    public async Task<Result> ToggleAsync(int id, CancellationToken cancellationToken = default)
+    {
+        var category = await _context.Categories
+            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+
+        if (category == null)
+            return Result.Failure(_categoryErrors.CategoryNotFound);
+
+        if (await _context.CategorySubcategories.AnyAsync(
+                relationship => relationship.CategoryId == id &&
+                                relationship.SubCategory != null &&
+                                !relationship.SubCategory.IsDeleted,
+                cancellationToken))
+            return Result.Failure(_categoryErrors.CategoryHasSubCategories);
+
+        // Cascade delete will handle CategorySubcategories
+        category.IsDeleted = !category.IsDeleted;
+        category.DeletedById = _currentActor.UserId;
+        category.DeletedOn = DateTime.UtcNow;
+        category.DeletedByPc = Environment.MachineName;
+
+        await _context.SaveChangesAsync(cancellationToken);
+        await _hybridCache.RemoveAsync(CompanyScopedCatalogCacheKey.Create(CacheKeyPrefix, _currentActor), cancellationToken);
+
+        DispatchChange(category.IsDeleted ? "Delete" : "Restore", category);
+
+        return Result.Success();
+    }
+
+    private void DispatchChange(string action, Category category)
+    {
+        if (string.IsNullOrWhiteSpace(category.TenantId) || category.CompanyId <= 0)
+        {
+            throw new InvalidOperationException("A tenant and company are required for category realtime updates.");
+        }
+
+        realtimeChanges.Dispatch(RealtimeChangeRequest.For<Category>(
+            RealtimeAudience.ForCompanyPermission(category.TenantId, category.CompanyId, Permissions.ViewCategories),
+            action,
+            category.Id.ToString(CultureInfo.InvariantCulture)));
+    }
+}

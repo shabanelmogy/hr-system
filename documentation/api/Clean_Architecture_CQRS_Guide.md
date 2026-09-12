@@ -5,22 +5,31 @@ workflow, also follow `../project/CORE_FEATURE_CQRS_WEB_GUIDE.md`.
 
 ## Architecture
 
-The API is migrating incrementally to a Clean Architecture modular monolith:
+The API uses a Clean Architecture modular monolith. The current runtime modules
+are HR, Accounting, Platform, and Contacts. Each module follows the same
+six-project shape, while shared technical primitives live in neutral
+BuildingBlocks:
 
 ```text
-HrManagementSystem.Api (API host)
-    -> HrManagementSystem.Application
-    -> HrManagementSystem.Infrastructure
+ErpSystem.Api (generic host)
+    -> ErpSystem.Modules.HR (bootstrap)
+    -> ErpSystem.Modules.Accounting (bootstrap)
+    -> ErpSystem.Modules.Platform (bootstrap; technical/internal)
+    -> ErpSystem.Modules.Contacts (bootstrap)
 
-HrManagementSystem.Infrastructure
-    -> HrManagementSystem.Application
-    -> HrManagementSystem.Domain
+Module bootstrap
+    -> own Application + Infrastructure + Presentation
+Presentation
+    -> own Application + own Contracts + approved shared BuildingBlocks
+Application
+    -> own Domain + own Contracts
+Infrastructure
+    -> own Application + own Domain + own Contracts
+Contracts, Domain
+    -> no project dependencies by default
 
-HrManagementSystem.Application
-    -> HrManagementSystem.Domain
-
-HrManagementSystem.Domain
-    -> no project dependencies
+Shared BuildingBlocks
+    -> Application pipeline, Authorization, Context, Messaging, Modularity
 ```
 
 ## Current Project Ownership
@@ -29,50 +38,68 @@ The physical migration from the original web project is complete:
 
 | Project | Owns |
 | --- | --- |
-| `HrManagementSystem.Domain` | Entities, tenant/company scope markers, and domain state |
-| `HrManagementSystem.Application` | Contracts, validators, results, service ports, MediatR requests, and pipeline behaviors |
-| `HrManagementSystem.Infrastructure` | EF Core, migrations, Identity, service implementations, Hangfire, SignalR, files, email, cache, localization, and external integrations |
-| `HrManagementSystem.Api` | `Program.cs`, controllers, HTTP attributes, and HTTP result translation |
+| `ErpSystem.Modules.HR.Domain` | Entities, tenant/company scope markers, and domain state |
+| `ErpSystem.Modules.HR.Contracts` | Cross-module integration contracts and marker (not every HTTP DTO) |
+| `ErpSystem.Modules.HR.Application` | HTTP/application DTOs, validators, results, service ports, and MediatR requests |
+| `ErpSystem.Modules.HR.Infrastructure` | EF Core, migrations, Identity, service implementations, Hangfire, SignalR, files, email, cache, localization, and external integrations |
+| `ErpSystem.Modules.HR.Presentation` | Controllers, HTTP attributes, routes, result translation, and MVC application part |
+| `ErpSystem.Modules.HR` | HR composition root plus explicit legacy adapters for physical Identity/HR storage that have not moved |
+| `ErpSystem.Modules.Platform.*` | Reusable platform contracts/policy/orchestration, authorization/token infrastructure, technical module catalog, and platform-owned persistence/read models |
+| `ErpSystem.Modules.Contacts.*` | Contacts bounded context plus its durable integration-event/outbox boundary |
+| `ErpSystem.Modules.Accounting.*` | Accounting bounded context plus inbox/outbox integration foundation |
+| `ErpSystem.BuildingBlocks.*` | Domain-neutral application pipeline, Authorization, execution Context, durable-message contracts, and module/runtime composition primitives |
+| `ErpSystem.Api` | Generic host, operational middleware, health/observability, and explicit module/runtime composition only |
 
 Use layer-qualified namespaces:
 
 ```text
-HrManagementSystem.Domain.*
-HrManagementSystem.Application.*
-HrManagementSystem.Infrastructure.*
-HrManagementSystem.Api.*
+ErpSystem.Modules.HR.Domain.*
+ErpSystem.Modules.HR.Application.*
+ErpSystem.Modules.HR.Infrastructure.*
+ErpSystem.Modules.HR.Presentation.*
 ```
 
 Do not add entities, validators, jobs, persistence configurations, or service
 implementations to the API host. A controller may reference Application ports and
 contracts. Infrastructure implements those ports.
 
-Do not introduce a project per HR feature. Keep one deployable API and organize each
-layer by business feature.
+Keep feature code inside its owning module's Application, Infrastructure, and
+Presentation projects. Existing bounded contexts are HR, Accounting, Platform,
+and Contacts. Any later bounded context is created under
+`api/Modules/<ModuleName>` only after its ownership is approved, following
+`MODULAR_MONOLITH_ARCHITECTURE.md`; technical preparation does not imply a
+business-module plan.
 
 ## Inner-Layer Boundaries
 
 Keep Application contracts independent of HTTP and persistence frameworks:
 
-- Bind `IFormFile`, claims, status codes, and route templates in `HrManagementSystem.Api`.
+- Bind `IFormFile`, claims, status codes, and route templates in the module's Presentation project.
 - Adapt multipart files to Application's `FileUpload` model at the controller boundary.
 - Adapt external identity payloads to transport-neutral records before calling Application ports.
 - Expose narrow asynchronous validation questions through feature interfaces that
   implement the `IValidationQuery` marker; never expose `DbSet` or `IQueryable`.
 - Execute EF Core filtering, projection, and pagination in Infrastructure, then construct Application response models.
-- Represent failures with `ErrorType`; map that classification to HTTP status codes only in the API host.
+- Represent failures with `ErrorType`; map that classification to HTTP status codes in Presentation.
 
 Microsoft abstractions such as localization and logging are allowed because they do
 not expose ASP.NET Core transport or EF Core persistence behavior. The architecture
 tests prevent direct ASP.NET Core and EF Core assembly references from returning.
 
-## API Host Structure
+Source-boundary rule: Presentation may depend on its own Application/Contracts, approved
+domain-neutral BuildingBlocks, and another module's public Contracts when the HTTP
+boundary genuinely needs them; it never depends on Domain or Infrastructure.
+Application may depend on its own Domain/Contracts, approved BuildingBlocks, and
+explicit public cross-module Contracts, but never Presentation or Infrastructure.
+The bootstrap is the only composition point that references its own Infrastructure.
 
-The API host contains only HTTP endpoints and composition-root concerns. Keep its
-feature tree shallow:
+## Module Presentation Structure
+
+Each module's Presentation project owns HTTP endpoints and keeps its feature tree
+shallow:
 
 ```text
-Features/
+Modules/HR/ErpSystem.Modules.HR.Presentation/Features/
   GeographicalInformation/
     Countries/
       V1/
@@ -84,7 +111,7 @@ Features/
 ```
 
 Do not recreate `Contracts`, `Entities`, `Services`, `Persistence`, `Jobs`, or an
-extra `Controllers` folder in the API host. Those concerns belong to Application,
+extra `Controllers` folder in Presentation. Those concerns belong to Application,
 Domain, or Infrastructure. Keep the version folder because the API supports
 side-by-side endpoint versions.
 
@@ -169,6 +196,37 @@ Application registers these behaviors for every MediatR request:
 
 1. `RequestLoggingBehavior` logs request type and elapsed time without HR payloads.
 2. `ValidationBehavior` runs FluentValidation validators before the handler.
+
+The implementations live in `ErpSystem.BuildingBlocks.Application`, which has no
+ASP.NET Core, EF Core, or module dependency. Each module Application composition
+root calls `AddApplicationPipeline()` after registering its own MediatR handlers
+and validators. The extension uses `TryAddEnumerable` for open-generic
+`IPipelineBehavior<,>` descriptors, so composing HR, Platform, Accounting, and
+Contacts repeatedly still produces exactly one logging and one validation behavior.
+Logging records request type and timing only; it never serializes request payloads.
+
+Validation is asynchronous and feature-owned. A module registers validators from
+its own Application assembly, so a Contacts command is validated by Contacts
+rules even when the host composes several modules. Transport-shape rules stay in
+FluentValidation; persisted-state, ownership, concurrency, and uniqueness checks
+remain in the handler or a narrow feature port.
+
+### Application Ports and Unit of Work
+
+Every feature should expose the smallest asynchronous read/write ports needed by
+its handlers, for example `ICountryReadStore`, `ICompanyWriteStore`, or an
+outbox interface owned by the module. Ports return Application contracts or
+transport-neutral records and never expose `DbSet`, `IQueryable`, EF entities, or
+generic repository methods. Do not introduce a generic repository over EF Core;
+it hides query intent, makes projection and scope enforcement ambiguous, and
+does not improve portability.
+
+The module `DbContext` is the Infrastructure implementation of the feature ports
+and the unit-of-work/transaction boundary. A command stages its aggregate and
+durable side effects through the same scoped context, then calls one
+`SaveChangesAsync`. Infrastructure owns EF configuration, transaction policy,
+migrations, and provider-specific concurrency handling; Application owns the
+use-case orchestration and does not reference EF Core.
 
 Validation failures become HTTP 400 validation problem details. Unexpected failures
 remain HTTP 500 responses with a trace identifier.
@@ -259,7 +317,7 @@ local `dotnet-ef` tool manifest:
 
 ```powershell
 dotnet ef migrations add MigrationName `
-  --project HrManagementSystem.Infrastructure\HrManagementSystem.Infrastructure.csproj `
-  --startup-project HrManagementSystem.Api\HrManagementSystem.Api.csproj `
-  --context HrManagementSystem.Infrastructure.Persistence.ApplicationDbContext
+  --project Modules\HR\ErpSystem.Modules.HR.Infrastructure\ErpSystem.Modules.HR.Infrastructure.csproj `
+  --startup-project ErpSystem.Api\ErpSystem.Api.csproj `
+  --context ErpSystem.Modules.HR.Infrastructure.Persistence.ApplicationDbContext
 ```

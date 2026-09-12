@@ -158,8 +158,8 @@ export default function MyTextField({
       onFocus,
       slotProps: suppliedSlotProps,
       disabled: suppliedDisabled,
-      error: _suppliedError,
-      helperText: _suppliedHelperText,
+      error: suppliedError,
+      helperText: suppliedHelperText,
       ...textFieldProps
     } = restProps;
     const externalOnFocus = onFocus as React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
@@ -210,11 +210,11 @@ export default function MyTextField({
             },
           }),
           ...(required && { "aria-required": true }),
-          "aria-invalid": Boolean(fieldError) || externalError,
+          "aria-invalid": Boolean(fieldError) || externalError || Boolean(suppliedError),
           "aria-describedby": [
             externalHtmlInput["aria-describedby"],
             showCounter && !isPasswordField ? `${actualFieldName}-counter` : null,
-            fieldError || externalError || externalHelperText
+            fieldError || externalError || suppliedError || suppliedHelperText || externalHelperText
               ? `${actualFieldName}-error`
               : null,
           ].filter(Boolean).join(" ") || undefined,

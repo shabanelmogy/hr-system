@@ -13,7 +13,7 @@ legacy `/basic-data/organizational-structure` and
 
 ## 2. Feature ownership
 
-Types live under `src/features/basic-data/organizational-structure/management/types`,
+Types live under `web-next/src/modules/hr/basic-data/organizational-structure/management/types`,
 the service is the only caller of `apiService`, hooks own React Query keys and
 mutations, and the seven resource page components (`BranchesPage` through
 `JobDescriptionsPage`) compose the fixed resource result. Realtime imports the
@@ -134,3 +134,8 @@ and Import are available from the shared multi-view selector. Report uses the
 published managed-Crystal catalog and bounded bilingual filters. Import uses
 the shared XLSX card/table, active parent-code lookups, and the atomic bulk API.
 Export remains Excluded.
+## 16. 2026-09-08 review addendum
+
+Status-label lookup is total for unknown API values, cost-center selection remains
+numeric at the feature boundary, and development mock identifiers are deterministic.
+Feature-scoped TypeScript and ESLint checks pass.

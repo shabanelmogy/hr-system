@@ -16,28 +16,28 @@
     {
       "id": "api-application-feature",
       "layer": "api",
-      "path": "api/HrManagementSystem.Application/Features/Analytics/CrystalReports",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/Analytics/CrystalReports",
       "minimumFiles": 8,
       "purpose": "Crystal report CQRS contracts, commands, queries, validation, errors, and ports"
     },
     {
       "id": "api-infrastructure-feature",
       "layer": "api",
-      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports",
       "minimumFiles": 7,
       "purpose": "EF persistence, company ACL evaluation, private storage, and Crystal inspection/render adapters"
     },
     {
       "id": "web-feature",
       "layer": "web-next",
-      "path": "web-next/src/features/reporting/crystal-report-manager",
+      "path": "web-next/src/shared/reporting/crystal-report-manager",
       "minimumFiles": 5,
       "purpose": "Management grid, multipart workflow, versions, permissions, service, types, and tests"
     },
     {
       "id": "mobile-shared-reporting",
       "layer": "mobile-react",
-      "path": "mobile-react/src/features/reporting",
+      "path": "mobile-react/src/platform/reporting",
       "minimumFiles": 4,
       "purpose": "Authenticated mobile catalog/render boundary, runtime schemas, and transport tests"
     }
@@ -64,61 +64,61 @@
     {
       "id": "api-controller",
       "layer": "api",
-      "path": "api/HrManagementSystem.Api/Features/Analytics/CrystalReports/V1/CrystalReportsController.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/Analytics/CrystalReports/V1/CrystalReportsController.cs",
       "purpose": "Versioned management, upload, download, publish, ACL, and archive HTTP surface"
     },
     {
       "id": "api-domain-report",
       "layer": "api",
-      "path": "api/HrManagementSystem.Domain/Analytics/CrystalReports/Entities/CrystalReport.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/Analytics/CrystalReports/Entities/CrystalReport.cs",
       "purpose": "Tenant-owned stable report identity and published-version pointer"
     },
     {
       "id": "api-domain-version",
       "layer": "api",
-      "path": "api/HrManagementSystem.Domain/Analytics/CrystalReports/Entities/CrystalReportVersion.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/Analytics/CrystalReports/Entities/CrystalReportVersion.cs",
       "purpose": "Immutable private source revision metadata"
     },
     {
       "id": "api-domain-grant",
       "layer": "api",
-      "path": "api/HrManagementSystem.Domain/Analytics/CrystalReports/Entities/CrystalReportRoleGrant.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/Analytics/CrystalReports/Entities/CrystalReportRoleGrant.cs",
       "purpose": "Company-scoped per-role report rights"
     },
     {
       "id": "api-store",
       "layer": "api",
-      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportStore.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportStore.cs",
       "purpose": "Tenant/company filtering, server paging, projections, ACL checks, and persistence"
     },
     {
       "id": "api-private-storage",
       "layer": "api",
-      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Storage/PrivateCrystalReportFileStorage.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Storage/PrivateCrystalReportFileStorage.cs",
       "purpose": "Opaque private storage, size/signature checks, hash, and containment"
     },
     {
       "id": "api-inspector-client",
       "layer": "api",
-      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportInspectorClient.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportInspectorClient.cs",
       "purpose": "Authenticated service-to-service SummaryInfo and Crystal runtime inspection"
     },
     {
       "id": "api-legacy-source-client",
       "layer": "api",
-      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportLegacySourceClient.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportLegacySourceClient.cs",
       "purpose": "Authenticated catalog and bounded source-copy adapter for existing reports"
     },
     {
       "id": "api-renderer-client",
       "layer": "api",
-      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportRendererClient.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportRendererClient.cs",
       "purpose": "Streams the authorized published RPT to the internal Crystal runtime and validates the PDF response"
     },
     {
       "id": "api-report-data-source",
       "layer": "api",
-      "path": "api/HrManagementSystem.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs",
       "purpose": "Builds allowlisted explicit-schema report data from the HR API EF context"
     },
     {
@@ -154,13 +154,13 @@
     {
       "id": "web-page",
       "layer": "web-next",
-      "path": "web-next/src/features/reporting/crystal-report-manager/CrystalReportManagerPage.tsx",
+      "path": "web-next/src/shared/reporting/crystal-report-manager/CrystalReportManagerPage.tsx",
       "purpose": "User Manager-style administration workflow"
     },
     {
       "id": "web-service",
       "layer": "web-next",
-      "path": "web-next/src/features/reporting/crystal-report-manager/services.ts",
+      "path": "web-next/src/shared/reporting/crystal-report-manager/services.ts",
       "purpose": "Typed API mapping, multipart upload, source download, lifecycle, and ACL transport"
     },
     {
@@ -172,55 +172,55 @@
     {
       "id": "web-countries-report-consumer",
       "layer": "web-next",
-      "path": "web-next/src/features/basic-data/geographical-information/countries/reports/pages/CountryReportPage.tsx",
+      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/reports/pages/CountryReportPage.tsx",
       "purpose": "Consumes only the manager-owned Countries published catalog and render endpoint"
     },
     {
       "id": "web-states-report-consumer",
       "layer": "web-next",
-      "path": "web-next/src/features/basic-data/geographical-information/states/reports/pages/StateReportPage.tsx",
+      "path": "web-next/src/modules/hr/basic-data/geographical-information/states/reports/pages/StateReportPage.tsx",
       "purpose": "Consumes only the manager-owned States published catalog and render endpoint"
     },
     {
       "id": "mobile-reporting-public-api",
       "layer": "mobile-react",
-      "path": "mobile-react/src/features/reporting/index.ts",
+      "path": "mobile-react/src/platform/reporting/index.ts",
       "purpose": "Curated shared reporting exports"
     },
     {
       "id": "mobile-reporting-service",
       "layer": "mobile-react",
-      "path": "mobile-react/src/features/reporting/crystal-reports/crystal-report-api.ts",
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-remote-data-source.ts",
       "purpose": "Authenticated published catalog and PDF render transport"
     },
     {
       "id": "mobile-reporting-schemas",
       "layer": "mobile-react",
-      "path": "mobile-react/src/features/reporting/crystal-reports/crystal-report-schemas.ts",
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-schemas.ts",
       "purpose": "Runtime-validated mobile manager contracts"
     },
     {
       "id": "mobile-countries-report-consumer",
       "layer": "mobile-react",
-      "path": "mobile-react/src/features/basic-data/countries/components/CountryReportView.tsx",
+      "path": "mobile-react/src/modules/hr/basic-data/countries/presentation/components/CountryReportView.tsx",
       "purpose": "Permission-aware Countries report selector, filters, preview, and sharing"
     },
     {
       "id": "mobile-reporting-tests",
       "layer": "test",
-      "path": "mobile-react/src/features/reporting/crystal-reports/__tests__/crystal-report-api.test.ts",
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-remote-data-source.test.ts",
       "purpose": "Catalog and render transport contract coverage"
     },
     {
       "id": "api-tests",
       "layer": "test",
-      "path": "api/HrManagementSystem.Tests/CrystalReportsControllerContractTests.cs",
+      "path": "api/ErpSystem.Tests/CrystalReportsControllerContractTests.cs",
       "purpose": "Controller route and permission contract verification"
     },
     {
       "id": "web-tests",
       "layer": "test",
-      "path": "web-next/src/features/reporting/crystal-report-manager/services.test.ts",
+      "path": "web-next/src/shared/reporting/crystal-report-manager/services.test.ts",
       "purpose": "HTTP criteria, row-version, lifecycle, and scope transport verification"
     }
   ],

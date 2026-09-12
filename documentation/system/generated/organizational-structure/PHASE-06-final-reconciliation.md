@@ -52,10 +52,10 @@ decision. A focused test pass alone is never a `Ready` decision.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | organizational-structure-master | 8 | `2d14109ce3bb4835c1ac94307acaf5e892e36ded76f27395197546348229812d` |
-| organizational-structure-master | 9 | `bae2687e1211329b805292f5be72567485077fedeee56abc8e97f72c4998e959` |
-| organizational-structure-master | 10 | `e6fc5e4360c1e26d615b0ecbc14dca162fe17ece4bcb0b33d4abe5323d4e942a` |
+| organizational-structure-master | 9 | `7ceb12bb46037333513809999525207b50465f1d803c98dc76366d8248e070c6` |
+| organizational-structure-master | 10 | `41ee6758ac0ad41189b8b22a4ce8f8f1c40ee896425aaddf17e126b610a79006` |
 | organizational-structure-api | 10 | `691c8be03efd3ce06ac8b599b24b3736ef9b3f74d8da99e0a19cbe28d593839f` |
-| organizational-structure-api | 11 | `e23bc8d5e23de665b911cbcfa679e05ccf2beda28ff2c3bdffa69fed0c724673` |
+| organizational-structure-api | 11 | `983231e35dc3ecfe7c2be3558d67b36323cd4b8e1dfdc4365b64d9b854d497cf` |
 | organizational-structure-web | 12 | `47bd148ad14a10bc644220bc5aef78ccdea786580624e58b049cf19d3969d1d9` |
 | organizational-structure-web | 13 | `f426db9a30f8de5984d35e6fcfbd4c2e466f6f573c87b20ee831432a35f69058` |
 | organizational-structure-web | 14 | `ccb774cb65e6215e4e7d48268156c08a255ffe261a2598faeb6027c045d835f8` |

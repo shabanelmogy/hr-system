@@ -499,5 +499,5 @@ All assignee operations are logged with:
 
 **Document Version:** 1.0  
 **Last Updated:** 2024  
-**Author:** HR Management System Team  
+**Author:** ERP System Team
 **Status:** Implemented

@@ -2,7 +2,7 @@
 
 Status: Canonical cross-platform reference for configuring the current company's operating geography.
 
-Reviewed: 2026-08-25
+Reviewed: 2026-09-08
 
 ## 1. Review Manifest
 
@@ -34,6 +34,11 @@ flags.
 ## 4. Ownership and Isolation
 
 `Country`, `State`, and `District` remain global. `CompanyCountry` is tenant/company scoped through `CompanyAuditableEntity`, EF global filters, and trusted `ICurrentActor`. A unique company-country link prevents duplicates and a filtered unique index permits at most one active default. `Company.RegistrationCountryId` is a restrictive FK to the same global catalog; the scope command updates it within the same serialized transaction.
+
+The shared company-isolation interceptor now distinguishes the entity's explicit
+domain CompanyId from an EF temporary FK value on Added rows. New scope links with
+the default value are stamped from the current actor; explicit cross-company values
+remain rejected. This prevents provider-specific false cross-company failures.
 
 ## 5. Capability Decisions
 

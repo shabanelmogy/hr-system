@@ -1,6 +1,6 @@
 # Recruitment & Hiring Lifecycle Feature Full Review
 
-Status: Final applied cross-platform production-grade implementation profile. Review date: 2026-09-05.
+Status: Final applied cross-platform production-grade implementation profile. Review date: 2026-09-08.
 
 This document establishes the canonical architectural record and evidence surface for the enterprise-grade Recruitment & Hiring module across Backend (.NET 10 API, EF Core), Web (`web-next`), and Mobile (`mobile-react`).
 
@@ -19,7 +19,7 @@ The module manages the complete end-to-end recruitment lifecycle under the activ
 - **JobOffers**: Formal financial offers, terms, probation periods, and approval workflows.
 - **Core HR Persistence**: Automated transition from candidate to official company employee upon hiring.
 
-TenantId and CompanyId are strictly enforced and trusted from `ICurrentActor` and `ApplicationDbContext`. Clients never submit tenant/company identifiers directly.
+Candidates are tenant-scoped so one talent profile can apply across companies in the tenant. Requisitions, openings, postings, applications, interviews, and offers are company-scoped. Scope is trusted from `ICurrentActor` and `ApplicationDbContext`; clients never submit tenant/company identifiers. Offer placement is also server-derived from application -> opening, so offer mutations cannot substitute position, branch, department, or division identifiers.
 
 ---
 
@@ -28,7 +28,7 @@ TenantId and CompanyId are strictly enforced and trusted from `ICurrentActor` an
 ### Real Employee & Contract Persistence
 Upon calling `HireApplicationAsync`:
 1. Validates candidate, application status, and active vacancies.
-2. Resolves real actor identity from `_context.Employees` matching current user claims (`actor.CandidateId` or active assignment). If not found, resolves the primary company administrator employee, completely eliminating synthetic or hardcoded actor IDs.
+2. Resolves the real actor employee by exact `UserId`, `TenantId`, and `CompanyId` match. Operations that persist an employee actor fail with `Recruitment.ActorEmployeeRequired` when no link exists; there is no synthetic ID or administrator fallback.
 3. Persists a new `Employee` record with the candidate's real legal name, contact email, and provided employee number and hire date.
 4. Generates a primary `EmployeeAssignment` establishing company, branch, department, division, and position placement.
 5. Automatically creates an initial `EmployeeContract` reflecting agreed terms and start date.
@@ -36,9 +36,12 @@ Upon calling `HireApplicationAsync`:
 
 ### Data Integrity & Filtered Unique Indexes
 Live database constraints enforced via migrations:
-- Filtered unique index on `Candidates(TenantId, CompanyId, Email)` where `IsDeleted = 0`.
-- Filtered unique index on `EmploymentApplications(TenantId, CompanyId, JobOpeningId, CandidateId)` where `IsDeleted = 0`.
+- Unique index on `Candidates(TenantId, Email)`.
+- Filtered unique index on `EmploymentApplications(TenantId, CompanyId, CandidateId, JobOpeningId)` where `IsDeleted = 0`.
 - Sequential tracking of application timeline events without workflow bypass.
+- All recruitment page requests are normalized to page >= 1 and page size 1..50 before `Skip/Take`.
+- Interview participant identifiers must resolve to employees visible in the current company; only an assigned interviewer may evaluate, and API responses hydrate real employee names.
+- Offer issue and acceptance lock the company, application, and offer, re-read tracked state inside one transaction, mutate the offer and application together, append history, and save once.
 
 ---
 
@@ -90,7 +93,7 @@ Actions across API, Web, and Mobile are guarded with granular permissions:
 ### 5-Point Cross-Platform UI Audit
 1. **Creation Journey**:
    - **Web**: Dedicated `JobRequisitionDialog`, `JobOpeningDialog`, `NewApplicationDialog`, `ScheduleInterviewDialog`, `InterviewEvaluationDialog`, and `JobOfferDialog`.
-   - **Mobile**: Modals for Requisitions, Openings, Pipeline, Interviews, Scorecards, and Job Offers.
+   - **Mobile**: Shared `AppForm` journeys for planned requisitions, interview scheduling, and job offers. Interview start/end times and offer compensation/start date are editable with inline validation; invalid salary is never silently replaced.
 2. **Editing & Evaluation Journey**:
    - Dynamic scorecards load approved position skills with interactive rating bars and weighted calculation.
 3. **Viewing Journey**:
@@ -110,6 +113,9 @@ Actions across API, Web, and Mobile are guarded with granular permissions:
   2. `20260905160817_AddRecruitmentIntegrityFilteredIndexes`
   3. `20260905161303_AddInterviewEvaluationScorecard`
   4. `20260905163022_AddRequisitionBudgetAndHeadcount`
-- **Backend Unit & Integration Tests**: 392 passed, 0 failed (`dotnet test`).
-- **Web Next.js Static Analysis**: 0 TypeScript errors (`npm run type-check`).
-- **Mobile React Native Static Analysis**: 0 TypeScript errors (`npm run typecheck`).
+- **Backend focused regression**: 6 passed, 0 failed, covering the recruitment lifecycle, real interviewer identity, invalid participant rejection, and the organizational branch isolation regression.
+- **Backend full suite**: 496 passed, 0 failed after final contract synchronization, including explicit actor fail-closed and paging-bound regressions.
+- **Web Next.js full gate**: architecture, type-check, and strict type-check pass; scoped feature ESLint has no warnings or errors (repository-wide lint retains inherited warnings).
+- **Mobile React Native full gate**: type-check, architecture, and all 49 suites / 154 tests pass; repository-wide lint has 11 inherited shared chart/tree warnings and no errors.
+
+Platform-specific implementation evidence is recorded in `documentation/web-next/features/recruitment-frontend-reference.md` and `documentation/mobile-react/recruitment-mobile-reference.md`.

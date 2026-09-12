@@ -17,9 +17,9 @@ export default ({ config }: ConfigContext): ExpoConfig => {
 
   return {
     ...config,
-    name: config.name ?? 'HR Management',
-    slug: config.slug ?? 'hr-management-mobile',
-    scheme: config.scheme ?? 'hrmanagement',
+    name: config.name ?? 'ERP System',
+    slug: config.slug ?? 'erp-system-mobile',
+    scheme: config.scheme ?? 'erpsystem',
     plugins: [
       ...(config.plugins ?? []),
       [
@@ -33,14 +33,14 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ],
     ios: {
       ...config.ios,
-      bundleIdentifier: config.ios?.bundleIdentifier ?? 'com.hrmanagementsystem.mobile',
+      bundleIdentifier: config.ios?.bundleIdentifier ?? 'com.erpsystem.mobile',
       ...(appLinkHost
         ? { associatedDomains: [`applinks:${appLinkHost}`] }
         : {})
     },
     android: {
       ...config.android,
-      package: config.android?.package ?? 'com.hrmanagementsystem.mobile',
+      package: config.android?.package ?? 'com.erpsystem.mobile',
       ...(appLinkHost
         ? {
             intentFilters: [

@@ -18,10 +18,10 @@ templates for new core HR modules.
 Keep each feature flat and predictable.
 
 ```text
-HrManagementSystem.Domain/{GroupName}/{FeatureNamePlural}/
+ErpSystem.Modules.HR.Domain/{GroupName}/{FeatureNamePlural}/
   Entities/{FeatureName}.cs
 
-HrManagementSystem.Application/Features/{GroupName}/{FeatureNamePlural}/
+ErpSystem.Modules.HR.Application/Features/{GroupName}/{FeatureNamePlural}/
   Commands/{UseCase}/
   Queries/{UseCase}/
   Abstractions/
@@ -29,13 +29,13 @@ HrManagementSystem.Application/Features/{GroupName}/{FeatureNamePlural}/
   Errors/
   Mapping/                           # optional; only for non-conventional rules
 
-HrManagementSystem.Infrastructure/Features/{GroupName}/{FeatureNamePlural}/
+ErpSystem.Modules.HR.Infrastructure/Features/{GroupName}/{FeatureNamePlural}/
   Persistence/{FeatureName}Configuration.cs
   Persistence/{FeatureName}ReadStore.cs
   Persistence/{FeatureName}WriteStore.cs
   Jobs/{FeatureName}ChangedJob.cs
 
-HrManagementSystem.Api/Features/{GroupName}/{FeatureNamePlural}/V1/
+Modules/HR/ErpSystem.Modules.HR.Presentation/Features/{GroupName}/{FeatureNamePlural}/V1/
   {FeatureNamePlural}Controller.cs
 ```
 
@@ -208,7 +208,7 @@ public record CountryListItemResponse(
 - Required strings need `NotEmpty`, trimming, and length limits.
 - Optional strings still need max length and format validation when provided.
 - Keep reusable regex patterns in
-  `HrManagementSystem.Application/Common/Consts/RegexPattern.cs`; do not duplicate
+  `ErpSystem.Modules.HR.Application/Common/Consts/RegexPattern.cs`; do not duplicate
   inline regex strings in validators.
 - Arabic name fields, for example `NameAr`, must validate Arabic text with `Strings.ArabicLetterOnly`.
 - English name fields, for example `NameEn`, must validate English text with `Strings.EnglishLetterOnly`.
@@ -712,9 +712,9 @@ patterns, then add tenant/company rules for owned HR data:
 Run from `api/` before handoff:
 
 ```powershell
-dotnet restore HrManagementSystem.sln
-dotnet build HrManagementSystem.sln --no-restore
-dotnet test HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-build --no-restore
+dotnet restore ErpSystem.sln
+dotnet build ErpSystem.sln --no-restore
+dotnet test ErpSystem.Tests/ErpSystem.Tests.csproj --no-build --no-restore
 ```
 
 When a running host locks normal outputs, use one explicit isolated

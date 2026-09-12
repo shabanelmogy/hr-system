@@ -67,7 +67,7 @@ response.headers.set("Expires", "0");
 return response;
 ```
 
-### 3. **Add Session Context Logout** (`lib/auth/session-context.tsx`)
+### 3. **Add Session Context Logout** (`lib/auth/SessionContext.tsx`)
 
 Added a `logout()` method to clear local session state immediately:
 
@@ -95,7 +95,7 @@ Changed from `window.location.replace()` to `window.location.href`:
 | `lib/api/client.ts` | Clear `sessionStorage` | Remove any client-side cached session data |
 | `lib/api/client.ts` | Use `window.location.href` instead of `replace()` | Force full page reload |
 | `app/api/auth/logout/route.ts` | Add cache-control headers | Prevent browser from caching logout response |
-| `lib/auth/session-context.tsx` | Add `logout()` method | Clear local React state immediately |
+| `lib/auth/SessionContext.tsx` | Add `logout()` method | Clear local React state immediately |
 
 ---
 
@@ -153,13 +153,13 @@ Test the following scenarios:
 ### Frontend
 - ✅ `web-next/src/lib/api/client.ts` — Modified logout method
 - ✅ `web-next/src/app/api/auth/logout/route.ts` — Added cache headers
-- ✅ `web-next/src/lib/auth/session-context.tsx` — Added logout method
+- ✅ `web-next/src/lib/auth/SessionContext.tsx` — Added logout method
 - 📄 `web-next/src/proxy.ts` — Middleware (unchanged, handles redirect)
-- 📄 `web-next/src/layouts/components/topBar/topBar.tsx` — Logout button (unchanged)
+- 📄 `web-next/src/shell/components/top-bar/TopBar.tsx` — Logout button (unchanged)
 
 ### Backend
-- 📄 `api/HrManagementSystem.Api/Features/Security/Authentication/V1/AuthController.cs` — LogOut endpoint (unchanged)
-- 📄 `api/HrManagementSystem.Infrastructure/Features/Security/Authentication/Services/AuthService.cs` — Logout logic (unchanged)
+- 📄 `api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/Security/Authentication/V1/AuthController.cs` — LogOut endpoint (unchanged)
+- 📄 `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Security/Authentication/Services/AuthService.cs` — Logout logic (unchanged)
 
 ---
 

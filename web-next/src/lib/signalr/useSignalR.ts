@@ -1,10 +1,10 @@
 import { useEffect, useCallback } from "react";
 import signalRService from "./signalRService";
 
-const useSignalR = (eventName: string, onUpdateCallback: (data: any) => void) => {
+const useSignalR = (eventName: string, onUpdateCallback: (data: unknown) => void) => {
   // Memoize the event handler
   const handleUpdate = useCallback(
-    (data: any) => {
+    (data: unknown) => {
       onUpdateCallback(data);
     },
     [onUpdateCallback]

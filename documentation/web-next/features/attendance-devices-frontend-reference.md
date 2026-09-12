@@ -4,7 +4,7 @@
 Browser implementation of phase-one raw attendance integration.
 
 ## 2. Source Map and Ownership
-Feature boundary is src/features/attendance-devices; App Router entries are thin under app/(main)/attendance-devices.
+Feature boundary is `web-next/src/modules/hr/attendance-devices`; App Router entries are thin under `web-next/src/app/(main)/attendance-devices`.
 
 ## 3. HTTP Contract
 Use only config/api/attendanceDevices.ts. Types/services follow exact API DTOs;
@@ -45,7 +45,7 @@ assigned Agent's freshness and SDK status, never a browser-local SDK assumption.
 not show a prior device result after selection changes.
 
 ## 13. Verification
-Run type-check, strict type-check, lint, focused tests and manual EN/AR LTR/RTL responsive review.
+Run `npm.cmd run type-check`, strict type-check, lint, focused tests and manual EN/AR LTR/RTL responsive review.
 
 ## 14. Final Reconciliation
 Cards/charts/reports/import/export are excluded; mobile remains deferred. API shape changes require matching type/service/query tests.

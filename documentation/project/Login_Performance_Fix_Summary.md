@@ -38,9 +38,11 @@ Each call took 5-6 seconds = **18 seconds wasted on duplicates**
 **Files Modified:**
 - ✅ Created `web-next/src/lib/signalr/SignalRProvider.tsx`
 - ✅ Modified `web-next/src/app/providers.tsx` — Added `<SignalRProvider>`
-- ✅ Modified `web-next/src/shared/store/useTokenRevocation.ts` — Removed `.start()`
-- ✅ Modified `web-next/src/shared/store/useSignalR.ts` — Removed `.start()` and `.stop()`
-- ✅ Modified `web-next/src/shared/services/notifications/SimpleNotificationSystem.ts` — Deprecated `.startSignalR()`
+- ✅ Modified `web-next/src/platform/auth/hooks/useTokenRevocation.ts` — Removed `.start()`
+- ✅ Modified `web-next/src/lib/signalr/useSignalR.ts` — Removed `.start()` and `.stop()`
+- ✅ Replaced the retired `SimpleNotificationSystem` with
+  `web-next/src/platform/notifications/NotificationRealtimeBridge.tsx`, which
+  consumes the shared SignalR connection without owning its lifecycle.
 
 **Result:**
 - **Before:** 3 calls × 6s = 18s
@@ -86,9 +88,9 @@ Load only required fields instead of full entities.
 ### Frontend
 - ✅ `web-next/src/lib/signalr/SignalRProvider.tsx` — NEW
 - ✅ `web-next/src/app/providers.tsx`
-- ✅ `web-next/src/shared/store/useTokenRevocation.ts`
-- ✅ `web-next/src/shared/store/useSignalR.ts`
-- ✅ `web-next/src/shared/services/notifications/SimpleNotificationSystem.ts`
+- ✅ `web-next/src/platform/auth/hooks/useTokenRevocation.ts`
+- ✅ `web-next/src/lib/signalr/useSignalR.ts`
+- ✅ `web-next/src/platform/notifications/NotificationRealtimeBridge.tsx`
 
 ### Backend (Recommended)
 - [ ] Add database indexes

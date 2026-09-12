@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Dashboard | HR Management System",
-  description: "HR management dashboard overview."
+  title: "Dashboard | ERP System",
+  description: "ERP dashboard overview."
 };
 
 import DashboardLanding from "./DashboardLanding";

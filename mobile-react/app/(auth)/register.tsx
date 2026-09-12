@@ -2,7 +2,7 @@ import { Redirect } from 'expo-router';
 
 import { ROUTES } from '@/src/core/constants/routes';
 import { ENV } from '@/src/core/config/env';
-import { Register } from '@/src/features/auth';
+import { Register } from '@/src/platform/auth';
 
 export default function RegisterRoute() {
   if (!ENV.publicSelfRegistrationEnabled) {

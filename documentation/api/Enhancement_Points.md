@@ -1,4 +1,4 @@
-# Enhancement Points — HrManagementSystem
+# Enhancement Points — ERP System
 
 > **Historical audit only (superseded for Countries).** This file records a point-in-time
 > review of the former service/toggle/client-list implementation. Do not use its Country
@@ -137,4 +137,4 @@ This document tracks all identified improvement opportunities across the backend
 ---
 
 **Last Updated:** August 2026 — retained as a historical audit; see the superseding guides above.
-**Author:** HR Management System Team
+**Author:** ERP System Team

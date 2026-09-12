@@ -8,7 +8,7 @@ Use the narrowest owner that can express the rule:
 
 1. **`src/core/theme/theme.ts`** owns reusable design tokens: semantic colors, spacing, radii, typography sizes, and theme-mode behavior. Add a token only when it is genuinely app-wide and name it by meaning, not by a screen.
 2. **`src/shared/components`** owns domain-neutral visual behavior (text, cards, fields, buttons, modal surfaces). A shared component owns its internal layout and exposes intentional variants/props; consumers should not reach into its implementation styles.
-3. **`src/features/<feature>`** owns feature composition and feature-specific visuals. Keep styles beside the screen/component that renders them. A feature may use shared primitives and theme tokens, but must not add feature colors or a second design system.
+3. **`src/modules/<module>/<domain>/<feature>`** owns feature composition and feature-specific visuals. Keep styles beside the screen/component that renders them. A feature may use shared primitives and theme tokens, but must not add feature colors or a second design system.
 
 There is no global `shared/styles` dump, per-feature global stylesheet, or catch-all constants file. A token belongs in core only after it has multiple independent consumers; a component belongs in shared only after its behavior is domain-neutral.
 
@@ -102,7 +102,7 @@ do not reuse that exception for normal pages, cards, text, or controls.
 
 ## New feature template
 
-1. Identify the screen owner under `src/features/<feature>` and choose existing shared primitives.
+1. Identify the screen owner under `src/modules/<module>/<domain>/<feature>` and choose existing shared primitives.
 2. Sketch states first: loading, empty, error, disabled, pressed, keyboard, light/dark, and LTR/RTL.
 3. Use theme tokens and `AppText`; create a colocated `styles` map for invariant layout.
 4. Add only necessary dynamic styles for theme, state, direction, and measured breakpoints.

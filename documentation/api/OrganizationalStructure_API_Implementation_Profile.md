@@ -98,3 +98,7 @@ translation. The translation regression covers seven resources, five search
 fields, and six operators (210 combinations), including parent ordering. Run API
 build, focused tests, migration update, then exercise each resource in dependency
 order.
+
+The 2026-09-08 isolation review additionally verifies that an Added entity with
+domain `CompanyId == 0` is stamped from the trusted current company even if EF has
+assigned a temporary FK value. Explicit non-current company IDs still fail closed.

@@ -30,7 +30,7 @@
 - **Impact:** Instant logout experience
 
 ### 2. Login Page Cleanup
-- **File:** `web-next/src/features/auth/login/Login.tsx`
+- **File:** `web-next/src/platform/auth/login/Login.tsx`
 - **Change:** Clear sessionStorage on mount
 - **Impact:** Clean state after logout
 
@@ -43,9 +43,10 @@
 - **Files:**
   - NEW: `web-next/src/lib/signalr/SignalRProvider.tsx`
   - Modified: `web-next/src/app/providers.tsx`
-  - Modified: `web-next/src/shared/store/useTokenRevocation.ts`
-  - Modified: `web-next/src/shared/store/useSignalR.ts`
-  - Modified: `web-next/src/shared/services/notifications/SimpleNotificationSystem.ts`
+  - Modified: `web-next/src/platform/auth/hooks/useTokenRevocation.ts`
+  - Modified: `web-next/src/lib/signalr/useSignalR.ts`
+  - Replaced the retired `SimpleNotificationSystem` with
+    `web-next/src/platform/notifications/NotificationRealtimeBridge.tsx`
 - **Change:** Start SignalR once at app root
 - **Impact:** Saves 12 seconds per login (3 duplicate calls eliminated)
 

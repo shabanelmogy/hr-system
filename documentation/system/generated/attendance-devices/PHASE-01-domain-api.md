@@ -81,7 +81,7 @@ implementation discipline.
 | attendance-devices-master | 3 | `c6619586b58ca9eca3be36bb6d10bb72d97f3cdb67b4f49ebca55e90bc29ca5c` |
 | attendance-devices-master | 4 | `7b3f937ee4ba3ffb1f67be08c46916c39fd143d4cac3a7f512036d64d99335a6` |
 | attendance-devices-master | 6 | `d4d02053ca38139b5ea51928c18352d2ad86e08b3b1308b3d3fa58fab55db761` |
-| attendance-devices-api | 1 | `11075753c6e727cc846cd3707be4292ff613548892ea5dac171ac5980221c113` |
+| attendance-devices-api | 1 | `657e0dc0b110e3a673f2a8e7fd10aaa3d9f8270eded0052eeb15105d9796f184` |
 | attendance-devices-api | 2 | `fa11797ee9511a578fd7355c91f6e88d6ab1d1ffb23a961818977504c9336fa8` |
 | attendance-devices-api | 3 | `48bb482fe3bd56969358c5c7bcbc6dcd871f019199dc9e423fd893e4c30507ad` |
 | attendance-devices-api | 4 | `28440ff3b81525bf589377e414438cfe701f85255183e7c37abbd7519acdc848` |

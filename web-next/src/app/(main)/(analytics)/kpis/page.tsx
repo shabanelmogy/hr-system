@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Kpis | HR Management System",
-  description: "HR Management System page for Kpis."
+  title: "Kpis | ERP System",
+  description: "ERP System page for Kpis."
 };
 
-import PageComponent from "@/features/home/pages/KpisPage";
+import PageComponent from "@/modules/hr/home/pages/KpisPage";
 
 export default function Page() {
   return <PageComponent />;

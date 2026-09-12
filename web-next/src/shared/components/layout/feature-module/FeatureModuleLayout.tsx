@@ -129,10 +129,14 @@ export default function FeatureModuleLayout({
             width: "100%",
             minWidth: 0,
             minHeight: 0,
-            overflow: "hidden",
+            // Overview pages may be taller than the bounded App Router shell.
+            // Let this shared content panel own the vertical scroll while
+            // keeping grid/card children constrained by minHeight: 0.
+            overflowX: "hidden",
+            overflowY: "auto",
           }}
         >
-          <Box sx={{ display: "flex", flex: 1, flexDirection: "column", minHeight: 0 }}>
+          <Box sx={{ display: "flex", flex: "1 1 auto", flexDirection: "column", minHeight: 0 }}>
             {children}
           </Box>
         </Box>

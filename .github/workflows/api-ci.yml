@@ -1,0 +1,231 @@
+name: API Foundation CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: api-foundation-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secret-scan:
+    name: Scan current tree for secrets
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Gitleaks current-tree scan
+        run: >-
+          docker run --rm
+          -v "${{ github.workspace }}:/repo:ro"
+          ghcr.io/gitleaks/gitleaks:v8.29.1
+          dir --redact --no-banner --config=/repo/.gitleaks.toml /repo
+
+  verify-api:
+    name: Restore, build, and test API
+    needs: secret-scan
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8 tool runtime and .NET 10 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.400
+
+      - name: Restore
+        shell: pwsh
+        working-directory: ./api
+        run: dotnet restore ./ErpSystem.sln
+
+      - name: Audit direct and transitive NuGet dependencies
+        shell: pwsh
+        working-directory: ./api
+        run: |
+          $reportDirectory = Join-Path $PWD 'artifacts/security'
+          New-Item -ItemType Directory -Force -Path $reportDirectory | Out-Null
+          $reportPath = Join-Path $reportDirectory 'nuget-vulnerabilities.json'
+          dotnet package list --project ./ErpSystem.sln --include-transitive --vulnerable --format json --output-version 1 --no-restore |
+            Set-Content -LiteralPath $reportPath -Encoding utf8
+          if ($LASTEXITCODE -ne 0) {
+            throw "NuGet vulnerability audit command failed with exit code $LASTEXITCODE."
+          }
+
+          $report = Get-Content -LiteralPath $reportPath -Raw | ConvertFrom-Json
+          $findings = @(
+            foreach ($project in @($report.projects)) {
+              foreach ($framework in @($project.frameworks)) {
+                if ($null -eq $framework) {
+                  continue
+                }
+                $packages = @($framework.topLevelPackages) + @($framework.transitivePackages)
+                foreach ($package in $packages) {
+                  if ($null -eq $package) {
+                    continue
+                  }
+                  foreach ($vulnerability in @($package.vulnerabilities)) {
+                    if ($null -eq $vulnerability) {
+                      continue
+                    }
+                    [pscustomobject]@{
+                      Project = $project.path
+                      Package = $package.id
+                      Version = $package.resolvedVersion
+                      Severity = $vulnerability.severity
+                      AdvisoryUrl = $vulnerability.advisoryUrl
+                    }
+                  }
+                }
+              }
+            }
+          )
+          if ($findings.Count -gt 0) {
+            $findings | Format-Table -AutoSize | Out-String | Write-Error
+            throw "NuGet vulnerability audit found $($findings.Count) direct or transitive finding(s)."
+          }
+          Write-Output "NuGet vulnerability audit completed with no known findings."
+
+      - name: Upload NuGet vulnerability audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: erpsystem-api-nuget-audit-${{ github.sha }}
+          path: api/artifacts/security/nuget-vulnerabilities.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Build
+        shell: pwsh
+        working-directory: ./api
+        run: dotnet build ./ErpSystem.sln --configuration Release --no-restore -v:minimal
+
+      - name: Test
+        shell: pwsh
+        working-directory: ./api
+        env:
+          ERPSYSTEM_TEST_SQLSERVER_CONNECTION: 'Server=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;TrustServerCertificate=True;'
+        run: dotnet test ./ErpSystem.Tests/ErpSystem.Tests.csproj --configuration Release --no-build --no-restore -v:minimal
+
+      - name: Restore local .NET tools
+        shell: pwsh
+        working-directory: ./api
+        run: dotnet tool restore
+
+      - name: Verify EF model and migration drift
+        shell: pwsh
+        working-directory: ./api
+        env:
+          ConnectionStrings__DefaultConnection: 'Server=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;TrustServerCertificate=True;'
+        run: |
+          dotnet ef migrations has-pending-model-changes --project ./Modules/HR/ErpSystem.Modules.HR.Infrastructure/ErpSystem.Modules.HR.Infrastructure.csproj --startup-project ./Modules/HR/ErpSystem.Modules.HR.Infrastructure/ErpSystem.Modules.HR.Infrastructure.csproj --context ApplicationDbContext --configuration Release --no-build
+          dotnet ef migrations has-pending-model-changes --project ./Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/ErpSystem.Modules.Accounting.Infrastructure.csproj --startup-project ./Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/ErpSystem.Modules.Accounting.Infrastructure.csproj --context AccountingDbContext --configuration Release --no-build
+          dotnet ef migrations has-pending-model-changes --project ./Modules/Contacts/ErpSystem.Modules.Contacts.Infrastructure/ErpSystem.Modules.Contacts.Infrastructure.csproj --startup-project ./Modules/Contacts/ErpSystem.Modules.Contacts.Infrastructure/ErpSystem.Modules.Contacts.Infrastructure.csproj --context ContactsDbContext --configuration Release --no-build
+          dotnet ef migrations has-pending-model-changes --project ./Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/ErpSystem.Modules.Platform.Infrastructure.csproj --startup-project ./Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/ErpSystem.Modules.Platform.Infrastructure.csproj --context PlatformDbContext --configuration Release --no-build
+
+      - name: Publish release artifact
+        shell: pwsh
+        working-directory: ./api
+        run: dotnet publish ./ErpSystem.Api/ErpSystem.Api.csproj --configuration Release --no-build --no-restore --output ./artifacts/api-publish /p:UseAppHost=false
+
+      - name: Verify release artifact
+        shell: pwsh
+        working-directory: ./api
+        run: |
+          $entryPoint = Join-Path $PWD 'artifacts/api-publish/ErpSystem.Api.dll'
+          if (-not (Test-Path -LiteralPath $entryPoint -PathType Leaf)) {
+            throw "Release publish did not produce ErpSystem.Api.dll."
+          }
+
+      - name: Generate and validate SPDX SBOM
+        shell: pwsh
+        working-directory: ./api
+        run: |
+          $publishPath = Join-Path $PWD 'artifacts/api-publish'
+          $sbomPath = Join-Path $PWD 'artifacts/sbom'
+          New-Item -ItemType Directory -Force -Path $sbomPath | Out-Null
+
+          dotnet sbom-tool generate `
+            -b $publishPath `
+            -bc $PWD `
+            -pn ErpSystem.Api `
+            -pv $env:GITHUB_SHA `
+            -ps "Organization: ErpSystem" `
+            -nsb "https://github.com/$env:GITHUB_REPOSITORY" `
+            -nsu $env:GITHUB_SHA `
+            -m $sbomPath `
+            -mi SPDX:2.2 `
+            -D true
+          if ($LASTEXITCODE -ne 0) {
+            throw "SBOM generation failed with exit code $LASTEXITCODE."
+          }
+
+          $manifestPath = Join-Path $sbomPath '_manifest/spdx_2.2/manifest.spdx.json'
+          if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
+            throw "SBOM generation did not produce the SPDX 2.2 manifest."
+          }
+          $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+          if (@($manifest.packages).Count -eq 0 -or @($manifest.files).Count -eq 0) {
+            throw "SBOM manifest must contain both packages and published files."
+          }
+
+          $validationPath = Join-Path $sbomPath 'validation.json'
+          dotnet sbom-tool validate `
+            -b $publishPath `
+            -m (Join-Path $sbomPath '_manifest') `
+            -o $validationPath `
+            -mi SPDX:2.2 `
+            -n
+          if ($LASTEXITCODE -ne 0) {
+            throw "SBOM validation failed with exit code $LASTEXITCODE."
+          }
+          $validation = Get-Content -LiteralPath $validationPath -Raw | ConvertFrom-Json
+          if ($validation.Result -ne 'Success') {
+            throw "SBOM validation result was '$($validation.Result)'."
+          }
+          Write-Output "Validated SBOM with $(@($manifest.packages).Count) packages and $(@($manifest.files).Count) files."
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: erpsystem-api-${{ github.sha }}
+          path: api/artifacts/api-publish
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload validated SPDX SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: erpsystem-api-sbom-${{ github.sha }}
+          path: api/artifacts/sbom
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Whitespace check
+        shell: pwsh
+        run: git diff --check
+
+  verify-container:
+    name: Build production API container
+    needs: [secret-scan, verify-api]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build container without publishing
+        run: docker build --file ./api/ErpSystem.Api/Dockerfile --tag erpsystem-api:ci ./api
+

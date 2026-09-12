@@ -1,3 +1,3 @@
-import { ConfirmEmailScreen } from '@/src/features/auth';
+import { ConfirmEmailScreen } from '@/src/platform/auth';
 
 export default ConfirmEmailScreen;

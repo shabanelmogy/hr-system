@@ -17,6 +17,7 @@ declare module 'axios' {
     skipAuthRefresh?: boolean;
     allowWhenReadOnly?: boolean;
     allowAuthTransitionRefresh?: boolean;
+    requestContextSignal?: AbortSignal;
   }
 }
 
@@ -28,8 +29,33 @@ let refreshHandler: RefreshHandler | null = null;
 let authFailureHandler: AuthFailureHandler | null = null;
 let readOnlyGuard: { isReadOnly: () => boolean; onBlocked: () => void } | null = null;
 let authenticationTransitionDepth = 0;
+let requestContextController = new AbortController();
+
+export function rotateAxiosRequestContext(): void {
+  requestContextController.abort();
+  requestContextController = new AbortController();
+}
+
+export function getAxiosRequestContextSignal(): AbortSignal {
+  return requestContextController.signal;
+}
+
+export function resolveAxiosRequestContextSignal(expected?: AbortSignal): AbortSignal {
+  if (expected && expected !== requestContextController.signal) {
+    throw new ApiError(
+      0,
+      'The authenticated request context changed before this operation could be sent.',
+      { type: 'Authentication.RequestContextChanged' },
+    );
+  }
+
+  return expected ?? requestContextController.signal;
+}
 
 export function beginAxiosAuthenticationTransition(): () => void {
+  if (authenticationTransitionDepth === 0) {
+    rotateAxiosRequestContext();
+  }
   authenticationTransitionDepth += 1;
   let completed = false;
 
@@ -91,6 +117,11 @@ axiosClient.interceptors.request.use(async (config) => {
   if (!ENV.isApiConfigured) {
     throw new ApiError(0, 'EXPO_PUBLIC_API_URL is not configured.');
   }
+
+  // Bind the request to the current authenticated context before the first
+  // asynchronous operation. Otherwise a context rotation while secure storage
+  // is being read can let an old request attach to the replacement context.
+  config.signal = resolveAxiosRequestContextSignal(config.requestContextSignal);
 
   if (!config.skipAuth) {
     const accessToken = await secureSession.getAccessToken();

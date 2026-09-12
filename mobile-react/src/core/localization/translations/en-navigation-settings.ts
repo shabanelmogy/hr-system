@@ -4,6 +4,7 @@ export const enNavigationSettings = {
     users: 'Users',
     invitations: 'Invitations',
     roles: 'Roles',
+    offlineOperations: 'Offline operations',
     superAdminDashboard: 'Super admin dashboard',
     tenantManagement: 'Tenant management',
     tenantAdminManagement: 'Tenant administrators',

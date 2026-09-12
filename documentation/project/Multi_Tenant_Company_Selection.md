@@ -13,16 +13,18 @@ This is intentionally a shared-database monolith. It does not add a tenant frame
 
 ## Login Flow
 
-1. The user submits credentials.
-2. If the user has no active company access, the API returns `User.NoCompanyAccess`.
-3. If the user has one active company, the API immediately issues normal access and refresh tokens.
-4. If the user has more than one active company, the API returns a short-lived company-selection token and the available company codes and localized names. No access or refresh token is issued at this step.
-5. The user selects a company. The API validates the temporary token, tenant, security stamp, user status, company status, and membership before issuing normal tokens.
-6. Access, refresh, realtime, and session responses include `tenantId` and `companyId`. Auth and session responses also expose the current company code and localized names.
+1. The user submits credentials (or completes an external login).
+2. If the user has no available active tenant, the API returns `User.NoCompanyAccess`.
+3. For every user with at least one available tenant, including exactly one, the API returns a short-lived tenant-selection token and the available tenant options. No access or refresh token is issued at this step.
+4. The user explicitly selects a tenant. The API validates the one-time token, user security stamp, user status, and tenant membership before resolving companies.
+5. If the selected tenant has no active company access, the API returns `User.NoCompanyAccess`.
+6. For every selected tenant with at least one active company, including exactly one, the API returns a short-lived company-selection token and the available company options. No access or refresh token is issued at this step.
+7. The user explicitly selects a company. Only then does the API validate the one-time token, tenant, security stamp, user status, company status, and membership before issuing normal access and refresh tokens.
+8. Access, refresh, realtime, and session responses include `tenantId` and `companyId`. Auth and session responses also expose the current company code and localized names.
 
 Tenant- and company-selection tokens are valid for five minutes by default. Each token carries a unique `jti`, which is persisted in `AuthenticationSelectionChallenges` and consumed atomically on the first selection attempt. A consumed, expired, mismatched, or replayed selection token is rejected. Selection tokens are never accepted by normal authenticated endpoints.
 
-Neither web nor mobile preselects the first option when explicit tenant or company selection is required. The user must make an intentional selection before Continue is enabled.
+The invariant on both clients is `credentials -> explicit tenant -> explicit company -> module launcher -> module -> submodule`. Neither web nor mobile preselects the first option, and the selection step is shown even when the list contains exactly one option. The user must make an intentional selection before Continue is enabled. Session issuance occurs only after `SelectCompany` succeeds.
 
 ## Current Company And Switching
 
@@ -85,7 +87,7 @@ To grant a user access to several companies, send `companyIds` in the authentica
 `web-next` and `mobile-react` implement the same company-selection and company-switching behavior. Both clients:
 
 - parse the same strict company option shape: `id`, `companyCode`, `nameAr`, and `nameEn`;
-- require explicit selection during login when multiple choices exist;
+- require explicit tenant and company selection during login whenever the list is non-empty, including one-option lists;
 - show current company identity in the authenticated header;
 - offer only companies returned by `auth/session`;
 - replace credentials, clear scoped state, and reconnect realtime services after a switch;
@@ -95,7 +97,8 @@ The web BFF keeps access and refresh tokens in secure HttpOnly cookies. Mobile s
 
 ## Verification Checklist
 
-- Multiple-tenant and multiple-company challenges require an explicit user choice on both clients.
+- Credentials always lead to an explicit tenant challenge, followed by an explicit company challenge for the selected tenant; both challenges remain mandatory even with one option.
+- No access or refresh session is issued before `SelectCompany` completes.
 - Replaying the same tenant/company selection token fails.
 - The session response contains the current company in a unique available-company list.
 - Switching to an inaccessible or inactive company fails without changing client scope.

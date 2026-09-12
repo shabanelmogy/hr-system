@@ -52,7 +52,7 @@ decision. A focused test pass alone is never a `Ready` decision.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | address-types-master | 8 | `d644b335ee5a2463885136b0a10c31dc4dd5af695866e6a2bbb825356a29fcfa` |
-| address-types-master | 9 | `d27f68fbce7c132d9111b39903b39f4ef64ade452789cfb3b25cff974a4742d2` |
+| address-types-master | 9 | `7600fe70c892d1e5b846ec248fa105756c3b54bf86e3d51b2ade23f848b9fe89` |
 | address-types-master | 10 | `650db926fa75626216c197eadd1921f3da5ff22870c370e747998a8f118616c1` |
 | address-types-api | 10 | `a6b047ce552f06a101f0d842e1d2a5073f8422c48228f4a1f548e88a7a481079` |
 | address-types-api | 11 | `545a74147c539ef7388c9f349fd4f3fcc94399ffa23988ee2e199395c87dbd8f` |

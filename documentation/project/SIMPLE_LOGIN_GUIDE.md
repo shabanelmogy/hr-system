@@ -27,7 +27,7 @@
 
 ### Step 2: Rebuild Backend (1 minute)
 ```bash
-cd api/HrManagementSystem
+cd api/ErpSystem.Api
 dotnet build
 ```
 

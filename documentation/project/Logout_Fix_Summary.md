@@ -21,7 +21,7 @@ await fetch("/api/auth/logout", { method: "POST", credentials: "same-origin" });
 response.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
 ```
 
-### 3. Clear Session State (`lib/auth/session-context.tsx`)
+### 3. Clear Session State (`lib/auth/SessionContext.tsx`)
 ```typescript
 // Added logout method to SessionContext
 const logout = useCallback(() => setUser(null), []);
@@ -30,7 +30,7 @@ const logout = useCallback(() => setUser(null), []);
 ## Files Modified
 - ✅ `web-next/src/lib/api/client.ts`
 - ✅ `web-next/src/app/api/auth/logout/route.ts`
-- ✅ `web-next/src/lib/auth/session-context.tsx`
+- ✅ `web-next/src/lib/auth/SessionContext.tsx`
 
 ## Testing
 1. Login → Click logout → Should redirect to `/login`

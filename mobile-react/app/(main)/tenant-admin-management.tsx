@@ -1,6 +1,6 @@
 import { ROUTES } from '@/src/core/constants/routes';
-import { RouteGuard } from '@/src/features/auth';
-import { TenantAdminManagementScreen } from '@/src/features/tenant-admins';
+import { RouteGuard } from '@/src/platform/auth';
+import { TenantAdminManagementScreen } from '@/src/platform/tenant-admins';
 
 export default function TenantAdminManagementRoute() {
   return (

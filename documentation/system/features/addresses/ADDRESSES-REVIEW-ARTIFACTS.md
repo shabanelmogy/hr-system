@@ -4,16 +4,16 @@ Status: applied domain foundation review.
 
 ## Verified source
 
-- `api/HrManagementSystem.Domain/GeographicalInformation/Addresses/Entities/Address.cs`
-- `api/HrManagementSystem.Domain/GeographicalInformation/Addresses/Entities/CompanyAddress.cs`
-- `api/HrManagementSystem.Domain/GeographicalInformation/Addresses/Entities/BranchAddress.cs`
-- `api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Addresses/Persistence/AddressConfiguration.cs`
-- `api/HrManagementSystem.Infrastructure/Persistence/Configurations/OrganizationalStructure/CompanyAddressConfiguration.cs`
-- `api/HrManagementSystem.Infrastructure/Persistence/Configurations/OrganizationalStructure/BranchAddressConfiguration.cs`
-- `api/HrManagementSystem.Application/Features/GeographicalInformation/Addresses/Contracts/AddressRequestValidator.cs`
-- `api/HrManagementSystem.Application/Features/GeographicalInformation/Validation/PrintableTextRules.cs`
-- `api/HrManagementSystem.Application/Features/GeographicalInformation/Validation/GeographicalNameRules.cs`
-- `api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Addresses/Services/AddressService.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Domain/GeographicalInformation/Addresses/Entities/Address.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Domain/GeographicalInformation/Addresses/Entities/CompanyAddress.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Domain/GeographicalInformation/Addresses/Entities/BranchAddress.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/GeographicalInformation/Addresses/Persistence/AddressConfiguration.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/Configurations/OrganizationalStructure/CompanyAddressConfiguration.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/Configurations/OrganizationalStructure/BranchAddressConfiguration.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Addresses/Contracts/AddressRequestValidator.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Validation/PrintableTextRules.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Validation/GeographicalNameRules.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/GeographicalInformation/Addresses/Services/AddressService.cs`
 
 ## Decisions
 

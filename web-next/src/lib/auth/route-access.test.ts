@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { appRoutes } from "@/config/routes";
 import { permissions } from "./permissions";
-import { canAccessRoute, routePolicies } from "./route-access";
+import {
+  canAccessRoute,
+  routePolicies,
+} from "./route-access";
 import type { SessionClaims } from "./session";
 
 const session: SessionClaims = {
@@ -63,6 +66,10 @@ describe("route access policies", () => {
       ...session,
       roles: ["super_admin"],
       permissions: [permissions.ViewCountries],
+    })).toBe(false);
+    expect(canAccessRoute(appRoutes.apps, {
+      ...session,
+      roles: ["super_admin"],
     })).toBe(false);
   });
 
@@ -140,6 +147,14 @@ describe("route access policies", () => {
     expect(canAccessRoute(appRoutes.recruitment, {
       ...session,
       permissions: [permissions.ViewRecruitment],
+    })).toBe(true);
+  });
+
+  it("requires OfflineOperations:Manage for the offline operations administration page", () => {
+    expect(canAccessRoute(appRoutes.auth.offlineOperationsPage, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.auth.offlineOperationsPage, {
+      ...session,
+      permissions: [permissions.ManageOfflineOperations],
     })).toBe(true);
   });
 

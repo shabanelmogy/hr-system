@@ -29,8 +29,8 @@ semantics, but they do not need identical controls or screen composition.
 
 | Item | Countries decision or evidence |
 |---|---|
-| Web feature owner | `web-next/src/features/basic-data/geographical-information/countries` |
-| Mobile feature owner | `mobile-react/src/features/basic-data/countries` |
+| Web feature owner | `web-next/src/modules/hr/basic-data/geographical-information/countries` |
+| Mobile feature owner | `mobile-react/src/modules/hr/basic-data/countries` |
 | Web route adapter | `web-next/src/app/(main)/basic-data/(geographical-information)/countries/page.tsx` |
 | Mobile route adapter | `mobile-react/app/(main)/basic-data/geographical-information/countries.tsx` |
 | Web primary UI shape | Server-managed Grid with modal create/edit/view workflows |
@@ -104,7 +104,7 @@ Expo Router page + RouteGuard
 | Page-scoped analytics | `components/chart-view/` and `components/CountriesChartView.tsx` |
 | Submitted-batch import | `components/import-data/` |
 | Domain report page | `reports/pages/CountryReportPage.tsx` |
-| Browser report composition | `reports/components/CountryActiveReportsDesigner.tsx`, shared `features/reporting` designer/viewer/repository, and `public/reports/countries/countries-directory.rdlx-json` |
+| Browser report composition | `reports/components/CountryActiveReportsDesigner.tsx`, shared `src/shared/reporting` designer/viewer/repository, and `public/reports/countries/countries-directory.rdlx-json` |
 | Deliberate public API | `index.ts` |
 
 The feature public API exports only the page, report page, lookup hook,
@@ -117,17 +117,17 @@ services, controller logic, or internal view components.
 |---|---|
 | Thin guarded route | `mobile-react/app/(main)/basic-data/geographical-information/countries.tsx` |
 | Typed route constant | `mobile-react/src/core/constants/routes.ts` |
-| Canonical route policy | `mobile-react/src/features/auth/rbac/route-manifest.ts` |
-| Screen orchestration | `mobile-react/src/features/basic-data/countries/screens/CountriesScreen.tsx` |
-| Endpoint constants | `mobile-react/src/features/basic-data/countries/api/country-endpoints.ts` |
-| Runtime response validation | `mobile-react/src/features/basic-data/countries/api/country-schemas.ts` |
-| HTTP and query serialization | `mobile-react/src/features/basic-data/countries/api/country-api.ts` |
-| Transport and list types | `mobile-react/src/features/basic-data/countries/types/country.ts` |
-| Query keys, queries and mutations | `mobile-react/src/features/basic-data/countries/queries/` |
-| Card presentation | `mobile-react/src/features/basic-data/countries/components/CountryCard.tsx` |
-| Full-screen form | `mobile-react/src/features/basic-data/countries/components/CountryForm.tsx` |
-| Device report workflow | `mobile-react/src/features/basic-data/countries/components/CountryReportView.tsx` |
-| Deliberate public API | `mobile-react/src/features/basic-data/countries/index.ts` |
+| Canonical route policy | `mobile-react/src/platform/auth/presentation/rbac/route-manifest.ts` |
+| Screen orchestration | `mobile-react/src/modules/hr/basic-data/countries/presentation/screens/CountriesScreen.tsx` |
+| Endpoint constants | `mobile-react/src/modules/hr/basic-data/countries/data/remote/country-endpoints.ts` |
+| Runtime response validation | `mobile-react/src/modules/hr/basic-data/countries/data/remote/country-schemas.ts` |
+| HTTP and query serialization | `mobile-react/src/modules/hr/basic-data/countries/data/remote/country-remote-data-source.ts` |
+| Transport and list types | `mobile-react/src/modules/hr/basic-data/countries/domain/models/country.ts` |
+| Query keys, queries and mutations | `mobile-react/src/modules/hr/basic-data/countries/presentation/queries/` |
+| Card presentation | `mobile-react/src/modules/hr/basic-data/countries/presentation/components/CountryCard.tsx` |
+| Full-screen form | `mobile-react/src/modules/hr/basic-data/countries/presentation/components/CountryForm.tsx` |
+| Device report workflow | `mobile-react/src/modules/hr/basic-data/countries/presentation/components/CountryReportView.tsx` |
+| Deliberate public API | `mobile-react/src/modules/hr/basic-data/countries/index.ts` |
 | Shared list state | `mobile-react/src/shared/listing/useServerListState.ts` |
 | Shared list composition | `mobile-react/src/shared/components/multi-view/AppListScreen.tsx` |
 
@@ -662,7 +662,7 @@ screenshot.
 Web:
 
 ```text
-web-next/src/features/<domain>/<feature>/
+web-next/src/modules/<module>/<domain>/<feature>/
   pages/<Feature>Page.tsx
   components/
     <Feature>MultiView.tsx
@@ -685,7 +685,7 @@ web-next/src/features/<domain>/<feature>/
 Mobile:
 
 ```text
-mobile-react/src/features/<domain>/<feature>/
+mobile-react/src/modules/<module>/<domain>/<feature>/
   api/
     <feature>-endpoints.ts
     <feature>-schemas.ts
@@ -800,11 +800,11 @@ instead of recreating the original gap.
 | Shared XLSX safety contract | `shared/services/excelService.test.ts` |
 | Countries Import duplicate scope | `components/import-data/countryImport.test.ts` |
 | ActiveReportsJS templates | Shared service route tests, strict TypeScript compilation of SSR-safe Designer/Viewer wrappers, API safety/scope tests, and JSON parsing of the bound `public/reports/countries/countries-directory.rdlx-json` starter |
-| Mobile endpoint/query and response schemas | `mobile-react/src/features/basic-data/countries/api/__tests__/country-api.test.ts` |
+| Mobile endpoint/query and response schemas | `mobile-react/src/modules/hr/basic-data/countries/data/remote/__tests__/country-remote-boundary.test.ts` |
 | Mobile shared list debounce/reset | `mobile-react/src/shared/listing/__tests__/useServerListState.test.ts` |
-| Mobile route authorization | `mobile-react/src/features/auth/rbac/__tests__/route-access.test.ts` |
-| Mobile realtime resource mapping | `mobile-react/src/features/realtime/__tests__/realtime-query-registry.test.ts` |
-| CQRS handlers, validation and lifecycle | `api/HrManagementSystem.Tests/CountryCqrsHandlerTests.cs` |
+| Mobile route authorization | `mobile-react/src/platform/auth/presentation/rbac/__tests__/route-access.test.ts` |
+| Mobile realtime resource mapping | `mobile-react/src/platform/realtime/application/realtime-query-registry.test.ts` |
+| CQRS handlers, validation and lifecycle | `api/ErpSystem.Tests/CountryCqrsHandlerTests.cs` |
 | CQRS/controller architecture | `CountryCqrsArchitectureTests.cs`, `CountriesControllerCqrsTests.cs` |
 
 ### Required commands
@@ -823,7 +823,7 @@ npm.cmd run build
 From the repository root for focused backend verification:
 
 ```powershell
-dotnet test api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --filter CountryCqrs
+dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj --filter CountryCqrs
 ```
 
 From `mobile-react`:
@@ -832,7 +832,7 @@ From `mobile-react`:
 npm.cmd run typecheck
 npm.cmd run lint
 npm.cmd run check:architecture
-npm.cmd test -- --runTestsByPath src/features/basic-data/countries/api/__tests__/country-api.test.ts
+npm.cmd test -- --runTestsByPath src/modules/hr/basic-data/countries/data/remote/__tests__/country-remote-boundary.test.ts
 npm.cmd run check
 ```
 

@@ -15,7 +15,7 @@ web-next/src/lib/auth/
 ├── cookies.ts                  ← Cookie management utilities
 ├── permissions.ts              ← Permission constants & helpers
 ├── route-access.ts             ← Route authorization rules
-├── session-context.tsx         ← Client-side session provider
+├── SessionContext.tsx          ← Client-side session provider
 ├── session.ts                  ← SessionClaims type & validator
 └── session.test.ts             ← Unit tests for session validation
 ```
@@ -88,7 +88,7 @@ function tokenPreview(token?: string) {
 
 ---
 
-### 3. **session-context.tsx** — Client-Side Session Provider
+### 3. **SessionContext.tsx** — Client-Side Session Provider
 **Purpose:** React context for accessing user session throughout the app
 
 **Provides:**
@@ -160,7 +160,7 @@ export const permissions = {
 } as const;
 ```
 
-**Mirrors backend:** `api/HrManagementSystem.Application/Common/Consts/Permissions.cs`
+**Mirrors backend:** `api/Modules/HR/ErpSystem.Modules.HR.Application/Common/Consts/Permissions.cs`
 
 **Helper Functions:**
 - `getAllPermissions()` — Get all permission strings

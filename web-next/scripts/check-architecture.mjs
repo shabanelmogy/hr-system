@@ -1,6 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
+import { collectImportSpecifiers } from "./import-specifiers.mjs";
+import {
+  allowedOwnerDependencies,
+  moduleDirectories,
+  ownershipGroups,
+} from "./module-boundaries.mjs";
 
 const sourceRoot = path.resolve("src");
 const sourceFiles = [];
@@ -41,21 +47,72 @@ function layerOf(filePath) {
   return relative || "root";
 }
 
-function featureGroup(filePath) {
+function ownerOf(filePath) {
   const parts = path.relative(sourceRoot, filePath).split(path.sep);
-  return parts[0] === "features" ? parts[1] : null;
+  if (parts[0] === "platform") return "platform";
+  if (parts[0] === "modules") return parts[1] ?? null;
+  if (parts[0] === "shell") return "shell";
+  if (parts[0] === "shared") return "shared";
+  return null;
+}
+
+function isPublicApi(filePath) {
+  return /^index\.(?:ts|tsx|js|jsx)$/.test(path.basename(filePath));
+}
+
+
+const ownershipViolations = [];
+const legacyFeatureRoot = path.join(sourceRoot, "features");
+if (fs.existsSync(legacyFeatureRoot)) {
+  const legacyEntries = fs.readdirSync(legacyFeatureRoot);
+  if (legacyEntries.length > 0) {
+    ownershipViolations.push(
+      "src/features must remain empty; capabilities belong under src/platform or src/modules/<module>",
+    );
+  }
+}
+
+const legacyLayoutsRoot = path.join(sourceRoot, "layouts");
+if (fs.existsSync(legacyLayoutsRoot) && fs.readdirSync(legacyLayoutsRoot).length > 0) {
+  ownershipViolations.push("src/layouts is legacy; shell-owned code belongs under src/shell");
+}
+
+for (const [moduleCode, relativeDirectory] of Object.entries(moduleDirectories)) {
+  const directory = path.resolve(relativeDirectory);
+  if (!fs.existsSync(directory)) {
+    ownershipViolations.push(`${relativeDirectory}: registered module directory is missing`);
+    continue;
+  }
+  if (!fs.existsSync(path.join(directory, "index.ts"))) {
+    ownershipViolations.push(`${relativeDirectory}: module public index.ts is required`);
+  }
+  if (!fs.existsSync(path.join(directory, "moduleDefinition.tsx"))) {
+    ownershipViolations.push(`${relativeDirectory}: moduleDefinition.tsx is required`);
+  }
+  if (!ownershipGroups.includes(moduleCode)) {
+    ownershipViolations.push(`${relativeDirectory}: '${moduleCode}' is not a known ownership group`);
+  }
+}
+
+const modulesRoot = path.join(sourceRoot, "modules");
+if (fs.existsSync(modulesRoot)) {
+  for (const entry of fs.readdirSync(modulesRoot, { withFileTypes: true })) {
+    if (entry.isDirectory() && !Object.hasOwn(moduleDirectories, entry.name)) {
+      ownershipViolations.push(
+        `src/modules/${entry.name}: module is not declared in scripts/module-boundaries.mjs`,
+      );
+    }
+  }
 }
 
 const graph = new Map(sourceFiles.map((filePath) => [filePath, []]));
-const importPattern = /(?:from|import)\s*["']([^"']+)["']/g;
 const violations = [];
+const moduleBoundaryViolations = [];
 const formSafetyViolations = [];
 const cacheSafetyViolations = [];
 
 for (const filePath of sourceFiles) {
   const source = fs.readFileSync(filePath, "utf8");
-  let match;
-
   const relativePath = path.relative(sourceRoot, filePath);
   const isValidationSource = /(?:validation|schema)/i.test(relativePath);
   const transformedUndefinedUnion = /z\.union\s*\(\s*\[[\s\S]*?z\.undefined\s*\(\s*\)[\s\S]*?\]\s*\)\s*\.transform\s*\(/;
@@ -81,31 +138,44 @@ for (const filePath of sourceFiles) {
     );
   }
 
-  while ((match = importPattern.exec(source))) {
-    const target = resolveImport(filePath, match[1]);
+  for (const specifier of collectImportSpecifiers(source)) {
+    const target = resolveImport(filePath, specifier);
     if (!target) continue;
     graph.get(filePath).push(target);
 
     const fromLayer = layerOf(filePath);
     const targetLayer = layerOf(target);
-    const isFeaturePublicApi = targetLayer === "features" &&
-      path.basename(target) === "index.ts";
-    const allowedFeatureDependency = fromLayer === "features" &&
-      targetLayer === "features" &&
-      (featureGroup(filePath) === featureGroup(target) || isFeaturePublicApi);
-    const allowedLayoutFeatureDependency = fromLayer === "layouts" &&
-      isFeaturePublicApi;
-
     if (
-      (fromLayer === "shared" && ["app", "layouts", "features"].includes(targetLayer)) ||
-      (fromLayer === "features" && ["app", "layouts"].includes(targetLayer)) ||
-      (fromLayer === "layouts" && targetLayer === "app") ||
-      (fromLayer === "layouts" && targetLayer === "features" && !allowedLayoutFeatureDependency) ||
-      (fromLayer === "lib" && ["app", "layouts", "features"].includes(targetLayer)) ||
-      (fromLayer === "config" && ["app", "layouts", "features", "shared"].includes(targetLayer)) ||
-      (fromLayer === "features" && targetLayer === "features" && !allowedFeatureDependency)
+      (fromLayer === "shared" && ["app", "shell", "platform", "modules"].includes(targetLayer)) ||
+      (fromLayer === "platform" && ["app", "shell", "modules"].includes(targetLayer)) ||
+      (fromLayer === "modules" && ["app", "shell"].includes(targetLayer)) ||
+      (fromLayer === "shell" && ["app", "modules"].includes(targetLayer)) ||
+      (fromLayer === "lib" && ["app", "shell", "platform", "modules", "shared"].includes(targetLayer)) ||
+      (fromLayer === "config" && ["app", "shell", "platform", "modules", "shared", "lib"].includes(targetLayer))
     ) {
       violations.push(`${path.relative(process.cwd(), filePath)} -> ${path.relative(process.cwd(), target)}`);
+    }
+
+    const fromOwner = ownerOf(filePath);
+    const targetOwner = ownerOf(target);
+    if (
+      fromOwner &&
+      targetOwner &&
+      fromOwner !== targetOwner
+    ) {
+      if (!allowedOwnerDependencies[fromOwner]?.includes(targetOwner)) {
+        moduleBoundaryViolations.push(
+          `${path.relative(process.cwd(), filePath)} -> ${path.relative(process.cwd(), target)} ` +
+          `(owner '${fromOwner}' may not depend on '${targetOwner}')`,
+        );
+      }
+
+      if (["platform", "hr", "accounting", "shell"].includes(targetOwner) && !isPublicApi(target)) {
+        moduleBoundaryViolations.push(
+          `${path.relative(process.cwd(), filePath)} -> ${path.relative(process.cwd(), target)} ` +
+          `(cross-owner imports must target a deliberate index.ts public API)`,
+        );
+      }
     }
   }
 }
@@ -135,7 +205,14 @@ for (const filePath of sourceFiles) {
   if (!states.has(filePath)) visit(filePath);
 }
 
-if (violations.length || cycles.size || formSafetyViolations.length || cacheSafetyViolations.length) {
+if (
+  violations.length ||
+  moduleBoundaryViolations.length ||
+  ownershipViolations.length ||
+  cycles.size ||
+  formSafetyViolations.length ||
+  cacheSafetyViolations.length
+) {
   if (violations.length) {
     console.error("Forbidden architecture dependencies:");
     for (const violation of violations) console.error(`  ${violation}`);
@@ -143,6 +220,14 @@ if (violations.length || cycles.size || formSafetyViolations.length || cacheSafe
   if (cycles.size) {
     console.error("Circular dependencies:");
     for (const cycle of cycles) console.error(`  ${cycle}`);
+  }
+  if (ownershipViolations.length) {
+    console.error("Feature ownership violations:");
+    for (const violation of ownershipViolations) console.error(`  ${violation}`);
+  }
+  if (moduleBoundaryViolations.length) {
+    console.error("Module boundary violations:");
+    for (const violation of moduleBoundaryViolations) console.error(`  ${violation}`);
   }
   if (formSafetyViolations.length) {
     console.error("Unsafe form validation patterns:");
@@ -155,4 +240,6 @@ if (violations.length || cycles.size || formSafetyViolations.length || cacheSafe
   process.exit(1);
 }
 
-console.log("Architecture checks passed: dependency direction, cycles, form validation safety, and query cache consistency are clean.");
+console.log(
+  "Architecture checks passed: target ownership, public APIs, static/dynamic dependency direction, cycles, form validation safety, and query cache consistency are clean.",
+);

@@ -10,6 +10,10 @@ export const queryClient = new QueryClient({
     },
     mutations: {
       retry: false,
+      // Server-authoritative writes must never become an implicit in-memory
+      // offline queue. Features that support offline writes opt into the
+      // persisted outbox explicitly and reconcile their own command semantics.
+      networkMode: 'always',
     },
   },
 });

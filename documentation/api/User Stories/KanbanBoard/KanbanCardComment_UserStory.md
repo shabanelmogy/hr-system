@@ -270,4 +270,4 @@ Relationships:
 
 **Document Version:** 1.0
 **Last Updated:** 2025
-**Author:** HR Management System Team
+**Author:** ERP System Team

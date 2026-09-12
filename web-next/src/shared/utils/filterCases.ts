@@ -1,5 +1,16 @@
-// Then update the filterCases function to handle multiple search fields:
-export const filterCases = (ListItems: any[], options: any = {}) => {
+type FilterOptions = {
+  searchText?: string | string[];
+  searchType?: string;
+  searchField?: string | null;
+  searchFields?: string[];
+  filters?: Record<string, unknown>;
+};
+
+function asRecord(value: unknown): Record<string, unknown> {
+  return typeof value === "object" && value !== null ? value as Record<string, unknown> : {};
+}
+
+export const filterCases = <T>(ListItems: T[], options: FilterOptions = {}): T[] => {
   // Destructure with defaults
   const {
     searchText = [],
@@ -14,11 +25,12 @@ export const filterCases = (ListItems: any[], options: any = {}) => {
     let matchesFilters = true;
 
     // Apply dynamic filters
+    const itemRecord = asRecord(item);
     matchesFilters = Object.entries(filters).every(([field, filterValue]) => {
       // Skip if filter value is null or 0 (assuming 0 means "no filter")
       if (filterValue === null || filterValue === 0) return true;
       // Check if the snippet's field matches the filter value
-      return item[field] === filterValue;
+      return itemRecord[field] === filterValue;
     });
 
     // Apply search text filter
@@ -36,17 +48,17 @@ export const filterCases = (ListItems: any[], options: any = {}) => {
       if (searchFields && searchFields.length > 0) {
         // Use the provided searchFields array
         fieldsToSearch = searchFields.includes("all")
-          ? Object.keys(item)
+          ? Object.keys(itemRecord)
           : searchFields;
       }
       // Backward compatibility with searchField (string)
       else if (searchField) {
         fieldsToSearch =
-          searchField === "all" ? Object.keys(item) : [searchField];
+          searchField === "all" ? Object.keys(itemRecord) : [searchField];
       }
       // Default to all fields if nothing specified
       else {
-        fieldsToSearch = Object.keys(item);
+        fieldsToSearch = Object.keys(itemRecord);
       }
 
       // Consider a match if all search terms match at least one field
@@ -59,7 +71,7 @@ export const filterCases = (ListItems: any[], options: any = {}) => {
 
         // Check if any field matches this term
         return fieldsToSearch.some((field) => {
-          const value = item[field];
+          const value = itemRecord[field];
           const fieldValue =
             typeof value === "string"
               ? value.toLowerCase()

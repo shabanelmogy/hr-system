@@ -1,0 +1,77 @@
+<Project>
+  <!--
+    NuGet Central Package Management for the ERP modular monolith.
+    Single source of truth for every NuGet version used by ErpSystem.sln.
+    To upgrade a package, change its PackageVersion below; never add a
+    Version to a PackageReference in a solution project. The module
+    generator (api/scripts/New-ErpModule.ps1) emits versionless
+    PackageReference items that resolve here.
+
+    Scope: central management is enabled only for ErpSystem.sln identities
+    (ErpSystem.Api, ErpSystem.Tests, ErpSystem.BuildingBlocks.*,
+    and every ErpSystem.Modules.* project). Independent projects such as
+    CrystalReportGeneratorApi and ErpSystem.AttendanceConnector keep
+    ManagePackageVersionsCentrally=false and are unaffected.
+
+    CentralPackageTransitivePinningEnabled is deliberately off: enabling it
+    would rewrite the transitive restore graph for every solution project,
+    which is an unwanted behavior change for this phase.
+  -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally Condition="$([System.String]::Copy('$(MSBuildProjectName)').StartsWith('ErpSystem.Modules.')) or $([System.String]::Copy('$(MSBuildProjectName)').StartsWith('ErpSystem.BuildingBlocks.')) or '$(MSBuildProjectName)' == 'ErpSystem.Api' or '$(MSBuildProjectName)' == 'ErpSystem.Tests'">true</ManagePackageVersionsCentrally>
+    <ManagePackageVersionsCentrally Condition="'$(ManagePackageVersionsCentrally)' == ''">false</ManagePackageVersionsCentrally>
+    <CentralPackageVersionOverrideEnabled>false</CentralPackageVersionOverrideEnabled>
+    <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(ManagePackageVersionsCentrally)' == 'true'">
+    <PackageVersion Include="Asp.Versioning.Mvc" Version="8.1.0" />
+    <PackageVersion Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
+    <PackageVersion Include="AspNet.Security.OAuth.LinkedIn" Version="10.0.0" />
+    <PackageVersion Include="AspNetCore.HealthChecks.Hangfire" Version="9.0.0" />
+    <PackageVersion Include="AspNetCore.HealthChecks.SqlServer" Version="9.0.0" />
+    <PackageVersion Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
+    <PackageVersion Include="ClosedXML" Version="0.105.0" />
+    <PackageVersion Include="EFCore.BulkExtensions" Version="10.0.1" />
+    <PackageVersion Include="FluentValidation" Version="12.1.1" />
+    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+    <PackageVersion Include="Hangfire.AspNetCore" Version="1.8.23" />
+    <PackageVersion Include="Hangfire.SqlServer" Version="1.8.23" />
+    <PackageVersion Include="MailKit" Version="4.17.0" />
+    <PackageVersion Include="Mapster" Version="10.0.10" />
+    <PackageVersion Include="MediatR" Version="12.5.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Hybrid" Version="10.7.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Localization.Abstractions" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.18.0" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.18.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.18.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.18.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.18.0" />
+    <PackageVersion Include="QRCoder" Version="1.8.0" />
+    <PackageVersion Include="Scrutor" Version="7.0.0" />
+    <PackageVersion Include="Serilog.AspNetCore" Version="10.0.0" />
+    <PackageVersion Include="Serilog.Sinks.MSSqlServer" Version="10.0.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="10.2.3" />
+    <PackageVersion Include="Syncfusion.Blazor.SfPdfViewer" Version="34.1.29" />
+    <PackageVersion Include="System.Data.SqlClient" Version="4.9.1" />
+    <PackageVersion Include="System.Drawing.Common" Version="10.0.9" />
+    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+    <PackageVersion Include="System.Linq.Dynamic.Core" Version="1.7.2" />
+    <PackageVersion Include="System.Security.Permissions" Version="10.0.9" />
+    <PackageVersion Include="xunit" Version="2.9.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.2" />
+  </ItemGroup>
+</Project>

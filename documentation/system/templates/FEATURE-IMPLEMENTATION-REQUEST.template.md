@@ -14,6 +14,10 @@ remains the evidence ledger; this request states the work to perform.
 | Request date | `<YYYY-MM-DD>` |
 | Review artifact | `<repository-relative review artifact path>` |
 | Required-file manifest | `<repository-relative draft or final manifest path>` |
+| Owning module | `<platform | hr | accounting | ...>` |
+| Module documentation package | `<repository-relative module package path>` |
+| Public module contract | `<repository-relative Contracts/profile path or explicit decision>` |
+| Shared reuse inventory | `<catalog links and reused/extended/rejected pieces>` |
 
 ## Execution request
 
@@ -26,7 +30,9 @@ or findings.
 Before changing runtime source:
 
 1. Run `./documentation/system/Generate-Documentation.ps1 -Check`.
-2. Read `AGENTS.md`, `documentation/system/README.md`, this request, the review
+2. Read `AGENTS.md`, `documentation/system/README.md`,
+   `documentation/project/ERP_DOCUMENTATION_GUIDE_AR.md`,
+   `documentation/project/SHARED_REUSE_CATALOG.md`, this request, the review
    artifact, the feature's generated phase packets, and the selected reference's
    required-file manifest.
 3. Verify every referenced runtime path and record current, requested,
@@ -47,6 +53,22 @@ Before changing runtime source:
 | Reporting | `<Required | Deferred | Excluded; engine, dataset, permissions>` |
 | Import | `<Required | Deferred | Excluded independently for web and mobile>` |
 | Realtime and notifications | `<resource, actions, audience, route, localized keys>` |
+
+## Ownership, contracts, and reuse inventory
+
+Record the owning bounded context and the allowed dependency direction. List
+the shared BuildingBlocks and module-local pieces inspected before implementation
+and classify each as `reused`, `extended`, `rejected`, or `new module-local`.
+When a shared component or Contract is added or extended, update its generic
+canonical guide in the same change with its public API/options/defaults, a real
+usage example, constraints, accessibility/RTL, loading/error behavior,
+compatibility, and tests; link every affected consumer profile.
+
+| Item | Owner/source | Decision and evidence |
+| --- | --- | --- |
+| Domain rules and persistence | `<module and exact paths>` | `<decision>` |
+| Cross-module Contract/event | `<public contract path>` | `<version, consumers, compatibility>` |
+| Shared piece inspected | `<catalog or source path>` | `<reused | extended | rejected | new local; reason>` |
 
 ## Import contract
 
@@ -73,15 +95,37 @@ decision, reason, owner, and trigger that would reopen it.
 - API: domain rules, persistence, contracts, CQRS handlers, thin versioned
   controller, permissions, stable errors, post-commit work, localization, and
   focused tests.
-- Next.js: thin route, exact transport types/service, one server-list state,
-  approved views, shared controls/components, forms/dialogs, lifecycle actions,
-  realtime invalidation, localization, RTL, accessibility, and tests.
+- Next.js: thin route, exact transport types/service, and (where the feature has
+  a server-managed list) one server-list state shared by its approved views;
+  use shared controls/components, forms/dialogs, lifecycle actions, realtime
+  invalidation, localization, RTL, accessibility, and tests as applicable.
 - Expo: thin guarded route, runtime schemas, exact endpoint client, one server-list
-  state, native responsive UI, permissions/read-only behavior, localization, RTL,
-  accessibility, realtime/deep links, and tests for every Required capability.
+  state where the feature has a server-managed list, native responsive UI,
+  permissions/read-only behavior, localization, RTL, accessibility,
+  realtime/deep links, and tests for every Required capability.
 - Documentation: cross-platform master, API/web/mobile applied profiles, final
   required-file manifest, review artifact, feature-scoped recipes, and regenerated
   phases 00 through 06.
+
+## Optional offline and synchronization decisions
+
+Decide each capability independently for API, web, and mobile. `Required`,
+`Deferred`, and `Excluded` need evidence, an owner, and a reopening trigger when
+applicable; no platform may infer support from another platform.
+
+| Capability | API | Web | Mobile | Decision, owner, and acceptance evidence |
+| --- | --- | --- | --- | --- |
+| Cached/offline read | `<Required | Deferred | Excluded>` | `<decision>` | `<decision>` | `<source, freshness, scope, acceptance>` |
+| Local draft/write | `<decision>` | `<decision>` | `<decision>` | `<draft meaning, protection, acceptance>` |
+| Sync/outbox write | `<decision>` | `<decision>` | `<decision>` | `<idempotency, retry, conflict, uncertain result, acceptance>` |
+| Connection required | `<decision>` | `<decision>` | `<decision>` | `<operations that require live authorization>` |
+| Local security | `<N/A or decision>` | `<decision>` | `<decision>` | `<encryption, logout/company switch, retention, acceptance>` |
+| Lifecycle/recovery | `<N/A or decision>` | `<decision>` | `<decision>` | `<upgrade, restart, policy change, unsent work, acceptance>` |
+
+The decision must also state who enables the capability (server policy, tenant,
+company, user, or device), the maximum local data, and the UI state shown for
+cached, pending, synchronized, failed, or conflicted work. A local write is not
+reported as final business success until the server confirms it.
 
 ## Verification and handoff
 
@@ -91,6 +135,11 @@ versions, local-link validation, and `git diff --check`. Record exact commands,
 counts, dates, skipped gates, environmental blockers, and unrelated inherited
 failures. Do not describe the feature as fully ready while a Required feature gate
 or manual release matrix remains unresolved.
+
+Before handoff, verify the acceptance criteria in the ownership, offline, and
+platform tables. Update the generic guide and every affected consumer profile
+in the same change when a shared capability changed, then regenerate and check
+the documentation packets.
 
 Report at handoff:
 

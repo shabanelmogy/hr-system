@@ -43,18 +43,18 @@ realtime, notification, localization, report, or Import integration is reachable
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| organizational-structure-master | 4 | `0beaf7376a09bb7c622523a47042700f05bf8105485ff4f3fda6be4ed287136a` |
-| organizational-structure-master | 5 | `f6ce22854058c1886ebddf1698075291a68bb0e4c971a587028f433124d7055e` |
+| organizational-structure-master | 4 | `834005c26053eb5eee6e85e186c98953501eda8584fb9e30055ec9bd16391cb8` |
+| organizational-structure-master | 5 | `04175ffea064be1ae39e229a05d90b75b0de90f11ef7c12ae8dc0c69472c265c` |
 | organizational-structure-master | 6 | `2fdee62992580c5d76fc63348edf52701b1e514b1c18ff8be30c53dda4d1b0bf` |
 | organizational-structure-master | 7 | `d3371766bde33eeaa333e5abee156d13b95e6c35dae25ecc9ca097037434c07c` |
-| organizational-structure-master | 9 | `bae2687e1211329b805292f5be72567485077fedeee56abc8e97f72c4998e959` |
+| organizational-structure-master | 9 | `7ceb12bb46037333513809999525207b50465f1d803c98dc76366d8248e070c6` |
 | organizational-structure-api | 8 | `8427fbc60b6506434f168bbb92cebc0b07e6699dec5f0c7e336d6b0c7906c32a` |
 | organizational-structure-api | 9 | `bb97abd860546e88987447fc83aeaa058d22e9fc11562226223c3952b5391913` |
 | organizational-structure-api | 10 | `691c8be03efd3ce06ac8b599b24b3736ef9b3f74d8da99e0a19cbe28d593839f` |
 | organizational-structure-web | 8 | `81709390ab5691f03acc9dcd2b845f95f2a60c0ee2707ea8d96dcfc4efd4d812` |
 | organizational-structure-web | 10 | `c25e75c25fae7744eb25e95dbc1644c94d4955fae4e6f87f95947b8decd7fb33` |
 | organizational-structure-web | 13 | `f426db9a30f8de5984d35e6fcfbd4c2e466f6f573c87b20ee831432a35f69058` |
-| organizational-structure-mobile | 2 | `47cebdf0a98ae323696ee1964ea27494638b937c1860d250e2baef9f4cb8d8f0` |
+| organizational-structure-mobile | 2 | `1abff838a984989b1613c209a17dc8f5abbb2f2124a52c9ae392da73575c379e` |
 | organizational-structure-mobile | 11 | `ec3e51c2ef99a1494eb03474652b596423e1d5fcc07a4ad7cf8066b0517e1b4e` |
 | organizational-structure-mobile | 12 | `a8731c681436d699f98b56159978ab43b87dec90325e32bd0d384599339f2d4b` |
 | organizational-structure-mobile | 15 | `85d324cd065dd2048f40a320715e506ab78f314b3db5d3481f67954747d86195` |

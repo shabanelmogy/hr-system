@@ -2,10 +2,10 @@
 
 | Item | Current mobile contract |
 |---|---|
-| Status | Canonical applied server-managed reference for `mobile-react` |
+| Status | Canonical Clean Architecture reference with optional scoped offline reads |
 | Physical route | `app/(main)/basic-data/geographical-information/countries.tsx` |
 | Typed route | `/basic-data/geographical-information/countries` |
-| Feature owner | `src/features/basic-data/countries` |
+| Feature owner | `src/modules/hr/basic-data/countries` |
 | Access | `RouteGuard` plus `super_admin` route policy; action permissions remain explicit |
 | Primary views | Server-managed Table and Cards |
 | Optional view | Independent PDF Report |
@@ -32,26 +32,43 @@ app/(main)/basic-data/geographical-information/
   _layout.tsx
   countries.tsx
 
-src/features/basic-data/countries/
+src/modules/hr/basic-data/countries/
   index.ts
-  api/
-    country-endpoints.ts
-    country-schemas.ts
-    country-api.ts
-    country-report-api.ts
-    __tests__/country-api.test.ts
-  types/country.ts
-  queries/
-    country-keys.ts
-    use-countries.ts
-    use-country-reports.ts
-  components/
-    CountryCard.tsx
-    CountryForm.tsx
-    CountryReportView.tsx
-  screens/CountriesScreen.tsx
+  application/
+    country-use-cases.ts
+  composition/
+    use-country-use-cases.ts
+  data/
+    local/
+      country-local-data-source.ts
+      sqlite-country-local-data-source.ts
+    remote/
+      country-endpoints.ts
+      country-schemas.ts
+      country-remote-data-source.ts
+      __tests__/country-remote-boundary.test.ts
+      __tests__/country-bulk-remote.test.ts
+    repositories/
+      default-country-repository.ts
+  domain/
+    models/country.ts
+    policies/country-request-policy.ts
+    repositories/country-repository.ts
+  presentation/
+    components/
+      CountryCard.tsx
+      CountryForm.tsx
+      CountryReportView.tsx
+    queries/
+      country-keys.ts
+      use-countries.ts
+      use-country-reports.ts
+    reporting/
+      country-report-api.ts
+    screens/CountriesScreen.tsx
+    utils/country-mock-data.ts
 
-src/features/reporting/
+src/platform/reporting/
   index.ts
   crystal-reports/
     crystal-report-api.ts
@@ -60,17 +77,17 @@ src/features/reporting/
 
 Required integration sources:
 
-- `src/features/basic-data/index.ts` — public screen export;
+- `src/modules/hr/basic-data/index.ts` — public screen export;
 - `src/core/constants/routes.ts` — typed path;
-- `src/features/auth/rbac/route-manifest.ts` — canonical access policy;
-- `src/features/auth/rbac/permissions.ts` — Countries and managed-report permission constants;
-- `src/features/basic-data/screens/GeographicalInformationScreen.tsx` — module navigation;
+- `src/platform/auth/presentation/rbac/route-manifest.ts` — canonical access policy;
+- `src/platform/auth/presentation/rbac/permissions.ts` — Countries and managed-report permission constants;
+- `src/modules/hr/basic-data/presentation/screens/GeographicalInformationScreen.tsx` — module navigation;
 - `src/core/localization/translations/en-basic-data.ts` and
   `ar-basic-data.ts` — paired strings;
-- `src/features/realtime/realtime-query-registry.ts` — stable invalidation prefix;
-- `src/features/notifications/utils/notification-presentation.ts` — maps the
+- `src/platform/realtime/application/realtime-query-registry.ts` — stable invalidation prefix;
+- `src/platform/notifications/presentation/utils/notification-presentation.ts` — maps the
   API's web-oriented notification action URL to the mobile route;
-- `src/features/reporting/index.ts` — shared Crystal Report Manager catalog and
+- `src/platform/reporting/index.ts` — shared Crystal Report Manager catalog and
   render boundary (see the
   [Crystal Report Manager Integration Guide](../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md)).
 
@@ -97,13 +114,11 @@ Expo route
 
 ## 3. Feature Boundary and Public API
 
-The feature root deliberately exports:
+The feature root deliberately exports only:
 
 - `CountriesScreen`;
-- `countryApi` and `countryReportApi`;
-- `countryKeys`;
-- selected transport/domain types, including the `CountryReportInfo` alias of
-  the shared manager catalog item.
+- `useCountryLookup` for authorized cross-subdomain selectors such as States;
+- `CountryLookupItem` as the narrow public lookup type.
 
 It does not expose feature-private components, mutation hooks or implementation
 state. A cross-feature consumer uses the public root or a deliberately added
@@ -115,7 +130,9 @@ Dependency direction is:
 app/layout -> feature public API -> feature internals -> shared/core
 ```
 
-`npm run check:architecture` enforces the broad boundary.
+`npm run check:architecture` enforces the broad boundary and rejects Basic Data
+subdomain imports that reach another subdomain's internals. Static imports,
+re-exports, and literal dynamic imports are checked.
 
 ## 4. Type and Runtime Schema Contract
 
@@ -129,7 +146,7 @@ app/layout -> feature public API -> feature internals -> shared/core
 | `CountryFilters` | Visible status state only; no hidden criteria are retained |
 | `BulkArchiveCountriesResponse` / schema | Runtime-validated archive count |
 | lookup schema | Runtime-validated selector rows |
-| shared reporting schemas | Manager catalog items and render request, owned by `src/features/reporting` |
+| shared reporting schemas | Manager catalog items and render request, owned by `src/platform/reporting` |
 
 Every JSON API method requests `unknown` from `apiService` and parses it with a
 feature-owned Zod schema. A missing required field fails closed. Do not hide a
@@ -158,8 +175,8 @@ sends currency only after trim and uppercase, and converts
 
 ```text
 countries
-  list + CountryPageQuery
-  lookup
+  list + read-mode + CountryPageQuery
+  lookup + read-mode
   detail + id
   reports + catalog
 ```
@@ -177,6 +194,20 @@ countries
 
 React Query owns server data. Local state owns only form mode, selected row,
 pending confirmation and selected IDs.
+
+### Optional cached reads
+
+Countries is the first implemented `offline-read` reference. Cached reads are off
+by default, so the feature requires a live connection. A permitted user can opt in
+to saved reads; successful Countries reads are then stored in SQLite under the
+authenticated `userId + tenantId + companyId` scope and may be served for up to
+24 hours when connectivity is unavailable. The screen shows connection state,
+whether the current result came from saved storage, and the last update time.
+
+The opt-in itself is a lightweight preference stored in AsyncStorage; durable
+business rows remain in SQLite. Disabling the option stops reading and refreshing
+the durable Countries cache. Create, update, archive, restore, bulk archive, and
+bulk import remain online-authoritative and are never queued for replay.
 
 ## 7. Server-Managed List Contract
 
@@ -321,7 +352,7 @@ Successful bulk archive clears selection; single archive removes the archived ID
 ## 11. Report Contract
 
 The report view is independent from the management query and reads the Crystal
-Report Manager through the shared `src/features/reporting` boundary; see the
+Report Manager through the shared `src/platform/reporting` boundary; see the
 [Crystal Report Manager Integration Guide](../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md)
 for the canonical contract. Feature-specific behavior:
 
@@ -382,7 +413,9 @@ reports.
 13. Add EN/AR, RTL, safe-area, keyboard, touch and responsive behavior.
 14. Register realtime invalidation and notification route mapping.
 15. Add API, state, route, permission, mutation and representative screen tests.
-16. Run the full mobile quality gate and manual device matrix.
+16. If offline read is explicitly required, add a feature policy, scoped local data
+    source, freshness rule, visible connection/last-update state, and restart/offline tests.
+17. Run the full mobile quality gate and manual device matrix.
 
 ## 14. Resolved Review Findings
 
@@ -391,29 +424,35 @@ reports.
 | C-M01 | Removed unexposed `currencyCode`/`hasStates` filter state and serialization from the mobile screen contract. | Every active criterion must have a visible control; otherwise omit it from presented state. |
 | C-M02 | Removed the unused detail hook/key because the list row includes every mutable Country form field. | Fetch detail only when the list is not authoritative, and block unsafe edit on detail failure. |
 | C-M03 | Added Countries screen composition/action/permission coverage and mutation transport/invalidation tests. | Pair boundary tests with representative screen and mutation-hook integration coverage. |
+| C-M04 | Replaced the legacy Countries API/query/type facades with domain/application/data/presentation/composition and a narrow public `useCountryLookup`. | Cross-feature consumers use curated public contracts only. |
+| C-M05 | Added opt-in 24-hour scoped SQLite reads while keeping all writes online-authoritative. | Offline capability is an explicit per-feature policy, not a transport fallback. |
 
 ## 15. Verification
 
 Existing focused evidence:
 
-- `src/features/basic-data/countries/api/__tests__/country-api.test.ts`;
-- `src/features/basic-data/countries/api/__tests__/country-bulk-api.test.ts`;
-- `src/features/basic-data/countries/screens/CountriesScreen.test.tsx`;
-- `src/features/basic-data/countries/components/chart-view/country-chart-data.test.ts`;
-- `src/features/basic-data/countries/components/import-data/country-import.test.ts`;
+- `src/modules/hr/basic-data/countries/data/remote/__tests__/country-remote-boundary.test.ts`;
+- `src/modules/hr/basic-data/countries/data/remote/__tests__/country-bulk-remote.test.ts`;
+- `src/modules/hr/basic-data/countries/data/repositories/default-country-repository.test.ts`;
+- `src/modules/hr/basic-data/countries/application/country-use-cases.test.ts`;
+- `src/modules/hr/basic-data/countries/presentation/screens/CountriesScreen.test.tsx`;
+- `src/modules/hr/basic-data/countries/presentation/components/chart-view/country-chart-data.test.ts`;
+- `src/modules/hr/basic-data/countries/presentation/components/import-data/country-import.test.ts`;
 - `src/shared/importing/native-spreadsheet.test.ts`;
-- `src/features/basic-data/countries/queries/use-countries.test.ts`;
-- `src/features/reporting/crystal-reports/__tests__/crystal-report-api.test.ts`;
+- `src/modules/hr/basic-data/countries/presentation/queries/use-countries.test.ts`;
+- `src/core/preferences/OfflineReadPreferencesProvider.test.tsx`;
+- `src/core/offline/offline-read-policy.test.ts`;
+- `src/platform/reporting/data/remote/crystal-report-remote-data-source.test.ts`;
 - `src/shared/listing/__tests__/useServerListState.test.ts`;
-- `src/features/auth/rbac/__tests__/route-access.test.ts`;
-- `src/features/realtime/__tests__/realtime-query-registry.test.ts`;
+- `src/platform/auth/presentation/rbac/__tests__/route-access.test.ts`;
+- `src/platform/realtime/application/realtime-query-registry.test.ts`;
 - architecture and localization parity tests in the full suite.
 
 ```powershell
 npm.cmd run typecheck
 npm.cmd run lint
 npm.cmd run check:architecture
-npm.cmd test -- --runTestsByPath src/features/basic-data/countries/api/__tests__/country-api.test.ts
+npm.cmd test -- --runTestsByPath src/modules/hr/basic-data/countries/data/remote/__tests__/country-remote-boundary.test.ts
 npm.cmd run check
 ```
 

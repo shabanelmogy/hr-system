@@ -1,0 +1,38 @@
+name: Documentation Contracts CI
+
+on:
+  push:
+    paths:
+      - 'documentation/**'
+      - 'api/**'
+      - 'web-next/**'
+      - 'mobile-react/**'
+      - '.github/workflows/documentation-ci.yml'
+  pull_request:
+    paths:
+      - 'documentation/**'
+      - 'api/**'
+      - 'web-next/**'
+      - 'mobile-react/**'
+      - '.github/workflows/documentation-ci.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: documentation-contracts-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify-documentation:
+    name: Verify documentation contracts
+    runs-on: windows-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify manifests and generated recipes
+        shell: pwsh
+        run: ./documentation/system/Generate-Documentation.ps1 -Check

@@ -3,11 +3,9 @@ import { StyleSheet, View, Pressable, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as Haptics from 'expo-haptics';
 import { useAppTheme } from '@/src/core/theme';
-import { useLocalization } from '@/src/core/localization';
 import { AppText } from '@/src/shared/components/typography/AppText';
 import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon';
 import { AppCard } from '@/src/shared/components/surfaces/AppCard';
-import { AppStatusBadge } from '@/src/shared/components/feedback/AppStatusBadge';
 import { AppButton } from '@/src/shared/components/controls/AppButton';
 import { AppIconButton } from '@/src/shared/components/controls/AppIconButton';
 
@@ -31,7 +29,7 @@ export interface AppInteractiveChartItem<T> {
   /** Optional status or category badge color */
   badgeColor?: string;
   /** Key-value details to display in the details card */
-  details?: Array<{ label: string; value: string | number }>;
+  details?: { label: string; value: string | number }[];
   /** Optional icon for the item */
   icon?: AppIconName;
 }
@@ -75,8 +73,7 @@ export function AppInteractiveEntityChart<T>({
   height = 220,
 }: AppInteractiveEntityChartProps<T>) {
   const { theme } = useAppTheme();
-  const { isRTL } = useLocalization();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const isAr = Boolean((i18n?.resolvedLanguage ?? i18n?.language ?? '')?.startsWith('ar'));
 
   const [selectedKey, setSelectedKey] = useState<string | null>(null);

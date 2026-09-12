@@ -2,7 +2,7 @@
 
 ## 1. Feature Inventory
 
-The feature owner is `src/features/basic-data/company-geographic-scope`; the thin route is `app/(main)/basic-data/organizational-structure/geographic-scope.tsx`.
+The feature owner is `src/modules/hr/basic-data/company-geographic-scope`; the thin route is `app/(main)/basic-data/organizational-structure/geographic-scope.tsx`.
 
 ## 2. Route and Navigation
 

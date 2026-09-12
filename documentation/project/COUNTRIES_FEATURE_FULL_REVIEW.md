@@ -18,7 +18,7 @@ Reviewed: 2026-08-23
 | General web guide | [Server-Managed Frontend Reference](../web-next/features/server-managed-feature-reference.md) |
 | General mobile guide | [Mobile Feature Guide](../mobile-react/MOBILE_FEATURE_GUIDE.md) |
 | Documentation workflow | [Feature Documentation System](../system/README.md) |
-| Legacy frontend | `web/` is reference-only and is not an implementation target |
+| Legacy frontend | Retired Vite client; not an implementation target |
 | API ownership | Global Platform catalog; `super_admin` role plus action permission required |
 | Clients | Canonical browser client and active Expo/React Native mobile client |
 | Required consistency | HTTP fields, validation semantics, permissions, lifecycle, paging, sorting, errors and invalidation |
@@ -216,7 +216,7 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | `countryPageQuery.ts` | Exact criteria serialization |
 | `useCountryQueries.ts`, `countryService.ts` | Cache and HTTP normalization |
 | `CountriesMultiView.tsx` and view folders | Grid/Cards/Chart/Report/Import composition |
-| `CountryReportPage.tsx`, Countries report composition, shared `features/reporting`, and `public/reports/countries/` | Crystal remains default; ActiveReportsJS uses SSR-safe tenant-published Viewer/management Designer flows and an API-bound starter template |
+| `CountryReportPage.tsx`, Countries report composition, shared `src/shared/reporting`, and `public/reports/countries/` | Crystal remains default; ActiveReportsJS uses SSR-safe tenant-published Viewer/management Designer flows and an API-bound starter template |
 | `CountryForm.tsx`, validation | Detail-backed modes and request rules |
 | web Countries tests | Query/service/permission/chart/cell evidence |
 
@@ -341,9 +341,9 @@ them in the next feature.
 ### API
 
 ```powershell
-dotnet test api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --filter CountryCqrs
-dotnet test api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj
-dotnet build api/HrManagementSystem.sln
+dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj --filter CountryCqrs
+dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj
+dotnet build api/ErpSystem.sln
 ```
 
 ### Web-next
@@ -416,7 +416,7 @@ loading/error/empty/retry, dirty/busy forms and realtime refresh.
 - [ ] Full API, web and mobile gates pass.
 - [ ] Local documentation links resolve.
 - [ ] Findings are fixed or have an explicit owner/decision.
-- [ ] No legacy `web/` implementation was treated as authority.
+- [ ] No retired Vite client implementation was treated as authority.
 
 The feature is complete only when the checklist is supported by current source,
 test and runtime evidence. Similar-looking screens are not evidence of the same

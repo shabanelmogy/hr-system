@@ -36,10 +36,10 @@
 
 أهم ملفات الأساس الحالي:
 
-- `api/HrManagementSystem.Infrastructure/Persistence/ApplicationDbContext.cs`
-- `api/HrManagementSystem.Domain/Tenancy/Entities/Tenant.cs`
-- `api/HrManagementSystem.Infrastructure/Dependencies/AuthenticationService.cs`
-- `api/HrManagementSystem.Api/Program.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/ApplicationDbContext.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Domain/Tenancy/Entities/Tenant.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/AuthenticationService.cs`
+- `api/ErpSystem.Api/Program.cs`
 
 ---
 
@@ -51,9 +51,9 @@
 
 الأماكن الحالية:
 
-- `api/HrManagementSystem.Api/Features/Security/Authentication/V1/AuthController.cs`
-- `api/HrManagementSystem.Infrastructure/Features/Security/Authentication/Services/AuthAccountService.cs`
-- `api/HrManagementSystem.Infrastructure/Features/Security/Authentication/Services/AuthLoginService.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/Security/Authentication/V1/AuthController.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Security/Authentication/Services/AuthAccountService.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Security/Authentication/Services/AuthLoginService.cs`
 
 التعديلات المطلوبة:
 
@@ -99,13 +99,13 @@
 
 ### 3. عزل الأدوار والصلاحيات بين الـ Tenants
 
-تم تحويل `ApplicationRole` إلى نموذج system/global أو custom/tenant-owned، وعُزلت التعيينات وJWT والإشعارات والـrealtime. البنود غير المكتملة أدناه تخص session invalidation وsecurity audit والتحقق التكاملـي على SQL Server.
+تم تحويل `ApplicationRole` إلى نموذج system/global أو custom/tenant-owned، وعُزلت التعيينات وJWT والإشعارات والـrealtime. تغييرات الأدوار والصلاحيات أصبحت ذرّية على SQL Server: قفل تطبيق ثابت النطاق، mutation وaudit داخل المعاملة، ثم realtime/session-revocation بعد نجاح الـcommit. يبقى اختبار migration الخاص ببيانات legacy متعددة الـtenants خارج هذا الإغلاق.
 
 الأماكن الحالية:
 
-- `api/HrManagementSystem.Infrastructure/Features/Security/Authentication/Entities/ApplicationRole.cs`
-- `api/HrManagementSystem.Infrastructure/Features/Security/Authorization/Services/RoleService.cs`
-- `api/HrManagementSystem.Api/Features/Security/Authorization/V1/RolesController.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Security/Authentication/Entities/ApplicationRole.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Security/Authorization/Services/RoleService.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/Security/Authorization/V1/RolesController.cs`
 
 التصميم المقترح:
 
@@ -120,8 +120,8 @@
 - [x] إضافة Tenant ownership للأدوار المخصصة والصلاحيات المرتبطة بها.
 - [x] فرض tenant filter على القراءة والإنشاء والتعديل والحذف.
 - [x] منع Tenant Admin من تعديل platform roles أو أدوار Tenant آخر.
-- [ ] إلغاء الجلسات المتأثرة بعد تغيير صلاحيات role.
-- [ ] تسجيل كل role/permission mutation في Security Audit.
+- [x] إلغاء الجلسات المتأثرة بعد تغيير صلاحيات role.
+- [x] تسجيل كل role/permission mutation في Security Audit داخل نفس المعاملة.
 - [x] إضافة migration آمنة لتحويل الأدوار الحالية مع fail-fast عند تعذر استنتاج الملكية.
 - [x] إضافة اختبارات عدائية تثبت عدم وجود cross-tenant role access.
 
@@ -135,7 +135,7 @@
 - [ ] تشغيل migration داخل maintenance window وبعد backup مجرب، لأنها لا تملك `Down` يعيد دمج نسخ اختلفت بعد التشغيل بشكل lossless.
 - [x] تحديث JWT، notifications وrealtime queries لتقيد الدور بالـ selected Tenant وتتجاهل الدور المخصص المعطل.
 - [x] تحديث الويب والموبايل بعقد `isSystem` إلزامي، وجعل system roles للعرض فقط، وإزالة role cache المستمر بين جلسات الويب.
-- [ ] إلغاء جلسات المستخدمين المتأثرين وتحديث security stamps بعد تغيير الدور أو صلاحياته.
+- [x] إلغاء جلسات المستخدمين المتأثرين وتحديث security stamps بعد تغيير الدور أو صلاحياته؛ enqueue يحدث بعد نجاح الـcommit فقط.
 - [x] استخدام realtime groups بصيغة `tenant:{tenantId}:permission:{permission}` و`tenant:{tenantId}:role:{roleId}` للأحداث المملوكة للـTenant، مع الإبقاء على audience عامة للأحداث المشتركة المراجعة فقط.
 
 معيار القبول:
@@ -144,17 +144,30 @@
 
 ### 4. تأمين الأسرار وإعدادات الاتصال
 
-`api/HrManagementSystem.Api/appsettings.json` ملف متتبع ويحتوي حاليًا على إعدادات اتصال وبريد حساسة غير فارغة، كما يوجد اتصال SQL يسمح بالثقة في شهادة الخادم.
+تكوين التشغيل يجب أن يبقى خاليًا من أسرار الإنتاج، مع فشل مبكر عند غياب
+إعدادات الإنتاج أو استخدام اتصال SQL غير موثق. القيم الفعلية تأتي من secret
+manager أو environment variables، ولا تُكتب في ملفات الإعداد المتتبعة.
 
 التعديلات المطلوبة:
 
 - [ ] تدوير database وSMTP credentials الحالية.
-- [ ] إزالة القيم السرية من الملفات المتتبعة واستبدالها بقيم فارغة أو placeholders.
-- [ ] استخدام environment variables أو secret manager في البيئات المستضافة.
+- [x] إزالة القيم السرية من ملفات الإعداد واستبدالها بقيم فارغة أو placeholders.
+- [x] استخدام environment variables أو secret manager في البيئات المستضافة.
 - [ ] فحص Git history بحثًا عن أسرار سابقة واتخاذ قرار تنظيف التاريخ عند الحاجة.
-- [ ] تفعيل التحقق الصحيح من شهادة SQL وإلغاء `TrustServerCertificate=true` في الإنتاج.
-- [ ] تقييد `AllowedHosts` وCORS إلى النطاقات الفعلية.
-- [ ] إضافة secret scanning إلى CI.
+- [x] تفعيل التحقق الصحيح من شهادة SQL وإلغاء `TrustServerCertificate=true` في الإنتاج.
+- [x] تقييد `AllowedHosts` وCORS إلى النطاقات الفعلية.
+- [x] إضافة secret scanning إلى CI.
+
+تم تطبيق فحص Gitleaks على checkout الحالي في
+`.github/workflows/api-ci.yml` باستخدام الإصدار المثبت `v8.29.1` وقائمة
+استثناءات تقتصر على build/cache/vendor/binary outputs. فحص تاريخ Git السابق
+وجد خمس نتائج legacy (إعدادات API قديمة، ملف `.env` للويب، وملف private-key
+قديم). لم يُعاد كتابة التاريخ تلقائيًا؛ تدوير الاعتمادات ومراجعة purge معتمد
+للتاريخ ما زالا شرط إصدار قبل اعتبار المستودع خاليًا من الأسرار التاريخية.
+
+`HostDeploymentConfigurationValidator` يفشل تشغيل Production قبل تسجيل
+الخدمات عند غياب اتصال فعلي لأي Module أو Hangfire، أو عند استخدام wildcard
+hosts/CORS غير آمن، أو secrets placeholder، أو startup migrations/seeding.
 
 معيار القبول:
 
@@ -164,6 +177,12 @@
 
 إنشاء Tenant يجب أن يكون use case واحدًا، وليس خطوات يدوية منفصلة قد تترك Tenant ناقصًا.
 
+أُغلقت طبقة الأساس الحالية داخل مسار إنشاء الـTenant: فحص الحالة والـentitlements
+قبل الكتابة، وقفل SQL Server ثابت مشتق من identifier، ومعاملة واحدة تنشئ الـTenant
+والـDEFAULT Company والـentitlements وسجل `TenantCreated` ثم تحفظ مرة واحدة. يتم
+إرسال realtime بعد نجاح الـcommit وبشكل best-effort مع تسجيل الفشل، لذلك لا يحوّل
+تعطل SignalR أو Hangfire عملية مكتملة إلى استجابة فاشلة.
+
 التدفق المطلوب:
 
 `Tenant → Default Company → Admin Invitation → Default Roles/Policies → Tenant Settings → Audit`
@@ -171,8 +190,11 @@
 التعديلات المطلوبة:
 
 - [ ] إنشاء `TenantProvisioningService` أو use case مستقل.
-- [ ] تنفيذ خطوات قاعدة البيانات داخل transaction واحدة.
-- [ ] إنشاء default company وbaseline settings تلقائيًا.
+- [x] تنفيذ خطوات قاعدة البيانات داخل transaction واحدة.
+- [x] إنشاء default company تلقائيًا بالرمز `DEFAULT` والقيم الأساسية الحالية.
+- [x] تسجيل `TenantCreated` ضمن نفس عملية الحفظ.
+- [x] تنفيذ realtime post-commit بشكل best-effort بعد نجاح الحفظ.
+- [ ] إنشاء baseline tenant settings تلقائيًا.
 - [ ] إنشاء invitation للـ initial tenant admin بدل استقبال كلمة مرور منه.
 - [ ] إضافة idempotency key لمنع تكرار Tenant عند إعادة الطلب.
 - [ ] إضافة provisioning status واضح: pending، ready، failed.
@@ -191,11 +213,11 @@
 
 الدليل:
 
-- `api/HrManagementSystem.Infrastructure/Persistence/ApplicationDbContext.cs`
-- `api/HrManagementSystem.Domain/Employees/Entities/Employee.cs`
-- `api/HrManagementSystem.Domain/OrganizationalStructure/Entities/Department.cs`
-- `api/HrManagementSystem.Domain/OrganizationalStructure/Entities/Position.cs`
-- `api/HrManagementSystem.Domain/Employees/Entities/EmployeeContract.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/ApplicationDbContext.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Domain/Employees/Entities/Employee.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Domain/OrganizationalStructure/Entities/Department.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Domain/OrganizationalStructure/Entities/Position.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Domain/Employees/Entities/EmployeeContract.cs`
 
 ### 6. Organizational Structure
 
@@ -286,9 +308,9 @@
 
 ### 12. Audit Completeness
 
-- [ ] تسجيل تغييرات roles، permissions وAPI keys في `SecurityAuditEvent`.
-- [ ] ضمان أن audit record وbusiness change ينجحان أو يفشلان بصورة متسقة.
-- [ ] منع تسجيل change log لعملية فشلت لاحقًا.
+- [x] تسجيل تغييرات roles وpermissions في `SecurityAuditEvent`؛ تبقى تغييرات API keys ضمن بند مستقل.
+- [x] ضمان أن audit record وbusiness change لتغييرات RBAC ينجحان أو يفشلان بصورة متسقة داخل transaction واحدة.
+- [x] منع تسجيل change log أو إرسال realtime/session-revocation لعملية RBAC فشلت لاحقًا.
 - [ ] إضافة filters، export وصلاحيات مستقلة لعرض الـ audit.
 - [ ] إضافة actor، tenant، company، IP، correlation ID وreason عند العمليات الحساسة.
 - [ ] منع تعديل أو حذف سجلات التدقيق من التطبيق.
@@ -310,10 +332,12 @@
 ### 14. Outbox and Idempotency
 
 - [ ] استخدام transactional outbox للأحداث التي يؤدي فقدها إلى أثر تجاري أو أمني.
-- [ ] إبقاء realtime refresh غير الحرج على Hangfire عند ملاءمته.
+- [x] تطبيق transactional outbox لمسار Contacts Party إلى Accounting مع commit ذري داخل الموديول.
+- [x] إبقاء realtime refresh غير الحرج بعد commit وعلى Hangfire عند ملاءمته.
 - [ ] إضافة idempotency layer لطلبات create الحرجة والـ webhooks.
-- [ ] إضافة deduplication keys للرسائل الخارجية.
-- [ ] تصميم retry وdead-letter/recovery للعمليات المهمة.
+- [x] إضافة Inbox receipt idempotent داخل Accounting للأحداث المستهلكة الحالية.
+- [ ] إضافة deduplication keys للرسائل الخارجية عند إضافة broker/webhooks.
+- [x] تنفيذ bounded retry وdead-letter وstale-processing recovery ومراقبة readiness لمسار Contacts الحالي.
 
 ### 15. API Keys and Integration Platform
 
@@ -342,12 +366,15 @@
 ### 17. CI/CD and Migrations
 
 - [ ] إضافة CI للـ API والويب والموبايل.
+- [x] إضافة API CI يبني ويختبر Release وينتج publish artifact ويتحقق من بناء صورة الإنتاج بدون push.
 - [ ] تشغيل build، tests، lint، type checks وarchitecture checks.
-- [ ] إضافة dependency vulnerability scanning وsecret scanning وSBOM.
-- [ ] فحص EF migration model drift.
-- [ ] تنفيذ migrations كخطوة deployment محكومة بدل الاعتماد على startup migration في الإنتاج.
+- [x] إضافة فحص ثغرات NuGet المباشرة والمتعدية وSPDX SBOM مُتحقق منه كـCI artifacts.
+- [x] إضافة secret scanning للـ current tree باستخدام Gitleaks.
+- [x] فحص EF migration model drift لكل Module DbContext حالي.
+- [x] تنفيذ migrations كخطوة deployment محكومة بدل الاعتماد على startup migration في الإنتاج.
 - [ ] إضافة approval gates وبيئات dev/staging/production.
-- [ ] توثيق rollback/forward-fix strategy.
+- [ ] إضافة image signing وprovenance attestation عند اختيار registry ومنصة النشر.
+- [x] توثيق rollout وrollback/forward-fix strategy للـ API.
 
 ### 18. Backups and Disaster Recovery
 
@@ -359,7 +386,7 @@
 
 ### 19. Observability and SLOs
 
-- [ ] OpenTelemetry traces، metrics وstructured logs.
+- [x] إضافة OpenTelemetry traces وmetrics عبر OTLP مع spans/metrics داخل CQRS، مع الإبقاء على Serilog للـ structured logs.
 - [ ] error tracking مركزي.
 - [ ] dashboards للـ API latency/error rate، SQL، Hangfire queues والـ email failures.
 - [ ] alerts للـ failed jobs، readiness failures، ارتفاع 5xx وارتفاع latency.

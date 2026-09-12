@@ -57,7 +57,7 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | company-geographic-scope-master | 3 | `9ec15c72949a18d28967bf33b8be561db54b6bbe9511861f83fce9b7bbb4f182` |
-| company-geographic-scope-master | 4 | `8185c0aac290bcb1ea4cb2e37b929a12ecd0992abfd64e7ca399982ee2053de1` |
+| company-geographic-scope-master | 4 | `91771c4ee3bfa569933528e6b5c71b64a66f0d5b0c536ef31efeec8e682178af` |
 | company-geographic-scope-master | 6 | `9af33779eb8e399a26aa1fbde2585ba40dcd0fad4f6223030372c15c0aec6c20` |
 | company-geographic-scope-master | 7 | `4aabfce40f78278ebe9253ba61344d31ffa99b0fc6fb6aca579a2125cdcac9c6` |
 | company-geographic-scope-master | 8 | `65fc3239cb85c7b89cc4ef1cff4b2e7a50841d135b61b801509f28181ab56a39` |

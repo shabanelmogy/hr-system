@@ -3,13 +3,14 @@ import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { permissions, useAuthorization } from '@/src/features/auth';
-import { AppNavigationHeader } from '@/src/layouts/navigation/AppNavigationHeader';
+import { permissions, useAuthorization } from '@/src/platform/auth';
+import { AppNavigationHeader } from '@/src/platform/navigation';
 import { AppIcon } from '@/src/shared/components';
 import { useAppTheme } from '@/src/core/theme';
 
 const viewUsersPermission = [permissions.ViewUsers] as const;
 const viewRolesPermission = [permissions.ViewRoles] as const;
+const manageOfflineOperationsPermission = [permissions.ManageOfflineOperations] as const;
 
 export default function AdministrationLayout() {
   const { t } = useTranslation();
@@ -20,6 +21,9 @@ export default function AdministrationLayout() {
   });
   const { allowed: canViewRoles } = useAuthorization({
     requiredPermissions: viewRolesPermission,
+  });
+  const { allowed: canManageOfflineOperations } = useAuthorization({
+    requiredPermissions: manageOfflineOperationsPermission,
   });
   const bottomSpacing = Math.max(insets.bottom, 10);
 
@@ -76,6 +80,16 @@ export default function AdministrationLayout() {
           title: t('navigation.roles'),
           tabBarIcon: ({ color, size }) => (
             <AppIcon color={color} name="shield-checkmark-outline" size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="offline-operations"
+        options={{
+          href: canManageOfflineOperations ? undefined : null,
+          title: t('navigation.offlineOperations'),
+          tabBarIcon: ({ color, size }) => (
+            <AppIcon color={color} name="cloud-offline-outline" size={size} />
           ),
         }}
       />

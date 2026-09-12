@@ -25,10 +25,10 @@ errors and concurrency requirements.
 ## 1. Exact Source Inventory
 
 ```text
-HrManagementSystem.Domain/GeographicalInformation/Countries/
+ErpSystem.Modules.HR.Domain/GeographicalInformation/Countries/
   Entities/Country.cs
 
-HrManagementSystem.Application/Features/GeographicalInformation/Countries/
+ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Countries/
   Abstractions/
     ICountryReadStore.cs
     ICountryWriteStore.cs
@@ -57,7 +57,7 @@ HrManagementSystem.Application/Features/GeographicalInformation/Countries/
   Errors/CountryErrors.cs
   Mapping/CountryMappingConfig.cs
 
-HrManagementSystem.Infrastructure/Features/GeographicalInformation/Countries/
+ErpSystem.Modules.HR.Infrastructure/Features/GeographicalInformation/Countries/
   Persistence/
     CountryConfiguration.cs
     CountryReadStore.cs
@@ -68,7 +68,7 @@ HrManagementSystem.Infrastructure/Features/GeographicalInformation/Countries/
     CountryChangeScheduler.cs
     CountryChangedJob.cs
 
-HrManagementSystem.Api/Features/GeographicalInformation/Countries/V1/
+Modules/HR/ErpSystem.Modules.HR.Presentation/Features/GeographicalInformation/Countries/V1/
   CountriesController.cs
 ```
 
@@ -338,14 +338,14 @@ connection string.
 The source inventory for this extension is:
 
 ```text
-HrManagementSystem.Domain/Analytics/ReportTemplates/
-HrManagementSystem.Application/Features/Analytics/ReportTemplates/
-HrManagementSystem.Infrastructure/Features/Analytics/ReportTemplates/
-HrManagementSystem.Api/Features/Analytics/ReportTemplates/V1/
-HrManagementSystem.Application/Features/GeographicalInformation/Countries/
+ErpSystem.Modules.HR.Domain/Analytics/ReportTemplates/
+ErpSystem.Modules.HR.Application/Features/Analytics/ReportTemplates/
+ErpSystem.Modules.HR.Infrastructure/Features/Analytics/ReportTemplates/
+Modules/HR/ErpSystem.Modules.HR.Presentation/Features/Analytics/ReportTemplates/V1/
+ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Countries/
   Contracts/CountryReportDataResponse.cs
   Queries/GetCountryReportData/
-HrManagementSystem.Tests/ReportTemplateFeatureTests.cs
+ErpSystem.Tests/ReportTemplateFeatureTests.cs
 ```
 
 This is a reusable platform capability with a currently allow-listed Countries
@@ -366,7 +366,7 @@ endpoint; it must not accept arbitrary client URLs or database connection string
 Focused gate from the repository root:
 
 ```powershell
-dotnet test api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --filter CountryCqrs
+dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj --filter CountryCqrs
 ```
 
 For a copied feature, add persistence tests for scope, unique indexes and

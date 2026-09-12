@@ -1,7 +1,7 @@
 # Attendance Devices API Implementation Profile
 
 ## 1. Exact Source Inventory
-Feature source is in Domain/Attendance/Devices, Application/Features/Attendance/Devices, Infrastructure/Features/Attendance/Devices and versioned controllers; the companion is HrManagementSystem.AttendanceConnector.
+Feature source is in Domain/Attendance/Devices, Application/Features/Attendance/Devices, Infrastructure/Features/Attendance/Devices and versioned controllers; the companion is ErpSystem.AttendanceConnector.
 
 ## 2. Ownership and Persistence
 All device, credential, raw and run entities are tenant/company scoped. Device BranchId is optional with a composite same-company foreign key, selected by request rather than token.

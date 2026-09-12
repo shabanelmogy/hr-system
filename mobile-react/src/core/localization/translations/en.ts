@@ -7,6 +7,8 @@ import { enPlatformToolsNotifications } from './en-platform-tools-notifications'
 import { enBasicData } from './en-basic-data';
 import { enFiscalYears } from './en-fiscal-years';
 import { enWorkforcePlanning } from './en-workforce-planning';
+import { enModules } from './en-modules';
+import { enOfflineOperations } from './en-offline-operations';
 
 export const en = {
   ...enCommon,
@@ -18,4 +20,6 @@ export const en = {
   ...enRecruitment,
   ...enFiscalYears,
   ...enWorkforcePlanning,
+  ...enModules,
+  ...enOfflineOperations,
 };

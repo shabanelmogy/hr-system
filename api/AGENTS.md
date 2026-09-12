@@ -16,9 +16,9 @@ When the feature has a required parent relationship, compare the States profiles
 Before handoff, run from `api/`:
 
 ```powershell
-dotnet restore HrManagementSystem.sln
-dotnet build HrManagementSystem.sln --no-restore
-dotnet test HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-build --no-restore
+dotnet restore ErpSystem.sln
+dotnet build ErpSystem.sln --no-restore
+dotnet test ErpSystem.Tests/ErpSystem.Tests.csproj --no-build --no-restore
 ```
 
 If a running API locks normal outputs, use one explicit isolated `--artifacts-path` for restore, build, and test. Record any skipped integration or migration gate instead of reporting the feature as fully verified.

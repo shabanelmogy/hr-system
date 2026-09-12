@@ -121,7 +121,7 @@ remains Branch/Site/WorkLocation.
 | Layer | Command/check | Result | Date |
 | --- | --- | --- | --- |
 | Documentation | `Generate-Documentation.ps1`, then `Generate-Documentation.ps1 -Check` | Passed: phases regenerated; 35 registered recipes checked | 2026-08-25 |
-| API | `dotnet test HrManagementSystem.Tests.csproj --no-restore`; API project build; EF pending-model check | Passed: 351 tests; build has 0 warnings/errors; no pending model changes | 2026-08-25 |
+| API | `dotnet test ErpSystem.Tests.csproj --no-restore`; API project build; EF pending-model check | Passed: 351 tests; build has 0 warnings/errors; no pending model changes | 2026-08-25 |
 | Web | Address Type service test, strict type check, lint | Passed: 2 tests; strict type check; lint has existing repository warnings | 2026-08-24 |
 | Web full gate | `npm.cmd run check` | Inherited failure: existing architecture/circular-dependency violations outside Address Types | 2026-08-24 |
 | Mobile | typecheck, lint, architecture check, Jest | Passed: 35 suites / 104 tests, including EN/AR literal-key coverage | 2026-08-24 |

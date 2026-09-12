@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.Accounting</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.Accounting</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Modularity\ErpSystem.BuildingBlocks.Modularity.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Accounting.Application\ErpSystem.Modules.Accounting.Application.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Accounting.Infrastructure\ErpSystem.Modules.Accounting.Infrastructure.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Accounting.Presentation\ErpSystem.Modules.Accounting.Presentation.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -51,7 +51,7 @@
 
 | Evidence ID | Claim | File and symbol | Verification |
 | --- | --- | --- | --- |
-| E-01 | Countries are global | `api/HrManagementSystem.Domain/GeographicalInformation/Countries/Entities/Country.cs` | Entity has no scope marker |
+| E-01 | Countries are global | `api/Modules/HR/ErpSystem.Modules.HR.Domain/GeographicalInformation/Countries/Entities/Country.cs` | Entity has no scope marker |
 | E-02 | States and Districts inherit global parent scope | `State.cs`, `District.cs`, their EF configurations | Global parent FKs and unique indexes inspected |
 | E-03 | Company data uses trusted automatic isolation | `ApplicationDbContext.ConfigureCompanyEntity` and `ApplyTenantIsolation` | Query/write filters inspected |
 | E-04 | Addresses are company-owned and have explicit owner links | `Address.cs`, `CompanyAddress.cs`, `BranchAddress.cs` | Scope and purpose/primary link model inspected |

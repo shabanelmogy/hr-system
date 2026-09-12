@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Modal,
   Pressable,
@@ -13,9 +13,7 @@ import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { AppText } from '@/src/shared/components/typography/AppText';
 import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon';
-import { AppStatusBadge } from '@/src/shared/components/feedback/AppStatusBadge';
 import { AppButton } from '@/src/shared/components/controls/AppButton';
-import { AppIconButton } from '@/src/shared/components/controls/AppIconButton';
 
 export type TreeId = string | number;
 
@@ -110,7 +108,7 @@ export function AppHierarchicalTree<T>({
   );
 
   // Build tree data structure (FolderNode / DocNode pattern from ticket_managementsystem)
-  const { tree, allIds, nodeMap } = useMemo(() => {
+  const { tree, allIds } = useMemo(() => {
     const byId: Record<string, AppHierarchicalTreeNode<T>> = {};
     const childrenMap: Record<string, AppHierarchicalTreeNode<T>[]> = {};
     const roots: AppHierarchicalTreeNode<T>[] = [];
@@ -145,7 +143,7 @@ export function AppHierarchicalTree<T>({
       }
     });
 
-    return { tree: roots, allIds: ids, nodeMap: byId };
+    return { tree: roots, allIds: ids };
   }, [items, getId, normalizeParentId]);
 
   // Expansion state Record<string, boolean> matching ticket_managementsystem
@@ -236,7 +234,6 @@ export function AppHierarchicalTree<T>({
     const hasChildren = children.length > 0;
     const isExpanded = !!expanded[id];
     const label = getLabel(item);
-    const secondaryLabel = getSecondaryLabel ? getSecondaryLabel(item) : undefined;
     const code = getCode ? getCode(item) : undefined;
     const isDeleted = isItemDisabled ? isItemDisabled(item) : false;
 

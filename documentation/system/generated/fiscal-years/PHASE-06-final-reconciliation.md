@@ -51,13 +51,13 @@ decision. A focused test pass alone is never a `Ready` decision.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| fiscal-years-master | 8 | `7bac233192642900e592d8fb97ab9c9bcadebf166ee02024e7c749ead6dc5752` |
+| fiscal-years-master | 8 | `0608539faf50906c65ce836f3ec4d3ac23ed071fee40e136df580a996f2a1c73` |
 | fiscal-years-master | 9 | `33da16943407ea887dd06b6919c97cf7b70eed5e38e7a821e7ab264dc04cc7b1` |
-| fiscal-years-master | 10 | `502e1b78e1cb04774ee5b0f6d5c603687dc676f967f2323878e52ba10e807975` |
-| fiscal-years-api | 10 | `d14131b97238f2d8307bebe637fb8b4e24760c291283b6711dc4fc455d22867b` |
+| fiscal-years-master | 10 | `8e1a81c17c81148fd8c47e1aeb05acf312d4a52e785c43631d260cdad3e322ab` |
+| fiscal-years-api | 10 | `b060046b42161306d8172af2dd59873e554d42dccdf0f78931397f67633cc5b1` |
 | fiscal-years-api | 11 | `99c6d7e10dffbd400575fd974ee4db84de615f6101c572df126d2f93f7d665fb` |
 | fiscal-years-web | 12 | `94a00e7675f510f6cb95000d5a53f387ee35649b7ad34069557235b216941346` |
-| fiscal-years-web | 13 | `38633d021b8d71ddc808a9f41835d43d43217b8de4677fbe3f180b5c56fcb647` |
+| fiscal-years-web | 13 | `f5dc0e405de381f45c3c08fef09d4f52c7d3a996be0d0c005f535d718be57033` |
 | fiscal-years-web | 14 | `647637e46ba887513ca0b6601ccb5b8f95ca510e497fbba19435d2402d17545c` |
 | fiscal-years-mobile | 14 | `1d813b3610e2493e2c27996783b2c0bcd0de7fbe2065dfd693707e186cf8d9d4` |
 | fiscal-years-mobile | 15 | `5cc29e042de8aafe3f242d20718b0425cabf0fa6922db1b5540aa67d7a8eb382` |

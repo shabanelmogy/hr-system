@@ -4,7 +4,7 @@
     "company": "Company",
     "profile": "Profile",
     "lang": "Choose Language",
-    "mainTitle": "Hr Management",
+    "mainTitle": "ERP System",
     "backToHome": "Back to Home",
     "darkMode": "Dark Mode",
     "lightMode": "Light Mode",
@@ -51,6 +51,48 @@
     "validationErrorCount_one": "{{count}} error",
     "validationErrorCount_other": "{{count}} errors",
     "reviewValidationErrors": "Review {{count}} validation errors"
+  },
+  "offlineOperations": {
+    "title": "Offline Operations",
+    "subtitle": "Control which server-approved operations may run offline for the active tenant and company.",
+    "scopeTitle": "Active policy scope",
+    "tenantScopeValue": "Tenant: {{name}} — ID: {{id}}",
+    "companyScopeValue": "Company: {{name}} — ID: {{id}}",
+    "loading": "Loading server policy...",
+    "source": {
+      "serverPolicy": "Server policy"
+    },
+    "serverAuthorityNotice": "The Platform API is the source of truth. This screen can only select modes declared by the server and safely supported by this Web client.",
+    "scopeMismatch": "The loaded policy does not match the active tenant/company scope. Editing is disabled; reload after the context switch completes.",
+    "readOnlyNotice": "This tenant is in read-only mode. You can review the policy, but policy changes are disabled.",
+    "incompatiblePolicy": "Editing is disabled because the server policy is missing a capability this Web client expects or contains a known mode outside this client's safety ceiling.",
+    "saveSuccess": "Offline Operations policy updated.",
+    "saveFailed": "The Offline Operations policy could not be updated.",
+    "loadFailed": "The Offline Operations policy could not be loaded.",
+    "conflictReloaded": "Another administrator changed this policy. The latest server version has been reloaded; review it before trying again.",
+    "reset": "Reset to online only",
+    "resetConfirmTitle": "Reset Offline Operations policy?",
+    "resetConfirmDescription": "This replaces the complete server policy for the active tenant and company and sets every server-declared capability to Online only. This cannot enable any offline behavior.",
+    "cancel": "Cancel",
+    "unknownCapability": "This capability was declared by the server but is not implemented by this Web client.",
+    "unsupportedCapability": "This server capability is newer than this Web client. Its current value is preserved on normal saves and cannot be changed here.",
+    "incompatibleCapability": "The configured mode is not allowed by both the server capability and this Web client's safety ceiling. It is shown for diagnostics only and cannot be edited.",
+    "incompatibleCurrentMode": "Incompatible: {{mode}}",
+    "capabilities": {
+      "countriesRead": "Countries — offline read",
+      "countriesReadDescription": "Allow locally cached country reference data to be read when the server is unavailable.",
+      "workforcePlanUpdateDraft": "Workforce Plan — offline update",
+      "workforcePlanUpdateDraftDescription": "Control server-approved offline draft or command handling for certified Workforce Plan updates."
+    },
+    "modes": {
+      "onlineOnly": "Online only",
+      "offlineRead": "Offline read",
+      "offlineDraft": "Offline draft",
+      "offlineCommand": "Offline command"
+    },
+    "lastUpdated": "Last updated: {{date}} — by {{user}}",
+    "never": "Never",
+    "system": "System"
   },
   "companyGeographicScope": {
     "title": "Operating Countries",
@@ -179,7 +221,7 @@
     "whatsApp": "WhatsApp",
     "technicalDetails": "Technical details (development only)",
     "close": "Close",
-    "errorReport": "HR Management System error report",
+    "errorReport": "ERP System error report",
     "unknownMessage": "An unexpected error occurred. Please try again."
   },
   "notifications": {
@@ -296,6 +338,7 @@
     "usersManagement": "Users Management",
     "invitationsManagement": "Invitations",
     "crystalReportsManagement": "Crystal Reports",
+    "offlineOperations": "Offline Operations",
     "superAdmin": "Super Admin",
     "superAdminDashboard": "Dashboard",
     "globalGeography": "Global Geography",
@@ -1722,6 +1765,7 @@
     "contactName": "Contact name",
     "contactPhone": "Contact phone",
     "notes": "Notes",
+    "entitlements": "Purchased applications and areas",
     "tenantEnabled": "Tenant login enabled",
     "enabled": "Enabled",
     "disabled": "Disabled",
@@ -2515,6 +2559,7 @@
       "foldInKanban": "Fold column by default in Kanban",
       "autoEmail": "Send automated email notification when candidate moves to this stage",
       "emailTemplate": "Automated Email Template Content",
+      "emailTemplatePlaceholder": "Enter the message that will be sent to the candidate...",
       "reasonsTitle": "Refusal & Rejection Reasons",
       "reasonsSubtitle": "Standardize rejection reasons across teams to avoid arbitrary decisions, with optional polite automated rejection emails like Odoo",
       "newReasonBtn": "Add Rejection Reason",
@@ -2533,6 +2578,8 @@
       "emailTemplateTitle": "Candidate Automated Rejection Email Template:",
       "emailSubjectAr": "Email Subject (Arabic)",
       "emailBodyAr": "Email Body (Arabic)",
+      "emailSubjectEn": "Email Subject (English)",
+      "emailBodyEn": "Email Body (English)",
       "sourcesTitle": "Sourcing Channels & Platforms",
       "sourcesSubtitle": "Manage and monitor talent acquisition sources and analyze conversion metrics per channel",
       "newSourceBtn": "Add New Source",
@@ -2573,6 +2620,8 @@
       "critLead": "Leadership & Teamwork",
       "criterionWeight": "Relative Weight (%)",
       "criterionDescAr": "Interviewer Instructions & Guidance",
+      "criterionDescEn": "Interviewer Instructions & Guidance (English)",
+      "criterionDescriptionPlaceholder": "What should the interviewer focus on when assessing this criterion?",
       "mandatoryCriterion": "Mandatory (Every interviewer must submit a rating to complete interview)",
       "generalTitle": "General Policies & Governance",
       "generalSubtitle": "Set organization-wide policies for compensation, headcount capacity, offer validity, and automations",
@@ -2590,7 +2639,57 @@
       "publicPortalDesc": "Allow direct online applications and CV uploads through external public portal",
       "resetDefaults": "Reset to Defaults",
       "savedSuccess": "Recruitment settings and policies saved successfully!",
-      "confirmReset": "Are you sure you want to reset all recruitment settings to factory defaults?"
+      "confirmReset": "Are you sure you want to reset all recruitment settings to factory defaults?",
+      "defaultEmailSubjectAr": "تحديث بخصوص طلب التوظيف",
+      "defaultEmailSubjectEn": "Update regarding your application",
+      "defaultEmailBodyAr": "نشكرك على اهتمامك ووقتك معنا، ونعتذر عن عدم المضي قدماً في طلبك لهذه الفرصة.",
+      "defaultEmailBodyEn": "Thank you for your interest and time. We are unable to proceed with your application at this time.",
+      "validation": {
+        "required": "This bilingual field is required.",
+        "sequence": "Sequence must be at least 1.",
+        "weight": "Weight must be between 1 and 100.",
+        "offerExpiry": "Offer validity must be between 1 and 365 days.",
+        "probation": "Select a supported probation period.",
+        "email": "Enter a valid inbound email address."
+      },
+      "currencies": {
+        "egp": "EGP - Egyptian pound",
+        "sar": "SAR - Saudi riyal",
+        "aed": "AED - UAE dirham",
+        "usd": "USD - US dollar",
+        "eur": "EUR - Euro"
+      },
+      "probationOptions": {
+        "one": "1 month",
+        "three": "3 months (standard)",
+        "six": "6 months"
+      }
+    }
+  },
+  "modules": {
+    "title": "Applications",
+    "description": "Choose an application, then open one of its enabled areas.",
+    "submoduleDescription": "Choose an enabled area to continue.",
+    "open": "Open application",
+    "overview": "Applications overview",
+    "currentApplication": "Current application",
+    "switchApplication": "Switch application",
+    "hr": "Human Resources",
+    "accounting": "Accounting",
+    "empty": "No applications are enabled for this tenant.",
+    "accountingEmpty": "Accounting is installed but no business areas are available yet.",
+    "genericEmpty": "This application is installed but no areas are available yet.",
+    "noAvailableFeatures": "This area is enabled, but no screen matching your current permissions is available yet.",
+    "submodules": {
+      "hr": {
+        "basic-data": "Basic data",
+        "recruitment": "Recruitment",
+        "workforce": "Workforce planning",
+        "attendance": "Attendance",
+        "analytics": "Analytics",
+        "administration": "Administration",
+        "collaboration": "Collaboration"
+      }
     }
   }
 }

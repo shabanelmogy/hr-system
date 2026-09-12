@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import InvitationsPage from "@/features/auth/invitations/InvitationsPage";
+import InvitationsPage from "@/platform/auth/invitations/InvitationsPage";
 
 export const metadata: Metadata = {
-  title: "Administration Invitations | HR Management System",
+  title: "Administration Invitations | ERP System",
   description: "Invite users and manage pending account invitations.",
 };
 

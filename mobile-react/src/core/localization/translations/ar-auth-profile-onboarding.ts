@@ -20,6 +20,9 @@ export const arAuthProfileOnboarding = {
     currentCompany: 'الشركة الحالية',
     switchCompany: 'تغيير الشركة',
     switchCompanyDescription: 'اختر الشركة التي تريد العمل عليها خلال هذه الجلسة.',
+    switchCompanyUnsavedTitle: 'تجاهل التغييرات وتغيير الشركة؟',
+    switchCompanyUnsavedDescription:
+      'لديك تغييرات غير محفوظة. سيؤدي تغيير الشركة إلى تجاهلها قبل تحميل سياق الشركة الجديدة.',
     companySwitched: 'تم تغيير الشركة بنجاح.',
     companySwitchFailed: 'تعذر تغيير الشركة الحالية.',
     welcome: 'مرحباً بعودتك',

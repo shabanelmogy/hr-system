@@ -47,7 +47,7 @@ if (pathname === "/login") {
 
 **Result:** Cookies are cleared on the client side as soon as the login page loads.
 
-#### 3. **SessionStorage Cleanup** (`features/auth/login/Login.tsx`)
+#### 3. **SessionStorage Cleanup** (`platform/auth/login/Login.tsx`)
 ```typescript
 useEffect(() => {
   try {
@@ -157,7 +157,7 @@ The `navigatingToLogin` flag prevents duplicate logout calls if the user clicks 
 
 - ✅ `web-next/src/lib/api/client.ts` — Optimistic logout with background API call
 - ✅ `web-next/src/proxy.ts` — Always clear cookies on login page
-- ✅ `web-next/src/features/auth/login/Login.tsx` — Clear sessionStorage on mount
+- ✅ `web-next/src/platform/auth/login/Login.tsx` — Clear sessionStorage on mount
 
 ---
 

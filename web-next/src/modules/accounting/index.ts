@@ -1,0 +1,1 @@
+export { accountingModuleDefinition } from "./moduleDefinition";

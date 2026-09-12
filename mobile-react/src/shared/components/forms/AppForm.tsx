@@ -21,6 +21,7 @@ import { AppAlert } from '@/src/shared/components/feedback/AppAlert';
 import type { AppIconName } from '@/src/shared/components/icons/AppIcon';
 import { AppModal } from '@/src/shared/components/surfaces/AppModal';
 import { useAppReadOnly } from '@/src/shared/contexts/AppReadOnlyContext';
+import { registerUnsavedChange } from '@/src/shared/contexts/unsaved-changes-registry';
 
 interface FocusableField {
   focus: () => void;
@@ -116,6 +117,10 @@ export function AppForm({
     errorsRef.current = errors;
     activeRef.current = active;
   }, [active, errors]);
+  useEffect(() => {
+    if (!active || !isDirty || !onCancel) return;
+    return registerUnsavedChange(onCancel);
+  }, [active, isDirty, onCancel]);
   const {
     dialogVisible: discardDialogVisible,
     discard,

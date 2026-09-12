@@ -412,5 +412,5 @@ Manage Kanban cards within columns. Cards represent individual tasks or work ite
 
 **Document Version:** 1.0  
 **Last Updated:** 2024  
-**Author:** HR Management System Team  
+**Author:** ERP System Team
 **Status:** Implemented

@@ -1,0 +1,20 @@
+namespace ErpSystem.Modules.HR.Application.Features.Security.Authentication.Contracts
+{
+    public record AuthResponse(
+        string Id,
+        string UserName,
+        string FirstName,
+        string LastName,
+        string TenantId,
+        string TenantName,
+        string TenantPlanName,
+        int CompanyId,
+        string CompanyCode,
+        string CompanyNameAr,
+        string CompanyNameEn,
+        string Token,
+        DateTime TokenExpiration,
+        string RefreshToken,
+        DateTime RefreshTokenExpiration
+        );
+}

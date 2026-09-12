@@ -43,8 +43,8 @@
 ```powershell
 git status --short
 ./documentation/system/Generate-Documentation.ps1 -Check
-dotnet build ./api/HrManagementSystem.Api/HrManagementSystem.Api.csproj --no-restore
-dotnet test ./api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore
+dotnet build ./api/ErpSystem.Api/ErpSystem.Api.csproj --no-restore
+dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore
 npm --prefix ./web-next run type-check
 npm --prefix ./web-next run check:architecture
 npm --prefix ./mobile-react run typecheck
@@ -54,8 +54,8 @@ npm --prefix ./mobile-react run check:architecture
 ثم افحص قاعدة البيانات:
 
 ```powershell
-dotnet ef migrations list --project ./api/HrManagementSystem.Infrastructure --startup-project ./api/HrManagementSystem.Api
-dotnet ef migrations has-pending-model-changes --project ./api/HrManagementSystem.Infrastructure --startup-project ./api/HrManagementSystem.Api
+dotnet ef migrations list --project ./api/Modules/HR/ErpSystem.Modules.HR.Infrastructure --startup-project ./api/ErpSystem.Api
+dotnet ef migrations has-pending-model-changes --project ./api/Modules/HR/ErpSystem.Modules.HR.Infrastructure --startup-project ./api/ErpSystem.Api
 ```
 
 Gate عام:
@@ -82,7 +82,7 @@ $env:ConnectionStrings__HangfireConnection='Server=(localdb)\MSSQLLocalDB;Databa
 $env:DatabaseSettings__ApplyMigrationsOnStartup='true'
 $env:DatabaseSettings__SeedOnStartup='true'
 $env:ASPNETCORE_ENVIRONMENT='Development'
-dotnet run --project ./api/HrManagementSystem.Api --launch-profile http
+dotnet run --project ./api/ErpSystem.Api --launch-profile http
 ```
 
 وشغّل Web عبر HTTPS في نافذة أخرى. يجب أن يكون `BACKEND_URL` جذر الخادم بلا `/api/v1`:
@@ -125,7 +125,7 @@ npx next dev --webpack --experimental-https --experimental-https-key ./certifica
 ### اختبارات آلية
 
 ```powershell
-dotnet test ./api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~WorkforcePlan"
+dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~WorkforcePlan"
 npm --prefix ./web-next test -- workforcePlanService.test.ts
 npm --prefix ./mobile-react test -- workforce-plan-api.test.ts
 ```
@@ -154,8 +154,8 @@ npm --prefix ./mobile-react test -- workforce-plan-api.test.ts
 ### اختبارات آلية
 
 ```powershell
-dotnet test ./api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~WorkforceBudget"
-dotnet test ./api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~Workforce"
+dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~WorkforceBudget"
+dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~Workforce"
 npm --prefix ./web-next test -- workforceBudgetService.test.ts
 npm --prefix ./mobile-react test -- workforce-budget-api.test.ts
 ```
@@ -187,7 +187,7 @@ npm --prefix ./mobile-react test -- workforce-budget-api.test.ts
 ### اختبارات آلية بعد التنفيذ
 
 ```powershell
-dotnet test ./api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~StaffingRequest|FullyQualifiedName~EnvelopeAmendment"
+dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~StaffingRequest|FullyQualifiedName~EnvelopeAmendment"
 npm --prefix ./web-next test -- staffingRequest envelopeAmendment
 npm --prefix ./mobile-react test -- staffing-request envelope-amendment
 ```
@@ -225,7 +225,7 @@ npm --prefix ./mobile-react test -- staffing-request envelope-amendment
 ### اختبارات آلية بعد التنفيذ
 
 ```powershell
-dotnet test ./api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~Recruitment|FullyQualifiedName~StaffingRequest"
+dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~Recruitment|FullyQualifiedName~StaffingRequest"
 npm --prefix ./web-next test -- recruitment
 npm --prefix ./mobile-react test -- recruitment
 ```
@@ -255,7 +255,7 @@ npm --prefix ./mobile-react test -- recruitment
 ### اختبارات آلية بعد التنفيذ
 
 ```powershell
-dotnet test ./api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~JobOffer|FullyQualifiedName~Hire|FullyQualifiedName~RecruitmentLifecycle"
+dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~JobOffer|FullyQualifiedName~Hire|FullyQualifiedName~RecruitmentLifecycle"
 npm --prefix ./web-next test -- recruitment offer hire
 npm --prefix ./mobile-react test -- recruitment offer hire
 ```
@@ -294,7 +294,7 @@ npm --prefix ./mobile-react test -- recruitment offer hire
 ### اختبارات آلية بعد التنفيذ
 
 ```powershell
-dotnet test ./api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~WorkforceTrace|FullyQualifiedName~PlanCommitment"
+dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~WorkforceTrace|FullyQualifiedName~PlanCommitment"
 npm --prefix ./web-next test -- workforce trace commitment
 npm --prefix ./mobile-react test -- workforce trace commitment
 ```
@@ -338,11 +338,11 @@ npm --prefix ./mobile-react test -- workforce trace commitment
 ### Database وrelease
 
 ```powershell
-dotnet ef database update --project ./api/HrManagementSystem.Infrastructure --startup-project ./api/HrManagementSystem.Api
-dotnet ef migrations list --project ./api/HrManagementSystem.Infrastructure --startup-project ./api/HrManagementSystem.Api
-dotnet ef migrations has-pending-model-changes --project ./api/HrManagementSystem.Infrastructure --startup-project ./api/HrManagementSystem.Api
-dotnet build ./api/HrManagementSystem.Api/HrManagementSystem.Api.csproj --no-restore
-dotnet test ./api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore
+dotnet ef database update --project ./api/Modules/HR/ErpSystem.Modules.HR.Infrastructure --startup-project ./api/ErpSystem.Api
+dotnet ef migrations list --project ./api/Modules/HR/ErpSystem.Modules.HR.Infrastructure --startup-project ./api/ErpSystem.Api
+dotnet ef migrations has-pending-model-changes --project ./api/Modules/HR/ErpSystem.Modules.HR.Infrastructure --startup-project ./api/ErpSystem.Api
+dotnet build ./api/ErpSystem.Api/ErpSystem.Api.csproj --no-restore
+dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore
 npm --prefix ./web-next run test
 npm --prefix ./web-next run lint
 npm --prefix ./web-next run type-check
@@ -411,11 +411,11 @@ Regression / inherited / environment blocker:
 The current source pass covers Phases 3–6 and the Phase 7 documentation handoff. Browser and mobile-simulator checks are intentionally excluded by the user request; do not mark those manual gates as passed. Reviewers should run the following static/runtime checks and record the result beside the relevant gate:
 
 ```powershell
-dotnet build ./api/HrManagementSystem.Api/HrManagementSystem.Api.csproj --no-restore
-dotnet test ./api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~Recruitment"
-dotnet test ./api/HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~Workforce"
-dotnet ef migrations list --project ./api/HrManagementSystem.Infrastructure --startup-project ./api/HrManagementSystem.Api
-dotnet ef migrations has-pending-model-changes --project ./api/HrManagementSystem.Infrastructure --startup-project ./api/HrManagementSystem.Api
+dotnet build ./api/ErpSystem.Api/ErpSystem.Api.csproj --no-restore
+dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~Recruitment"
+dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~Workforce"
+dotnet ef migrations list --project ./api/Modules/HR/ErpSystem.Modules.HR.Infrastructure --startup-project ./api/ErpSystem.Api
+dotnet ef migrations has-pending-model-changes --project ./api/Modules/HR/ErpSystem.Modules.HR.Infrastructure --startup-project ./api/ErpSystem.Api
 npm --prefix ./web-next run type-check
 npm --prefix ./web-next run check:architecture
 npm --prefix ./mobile-react run typecheck
@@ -428,4 +428,4 @@ Phase 5 reviewers must verify `Draft -> PendingApproval -> Approved -> Issued ->
 
 Phase 6 reviewers must use only the explicit application/offer/employee trace routes and the paginated plan-commitment route. Cross-company roots must return not-found/forbidden, a caller without `WorkforcePlanning:ViewFinancials` must receive null salary/currency fields, and the Web accessible timeline/Mobile chronological timeline must remain usable without a diagram interaction.
 
-Phase 7 status is `Source Complete / Database Applied / Browser-Mobile Smoke Not Run / Documentation Generator Registered`. The consolidated baseline `api/HrManagementSystem.Infrastructure/Migrations/20260906112413_create-database.cs` contains the global geography transition. Any full-suite or lint findings are recorded separately as inherited.
+Phase 7 status is `Source Complete / Database Applied / Browser-Mobile Smoke Not Run / Documentation Generator Registered`. The consolidated baseline `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Migrations/20260906112413_create-database.cs` contains the global geography transition. Any full-suite or lint findings are recorded separately as inherited.

@@ -1,0 +1,17 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Messaging;
+using ErpSystem.Modules.HR.Application.Features.GeographicalInformation.Countries.Contracts;
+using ErpSystem.Modules.HR.Application.Features.GeographicalInformation.Countries.Abstractions;
+
+namespace ErpSystem.Modules.HR.Application.Features.GeographicalInformation.Countries.Queries.GetCountryReportData;
+
+public sealed record GetCountryReportDataQuery
+    : IQuery<IReadOnlyList<CountryReportDataResponse>>;
+
+public sealed class GetCountryReportDataQueryHandler(ICountryReadStore readStore)
+    : IQueryHandler<GetCountryReportDataQuery, IReadOnlyList<CountryReportDataResponse>>
+{
+    public Task<IReadOnlyList<CountryReportDataResponse>> Handle(
+        GetCountryReportDataQuery request,
+        CancellationToken cancellationToken) =>
+        readStore.GetReportDataAsync(cancellationToken);
+}

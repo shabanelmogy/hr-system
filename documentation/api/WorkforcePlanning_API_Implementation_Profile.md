@@ -62,4 +62,8 @@ Built-in system-role permission reconciliation is independent from `DatabaseSett
 
 Phase 3/4 adds Staffing Request and Envelope Amendment command/query surfaces plus the planned requisition bridge. Phase 5 adds offer submit/approve/reject endpoints, append-only approval history, Accepted-offer-only hire, and idempotent employee creation. `ExecuteAtomicallyAsync` locks are ordered by resource string; the hire path uses a company lock together with application, idempotency, and employee-number locks and calls `SaveChangesAsync` once.
 
+Issue and Accept use the company/application/offer lock set and mutate both
+aggregates inside a single transaction. `JobOfferMutation` accepts commercial
+terms only; Position/Branch/Department/Division are loaded from the opening.
+
 Phase 6 adds explicit trace routes `/api/v1/workforce-planning/trace/application/{id}`, `/offer/{id}`, `/employee/{id}`, and `/plan-commitment`. The read port never accepts a free-form entity type, uses bounded `AsNoTracking` projections, and lets the controller derive financial visibility from the authenticated permission claim. Tenant/company query filters fail closed and salary fields are null when financial visibility is absent.

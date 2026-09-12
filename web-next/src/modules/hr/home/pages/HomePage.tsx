@@ -1,0 +1,290 @@
+"use client";
+
+import { TrendingUp } from "@mui/icons-material";
+import dynamic from "next/dynamic";
+import {
+  alpha,
+  Box,
+  Button,
+  Grid,
+  Skeleton,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
+import Link from "next/link";
+
+// Shared components and charts
+import { appRoutes } from "@/config";
+import { PageHeader } from "@/shared/components/navigation/header";
+import Section from "@/shared/components/layout/Section";
+
+const QuickInsights = dynamic(() => import("../quick-insights"), {
+  ssr: false,
+  loading: () => <DashboardContentSkeleton minHeight={150} />,
+});
+const KpiRow = dynamic(() => import("../rows/kpi-row"), {
+  ssr: false,
+  loading: () => <DashboardContentSkeleton minHeight={280} />,
+});
+const TrendsRow = dynamic(() => import("../rows/trends-row"), {
+  ssr: false,
+  loading: () => <DashboardContentSkeleton minHeight={320} />,
+});
+const GlobalPresenceRow = dynamic(
+  () =>
+    import(
+      "@/modules/hr/basic-data/geographical-information/global-presence/components/global-presence-row"
+    ),
+  {
+    ssr: false,
+    loading: () => <DashboardContentSkeleton minHeight={360} />,
+  },
+);
+const HealthPipelineRow = dynamic(() => import("../rows/health-pipeline-row"), {
+  ssr: false,
+  loading: () => <DashboardContentSkeleton minHeight={320} />,
+});
+const AttendanceTrendsRow = dynamic(
+  () => import("../rows/attendance-trends-row"),
+  {
+    ssr: false,
+    loading: () => <DashboardContentSkeleton minHeight={360} />,
+  },
+);
+
+const Home = () => {
+  const { t } = useTranslation();
+  const theme = useTheme();
+
+  const isUpLg = useMediaQuery(theme.breakpoints.up("lg"));
+
+  return (
+    <Box>
+      {/* HERO SECTION */}
+      <Box
+        sx={{
+          mb: 3,
+          p: { xs: 2, md: 3 },
+          borderRadius: 4,
+          position: "relative",
+          overflow: "hidden",
+          background: `radial-gradient(1200px 300px at 10% -20%, ${alpha(
+            theme.palette.primary.main,
+            0.18
+          )} 0%, transparent 60%), radial-gradient(1000px 300px at 90% -10%, ${alpha(
+            theme.palette.secondary.main,
+            0.16
+          )} 0%, transparent 60%)`,
+          border: `1px solid ${alpha(theme.palette.primary.main, 0.18)}`,
+          boxShadow:
+            theme.palette.mode === "dark"
+              ? `0 12px 40px ${alpha(theme.palette.common.black, 0.5)}`
+              : `0 12px 40px ${alpha(theme.palette.primary.main, 0.18)}`,
+        }}
+      >
+        <Grid sx={{ gap: 2, display: "flex", flexDirection: "column" }}>
+          {isUpLg && (
+            <PageHeader
+              isDashboard
+              title={t("menu.dashboard") || "Global HR Dashboard"}
+              subTitle={
+                t("menu.welcomeToYourDashboard") ||
+                "Welcome to your centralized HR insights"
+              }
+            />
+          )}
+          {/* Quick Insights */}
+          <QuickInsights />
+        </Grid>
+      </Box>
+
+      {/* KPI CARDS SECTION */}
+      <Section title="Key KPIs" subtitle="At-a-glance performance metrics">
+        <Stack
+          direction="row"
+          sx={{ alignItems: "center", justifyContent: "flex-end", mb: 1 }}
+        >
+          <Button
+            component={Link}
+            href={appRoutes.kpis}
+            prefetch
+            size="small"
+            variant="outlined"
+          >
+            VIEW ALL
+          </Button>
+        </Stack>
+        <KpiRow showAll={false} />
+      </Section>
+
+      <Box sx={{ height: 16 }} />
+
+      {/* TRENDS & DISTRIBUTION SECTION */}
+      <Section
+        title="People Trends & Distribution"
+        subtitle="Track workforce growth and department composition"
+      >
+        <Stack
+          direction="row"
+          sx={{ alignItems: "center", justifyContent: "space-between", mb: 1 }}
+        >
+          <Typography variant="h6">Trends Overview</Typography>
+          <Button
+            component={Link}
+            href={appRoutes.trends}
+            prefetch
+            size="small"
+            variant="outlined"
+          >
+            VIEW ALL
+          </Button>
+        </Stack>
+        <DeferredDashboardContent minHeight={320}>
+          <TrendsRow />
+        </DeferredDashboardContent>
+      </Section>
+
+      <Box sx={{ height: 16 }} />
+
+      {/* GLOBAL PRESENCE & ACTIVITY */}
+      <Section
+        title="Global Presence & Activity"
+        subtitle="World-wide footprint and the latest HR updates"
+      >
+        <DeferredDashboardContent minHeight={360}>
+          <GlobalPresenceRow />
+        </DeferredDashboardContent>
+      </Section>
+
+      <Box sx={{ height: 16 }} />
+
+      {/* HEALTH & PIPELINE */}
+      <Section
+        title="People Health & Hiring Pipeline"
+        subtitle="Engagement, compliance and funnel conversion"
+      >
+        <Stack
+          direction="row"
+          sx={{ alignItems: "center", justifyContent: "space-between", mb: 1 }}
+        >
+          <Typography variant="h6">Health & Pipeline Overview</Typography>
+          <Button
+            component={Link}
+            href={appRoutes.healthPipeline}
+            prefetch
+            size="small"
+            variant="outlined"
+          >
+            VIEW ALL
+          </Button>
+        </Stack>
+        <DeferredDashboardContent minHeight={320}>
+          <HealthPipelineRow />
+        </DeferredDashboardContent>
+      </Section>
+
+      <Box sx={{ height: 16 }} />
+
+      {/* ATTENDANCE & MICRO-TRENDS */}
+      <Section
+        title="Attendance Heatmap & Micro-Trends"
+        subtitle="In-office presence and short-term signals"
+      >
+        <Stack
+          direction="row"
+          sx={{ alignItems: "center", justifyContent: "space-between", mb: 1 }}
+        >
+          <Typography variant="h6">Attendance Overview</Typography>
+          <Button
+            component={Link}
+            href={appRoutes.attendanceTrends}
+            prefetch
+            size="small"
+            variant="outlined"
+          >
+            VIEW ALL
+          </Button>
+        </Stack>
+        <DeferredDashboardContent minHeight={360}>
+          <AttendanceTrendsRow />
+        </DeferredDashboardContent>
+      </Section>
+
+      {/* Bottom highlight strip */}
+      <Box
+        sx={{
+          mt: 3,
+          p: 2,
+          borderRadius: 3,
+          display: "flex",
+          alignItems: "center",
+          gap: 1.5,
+          background: `linear-gradient(90deg, ${alpha(
+            theme.palette.primary.main,
+            0.08
+          )} 0%, ${alpha(theme.palette.secondary.main, 0.06)} 100%)`,
+          border: `1px solid ${alpha(theme.palette.primary.main, 0.15)}`,
+          boxShadow:
+            theme.palette.mode === "dark"
+              ? `0 6px 20px ${alpha(theme.palette.common.black, 0.4)}`
+              : `0 6px 20px ${alpha(theme.palette.primary.main, 0.15)}`,
+        }}
+      >
+        <TrendingUp color="primary" />
+        <Typography variant="body2">
+          Hiring momentum remains strong this quarter. Keep tracking your
+          pipeline and upcoming onboarding tasks.
+        </Typography>
+      </Box>
+    </Box>
+  );
+};
+
+export default Home;
+
+function DashboardContentSkeleton({ minHeight }: { minHeight: number }) {
+  return (
+    <Box role="status" aria-label="Loading dashboard content" sx={{ minHeight }}>
+      <Skeleton variant="rounded" height={minHeight} animation="wave" />
+    </Box>
+  );
+}
+
+function DeferredDashboardContent({
+  children,
+  minHeight,
+}: {
+  children: ReactNode;
+  minHeight: number;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element || visible) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [visible]);
+
+  return (
+    <Box ref={containerRef} sx={{ minHeight }}>
+      {visible ? children : <DashboardContentSkeleton minHeight={minHeight} />}
+    </Box>
+  );
+}

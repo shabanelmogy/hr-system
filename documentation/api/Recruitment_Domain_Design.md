@@ -2,9 +2,9 @@
 
 ## Scope
 
-This document defines the Recruitment domain model only. Persistence, EF Core configuration,
-migrations, CQRS handlers, API contracts, localization resources, and frontend screens are
-deliberately deferred until the domain is reviewed and accepted.
+This document defines the implemented Recruitment domain model and its persistence boundaries.
+EF Core configuration, migrations, API contracts, internal endpoints, and Web/Mobile journeys are
+live. The future external job portal remains outside the current release.
 
 The model supports the current internal HR application and a future external job portal without
 requiring the portal to be built now.
@@ -78,9 +78,9 @@ separately from employer rejection. Invalid skipped or terminal-state transition
 Every transition appends an `ApplicationStatusHistory` item. The application also stores the
 specific resume file used for that application, so later profile updates do not rewrite history.
 
-## Transaction Boundaries for Later Handlers
+## Transaction Boundaries
 
-The future `HireCandidateCommand` should perform these operations in one database transaction:
+`HireApplicationAsync` performs these operations in one serialized database transaction:
 
 1. Verify that the offer is accepted and the opening still has capacity.
 2. Create the Employee.
@@ -89,24 +89,32 @@ The future `HireCandidateCommand` should perform these operations in one databas
 5. Register the hire against the opening.
 6. Mark the requisition fulfilled when all related openings are filled or closed.
 
-Realtime updates and notifications happen after the transaction through the existing outbox
-mechanism. They must not control whether the business transaction succeeds.
+Offer issue and acceptance similarly lock the company, application, and offer, re-read state after
+the locks are acquired, update both aggregates, append approval history, and save once. Realtime
+updates and notifications must occur only after the business transaction commits.
+
+## Actor, interview, and paging integrity
+
+- Employee-attributed transitions resolve the actor through the exact current UserId/TenantId/
+  CompanyId employee link and fail closed when it does not exist.
+- Interview participant IDs must identify current-company employees. Evaluations are accepted only
+  from an assigned participant, and participant/evaluator display names are hydrated from Employee.
+- All paged recruitment reads normalize page to at least 1 and page size to the shared 1..50 bound.
+- Offer organization placement is derived from the application opening and is not accepted from a
+  client mutation.
 
 ## Deferred Work
 
-The following work starts only after the domain review:
+The remaining deferred scope is:
 
-- EF Core configurations, indexes, relationships, query filters, and migration.
-- Application interfaces and MediatR commands/queries.
-- FluentValidation rules and localized error keys for domain rule codes.
-- API endpoints for internal recruitment and the future public portal.
+- External/public careers portal endpoints and identity flows.
 - Candidate education, experience, skills, screening questions, and onboarding. These can be added
   as focused subfeatures when their requirements are defined; they do not require changing the
   current aggregate identities or workflow.
 
-## Required Persistence Constraints
+## Persistence Constraints
 
-The EF stage must enforce at least:
+The EF model enforces:
 
 - Unique candidate `PublicId` within the tenant and normalized candidate email lookup.
 - Unique requisition, opening, and offer numbers within the company.

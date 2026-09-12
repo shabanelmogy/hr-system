@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.Contacts.Presentation</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.Contacts.Presentation</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ErpSystem.Modules.Contacts.Application\ErpSystem.Modules.Contacts.Application.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Contacts.Contracts\ErpSystem.Modules.Contacts.Contracts.csproj" />
+  </ItemGroup>
+</Project>

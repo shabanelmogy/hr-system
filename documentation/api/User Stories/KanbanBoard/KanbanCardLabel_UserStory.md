@@ -375,5 +375,5 @@ Manage labels linked to Kanban cards. This feature allows applying one or more l
 
 **Document Version:** 1.0  
 **Last Updated:** 2024  
-**Author:** HR Management System Team  
+**Author:** ERP System Team
 **Status:** Implemented

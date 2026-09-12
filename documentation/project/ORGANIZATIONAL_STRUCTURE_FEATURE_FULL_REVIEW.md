@@ -1,6 +1,6 @@
 # Organizational Structure Feature Full Review
 
-Status: final applied cross-platform implementation profile. Review date: 2026-08-31.
+Status: final applied cross-platform implementation profile. Review date: 2026-09-08.
 
 This feature follows the States reference for server-owned list criteria, shared
 feedback, multi-view composition, and verification discipline. It keeps the
@@ -42,7 +42,7 @@ per company, non-negative exchange rates, and single active default currency per
 
 ## 4. JobDescription and lifecycle
 
-`JobDescription` lives at `api/HrManagementSystem.Domain/OrganizationalStructure/Entities/JobDescription.cs`.
+`JobDescription` lives at `api/Modules/HR/ErpSystem.Modules.HR.Domain/OrganizationalStructure/Entities/JobDescription.cs`.
 It references `PositionId`, carries an uppercase version, bilingual Purpose,
 Responsibilities, and Requirements, optional skills/education/experience, and an
 effective/expiry period. Draft content can be edited. Approval requires all six
@@ -54,8 +54,12 @@ it to Draft for resubmission. Expired is derived from dates.
 ## 5. Persistence and company isolation
 
 The DbContext exposes all seven DbSets and configuration classes under
-`api/HrManagementSystem.Infrastructure/Persistence/Configurations/OrganizationalStructure`.
+`api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/Configurations/OrganizationalStructure`.
 Composite TenantId/CompanyId foreign keys prevent cross-company relationships.
+For newly added company-scoped entities, `ApplicationDbContext` reads the entity's
+domain `CompanyId` before EF temporary foreign-key fix-up. A default value is
+stamped from the current actor, while an explicit foreign company remains
+rejected. The Branch update regression covers this InMemory/EF edge case.
 Unique indexes cover company-scoped codes, parent-scoped names, and
 `(PositionId, Version)` for descriptions. Migrations
 `20260830205716_AddOrganizationalStructureManagement` and
@@ -136,6 +140,7 @@ schema and requires no behavior change for this Web-only defect.
 ## 10. Verification and release decision
 
 Focused API build and OrganizationalStructure/Pragmatic domain tests pass. The
+2026-09-08 focused regression run also passes the Branch update isolation case.
 management regression suite also verifies SQL Server translation for all seven
 resources across five search fields and six operators (210 combinations), and a
 local authenticated request through the Next.js API proxy returns HTTP 200 for

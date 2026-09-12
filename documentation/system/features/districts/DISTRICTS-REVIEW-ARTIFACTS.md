@@ -58,9 +58,9 @@
 | D-E02 | List and lifecycle rules are feature-owned | `Application/.../Districts/Queries/DistrictQueries.cs`, `Commands/DistrictCommands.cs` |
 | D-E03 | Persistence/audit/realtime are post-commit | `Infrastructure/.../Districts/Persistence/DistrictManagementStores.cs`, `Jobs/DistrictManagementChangedJob.cs` |
 | D-E04 | Browser uses server list and approved views | `web-next/.../districts/hooks/useDistrictGridLogic.ts`, `components/DistrictsMultiView.tsx` |
-| D-E05 | Mobile has a direct guarded route and Zod boundary | `mobile-react/app/(main)/basic-data/geographical-information/districts.tsx`, `src/features/basic-data/districts` |
-| D-E06 | API contract/route/validator/mapping tests exist | `api/HrManagementSystem.Tests/DistrictCqrsArchitectureTests.cs` |
-| D-E07 | Atomic District bulk-create behavior and persistence conflict closure | `api/HrManagementSystem.Tests/DistrictBulkCreateHandlerTests.cs` |
+| D-E05 | Mobile has a direct guarded route and Zod boundary | `mobile-react/app/(main)/basic-data/geographical-information/districts.tsx`, `src/modules/hr/basic-data/districts` |
+| D-E06 | API contract/route/validator/mapping tests exist | `api/ErpSystem.Tests/DistrictCqrsArchitectureTests.cs` |
+| D-E07 | Atomic District bulk-create behavior and persistence conflict closure | `api/ErpSystem.Tests/DistrictBulkCreateHandlerTests.cs` |
 | D-E08 | Web import parser/lookup/duplicate/body behavior | `web-next/.../districts/components/import-data`, `services/districtService.test.ts` |
 | D-E09 | Managed District report dataset and web viewer | `api/.../CrystalReportDataSource.cs`, `web-next/.../districts/reports/pages/DistrictReportPage.tsx` |
 | D-E10 | Mobile managed Report, native Import, and five-view registration | `mobile-react/.../districts/components/DistrictReportView.tsx`, `components/import-data/DistrictImportView.tsx`, `screens/DistrictsScreen.test.tsx` |
@@ -84,15 +84,15 @@ Districts is below State and is guarded by Address dependencies. Its import reso
 | --- | --- | --- |
 | Documentation baseline | `./documentation/system/Generate-Documentation.ps1 -Check` | Passed before refactor |
 | API focused | `dotnet test ... --filter "...DistrictCqrsArchitectureTests|...DistrictBulkCreateHandlerTests|...CrystalReportDataSourceTests|...BackgroundNotificationJobTests"` | Passed: 67 |
-| API build | `dotnet build HrManagementSystem.Api/HrManagementSystem.Api.csproj --no-restore` | Passed: 0 warnings, 0 errors |
-| API full tests | `dotnet test HrManagementSystem.Tests/HrManagementSystem.Tests.csproj --no-restore` | 318 passed, 1 inherited migration text assertion failure (`TenantRoleIsolationTests.MigrationBackfill_DeduplicatesSharedRoleTenantBeforeAssigningCloneIds`) |
-| API solution build | `dotnet build HrManagementSystem.sln --no-restore` | Environment blocker: legacy Crystal project lacks `Microsoft.WebApplication.targets`; primary API projects passed |
+| API build | `dotnet build ErpSystem.Api/ErpSystem.Api.csproj --no-restore` | Passed: 0 warnings, 0 errors |
+| API full tests | `dotnet test ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore` | 318 passed, 1 inherited migration text assertion failure (`TenantRoleIsolationTests.MigrationBackfill_DeduplicatesSharedRoleTenantBeforeAssigningCloneIds`) |
+| API solution build | `dotnet build ErpSystem.sln --no-restore` | Environment blocker: legacy Crystal project lacks `Microsoft.WebApplication.targets`; primary API projects passed |
 | Web type checks | `npm run type-check`; `npm run type-check:strict` | Passed |
 | Web lint/build | `npm run lint`; `npm run build` | Passed; lint has 116 inherited warnings and 0 errors; production build compiled and generated all 41 static pages |
 | Web focused test | `vitest run districtService.test.ts districtImport.test.ts districtImportDuplicates.test.ts --pool=forks --maxWorkers=1` | Passed: 3 files, 12 tests |
 | Web architecture | `npm run check:architecture` | 4 inherited cross-feature forbidden imports and 1 shared forms/dialogs cycle; no Districts finding |
 | Mobile full gate | `npm.cmd run check` | Passed: typecheck, full lint, architecture, 31 suites and 93 tests |
-| Mobile focused tests | `jest src/features/basic-data/districts --runInBand --forceExit` | Passed: 4 suites, 12 tests; force-exit notice remains the inherited focused-run behavior |
+| Mobile focused tests | `jest src/modules/hr/basic-data/districts --runInBand --forceExit` | Passed: 4 suites, 12 tests; force-exit notice remains the inherited focused-run behavior |
 | Documentation | Generation and `-Check` | Passed: 21 recipes |
 | Markdown local links | Repository documentation link scan | Passed: 123 Markdown files |
 | Diff hygiene | `git diff --check` | Passed |

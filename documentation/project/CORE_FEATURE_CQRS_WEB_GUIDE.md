@@ -37,7 +37,8 @@ The following rules apply to every new core HR feature:
    full table and using `useMemo` pagination is allowed only for demonstrably small
    lookup data.
 6. `web-next/src/app` routes stay thin. Feature pages, hooks, forms, tables, cards,
-   and dialogs belong to `web-next/src/features`.
+   and dialogs belong to `web-next/src/modules/<module>` (or
+   `web-next/src/platform` for platform capabilities).
 7. Grid and card views are the normal page baseline. Chart, report, map, timeline,
    and import views are added only when the use case needs them. Mark Import
    `Required`, `Deferred`, or `Excluded` independently for web and mobile.
@@ -52,10 +53,10 @@ The following rules apply to every new core HR feature:
 
 The CQRS foundation already exists:
 
-- `api/HrManagementSystem.Application/Abstractions/Messaging`
-- `api/HrManagementSystem.Application/Behaviors/RequestLoggingBehavior.cs`
-- `api/HrManagementSystem.Application/Behaviors/ValidationBehavior.cs`
-- `api/HrManagementSystem.Application/DependencyInjection.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Application/Abstractions/Messaging`
+- `api/Modules/HR/ErpSystem.Modules.HR.Application/Behaviors/RequestLoggingBehavior.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Application/Behaviors/ValidationBehavior.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Application/DependencyInjection.cs`
 
 `Countries` is the first complete CQRS reference. Its controller injects `ISender`
 only; create, bulk create, update, archive, atomic bulk archive, restore, page, lookup, detail, and
@@ -92,10 +93,10 @@ Use this structure for a new aggregate such as Employee:
 
 ```text
 api/
-  HrManagementSystem.Domain/
+  ErpSystem.Modules.HR.Domain/
     CoreHr/Employees/Entities/Employee.cs
 
-  HrManagementSystem.Application/
+  ErpSystem.Modules.HR.Application/
     Features/CoreHr/Employees/
       Commands/
         CreateEmployee/
@@ -119,7 +120,7 @@ api/
         IEmployeeChangeScheduler.cs
       Errors/EmployeeErrors.cs
 
-  HrManagementSystem.Infrastructure/
+  ErpSystem.Modules.HR.Infrastructure/
     Features/CoreHr/Employees/
       Persistence/
         EmployeeConfiguration.cs
@@ -127,12 +128,12 @@ api/
         EmployeeWriteStore.cs
       Jobs/EmployeeChangedJob.cs
 
-  HrManagementSystem.Api/
+  ErpSystem.Api/
     Features/CoreHr/Employees/V1/EmployeesController.cs
 
 web-next/src/
   app/(main)/core-hr/employees/page.tsx
-  features/core-hr/employees/
+  modules/hr/employees/
     api/
     components/
       grid-view/
@@ -384,7 +385,7 @@ lower-risk reference-data exception; employee and policy records normally cannot
 The App Router file is a thin adapter:
 
 ```tsx
-import { EmployeesPage } from "@/features/core-hr/employees";
+import { EmployeesPage } from "@/modules/hr/employees";
 
 export default function Page() {
   return <EmployeesPage />;
@@ -521,15 +522,15 @@ export const employeeKeys = {
 
 Use these files as the implemented reference:
 
-- Countries controller: `api/HrManagementSystem.Api/Features/GeographicalInformation/Countries/V1/CountriesController.cs`
-- Commands/queries: `api/HrManagementSystem.Application/Features/GeographicalInformation/Countries`
-- Mapster rules: `api/HrManagementSystem.Application/Features/GeographicalInformation/Countries/Mapping/CountryMappingConfig.cs`
-- Persistence ports: `api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Countries/Persistence`
-- Countries page: `web-next/src/features/basic-data/geographical-information/countries/pages/CountriesPage.tsx`
-- Countries multi-view: `web-next/src/features/basic-data/geographical-information/countries/components/CountriesMultiView.tsx`
-- Countries orchestration: `web-next/src/features/basic-data/geographical-information/countries/hooks/useCountryGridLogic.ts`
-- Countries queries: `web-next/src/features/basic-data/geographical-information/countries/hooks/useCountryQueries.ts`
-- Country form: `web-next/src/features/basic-data/geographical-information/countries/components/CountryForm.tsx`
+- Countries controller: `api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs`
+- Commands/queries: `api/Modules/HR/ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Countries`
+- Mapster rules: `api/Modules/HR/ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Countries/Mapping/CountryMappingConfig.cs`
+- Persistence ports: `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/GeographicalInformation/Countries/Persistence`
+- Countries page: `web-next/src/modules/hr/basic-data/geographical-information/countries/pages/CountriesPage.tsx`
+- Countries multi-view: `web-next/src/modules/hr/basic-data/geographical-information/countries/components/CountriesMultiView.tsx`
+- Countries orchestration: `web-next/src/modules/hr/basic-data/geographical-information/countries/hooks/useCountryGridLogic.ts`
+- Countries queries: `web-next/src/modules/hr/basic-data/geographical-information/countries/hooks/useCountryQueries.ts`
+- Country form: `web-next/src/modules/hr/basic-data/geographical-information/countries/components/CountryForm.tsx`
 - Shared server list state: `web-next/src/shared/hooks/useServerListState.ts`
 
 Migrate the other geographic features toward this reference rather than copying

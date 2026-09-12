@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   BACKEND_OVERRIDE_COOKIE,
   BACKEND_OVERRIDE_HEADER,

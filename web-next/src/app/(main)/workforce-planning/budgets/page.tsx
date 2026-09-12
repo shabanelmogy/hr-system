@@ -1,4 +1,4 @@
-import { WorkforceBudgetsPage } from "@/features/workforce-planning";
+import { WorkforceBudgetsPage } from "@/modules/hr/workforce-planning";
 
 export default function Page() {
   return <WorkforceBudgetsPage />;

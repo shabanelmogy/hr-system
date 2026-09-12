@@ -35,6 +35,9 @@ export const enAuthProfileOnboarding = {
     currentCompany: 'Current company',
     switchCompany: 'Switch company',
     switchCompanyDescription: 'Choose the company you want to work with in this session.',
+    switchCompanyUnsavedTitle: 'Discard changes and switch company?',
+    switchCompanyUnsavedDescription:
+      'You have unsaved changes. Switching company will discard them before the new company context is loaded.',
     companySwitched: 'Company changed successfully.',
     companySwitchFailed: 'Could not change the current company.',
     cancelSelection: 'Back to sign in',

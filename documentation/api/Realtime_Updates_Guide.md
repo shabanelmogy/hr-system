@@ -64,7 +64,7 @@ from the validated short-lived realtime token.
 4. Apply `[AutomaticRetry(Attempts = 5)]` to the job.
 5. Select the narrowest valid SignalR audience.
 6. Send `ReceiveEntityChanged`; keep persisted notifications permission-aware.
-7. Add the resource and affected query roots to `web-next/src/features/realtime/realtimeQueryRegistry.ts`.
+7. Add the resource and affected query roots to `web-next/src/platform/realtime/realtimeQueryRegistry.ts`.
 8. Add tests for the event contract, audience, and dependent query invalidation.
 
 ## Client Behavior

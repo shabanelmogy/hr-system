@@ -1,8 +1,8 @@
 "use client";
 
-import PageComponent from "@/features/home/pages/HomePage";
-import { TenantDashboardPage } from "@/features/tenants";
+import { TenantDashboardPage } from "@/platform/tenants";
 import { useSession } from "@/lib/auth/SessionContext";
+import AppsPage from "./apps/page";
 
 const SUPER_ADMIN_ROLE = "super_admin";
 
@@ -12,5 +12,5 @@ export default function DashboardLanding() {
     (role) => role.trim().toLowerCase() === SUPER_ADMIN_ROLE,
   );
 
-  return isSuperAdmin ? <TenantDashboardPage /> : <PageComponent />;
+  return isSuperAdmin ? <TenantDashboardPage /> : <AppsPage />;
 }

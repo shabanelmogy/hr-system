@@ -1,0 +1,33 @@
+{
+    "moduleName":  "Contacts",
+    "docSlug":  "contacts",
+    "databaseSchema":  "contacts",
+    "version":  "1.0.0",
+    "requiredModuleDependencies":  [
+
+                                   ],
+    "optionalModuleDependencies":  [
+
+                                   ],
+    "isUserVisible":  true,
+    "allowsTenantEntitlement":  true,
+    "lifecycle":  "active",
+    "status":  "reference-workflow",
+    "runtimePaths":  {
+                         "root":  "api/Modules/Contacts",
+                         "contracts":  "api/Modules/Contacts/ErpSystem.Modules.Contacts.Contracts",
+                         "domain":  "api/Modules/Contacts/ErpSystem.Modules.Contacts.Domain",
+                         "application":  "api/Modules/Contacts/ErpSystem.Modules.Contacts.Application",
+                         "infrastructure":  "api/Modules/Contacts/ErpSystem.Modules.Contacts.Infrastructure",
+                         "presentation":  "api/Modules/Contacts/ErpSystem.Modules.Contacts.Presentation",
+                         "bootstrap":  "api/Modules/Contacts/ErpSystem.Modules.Contacts"
+                     },
+    "documentationPaths":  {
+                               "root":  "documentation/modules/contacts",
+                               "api":  "documentation/modules/contacts/api/README.md",
+                               "webNext":  "documentation/modules/contacts/web-next/README.md",
+                               "mobileReact":  "documentation/modules/contacts/mobile-react/README.md",
+                               "features":  "documentation/modules/contacts/features/README.md",
+                               "phases":  "documentation/modules/contacts/phases/README.md"
+                           }
+}

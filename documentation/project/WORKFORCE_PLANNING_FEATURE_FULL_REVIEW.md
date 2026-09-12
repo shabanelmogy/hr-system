@@ -64,6 +64,11 @@ Phase 2 is `Source Complete / Database Applied / Smoke Pending`. Migration `2026
 
 Job offer states 1–6 are unchanged; states 7 (`PendingApproval`) and 8 (`Approved`) add the governed path `Draft -> PendingApproval -> Approved -> Issued -> Accepted`. Approval rejects requester/creator self-approval, records immutable `JobOfferApprovalHistory`, snapshots annual/fiscal cost and policy version, validates currency and reservation delta before mutation, and permits Issue only from Approved. Hire now requires an Accepted offer and OfferAccepted application, locks the company/application/idempotency/employee-number resources, creates employee/assignment/contract in one tracked graph and one transaction, consumes planned reservation/counters exactly once, and returns the existing application on retry. `HireIdempotencyKey` and employee number are tenant/company unique.
 
+The 2026-09-08 bridge review extends the same serialized boundary to Issue and
+Accept: both lock company/application/offer, re-read state, update the offer and
+application together, append history, and save once. Offer placement is derived
+from application -> opening and is no longer writable by Web or Mobile clients.
+
 ## 16. Phase 6 trace and commitment projection
 
 `IWorkforceTraceReadStore` exposes only allow-listed application, offer, and employee roots plus a paginated Fiscal Year Plan-vs-Commitment projection. Queries are `AsNoTracking`, bounded to one root/page, and inherit tenant/company global filters. Salary and currency fields are populated only when the caller has `WorkforcePlanning:ViewFinancials`; Payroll Actuals remain Deferred. Web renders an animated framer-motion timeline and an accessible ordered list/table; Mobile renders a chronological shared-component timeline and commitment cards.

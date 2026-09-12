@@ -6,9 +6,24 @@ Authentication and infrastructure secrets must be supplied through environment v
 
 In `Development`, the API uses the local development key from `appsettings.Development.json` or the built-in development fallback when no key is configured. Production and non-development environments require `JwtOptions__Key` from secure configuration.
 
-`appsettings.Development.json` points to SQL LocalDB by default. If LocalDB is not available on your machine, override the connection strings with user secrets.
+`appsettings.Development.json` contains development behavior overrides but no
+database credentials. Configure LocalDB or another SQL Server through user
+secrets or environment variables before starting the API.
 
-Run these commands from the `api/HrManagementSystem.Api` directory when local overrides are needed, replacing each placeholder with a development value:
+For Visual Studio local development, keep the Next.js server-side proxy pointed at
+the local API (`http://localhost:5293`):
+
+```env
+BACKEND_URL=http://localhost:5293
+NEXT_PUBLIC_API_URL=http://localhost:5293/api/v1
+```
+
+The JWT implementation is registered once as a scoped `JwtProvider`. Both
+`IJwtProvider` and `IRealtimeTokenProvider` resolve that same scoped instance;
+the concrete registration must remain present because the realtime contract
+resolves it directly.
+
+Run these commands from the `api/ErpSystem.Api` directory when local overrides are needed, replacing each placeholder with a development value:
 
 ```powershell
 dotnet user-secrets set "JwtOptions:Key" "<at-least-32-random-characters>"
@@ -30,6 +45,15 @@ Bootstrap accounts are optional. To create an initial administrator on an empty 
 
 Hosted environment variable names use double underscores, for example `JwtOptions__Key` and `ConnectionStrings__DefaultConnection`.
 
+The tracked `ErpSystem.Api/appsettings.example.json` contains placeholders only;
+live `appsettings*.json` files are local and ignored. Keep database, JWT, SMTP,
+Hangfire, bootstrap-user, and external-provider values in user secrets for local
+work and in the deployment secret store for hosted environments. The migration operator uses the same
+`ConnectionStrings__*` convention, so a module can be extracted by setting its
+own connection variable without changing source or committing a second config
+file. Rotate any credential that was ever committed before the sanitized
+configuration was introduced.
+
 All secrets that previously existed in repository history must be rotated. Removing them from the current files does not invalidate exposed historical values.
 
 ## Refresh-token rotation
@@ -46,6 +70,8 @@ This design avoids the operational complexity of full token-family tracking whil
 ## Tenant and company selection
 
 Tenant- and company-selection JWTs are short-lived, scope-specific, and single-use. Their `jti` values are stored in `AuthenticationSelectionChallenges`; the matching row is deleted atomically on the first selection attempt. Deploy the `AddAuthenticationSelectionChallenges` migration before enabling this flow. Changing the configured selection-token lifetime does not make a consumed token reusable.
+
+The login sequence is always `credentials -> explicit tenant -> explicit company -> session`: a successful credentials or external-login check returns a tenant-selection challenge whenever at least one tenant is available, even when the list contains one tenant. After `SelectTenant`, the API returns a company-selection challenge whenever at least one active company is available, even when the list contains one company. The API never preselects the first option and never issues an authenticated session from either shortcut. Access and refresh session issuance occurs only after `SelectCompany` validates and consumes the company-selection token.
 
 Authenticated company switching rotates into a new session and revokes only the replaced session. It does not reuse a login selection token and it does not revoke the user's other devices or sessions.
 

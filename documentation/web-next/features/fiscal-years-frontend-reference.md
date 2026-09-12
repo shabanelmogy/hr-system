@@ -2,7 +2,7 @@
 
 ## 1. Feature boundary
 
-Source lives under `src/features/finance/fiscal-years`; the App Router
+Source lives under `web-next/src/modules/hr/finance/fiscal-years`; the App Router
 file only renders `FiscalYearsPage`. Types, services, hooks, validation, visual
 composition, and orchestration stay inside the feature boundary.
 

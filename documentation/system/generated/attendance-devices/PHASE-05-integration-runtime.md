@@ -53,7 +53,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | attendance-devices-api | 10 | `ad145f088dff331f2b150b9d14a3ef8801af90074d3f9691ded837ea7f7c2fd8` |
 | attendance-devices-web | 8 | `e0bf7f1dade9eb1795bf7dbd1cdd0db0104d3d7cfefdcb9400756a8f3cb89f1c` |
 | attendance-devices-web | 10 | `23f0dcc86d515444f8e139d037bc9a662737703b739aca8b7394a47c8138ffb9` |
-| attendance-devices-web | 13 | `fc31618e8d985cd765e02700bcf99f1c7f58b119b3fa1ac2916ae9a4f7e38953` |
+| attendance-devices-web | 13 | `e31751a1461e5db6998869a07fbb7f028974e7d0967fc790fee14e9336613fca` |
 | attendance-devices-mobile | 2 | `14455a3b23dee24861cb73b6c36f0f2be23653a00d9c81f2c5827c0bcb6835d1` |
 | attendance-devices-mobile | 11 | `f6e3af50cabec47f4411d301618509d22c795267a86a53bd1dfdf111edba5da4` |
 | attendance-devices-mobile | 12 | `aa84e3d7d989e7208f9f8156901ce3a77743aa2dbb9fcc15aaa0a8854f904b2b` |

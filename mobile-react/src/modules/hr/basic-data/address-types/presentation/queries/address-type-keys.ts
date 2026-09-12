@@ -1,0 +1,9 @@
+import type { AddressTypePageQuery } from '../../domain/models/address-type';
+
+export const addressTypeKeys = {
+  all: ['address-types'] as const,
+  lists: () => [...addressTypeKeys.all, 'list'] as const,
+  list: (query: AddressTypePageQuery) => [...addressTypeKeys.lists(), query] as const,
+  detail: (id: number) => [...addressTypeKeys.all, 'detail', id] as const,
+  reportCatalog: () => [...addressTypeKeys.all, 'reports', 'catalog'] as const,
+};

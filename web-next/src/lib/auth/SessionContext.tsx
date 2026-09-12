@@ -11,6 +11,7 @@ import { isPublicRoute, SESSION_CHANGED_EVENT } from "./constants";
 import { UNAVAILABLE_ROUTE } from "./route-access";
 import { SessionRequestState } from "./session-request-state";
 import { auth as authRoutes } from "@/config/api/auth";
+import { verifyTargetCompany } from "./company-switch-verification";
 
 const sessionRevalidationIntervalMs = 5 * 60_000;
 const sessionExpiryBufferMs = 30_000;
@@ -18,6 +19,8 @@ const focusRevalidationThrottleMs = 60_000;
 const maxTimerDelayMs = 2_147_000_000;
 const logoutTransitionDurationMs = 360;
 const logoutRequestTimeoutMs = 5_000;
+const sessionRequestTimeoutMs = 15_000;
+const companySwitchRequestTimeoutMs = 15_000;
 
 type SessionContextValue = {
   user: SessionClaims | null;
@@ -34,6 +37,8 @@ type SessionContextValue = {
   hasPermission: (permissions: readonly PermissionString[]) => boolean;
 };
 
+type RevalidationResult = "pending" | "ok" | "unauthenticated" | "invalid" | "error" | "skipped";
+
 const SessionContext = createContext<SessionContextValue | null>(null);
 
 export function SessionProvider({ children }: { children: ReactNode }) {
@@ -47,11 +52,16 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const refreshStateRef = useRef<SessionRequestState | null>(null);
   const companySwitchTransitionRef = useRef(false);
+  const loggingOutRef = useRef(false);
+  const refreshControllerRef = useRef<AbortController | null>(null);
+  const switchRequestRef = useRef<Promise<Response> | null>(null);
   const logoutPromiseRef = useRef<Promise<void> | null>(null);
+  const logoutEpochRef = useRef(0);
   const lastRefreshAtRef = useRef(0);
   const userRef = useRef<SessionClaims | null>(null);
   const bootstrappedRef = useRef(false);
   const pathnameRef = useRef(pathname);
+  const revalidationResultRef = useRef<RevalidationResult>("skipped");
   if (refreshStateRef.current == null) {
     refreshStateRef.current = new SessionRequestState();
   }
@@ -60,25 +70,36 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     pathnameRef.current = pathname;
   }, [pathname]);
 
-  const refresh = useCallback(async () => {
+  const revalidate = useCallback(async (duringSwitch = false, suppressFailureRedirect = false) => {
+    if (loggingOutRef.current || (companySwitchTransitionRef.current && !duringSwitch)) {
+      return;
+    }
+    revalidationResultRef.current = "pending";
     return refreshStateRef.current!.run(async (requestGeneration) => {
+      const controller = new AbortController();
+      refreshControllerRef.current = controller;
       setIsLoading(true);
       lastRefreshAtRef.current = Date.now();
       setError(null);
       try {
         const response = await fetch("/api/auth/session", {
           credentials: "same-origin",
-          cache: "no-store"
+          cache: "no-store",
+          signal: AbortSignal.any([
+            controller.signal,
+            AbortSignal.timeout(sessionRequestTimeoutMs),
+          ]),
         });
         
         // 401 = not authenticated (expected, not an error)
         if (response.status === 401) {
           if (refreshStateRef.current!.isCurrent(requestGeneration)) {
+            revalidationResultRef.current = "unauthenticated";
             const currentPathname = pathnameRef.current;
             userRef.current = null;
             setUser(null);
             setError(null);
-            if (!isPublicRoute(currentPathname)) {
+            if (!suppressFailureRedirect && !isPublicRoute(currentPathname)) {
               window.dispatchEvent(new CustomEvent("auth:logout"));
             }
           }
@@ -88,9 +109,10 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         // Server errors - don't clear user, they might still be authenticated
         if (!response.ok) {
           if (refreshStateRef.current!.isCurrent(requestGeneration)) {
+            revalidationResultRef.current = "error";
             const currentPathname = pathnameRef.current;
             setError(`Server error: ${response.status}`);
-            if (!userRef.current && currentPathname !== UNAVAILABLE_ROUTE) {
+            if (!suppressFailureRedirect && !userRef.current && currentPathname !== UNAVAILABLE_ROUTE) {
               router.replace(unavailableUrlWithReturnTo() as Route);
             }
           }
@@ -100,25 +122,32 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         const payload = (await response.json()) as { user?: unknown };
         if (!refreshStateRef.current!.isCurrent(requestGeneration)) return;
         if (isSessionClaims(payload.user)) {
+          revalidationResultRef.current = "ok";
+          const previous = userRef.current;
+          if (previous && (previous.userId !== payload.user.userId || previous.tenantId !== payload.user.tenantId || previous.companyId !== payload.user.companyId)) {
+            apiClient.rotateRequestContext();
+          }
           userRef.current = payload.user;
           setUser(payload.user);
           setIsLoggingOut(false);
           setError(null);
         } else {
+          revalidationResultRef.current = "invalid";
           const currentPathname = pathnameRef.current;
           setError("Invalid session data");
           userRef.current = null;
           setUser(null);
-          if (currentPathname !== UNAVAILABLE_ROUTE) {
+          if (!suppressFailureRedirect && currentPathname !== UNAVAILABLE_ROUTE) {
             router.replace(unavailableUrlWithReturnTo() as Route);
           }
         }
       } catch (err) {
         // Network errors - don't clear user
         if (refreshStateRef.current!.isCurrent(requestGeneration)) {
+          revalidationResultRef.current = "error";
           const currentPathname = pathnameRef.current;
           setError(err instanceof Error ? err.message : "Network error");
-          if (!userRef.current && currentPathname !== UNAVAILABLE_ROUTE) {
+          if (!suppressFailureRedirect && !userRef.current && currentPathname !== UNAVAILABLE_ROUTE) {
             router.replace(unavailableUrlWithReturnTo() as Route);
           }
         }
@@ -129,6 +158,8 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       }
     });
   }, [router]);
+
+  const refresh = useCallback(() => revalidate(), [revalidate]);
 
   useEffect(() => {
     if (!requiresSession) {
@@ -192,7 +223,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     if (logoutPromiseRef.current) return logoutPromiseRef.current;
 
     const performLogout = async () => {
+      logoutEpochRef.current += 1;
+      loggingOutRef.current = true;
       refreshStateRef.current!.invalidate();
+      refreshControllerRef.current?.abort();
+      apiClient.beginContextTransition();
+      apiClient.rotateRequestContext();
       setIsLoading(false);
       setIsLoggingOut(true);
 
@@ -207,6 +243,8 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       });
 
       try {
+        // Complete a pending cookie change before deleting the session.
+        await switchRequestRef.current?.catch(() => undefined);
         await Promise.all([
           fetch("/api/auth/logout", {
             method: "POST",
@@ -224,6 +262,8 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         apiClient.resetLogoutGuard();
       } finally {
         logoutPromiseRef.current = null;
+        loggingOutRef.current = false;
+        apiClient.endContextTransition();
       }
     };
 
@@ -233,6 +273,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   }, [router]);
 
   const switchCompany = useCallback(async (companyId: number) => {
+    if (companySwitchTransitionRef.current || loggingOutRef.current) throw new Error("Session transition already in progress");
     const currentUser = userRef.current;
     if (
       !Number.isInteger(companyId) ||
@@ -245,18 +286,28 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
     companySwitchTransitionRef.current = true;
     refreshStateRef.current!.invalidate();
+    refreshControllerRef.current?.abort();
+    apiClient.beginContextTransition();
+    apiClient.rotateRequestContext();
     setIsSwitchingCompany(true);
     setError(null);
+    let logoutTriggered = false;
+    let sessionVerificationComplete = false;
+    const switchLogoutEpoch = logoutEpochRef.current;
     try {
-      const response = await fetch(authRoutes.switchCompany, {
+      switchRequestRef.current = fetch(authRoutes.switchCompany, {
         method: "POST",
         credentials: "same-origin",
         cache: "no-store",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ companyId }),
+        signal: AbortSignal.timeout(companySwitchRequestTimeoutMs),
       });
+      const response = await switchRequestRef.current;
+      if (loggingOutRef.current) throw new Error("Session is logging out");
 
       if (response.status === 401) {
+        logoutTriggered = true;
         await logout();
         throw new Error("Authentication session expired");
       }
@@ -264,19 +315,55 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         throw new Error(await readProblemMessage(response));
       }
 
-      await refresh();
-      if (userRef.current?.companyId !== companyId) {
+      // The switch endpoint changes the cookie, while the session endpoint is
+      // the source of truth for the company that is actually active.  A
+      // transient response (for example, an eventually-consistent auth
+      // store) must not expose the previous company, so retry the verification
+      // once before failing the transition.
+      const verifiedCompany = await verifyTargetCompany({
+        companyId,
+        revalidate: async () => {
+          await revalidate(true, true);
+          if (loggingOutRef.current || logoutEpochRef.current !== switchLogoutEpoch) {
+            logoutTriggered = true;
+            throw new Error("Session is logging out");
+          }
+          if (revalidationResultRef.current === "unauthenticated") {
+            logoutTriggered = true;
+            await logout();
+            throw new Error("Authentication session expired");
+          }
+        },
+        readCompanyId: () => userRef.current?.companyId,
+        clearStaleSession: () => {
+          userRef.current = null;
+          setUser(null);
+        },
+      });
+      sessionVerificationComplete = true;
+      if (!verifiedCompany) {
         userRef.current = null;
         setUser(null);
         setError("Unable to verify the switched company session");
         router.replace(unavailableUrlWithReturnTo() as Route);
         throw new Error("Unable to verify the switched company session");
       }
+    } catch (error) {
+      // A failed transport may have applied Set-Cookie; require a fresh session
+      // before presenting data again instead of assuming the old company.
+      if (!loggingOutRef.current && !logoutTriggered && !sessionVerificationComplete) {
+        userRef.current = null;
+        setUser(null);
+        await revalidate(true);
+      }
+      throw error;
     } finally {
+      switchRequestRef.current = null;
       companySwitchTransitionRef.current = false;
+      apiClient.endContextTransition();
       setIsSwitchingCompany(false);
     }
-  }, [logout, refresh, router]);
+  }, [logout, revalidate, router]);
 
   // Handle logout events dispatched by apiClient (e.g. on 401 interceptor)
   useEffect(() => {

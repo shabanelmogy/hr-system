@@ -2,6 +2,11 @@
 
 This system turns reviewed implementations such as Countries and States into repeatable evidence-based workflows for API, Next.js, and Expo features. It follows the useful structure of the Sigma ERP recipe system while remaining specific to this repository.
 
+For the product-wide ownership and reuse workflow, start with the [ERP
+documentation guide](../project/ERP_DOCUMENTATION_GUIDE_AR.md) and its [shared
+reuse catalog](../project/SHARED_REUSE_CATALOG.md). This system owns the shared
+recipe mechanics; it does not make HR the owner of every future feature.
+
 ## Authority model
 
 The canonical books own factual rules:
@@ -20,6 +25,30 @@ The canonical books own factual rules:
 - `../mobile-react/addresses-mobile-reference.md`
 
 `recipe-manifest.json` declares which numbered sections support each phase. `Generate-Documentation.ps1` hashes those sections and writes derivative packets into `generated/`. The generated packets are navigation and verification aids; they never replace the canonical books.
+
+## Module ownership
+
+Module-specific documentation is indexed under [`../modules/`](../modules/).
+Each package owns its architecture, roadmap, feature catalog, and API/web/mobile
+notes, while this directory remains the single authority for shared recipes,
+templates, manifests, generated packets, and decision vocabulary. Do not copy a
+shared rule into a module package.
+
+HR's current canonical books remain at their established `project/`, `api/`,
+`web-next/`, and `mobile-react/` paths so existing recipe fingerprints stay
+stable; `documentation/modules/hr/` catalogs those paths. Moving a book requires
+updating `recipe-manifest.json`, required-file manifests, links, and generated
+packets together, followed by `Generate-Documentation.ps1 -Check`.
+
+Before adding a reusable component, service, or Contract, inventory shared
+BuildingBlocks and the owning module's local pieces. Reuse or extend a compatible
+abstraction and record the decision in the module book. New pieces start
+module-local and are promoted only when genuinely domain-neutral and used by
+multiple modules.
+
+`api/scripts/New-ErpModule.ps1` creates the same module package shape (including
+`phases/README.md`) atomically with each new runtime module; the package records
+foundation facts only until feature evidence is added.
 
 ## Layout
 
@@ -55,6 +84,14 @@ The new-feature scaffold also writes a copy-ready `IMPLEMENTATION-REQUEST.md`.
 Complete its decision tables, then use that file as the request given to an
 implementing agent. The review artifact records evidence and findings; the request
 records the desired work. Neither replaces the canonical applied profiles.
+
+`New-FeatureDocumentation.ps1` currently accepts only `countries` and `states`
+as `-ReferenceFeature` values and initially plans central canonical book paths.
+For another business module, choose the closest reference, then deliberately
+adapt the draft manifest and recipe registration to the owning module's
+canonical profiles before final registration. Do not invent command parameters,
+copy CRUD rules, or register a path before its source and numbered sections
+exist.
 
 ## Decision vocabulary
 

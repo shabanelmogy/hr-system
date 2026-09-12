@@ -5,7 +5,7 @@
 -->
 <doc>
   <members>
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.GetPage(HrManagementSystem.Application.Features.GeographicalInformation.Countries.Queries.GetCountries.GetCountriesQuery,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Countries.V1.CountriesController.GetPage(ErpSystem.Modules.HR.Application.Features.GeographicalInformation.Countries.Queries.GetCountries.GetCountriesQuery,System.Threading.CancellationToken)">
       <summary>Returns the server-paged country management collection.</summary>
       <remarks>
         Supports pageNumber, pageSize, search, status, currencyCode, hasStates,
@@ -20,7 +20,7 @@
       <response code="403">Tenant membership or permission was denied.</response>
     </member>
 
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.GetLookup(System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Countries.V1.CountriesController.GetLookup(System.Threading.CancellationToken)">
       <summary>Returns lightweight active countries for selectors.</summary>
       <remarks>Requires <c>Countries:View</c>.</remarks>
       <param name="cancellationToken">Request cancellation token.</param>
@@ -30,7 +30,7 @@
       <response code="403">Tenant membership or permission was denied.</response>
     </member>
 
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.GetById(System.Int32,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Countries.V1.CountriesController.GetById(System.Int32,System.Threading.CancellationToken)">
       <summary>Returns one active or archived country without its states.</summary>
       <remarks>Requires <c>Countries:View</c>.</remarks>
       <param name="id">Country identifier.</param>
@@ -42,7 +42,7 @@
       <response code="403">Tenant membership or permission was denied.</response>
     </member>
 
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.GetWithStates(System.Int32,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Countries.V1.CountriesController.GetWithStates(System.Int32,System.Threading.CancellationToken)">
       <summary>Returns one country with its active states.</summary>
       <remarks>Requires <c>Countries:View</c>.</remarks>
       <param name="id">Country identifier.</param>
@@ -54,7 +54,7 @@
       <response code="403">Tenant membership or permission was denied.</response>
     </member>
 
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.Create(HrManagementSystem.Application.Features.GeographicalInformation.Countries.Commands.CreateCountry.CreateCountryCommand,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Countries.V1.CountriesController.Create(ErpSystem.Modules.HR.Application.Features.GeographicalInformation.Countries.Commands.CreateCountry.CreateCountryCommand,System.Threading.CancellationToken)">
       <summary>Creates one country.</summary>
       <remarks>Requires <c>Countries:Create</c>.</remarks>
       <param name="command">Country fields; the server normalizes optional codes.</param>
@@ -67,7 +67,7 @@
       <response code="403">Tenant membership or permission was denied.</response>
     </member>
 
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.CreateBulk(HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts.CreateCountriesRequest,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Countries.V1.CountriesController.CreateBulk(ErpSystem.Modules.HR.Application.Features.GeographicalInformation.Countries.Contracts.CreateCountriesRequest,System.Threading.CancellationToken)">
       <summary>Atomically creates multiple countries.</summary>
       <remarks>Requires <c>Countries:Create</c>.</remarks>
       <param name="request">A collection containing 1 through 100 countries.</param>
@@ -80,7 +80,7 @@
       <response code="403">Tenant membership or permission was denied.</response>
     </member>
 
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.Update(System.Int32,HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts.UpdateCountryRequest,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Countries.V1.CountriesController.Update(System.Int32,ErpSystem.Modules.HR.Application.Features.GeographicalInformation.Countries.Contracts.UpdateCountryRequest,System.Threading.CancellationToken)">
       <summary>Updates one active country.</summary>
       <remarks>The identifier comes from the route. Requires <c>Countries:Edit</c>.</remarks>
       <param name="id">Country identifier.</param>
@@ -95,7 +95,7 @@
       <response code="403">Tenant membership or permission was denied.</response>
     </member>
 
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.Archive(System.Int32,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Countries.V1.CountriesController.Archive(System.Int32,System.Threading.CancellationToken)">
       <summary>Archives one active country.</summary>
       <remarks>Requires <c>Countries:Delete</c>. This is not a lifecycle toggle.</remarks>
       <param name="id">Country identifier.</param>
@@ -108,7 +108,7 @@
       <response code="403">Tenant membership or permission was denied.</response>
     </member>
 
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.Restore(System.Int32,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Countries.V1.CountriesController.Restore(System.Int32,System.Threading.CancellationToken)">
       <summary>Restores one archived country.</summary>
       <remarks>Requires <c>Countries:Delete</c>.</remarks>
       <param name="id">Country identifier.</param>
@@ -120,7 +120,7 @@
       <response code="403">Tenant membership or permission was denied.</response>
     </member>
 
-    <member name="M:HrManagementSystem.Api.Features.GeographicalInformation.Countries.V1.CountriesController.BulkArchive(HrManagementSystem.Application.Features.GeographicalInformation.Countries.Contracts.BulkArchiveCountriesRequest,System.Threading.CancellationToken)">
+    <member name="M:ErpSystem.Modules.HR.Presentation.Features.GeographicalInformation.Countries.V1.CountriesController.BulkArchive(ErpSystem.Modules.HR.Application.Features.GeographicalInformation.Countries.Contracts.BulkArchiveCountriesRequest,System.Threading.CancellationToken)">
       <summary>Atomically archives up to 100 countries.</summary>
       <remarks>
         Requires <c>Countries:Delete</c>. IDs must be positive and distinct. Missing

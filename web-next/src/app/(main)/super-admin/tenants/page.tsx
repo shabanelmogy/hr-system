@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
-import { TenantManagementPage } from "@/features/tenants";
+import { TenantManagementPage } from "@/platform/tenants";
 
 export const metadata: Metadata = {
-  title: "Tenant Management | HR Management System",
+  title: "Tenant Management | ERP System",
   description: "Manage tenants, subscriptions, limits, and account usage.",
 };
 

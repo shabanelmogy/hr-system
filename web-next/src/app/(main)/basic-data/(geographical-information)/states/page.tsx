@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Basic Data States | HR Management System",
-  description: "HR Management System page for Basic Data States."
+  title: "Basic Data States | ERP System",
+  description: "ERP System page for Basic Data States."
 };
 
-import { StatesPage } from "@/features/basic-data/geographical-information/states";
+import { StatesPage } from "@/modules/hr/basic-data/geographical-information/states";
 
 export default function Page() {
   return <StatesPage />;

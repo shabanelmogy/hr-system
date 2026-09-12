@@ -1,0 +1,494 @@
+import SearchIcon from "@mui/icons-material/Search";
+import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
+import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
+import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
+import {
+  alpha,
+  Box,
+  Button,
+  Collapse,
+  Divider,
+  Drawer as MuiDrawer,
+  styled,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { useCallback, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { usePathname } from "next/navigation";
+import DrawerHeader from "./DrawerHeader";
+import { getNavigationConfig } from "./navigationConfig";
+import { filterNavigationConfigByModules } from "./navigationUtils";
+import NavigationSection from "./NavigationSection";
+import SidebarNavigationItem from "./NavigationItem";
+import UserProfile from "./UserProfile";
+import { useSession } from "@/lib/auth/SessionContext";
+import { MyTextField } from "@/shared/components/forms";
+import { useSidebar } from "@/shared/contexts/SidebarContext";
+import type { NavigationItem, NavigationSection as NavigationSectionModel } from "./navigationTypes";
+import { compactSidebarWidth, expandedSidebarWidth } from "./sidebarConstants";
+import { toLauncherModule, useAccessibleModulesQuery } from "@/platform/modules";
+import { requiredModuleForPath } from "@/platform/modules";
+import { appRoutes } from "@/config/routes";
+// Drawer Sizes
+
+// Search container
+const SearchContainer = styled("div")<{ open: boolean }>(({ theme, open }) => ({
+  display: "flex",
+  width: "calc(100% - 16px)",
+  minHeight: open ? 40 : 0,
+  maxHeight: open ? 48 : 0,
+  alignItems: "center",
+  position: "relative",
+  overflow: "hidden",
+  opacity: open ? 1 : 0,
+  pointerEvents: open ? "auto" : "none",
+  transform: open ? "translateY(0)" : "translateY(-4px)",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.1),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+  },
+  marginInline: theme.spacing(1),
+  marginTop: open ? theme.spacing(3) : 0,
+  marginBottom: open ? theme.spacing(1) : 0,
+  border: `1px solid ${open ? alpha(theme.palette.divider, 0.2) : "transparent"}`,
+  transition: theme.transitions.create(
+    ["max-height", "min-height", "opacity", "transform", "margin-top", "margin-bottom"],
+    {
+      easing: theme.transitions.easing.sharp,
+      duration: open
+        ? theme.transitions.duration.enteringScreen
+        : theme.transitions.duration.leavingScreen,
+    },
+  ),
+}));
+
+// Main drawer content container with scrolling
+const DrawerContent = styled(Box)(() => ({
+  display: "flex",
+  flexDirection: "column",
+  height: "100%",
+  overflow: "hidden",
+}));
+
+// Scrollable area
+const ScrollableContent = styled(Box)(() => ({
+  flex: "1 1 auto",
+  minHeight: 0,
+  overflowY: "auto",
+  overflowX: "hidden",
+}));
+
+const ToggleButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== "expanded" && prop !== "open",
+})<{ open: boolean; expanded: boolean }>(({ theme, open }) => ({
+  display: "flex",
+  width: "100%",
+  minHeight: open ? 40 : 0,
+  maxHeight: open ? 48 : 0,
+  justifyContent: "flex-start",
+  overflow: "hidden",
+  opacity: open ? 1 : 0,
+  pointerEvents: open ? "auto" : "none",
+  padding: open ? theme.spacing(1, 2) : theme.spacing(0, 2),
+  textTransform: "none",
+  borderRadius: 0,
+  fontWeight: 500,
+  color: theme.palette.text.primary,
+  borderBottom: `1px solid ${open ? alpha(theme.palette.divider, 0.5) : "transparent"}`,
+  transition: theme.transitions.create(
+    ["max-height", "min-height", "opacity", "padding"],
+    {
+      easing: theme.transitions.easing.sharp,
+      duration: open
+        ? theme.transitions.duration.enteringScreen
+        : theme.transitions.duration.leavingScreen,
+    },
+  ),
+
+  // Use CSS classes instead of props
+  "&.expanded": {
+    backgroundColor: alpha(theme.palette.primary.main, 0.08),
+    "&:hover": {
+      backgroundColor: alpha(theme.palette.primary.main, 0.12),
+    },
+  },
+  "&:not(.expanded)": {
+    backgroundColor: "transparent",
+    "&:hover": {
+      backgroundColor: alpha(theme.palette.action.hover, 0.08),
+    },
+  },
+}));
+
+function SideBar({
+  open,
+  hideWhenClosed = false,
+  handleDrawerClose,
+}: {
+  open: boolean;
+  hideWhenClosed?: boolean;
+  handleDrawerClose: () => void;
+}) {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const { t } = useTranslation();
+  const pathname = usePathname();
+  const [searchTerm, setSearchTerm] = useState("");
+  const { user } = useSession();
+  const modulesQuery = useAccessibleModulesQuery();
+  const { setOpen } = useSidebar();
+  const activeModuleCode = requiredModuleForPath(pathname)?.moduleCode.toLowerCase() ?? null;
+  const activeModule = activeModuleCode
+    ? modulesQuery.data?.find((module) => module.code.toLowerCase() === activeModuleCode)
+    : undefined;
+  const activeModulePresentation = activeModule ? toLauncherModule(activeModule) : undefined;
+  const isModuleLauncherRoute = Boolean(
+    activeModule &&
+      (pathname === appRoutes.module(activeModule.code) ||
+        pathname.startsWith(`${appRoutes.module(activeModule.code)}/`)),
+  );
+  const currentDrawerWidth = isSmallScreen
+    ? expandedSidebarWidth
+    : open
+      ? expandedSidebarWidth
+      : hideWhenClosed
+        ? 0
+        : compactSidebarWidth;
+  const hidden = hideWhenClosed && !open && !isSmallScreen;
+  const widthTransition = theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: open
+      ? theme.transitions.duration.enteringScreen
+      : theme.transitions.duration.leavingScreen,
+  });
+
+  // Track expanded sections with an object
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
+
+  // Get navigation configuration
+  const navigationSections = useMemo(
+    () => {
+      const config = getNavigationConfig(user?.roles, user?.permissions);
+      // Fail closed while entitlements are loading or unavailable. Platform
+      // links with no module requirement remain visible; module-owned links
+      // wait for the server response instead of leaking into the drawer.
+      return filterNavigationConfigByModules(config, modulesQuery.data ?? []);
+    },
+    [modulesQuery.data, user?.permissions, user?.roles]
+  );
+
+  const isSectionVisible = useCallback(
+    (section: NavigationSectionModel) => {
+      const sectionMatches =
+        searchTerm &&
+        t(section.title).toLowerCase().includes(searchTerm.toLowerCase());
+
+      const itemsMatch = (section.items ?? []).some(
+        (item) =>
+          searchTerm &&
+          t(item.title).toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+
+      return sectionMatches || itemsMatch;
+    },
+    [searchTerm, t],
+  );
+
+
+  // Find which section contains a specific path (recursive for nested items)
+  const findSectionByPath = (path: string) => {
+    const findInItems = (items: NavigationItem[] = []) => {
+      for (const item of items) {
+        if (item.path === path) {
+          return true;
+        }
+        if (item.items && item.items.length > 0) {
+          if (findInItems(item.items)) {
+            return true;
+          }
+        }
+      }
+      return false;
+    };
+
+    for (const section of navigationSections) {
+      if (findInItems(section.items)) {
+        return section.id;
+      }
+    }
+    return null;
+  };
+
+  // Calculate visible sections (for search)
+  const visibleSections = useMemo(() => {
+    if (!searchTerm) return navigationSections;
+    return navigationSections.filter((section) => isSectionVisible(section));
+  }, [isSectionVisible, navigationSections, searchTerm]);
+
+  // Determine if all sections are currently expanded
+  const areAllSectionsExpanded = useMemo(() => {
+    // If no sections are visible, return false
+    if (visibleSections.length === 0) return false;
+
+    // Check if all visible sections are expanded
+    return visibleSections.every((section) => !!expandedSections[section.id]);
+  }, [visibleSections, expandedSections]);
+
+  // Check if any section is expanded
+  const isAnySectionExpanded = Object.values(expandedSections).some(
+    (value) => value === true
+  );
+
+  // Handle toggle of a single section
+  const handleSectionToggle = useCallback(
+    (sectionId: string, forceState?: boolean) => {
+      setExpandedSections((prev) => {
+        const nextState = forceState ?? !prev[sectionId];
+        if (prev[sectionId] === nextState) return prev;
+
+        return {
+          ...prev,
+          [sectionId]: nextState,
+        };
+      });
+    },
+    [],
+  );
+
+  // Toggle all sections
+  const toggleAllSections = () => {
+    if (areAllSectionsExpanded) {
+      // If all are expanded, collapse all
+      setExpandedSections({});
+    } else {
+      // If not all are expanded, expand all visible sections
+      const newState: Record<string, boolean> = {};
+      visibleSections.forEach((section) => {
+        newState[section.id] = true;
+      });
+      setExpandedSections(newState);
+    }
+  };
+
+  // Clear search when navigating
+  const handleNavigate = (path: string) => {
+    // Find which section contains this path
+    const sectionId = findSectionByPath(path);
+
+    // Set only that section to be expanded
+    if (sectionId) {
+      const newExpandedState: Record<string, boolean> = {};
+      newExpandedState[sectionId] = true;
+      setExpandedSections(newExpandedState);
+    }
+
+    // Clear search term
+    setSearchTerm("");
+
+    // Close drawer on mobile
+    if (isSmallScreen) {
+      handleDrawerClose();
+    }
+  };
+
+  // Handle search clear
+  const handleClearSearch = () => {
+    setSearchTerm("");
+  };
+
+  // Check if there are any matches for the search term
+  const hasSearchMatches = () => {
+    if (!searchTerm) return true;
+    return navigationSections.some((section) => isSectionVisible(section));
+  };
+
+  return (
+    <MuiDrawer
+      id="app-sidebar"
+      dir={theme.direction}
+      variant={isSmallScreen ? "temporary" : "permanent"}
+      anchor="left"
+      open={open || !isSmallScreen}
+      onClose={handleDrawerClose}
+      transitionDuration={{
+        enter: theme.transitions.duration.enteringScreen,
+        exit: theme.transitions.duration.leavingScreen,
+      }}
+      slotProps={{
+        paper: {
+          dir: theme.direction,
+          "aria-hidden": hidden || undefined,
+          inert: hidden || undefined,
+        },
+      }}
+      sx={{
+        width: currentDrawerWidth,
+        flexShrink: 0,
+        pointerEvents: hidden ? "none" : "auto",
+        transition: isSmallScreen ? undefined : widthTransition,
+        "& .MuiDrawer-paper": {
+          width: currentDrawerWidth,
+          visibility: hidden ? "hidden" : "visible",
+          border: hidden ? 0 : undefined,
+          boxSizing: "border-box",
+          overflowX: "hidden",
+          whiteSpace: "nowrap",
+          willChange: isSmallScreen ? undefined : "width",
+          transition: isSmallScreen ? undefined : widthTransition,
+          boxShadow: open && !isSmallScreen ? theme.shadows[2] : "none",
+        },
+      }}
+    >
+      <DrawerContent>
+        {/* Drawer Header - Always Show*/}
+        <DrawerHeader open={open} handleDrawerClose={handleDrawerClose} />
+
+        {/* Toggle Expand/Collapse Button - Always visible */}
+        <ToggleButton
+          onClick={toggleAllSections}
+          open={open}
+          expanded={areAllSectionsExpanded}
+          startIcon={
+            areAllSectionsExpanded ? <UnfoldLessIcon /> : <UnfoldMoreIcon />
+          }
+        >
+          {areAllSectionsExpanded
+            ? t("menu.collapseAllSections")
+            : t("menu.expandAllSections")}
+        </ToggleButton>
+
+        {/* User Profile - Hide when sections are expanded */}
+        <Collapse in={!isAnySectionExpanded} timeout="auto">
+          <Box sx={{ pb: 1 }}>
+            <UserProfile open={open} />
+          </Box>
+        </Collapse>
+
+        {/* Search Input */}
+        <SearchContainer open={open}>
+          <MyTextField
+            appearance="plain"
+            counter={false}
+            fieldName="sidebarSearch"
+            labelKey={null}
+            margin="none"
+            maxValue={100}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            onClear={handleClearSearch}
+            placeholder={t("search.searchInSidebar")}
+            showClearButton
+            size="small"
+            slotProps={{ htmlInput: { "aria-label": "search" } }}
+            startIcon={<SearchIcon fontSize="small" />}
+            sx={{
+              "& .MuiOutlinedInput-root": { minHeight: 40 },
+              "& .MuiOutlinedInput-notchedOutline": { border: "none" },
+              "& .MuiInputBase-input": { fontSize: "0.875rem" },
+            }}
+            value={searchTerm}
+          />
+        </SearchContainer>
+
+        <ScrollableContent>
+          {/* No Results Message */}
+          {searchTerm && !hasSearchMatches() && (
+            <Box
+              sx={{
+                p: 2,
+                textAlign: "center",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 1,
+                color: "text.secondary",
+                my: 2,
+              }}
+            >
+              <SearchIcon
+                sx={{
+                  fontSize: 40,
+                  color: alpha(theme.palette.text.secondary, 0.6),
+                }}
+              />
+              <Typography variant="body2">{t("No results found")}</Typography>
+              <Typography variant="caption" sx={{ maxWidth: "80%" }}>
+                {t("Try different keywords")}
+              </Typography>
+            </Box>
+          )}
+
+          {/* Module landing navigation mirrors the enabled launcher areas in the drawer. */}
+          {isModuleLauncherRoute && activeModulePresentation && (
+            <>
+              <SidebarNavigationItem
+                open={open}
+                title={t("modules.title")}
+                icon={<AppsRoundedIcon />}
+                path={appRoutes.apps}
+                searchTerm={searchTerm}
+                onNavigate={handleNavigate}
+                onRequestOpen={() => setOpen(true)}
+              />
+              {activeModulePresentation.submodules.map((submodule) => (
+                <SidebarNavigationItem
+                  key={submodule.code}
+                  open={open}
+                  title={t(`modules.submodules.${activeModulePresentation.code}.${submodule.code}`, {
+                    defaultValue: submodule.name,
+                  })}
+                  icon={submodule.icon ?? <AppsRoundedIcon />}
+                  path={submodule.entryPath || `/apps/${activeModulePresentation.code}/${submodule.code}`}
+                  searchTerm={searchTerm}
+                  onNavigate={handleNavigate}
+                  onRequestOpen={() => setOpen(true)}
+                />
+              ))}
+              {navigationSections.length > 0 && <Divider />}
+            </>
+          )}
+
+          {/* Keep the drawer useful when every legacy section is filtered out by module access. */}
+          {!isModuleLauncherRoute && navigationSections.length === 0 && (
+            <SidebarNavigationItem
+              open={open}
+              title={t("modules.title")}
+              icon={<AppsRoundedIcon />}
+              path="/apps"
+              searchTerm={searchTerm}
+              onNavigate={handleNavigate}
+              onRequestOpen={() => setOpen(true)}
+            />
+          )}
+
+          {/* Navigation Sections */}
+          {!isModuleLauncherRoute && navigationSections.map((section, index) => (
+            <div key={section.id}>
+              <NavigationSection
+                section={section}
+                open={open}
+                searchTerm={searchTerm}
+                t={t}
+                isExpanded={!!expandedSections[section.id]}
+                onToggle={handleSectionToggle}
+                onNavigate={handleNavigate}
+                onRequestOpen={() => setOpen(true)}
+              />
+              {index < navigationSections.length - 1 &&
+                (!searchTerm ||
+                  (searchTerm &&
+                    isSectionVisible(section) &&
+                    navigationSections
+                      .slice(index + 1)
+                      .some((s) => isSectionVisible(s)))) && <Divider />}
+            </div>
+          ))}
+        </ScrollableContent>
+      </DrawerContent>
+    </MuiDrawer>
+  );
+}
+
+export default SideBar;

@@ -81,3 +81,7 @@ The Mobile Phase 1 surface is source-complete. Live data and realtime verificati
 ## 18. Phase 5–6 trace and governance
 
 Offer actions are separate lifecycle commands and never auto-issue or auto-hire. The Trace screen uses shared `AppScreen`, `AppDataCard`, `AppSegmentedControl`, `AppTextField`, and `AppStateView` components, Zod runtime schemas, and a chronological accessible timeline. Salary/currency values are only present when the API caller has financial visibility. Device/simulator smoke is intentionally omitted per the user request; typecheck, lint, architecture, and focused API/schema tests remain the automated gate.
+
+Offer creation now uses the shared `AppForm` controls, validates salary/currency/start
+date inline, and sends only commercial terms plus application identity. Organization
+placement remains server-derived and cannot be overridden by the device.

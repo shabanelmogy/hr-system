@@ -1,6 +1,6 @@
 # Mobile feature guide
 
-Use this guide for every new HR module. The goal is consistent ownership and predictable behavior, not identical folder counts. Small features may omit folders they do not need.
+Use this guide for every new business feature inside a mobile ERP module. The goal is consistent ownership and predictable behavior, not identical folder counts. Small features may omit folders they do not need.
 
 ## 1. Define the boundary first
 
@@ -8,41 +8,71 @@ Write down the business capability and actor, API resources and permissions, ten
 
 Do not place unrelated work in an existing miscellaneous feature. Create a stable business boundary such as `employees`, `leave`, `attendance`, or `organization`.
 
+## Module ownership before feature structure
+
+Every business feature belongs to a user-facing ERP module under `src/modules/<module>`. Current mobile business owners are `hr` and `accounting`; cross-module technical capabilities belong under `src/platform`, and top-level composition belongs under `src/shell`.
+
+When adding a completely new ERP module, create its `moduleDefinition.ts`, add its dependency policy in `scripts/module-boundaries.mjs`, and register it from `src/shell/module-registration.ts`. The server module catalog remains authoritative for enablement and entitlements; the mobile registry only filters that server catalog to modules/submodules implemented by this build.
+
+Do not import another module's internals. Cross-owner dependencies use public `index.ts` APIs, and business modules must never depend on `src/shell`.
 ## 2. Target structure
 
 ```text
-src/features/employees/
-├── api/
-│   ├── employee-api.ts
-│   ├── employee-endpoints.ts
-│   └── employee-schemas.ts
-├── components/
-├── hooks/
-├── queries/
-│   ├── employee-keys.ts
-│   └── use-employees.ts
-├── screens/
-├── types/
+src/modules/hr/employees/
+├── domain/
+│   ├── entities/
+│   ├── policies/
+│   └── repositories/
+│       └── employee-repository.ts
+├── application/
+│   ├── use-cases/
+│   └── ports/
+├── data/
+│   ├── remote/
+│   │   ├── employee-remote-data-source.ts
+│   │   ├── employee-endpoints.ts
+│   │   └── employee-schemas.ts
+│   ├── local/
+│   │   └── employee-local-data-source.ts
+│   ├── mappers/
+│   └── repositories/
+│       └── offline-first-employee-repository.ts
+├── presentation/
+│   ├── components/
+│   ├── hooks/
+│   ├── queries/
+│   │   ├── employee-keys.ts
+│   │   └── use-employees.ts
+│   └── screens/
 ├── validation/
 ├── navigation/
 │   └── employee-route-manifest.ts
+├── composition/
+│   └── employee-dependencies.ts
 └── index.ts
 ```
 
-- `api` owns transport DTOs, runtime schemas, endpoint mapping and normalization.
-- `queries` owns React Query keys/hooks and invalidation.
+- `domain` owns pure business types, invariants and repository/clock/ID ports.
+- `application` owns UI-neutral use cases and orchestration over domain ports.
+- `data/remote` owns transport DTOs, runtime schemas, endpoint mapping and normalization.
+- `data/local` owns SQLite persistence for this feature only.
+- `data/repositories` implements repository ports and the feature's online/offline policy.
+- `presentation/queries` owns React Query keys/controllers and invalidation; it calls application/repository boundaries rather than remote APIs directly.
+- `presentation/screens` orchestrate feature UI; reusable business UI stays in `presentation/components`.
 - `validation` owns form schemas, not API response schemas.
-- `screens` orchestrate feature behavior; reusable business UI stays in feature components.
 - `navigation` exists only when the feature has multiple screens or module navigation.
+- `composition` is the only feature layer that wires concrete core/data implementations.
 - `index.ts` exports only what external consumers need.
 
 Avoid broad `export *` for APIs and implementation hooks. A public API is a compatibility contract.
 
+The top-level module migration is complete: do not recreate `src/features` or `src/layouts`. Within an owning module, a feature may still be migrated incrementally from local legacy `api/queries/screens/components` folders toward the clean layers above, but new behavior must target the clean structure.
+
 ## 3. Routes and navigation
 
 - Add the physical Expo Router file first, then its typed `ROUTES` entry.
-- A route imports a feature root/subdomain public API and renders a screen or feature-owned layout.
-- Add the access policy to `auth/rbac/route-manifest.ts`.
+- A route imports the owning module feature/subdomain public API and renders a screen or feature-owned layout.
+- Add the access policy to `src/platform/auth/presentation/rbac/route-manifest.ts`.
 - Main drawer metadata belongs in the same manifest so visibility and authorization cannot drift.
 - Add every direct route to `AppBreadcrumbs` with its complete parent chain. Breadcrumb overflow stays anchored at the logical Home item (left in LTR, right in RTL), while later items remain horizontally swipeable; re-evaluate that position after route, language, orientation, and width changes.
 - Keep `RouteGuard` in routed pages even when a navigation item is hidden.
@@ -68,6 +98,7 @@ export async function getEmployee(id: string) {
 - Do not hide missing required fields with empty strings or zero.
 - Keep optional/backward-compatible fallbacks explicit in the schema.
 - Do not put endpoint behavior into a screen.
+- Remote data sources are infrastructure adapters. Application use cases and presentation code must not import them directly.
 
 ## 5. Query ownership
 
@@ -84,10 +115,40 @@ export const employeeKeys = {
 - Mutations invalidate the narrowest correct prefix.
 - Realtime registers stable public prefixes, not imports from private hook files.
 - Session/company changes remain responsible for clearing cross-tenant caches.
+- For an offline-enabled feature the query function reads through the application/repository boundary. React Query may cache/project that result, but SQLite owns durable business data.
+
+### Offline Operations Policy and repository rule
+
+Every operation that may have offline behavior must first have a code-owned capability definition. The definition is the safety ceiling: administration can select a supported mode for a tenant/company but cannot invent support that the feature did not declare. The supported modes are:
+
+- `online-only`: require a live server response and never synthesize success locally;
+- `offline-read`: read scoped local data immediately and refresh remotely when possible;
+- `offline-draft`: persist user-entered drafts locally but submit only while online;
+- `offline-command`: update local state and atomically enqueue a replay-safe outbox command.
+
+Unknown capabilities and missing, stale, malformed, wrong-scope, or unsupported policy values fail closed to `online-only`. A device preference may narrow the effective mode but must never expand it. The Platform API policy at `GET/PUT /api/v1/offline-operations/policy` is the tenant/company authority. Mobile may use a bounded cached copy only as a runtime fallback; cached or fail-closed policy is never editable authority.
+
+Do not classify a mutation as `offline-command` merely because it is technically possible to save its payload. The API must provide safe replay/idempotency, aggregate concurrency, deterministic conflict/reconciliation, scope isolation, and interruption/restart recovery. Ambiguous non-idempotent submissions are `uncertain` and must reconcile rather than auto-retry. The normal React Query mutation path stays online-authoritative (`networkMode: 'always'`, no automatic replay); explicit persisted outbox commands are the only replay mechanism.
+
+The current read reference is Countries. Code declares `countries.read` safe for
+`online-only` and `offline-read`; the effective cached-read path additionally requires
+the active tenant/company policy and the existing local user opt-in. Country cache rows
+remain partitioned by `userId + tenantId + companyId`, have a 24-hour freshness limit,
+and expose connection/source/last-update state. Enabling cached reads does not make any
+mutation offline-capable.
+
+The first certified mutation pilot is Workforce Plan draft update. The capability
+`workforce-plan.update-draft` supports `online-only`, `offline-draft`, and
+`offline-command`, while the tenant/company policy still defaults to `online-only` and
+must explicitly opt in. Certification is backed by SQL Server aggregate-concurrency
+coverage proving that child-only edits advance/check the parent rowVersion and stale
+writers cannot overwrite newer lines. The mobile pilot atomically persists the scoped
+draft plus row-versioned outbox command, reconciles ambiguous/409 outcomes against the
+authoritative plan before retry, and stops on a concurrent server change.
 
 ## 6. Server-managed list reference
 
-`src/features/basic-data/countries` is the first implemented mobile reference for
+`src/modules/hr/basic-data/countries` is the first implemented mobile reference for
 this pattern. It demonstrates a feature-owned endpoint/schema boundary, stable query
 keys, one server list state shared by table and card views, table page size 5,
 card page size 3,

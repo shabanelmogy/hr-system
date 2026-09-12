@@ -107,13 +107,13 @@ candidate's home address.
 
 | Area | Source |
 |---|---|
-| Entity | `api/HrManagementSystem.Domain/GeographicalInformation/Addresses/Entities/Address.cs` |
+| Entity | `api/Modules/HR/ErpSystem.Modules.HR.Domain/GeographicalInformation/Addresses/Entities/Address.cs` |
 | Owner links | `CompanyAddress.cs`, `BranchAddress.cs`, `AddressPurpose.cs` |
-| Request/response | `api/HrManagementSystem.Application/Features/GeographicalInformation/Addresses/Contracts` |
+| Request/response | `api/Modules/HR/ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Addresses/Contracts` |
 | Validation | `AddressRequestValidator.cs` and Country/State/District validation queries |
 | Persistence | `AddressConfiguration.cs`, `CompanyAddressConfiguration.cs`, `BranchAddressConfiguration.cs` |
 | Migration | `RefactorAddressesForGlobalGeography` |
-| Current HTTP boundary | `api/HrManagementSystem.Api/Features/GeographicalInformation/Addresses/V1/AddressesController.cs` |
+| Current HTTP boundary | `api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/GeographicalInformation/Addresses/V1/AddressesController.cs` |
 
 ## 7. Client decisions
 

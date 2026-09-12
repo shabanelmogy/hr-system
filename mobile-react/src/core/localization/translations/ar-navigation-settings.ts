@@ -4,6 +4,7 @@ export const arNavigationSettings = {
     users: 'المستخدمون',
     invitations: 'الدعوات',
     roles: 'الأدوار',
+    offlineOperations: 'العمل دون اتصال',
     superAdminDashboard: 'لوحة تحكم مدير النظام',
     tenantManagement: 'إدارة المستأجرين',
     tenantAdminManagement: '\u0625\u062f\u0627\u0631\u0629 \u0645\u0633\u0624\u0648\u0644\u064a \u0627\u0644\u0645\u0646\u0634\u0622\u062a',

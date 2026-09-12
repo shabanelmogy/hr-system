@@ -1,4 +1,4 @@
-import { OnboardingScreen } from '@/src/features/onboarding';
+import { OnboardingScreen } from '@/src/shell/onboarding';
 
 export default function OnboardingRoute() {
   return <OnboardingScreen />;

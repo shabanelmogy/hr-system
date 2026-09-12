@@ -92,6 +92,7 @@ export const enAdministrationTenants = {
     title: 'Tenant management',
     subtitle: 'Manage subscriptions, limits, contacts, and tenant access.',
     description: 'Subscriptions, account limits, contacts, and access status',
+    entitlements: 'Enabled modules and submodules',
     addTenant: 'Add tenant',
     editTenant: 'Edit tenant',
     search: 'Search tenants',

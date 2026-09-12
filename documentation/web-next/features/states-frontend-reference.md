@@ -1,6 +1,6 @@
 # States Next.js Frontend Reference
 
-Status: applied adaptive-list feature profile. Feature owner: `src/features/basic-data/geographical-information/states`.
+Status: applied adaptive-list feature profile. Feature owner: `web-next/src/modules/hr/basic-data/geographical-information/states`.
 
 ## 1. Route and ownership
 

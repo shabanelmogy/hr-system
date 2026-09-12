@@ -1,6 +1,6 @@
 import { ROUTES } from '@/src/core/constants/routes';
-import { RouteGuard } from '@/src/features/auth';
-import { TrackChangesScreen } from '@/src/features/platform-tools/track-changes';
+import { RouteGuard } from '@/src/platform/auth';
+import { TrackChangesScreen } from '@/src/platform/tools/track-changes';
 
 export default function TrackChangesRoute() {
   return (

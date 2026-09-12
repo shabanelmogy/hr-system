@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { DistrictsPage } from "@/features/basic-data/geographical-information/districts";
+import { DistrictsPage } from "@/modules/hr/basic-data/geographical-information/districts";
 
 export const metadata: Metadata = {
-  title: "Global Districts | HR Management System",
+  title: "Global Districts | ERP System",
   description: "Super Admin management for the global district catalog.",
 };
 

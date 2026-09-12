@@ -1,19 +1,25 @@
 # Mobile Feature Implementation Guide
 
-Status: Canonical guide for building list/management features in the React Native mobile app.
-Reference: `features/basic-data/countries/`
+Status: Legacy compatibility reference. For new work, use
+[MOBILE_FEATURE_GUIDE.md](MOBILE_FEATURE_GUIDE.md), which is the current Clean
+Architecture and module-boundary contract.
+Reference: `modules/hr/basic-data/countries/`
 Cross-platform review: [Countries Feature Full Review](../project/COUNTRIES_FEATURE_FULL_REVIEW.md)
 Applied mobile profile: [Countries Mobile Applied Feature Profile](countries-mobile-reference.md)
 
-Use this when building a new feature that manages a server collection. It documents
-the exact patterns from the Countries feature. Do not invent new ones.
+The examples below document the earlier list-management API shape for migrated
+features. Keep them only when preserving an existing public contract; do not
+create a new top-level `src/features` tree or copy the legacy `api/queries`
+layout into a new module. New features belong under
+`src/modules/<module>/<domain>/<feature>` and follow the domain/application/data/
+presentation/composition layers in the current guide.
 
 ---
 
 ## 1. Folder Structure
 
 ```
-src/features/<domain>/<feature>/
+src/modules/<module>/<domain>/<feature>/
 ├── index.ts                         ← Public exports
 ├── api/
 │   ├── {feature}-endpoints.ts       ← URL path constants
@@ -707,7 +713,7 @@ renders regardless of list data and never owns list pagination:
 |------|--------|---------|
 | `useServerListState` | `@/src/shared/listing` | Page, search, sort, filters state |
 | `toApiPageNumber` | `@/src/shared/listing` | Converts 0-based UI page to 1-based API page |
-| `useAuthorization` | `@/src/features/auth` | Permission check |
+| `useAuthorization` | `@/src/platform/auth` | Permission check |
 | `useAppReadOnly` | `@/src/shared/contexts/AppReadOnlyContext` | Read-only mode guard |
 | `useZodForm` | `@/src/core/validation` | react-hook-form + zod |
 | `toFormErrorMap` | `@/src/core/validation` | Converts RHF errors to AppForm format |

@@ -1,6 +1,6 @@
 import { ROUTES } from '@/src/core/constants/routes';
-import { RouteGuard } from '@/src/features/auth';
-import { HealthCheckScreen } from '@/src/features/platform-tools/operations';
+import { RouteGuard } from '@/src/platform/auth';
+import { HealthCheckScreen } from '@/src/platform/tools/operations';
 
 export default function HealthCheckRoute() {
   return (

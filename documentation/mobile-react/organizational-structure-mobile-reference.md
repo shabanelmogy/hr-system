@@ -15,7 +15,7 @@ navigation parameters.
 Types, Zod runtime schemas, API serializers, query keys/hooks, validation, cards,
 chart, filter button, forms, decision form, and the seven resource screen
 compositions are feature-owned under
-`src/features/basic-data/organizational-structure`.
+`src/modules/hr/basic-data/organizational-structure`.
 
 ## 3. Shared design system
 
@@ -103,3 +103,8 @@ Excluded.
 and the full Jest suite pass after the feature translation fix. Manual device
 checks remain for direct navigation, EN/AR RTL, small/large text, permissions,
 archive dependency errors, approval period validation, and realtime refresh.
+## 16. 2026-09-08 review addendum
+
+The review removed unused type/import drift from chart, detail, and structured
+job-description editor surfaces. Mobile TypeScript and scoped ESLint checks pass
+without changing runtime behavior.

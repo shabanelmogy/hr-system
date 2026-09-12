@@ -57,7 +57,7 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | organizational-structure-master | 3 | `e45c90794d15330609e089c888b6a6af9df12bcf5a265e1f78d93e31f39b8a8c` |
-| organizational-structure-master | 4 | `0beaf7376a09bb7c622523a47042700f05bf8105485ff4f3fda6be4ed287136a` |
+| organizational-structure-master | 4 | `834005c26053eb5eee6e85e186c98953501eda8584fb9e30055ec9bd16391cb8` |
 | organizational-structure-master | 6 | `2fdee62992580c5d76fc63348edf52701b1e514b1c18ff8be30c53dda4d1b0bf` |
 | organizational-structure-master | 7 | `d3371766bde33eeaa333e5abee156d13b95e6c35dae25ecc9ca097037434c07c` |
 | organizational-structure-master | 8 | `2d14109ce3bb4835c1ac94307acaf5e892e36ded76f27395197546348229812d` |
@@ -67,7 +67,7 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | organizational-structure-web | 6 | `9f3ee2ec7f93eca74063e2e7bd940a416c741f9f673c1dcf4ec87f91b8b1f5ea` |
 | organizational-structure-web | 7 | `8079e625c2cff443433359be277baccfd39cd512dd3cffd356e5b934d31637b2` |
 | organizational-structure-web | 8 | `81709390ab5691f03acc9dcd2b845f95f2a60c0ee2707ea8d96dcfc4efd4d812` |
-| organizational-structure-web | 9 | `e927d61cfecd602bd6ef280ad83f12cd1a9615a5e9753963a89f8cc8e4dd2033` |
+| organizational-structure-web | 9 | `f2277cf5c38e75285cc97507df1e7294c4ef59df2bbe4a209287722cd7db5412` |
 | organizational-structure-mobile | 9 | `a81ab1f68c57c31f0a4a4e83b9a035b17676c9c8098b2ab3ce74e33b1323c466` |
 | organizational-structure-mobile | 10 | `a63acd8c39188f4d933e677680fde79c2170aa45afe71c8cf4b896109c5bc06c` |
 | organizational-structure-mobile | 11 | `ec3e51c2ef99a1494eb03474652b596423e1d5fcc07a4ad7cf8066b0517e1b4e` |

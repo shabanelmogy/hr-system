@@ -8,14 +8,17 @@ export function findActiveNavigationTrail(
   items: readonly FeatureModuleNavigationItem[],
   pathname: string,
 ): FeatureModuleNavigationItem[] {
-  for (const item of items) {
+  return items.reduce<FeatureModuleNavigationItem[]>((bestTrail, item) => {
     const childTrail = findActiveNavigationTrail(item.children ?? [], pathname);
-    if (childTrail.length > 0) return [item, ...childTrail];
-
-    if (item.href && isFeaturePathActive(pathname, item.href)) return [item];
-  }
-
-  return [];
+    const candidate = childTrail.length > 0
+      ? [item, ...childTrail]
+      : item.href && isFeaturePathActive(pathname, item.href)
+        ? [item]
+        : [];
+    const candidateLength = candidate.at(-1)?.href?.length ?? 0;
+    const bestLength = bestTrail.at(-1)?.href?.length ?? 0;
+    return candidateLength > bestLength ? candidate : bestTrail;
+  }, []);
 }
 
 export function flattenFeatureNavigation(

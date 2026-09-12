@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { StatesPage } from "@/features/basic-data/geographical-information/states";
+import { StatesPage } from "@/modules/hr/basic-data/geographical-information/states";
 
 export const metadata: Metadata = {
-  title: "Global States | HR Management System",
+  title: "Global States | ERP System",
   description: "Super Admin management for the global state catalog.",
 };
 

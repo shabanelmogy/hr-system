@@ -1,6 +1,6 @@
 import { ROUTES } from '@/src/core/constants/routes';
-import { RouteGuard } from '@/src/features/auth';
-import { DistrictsScreen } from '@/src/features/basic-data';
+import { RouteGuard } from '@/src/platform/auth';
+import { DistrictsScreen } from '@/src/modules/hr/basic-data';
 
 export default function DistrictsRoute() {
   return (

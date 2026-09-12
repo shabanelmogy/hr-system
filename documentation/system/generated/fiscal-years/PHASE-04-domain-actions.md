@@ -56,18 +56,18 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| fiscal-years-master | 3 | `ccc1e6d3749ac91ff4e2408e9849fe8fdf77bfac6c3c2ee91f4a20d117fb0594` |
-| fiscal-years-master | 4 | `a460b43fa6abe4003f8b26786686574974837756572467bddbf56ef66c136773` |
+| fiscal-years-master | 3 | `8390cefc7a311be46bc6e92580fcbe7aff06ff47aaa4ac187f90cd7e66903da8` |
+| fiscal-years-master | 4 | `dea891749533e9690608c378a77d0fe3056c46fb0262d3412a75d6595a5c2bed` |
 | fiscal-years-master | 6 | `c61603f2d747c9ea9d5c5c0dbec61ba19af29c8f378afac7131e65ec8659b438` |
 | fiscal-years-master | 7 | `b3750a34f63ea59165176bbfdfde4267e123c0e9eed6ed0d09b5d821c9c45099` |
-| fiscal-years-master | 8 | `7bac233192642900e592d8fb97ab9c9bcadebf166ee02024e7c749ead6dc5752` |
-| fiscal-years-api | 6 | `9930369dddbe839a428229fd19890e314ee7733898ea020224fbea7e78d63066` |
+| fiscal-years-master | 8 | `0608539faf50906c65ce836f3ec4d3ac23ed071fee40e136df580a996f2a1c73` |
+| fiscal-years-api | 6 | `748acbb8a884f50f81cdf9e854ef7f784765a8f2781f904bf2a90f5872ed6c64` |
 | fiscal-years-api | 7 | `c25d29f51a1e7ed2e7f3c4010197ff26f4c0c385fc4fb356666a1601585964fd` |
-| fiscal-years-api | 8 | `048676eb30bdd218e94bb7e00f51bdf7bc4328d37eda70b842f887e50b14074c` |
+| fiscal-years-api | 8 | `da26f9374d1461299ddd9043d1a72414d6f63e7df4cd8babe579a9c9382cebb2` |
 | fiscal-years-web | 6 | `4a987d415b162e64422f9bb51141de6927512e52c13326d8d0f5b7718c2212ff` |
 | fiscal-years-web | 7 | `40edc2f5844933853f70e51361b2d32da035cc6ee8d53c774c87de4730a707d7` |
 | fiscal-years-web | 8 | `e46e54a03b71c5d25ea8647727571d4b305e67fae28e541211b08f63c0d0fa79` |
-| fiscal-years-web | 9 | `7a19f6884815ed3863251e0ef30370954bdf10e1c97289a2eb0abbf324bba84a` |
+| fiscal-years-web | 9 | `79fbad010860a07f76192e693aa5e688ad95ffb364f8c207add350a15e041676` |
 | fiscal-years-mobile | 9 | `2e7fa5bc0d34196489db933bbd648c9fd6b18b04bce5f90a6b6087776daf0470` |
 | fiscal-years-mobile | 10 | `30718f35722bac64dcc821190ed1fcebfcb21b3555208e9016c3e0393b10cfa1` |
-| fiscal-years-mobile | 11 | `be56c4107cac3e77f8ecc76f320e8ba708f846336318127f0604261f7faa0bdc` |
+| fiscal-years-mobile | 11 | `52260959e8e4915eb5304aceea135dd4715ff6ff3ded05dacbd3e6be022fab0c` |

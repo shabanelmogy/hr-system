@@ -7,6 +7,8 @@ import { arPlatformToolsNotifications } from './ar-platform-tools-notifications'
 import { arBasicData } from './ar-basic-data';
 import { arFiscalYears } from './ar-fiscal-years';
 import { arWorkforcePlanning } from './ar-workforce-planning';
+import { arModules } from './ar-modules';
+import { arOfflineOperations } from './ar-offline-operations';
 
 export const ar = {
   ...arCommon,
@@ -18,4 +20,6 @@ export const ar = {
   ...arRecruitment,
   ...arFiscalYears,
   ...arWorkforcePlanning,
+  ...arModules,
+  ...arOfflineOperations,
 };

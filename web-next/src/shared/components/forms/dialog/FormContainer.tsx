@@ -12,6 +12,7 @@ import { FormProvider } from "./FormContext";
 import type { MyFormProps } from "./types";
 import { useFormDialogFocus } from "./useFormDialogFocus";
 import { useFormDialogState } from "./useFormDialogState";
+import { useUnsavedChangesRegistration } from "@/shared/contexts/UnsavedChangesContext";
 
 const DialogTransition = React.forwardRef<
   unknown,
@@ -68,6 +69,7 @@ export const FormContainer: React.FC<MyFormProps> = ({
     onClose,
     onSubmit,
   });
+  useUnsavedChangesRegistration(Boolean(open && (isDirty || submissionPending)), submissionPending);
 
   const getDialogStyles = () => {
     const baseStyles = {

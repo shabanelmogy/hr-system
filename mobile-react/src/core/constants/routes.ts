@@ -2,6 +2,10 @@ import type { Href } from 'expo-router';
 
 export const ROUTES = {
   home: '/',
+  apps: '/apps',
+  module: (moduleCode: string) => `/apps/${moduleCode}` as `/apps/${string}`,
+  submodule: (moduleCode: string, submoduleCode: string) =>
+    `/apps/${moduleCode}/${submoduleCode}` as `/apps/${string}/${string}`,
   onboarding: '/onboarding',
   login: '/login',
   register: '/register',
@@ -54,6 +58,7 @@ export const ROUTES = {
     root: '/administration',
     invitations: '/administration/invitations',
     roles: '/administration/roles',
+    offlineOperations: '/administration/offline-operations',
     rolePermissionsRoot: '/administration/role-permissions',
     rolePermissions: (roleId: string) =>
       `/administration/role-permissions/${encodeURIComponent(roleId)}` as
@@ -79,6 +84,9 @@ export const ROUTES = {
 
 export type AppRoute =
   | typeof ROUTES.home
+  | typeof ROUTES.apps
+  | ReturnType<typeof ROUTES.module>
+  | ReturnType<typeof ROUTES.submodule>
   | typeof ROUTES.onboarding
   | typeof ROUTES.login
   | typeof ROUTES.register
@@ -100,6 +108,7 @@ export type AppRoute =
   | typeof ROUTES.administration.root
   | typeof ROUTES.administration.invitations
   | typeof ROUTES.administration.roles
+  | typeof ROUTES.administration.offlineOperations
   | typeof ROUTES.administration.rolePermissionsRoot
   | ReturnType<typeof ROUTES.administration.rolePermissions>
   | typeof ROUTES.recruitment.root

@@ -1,0 +1,16 @@
+namespace ErpSystem.Modules.HR.Application.Features.GeographicalInformation;
+
+public static class GeographicalLifecycleLocks
+{
+    public static string Country(int countryId) =>
+        $"GeographicalInformation:Country:{countryId}";
+
+    public static string State(int stateId) =>
+        $"GeographicalInformation:State:{stateId}";
+
+    public static string District(int districtId) =>
+        $"GeographicalInformation:District:{districtId}";
+
+    public static string AddressType(int addressTypeId) =>
+        $"GeographicalInformation:AddressType:{addressTypeId}";
+}

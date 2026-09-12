@@ -7,8 +7,9 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { LocalizationProvider, useLocalization } from '@/src/core/localization';
+import { OfflineFoundationProvider } from '@/src/core/offline';
 import { OnboardingProvider } from '@/src/core/onboarding';
-import { MockDataPreferencesProvider } from '@/src/core/preferences';
+import { MockDataPreferencesProvider, OfflineReadPreferencesProvider } from '@/src/core/preferences';
 import { queryClient } from '@/src/core/query/query-client';
 import { AppThemeProvider, useAppTheme } from '@/src/core/theme';
 import { AppFeedbackHost } from '@/src/shared/components/feedback/transient';
@@ -39,18 +40,22 @@ export function AppProviders({ children }: PropsWithChildren) {
       <KeyboardProvider preserveEdgeToEdge>
         <SafeAreaProvider>
           <QueryClientProvider client={queryClient}>
-            <LocalizationProvider>
-              <MockDataPreferencesProvider>
-                <AppThemeProvider>
-                  <OnboardingProvider>
-                    <DirectionRoot>
-                      {children}
-                      <AppFeedbackHost />
-                    </DirectionRoot>
-                  </OnboardingProvider>
-                </AppThemeProvider>
-              </MockDataPreferencesProvider>
-            </LocalizationProvider>
+            <OfflineFoundationProvider>
+              <LocalizationProvider>
+                <OfflineReadPreferencesProvider>
+                  <MockDataPreferencesProvider>
+                    <AppThemeProvider>
+                      <OnboardingProvider>
+                        <DirectionRoot>
+                          {children}
+                          <AppFeedbackHost />
+                        </DirectionRoot>
+                      </OnboardingProvider>
+                    </AppThemeProvider>
+                  </MockDataPreferencesProvider>
+                </OfflineReadPreferencesProvider>
+              </LocalizationProvider>
+            </OfflineFoundationProvider>
           </QueryClientProvider>
         </SafeAreaProvider>
       </KeyboardProvider>

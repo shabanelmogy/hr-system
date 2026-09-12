@@ -1,7 +1,23 @@
 // src/Utilites/excelExportUtils.js
 import * as XLSX from "xlsx";
 
-export const exportGridToExcel = (apiRef: any, options: any = {}) => {
+type GridRow = Record<string, unknown>;
+type GridColumn = { field: string; headerName?: string; type?: string };
+type GridApi = {
+  getSelectedRows: () => Map<unknown, GridRow>;
+  getRow: (id: unknown) => GridRow | null;
+  getRowModels: () => Map<unknown, GridRow>;
+  getAllColumns: () => GridColumn[];
+};
+export type GridApiRef = { current?: GridApi | null };
+type ExportOptions = {
+  selectedOnly?: boolean;
+  fileName?: string;
+  sheetName?: string;
+  excludeFields?: readonly string[];
+};
+
+export const exportGridToExcel = (apiRef: GridApiRef, options: ExportOptions = {}) => {
   const {
     selectedOnly = false,
     fileName = "export",
@@ -13,14 +29,14 @@ export const exportGridToExcel = (apiRef: any, options: any = {}) => {
 
   try {
     // Get rows based on selection mode
-    let rows;
+    let rows: GridRow[];
     if (selectedOnly) {
       const selectedRowIds = apiRef.current.getSelectedRows();
       if (selectedRowIds.size === 0) return false;
 
       rows = Array.from(selectedRowIds.keys())
         .map((id) => apiRef.current.getRow(id))
-        .filter(Boolean);
+      .filter((row): row is GridRow => row !== null);
     } else {
       rows = Array.from(apiRef.current.getRowModels().values());
     }
@@ -37,7 +53,7 @@ export const exportGridToExcel = (apiRef: any, options: any = {}) => {
 
     // Clean data (remove action buttons, etc.)
     const cleanedRows = rows.map((row) => {
-      const newRow = {};
+      const newRow: GridRow = {};
       columns.forEach((column) => {
         // Use headerName as keys for better readability in Excel
         const key = column.headerName || column.field;
@@ -46,8 +62,10 @@ export const exportGridToExcel = (apiRef: any, options: any = {}) => {
         // Format date values if needed
         if (column.type === "date" && value) {
           try {
-            value = new Date(value).toLocaleDateString();
-          } catch (e) {
+            if (typeof value === "string" || typeof value === "number" || value instanceof Date) {
+              value = new Date(value).toLocaleDateString();
+            }
+          } catch {
             // Keep original value if date parsing fails
           }
         }
@@ -61,7 +79,7 @@ export const exportGridToExcel = (apiRef: any, options: any = {}) => {
     const worksheet = XLSX.utils.json_to_sheet(cleanedRows);
 
     // Add some basic styling - auto width columns
-    const colWidths = {};
+    const colWidths: Record<string, number> = {};
     cleanedRows.forEach((row) => {
       Object.keys(row).forEach((key) => {
         const value = row[key] ? String(row[key]) : "";

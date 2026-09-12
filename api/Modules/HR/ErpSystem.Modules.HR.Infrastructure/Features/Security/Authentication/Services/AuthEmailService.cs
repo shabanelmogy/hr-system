@@ -1,0 +1,41 @@
+using ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities;
+
+namespace ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Services;
+
+public class AuthEmailService(
+    IBackgroundJobClient backgroundJobs,
+    AuthEmailLinkBuilder links) : IAuthEmailService
+{
+    public void SendConfirmationEmail(ApplicationUser user, string code)
+    {
+        var actionUrl = links.BuildConfirmationLink(user.Id, code);
+        EnqueueEmail(user.Email!, "ERP System: Email confirmation",
+            "EmailConfirmation", user.FirstName, actionUrl);
+    }
+
+    public void SendResetPasswordEmail(ApplicationUser user, string code)
+    {
+        var actionUrl = links.BuildResetPasswordLink(user.Email!, code);
+        EnqueueEmail(user.Email!, "ERP System: Reset password",
+            "ForgetPassword", user.FirstName, actionUrl);
+    }
+
+    public void SendInvitationEmail(string email, string firstName, Guid invitationId, string token)
+    {
+        var actionUrl = links.BuildInvitationActivationLink(invitationId, token);
+        EnqueueEmail(email, "ERP System: Activate your account",
+            "Invitation", firstName, actionUrl);
+    }
+
+    private void EnqueueEmail(string to, string subject, string template, string name, string actionUrl)
+    {
+        var body = EmailBodyBuilder.GenerateEmailBody(template, new Dictionary<string, string>
+        {
+            { "{{name}}", name },
+            { "{{action_url}}", actionUrl }
+        });
+
+        backgroundJobs.Enqueue<IEmailSender>(
+            emailSender => emailSender.SendEmailAsync(to, subject, body));
+    }
+}

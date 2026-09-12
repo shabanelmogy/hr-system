@@ -1,4 +1,4 @@
-// Mirrors api/HrManagementSystem/Shared/Consts/Permissions.cs; parity is enforced by a test.
+// Mirrors api/Modules/HR/ErpSystem.Modules.HR.Application/Common/Consts/Permissions.cs; parity is enforced by a test.
 export const permissions = {
   ViewAddresses: "Addresses:View",
   CreateAddresses: "Addresses:Create",
@@ -94,6 +94,7 @@ export const permissions = {
   CreateRoles: "Roles:Create",
   EditRoles: "Roles:Edit",
   DeleteRoles: "Roles:Delete",
+  ManageOfflineOperations: "OfflineOperations:Manage",
   ViewStates: "States:View",
   CreateStates: "States:Create",
   EditStates: "States:Edit",
@@ -198,6 +199,7 @@ export type PermissionModule =
   | "ReportTemplates"
   | "CrystalReports"
   | "Roles"
+  | "OfflineOperations"
   | "States"
   | "SubCategories"
   | "KanbanBoards"

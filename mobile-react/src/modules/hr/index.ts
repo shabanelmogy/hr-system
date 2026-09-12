@@ -1,0 +1,1 @@
+export { hrModuleDefinition } from './moduleDefinition';

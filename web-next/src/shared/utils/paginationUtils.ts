@@ -1,13 +1,13 @@
-export const goToLastPage = (
-  data: any[],
+export const goToLastPage = <T>(
+  data: T[],
   searchText: string,
   searchType: string,
   searchFields: string[],
-  filters: any,
+  filters: Record<string, unknown>,
   pageSize: number,
   setCurrentPage: (page: number | ((prev: number) => number)) => void,
-  filterFunc: (data: any[], options: any) => any[],
-  newItem: any = null
+  filterFunc: (data: T[], options: Record<string, unknown>) => T[],
+  newItem: T | null = null
 ) => {
   // Include the new item in the data if provided
   const updatedData = newItem ? [...data, newItem] : data;
@@ -26,7 +26,17 @@ export const goToLastPage = (
   if (newItem) {
     // If we have a new item, find which page it would be on
     const newItemIndex = filteredData.findIndex(
-      (item) => item.id === newItem.id
+      (item) => {
+        const itemWithId = typeof item === "object" && item !== null && "id" in item
+          ? (item as { id: unknown })
+          : null;
+        const newItemWithId = typeof newItem === "object" && newItem !== null && "id" in newItem
+          ? (newItem as { id: unknown })
+          : null;
+        return itemWithId !== null
+          && newItemWithId !== null
+          && itemWithId.id === newItemWithId.id;
+      }
     );
 
     if (newItemIndex >= 0) {
@@ -43,7 +53,7 @@ export const goToLastPage = (
   }
 };
 
-export const paginateData = (data: any[], pageSize: number, currentPage: number) => {
+export const paginateData = <T>(data: T[], pageSize: number, currentPage: number) => {
   // Calculate the total number of pages
   const totalPages = Math.max(1, Math.ceil(data.length / pageSize)); // Ensure at least 1 page
 

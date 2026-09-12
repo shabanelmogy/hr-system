@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { WorkforcePlanningHomePage } from "@/features/workforce-planning";
+import { WorkforcePlanningHomePage } from "@/modules/hr/workforce-planning";
 
 export const metadata: Metadata = {
-  title: "Workforce Planning | HR Management System",
+  title: "Workforce Planning | ERP System",
   description: "Plan, authorize, and monitor workforce demand and commitments.",
 };
 

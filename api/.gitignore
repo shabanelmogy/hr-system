@@ -8,6 +8,12 @@ appsettings.Local.json
 .env
 .env.*
 !.env.example
+
+# Local API runtime configuration may contain database credentials, JWT keys,
+# SMTP passwords, bootstrap-user passwords, or third-party client secrets.
+# Keep the live files local and commit only appsettings.example.json.
+ErpSystem.Api/appsettings.json
+ErpSystem.Api/appsettings.Development.json
 *.rsuser
 *.suo
 *.user

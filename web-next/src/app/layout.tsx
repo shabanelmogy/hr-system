@@ -6,8 +6,8 @@ import { Providers } from "./providers";
 import "@/index.css";
 
 export const metadata: Metadata = {
-  title: "HR Management System",
-  description: "Operational HR management dashboard"
+  title: "ERP System",
+  description: "Operational ERP dashboard"
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

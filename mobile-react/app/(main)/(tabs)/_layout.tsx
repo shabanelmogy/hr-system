@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ROUTES } from '@/src/core/constants/routes';
 import { useAppTheme } from '@/src/core/theme';
-import { useCanAccessRoute } from '@/src/features/auth';
+import { useCanAccessRoute } from '@/src/platform/auth';
 import { AppIcon } from '@/src/shared/components';
 
 export default function TabLayout() {

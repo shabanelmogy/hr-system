@@ -1,6 +1,6 @@
-# HR Management System Documentation
+# ERP System Documentation
 
-This directory is the single home for project-owned documentation. Product source code stays in `api/`, `web-next/`, `mobile-react/`, and `web/`; documentation and implementation evidence stay here.
+This directory is the single home for project-owned documentation. Product source code stays in `api/`, `web-next/`, and `mobile-react/`; documentation and implementation evidence stay here.
 
 ## Directory map
 
@@ -10,13 +10,15 @@ This directory is the single home for project-owned documentation. Product sourc
 | `api/` | Backend architecture, controller contracts, user stories, database assets, and API guides |
 | `web-next/` | Canonical Next.js architecture and feature guides |
 | `mobile-react/` | Expo architecture, style, and feature guides |
-| `legacy-web/` | Archived guidance from the legacy `web/` client; reference-only |
+| `modules/` | Module-owned documentation packages and ownership indexes |
 | `system/` | Reusable documentation recipes, manifests, generated phase packets, and feature review artifacts |
 
 Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain beside their projects because development tools discover them there. They link back to this directory for the canonical documentation.
 
 ## Start here
 
+- General ERP documentation guide: [`project/ERP_DOCUMENTATION_GUIDE_AR.md`](project/ERP_DOCUMENTATION_GUIDE_AR.md)
+- Shared reuse catalog: [`project/SHARED_REUSE_CATALOG.md`](project/SHARED_REUSE_CATALOG.md)
 - Core feature delivery guide: [`project/CORE_FEATURE_CQRS_WEB_GUIDE.md`](project/CORE_FEATURE_CQRS_WEB_GUIDE.md)
 - Managed Crystal reporting integration: [`project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md`](project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md)
 - Three-project Countries review: [`project/COUNTRIES_FEATURE_FULL_REVIEW.md`](project/COUNTRIES_FEATURE_FULL_REVIEW.md)
@@ -28,18 +30,26 @@ Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain
 - Web States profile: [`web-next/features/states-frontend-reference.md`](web-next/features/states-frontend-reference.md)
 - Mobile States profile: [`mobile-react/states-mobile-reference.md`](mobile-react/states-mobile-reference.md)
 - Reusable documentation workflow: [`system/README.md`](system/README.md)
+- Module documentation ownership: [`modules/README.md`](modules/README.md)
 - Geographical information domain guide: [`project/GEOGRAPHICAL_INFORMATION_DOMAIN_GUIDE.md`](project/GEOGRAPHICAL_INFORMATION_DOMAIN_GUIDE.md)
 - Addresses domain review: [`project/ADDRESSES_DOMAIN_FULL_REVIEW.md`](project/ADDRESSES_DOMAIN_FULL_REVIEW.md)
+- Modular monolith architecture: [`api/MODULAR_MONOLITH_ARCHITECTURE.md`](api/MODULAR_MONOLITH_ARCHITECTURE.md)
+- API production deployment runbook: [`api/PRODUCTION_DEPLOYMENT_RUNBOOK.md`](api/PRODUCTION_DEPLOYMENT_RUNBOOK.md)
 
 ## Organization rules
 
 1. Put new shared documentation in this directory, under the owning project or concern.
 2. Do not create new `docs/`, `Docs/`, or `doc/` trees inside application projects.
 3. Keep source-owned configuration files such as `AGENTS.md` at their required scope and link them to this directory.
-4. Treat `legacy-web/` as historical evidence, not as an implementation target.
-5. Do not edit files under `system/generated/` directly. Update canonical guides, the recipe manifest, or templates and regenerate them.
-6. Run `./documentation/system/Generate-Documentation.ps1 -Check` before handing off a documentation-system change.
-7. Every code change must update the canonical documentation for the affected domain in the same change. Record platform differences explicitly instead of leaving an undocumented gap.
+4. Do not edit files under `system/generated/` directly. Update canonical guides, the recipe manifest, or templates and regenerate them.
+5. Run `./documentation/system/Generate-Documentation.ps1 -Check` before handing off a documentation-system change.
+6. Every code change must update the canonical documentation for the affected domain in the same change. Record platform differences explicitly instead of leaving an undocumented gap.
+7. Before creating a component, service, or contract, inventory shared
+   BuildingBlocks and existing module-local abstractions. Reuse or extend a
+   compatible piece and record the decision in the owning module book. Start
+   new pieces module-local; promote them to shared only when they are genuinely
+   domain-neutral and used by multiple modules. Never put HR or Accounting
+   domain logic in shared code or copy/paste a shared capability.
 
 ## Adding a new feature review
 

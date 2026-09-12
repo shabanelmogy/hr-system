@@ -1,6 +1,6 @@
 import { ROUTES } from '@/src/core/constants/routes';
-import { RouteGuard } from '@/src/features/auth';
-import { RecruitmentScreen } from '@/src/features/recruitment';
+import { RouteGuard } from '@/src/platform/auth';
+import { RecruitmentScreen } from '@/src/modules/hr/recruitment';
 
 export default function RecruitmentRoute() {
   return (

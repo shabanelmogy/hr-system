@@ -46,17 +46,17 @@ This is the applied evidence ledger for the current Countries feature. The detai
 
 | Evidence ID | Claim | File or profile |
 | --- | --- | --- |
-| E-API-01 | Controller remains thin and sends typed CQRS messages | `api/HrManagementSystem.Api/Features/GeographicalInformation/Countries/V1/CountriesController.cs` |
-| E-API-02 | Read behavior is server-driven and deterministic | `api/HrManagementSystem.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryReadStore.cs` |
+| E-API-01 | Controller remains thin and sends typed CQRS messages | `api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs` |
+| E-API-02 | Read behavior is server-driven and deterministic | `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryReadStore.cs` |
 | E-API-03 | Dependency-sensitive writes own one transaction and shared lifecycle resource, then schedule side effects after commit | `IUnitOfWork`, `ApplicationDbContext`, geographical lifecycle resources, Country/State handlers, and `CountryChangeScheduler` |
-| E-WEB-01 | One hook owns list query state | `web-next/src/features/basic-data/geographical-information/countries/hooks/useCountryGridLogic.ts` |
+| E-WEB-01 | One hook owns list query state | `web-next/src/modules/hr/basic-data/geographical-information/countries/hooks/useCountryGridLogic.ts` |
 | E-WEB-02 | Toolbar and grid options are reusable shared components | `web-next/src/shared/components/data-grid/toolbar/` |
 | E-WEB-03 | Page composition supports grid, cards, chart, report, and import | `CountriesMultiView.tsx` |
-| E-WEB-04 | Crystal remains default while SSR-safe shared ActiveReportsJS Viewer/Designer components load published or management templates from the current tenant; the starter is bound only to the approved relative Countries API source | `reports/pages/CountryReportPage.tsx`, Countries composition, `src/features/reporting/`, and `public/reports/countries/countries-directory.rdlx-json` |
+| E-WEB-04 | Crystal remains default while SSR-safe shared ActiveReportsJS Viewer/Designer components load published or management templates from the current tenant; the starter is bound only to the approved relative Countries API source | `reports/pages/CountryReportPage.tsx`, Countries composition, `src/shared/reporting/`, and `public/reports/countries/countries-directory.rdlx-json` |
 | E-WEB-05 | Import validates file metadata, canonical headers, value-only rows, bounds and duplicate scope, then distinguishes failed from uncertain submissions | `src/shared/services/excelService.ts`, `src/shared/components/file-upload/SpreadsheetImportCard.tsx`, and Countries `components/import-data/` |
 | E-API-07 | Report templates/revisions are tenant-filtered, drafts are absent from public reads, lifecycle writes use RowVersion, revisions are append-only, and the source catalog permits only `endpoint=/api/v1/countries/report-data` | `Domain/Application/Infrastructure/Api` ReportTemplates slices, `GetCountryReportDataQuery`, migration `20260823075732_AddTenantReportTemplates`, and `ReportTemplateFeatureTests.cs` |
 | E-MOB-01 | One controlled state owns the mobile server list | `mobile-react/src/shared/listing/useServerListState.ts` and `CountriesScreen.tsx` |
-| E-MOB-02 | Runtime schemas guard mobile API responses | `mobile-react/src/features/basic-data/countries/api/country-schemas.ts` |
+| E-MOB-02 | Runtime schemas guard mobile API responses | `mobile-react/src/modules/hr/basic-data/countries/data/remote/country-schemas.ts` |
 | E-MOB-03 | Route authorization and deep-link integration are registered | mobile route manifest, realtime registry, and notification presentation utility |
 
 ## Intentional platform differences

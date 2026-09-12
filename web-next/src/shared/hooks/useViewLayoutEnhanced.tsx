@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type ViewLayoutOptions = {
   autoSaveDelay?: number;
@@ -54,8 +54,7 @@ const useViewLayoutEnhanced = (
     }
   });
 
-  // Track if we need to save to localStorage
-  const [pendingSave, setPendingSave] = useState<string | null>(null);
+  const saveTimeoutRef = useRef<number | null>(null);
 
   // Save to localStorage with optional delay
   const saveToStorage = useCallback((layout: string) => {
@@ -69,30 +68,35 @@ const useViewLayoutEnhanced = (
     }
   }, [storageKey, debug]);
 
-  // Handle delayed saving
-  useEffect(() => {
-    if (pendingSave) {
-      if (autoSaveDelay > 0) {
-        const timeoutId = setTimeout(() => {
-          saveToStorage(pendingSave);
-          setPendingSave(null);
-        }, autoSaveDelay);
-
-        return () => clearTimeout(timeoutId);
-      } else {
-        saveToStorage(pendingSave);
-        setPendingSave(null);
-      }
+  const scheduleSave = useCallback((layout: string) => {
+    if (saveTimeoutRef.current !== null) {
+      window.clearTimeout(saveTimeoutRef.current);
+      saveTimeoutRef.current = null;
     }
-  }, [pendingSave, autoSaveDelay, saveToStorage]);
+
+    if (autoSaveDelay <= 0) {
+      saveToStorage(layout);
+      return;
+    }
+
+    saveTimeoutRef.current = window.setTimeout(() => {
+      saveToStorage(layout);
+      saveTimeoutRef.current = null;
+    }, autoSaveDelay);
+  }, [autoSaveDelay, saveToStorage]);
+
+  useEffect(() => () => {
+    if (saveTimeoutRef.current !== null) {
+      window.clearTimeout(saveTimeoutRef.current);
+    }
+  }, []);
 
   // Handle view layout change
   const handleViewLayoutChange = useCallback((_event: unknown, newLayout: string | null) => {
     if (newLayout !== null && validLayouts.includes(newLayout)) {
       setViewLayout(newLayout);
       
-      // Schedule save to localStorage
-      setPendingSave(newLayout);
+      scheduleSave(newLayout);
       
       // Call onChange callback if provided
       if (onLayoutChange) {
@@ -103,7 +107,7 @@ const useViewLayoutEnhanced = (
         console.log(`[useViewLayoutEnhanced] Layout changed: ${viewLayout} -> ${newLayout}`);
       }
     }
-  }, [viewLayout, validLayouts, onLayoutChange, debug]);
+  }, [debug, onLayoutChange, scheduleSave, validLayouts, viewLayout]);
 
   // Programmatically set layout (useful for responsive changes)
   const setLayout = useCallback((newLayout: string) => {
