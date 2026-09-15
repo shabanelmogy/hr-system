@@ -82,7 +82,7 @@ export const getOrganizationalStructureColumns = ({ t, resource, language, getAc
         sortable: false,
         renderCell: ({ row }) => (
           <AppChip
-            label={row.isCentralized || !row.branchId ? (isAr ? "مركزية (عامة)" : "Centralized") : (isAr ? "فرعية" : "Branch-scoped")}
+            label={row.isCentralized || !row.branchId ? (t("organizationalStructure.grid.centralized")) : (t("organizationalStructure.grid.branchScoped"))}
             colorKey={row.isCentralized || !row.branchId ? "secondary" : "info"}
             variant="soft"
             size="small"
@@ -103,7 +103,7 @@ export const getOrganizationalStructureColumns = ({ t, resource, language, getAc
             <AppChip label={branch} colorKey="primary" variant="outlined" size="small" />
           ) : (
             <Typography variant="caption" color="text.secondary">
-              {isAr ? "كافة الفروع" : "All branches"}
+              {t("organizationalStructure.grid.allBranches")}
             </Typography>
           );
         },
@@ -122,7 +122,7 @@ export const getOrganizationalStructureColumns = ({ t, resource, language, getAc
             <AppChip label={parent} colorKey="secondary" variant="outlined" size="small" />
           ) : (
             <Typography variant="caption" color="text.secondary">
-              {isAr ? "إدارة رئيسية (مستوى 1)" : "Top-level"}
+              {t("organizationalStructure.grid.topLevel")}
             </Typography>
           );
         },
@@ -163,7 +163,7 @@ export const getOrganizationalStructureColumns = ({ t, resource, language, getAc
           const branch = isAr ? row.branchNameAr : row.branchNameEn;
           return branch ? <AppChip label={branch} colorKey="secondary" variant="soft" size="small" /> : (
             <Typography variant="caption" color="text.secondary">
-              {isAr ? "مركزي" : "Central"}
+              {t("organizationalStructure.grid.central")}
             </Typography>
           );
         },
@@ -324,7 +324,7 @@ export const getOrganizationalStructureColumns = ({ t, resource, language, getAc
         align: "center",
         headerAlign: "center",
         renderCell: ({ value }) => value != null ? (
-          <AppChip label={`${value} ${isAr ? "سنوات" : "yrs"}`} colorKey="secondary" variant="soft" size="small" />
+          <AppChip label={`${value} ${t("organizationalStructure.grid.yrs")}`} colorKey="secondary" variant="soft" size="small" />
         ) : "-",
       },
       {

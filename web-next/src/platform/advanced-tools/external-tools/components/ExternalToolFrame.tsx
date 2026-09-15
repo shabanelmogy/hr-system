@@ -2,6 +2,7 @@
 
 import { publicApiUrl } from "@/config/publicEnv";
 import { Alert, Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 interface ExternalToolFrameProps {
   path: string;
@@ -14,8 +15,9 @@ export default function ExternalToolFrame({
   title,
   height = "calc(100vh - 150px)",
 }: ExternalToolFrameProps) {
+  const { t } = useTranslation();
   if (!publicApiUrl) {
-    return <Alert severity="error">NEXT_PUBLIC_API_URL is required.</Alert>;
+    return <Alert severity="error">{t("externalTools.apiUrlRequired")}</Alert>;
   }
 
   return (

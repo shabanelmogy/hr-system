@@ -6,10 +6,10 @@ export interface EditableEntitlement {
 }
 
 export function createDefaultEntitlements(
-  installedModules: readonly ErpModule[],
+  tenantEntitlementModules: readonly ErpModule[],
 ): EditableEntitlement[] {
-  return installedModules
-    .filter((module) => module.isDefault ?? module.code.toLowerCase() === "hr")
+  return tenantEntitlementModules
+    .filter((module) => module.isDefault)
     .map((module) => ({
       moduleCode: module.code,
       submoduleCodes: module.submodules.map((item) => item.code),
@@ -18,13 +18,23 @@ export function createDefaultEntitlements(
 
 export function hydrateEntitlements(
   saved: readonly EditableEntitlement[] | null | undefined,
-  installedModules: readonly ErpModule[],
+  tenantEntitlementModules: readonly ErpModule[],
 ): EditableEntitlement[] {
-  if (saved == null) return createDefaultEntitlements(installedModules);
-  return saved.map((item) => ({
-    moduleCode: item.moduleCode,
-    submoduleCodes: [...item.submoduleCodes],
-  }));
+  if (saved == null) return createDefaultEntitlements(tenantEntitlementModules);
+  return saved.flatMap((item) => {
+    const module = tenantEntitlementModules.find(
+      (candidate) => candidate.code.toLowerCase() === item.moduleCode.toLowerCase(),
+    );
+    if (!module) return [];
+
+    const savedSubmodules = new Set(item.submoduleCodes.map((code) => code.toLowerCase()));
+    return [{
+      moduleCode: module.code,
+      submoduleCodes: module.submodules
+        .filter((submodule) => savedSubmodules.has(submodule.code.toLowerCase()))
+        .map((submodule) => submodule.code),
+    }];
+  });
 }
 
 export function toggleModuleEntitlement(

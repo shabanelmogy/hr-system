@@ -96,7 +96,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
          {t("pagination.pages")} : {totalPages}
         </Typography>
         {navButtons.map(({ title, icon: Icon, onClick, disabled }) => (
-          <Tooltip key={title} title={`${title} Page`}>
+          <Tooltip key={title} title={t("common.pageAction", { title })}>
             <span>
               <IconButton size="small" onClick={onClick} disabled={disabled}>
                 <Icon fontSize="small" />

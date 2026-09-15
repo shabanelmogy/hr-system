@@ -98,10 +98,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ mediaUrl, onError, onBack }) 
           {/* Center: Play Controls */}
           <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0.5, sm: 1 } }}>
             {!isMd && (
-              <SkipButton title="Skip -30s" delta={-30} onSkip={handleSkip} />
+              <SkipButton title={t("files.skipSeconds", { seconds: -30 })} delta={-30} onSkip={handleSkip} />
             )}
             {!isSm && (
-              <SkipButton title="Skip -10s" delta={-10} onSkip={handleSkip} />
+              <SkipButton title={t("files.skipSeconds", { seconds: -10 })} delta={-10} onSkip={handleSkip} />
             )}
 
             {/* Always show play/pause */}
@@ -116,10 +116,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ mediaUrl, onError, onBack }) 
             />
 
             {!isSm && (
-              <SkipButton title="Skip +10s" delta={10} onSkip={handleSkip} />
+              <SkipButton title={t("files.skipSeconds", { seconds: 10 })} delta={10} onSkip={handleSkip} />
             )}
             {!isMd && (
-              <SkipButton title="Skip +30s" delta={30} onSkip={handleSkip} />
+              <SkipButton title={t("files.skipSeconds", { seconds: 30 })} delta={30} onSkip={handleSkip} />
             )}
           </Box>
 
@@ -138,7 +138,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ mediaUrl, onError, onBack }) 
             
             {/* Show menu up to md screens */}
             {(isMd || isSm || isXs) && (
-              <Tooltip title="More">
+              <Tooltip title={t("files.more")}>
                 <IconButton 
                   onClick={(e) => setMenuAnchor(e.currentTarget)} 
                   size="small"

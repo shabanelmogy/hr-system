@@ -10,9 +10,10 @@ import {
   Select,
 } from "@mui/material";
 import { MyTextField } from "@/shared/components/forms";
-import { ROLE_MODULES } from "./constants";
+import { useTranslation } from "react-i18next";
 
 type RolePermissionsFiltersProps = {
+  modules: string[];
   searchTerm: string;
   selectedModule: string;
   showOnlySelected: boolean;
@@ -23,6 +24,7 @@ type RolePermissionsFiltersProps = {
 };
 
 export default function RolePermissionsFilters(props: RolePermissionsFiltersProps) {
+  const { t } = useTranslation();
   return (
     <Grid container spacing={3} sx={{ alignItems: "center" }}>
       <Grid size={{ xs: 12, md: 4 }}>
@@ -32,7 +34,7 @@ export default function RolePermissionsFilters(props: RolePermissionsFiltersProp
           labelKey={null}
           margin="none"
           maxValue={100}
-          placeholder="Search modules..."
+          placeholder={t("roles.searchModules")}
           value={props.searchTerm}
           onChange={(event) => props.onSearchChange(event.target.value)}
           showClearButton
@@ -42,15 +44,15 @@ export default function RolePermissionsFilters(props: RolePermissionsFiltersProp
       </Grid>
       <Grid size={{ xs: 12, md: 3 }}>
         <FormControl fullWidth size="small">
-          <InputLabel>Filter by Module</InputLabel>
+          <InputLabel>{t("roles.filterByModule")}</InputLabel>
           <Select
             value={props.selectedModule}
-            label="Filter by Module"
+            label={t("roles.filterByModule")}
             onChange={(event) => props.onModuleChange(event.target.value)}
             startAdornment={<ViewModule sx={{ mr: 1, color: "action.active" }} />}
           >
-            <MenuItem value=""><em>All Modules</em></MenuItem>
-            {ROLE_MODULES.map((module) => (
+            <MenuItem value=""><em>{t("roles.allModules")}</em></MenuItem>
+            {props.modules.map((module) => (
               <MenuItem key={module} value={module}>{module}</MenuItem>
             ))}
           </Select>
@@ -64,13 +66,13 @@ export default function RolePermissionsFilters(props: RolePermissionsFiltersProp
               onChange={(event) => props.onShowOnlySelectedChange(event.target.checked)}
             />
           }
-          label="Show only selected"
+          label={t("roles.showOnlySelected")}
         />
       </Grid>
       <Grid size={{ xs: 12, md: 2 }}>
         <Chip
           icon={<FilterList />}
-          label={`${props.resultCount} modules`}
+          label={t("roles.moduleCount", { count: props.resultCount })}
           color="primary"
           variant="outlined"
         />

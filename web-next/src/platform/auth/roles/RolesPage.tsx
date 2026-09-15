@@ -4,7 +4,7 @@
 import { ContentWrapper } from "@/shared/components/layout";
 import { PageHeader } from "@/shared/components/navigation/header";
 import { useTranslation } from "react-i18next";
-import RoleDeleteDialog from "./components/RoleDeleteDialog";
+import RoleArchiveDialog from "./components/RoleArchiveDialog";
 import RoleForm from "./components/RoleForm";
 import RolesDataGrid from "./components/RolesDataGrid";
 import useRoleGridLogic from "./hooks/UseRoleGridLogic";
@@ -18,12 +18,16 @@ const RolesPage = () => {
     selectedRole,
     loading,
     roles,
+    canCreate,
+    canEdit,
+    canDelete,
     apiRef,
     onEdit,
     onView,
     onDelete,
     onAdd,
     onManagePermissions,
+    onRestore,
     lastAddedId,
     lastEditedId,
     lastDeletedIndex,
@@ -52,6 +56,10 @@ const RolesPage = () => {
           onDelete={onDelete}
           onAdd={onAdd}
           onManagePermissions={onManagePermissions}
+          onRestore={onRestore}
+          canCreate={canCreate}
+          canEdit={canEdit}
+          canDelete={canDelete}
           lastAddedId={lastAddedId}
           lastEditedId={lastEditedId}
           lastDeletedIndex={lastDeletedIndex}
@@ -68,7 +76,7 @@ const RolesPage = () => {
           t={t}
         />
 
-        <RoleDeleteDialog
+        <RoleArchiveDialog
           open={dialogType === "delete"}
           onClose={closeDialog}
           onConfirm={handleDelete}

@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { AppState } from 'react-native';
 
 import {
   ApiError,
@@ -13,10 +14,12 @@ import {
   configureAxiosAuthentication,
   rotateAxiosRequestContext,
 } from '@/src/core/api';
+import { useConnectivity, useOfflineDatabase } from '@/src/core/offline';
 import { queryClient } from '@/src/core/query/query-client';
 import { secureSession } from '@/src/core/storage/secure-storage';
 import { clearSensitiveFileCache } from '@/src/core/storage/sensitive-file-cache';
 import { authUseCases as authApi } from '../../composition/auth-container';
+import { offlineSessionLeaseUseCases } from '../../composition/offline-session-lease-composition';
 import type {
   AuthResponse,
   LoginOutcome,
@@ -25,6 +28,7 @@ import type {
 } from '../../domain/models/auth';
 
 type AuthStatus = 'loading' | 'authenticated' | 'unauthenticated' | 'unavailable';
+type AuthAuthority = 'server' | 'offline-lease' | null;
 
 interface AuthContextValue {
   status: AuthStatus;
@@ -37,6 +41,8 @@ interface AuthContextValue {
   signOut: () => Promise<void>;
   retry: () => Promise<void>;
   refreshSession: () => Promise<void>;
+  authority: AuthAuthority;
+  isServerAuthenticated: boolean;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -45,13 +51,17 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const [status, setStatus] = useState<AuthStatus>('loading');
   const [session, setSession] = useState<SessionResponse | null>(null);
   const [isSwitchingCompany, setIsSwitchingCompany] = useState(false);
+  const [authority, setAuthority] = useState<AuthAuthority>(null);
+  const database = useOfflineDatabase();
+  const connectivity = useConnectivity();
 
   const handleAuthFailure = useCallback(() => {
     rotateAxiosRequestContext();
-    void Promise.all([secureSession.clear(), clearSensitiveFileCache()]);
+    void Promise.all([secureSession.clear(), offlineSessionLeaseUseCases.invalidate(), clearSensitiveFileCache()]);
     queryClient.clear();
     setSession(null);
     setStatus('unauthenticated');
+    setAuthority(null);
   }, []);
 
   const bootstrap = useCallback(async () => {
@@ -64,22 +74,35 @@ export function AuthProvider({ children }: PropsWithChildren) {
       void clearSensitiveFileCache();
       setSession(null);
       setStatus('unauthenticated');
+      setAuthority(null);
       return;
     }
 
     setStatus('loading');
     try {
-      setSession(await authApi.session());
+      const validated = await authApi.session();
+      setSession(validated);
+      setAuthority('server');
+      await offlineSessionLeaseUseCases.save(database, validated);
       setStatus('authenticated');
     } catch (error) {
       if (isTemporaryFailure(error)) {
-        setStatus('unavailable');
+        const lease = await offlineSessionLeaseUseCases.load(database);
+        if (lease) {
+          setSession(lease);
+          setAuthority('offline-lease');
+          setStatus('authenticated');
+        } else {
+          setSession(null);
+          setAuthority(null);
+          setStatus('unavailable');
+        }
         return;
       }
 
       handleAuthFailure();
     }
-  }, [handleAuthFailure]);
+  }, [database, handleAuthFailure]);
 
   useEffect(
     () =>
@@ -99,10 +122,14 @@ export function AuthProvider({ children }: PropsWithChildren) {
     rotateAxiosRequestContext();
     queryClient.clear();
     await clearSensitiveFileCache();
+    await offlineSessionLeaseUseCases.invalidate();
     await secureSession.setTokens(response.token, response.refreshToken);
 
     try {
-      setSession(await authApi.session());
+      const validated = await authApi.session();
+      setSession(validated);
+      setAuthority('server');
+      await offlineSessionLeaseUseCases.save(database, validated);
     } catch (error) {
       if (!isTemporaryFailure(error)) {
         await secureSession.clear();
@@ -112,7 +139,10 @@ export function AuthProvider({ children }: PropsWithChildren) {
         throw error;
       }
 
-      setSession(createProvisionalSession(response));
+      setSession(null);
+      setAuthority(null);
+      setStatus('unavailable');
+      return;
     }
 
     setStatus('authenticated');
@@ -121,8 +151,32 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const refreshSession = useCallback(async () => {
     const refreshedSession = await authApi.session();
     setSession(refreshedSession);
+    setAuthority('server');
+    await offlineSessionLeaseUseCases.save(database, refreshedSession);
     setStatus('authenticated');
-  }, []);
+  }, [database]);
+
+  useEffect(() => {
+    if (!connectivity.isOnline || status !== 'authenticated' || authority === 'server') return undefined;
+    let cancelled = false;
+    const timer = setTimeout(() => {
+      void refreshSession().catch((error) => {
+        if (!cancelled && !isTemporaryFailure(error)) handleAuthFailure();
+      });
+    }, 0);
+    return () => { cancelled = true; clearTimeout(timer); };
+  }, [authority, connectivity.isOnline, handleAuthFailure, refreshSession, status]);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextState) => {
+      if (nextState === 'active' && connectivity.isOnline && status === 'authenticated' && authority === 'offline-lease') {
+        void refreshSession().catch((error) => {
+          if (!isTemporaryFailure(error)) handleAuthFailure();
+        });
+      }
+    });
+    return () => subscription.remove();
+  }, [authority, connectivity.isOnline, handleAuthFailure, refreshSession, status]);
 
   const signIn = async (request: LoginRequest): Promise<LoginOutcome> => {
     const result = await authApi.login(request);
@@ -168,10 +222,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
         await authApi.logout();
       } finally {
         rotateAxiosRequestContext();
-        await Promise.all([secureSession.clear(), clearSensitiveFileCache()]);
+        await Promise.all([secureSession.clear(), offlineSessionLeaseUseCases.invalidate(), clearSensitiveFileCache()]);
         queryClient.clear();
         setSession(null);
         setStatus('unauthenticated');
+        setAuthority(null);
       }
     } finally {
       endAuthenticationTransition();
@@ -189,6 +244,8 @@ export function AuthProvider({ children }: PropsWithChildren) {
     signOut,
     retry: bootstrap,
     refreshSession,
+    authority,
+    isServerAuthenticated: status === 'authenticated' && authority === 'server',
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
@@ -207,34 +264,5 @@ function isTemporaryFailure(error: unknown): boolean {
     error instanceof ApiError &&
     (error.status === 0 || error.status === 408 || error.status === 429 || error.status >= 500)
   );
-}
-
-function createProvisionalSession(response: AuthResponse): SessionResponse {
-  return {
-    userId: response.id,
-    tenantId: response.tenantId,
-    tenantName: response.tenantName,
-    tenantPlanName: response.tenantPlanName,
-    companyId: response.companyId,
-    companyCode: response.companyCode,
-    companyNameAr: response.companyNameAr,
-    companyNameEn: response.companyNameEn,
-    companies: [{
-      id: response.companyId,
-      companyCode: response.companyCode,
-      nameAr: response.companyNameAr,
-      nameEn: response.companyNameEn,
-    }],
-    userName: response.userName,
-    email: '',
-    firstName: response.firstName,
-    lastName: response.lastName,
-    roles: [],
-    permissions: [],
-    tenantSubscriptionStatus: 'active',
-    tenantSubscriptionEndsOn: null,
-    tenantReadOnly: false,
-    expiresAt: Date.parse(response.tokenExpiration),
-  };
 }
 

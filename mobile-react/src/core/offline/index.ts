@@ -10,6 +10,7 @@ export {
   runInOfflineWriteTransaction,
 } from './database';
 export { OfflineFoundationProvider } from './OfflineFoundationProvider';
+export { registerOfflineMaintenanceTask, OFFLINE_MAINTENANCE_TASK } from './background-maintenance';
 export { useOfflineDatabase } from './OfflineDatabaseContext';
 export { OfflineOutboxRepository } from './outbox';
 export type {

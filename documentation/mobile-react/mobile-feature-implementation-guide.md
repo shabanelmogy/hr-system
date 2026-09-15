@@ -668,7 +668,7 @@ do not mix them with ActiveReports/RDLX `ReportTemplates`.
 
 For Managed Crystal, list the manager-owned published catalog with the feature's
 stable `entityKey`, localize SummaryInfo Title for Arabic and Subject for English,
-and render by report ID through the HR API. Send only `ar`/`en` and feature-approved
+and render by report ID through the authenticated ERP/Reporting API. Send only `ar`/`en` and feature-approved
 filters. Never call the Crystal host or pass its path, filename, connection string,
 tenant ID, or company ID.
 
@@ -792,4 +792,4 @@ renders regardless of list data and never owns list pagination:
 - Do not import a chart package directly into business screens — wrap it in shared
   chart primitives and keep series preparation feature-owned
 - Do not call the Crystal host directly or treat a deployed `.rpt` as published —
-  consume only the HR API Report Manager catalog/render contract
+  consume only the ERP Reporting API Report Manager catalog/render contract

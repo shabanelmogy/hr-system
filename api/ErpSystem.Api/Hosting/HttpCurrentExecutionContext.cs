@@ -37,6 +37,11 @@ public sealed class HttpCurrentExecutionContext(IHttpContextAccessor httpContext
         }
     }
 
+    public string? MachineName => Environment.MachineName;
+
+    public string? CorrelationId =>
+        httpContextAccessor.HttpContext?.GetCorrelationId();
+
     public bool IsInRole(string role) =>
         httpContextAccessor.HttpContext?.User.IsInRole(role) ?? false;
 

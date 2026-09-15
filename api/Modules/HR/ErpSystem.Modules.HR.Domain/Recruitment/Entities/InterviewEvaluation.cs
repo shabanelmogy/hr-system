@@ -1,5 +1,6 @@
 using ErpSystem.Modules.HR.Domain.Recruitment.Enums;
-using static ErpSystem.Modules.HR.Domain.Common.Guards.DomainGuard;
+using ErpSystem.Modules.HR.Domain.Employees.Entities;
+using static ErpSystem.BuildingBlocks.Domain.Guards.DomainGuard;
 
 namespace ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 
@@ -31,6 +32,7 @@ public sealed class InterviewEvaluation : CompanyAuditableEntity
     public long Id { get; private set; }
     public int InterviewId { get; private set; }
     public int InterviewerEmployeeId { get; private set; }
+    public Employee InterviewerEmployee { get; private set; } = null!;
     public decimal Score { get; private set; }
     public InterviewRecommendation Recommendation { get; private set; }
     public string? Comments { get; private set; }

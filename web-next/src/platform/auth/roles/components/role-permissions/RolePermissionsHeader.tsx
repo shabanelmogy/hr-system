@@ -1,4 +1,5 @@
 import { Home, Security } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 import {
   alpha,
   Avatar,
@@ -28,6 +29,7 @@ export default function RolePermissionsHeader({
   onDashboard,
 }: RolePermissionsHeaderProps) {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Paper
@@ -58,7 +60,7 @@ export default function RolePermissionsHeader({
             {roleName}
           </Typography>
           <Typography variant="body2" sx={{ opacity: 0.9 }}>
-            {selected}/{total} permissions ({percentage.toFixed(1)}%)
+            {t("roles.permissionsSummary", { selected, total, percentage: percentage.toFixed(1) })}
           </Typography>
         </Grid>
         <Grid>
@@ -76,9 +78,9 @@ export default function RolePermissionsHeader({
                 },
               }}
             />
-            <Tooltip title="Go to Dashboard">
+            <Tooltip title={t("common.goToDashboard")}>
               <IconButton
-                aria-label="Go to Dashboard"
+                aria-label={t("common.goToDashboard")}
                 onClick={onDashboard}
                 size="small"
                 sx={{

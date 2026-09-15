@@ -1,5 +1,9 @@
 import type { TenantEntitlementModule } from './tenant-entitlements';
-import { createDefaultEntitlements, toggleModuleEntitlement } from './tenant-entitlements';
+import {
+  createDefaultEntitlements,
+  hydrateEntitlements,
+  toggleModuleEntitlement,
+} from './tenant-entitlements';
 
 const modules: TenantEntitlementModule[] = [
   {
@@ -24,6 +28,15 @@ describe('tenant module entitlements', () => {
     expect(updated).toEqual([
       { moduleCode: 'hr', submoduleCodes: ['basic-data', 'recruitment'] },
       { moduleCode: 'acc', submoduleCodes: [] },
+    ]);
+  });
+
+  it('drops modules and submodules absent from the tenant entitlement catalog', () => {
+    expect(hydrateEntitlements([
+      { moduleCode: 'hr', submoduleCodes: ['basic-data', 'geography'] },
+      { moduleCode: 'platform', submoduleCodes: ['identity'] },
+    ], modules)).toEqual([
+      { moduleCode: 'hr', submoduleCodes: ['basic-data'] },
     ]);
   });
 });

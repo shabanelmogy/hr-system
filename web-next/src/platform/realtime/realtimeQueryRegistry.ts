@@ -10,17 +10,15 @@ export const realtimeResources = {
   roleClaims: "role-claims",
   companies: "companies",
   notifications: "notifications",
-  entityChangeLogs: "entity-change-logs",
 } as const;
 
 const queryKeysByResource = new Map<string, readonly RealtimeQueryKey[]>([
-  [realtimeResources.users, [["userProfile"], tenantAdminKeys.all]],
+  [realtimeResources.users, [["users"], ["userProfile"], tenantAdminKeys.all]],
   [realtimeResources.tenants, [tenantKeys.all]],
   [realtimeResources.roles, []],
   [realtimeResources.roleClaims, []],
   [realtimeResources.companies, []],
   [realtimeResources.notifications, [["notifications"]]],
-  [realtimeResources.entityChangeLogs, [["advancedTools", "trackChanges"]]],
 ]);
 
 export function registerRealtimeQueryKeys(

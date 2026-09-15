@@ -1,8 +1,7 @@
-using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.Shared;
 using CrystalReportGeneratorApi.Filters;
+using CrystalReportGeneratorApi.Runtime;
+using CrystalReportGeneratorApi.Runtime.Inspection;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -15,112 +14,91 @@ namespace CrystalReportGeneratorApi.Controllers
     [InternalApiKey]
     public sealed class InternalReportInspectorController : ApiController
     {
-        private const long MaximumReportSizeBytes = 10L * 1024L * 1024L;
+        private readonly CrystalReportInspectionService _inspectionService =
+            new CrystalReportInspectionService();
 
         [HttpPost]
         [Route("internal/reports/inspect")]
         public async Task<IHttpActionResult> Inspect()
         {
             if (!Request.Content.IsMimeMultipartContent())
-                return Content(HttpStatusCode.UnsupportedMediaType, "A multipart .rpt file is required.");
+                return ResponseMessage(InternalReportResponseFactory.Create(
+                    Request,
+                    HttpStatusCode.UnsupportedMediaType,
+                    InternalReportErrorCodes.InvalidRequest,
+                    "A multipart .rpt file is required."));
 
-            var quarantineDirectory = Path.Combine(Path.GetTempPath(), "hrms-crystal-inspection");
-            Directory.CreateDirectory(quarantineDirectory);
-
-            var provider = new MultipartFormDataStreamProvider(quarantineDirectory);
-
-            try
+            using (var workspace = CrystalReportRequestWorkspace.Create("inspection"))
             {
-                await Request.Content.ReadAsMultipartAsync(provider);
-                if (provider.FileData.Count != 1)
-                    return BadRequest("Exactly one .rpt file is required.");
-
-                var uploaded = provider.FileData.Single();
-                var originalName = TrimQuotes(uploaded.Headers.ContentDisposition.FileName);
-                if (!string.Equals(Path.GetExtension(originalName), ".rpt", StringComparison.OrdinalIgnoreCase))
-                    return BadRequest("Only Crystal Report .rpt files are accepted.");
-
-                var file = new FileInfo(uploaded.LocalFileName);
-                if (!file.Exists || file.Length == 0 || file.Length > MaximumReportSizeBytes)
-                    return BadRequest("The Crystal Report file must be between 1 byte and 10 MiB.");
-
-                using (var report = new ReportDocument())
+                var provider = new MultipartFormDataStreamProvider(workspace.DirectoryPath);
+                try
                 {
-                    report.Load(file.FullName, OpenReportMethod.OpenReportByTempCopy);
+                    await Request.Content.ReadAsMultipartAsync(provider);
+                    if (provider.FileData.Count != 1)
+                        return ResponseMessage(InternalReportResponseFactory.Create(
+                            Request,
+                            HttpStatusCode.BadRequest,
+                            InternalReportErrorCodes.InvalidRequest,
+                            "Exactly one .rpt file is required."));
 
-                    var documents = new List<ReportDocument> { report };
-                    documents.AddRange(report.Subreports.Cast<ReportDocument>());
+                    var uploaded = provider.FileData.Single();
+                    var originalName = TrimQuotes(uploaded.Headers.ContentDisposition.FileName);
+                    if (!string.Equals(Path.GetExtension(originalName), ".rpt", StringComparison.OrdinalIgnoreCase))
+                        return ResponseMessage(InternalReportResponseFactory.Create(
+                            Request,
+                            HttpStatusCode.BadRequest,
+                            InternalReportErrorCodes.InvalidReport,
+                            "Only Crystal Report .rpt files are accepted."));
 
-                    if (documents.Any(document => document.HasSavedData))
-                        return BadRequest("Crystal Report files containing saved data are not accepted.");
+                    var file = new FileInfo(uploaded.LocalFileName);
+                    if (!file.Exists || file.Length == 0 ||
+                        file.Length > CrystalReportRuntimeSettings.MaximumReportFileSizeBytes)
+                        return ResponseMessage(InternalReportResponseFactory.Create(
+                            Request,
+                            HttpStatusCode.BadRequest,
+                            InternalReportErrorCodes.InvalidReport,
+                            "The Crystal Report file exceeds the configured size limit."));
 
-                    if (documents.Any(HasEmbeddedPassword))
-                        return BadRequest("Crystal Report files containing embedded database passwords are not accepted.");
-
-                    var title = NormalizeSummary(report.SummaryInfo == null
-                        ? null
-                        : report.SummaryInfo.ReportTitle);
-                    var subject = NormalizeSummary(report.SummaryInfo == null
-                        ? null
-                        : report.SummaryInfo.ReportSubject);
-
-                    return Ok(new
+                    using (var executionLease = await CrystalReportExecutionGate.TryEnterAsync())
                     {
-                        IsValid = true,
-                        Title = title,
-                        Subject = subject,
-                        HasSavedData = false,
-                        HasEmbeddedCredentials = false,
-                        SubreportCount = report.Subreports.Count
-                    });
+                        if (executionLease == null)
+                        {
+                            CrystalRuntimeDiagnostics.Warning(Request, "inspect", InternalReportErrorCodes.Busy);
+                            return ResponseMessage(InternalReportResponseFactory.Create(
+                                Request,
+                                HttpStatusCode.ServiceUnavailable,
+                                InternalReportErrorCodes.Busy,
+                                "The Crystal report runtime is busy. Retry the request shortly."));
+                        }
+
+                        var inspection = _inspectionService.Inspect(file.FullName);
+                        CrystalRuntimeDiagnostics.Information(Request, "inspect", "success");
+                        return Ok(inspection);
+                    }
+                }
+                catch (CrystalReportRejectedException exception)
+                {
+                    CrystalRuntimeDiagnostics.Warning(Request, "inspect", InternalReportErrorCodes.InvalidReport, exception);
+                    return ResponseMessage(InternalReportResponseFactory.Create(
+                        Request,
+                        HttpStatusCode.BadRequest,
+                        InternalReportErrorCodes.InvalidReport,
+                        exception.Message));
+                }
+                catch (Exception exception)
+                {
+                    CrystalRuntimeDiagnostics.Error(Request, "inspect", InternalReportErrorCodes.InvalidReport, exception);
+                    return ResponseMessage(InternalReportResponseFactory.Create(
+                        Request,
+                        HttpStatusCode.BadRequest,
+                        InternalReportErrorCodes.InvalidReport,
+                        "The uploaded file could not be opened as a supported Crystal Report."));
                 }
             }
-            catch (Exception)
-            {
-                return BadRequest("The uploaded file could not be opened as a supported Crystal Report.");
-            }
-            finally
-            {
-                foreach (var item in provider.FileData)
-                    TryDelete(item.LocalFileName);
-            }
-        }
-
-        private static bool HasEmbeddedPassword(ReportDocument report)
-        {
-            foreach (Table table in report.Database.Tables)
-            {
-                var connection = table.LogOnInfo == null ? null : table.LogOnInfo.ConnectionInfo;
-                if (connection != null && !string.IsNullOrWhiteSpace(connection.Password))
-                    return true;
-            }
-
-            return false;
-        }
-
-        private static string NormalizeSummary(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                return null;
-
-            var normalized = new string(value.Where(character => !char.IsControl(character)).ToArray()).Trim();
-            return normalized.Length <= 200 ? normalized : normalized.Substring(0, 200);
         }
 
         private static string TrimQuotes(string value) =>
             string.IsNullOrWhiteSpace(value) ? string.Empty : value.Trim().Trim('"');
 
-        private static void TryDelete(string path)
-        {
-            try
-            {
-                if (!string.IsNullOrWhiteSpace(path) && File.Exists(path))
-                    File.Delete(path);
-            }
-            catch
-            {
-                // Best-effort quarantine cleanup; hosting cleanup remains a secondary safeguard.
-            }
-        }
     }
 }

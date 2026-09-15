@@ -21,8 +21,9 @@ public static class HostInfrastructureServiceCollectionExtensions
         IConfiguration configuration,
         IEnumerable<string> moduleNames)
     {
+        services.AddHostForwardedHeaders(configuration);
         services.AddHostCors(configuration);
-        services.AddHostSharedRuntime();
+        services.AddHostSharedRuntime(configuration);
         services.AddExceptionHandler<HostGlobalExceptionHandler>();
         services.AddProblemDetails();
         services.Configure<MvcOptions>(options =>
@@ -35,8 +36,11 @@ public static class HostInfrastructureServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddHostSharedRuntime(this IServiceCollection services)
+    public static IServiceCollection AddHostSharedRuntime(
+        this IServiceCollection services,
+        IConfiguration? configuration = null)
     {
+        configuration ??= new ConfigurationBuilder().Build();
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         services.AddHttpContextAccessor();
         services.AddLocalization();
@@ -46,8 +50,8 @@ public static class HostInfrastructureServiceCollectionExtensions
         services.AddScoped<ICurrentExecutionContextScope>(provider =>
             provider.GetRequiredService<HttpCurrentExecutionContext>());
         services.AddScoped<IIntegrationEventPublisher, InProcessIntegrationEventPublisher>();
-        services.AddDistributedMemoryCache();
-        services.AddSignalR();
+        services.AddHostDataProtection(configuration);
+        services.AddHostDistributedRuntime(configuration);
         services.AddHybridCache(options =>
         {
             options.DefaultEntryOptions = new HybridCacheEntryOptions
@@ -71,7 +75,7 @@ public static class HostInfrastructureServiceCollectionExtensions
         if (!HasValidOrigins(settings))
         {
             throw new InvalidOperationException(
-                "CorsSettings:AllowedOrigins must contain at least one valid HTTP or HTTPS origin.");
+                "CorsSettings:AllowedOrigins must contain only valid HTTP or HTTPS origins.");
         }
 
         services.AddOptions<HostCorsSettings>()
@@ -83,8 +87,10 @@ public static class HostInfrastructureServiceCollectionExtensions
         {
             options.AddPolicy(BrowserCorsPolicy, policy =>
             {
-                policy.WithOrigins(settings.AllowedOrigins.ToArray())
-                    .AllowAnyHeader()
+                if (settings.AllowedOrigins.Count > 0)
+                    policy.WithOrigins(settings.AllowedOrigins.ToArray());
+
+                policy.AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials()
                     .WithExposedHeaders(HostCorrelationContext.HeaderName);
@@ -158,9 +164,10 @@ public static class HostInfrastructureServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(configuration);
         ArgumentNullException.ThrowIfNull(moduleNames);
 
+        var moduleNameList = moduleNames.ToArray();
         var healthChecks = services.AddHealthChecks();
 
-        foreach (var moduleName in moduleNames)
+        foreach (var moduleName in moduleNameList)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(moduleName);
 
@@ -185,12 +192,43 @@ public static class HostInfrastructureServiceCollectionExtensions
         healthChecks.AddCheck<ModuleSchemaCompatibilityHealthCheck>(
             "module-schema",
             tags: [HostHealthCheckPredicates.ReadinessTag]);
+        var crystalRuntimeEnabled = configuration.GetValue<bool>("CrystalReports:RuntimeEnabled");
+        var crystalRuntimeBaseUrl = configuration["CrystalReports:RuntimeBaseUrl"];
+        if (moduleNameList.Contains("Reporting", StringComparer.OrdinalIgnoreCase) &&
+            crystalRuntimeEnabled)
+        {
+            if (!Uri.TryCreate(crystalRuntimeBaseUrl, UriKind.Absolute, out var crystalRuntimeUri) ||
+                (crystalRuntimeUri.Scheme != Uri.UriSchemeHttp && crystalRuntimeUri.Scheme != Uri.UriSchemeHttps) ||
+                !string.IsNullOrEmpty(crystalRuntimeUri.UserInfo))
+                throw new InvalidOperationException(
+                    "CrystalReports:RuntimeBaseUrl must be an absolute HTTP or HTTPS URL without user information when RuntimeEnabled is true.");
+
+            services.AddHttpClient<CrystalReportRuntimeHealthCheck>(client =>
+            {
+                client.BaseAddress = new Uri(
+                    crystalRuntimeUri.AbsoluteUri.TrimEnd('/') + "/",
+                    UriKind.Absolute);
+                client.Timeout = TimeSpan.FromSeconds(5);
+            });
+            healthChecks.AddCheck<CrystalReportRuntimeHealthCheck>(
+                "reporting:crystal-runtime",
+                tags: [HostHealthCheckPredicates.ReadinessTag],
+                timeout: TimeSpan.FromSeconds(6));
+        }
+        if (HostDistributedRuntimeServiceCollectionExtensions
+            .GetValidatedSettings(configuration).Enabled)
+        {
+            healthChecks.AddCheck<HostDistributedRuntimeHealthCheck>(
+                "distributed-runtime:redis",
+                tags: [HostHealthCheckPredicates.ReadinessTag],
+                timeout: TimeSpan.FromSeconds(5));
+        }
 
         return services;
     }
 
     private static bool HasValidOrigins(HostCorsSettings settings) =>
-        settings.AllowedOrigins.Count > 0 &&
+        settings.AllowedOrigins.Count == 0 ||
         settings.AllowedOrigins.All(origin =>
             Uri.TryCreate(origin, UriKind.Absolute, out var uri) &&
             (string.Equals(uri.Scheme, Uri.UriSchemeHttp, StringComparison.OrdinalIgnoreCase) ||

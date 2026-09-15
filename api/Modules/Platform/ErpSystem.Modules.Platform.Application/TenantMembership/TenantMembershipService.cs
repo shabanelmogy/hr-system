@@ -1,5 +1,5 @@
-using ErpSystem.Modules.Platform.Contracts.TenantMembership;
-using ErpSystem.Modules.Platform.Contracts.Tenancy;
+using ErpSystem.Modules.Platform.Application.TenantMembership;
+using ErpSystem.Modules.Platform.Application.Tenancy;
 
 namespace ErpSystem.Modules.Platform.Application.TenantMembership;
 

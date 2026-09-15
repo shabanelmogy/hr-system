@@ -24,6 +24,7 @@ import {
   Edit,
 } from "@mui/icons-material";
 import { motion, type PanInfo } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import type { TreeNode } from "./types";
 
 export interface HierarchicalTreeListProps<T> {
@@ -74,6 +75,7 @@ export default function HierarchicalTreeList<T>({
   rootTitle,
 }: HierarchicalTreeListProps<T>) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const isRtl = theme.direction === "rtl";
 
   const [draggingItem, setDraggingItem] = useState<T | null>(null);
@@ -367,7 +369,7 @@ export default function HierarchicalTreeList<T>({
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               {/* Type Badge */}
               <Chip
-                label={hasChildren ? (isRtl ? "رئيسي" : "Parent") : (isRtl ? "فرعي" : "Sub")}
+                label={hasChildren ? (t("treeView.parent")) : (t("treeView.sub"))}
                 size="small"
                 variant="outlined"
                 sx={{
@@ -408,7 +410,7 @@ export default function HierarchicalTreeList<T>({
               {/* Status Badge (if archived) */}
               {isDeleted && (
                 <Chip
-                  label={isRtl ? "مؤرشف" : "Archived"}
+                  label={t("treeView.archived")}
                   size="small"
                   color="error"
                   variant="outlined"
@@ -429,7 +431,7 @@ export default function HierarchicalTreeList<T>({
                 }}
               >
                 {canCreate && onAddChild && (
-                  <Tooltip title={isRtl ? "إضافة عنصر فرعي" : "Add Sub-Item"}>
+                  <Tooltip title={t("treeView.addSubItem")}>
                     <IconButton
                       size="small"
                       onPointerDown={(e) => e.stopPropagation()}
@@ -446,7 +448,7 @@ export default function HierarchicalTreeList<T>({
                 )}
 
                 {canEdit && onMove && (
-                  <Tooltip title={isRtl ? "نقل العنصر" : "Move Item"}>
+                  <Tooltip title={t("treeView.moveItem")}>
                     <IconButton
                       size="small"
                       onPointerDown={(e) => e.stopPropagation()}
@@ -463,7 +465,7 @@ export default function HierarchicalTreeList<T>({
                 )}
 
                 {canEdit && onEdit && (
-                  <Tooltip title={isRtl ? "تعديل" : "Edit"}>
+                  <Tooltip title={t("treeView.edit")}>
                     <IconButton
                       size="small"
                       onPointerDown={(e) => e.stopPropagation()}
@@ -480,7 +482,7 @@ export default function HierarchicalTreeList<T>({
                 )}
 
                 {canDrag && (
-                  <Tooltip title={isRtl ? "اسحب لإعادة الترتيب أو النقل" : "Drag to move"}>
+                  <Tooltip title={t("treeView.dragToMove")}>
                     <Box
                       sx={{
                         display: "flex",
@@ -557,7 +559,7 @@ export default function HierarchicalTreeList<T>({
       >
         <FolderOpen sx={{ color: theme.palette.mode === "dark" ? theme.palette.primary.light : theme.palette.primary.main, fontSize: 18 }} />
         <Typography variant="caption" sx={{ fontWeight: 700, color: theme.palette.mode === "dark" ? theme.palette.primary.light : theme.palette.primary.dark }}>
-          {rootTitle ?? (isRtl ? "المستوى الرئيسي للشركة (بدون مركز أب)" : "Company Top Level (No Parent)")}
+          {rootTitle ?? (t("treeView.companyTopLevelNoParent"))}
         </Typography>
       </Box>
 

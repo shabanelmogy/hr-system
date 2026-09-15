@@ -51,6 +51,10 @@ const mockOutbox = {
     mockMatchesCommandScope(scope) && ['pending', 'failed'].includes(mockCommand.status)
       ? [{ ...mockCommand }]
       : []),
+  listPendingByTypes: jest.fn(async (scope: typeof mockScope) =>
+    mockMatchesCommandScope(scope) && ['pending', 'failed'].includes(mockCommand.status)
+      ? [{ ...mockCommand }]
+      : []),
   markProcessing: jest.fn(async () => {
     if (!['pending', 'failed'].includes(mockCommand.status)) return false;
     mockCommand = {

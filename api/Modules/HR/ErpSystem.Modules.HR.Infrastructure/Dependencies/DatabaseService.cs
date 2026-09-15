@@ -1,5 +1,5 @@
-using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
-using ErpSystem.Modules.HR.Application.Abstractions.Validation;
+using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
+using ErpSystem.BuildingBlocks.Application.Abstractions.Validation;
 using Scrutor;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Dependencies;

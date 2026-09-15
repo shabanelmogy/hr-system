@@ -1,10 +1,11 @@
-import { getBasicDataConfig } from "./basicDataConfig";
 import { getWorkforcePlanningConfig } from "./workforcePlanningConfig";
-import { getFinanceConfig } from "./financeConfig";
 import { getRecruitmentConfig } from "./recruitmentConfig";
 import { getAttendanceConfig } from "./attendanceConfig";
-import { getExtrasConfig } from "./extrasConfig";
-import { getUsersAndRolesConfig } from "./usersAndRolesConfig";
-import { getAdvancedToolsConfig } from "./advancedToolsConfig";
+import { getOrganizationalStructureConfig } from "./organizationalStructureConfig";
 
-export const hrNavigation = [getBasicDataConfig(), getWorkforcePlanningConfig(), getFinanceConfig(), getRecruitmentConfig(), getAttendanceConfig(), getExtrasConfig(), getUsersAndRolesConfig(), getAdvancedToolsConfig()];
+export const hrNavigation = [
+  getOrganizationalStructureConfig(),
+  getWorkforcePlanningConfig(),
+  getRecruitmentConfig(),
+  getAttendanceConfig(),
+];

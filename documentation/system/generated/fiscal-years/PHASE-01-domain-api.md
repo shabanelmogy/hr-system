@@ -6,9 +6,9 @@
 
 Build the server contract first so both clients consume one stable model.
 
-Execution reference: `documentation/api/Feature_Module_Implementation_Checklist.md`.
-The applied feature profile supplies evidence; the generic checklist supplies the
-implementation discipline.
+Execution reference: `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`.
+The applied feature profile supplies evidence; the workflow supplies the mandatory
+existing-system review, implementation order, and Definition of Done.
 
 ## Required decisions
 
@@ -79,7 +79,7 @@ implementation discipline.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | fiscal-years-master | 3 | `8390cefc7a311be46bc6e92580fcbe7aff06ff47aaa4ac187f90cd7e66903da8` |
-| fiscal-years-master | 4 | `dea891749533e9690608c378a77d0fe3056c46fb0262d3412a75d6595a5c2bed` |
+| fiscal-years-master | 4 | `a138eeba03b2c75a88c481f8ecad0b88cd339b53f5c26f67fc52bf62d2da13bf` |
 | fiscal-years-master | 6 | `c61603f2d747c9ea9d5c5c0dbec61ba19af29c8f378afac7131e65ec8659b438` |
 | fiscal-years-api | 1 | `c5cd5261f849189a2749a31cd78e70e9245714e5d8c28b7f8dacb8285b23b92c` |
 | fiscal-years-api | 2 | `02d18d2d40635c247dd35aabe02cd296212efe5cb30da3a8e834f5e0c9877e8e` |
@@ -87,7 +87,7 @@ implementation discipline.
 | fiscal-years-api | 4 | `1e69de36f54c56ace43f1c0d1fc3071374d91f7e473e1439011b21d51b55efcd` |
 | fiscal-years-api | 5 | `ba8176ed5d7ccdae35e2e28dbf19753c72676ad255c6787cf74c3a0dac821529` |
 | fiscal-years-api | 6 | `748acbb8a884f50f81cdf9e854ef7f784765a8f2781f904bf2a90f5872ed6c64` |
-| fiscal-years-api | 7 | `c25d29f51a1e7ed2e7f3c4010197ff26f4c0c385fc4fb356666a1601585964fd` |
+| fiscal-years-api | 7 | `bb9330bdbdb4a33564e6b4560a0a2709d55cca905f26b079bd9507f9bb0276ad` |
 | fiscal-years-api | 8 | `da26f9374d1461299ddd9043d1a72414d6f63e7df4cd8babe579a9c9382cebb2` |
 | fiscal-years-api | 9 | `544d5cc0a769e20f76567b5d1560052dfb950882220b506c0f911cdaa22170bf` |
-| fiscal-years-api | 10 | `b060046b42161306d8172af2dd59873e554d42dccdf0f78931397f67633cc5b1` |
+| fiscal-years-api | 10 | `a823f2200f91e5603cc9dcb22e2fa57d513a7442a3485fa03ed8c3ee1fcc5715` |

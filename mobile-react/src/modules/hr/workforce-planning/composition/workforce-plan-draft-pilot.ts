@@ -20,6 +20,7 @@ import { useAuth } from '@/src/platform/auth';
 import { useOfflineOperationsPolicy } from '@/src/platform/offline-operations';
 import type {
   WorkforcePlanDraftState,
+  WorkforcePlanEditingSnapshot,
 } from '../domain/models/workforce-plan-draft';
 import type {
   UpdateWorkforcePlanRequest,
@@ -29,6 +30,7 @@ import { workforcePlanMatchesDraftUpdate } from '../domain/policies/workforce-pl
 import {
   WORKFORCE_PLAN_DRAFT_COMMAND,
   WorkforcePlanDraftStore,
+  toLocalWorkforcePlan,
 } from '../data/local/workforce-plan-draft-store';
 import { DefaultWorkforcePlanRepository } from '../data/repositories/default-workforce-plan-repository';
 
@@ -62,19 +64,29 @@ export class WorkforcePlanDraftPilot {
     scope: OfflineScope,
     baseDetail: WorkforcePlanDetail,
     request: UpdateWorkforcePlanRequest,
+    editingSnapshot: WorkforcePlanEditingSnapshot,
     queueForReplay: boolean,
   ): Promise<WorkforcePlanDraftState> {
     return queueForReplay
-      ? this.drafts.queueUpdate(scope, baseDetail, request)
-      : this.drafts.saveLocalDraft(scope, baseDetail, request);
+      ? this.drafts.queueUpdate(scope, baseDetail, request, editingSnapshot)
+      : this.drafts.saveLocalDraft(scope, baseDetail, request, editingSnapshot);
   }
 
   get(scope: OfflineScope, planId: number): Promise<WorkforcePlanDraftState | null> {
     return this.drafts.get(scope, planId);
   }
 
+  async list(scope: OfflineScope) {
+    const states = await this.drafts.list(scope);
+    return states.map((state) => ({ state, plan: toLocalWorkforcePlan(state) }));
+  }
+
   discard(scope: OfflineScope, planId: number): Promise<void> {
     return this.drafts.remove(scope, planId);
+  }
+
+  retry(scope: OfflineScope, planId: number): Promise<WorkforcePlanDraftState | null> {
+    return this.drafts.retry(scope, planId);
   }
 
   sync(scope: OfflineScope, authorization: SyncAuthorization): Promise<SyncRunResult> {
@@ -208,7 +220,7 @@ export function useWorkforcePlanDraftPilot() {
   const database = useOfflineDatabase();
   const connectivity = useConnectivity();
   const offlinePolicy = useOfflineOperationsPolicy();
-  const { session, status } = useAuth();
+  const { session, status, isServerAuthenticated } = useAuth();
   const userId = session?.userId ?? null;
   const tenantId = session?.tenantId ?? null;
   const companyId = session?.companyId ?? null;
@@ -216,11 +228,15 @@ export function useWorkforcePlanDraftPilot() {
     && offlinePolicy.canSaveDraft(OFFLINE_CAPABILITY_IDS.workforcePlanUpdateDraft);
   const offlineReplayAllowed = offlineDraftAllowed
     && offlinePolicy.canExecuteOfflineCommand(OFFLINE_CAPABILITY_IDS.workforcePlanUpdateDraft);
+  const policyFresh = offlinePolicy.loaded
+    && offlinePolicy.policy?.status === 'ready'
+    && Boolean(offlinePolicy.snapshot);
+  // The local pilot must remain available when policy loading fails or a
+  // server downgrade blocks new replay admission. Existing drafts still need
+  // to be viewed, edited, discarded, and eventually drained.
   const pilot = useMemo(
-    () => offlineDraftAllowed && database
-      ? getWorkforcePlanDraftPilot(database)
-      : null,
-    [database, offlineDraftAllowed],
+    () => database ? getWorkforcePlanDraftPilot(database) : null,
+    [database],
   );
   const scope = useMemo<OfflineScope | null>(() =>
     userId && tenantId && companyId ? ({ userId, tenantId, companyId }) : null,
@@ -230,7 +246,9 @@ export function useWorkforcePlanDraftPilot() {
     pilot,
     scope,
     isOnline: connectivity.isOnline,
-    authenticated: status === 'authenticated',
+    authenticated: status === 'authenticated' && isServerAuthenticated,
+    canSaveDraft: offlineDraftAllowed,
+    policyFresh,
     canExecuteOfflineCommand: offlineReplayAllowed,
   };
 }

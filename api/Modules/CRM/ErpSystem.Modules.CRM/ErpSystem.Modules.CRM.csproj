@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.CRM</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.CRM</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Modularity\ErpSystem.BuildingBlocks.Modularity.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.CRM.Application\ErpSystem.Modules.CRM.Application.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.CRM.Infrastructure\ErpSystem.Modules.CRM.Infrastructure.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.CRM.Presentation\ErpSystem.Modules.CRM.Presentation.csproj" />
+  </ItemGroup>
+</Project>

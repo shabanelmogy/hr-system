@@ -103,6 +103,7 @@ export const arBasicData = {
     decision: { approve: 'اعتماد', reject: 'رفض', approveTitle: 'اعتماد الوصف الوظيفي', rejectTitle: 'رفض الوصف الوظيفي', subtitle: 'سجل قرار دورة الحياة المنضبط لهذه النسخة المسودة.', approved: 'تم اعتماد الوصف الوظيفي.', rejected: 'تم رفض الوصف الوظيفي.', failed: 'تعذر حفظ قرار الوصف الوظيفي.' },
     jobDescriptionDetails: {
       profileTitle: 'بطاقة الوصف الوظيفي',
+      versionValue: 'الإصدار {{version}}',
       overview: 'الهدف العام للوظيفة',
       duties: 'مجالات العمل والمسؤوليات',
       skills: 'مصفوفة المهارات المطلوبة',
@@ -121,6 +122,38 @@ export const arBasicData = {
       emptyDuties: 'لم يتم تسجيل بنود مسؤوليات مهيكلة بعد.',
       emptySkills: 'لم يتم تسجيل مهارات بعد.',
       emptyEducation: 'لم يتم تسجيل مؤهلات بعد.',
+    },
+    jobDescriptionEditors: {
+      duties: {
+        title: 'مجالات العمل والواجبات المهيكلة', addSection: 'إضافة قسم', empty: 'لم تتم إضافة أقسام مهام بعد.',
+        sectionNumber: 'قسم واجبات رقم {{number}}', removeSection: 'حذف القسم',
+        titleArabic: 'عنوان المجال بالعربية', titleEnglish: 'عنوان المجال بالإنجليزية', weightPercentage: 'الوزن النسبي %',
+        itemsCount: 'بنود الواجبات والمسؤوليات ({{count}}):', itemArabic: 'بند رقم {{number}} (عربي)', itemEnglish: 'بند رقم {{number}} (إنجليزي)',
+        removeItem: 'حذف البند', addItem: 'إضافة بند مسؤولية',
+      },
+      education: {
+        title: 'المؤهلات العلمية المطلوبة', add: 'إضافة مؤهل', empty: 'لم تتم إضافة مؤهلات علمية بعد.',
+        number: 'مؤهل رقم {{number}}', degreeLevel: 'المستوى الدراسي (بكالوريوس / ماجستير)', fieldOfStudy: 'التخصص / مجال الدراسة',
+        mandatory: 'مؤهل إلزامي',
+      },
+      skills: {
+        title: 'المهارات المطلوبة ومستويات الإتقان', add: 'إضافة مهارة', empty: 'لم تتم إضافة مهارات بعد.',
+        number: 'مهارة رقم {{number}}', name: 'اسم المهارة', proficiency: 'مستوى الإتقان', mandatory: 'مهارة إلزامية للوظيفة',
+        level: { beginner: 'مبتدئ', intermediate: 'متوسط', advanced: 'متقدم', expert: 'خبير' },
+      },
+    },
+    tree: {
+      centralized: 'مركزي', move: 'نقل', addChild: 'إضافة عنصر فرعي', dropAsParent: 'أفلت هنا لتكون أبًا لـ {{code}}',
+      movingNotice: 'جارٍ النقل... اختر الأب الجديد أو ألغِ', hierarchy: 'الهيكل الشجري ({{count}} {{entity}})',
+      expand: 'فرد', collapse: 'طي', companyRoot: 'مستوى الشركة الأعلى', noParentDepartment: 'لا توجد إدارة أب (مستوى رئيسي)',
+      confirmMoveDescription: 'هل أنت متأكد من نقل {{code}} — {{name}} لتصبح تابعة لـ {{target}}؟', moveDepartment: 'نقل الإدارة',
+      confirmMove: 'تأكيد النقل', dropAtCompanyRoot: 'أفلت هنا لتعيين {{code}} في المستوى الرئيسي للشركة',
+      moveDepartmentCode: 'نقل الإدارة: {{code}}',
+      close: 'إغلاق', selectParent: 'اختر الإدارة الأب الجديدة من القائمة أدناه:', searchDepartments: 'بحث في الإدارات',
+      searchPlaceholder: 'ابحث بالاسم أو الكود...', noMatchingDepartments: 'لا توجد إدارات مطابقة للبحث',
+      companyRootLevel: 'المستوى الرئيسي للشركة (بدون إدارة أب)', costCenterRoot: 'مراكز التكلفة في المستوى الرئيسي للشركة', cancel: 'إلغاء', saveMove: 'حفظ النقل',
+      costCenterEntity: 'مركز تكلفة',
+      costCenterPlural: 'مراكز تكلفة',
     },
   },
   countries: {

@@ -1,0 +1,20 @@
+using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation.Countries.Abstractions;
+using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation.Countries.Contracts;
+
+namespace ErpSystem.Modules.ReferenceData.Infrastructure.Features.GeographicalInformation.Countries.Jobs;
+
+public sealed class CountryChangeScheduler : ICountryChangeScheduler
+{
+    public void Schedule(CountryChange change)
+    {
+        var request = new CountryChangedJobRequest(
+            change.Country,
+            change.Action,
+            change.BulkCount,
+            change.ActorUserId,
+            change.OperationId);
+
+        BackgroundJob.Enqueue<CountryChangedJob>(
+            job => job.ExecuteAsync(request, CancellationToken.None));
+    }
+}

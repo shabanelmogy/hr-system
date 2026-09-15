@@ -5,7 +5,9 @@ Status: domain foundation applied; owner-link CQRS endpoints are Deferred.
 ## 1. Boundary
 
 The current versioned controller is a tenant/company permission boundary over
-the reusable Address entity. It uses the existing service for compatibility.
+the reusable Address entity. It is a thin `ISender` adapter over Application-owned
+CQRS commands/queries; persistence is exposed through `IAddressReadStore` and
+`IAddressWriteStore` and implemented in ReferenceData Infrastructure.
 Future owner-link APIs must be thin controllers over CQRS commands and queries,
 with Company, Branch, Employee, and Work Location ownership kept in their own
 feature slices.
@@ -59,20 +61,22 @@ privacy-specific permissions before exposing home or emergency addresses.
 
 ## 5. Lifecycle and integration rules
 
-The compatibility service validates active Country/State/District references
-again inside its transaction and acquires the corresponding geographical
-lifecycle resources before writing. Country and State archive commands reject
-active Address references; District archive does the same. This prevents a
-valid address from being committed concurrently with an archived parent.
-Create, update, and restore also require an active `CompanyCountry` for the
-selected Country. They share the current company's geographic-scope lock with
-scope replacement. Restore additionally locks and revalidates the current
-AddressType and complete optional hierarchy before activation, retrying when
-its snapshot changes while locks are acquired.
+The Address command handlers validate active Country/State/District and
+AddressType references inside the transaction and acquire the corresponding
+geographical lifecycle resources before writing. Country and State archive
+commands reject active Address references; District archive does the same. This
+prevents a valid address from being committed concurrently with an archived
+parent. Create, update, and restore also require the selected Country to remain
+inside the trusted current tenant/company operating scope through
+`ICompanyGeographySource`. They share the current company's geographic-scope
+lock with scope replacement. Update/restore snapshot the current lifecycle
+references, lock the relevant old/new resources, re-read, and retry when the
+snapshot changed while locks were acquired. Non-transactional change scheduling
+occurs only after the owning transaction completes successfully.
 
 ## 6. Required future work
 
-Replace the compatibility service with Address CQRS reads/writes, then add
+The Address CQRS read/write migration is complete. Remaining work is to add
 owner-link commands with transaction locks for one-primary-per-owner-purpose.
 Every owner-link mutation must retain the operating-country validation already
 enforced by the Address write boundary and add its purpose-specific policy. In

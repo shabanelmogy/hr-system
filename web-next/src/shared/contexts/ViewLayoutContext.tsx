@@ -162,8 +162,8 @@ export const ViewLayoutProvider = ({ children }: { children: React.ReactNode }) 
 };
 
 // HOC for components that need view layout context
-export const withViewLayout = (Component) => {
-  return function ViewLayoutWrappedComponent(props) {
+export const withViewLayout = <Props extends object>(Component: React.ComponentType<Props>) => {
+  return function ViewLayoutWrappedComponent(props: Props) {
     return (
       <ViewLayoutProvider>
         <Component {...props} />

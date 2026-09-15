@@ -69,7 +69,7 @@ export function EntityChangeLogModal({
       if (!map.has(gId)) {
         map.set(gId, {
           changeLogId: gId,
-          changedBy: log.changedBy || (isAr ? 'مستخدم النظام' : 'System User'),
+          changedBy: log.changedBy || t('auditLog.systemUser'),
           changedAt: log.changedAt,
           changedByPc: log.changedByPc || '',
           items: [],
@@ -81,7 +81,7 @@ export function EntityChangeLogModal({
     return Array.from(map.values()).sort(
       (a, b) => new Date(b.changedAt).getTime() - new Date(a.changedAt).getTime()
     );
-  }, [isAr, logs]);
+  }, [logs, t]);
 
   const formatDate = (isoString: string) => {
     if (!isoString) return '-';
@@ -117,7 +117,7 @@ export function EntityChangeLogModal({
       icon="time-outline"
       onClose={onClose}
       subtitle={subtitleText || undefined}
-      title={title || (isAr ? 'سجل التعديلات والتدقيق' : 'Change History & Audit Trail')}
+      title={title || t('auditLog.title')}
       variant="fullScreen"
       visible={visible}
     >
@@ -127,13 +127,9 @@ export function EntityChangeLogModal({
         <AppStateView message={t('feedback.unknownError')} onRetry={onRetry} state="error" />
       ) : groupedLogs.length === 0 ? (
         <AppStateView
-          message={
-            isAr
-              ? 'لم يتم تسجيل أي تعديل على هذا العنصر حتى الآن'
-              : 'No modifications have been recorded for this item yet'
-          }
+          message={t('auditLog.emptyMessage')}
           state="empty"
-          title={isAr ? 'لا توجد حركات تعديل' : 'No Changes Found'}
+          title={t('auditLog.emptyTitle')}
         />
       ) : (
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
@@ -191,7 +187,7 @@ export function EntityChangeLogModal({
                       {/* Old Value */}
                       <View style={styles.valueBox}>
                         <AppText color="muted" style={styles.valueLabel} variant="caption">
-                          {isAr ? 'السابقة:' : 'Old:'}
+                          {t('auditLog.oldValue')}
                         </AppText>
                         {item.oldValue ? (
                           <View
@@ -213,7 +209,7 @@ export function EntityChangeLogModal({
                           </View>
                         ) : (
                           <AppText color="muted" variant="caption">
-                            {isAr ? 'فارغ' : 'Empty'}
+                            {t('auditLog.emptyValue')}
                           </AppText>
                         )}
                       </View>
@@ -230,7 +226,7 @@ export function EntityChangeLogModal({
                       {/* New Value */}
                       <View style={styles.valueBox}>
                         <AppText color="muted" style={styles.valueLabel} variant="caption">
-                          {isAr ? 'الجديدة:' : 'New:'}
+                          {t('auditLog.newValue')}
                         </AppText>
                         {item.newValue ? (
                           <View
@@ -253,7 +249,7 @@ export function EntityChangeLogModal({
                           </View>
                         ) : (
                           <AppText color="muted" variant="caption">
-                            {isAr ? 'فارغ' : 'Empty'}
+                            {t('auditLog.emptyValue')}
                           </AppText>
                         )}
                       </View>

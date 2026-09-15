@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework><AssemblyName>ErpSystem.Modules.Contacts.Tests</AssemblyName><RootNamespace>ErpSystem.Modules.Contacts.Tests</RootNamespace><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable><IsPackable>false</IsPackable><IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+  <ItemGroup><PackageReference Include="Microsoft.NET.Test.Sdk" /><PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" /><PackageReference Include="xunit" /><PackageReference Include="xunit.runner.visualstudio"><PrivateAssets>all</PrivateAssets><IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets></PackageReference></ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ErpSystem.Modules.Contacts.Contracts\ErpSystem.Modules.Contacts.Contracts.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Contacts.Domain\ErpSystem.Modules.Contacts.Domain.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Contacts.Application\ErpSystem.Modules.Contacts.Application.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Contacts.Infrastructure\ErpSystem.Modules.Contacts.Infrastructure.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Contacts.Presentation\ErpSystem.Modules.Contacts.Presentation.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Contacts\ErpSystem.Modules.Contacts.csproj" />
+  </ItemGroup>
+</Project>

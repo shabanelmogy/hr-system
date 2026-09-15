@@ -59,8 +59,8 @@
 | D-E03 | Persistence/audit/realtime are post-commit | `Infrastructure/.../Districts/Persistence/DistrictManagementStores.cs`, `Jobs/DistrictManagementChangedJob.cs` |
 | D-E04 | Browser uses server list and approved views | `web-next/.../districts/hooks/useDistrictGridLogic.ts`, `components/DistrictsMultiView.tsx` |
 | D-E05 | Mobile has a direct guarded route and Zod boundary | `mobile-react/app/(main)/basic-data/geographical-information/districts.tsx`, `src/modules/hr/basic-data/districts` |
-| D-E06 | API contract/route/validator/mapping tests exist | `api/ErpSystem.Tests/DistrictCqrsArchitectureTests.cs` |
-| D-E07 | Atomic District bulk-create behavior and persistence conflict closure | `api/ErpSystem.Tests/DistrictBulkCreateHandlerTests.cs` |
+| D-E06 | API contract/route/validator/mapping tests exist | `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/DistrictCqrsArchitectureTests.cs` |
+| D-E07 | Atomic District bulk-create behavior and persistence conflict closure | `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/DistrictBulkCreateHandlerTests.cs` |
 | D-E08 | Web import parser/lookup/duplicate/body behavior | `web-next/.../districts/components/import-data`, `services/districtService.test.ts` |
 | D-E09 | Managed District report dataset and web viewer | `api/.../CrystalReportDataSource.cs`, `web-next/.../districts/reports/pages/DistrictReportPage.tsx` |
 | D-E10 | Mobile managed Report, native Import, and five-view registration | `mobile-react/.../districts/components/DistrictReportView.tsx`, `components/import-data/DistrictImportView.tsx`, `screens/DistrictsScreen.test.tsx` |
@@ -75,7 +75,6 @@ Districts is below State and is guarded by Address dependencies. Its import reso
 | --- | --- | --- | --- |
 | D-F01 | Manual release check | Browser desktop/tablet/mobile and Expo phone/tablet RTL visual matrix remains manual. | Product/QA must execute before release. |
 | D-F02 | Deployment release check | The report view can run only after a compatible District `.rpt` version is uploaded, published, and granted Run access. | Report administrator/deployment owner. |
-| D-F03 | Cleanup follow-up | Legacy District service/job compatibility code has no current controller producer. | Audit all callers and remove in a dedicated compatibility cleanup. |
 | D-F04 | Repository test gate | The full Vitest runner remained alive after its worker exited, so the full browser-suite result could not be collected in the bounded run. | Web test-infrastructure owner should inspect open handles; the focused District service suite passed. |
 
 ## Verification
@@ -85,7 +84,7 @@ Districts is below State and is guarded by Address dependencies. Its import reso
 | Documentation baseline | `./documentation/system/Generate-Documentation.ps1 -Check` | Passed before refactor |
 | API focused | `dotnet test ... --filter "...DistrictCqrsArchitectureTests|...DistrictBulkCreateHandlerTests|...CrystalReportDataSourceTests|...BackgroundNotificationJobTests"` | Passed: 67 |
 | API build | `dotnet build ErpSystem.Api/ErpSystem.Api.csproj --no-restore` | Passed: 0 warnings, 0 errors |
-| API full tests | `dotnet test ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore` | 318 passed, 1 inherited migration text assertion failure (`TenantRoleIsolationTests.MigrationBackfill_DeduplicatesSharedRoleTenantBeforeAssigningCloneIds`) |
+| API full tests | Current gate: `dotnet test api/ErpSystem.sln -c Release` | Historical implementation result is superseded by `documentation/api/FOUNDATION_CLOSURE_MATRIX.md`; use the current solution gate for new work |
 | API solution build | `dotnet build ErpSystem.sln --no-restore` | Environment blocker: legacy Crystal project lacks `Microsoft.WebApplication.targets`; primary API projects passed |
 | Web type checks | `npm run type-check`; `npm run type-check:strict` | Passed |
 | Web lint/build | `npm run lint`; `npm run build` | Passed; lint has 116 inherited warnings and 0 errors; production build compiled and generated all 41 static pages |

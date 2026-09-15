@@ -1,7 +1,6 @@
 using System.Globalization;
-using ErpSystem.Modules.HR.Application.Abstractions.Authentication;
-using ErpSystem.Modules.HR.Application.Common.Consts;
-using ErpSystem.Modules.HR.Application.Common.Realtime;
+using ErpSystem.BuildingBlocks.Context.Authentication;
+using ErpSystem.BuildingBlocks.Application.Common.Realtime;
 using Microsoft.Extensions.Logging;
 
 namespace ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Commands;
@@ -17,7 +16,7 @@ public sealed class StaffingEffects(
             RealtimeAudience.ForCompanyPermission(
                 TenantId(),
                 CompanyId(),
-                Permissions.ViewEnvelopeAmendments),
+                HrPermissions.ViewEnvelopeAmendments),
             "envelope-amendments",
             action,
             amendmentId.ToString(CultureInfo.InvariantCulture),
@@ -30,7 +29,7 @@ public sealed class StaffingEffects(
             RealtimeAudience.ForCompanyPermission(
                 TenantId(),
                 CompanyId(),
-                Permissions.ViewPositionEnvelopes),
+                HrPermissions.ViewPositionEnvelopes),
             "position-envelopes",
             "Expand",
             envelopeId.ToString(CultureInfo.InvariantCulture),
@@ -42,7 +41,7 @@ public sealed class StaffingEffects(
             RealtimeAudience.ForCompanyPermission(
                 TenantId(),
                 CompanyId(),
-                Permissions.ViewStaffingRequests),
+                HrPermissions.ViewStaffingRequests),
             "staffing-requests",
             action,
             requestId.ToString(CultureInfo.InvariantCulture),
@@ -55,7 +54,7 @@ public sealed class StaffingEffects(
             RealtimeAudience.ForCompanyPermission(
                 TenantId(),
                 CompanyId(),
-                Permissions.ViewPositionEnvelopes),
+                HrPermissions.ViewPositionEnvelopes),
             "position-envelopes",
             "Release",
             envelopeId.ToString(CultureInfo.InvariantCulture),
@@ -69,7 +68,7 @@ public sealed class StaffingEffects(
             RealtimeAudience.ForCompanyPermission(
                 TenantId(),
                 CompanyId(),
-                Permissions.ViewPositionEnvelopes),
+                HrPermissions.ViewPositionEnvelopes),
             "position-envelopes",
             "Reserve",
             envelopeId.ToString(CultureInfo.InvariantCulture),

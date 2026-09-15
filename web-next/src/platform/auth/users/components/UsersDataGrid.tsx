@@ -1,19 +1,31 @@
 import {
+  ArchiveOutlined,
   Edit,
   LockOpen,
   Person,
   PersonOff,
   RemoveCircle,
+  Restore,
   Visibility
 } from "@mui/icons-material";
-import { Avatar, Box, Chip, Tooltip, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Checkbox,
+  Chip,
+  FormControlLabel,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import {
   GridActionsCellItem,
   type GridActionsCellItemProps,
   type GridApi,
   type GridColDef,
+  type GridPaginationModel,
   type GridRenderCellParams,
   type GridRowParams,
+  type GridSortModel,
 } from "@mui/x-data-grid";
 import { useCallback, useMemo, type ReactElement, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
@@ -26,6 +38,7 @@ import {
 } from "./UserStatusCellRenderers";
 import useUserStore from "../store/useUserStore";
 import { useSession } from "@/lib/auth/SessionContext";
+import { ResetButton } from "@/shared/components/lists/card-view/header-controls/ResetButton";
 
 interface UsersDataGridProps {
   users: User[];
@@ -37,11 +50,27 @@ interface UsersDataGridProps {
   onToggle: (user: User) => void;
   onUnlock: (user: User) => void;
   onRevoke: (user: User) => void;
+  onArchive: (user: User) => void;
+  onRestore: (user: User) => void;
   t: Translator;
   lastAddedId?: string | number | null;
   lastEditedId?: string | number | null;
   canCreate: boolean;
   canEdit: boolean;
+  canDelete: boolean;
+  page: number;
+  pageSize: number;
+  totalCount: number;
+  searchValue: string;
+  sortColumn: "name" | "userName" | "email";
+  sortDirection: "ASC" | "DESC";
+  includeArchived: boolean;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
+  onSearchChange: (value: string) => void;
+  onSortChange: (column: "name" | "userName" | "email", direction: "ASC" | "DESC") => void;
+  onIncludeArchivedChange: (includeArchived: boolean) => void;
+  onResetList: () => void;
 }
 
 const UsersDataGrid = ({
@@ -54,11 +83,27 @@ const UsersDataGrid = ({
   onToggle, // Single function for enable/disable
   onUnlock,
   onRevoke, // Revoke function
+  onArchive,
+  onRestore,
   t,
   lastAddedId,
   lastEditedId,
   canCreate,
   canEdit,
+  canDelete,
+  page,
+  pageSize,
+  totalCount,
+  searchValue,
+  sortColumn,
+  sortDirection,
+  includeArchived,
+  onPageChange,
+  onPageSizeChange,
+  onSearchChange,
+  onSortChange,
+  onIncludeArchivedChange,
+  onResetList,
 }: UsersDataGridProps) => {
   const { i18n } = useTranslation();
   const { user: currentUser } = useSession();
@@ -144,6 +189,8 @@ const UsersDataGrid = ({
   const getActions = useCallback(
     (params: GridRowParams<User>): ReactElement<GridActionsCellItemProps>[] => {
       const { isDisabled, isLocked } = params.row;
+      const isOwnUser = params.row.id === currentUser?.userId;
+      const isArchived = params.row.lifecycleStatus === "archived";
 
       const actions = [
         // View button - always available
@@ -157,7 +204,34 @@ const UsersDataGrid = ({
 
       ];
 
-      if (!canEdit || params.row.id === currentUser?.userId) return actions;
+      if (isArchived) {
+        if (canDelete && !isOwnUser) {
+          actions.push(
+            <Tooltip title={t("actions.restore")} key={`restore-${params.row.id}`} arrow>
+              <GridActionsCellItem
+                icon={<Restore sx={{ fontSize: 20, color: "success.main" }} />}
+                label={t("actions.restore")}
+                onClick={() => onRestore(params.row)}
+              />
+            </Tooltip>,
+          );
+        }
+        return actions;
+      }
+
+      if (canDelete && !isOwnUser) {
+        actions.push(
+          <Tooltip title={t("actions.archive")} key={`archive-${params.row.id}`} arrow>
+            <GridActionsCellItem
+              icon={<ArchiveOutlined sx={{ fontSize: 20, color: "error.main" }} />}
+              label={t("actions.archive")}
+              onClick={() => onArchive(params.row)}
+            />
+          </Tooltip>,
+        );
+      }
+
+      if (!canEdit || isOwnUser) return actions;
 
       actions.push(
         <Tooltip title={t("actions.edit")} key={`edit-${params.row.id}`} arrow>
@@ -243,7 +317,19 @@ const UsersDataGrid = ({
 
       return actions;
     },
-    [canEdit, currentUser?.userId, t, onEdit, onView, onToggle, onUnlock, onRevoke]
+    [
+      canDelete,
+      canEdit,
+      currentUser?.userId,
+      onArchive,
+      onEdit,
+      onRestore,
+      onRevoke,
+      onToggle,
+      onUnlock,
+      onView,
+      t,
+    ]
   );
 
   // Memoized columns with separate status renderers
@@ -279,9 +365,27 @@ const UsersDataGrid = ({
         headerAlign: "center",
       },
       {
+        field: "lifecycleStatus",
+        headerName: t("users.lifecycleStatus"),
+        flex: 0.8,
+        minWidth: 110,
+        sortable: false,
+        align: "center",
+        headerAlign: "center",
+        renderCell: ({ value }) => (
+          <Chip
+            size="small"
+            color={value === "archived" ? "default" : "success"}
+            variant="outlined"
+            label={value === "archived" ? t("users.archivedStatus") : t("users.activeStatus")}
+          />
+        ),
+      },
+      {
         field: "roles",
         headerName: t("users.roles"),
         flex: 1.2,
+        sortable: false,
         align: "center",
         headerAlign: "center",
         renderCell: renderRoles,
@@ -291,6 +395,7 @@ const UsersDataGrid = ({
         headerName: t("users.companies"),
         flex: 1.2,
         minWidth: 170,
+        sortable: false,
         align: "center",
         headerAlign: "center",
         renderCell: renderCompanies,
@@ -301,6 +406,7 @@ const UsersDataGrid = ({
         field: "isDisabled",
         headerName: t("users.disabledStatus"),
         flex: 0.8,
+        sortable: false,
         align: "center",
         headerAlign: "center",
         renderCell: renderDisabledStatus(t),
@@ -309,6 +415,7 @@ const UsersDataGrid = ({
         field: "isLocked",
         headerName: t("users.lockedStatus"),
         flex: 0.8,
+        sortable: false,
         align: "center",
         headerAlign: "center",
         renderCell: renderLockedStatus(t),
@@ -332,17 +439,61 @@ const UsersDataGrid = ({
     ]
   );
 
+  const sortField = sortColumn === "name" ? "firstName" : sortColumn;
+  const handlePaginationChange = useCallback((model: GridPaginationModel) => {
+    if (model.pageSize !== pageSize) onPageSizeChange(model.pageSize);
+    else onPageChange(model.page);
+  }, [onPageChange, onPageSizeChange, pageSize]);
+  const handleSortChange = useCallback((model: GridSortModel) => {
+    const entry = model[0];
+    if (!entry?.sort) return;
+    const column = entry.field === "email"
+      ? "email"
+      : entry.field === "userName"
+        ? "userName"
+        : "name";
+    onSortChange(column, entry.sort.toUpperCase() as "ASC" | "DESC");
+  }, [onSortChange]);
+
   return (
     <MyDataGrid
       rows={users}
       columns={columns}
       loading={loading}
       apiRef={apiRef}
-      filterMode="client"
-      initialSortModel={[{ field: "id", sort: "asc" }]}
+      filterMode="server"
+      sortingMode="server"
+      sortModel={[{ field: sortField, sort: sortDirection.toLowerCase() as "asc" | "desc" }]}
+      onSortModelChange={handleSortChange}
       onToolbarAdd={canCreate ? onAdd : undefined}
       pagination
-      pageSizeOptions={[5, 10, 25]}
+      paginationMode="server"
+      paginationModel={{ page, pageSize }}
+      onPaginationModelChange={handlePaginationChange}
+      rowCount={totalCount}
+      pageSizeOptions={[5, 10, 25, 50]}
+      showToolbar
+      showGridOptions
+      toolbarSearch={{
+        value: searchValue,
+        placeholder: t("users.searchPlaceholder"),
+        onChange: onSearchChange,
+        onClear: () => onSearchChange(""),
+      }}
+      toolbarContent={(
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <FormControlLabel
+            control={(
+              <Checkbox
+                checked={includeArchived}
+                onChange={(_, checked) => onIncludeArchivedChange(checked)}
+              />
+            )}
+            label={t("users.includeArchived")}
+          />
+          <ResetButton onReset={onResetList} fullWidth={false} height={40} />
+        </Box>
+      )}
       lastAddedId={lastAddedId}
       lastEditedId={lastEditedId}
     />

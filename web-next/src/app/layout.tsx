@@ -23,6 +23,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang={savedLang} dir={dir} data-theme={initialThemeMode}>
       <head>
+        {/* FullCalendar reuses this SSR placeholder during client module evaluation. */}
+        <style data-fullcalendar="" />
         <style dangerouslySetInnerHTML={{ __html: `
           html[data-theme="light"] {
             --app-background: #ffffff;

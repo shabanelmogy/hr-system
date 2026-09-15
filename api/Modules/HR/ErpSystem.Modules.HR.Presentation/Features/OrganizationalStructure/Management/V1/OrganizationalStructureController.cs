@@ -1,4 +1,4 @@
-using ErpSystem.Modules.HR.Application.Common.Paginations;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Commands;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Contracts;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Queries;
@@ -14,7 +14,7 @@ namespace ErpSystem.Modules.HR.Presentation.Features.OrganizationalStructure.Man
 public sealed class OrganizationalStructureController(ISender sender) : ControllerBase
 {
     [HttpGet]
-    [HasPermission(Permissions.ViewOrganizationalStructure)]
+    [HasPermission(HrPermissions.ViewOrganizationalStructure)]
     [ProducesResponseType(typeof(PageResponse<OrganizationalStructureItem>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPage(
         [FromRoute] string resource,
@@ -23,7 +23,7 @@ public sealed class OrganizationalStructureController(ISender sender) : Controll
         Ok(await sender.Send(query with { Resource = resource }, cancellationToken));
 
     [HttpGet("lookup")]
-    [HasPermission(Permissions.ViewOrganizationalStructure)]
+    [HasPermission(HrPermissions.ViewOrganizationalStructure)]
     [ProducesResponseType(typeof(IReadOnlyList<OrganizationalStructureLookup>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetLookup(
         [FromRoute] string resource,
@@ -32,7 +32,7 @@ public sealed class OrganizationalStructureController(ISender sender) : Controll
         Ok(await sender.Send(new GetOrganizationalStructureLookupQuery(resource, parentId), cancellationToken));
 
     [HttpGet("{id:int}")]
-    [HasPermission(Permissions.ViewOrganizationalStructure)]
+    [HasPermission(HrPermissions.ViewOrganizationalStructure)]
     [ProducesResponseType(typeof(OrganizationalStructureItem), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(string resource, int id, CancellationToken cancellationToken)
@@ -42,7 +42,7 @@ public sealed class OrganizationalStructureController(ISender sender) : Controll
     }
 
     [HttpGet("{id:int}/change-logs")]
-    [HasPermission(Permissions.ViewOrganizationalStructure)]
+    [HasPermission(HrPermissions.ViewOrganizationalStructure)]
     [ProducesResponseType(typeof(IReadOnlyList<EntityChangeLogsResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetChangeLogs(
         [FromRoute] string resource,
@@ -54,7 +54,7 @@ public sealed class OrganizationalStructureController(ISender sender) : Controll
     }
 
     [HttpPost]
-    [HasPermission(Permissions.CreateOrganizationalStructure)]
+    [HasPermission(HrPermissions.CreateOrganizationalStructure)]
     [ProducesResponseType(typeof(OrganizationalStructureItem), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create(
         string resource,
@@ -69,7 +69,7 @@ public sealed class OrganizationalStructureController(ISender sender) : Controll
 
     /// <summary>Creates up to 100 organizational items atomically.</summary>
     [HttpPost("bulk")]
-    [HasPermission(Permissions.CreateOrganizationalStructure)]
+    [HasPermission(HrPermissions.CreateOrganizationalStructure)]
     [ProducesResponseType(typeof(OrganizationalStructureBulkCreateResponse), StatusCodes.Status201Created)]
     public async Task<IActionResult> CreateBulk(
         string resource,
@@ -82,7 +82,7 @@ public sealed class OrganizationalStructureController(ISender sender) : Controll
     }
 
     [HttpPut("{id:int}")]
-    [HasPermission(Permissions.EditOrganizationalStructure)]
+    [HasPermission(HrPermissions.EditOrganizationalStructure)]
     [ProducesResponseType(typeof(OrganizationalStructureItem), StatusCodes.Status200OK)]
     public async Task<IActionResult> Update(
         string resource,
@@ -95,7 +95,7 @@ public sealed class OrganizationalStructureController(ISender sender) : Controll
     }
 
     [HttpDelete("{id:int}")]
-    [HasPermission(Permissions.DeleteOrganizationalStructure)]
+    [HasPermission(HrPermissions.DeleteOrganizationalStructure)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Archive(string resource, int id, CancellationToken cancellationToken)
     {
@@ -104,7 +104,7 @@ public sealed class OrganizationalStructureController(ISender sender) : Controll
     }
 
     [HttpPost("{id:int}/restore")]
-    [HasPermission(Permissions.DeleteOrganizationalStructure)]
+    [HasPermission(HrPermissions.DeleteOrganizationalStructure)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Restore(string resource, int id, CancellationToken cancellationToken)
     {
@@ -113,7 +113,7 @@ public sealed class OrganizationalStructureController(ISender sender) : Controll
     }
 
     [HttpPost("{id:int}/approve")]
-    [HasPermission(Permissions.ApproveJobDescriptions)]
+    [HasPermission(HrPermissions.ApproveJobDescriptions)]
     [ProducesResponseType(typeof(OrganizationalStructureItem), StatusCodes.Status200OK)]
     public async Task<IActionResult> Approve(
         string resource,
@@ -129,7 +129,7 @@ public sealed class OrganizationalStructureController(ISender sender) : Controll
     }
 
     [HttpPost("{id:int}/reject")]
-    [HasPermission(Permissions.ApproveJobDescriptions)]
+    [HasPermission(HrPermissions.ApproveJobDescriptions)]
     [ProducesResponseType(typeof(OrganizationalStructureItem), StatusCodes.Status200OK)]
     public async Task<IActionResult> Reject(
         string resource,

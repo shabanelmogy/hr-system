@@ -1,5 +1,7 @@
 import { ThemeProvider } from 'expo-router/react-navigation';
 import { Stack } from 'expo-router';
+import Constants from 'expo-constants';
+import { Observe, ObserveRoot } from 'expo-observe';
 import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
 import 'react-native-reanimated';
@@ -12,6 +14,21 @@ import { useAppTheme } from '@/src/core/theme';
 import { AuthProvider, useAuth } from '@/src/platform/auth';
 import { RealtimeProvider } from '@/src/platform/realtime';
 import { AppScreen, AppStateView } from '@/src/shared/components';
+import { AppErrorBoundary } from '@/src/shared/components/feedback/AppErrorBoundary';
+import { AppFeedbackHost } from '@/src/shared/components/feedback/transient';
+
+const observeDispatchingEnabled =
+  Constants.expoConfig?.extra?.eas?.observe?.dispatchingEnabled === true;
+
+Observe.configure({
+  dispatchingEnabled: observeDispatchingEnabled,
+  dispatchInDebug: false,
+  integrations: {
+    'expo-router': {
+      filteredParams: ['email', 'code', 'userId', 'invitationId', 'token', 'id'],
+    },
+  },
+});
 
 export const unstable_settings = {
   initialRouteName: 'onboarding',
@@ -19,13 +36,18 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   return (
-    <AppProviders>
-      <AuthProvider>
-        <RealtimeProvider>
-          <RootNavigator />
-        </RealtimeProvider>
-      </AuthProvider>
-    </AppProviders>
+    <ObserveRoot>
+      <AppProviders>
+        <AppErrorBoundary>
+          <AuthProvider>
+            <RealtimeProvider>
+              <RootNavigator />
+            </RealtimeProvider>
+          </AuthProvider>
+          <AppFeedbackHost />
+        </AppErrorBoundary>
+      </AppProviders>
+    </ObserveRoot>
   );
 }
 

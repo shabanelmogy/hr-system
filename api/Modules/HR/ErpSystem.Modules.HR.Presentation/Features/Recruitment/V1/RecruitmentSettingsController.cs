@@ -1,8 +1,7 @@
 using Asp.Versioning;
-using ErpSystem.Modules.HR.Application.Common.Consts;
-using ErpSystem.Modules.HR.Application.Features.Recruitment.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.Recruitment.Contracts;
-using ErpSystem.Modules.HR.Presentation.Security.Authorization.Filters;
+using ErpSystem.Modules.HR.Application.Features.Recruitment.Settings;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ErpSystem.Modules.HR.Presentation.Features.Recruitment.V1;
@@ -11,25 +10,25 @@ namespace ErpSystem.Modules.HR.Presentation.Features.Recruitment.V1;
 [Route("api/v{version:apiVersion}/recruitment/settings")]
 [ApiController]
 [TenantMember]
-public sealed class RecruitmentSettingsController(IRecruitmentService recruitmentService) : ControllerBase
+public sealed class RecruitmentSettingsController(ISender sender) : ControllerBase
 {
-    private readonly IRecruitmentService _recruitmentService = recruitmentService;
-
     [HttpGet]
-    [HasPermission(Permissions.ViewRecruitment)]
+    [HasPermission(HrPermissions.ViewRecruitment)]
     [ProducesResponseType(typeof(RecruitmentSettingsDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetSettings(CancellationToken cancellationToken)
     {
-        var settings = await _recruitmentService.GetSettingsAsync(cancellationToken);
+        var settings = await sender.Send(new GetRecruitmentSettingsQuery(), cancellationToken);
         return Ok(settings);
     }
 
     [HttpPut]
-    [HasPermission(Permissions.ManageJobOpenings)]
+    [HasPermission(HrPermissions.ManageJobOpenings)]
     [ProducesResponseType(typeof(RecruitmentSettingsDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> UpdateSettings([FromBody] RecruitmentSettingsDto updatedSettings, CancellationToken cancellationToken)
     {
-        var settings = await _recruitmentService.UpdateSettingsAsync(updatedSettings, cancellationToken);
+        var settings = await sender.Send(
+            new UpdateRecruitmentSettingsCommand(updatedSettings),
+            cancellationToken);
         return Ok(settings);
     }
 }

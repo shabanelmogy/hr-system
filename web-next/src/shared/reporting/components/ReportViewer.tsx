@@ -18,6 +18,7 @@ import {
   DescriptionOutlined,
   Clear,
 } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 export type ReportParameterValue = string | number | boolean | null | undefined;
 export type ReportSearchParams = Record<string, ReportParameterValue>;
 export type UpdateReportSearchParams = (params: ReportSearchParams) => void;
@@ -41,6 +42,7 @@ const noop = () => {};
 
 const NoResultsMessage = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -64,7 +66,7 @@ const NoResultsMessage = () => {
         }}
       />
       <Typography variant="h5" color="textSecondary" align="center" sx={{ mb: 1 }}>
-        No Results Found
+        {t("reports.noResultsFound")}
       </Typography>
       <Typography
         variant="body1"
@@ -72,8 +74,7 @@ const NoResultsMessage = () => {
         align="center"
         sx={{ maxWidth: 400 }}
       >
-        No data matches your current search criteria. Try adjusting your filters
-        or clearing them to view all results.
+        {t("reports.noDataMatches")}
       </Typography>
     </Box>
   );
@@ -88,6 +89,7 @@ const ReportViewer = ({
   filterBarVisible,
 }: ReportViewerProps) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const lang: "ar" | "en" = theme.direction === "rtl" ? "ar" : "en";
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [searchParams, setSearchParams] = useState<ReportSearchParams>({});
@@ -123,7 +125,6 @@ const ReportViewer = ({
         blob.size < 100 ||
         blob.type !== "application/pdf"
       ) {
-        console.log("Blob invalid (size or type), no content");
         return { url: null, hasContent: false };
       }
 
@@ -237,7 +238,7 @@ const ReportViewer = ({
           }}
           onClick={toggleSidebar}
         >
-          <Box sx={{ flexGrow: 1, pl: 2 }}>Search Options</Box>
+          <Box sx={{ flexGrow: 1, pl: 2 }}>{t("reports.searchOptions")}</Box>
           <IconButton color="inherit" size="small" sx={{ mr: 1 }}>
             {sidebarOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </IconButton>
@@ -286,7 +287,7 @@ const ReportViewer = ({
             fullWidth
             sx={{ mt: 1, mb: isMobile ? 2 : 0 }} // Added bottom margin for mobile
           >
-            SEARCH
+            {t("reports.searchUpper")}
           </Button>
 
           <Button
@@ -300,7 +301,7 @@ const ReportViewer = ({
             sx={{ mt: 1, mb: isMobile ? 2 : 0 }}
             disabled={Object.keys(searchParams).length === 0}
           >
-            Clear Filters
+            {t("reports.clearFilters")}
           </Button>
         </Box>
       </Paper>
@@ -373,7 +374,7 @@ const ReportViewer = ({
             >
               <CircularProgress sx={{ mb: 2 }} />
               <Typography variant="body1" color="textSecondary">
-                Generating Report...
+                {t("reports.generatingReport")}
               </Typography>
             </Box>
           ) : noResults ? (
@@ -390,7 +391,7 @@ const ReportViewer = ({
                 backgroundColor: theme.palette.background.default,
                 colorScheme: theme.palette.mode,
               }}
-              title="Report Viewer"
+              title={t("reports.reportViewer")}
               allowFullScreen
             />
           ) : null}

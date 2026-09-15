@@ -6,6 +6,13 @@ export type PreparedBackendBody = {
   streaming: boolean;
 };
 
+export class RequestBodyTooLargeError extends Error {
+  constructor(readonly maxBytes: number) {
+    super(`Request body exceeds the ${maxBytes}-byte proxy limit`);
+    this.name = "RequestBodyTooLargeError";
+  }
+}
+
 const streamedRequestTypes = [
   "multipart/form-data",
   "application/octet-stream",
@@ -19,10 +26,16 @@ const forwardedResponseHeaders = [
   "content-type",
   "etag",
   "last-modified",
+  "retry-after",
+  "www-authenticate",
+  "x-correlation-id",
 ] as const;
+
+export const DEFAULT_MAX_BUFFERED_BODY_BYTES = 10 * 1024 * 1024;
 
 export async function prepareBackendBody(
   request: Request,
+  maxBytes = DEFAULT_MAX_BUFFERED_BODY_BYTES,
 ): Promise<PreparedBackendBody> {
   if (["GET", "HEAD"].includes(request.method) || !request.body) {
     return { body: undefined, replayable: true, streaming: false };
@@ -33,8 +46,39 @@ export async function prepareBackendBody(
     return { body: request.body, replayable: false, streaming: true };
   }
 
+  const declaredLength = Number(request.headers.get("content-length"));
+  if (Number.isFinite(declaredLength) && declaredLength > maxBytes) {
+    throw new RequestBodyTooLargeError(maxBytes);
+  }
+
+  if (!request.body) {
+    return { body: undefined, replayable: true, streaming: false };
+  }
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  try {
+    while (true) {
+      const result = await reader.read();
+      if (result.done) break;
+      total += result.value.byteLength;
+      if (total > maxBytes) {
+        await reader.cancel("proxy body limit exceeded");
+        throw new RequestBodyTooLargeError(maxBytes);
+      }
+      chunks.push(result.value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  const body = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) {
+    body.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
   return {
-    body: await request.arrayBuffer(),
+    body,
     replayable: true,
     streaming: false,
   };

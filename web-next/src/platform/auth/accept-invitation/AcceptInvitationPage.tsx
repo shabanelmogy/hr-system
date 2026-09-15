@@ -1,10 +1,11 @@
 "use client";
 
-import { apiRoutes, appRoutes } from "@/config";
+import { appRoutes } from "@/config";
 import { passwordPolicyPattern } from "@/platform/auth/validation/passwordPolicy";
 import { MyTextField } from "@/shared/components/forms";
 import { useSnackbar } from "@/shared/hooks";
-import { apiService, HandleApiError } from "@/shared/services";
+import { HandleApiError } from "@/shared/services";
+import { authService } from "../services/authService";
 import LockIcon from "@mui/icons-material/Lock";
 import { Alert, Button, Card, CardContent, Container, Typography } from "@mui/material";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -59,7 +60,7 @@ const AcceptInvitationPage = () => {
   const onSubmit = async (data: InvitationFormData) => {
     setLoading(true);
     try {
-      await apiService.post(apiRoutes.userInvitations.accept, {
+      await authService.acceptInvitation({
         invitationId: data.invitationId,
         token: data.token,
         password: data.password,

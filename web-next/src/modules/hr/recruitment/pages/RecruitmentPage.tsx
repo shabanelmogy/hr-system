@@ -73,20 +73,14 @@ export default function RecruitmentPage() {
   };
 
   const handleOpenNewApp = (openingId?: number) => {
-    setTargetOpeningIdForApp(openingId ?? selectedOpeningId ?? 1);
+    setTargetOpeningIdForApp(openingId ?? selectedOpeningId ?? null);
     setOpenApplicationDialog(true);
   };
 
   const handleOpenOpeningFromRequisition = (req: JobRequisitionDto) => {
     setOpeningInitialValues({
       jobRequisitionId: req.id,
-      positionId: req.positionId,
-      branchId: req.branchId,
-      departmentId: req.departmentId,
-      divisionId: req.divisionId,
       positionCount: req.requestedPositions,
-      employmentType: req.employmentType,
-      workArrangement: req.workArrangement,
     });
     setOpenOpeningDialog(true);
   };
@@ -113,7 +107,7 @@ export default function RecruitmentPage() {
                 {t("recruitment.requisitions.newRequisition", "طلب احتياج وظيفي / New Requisition")}
               </Button>
             )}
-            {(perms.canManageCandidates || perms.canManageApplications) && (
+            {perms.canManageCandidates && perms.canManageApplications && (
               <Button
                 variant="outlined"
                 startIcon={<PersonAddAlt1Icon />}
@@ -181,7 +175,7 @@ export default function RecruitmentPage() {
         {perms.canView && (
           <Tab value="offers" icon={<WorkOutlineRoundedIcon />} iconPosition="start" label={t("recruitment.tabs.offers", "العروض الوظيفية / Job Offers")} />
         )}
-        {(perms.canManageOpenings || perms.canManageRequisitions) && (
+        {perms.canView && (
           <Tab
             value="settings"
             icon={<TuneRoundedIcon />}
@@ -263,7 +257,7 @@ export default function RecruitmentPage() {
       {activeTab === "offers" && <JobOffersGrid />}
 
       {activeTab === "settings" && (
-        <RecruitmentSettingsView />
+        <RecruitmentSettingsView canEdit={perms.canManageOpenings} />
       )}
 
       {/* Modals and Dialogs */}

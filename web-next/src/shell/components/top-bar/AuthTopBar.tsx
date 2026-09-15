@@ -72,7 +72,7 @@ export default function AuthTopBar() {
         <Box sx={{ display: { xs: "flex", md: "none" } }}>
           <IconButton
             size="large"
-            aria-label="show more"
+            aria-label={t("common.showMore")}
             aria-controls="auth-mobile-menu"
             aria-haspopup="true"
             onClick={(event: MouseEvent<HTMLElement>) => setMobileAnchor(event.currentTarget)}

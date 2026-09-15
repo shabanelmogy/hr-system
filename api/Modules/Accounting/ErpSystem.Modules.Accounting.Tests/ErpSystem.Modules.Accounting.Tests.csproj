@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.Accounting.Tests</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.Accounting.Tests</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio"><PrivateAssets>all</PrivateAssets><IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets></PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ErpSystem.Modules.Accounting.Contracts\ErpSystem.Modules.Accounting.Contracts.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Accounting.Domain\ErpSystem.Modules.Accounting.Domain.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Accounting.Application\ErpSystem.Modules.Accounting.Application.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Accounting.Infrastructure\ErpSystem.Modules.Accounting.Infrastructure.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Accounting.Presentation\ErpSystem.Modules.Accounting.Presentation.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Accounting\ErpSystem.Modules.Accounting.csproj" />
+    <ProjectReference Include="..\..\Platform\ErpSystem.Modules.Platform.Contracts\ErpSystem.Modules.Platform.Contracts.csproj" />
+  </ItemGroup>
+</Project>

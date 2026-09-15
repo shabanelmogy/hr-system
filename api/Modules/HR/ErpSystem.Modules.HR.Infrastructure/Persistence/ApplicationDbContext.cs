@@ -1,43 +1,21 @@
-using ErpSystem.Modules.HR.Application.Abstractions.Authentication;
-using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
-using ErpSystem.Modules.HR.Domain.Common.Abstractions;
-using ErpSystem.Modules.HR.Domain.Common.Entities;
+using System.Reflection;
+using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
+using ErpSystem.BuildingBlocks.Context.Authentication;
+using ErpSystem.BuildingBlocks.Domain.Abstractions;
+using ErpSystem.BuildingBlocks.Domain.Entities;
+using ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities;
 using ErpSystem.Modules.HR.Domain.Employees.Entities;
-using ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities;
 using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities;
-using ErpSystem.Modules.HR.Domain.Tenancy.Entities;
-using ErpSystem.Modules.HR.Domain.GeographicalInformation.Addresses.Entities;
-using ErpSystem.Modules.HR.Domain.GeographicalInformation.AddressTypes.Entities;
-using ErpSystem.Modules.HR.Domain.GeographicalInformation.Countries.Entities;
-using ErpSystem.Modules.HR.Domain.GeographicalInformation.Districts.Entities;
-using ErpSystem.Modules.HR.Infrastructure.Features.Platform.Notifications.Entities;
 using ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities;
 
-using ErpSystem.Modules.HR.Domain.Analytics.Reports.Entities;
-using ErpSystem.Modules.HR.Domain.Analytics.ReportTemplates.Entities;
-using ErpSystem.Modules.HR.Domain.Analytics.CrystalReports.Entities;
-using ErpSystem.Modules.HR.Domain.Appointments.Entities;
-using ErpSystem.Modules.HR.Domain.Catalog.Categories.Entities;
-using ErpSystem.Modules.HR.Domain.Catalog.SubCategories.Entities;
-using ErpSystem.Modules.HR.Domain.GeographicalInformation.States.Entities;
-using ErpSystem.Modules.HR.Domain.Platform.EntityChangeLogs.Entities;
-using ErpSystem.Modules.HR.Domain.Platform.Files.Entities;
-using ErpSystem.Modules.HR.Domain.Platform.SecurityAudits.Entities;
-using ErpSystem.Modules.HR.Domain.Security.ApiKeys.Entities;
-using ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities;
-using ErpSystem.Modules.HR.Domain.Security.Users.Enums;
-using ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities;
-
 namespace ErpSystem.Modules.HR.Infrastructure.Persistence;
 
-public class ApplicationDbContext(
+public sealed class ApplicationDbContext(
     DbContextOptions<ApplicationDbContext> options,
     ICurrentActor currentActor,
-    TimeProvider timeProvider) : IdentityDbContext<ApplicationUser, ApplicationRole, string>(options),
-    IUnitOfWork
+    TimeProvider timeProvider) : DbContext(options), IUnitOfWork
 {
-    /// <summary>Short SQL schema owned by the HR module. All module tables, including Identity, live here.</summary>
     public const string Schema = "hr";
 
     private readonly ICurrentActor _currentActor = currentActor;
@@ -45,192 +23,109 @@ public class ApplicationDbContext(
     private string? CurrentTenantId => _currentActor.TenantId;
     private int? CurrentCompanyId => _currentActor.CompanyId;
 
-    public DbSet<UserLogin> LoginAudits { get; set; }
-    public DbSet<EntityChangeLog> EntityChangeLogs { get; set; }
-    public DbSet<UploadedFile> Files { get; set; }
-    public DbSet<Category> Categories { get; set; }
-    public DbSet<SubCategory> SubCategories { get; set; }
-    public DbSet<CategorySubcategory> CategorySubcategories { get; set; }
-    public DbSet<ReportCategory> ReportsCategories { get; set; }
-    public DbSet<ReportMaster> ReportsMasters { get; set; }
-    public DbSet<ReportDetail> ReportsDetails { get; set; }
-    public DbSet<ReportTemplate> ReportTemplates { get; set; }
-    public DbSet<ReportTemplateRevision> ReportTemplateRevisions { get; set; }
-    public DbSet<CrystalReport> CrystalReports { get; set; }
-    public DbSet<CrystalReportVersion> CrystalReportVersions { get; set; }
-    public DbSet<CrystalReportRoleGrant> CrystalReportRoleGrants { get; set; }
-    public DbSet<ApiKey> ApiKeys { get; set; }
-    public DbSet<Country> Countries { get; set; }
-    public DbSet<State> States { get; set; }
-    public DbSet<District> Districts { get; set; }
-    public DbSet<Address> Addresses { get; set; }
-    public DbSet<AddressType> AddressTypes { get; set; }
-    public DbSet<Appointment> Appointments { get; set; }
-    public DbSet<Notification> Notifications { get; set; }
-    public DbSet<Tenant> Tenants { get; set; }
-    public DbSet<TenantModuleEntitlement> TenantModuleEntitlements { get; set; }
-    public DbSet<TenantSubmoduleEntitlement> TenantSubmoduleEntitlements { get; set; }
-    public DbSet<Company> Companies { get; set; }
-    public DbSet<CompanyCountry> CompanyCountries { get; set; }
-    public DbSet<UserTenantAccess> UserTenantAccesses { get; set; }
-    public DbSet<UserCompanyAccess> UserCompanyAccesses { get; set; }
-    public DbSet<AuthenticationSelectionChallenge> AuthenticationSelectionChallenges { get; set; }
-    public DbSet<UserInvitation> UserInvitations { get; set; }
-    public DbSet<SecurityAuditEvent> SecurityAuditEvents { get; set; }
-    public DbSet<AttendanceDevice> AttendanceDevices { get; set; }
-    public DbSet<AttendanceAgent> AttendanceAgents { get; set; }
-    public DbSet<Branch> Branches { get; set; }
-    public DbSet<Department> Departments { get; set; }
-    public DbSet<Division> Divisions { get; set; }
-    public DbSet<JobTitle> JobTitles { get; set; }
-    public DbSet<JobLevel> JobLevels { get; set; }
-    public DbSet<Position> Positions { get; set; }
-    public DbSet<JobDescription> JobDescriptions { get; set; }
-    public DbSet<CostCenter> CostCenters { get; set; }
-    public DbSet<Currency> Currencies { get; set; }
-    public DbSet<DeviceCredential> AttendanceDeviceCredentials { get; set; }
-    public DbSet<RawDeviceUser> RawDeviceUsers { get; set; }
-    public DbSet<RawAttendancePunch> RawAttendancePunches { get; set; }
-    public DbSet<DevicePullRun> DevicePullRuns { get; set; }
+    public DbSet<AttendanceDevice> AttendanceDevices => Set<AttendanceDevice>();
+    public DbSet<AttendanceAgent> AttendanceAgents => Set<AttendanceAgent>();
+    public DbSet<DeviceCredential> AttendanceDeviceCredentials => Set<DeviceCredential>();
+    public DbSet<RawDeviceUser> RawDeviceUsers => Set<RawDeviceUser>();
+    public DbSet<RawAttendancePunch> RawAttendancePunches => Set<RawAttendancePunch>();
+    public DbSet<DevicePullRun> DevicePullRuns => Set<DevicePullRun>();
 
-    public DbSet<Candidate> Candidates { get; set; }
-    public DbSet<JobRequisition> JobRequisitions { get; set; }
-    public DbSet<JobOpening> JobOpenings { get; set; }
-    public DbSet<JobPosting> JobPostings { get; set; }
-    public DbSet<EmploymentApplication> EmploymentApplications { get; set; }
-    public DbSet<ApplicationStatusHistory> ApplicationStatusHistories { get; set; }
-    public DbSet<Interview> Interviews { get; set; }
-    public DbSet<InterviewParticipant> InterviewParticipants { get; set; }
-    public DbSet<InterviewEvaluation> InterviewEvaluations { get; set; }
-    public DbSet<JobOffer> JobOffers { get; set; }
-    public DbSet<JobOfferApprovalHistory> JobOfferApprovalHistory { get; set; }
+    public DbSet<Branch> Branches => Set<Branch>();
+    public DbSet<Department> Departments => Set<Department>();
+    public DbSet<Division> Divisions => Set<Division>();
+    public DbSet<JobTitle> JobTitles => Set<JobTitle>();
+    public DbSet<JobLevel> JobLevels => Set<JobLevel>();
+    public DbSet<Position> Positions => Set<Position>();
+    public DbSet<JobDescription> JobDescriptions => Set<JobDescription>();
+    public DbSet<CostCenter> CostCenters => Set<CostCenter>();
+    public DbSet<Currency> Currencies => Set<Currency>();
 
-    public DbSet<RecruitmentStage> RecruitmentStages { get; set; }
-    public DbSet<RejectionReason> RecruitmentRejectionReasons { get; set; }
-    public DbSet<RecruitmentSource> RecruitmentSources { get; set; }
-    public DbSet<EvaluationCriterion> RecruitmentEvaluationCriteria { get; set; }
-    public DbSet<RecruitmentPolicy> RecruitmentPolicies { get; set; }
+    public DbSet<Employee> Employees => Set<Employee>();
+    public DbSet<EmployeeAssignment> EmployeeAssignments => Set<EmployeeAssignment>();
+    public DbSet<EmployeeContract> EmployeeContracts => Set<EmployeeContract>();
 
-    public DbSet<Employee> Employees { get; set; }
-    public DbSet<EmployeeAssignment> EmployeeAssignments { get; set; }
-    public DbSet<EmployeeContract> EmployeeContracts { get; set; }
-    public DbSet<FiscalYear> FiscalYears { get; set; }
-    public DbSet<FiscalPeriod> FiscalPeriods { get; set; }
-    public DbSet<WorkforcePlan> WorkforcePlans { get; set; }
-    public DbSet<WorkforcePlanLine> WorkforcePlanLines { get; set; }
-    public DbSet<WorkforcePlanLinePeriodTarget> WorkforcePlanLinePeriodTargets { get; set; }
-    public DbSet<WorkforceBudget> WorkforceBudgets { get; set; }
-    public DbSet<WorkforceBudgetLine> WorkforceBudgetLines { get; set; }
-    public DbSet<WorkforceBudgetPeriodAllocation> WorkforceBudgetPeriodAllocations { get; set; }
-    public DbSet<PositionEnvelope> PositionEnvelopes { get; set; }
-    public DbSet<EnvelopeAmendment> EnvelopeAmendments { get; set; }
-    public DbSet<StaffingRequest> StaffingRequests { get; set; }
+    public DbSet<Candidate> Candidates => Set<Candidate>();
+    public DbSet<JobRequisition> JobRequisitions => Set<JobRequisition>();
+    public DbSet<JobOpening> JobOpenings => Set<JobOpening>();
+    public DbSet<JobPosting> JobPostings => Set<JobPosting>();
+    public DbSet<EmploymentApplication> EmploymentApplications => Set<EmploymentApplication>();
+    public DbSet<ApplicationStatusHistory> ApplicationStatusHistories => Set<ApplicationStatusHistory>();
+    public DbSet<Interview> Interviews => Set<Interview>();
+    public DbSet<InterviewParticipant> InterviewParticipants => Set<InterviewParticipant>();
+    public DbSet<InterviewEvaluation> InterviewEvaluations => Set<InterviewEvaluation>();
+    public DbSet<JobOffer> JobOffers => Set<JobOffer>();
+    public DbSet<JobOfferApprovalHistory> JobOfferApprovalHistory => Set<JobOfferApprovalHistory>();
+    public DbSet<RecruitmentStage> RecruitmentStages => Set<RecruitmentStage>();
+    public DbSet<RejectionReason> RecruitmentRejectionReasons => Set<RejectionReason>();
+    public DbSet<RecruitmentSource> RecruitmentSources => Set<RecruitmentSource>();
+    public DbSet<EvaluationCriterion> RecruitmentEvaluationCriteria => Set<EvaluationCriterion>();
+    public DbSet<RecruitmentPolicy> RecruitmentPolicies => Set<RecruitmentPolicy>();
+
+    public DbSet<WorkforcePlan> WorkforcePlans => Set<WorkforcePlan>();
+    public DbSet<WorkforcePlanLine> WorkforcePlanLines => Set<WorkforcePlanLine>();
+    public DbSet<WorkforcePlanLinePeriodTarget> WorkforcePlanLinePeriodTargets => Set<WorkforcePlanLinePeriodTarget>();
+    public DbSet<WorkforceBudget> WorkforceBudgets => Set<WorkforceBudget>();
+    public DbSet<WorkforceBudgetLine> WorkforceBudgetLines => Set<WorkforceBudgetLine>();
+    public DbSet<WorkforceBudgetPeriodAllocation> WorkforceBudgetPeriodAllocations => Set<WorkforceBudgetPeriodAllocation>();
+    public DbSet<PositionEnvelope> PositionEnvelopes => Set<PositionEnvelope>();
+    public DbSet<EnvelopeAmendment> EnvelopeAmendments => Set<EnvelopeAmendment>();
+    public DbSet<StaffingRequest> StaffingRequests => Set<StaffingRequest>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasDefaultSchema(Schema);
-        IgnoreUnpersistedOrganizationalEntities(modelBuilder);
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        modelBuilder.ApplyConfigurationsFromAssembly(
-            ErpSystem.Modules.HR.Infrastructure.AssemblyReference.Assembly);
         base.OnModelCreating(modelBuilder);
-        new Features.Security.Authentication.Persistence.ApplicationRoleConfiguration()
-            .Configure(modelBuilder.Entity<ApplicationRole>());
-        ConfigureAuditRelationships(modelBuilder);
+        modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        ConfigureRowVersion(modelBuilder);
         ConfigureTenantIsolation(modelBuilder);
         RestrictCascadeDelete(modelBuilder);
     }
 
-    private static void IgnoreUnpersistedOrganizationalEntities(ModelBuilder modelBuilder)
+    private static void ConfigureRowVersion(ModelBuilder modelBuilder)
     {
-    }
-
-    private static void ConfigureAuditRelationships(ModelBuilder modelBuilder)
-    {
-        var auditableEntityTypes = modelBuilder.Model
-            .GetEntityTypes()
-            .Where(entityType =>
-                !entityType.IsOwned() &&
-                typeof(AuditableEntity).IsAssignableFrom(entityType.ClrType))
-            .Select(entityType => entityType.ClrType)
-            .Distinct()
-            .ToList();
-
-        var configureMethod = typeof(ApplicationDbContext)
-            .GetMethod(nameof(ConfigureAuditableEntity), BindingFlags.Static | BindingFlags.NonPublic)!;
-
-        foreach (var entityType in auditableEntityTypes)
-            configureMethod.MakeGenericMethod(entityType).Invoke(null, [modelBuilder]);
-    }
-
-    private static void ConfigureAuditableEntity<TEntity>(ModelBuilder modelBuilder)
-        where TEntity : AuditableEntity
-    {
-        var builder = modelBuilder.Entity<TEntity>();
-        builder.Property(entity => entity.RowVersion).IsRowVersion();
-
-        builder.HasOne<ApplicationUser>()
-            .WithMany()
-            .HasForeignKey(entity => entity.CreatedById)
-            .OnDelete(DeleteBehavior.Restrict)
-            .IsRequired();
-
-        builder.HasOne<ApplicationUser>()
-            .WithMany()
-            .HasForeignKey(entity => entity.UpdatedById);
-
-        builder.HasOne<ApplicationUser>()
-            .WithMany()
-            .HasForeignKey(entity => entity.DeletedById);
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes()
+                     .Where(entity => !entity.IsOwned() &&
+                         typeof(AuditableEntity).IsAssignableFrom(entity.ClrType)))
+        {
+            modelBuilder.Entity(entityType.ClrType)
+                .Property(nameof(AuditableEntity.RowVersion))
+                .IsRowVersion()
+                .IsConcurrencyToken();
+        }
     }
 
     private void ConfigureTenantIsolation(ModelBuilder modelBuilder)
     {
-        var tenantEntityTypes = modelBuilder.Model
-            .GetEntityTypes()
-            .Where(entityType =>
-                !entityType.IsOwned() &&
-                typeof(ITenantScoped).IsAssignableFrom(entityType.ClrType))
-            .Select(entityType => entityType.ClrType)
+        var tenantTypes = modelBuilder.Model.GetEntityTypes()
+            .Where(entity => !entity.IsOwned() && typeof(ITenantScoped).IsAssignableFrom(entity.ClrType))
+            .Select(entity => entity.ClrType)
             .Distinct()
-            .ToList();
+            .ToArray();
 
-        var configureMethod = typeof(ApplicationDbContext)
+        var tenantMethod = typeof(ApplicationDbContext)
             .GetMethod(nameof(ConfigureTenantEntity), BindingFlags.Instance | BindingFlags.NonPublic)!;
 
-        foreach (var entityType in tenantEntityTypes)
-            configureMethod.MakeGenericMethod(entityType).Invoke(this, [modelBuilder]);
+        foreach (var type in tenantTypes)
+            tenantMethod.MakeGenericMethod(type).Invoke(this, [modelBuilder]);
     }
 
     private void ConfigureTenantEntity<TEntity>(ModelBuilder modelBuilder)
         where TEntity : class, ITenantScoped
     {
         var builder = modelBuilder.Entity<TEntity>();
-        builder.Property(entity => entity.TenantId).HasMaxLength(32).IsRequired();
+        builder.Property(entity => entity.TenantId)
+            .HasMaxLength(32)
+            .IsRequired()
+            .IsConcurrencyToken();
         builder.HasIndex(entity => entity.TenantId);
-        if (typeof(TEntity) != typeof(UserTenantAccess) &&
-            typeof(TEntity) != typeof(TenantModuleEntitlement) &&
-            typeof(TEntity) != typeof(TenantSubmoduleEntitlement))
-        {
-            builder.HasOne<Tenant>()
-                .WithMany()
-                .HasForeignKey(entity => entity.TenantId)
-                .OnDelete(DeleteBehavior.Restrict);
-        }
-
-        // Identity must remain queryable before authentication so login can resolve the user.
-        if (typeof(TEntity) != typeof(ApplicationUser))
-        {
-            builder.HasQueryFilter(
-                "TenantFilter",
-                entity => CurrentTenantId != null && entity.TenantId == CurrentTenantId);
-        }
+        builder.HasQueryFilter("TenantFilter", entity =>
+            CurrentTenantId != null && entity.TenantId == CurrentTenantId);
 
         if (typeof(ICompanyScoped).IsAssignableFrom(typeof(TEntity)))
         {
-            var configureCompanyMethod = typeof(ApplicationDbContext)
+            var companyMethod = typeof(ApplicationDbContext)
                 .GetMethod(nameof(ConfigureCompanyEntity), BindingFlags.Instance | BindingFlags.NonPublic)!;
-            configureCompanyMethod.MakeGenericMethod(typeof(TEntity)).Invoke(this, [modelBuilder]);
+            companyMethod.MakeGenericMethod(typeof(TEntity)).Invoke(this, [modelBuilder]);
         }
     }
 
@@ -238,51 +133,37 @@ public class ApplicationDbContext(
         where TEntity : class, ICompanyScoped
     {
         var builder = modelBuilder.Entity<TEntity>();
-        builder.Property(entity => entity.CompanyId).IsRequired();
+        builder.Property(entity => entity.CompanyId)
+            .IsRequired()
+            .IsConcurrencyToken();
         builder.HasIndex(entity => new { entity.TenantId, entity.CompanyId });
-        if (typeof(TEntity) != typeof(UserCompanyAccess) &&
-            typeof(TEntity) != typeof(CompanyAddress))
-        {
-            builder.HasOne<Company>()
-                .WithMany()
-                .HasForeignKey(entity => new { entity.TenantId, entity.CompanyId })
-                .HasPrincipalKey(company => new { company.TenantId, company.Id })
-                .OnDelete(DeleteBehavior.Restrict);
-        }
-        builder.HasQueryFilter(
-            "CompanyFilter",
-            entity => CurrentCompanyId != null && entity.CompanyId == CurrentCompanyId);
+        builder.HasQueryFilter("CompanyFilter", entity =>
+            CurrentCompanyId != null && entity.CompanyId == CurrentCompanyId);
     }
 
     private static void RestrictCascadeDelete(ModelBuilder modelBuilder)
     {
-        var cascadeFKs = modelBuilder.Model
-            .GetEntityTypes()
-            .SelectMany(t => t.GetForeignKeys())
-            .Where(fk =>
-                fk.DeleteBehavior == DeleteBehavior.Cascade &&
-                !fk.DeclaringEntityType.IsOwned() &&
-                fk.DeclaringEntityType.ClrType != typeof(TenantModuleEntitlement) &&
-                fk.DeclaringEntityType.ClrType != typeof(TenantSubmoduleEntitlement));
-
-        foreach (var fk in cascadeFKs)
+        foreach (var foreignKey in modelBuilder.Model.GetEntityTypes()
+                     .SelectMany(type => type.GetForeignKeys())
+                     .Where(key => key.DeleteBehavior == DeleteBehavior.Cascade && !key.DeclaringEntityType.IsOwned()))
         {
-            fk.DeleteBehavior = DeleteBehavior.Restrict;
+            foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
         }
     }
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
-        GrantNewCompanyAccesses();
         PrepareChanges();
         return base.SaveChanges(acceptAllChangesOnSuccess);
     }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>
+        SaveChangesAsync(true, cancellationToken);
 
     public override async Task<int> SaveChangesAsync(
         bool acceptAllChangesOnSuccess,
         CancellationToken cancellationToken = default)
     {
-        await GrantNewCompanyAccessesAsync(cancellationToken);
         PrepareChanges();
         return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
@@ -295,7 +176,7 @@ public class ApplicationDbContext(
         ArgumentNullException.ThrowIfNull(lockResources);
         ArgumentNullException.ThrowIfNull(operation);
 
-        var orderedResources = lockResources
+        var resources = lockResources
             .Where(resource => !string.IsNullOrWhiteSpace(resource))
             .Distinct(StringComparer.Ordinal)
             .OrderBy(resource => resource, StringComparer.Ordinal)
@@ -304,356 +185,165 @@ public class ApplicationDbContext(
         if (!Database.IsRelational())
             return await operation(cancellationToken);
 
-        if (!string.Equals(
-                Database.ProviderName,
-                "Microsoft.EntityFrameworkCore.SqlServer",
-                StringComparison.Ordinal))
+        if (resources.Length > 0 &&
+            !string.Equals(Database.ProviderName, "Microsoft.EntityFrameworkCore.SqlServer", StringComparison.Ordinal))
         {
             throw new NotSupportedException(
-                "Atomic resource locking is configured for the SQL Server provider only.");
+                "HR atomic operations that require transaction resource locks are supported only by SQL Server.");
         }
 
-        if (Database.CurrentTransaction is not null)
-        {
-            await AcquireTransactionLocksAsync(orderedResources, cancellationToken);
-            return await operation(cancellationToken);
-        }
+        await using var transaction = Database.CurrentTransaction is null
+            ? await Database.BeginTransactionAsync(cancellationToken)
+            : null;
 
-        await using var transaction = await Database.BeginTransactionAsync(cancellationToken);
         try
         {
-            await AcquireTransactionLocksAsync(orderedResources, cancellationToken);
+            if (Database.ProviderName == "Microsoft.EntityFrameworkCore.SqlServer")
+            {
+                foreach (var resource in resources)
+                {
+                    await Database.ExecuteSqlInterpolatedAsync($$"""
+                        DECLARE @lockResult int;
+                        EXEC @lockResult = sys.sp_getapplock
+                            @Resource = {{resource}},
+                            @LockMode = 'Exclusive',
+                            @LockOwner = 'Transaction',
+                            @LockTimeout = 15000;
+                        IF @lockResult < 0 THROW 51001, 'Failed to acquire a transaction resource lock.', 1;
+                        """, cancellationToken);
+                }
+            }
+
             var result = await operation(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
+            if (transaction is not null)
+                await transaction.CommitAsync(cancellationToken);
             return result;
         }
         catch
         {
-            try
+            if (transaction is not null)
             {
-                await transaction.RollbackAsync(CancellationToken.None);
-            }
-            catch
-            {
-                // Preserve the original operation/commit exception.
+                try
+                {
+                    await transaction.RollbackAsync(CancellationToken.None);
+                }
+                catch
+                {
+                    // Preserve the operation/commit exception as the primary failure.
+                }
             }
             throw;
         }
     }
 
-    private async Task AcquireTransactionLocksAsync(
-        IReadOnlyCollection<string> lockResources,
-        CancellationToken cancellationToken)
-    {
-        foreach (var resource in lockResources)
-        {
-            await Database.ExecuteSqlInterpolatedAsync($$"""
-                DECLARE @lockResult int;
-                EXEC @lockResult = sys.sp_getapplock
-                    @Resource = {{resource}},
-                    @LockMode = 'Exclusive',
-                    @LockOwner = 'Transaction',
-                    @LockTimeout = 15000;
-                IF @lockResult < 0
-                    THROW 51001, 'Failed to acquire a transaction resource lock.', 1;
-                """, cancellationToken);
-        }
-    }
-
     private void PrepareChanges()
     {
-        EnforceAppendOnlySecurityAudit();
-        EnforceAppendOnlyReportTemplateRevisions();
-        EnforceAppendOnlyCrystalReportVersions();
         ApplyTenantIsolation();
+        var actorId = _currentActor.UserId;
+        var machineName = Environment.MachineName;
+        var now = _timeProvider.GetUtcNow().UtcDateTime;
 
-        var currentUserId = _currentActor.UserId;
-        var currentMachineName = Environment.MachineName;
-        var currentTime = _timeProvider.GetUtcNow().UtcDateTime;
-
-        foreach (var entityEntry in ChangeTracker.Entries<AuditableEntity>())
+        foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
         {
-            switch (entityEntry.State)
+            if ((entry.State is EntityState.Added or EntityState.Modified or EntityState.Deleted) &&
+                string.IsNullOrWhiteSpace(actorId))
+            {
+                throw new InvalidOperationException("An actor user is required to change HR data.");
+            }
+
+            switch (entry.State)
             {
                 case EntityState.Added:
-                    SetCreatedValues(entityEntry, currentUserId, currentMachineName, currentTime);
+                    entry.Entity.CreatedById = actorId!;
+                    entry.Entity.CreatedByPc = machineName;
+                    entry.Entity.CreatedOn = now;
                     break;
                 case EntityState.Modified:
-                    SetUpdatedValues(entityEntry, currentUserId, currentMachineName, currentTime);
+                    PreserveCreationMetadata(entry);
+                    entry.Entity.UpdatedById = actorId;
+                    entry.Entity.UpdatedByPc = machineName;
+                    entry.Entity.UpdatedOn = now;
                     break;
                 case EntityState.Deleted:
-                    SetDeletedValues(entityEntry, currentUserId, currentMachineName, currentTime);
+                    entry.State = EntityState.Modified;
+                    PreserveCreationMetadata(entry);
+                    entry.Entity.IsDeleted = true;
+                    entry.Entity.DeletedById = actorId;
+                    entry.Entity.DeletedByPc = machineName;
+                    entry.Entity.DeletedOn = now;
+                    entry.Entity.UpdatedById = actorId;
+                    entry.Entity.UpdatedByPc = machineName;
+                    entry.Entity.UpdatedOn = now;
                     break;
             }
         }
-
     }
 
-    private void EnforceAppendOnlySecurityAudit()
+    private static void PreserveCreationMetadata(EntityEntry<AuditableEntity> entry)
     {
-        var invalidEntry = ChangeTracker.Entries<SecurityAuditEvent>()
-            .FirstOrDefault(entry => entry.State is EntityState.Modified or EntityState.Deleted);
-
-        if (invalidEntry is not null)
-            throw new InvalidOperationException("Security audit events are append-only.");
-    }
-
-    private void EnforceAppendOnlyReportTemplateRevisions()
-    {
-        var invalidEntry = ChangeTracker.Entries<ReportTemplateRevision>()
-            .FirstOrDefault(entry => entry.State is EntityState.Modified or EntityState.Deleted);
-
-        if (invalidEntry is not null)
-            throw new InvalidOperationException("Report template revisions are append-only.");
-    }
-
-    private void EnforceAppendOnlyCrystalReportVersions()
-    {
-        var invalidEntry = ChangeTracker.Entries<CrystalReportVersion>()
-            .FirstOrDefault(entry => entry.State is EntityState.Modified or EntityState.Deleted);
-
-        if (invalidEntry is not null)
-            throw new InvalidOperationException("Crystal report versions are append-only.");
-    }
-
-    private void GrantNewCompanyAccesses()
-    {
-        var addedCompanies = GetAddedCompanies();
-        if (addedCompanies.Length == 0)
-            return;
-
-        var tenantIds = addedCompanies.Select(company => company.TenantId).Distinct().ToArray();
-        var tenantAdmins = GetActiveTenantAdministratorAccesses(tenantIds).ToArray();
-        GrantNewCompanyAccesses(addedCompanies, tenantAdmins);
-    }
-
-    private async Task GrantNewCompanyAccessesAsync(CancellationToken cancellationToken)
-    {
-        var addedCompanies = GetAddedCompanies();
-        if (addedCompanies.Length == 0)
-            return;
-
-        var tenantIds = addedCompanies.Select(company => company.TenantId).Distinct().ToArray();
-        var tenantAdmins = await GetActiveTenantAdministratorAccesses(tenantIds)
-            .ToArrayAsync(cancellationToken);
-        GrantNewCompanyAccesses(addedCompanies, tenantAdmins);
-    }
-
-    private Company[] GetAddedCompanies()
-    {
-        var currentTenantId = CurrentTenantId;
-        var companies = ChangeTracker.Entries<Company>()
-            .Where(entry => entry.State == EntityState.Added)
-            .Select(entry => entry.Entity)
-            .ToArray();
-
-        foreach (var company in companies.Where(company => string.IsNullOrWhiteSpace(company.TenantId)))
+        foreach (var propertyName in new[]
+                 {
+                     nameof(AuditableEntity.CreatedById),
+                     nameof(AuditableEntity.CreatedOn),
+                     nameof(AuditableEntity.CreatedByPc)
+                 })
         {
-            if (string.IsNullOrWhiteSpace(currentTenantId))
-                throw new InvalidOperationException("A tenant is required to create a company.");
-
-            company.TenantId = currentTenantId;
-        }
-
-        return companies;
-    }
-
-    private IQueryable<TenantAdministratorAccess> GetActiveTenantAdministratorAccesses(
-        IReadOnlyCollection<string> tenantIds) =>
-        (from tenantAccess in UserTenantAccesses.IgnoreQueryFilters().AsNoTracking()
-         join user in Users.IgnoreQueryFilters().AsNoTracking()
-             on tenantAccess.UserId equals user.Id
-         join userRole in UserRoles.AsNoTracking()
-             on tenantAccess.UserId equals userRole.UserId
-         join role in Roles.AsNoTracking()
-             on userRole.RoleId equals role.Id
-         where tenantIds.Contains(tenantAccess.TenantId) &&
-               user.LifecycleStatus == UserLifecycleStatus.Active &&
-               role.IsSystem &&
-               role.NormalizedName == AppRoles.admin.ToUpper()
-         select new TenantAdministratorAccess(tenantAccess.TenantId, tenantAccess.UserId))
-        .Distinct();
-
-    private void GrantNewCompanyAccesses(
-        IReadOnlyCollection<Company> companies,
-        IReadOnlyCollection<TenantAdministratorAccess> tenantAdministrators)
-    {
-        var currentUserId = _currentActor.UserId;
-        var currentTenantId = CurrentTenantId;
-
-        foreach (var company in companies)
-        {
-            var userIds = tenantAdministrators
-                .Where(access => access.TenantId == company.TenantId)
-                .Select(access => access.UserId)
-                .ToHashSet(StringComparer.Ordinal);
-
-            if (!string.IsNullOrWhiteSpace(currentUserId) &&
-                string.Equals(currentTenantId, company.TenantId, StringComparison.Ordinal))
-            {
-                userIds.Add(currentUserId);
-            }
-
-            foreach (var userId in userIds)
-            {
-                var alreadyTracked = ChangeTracker.Entries<UserCompanyAccess>()
-                    .Any(entry =>
-                        entry.State != EntityState.Deleted &&
-                        entry.Entity.UserId == userId &&
-                        (ReferenceEquals(entry.Entity.Company, company) ||
-                         (company.Id > 0 && entry.Entity.CompanyId == company.Id)));
-
-                if (alreadyTracked)
-                    continue;
-
-                UserCompanyAccesses.Add(new UserCompanyAccess
-                {
-                    TenantId = company.TenantId,
-                    UserId = userId,
-                    Company = company,
-                    IsDefault = false
-                });
-            }
+            var property = entry.Property(propertyName);
+            property.CurrentValue = property.OriginalValue;
+            property.IsModified = false;
         }
     }
-
-    private sealed record TenantAdministratorAccess(string TenantId, string UserId);
 
     private void ApplyTenantIsolation()
     {
-        var currentTenantId = CurrentTenantId;
-
-        foreach (var entityEntry in ChangeTracker.Entries<ITenantScoped>()
+        foreach (var entry in ChangeTracker.Entries<ITenantScoped>()
                      .Where(entry => entry.State is EntityState.Added or EntityState.Modified or EntityState.Deleted))
         {
-            var tenantProperty = entityEntry.Property(entity => entity.TenantId);
-            var entityTenantId = tenantProperty.CurrentValue;
+            var tenant = entry.Entity.TenantId;
+            if (string.IsNullOrWhiteSpace(CurrentTenantId))
+                throw new InvalidOperationException("A tenant scope is required to change HR data.");
 
-            if (entityEntry.State == EntityState.Added && string.IsNullOrWhiteSpace(entityTenantId))
+            if (entry.State == EntityState.Added && string.IsNullOrWhiteSpace(tenant))
             {
-                if (string.IsNullOrWhiteSpace(currentTenantId))
-                    throw new InvalidOperationException("A tenant is required to create tenant-owned data.");
-
-                tenantProperty.CurrentValue = currentTenantId;
-                entityTenantId = currentTenantId;
+                entry.Entity.TenantId = CurrentTenantId!;
+                tenant = CurrentTenantId!;
             }
 
-            if (string.IsNullOrWhiteSpace(entityTenantId))
-                throw new InvalidOperationException("Tenant-owned data must have a tenant identifier.");
+            if (string.IsNullOrWhiteSpace(tenant))
+                throw new InvalidOperationException("HR data must have a tenant identifier.");
+            if (CurrentTenantId is not null && !string.Equals(tenant, CurrentTenantId, StringComparison.Ordinal))
+                throw new InvalidOperationException("Cross-tenant HR data changes are not allowed.");
 
-            if (!string.IsNullOrWhiteSpace(currentTenantId) &&
-                !string.Equals(entityTenantId, currentTenantId, StringComparison.Ordinal))
+            if (entry.State is EntityState.Modified or EntityState.Deleted)
             {
-                throw new InvalidOperationException("Cross-tenant data changes are not allowed.");
-            }
-
-            if (entityEntry.State == EntityState.Modified && tenantProperty.IsModified &&
-                !string.Equals(tenantProperty.OriginalValue, tenantProperty.CurrentValue, StringComparison.Ordinal))
-            {
-                throw new InvalidOperationException("Changing an entity tenant is not allowed.");
+                var originalTenant = entry.Property(nameof(ITenantScoped.TenantId)).OriginalValue as string;
+                if (!string.Equals(originalTenant, tenant, StringComparison.Ordinal))
+                    throw new InvalidOperationException("Tenant scope cannot be changed on existing HR data.");
             }
         }
 
-        foreach (var entityEntry in ChangeTracker.Entries<ICompanyScoped>()
+        foreach (var entry in ChangeTracker.Entries<ICompanyScoped>()
                      .Where(entry => entry.State is EntityState.Added or EntityState.Modified or EntityState.Deleted))
         {
-            var isUserCompanyAccess = entityEntry.Entity is UserCompanyAccess;
-            var linksToAddedCompany = entityEntry.Entity is UserCompanyAccess userCompanyAccess &&
-                userCompanyAccess.Company is not null &&
-                Entry(userCompanyAccess.Company).State == EntityState.Added;
-            var companyProperty = entityEntry.Property(entity => entity.CompanyId);
-            // EF may assign a temporary FK value (for example, 1 in the InMemory
-            // provider) before SaveChanges. Read the domain value first so a new
-            // company-scoped entity with the default 0 is stamped with the current
-            // company rather than being rejected as cross-company.
-            var entityCompanyId = entityEntry.Entity.CompanyId;
-            var currentCompanyId = CurrentCompanyId;
+            if (!CurrentCompanyId.HasValue || CurrentCompanyId.Value <= 0)
+                throw new InvalidOperationException("A company scope is required to change company-owned HR data.");
 
-            if (entityEntry.State == EntityState.Added && entityCompanyId <= 0 && !linksToAddedCompany)
+            if (entry.State == EntityState.Added && entry.Entity.CompanyId <= 0)
             {
-                if (!currentCompanyId.HasValue)
-                    throw new InvalidOperationException("A company is required to create company-owned data.");
-
-                companyProperty.CurrentValue = currentCompanyId.Value;
-                entityCompanyId = currentCompanyId.Value;
+                entry.Entity.CompanyId = CurrentCompanyId.Value;
             }
 
-            if (entityCompanyId <= 0 && !linksToAddedCompany)
-                throw new InvalidOperationException("Company-owned data must have a company identifier.");
+            if (entry.Entity.CompanyId <= 0)
+                throw new InvalidOperationException("Company-owned HR data must have a company identifier.");
+            if (CurrentCompanyId.HasValue && entry.Entity.CompanyId != CurrentCompanyId.Value)
+                throw new InvalidOperationException("Cross-company HR data changes are not allowed.");
 
-            if (!isUserCompanyAccess &&
-                currentCompanyId.HasValue &&
-                entityCompanyId != currentCompanyId.Value)
+            if (entry.State is EntityState.Modified or EntityState.Deleted)
             {
-                throw new InvalidOperationException("Cross-company data changes are not allowed.");
-            }
-
-            if (!isUserCompanyAccess &&
-                entityEntry.State == EntityState.Modified && companyProperty.IsModified &&
-                !Equals(companyProperty.OriginalValue, companyProperty.CurrentValue))
-            {
-                throw new InvalidOperationException("Changing an entity company is not allowed.");
+                var originalCompany = entry.Property(nameof(ICompanyScoped.CompanyId)).OriginalValue;
+                if (originalCompany is not int originalCompanyId || originalCompanyId != entry.Entity.CompanyId)
+                    throw new InvalidOperationException("Company scope cannot be changed on existing HR data.");
             }
         }
     }
-
-    private static void SetCreatedValues(
-        EntityEntry<AuditableEntity> entityEntry,
-        string? userId,
-        string machineName,
-        DateTime currentTime)
-    {
-        if (!string.IsNullOrWhiteSpace(userId))
-            entityEntry.Property(x => x.CreatedById).CurrentValue = userId;
-
-        if (string.IsNullOrWhiteSpace(entityEntry.Property(x => x.CreatedById).CurrentValue))
-        {
-            throw new InvalidOperationException(
-                "An actor user is required to create auditable data. " +
-                "Background operations must establish an ICurrentActorScope.");
-        }
-
-        entityEntry.Property(x => x.CreatedByPc).CurrentValue = machineName;
-        entityEntry.Property(x => x.CreatedOn).CurrentValue = currentTime;
-    }
-
-    private static void SetUpdatedValues(
-        EntityEntry<AuditableEntity> entityEntry,
-        string? userId,
-        string machineName,
-        DateTime currentTime)
-    {
-        if (!string.IsNullOrWhiteSpace(userId))
-            entityEntry.Property(x => x.UpdatedById).CurrentValue = userId;
-
-        entityEntry.Property(x => x.UpdatedByPc).CurrentValue = machineName;
-        entityEntry.Property(x => x.UpdatedOn).CurrentValue = currentTime;
-    }
-
-    private static void SetDeletedValues(
-        EntityEntry<AuditableEntity> entityEntry,
-        string? userId,
-        string machineName,
-        DateTime currentTime)
-    {
-        entityEntry.State = EntityState.Modified;
-
-        if (!string.IsNullOrWhiteSpace(userId))
-            entityEntry.Property(x => x.DeletedById).CurrentValue = userId;
-
-        if (string.IsNullOrWhiteSpace(entityEntry.Property(x => x.DeletedById).CurrentValue))
-        {
-            throw new InvalidOperationException(
-                "An actor user is required to delete auditable data. " +
-                "Background operations must establish an ICurrentActorScope.");
-        }
-
-        entityEntry.Property(x => x.IsDeleted).CurrentValue = true;
-        entityEntry.Property(x => x.DeletedByPc).CurrentValue = machineName;
-        entityEntry.Property(x => x.DeletedOn).CurrentValue = currentTime;
-        entityEntry.Property(x => x.UpdatedById).CurrentValue = userId;
-        entityEntry.Property(x => x.UpdatedByPc).CurrentValue = machineName;
-        entityEntry.Property(x => x.UpdatedOn).CurrentValue = currentTime;
-    }
-
 }

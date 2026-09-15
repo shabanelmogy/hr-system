@@ -2,7 +2,9 @@
 
 import React, { useState } from "react";
 import {
+  Alert,
   Box,
+  CircularProgress,
   Tabs,
   Tab,
   Paper,
@@ -21,7 +23,11 @@ import SourcesSettingsTab from "./SourcesSettingsTab";
 import ScorecardCriteriaTab from "./ScorecardCriteriaTab";
 import GeneralGovernanceTab from "./GeneralGovernanceTab";
 
-export default function RecruitmentSettingsView() {
+interface RecruitmentSettingsViewProps {
+  canEdit: boolean;
+}
+
+export default function RecruitmentSettingsView({ canEdit }: RecruitmentSettingsViewProps) {
   const { t } = useTranslation();
 
   const [activeSubTab, setActiveSubTab] = useState<
@@ -29,6 +35,22 @@ export default function RecruitmentSettingsView() {
   >("stages");
 
   const settingsState = useRecruitmentSettings();
+
+  if (settingsState.isLoading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (settingsState.isError || !settingsState.isLoaded || !settingsState.generalSettings) {
+    return (
+      <Alert severity="error">
+        {t("recruitment.settings.loadFailed", "تعذر تحميل إعدادات التوظيف من الخادم. حاول مرة أخرى.")}
+      </Alert>
+    );
+  }
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -128,44 +150,44 @@ export default function RecruitmentSettingsView() {
       {activeSubTab === "stages" && (
         <StagesSettingsTab
           stages={settingsState.stages}
+          canEdit={canEdit && !settingsState.isSaving}
           onAddStage={settingsState.addStage}
           onUpdateStage={settingsState.updateStage}
-          onDeleteStage={settingsState.deleteStage}
         />
       )}
 
       {activeSubTab === "reasons" && (
         <RejectionReasonsTab
           reasons={settingsState.reasons}
+          canEdit={canEdit && !settingsState.isSaving}
           onAddReason={settingsState.addReason}
           onUpdateReason={settingsState.updateReason}
-          onDeleteReason={settingsState.deleteReason}
         />
       )}
 
       {activeSubTab === "sources" && (
         <SourcesSettingsTab
           sources={settingsState.sources}
+          canEdit={canEdit && !settingsState.isSaving}
           onAddSource={settingsState.addSource}
           onUpdateSource={settingsState.updateSource}
-          onDeleteSource={settingsState.deleteSource}
         />
       )}
 
       {activeSubTab === "criteria" && (
         <ScorecardCriteriaTab
           criteria={settingsState.criteria}
+          canEdit={canEdit && !settingsState.isSaving}
           onAddCriterion={settingsState.addCriterion}
           onUpdateCriterion={settingsState.updateCriterion}
-          onDeleteCriterion={settingsState.deleteCriterion}
         />
       )}
 
       {activeSubTab === "general" && (
         <GeneralGovernanceTab
           settings={settingsState.generalSettings}
+          canEdit={canEdit && !settingsState.isSaving}
           onUpdateSettings={settingsState.updateGeneralSettings}
-          onResetAll={settingsState.resetAll}
         />
       )}
     </Box>

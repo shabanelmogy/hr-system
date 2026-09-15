@@ -14,7 +14,7 @@ Reviewed: 2026-08-23
 | HTTP contract | [Countries Controller Contract](../api/Controllers/Geographic/CountriesController.md) |
 | Web profile | [Countries Web/Full-Stack Applied Profile](../web-next/features/countries-frontend-reference.md) |
 | Mobile profile | [Countries Mobile Applied Profile](../mobile-react/countries-mobile-reference.md) |
-| General API guide | [Feature Module Implementation Guide](../api/Feature_Module_Implementation_Checklist.md) |
+| General API workflow | [API Feature Development Workflow](../api/API_FEATURE_DEVELOPMENT_WORKFLOW.md) |
 | General web guide | [Server-Managed Frontend Reference](../web-next/features/server-managed-feature-reference.md) |
 | General mobile guide | [Mobile Feature Guide](../mobile-react/MOBILE_FEATURE_GUIDE.md) |
 | Documentation workflow | [Feature Documentation System](../system/README.md) |
@@ -215,8 +215,8 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | `useCountryGridLogic.ts` | One list controller and guarded actions |
 | `countryPageQuery.ts` | Exact criteria serialization |
 | `useCountryQueries.ts`, `countryService.ts` | Cache and HTTP normalization |
-| `CountriesMultiView.tsx` and view folders | Grid/Cards/Chart/Report/Import composition |
-| `CountryReportPage.tsx`, Countries report composition, shared `src/shared/reporting`, and `public/reports/countries/` | Crystal remains default; ActiveReportsJS uses SSR-safe tenant-published Viewer/management Designer flows and an API-bound starter template |
+| `CountriesMultiView.tsx` and view folders | Grid/Cards/Chart/Import composition |
+| Web Reports | Excluded until Countries owns a reachable report route, composition, permissions, and focused tests |
 | `CountryForm.tsx`, validation | Detail-backed modes and request rules |
 | web Countries tests | Query/service/permission/chart/cell evidence |
 
@@ -341,9 +341,9 @@ them in the next feature.
 ### API
 
 ```powershell
-dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj --filter CountryCqrs
-dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj
-dotnet build api/ErpSystem.sln
+dotnet test api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/ErpSystem.Modules.ReferenceData.Tests.csproj --filter CountryCqrs
+dotnet test api/ErpSystem.sln -c Release
+dotnet build api/ErpSystem.sln -c Release
 ```
 
 ### Web-next

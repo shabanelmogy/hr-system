@@ -11,6 +11,13 @@ as the copy-ready scope contract and the review artifact as the evidence ledger.
 `Required` means current-release and gated, `Deferred` requires an owner/trigger,
 and `Excluded` means no runtime surface.
 
+For any API work, also follow
+`documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`. Phase 00 cannot close and
+runtime implementation cannot begin until the Existing-System Relationship Review
+and all three Business Readiness matrices in `IMPLEMENTATION-REQUEST.md` are
+complete for the known scope. Every Edge Cases & Validation category must contain
+scenarios or an explicit `N/A` with a reason.
+
 ## Required outputs
 
 1. Copy `FEATURE-REVIEW-ARTIFACTS.template.md` to `features/<feature>/<FEATURE>-REVIEW-ARTIFACTS.md`.
@@ -23,6 +30,8 @@ and `Excluded` means no runtime surface.
    reason for every platform difference.
 7. Separate verified current behavior, requested behavior, intentional platform differences, and unresolved findings.
 8. Record tests that prove each contract rather than only naming test folders.
+9. Complete the Business Rules Matrix, Edge Cases & Validation Matrix, and Impact
+   Matrix in `IMPLEMENTATION-REQUEST.md`; update them when discovery changes scope.
 
 ## Discovery checklist
 
@@ -39,6 +48,17 @@ and `Excluded` means no runtime surface.
       evidence path; no decision is inferred from the selected reference.
 - [ ] Verification gates are identified before coding, including manual and
       environment-dependent checks.
+- [ ] Existing-System Relationship Review is complete and the owning capability is
+      resolved; no parallel/workaround owner is being introduced.
+- [ ] Business Rules Matrix records every known rule with one primary owner,
+      stable outcome/error, and required test.
+- [ ] Every Edge Cases & Validation category is covered by scenarios or explicitly
+      marked `N/A` with a reason and has an enforcement layer plus required test.
+- [ ] Impact Matrix classifies Domain, CQRS, persistence, API, security/scope,
+      migration/data, integrations/runtime effects, tests, clients, and docs as
+      `Reuse`, `Extend`, `Change`, `Add`, or reasoned `N/A`.
+- [ ] No unresolved ownership, matrix placeholder, or unclassified edge-case row
+      remains before Phase 00 is closed.
 
 ## Approved references
 
@@ -53,12 +73,12 @@ and `Excluded` means no runtime surface.
 | --- | ---: | --- |
 | address-types-master | 1 | `34423c0d5966193b3fe39f7c51d906efeed561273804061940fffab0d58715f8` |
 | address-types-master | 2 | `48a0e4532c4f21d1a84d293b2089aca0d66a68888d892ae5c357ab58135b2989` |
-| address-types-master | 5 | `c31995a8d7c1c03131d3084fd78c2df2bd9034552868155d478365f5045521e3` |
+| address-types-master | 5 | `ccb14984128ac28dfb8f9a04adaa8b43aa73931d1240318268eca4ab25452ba3` |
 | address-types-master | 8 | `d644b335ee5a2463885136b0a10c31dc4dd5af695866e6a2bbb825356a29fcfa` |
 | address-types-master | 9 | `7600fe70c892d1e5b846ec248fa105756c3b54bf86e3d51b2ade23f848b9fe89` |
 | address-types-api | 1 | `a89af44849dac3d3d1cfa2eca1a0fda8d2484642a726a9b1bf1f84ca0a58a05d` |
 | address-types-api | 10 | `a6b047ce552f06a101f0d842e1d2a5073f8422c48228f4a1f548e88a7a481079` |
-| address-types-api | 11 | `545a74147c539ef7388c9f349fd4f3fcc94399ffa23988ee2e199395c87dbd8f` |
+| address-types-api | 11 | `12fedea5d53799940a3d74558d235c8e70543d220aa2c651dfb8f0da1123a1cb` |
 | address-types-web | 1 | `b3020d62bc94049712c0a2f15d7435292ce16aaa254409856a6bf7c7405cc499` |
 | address-types-web | 2 | `566c1bb2e2d57ebcaf5853637d29939bf6c53061d7ddff9fdb92740ec3ae4f66` |
 | address-types-web | 12 | `79c8b65d2b3da2c9f670533292936c9cc7c268333fc03488b6e3f321ea75e4da` |

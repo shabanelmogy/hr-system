@@ -34,6 +34,7 @@ Rules:
 ## Centralized documentation system
 
 - All project-owned guides live under [`documentation/`](documentation/README.md). Do not create new `Docs/`, `docs/`, or `doc/` trees inside application projects.
+- Any change that includes API work must follow [`documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md) first. The documentation recipe system organizes evidence and cross-platform handoff; it does not replace API ownership, business-rule, or existing-system relationship decisions.
 - Before creating or restructuring a feature that spans API, `web-next`, or `mobile-react`, read [`documentation/system/README.md`](documentation/system/README.md) and run `./documentation/system/Generate-Documentation.ps1 -Check`.
 - Choose the closest reviewed reference explicitly: Countries for a flat global reference-data lifecycle, or States for a parent-dependent reference-data lifecycle. Neither reference supplies tenant/company ownership rules for HR aggregates.
 - Use the selected feature's `documentation/system/features/<reference>/required-files.json` to discover its complete evidence surface. Verify current source before applying the pattern.

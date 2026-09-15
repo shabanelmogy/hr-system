@@ -2,113 +2,110 @@ import { readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import { permissions } from "./permissions";
 
-const backendPermissionSourcePaths = [
-  new URL(
-    "../../../../api/Modules/HR/ErpSystem.Modules.HR.Application/Common/Consts/Permissions.cs",
-    import.meta.url,
-  ),
-  new URL(
-    "../../../../api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/OfflineOperations/OfflineOperationsContracts.cs",
-    import.meta.url,
-  ),
-];
-
-type ConstantDefinition = {
-  qualifiedName: string;
-  source: string;
-  literal?: string;
-  reference?: string;
+type BackendPermissionSource = {
+  path: URL;
+  className: string;
 };
 
-function parseStringConstants(source: string, sourceName: string) {
-  const classMatches = [
-    ...source.matchAll(
-      /\b(?:public\s+)?(?:static\s+)?(?:sealed\s+)?(?:partial\s+)?class\s+(\w+)\b/g,
+const backendPermissionSources: readonly BackendPermissionSource[] = [
+  {
+    path: new URL(
+      "../../../../api/Modules/Accounting/ErpSystem.Modules.Accounting.Contracts/Authorization/AccountingPermissions.cs",
+      import.meta.url,
     ),
-  ];
-  const definitions: ConstantDefinition[] = [];
-  const declarationPattern =
-    /public\s+const\s+string\s+(\w+)\s*=\s*(?:"([^"]+)"|((?:\w+\.)+\w+))\s*;/g;
+    className: "AccountingPermissions",
+  },
+  {
+    path: new URL(
+      "../../../../api/Modules/Contacts/ErpSystem.Modules.Contacts.Application/Parties/PartyPermissions.cs",
+      import.meta.url,
+    ),
+    className: "PartyPermissions",
+  },
+  {
+    path: new URL(
+      "../../../../api/Modules/CRM/ErpSystem.Modules.CRM.Contracts/Authorization/CrmPermissions.cs",
+      import.meta.url,
+    ),
+    className: "CrmPermissions",
+  },
+  {
+    path: new URL(
+      "../../../../api/Modules/HR/ErpSystem.Modules.HR.Contracts/Authorization/HrPermissions.cs",
+      import.meta.url,
+    ),
+    className: "HrPermissions",
+  },
+  {
+    path: new URL(
+      "../../../../api/Modules/Inventory/ErpSystem.Modules.Inventory.Contracts/Authorization/InventoryPermissions.cs",
+      import.meta.url,
+    ),
+    className: "InventoryPermissions",
+  },
+  {
+    path: new URL(
+      "../../../../api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/Authorization/PermissionContracts.cs",
+      import.meta.url,
+    ),
+    className: "PlatformPermissions",
+  },
+  {
+    path: new URL(
+      "../../../../api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Contracts/Authorization/ReferenceDataPermissions.cs",
+      import.meta.url,
+    ),
+    className: "ReferenceDataPermissions",
+  },
+  {
+    path: new URL(
+      "../../../../api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Authorization/ReportingPermissions.cs",
+      import.meta.url,
+    ),
+    className: "ReportingPermissions",
+  },
+] as const;
 
-  for (const [index, classMatch] of classMatches.entries()) {
-    const className = classMatch[1];
-    const classStart = classMatch.index ?? 0;
-    const classEnd = classMatches[index + 1]?.index ?? source.length;
-    const classBody = source.slice(classStart, classEnd);
-    for (const declaration of classBody.matchAll(declarationPattern)) {
-      const name = declaration[1];
-      const literal = declaration[2];
-      const reference = declaration[3];
-      definitions.push({
-        qualifiedName: `${className}.${name}`,
-        source: sourceName,
-        ...(literal === undefined ? { reference } : { literal }),
-      });
+function classBody(source: string, className: string): string {
+  const marker = new RegExp(`\\bclass\\s+${className}\\b`);
+  const match = marker.exec(source);
+  if (!match) throw new Error(`Backend permission class '${className}' was not found.`);
+
+  const bodyStart = source.indexOf("{", match.index);
+  if (bodyStart < 0) throw new Error(`Backend permission class '${className}' has no body.`);
+
+  let depth = 0;
+  for (let index = bodyStart; index < source.length; index += 1) {
+    if (source[index] === "{") depth += 1;
+    if (source[index] === "}") {
+      depth -= 1;
+      if (depth === 0) return source.slice(bodyStart + 1, index);
     }
   }
-
-  return definitions;
+  throw new Error(`Backend permission class '${className}' has an unterminated body.`);
 }
 
-function resolveConstants(definitions: ConstantDefinition[]) {
-  const byName = new Map<string, ConstantDefinition>();
-  for (const definition of definitions) {
-    if (byName.has(definition.qualifiedName)) {
-      throw new Error(`Duplicate backend constant declaration: ${definition.qualifiedName}`);
-    }
-    byName.set(definition.qualifiedName, definition);
-  }
-
-  const resolving = new Set<string>();
-  const resolve = (qualifiedName: string, referencedBy?: ConstantDefinition): string => {
-    const definition = byName.get(qualifiedName);
-    if (!definition) {
-      const owner = referencedBy
-        ? ` referenced by ${referencedBy.qualifiedName} in ${referencedBy.source}`
-        : "";
-      throw new Error(`Unable to resolve backend constant reference: ${qualifiedName}${owner}`);
-    }
-    if (definition.literal !== undefined) return definition.literal;
-    if (!definition.reference) {
-      throw new Error(`Backend constant has no literal or reference: ${qualifiedName}`);
-    }
-    if (resolving.has(qualifiedName)) {
-      throw new Error(`Circular backend constant reference: ${qualifiedName}`);
-    }
-    resolving.add(qualifiedName);
-    try {
-      return resolve(definition.reference, definition);
-    } finally {
-      resolving.delete(qualifiedName);
-    }
-  };
-
-  return { byName, resolve };
+function parsePermissionValues(source: string, className: string): string[] {
+  const body = classBody(source, className);
+  return [...body.matchAll(/public\s+const\s+string\s+\w+\s*=\s*"([^"]+)"\s*;/g)]
+    .map((match) => match[1])
+    .filter((value): value is string => Boolean(value));
 }
 
 describe("permission constants", () => {
-  it("stays in exact parity with the backend constants", async () => {
-    const sources = await Promise.all(
-      backendPermissionSourcePaths.map(async (path) => ({
-        path: path.pathname,
-        source: await readFile(path, "utf8"),
-      })),
-    );
-    const definitions = sources.flatMap(({ path, source }) =>
-      parseStringConstants(source, path),
-    );
-    const { byName, resolve } = resolveConstants(definitions);
-    const permissionDefinitions = [...byName.values()].filter(
-      ({ qualifiedName }) => qualifiedName.startsWith("Permissions."),
-    );
-    const backendPermissions = Object.fromEntries(
-      permissionDefinitions.map(({ qualifiedName }) => [
-        qualifiedName.slice("Permissions.".length),
-        resolve(qualifiedName),
-      ]),
-    );
+  it("stays in exact parity with every current backend permission catalog", async () => {
+    const backendPermissions = (
+      await Promise.all(
+        backendPermissionSources.map(async ({ path, className }) =>
+          parsePermissionValues(await readFile(path, "utf8"), className),
+        ),
+      )
+    ).flat();
+    const frontendPermissions = Object.values(permissions);
 
-    expect(backendPermissions).not.toEqual({});
-    expect(permissions).toEqual(backendPermissions);
+    expect(backendPermissions.length).toBeGreaterThan(0);
+    expect(new Set(backendPermissions).size).toBe(backendPermissions.length);
+    expect(new Set(frontendPermissions).size).toBe(frontendPermissions.length);
+    expect([...frontendPermissions].sort()).toEqual([...backendPermissions].sort());
   });
 });

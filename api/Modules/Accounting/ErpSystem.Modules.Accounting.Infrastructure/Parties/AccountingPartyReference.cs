@@ -14,12 +14,13 @@ public sealed class AccountingPartyReference
         string? email,
         string? phone,
         Guid sourceEventId,
-        DateTimeOffset sourceOccurredOnUtc)
+        DateTimeOffset sourceOccurredOnUtc,
+        long sourceRevision)
     {
         PartyId = partyId;
         TenantId = tenantId;
         CompanyId = companyId;
-        Apply(displayName, email, phone, sourceEventId, sourceOccurredOnUtc);
+        Apply(displayName, email, phone, sourceEventId, sourceOccurredOnUtc, sourceRevision);
     }
 
     public Guid PartyId { get; private set; }
@@ -30,6 +31,7 @@ public sealed class AccountingPartyReference
     public string? Phone { get; private set; }
     public Guid SourceEventId { get; private set; }
     public DateTimeOffset SourceOccurredOnUtc { get; private set; }
+    public long SourceRevision { get; private set; }
     public byte[] RowVersion { get; private set; } = [];
 
     internal void Apply(
@@ -37,12 +39,14 @@ public sealed class AccountingPartyReference
         string? email,
         string? phone,
         Guid sourceEventId,
-        DateTimeOffset sourceOccurredOnUtc)
+        DateTimeOffset sourceOccurredOnUtc,
+        long sourceRevision)
     {
         DisplayName = displayName;
         Email = email;
         Phone = phone;
         SourceEventId = sourceEventId;
         SourceOccurredOnUtc = sourceOccurredOnUtc;
+        SourceRevision = sourceRevision;
     }
 }

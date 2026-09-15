@@ -6,3 +6,4 @@ export { PositionEnvelopesScreen } from './presentation/screens/PositionEnvelope
 export { StaffingRequestsScreen } from './presentation/screens/StaffingRequestsScreen';
 export { EnvelopeAmendmentsScreen } from './presentation/screens/EnvelopeAmendmentsScreen';
 export { WorkforceTraceScreen } from './presentation/screens/WorkforceTraceScreen';
+export { useWorkforcePlanDraftPilot } from './composition/workforce-plan-draft-pilot';

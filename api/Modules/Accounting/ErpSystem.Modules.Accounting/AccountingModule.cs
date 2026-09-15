@@ -1,13 +1,11 @@
-using System.Runtime.CompilerServices;
 using ErpSystem.BuildingBlocks.Modularity;
 using ErpSystem.Modules.Accounting.Application;
+using ErpSystem.Modules.Accounting.Contracts.Authorization;
 using ErpSystem.Modules.Accounting.Infrastructure;
 using ErpSystem.Modules.Accounting.Presentation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
-[assembly: InternalsVisibleTo("ErpSystem.Tests")]
 
 namespace ErpSystem.Modules.Accounting;
 
@@ -15,7 +13,13 @@ namespace ErpSystem.Modules.Accounting;
 public sealed class AccountingModule : IModule
 {
     public string Name => "Accounting";
-    public ModuleDefinition Definition => new("acc", "Accounting", [])
+    public ModuleDefinition Definition => new(
+        "acc",
+        "Accounting",
+        [
+            new SubmoduleDefinition("fiscal-years", "Fiscal years", AccountingPermissions.FiscalYears),
+            new SubmoduleDefinition("invoicing", "Invoicing", AccountingPermissions.Invoicing)
+        ])
     {
         Version = "1.0.0",
         OptionalModuleDependencies = ["contacts"]

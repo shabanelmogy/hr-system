@@ -1,0 +1,30 @@
+{
+  "moduleName": "CRM",
+  "docSlug": "customer-relationship-management",
+  "databaseSchema": "crm",
+  "version": "1.0.0",
+  "requiredModuleDependencies": [],
+  "optionalModuleDependencies": [],
+  "isUserVisible": true,
+  "allowsTenantEntitlement": true,
+  "lifecycle": "active",
+  "status": "foundation",
+  "runtimePaths": {
+    "root": "api/Modules/CRM",
+    "contracts": "api/Modules/CRM/ErpSystem.Modules.CRM.Contracts",
+    "domain": "api/Modules/CRM/ErpSystem.Modules.CRM.Domain",
+    "application": "api/Modules/CRM/ErpSystem.Modules.CRM.Application",
+    "infrastructure": "api/Modules/CRM/ErpSystem.Modules.CRM.Infrastructure",
+    "presentation": "api/Modules/CRM/ErpSystem.Modules.CRM.Presentation",
+    "bootstrap": "api/Modules/CRM/ErpSystem.Modules.CRM",
+    "tests": "api/Modules/CRM/ErpSystem.Modules.CRM.Tests"
+  },
+  "documentationPaths": {
+    "root": "documentation/modules/customer-relationship-management",
+    "api": "documentation/modules/customer-relationship-management/api/README.md",
+    "webNext": "documentation/modules/customer-relationship-management/web-next/README.md",
+    "mobileReact": "documentation/modules/customer-relationship-management/mobile-react/README.md",
+    "features": "documentation/modules/customer-relationship-management/features/README.md",
+    "phases": "documentation/modules/customer-relationship-management/phases/README.md"
+  }
+}

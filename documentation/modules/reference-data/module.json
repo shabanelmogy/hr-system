@@ -1,0 +1,29 @@
+{
+  "moduleName": "ReferenceData",
+  "docSlug": "reference-data",
+  "databaseSchema": "ref",
+  "version": "1.0.0",
+  "requiredModuleDependencies": [],
+  "optionalModuleDependencies": [],
+  "isUserVisible": true,
+  "allowsTenantEntitlement": true,
+  "lifecycle": "active",
+  "status": "foundation",
+  "runtimePaths": {
+    "root": "api/Modules/ReferenceData",
+    "contracts": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Contracts",
+    "domain": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Domain",
+    "application": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application",
+    "infrastructure": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure",
+    "presentation": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation",
+    "bootstrap": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData"
+  },
+  "documentationPaths": {
+    "root": "documentation/modules/reference-data",
+    "api": "documentation/modules/reference-data/api/README.md",
+    "webNext": "documentation/modules/reference-data/web-next/README.md",
+    "mobileReact": "documentation/modules/reference-data/mobile-react/README.md",
+    "features": "documentation/modules/reference-data/features/README.md",
+    "phases": "documentation/modules/reference-data/phases/README.md"
+  }
+}

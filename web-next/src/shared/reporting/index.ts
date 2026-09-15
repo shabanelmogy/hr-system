@@ -15,11 +15,6 @@ export type {
   ServerReportDesignerProps,
 } from "./components/ServerReportDesignerClient";
 export type { ServerReportViewerProps } from "./components/ServerReportViewerClient";
-export { crystalReportService } from "./crystal-report-manager/services";
-export type {
-  CrystalReportListItem,
-  RenderCrystalReportRequest,
-} from "./crystal-report-manager/types";
 export type {
   CreateReportTemplateRequest,
   DuplicateReportTemplateRequest,

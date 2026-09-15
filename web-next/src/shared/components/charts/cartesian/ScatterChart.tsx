@@ -64,10 +64,10 @@ const ScatterChart = ({
           {String(getChartValue(data, 'name') || `Point ${getChartValue(data, 'index') || ''}`)}
         </p>
         <p style={{ margin: '4px 0', color: payload[0].color }}>
-          X: {formatValue(getChartValue(data, xKey))}
+          {t('common.xValue')}: {formatValue(getChartValue(data, xKey))}
         </p>
         <p style={{ margin: '4px 0', color: payload[0].color }}>
-          Y: {formatValue(getChartValue(data, yKey))}
+          {t('common.yValue')}: {formatValue(getChartValue(data, yKey))}
         </p>
         {zKey && (
           <p style={{ margin: '4px 0', color: payload[0].color }}>

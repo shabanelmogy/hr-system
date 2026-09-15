@@ -1,6 +1,5 @@
 using ErpSystem.BuildingBlocks.Modularity;
-using ErpSystem.Modules.Platform.Contracts.Entitlements;
-using ErpSystem.Modules.Platform.Contracts.Modules;
+using ErpSystem.Modules.Platform.Application.Entitlements;
 
 namespace ErpSystem.Modules.Platform.Application.Modules;
 
@@ -11,12 +10,30 @@ internal sealed class ModuleCatalogPolicy(
     public IReadOnlyList<ModuleCatalogItem> GetInstalled() =>
         catalog.UserVisibleDefinitions.Select(ToContract).ToArray();
 
+    public IReadOnlyList<ModuleCatalogItem> GetTenantEntitlementCatalog() =>
+        catalog.TenantEntitlementDefinitions
+            .Where(static definition => definition.IsUserVisible)
+            .Select(static definition => new ModuleCatalogItem(
+                definition.Code,
+                definition.Name,
+                definition.Submodules
+                    .Where(static submodule =>
+                        submodule.PermissionAccessMode == PermissionAccessMode.TenantEntitlement)
+                    .Select(ToContract)
+                    .ToArray(),
+                definition.IsDefault))
+            .ToArray();
+
     public IReadOnlyList<TenantModuleEntitlementRequest> GetDefaultEntitlements() =>
         catalog.TenantEntitlementDefinitions
             .Where(definition => definition.IsDefault)
             .Select(definition => new TenantModuleEntitlementRequest(
                 definition.Code,
-                definition.Submodules.Select(submodule => submodule.Code).ToArray()))
+                definition.Submodules
+                    .Where(static submodule =>
+                        submodule.PermissionAccessMode == PermissionAccessMode.TenantEntitlement)
+                    .Select(submodule => submodule.Code)
+                    .ToArray()))
             .ToArray();
 
     public async Task<IReadOnlyList<ModuleCatalogItem>> GetAccessibleAsync(
@@ -45,14 +62,15 @@ internal sealed class ModuleCatalogPolicy(
             if (!purchasedByModule.TryGetValue(definition.Code, out var purchase))
                 continue;
 
-            if (definition.Submodules.Count == 0)
-            {
-                accessible.Add(ToContract(definition));
+            var entitlementSubmodules = definition.Submodules
+                .Where(static submodule =>
+                    submodule.PermissionAccessMode == PermissionAccessMode.TenantEntitlement)
+                .ToArray();
+            if (entitlementSubmodules.Length == 0)
                 continue;
-            }
 
             var allowedSubmodules = new List<ModuleSubmoduleCatalogItem>();
-            foreach (var submodule in definition.Submodules)
+            foreach (var submodule in entitlementSubmodules)
             {
                 if (!purchase.SubmoduleCodes.Contains(submodule.Code, StringComparer.OrdinalIgnoreCase))
                     continue;
@@ -76,25 +94,46 @@ internal sealed class ModuleCatalogPolicy(
         return accessible;
     }
 
+    public IReadOnlySet<string> GetKnownPermissions() =>
+        catalog.Definitions
+            .SelectMany(static definition => definition.Submodules)
+            .SelectMany(static submodule => submodule.RequiredPermissions)
+            .ToHashSet(StringComparer.Ordinal);
+
+    public IReadOnlySet<string> GetTenantAssignablePermissions() =>
+        catalog.Definitions
+            .SelectMany(static definition => definition.Submodules)
+            .Where(static submodule => submodule.PermissionAccessMode != PermissionAccessMode.Global)
+            .SelectMany(static submodule => submodule.RequiredPermissions)
+            .ToHashSet(StringComparer.Ordinal);
+
     public bool TryResolvePermission(
         string permission,
-        out string moduleCode,
-        out string submoduleCode)
+        out ModulePermissionCatalogItem resolvedPermission)
     {
         foreach (var definition in catalog.Definitions)
         {
             var submodule = definition.Submodules.FirstOrDefault(candidate =>
                 candidate.RequiredPermissions.Contains(permission, StringComparer.Ordinal));
-            if (submodule is not null)
-            {
-                moduleCode = definition.Code;
-                submoduleCode = submodule.Code;
-                return true;
-            }
+            if (submodule is null)
+                continue;
+
+            var requiresTenantScope = submodule.PermissionAccessMode != PermissionAccessMode.Global;
+            resolvedPermission = new ModulePermissionCatalogItem(
+                permission,
+                definition.Code,
+                submodule.Code,
+                requiresTenantScope,
+                submodule.PermissionAccessMode == PermissionAccessMode.TenantEntitlement);
+            return true;
         }
 
-        moduleCode = string.Empty;
-        submoduleCode = string.Empty;
+        resolvedPermission = new ModulePermissionCatalogItem(
+            permission,
+            string.Empty,
+            string.Empty,
+            RequiresTenantScope: false,
+            RequiresTenantEntitlement: false);
         return false;
     }
 
@@ -118,8 +157,10 @@ internal sealed class ModuleCatalogPolicy(
 
             foreach (var submoduleCode in item.SubmoduleCodes ?? [])
             {
-                if (definition.Submodules.All(candidate =>
-                        !string.Equals(candidate.Code, submoduleCode, StringComparison.OrdinalIgnoreCase)))
+                var submodule = definition.Submodules.FirstOrDefault(candidate =>
+                    string.Equals(candidate.Code, submoduleCode, StringComparison.OrdinalIgnoreCase));
+                if (submodule is null ||
+                    submodule.PermissionAccessMode != PermissionAccessMode.TenantEntitlement)
                 {
                     invalidCode = $"{item.ModuleCode}:{submoduleCode}";
                     return false;

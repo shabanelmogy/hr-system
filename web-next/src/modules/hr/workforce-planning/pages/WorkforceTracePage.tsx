@@ -2,7 +2,7 @@
 
 import PageHeader from "@/shared/components/navigation/header/PageHeader";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
-import { useFiscalYearLookup } from "@/modules/hr/finance";
+import { useFiscalYearLookup } from "@/modules/accounting";
 import { Alert, Box, Button, Card, CardContent, Chip, CircularProgress, Divider, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";

@@ -1,7 +1,7 @@
-using ErpSystem.Modules.HR.Domain.Common.Entities;
-using ErpSystem.Modules.HR.Domain.Common.Exceptions;
+using ErpSystem.BuildingBlocks.Domain.Entities;
+using ErpSystem.BuildingBlocks.Domain.Exceptions;
 using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Enums;
-using static ErpSystem.Modules.HR.Domain.Common.Guards.DomainGuard;
+using static ErpSystem.BuildingBlocks.Domain.Guards.DomainGuard;
 
 namespace ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities;
 

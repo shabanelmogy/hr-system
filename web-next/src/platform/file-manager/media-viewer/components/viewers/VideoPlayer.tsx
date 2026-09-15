@@ -9,7 +9,6 @@ import {
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import TimeMarks from '../controls/TimeMarks';
-import VideoSidebar from '../layout/VideoSidebar';
 import { TopBar } from '../video/TopBar';
 import { ProgressBar } from '../video/ProgressBar';
 import { ControlsBar } from '../video/ControlsBar';
@@ -41,8 +40,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ mediaUrl, onError, onBack }) 
     repeatMode,
     showTimeMarks,
     setShowTimeMarks,
-    showSidebar,
-    setShowSidebar,
     handlePlayPause,
     handleProgressChange,
     handleVolumeChange,
@@ -63,8 +60,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ mediaUrl, onError, onBack }) 
       onMouseLeave={() => isPlaying && setShowControls(false)}
       sx={{
         maxHeight: isFullscreen ? "100vh" : "80vh",
-        marginRight: showSidebar ? "350px" : 0,
-        transition: "margin-right 0.3s ease",
       }}
     >
       <VideoElement
@@ -73,12 +68,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ mediaUrl, onError, onBack }) 
         controlsList="nodownload"
         preload="metadata"
         onClick={handlePlayPause}
-        onLoadStart={() => console.log("Video load started")}
         onLoadedMetadata={() => {
-          console.log("Video metadata loaded");
           onError("");
         }}
-        onCanPlay={() => console.log("Video can play")}
       >
         {t("media.videoNotSupported")}
       </VideoElement>
@@ -124,8 +116,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ mediaUrl, onError, onBack }) 
         show={showControls}
         onDownload={handleDownload}
         onPip={handlePictureInPicture}
-        sidebarActive={showSidebar}
-        onToggleSidebar={() => setShowSidebar(!showSidebar)}
         onBack={onBack}
       />
 
@@ -170,16 +160,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ mediaUrl, onError, onBack }) 
         onClose={() => setShowTimeMarks(false)}
       />
       
-      <VideoSidebar
-        open={showSidebar}
-        onClose={() => setShowSidebar(false)}
-        currentTime={currentTime}
-        onSeek={(time) => {
-          if (videoRef.current) {
-            videoRef.current.currentTime = time;
-          }
-        }}
-      />
     </VideoContainer>
   );
 };

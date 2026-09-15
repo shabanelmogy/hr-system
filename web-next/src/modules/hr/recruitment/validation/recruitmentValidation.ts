@@ -3,22 +3,14 @@ import type { TFunction } from "i18next";
 import {
   EmploymentType,
   WorkArrangement,
-  ApplicationSource,
   InterviewType,
   InterviewRecommendation,
-  PayFrequency,
   RequisitionType,
 } from "../types";
 
 export const jobOpeningSchema = z.object({
-  jobRequisitionId: z.coerce.number().optional().default(0),
-  positionId: z.coerce.number().min(1, "Position is required"),
-  branchId: z.coerce.number().min(1, "Branch is required"),
-  departmentId: z.coerce.number().min(1, "Department is required"),
-  divisionId: z.coerce.number().optional(),
+  jobRequisitionId: z.coerce.number().min(1, "Job requisition is required"),
   positionCount: z.coerce.number().min(1, "Must request at least 1 opening"),
-  employmentType: z.coerce.number().default(EmploymentType.FullTime),
-  workArrangement: z.coerce.number().default(WorkArrangement.OnSite),
 });
 
 export type JobOpeningFormData = z.infer<typeof jobOpeningSchema>;
@@ -43,9 +35,9 @@ export const newApplicationSchema = z.object({
   email: z.string().trim().email("Please provide a valid email address"),
   phoneNumber: z.string().trim().optional(),
   jobOpeningId: z.coerce.number().min(1, "Job opening is required"),
-  source: z.coerce.number().default(ApplicationSource.CareersPortal),
+  source: z.coerce.number().min(1, "Application source is required"),
   expectedSalary: z.coerce.number().optional(),
-  expectedSalaryCurrencyCode: z.string().default("EGP"),
+  expectedSalaryCurrencyCode: z.string().trim().length(3, "Currency code is required"),
   availableFrom: z.string().optional(),
   coverLetter: z.string().trim().optional(),
 });
@@ -74,8 +66,8 @@ export type InterviewEvaluationFormData = z.infer<typeof interviewEvaluationSche
 
 export const jobOfferSchema = z.object({
   baseSalary: z.coerce.number().min(100, "Base salary must be positive"),
-  currencyCode: z.string().default("EGP"),
-  payFrequency: z.coerce.number().default(PayFrequency.Monthly),
+  currencyCode: z.string().trim().length(3, "Currency code is required"),
+  payFrequency: z.coerce.number().min(1, "Pay frequency is required"),
   proposedStartDate: z.string().min(1, "Start date is required"),
   termsAndConditions: z.string().trim().optional(),
 });

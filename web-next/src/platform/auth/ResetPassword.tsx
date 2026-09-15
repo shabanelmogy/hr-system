@@ -1,10 +1,10 @@
 "use client";
 
-import { apiRoutes } from "@/config";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MyTextField } from "@/shared/components/forms";
 import { useSnackbar } from "@/shared/hooks";
-import { apiService, HandleApiError } from "@/shared/services";
+import { HandleApiError } from "@/shared/services";
+import { authService } from "./services/authService";
 import LockIcon from "@mui/icons-material/Lock";
 import {
   Button,
@@ -85,7 +85,7 @@ const ResetPassword = () => {
 
     setLoading(true);
     try {
-      await apiService.post(apiRoutes.auth.resetPassword, data);
+      await authService.resetPassword(data);
       reset();
       setTimeout(() => {
         router.replace("/login");

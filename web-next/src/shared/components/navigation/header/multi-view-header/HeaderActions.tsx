@@ -71,14 +71,14 @@ export default function HeaderActions(props: HeaderActionsProps) {
   return (
     <>
       {props.actions.add && (
-        <Tooltip title={t("actions.add") || "Add"} arrow>
+        <Tooltip title={t("actions.add")} arrow>
           <Button
             variant="contained"
             startIcon={<Add />}
             onClick={props.onAdd}
             disabled={isReadOnly}
             size="small"
-            aria-label={props.iconOnlyAdd ? t("actions.add") || "Add" : undefined}
+            aria-label={props.iconOnlyAdd ? t("actions.add") : undefined}
             sx={{
               borderRadius: props.compact ? 2 : 3,
               textTransform: "none",
@@ -102,7 +102,7 @@ export default function HeaderActions(props: HeaderActionsProps) {
               },
             }}
           >
-            {props.iconOnlyAdd ? "" : t("actions.add") || "Add"}
+            {props.iconOnlyAdd ? "" : t("actions.add")}
           </Button>
         </Tooltip>
       )}
@@ -150,13 +150,13 @@ export default function HeaderActions(props: HeaderActionsProps) {
       )}
       {props.actions.export && props.exportOptions.length > 0 && (
         <>
-          <Tooltip title={t("actions.export") || "Export"} arrow>
+          <Tooltip title={t("actions.export")} arrow>
             <span>
               <IconButton
                 size="small"
                 onClick={(event) => setExportAnchor(event.currentTarget)}
                 disabled={isExporting || !hasAvailableExport}
-                aria-label={t("actions.export") || "Export"}
+                aria-label={t("actions.export")}
                 aria-controls={exportAnchor ? exportMenuId : undefined}
                 aria-haspopup="menu"
                 aria-expanded={exportAnchor ? "true" : undefined}

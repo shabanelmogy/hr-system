@@ -13,8 +13,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Mvc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Presentation\ErpSystem.BuildingBlocks.Presentation.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Authorization\ErpSystem.BuildingBlocks.Authorization.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.Accounting.Application\ErpSystem.Modules.Accounting.Application.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.Accounting.Contracts\ErpSystem.Modules.Accounting.Contracts.csproj" />
+    <ProjectReference Include="..\..\Platform\ErpSystem.Modules.Platform.Contracts\ErpSystem.Modules.Platform.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

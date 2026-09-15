@@ -67,14 +67,13 @@ export function AppInteractiveEntityChart<T>({
   valueUnit,
   onViewItem,
   onEditItem,
-  emptyMessage = 'لا توجد بيانات متاحة للعرض',
+  emptyMessage,
   entityName,
   renderExtraDetails,
   height = 220,
 }: AppInteractiveEntityChartProps<T>) {
   const { theme } = useAppTheme();
-  const { i18n } = useTranslation();
-  const isAr = Boolean((i18n?.resolvedLanguage ?? i18n?.language ?? '')?.startsWith('ar'));
+  const { t } = useTranslation();
 
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
 
@@ -107,7 +106,7 @@ export function AppInteractiveEntityChart<T>({
     return (
       <AppCard style={styles.containerCard}>
         <AppText align="center" color="muted" variant="bodySmall">
-          {emptyMessage}
+          {emptyMessage ?? t('interactiveChart.empty')}
         </AppText>
       </AppCard>
     );
@@ -133,9 +132,7 @@ export function AppInteractiveEntityChart<T>({
               </AppText>
             ) : (
               <AppText color="muted" variant="caption">
-                {isAr
-                  ? 'اضغط على أي عمود لعرض تفاصيل المركز'
-                  : 'Tap any column to view entity details'}
+                {t('interactiveChart.tapColumn')}
               </AppText>
             )}
           </View>
@@ -328,7 +325,7 @@ export function AppInteractiveEntityChart<T>({
 
             <AppIconButton
               icon="close-outline"
-              label={isAr ? 'إغلاق' : 'Close'}
+              label={t('common.close')}
               onPress={() => setSelectedKey(null)}
               size={20}
             />
@@ -363,9 +360,7 @@ export function AppInteractiveEntityChart<T>({
                 style={styles.actionBtn}
                 variant="primary"
               >
-                {isAr
-                  ? `عرض تفاصيل ${entityName ?? 'العنصر'}`
-                  : `View ${entityName ?? 'Item'} Details`}
+                {t('interactiveChart.viewDetails', { entity: entityName ?? t('interactiveChart.defaultEntity') })}
               </AppButton>
             ) : null}
 
@@ -377,7 +372,7 @@ export function AppInteractiveEntityChart<T>({
                 style={styles.actionBtn}
                 variant="outline"
               >
-                {isAr ? 'تعديل' : 'Edit'}
+                {t('common.edit')}
               </AppButton>
             ) : null}
           </View>

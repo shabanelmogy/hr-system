@@ -11,9 +11,8 @@ interface Props {
 }
 
 export function SkillsEditor({ skills = [], onChange, disabled = false }: Props) {
-  const { i18n } = useTranslation();
+  const { t } = useTranslation();
   const { theme } = useAppTheme();
-  const isAr = i18n.language === 'ar';
 
   const handleAdd = () => {
     onChange([...skills, { skillName: '', proficiencyLevel: 'Intermediate', isMandatory: false }]);
@@ -31,7 +30,7 @@ export function SkillsEditor({ skills = [], onChange, disabled = false }: Props)
     <View style={styles.container}>
       <View style={styles.header}>
         <AppText variant="label" style={styles.title}>
-          {isAr ? 'المهارات المطلوبة ومستويات الإتقان' : 'Required Skills & Proficiency Levels'}
+          {t('organizationalStructure.jobDescriptionEditors.skills.title')}
         </AppText>
         {!disabled && (
           <AppButton
@@ -39,14 +38,14 @@ export function SkillsEditor({ skills = [], onChange, disabled = false }: Props)
             onPress={handleAdd}
             variant="outline"
           >
-            {isAr ? 'إضافة مهارة' : 'Add Skill'}
+            {t('organizationalStructure.jobDescriptionEditors.skills.add')}
           </AppButton>
         )}
       </View>
 
       {skills.length === 0 ? (
         <AppText color="muted" variant="caption">
-          {isAr ? 'لم تتم إضافة مهارات بعد.' : 'No skills added yet.'}
+          {t('organizationalStructure.jobDescriptionEditors.skills.empty')}
         </AppText>
       ) : (
         <View style={styles.list}>
@@ -57,38 +56,38 @@ export function SkillsEditor({ skills = [], onChange, disabled = false }: Props)
             >
               <View style={styles.cardHeader}>
                 <AppText variant="label" style={styles.cardTitle}>
-                  {isAr ? `مهارة #${index + 1}` : `Skill #${index + 1}`}
+                  {t('organizationalStructure.jobDescriptionEditors.skills.number', { number: index + 1 })}
                 </AppText>
                 {!disabled && (
                   <AppIconButton
                     icon="trash-outline"
-                    label={isAr ? 'حذف' : 'Delete'}
+                    label={t('common.delete')}
                     onPress={() => handleRemove(index)}
                   />
                 )}
               </View>
               <AppTextField
                 editable={!disabled}
-                label={isAr ? 'اسم المهارة' : 'Skill Name'}
+                label={t('organizationalStructure.jobDescriptionEditors.skills.name')}
                 name={`skillName_${index}`}
                 onChangeText={(val) => handleUpdate(index, { skillName: val })}
                 value={skill.skillName}
               />
               <AppSegmentedControl
                 disabled={disabled}
-                label={isAr ? 'مستوى الإتقان' : 'Proficiency Level'}
+                label={t('organizationalStructure.jobDescriptionEditors.skills.proficiency')}
                 onChange={(val) => handleUpdate(index, { proficiencyLevel: String(val) })}
                 options={[
-                  { label: isAr ? 'مبتدئ' : 'Beg', value: 'Beginner' },
-                  { label: isAr ? 'متوسط' : 'Int', value: 'Intermediate' },
-                  { label: isAr ? 'متقدم' : 'Adv', value: 'Advanced' },
-                  { label: isAr ? 'خبير' : 'Exp', value: 'Expert' },
+                  { label: t('organizationalStructure.jobDescriptionEditors.skills.level.beginner'), value: 'Beginner' },
+                  { label: t('organizationalStructure.jobDescriptionEditors.skills.level.intermediate'), value: 'Intermediate' },
+                  { label: t('organizationalStructure.jobDescriptionEditors.skills.level.advanced'), value: 'Advanced' },
+                  { label: t('organizationalStructure.jobDescriptionEditors.skills.level.expert'), value: 'Expert' },
                 ]}
                 value={skill.proficiencyLevel || 'Intermediate'}
               />
               <AppSwitchField
                 disabled={disabled}
-                label={isAr ? 'مهارة إلزامية للوظيفة' : 'Mandatory for this job'}
+                label={t('organizationalStructure.jobDescriptionEditors.skills.mandatory')}
                 name={`isMandatory_${index}`}
                 onValueChange={(val) => handleUpdate(index, { isMandatory: val })}
                 value={skill.isMandatory}

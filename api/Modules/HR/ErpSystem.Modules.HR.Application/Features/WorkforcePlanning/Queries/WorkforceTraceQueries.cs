@@ -1,7 +1,7 @@
 using FluentValidation;
-using ErpSystem.Modules.HR.Application.Abstractions.Messaging;
-using ErpSystem.Modules.HR.Application.Common.Errors;
-using ErpSystem.Modules.HR.Application.Common.Paginations;
+using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
+using ErpSystem.BuildingBlocks.Application.Common.Errors;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Contracts;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Errors;

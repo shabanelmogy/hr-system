@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
 
 import type { ErpModule } from "@/platform/modules";
-import { createDefaultEntitlements, toggleModuleEntitlement } from "./entitlements";
+import {
+  createDefaultEntitlements,
+  hydrateEntitlements,
+  toggleModuleEntitlement,
+} from "./entitlements";
 
 const modules: ErpModule[] = [
   {
@@ -9,8 +13,8 @@ const modules: ErpModule[] = [
     name: "HR",
     isDefault: true,
     submodules: [
-      { code: "basic-data", name: "Basic data", requiredPermissions: [] },
-      { code: "recruitment", name: "Recruitment", requiredPermissions: [] },
+      { code: "basic-data", name: "Basic data", requiredPermissions: [], entryPath: null },
+      { code: "recruitment", name: "Recruitment", requiredPermissions: [], entryPath: null },
     ],
   },
   { code: "acc", name: "Accounting", isDefault: false, submodules: [] },
@@ -30,6 +34,15 @@ describe("tenant module entitlements", () => {
     expect(updated).toEqual([
       { moduleCode: "hr", submoduleCodes: ["basic-data", "recruitment"] },
       { moduleCode: "acc", submoduleCodes: [] },
+    ]);
+  });
+
+  it("drops modules and submodules absent from the tenant entitlement catalog", () => {
+    expect(hydrateEntitlements([
+      { moduleCode: "hr", submoduleCodes: ["basic-data", "geography"] },
+      { moduleCode: "platform", submoduleCodes: ["identity"] },
+    ], modules)).toEqual([
+      { moduleCode: "hr", submoduleCodes: ["basic-data"] },
     ]);
   });
 });

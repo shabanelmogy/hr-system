@@ -36,7 +36,7 @@ export function RecruitmentSettingsViewMobile() {
   if (settingsQuery.isError || !settingsQuery.data) {
     return (
       <AppStateView
-        message={settingsQuery.error instanceof Error ? settingsQuery.error.message : t('common.error', 'حدث خطأ')}
+        message={settingsQuery.error instanceof Error ? settingsQuery.error.message : t('common.error')}
         onRetry={() => void settingsQuery.refetch()}
         state="error"
       />
@@ -53,18 +53,18 @@ export function RecruitmentSettingsViewMobile() {
   const handleResetDefaults = async () => {
     try {
       await updateSettingsMutation.mutateAsync(DEFAULT_RECRUITMENT_SETTINGS);
-      showToast.success(t('recruitment.settings.resetSuccess', 'تمت استعادة الإعدادات الافتراضية بنجاح'));
+      showToast.success(t('recruitment.settings.resetSuccess'));
     } catch (e) {
-      showToast.error(e, t('common.error', 'حدث خطأ'));
+      showToast.error(e, t('common.error'));
     }
   };
 
   const sections: { id: typeof activeSection; label: string; icon: AppIconName; count?: number }[] = [
-    { id: 'stages', label: t('recruitment.settings.tabStages', 'مراحل الكانبان'), icon: 'layers-outline', count: stages.length },
-    { id: 'reasons', label: t('recruitment.settings.tabReasons', 'أسباب الرفض'), icon: 'close-circle-outline', count: reasons.length },
-    { id: 'sources', label: t('recruitment.settings.tabSources', 'قنوات الاستقطاب'), icon: 'globe-outline', count: sources.length },
-    { id: 'criteria', label: t('recruitment.settings.tabCriteria', 'معايير التقييم'), icon: 'checkbox-outline', count: criteria.length },
-    { id: 'general', label: t('recruitment.settings.tabGeneral', 'الإعدادات العامة'), icon: 'settings-outline' },
+    { id: 'stages', label: t('recruitment.settings.tabStages'), icon: 'layers-outline', count: stages.length },
+    { id: 'reasons', label: t('recruitment.settings.tabReasons'), icon: 'close-circle-outline', count: reasons.length },
+    { id: 'sources', label: t('recruitment.settings.tabSources'), icon: 'globe-outline', count: sources.length },
+    { id: 'criteria', label: t('recruitment.settings.tabCriteria'), icon: 'checkbox-outline', count: criteria.length },
+    { id: 'general', label: t('recruitment.settings.tabGeneral'), icon: 'settings-outline' },
   ];
 
   return (
@@ -72,10 +72,10 @@ export function RecruitmentSettingsViewMobile() {
       {/* Header */}
       <View style={styles.header}>
         <AppText variant="titleSmall" weight="800">
-          {t('recruitment.settings.title', 'إعدادات وتهيئة التوظيف')}
+          {t('recruitment.settings.title')}
         </AppText>
         <AppText variant="caption" style={{ color: theme.colors.textMuted }}>
-          {t('recruitment.settings.subtitle', 'تخصيص مراحل التعيين وأسباب الرفض والمعايير مثل أودو')}
+          {t('recruitment.settings.subtitle')}
         </AppText>
       </View>
 
@@ -145,7 +145,7 @@ export function RecruitmentSettingsViewMobile() {
                 </View>
 
                 {stg.isDefault && (
-                  <AppStatusBadge label={t('recruitment.settings.defaultStage', 'افتراضية')} color={theme.colors.primary} />
+                  <AppStatusBadge label={t('recruitment.settings.defaultStage')} color={theme.colors.primary} />
                 )}
               </View>
 
@@ -154,14 +154,14 @@ export function RecruitmentSettingsViewMobile() {
                   <View style={[styles.miniTag, { backgroundColor: `${theme.colors.secondary}15` }]}>
                     <AppIcon name="mail-outline" size={12} color={theme.colors.secondary} />
                     <AppText variant="caption" style={{ color: theme.colors.secondary, fontSize: 11 }}>
-                      {t('recruitment.settings.autoEmailChip', 'إيميل تلقائي')}
+                      {t('recruitment.settings.autoEmailChip')}
                     </AppText>
                   </View>
                 )}
                 {stg.foldedInKanban && (
                   <View style={[styles.miniTag, { backgroundColor: theme.colors.surfaceMuted }]}>
                     <AppText variant="caption" style={{ color: theme.colors.textMuted, fontSize: 11 }}>
-                      {t('recruitment.settings.foldedChip', 'مطوية')}
+                      {t('recruitment.settings.foldedChip')}
                     </AppText>
                   </View>
                 )}
@@ -191,7 +191,7 @@ export function RecruitmentSettingsViewMobile() {
                 <View style={[styles.miniTag, { backgroundColor: `${theme.colors.success}15`, marginTop: 6, alignSelf: 'flex-start' }]}>
                   <AppIcon name="checkmark-circle-outline" size={12} color={theme.colors.success} />
                   <AppText variant="caption" style={{ color: theme.colors.success, fontSize: 11 }}>
-                    {t('recruitment.settings.autoEmailActive', 'اعتذار آلي مهني')}
+                    {t('recruitment.settings.autoEmailActive')}
                   </AppText>
                 </View>
               )}
@@ -218,19 +218,19 @@ export function RecruitmentSettingsViewMobile() {
                     {isArabic ? src.nameAr : src.nameEn}
                   </AppText>
                   <AppStatusBadge
-                    label={src.isActive ? t('common.active', 'نشطة') : t('common.inactive', 'معطلة')}
+                    label={src.isActive ? t('common.active') : t('common.inactive')}
                     color={src.isActive ? theme.colors.success : theme.colors.textMuted}
                   />
                 </View>
                 <View style={[styles.metricsRow, { backgroundColor: theme.colors.surfaceMuted }]}>
                   <AppText variant="caption" style={{ color: theme.colors.textMuted }}>
-                    {t('recruitment.settings.metricApps', 'المتقدمين')}: <AppText variant="caption" weight="700">{src.applicationsCount}</AppText>
+                    {t('recruitment.settings.metricApps')}: <AppText variant="caption" weight="700">{src.applicationsCount}</AppText>
                   </AppText>
                   <AppText variant="caption" style={{ color: theme.colors.textMuted }}>
-                    {t('recruitment.settings.metricHired', 'المعينين')}: <AppText variant="caption" weight="700" style={{ color: theme.colors.success }}>{src.hiredCount}</AppText>
+                    {t('recruitment.settings.metricHired')}: <AppText variant="caption" weight="700" style={{ color: theme.colors.success }}>{src.hiredCount}</AppText>
                   </AppText>
                   <AppText variant="caption" style={{ color: theme.colors.textMuted }}>
-                    {t('recruitment.settings.metricConversion', 'النجاح')}: <AppText variant="caption" weight="700" style={{ color: theme.colors.primary }}>{rate}%</AppText>
+                    {t('recruitment.settings.metricConversion')}: <AppText variant="caption" weight="700" style={{ color: theme.colors.primary }}>{rate}%</AppText>
                   </AppText>
                 </View>
               </View>
@@ -262,7 +262,7 @@ export function RecruitmentSettingsViewMobile() {
               </View>
               {c.isMandatory && (
                 <AppText variant="caption" weight="700" style={{ color: theme.colors.danger, marginTop: 4 }}>
-                  • {t('recruitment.settings.mandatoryChip', 'إلزامي للتقييم')}
+                  • {t('recruitment.settings.mandatoryChip')}
                 </AppText>
               )}
             </View>
@@ -276,7 +276,7 @@ export function RecruitmentSettingsViewMobile() {
           <View style={[styles.itemCard, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}>
             <View style={styles.policyRow}>
               <AppText variant="body" weight="700">
-                {t('recruitment.settings.defaultCurrency', 'العملة الافتراضية')}
+                {t('recruitment.settings.defaultCurrency')}
               </AppText>
               <AppText variant="body" weight="800" style={{ color: theme.colors.primary }}>
                 {general?.defaultCurrency || 'EGP'}
@@ -285,28 +285,28 @@ export function RecruitmentSettingsViewMobile() {
 
             <View style={styles.policyRow}>
               <AppText variant="body" weight="700">
-                {t('recruitment.settings.offerExpiryDays', 'صلاحية العرض (أيام)')}
+                {t('recruitment.settings.offerExpiryDays')}
               </AppText>
               <AppText variant="body" weight="800" style={{ color: theme.colors.primary }}>
-                {general?.offerExpiryDays || 7} {t('common.days', 'أيام')}
+                {general?.offerExpiryDays || 7} {t('common.days')}
               </AppText>
             </View>
 
             <View style={styles.policyRow}>
               <AppText variant="body" weight="700">
-                {t('recruitment.settings.probationMonths', 'فترة التجربة')}
+                {t('recruitment.settings.probationMonths')}
               </AppText>
               <AppText variant="body" weight="800" style={{ color: theme.colors.primary }}>
-                {general?.defaultProbationMonths || 3} {t('common.months', 'أشهر')}
+                {general?.defaultProbationMonths || 3} {t('common.months')}
               </AppText>
             </View>
 
             <View style={styles.policyRow}>
               <AppText variant="body" weight="700">
-                {t('recruitment.settings.autoPublishLabel', 'النشر التلقائي للشاغر')}
+                {t('recruitment.settings.autoPublishLabel')}
               </AppText>
               <AppText variant="body" weight="800" style={{ color: theme.colors.success }}>
-                {t('common.enabled', 'مفعل')}
+                {t('common.enabled')}
               </AppText>
             </View>
 
@@ -317,7 +317,7 @@ export function RecruitmentSettingsViewMobile() {
                 loading={updateSettingsMutation.isPending}
                 onPress={handleResetDefaults}
               >
-                {t('recruitment.settings.resetToDefaults', 'استعادة الإعدادات الافتراضية')}
+                {t('recruitment.settings.resetToDefaults')}
               </AppButton>
             </View>
           </View>

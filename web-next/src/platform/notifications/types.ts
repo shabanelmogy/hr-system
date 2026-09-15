@@ -1,12 +1,4 @@
-export type NotificationSeverity =
-  | 1
-  | 2
-  | 3
-  | 4
-  | "Info"
-  | "Success"
-  | "Warning"
-  | "Critical";
+export type NotificationSeverity = 1 | 2 | 3 | 4;
 
 export type NotificationReadStatus = 0 | 1 | 2;
 
@@ -21,12 +13,14 @@ export type AppNotification = {
   entityType: string | null;
   entityId: string | null;
   actionUrl: string | null;
-  actorUserId?: string | null;
+  actorUserId: string | null;
   correlationId: string;
   createdOn: string;
-  readOn?: string | null;
-  expiresOn?: string | null;
+  readOn: string | null;
+  expiresOn: string | null;
 };
+
+export type RealtimeNotification = Omit<AppNotification, "readOn" | "expiresOn">;
 
 export type NotificationPageMetadata = {
   currentPage: number;

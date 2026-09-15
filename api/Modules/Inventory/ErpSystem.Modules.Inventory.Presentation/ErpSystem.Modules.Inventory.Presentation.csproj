@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.Inventory.Presentation</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.Inventory.Presentation</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Mvc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Authorization\ErpSystem.BuildingBlocks.Authorization.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Presentation\ErpSystem.BuildingBlocks.Presentation.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Inventory.Application\ErpSystem.Modules.Inventory.Application.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Inventory.Contracts\ErpSystem.Modules.Inventory.Contracts.csproj" />
+    <ProjectReference Include="..\..\Platform\ErpSystem.Modules.Platform.Contracts\ErpSystem.Modules.Platform.Contracts.csproj" />
+  </ItemGroup>
+</Project>

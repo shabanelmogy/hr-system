@@ -11,7 +11,6 @@ export const countries: CountriesRoutes = {
   update: (id: Id) => `${version}/countries/${id}`,
   archive: (id: Id) => `${version}/countries/${id}`,
   restore: (id: Id) => `${version}/countries/${id}/restore`,
-  reportData: `${version}/countries/report-data`,
 };
 
 export const addressTypes: AddressTypesRoutes = {
@@ -32,7 +31,6 @@ export const states: StatesRoutes = {
   lookup: (countryId?: Id) => countryId == null
     ? `${version}/states/lookup`
     : `${version}/states/lookup?countryId=${countryId}`,
-  byCountry: (countryId: Id) => `${version}/states/by-country/${countryId}`,
   getById: (id: Id) => `${version}/states/${id}`,
   getWithDistricts: (id: Id) => `${version}/states/${id}/districts`,
   create: `${version}/states`,
@@ -48,7 +46,6 @@ export const districts: DistrictsRoutes = {
   lookup: (stateId?: Id) => stateId == null
     ? `${version}/districts/lookup`
     : `${version}/districts/lookup?stateId=${stateId}`,
-  byState: (stateId: Id) => `${version}/districts/by-state/${stateId}`,
   getById: (id: Id) => `${version}/districts/${id}`,
   getWithAddresses: (id: Id) => `${version}/districts/${id}/addresses`,
   create: `${version}/districts`,

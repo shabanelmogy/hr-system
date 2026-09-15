@@ -6,15 +6,15 @@ export interface MappedFile {
   size?: number;
   mimeType: string;
   extension?: string;
-  updatedAt: string;
+  createdAt: string;
 }
 
 export const mapFiles = (files: FileItem[]): MappedFile[] => {
   return files.map((file) => ({
-    id: file.id.toString(),
-    name: file.fileName || file.storedFileName || `File ${file.id}`,
-    mimeType: file.contentType ?? "",
+    id: file.id,
+    name: file.fileName,
+    mimeType: file.contentType,
     extension: file.fileExtension.replace(".", ""),
-    updatedAt: file.updatedOn ?? "",
+    createdAt: file.createdOn,
   }));
 };

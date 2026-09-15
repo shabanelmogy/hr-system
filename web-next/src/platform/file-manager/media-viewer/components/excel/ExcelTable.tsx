@@ -74,7 +74,7 @@ const ExcelTable: React.FC<ExcelTableProps> = ({
             {headers.map((header, index) => (
               <StyledTableCell key={index} align="left">
                 {displayCell(header) === "-"
-                  ? `Column ${index + 1}`
+                  ? t("files.column", { index: index + 1 })
                   : displayCell(header)}
               </StyledTableCell>
             ))}

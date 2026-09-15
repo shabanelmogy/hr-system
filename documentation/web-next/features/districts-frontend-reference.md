@@ -2,7 +2,7 @@
 
 ## 1. Scope
 
-The Districts browser feature is a State-dependent reference-data implementation using the approved Grid, Cards, Chart, Report, and Import views.
+The Districts browser feature is a State-dependent reference-data implementation using the approved Grid, Cards, Chart, and Import views. A District-specific web Report view is Excluded from the current client.
 
 ## 2. Route and composition
 
@@ -54,7 +54,9 @@ Import is visible only with `Districts:Create` and submits only while the user a
 
 ## 13. Report view
 
-Report uses `crystalReportService.listPublished("districts")`, stable key `["crystal-reports", "published", "districts"]`, managed report IDs, and the shared `ReportViewer`. It sends `ar|en` plus only nonblank `NameAr`, `NameEn`, `StateAr`, and `StateEn` filters. Loading, unavailable, catalog-error/retry, localized selection, rendering, download, and print behavior stay in the managed reporting boundary.
+Excluded on web until Districts owns a reachable report composition, permissions,
+and focused tests. The Reporting module's managed Crystal capabilities do not by
+themselves make a District report view part of this client feature.
 
 ## 14. Verification
 

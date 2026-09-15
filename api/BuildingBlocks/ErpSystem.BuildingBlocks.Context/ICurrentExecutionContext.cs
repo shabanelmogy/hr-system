@@ -13,5 +13,23 @@ public interface ICurrentExecutionContext
 
     int? CompanyId { get; }
 
+    /// <summary>
+    /// Host/runtime machine that originated the current operation. Business
+    /// code consumes this metadata through the execution context instead of
+    /// reading process environment state directly.
+    /// </summary>
+    string? MachineName => null;
+
+    /// <summary>
+    /// Stable request/operation correlation identifier when the current execution
+    /// originated from a transport that supplies one. Background work may leave it null.
+    /// </summary>
+    string? CorrelationId => null;
+
     bool IsInRole(string role) => false;
+}
+
+public static class ExecutionContextHeaderNames
+{
+    public const string CorrelationId = "X-Correlation-ID";
 }

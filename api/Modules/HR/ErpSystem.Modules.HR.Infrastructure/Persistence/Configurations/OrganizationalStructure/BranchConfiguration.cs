@@ -18,7 +18,6 @@ public sealed class BranchConfiguration : IEntityTypeConfiguration<Branch>
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.NameEn }).IsUnique();
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.NameAr }).IsUnique();
         builder.HasAlternateKey(x => new { x.TenantId, x.CompanyId, x.Id });
-        builder.Ignore(x => x.Company);
         builder.Ignore(x => x.Manager);
         builder.Ignore(x => x.Employees);
     }

@@ -52,18 +52,15 @@ describe("resolveSession", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
-  it("uses API validation before reading claims during a phased backend rollout", async () => {
-    const token = createValidatedToken(session);
-    const fetchMock = vi.fn(async (input: string | URL | Request) =>
-      input.toString().endsWith("/auth/session")
-        ? jsonResponse({}, 404)
-        : jsonResponse({ isAuthenticated: true }));
+  it("fails closed when the canonical session endpoint is unavailable", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse({}, 404));
     vi.stubGlobal("fetch", fetchMock);
 
-    const result = await resolveSession(token, "refresh-token");
+    const result = await resolveSession("access-token", "refresh-token");
 
-    expect(result.status).toBe("authenticated");
-    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(result).toEqual({ status: "unavailable" });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock.mock.calls[0]?.[0].toString()).toContain("/api/v1/auth/session");
   });
 
   it("refreshes an expired access token before returning the session", async () => {
@@ -213,21 +210,3 @@ function jsonResponse(body: unknown, status = 200) {
   });
 }
 
-function createValidatedToken(value: typeof session) {
-  const payload = {
-    sub: value.userId,
-    tenant_id: value.tenantId,
-    tenant_name: value.tenantName,
-    tenant_plan: value.tenantPlanName,
-    company_id: value.companyId,
-    name: value.userName,
-    email: value.email,
-    firstName: value.firstName,
-    lastName: value.lastName,
-    roles: value.roles,
-    permissions: value.permissions,
-    exp: Math.floor(value.expiresAt / 1000),
-  };
-  const encoded = Buffer.from(JSON.stringify(payload)).toString("base64url");
-  return `header.${encoded}.signature`;
-}

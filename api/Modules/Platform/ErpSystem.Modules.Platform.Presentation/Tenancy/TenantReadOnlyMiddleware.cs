@@ -1,4 +1,5 @@
 using ErpSystem.BuildingBlocks.Context;
+using ErpSystem.Modules.Platform.Application.Tenancy;
 using ErpSystem.Modules.Platform.Contracts.Tenancy;
 using ErpSystem.Modules.Platform.Contracts.Authorization;
 using Microsoft.AspNetCore.Authorization;
@@ -44,7 +45,7 @@ public sealed class TenantReadOnlyMiddleware(RequestDelegate next)
 
         context.Response.StatusCode = StatusCodes.Status423Locked;
         context.Response.ContentType = "application/problem+json";
-        context.Response.Headers["Cache-Control"] = "no-store";
+        context.Response.Headers.CacheControl = "no-store";
         await context.Response.WriteAsJsonAsync(
             new ProblemDetails
             {

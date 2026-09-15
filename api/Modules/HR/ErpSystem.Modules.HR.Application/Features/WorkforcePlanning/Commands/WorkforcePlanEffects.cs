@@ -1,7 +1,6 @@
 using System.Globalization;
-using ErpSystem.Modules.HR.Application.Abstractions.Authentication;
-using ErpSystem.Modules.HR.Application.Common.Consts;
-using ErpSystem.Modules.HR.Application.Common.Realtime;
+using ErpSystem.BuildingBlocks.Context.Authentication;
+using ErpSystem.BuildingBlocks.Application.Common.Realtime;
 using Microsoft.Extensions.Logging;
 
 namespace ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Commands;
@@ -23,7 +22,7 @@ public sealed class WorkforcePlanEffects(
                 RealtimeAudience.ForCompanyPermission(
                     actor.TenantId,
                     actor.CompanyId.Value,
-                    Permissions.ViewWorkforcePlans),
+                    HrPermissions.ViewWorkforcePlans),
                 "workforce-plans",
                 action,
                 planId.ToString(CultureInfo.InvariantCulture),

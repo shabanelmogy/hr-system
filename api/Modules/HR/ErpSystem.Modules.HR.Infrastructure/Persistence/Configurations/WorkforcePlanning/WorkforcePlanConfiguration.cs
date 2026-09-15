@@ -1,4 +1,3 @@
-using ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities;
 using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -24,11 +23,6 @@ public sealed class WorkforcePlanConfiguration : IEntityTypeConfiguration<Workfo
             .IsUnique()
             .HasDatabaseName("UX_WorkforcePlans_OneEffectivePerFiscalYear")
             .HasFilter("[Status] = 4 AND [ActivatedOn] IS NOT NULL AND [SupersededOn] IS NULL AND [IsDeleted] = 0");
-        builder.HasOne<FiscalYear>()
-            .WithMany()
-            .HasForeignKey(plan => new { plan.TenantId, plan.CompanyId, plan.FiscalYearId })
-            .HasPrincipalKey(year => new { year.TenantId, year.CompanyId, year.Id })
-            .OnDelete(DeleteBehavior.Restrict);
         builder.HasMany(plan => plan.Lines)
             .WithOne(line => line.WorkforcePlan)
             .HasForeignKey(line => new { line.TenantId, line.CompanyId, line.WorkforcePlanId })
@@ -89,10 +83,5 @@ public sealed class WorkforcePlanLinePeriodTargetConfiguration : IEntityTypeConf
         builder.HasKey(target => target.Id);
         builder.HasAlternateKey(target => new { target.TenantId, target.CompanyId, target.Id });
         builder.HasIndex(target => new { target.TenantId, target.CompanyId, target.WorkforcePlanLineId, target.FiscalPeriodId }).IsUnique();
-        builder.HasOne<FiscalPeriod>()
-            .WithMany()
-            .HasForeignKey(target => new { target.TenantId, target.CompanyId, target.FiscalPeriodId })
-            .HasPrincipalKey(period => new { period.TenantId, period.CompanyId, period.Id })
-            .OnDelete(DeleteBehavior.Restrict);
     }
 }

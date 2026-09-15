@@ -11,6 +11,13 @@ as the copy-ready scope contract and the review artifact as the evidence ledger.
 `Required` means current-release and gated, `Deferred` requires an owner/trigger,
 and `Excluded` means no runtime surface.
 
+For any API work, also follow
+`documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`. Phase 00 cannot close and
+runtime implementation cannot begin until the Existing-System Relationship Review
+and all three Business Readiness matrices in `IMPLEMENTATION-REQUEST.md` are
+complete for the known scope. Every Edge Cases & Validation category must contain
+scenarios or an explicit `N/A` with a reason.
+
 ## Required outputs
 
 1. Copy `FEATURE-REVIEW-ARTIFACTS.template.md` to `features/<feature>/<FEATURE>-REVIEW-ARTIFACTS.md`.
@@ -23,6 +30,8 @@ and `Excluded` means no runtime surface.
    reason for every platform difference.
 7. Separate verified current behavior, requested behavior, intentional platform differences, and unresolved findings.
 8. Record tests that prove each contract rather than only naming test folders.
+9. Complete the Business Rules Matrix, Edge Cases & Validation Matrix, and Impact
+   Matrix in `IMPLEMENTATION-REQUEST.md`; update them when discovery changes scope.
 
 ## Discovery checklist
 
@@ -39,6 +48,17 @@ and `Excluded` means no runtime surface.
       evidence path; no decision is inferred from the selected reference.
 - [ ] Verification gates are identified before coding, including manual and
       environment-dependent checks.
+- [ ] Existing-System Relationship Review is complete and the owning capability is
+      resolved; no parallel/workaround owner is being introduced.
+- [ ] Business Rules Matrix records every known rule with one primary owner,
+      stable outcome/error, and required test.
+- [ ] Every Edge Cases & Validation category is covered by scenarios or explicitly
+      marked `N/A` with a reason and has an enforcement layer plus required test.
+- [ ] Impact Matrix classifies Domain, CQRS, persistence, API, security/scope,
+      migration/data, integrations/runtime effects, tests, clients, and docs as
+      `Reuse`, `Extend`, `Change`, `Add`, or reasoned `N/A`.
+- [ ] No unresolved ownership, matrix placeholder, or unclassified edge-case row
+      remains before Phase 00 is closed.
 
 ## Approved references
 
@@ -53,16 +73,16 @@ and `Excluded` means no runtime surface.
 | --- | ---: | --- |
 | districts-master | 1 | `51dc9bf711f3af7c9b93b050ed972340a5353e10be5efd925a1a7b7f6ae08453` |
 | districts-master | 2 | `c1e4a7ede6afaad7d955cb8e1e59fac93210489cd5e9fd0dba8fdf5878b79b7d` |
-| districts-master | 5 | `acc697a7d29a374cf2baaaf6678e2e1c3cfab296999f8afcadef2edb116b6e1c` |
+| districts-master | 5 | `2cdd9f65a8e66ca390127822a56da30485291dcb1be19a59d38497610640c38c` |
 | districts-master | 8 | `8b2d2dd81761ee08dc4f372a5fed20353b60d2020d2680d5d0138459389b7bbd` |
 | districts-master | 9 | `6266a855e1cd714553644fb584e857d8f02350ce0abec9a1904245cf0f63eeb5` |
 | districts-api | 1 | `22b3bbfddbed6d5048acb0224ba4b08ff7d1e5f94af607e8dde95b758b0a4c9b` |
 | districts-api | 10 | `36d563363a7c0b878ef54b12ab23dc6eb7e77e583b14c5199eeed69540539ee0` |
 | districts-api | 11 | `94630d0b417ed5537a5071fe59e19f7e36b325b45b543acd0a067dffb45e4bbc` |
-| districts-web | 1 | `150f2646e4e4c492b2addcc6960dca2c9c6eb1cc303d235a7737764985a23072` |
+| districts-web | 1 | `9e3d28964c31dbbb9e55845d26ef016120df5e3046cd987ab87ae22ce17edc3c` |
 | districts-web | 2 | `65a9dcab8af8b0efaad40974a60066c7e3178c8987eca502da411df85adc81a9` |
 | districts-web | 12 | `cf9b0888ef0144a75decf29a461edb753e1d68c5b8c12089d5d107157f157fe7` |
-| districts-web | 13 | `275456e2e6a79a8377c5e3d77a905e22c5488d11756b1a93a7b89707f8474409` |
+| districts-web | 13 | `c8372474d9422aa6eb587e1cb9f485c50c39b2c2dbb8c7c18a88723ce6a5a14e` |
 | districts-mobile | 1 | `682435c23634ea28fe064a96e876c6289a69fe969be5a2aac50a1e81fe8c2730` |
 | districts-mobile | 14 | `485ff7dc418e59ff8e15ebe9d20da50d60f68cfe972d1386d0984a047f3487f5` |
 | districts-mobile | 15 | `659b10d4561775eeb6d72d7acce06a4515644958840ec7820f9097e7a1826050` |

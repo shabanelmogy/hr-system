@@ -37,7 +37,8 @@
     "excellent": "Excellent",
     "good": "Good",
     "average": "Average",
-    "poor": "Poor"
+    "poor": "Poor",
+    "close": "Close"
   },
   "common": {
     "all": "All",
@@ -50,7 +51,57 @@
     "validationErrors": "Validation errors",
     "validationErrorCount_one": "{{count}} error",
     "validationErrorCount_other": "{{count}} errors",
-    "reviewValidationErrors": "Review {{count}} validation errors"
+    "reviewValidationErrors": "Review {{count}} validation errors",
+    "actual": "Actual",
+    "arabic": "Arabic",
+    "back": "Back",
+    "characterCount": "Character count: {{value}}",
+    "chartLegend": "Chart legend",
+    "copied": "Copied",
+    "copyClipboard": "Copy to clipboard",
+    "ctrlK": "Ctrl K",
+    "daysValue": "{{count}} days",
+    "downloadFile": "Download File",
+    "employees": "Employees",
+    "english": "English",
+    "errorValue": "Error: {{error}}",
+    "expected": "Expected",
+    "from": "From",
+    "globalPresenceActivity": "Global presence activity",
+    "goToDashboard": "Go to dashboard",
+    "idValue": "ID: {{id}}",
+    "itemCount": "{{count}} items",
+    "noOptionsFound": "No options found",
+    "pageAction": "{{title}} page",
+    "progressToTarget": "Progress toward target",
+    "risk": "Risk",
+    "rowsCount": "{{count}} rows",
+    "saving": "Saving",
+    "search": "Search",
+    "selectAll": "Select All",
+    "share": "Share",
+    "showAll": "Show All",
+    "showLess": "Show Less",
+    "showMore": "Show More",
+    "targetValue": "Target: {{value}}",
+    "to": "To",
+    "total": "Total",
+    "tryAgain": "Try Again",
+    "unselectAll": "Clear selection",
+    "viewAll": "View all",
+    "vsLastPeriod": "Compared with last period",
+    "xValue": "X value",
+    "yValue": "Y value",
+    "loading": "Loading…",
+    "cancel": "Cancel",
+    "processing": "Processing…",
+    "create": "Create",
+    "reject": "Reject",
+    "save": "Save",
+    "saveChanges": "Save changes",
+    "active": "Active",
+    "inactive": "Inactive",
+    "accessDenied": "Access denied"
   },
   "offlineOperations": {
     "title": "Offline Operations",
@@ -128,6 +179,7 @@
     "validation": {
       "countriesRequired": "Select at least one operating country",
       "countryLimit": "No more than 100 countries can be selected",
+      "countriesUnique": "Each operating country can be selected only once",
       "registrationRequired": "Select the country of registration",
       "registrationMustBeSelected": "The country of registration must be one of the selected operating countries",
       "defaultRequired": "Select a default operating country",
@@ -154,7 +206,6 @@
     "unknownCountry": "Unknown country"
   },
   "navigation": {
-    "dashboardNotice": "This dashboard is under construction using dummy data. Updates will roll out step by step.",
     "total": "Total",
     "refresh": "Refresh",
     "filter": "Filter",
@@ -193,7 +244,21 @@
     "overview": "Global Presence Overview",
     "viewAll": "View All",
     "recentActivity": "Recent HR Activity",
-    "latestMilestones": "Latest milestones and changes"
+    "latestMilestones": "Latest milestones and changes",
+    "globalPresenceSubtitle": "Activity across the global workforce",
+    "headcountByCountry": "Headcount by country",
+    "allCountries": "All Countries",
+    "officesByCountry": "Offices by country",
+    "counts": "Counts",
+    "revenueByCountry": "Revenue by country",
+    "relativeContribution": "Relative contribution",
+    "employeesByTimezone": "Employees by time zone",
+    "summedHeadcount": "Total headcount",
+    "regionalGrowth": "Regional growth",
+    "quarterlyHeadcountTrend": "Quarterly headcount trend",
+    "americas": "Americas",
+    "emea": "Europe, the Middle East, and Africa",
+    "apac": "Asia-Pacific"
   },
   "displayDebugger": {
     "title": "Display",
@@ -395,8 +460,10 @@
     "retry": "Retry",
     "addTitle": "New Appointment",
     "editTitle": "Edit Appointment",
+    "viewTitle": "Appointment Details",
     "addSubtitle": "Schedule a new appointment",
     "editSubtitle": "Update appointment details",
+    "viewSubtitle": "Review appointment details",
     "titleLabel": "Title",
     "titlePlaceholder": "What is this about?",
     "start": "Start",
@@ -414,8 +481,7 @@
       "endRequired": "End is required",
       "invalidDate": "Enter a valid date",
       "endAfterStart": "End must be after Start",
-      "allDayEnd": "End day must be on or after Start day",
-      "pastStart": "Appointments cannot start in a previous day"
+      "allDayEnd": "End day must be on or after Start day"
     }
   },
   "actions": {
@@ -471,9 +537,19 @@
     "enable": "Enable",
     "gridOptions": "Grid options",
     "generateMockData": "Generate Mock Data",
-    "unlock": "Unlock"
+    "unlock": "Unlock",
+    "confirm": "Confirm",
+    "remove": "Remove",
+    "retry": "Retry",
+    "search": "Search",
+    "refresh": "Refresh"
   },
   "auth": {
+    "confirmingEmail": "Confirming your email...",
+    "emailConfirmed": "Your email was confirmed successfully.",
+    "emailConfirmationFailed": "We could not confirm your email. Request a new confirmation link and try again.",
+    "invalidEmailConfirmationLink": "This email confirmation link is incomplete or invalid.",
+    "returnToLogin": "Return to login",
     "personalInfo": "Personal Information",
     "profileOverview": "Manage your account details and security settings",
     "profilePageDescription": "Manage your personal details, profile picture, and security settings.",
@@ -545,6 +621,7 @@
     "analyticsDesc": "Analytics description",
     "securitySettings": "Security Settings",
     "alreadyHaveAccount": "Already have an account?",
+    "error": "Error",
     "failedLoadImage": "Failed to process image",
     "selectValidImage": "Please select a valid image file",
     "profilePictureRemoved": "Profile picture removed successfully",
@@ -603,6 +680,7 @@
   },
   "validation": {
     "required": "Required field",
+    "duplicateValues": "Duplicate values are not allowed",
     "invalidEmail": "Invalid email",
     "minLength": "Must be at least {{count}} characters",
     "maxLength": "Must be {{count}} characters or less",
@@ -631,7 +709,9 @@
     "fileTooLarge": "File size must be less than 5MB",
     "invalidFileType": "Invalid file type",
     "positiveNumber": "Allowed only positive numbers",
-    "integerNumber": "Allowed only integer numbers"
+    "integerNumber": "Allowed only integer numbers",
+    "invalidValues": "Some values are invalid",
+    "endDateBeforeStart": "The end date must be after the start date"
   },
   "messages": {
     "profileUpdated": "Profile updated successfully",
@@ -692,6 +772,7 @@
     "resultCount": "{{count}} search results"
   },
   "pagination": {
+    "summary": "Showing {{start}}-{{end}} of {{total}} {{items}}",
     "dataTable": "Data table",
     "rowsPerPage": "Rows per page",
     "showing": "Showing",
@@ -781,6 +862,9 @@
     "deleteError": "Failed to delete address type",
     "nameArPlaceholder": "Arabic only like : المنزل , العمل",
     "nameEnPlaceholder": "English only like : Home , Work",
+    "recent60Days": "Recent (60 days)",
+    "recent90Days": "Recent (90 days)",
+    "recent120Days": "Recent (120 days)",
     "noData": "No Address Types Available",
     "noDataDescription": "Start by adding your first address type to see analytics",
     "total": "Total",
@@ -827,7 +911,9 @@
       "uploading": "Uploading Address Types...",
       "duplicateInFile": "Duplicate of another address type row in this file",
       "importSuccess": "{{count}} address types uploaded"
-    }
+    },
+    "listSummary": "Browse and manage {{count}} address types",
+    "totalCount": "{{count}} address types"
   },
   "countries": {
     "dashboard": {
@@ -1336,6 +1422,9 @@
     "filters": {
       "all": "All Districts",
       "recent30Days": "Recent (30 days)",
+      "recent60Days": "Recent (60 days)",
+      "recent90Days": "Recent (90 days)",
+      "recent120Days": "Recent (120 days)",
       "hasState": "With State"
     },
     "district": "District",
@@ -1367,7 +1456,8 @@
         "forbidden": "District import requires States:View so State names can be validated. Ask an administrator for this permission.",
         "error": "The active State lookup could not be loaded. No rows have been validated as unknown. Retry the lookup."
       }
-    }
+    },
+    "addFirstState": "Add the first district"
   },
   "roles": {
     "creatingRole": "Creating new role",
@@ -1387,7 +1477,22 @@
     "created": "Role created successfully",
     "deleted": "Role deleted successfully",
     "title": "Roles List",
-    "subTitle": "List of roles"
+    "subTitle": "List of roles",
+    "permissionFor": "{{type}} permission for {{module}}",
+    "permissionsSelected": "{{selected}} of {{total}} permissions selected",
+    "backToRoles": "Back to roles",
+    "searchModules": "Search modules",
+    "filterByModule": "Filter by module",
+    "allModules": "All Modules",
+    "showOnlySelected": "Show only selected",
+    "moduleCount": "{{count}} modules",
+    "permissionsSummary": "{{selected}} of {{total}} permissions ({{percentage}}%)",
+    "module": "Module",
+    "loadingRolePermissions": "Loading role permissions…",
+    "roleNotFound": "Role not found",
+    "reviewPermissions": "Review permissions",
+    "archiveTitle": "Archive role?",
+    "archiveDescription": "The role will no longer be assignable and can be restored later."
   },
   "users": {
     "dashboard": {
@@ -1448,6 +1553,11 @@
     "passwordMedium": "Medium",
     "passwordStrong": "Strong",
     "passwordVeryStrong": "Very Strong",
+    "passwordLength": "At least 8 characters",
+    "passwordLowercase": "Lowercase letter",
+    "passwordUppercase": "Uppercase letter",
+    "passwordNumbers": "Number",
+    "passwordSymbols": "Special character",
     "loadingRoles": "Loading roles",
     "noRolesFound": "No roles found",
     "passwordSection": "Password Section",
@@ -1485,7 +1595,21 @@
     "revokeInvitation": "Revoke",
     "invitationResent": "Invitation resent successfully",
     "invitationRevoked": "Invitation revoked successfully",
-    "expiresOn": "Expires {{date}}"
+    "expiresOn": "Expires {{date}}",
+    "locked": "Locked",
+    "searchPlaceholder": "Search users by name, username, or email",
+    "includeArchived": "Include archived users",
+    "lifecycleStatus": "Lifecycle",
+    "activeStatus": "Active",
+    "archivedStatus": "Archived",
+    "archived": "User archived successfully",
+    "restored": "User restored successfully",
+    "archiveTitle": "Archive user?",
+    "archiveDescription": "Archive this account and revoke its active sessions? The account can be restored later.",
+    "restoreTitle": "Restore user?",
+    "restoreDescription": "Restore this archived account to active user management?",
+    "archiveReason": "Archive reason",
+    "fetchError": "Unable to load users."
   },
   "invitations": {
     "title": "Invitations",
@@ -1498,6 +1622,12 @@
     "apiEndPoints": "API Endpoints",
     "localizationApi": "Localization API",
     "hangfireDashboard": "Hangfire Dashboard"
+  },
+  "localizationApi": {
+    "keyAndValueMustNotBeEmpty": "Key and value must not be empty",
+    "localizationUpdated": "Localization updated successfully",
+    "title": "Localization messages",
+    "subTitle": "Enter a key and value to update localization"
   },
   "healthCheck": {
     "title": "System Health",
@@ -1573,7 +1703,14 @@
     }
   },
   "reports": {
-    "reportForms": "Report Forms"
+    "reportForms": "Report Forms",
+    "searchOptions": "Search options",
+    "searchUpper": "Search",
+    "reportViewer": "Report viewer",
+    "noResultsFound": "No results found",
+    "noDataMatches": "No matching data",
+    "clearFilters": "Clear Filters",
+    "generatingReport": "Generating report…"
   },
   "files": {
     "download": "Download",
@@ -1630,6 +1767,8 @@
     "previousSheet": "Previous Sheet",
     "nextSheet": "Next Sheet",
     "search": "Search ... ",
+    "column": "Column {{index}}",
+    "sheetShort": "S{{index}}",
     "refresh": "Refresh",
     "print": "Print",
     "export": "Export",
@@ -1638,8 +1777,30 @@
     "searchInSheet": "Search In Sheet",
     "more": "More",
     "pictureInPicture": "Picture in Picture",
-    "notesAndBookmarks": "Notes and Bookmarks",
-    "loadingImage": "Loading image..."
+    "loadingImage": "Loading image...",
+    "fileRequired": "Select a file to upload",
+    "invalidFileName": "The file name is invalid",
+    "tooManyFiles": "You can upload up to {{count}} files",
+    "backToGroups": "Back to groups",
+    "searchInGroup": "Search in group",
+    "timeMarks": "Time marks",
+    "markLabel": "Mark",
+    "addMarkAt": "Add mark at {{time}}",
+    "addNoteBookmark": "Add Note Bookmark",
+    "addNotePlaceholder": "Enter a note for this time mark…",
+    "saveNote": "Save Note",
+    "flipHorizontal": "Flip Horizontal",
+    "flipVertical": "Flip Vertical",
+    "previewNotAvailable": "Preview unavailable",
+    "downloadToView": "Download the file to view it",
+    "fileType": "{{extension}} file",
+    "loadingFile": "Loading file…",
+    "fontSizeDown": "Decrease font size",
+    "fontSizeUp": "Increase font size",
+    "searchInText": "Search in text",
+    "skipSeconds": "Skip {{seconds}}s",
+    "loadingPdfViewer": "Loading PDF viewer…",
+    "loadingWordDocument": "Loading Word document…"
   },
   "media": {
     "unsupportedFormat": "Unsupported file format",
@@ -1683,7 +1844,8 @@
     "off": "Off",
     "rotate90": "Rotate 90°",
     "flipVertical": "Flip Vertical",
-    "flipHorizontal": "Flip Horizontal"
+    "flipHorizontal": "Flip Horizontal",
+    "failedToLoadExcel": "The spreadsheet could not be loaded"
   },
   "tenantAccess": {
     "title": "Subscription expired",
@@ -1746,6 +1908,7 @@
     "loadError": "Unable to load tenants.",
     "addTenant": "Add tenant",
     "editTenant": "Edit tenant",
+    "formSubtitle": "Configure the tenant profile, subscription, capacity, contacts, and purchased applications.",
     "edit": "Edit",
     "identifier": "Identifier",
     "name": "Tenant name",
@@ -1766,9 +1929,38 @@
     "contactPhone": "Contact phone",
     "notes": "Notes",
     "entitlements": "Purchased applications and areas",
+    "entitlementSummary": "Application access",
+    "enabledModulesCount": "{{enabled}} of {{total}} applications enabled",
+    "moduleAreasCount_one": "{{count}} functional area",
+    "moduleAreasCount_other": "{{count}} functional areas",
+    "moduleNoAreas": "No functional areas",
+    "functionalAreas": "Functional areas",
+    "selectedAreasCount": "{{selected}} of {{total}} selected",
     "tenantEnabled": "Tenant login enabled",
     "enabled": "Enabled",
     "disabled": "Disabled",
+    "unsavedChanges": "Unsaved changes",
+    "readyToConfigure": "Ready to configure",
+    "tabs": {
+      "label": "Tenant setup sections",
+      "identity": "Tenant profile",
+      "subscription": "Subscription & limits",
+      "contact": "Billing & contact",
+      "entitlements": "Applications",
+      "notes": "Notes"
+    },
+    "sections": {
+      "identity": "Tenant profile",
+      "identityDescription": "Define the tenant identity and whether users can sign in.",
+      "subscription": "Subscription",
+      "subscriptionDescription": "Set the commercial plan, lifecycle status, and subscription period.",
+      "capacity": "Account capacity",
+      "capacityDescription": "Control the maximum administrator and user seats available to this tenant.",
+      "contact": "Billing and contact",
+      "contactDescription": "Keep the primary billing and operational contact details together.",
+      "entitlementsDescription": "Choose the ERP applications and functional areas purchased by this tenant.",
+      "notesDescription": "Add internal administration notes for this tenant."
+    },
     "validation": {
       "invalidIdentifier": "Start with a letter or number and use only English letters, numbers, and hyphens.",
       "invalidOption": "Select a valid option.",
@@ -1876,8 +2068,7 @@
       "Run": "Run",
       "Download": "Download",
       "Upload": "Upload revision",
-      "Publish": "Publish",
-      "ManageAccess": "Manage access"
+      "Publish": "Publish"
     },
     "accessReadOnly": "You can view access assignments, but cannot change them.",
     "loadError": "Unable to load Crystal reports.",
@@ -1892,7 +2083,8 @@
     "accessError": "Unable to save report permissions.",
     "archiveError": "Unable to archive this report.",
     "downloadError": "Unable to download the report.",
-    "rolesLoadError": "Unable to load roles for report permissions."
+    "rolesLoadError": "Unable to load roles for report permissions.",
+    "conflictReloaded": "This report changed in another operation. The latest server version has been reloaded; review it before trying again."
   },
   "organizationalStructure": {
     "title": "Organizational Structure",
@@ -2108,6 +2300,104 @@
       "emptySkills": "No skills recorded yet.",
       "emptyEducation": "No education requirements recorded yet.",
       "close": "Close"
+    },
+    "grid": {
+      "centralized": "Centralized",
+      "branchScoped": "Branch-scoped",
+      "allBranches": "All branches",
+      "topLevel": "Top-level",
+      "central": "Central",
+      "yrs": "yrs"
+    },
+    "dutyEditor": {
+      "dutySectionsAndStructuredDuties": "Duty Sections & Structured Duties",
+      "addDutySection": "Add Duty Section",
+      "emptyDescription": "No duty sections added yet. You can categorize duties (e.g. Administrative, Technical) with weight percentages.",
+      "sectionTitleArabic": "Section Title (Ar)",
+      "sectionTitleEnglish": "Section Title (En)",
+      "weight": "Weight %",
+      "dutyTextInArabic": "Duty text in Arabic...",
+      "dutyTextInEnglish": "Duty text in English...",
+      "addDutyItem": "Add Duty Item",
+      "dutyItemsCount": "Duty items ({{count}})"
+    },
+    "educationEditor": {
+      "educationAndDegreeRequirements": "Education & Degree Requirements",
+      "addEducation": "Add Education",
+      "emptyDescription": "No education requirements added yet. Click 'Add Education' to begin.",
+      "degreeLevelLabel": "Degree Level (e.g. Bachelor / Master)",
+      "fieldOfStudy": "Field of Study",
+      "required": "Required"
+    },
+    "skillsEditor": {
+      "requiredSkillsAndProficiencyLevels": "Required Skills & Proficiency Levels",
+      "addSkill": "Add Skill",
+      "emptyDescription": "No skills added yet. Click 'Add Skill' to begin.",
+      "skillName": "Skill Name",
+      "mandatory": "Mandatory"
+    },
+    "costCenterTree": {
+      "selected": "Selected",
+      "moveCostCenter": "Move Cost Center",
+      "addSubCostCenter": "Add Sub-Cost Center",
+      "collapse": "Collapse",
+      "expand": "Expand",
+      "addSub": "Add Sub",
+      "archived": "Archived",
+      "active": "Active",
+      "edit": "Edit",
+      "changeLog": "Change Log",
+      "addSubCenter": "Add Sub-Center",
+      "move": "Move",
+      "restore": "Restore",
+      "archive": "Archive",
+      "hierarchyTrail": "Hierarchy Trail",
+      "company": "Company",
+      "hierarchyAndRelationships": "Hierarchy & Relationships",
+      "depthLevel": "Depth Level:",
+      "parentCenter": "Parent Center:",
+      "companyRoot": "Company Root",
+      "subCostCenters": "Sub-Cost Centers",
+      "noSubCenters": "No sub-cost centers under this center.",
+      "linkedOrganizationalUnits": "Linked Organizational Units",
+      "departments": "Departments:",
+      "divisions": "Divisions:",
+      "noLinkedUnits": "No departments or divisions currently linked.",
+      "descriptionAndMetadata": "Description & Metadata",
+      "arabicDescription": "Arabic Description:",
+      "englishDescription": "English Description:",
+      "noDescriptionProvided": "No description provided.",
+      "created": "Created:",
+      "costCentersTree": "Cost Centers Tree",
+      "instructions": "Click on any cost center card in the tree to inspect hierarchy links, assigned units, and management actions.",
+      "totalCenters": "Total Centers",
+      "rootCenters": "Root Centers",
+      "companyRootCostCenters": "Company / Root Cost Centers",
+      "searchCostCentersTree": "Search cost centers tree...",
+      "newParentCostCenter": "New Parent Cost Center",
+      "companyTopLevelCostCenter": "Company / Top-Level Cost Center",
+      "saveMove": "Save Move",
+      "subCentersCount": "{{count}} sub-centers",
+      "rootDepthLabel": "Level {{depth}} (Root)",
+      "depthLabel": "Level {{depth}}",
+      "selectNewParentFor": "Select the new parent for: \"{{name}}\" ({{code}})"
+    },
+    "departmentTree": {
+      "dragToReparentThisDepartment": "Drag to reparent this department",
+      "centralized": "Centralized",
+      "branch": "Branch",
+      "terminal": "Terminal",
+      "collapse": "Collapse",
+      "expand": "Expand",
+      "addSub": "Add Sub",
+      "zoomIn": "Zoom in",
+      "resetZoom": "Reset zoom",
+      "zoomOut": "Zoom out",
+      "descendantMoveWarning": "The sub-department will be promoted, and the current department will be nested underneath it.",
+      "moving": "Moving...",
+      "companyTopLevel": "Company / Top Level",
+      "topLevelRoot": "Top-level root",
+      "saving": "Saving..."
     }
   },
   "attendanceDevices": {
@@ -2132,6 +2422,7 @@
     "operationQueued": "Operation requested successfully.",
     "permissionDenied": "You do not have permission for this attendance device action.",
     "saved": "Attendance device saved.",
+    "conflictReloaded": "This attendance device changed in another operation. The latest server data has been reloaded; review it before trying again.",
     "credentialsSaved": "Credentials updated securely.",
     "viewTitle": "Attendance devices",
     "viewSubtitle": "Register devices at the customer site, then safely read their raw data.",
@@ -2208,33 +2499,152 @@
       "timeZoneRequired": "Time zone is required.",
       "agentRequired": "Select a site agent.",
       "agentNameRequired": "Agent name is required."
-    }
+    },
+    "credentialsDescription": "Enter device credentials",
+    "commKey": "Communication key",
+    "saveCredentials": "Save Credentials",
+    "updateCredentials": "Update Credentials",
+    "devicePullRuns": "Device pull runs",
+    "pullRunsSubtitle": "Attendance pull-run history",
+    "pullRunsSearchUnavailable": "Pull-run search is unavailable",
+    "rawAttendancePunches": "Raw attendance punches",
+    "rawAttendancePunchesSubtitle": "Raw attendance events from devices",
+    "device": "Device",
+    "allDevices": "All Devices",
+    "externalCodeSearch": "Search by external code",
+    "rawDeviceUsers": "Raw device users",
+    "rawDeviceUsersSubtitle": "Users reported by attendance devices",
+    "rawDeviceUsersSearch": "Search raw device users"
   },
   "fiscalYears": {
     "title": "Fiscal Years",
     "totalLabel": "fiscal years",
-    "fields": { "code": "Code", "startDate": "Start date", "endDate": "End date", "frequency": "Period frequency", "periods": "Periods", "status": "Status" },
-    "frequency": { "monthly": "Monthly", "quarterly": "Quarterly" },
-    "status": { "all": "All statuses", "draft": "Draft", "open": "Open", "closing": "Closing", "closed": "Closed", "locked": "Locked" },
-    "recordStatus": { "active": "Active records", "archived": "Archived records", "all": "All records" },
-    "filters": { "recordStatus": "Record status", "lifecycle": "Lifecycle status" },
-    "search": {
-      "placeholder": "Search fiscal years...", "column": "Search column", "condition": "Condition",
-      "fields": { "all": "All columns", "code": "Code", "nameAr": "Arabic name", "nameEn": "English name" },
-      "operators": { "contains": "Contains", "doesNotContain": "Does not contain", "equals": "Equals", "doesNotEqual": "Does not equal", "startsWith": "Starts with", "endsWith": "Ends with" }
+    "fields": {
+      "code": "Code",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "frequency": "Period frequency",
+      "periods": "Periods",
+      "status": "Status"
     },
-    "sort": { "startDate": "Start date", "endDate": "End date", "code": "Code", "nameAr": "Arabic name", "nameEn": "English name", "status": "Status", "createdOn": "Created on" },
-    "actions": { "add": "Add fiscal year", "lifecycle": "Advance lifecycle", "reset": "Reset filters" },
-    "lifecycle": { "open": "Open year", "beginClosing": "Begin closing", "close": "Close year", "lock": "Lock year", "reopen": "Reopen year" },
-    "form": { "addTitle": "Add Fiscal Year", "editTitle": "Edit Fiscal Year", "viewTitle": "Fiscal Year Details", "subtitle": "Define the financial calendar used by workforce plans and budgets.", "endDateHelper": "Calculated automatically to cover exactly twelve months.", "periodsHelper": "Monthly or quarterly periods are generated automatically and become read-only after the year is opened." },
-    "periods": { "title": "Generated periods", "count": "{{count}} periods", "item": "Period {{sequence}}" },
-    "validation": { "code": "Enter a valid code of 2–20 letters, numbers, dots, slashes, underscores, or hyphens.", "name": "Enter a valid name of 2–100 characters.", "startDate": "Select the start date.", "endDate": "Select the end date.", "duration": "The fiscal year must cover exactly twelve months." },
-    "empty": { "title": "No fiscal years yet", "subtitle": "Create the first financial calendar before preparing workforce budgets." },
-    "noResults": { "title": "No matching fiscal years", "subtitle": "Reset the search or lifecycle filters and try again." },
-    "messages": { "created": "Fiscal year {{code}} was created.", "updated": "Fiscal year {{code}} was updated.", "archived": "Fiscal year archived.", "restored": "Fiscal year restored.", "lifecycleChanged": "Fiscal year moved to {{status}}.", "fetchError": "Unable to load fiscal years.", "createError": "Unable to create the fiscal year.", "updateError": "Unable to update the fiscal year.", "archiveError": "Unable to archive the fiscal year.", "restoreError": "Unable to restore the fiscal year.", "lifecycleError": "Unable to advance the fiscal year lifecycle." },
+    "frequency": {
+      "monthly": "Monthly",
+      "quarterly": "Quarterly"
+    },
+    "status": {
+      "all": "All statuses",
+      "draft": "Draft",
+      "open": "Open",
+      "closing": "Closing",
+      "closed": "Closed",
+      "locked": "Locked"
+    },
+    "recordStatus": {
+      "active": "Active records",
+      "archived": "Archived records",
+      "all": "All records"
+    },
+    "filters": {
+      "recordStatus": "Record status",
+      "lifecycle": "Lifecycle status"
+    },
+    "search": {
+      "placeholder": "Search fiscal years...",
+      "column": "Search column",
+      "condition": "Condition",
+      "fields": {
+        "all": "All columns",
+        "code": "Code",
+        "nameAr": "Arabic name",
+        "nameEn": "English name"
+      },
+      "operators": {
+        "contains": "Contains",
+        "doesNotContain": "Does not contain",
+        "equals": "Equals",
+        "doesNotEqual": "Does not equal",
+        "startsWith": "Starts with",
+        "endsWith": "Ends with"
+      }
+    },
+    "sort": {
+      "startDate": "Start date",
+      "endDate": "End date",
+      "code": "Code",
+      "nameAr": "Arabic name",
+      "nameEn": "English name",
+      "status": "Status",
+      "createdOn": "Created on"
+    },
+    "actions": {
+      "add": "Add fiscal year",
+      "lifecycle": "Advance lifecycle",
+      "reset": "Reset filters"
+    },
+    "lifecycle": {
+      "open": "Open year",
+      "beginClosing": "Begin closing",
+      "close": "Close year",
+      "lock": "Lock year",
+      "reopen": "Reopen year"
+    },
+    "form": {
+      "addTitle": "Add Fiscal Year",
+      "editTitle": "Edit Fiscal Year",
+      "viewTitle": "Fiscal Year Details",
+      "subtitle": "Define the financial calendar used by workforce plans and budgets.",
+      "endDateHelper": "Calculated automatically to cover exactly twelve months.",
+      "periodsHelper": "Monthly or quarterly periods are generated automatically and become read-only after the year is opened."
+    },
+    "periods": {
+      "title": "Generated periods",
+      "count": "{{count}} periods",
+      "item": "Period {{sequence}}"
+    },
+    "validation": {
+      "code": "Enter a valid code of 2–20 letters, numbers, dots, slashes, underscores, or hyphens.",
+      "name": "Enter a valid name of 2–100 characters.",
+      "startDate": "Select the start date.",
+      "endDate": "Select the end date.",
+      "duration": "The fiscal year must cover exactly twelve months."
+    },
+    "empty": {
+      "title": "No fiscal years yet",
+      "subtitle": "Create the first financial calendar before preparing workforce budgets."
+    },
+    "noResults": {
+      "title": "No matching fiscal years",
+      "subtitle": "Reset the search or lifecycle filters and try again."
+    },
+    "messages": {
+      "created": "Fiscal year {{code}} was created.",
+      "updated": "Fiscal year {{code}} was updated.",
+      "archived": "Fiscal year archived.",
+      "restored": "Fiscal year restored.",
+      "lifecycleChanged": "Fiscal year moved to {{status}}.",
+      "fetchError": "Unable to load fiscal years.",
+      "createError": "Unable to create the fiscal year.",
+      "updateError": "Unable to update the fiscal year.",
+      "archiveError": "Unable to archive the fiscal year.",
+      "restoreError": "Unable to restore the fiscal year.",
+      "lifecycleError": "Unable to advance the fiscal year lifecycle.",
+      "conflictReloaded": "This fiscal year was changed by another operation. The latest server version has been reloaded; review it before trying again."
+    },
     "confirm": {
-      "archiveTitle": "Archive fiscal year?", "archiveDescription": "Only draft fiscal years can be archived.", "restoreTitle": "Restore fiscal year?", "restoreDescription": "The draft financial calendar will become active again.",
-      "openTitle": "Open fiscal year?", "openDescription": "The calendar becomes available to workforce plans and can no longer be edited.", "beginClosingTitle": "Begin fiscal-year closing?", "beginClosingDescription": "The year enters a controlled closing phase.", "closeTitle": "Close fiscal year?", "closeDescription": "All generated periods will be closed.", "lockTitle": "Lock fiscal year?", "lockDescription": "The year and all its periods will be locked against operational changes. An authorized lifecycle manager can still reopen it.", "reopenTitle": "Reopen fiscal year?", "reopenDescription": "This returns either a Closed or Locked year and all its periods to Open while preserving the audit history."
+      "archiveTitle": "Archive fiscal year?",
+      "archiveDescription": "Only draft fiscal years can be archived.",
+      "restoreTitle": "Restore fiscal year?",
+      "restoreDescription": "The draft financial calendar will become active again.",
+      "openTitle": "Open fiscal year?",
+      "openDescription": "The calendar becomes available to workforce plans and can no longer be edited.",
+      "beginClosingTitle": "Begin fiscal-year closing?",
+      "beginClosingDescription": "The year enters a controlled closing phase.",
+      "closeTitle": "Close fiscal year?",
+      "closeDescription": "All generated periods will be closed.",
+      "lockTitle": "Lock fiscal year?",
+      "lockDescription": "The year and all its periods will be locked against operational changes. An authorized lifecycle manager can still reopen it.",
+      "reopenTitle": "Reopen fiscal year?",
+      "reopenDescription": "This returns either a Closed or Locked year and all its periods to Open while preserving the audit history."
     }
   },
   "workforcePlanning": {
@@ -2254,48 +2664,276 @@
     },
     "title": "Workforce Plans",
     "totalLabel": "workforce plans",
-    "fields": { "planCode": "Plan code", "fiscalYear": "Fiscal year", "titleEn": "English title", "titleAr": "Arabic title", "description": "Description", "position": "Position", "targetBranch": "Target branch", "targetHeadcount": "Expected employees at year end", "plannedHiringSlots": "Total people to recruit", "justification": "Reason for the need", "fiscalPeriod": "Hiring period", "newHireSlots": "New positions (growth)", "replacementSlots": "Replacement positions", "revision": "Revision", "lines": "Lines", "status": "Status", "decisionReason": "Rejection reason" },
-    "status": { "draft": "Draft", "submitted": "Submitted", "underReview": "Under review", "approved": "Approved", "rejected": "Rejected", "superseded": "Superseded" },
-    "recordStatus": { "active": "Active records", "archived": "Archived", "all": "All records" },
-    "search": { "placeholder": "Search workforce plans..." },
-    "form": { "addTitle": "Create Workforce Plan", "editTitle": "Edit Workforce Plan", "viewTitle": "Workforce Plan Details", "subtitle": "Capture controlled workforce demand for a draft or open fiscal year.", "branchHelper": "Leave empty only for a company-wide position." },
-    "lines": { "title": "Plan lines", "add": "Add line", "item": "Line {{number}}", "count": "{{count}} lines" },
-    "periodTargets": { "title": "When do you expect to hire?", "add": "Add hiring period" },
-    "actions": { "add": "Add workforce plan", "moveUp": "Move up", "moveDown": "Move down", "submit": "Submit", "beginReview": "Begin review", "approve": "Approve", "reject": "Reject", "createRevision": "Create revision", "archive": "Archive", "restore": "Restore" },
-    "filters": { "status": "Plan status", "recordStatus": "Records" },
-    "sort": { "createdOn": "Created date", "planCode": "Plan code", "titleEn": "English title", "titleAr": "Arabic title", "status": "Status" },
-    "baseline": { "count": "Current employees: {{count}}", "asOf": "Calculated on {{date}}" },
-    "summary": { "currentEmployees": "Current employees: {{count}}", "expectedEmployees": "Expected employees at year end: {{count}}", "totalHiring": "Total people to recruit: {{count}}", "baselineOnSave": "The system will calculate current employees when you save" },
-    "revisions": { "title": "Revision history and comparison", "item": "Revision {{revision}} • {{slots}} slots", "delta": "Change from revision {{revision}}: {{count}} hiring slots", "short": "Revision {{revision}}" },
-    "slots": { "count": "Total people to recruit: {{count}}", "new": "New positions: {{count}}", "replacement": "Replacements: {{count}}" },
+    "fields": {
+      "planCode": "Plan code",
+      "fiscalYear": "Fiscal year",
+      "titleEn": "English title",
+      "titleAr": "Arabic title",
+      "description": "Description",
+      "position": "Position",
+      "targetBranch": "Target branch",
+      "targetHeadcount": "Expected employees at year end",
+      "plannedHiringSlots": "Total people to recruit",
+      "justification": "Reason for the need",
+      "fiscalPeriod": "Hiring period",
+      "newHireSlots": "New positions (growth)",
+      "replacementSlots": "Replacement positions",
+      "revision": "Revision",
+      "lines": "Lines",
+      "status": "Status",
+      "decisionReason": "Rejection reason"
+    },
+    "status": {
+      "draft": "Draft",
+      "submitted": "Submitted",
+      "underReview": "Under review",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "superseded": "Superseded"
+    },
+    "recordStatus": {
+      "active": "Active records",
+      "archived": "Archived",
+      "all": "All records"
+    },
+    "search": {
+      "placeholder": "Search workforce plans..."
+    },
+    "form": {
+      "addTitle": "Create Workforce Plan",
+      "editTitle": "Edit Workforce Plan",
+      "viewTitle": "Workforce Plan Details",
+      "subtitle": "Capture controlled workforce demand for a draft or open fiscal year.",
+      "branchHelper": "Leave empty only for a company-wide position."
+    },
+    "lines": {
+      "title": "Plan lines",
+      "add": "Add line",
+      "item": "Line {{number}}",
+      "count": "{{count}} lines"
+    },
+    "periodTargets": {
+      "title": "When do you expect to hire?",
+      "add": "Add hiring period"
+    },
+    "actions": {
+      "add": "Add workforce plan",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "submit": "Submit",
+      "beginReview": "Begin review",
+      "approve": "Approve",
+      "reject": "Reject",
+      "createRevision": "Create revision",
+      "archive": "Archive",
+      "restore": "Restore"
+    },
+    "filters": {
+      "status": "Plan status",
+      "recordStatus": "Records"
+    },
+    "sort": {
+      "createdOn": "Created date",
+      "planCode": "Plan code",
+      "titleEn": "English title",
+      "titleAr": "Arabic title",
+      "status": "Status"
+    },
+    "baseline": {
+      "count": "Current employees: {{count}}",
+      "asOf": "Calculated on {{date}}"
+    },
+    "summary": {
+      "currentEmployees": "Current employees: {{count}}",
+      "expectedEmployees": "Expected employees at year end: {{count}}",
+      "totalHiring": "Total people to recruit: {{count}}",
+      "baselineOnSave": "The system will calculate current employees when you save"
+    },
+    "revisions": {
+      "title": "Revision history and comparison",
+      "item": "Revision {{revision}} • {{slots}} slots",
+      "delta": "Change from revision {{revision}}: {{count}} hiring slots",
+      "short": "Revision {{revision}}"
+    },
+    "slots": {
+      "count": "Total people to recruit: {{count}}",
+      "new": "New positions: {{count}}",
+      "replacement": "Replacements: {{count}}"
+    },
     "effective": "Effective plan",
-    "validation": { "planCode": "Enter a valid plan code.", "fiscalYear": "Select a fiscal year.", "title": "Enter a title from 2 to 200 characters.", "description": "Use at most 2000 characters.", "position": "Select a position.", "period": "Add at least one valid hiring period.", "lines": "Add at least one plan line.", "nonNegative": "Use a non-negative number.", "reason": "Enter a clear rejection reason.", "duplicatePeriod": "Each hiring period can appear only once in a line.", "newHirePeriodTotals": "Distribute every new position across the hiring periods.", "replacementPeriodTotals": "Distribute every replacement position across the hiring periods." },
-    "empty": { "title": "No workforce plans yet", "subtitle": "Create the first plan to capture workforce demand." },
-    "noResults": { "title": "No matching workforce plans", "subtitle": "Change or clear the current filters." },
-    "messages": { "fetchError": "Unable to load workforce plans.", "created": "Plan {{code}} was created.", "updated": "Plan {{code}} was updated.", "submitted": "Plan {{code}} was submitted.", "reviewStarted": "Review started for plan {{code}}.", "approved": "Plan {{code}} was approved.", "rejected": "Plan {{code}} was rejected.", "revisionCreated": "Revision {{revision}} was created.", "archived": "The workforce plan was archived.", "restored": "Plan {{code}} was restored.", "createError": "Unable to create the workforce plan.", "updateError": "Unable to update the workforce plan.", "archiveError": "Unable to archive the workforce plan.", "restoreError": "Unable to restore the workforce plan.", "lifecycleError": "Unable to complete the plan action." },
-    "confirm": { "submitTitle": "Submit workforce plan?", "submitDescription": "The draft becomes read-only and enters the approval workflow.", "beginReviewTitle": "Begin plan review?", "beginReviewDescription": "The submitted plan moves to the controlled review stage.", "approveTitle": "Approve workforce plan?", "approveDescription": "Approval confirms this workforce demand for the open fiscal year.", "rejectTitle": "Reject workforce plan?", "rejectDescription": "State a clear reason so the planner can revise and resubmit.", "createRevisionTitle": "Create a new revision?", "createRevisionDescription": "A new editable draft will be copied from this revision.", "archiveTitle": "Archive workforce plan?", "archiveDescription": "Only draft or rejected plans can be archived. The record remains available in the archive.", "restoreTitle": "Restore workforce plan?", "restoreDescription": "The archived draft or rejected plan will return to active records." }
+    "validation": {
+      "planCode": "Enter a valid plan code.",
+      "fiscalYear": "Select a fiscal year.",
+      "title": "Enter a title from 2 to 200 characters.",
+      "description": "Use at most 2000 characters.",
+      "position": "Select a position.",
+      "period": "Add at least one valid hiring period.",
+      "lines": "Add at least one plan line.",
+      "nonNegative": "Use a non-negative number.",
+      "reason": "Enter a clear rejection reason.",
+      "duplicatePeriod": "Each hiring period can appear only once in a line.",
+      "newHirePeriodTotals": "Distribute every new position across the hiring periods.",
+      "replacementPeriodTotals": "Distribute every replacement position across the hiring periods."
+    },
+    "empty": {
+      "title": "No workforce plans yet",
+      "subtitle": "Create the first plan to capture workforce demand."
+    },
+    "noResults": {
+      "title": "No matching workforce plans",
+      "subtitle": "Change or clear the current filters."
+    },
+    "messages": {
+      "fetchError": "Unable to load workforce plans.",
+      "created": "Plan {{code}} was created.",
+      "updated": "Plan {{code}} was updated.",
+      "submitted": "Plan {{code}} was submitted.",
+      "reviewStarted": "Review started for plan {{code}}.",
+      "approved": "Plan {{code}} was approved.",
+      "rejected": "Plan {{code}} was rejected.",
+      "revisionCreated": "Revision {{revision}} was created.",
+      "archived": "The workforce plan was archived.",
+      "restored": "Plan {{code}} was restored.",
+      "createError": "Unable to create the workforce plan.",
+      "updateError": "Unable to update the workforce plan.",
+      "archiveError": "Unable to archive the workforce plan.",
+      "restoreError": "Unable to restore the workforce plan.",
+      "lifecycleError": "Unable to complete the plan action.",
+      "conflictReloaded": "This workforce plan changed in another operation. The latest server data has been reloaded; review it before trying again."
+    },
+    "confirm": {
+      "submitTitle": "Submit workforce plan?",
+      "submitDescription": "The draft becomes read-only and enters the approval workflow.",
+      "beginReviewTitle": "Begin plan review?",
+      "beginReviewDescription": "The submitted plan moves to the controlled review stage.",
+      "approveTitle": "Approve workforce plan?",
+      "approveDescription": "Approval confirms this workforce demand for the open fiscal year.",
+      "rejectTitle": "Reject workforce plan?",
+      "rejectDescription": "State a clear reason so the planner can revise and resubmit.",
+      "createRevisionTitle": "Create a new revision?",
+      "createRevisionDescription": "A new editable draft will be copied from this revision.",
+      "archiveTitle": "Archive workforce plan?",
+      "archiveDescription": "Only draft or rejected plans can be archived. The record remains available in the archive.",
+      "restoreTitle": "Restore workforce plan?",
+      "restoreDescription": "The archived draft or rejected plan will return to active records."
+    }
   },
   "workforceBudget": {
     "title": "Workforce Budgets",
     "totalLabel": "workforce budgets",
-    "fields": { "budgetCode": "Budget code", "plan": "Workforce plan", "fiscalYear": "Fiscal year", "currency": "Currency", "revision": "Revision", "headcount": "Approved people", "salary": "Salary budget", "recruitment": "Recruitment budget", "grandTotal": "Grand total", "status": "Status", "fiscalPeriod": "Budget period", "decisionReason": "Rejection reason" },
-    "status": { "draft": "Draft", "submitted": "Submitted", "approved": "Approved", "rejected": "Rejected", "superseded": "Superseded", "closed": "Closed" },
-    "search": { "placeholder": "Search workforce budgets..." },
-    "form": { "addTitle": "Create Workforce Budget", "editTitle": "Edit Workforce Budget", "viewTitle": "Workforce Budget Details", "subtitle": "Authorize headcount and money against an approved plan. Period allocations must reconcile exactly.", "selectPlanFirst": "Select an approved workforce plan to load its lines and fiscal periods." },
-    "lines": { "title": "Budget lines", "item": "Line {{number}}", "coverage": "{{count}} plan lines", "ceiling": "Plan allows {{count}} people" },
-    "allocations": { "title": "How is this line distributed across periods?", "add": "Add budget period" },
-    "sums": { "headcount": "People: {{sum}} / {{total}}", "salary": "Salary: {{sum}} / {{total}} {{currency}}", "recruitment": "Recruitment: {{sum}} / {{total}} {{currency}}" },
-    "summary": { "headcount": "{{count}} people", "grandTotal": "{{amount}} {{currency}}", "salary": "Salary: {{amount}} {{currency}}", "recruitment": "Recruitment: {{amount}} {{currency}}" },
-    "revision": { "short": "Revision {{revision}}" },
+    "fields": {
+      "budgetCode": "Budget code",
+      "plan": "Workforce plan",
+      "fiscalYear": "Fiscal year",
+      "currency": "Currency",
+      "revision": "Revision",
+      "headcount": "Approved people",
+      "salary": "Salary budget",
+      "recruitment": "Recruitment budget",
+      "grandTotal": "Grand total",
+      "status": "Status",
+      "fiscalPeriod": "Budget period",
+      "decisionReason": "Rejection reason"
+    },
+    "status": {
+      "draft": "Draft",
+      "submitted": "Submitted",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "superseded": "Superseded",
+      "closed": "Closed"
+    },
+    "search": {
+      "placeholder": "Search workforce budgets..."
+    },
+    "form": {
+      "addTitle": "Create Workforce Budget",
+      "editTitle": "Edit Workforce Budget",
+      "viewTitle": "Workforce Budget Details",
+      "subtitle": "Authorize headcount and money against an approved plan. Period allocations must reconcile exactly.",
+      "selectPlanFirst": "Select an approved workforce plan to load its lines and fiscal periods."
+    },
+    "lines": {
+      "title": "Budget lines",
+      "item": "Line {{number}}",
+      "coverage": "{{count}} plan lines",
+      "ceiling": "Plan allows {{count}} people"
+    },
+    "allocations": {
+      "title": "How is this line distributed across periods?",
+      "add": "Add budget period"
+    },
+    "sums": {
+      "headcount": "People: {{sum}} / {{total}}",
+      "salary": "Salary: {{sum}} / {{total}} {{currency}}",
+      "recruitment": "Recruitment: {{sum}} / {{total}} {{currency}}"
+    },
+    "summary": {
+      "headcount": "{{count}} people",
+      "grandTotal": "{{amount}} {{currency}}",
+      "salary": "Salary: {{amount}} {{currency}}",
+      "recruitment": "Recruitment: {{amount}} {{currency}}"
+    },
+    "revision": {
+      "short": "Revision {{revision}}"
+    },
     "effective": "Effective budget",
-    "actions": { "add": "Add workforce budget", "submit": "Submit", "approve": "Approve", "reject": "Reject" },
-    "filters": { "status": "Budget status" },
-    "sort": { "createdOn": "Created date", "budgetCode": "Budget code", "status": "Status", "grandTotal": "Grand total" },
-    "validation": { "budgetCode": "Enter a valid budget code.", "plan": "Select an approved workforce plan.", "currency": "Enter a 3-letter currency code.", "lines": "Add at least one budget line.", "period": "Add at least one valid budget period.", "nonNegative": "Use a non-negative number.", "reason": "Enter a clear rejection reason.", "duplicatePeriod": "Each budget period can appear only once in a line.", "headcountTotals": "Distribute every approved person across the budget periods.", "salaryTotals": "Distribute the full salary budget across the budget periods.", "recruitmentTotals": "Distribute the full recruitment budget across the budget periods." },
-    "empty": { "title": "No workforce budgets yet", "subtitle": "Create the first budget from an approved workforce plan." },
-    "noResults": { "title": "No matching workforce budgets", "subtitle": "Change or clear the current filters." },
-    "messages": { "fetchError": "Unable to load workforce budgets.", "created": "Budget {{code}} was created.", "updated": "Budget {{code}} was updated.", "submitted": "Budget {{code}} was submitted.", "approved": "Budget {{code}} was approved and envelopes were generated.", "rejected": "Budget {{code}} was rejected.", "createError": "Unable to create the workforce budget.", "updateError": "Unable to update the workforce budget.", "lifecycleError": "Unable to complete the budget action." },
-    "confirm": { "submitTitle": "Submit workforce budget?", "submitDescription": "The draft becomes read-only and enters the approval workflow.", "approveTitle": "Approve workforce budget?", "approveDescription": "Approval activates this budget with its plan and generates one position envelope per line.", "rejectTitle": "Reject workforce budget?", "rejectDescription": "State a clear reason so the planner can revise and resubmit." }
+    "actions": {
+      "add": "Add workforce budget",
+      "submit": "Submit",
+      "approve": "Approve",
+      "reject": "Reject"
+    },
+    "filters": {
+      "status": "Budget status"
+    },
+    "sort": {
+      "createdOn": "Created date",
+      "budgetCode": "Budget code",
+      "status": "Status",
+      "grandTotal": "Grand total"
+    },
+    "validation": {
+      "budgetCode": "Enter a valid budget code.",
+      "plan": "Select an approved workforce plan.",
+      "currency": "Enter a 3-letter currency code.",
+      "lines": "Add at least one budget line.",
+      "period": "Add at least one valid budget period.",
+      "nonNegative": "Use a non-negative number.",
+      "reason": "Enter a clear rejection reason.",
+      "duplicatePeriod": "Each budget period can appear only once in a line.",
+      "headcountTotals": "Distribute every approved person across the budget periods.",
+      "salaryTotals": "Distribute the full salary budget across the budget periods.",
+      "recruitmentTotals": "Distribute the full recruitment budget across the budget periods."
+    },
+    "empty": {
+      "title": "No workforce budgets yet",
+      "subtitle": "Create the first budget from an approved workforce plan."
+    },
+    "noResults": {
+      "title": "No matching workforce budgets",
+      "subtitle": "Change or clear the current filters."
+    },
+    "messages": {
+      "fetchError": "Unable to load workforce budgets.",
+      "created": "Budget {{code}} was created.",
+      "updated": "Budget {{code}} was updated.",
+      "submitted": "Budget {{code}} was submitted.",
+      "approved": "Budget {{code}} was approved and envelopes were generated.",
+      "rejected": "Budget {{code}} was rejected.",
+      "createError": "Unable to create the workforce budget.",
+      "updateError": "Unable to update the workforce budget.",
+      "lifecycleError": "Unable to complete the budget action.",
+      "conflictReloaded": "This workforce budget changed in another operation. The latest server data has been reloaded; review it before trying again."
+    },
+    "confirm": {
+      "submitTitle": "Submit workforce budget?",
+      "submitDescription": "The draft becomes read-only and enters the approval workflow.",
+      "approveTitle": "Approve workforce budget?",
+      "approveDescription": "Approval activates this budget with its plan and generates one position envelope per line.",
+      "rejectTitle": "Reject workforce budget?",
+      "rejectDescription": "State a clear reason so the planner can revise and resubmit."
+    }
   },
   "workforceTrace": {
     "title": "Workforce trace & commitment",
@@ -2326,31 +2964,169 @@
     "title": "Position Envelopes",
     "totalLabel": "position envelopes",
     "companyWide": "Company-wide",
-    "fields": { "envelopeCode": "Envelope code", "currency": "Currency", "fiscalYear": "Fiscal year", "headcountCapacity": "People capacity", "salaryCapacity": "Salary capacity", "position": "Position {{id}}", "branch": "Branch {{id}}", "department": "Department {{id}}", "division": "Division {{id}}" },
-    "search": { "placeholder": "Search position envelopes..." },
-    "sort": { "createdOn": "Created date", "envelopeCode": "Envelope code" },
-    "capacity": { "headcount": "{{available}} of {{total}} people free", "reserved": "Reserved: {{count}}", "hired": "Hired: {{count}}", "salary": "{{available}} of {{total}} {{currency}} free", "money": "{{amount}} {{currency}}", "used": "Used {{used}} of {{total}}", "available": "{{amount}} available" },
-    "lineage": { "budget": "Budget {{id}}", "plan": "Plan {{id}}", "year": "Year {{id}}", "policy": "Policy {{version}}" },
-    "details": { "title": "Position Envelope Details", "subtitle": "System-generated capacity snapshot", "loading": "Loading envelope details...", "capacity": "Available capacity", "snapshots": "Organization snapshots" },
-    "empty": { "title": "No position envelopes yet", "subtitle": "Envelopes appear automatically when a workforce budget is approved." },
-    "noResults": { "title": "No matching position envelopes", "subtitle": "Change or clear the current filters." },
-    "messages": { "fetchError": "Unable to load position envelopes." }
+    "fields": {
+      "envelopeCode": "Envelope code",
+      "currency": "Currency",
+      "fiscalYear": "Fiscal year",
+      "headcountCapacity": "People capacity",
+      "salaryCapacity": "Salary capacity",
+      "position": "Position {{id}}",
+      "branch": "Branch {{id}}",
+      "department": "Department {{id}}",
+      "division": "Division {{id}}"
+    },
+    "search": {
+      "placeholder": "Search position envelopes..."
+    },
+    "sort": {
+      "createdOn": "Created date",
+      "envelopeCode": "Envelope code"
+    },
+    "capacity": {
+      "headcount": "{{available}} of {{total}} people free",
+      "reserved": "Reserved: {{count}}",
+      "hired": "Hired: {{count}}",
+      "salary": "{{available}} of {{total}} {{currency}} free",
+      "money": "{{amount}} {{currency}}",
+      "used": "Used {{used}} of {{total}}",
+      "available": "{{amount}} available"
+    },
+    "lineage": {
+      "budget": "Budget {{id}}",
+      "plan": "Plan {{id}}",
+      "year": "Year {{id}}",
+      "policy": "Policy {{version}}"
+    },
+    "details": {
+      "title": "Position Envelope Details",
+      "subtitle": "System-generated capacity snapshot",
+      "loading": "Loading envelope details...",
+      "capacity": "Available capacity",
+      "snapshots": "Organization snapshots"
+    },
+    "empty": {
+      "title": "No position envelopes yet",
+      "subtitle": "Envelopes appear automatically when a workforce budget is approved."
+    },
+    "noResults": {
+      "title": "No matching position envelopes",
+      "subtitle": "Change or clear the current filters."
+    },
+    "messages": {
+      "fetchError": "Unable to load position envelopes."
+    }
   },
   "staffing": {
     "search": "Search by envelope or justification...",
-    "requests": { "title": "Staffing Requests", "total": "staffing requests", "createTitle": "Create Staffing Request", "viewTitle": "Staffing Request Details", "subtitle": "Reserve approved headcount and fiscal-year salary capacity" },
-    "amendments": { "title": "Envelope Amendments", "total": "envelope amendments", "createTitle": "Create Envelope Amendment", "viewTitle": "Envelope Amendment Details", "subtitle": "Request a positive capacity increase", "capacityHint": "Approval expands headcount and salary capacity atomically." },
-    "fields": { "envelope": "Position envelope", "additionalHeadcount": "Additional headcount", "additionalSalaryCost": "Additional salary cost", "justification": "Justification", "requestedHeadcount": "Requested headcount", "annualSalary": "Annual salary per slot", "targetStartDate": "Target start date", "requestType": "Request type", "priority": "Priority", "status": "Status", "remainingAllocatable": "Available for requisitions", "remainingToHire": "Remaining to hire", "totalReservedCost": "Reserved fiscal cost", "createdOn": "Created date", "reason": "Decision reason", "closeReason": "Close reason" },
-    "type": { "newHire": "New hire", "replacement": "Replacement" },
-    "priority": { "1": "Low", "2": "Normal", "3": "High", "4": "Urgent" },
-    "status": { "1": "Draft", "2": "Submitted", "3": "Approved", "4": "Rejected", "5": "Closed" },
-    "amendmentStatus": { "1": "Draft", "2": "Submitted", "3": "Approved", "4": "Rejected" },
-    "closeReason": { "1": "Fulfilled", "2": "Cancelled", "3": "Partially fulfilled and cancelled" },
-    "capacity": { "allocatable": "Allocatable: {{count}}", "toHire": "Remaining to hire: {{count}}" },
-    "actions": { "submit": "Submit", "approve": "Approve", "reject": "Reject", "close": "Close" },
-    "validation": { "envelope": "Select a position envelope", "positiveHeadcount": "Headcount must be greater than zero", "positiveCost": "Additional cost must be greater than zero", "nonNegativeSalary": "Salary cannot be negative", "targetStartDate": "Select a target start date", "justification": "Enter a justification" },
-    "messages": { "fetchError": "Unable to load staffing planning data.", "lifecycleError": "Unable to complete the staffing action.", "created": "Staffing request created.", "submitted": "Staffing request submitted.", "approved": "Staffing request approved and capacity reserved.", "rejected": "Staffing request rejected.", "closed": "Staffing request closed and unused capacity released.", "amendmentCreated": "Envelope amendment created.", "amendmentSubmitted": "Envelope amendment submitted.", "amendmentApproved": "Envelope amendment approved and capacity expanded.", "amendmentRejected": "Envelope amendment rejected." },
-    "confirm": { "submitTitle": "Submit staffing request?", "submitDescription": "The request will enter approval.", "approveTitle": "Approve staffing request?", "approveDescription": "Approval reserves headcount and salary capacity. You cannot approve your own request.", "rejectTitle": "Reject staffing request?", "rejectDescription": "Provide a clear decision reason.", "closeTitle": "Close staffing request?", "closeDescription": "Only unused and unhired capacity is released.", "submitAmendmentTitle": "Submit envelope amendment?", "submitAmendmentDescription": "The amendment will enter approval.", "approveAmendmentTitle": "Approve envelope amendment?", "approveAmendmentDescription": "Approval expands the envelope atomically. You cannot approve your own amendment.", "rejectAmendmentTitle": "Reject envelope amendment?", "rejectAmendmentDescription": "Provide a clear decision reason." }
+    "requests": {
+      "title": "Staffing Requests",
+      "total": "staffing requests",
+      "createTitle": "Create Staffing Request",
+      "viewTitle": "Staffing Request Details",
+      "subtitle": "Reserve approved headcount and fiscal-year salary capacity"
+    },
+    "amendments": {
+      "title": "Envelope Amendments",
+      "total": "envelope amendments",
+      "createTitle": "Create Envelope Amendment",
+      "viewTitle": "Envelope Amendment Details",
+      "subtitle": "Request a positive capacity increase",
+      "capacityHint": "Approval expands headcount and salary capacity atomically."
+    },
+    "fields": {
+      "envelope": "Position envelope",
+      "additionalHeadcount": "Additional headcount",
+      "additionalSalaryCost": "Additional salary cost",
+      "justification": "Justification",
+      "requestedHeadcount": "Requested headcount",
+      "annualSalary": "Annual salary per slot",
+      "targetStartDate": "Target start date",
+      "requestType": "Request type",
+      "priority": "Priority",
+      "status": "Status",
+      "remainingAllocatable": "Available for requisitions",
+      "remainingToHire": "Remaining to hire",
+      "totalReservedCost": "Reserved fiscal cost",
+      "createdOn": "Created date",
+      "reason": "Decision reason",
+      "closeReason": "Close reason"
+    },
+    "type": {
+      "newHire": "New hire",
+      "replacement": "Replacement"
+    },
+    "priority": {
+      "1": "Low",
+      "2": "Normal",
+      "3": "High",
+      "4": "Urgent"
+    },
+    "status": {
+      "1": "Draft",
+      "2": "Submitted",
+      "3": "Approved",
+      "4": "Rejected",
+      "5": "Closed"
+    },
+    "amendmentStatus": {
+      "1": "Draft",
+      "2": "Submitted",
+      "3": "Approved",
+      "4": "Rejected"
+    },
+    "closeReason": {
+      "1": "Fulfilled",
+      "2": "Cancelled",
+      "3": "Partially fulfilled and cancelled"
+    },
+    "capacity": {
+      "allocatable": "Allocatable: {{count}}",
+      "toHire": "Remaining to hire: {{count}}"
+    },
+    "actions": {
+      "submit": "Submit",
+      "approve": "Approve",
+      "reject": "Reject",
+      "close": "Close"
+    },
+    "validation": {
+      "envelope": "Select a position envelope",
+      "positiveHeadcount": "Headcount must be greater than zero",
+      "positiveCost": "Additional cost must be greater than zero",
+      "nonNegativeSalary": "Salary cannot be negative",
+      "targetStartDate": "Select a target start date",
+      "justification": "Enter a justification"
+    },
+    "messages": {
+      "fetchError": "Unable to load staffing planning data.",
+      "lifecycleError": "Unable to complete the staffing action.",
+      "conflictReloaded": "This staffing record changed in another operation. The latest server data has been reloaded; review it before trying again.",
+      "created": "Staffing request created.",
+      "submitted": "Staffing request submitted.",
+      "approved": "Staffing request approved and capacity reserved.",
+      "rejected": "Staffing request rejected.",
+      "closed": "Staffing request closed and unused capacity released.",
+      "amendmentCreated": "Envelope amendment created.",
+      "amendmentSubmitted": "Envelope amendment submitted.",
+      "amendmentApproved": "Envelope amendment approved and capacity expanded.",
+      "amendmentRejected": "Envelope amendment rejected."
+    },
+    "confirm": {
+      "submitTitle": "Submit staffing request?",
+      "submitDescription": "The request will enter approval.",
+      "approveTitle": "Approve staffing request?",
+      "approveDescription": "Approval reserves headcount and salary capacity. You cannot approve your own request.",
+      "rejectTitle": "Reject staffing request?",
+      "rejectDescription": "Provide a clear decision reason.",
+      "closeTitle": "Close staffing request?",
+      "closeDescription": "Only unused and unhired capacity is released.",
+      "submitAmendmentTitle": "Submit envelope amendment?",
+      "submitAmendmentDescription": "The amendment will enter approval.",
+      "approveAmendmentTitle": "Approve envelope amendment?",
+      "approveAmendmentDescription": "Approval expands the envelope atomically. You cannot approve your own amendment.",
+      "rejectAmendmentTitle": "Reject envelope amendment?",
+      "rejectAmendmentDescription": "Provide a clear decision reason."
+    }
   },
   "Action": {
     "Close": "Close"
@@ -2360,7 +3136,8 @@
     "page": {
       "title": "Recruitment & Hiring Lifecycle",
       "newCandidate": "New Candidate",
-      "newPosition": "New Position"
+      "newPosition": "New Position",
+      "subtitle": "Manage openings, candidates, interviews, and offers"
     },
     "pipeline": {
       "title": "Recruitment Pipeline & Stages",
@@ -2368,7 +3145,10 @@
       "allOpenings": "Showing all applicants across all jobs",
       "clearFilter": "Clear Filter",
       "noApplicants": "No applicants in this stage",
-      "dragHelp": "Drag candidate cards between stages or use the action menu"
+      "dragHelp": "Drag candidate cards between stages or use the action menu",
+      "hireSuccess": "Candidate hired successfully",
+      "rejectSuccess": "Candidate rejected successfully",
+      "emptyStage": "No candidates in this stage"
     },
     "openings": {
       "title": "Job Positions",
@@ -2399,7 +3179,8 @@
     "tabs": {
       "openings": "Job Openings & Pipeline",
       "requisitions": "Job Requisitions",
-      "settings": "Settings & Configuration"
+      "settings": "Settings & Configuration",
+      "offers": "Offers"
     },
     "requisitions": {
       "title": "Job Requisitions",
@@ -2433,7 +3214,18 @@
       "typeReplacement": "Replacement",
       "planned": "Planned",
       "legacy": "Legacy",
-      "remainingPositions": "{{count}} positions remaining"
+      "remainingPositions": "{{count}} positions remaining",
+      "approvedSuccess": "Requisition approved",
+      "rejectedSuccess": "Requisition rejected",
+      "submittedSuccess": "Requisition submitted",
+      "replacementFor": "Replacement for",
+      "budgetJustificationShort": "Budget justification",
+      "submitBtn": "Submit request",
+      "approveBtn": "Approve request",
+      "rejectBtn": "Reject request",
+      "rejectDialogTitle": "Reject requisition",
+      "rejectDialogHelp": "Provide a reason for rejecting this request.",
+      "rejectReasonLabel": "Rejection reason"
     },
     "requisitionStatus": {
       "draft": "Draft",
@@ -2459,7 +3251,11 @@
       "hrInterview": "HR Interview",
       "jobOffer": "Job Offer",
       "hired": "Hired",
-      "rejected": "Rejected"
+      "rejected": "Rejected",
+      "underReview": "Under review",
+      "shortlist": "Shortlist",
+      "interview": "Interview",
+      "offer": "Offer"
     },
     "actions": {
       "openOpening": "Open Position",
@@ -2470,7 +3266,10 @@
       "hireCandidate": "Hire Candidate",
       "rejectCandidate": "Reject Candidate",
       "viewDetails": "View Details",
-      "moveTo": "Move To Stage"
+      "moveTo": "Move To Stage",
+      "reject": "Reject candidate",
+      "hire": "Hire candidate",
+      "evaluate": "Evaluate candidate"
     },
     "candidate": {
       "contactInfo": "Contact Information",
@@ -2492,7 +3291,14 @@
       "rateCandidate": "Rate Candidate",
       "score": "Score",
       "recommendation": "Recommendation",
-      "notes": "Notes"
+      "notes": "Notes",
+      "openScorecard": "Open scorecard",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "expectedSalary": "Expected salary",
+      "source": "Source"
     },
     "interviews": {
       "scheduleTitle": "Schedule Interview",
@@ -2502,7 +3308,9 @@
       "endsOn": "Ends On",
       "locationOrUrl": "Meeting URL or Location",
       "interviewerNotes": "Interviewer Notes",
-      "scheduledSuccess": "Interview scheduled successfully"
+      "scheduledSuccess": "Interview scheduled successfully",
+      "countBadge": "{{count}} interviews",
+      "noInterviewsYet": "No interviews scheduled yet"
     },
     "offers": {
       "createTitle": "Create Job Offer",
@@ -2513,7 +3321,49 @@
       "expiryDate": "Offer Expiry Date",
       "termsAndConditions": "Terms & Conditions",
       "benefitsSummary": "Benefits Summary",
-      "offerCreatedSuccess": "Job offer created successfully","offerSubmittedSuccess": "Offer created and submitted for approval","submitForApproval": "Submit for approval","approveOffer": "Approve offer","rejectApproval": "Return to draft","approvalHistory": "Approval history","pendingApproval": "Pending approval","approved": "Approved","noOffers": "No job offers found.","fetchError": "Unable to load job offers.","annualSnapshot": "Annual snapshot","fiscalSnapshot": "Fiscal-year snapshot","reservationDelta": "Reservation delta","returnReason": "Returned by approver","rejectReason": "Return reason","rejectReasonRequired": "Enter a return reason (up to 1000 characters).","total": "job offers","actionDescription": "Confirm this offer governance action.","actions": {"submit": "Submit for approval","approve": "Approve","reject": "Return to draft","issue": "Issue offer"},"status": {"Draft": "Draft","PendingApproval": "Pending approval","Approved": "Approved","Issued": "Issued","Accepted": "Accepted","Declined": "Declined","Withdrawn": "Withdrawn","Expired": "Expired"},"history": {"Submitted": "Submitted","Approved": "Approved","Rejected": "Returned","Declined": "Declined"}
+      "offerCreatedSuccess": "Job offer created successfully",
+      "offerSubmittedSuccess": "Offer created and submitted for approval",
+      "submitForApproval": "Submit for approval",
+      "approveOffer": "Approve offer",
+      "rejectApproval": "Return to draft",
+      "approvalHistory": "Approval history",
+      "pendingApproval": "Pending approval",
+      "approved": "Approved",
+      "noOffers": "No job offers found.",
+      "fetchError": "Unable to load job offers.",
+      "annualSnapshot": "Annual snapshot",
+      "fiscalSnapshot": "Fiscal-year snapshot",
+      "reservationDelta": "Reservation delta",
+      "returnReason": "Returned by approver",
+      "rejectReason": "Return reason",
+      "rejectReasonRequired": "Enter a return reason (up to 1000 characters).",
+      "total": "job offers",
+      "actionDescription": "Confirm this offer governance action.",
+      "actions": {
+        "submit": "Submit for approval",
+        "approve": "Approve",
+        "reject": "Return to draft",
+        "issue": "Issue offer"
+      },
+      "status": {
+        "Draft": "Draft",
+        "PendingApproval": "Pending approval",
+        "Approved": "Approved",
+        "Issued": "Issued",
+        "Accepted": "Accepted",
+        "Declined": "Declined",
+        "Withdrawn": "Withdrawn",
+        "Expired": "Expired"
+      },
+      "history": {
+        "Submitted": "Submitted",
+        "Approved": "Approved",
+        "Rejected": "Returned",
+        "Declined": "Declined"
+      },
+      "baseSalary": "Base salary",
+      "payFrequency": "Pay frequency",
+      "terms": "Offer terms"
     },
     "interviewTypes": {
       "technical": "Technical Interview",
@@ -2521,7 +3371,9 @@
       "phone": "Phone Screening",
       "behavioral": "HR Behavioral",
       "onSite": "On-Site Interview",
-      "executive": "Executive Interview"
+      "executive": "Executive Interview",
+      "hr": "HR interview",
+      "panel": "Panel interview"
     },
     "stats": {
       "activeOpenings": "Active Openings",
@@ -2533,7 +3385,16 @@
       "offersExtended": "Offers Extended",
       "offersExtendedSubtitle": "Pending candidate decision",
       "hiredThisMonth": "Hired This Month",
-      "hiredThisMonthSubtitle": "Successful placements"
+      "hiredThisMonthSubtitle": "Successful placements",
+      "openings": "Openings",
+      "active": "Active requisitions",
+      "candidates": "Candidates",
+      "interviews": "Interviews",
+      "upcoming": "Upcoming",
+      "offers": "Offers",
+      "pendingDecision": "Pending decision",
+      "hired": "Hired",
+      "totalHired": "Total hired"
     },
     "settings": {
       "tabStages": "Pipeline Stages",
@@ -2639,6 +3500,7 @@
       "publicPortalDesc": "Allow direct online applications and CV uploads through external public portal",
       "resetDefaults": "Reset to Defaults",
       "savedSuccess": "Recruitment settings and policies saved successfully!",
+      "loadFailed": "Unable to load recruitment settings from the server. Try again.",
       "confirmReset": "Are you sure you want to reset all recruitment settings to factory defaults?",
       "defaultEmailSubjectAr": "تحديث بخصوص طلب التوظيف",
       "defaultEmailSubjectEn": "Update regarding your application",
@@ -2664,6 +3526,66 @@
         "three": "3 months (standard)",
         "six": "6 months"
       }
+    },
+    "hire": {
+      "confirmTitle": "Confirm hiring",
+      "confirmHelp": "Review the accepted offer before creating the employee record.",
+      "employeeNumber": "Employee number",
+      "execute": "Hire candidate",
+      "acceptedOfferRequired": "An accepted offer is required before hiring."
+    },
+    "recommendations": {
+      "strongHire": "Strong hire",
+      "hire": "Hire",
+      "hold": "Hold",
+      "noHire": "Do not hire",
+      "strongNoHire": "Strong no hire"
+    },
+    "evaluation": {
+      "submittedSuccess": "Interview evaluation submitted",
+      "submitFailed": "Could not submit interview evaluation",
+      "dialogTitle": "Interview evaluation",
+      "dialogSubtitle": "Record the interviewer's assessment",
+      "candidateName": "Candidate name",
+      "position": "Position",
+      "weightedScore": "Weighted score",
+      "mandatoryWarning": "Complete every required criterion before submitting.",
+      "skillsTitle": "Skills assessment",
+      "finalDecision": "Final decision",
+      "recommendation": "Recommendation",
+      "generalComments": "General comments",
+      "commentsPlaceholder": "Add comments about the interview"
+    },
+    "skills": {
+      "mandatory": "Required skill",
+      "weight": "Weight",
+      "interviewerNotes": "Interviewer notes"
+    },
+    "pay": {
+      "monthly": "Monthly",
+      "weekly": "Weekly",
+      "annually": "Annually",
+      "daily": "Daily",
+      "hourly": "Hourly"
+    },
+    "types": {
+      "fullTime": "Full-time",
+      "partTime": "Part-time",
+      "temporary": "Temporary",
+      "contract": "Contract",
+      "internship": "Internship"
+    },
+    "work": {
+      "onSite": "On-site",
+      "remote": "Remote",
+      "hybrid": "Hybrid"
+    },
+    "sources": {
+      "careersPortal": "Careers portal",
+      "internal": "Internal referral",
+      "referral": "Employee referral",
+      "agency": "Recruitment agency",
+      "manual": "Manual entry"
     }
   },
   "modules": {
@@ -2691,5 +3613,199 @@
         "collaboration": "Collaboration"
       }
     }
+  },
+  "personalDetails": "Personal details",
+  "accountSecurity": "Account security",
+  "profilePicture": "Profile picture",
+  "tenantAdmins": {
+    "title": "Tenant administrators",
+    "subtitle": "Manage tenant administrator accounts",
+    "add": "Add tenant administrator",
+    "empty": "No tenant administrators found",
+    "disabled": "Disabled",
+    "locked": "Locked",
+    "active": "Active",
+    "assignedTenants": "Assigned tenants",
+    "default": "Default",
+    "edit": "Edit tenant administrator",
+    "formSubtitle": "Enter administrator details",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "userName": "Username",
+    "email": "Email",
+    "newPassword": "New password",
+    "password": "Password",
+    "tenants": "Tenants",
+    "defaultTenant": "Default tenant",
+    "disableAccount": "Disable account"
+  },
+  "loading": "Loading…",
+  "noOptionsFound": "No options found",
+  "hidePassword": "Hide password",
+  "showPassword": "Show password",
+  "exportSuccess": "Export completed successfully",
+  "success": "Success",
+  "noRowsSelected": "Select at least one row",
+  "warning": "Warning",
+  "noDataToExport": "There is no data to export",
+  "exportFailed": "Export failed",
+  "error": "Error",
+  "darkMode": "Dark mode",
+  "lightMode": "Light mode",
+  "account": "Account",
+  "profile": "Profile",
+  "logout": "Log out",
+  "home": {
+    "attendanceMicroTrends": "Attendance micro-trends",
+    "attendancePatternsSubtitle": "Attendance patterns by time and location",
+    "inOfficeRateArea": "In-office rate by area",
+    "filledAreaVisualization": "Filled-area chart",
+    "rollingAverage": "Rolling average",
+    "smoothedTrend": "Smoothed trend",
+    "actualExpectedAttendance": "Actual Expected Attendance",
+    "compareBaseline": "Compare Baseline",
+    "peopleHealthPipeline": "People health pipeline",
+    "deepDiveCharts": "Detailed charts",
+    "trainingCompliance": "Training compliance",
+    "completedPendingOverdue": "Completed, pending, and overdue",
+    "trainingCompletionDept": "Training completion by department",
+    "percentCompleted": "Percent complete",
+    "engagementTrend": "Engagement trend",
+    "companyWideIndex": "Company-wide index",
+    "timeToFillTarget": "Time-to-fill target",
+    "daysToFillRoles": "Days to fill roles",
+    "pipelineDropoff": "Pipeline drop-off",
+    "netChangesStages": "Net-change stages",
+    "offersAcceptance": "Offer acceptance rate",
+    "monthlyAcceptanceTrend": "Monthly acceptance trend",
+    "keyKpis": "Key performance indicators",
+    "performanceMetrics": "Performance metrics",
+    "peopleTrendsDistribution": "People-trend distribution",
+    "workforceComposition": "Workforce composition",
+    "trendsOverview": "Trends overview",
+    "worldwideFootprint": "Worldwide footprint",
+    "engagementCompliance": "Engagement compliance",
+    "healthPipelineOverview": "Health pipeline overview",
+    "attendanceHeatmap": "Attendance heatmap",
+    "inOfficeSignals": "In-office signals",
+    "attendanceOverview": "Attendance overview",
+    "hiringMomentum": "Hiring momentum",
+    "loadingDashboard": "Loading dashboard…",
+    "allKpis": "All KPIs",
+    "kpisSubtitle": "Key performance indicators for this period",
+    "allPeopleTrends": "All people trends",
+    "trendsSubtitle": "Trends for the selected period",
+    "quickInsights": "Quick insights",
+    "hiring": "Hiring",
+    "hires7d": "Hires in the last 7 days",
+    "timeToHire": "Time to hire",
+    "satisfaction7d": "Satisfaction in the last 7 days",
+    "overtime7d": "Overtime in the last 7 days",
+    "pipelineOffers": "Pipeline offers",
+    "applicants7d": "Applicants in the last 7 days",
+    "offerAcceptance": "Offer acceptance",
+    "workforce": "Workforce",
+    "headcount": "Headcount",
+    "absenceRate": "Absence Rate",
+    "development": "Development",
+    "trainingCompletion": "Training completion",
+    "remoteRatio": "Remote-work ratio",
+    "attritionRisk": "Attrition Risk",
+    "timeOffWellbeing": "Time off and wellbeing",
+    "ptoUtilization": "Paid-time-off utilization",
+    "sickDays7d": "Sick days in the last 7 days",
+    "onboardingMobility": "Onboarding mobility",
+    "onboardingCompletion": "Onboarding completion",
+    "internalMobility": "Internal mobility",
+    "inclusionCulture": "Inclusion and culture",
+    "diversityIndex": "Diversity index",
+    "genderBalance": "Gender balance",
+    "enps": "Employee Net Promoter Score",
+    "compliance": "Compliance",
+    "incidents7d": "Incidents in the last 7 days",
+    "weekdayHourDensity": "Weekday-hour density",
+    "microTrends": "Micro-trends",
+    "inOfficeLastTwoWeeks": "In-office attendance in the last two weeks",
+    "checkinsWeekday": "Check-ins by weekday",
+    "summedOverHours": "Total by hour",
+    "checkinsHour": "Check-ins by hour",
+    "summedOverWeekdays": "Total by weekday",
+    "inOfficeRate": "In-office rate",
+    "shortTermAttendance": "Short-term attendance",
+    "presenceBreakdown": "Presence breakdown",
+    "onSiteRemoteAbsent": "On-site, remote, or absent",
+    "people": "People",
+    "absenceRateTarget": "Absence Rate Target",
+    "latestDayThresholds": "Latest-day thresholds",
+    "employeeEngagement": "Employee engagement",
+    "companyWideEngagement": "Company-wide engagement",
+    "policyCompliance": "Policy compliance",
+    "mandatoryTrainingChecks": "Mandatory training checks",
+    "recruitmentPipeline": "Recruitment pipeline",
+    "applicationHireConversion": "Application-to-hire conversion",
+    "payrollTrend": "Payroll trend",
+    "lastSixMonths": "Last six months",
+    "cumulativeGrossPayroll": "Cumulative gross payroll",
+    "openRolesDept": "Open roles by department",
+    "activeRequisitions": "Active Requisitions",
+    "departmentDistribution": "Department distribution",
+    "headcountHiringTrends": "Headcount and hiring trends",
+    "trackHeadcountGrowth": "Track headcount growth",
+    "workforceDepartment": "Workforce by department",
+    "keyFunctionDistribution": "Key-function distribution",
+    "monthlyNetAdds": "Monthly net additions",
+    "hiresMinusAttrition": "Hires minus attrition",
+    "hiresVsAttrition": "Hires versus attrition",
+    "monthlyComparison": "Monthly comparison",
+    "hires": "Hires",
+    "attrition": "Attrition",
+    "headcountWithHiresAttrition": "Headcount with hires and attrition",
+    "combinedBarsLine": "Combined bar and line chart",
+    "departmentSizeFunnel": "Department size funnel",
+    "largestSmallestDepartments": "Largest and smallest departments",
+    "hiresAttritionScatter": "Hires and attrition scatter plot",
+    "netGrowthLossMonths": "Months with net growth or loss",
+    "netGrowth": "Net growth",
+    "netLoss": "Net loss"
+  },
+  "externalTools": {
+    "apiUrlRequired": "API URL is required",
+    "apiEndpoints": "API endpoints"
+  },
+  "auditLog": {
+    "system": "System",
+    "changeHistoryAndAuditTrail": "Change History & Audit Trail",
+    "loadingChangeHistory": "Loading change history...",
+    "failedToLoadChangeHistory": "Failed to load change history",
+    "retry": "Retry",
+    "noRecordedChangesFound": "No recorded changes found",
+    "noModificationsHaveBeenRecordedForThisItemYet": "No modifications have been recorded for this item yet",
+    "field": "Field",
+    "oldValue": "Old Value",
+    "newValue": "New Value",
+    "empty": "Empty",
+    "close": "Close"
+  },
+  "treeView": {
+    "parent": "Parent",
+    "sub": "Sub",
+    "archived": "Archived",
+    "addSubItem": "Add Sub-Item",
+    "moveItem": "Move Item",
+    "edit": "Edit",
+    "dragToMove": "Drag to move",
+    "companyTopLevelNoParent": "Company Top Level (No Parent)",
+    "expandAll": "Expand all",
+    "collapseAll": "Collapse all",
+    "zoomIn": "Zoom in",
+    "resetZoom": "Reset zoom",
+    "zoomOut": "Zoom out",
+    "exitFullscreen": "Exit Fullscreen",
+    "fullscreen": "Fullscreen",
+    "hideDetails": "Hide details",
+    "showDetails": "Show details",
+    "companyRootLevel": "Company Root Level",
+    "selectItemPrompt": "Select an item from the tree to inspect details.",
+    "itemCount": "{{count}} items"
   }
 }

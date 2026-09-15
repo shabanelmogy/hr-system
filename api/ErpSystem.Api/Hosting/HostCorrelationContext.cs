@@ -1,10 +1,11 @@
 using System.Diagnostics;
+using ErpSystem.BuildingBlocks.Context;
 
 namespace ErpSystem.Api.Hosting;
 
 public static class HostCorrelationContext
 {
-    public const string HeaderName = "X-Correlation-ID";
+    public const string HeaderName = ExecutionContextHeaderNames.CorrelationId;
 
     // Preserve the historical item key while ownership moves out of HR so
     // existing filters/controllers continue to read the same request value.

@@ -1,7 +1,9 @@
+using ErpSystem.BuildingBlocks.Application;
 using ErpSystem.BuildingBlocks.Context;
 using ErpSystem.Modules.Contacts.Contracts;
 using ErpSystem.Modules.Contacts.Domain;
 using ErpSystem.Modules.Contacts.Application.Messaging;
+using FluentValidation;
 using MediatR;
 
 namespace ErpSystem.Modules.Contacts.Application.Parties;
@@ -18,6 +20,7 @@ public sealed record UpdatePartyCommand(
     string DisplayName,
     string? Email,
     string? Phone,
+    long ExpectedRevision,
     string? CorrelationId = null,
     string? CausationId = null) : IRequest<PartyResponse?>;
 
@@ -51,7 +54,8 @@ public sealed class CreatePartyCommandHandler(
             Guid.NewGuid(),
             nowUtc,
             request.CorrelationId,
-            request.CausationId));
+            request.CausationId,
+            party.Revision));
 
         await store.SaveChangesAsync(cancellationToken);
         return PartyResponseMapper.Map(party);
@@ -66,10 +70,16 @@ public sealed class UpdatePartyCommandHandler(
 {
     public async Task<PartyResponse?> Handle(UpdatePartyCommand request, CancellationToken cancellationToken)
     {
+        if (request.ExpectedRevision <= 0)
+            throw new ValidationException("ExpectedRevision must be greater than zero.");
+
         PartyScope.Require(executionContext);
         var party = await store.GetByIdAsync(request.Id, cancellationToken);
         if (party is null)
             return null;
+
+        if (party.Revision != request.ExpectedRevision)
+            throw new ConcurrencyConflictException();
 
         var nowUtc = timeProvider.GetUtcNow();
         party.Update(request.DisplayName, request.Email, request.Phone, nowUtc);
@@ -83,7 +93,8 @@ public sealed class UpdatePartyCommandHandler(
             Guid.NewGuid(),
             nowUtc,
             request.CorrelationId,
-            request.CausationId));
+            request.CausationId,
+            party.Revision));
 
         await store.SaveChangesAsync(cancellationToken);
         return PartyResponseMapper.Map(party);

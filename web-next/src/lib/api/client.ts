@@ -7,6 +7,11 @@ import {
   getStoredBackendOverride,
 } from "@/lib/api/backendOverride";
 import {
+  publicBackendAllowedOrigins,
+  publicBackendOverrideEnabled,
+  publicDefaultBackendOrigin,
+} from "@/config/publicEnv";
+import {
   SESSION_CHANGED_EVENT,
   SESSION_REFRESHED_HEADER,
 } from "@/lib/auth/constants";
@@ -18,6 +23,7 @@ export type ApiError = {
   detail?: string;
   traceId?: string;
   type?: string;
+  code?: string;
   errorCodes?: string[];
   fieldErrors: Record<string, string[]> | null;
   errors: string[] | null;
@@ -29,6 +35,7 @@ export class ApiClientError extends Error implements ApiError {
   detail?: string;
   traceId?: string;
   type?: string;
+  code?: string;
   errorCodes?: string[];
   fieldErrors: Record<string, string[]> | null;
   errors: string[] | null;
@@ -41,10 +48,41 @@ export class ApiClientError extends Error implements ApiError {
     this.detail = apiError.detail;
     this.traceId = apiError.traceId;
     this.type = apiError.type;
+    this.code = apiError.code;
     this.errorCodes = apiError.errorCodes;
     this.fieldErrors = apiError.fieldErrors;
     this.errors = apiError.errors;
   }
+}
+
+export type ApiErrorPayload = {
+  title?: unknown;
+  detail?: unknown;
+  traceId?: unknown;
+  type?: unknown;
+  code?: unknown;
+  codes?: unknown;
+  errors?: unknown;
+};
+
+export function parseApiErrorPayload(payload: unknown, status: number): ApiError {
+  const data = isRecord(payload) ? payload as ApiErrorPayload : {};
+  const errors = normalizeApiErrors(data.errors as Record<string, unknown[]> | unknown[] | undefined);
+  const fieldErrors = normalizeFieldErrors(data.errors as Record<string, unknown[]> | unknown[] | undefined);
+  const title = asString(data.title) ?? "Error";
+  const detail = asString(data.detail);
+  return {
+    status,
+    title,
+    detail,
+    traceId: asString(data.traceId),
+    type: asString(data.type),
+    code: asString(data.code),
+    errorCodes: normalizeErrorCodes(data.codes),
+    fieldErrors,
+    errors,
+    message: detail ?? errors?.[0] ?? title ?? `Request failed with status ${status}`,
+  };
 }
 
 type ReadOnlyGuard = {
@@ -77,7 +115,13 @@ class ApiClient {
     this.api.interceptors.request.use((config) => {
       config.headers.Culture = i18n.language || "en";
 
-      const backendOverride = getStoredBackendOverride();
+      const allowedOrigins = [
+        ...publicBackendAllowedOrigins,
+        ...(publicDefaultBackendOrigin ? [publicDefaultBackendOrigin] : []),
+      ];
+      const backendOverride = publicBackendOverrideEnabled
+        ? getStoredBackendOverride(allowedOrigins)
+        : null;
       if (backendOverride) {
         config.headers.set(BACKEND_OVERRIDE_HEADER, backendOverride);
       }
@@ -129,35 +173,7 @@ class ApiClient {
       });
     }
 
-    const data = error.response.data as
-      | {
-          title?: string;
-          detail?: string;
-          traceId?: string;
-          type?: string;
-          errors?: Record<string, unknown[]> | unknown[];
-        }
-      | undefined;
-    const errors = normalizeApiErrors(data?.errors);
-    const fieldErrors = normalizeFieldErrors(data?.errors);
-    return new ApiClientError({
-      status: error.response.status,
-      title: data?.title ?? "Error",
-      detail: data?.detail,
-      traceId: data?.traceId,
-      type: data?.type,
-      errorCodes:
-        data?.errors && !Array.isArray(data.errors)
-          ? Object.keys(data.errors)
-          : undefined,
-      fieldErrors,
-      errors,
-      message:
-        data?.detail ??
-        errors?.[0] ??
-        data?.title ??
-        `Request failed with status ${error.response.status}`,
-    });
+    return new ApiClientError(parseApiErrorPayload(error.response.data, error.response.status));
   }
 
   configureReadOnlyGuard(guard: ReadOnlyGuard) {
@@ -233,6 +249,31 @@ class ApiClient {
       headers: { Accept: "application/octet-stream" },
       allowWhenReadOnly: true,
     });
+  }
+
+  async getBlobDownload(endpoint: string): Promise<{ blob: Blob; fileName: string | null }> {
+    if (this.contextTransitionGate) {
+      throw new axios.CanceledError("Work context is changing");
+    }
+
+    const signal = mergeAbortSignals(undefined, this.requestContextController.signal);
+    try {
+      const response = await this.api.request<Blob>({
+        method: "GET",
+        url: endpoint,
+        responseType: "blob",
+        headers: { Accept: "application/octet-stream" },
+        signal,
+      });
+      if (signal?.aborted) throw new axios.CanceledError("Work context changed");
+      return {
+        blob: response.data,
+        fileName: parseContentDispositionFileName(response.headers["content-disposition"]),
+      };
+    } catch (error) {
+      if (axios.isCancel(error)) throw error;
+      throw this.processError(error);
+    }
   }
 
   post<T = unknown>(endpoint: string, data?: unknown, headers: Record<string, string> = {}) {
@@ -361,6 +402,14 @@ function normalizeApiErrors(
   return messages.length > 0 ? messages : null;
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+function asString(value: unknown): string | undefined {
+  return typeof value === "string" && value.trim() ? value : undefined;
+}
+
 function normalizeFieldErrors(
   errors: Record<string, unknown[]> | unknown[] | undefined,
 ): Record<string, string[]> | null {
@@ -379,4 +428,29 @@ function normalizeFieldErrors(
   );
 
   return Object.keys(normalized).length > 0 ? normalized : null;
+}
+
+function normalizeErrorCodes(value: unknown): string[] | undefined {
+  if (typeof value === "string" && value.trim()) return [value];
+  if (!Array.isArray(value)) return undefined;
+  const codes = value.filter((item): item is string => typeof item === "string" && Boolean(item.trim()));
+  return codes.length > 0 ? codes : undefined;
+}
+
+function parseContentDispositionFileName(value: unknown): string | null {
+  if (typeof value !== "string" || !value.trim()) return null;
+
+  const encoded = /filename\*=UTF-8''([^;]+)/i.exec(value)?.[1];
+  if (encoded) {
+    try {
+      return decodeURIComponent(encoded).trim() || null;
+    } catch {
+      return encoded.trim() || null;
+    }
+  }
+
+  const quoted = /filename="([^"]+)"/i.exec(value)?.[1];
+  if (quoted?.trim()) return quoted.trim();
+  const plain = /filename=([^;]+)/i.exec(value)?.[1];
+  return plain?.trim() || null;
 }

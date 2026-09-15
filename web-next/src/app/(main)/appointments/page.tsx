@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "ERP System page for Appointments."
 };
 
-import PageComponent from "@/modules/hr/appointments/pages/AppointmentsPage";
+import { AppointmentsPage as PageComponent } from "@/modules/crm";
 
 export default function Page() {
   return <PageComponent />;

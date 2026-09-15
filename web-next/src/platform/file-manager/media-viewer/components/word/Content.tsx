@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, forwardRef } from "react";
 import { Box, Typography } from "@mui/material";
 import { renderAsync } from "docx-preview";
+import { useTranslation } from "react-i18next";
 
 interface ContentProps {
   mediaUrl: string;
@@ -11,6 +12,7 @@ interface ContentProps {
 }
 
 const Content = forwardRef<HTMLDivElement, ContentProps>(function Content({ mediaUrl, isLoading, setIsLoading, onError, onPagesDetected }, ref) {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const assignContainerRef = (element: HTMLDivElement | null) => {
     containerRef.current = element;
@@ -56,7 +58,7 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(function Content({ medi
     <Box sx={{ flex: 1, overflow: "auto", bgcolor: "background.default", p: 1 }}>
       {isLoading && (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
-          <Typography>Loading Word document...</Typography>
+          <Typography>{t("files.loadingWordDocument")}</Typography>
         </Box>
       )}
       <div ref={assignContainerRef} />

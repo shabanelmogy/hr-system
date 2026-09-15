@@ -1,5 +1,6 @@
 using ErpSystem.BuildingBlocks.Modularity;
 using ErpSystem.Modules.Platform.Application;
+using ErpSystem.Modules.Platform.Contracts.Authorization;
 using ErpSystem.Modules.Platform.Infrastructure;
 using ErpSystem.Modules.Platform.Presentation;
 using ErpSystem.Modules.Platform.Presentation.Tenancy;
@@ -14,7 +15,19 @@ namespace ErpSystem.Modules.Platform;
 public sealed class PlatformModule : IModule
 {
     public string Name => "Platform";
-    public ModuleDefinition Definition => new("platform", "Platform", [])
+    public ModuleDefinition Definition => new("platform", "Platform",
+    [
+        new SubmoduleDefinition(
+            "tenant-administration",
+            "Tenant administration",
+            PlatformPermissions.TenantAdministration,
+            PermissionAccessMode: PermissionAccessMode.Tenant),
+        new SubmoduleDefinition(
+            "operations",
+            "Platform operations",
+            PlatformPermissions.GlobalOperations,
+            PermissionAccessMode: PermissionAccessMode.Global)
+    ])
     {
         Version = "1.0.0",
         IsUserVisible = false,
@@ -26,6 +39,8 @@ public sealed class PlatformModule : IModule
         services.AddPlatformApplication();
         services.AddPlatformInfrastructure(configuration);
         services.AddPlatformPresentation();
+        services.AddSingleton<IHostRuntimeApplicationContributor, PlatformHangfireDashboardRuntimeContributor>();
+        services.AddSingleton<IHostRuntimeEndpointContributor, PlatformRealtimeEndpointContributor>();
     }
 
     public void ConfigureApplication(WebApplication app)

@@ -1,0 +1,16 @@
+{
+  "build": {
+    "preview": {
+      "node": "22.13.0",
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "uploadSourceMaps": true
+    },
+    "production": {
+      "node": "22.13.0",
+      "uploadSourceMaps": true
+    }
+  }
+}

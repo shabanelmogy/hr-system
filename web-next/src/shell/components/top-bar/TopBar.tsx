@@ -1,6 +1,5 @@
 import { Box, IconButton, Tooltip, Typography, alpha } from "@mui/material";
 import { useLayoutEffect, useRef, useState } from "react";
-import { useMemo } from "react";
 
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
@@ -21,11 +20,11 @@ import ThemeToggler from "./ThemeToggler";
 // Import styled components
 import { AppBar, StyledToolbar } from "./TopBarStyles";
 import UserWelcome from "./UserWelcome";
-import { getNavigationConfig } from "../sidebar/navigationConfig";
 import { useTopBarPreferences } from "./useTopBarPreferences";
 import { CompanyContextSwitcher } from "@/platform/tenant-access";
 import { ModuleContextSwitcher } from "@/platform/modules";
 import { useUnsavedChanges } from "@/shared/contexts/UnsavedChangesContext";
+import { useAuthorizedNavigation } from "@/shell/navigation/useAuthorizedNavigation";
 
 const DisplayDebugger = dynamic(() => import("./DisplayDebugger"), { ssr: false });
 const GlobalSearchButton = dynamic(
@@ -51,10 +50,12 @@ const TopBar = ({
   open,
   handleDrawerToggle,
   onHeightChange,
+  showSidebarToggle = true,
 }: {
   open: boolean;
   handleDrawerToggle: () => void;
   onHeightChange: (height: number) => void;
+  showSidebarToggle?: boolean;
 }) => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<HTMLElement | null>(null);
   const toolbarRef = useRef<HTMLDivElement | null>(null);
@@ -74,10 +75,7 @@ const TopBar = ({
   const isSuperAdmin = user?.roles.some(
     (role) => role.trim().toLowerCase() === "super_admin",
   );
-  const searchNavigation = useMemo(
-    () => getNavigationConfig(user?.roles, user?.permissions),
-    [user?.permissions, user?.roles],
-  );
+  const { navigation: searchNavigation } = useAuthorizedNavigation();
 
   const router = useRouter();
 
@@ -122,7 +120,7 @@ const TopBar = ({
         >
           {/* Left Section */}
           <Box sx={{ display: "flex", alignItems: "center", flex: "0 1 auto", minWidth: 0 }}>
-            {isAuthenticated && (
+            {isAuthenticated && showSidebarToggle && (
               <Tooltip
                 title={t(open ? "menu.closeSidebar" : "menu.openSidebar")}
               >

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CountriesPage } from "@/modules/hr/basic-data/geographical-information/countries";
+import { CountriesPage } from "@/modules/reference-data/geographical-information/countries";
 
 export const metadata: Metadata = {
   title: "Global Countries | ERP System",

@@ -2,16 +2,16 @@ using System.Security.Claims;
 using ErpSystem.BuildingBlocks.Authorization;
 using ErpSystem.Modules.Platform.Contracts.Authentication.Tokens;
 using ErpSystem.Modules.Platform.Contracts.Authorization;
-using ErpSystem.Modules.Platform.Contracts.Entitlements;
-using ErpSystem.Modules.Platform.Contracts.Modules;
+using ErpSystem.Modules.Platform.Application.Entitlements;
+using ErpSystem.Modules.Platform.Application.Modules;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ErpSystem.Modules.Platform.Infrastructure.Authorization;
 
 /// <summary>
 /// Platform-owned live authorization check. JWT claims are the fast-path signal;
-/// tenant permissions and entitlements are re-read so revocation is immediate.
-/// Unknown permissions fail closed.
+/// module metadata defines whether a permission is global, tenant-scoped, or
+/// tenant-entitlement-scoped. Unknown permissions fail closed.
 /// </summary>
 public sealed class PermissionAuthorizationHandler(
     IModuleCatalogPolicy moduleCatalog,
@@ -28,16 +28,17 @@ public sealed class PermissionAuthorizationHandler(
         if (!context.User.HasClaim(PermissionClaimNames.Permission, requirement.Permission))
             return;
 
-        if (!moduleCatalog.TryResolvePermission(
-                requirement.Permission,
-                out var moduleCode,
-                out var submoduleCode))
+        if (!moduleCatalog.TryResolvePermission(requirement.Permission, out var resolvedPermission))
+            return;
+
+        if (!resolvedPermission.RequiresTenantScope)
         {
-            if (PlatformPermissions.IsPlatformPermission(requirement.Permission))
-                context.Succeed(requirement);
+            context.Succeed(requirement);
             return;
         }
 
+        // A platform super-admin is deliberately not a tenant member. Tenant-scoped
+        // permissions must be exercised through a tenant identity/session instead.
         if (context.User.IsInRole(PlatformRoleNames.SuperAdmin))
             return;
 
@@ -53,11 +54,16 @@ public sealed class PermissionAuthorizationHandler(
         if (!await entitlements.UserHasPermissionAsync(
                 userId,
                 tenantId,
-                requirement.Permission).ConfigureAwait(false) ||
+                requirement.Permission).ConfigureAwait(false))
+        {
+            return;
+        }
+
+        if (resolvedPermission.RequiresTenantEntitlement &&
             !await entitlements.HasAccessAsync(
                 tenantId,
-                moduleCode,
-                submoduleCode).ConfigureAwait(false))
+                resolvedPermission.ModuleCode,
+                resolvedPermission.SubmoduleCode).ConfigureAwait(false))
         {
             return;
         }

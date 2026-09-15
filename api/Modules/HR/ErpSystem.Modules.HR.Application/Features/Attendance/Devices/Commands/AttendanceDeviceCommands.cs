@@ -1,18 +1,16 @@
-using ErpSystem.Modules.HR.Application.Abstractions.Authentication;
-using ErpSystem.Modules.HR.Application.Abstractions.Messaging;
+using ErpSystem.BuildingBlocks.Context.Authentication;
+using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts;
 using ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Errors;
 using ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities;
 using MapsterMapper;
 using Microsoft.Extensions.Logging;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Commands;
 
 public sealed record CreateAttendanceDeviceCommand(AttendanceDeviceRequest Request) : ICommand<Result<AttendanceDeviceResponse>>;
-public sealed record UpdateAttendanceDeviceCommand(int Id, AttendanceDeviceRequest Request) : ICommand<Result<AttendanceDeviceResponse>>;
-public sealed record SetAttendanceDeviceEnabledCommand(int Id, bool Enabled) : ICommand<Result>;
+public sealed record UpdateAttendanceDeviceCommand(int Id, UpdateAttendanceDeviceRequest Request) : ICommand<Result<AttendanceDeviceResponse>>;
+public sealed record SetAttendanceDeviceEnabledCommand(int Id, bool Enabled, string RowVersion) : ICommand<Result>;
 public sealed record CreateAttendanceAgentCommand(CreateAttendanceAgentRequest Request) : ICommand<Result<CreatedAttendanceAgentResponse>>;
 public sealed record UpdateAttendanceDeviceCredentialsCommand(int Id, UpdateDeviceCredentialsRequest Request) : ICommand<Result>;
 public sealed record DetectAttendanceDeviceCommand(DetectDeviceRequest Request) : ICommand<Result<DetectDeviceResponse>>;
@@ -69,6 +67,7 @@ public sealed class UpdateAttendanceDeviceCommandHandler(
                 return Result.Failure<AttendanceDeviceResponse>(errors.Agent);
             if (await store.NameExistsAsync(request.Request.Name.Trim().ToUpperInvariant(), request.Id, token))
                 return Result.Failure<AttendanceDeviceResponse>(errors.Duplicate);
+            store.ApplyRowVersion(device, request.Request.RowVersion);
             mapper.Map(request.Request, device);
             effects.Audit("Update", request.Id.ToString());
             await unitOfWork.SaveChangesAsync(token);
@@ -80,7 +79,8 @@ public sealed class UpdateAttendanceDeviceCommandHandler(
 }
 public sealed class CreateAttendanceAgentCommandHandler(
     IAttendanceDeviceWriteStore store, IUnitOfWork unitOfWork, AttendanceDeviceEffects effects, AttendanceDeviceErrors errors,
-    IAttendanceAgentInstallationSettings installationSettings)
+    IAttendanceAgentInstallationSettings installationSettings,
+    IAttendanceAgentCredentialGenerator credentialGenerator)
     : ICommandHandler<CreateAttendanceAgentCommand, Result<CreatedAttendanceAgentResponse>>
 {
     public async Task<Result<CreatedAttendanceAgentResponse>> Handle(CreateAttendanceAgentCommand request, CancellationToken ct)
@@ -92,27 +92,25 @@ public sealed class CreateAttendanceAgentCommandHandler(
         {
             if (await store.AgentNameExistsAsync(normalized, token))
                 return Result.Failure<CreatedAttendanceAgentResponse>(errors.AgentExists);
-            var secret = $"hra_{ToBase64Url(RandomNumberGenerator.GetBytes(32))}";
+            var credential = credentialGenerator.Create();
             var agent = new AttendanceAgent
             {
                 Id = Guid.NewGuid(), Name = name, NormalizedName = normalized,
-                SecretHash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(secret))),
-                SecretPrefix = secret[..Math.Min(secret.Length, 16)], IsActive = true
+                SecretHash = credential.SecretHash,
+                SecretPrefix = credential.SecretPrefix, IsActive = true
             };
             store.Add(agent);
             effects.Audit("CreateAgent", agent.Id.ToString());
             await unitOfWork.SaveChangesAsync(token);
             var summary = new AttendanceAgentResponse(agent.Id, agent.Name, agent.IsActive, agent.LastSeenAtUtc, 0);
-            return Result.Success(new CreatedAttendanceAgentResponse(summary, secret,
-                new AttendanceAgentInstallConfiguration(agent.Id, secret, installationSettings.HostedApiBaseUrl,
+            return Result.Success(new CreatedAttendanceAgentResponse(summary, credential.Secret,
+                new AttendanceAgentInstallConfiguration(agent.Id, credential.Secret, installationSettings.HostedApiBaseUrl,
                     installationSettings.PollIntervalSeconds)));
         }, ct);
         if (result.IsSuccess) effects.ChangedAgents();
         return result;
     }
 
-    private static string ToBase64Url(byte[] value) => Convert.ToBase64String(value)
-        .TrimEnd('=').Replace('+', '-').Replace('/', '_');
 }
 public sealed class SetAttendanceDeviceEnabledCommandHandler(
     IAttendanceDeviceWriteStore store, IUnitOfWork unitOfWork, AttendanceDeviceEffects effects, AttendanceDeviceErrors errors)
@@ -126,6 +124,7 @@ public sealed class SetAttendanceDeviceEnabledCommandHandler(
             var device = await store.FindAsync(request.Id, token);
             if (device is null) return Result.Failure(errors.NotFound);
             if (await store.HasActivePullAsync(request.Id, token)) return Result.Failure(errors.Busy);
+            store.ApplyRowVersion(device, request.RowVersion);
             device.Enabled = request.Enabled;
             effects.Audit(request.Enabled ? "Enable" : "Disable", request.Id.ToString());
             await unitOfWork.SaveChangesAsync(token);

@@ -43,14 +43,14 @@ realtime, notification, localization, report, or Import integration is reachable
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| tenant-module-entitlements-master | 4 | `e555dc9d04feebee880d75fafd06d4fa2c525673d99cc4476055e8b15cfe36ab` |
+| tenant-module-entitlements-master | 4 | `6ce0ac78f838937858372f8bd73c02c85b8d3495d904c9196b95944943a8de12` |
 | tenant-module-entitlements-master | 5 | `33487ff92f7cbe8016aefa881fa307cdd8cd24645d06255261b68bcdcf41b1c9` |
-| tenant-module-entitlements-master | 6 | `5dda69ba2342bfa1f8caee1dee1868a383b4d7c1ce1f7596a753e20c4aba1cfb` |
+| tenant-module-entitlements-master | 6 | `89544550aa2d052292f9b9095338d67eb4992cb1b1c89fc2d289082f0d031f38` |
 | tenant-module-entitlements-master | 7 | `fe1349efb104547e5f048e64174e844f17ad248fb17f5e0c7c4e14334bc8213f` |
 | tenant-module-entitlements-master | 9 | `60c69fc638e2b14a82907e3c7d6c6a9b1df99042b776f0ba848ff33754256bfe` |
 | tenant-module-entitlements-api | 8 | `c37c50acf4176e243388ef9a13427e4eae964c0da2d59c75c49a3ca3f8226094` |
-| tenant-module-entitlements-api | 9 | `0adb2ee75634988ab88fd78d7351ee7fc600985d803b15bb47e399b0144152f9` |
-| tenant-module-entitlements-api | 10 | `bcc7ef77c03aba1632b982232bdf6c92b819081cab9cb1805446bd76096aaf6b` |
+| tenant-module-entitlements-api | 9 | `cda0cba8aa4a43c8673c3596a8521692d458a36947bd3cbbad9c68493de2c2da` |
+| tenant-module-entitlements-api | 10 | `479d38c1e960adbe09bc5ce6f8690f88f99ada41c5d71bdc25a8197d56d9913e` |
 | tenant-module-entitlements-web | 8 | `d4c14b4558540d754cb3e913b31c7e64094dae39e2379900ab39260604f220bf` |
 | tenant-module-entitlements-web | 10 | `c9741f4295a0f3bfcef368eb33169cf605fe7780f4da9e426f973be8201c681b` |
 | tenant-module-entitlements-web | 13 | `8d4e22b075f697513becfe7f146ec4fa5f7448c429f001a46927bb8b448c0529` |

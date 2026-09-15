@@ -19,7 +19,10 @@ Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain
 
 - General ERP documentation guide: [`project/ERP_DOCUMENTATION_GUIDE_AR.md`](project/ERP_DOCUMENTATION_GUIDE_AR.md)
 - Shared reuse catalog: [`project/SHARED_REUSE_CATALOG.md`](project/SHARED_REUSE_CATALOG.md)
-- Core feature delivery guide: [`project/CORE_FEATURE_CQRS_WEB_GUIDE.md`](project/CORE_FEATURE_CQRS_WEB_GUIDE.md)
+- API feature development workflow: [`api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](api/API_FEATURE_DEVELOPMENT_WORKFLOW.md)
+- API development workflow closure: [`api/API_DEVELOPMENT_WORKFLOW_CLOSURE.md`](api/API_DEVELOPMENT_WORKFLOW_CLOSURE.md)
+- API architecture constitution: [`api/ERP_ARCHITECTURE_CONSTITUTION.md`](api/ERP_ARCHITECTURE_CONSTITUTION.md)
+- Cross-platform CQRS/web reference: [`project/CORE_FEATURE_CQRS_WEB_GUIDE.md`](project/CORE_FEATURE_CQRS_WEB_GUIDE.md)
 - Managed Crystal reporting integration: [`project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md`](project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md)
 - Three-project Countries review: [`project/COUNTRIES_FEATURE_FULL_REVIEW.md`](project/COUNTRIES_FEATURE_FULL_REVIEW.md)
 - API Countries profile: [`api/Countries_API_Implementation_Profile.md`](api/Countries_API_Implementation_Profile.md)
@@ -35,6 +38,8 @@ Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain
 - Addresses domain review: [`project/ADDRESSES_DOMAIN_FULL_REVIEW.md`](project/ADDRESSES_DOMAIN_FULL_REVIEW.md)
 - Modular monolith architecture: [`api/MODULAR_MONOLITH_ARCHITECTURE.md`](api/MODULAR_MONOLITH_ARCHITECTURE.md)
 - API production deployment runbook: [`api/PRODUCTION_DEPLOYMENT_RUNBOOK.md`](api/PRODUCTION_DEPLOYMENT_RUNBOOK.md)
+- Foundation closure matrix: [`api/FOUNDATION_CLOSURE_MATRIX.md`](api/FOUNDATION_CLOSURE_MATRIX.md)
+- API architecture decisions: [`api/adr/README.md`](api/adr/README.md)
 
 ## Organization rules
 
@@ -73,3 +78,14 @@ four canonical profiles exist, replace the required-file draft with
 `required-files.json`, merge the reviewed registration draft into
 `system/recipe-manifest.json`, generate `system/generated/<feature>/PHASE-00`
 through `PHASE-06`, and finish the mandatory reconciliation phase.
+
+## Web client readiness
+
+- [Web/API readiness review](web-next/WEB_API_READINESS_REVIEW.md)
+- [Frontend architecture reference](web-next/architecture/frontend-architecture-reference.md)
+
+## Mobile client readiness
+
+- [Mobile/API readiness review](mobile-react/MOBILE_API_READINESS_REVIEW.md)
+- [Mobile architecture guide](mobile-react/MOBILE_ARCHITECTURE.md)
+- [Mobile feature guide](mobile-react/MOBILE_FEATURE_GUIDE.md)

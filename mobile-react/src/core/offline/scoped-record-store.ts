@@ -10,6 +10,7 @@ export interface ScopedRecord<T> {
   serverUpdatedAt: string | null;
   localUpdatedAt: string;
   isDeleted: boolean;
+  isProtected?: boolean;
 }
 
 interface ScopedRecordRow {
@@ -19,6 +20,7 @@ interface ScopedRecordRow {
   server_updated_at: string | null;
   local_updated_at: string;
   is_deleted: number;
+  is_protected: number;
 }
 
 export class ScopedRecordStore {
@@ -36,6 +38,7 @@ export class ScopedRecordStore {
     serverRowVersion?: string | null;
     serverUpdatedAt?: string | null;
     isDeleted?: boolean;
+    isProtected?: boolean;
   }): Promise<void> {
     const scope = await this.scopes.ensure(options.scope);
     const namespace = requireSegment(options.namespace, 'namespace');
@@ -45,15 +48,16 @@ export class ScopedRecordStore {
     await this.db.runAsync(
       `INSERT INTO offline_records (
          user_id, tenant_id, company_id, namespace, record_key, payload_json,
-         server_row_version, server_updated_at, local_updated_at, is_deleted
-       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+         server_row_version, server_updated_at, local_updated_at, is_deleted, is_protected
+       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
        ON CONFLICT (user_id, tenant_id, company_id, namespace, record_key)
        DO UPDATE SET
          payload_json = excluded.payload_json,
          server_row_version = excluded.server_row_version,
          server_updated_at = excluded.server_updated_at,
          local_updated_at = excluded.local_updated_at,
-         is_deleted = excluded.is_deleted`,
+         is_deleted = excluded.is_deleted,
+         is_protected = excluded.is_protected`,
       scope.userId,
       scope.tenantId,
       scope.companyId,
@@ -64,13 +68,14 @@ export class ScopedRecordStore {
       options.serverUpdatedAt ?? null,
       now,
       options.isDeleted ? 1 : 0,
+      options.isProtected ? 1 : 0,
     );
   }
 
   async get<T>(scope: OfflineScope, namespace: string, key: string): Promise<ScopedRecord<T> | null> {
     const normalized = await this.scopes.ensure(scope);
     const row = await this.db.getFirstAsync<ScopedRecordRow>(
-      `SELECT record_key, payload_json, server_row_version, server_updated_at, local_updated_at, is_deleted
+      `SELECT record_key, payload_json, server_row_version, server_updated_at, local_updated_at, is_deleted, is_protected
        FROM offline_records
        WHERE user_id = ? AND tenant_id = ? AND company_id = ? AND namespace = ? AND record_key = ?`,
       normalized.userId,
@@ -85,7 +90,7 @@ export class ScopedRecordStore {
   async list<T>(scope: OfflineScope, namespace: string): Promise<ScopedRecord<T>[]> {
     const normalized = await this.scopes.ensure(scope);
     const rows = await this.db.getAllAsync<ScopedRecordRow>(
-      `SELECT record_key, payload_json, server_row_version, server_updated_at, local_updated_at, is_deleted
+      `SELECT record_key, payload_json, server_row_version, server_updated_at, local_updated_at, is_deleted, is_protected
        FROM offline_records
        WHERE user_id = ? AND tenant_id = ? AND company_id = ? AND namespace = ?
        ORDER BY local_updated_at DESC`,
@@ -119,6 +124,7 @@ function mapRow<T>(row: ScopedRecordRow): ScopedRecord<T> {
     serverUpdatedAt: row.server_updated_at,
     localUpdatedAt: row.local_updated_at,
     isDeleted: row.is_deleted === 1,
+    isProtected: row.is_protected === 1,
   };
 }
 

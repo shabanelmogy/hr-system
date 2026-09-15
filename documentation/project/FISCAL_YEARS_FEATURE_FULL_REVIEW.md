@@ -54,8 +54,11 @@ update, archive, restore, open, begin-closing, close, lock, and reopen operation
 actions use MediatR commands/queries from a thin controller and require
 `TenantMember` plus a feature permission.
 
-Writes run under one company-calendar resource lock and one unit-of-work
-transaction. Duplicate code includes archived records. Overlap checks include all
+Writes run under one company-calendar resource lock and the Accounting-owned
+`IAccountingUnitOfWork` transaction. The module-specific contract ensures the
+handler, stores, and `AccountingDbContext` share the same scoped context even when
+other ERP modules register the shared `IUnitOfWork`. Duplicate code includes
+archived records. Overlap checks include all
 active records and are repeated during restore so an old archived year cannot be
 restored over a newer calendar. Update, restore, and lifecycle operations use
 RowVersion. Audit persistence is part of the transaction; Hangfire/realtime is
@@ -74,7 +77,7 @@ clients repeat the rules for discoverability and fail closed when claims are abs
 Read-only subscription mode suppresses every mutation while preserving view access.
 
 Tenant/company query filters and ownership stamping are supplied by
-`ApplicationDbContext`. No route, DTO, query string, form, or mobile payload allows
+`AccountingDbContext`. No route, DTO, query string, form, or mobile payload allows
 a caller-selected tenant/company scope.
 
 ## 6. Web implementation

@@ -1,6 +1,6 @@
 /** Canonical dependency policy for the modular mobile frontend. */
 export const allowedOwnerDependencies = Object.freeze({
-  core: Object.freeze(['shared']),
+  core: Object.freeze([]),
   shared: Object.freeze(['core']),
   platform: Object.freeze(['core', 'shared']),
   shell: Object.freeze(['core', 'shared', 'platform', 'hr', 'accounting']),

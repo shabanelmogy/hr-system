@@ -6,6 +6,7 @@ import BackButton from "@/shared/components/navigation/BackButton";
 import { MappedFile } from "./FileMapper";
 import { FileItem } from "./FileTypeClassifier";
 import { formatDistanceToNow } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 export interface GroupFilesViewProps {
   groupName: string;
@@ -33,6 +34,7 @@ const GroupFilesView: React.FC<GroupFilesViewProps> = ({
   onOpenFile,
   onDeleteFile,
 }) => {
+  const { t } = useTranslation();
   const filteredFiles = query.trim()
     ? files.filter((f) =>
         (f.name || "").toLowerCase().includes(query.trim().toLowerCase())
@@ -62,8 +64,8 @@ const GroupFilesView: React.FC<GroupFilesViewProps> = ({
       <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
         <BackButton
           onClick={onBackClick ?? (() => undefined)}
-          tooltip="Back to groups"
-          ariaLabel="Back to groups"
+          tooltip={t("files.backToGroups")}
+          ariaLabel={t("files.backToGroups")}
         />
         <MyTextField
           containerSx={{ width: 300 }}
@@ -72,7 +74,7 @@ const GroupFilesView: React.FC<GroupFilesViewProps> = ({
           margin="none"
           maxValue={200}
           size="small"
-          label="Search in group"
+          label={t("files.searchInGroup")}
           value={query}
           onChange={(e) => handleQueryChange(e.target.value)}
         />
@@ -85,13 +87,7 @@ const GroupFilesView: React.FC<GroupFilesViewProps> = ({
             <FileTile
               key={f.id}
               name={f.name}
-              subtitle={[
-                f.updatedAt
-                  ? `Updated ${formatDistanceToNow(new Date(f.updatedAt))} ago`
-                  : undefined,
-              ]
-                .filter(Boolean)
-                .join(" • ")}
+              subtitle={`${t("general.createdOn")}: ${formatDistanceToNow(new Date(f.createdAt), { addSuffix: true })}`}
               onOpen={() => {
                 if (originalFile) onOpenFile?.(originalFile);
               }}

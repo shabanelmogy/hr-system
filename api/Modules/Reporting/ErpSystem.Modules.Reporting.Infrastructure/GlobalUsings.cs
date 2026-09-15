@@ -1,0 +1,17 @@
+global using ErpSystem.Modules.Reporting.Contracts.Authorization;
+global using System.Globalization;
+global using System.Security.Cryptography;
+global using System.Text;
+global using ErpSystem.BuildingBlocks.Application.Common.Errors;
+global using ErpSystem.BuildingBlocks.Application.Common.Realtime;
+global using ErpSystem.BuildingBlocks.Context.Authentication;
+global using ErpSystem.Modules.Platform.Contracts.Authorization;
+global using ErpSystem.Modules.ReferenceData.Contracts.Reporting;
+global using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.Extensions.Caching.Hybrid;
+global using Microsoft.Extensions.Options;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.AspNetCore.Http;

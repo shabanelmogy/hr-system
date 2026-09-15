@@ -11,6 +11,13 @@ as the copy-ready scope contract and the review artifact as the evidence ledger.
 `Required` means current-release and gated, `Deferred` requires an owner/trigger,
 and `Excluded` means no runtime surface.
 
+For any API work, also follow
+`documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`. Phase 00 cannot close and
+runtime implementation cannot begin until the Existing-System Relationship Review
+and all three Business Readiness matrices in `IMPLEMENTATION-REQUEST.md` are
+complete for the known scope. Every Edge Cases & Validation category must contain
+scenarios or an explicit `N/A` with a reason.
+
 ## Required outputs
 
 1. Copy `FEATURE-REVIEW-ARTIFACTS.template.md` to `features/<feature>/<FEATURE>-REVIEW-ARTIFACTS.md`.
@@ -23,6 +30,8 @@ and `Excluded` means no runtime surface.
    reason for every platform difference.
 7. Separate verified current behavior, requested behavior, intentional platform differences, and unresolved findings.
 8. Record tests that prove each contract rather than only naming test folders.
+9. Complete the Business Rules Matrix, Edge Cases & Validation Matrix, and Impact
+   Matrix in `IMPLEMENTATION-REQUEST.md`; update them when discovery changes scope.
 
 ## Discovery checklist
 
@@ -39,6 +48,17 @@ and `Excluded` means no runtime surface.
       evidence path; no decision is inferred from the selected reference.
 - [ ] Verification gates are identified before coding, including manual and
       environment-dependent checks.
+- [ ] Existing-System Relationship Review is complete and the owning capability is
+      resolved; no parallel/workaround owner is being introduced.
+- [ ] Business Rules Matrix records every known rule with one primary owner,
+      stable outcome/error, and required test.
+- [ ] Every Edge Cases & Validation category is covered by scenarios or explicitly
+      marked `N/A` with a reason and has an enforcement layer plus required test.
+- [ ] Impact Matrix classifies Domain, CQRS, persistence, API, security/scope,
+      migration/data, integrations/runtime effects, tests, clients, and docs as
+      `Reuse`, `Extend`, `Change`, `Add`, or reasoned `N/A`.
+- [ ] No unresolved ownership, matrix placeholder, or unclassified edge-case row
+      remains before Phase 00 is closed.
 
 ## Approved references
 
@@ -52,13 +72,13 @@ and `Excluded` means no runtime surface.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | tenant-module-entitlements-master | 1 | `7a1664dc8692c84e5f0d34ce051180c314ed505deafeefab8a059c6fc68126c3` |
-| tenant-module-entitlements-master | 2 | `5b2d5e87363de87e3a003730b0123359dca60f3f46455a0672db0ed2ab9e4f94` |
+| tenant-module-entitlements-master | 2 | `2e7b60ecd221f14bb754a9726ee770020e87de7cf5f79b4a518fc80165a6696e` |
 | tenant-module-entitlements-master | 5 | `33487ff92f7cbe8016aefa881fa307cdd8cd24645d06255261b68bcdcf41b1c9` |
-| tenant-module-entitlements-master | 8 | `600f4185fb40b51e4d07cfc5bfb174e431721fd540d5d784cd9f15a2cddb499f` |
+| tenant-module-entitlements-master | 8 | `9e8b5674dbf4c97a1895c5d66c203aa67822631d4a66c0fc6db7f1af3d97aafe` |
 | tenant-module-entitlements-master | 9 | `60c69fc638e2b14a82907e3c7d6c6a9b1df99042b776f0ba848ff33754256bfe` |
-| tenant-module-entitlements-api | 1 | `5da0d07803f38c790d1b6f8d545ab301c5469f1e42b4f9fe1f0da8012419e128` |
-| tenant-module-entitlements-api | 10 | `bcc7ef77c03aba1632b982232bdf6c92b819081cab9cb1805446bd76096aaf6b` |
-| tenant-module-entitlements-api | 11 | `62b4bda820b48962d43bc70ca3fcc4a591d655617bff17b8bf4bd36d811e221a` |
+| tenant-module-entitlements-api | 1 | `040a7eab03d342360325a061f06bf27f1b2c9cacc8559af835b40daf87950528` |
+| tenant-module-entitlements-api | 10 | `479d38c1e960adbe09bc5ce6f8690f88f99ada41c5d71bdc25a8197d56d9913e` |
+| tenant-module-entitlements-api | 11 | `2a6817fbd4f4f819446478653927804e26295f987e42cfd9a22c7b13a30074f0` |
 | tenant-module-entitlements-web | 1 | `92537e75c7e2394ffe61cb474399c65abd0606a68251ac628ab549ef8182397a` |
 | tenant-module-entitlements-web | 2 | `f244e2800352bed39f0e4db75904dbdde70021e3ff14b2ac7f483256503e7687` |
 | tenant-module-entitlements-web | 12 | `e78b2a2fdec5376b2db3df3a3445f1a1540910ebb1a87b98bb58214ec3561493` |

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CompanyGeographicScopePage } from "@/modules/hr/basic-data/organizational-structure/company-geographic-scope";
+import { CompanyGeographicScopePage } from "@/platform/company-geographic-scope";
 
 export const metadata: Metadata = {
   title: "Company Geographic Scope | ERP System",

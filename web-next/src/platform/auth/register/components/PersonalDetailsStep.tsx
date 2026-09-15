@@ -10,9 +10,9 @@ import Person2Icon from "@mui/icons-material/Person2";
 interface PersonalDetailsStepProps {
   register: UseFormRegister<RegistrationFormData>;
   errors: FieldErrors<RegistrationFormData>;
-  firstNameRef: React.RefObject<HTMLInputElement>;
-  lastNameRef: React.RefObject<HTMLInputElement>;
-  userNameRef: React.RefObject<HTMLInputElement>;
+  firstNameRef: React.RefObject<HTMLInputElement | null>;
+  lastNameRef: React.RefObject<HTMLInputElement | null>;
+  userNameRef: React.RefObject<HTMLInputElement | null>;
   t: (key: string) => string;
 }
 
@@ -51,14 +51,14 @@ const PersonalDetailsStep = ({
           mb: 0.5,
         }}
       >
-        {t("auth.personalDetails") || "Personal Details"}
+        {t("auth.personalDetails")}
       </Typography>
       <MyTextField
         counter
         errors={errors}
         fieldName="firstName"
         inputRef={firstNameRef}
-        label={t("auth.firstName") || "First Name"}
+        label={t("auth.firstName")}
         maxValue={50}
         minValue={3}
         register={register("firstName")}
@@ -71,7 +71,7 @@ const PersonalDetailsStep = ({
         errors={errors}
         fieldName="lastName"
         inputRef={lastNameRef}
-        label={t("auth.lastName") || "Last Name"}
+        label={t("auth.lastName")}
         maxValue={50}
         minValue={3}
         register={register("lastName")}
@@ -84,7 +84,7 @@ const PersonalDetailsStep = ({
         errors={errors}
         fieldName="userName"
         inputRef={userNameRef}
-        label={t("auth.userName") || "Username"}
+        label={t("auth.userName")}
         maxValue={50}
         minValue={3}
         register={register("userName")}

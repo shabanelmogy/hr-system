@@ -7,7 +7,7 @@ import { alpha, Avatar, Box, Divider, Typography, type Theme } from "@mui/materi
 import { useState, type Dispatch, type RefObject, type SetStateAction } from "react";
 import Link from "next/link";
 import { gradientIconStyle } from "@/theme/componentStyles";
-import { publicSelfRegistrationEnabled } from "@/config/publicEnv";
+import { publicBackendOverrideEnabled, publicSelfRegistrationEnabled } from "@/config/publicEnv";
 import type { AppRoutes } from "@/config/routes";
 import type { Translator } from "../../types";
 import type { SocialLoginHandler } from "../types";
@@ -158,7 +158,7 @@ const LoginForm = ({
         loading={false}
         disabled={isAnySubmitting}
       />
-      <ServerUrlField isDarkMode={isDarkMode} />
+      {publicBackendOverrideEnabled && <ServerUrlField isDarkMode={isDarkMode} />}
       {publicSelfRegistrationEnabled && (
         <Box sx={{ position: "relative", display: "flex", justifyContent: "center", alignItems: "center", mt: 2, pb: 1 }}>
           <RegisterLink t={t} theme={theme} appRoutes={appRoutes} />

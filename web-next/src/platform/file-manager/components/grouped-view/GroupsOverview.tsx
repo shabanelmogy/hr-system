@@ -46,7 +46,7 @@ const GroupsOverview: React.FC<GroupsOverviewProps> = ({
             dataSource={[
               { label: t("files.name"), value: "name" },
               { label: t("files.size"), value: "size" },
-              { label: t("files.lastUpdated"), value: "updated" },
+              { label: t("general.createdOn"), value: "created" },
             ]}
             displayMember="label"
             handleSelectionChange={(event) => onSortKeyChange(event.target.value as SortKey)}

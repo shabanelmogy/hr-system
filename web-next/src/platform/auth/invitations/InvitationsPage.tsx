@@ -1,12 +1,13 @@
 "use client";
 
-import { UserForm, UserInvitationsPanel } from "@/platform/auth/users";
+import { UserInvitationsPanel } from "@/platform/auth/users";
 import { permissions } from "@/lib/auth/permissions";
 import { ContentWrapper } from "@/shared/components/layout";
 import { PageHeader } from "@/shared/components/navigation/header";
 import { usePermissions } from "@/shared/hooks/usePermissions";
 import { useTranslation } from "react-i18next";
 import useInvitationManagement from "./hooks/useInvitationManagement";
+import InvitationForm from "./components/InvitationForm";
 
 const InvitationsPage = () => {
   const { t } = useTranslation();
@@ -44,10 +45,8 @@ const InvitationsPage = () => {
           onRevoke={onRevoke}
           t={t}
         />
-        <UserForm
+        <InvitationForm
           open={isFormOpen}
-          dialogType="add"
-          selectedUser={null}
           onClose={closeForm}
           onSubmit={submitInvitation}
           loading={loading}

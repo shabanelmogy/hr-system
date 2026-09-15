@@ -46,6 +46,9 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const sidebarScope = dedicatedLayoutRoute ? appRoutes.basicData.index : "main";
   const activeModuleCode = requiredModuleForPath(pathname)?.moduleCode.toLowerCase() ?? null;
   useModuleTranslations(activeModuleCode);
+  const isModuleLauncher =
+    pathname === appRoutes.apps ||
+    (pathname === appRoutes.home && !hasRole(["super_admin"]));
   const activeSidebarContextKey = activeModuleCode
     ? `${sidebarScope}:${activeModuleCode}`
     : null;
@@ -71,6 +74,12 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const handleDrawerToggle = () => setOpen((current) => !current);
 
   React.useEffect(() => {
+    if (isModuleLauncher) {
+      setOpen(false);
+      previousSidebarContextRef.current = null;
+      return;
+    }
+
     if (
       activeSidebarContextKey &&
       activeSidebarContextKey !== previousSidebarContextRef.current
@@ -79,7 +88,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
     }
 
     previousSidebarContextRef.current = activeSidebarContextKey;
-  }, [activeSidebarContextKey, desktopNavigation, setOpen]);
+  }, [activeSidebarContextKey, desktopNavigation, isModuleLauncher, setOpen]);
 
   useTokenRevocation();
 
@@ -106,13 +115,20 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
           },
         }}
       >
-        <TopBar open={open} handleDrawerToggle={handleDrawerToggle} onHeightChange={setToolbarHeight} />
-
-        <SideBar
+        <TopBar
           open={open}
-          hideWhenClosed={false}
-          handleDrawerClose={handleDrawerClose}
+          handleDrawerToggle={handleDrawerToggle}
+          onHeightChange={setToolbarHeight}
+          showSidebarToggle={!isModuleLauncher}
         />
+
+        {!isModuleLauncher && (
+          <SideBar
+            open={open}
+            hideWhenClosed={false}
+            handleDrawerClose={handleDrawerClose}
+          />
+        )}
 
         <Box
           component="main"

@@ -3,6 +3,7 @@ import React from "react";
 import { DialogContent, Box, useTheme, alpha } from "@mui/material";
 import { MyOverlayLoader } from "@/shared/components/loaders";
 import { useFormContext } from "./FormContext";
+import { useTranslation } from "react-i18next";
 
 const getFormOverlayIcon = (actionType?: string | null) => {
   switch (actionType) {
@@ -17,6 +18,7 @@ const getFormOverlayIcon = (actionType?: string | null) => {
 
 export const FormContent: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const { 
     hideFooter, 
     variant, 
@@ -101,7 +103,7 @@ export const FormContent: React.FC<{ children?: React.ReactNode }> = ({ children
         <MyOverlayLoader
           open={true}
           customIcon={getFormOverlayIcon(overlayActionType)}
-          message={overlayMessage || "Saving..."}
+          message={overlayMessage || t("actions.save")}
         />
       )}
 

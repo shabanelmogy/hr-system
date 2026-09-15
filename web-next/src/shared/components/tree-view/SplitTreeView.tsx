@@ -28,6 +28,7 @@ import {
   Business,
 } from "@mui/icons-material";
 import { motion, type PanInfo } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import HierarchicalTreeList from "./HierarchicalTreeList";
 import type { SplitTreeViewProps, TreeNode } from "./types";
 
@@ -49,7 +50,7 @@ export default function SplitTreeView<T>({
   onSelect,
   selectedId: controlledSelectedId,
   rootTitle,
-  searchPlaceholder = "Search...",
+  searchPlaceholder,
   loading = false,
   detailPanelWidth = 420,
   initialDetailPanelOpen = true,
@@ -58,7 +59,8 @@ export default function SplitTreeView<T>({
   onEdit,
 }: SplitTreeViewProps<T>) {
   const theme = useTheme();
-  const isRtl = theme.direction === "rtl";
+  const { t } = useTranslation();
+  const resolvedSearchPlaceholder = searchPlaceholder ?? t("common.search");
 
   const [internalSelectedId, setInternalSelectedId] = useState<number | string | null>(null);
   const selectedId = controlledSelectedId !== undefined ? controlledSelectedId : internalSelectedId;
@@ -457,7 +459,7 @@ export default function SplitTreeView<T>({
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, flex: 1, minWidth: 200, maxWidth: 380 }}>
           <TextField
             size="small"
-            placeholder={searchPlaceholder}
+            placeholder={resolvedSearchPlaceholder}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             slotProps={{
@@ -483,19 +485,19 @@ export default function SplitTreeView<T>({
 
         <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
           <Chip
-            label={isRtl ? `${items.length} عنصر` : `${items.length} items`}
+            label={t("treeView.itemCount", { count: items.length })}
             size="small"
             color="default"
             variant="outlined"
             sx={{ fontWeight: 700, mr: 0.5 }}
           />
 
-          <Tooltip title={isRtl ? "فرد الكل" : "Expand all"}>
+          <Tooltip title={t("treeView.expandAll")}>
             <IconButton size="small" onClick={expandAll}>
               <UnfoldMore />
             </IconButton>
           </Tooltip>
-          <Tooltip title={isRtl ? "طي الكل" : "Collapse all"}>
+          <Tooltip title={t("treeView.collapseAll")}>
             <IconButton size="small" onClick={collapseAll}>
               <UnfoldLess />
             </IconButton>
@@ -504,7 +506,7 @@ export default function SplitTreeView<T>({
           {variant === "diagram" && (
             <>
               <Box sx={{ width: 1, height: 24, backgroundColor: theme.palette.divider, mx: 0.5 }} />
-              <Tooltip title={isRtl ? "تكبير" : "Zoom in"}>
+              <Tooltip title={t("treeView.zoomIn")}>
                 <IconButton
                   size="small"
                   onClick={() => setZoom((z) => Math.min(1.4, Number((z + 0.1).toFixed(1))))}
@@ -514,7 +516,7 @@ export default function SplitTreeView<T>({
                 </IconButton>
               </Tooltip>
 
-              <Tooltip title={isRtl ? "إعادة الضبط" : "Reset zoom"}>
+              <Tooltip title={t("treeView.resetZoom")}>
                 <Button
                   size="small"
                   variant="outlined"
@@ -525,7 +527,7 @@ export default function SplitTreeView<T>({
                 </Button>
               </Tooltip>
 
-              <Tooltip title={isRtl ? "تصغير" : "Zoom out"}>
+              <Tooltip title={t("treeView.zoomOut")}>
                 <IconButton
                   size="small"
                   onClick={() => setZoom((z) => Math.max(0.6, Number((z - 0.1).toFixed(1))))}
@@ -535,7 +537,7 @@ export default function SplitTreeView<T>({
                 </IconButton>
               </Tooltip>
 
-              <Tooltip title={isFullscreen ? (isRtl ? "خروج من ملء الشاشة" : "Exit Fullscreen") : (isRtl ? "ملء الشاشة" : "Fullscreen")}>
+              <Tooltip title={isFullscreen ? t("treeView.exitFullscreen") : t("treeView.fullscreen")}>
                 <IconButton size="small" onClick={toggleFullscreen} color={isFullscreen ? "primary" : "default"}>
                   {isFullscreen ? <FullscreenExit /> : <Fullscreen />}
                 </IconButton>
@@ -546,7 +548,7 @@ export default function SplitTreeView<T>({
           {hasDetailPanel && (
             <>
               <Box sx={{ width: 1, height: 24, backgroundColor: theme.palette.divider, mx: 0.5 }} />
-              <Tooltip title={isDetailPanelOpen ? (isRtl ? "إخفاء لوحة التفاصيل" : "Hide details") : (isRtl ? "عرض لوحة التفاصيل" : "Show details")}>
+              <Tooltip title={isDetailPanelOpen ? t("treeView.hideDetails") : t("treeView.showDetails")}>
                 <IconButton
                   size="small"
                   color={isDetailPanelOpen ? "primary" : "default"}
@@ -650,7 +652,7 @@ export default function SplitTreeView<T>({
                 <Business color="primary" fontSize="small" />
                 {typeof rootTitle === "string" || !rootTitle ? (
                   <Box sx={{ fontWeight: 700, color: "primary.main", fontSize: "0.95rem" }}>
-                    {rootTitle ?? (isRtl ? "المستوى الرئيسي للشركة" : "Company Root Level")}
+                    {rootTitle ?? t("treeView.companyRootLevel")}
                   </Box>
                 ) : (
                   rootTitle
@@ -719,7 +721,7 @@ export default function SplitTreeView<T>({
               renderEmptyDetailPanel()
             ) : (
               <Box sx={{ p: 3, textAlign: "center", color: "text.secondary" }}>
-                {isRtl ? "اختر عنصراً من الشجرة لعرض تفاصيله" : "Select an item from the tree to inspect details."}
+                {t("treeView.selectItemPrompt")}
               </Box>
             )}
           </Paper>

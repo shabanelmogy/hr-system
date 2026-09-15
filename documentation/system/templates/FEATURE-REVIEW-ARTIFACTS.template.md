@@ -125,8 +125,8 @@ Do not combine Managed Crystal `.rpt` records with ActiveReports/RDLX
 | Runtime/deployment | `<services/configuration that must be deployed>` |
 | Verification | `<scope, ACL, schema, client payload, render/viewer tests>` |
 
-For Managed Crystal, also record evidence that the HR API data profile and Crystal
-runtime schema profile match, that a manager-owned version is published, and that
+For Managed Crystal, also record evidence that the Reporting data provider/owning-
+module source and Crystal runtime schema profile match, that a manager-owned version is published, and that
 the intended current-company roles have `Run`. Clients send only report ID,
 `ar`/`en`, and bounded feature filters; they never send a path, filename, SQL,
 connection string, tenant ID, or company ID.

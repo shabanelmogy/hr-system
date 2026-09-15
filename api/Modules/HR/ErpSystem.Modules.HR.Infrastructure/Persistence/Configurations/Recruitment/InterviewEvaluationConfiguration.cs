@@ -1,4 +1,5 @@
 using ErpSystem.Modules.HR.Domain.Recruitment.Entities;
+using ErpSystem.Modules.HR.Domain.Employees.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,5 +17,11 @@ public sealed class InterviewEvaluationConfiguration : IEntityTypeConfiguration<
 
         builder.HasIndex(x => new { x.InterviewId, x.InterviewerEmployeeId });
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.InterviewId });
+
+        builder.HasOne(x => x.InterviewerEmployee)
+            .WithMany()
+            .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.InterviewerEmployeeId })
+            .HasPrincipalKey(x => new { x.TenantId, x.CompanyId, x.Id })
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -1,6 +1,5 @@
 import useViewLayout from "@/shared/hooks/useViewLayout";
-import ConstructionIcon from "@mui/icons-material/Construction";
-import { Alert, Box, Paper, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Paper, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useMemo, type MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 import DesktopHeaderLayout from "./multi-view-header/DesktopHeaderLayout";
@@ -29,8 +28,6 @@ function SimplePageHeader({
   isDashboard = false,
 }: SimplePageHeaderProps) {
   const theme = useTheme();
-  const { t } = useTranslation();
-
   return (
     <Box sx={{ flexShrink: 0, mb: isDashboard ? 2 : 4 }}>
       <Box
@@ -57,16 +54,6 @@ function SimplePageHeader({
           </Box>
         ) : null}
       </Box>
-      {isDashboard ? (
-        <Alert
-          icon={<ConstructionIcon fontSize="inherit" />}
-          severity="warning"
-          variant="outlined"
-          sx={{ mt: 1, alignItems: "center", py: 0.5, "& .MuiAlert-message": { p: 0 } }}
-        >
-          {t("navigation.dashboardNotice")}
-        </Alert>
-      ) : null}
     </Box>
   );
 }

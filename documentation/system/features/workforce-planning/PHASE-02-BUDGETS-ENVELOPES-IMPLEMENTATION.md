@@ -503,7 +503,7 @@ Run the narrow tests first, then at minimum:
 
 ```powershell
 dotnet build api/ErpSystem.Api/ErpSystem.Api.csproj --no-restore
-dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore
+dotnet test api/Modules/HR/ErpSystem.Modules.HR.Tests/ErpSystem.Modules.HR.Tests.csproj --no-restore
 npm run type-check --prefix web-next
 npm run check:architecture --prefix web-next
 npm run typecheck --prefix mobile-react

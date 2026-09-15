@@ -28,8 +28,8 @@ interface ProfilePictureStepProps {
   handleDragLeave: (event: React.DragEvent<HTMLDivElement>) => void;
   handleDragOver: (event: React.DragEvent<HTMLDivElement>) => void;
   handleDrop: (event: React.DragEvent<HTMLDivElement>) => void;
-  fileInputRef: React.RefObject<HTMLInputElement>;
-  dropZoneRef: React.RefObject<HTMLDivElement>;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
+  dropZoneRef: React.RefObject<HTMLDivElement | null>;
   isLoading: boolean;
   registrationProgress: number;
   isMobile: boolean;
@@ -65,7 +65,7 @@ const ProfilePictureStep = ({
           mb: 0.5,
         }}
       >
-        {t("auth.profilePicture") || "Profile Picture"}
+        {t("auth.profilePicture")}
       </Typography>
       <Box
         sx={{
@@ -92,11 +92,11 @@ const ProfilePictureStep = ({
               color: theme.palette.text.secondary,
             }}
           >
-            {t("actions.preview") || "Preview"}
+            {t("actions.preview")}
           </Typography>
 
           <Avatar
-            src={previewUrl}
+            src={previewUrl ?? undefined}
             sx={{
               width: 120,
               height: 120,
@@ -145,7 +145,7 @@ const ProfilePictureStep = ({
                 <Typography variant="body2" sx={{
                   fontWeight: 500
                 }}>
-                  {t("auth.imageVerified") || "Image verified"}
+                  {t("auth.imageVerified")}
                 </Typography>
               </Box>
             </Box>
@@ -193,7 +193,7 @@ const ProfilePictureStep = ({
             type="file"
             ref={fileInputRef}
             style={{ display: "none" }}
-            accept="image/jpeg,image/png,image/gif,image/webp"
+            accept="image/jpeg,image/png"
             onChange={onFileChange}
           />
 
@@ -211,7 +211,7 @@ const ProfilePictureStep = ({
           <Typography variant="body1" sx={{
             fontWeight: 500
           }}>
-            {t("actions.dragAndDropOr") || "Drag and drop or"}{" "}
+            {t("actions.dragAndDropOr")}{" "}
             <Box
               component="span"
               sx={{
@@ -224,7 +224,7 @@ const ProfilePictureStep = ({
                 }),
               }}
             >
-              {t("actions.browse") || "browse"}
+              {t("actions.browse")}
             </Box>
           </Typography>
 
@@ -233,18 +233,7 @@ const ProfilePictureStep = ({
             color={uploadError ? theme.palette.error.main : "text.secondary"}
             sx={{ display: "block", mt: 1 }}
           >
-            {uploadError ||
-              t("general.supportedFormats") ||
-              "Supported formats: JPEG, PNG"}
-          </Typography>
-          <Typography
-            variant="caption"
-            sx={{
-              color: "text.secondary",
-              display: "block",
-              mt: 0.5
-            }}>
-            {t("validation.maxFileSize") || "Max file size: 10MB"}
+            {uploadError ?? `${t("general.supportedFormats")} ${t("validation.maxFileSize")}`}
           </Typography>
         </Box>
       </Box>
@@ -272,10 +261,10 @@ const ProfilePictureStep = ({
           {isLoading ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <CircularProgress size={20} sx={{ mr: 1 }} color="inherit" />
-              {t("auth.registering") || "Registering..."}
+              {t("auth.registering")}
             </Box>
           ) : (
-            t("auth.completeRegistration") || "Complete Registration"
+            t("auth.completeRegistration")
           )}
         </Button>
 
@@ -302,8 +291,7 @@ const ProfilePictureStep = ({
           <Typography variant="caption" sx={{
             color: "text.secondary"
           }}>
-            {t("auth.profilePictureOptional") ||
-              "Profile picture is optional and can be added later"}
+            {t("auth.profilePictureOptional")}
           </Typography>
         </Box>
       )}

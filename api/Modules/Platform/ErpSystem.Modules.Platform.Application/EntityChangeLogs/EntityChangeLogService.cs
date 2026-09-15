@@ -173,7 +173,7 @@ internal sealed class EntityChangeLogService(
             JsonNewValues = newValuesJson,
             ChangedById = currentActor.UserId
                 ?? throw new InvalidOperationException("User is not authenticated"),
-            ChangedByPc = Environment.MachineName
+            ChangedByPc = currentActor.MachineName ?? string.Empty
         };
 
         await store.AddAsync(

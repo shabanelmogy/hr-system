@@ -116,7 +116,7 @@ jobs:
         working-directory: ./api
         env:
           ERPSYSTEM_TEST_SQLSERVER_CONNECTION: 'Server=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;TrustServerCertificate=True;'
-        run: dotnet test ./ErpSystem.Tests/ErpSystem.Tests.csproj --configuration Release --no-build --no-restore -v:minimal
+        run: dotnet test ./ErpSystem.sln --configuration Release --no-build --no-restore -v:minimal
 
       - name: Restore local .NET tools
         shell: pwsh
@@ -128,11 +128,7 @@ jobs:
         working-directory: ./api
         env:
           ConnectionStrings__DefaultConnection: 'Server=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;TrustServerCertificate=True;'
-        run: |
-          dotnet ef migrations has-pending-model-changes --project ./Modules/HR/ErpSystem.Modules.HR.Infrastructure/ErpSystem.Modules.HR.Infrastructure.csproj --startup-project ./Modules/HR/ErpSystem.Modules.HR.Infrastructure/ErpSystem.Modules.HR.Infrastructure.csproj --context ApplicationDbContext --configuration Release --no-build
-          dotnet ef migrations has-pending-model-changes --project ./Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/ErpSystem.Modules.Accounting.Infrastructure.csproj --startup-project ./Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/ErpSystem.Modules.Accounting.Infrastructure.csproj --context AccountingDbContext --configuration Release --no-build
-          dotnet ef migrations has-pending-model-changes --project ./Modules/Contacts/ErpSystem.Modules.Contacts.Infrastructure/ErpSystem.Modules.Contacts.Infrastructure.csproj --startup-project ./Modules/Contacts/ErpSystem.Modules.Contacts.Infrastructure/ErpSystem.Modules.Contacts.Infrastructure.csproj --context ContactsDbContext --configuration Release --no-build
-          dotnet ef migrations has-pending-model-changes --project ./Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/ErpSystem.Modules.Platform.Infrastructure.csproj --startup-project ./Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/ErpSystem.Modules.Platform.Infrastructure.csproj --context PlatformDbContext --configuration Release --no-build
+        run: ./scripts/Test-ErpModuleModelDrift.ps1 -Configuration Release -NoBuild
 
       - name: Publish release artifact
         shell: pwsh

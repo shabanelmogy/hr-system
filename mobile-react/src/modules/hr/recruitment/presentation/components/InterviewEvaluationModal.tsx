@@ -1,20 +1,22 @@
 import React, { useMemo, useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@/src/core/theme';
-import { AppButton, AppIcon, AppText, showToast } from '@/src/shared/components';
+import { AppButton, AppIcon, AppModal, AppStateView, AppText, showToast } from '@/src/shared/components';
 import { useCompleteInterview, useEvaluateInterview, useScorecardTemplate } from '../queries/use-recruitment';
 import {
   InterviewEvaluationRecommendation,
+  InterviewStatus,
+  type InterviewDto,
   type InterviewSkillEvaluationDto,
   type JobSkillDto,
 } from '../../domain/models/recruitment';
 
 interface InterviewEvaluationModalProps {
   visible: boolean;
-  interviewId: number | null;
-  candidateName?: string;
-  positionTitle?: string;
+  interview: InterviewDto | null;
+  canManageApplications: boolean;
+  canEvaluateInterviews: boolean;
   onClose: () => void;
   onSuccess?: () => void;
 }
@@ -30,26 +32,28 @@ interface SkillRatingState {
 
 export function InterviewEvaluationModal({
   visible,
-  interviewId,
-  candidateName,
-  positionTitle,
+  interview,
+  canManageApplications,
+  canEvaluateInterviews,
   onClose,
   onSuccess,
 }: InterviewEvaluationModalProps) {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const { theme } = useAppTheme();
   const completeMutation = useCompleteInterview();
   const evaluateMutation = useEvaluateInterview();
+  const [completedInterviewId, setCompletedInterviewId] = useState<number | null>(null);
 
-  const { data: template } = useScorecardTemplate(
-    interviewId ?? 0
+  const scorecardQuery = useScorecardTemplate(
+    interview?.id ?? 0
   );
+  const template = scorecardQuery.data;
 
   const templateKey = useMemo(
-    () => `${interviewId ?? 0}:${template?.interviewId ?? 0}:${(template?.skills ?? [])
+    () => `${interview?.id ?? 0}:${template?.interviewId ?? 0}:${(template?.skills ?? [])
       .map((skill) => `${skill.skillName}:${skill.defaultWeightPercentage}:${skill.isMandatory}`)
       .join('|')}`,
-    [interviewId, template]
+    [interview?.id, template]
   );
   const defaultRatings = useMemo<SkillRatingState[]>(
     () => (template?.skills ?? []).map((skill: JobSkillDto) => ({
@@ -88,20 +92,30 @@ export function InterviewEvaluationModal({
   const hasFailedMandatory = ratings.some((r) => r.isMandatory && r.score < 3);
 
   const recommendations = [
-    { id: InterviewEvaluationRecommendation.StrongHire, label: t('recruitment.recommendations.strongHire', 'توصية قوية / Strong Hire') },
-    { id: InterviewEvaluationRecommendation.Hire, label: t('recruitment.recommendations.hire', 'قبول / Hire') },
-    { id: InterviewEvaluationRecommendation.Hold, label: t('recruitment.recommendations.hold', 'معلق / Hold') },
-    { id: InterviewEvaluationRecommendation.NoHire, label: t('recruitment.recommendations.noHire', 'عدم قبول / No Hire') },
+    { id: InterviewEvaluationRecommendation.StrongHire, label: t('recruitment.recommendations.strongHire') },
+    { id: InterviewEvaluationRecommendation.Hire, label: t('recruitment.recommendations.hire') },
+    { id: InterviewEvaluationRecommendation.Hold, label: t('recruitment.recommendations.hold') },
+    { id: InterviewEvaluationRecommendation.NoHire, label: t('recruitment.recommendations.noHire') },
   ];
 
+  const interviewCanBeEvaluated = canEvaluateInterviews && (interview?.status === InterviewStatus.Completed || (
+    interview?.status === InterviewStatus.Scheduled &&
+    (canManageApplications || completedInterviewId === interview.id)
+  ));
+  const templateMatchesInterview = !!interview && !!template && template.interviewId === interview.id;
+  const templateReady = templateMatchesInterview && template.skills.length > 0;
+
   const handleSubmit = async () => {
-    if (!interviewId) return;
+    if (!interview || !interviewCanBeEvaluated || !templateReady) return;
 
     try {
-      try {
-        await completeMutation.mutateAsync(interviewId);
-      } catch {
-        // Continue if already marked complete
+      if (
+        interview.status === InterviewStatus.Scheduled &&
+        completedInterviewId !== interview.id
+      ) {
+        if (!canManageApplications) return;
+        await completeMutation.mutateAsync(interview.id);
+        setCompletedInterviewId(interview.id);
       }
 
       const skillEvaluations: InterviewSkillEvaluationDto[] = ratings.map((r) => ({
@@ -109,11 +123,11 @@ export function InterviewEvaluationModal({
         score: r.score,
         weightPercentage: r.weightPercentage,
         isMandatory: r.isMandatory,
-        notes: r.notes.trim() || undefined,
+        notes: r.notes.trim() || null,
       }));
 
       await evaluateMutation.mutateAsync({
-        id: interviewId,
+        id: interview.id,
         request: {
           score: Math.round(weightedScore * 10) / 10,
           recommendation,
@@ -122,44 +136,67 @@ export function InterviewEvaluationModal({
         },
       });
 
-      showToast.success(t('recruitment.evaluation.submittedSuccess', 'تم تسجيل تقييم المقابلة بنجاح'));
+      showToast.success(t('recruitment.evaluation.submittedSuccess'));
       onSuccess?.();
       onClose();
     } catch (error) {
-      showToast.error(error, t('common.error', 'حدث خطأ أثناء تسجيل التقييم'));
+      showToast.error(error, t('common.error'));
     }
   };
 
   const isSubmitting = completeMutation.isPending || evaluateMutation.isPending;
 
-  return (
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
-      <View style={styles.overlay}>
-        <View style={[styles.content, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}>
-          {/* Header */}
-          <View style={styles.header}>
-            <View style={styles.headerTitleRow}>
-              <AppIcon name="ribbon-outline" size={22} color={theme.colors.primary} />
-              <View style={{ flex: 1 }}>
-                <AppText variant="titleSmall" weight="800">
-                  {t('recruitment.evaluation.dialogTitle', 'بطاقة تقييم المقابلة / Scorecard')}
-                </AppText>
-                <AppText variant="caption" color="muted">
-                  {candidateName || template?.candidateName || ''} {positionTitle ? `• ${positionTitle}` : ''}
-                </AppText>
-              </View>
-            </View>
-            <Pressable onPress={onClose} hitSlop={8}>
-              <AppIcon name="close" size={20} color={theme.colors.textMuted} />
-            </Pressable>
-          </View>
+  const positionTitle = interview
+    ? (i18n.language.startsWith('ar') ? interview.positionTitleAr : interview.positionTitleEn)
+    : '';
 
-          <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
+  return (
+    <AppModal
+      closeDisabled={isSubmitting}
+      closeLabel={t('common.close')}
+      contentContainerStyle={styles.body}
+      footer={(
+        <View style={[styles.footer, { borderTopColor: theme.colors.border }]}>
+          <AppButton disabled={isSubmitting} variant="outline" onPress={onClose} style={styles.footerBtn}>
+            {t('common.cancel')}
+          </AppButton>
+          <AppButton
+            disabled={!interviewCanBeEvaluated || !templateReady}
+            variant="primary"
+            onPress={handleSubmit}
+            loading={isSubmitting}
+            style={styles.footerBtn}
+          >
+            {t('recruitment.evaluation.submit')}
+          </AppButton>
+        </View>
+      )}
+      icon="ribbon-outline"
+      onClose={onClose}
+      subtitle={interview ? `${interview.candidateName} · ${positionTitle}` : undefined}
+      title={t('recruitment.evaluation.dialogTitle')}
+      visible={visible}
+    >
+      {scorecardQuery.isLoading ? (
+        <AppStateView state="loading" />
+      ) : scorecardQuery.isError || (template && !templateMatchesInterview) ? (
+        <AppStateView
+          message={t('feedback.unknownError')}
+          onRetry={() => { void scorecardQuery.refetch(); }}
+          state="error"
+        />
+      ) : !templateReady ? (
+        <AppStateView
+          message={t('recruitment.evaluation.noScorecardSkills')}
+          state="empty"
+        />
+      ) : (
+      <>
             {/* Score Summary Box */}
             <View style={[styles.scoreBanner, { backgroundColor: `${theme.colors.primary}12`, borderColor: theme.colors.primary }]}>
               <View>
                 <AppText variant="caption" color="muted">
-                  {t('recruitment.evaluation.weightedScore', 'التقييم الموزون')}
+                  {t('recruitment.evaluation.weightedScore')}
                 </AppText>
                 <AppText variant="titleSmall" weight="800" color="primary">
                   {weightedScore.toFixed(1)} / 5.0
@@ -181,14 +218,14 @@ export function InterviewEvaluationModal({
               <View style={[styles.warningBanner, { backgroundColor: `${theme.colors.warning}15`, borderColor: theme.colors.warning }]}>
                 <AppIcon name="alert-circle-outline" size={18} color={theme.colors.warning} />
                 <AppText variant="caption" color="warning" weight="700" style={{ flex: 1 }}>
-                  {t('recruitment.evaluation.mandatoryWarning', 'تنبيه: مهارة إلزامية حصلت على أقل من 3')}
+                  {t('recruitment.evaluation.mandatoryWarning')}
                 </AppText>
               </View>
             )}
 
             {/* Skills List */}
             <AppText variant="label" weight="800" style={{ marginTop: 12, marginBottom: 8 }}>
-              {t('recruitment.evaluation.skillsTitle', 'تقييم المهارات الموزونة للوظيفة')}
+              {t('recruitment.evaluation.skillsTitle')}
             </AppText>
 
             {ratings.map((item, idx) => (
@@ -211,13 +248,13 @@ export function InterviewEvaluationModal({
                       {item.isMandatory && (
                         <View style={[styles.badge, { backgroundColor: `${theme.colors.danger}20` }]}>
                           <AppText variant="caption" color="danger" weight="800" style={{ fontSize: 10 }}>
-                            {t('recruitment.skills.mandatory', 'إلزامي')}
+                            {t('recruitment.skills.mandatory')}
                           </AppText>
                         </View>
                       )}
                     </View>
                     <AppText variant="caption" color="muted">
-                      {t('recruitment.skills.weight', 'الوزن')}: {item.weightPercentage}% • {item.proficiencyLevel}
+                      {t('recruitment.skills.weight')}: {item.weightPercentage}% • {item.proficiencyLevel}
                     </AppText>
                   </View>
 
@@ -253,7 +290,7 @@ export function InterviewEvaluationModal({
 
             {/* Recommendation */}
             <AppText variant="label" weight="800" style={{ marginTop: 14, marginBottom: 8 }}>
-              {t('recruitment.evaluation.recommendation', 'التوصية بالتعيين')}
+              {t('recruitment.evaluation.recommendation')}
             </AppText>
             <View style={styles.chipsRow}>
               {recommendations.map((rec) => {
@@ -284,7 +321,7 @@ export function InterviewEvaluationModal({
 
             {/* General Comments */}
             <AppText variant="label" weight="800" style={{ marginTop: 14, marginBottom: 6 }}>
-              {t('recruitment.evaluation.generalComments', 'ملاحظات المقيم')}
+              {t('recruitment.evaluation.generalComments')}
             </AppText>
             <TextInput
               style={[
@@ -297,66 +334,21 @@ export function InterviewEvaluationModal({
               ]}
               multiline
               numberOfLines={3}
-              placeholder={t('recruitment.evaluation.commentsPlaceholder', 'انطباع المقابلة ونقاط القوة والضعف...')}
+              placeholder={t('recruitment.evaluation.commentsPlaceholder')}
               placeholderTextColor={theme.colors.textMuted}
               value={comments}
               onChangeText={(value) => setCommentsState({ key: templateKey, value })}
             />
-          </ScrollView>
-
-          {/* Footer Actions */}
-          <View style={[styles.footer, { borderTopColor: theme.colors.border }]}>
-            <AppButton variant="outline" onPress={onClose} style={styles.footerBtn}>
-              {t('common.cancel', 'إلغاء')}
-            </AppButton>
-            <AppButton
-              variant="primary"
-              onPress={handleSubmit}
-              loading={isSubmitting}
-              style={styles.footerBtn}
-            >
-              {t('recruitment.evaluation.submit', 'حفظ التقييم')}
-            </AppButton>
-          </View>
-        </View>
-      </View>
-    </Modal>
+      </>
+      )}
+    </AppModal>
   );
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
-  },
-  content: {
-    width: '100%',
-    maxWidth: 480,
-    maxHeight: '90%',
-    borderRadius: 16,
-    borderWidth: 1,
-    overflow: 'hidden',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 18,
-    paddingVertical: 14,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#ddd',
-  },
-  headerTitleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    flex: 1,
-  },
   body: {
-    padding: 16,
+    gap: 8,
+    paddingBottom: 8,
   },
   scoreBanner: {
     flexDirection: 'row',

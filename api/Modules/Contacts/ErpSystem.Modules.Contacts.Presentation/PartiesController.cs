@@ -1,4 +1,5 @@
 using ErpSystem.Modules.Contacts.Application.Parties;
+using ErpSystem.BuildingBlocks.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,10 +8,12 @@ namespace ErpSystem.Modules.Contacts.Presentation;
 
 [ApiController]
 [Authorize]
+[TenantMember]
 [Route("api/v1/contacts/parties")]
 public sealed class PartiesController(ISender sender) : ControllerBase
 {
     [HttpGet("{id:guid}")]
+    [HasPermission(PartyPermissions.View)]
     public async Task<ActionResult<PartyResponse>> Get(Guid id, CancellationToken cancellationToken)
     {
         var response = await sender.Send(new GetPartyQuery(id), cancellationToken);
@@ -18,6 +21,7 @@ public sealed class PartiesController(ISender sender) : ControllerBase
     }
 
     [HttpPost]
+    [HasPermission(PartyPermissions.Create)]
     public async Task<ActionResult<PartyResponse>> Create(
         CreatePartyRequest request,
         CancellationToken cancellationToken)
@@ -34,6 +38,7 @@ public sealed class PartiesController(ISender sender) : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
+    [HasPermission(PartyPermissions.Update)]
     public async Task<ActionResult<PartyResponse>> Update(
         Guid id,
         UpdatePartyRequest request,
@@ -45,6 +50,7 @@ public sealed class PartiesController(ISender sender) : ControllerBase
                 request.DisplayName,
                 request.Email,
                 request.Phone,
+                request.ExpectedRevision,
                 HttpContext.TraceIdentifier),
             cancellationToken);
 
@@ -54,4 +60,8 @@ public sealed class PartiesController(ISender sender) : ControllerBase
 
 public sealed record CreatePartyRequest(string DisplayName, string? Email, string? Phone);
 
-public sealed record UpdatePartyRequest(string DisplayName, string? Email, string? Phone);
+public sealed record UpdatePartyRequest(
+    string DisplayName,
+    string? Email,
+    string? Phone,
+    long ExpectedRevision);

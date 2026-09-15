@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import FactCheckOutlinedIcon from "@mui/icons-material/FactCheckOutlined";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import { useTranslation } from "react-i18next";
@@ -23,16 +22,16 @@ import CriterionEditDialog from "./CriterionEditDialog";
 
 interface ScorecardCriteriaTabProps {
   criteria: EvaluationCriterionConfig[];
+  canEdit: boolean;
   onAddCriterion: (data: Omit<EvaluationCriterionConfig, "id">) => void;
   onUpdateCriterion: (id: string, updates: Partial<EvaluationCriterionConfig>) => void;
-  onDeleteCriterion: (id: string) => void;
 }
 
 export default function ScorecardCriteriaTab({
   criteria,
+  canEdit,
   onAddCriterion,
   onUpdateCriterion,
-  onDeleteCriterion,
 }: ScorecardCriteriaTabProps) {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
@@ -100,14 +99,16 @@ export default function ScorecardCriteriaTab({
             )}
           </Typography>
         </Box>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleOpenAdd}
-          sx={{ fontWeight: 600 }}
-        >
-          {t("recruitment.settings.newCriterionBtn", "إضافة معيار تقييم")}
-        </Button>
+        {canEdit && (
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={handleOpenAdd}
+            sx={{ fontWeight: 600 }}
+          >
+            {t("recruitment.settings.newCriterionBtn", "إضافة معيار تقييم")}
+          </Button>
+        )}
       </Box>
 
       <Alert
@@ -167,20 +168,15 @@ export default function ScorecardCriteriaTab({
               </Box>
 
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <IconButton
-                  size="small"
-                  onClick={() => handleOpenEdit(c)}
-                  sx={{ color: "primary.main" }}
-                >
-                  <EditOutlinedIcon fontSize="small" />
-                </IconButton>
-                <IconButton
-                  size="small"
-                  onClick={() => onDeleteCriterion(c.id)}
-                  sx={{ color: "error.main" }}
-                >
-                  <DeleteOutlineRoundedIcon fontSize="small" />
-                </IconButton>
+                {canEdit && (
+                  <IconButton
+                    size="small"
+                    onClick={() => handleOpenEdit(c)}
+                    sx={{ color: "primary.main" }}
+                  >
+                    <EditOutlinedIcon fontSize="small" />
+                  </IconButton>
+                )}
               </Box>
             </Box>
 

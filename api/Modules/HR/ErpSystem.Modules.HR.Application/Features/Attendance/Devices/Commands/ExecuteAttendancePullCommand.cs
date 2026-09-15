@@ -1,5 +1,5 @@
 using System.Text.Json;
-using ErpSystem.Modules.HR.Application.Abstractions.Messaging;
+using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts;
 using ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities;
 
@@ -10,7 +10,8 @@ public sealed record ExecuteAttendancePullCommand(long RunId) : ICommand<bool>;
 
 public sealed class ExecuteAttendancePullCommandHandler(
     IAttendanceRawStore store, IAttendanceCredentialProtector protector, IAttendanceNetworkPolicy network,
-    IAttendanceConnectorClient connector, IUnitOfWork unitOfWork, TimeProvider clock, AttendanceDeviceEffects effects)
+    IAttendanceConnectorClient connector, IAttendanceEventKeyGenerator eventKeyGenerator,
+    IUnitOfWork unitOfWork, TimeProvider clock, AttendanceDeviceEffects effects)
     : ICommandHandler<ExecuteAttendancePullCommand, bool>
 {
     public async Task<bool> Handle(ExecuteAttendancePullCommand request, CancellationToken ct)
@@ -111,7 +112,7 @@ public sealed class ExecuteAttendancePullCommandHandler(
         run.SkippedCount = result.SkippedCount;
         run.InsertedCount = run.DuplicateCount = run.ErrorCount = 0;
         var zone = TimeZoneInfo.FindSystemTimeZoneById(run.AttendanceDevice.TimeZoneId);
-        var keys = result.Punches.Select(x => RawAttendanceConversion.Key(run.AttendanceDevice.ProviderId, x)).Distinct().ToArray();
+        var keys = result.Punches.Select(x => eventKeyGenerator.Create(run.AttendanceDevice.ProviderId, x)).Distinct().ToArray();
         var existing = new HashSet<string>(StringComparer.Ordinal);
         foreach (var batch in keys.Chunk(500))
             existing.UnionWith(await store.FindPunchKeysAsync(run.AttendanceDeviceId, batch, ct));
@@ -128,7 +129,7 @@ public sealed class ExecuteAttendancePullCommandHandler(
                 run.SkippedCount++;
                 continue;
             }
-            var key = RawAttendanceConversion.Key(run.AttendanceDevice.ProviderId, raw);
+            var key = eventKeyGenerator.Create(run.AttendanceDevice.ProviderId, raw);
             if (!existing.Add(key)) { run.DuplicateCount++; continue; }
             store.Add(new RawAttendancePunch
             {

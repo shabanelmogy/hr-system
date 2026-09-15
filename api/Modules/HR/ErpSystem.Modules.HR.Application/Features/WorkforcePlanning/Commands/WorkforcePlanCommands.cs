@@ -1,13 +1,11 @@
 using FluentValidation;
-using ErpSystem.Modules.HR.Application.Abstractions.Authentication;
-using ErpSystem.Modules.HR.Application.Abstractions.Messaging;
-using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
-using ErpSystem.Modules.HR.Application.Common.Consts;
+using ErpSystem.BuildingBlocks.Context.Authentication;
+using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
+using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Contracts;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Errors;
-using ErpSystem.Modules.HR.Domain.Common.Exceptions;
-using ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Enums;
+using ErpSystem.BuildingBlocks.Domain.Exceptions;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities;
 
 namespace ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Commands;
@@ -190,7 +188,7 @@ public sealed class CreateWorkforcePlanCommandHandler(
             {
                 var fiscalYear = await writeStore.GetFiscalYearAsync(request.FiscalYearId, token);
                 if (fiscalYear is null) return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearNotFound);
-                if (fiscalYear.Status is not (nameof(FiscalYearStatus.Draft) or nameof(FiscalYearStatus.Open)))
+                if (fiscalYear.Status is not ("Draft" or "Open"))
                     return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearMustBeOpen);
 
                 var code = request.PlanCode.Trim().ToUpperInvariant();
@@ -242,7 +240,7 @@ public sealed class UpdateWorkforcePlanCommandHandler(
                 if (plan is null || plan.IsDeleted) return Result.Failure<WorkforcePlanDetailResponse>(errors.NotFound);
                 var fiscalYear = await writeStore.GetFiscalYearAsync(plan.FiscalYearId, token);
                 if (fiscalYear is null) return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearNotFound);
-                if (fiscalYear.Status is not (nameof(FiscalYearStatus.Draft) or nameof(FiscalYearStatus.Open)))
+                if (fiscalYear.Status is not ("Draft" or "Open"))
                     return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearNotEditable);
                 writeStore.ApplyRowVersion(plan, command.Request.RowVersion);
                 plan.UpdateDraft(command.Request.TitleEn, command.Request.TitleAr, command.Request.Description);
@@ -273,7 +271,7 @@ public sealed class SubmitWorkforcePlanCommandHandler(IWorkforcePlanWriteStore s
             if (plan is null || plan.IsDeleted) return Result.Failure<WorkforcePlanDetailResponse>(errors.NotFound);
             var fiscalYear = await store.GetFiscalYearAsync(plan.FiscalYearId, token);
             if (fiscalYear is null) return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearNotFound);
-            if (!string.Equals(fiscalYear.Status, nameof(FiscalYearStatus.Open), StringComparison.Ordinal)) return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearMustBeOpen);
+            if (!string.Equals(fiscalYear.Status, "Open", StringComparison.Ordinal)) return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearMustBeOpen);
             store.ApplyRowVersion(plan, command.RowVersion);
             try { plan.Submit(clock.GetUtcNow(), actor.UserId ?? string.Empty); }
             catch (DomainRuleException) { return Result.Failure<WorkforcePlanDetailResponse>(errors.InvalidTransition); }
@@ -298,7 +296,7 @@ public sealed class BeginWorkforcePlanReviewCommandHandler(IWorkforcePlanWriteSt
             if (plan is null || plan.IsDeleted) return Result.Failure<WorkforcePlanDetailResponse>(errors.NotFound);
             var fiscalYear = await store.GetFiscalYearAsync(plan.FiscalYearId, token);
             if (fiscalYear is null) return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearNotFound);
-            if (!string.Equals(fiscalYear.Status, nameof(FiscalYearStatus.Open), StringComparison.Ordinal))
+            if (!string.Equals(fiscalYear.Status, "Open", StringComparison.Ordinal))
                 return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearMustBeOpen);
             store.ApplyRowVersion(plan, command.RowVersion);
             try { plan.BeginReview(); }
@@ -327,8 +325,8 @@ public sealed class ApproveWorkforcePlanCommandHandler(IWorkforcePlanWriteStore 
             store.ApplyRowVersion(plan, command.RowVersion);
             // Temporary policy: the built-in admin may approve its own plan until dedicated
             // approval permissions with separation-of-duties are introduced.
-            var allowSelfApproval = actor.IsInRole(AppRoles.admin);
-            try { plan.Approve(clock.GetUtcNow(), actor.UserId ?? string.Empty, string.Equals(fiscalYear.Status, nameof(FiscalYearStatus.Open), StringComparison.Ordinal), allowSelfApproval); }
+            var allowSelfApproval = actor.IsInRole(PlatformRoleNames.Admin);
+            try { plan.Approve(clock.GetUtcNow(), actor.UserId ?? string.Empty, string.Equals(fiscalYear.Status, "Open", StringComparison.Ordinal), allowSelfApproval); }
             catch (DomainRuleException exception) when (exception.Code == "WorkforcePlan.FiscalYearMustBeOpen") { return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearMustBeOpen); }
             catch (DomainRuleException exception) when (exception.Code == "WorkforcePlan.SelfApproval") { return Result.Failure<WorkforcePlanDetailResponse>(errors.SelfApproval); }
             catch (DomainRuleException) { return Result.Failure<WorkforcePlanDetailResponse>(errors.InvalidTransition); }
@@ -353,7 +351,7 @@ public sealed class RejectWorkforcePlanCommandHandler(IWorkforcePlanWriteStore s
             if (plan is null || plan.IsDeleted) return Result.Failure<WorkforcePlanDetailResponse>(errors.NotFound);
             var fiscalYear = await store.GetFiscalYearAsync(plan.FiscalYearId, token);
             if (fiscalYear is null) return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearNotFound);
-            if (!string.Equals(fiscalYear.Status, nameof(FiscalYearStatus.Open), StringComparison.Ordinal))
+            if (!string.Equals(fiscalYear.Status, "Open", StringComparison.Ordinal))
                 return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearMustBeOpen);
             store.ApplyRowVersion(plan, command.RowVersion);
             try { plan.Reject(clock.GetUtcNow(), actor.UserId ?? string.Empty, command.Reason); }
@@ -382,7 +380,7 @@ public sealed class CreateWorkforcePlanRevisionCommandHandler(IWorkforcePlanWrit
                 return Result.Failure<WorkforcePlanDetailResponse>(errors.InvalidTransition);
             var fiscalYear = await store.GetFiscalYearAsync(previous.FiscalYearId, token);
             if (fiscalYear is null) return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearNotFound);
-            if (!string.Equals(fiscalYear.Status, nameof(FiscalYearStatus.Open), StringComparison.Ordinal))
+            if (!string.Equals(fiscalYear.Status, "Open", StringComparison.Ordinal))
                 return Result.Failure<WorkforcePlanDetailResponse>(errors.FiscalYearMustBeOpen);
             var revision = new WorkforcePlan(previous.PlanCode, previous.FiscalYearId, previous.TitleEn, previous.TitleAr, previous.Description, previous.RevisionNumber + 1, previous.PlanSeriesId, previous.Id)
             {
@@ -430,7 +428,7 @@ public sealed class ArchiveWorkforcePlanCommandHandler(
 
             plan.IsDeleted = true;
             plan.DeletedById = actor.UserId;
-            plan.DeletedByPc = Environment.MachineName;
+            plan.DeletedByPc = actor.MachineName;
             plan.DeletedOn = clock.GetUtcNow().UtcDateTime;
             await uow.SaveChangesAsync(token);
             changed = true;

@@ -8,6 +8,9 @@ import { EntityCard } from "@/shared/components/cards";
 import { EmptyState } from "@/shared/components/feedback/states";
 import { CardViewPagination } from "@/shared/components/lists/card-view";
 import { PageHeader } from "@/shared/components/navigation/header";
+import { permissions as appPermissions } from "@/lib/auth/permissions";
+import { usePermissions } from "@/shared/hooks/usePermissions";
+import { useAccessibleModulesQuery } from "@/platform/modules";
 import OrganizationalStructureCardViewHeader from "./card-view/OrganizationalStructureCardViewHeader";
 import OrganizationalStructureDataGrid from "./grid-view/OrganizationalStructureDataGrid";
 import OrganizationalStructureReport from "./report-view/OrganizationalStructureReport";
@@ -65,9 +68,17 @@ interface Props {
 
 export default function OrganizationalStructureMultiView(props: Props) {
   const { t, i18n } = useTranslation();
+  const { hasPermission } = usePermissions();
+  const modulesQuery = useAccessibleModulesQuery();
+  const canViewReports = hasPermission(appPermissions.ViewCrystalReports) &&
+    (modulesQuery.data ?? []).some((module) => module.code.toLowerCase() === "reporting");
   const [view, setView] = useState<OrganizationalView>("grid");
   const [isFilterBarVisible, setIsFilterBarVisible] = useState(true);
-  const visibleView = view === "import" && !props.permissions.canCreate ? "grid" : view;
+  const visibleView =
+    (view === "import" && !props.permissions.canCreate) ||
+    (view === "report" && !canViewReports)
+      ? "grid"
+      : view;
   const supportsFilterBar = visibleView !== "import" && visibleView !== "tree";
   const language = i18n.resolvedLanguage?.startsWith("ar") ? "ar" : "en";
   const name = useCallback((item: OrganizationalStructureItem) => language === "ar" ? item.nameAr : item.nameEn, [language]);
@@ -87,7 +98,7 @@ export default function OrganizationalStructureMultiView(props: Props) {
 
   const handleViewChange = (value: string) => {
     if (value === "grid" || value === "cards" || value === "chart" || value === "tree" || value === "report" || value === "import") {
-      if (value !== "import" || props.permissions.canCreate) {
+      if ((value !== "import" || props.permissions.canCreate) && (value !== "report" || canViewReports)) {
         if (value === "chart" && props.page !== 0) props.onPageChange(0);
         setView(value);
       }
@@ -103,12 +114,13 @@ export default function OrganizationalStructureMultiView(props: Props) {
     if (props.resource === "departments" || props.resource === "cost-centers") {
       views.push("tree");
     }
-    views.push("chart", "report");
+    views.push("chart");
+    if (canViewReports) views.push("report");
     if (props.permissions.canCreate) {
       views.push("import");
     }
     return views;
-  }, [props.permissions.canCreate, props.resource]);
+  }, [canViewReports, props.permissions.canCreate, props.resource]);
 
   return (
     <Box sx={{ display: "flex", flex: 1, flexDirection: "column", height: "100%", minHeight: 0, minWidth: 0, overflow: "hidden", width: "100%" }}>

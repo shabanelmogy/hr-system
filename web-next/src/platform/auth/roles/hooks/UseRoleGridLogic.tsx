@@ -6,16 +6,19 @@ import { useGridCrudMarkerCleanup } from "@/shared/hooks/useGridCrudMarkerCleanu
 import useNotifications from "@/shared/hooks/useNotifications";
 import { useGridApiRef } from "@mui/x-data-grid";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import useRoleStore from "../store/useRoleStore";
 import type { RoleFormData } from "../utils/validation";
 import { useUnsavedChanges } from "@/shared/contexts/UnsavedChangesContext";
+import { permissions } from "@/lib/auth/permissions";
+import { usePermissions } from "@/shared/hooks/usePermissions";
 
 const useRoleGridLogic = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const { requestDiscard } = useUnsavedChanges();
+  const { hasPermission, isReadOnly } = usePermissions();
   const { showError, showSuccess, SnackbarComponent } = useNotifications();
   const { loading, handleApiCall } = useApiHandler({ showSuccess, showError });
   const fetchStartedRef = useRef(false);
@@ -26,10 +29,9 @@ const useRoleGridLogic = () => {
   const addRole = useRoleStore((state) => state.addRole);
   const updateRole = useRoleStore((state) => state.updateRole);
   const toggleRole = useRoleStore((state) => state.toggleRole);
-  const activeRoles = useMemo(
-    () => roles.filter((role) => !role.isDeleted),
-    [roles],
-  );
+  const canCreate = !isReadOnly && hasPermission(permissions.CreateRoles);
+  const canEdit = !isReadOnly && hasPermission(permissions.EditRoles);
+  const canDelete = !isReadOnly && hasPermission(permissions.DeleteRoles);
 
   const create = useCallback(async (formData: RoleFormData): Promise<Role> => {
     const request: CreateRoleRequest = { name: formData.name };
@@ -61,12 +63,23 @@ const useRoleGridLogic = () => {
   const remove = useCallback(async (id: string | number) => {
     const role = await handleApiCall(
       () => toggleRole(String(id)),
-      t("roles.deleted"),
+      t("actions.archive"),
       null,
       true,
     );
-    if (!role) throw new Error("Role deletion did not return a role.");
+    if (!role) throw new Error("Role archive did not return a role.");
     return role;
+  }, [handleApiCall, t, toggleRole]);
+
+  const handleRestore = useCallback(async (role: Role) => {
+    const restoredRole = await handleApiCall(
+      () => toggleRole(role.id),
+      t("actions.restore"),
+      null,
+      true,
+    );
+    if (!restoredRole) throw new Error("Role restore did not return a role.");
+    return restoredRole;
   }, [handleApiCall, t, toggleRole]);
 
   const refresh = useCallback(async () => {
@@ -74,7 +87,7 @@ const useRoleGridLogic = () => {
   }, [fetchRoles, handleApiCall]);
 
   const crud = useGridCrudController<Role, RoleFormData>({
-    items: activeRoles,
+    items: roles,
     create,
     update,
     remove,
@@ -105,7 +118,10 @@ const useRoleGridLogic = () => {
     dialogType: crud.dialogType,
     selectedRole: crud.selectedItem,
     loading,
-    roles: activeRoles,
+    roles,
+    canCreate,
+    canEdit,
+    canDelete,
     apiRef,
     closeDialog: crud.closeDialog,
     handleFormSubmit: crud.handleFormSubmit,
@@ -115,6 +131,7 @@ const useRoleGridLogic = () => {
     onDelete: crud.onDelete,
     onAdd: crud.onAdd,
     onManagePermissions: handleManagePermissions,
+    onRestore: handleRestore,
     lastAddedId: crud.lastAddedId,
     lastEditedId: crud.lastEditedId,
     lastDeletedIndex: crud.lastDeletedIndex,

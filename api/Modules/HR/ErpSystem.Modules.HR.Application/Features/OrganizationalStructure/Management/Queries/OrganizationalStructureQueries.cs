@@ -1,5 +1,5 @@
-using ErpSystem.Modules.HR.Application.Abstractions.Messaging;
-using ErpSystem.Modules.HR.Application.Common.Paginations;
+using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Contracts;
 using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;

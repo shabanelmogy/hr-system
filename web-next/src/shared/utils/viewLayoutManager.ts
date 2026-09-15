@@ -101,7 +101,6 @@ export class ViewLayoutManager {
       
       keysToRemove.forEach(key => localStorage.removeItem(key));
       
-      console.log(`Cleared ${keysToRemove.length} view layout preferences`);
       return keysToRemove.length;
     } catch (error) {
       console.error("Error clearing view layouts from localStorage:", error);
@@ -143,7 +142,6 @@ export class ViewLayoutManager {
         }
       });
       
-      console.log(`Imported ${importedCount} view layout preferences`);
       return importedCount;
     } catch (error) {
       console.error("Error importing view layout preferences:", error);

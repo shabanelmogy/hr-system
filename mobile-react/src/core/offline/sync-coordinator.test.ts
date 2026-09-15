@@ -28,11 +28,15 @@ function command(overrides: Partial<OutboxCommand> = {}): OutboxCommand {
 function createOutbox(commands: OutboxCommand[]) {
   const store: jest.Mocked<OutboxStore> = {
     listPending: jest.fn().mockResolvedValue(commands),
+    listPendingByTypes: jest.fn().mockResolvedValue(commands),
     markProcessing: jest.fn().mockResolvedValue(true),
     markSucceeded: jest.fn().mockResolvedValue(undefined),
     markFailed: jest.fn().mockResolvedValue(undefined),
     markConflict: jest.fn().mockResolvedValue(undefined),
     markUncertain: jest.fn().mockResolvedValue(undefined),
+    markBlocked: jest.fn().mockResolvedValue(undefined),
+    markDeadLetter: jest.fn().mockResolvedValue(undefined),
+    resetDeadLetterToPending: jest.fn().mockResolvedValue(true),
   };
   return store;
 }
@@ -58,6 +62,28 @@ describe('SyncCoordinator', () => {
 
     await expect(coordinator.run(scope, authorization)).resolves.toMatchObject({ skippedUnsafe: 1, processed: 0 });
     expect(execute).not.toHaveBeenCalled();
+    expect(outbox.markBlocked).toHaveBeenCalledWith(
+      '123e4567-e89b-42d3-a456-426614174000',
+      'Replay guard is missing for this command.',
+    );
+  });
+
+  it('uses registered-type pages and drains multiple bounded batches fairly', async () => {
+    const first = command({ idempotencyKey: 'country-1' });
+    const second = command({ commandId: '123e4567-e89b-42d3-a456-426614174001', idempotencyKey: 'country-2' });
+    const outbox = createOutbox([]);
+    outbox.listPendingByTypes
+      .mockResolvedValueOnce([first])
+      .mockResolvedValueOnce([second])
+      .mockResolvedValueOnce([]);
+    const execute = jest.fn().mockResolvedValue({ kind: 'succeeded' as const });
+    const coordinator = new SyncCoordinator(outbox, () => ({ isOnline: true }));
+    coordinator.registerHandler({ commandType: 'countries.update', replaySafety: 'idempotent', execute });
+
+    await coordinator.run(scope, authorization);
+
+    expect(outbox.listPendingByTypes).toHaveBeenCalledWith(scope, ['countries.update'], 25);
+    expect(execute).toHaveBeenCalledTimes(2);
   });
 
   it('runs a registered idempotent command only when an idempotency key exists', async () => {

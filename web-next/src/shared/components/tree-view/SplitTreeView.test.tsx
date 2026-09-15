@@ -1,7 +1,14 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import SplitTreeView from "./SplitTreeView";
+
+vi.mock("react-i18next", () => ({
+  useTranslation: () => ({
+    t: (key: string, options?: { count?: number }) =>
+      key === "treeView.itemCount" ? `${options?.count ?? 0} items` : key,
+  }),
+}));
 
 interface TestItem {
   id: number;

@@ -41,9 +41,34 @@ public sealed record ModuleDefinition(
     public bool AllowsTenantEntitlement { get; init; } = true;
 }
 
-/// <summary>Sellable and navigable capability owned by a module.</summary>
+/// <summary>
+/// Defines how a permission is authorized after its JWT claim has been verified.
+/// </summary>
+public enum PermissionAccessMode
+{
+    /// <summary>
+    /// Tenant/company scope, a live role-permission check, and a matching tenant
+    /// module/submodule entitlement are all required.
+    /// </summary>
+    TenantEntitlement = 0,
+
+    /// <summary>
+    /// Tenant/company scope and a live role-permission check are required, but
+    /// commercial module entitlement is not. Use for tenant-facing Platform capabilities.
+    /// </summary>
+    Tenant = 1,
+
+    /// <summary>
+    /// The permission claim is sufficient at the permission-policy layer. Endpoint
+    /// role/policy attributes remain responsible for any super-admin restriction.
+    /// </summary>
+    Global = 2
+}
+
+/// <summary>Sellable, navigable, or technical capability owned by a module.</summary>
 public sealed record SubmoduleDefinition(
     string Code,
     string Name,
     IReadOnlyList<string> RequiredPermissions,
-    string? EntryPath = null);
+    string? EntryPath = null,
+    PermissionAccessMode PermissionAccessMode = PermissionAccessMode.TenantEntitlement);

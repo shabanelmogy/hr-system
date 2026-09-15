@@ -15,7 +15,7 @@ it does not create a route or entity by itself.
 
 1. **Foundation and configuration:** company/book settings, currencies,
    dimensions, numbering, Accounting-specific permissions, and the fiscal-period
-   ownership decision. Reuse existing HR/platform identity, tenancy, company, and
+   ownership decision. Reuse existing Platform identity, tenancy, company, and
    branch capabilities; do not create duplicate auth or master-data services.
 2. **Chart of accounts:** account hierarchy, account types, dimensions, and
    effective-dated changes.

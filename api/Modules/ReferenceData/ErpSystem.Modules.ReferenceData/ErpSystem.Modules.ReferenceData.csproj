@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.ReferenceData</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.ReferenceData</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Modularity\ErpSystem.BuildingBlocks.Modularity.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.ReferenceData.Application\ErpSystem.Modules.ReferenceData.Application.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.ReferenceData.Infrastructure\ErpSystem.Modules.ReferenceData.Infrastructure.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.ReferenceData.Presentation\ErpSystem.Modules.ReferenceData.Presentation.csproj" />
+  </ItemGroup>
+</Project>

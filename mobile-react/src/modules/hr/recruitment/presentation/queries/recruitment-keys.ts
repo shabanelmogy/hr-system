@@ -1,5 +1,6 @@
 import type {
   ApplicationQuery,
+  InterviewQuery,
   JobOfferQuery,
   JobOpeningQuery,
   JobRequisitionQuery,
@@ -18,5 +19,6 @@ export const recruitmentKeys = {
   application: (id: number) => [...recruitmentKeys.all, 'application', id] as const,
   offers: (params?: JobOfferQuery) => [...recruitmentKeys.all, 'offers', params] as const,
   scorecardTemplate: (interviewId: number) => [...recruitmentKeys.all, 'scorecard-template', interviewId] as const,
+  interviews: (params?: InterviewQuery) => [...recruitmentKeys.all, 'interviews', params] as const,
   positionHeadcountSummary: (positionId?: number | null) => [...recruitmentKeys.all, 'position-headcount-summary', positionId] as const,
 };

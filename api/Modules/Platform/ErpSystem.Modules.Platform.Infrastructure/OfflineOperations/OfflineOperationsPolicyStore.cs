@@ -1,5 +1,5 @@
 using System.Text.Json;
-using ErpSystem.Modules.Platform.Contracts.OfflineOperations;
+using ErpSystem.Modules.Platform.Application.OfflineOperations;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 

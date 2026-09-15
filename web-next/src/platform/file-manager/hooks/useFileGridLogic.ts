@@ -16,7 +16,6 @@ import { appRoutes } from "@/config";
 import {
   useFiles,
   useDeleteFile,
-  useUploadFiles,
   useDownloadFile,
 } from "./useFileQueries";
 
@@ -61,22 +60,7 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
     },
     onError: (error: Error) => {
       const errorMessage = extractErrorMessage(error);
-      showToast.error(t("files.deleteError") || errorMessage);
-    },
-  });
-
-  const uploadFilesMutation = useUploadFiles({
-    onSuccess: (result) => {
-      if (result.success) {
-        showToast.success(t("files.uploaded"));
-        setDialogType(null);
-      } else {
-        showToast.error(result.message);
-      }
-    },
-    onError: (error: Error) => {
-      const errorMessage = extractErrorMessage(error);
-      showToast.error(t("files.uploadError") || errorMessage);
+      showToast.error(errorMessage || t("files.deleteError"));
     },
   });
 
@@ -86,7 +70,7 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
     },
     onError: (error: Error) => {
       const errorMessage = extractErrorMessage(error);
-      showToast.error(t("files.downloadError") || errorMessage);
+      showToast.error(errorMessage || t("files.downloadError"));
     },
   });
 
@@ -100,7 +84,7 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
     number | null
   >(null);
   const [newRowAdded, setNewRowAdded] = useState<boolean>(false);
-  const [lastAddedRowId, setLastAddedRowId] = useState<number | null>(null);
+  const [lastAddedRowId, setLastAddedRowId] = useState<string | null>(null);
   const [pendingAddedFileName, setPendingAddedFileName] = useState<
     string | null
   >(null);
@@ -149,7 +133,6 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
   // Check for any loading state from mutations
   const isAnyLoading: boolean =
     loading ||
-    uploadFilesMutation.isPending ||
     deleteFileMutation.isPending ||
     downloadFileMutation.isPending;
 
@@ -199,7 +182,7 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
     if (!api) return;
 
     // Resolve effective ID
-    let effectiveId: number | null = lastAddedRowId;
+    let effectiveId: string | null = lastAddedRowId;
     if (effectiveId === null && pendingAddedFileName) {
       const uploadedFile = files.find(
         (f) => f.fileName === pendingAddedFileName
@@ -252,7 +235,7 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
     if (!api) return;
 
     // Resolve effective ID
-    let effectiveId: number | null = lastAddedRowId;
+    let effectiveId: string | null = lastAddedRowId;
     if (effectiveId === null && pendingAddedFileName) {
       const uploadedFile = files.find(
         (f) => f.fileName === pendingAddedFileName
@@ -413,7 +396,6 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
     handleView,
 
     // Mutation states for advanced UI feedback
-    isUploading: uploadFilesMutation.isPending,
     isDeleting: deleteFileMutation.isPending,
 
     // Highlighting/Navigation state for card view

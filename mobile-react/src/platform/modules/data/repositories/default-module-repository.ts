@@ -20,4 +20,9 @@ export class DefaultModuleRepository implements ModuleRepository {
     this.requireOnline();
     return this.remote.getInstalled();
   }
+
+  getTenantEntitlements() {
+    this.requireOnline();
+    return this.remote.getTenantEntitlements();
+  }
 }

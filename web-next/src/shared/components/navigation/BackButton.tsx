@@ -32,8 +32,8 @@ const BackButton: React.FC<BackButtonProps> = ({
   const theme = useTheme();
   const isRtl = theme.direction === "rtl";
   
-  const defaultTooltip = tooltip || t("actions.back") || "Back";
-  const defaultAriaLabel = ariaLabel || t("actions.back") || "Back";
+  const defaultTooltip = tooltip || t("actions.back");
+  const defaultAriaLabel = ariaLabel || t("actions.back");
 
   return (
     <Tooltip title={defaultTooltip}>

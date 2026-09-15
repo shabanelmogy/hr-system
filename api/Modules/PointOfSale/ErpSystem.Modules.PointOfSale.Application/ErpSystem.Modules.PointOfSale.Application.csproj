@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.PointOfSale.Application</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.PointOfSale.Application</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Application\ErpSystem.BuildingBlocks.Application.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.PointOfSale.Contracts\ErpSystem.Modules.PointOfSale.Contracts.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.PointOfSale.Domain\ErpSystem.Modules.PointOfSale.Domain.csproj" />
+  </ItemGroup>
+</Project>

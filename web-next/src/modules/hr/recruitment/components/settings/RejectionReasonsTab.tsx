@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
 import BlockIcon from "@mui/icons-material/Block";
 import { useTranslation } from "react-i18next";
@@ -22,16 +21,16 @@ import RejectionReasonDialog from "./RejectionReasonDialog";
 
 interface RejectionReasonsTabProps {
   reasons: RejectionReasonConfig[];
+  canEdit: boolean;
   onAddReason: (data: Omit<RejectionReasonConfig, "id">) => void;
   onUpdateReason: (id: string, updates: Partial<RejectionReasonConfig>) => void;
-  onDeleteReason: (id: string) => void;
 }
 
 export default function RejectionReasonsTab({
   reasons,
+  canEdit,
   onAddReason,
   onUpdateReason,
-  onDeleteReason,
 }: RejectionReasonsTabProps) {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
@@ -95,14 +94,16 @@ export default function RejectionReasonsTab({
             )}
           </Typography>
         </Box>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleOpenAdd}
-          sx={{ fontWeight: 600 }}
-        >
-          {t("recruitment.settings.newReasonBtn", "إضافة سبب رفض")}
-        </Button>
+        {canEdit && (
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={handleOpenAdd}
+            sx={{ fontWeight: 600 }}
+          >
+            {t("recruitment.settings.newReasonBtn", "إضافة سبب رفض")}
+          </Button>
+        )}
       </Box>
 
       <Alert severity="info" sx={{ mb: 3 }}>
@@ -155,21 +156,15 @@ export default function RejectionReasonsTab({
                 </Tooltip>
               )}
 
-              <IconButton
-                size="small"
-                onClick={() => handleOpenEdit(r)}
-                sx={{ color: "primary.main" }}
-              >
-                <EditOutlinedIcon fontSize="small" />
-              </IconButton>
-
-              <IconButton
-                size="small"
-                onClick={() => onDeleteReason(r.id)}
-                sx={{ color: "error.main" }}
-              >
-                <DeleteOutlineRoundedIcon fontSize="small" />
-              </IconButton>
+              {canEdit && (
+                <IconButton
+                  size="small"
+                  onClick={() => handleOpenEdit(r)}
+                  sx={{ color: "primary.main" }}
+                >
+                  <EditOutlinedIcon fontSize="small" />
+                </IconButton>
+              )}
             </Box>
           </Card>
         ))}

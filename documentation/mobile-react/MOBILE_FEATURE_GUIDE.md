@@ -94,7 +94,11 @@ export async function getEmployee(id: string) {
 ```
 
 - Accept `unknown` from transport and parse it before returning domain data.
+- Model response DTOs from the owning API contract, including every serialized nullable field; do not require stale web/mobile-only fields or hide drift behind generic DTO casts. Keep contract-shaped valid and malformed response fixtures beside the remote adapter tests.
 - Normalize query/body values once at the API boundary.
+- When a child resource is filtered by a parent ID, keep that parent ID as a
+  list filter only. Use the selected child DTO's ID for child detail, scorecard,
+  completion, and mutation endpoints; test the distinction with separate IDs.
 - Do not hide missing required fields with empty strings or zero.
 - Keep optional/backward-compatible fallbacks explicit in the schema.
 - Do not put endpoint behavior into a screen.
@@ -128,7 +132,7 @@ Every operation that may have offline behavior must first have a code-owned capa
 
 Unknown capabilities and missing, stale, malformed, wrong-scope, or unsupported policy values fail closed to `online-only`. A device preference may narrow the effective mode but must never expand it. The Platform API policy at `GET/PUT /api/v1/offline-operations/policy` is the tenant/company authority. Mobile may use a bounded cached copy only as a runtime fallback; cached or fail-closed policy is never editable authority.
 
-Do not classify a mutation as `offline-command` merely because it is technically possible to save its payload. The API must provide safe replay/idempotency, aggregate concurrency, deterministic conflict/reconciliation, scope isolation, and interruption/restart recovery. Ambiguous non-idempotent submissions are `uncertain` and must reconcile rather than auto-retry. The normal React Query mutation path stays online-authoritative (`networkMode: 'always'`, no automatic replay); explicit persisted outbox commands are the only replay mechanism.
+Do not classify a mutation as `offline-command` merely because it is technically possible to save its payload. The API must provide safe replay semantics: an idempotency key for idempotent-key handlers, or a concurrency version plus deterministic GET reconciliation for row-versioned updates, together with aggregate concurrency, scope isolation, and interruption/restart recovery. Ambiguous submissions are `uncertain` and must reconcile rather than auto-retry. The normal React Query mutation path stays online-authoritative (`networkMode: 'always'`, no automatic replay); explicit persisted outbox commands are the only replay mechanism.
 
 The current read reference is Countries. Code declares `countries.read` safe for
 `online-only` and `offline-read`; the effective cached-read path additionally requires
@@ -403,6 +407,13 @@ access; both direct handlers check tenant read-only before permission denial.
 - Every literal `t('namespace.key')` in `app/` and `src/` must resolve in both
   EN and AR. Keep the source-usage translation test green so a missing key can
   never reach a device as its raw dotted identifier.
+- Use `t(...)` directly for all visible text; do not pass hardcoded fallback
+  copy. The AST gate checks JSX text, visible props, nested option/action labels,
+  conditional and template expressions, static keys, and catalog parity.
+- `app/` and every presentation layer must not import `apiService` or
+  `axiosClient`. Keep transport calls in owning `data/remote` adapters and parse
+  responses from `unknown` there. `core` cannot depend on shared UI; compose
+  hosts such as feedback at the root app boundary.
 - Keep generic table labels such as `dataTable.select` in the paired shared
   translation resources; feature namespaces should contain only feature-specific
   accessibility wording (for example, which country or state is being selected).
@@ -415,7 +426,7 @@ Record every Report view as Required, Deferred, or Excluded. When Managed Crysta
 is Required, follow the cross-project
 [Crystal Report Manager Feature Integration Guide](../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md).
 
-Mobile uses the same HR API catalog and render endpoints as web. The feature owns
+Mobile uses the same Reporting API catalog and render endpoints as web. The feature owns
 its stable `entityKey`, localized selector, allowed filters, and PDF
 open/share/error experience; shared reporting infrastructure owns the typed
 service, Zod parsing, query keys, and viewer primitives after the first mobile
@@ -449,6 +460,8 @@ Minimum tests for a business feature:
 Before handoff:
 
 - `npm run check` passes;
+- `npm run check:expo` and `npm run check:export` pass;
+- root `./documentation/system/Generate-Documentation.ps1 -Check` passes;
 - no architecture boundary exception was added without documentation;
 - routes work by direct navigation and from module navigation;
 - phone/tablet, EN/AR, LTR/RTL and light/dark are reviewed;

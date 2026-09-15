@@ -7,4 +7,6 @@ export const STORAGE_KEYS = {
   onboardingCompleted: 'preferences.onboarding-completed',
   accessToken: 'auth.access-token',
   refreshToken: 'auth.refresh-token',
+  offlineDatabaseKey: 'offline.database-key',
+  offlineSessionPointer: 'offline.session-pointer',
 } as const;

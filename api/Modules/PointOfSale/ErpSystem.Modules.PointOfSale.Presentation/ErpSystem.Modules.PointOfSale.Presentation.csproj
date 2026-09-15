@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.PointOfSale.Presentation</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.PointOfSale.Presentation</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Mvc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Authorization\ErpSystem.BuildingBlocks.Authorization.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.PointOfSale.Application\ErpSystem.Modules.PointOfSale.Application.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.PointOfSale.Contracts\ErpSystem.Modules.PointOfSale.Contracts.csproj" />
+  </ItemGroup>
+</Project>

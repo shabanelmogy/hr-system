@@ -43,6 +43,7 @@ export enum ApplicationStage {
   Offer = 4,
   Hired = 5,
   Rejected = 6,
+  Withdrawn = 7,
 }
 
 export enum InterviewType {
@@ -104,6 +105,7 @@ export enum PayFrequency {
 
 export interface JobOpeningDto {
   id: number;
+  publicId: string;
   openingNumber: string;
   jobRequisitionId: number;
   positionId: number;
@@ -115,28 +117,44 @@ export interface JobOpeningDto {
   departmentId: number;
   departmentNameAr: string;
   departmentNameEn: string;
-  divisionId?: number;
+  divisionId: number | null;
+  divisionNameEn: string | null;
+  divisionNameAr: string | null;
   positionCount: number;
   hiredCount: number;
-  activeApplicationsCount: number;
+  availablePositions: number;
+  employmentType: EmploymentType;
+  workArrangement: WorkArrangement;
   status: JobOpeningStatus;
-  openedOn?: string;
-  closedOn?: string;
-  targetDate?: string;
+  openedOn: string | null;
+  closedOn: string | null;
+  closureReason: string | null;
   createdOn: string;
+  activeApplicationsCount: number;
+  jobDescriptionId: number | null;
+  skills: JobSkillDto[];
 }
 
 export interface CandidateDto {
   id: number;
+  publicId: string;
   firstName: string;
+  middleName: string | null;
   lastName: string;
   fullName: string;
   email: string;
-  phoneNumber?: string;
-  highestDegree?: string;
-  yearsOfExperience?: number;
-  currentCompany?: string;
-  currentJobTitle?: string;
+  phoneNumber: string | null;
+  dateOfBirth: string | null;
+  nationalityCountryId: number | null;
+  nationalityCountryNameEn: string | null;
+  nationalityCountryNameAr: string | null;
+  currentCountryId: number | null;
+  currentStateId: number | null;
+  city: string | null;
+  linkedInUrl: string | null;
+  portfolioUrl: string | null;
+  resumeFileId: number | null;
+  isActive: boolean;
   createdOn: string;
 }
 
@@ -144,15 +162,15 @@ export interface JobSkillDto {
   skillName: string;
   proficiencyLevel: string;
   isMandatory: boolean;
-  defaultWeightPercentage?: number;
+  defaultWeightPercentage: number;
 }
 
 export interface InterviewSkillEvaluationDto {
   skillName: string;
   score: number;
-  weightPercentage?: number;
+  weightPercentage: number | null;
   isMandatory: boolean;
-  notes?: string;
+  notes: string | null;
 }
 
 export interface InterviewScorecardTemplateDto {
@@ -161,7 +179,7 @@ export interface InterviewScorecardTemplateDto {
   candidateName: string;
   positionTitleEn: string;
   positionTitleAr: string;
-  jobDescriptionId?: number;
+  jobDescriptionId: number | null;
   skills: JobSkillDto[];
 }
 
@@ -174,73 +192,80 @@ export interface SubmitInterviewEvaluationMutation {
 
 export interface InterviewEvaluationDto {
   id: number;
-  interviewId?: number;
-  interviewerEmployeeId?: number;
-  interviewerName?: string;
-  evaluatorEmployeeId?: number;
-  evaluatorName?: string;
-  score?: number;
-  overallScore?: number;
-  technicalScore?: number;
-  culturalFitScore?: number;
-  communicationScore?: number;
+  interviewerEmployeeId: number;
+  interviewerName: string;
+  score: number;
   recommendation: InterviewEvaluationRecommendation;
-  comments?: string;
-  notes?: string;
-  strengthsSummary?: string;
-  weaknessesSummary?: string;
-  submittedOn?: string;
-  evaluatedOn?: string;
-  skillEvaluations?: InterviewSkillEvaluationDto[];
+  comments: string | null;
+  submittedOn: string;
+  skillEvaluationsJson: string | null;
+  skillEvaluations: InterviewSkillEvaluationDto[];
+}
+
+export interface InterviewParticipantDto {
+  id: number;
+  employeeId: number;
+  employeeName: string;
+  isLead: boolean;
 }
 
 export interface InterviewDto {
   id: number;
-  interviewNumber: string;
   employmentApplicationId: number;
+  candidateName: string;
+  openingNumber: string;
+  positionTitleEn: string;
+  positionTitleAr: string;
   type: InterviewType;
   status: InterviewStatus;
   startsOn: string;
   endsOn: string;
-  locationOrMeetingUrl?: string;
-  leadEmployeeId?: number;
-  leadEmployeeName: string;
-  scheduledOn: string;
-  completedOn?: string;
+  completedOn: string | null;
+  locationOrMeetingUrl: string | null;
+  cancellationReason: string | null;
+  participants: InterviewParticipantDto[];
   evaluations: InterviewEvaluationDto[];
 }
 
 export interface JobOfferDto {
   id: number;
+  publicId: string;
   offerNumber: string;
   employmentApplicationId: number;
-  candidateName?: string;
+  candidateName: string;
   positionId: number;
   positionTitleAr: string;
   positionTitleEn: string;
   branchId: number;
+  branchNameAr: string;
+  branchNameEn: string;
   departmentId: number;
-  status: JobOfferStatus;
+  departmentNameAr: string;
+  departmentNameEn: string;
+  divisionId: number | null;
   baseSalary: number;
   currencyCode: string;
-  payFrequency: number;
-  employmentType: number;
-  workArrangement: number;
+  payFrequency: PayFrequency;
+  employmentType: EmploymentType;
+  workArrangement: WorkArrangement;
   proposedStartDate: string;
-  expiresOn?: string;
-  termsAndConditions?: string;
-  issuedOn?: string;
+  termsAndConditions: string | null;
+  status: JobOfferStatus;
+  issuedOn: string | null;
+  expiresOn: string | null;
+  respondedOn: string | null;
+  responseReason: string | null;
+  annualSalarySnapshot: number;
+  fiscalYearCostSnapshot: number;
+  reservationDelta: number;
+  calculationPolicyVersion: string | null;
+  approvalSubmittedOn: string | null;
+  approvalSubmittedById: string | null;
+  approvedOn: string | null;
+  approvedById: string | null;
+  approvalDecisionReason: string | null;
+  approvalHistory: JobOfferApprovalHistoryDto[];
   createdOn: string;
-  annualSalarySnapshot?: number;
-  fiscalYearCostSnapshot?: number;
-  reservationDelta?: number;
-  calculationPolicyVersion?: string;
-  approvalSubmittedOn?: string;
-  approvalSubmittedById?: string;
-  approvedOn?: string;
-  approvedById?: string;
-  approvalDecisionReason?: string;
-  approvalHistory?: JobOfferApprovalHistoryDto[];
 }
 
 export interface JobOfferApprovalHistoryDto {
@@ -250,56 +275,56 @@ export interface JobOfferApprovalHistoryDto {
   occurredOn: string;
   fromStatus: JobOfferStatus;
   toStatus: JobOfferStatus;
-  reason?: string;
+  reason: string | null;
 }
 
-export interface ApplicationTimelineDto {
+export interface ApplicationStatusHistoryDto {
   id: number;
-  fromStatus: ApplicationStatus;
+  fromStatus: ApplicationStatus | null;
   toStatus: ApplicationStatus;
   changedOn: string;
-  changedByUserId?: string;
-  reason?: string;
-  notes?: string;
+  reason: string | null;
+  changedByEmployeeId: number | null;
 }
 
 export interface EmploymentApplicationDto {
   id: number;
-  applicationNumber: string;
+  publicId: string;
   candidateId: number;
   candidateName: string;
   candidateEmail: string;
-  candidatePhone?: string;
+  candidatePhone: string | null;
   jobOpeningId: number;
   openingNumber: string;
   positionTitleAr: string;
   positionTitleEn: string;
+  departmentNameEn: string;
+  departmentNameAr: string;
   branchNameAr: string;
   branchNameEn: string;
+  jobPostingId: number | null;
   source: ApplicationSource;
   status: ApplicationStatus;
-  stage: ApplicationStage;
-  expectedSalary?: number;
-  expectedSalaryCurrencyCode?: string;
-  availableFrom?: string;
-  coverLetter?: string;
-  resumeFileId?: string;
-  appliedOn: string;
+  coverLetter: string | null;
+  resumeFileId: number | null;
+  expectedSalary: number | null;
+  expectedSalaryCurrencyCode: string | null;
+  availableFrom: string | null;
+  submittedOn: string | null;
+  lastStatusChangedOn: string;
+  employeeId: number | null;
   interviewsCount: number;
-  averageEvaluationScore?: number;
-  activeOfferId?: number;
-  timeline: ApplicationTimelineDto[];
-  interviews: InterviewDto[];
-  offers: JobOfferDto[];
+  averageEvaluationScore: number | null;
+  statusHistory: ApplicationStatusHistoryDto[];
 }
 
 export interface RecruitmentSummaryDto {
   totalOpenings: number;
-  openJobOpeningsCount: number;
   totalActiveCandidates: number;
-  scheduledInterviewsCount: number;
-  pendingOffersCount: number;
+  totalScheduledInterviews: number;
+  totalPendingOffers: number;
   totalHiredCount: number;
+  stageCounts: Record<string, number>;
 }
 
 export interface PositionHeadcountSummaryDto {
@@ -326,29 +351,29 @@ export interface JobRequisitionDto {
   departmentId: number;
   departmentNameEn: string;
   departmentNameAr: string;
-  divisionId?: number;
-  divisionNameEn?: string;
-  divisionNameAr?: string;
+  divisionId: number | null;
+  divisionNameEn: string | null;
+  divisionNameAr: string | null;
   requestedByEmployeeId: number;
   requestedPositions: number;
-  staffingRequestId?: number | null;
+  staffingRequestId: number | null;
   planningSource: PlanningSource;
   hiredPositions: number;
   remainingPositions: number;
   businessReason: string;
   employmentType: EmploymentType;
   workArrangement: WorkArrangement;
-  targetHireDate?: string;
+  targetHireDate: string | null;
   type: RequisitionType;
-  replacementEmployeeId?: number | null;
-  replacementEmployeeName?: string | null;
+  replacementEmployeeId: number | null;
+  replacementEmployeeName: string | null;
   isBudgeted: boolean;
-  budgetJustification?: string | null;
+  budgetJustification: string | null;
   status: JobRequisitionStatus;
-  submittedOn?: string;
-  reviewedByEmployeeId?: number;
-  reviewedOn?: string;
-  decisionReason?: string;
+  submittedOn: string | null;
+  reviewedByEmployeeId: number | null;
+  reviewedOn: string | null;
+  decisionReason: string | null;
   createdOn: string;
 }
 
@@ -356,17 +381,17 @@ export interface JobRequisitionMutation {
   positionId?: number;
   branchId?: number;
   departmentId?: number;
-  divisionId?: number;
+  divisionId?: number | null;
   requestedPositions: number;
   businessReason: string;
   employmentType: EmploymentType;
   workArrangement: WorkArrangement;
-  targetHireDate?: string;
+  targetHireDate?: string | null;
   type?: RequisitionType;
   replacementEmployeeId?: number | null;
   isBudgeted?: boolean;
   budgetJustification?: string | null;
-  staffingRequestId?: number;
+  staffingRequestId?: number | null;
 }
 
 export enum PlanningSource {
@@ -378,7 +403,7 @@ export interface ApprovedStaffingRequestOptionDto {
   id: number;
   envelopeCode: string;
   positionId: number;
-  branchId?: number | null;
+  branchId: number | null;
   departmentId: number;
   divisionId: number;
   remainingAllocatable: number;
@@ -397,6 +422,8 @@ export interface RecruitmentStageConfig {
   foldedInKanban: boolean;
   isDefault: boolean;
   sendEmailNotification: boolean;
+  mappedStatus: number;
+  emailTemplate: string | null;
 }
 
 export interface RejectionReasonConfig {
@@ -405,6 +432,10 @@ export interface RejectionReasonConfig {
   reasonEn: string;
   category: string;
   sendAutoEmail: boolean;
+  emailSubjectAr: string | null;
+  emailSubjectEn: string | null;
+  emailBodyAr: string | null;
+  emailBodyEn: string | null;
 }
 
 export interface RecruitmentSourceConfig {
@@ -425,6 +456,8 @@ export interface EvaluationCriterionConfig {
   maxScore: number;
   weight: number;
   isMandatory: boolean;
+  descriptionAr: string | null;
+  descriptionEn: string | null;
 }
 
 export interface RecruitmentGeneralSettings {
@@ -434,7 +467,7 @@ export interface RecruitmentGeneralSettings {
   enforceHeadcountCapacity: boolean;
   defaultProbationMonths: number;
   enablePublicPortal: boolean;
-  inboundEmailAlias?: string;
+  inboundEmailAlias: string;
 }
 
 export interface RecruitmentSettingsDto {
@@ -471,7 +504,14 @@ export interface JobOfferQuery {
   pageNumber?: number;
   pageSize?: number;
   applicationId?: number;
-  status?: number;
+  status?: JobOfferStatus;
+}
+
+export interface InterviewQuery {
+  pageNumber?: number;
+  pageSize?: number;
+  applicationId?: number;
+  status?: InterviewStatus;
 }
 
 export interface ApplicationQuery {
@@ -479,7 +519,6 @@ export interface ApplicationQuery {
   pageSize?: number;
   jobOpeningId?: number;
   status?: ApplicationStatus;
-  stage?: ApplicationStage;
   search?: string;
 }
 
@@ -491,10 +530,8 @@ export interface JobRequisitionQuery {
 }
 
 export interface ChangeApplicationStageMutation {
-  stage?: ApplicationStage;
-  targetStatus?: ApplicationStatus;
+  targetStatus: ApplicationStatus;
   reason?: string;
-  notes?: string;
 }
 
 export interface CreateCandidateMutation {
@@ -507,39 +544,40 @@ export interface CreateCandidateMutation {
 export interface SubmitApplicationMutation {
   candidateId: number;
   jobOpeningId: number;
-  source: number;
+  source: ApplicationSource;
+  jobPostingId?: number;
   expectedSalary?: number;
   expectedSalaryCurrencyCode?: string;
   availableFrom?: string;
   coverLetter?: string;
+  resumeFileId?: number;
 }
 
 export interface ScheduleInterviewMutation {
   employmentApplicationId: number;
-  type: number;
+  type: InterviewType;
   startsOn: string;
   endsOn: string;
   locationOrMeetingUrl?: string;
   leadEmployeeId?: number;
+  participantEmployeeIds?: number[];
 }
 
 export interface CreateJobOfferMutation {
   employmentApplicationId: number;
   baseSalary: number;
   currencyCode: string;
-  payFrequency: number;
-  employmentType: number;
-  workArrangement: number;
+  payFrequency: PayFrequency;
+  employmentType: EmploymentType;
+  workArrangement: WorkArrangement;
   proposedStartDate: string;
   termsAndConditions?: string;
+  expiresOn?: string;
 }
 
-/**
- * Idempotency is server-owned. Callers may provide the same key when retrying
- * the same intentional hire request; the mobile client never queues or replays it.
- */
+/** Server-owned deduplication key for retries of one intentional hire request. */
 export interface HireCandidateMutation {
-  employeeNumber?: string;
-  hireDate?: string;
+  employeeNumber: string;
+  hireDate: string;
   idempotencyKey?: string;
 }

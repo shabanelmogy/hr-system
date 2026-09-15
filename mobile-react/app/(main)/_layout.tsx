@@ -13,6 +13,7 @@ import { TenantAccessProvider } from '@/src/platform/tenant-access';
 import { AppDrawerContent, MainLayout } from '@/src/shell/layouts';
 import { AppNavigationHeader } from '@/src/platform/navigation';
 import { AppIcon } from '@/src/shared/components';
+import { OfflineSyncCoordinator } from '@/src/shell';
 
 export default function ProtectedRouteLayout() {
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ export default function ProtectedRouteLayout() {
   return (
     <OfflineOperationsPolicyProvider>
       <TenantAccessProvider>
+        <OfflineSyncCoordinator />
         <MainLayout>
         <Drawer
           drawerContent={(props) => <AppDrawerContent {...props} />}

@@ -7,9 +7,9 @@ export interface TenantEntitlementModule {
 }
 
 export function createDefaultEntitlements(
-  installedModules: readonly TenantEntitlementModule[],
+  tenantEntitlementModules: readonly TenantEntitlementModule[],
 ): TenantModuleEntitlementRequest[] {
-  return installedModules
+  return tenantEntitlementModules
     .filter((module) => module.isDefault ?? module.code.toLowerCase() === 'hr')
     .map((module) => ({
       moduleCode: module.code,
@@ -19,13 +19,23 @@ export function createDefaultEntitlements(
 
 export function hydrateEntitlements(
   saved: readonly TenantModuleEntitlementRequest[] | null | undefined,
-  installedModules: readonly TenantEntitlementModule[],
+  tenantEntitlementModules: readonly TenantEntitlementModule[],
 ): TenantModuleEntitlementRequest[] {
-  if (saved == null) return createDefaultEntitlements(installedModules);
-  return saved.map((item) => ({
-    moduleCode: item.moduleCode,
-    submoduleCodes: [...item.submoduleCodes],
-  }));
+  if (saved == null) return createDefaultEntitlements(tenantEntitlementModules);
+  return saved.flatMap((item) => {
+    const module = tenantEntitlementModules.find(
+      (candidate) => candidate.code.toLowerCase() === item.moduleCode.toLowerCase(),
+    );
+    if (!module) return [];
+
+    const savedSubmodules = new Set(item.submoduleCodes.map((code) => code.toLowerCase()));
+    return [{
+      moduleCode: module.code,
+      submoduleCodes: module.submodules
+        .filter((submodule) => savedSubmodules.has(submodule.code.toLowerCase()))
+        .map((submodule) => submodule.code),
+    }];
+  });
 }
 
 export function toggleModuleEntitlement(

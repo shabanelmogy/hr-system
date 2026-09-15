@@ -16,7 +16,11 @@ import {
   getStoredBackendOverride,
   saveBackendOverride,
 } from "@/lib/api/backendOverride";
-import { publicApiUrl } from "@/config/publicEnv";
+import {
+  publicApiUrl,
+  publicBackendAllowedOrigins,
+  publicDefaultBackendOrigin,
+} from "@/config/publicEnv";
 import { useTranslation } from "react-i18next";
 
 const ServerUrlField = ({ isDarkMode }: { isDarkMode: boolean }) => {
@@ -24,12 +28,16 @@ const ServerUrlField = ({ isDarkMode }: { isDarkMode: boolean }) => {
   const [expanded, setExpanded] = useState(false);
   const [draft, setDraft] = useState("");
   const [status, setStatus] = useState<{ kind: "success" | "error"; text: string } | null>(null);
-  const [activeOverride, setActiveOverride] = useState<string | null>(() => getStoredBackendOverride());
+  const allowedOrigins = [
+    ...publicBackendAllowedOrigins,
+    ...(publicDefaultBackendOrigin ? [publicDefaultBackendOrigin] : []),
+  ];
+  const [activeOverride, setActiveOverride] = useState<string | null>(() => getStoredBackendOverride(allowedOrigins));
 
   const activeTarget = activeOverride ?? publicApiUrl ?? t("auth.serverUrlDefault");
 
   const handleSave = () => {
-    const saved = saveBackendOverride(draft);
+    const saved = saveBackendOverride(draft, allowedOrigins);
     if (!saved) {
       setStatus({ kind: "error", text: t("auth.serverUrlInvalid") });
       return;

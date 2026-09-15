@@ -7,6 +7,7 @@ import PublicIcon from "@mui/icons-material/Public";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 
 import { appRoutes } from "@/config/routes";
+import { permissions } from "@/lib/auth/permissions";
 import {
   NavigationColors,
   NavigationSectionId,
@@ -51,18 +52,21 @@ export const getSuperAdminConfig = () =>
             createColoredIcon(<PublicIcon />, NavigationColors.PURPLE),
             appRoutes.superAdmin.geography.countries,
             [UserRoles.SUPER_ADMIN],
+            [permissions.ViewCountries],
           ),
           createNavItem(
             NavigationTitles.STATES,
             createColoredIcon(<LocationCityIcon />, NavigationColors.PURPLE),
             appRoutes.superAdmin.geography.states,
             [UserRoles.SUPER_ADMIN],
+            [permissions.ViewStates],
           ),
           createNavItem(
             NavigationTitles.DISTRICTS,
             createColoredIcon(<MapIcon />, NavigationColors.PURPLE),
             appRoutes.superAdmin.geography.districts,
             [UserRoles.SUPER_ADMIN],
+            [permissions.ViewDistricts],
           ),
         ],
       ),

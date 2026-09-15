@@ -23,7 +23,13 @@ jest.mock('react-native-keyboard-controller', () => {
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
     i18n: { language: 'en', resolvedLanguage: 'en' },
-    t: (key: string) => key,
+    t: (key: string) => ({
+      'treeDiagram.collapse': 'Collapse',
+      'treeDiagram.expand': 'Expand',
+      'treeDiagram.addChild': 'Add Child',
+      'treeDiagram.view': 'View',
+      'treeDiagram.delete': 'Delete',
+    } as Record<string, string>)[key] ?? key,
   }),
 }));
 

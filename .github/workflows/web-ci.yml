@@ -1,0 +1,79 @@
+name: Web Client CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: web-client-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify-web:
+    name: Verify web client
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web-next/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./web-next
+        run: npm ci
+
+      - name: Audit production dependencies
+        working-directory: ./web-next
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Verify architecture
+        working-directory: ./web-next
+        run: npm run check:architecture
+
+      - name: Verify translations
+        working-directory: ./web-next
+        run: npm run check:i18n
+
+      - name: Lint
+        working-directory: ./web-next
+        run: npm run lint
+
+      - name: Type check
+        working-directory: ./web-next
+        run: npm run type-check
+
+      - name: Strict type check
+        working-directory: ./web-next
+        run: npm run type-check:strict
+
+      - name: Test
+        working-directory: ./web-next
+        run: npm test
+
+      - name: Test module generator
+        working-directory: ./web-next
+        run: npm run test:module-generator
+
+      - name: Build production application
+        working-directory: ./web-next
+        env:
+          BACKEND_URL: https://api.ci.invalid
+        run: npm run build
+
+      - name: Enforce bundle budgets
+        working-directory: ./web-next
+        run: npm run measure:build
+
+      - name: Verify generated documentation
+        shell: pwsh
+        run: ./documentation/system/Generate-Documentation.ps1 -Check

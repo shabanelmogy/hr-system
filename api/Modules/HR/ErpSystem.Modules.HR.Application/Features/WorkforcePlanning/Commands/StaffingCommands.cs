@@ -1,9 +1,9 @@
-using ErpSystem.Modules.HR.Application.Abstractions.Authentication;
-using ErpSystem.Modules.HR.Application.Abstractions.Messaging;
+using ErpSystem.BuildingBlocks.Context.Authentication;
+using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Contracts;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Errors;
-using ErpSystem.Modules.HR.Domain.Common.Exceptions;
+using ErpSystem.BuildingBlocks.Domain.Exceptions;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Enums;

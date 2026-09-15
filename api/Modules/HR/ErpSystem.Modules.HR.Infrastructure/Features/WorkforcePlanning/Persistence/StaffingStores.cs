@@ -1,7 +1,9 @@
-using ErpSystem.Modules.HR.Application.Common.Paginations;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Contracts;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Queries;
+using ErpSystem.Modules.Accounting.Contracts;
+using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Enums;
 using ErpSystem.Modules.HR.Infrastructure.Persistence;
@@ -169,7 +171,10 @@ public sealed class StaffingReadStore(ApplicationDbContext context) : IStaffingR
             .FirstOrDefaultAsync(cancellationToken);
 }
 
-public sealed class StaffingWriteStore(ApplicationDbContext context) : IStaffingWriteStore
+public sealed class StaffingWriteStore(
+    ApplicationDbContext context,
+    IFiscalYearPlanningSource fiscalYears,
+    ICurrentActor currentActor) : IStaffingWriteStore
 {
     public void AddAmendment(EnvelopeAmendment amendment) => context.EnvelopeAmendments.Add(amendment);
 
@@ -186,11 +191,11 @@ public sealed class StaffingWriteStore(ApplicationDbContext context) : IStaffing
 
     public async Task<StaffingFiscalYearSnapshot?> GetFiscalYearAsync(int fiscalYearId, CancellationToken cancellationToken)
     {
-        var item = await context.FiscalYears.AsNoTracking()
-            .Where(year => year.Id == fiscalYearId && !year.IsDeleted)
-            .Select(year => new { year.Id, year.StartDate, year.EndDate, year.Status })
-            .FirstOrDefaultAsync(cancellationToken);
-        return item is null ? null : new StaffingFiscalYearSnapshot(item.Id, item.StartDate, item.EndDate, item.Status.ToString());
+        if (string.IsNullOrWhiteSpace(currentActor.TenantId) || currentActor.CompanyId is not > 0)
+            return null;
+
+        var item = await fiscalYears.GetAsync(currentActor.TenantId, currentActor.CompanyId.Value, fiscalYearId, cancellationToken);
+        return item is null ? null : new StaffingFiscalYearSnapshot(item.Id, item.StartDate, item.EndDate, item.Status);
     }
 
     public void ApplyAmendmentRowVersion(EnvelopeAmendment amendment, string rowVersion) =>

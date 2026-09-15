@@ -1,6 +1,8 @@
-using ErpSystem.Modules.HR.Domain.Common.Exceptions;
+using ErpSystem.BuildingBlocks.Domain.Exceptions;
+using ErpSystem.Modules.HR.Domain.Employees.Entities;
+using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities;
 using ErpSystem.Modules.HR.Domain.Recruitment.Enums;
-using static ErpSystem.Modules.HR.Domain.Common.Guards.DomainGuard;
+using static ErpSystem.BuildingBlocks.Domain.Guards.DomainGuard;
 
 namespace ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 
@@ -29,9 +31,13 @@ public sealed class JobRequisition : CompanyAuditableEntity
     public int Id { get; private set; }
     public string RequisitionNumber { get; private set; } = string.Empty;
     public int PositionId { get; private set; }
+    public Position Position { get; private set; } = null!;
     public int BranchId { get; private set; }
+    public Branch Branch { get; private set; } = null!;
     public int DepartmentId { get; private set; }
+    public Department Department { get; private set; } = null!;
     public int? DivisionId { get; private set; }
+    public Division? Division { get; private set; }
     public int RequestedByEmployeeId { get; private set; }
     public int RequestedPositions { get; private set; }
     public int? StaffingRequestId { get; private set; }
@@ -43,6 +49,7 @@ public sealed class JobRequisition : CompanyAuditableEntity
     public DateOnly? TargetHireDate { get; private set; }
     public RequisitionType Type { get; private set; } = RequisitionType.NewPosition;
     public int? ReplacementEmployeeId { get; private set; }
+    public Employee? ReplacementEmployee { get; private set; }
     public bool IsBudgeted { get; private set; } = true;
     public string? BudgetJustification { get; private set; }
     public JobRequisitionStatus Status { get; private set; } = JobRequisitionStatus.Draft;

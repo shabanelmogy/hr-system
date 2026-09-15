@@ -91,33 +91,28 @@ class ReportApiService {
   }
 
   async post(endpoint: string, data: unknown, customHeaders: Record<string, string> = {}) {
-    try {
-      // Determine if we need to adjust headers based on data type
-      const headers: Record<string, string> = {
-        ...this.getHeaders(),
-        ...customHeaders,
-      };
+    // Determine if we need to adjust headers based on data type
+    const headers: Record<string, string> = {
+      ...this.getHeaders(),
+      ...customHeaders,
+    };
 
-      // Remove Content-Type if FormData is being sent
-      if (data instanceof FormData) {
-        delete headers["Content-Type"];
-      }
-
-      const response = await fetch(this.buildUrl(endpoint), {
-        method: "POST",
-        headers,
-        body: data instanceof FormData ? data : JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw await this.processError(response);
-      }
-
-      return response;
-    } catch (error) {
-      console.log("POST error:", error);
-      throw error;
+    // Remove Content-Type if FormData is being sent
+    if (data instanceof FormData) {
+      delete headers["Content-Type"];
     }
+
+    const response = await fetch(this.buildUrl(endpoint), {
+      method: "POST",
+      headers,
+      body: data instanceof FormData ? data : JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw await this.processError(response);
+    }
+
+    return response;
   }
 }
 

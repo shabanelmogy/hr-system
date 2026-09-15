@@ -12,6 +12,9 @@ namespace ErpSystem.Api.Hosting;
 /// </summary>
 public static class HostDeploymentConfigurationValidator
 {
+    private const string EnforceProductionReadinessKey =
+        "DeploymentValidation:EnforceProductionReadiness";
+
     private static readonly string[] PlaceholderMarkers =
     [
         "YOUR_",
@@ -34,6 +37,8 @@ public static class HostDeploymentConfigurationValidator
         ArgumentException.ThrowIfNullOrWhiteSpace(environmentName);
         ArgumentNullException.ThrowIfNull(installedModuleNames);
 
+        HostDistributedRuntimeServiceCollectionExtensions.GetValidatedSettings(configuration);
+
         var moduleNames = installedModuleNames
             .Where(static name => !string.IsNullOrWhiteSpace(name))
             .Distinct(StringComparer.OrdinalIgnoreCase)
@@ -43,6 +48,12 @@ public static class HostDeploymentConfigurationValidator
             environmentName,
             Environments.Production,
             StringComparison.OrdinalIgnoreCase);
+        var isDevelopment = string.Equals(
+            environmentName,
+            Environments.Development,
+            StringComparison.OrdinalIgnoreCase);
+        var enforceProductionReadiness =
+            configuration.GetValue(EnforceProductionReadinessKey, defaultValue: true);
 
         foreach (var moduleName in moduleNames)
         {
@@ -60,7 +71,8 @@ public static class HostDeploymentConfigurationValidator
                 connectionString is null
                     ? $"ConnectionStrings:{moduleName} or ConnectionStrings:DefaultConnection"
                     : configuredKey,
-                isProduction);
+                isProduction && enforceProductionReadiness,
+                rejectLocalDb: !isDevelopment);
         }
 
         var hangfireConnection = configuration.GetConnectionString("HangfireConnection");
@@ -75,18 +87,22 @@ public static class HostDeploymentConfigurationValidator
                 : configuration.GetConnectionString("HangfireConnection") is null
                     ? "ConnectionStrings:DefaultConnection"
                     : "ConnectionStrings:HangfireConnection",
-            isProduction);
+            isProduction && enforceProductionReadiness,
+            rejectLocalDb: !isDevelopment);
 
-        if (isProduction)
+        if (isProduction && enforceProductionReadiness)
             ValidateProductionConfiguration(configuration, moduleNames, errors);
 
-        if (errors.Count == 0)
+        var distinctErrors = errors
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+        if (distinctErrors.Length == 0)
             return;
 
         throw new InvalidOperationException(
             "Host deployment configuration validation failed:" +
             Environment.NewLine +
-            string.Join(Environment.NewLine, errors.Select(error => $"- {error}")));
+            string.Join(Environment.NewLine, distinctErrors.Select(error => $"- {error}")));
     }
 
     private static void ValidateProductionConfiguration(
@@ -106,7 +122,29 @@ public static class HostDeploymentConfigurationValidator
         ValidateSecureUrl(configuration["AppSettings:FrontendUrl"], "AppSettings:FrontendUrl", errors);
 
         RequireProductionSecret(configuration["JwtOptions:Key"], "JwtOptions:Key", errors);
+        if (!configuration.GetValue<bool>("MailSettings:Enabled"))
+            errors.Add("MailSettings:Enabled must be true in production.");
         RequireProductionSecret(configuration["MailSettings:Password"], "MailSettings:Password", errors);
+
+        if (moduleNames.Contains("Reporting", StringComparer.OrdinalIgnoreCase) &&
+            configuration.GetValue<bool>("CrystalReports:RuntimeEnabled"))
+        {
+            ValidateSecureUrl(
+                configuration["CrystalReports:RuntimeBaseUrl"],
+                "CrystalReports:RuntimeBaseUrl",
+                errors);
+            var crystalRuntimeApiKey =
+                Environment.GetEnvironmentVariable("CRYSTAL_REPORT_INTERNAL_API_KEY");
+            if (string.IsNullOrWhiteSpace(crystalRuntimeApiKey))
+                crystalRuntimeApiKey = configuration["CrystalReports:RuntimeApiKey"];
+            RequireProductionSecret(
+                crystalRuntimeApiKey,
+                "CrystalReports:RuntimeApiKey or CRYSTAL_REPORT_INTERNAL_API_KEY",
+                errors);
+        }
+
+        ValidateProductionFileSecurity(configuration, errors);
+        ValidateProductionDataProtection(configuration, errors);
 
         ValidateFalseSwitch(configuration, "DatabaseSettings:SeedOnStartup", errors);
         ValidateFalseSwitch(configuration, "DatabaseSettings:ApplyMigrationsOnStartup", errors);
@@ -135,11 +173,58 @@ public static class HostDeploymentConfigurationValidator
         }
     }
 
+    private static void ValidateProductionFileSecurity(
+        IConfiguration configuration,
+        ICollection<string> errors)
+    {
+        if (!configuration.GetValue<bool>($"{FileSecuritySection}:MalwareScanningEnabled"))
+            errors.Add($"{FileSecuritySection}:MalwareScanningEnabled must be true in production.");
+
+        var scannerHost = configuration[$"{FileSecuritySection}:ScannerHost"];
+        if (string.IsNullOrWhiteSpace(scannerHost) ||
+            IsUnsetOrPlaceholder(scannerHost) ||
+            !IsValidScannerHost(scannerHost))
+        {
+            errors.Add($"{FileSecuritySection}:ScannerHost must be a valid DNS name or IP address in production.");
+        }
+
+        var scannerPort = configuration.GetValue<int?>($"{FileSecuritySection}:ScannerPort");
+        if (scannerPort is null or < 1 or > 65535)
+            errors.Add($"{FileSecuritySection}:ScannerPort must be between 1 and 65535 in production.");
+    }
+
+    private const string FileSecuritySection = "FileSecurity";
+
+    private static void ValidateProductionDataProtection(
+        IConfiguration configuration,
+        ICollection<string> errors)
+    {
+        var distributed = HostDistributedRuntimeServiceCollectionExtensions.GetValidatedSettings(configuration);
+        var section = configuration.GetSection(HostDataProtectionSettings.SectionName);
+        var settings = section.Get<HostDataProtectionSettings>() ?? new HostDataProtectionSettings();
+        if (!settings.IsValid(out var settingsError))
+            errors.Add($"DataProtection configuration is invalid: {settingsError}");
+
+        if (string.IsNullOrWhiteSpace(settings.KeyRingDirectory))
+            errors.Add("DataProtection:KeyRingDirectory is required in production so keys survive restarts.");
+        if (string.IsNullOrWhiteSpace(settings.ProtectionCertificatePath) ||
+            string.IsNullOrWhiteSpace(settings.ProtectionCertificatePassword))
+        {
+            errors.Add("DataProtection:ProtectionCertificatePath and DataProtection:ProtectionCertificatePassword are required in production.");
+        }
+
+        if (distributed.ReplicaCount > 1 && !settings.SharedKeyRing)
+        {
+            errors.Add("DataProtection:SharedKeyRing must be true for multiple production replicas.");
+        }
+    }
+
     private static void ValidateSqlConnection(
         ICollection<string> errors,
         string? connectionString,
         string settingKey,
-        bool requireProductionTransportSecurity)
+        bool requireProductionTransportSecurity,
+        bool rejectLocalDb)
     {
         if (string.IsNullOrWhiteSpace(connectionString))
         {
@@ -156,6 +241,12 @@ public static class HostDeploymentConfigurationValidator
         try
         {
             var builder = new SqlConnectionStringBuilder(connectionString);
+            if (rejectLocalDb && IsSqlServerLocalDb(builder.DataSource))
+            {
+                errors.Add($"{settingKey} must not use SQL Server LocalDB outside Development.");
+                return;
+            }
+
             if (!requireProductionTransportSecurity)
                 return;
 
@@ -174,6 +265,16 @@ public static class HostDeploymentConfigurationValidator
         {
             errors.Add($"{settingKey} must be a valid SQL connection string.");
         }
+    }
+
+    private static bool IsSqlServerLocalDb(string? dataSource)
+    {
+        if (string.IsNullOrWhiteSpace(dataSource))
+            return false;
+
+        var normalized = dataSource.Trim();
+        return normalized.StartsWith("(localdb)\\", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(normalized, "(localdb)", StringComparison.OrdinalIgnoreCase);
     }
 
     private static void ValidateAllowedHosts(string? allowedHosts, ICollection<string> errors)
@@ -281,6 +382,20 @@ public static class HostDeploymentConfigurationValidator
 
         return !normalized.Contains(':', StringComparison.Ordinal) &&
             Uri.CheckHostName(normalized) is UriHostNameType.Dns or UriHostNameType.IPv4;
+    }
+
+    private static bool IsValidScannerHost(string host)
+    {
+        var normalized = host.Trim();
+        if (IPAddress.TryParse(normalized, out _))
+            return true;
+
+        if (normalized.Contains('/', StringComparison.Ordinal) ||
+            normalized.Contains(':', StringComparison.Ordinal))
+            return false;
+
+        return
+            Uri.CheckHostName(normalized) is UriHostNameType.Dns or UriHostNameType.Basic;
     }
 
     private static bool IsFalseValue(string? value) =>

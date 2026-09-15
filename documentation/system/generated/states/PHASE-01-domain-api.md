@@ -6,9 +6,9 @@
 
 Build the server contract first so both clients consume one stable model.
 
-Execution reference: `documentation/api/Feature_Module_Implementation_Checklist.md`.
-The applied feature profile supplies evidence; the generic checklist supplies the
-implementation discipline.
+Execution reference: `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`.
+The applied feature profile supplies evidence; the workflow supplies the mandatory
+existing-system review, implementation order, and Definition of Done.
 
 ## Required decisions
 
@@ -81,7 +81,7 @@ implementation discipline.
 | states-master | 3 | `11eb828b5ab01b440915284f32842ff110624d6f4f7a57b77d5dde5f7ce9ca4b` |
 | states-master | 4 | `5a6d15c81abe80fbc5e13715f385f8a978b6482153ba7cec90474f46b6886ebf` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
-| states-api | 1 | `2395d7afcf495d57355e29724dc18f10fb01b10158e7e10992e3b4873f5a03fe` |
+| states-api | 1 | `85523ed52ed56c5ba99bfe170b3ae346c42d8851b1b420b13a784ae4eac9fa17` |
 | states-api | 2 | `11f8fd32cf2e1917fcbc35ea783d4f6f46e6df380bef0165ee054c636da37db1` |
 | states-api | 3 | `0385cf078edb08d33b9029d57b67bf2d6055a6bbef25d102ef84327700ea2271` |
 | states-api | 4 | `5436b2b4eb4947f63d84e03931b6030fd296510ca38beb398ce168a140ee52b8` |

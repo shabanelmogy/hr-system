@@ -14,18 +14,19 @@ import { useUpdateLocalizationMutation } from "./useLocalizationQueries";
 import { localizationEntrySchema } from "../validation/localizationValidation";
 import type { LocalizationEntry } from "../types/localization";
 
-export default function useLocalizationRowEditing(culture: string) {
+export default function useLocalizationRowEditing(culture: string, canEdit: boolean) {
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const { showSnackbar, SnackbarComponent } = useSnackbar();
   const { t } = useTranslation();
   const updateLocalization = useUpdateLocalizationMutation(culture);
 
   const handleEditClick = useCallback((id: GridRowId) => () => {
+    if (!canEdit) return;
     setRowModesModel((current) => ({
       ...current,
       [id]: { mode: GridRowModes.Edit },
     }));
-  }, []);
+  }, [canEdit]);
 
   const handleSaveClick = useCallback((id: GridRowId) => () => {
     setRowModesModel((current) => ({
@@ -52,6 +53,8 @@ export default function useLocalizationRowEditing(culture: string) {
 
   const processRowUpdate = useCallback(
     async (newRow: LocalizationEntry, oldRow: LocalizationEntry) => {
+      if (!canEdit) return oldRow;
+
       const validation = localizationEntrySchema.safeParse({
         language: culture,
         key: newRow.key,
@@ -82,7 +85,7 @@ export default function useLocalizationRowEditing(culture: string) {
         return oldRow;
       }
     },
-    [culture, showSnackbar, t, updateLocalization],
+    [canEdit, culture, showSnackbar, t, updateLocalization],
   );
 
   const handleProcessRowUpdateError = useCallback(

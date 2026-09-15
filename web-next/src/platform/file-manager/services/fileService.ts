@@ -1,15 +1,9 @@
 import axios from "axios";
 import apiClient, { ApiClientError } from "@/lib/api/client";
 import { apiService } from "@/shared/services";
-import { extractValue, extractValues } from "@/shared/utils/ApiHelper";
-import type { FileItem, UploadResult } from "../types/File";
-
-const BASE = "/api/v1/Files";
-
-const FILE_CONFIG = {
-  MAX_FILE_SIZE: 50 * 1024 * 1024,
-  MAX_FILES_PER_UPLOAD: 10,
-} as const;
+import { apiRoutes } from "@/config";
+import { FILE_CONFIG, validateFilePolicy } from "../components/file-upload/constants/fileUpload.type";
+import type { FileItem } from "../types/File";
 
 type FileErrorCollection = string[] | Record<string, string[]>;
 
@@ -65,23 +59,14 @@ class FileService {
   }
 
   static async getAll(): Promise<FileItem[]> {
-    const response = await apiService.get<unknown>(`${BASE}/GetAll`);
-    const files = extractValues<FileItem>(response);
+    const files = parseFileItems(await apiService.get<unknown>(apiRoutes.files.getAll));
     return files.filter((file) => !file.isDeleted);
-  }
-
-  static async getById(id: number): Promise<FileItem> {
-    if (!Number.isFinite(id) || id <= 0) {
-      throw new Error("Invalid file ID");
-    }
-    const response = await apiService.get<unknown>(`${BASE}/GetByID/${id}`);
-    return extractValue<FileItem>(response);
   }
 
   async downloadFile(storedFileName: string, fileName: string): Promise<DownloadResult> {
     try {
       const blob = await apiClient.getBlob(
-        `${BASE}/download/${storedFileName}`,
+        apiRoutes.files.download(storedFileName),
       );
       const url = window.URL.createObjectURL(blob);
       const anchor = document.createElement("a");
@@ -97,10 +82,10 @@ class FileService {
     }
   }
 
-  async downloadStream(idOrPath: string | number): Promise<DownloadStreamResult> {
+  async downloadStream(id: string): Promise<DownloadStreamResult> {
     try {
       const blob = await apiClient.getBlob(
-        `${BASE}/stream/${idOrPath}`,
+        apiRoutes.files.stream(requireGuid(id)),
       );
       const objectUrl = window.URL.createObjectURL(blob);
       return {
@@ -116,46 +101,41 @@ class FileService {
     }
   }
 
-  getStreamUrl(idOrPath: string | number): string {
-    const value = String(idOrPath).trim();
-    if (!value) throw new Error("Invalid file stream identifier");
-    return `${BASE}/stream/${encodeURIComponent(value)}`;
+  getStreamUrl(id: string): string {
+    return apiRoutes.files.stream(requireGuid(id));
   }
 
   static async delete(storedFileName: string): Promise<string> {
     if (!storedFileName.trim()) throw new Error("Invalid stored filename");
-    await apiService.delete(`${BASE}/Delete/${storedFileName}`);
+    await apiService.delete(apiRoutes.files.delete(storedFileName));
     return storedFileName;
   }
 
-  static async uploadMany(files: File[]): Promise<UploadResult> {
-    try {
-      if (files.length === 0) throw new Error("No files provided");
-      if (files.length > FILE_CONFIG.MAX_FILES_PER_UPLOAD) {
-        throw new Error(
-          `Cannot upload more than ${FILE_CONFIG.MAX_FILES_PER_UPLOAD} files at once`,
-        );
-      }
-
-      const oversizedFiles = files.filter((file) => file.size > FILE_CONFIG.MAX_FILE_SIZE);
-      if (oversizedFiles.length > 0) {
-        const sizeMB = (FILE_CONFIG.MAX_FILE_SIZE / (1024 * 1024)).toFixed(0);
-        const fileNames = oversizedFiles.map((file) => file.name).join(", ");
-        throw new Error(`Files exceed maximum size of ${sizeMB}MB: ${fileNames}`);
-      }
-
-      const formData = new FormData();
-      files.forEach((file) => formData.append("files", file));
-      await apiService.post(`${BASE}/UploadMany`, formData, {
-        "Content-Type": "multipart/form-data",
-      });
-      return { success: true, message: "Files uploaded successfully" };
-    } catch (error) {
-      return {
-        success: false,
-        message: error instanceof Error ? error.message : "Upload failed",
-      };
+  static async uploadMany(files: File[]): Promise<void> {
+    if (files.length === 0) throw new Error("No files provided");
+    if (files.length > FILE_CONFIG.MAX_FILES_PER_UPLOAD) {
+      throw new Error(
+        `Cannot upload more than ${FILE_CONFIG.MAX_FILES_PER_UPLOAD} files at once`,
+      );
     }
+
+    const oversizedFiles = files.filter((file) => file.size > FILE_CONFIG.MAX_FILE_SIZE);
+    if (oversizedFiles.length > 0) {
+      const sizeMB = (FILE_CONFIG.MAX_FILE_SIZE / (1024 * 1024)).toFixed(0);
+      const fileNames = oversizedFiles.map((file) => file.name).join(", ");
+      throw new Error(`Files exceed maximum size of ${sizeMB}MB: ${fileNames}`);
+    }
+
+    const invalidFiles = files.filter((file) => validateFilePolicy(file) !== null);
+    if (invalidFiles.length > 0) {
+      throw new Error(`File type or name is not allowed: ${invalidFiles.map((file) => file.name).join(", ")}`);
+    }
+
+    const formData = new FormData();
+    files.forEach((file) => formData.append("files", file));
+    await apiService.post(apiRoutes.files.uploadMany, formData, {
+      "Content-Type": "multipart/form-data",
+    });
   }
 
   private toErrorResponse(error: unknown): FileErrorResponse {
@@ -187,6 +167,49 @@ function normalizeErrors(value: unknown): string[] | null {
     Array.isArray(items) ? items.filter((item): item is string => typeof item === "string") : [],
   );
   return messages.length > 0 ? messages : null;
+}
+
+const guidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+function requireGuid(value: string): string {
+  const normalized = value.trim();
+  if (!guidPattern.test(normalized)) throw new Error("Invalid file stream identifier");
+  return normalized;
+}
+
+export function parseFileItems(value: unknown): FileItem[] {
+  if (!Array.isArray(value)) throw new Error("Invalid files response.");
+  return value.map(parseFileItem);
+}
+
+function parseFileItem(value: unknown): FileItem {
+  const item = asRecord(value);
+  if (!item
+    || typeof item.id !== "string"
+    || !guidPattern.test(item.id)
+    || typeof item.fileName !== "string"
+    || typeof item.storedFileName !== "string"
+    || typeof item.contentType !== "string"
+    || typeof item.fileExtension !== "string"
+    || typeof item.createdOn !== "string"
+    || !Number.isFinite(Date.parse(item.createdOn))
+    || typeof item.createdByPc !== "string"
+    || typeof item.createdById !== "string"
+    || typeof item.isDeleted !== "boolean") {
+    throw new Error("Invalid file response.");
+  }
+
+  return {
+    id: item.id,
+    fileName: item.fileName,
+    storedFileName: item.storedFileName,
+    contentType: item.contentType,
+    fileExtension: item.fileExtension,
+    createdOn: item.createdOn,
+    createdByPc: item.createdByPc,
+    createdById: item.createdById,
+    isDeleted: item.isDeleted,
+  };
 }
 
 const fileService = new FileService();

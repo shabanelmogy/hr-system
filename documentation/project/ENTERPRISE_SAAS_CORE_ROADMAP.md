@@ -8,7 +8,7 @@
 
 ## حالة التنفيذ
 
-آخر تحديث: 2026-08-16
+آخر تحديث: 2026-09-12
 
 الحزم الثلاث الأولى من المرحلة 0 اكتملت واختُبرت:
 
@@ -352,12 +352,13 @@ hosts/CORS غير آمن، أو secrets placeholder، أو startup migrations/se
 
 ### 16. Distributed Runtime Readiness
 
-- [ ] تفعيل forwarded headers وتحديد trusted proxies قبل الاعتماد على client IP.
+- [x] تفعيل forwarded headers اختياريًا بقوائم trusted proxies/networks صريحة قبل الاعتماد على client IP، مع رفض المصادر غير الموثوقة وشبكات `/0`.
 - [ ] استخدام distributed rate limiting أو gateway عند تعدد instances.
-- [ ] استخدام SignalR backplane أو managed SignalR عند التوسع الأفقي.
+- [x] إضافة Redis SignalR backplane اختياري مع channel prefix وعقد session affinity للتوسع الأفقي.
 - [ ] نقل الملفات إلى object storage مشترك مع encryption وbackup.
-- [ ] إضافة malware scanning وcontent validation للملفات المرفوعة.
-- [ ] استخدام distributed cache فقط عندما تبرره الحاجة الفعلية.
+- [x] إضافة Platform-owned content validation لمسارات الرفع الحالية قبل أي binary/metadata write، مع
+  extension/content-type/signature checks وClamAV `INSTREAM` اختياري fail-closed.
+- [x] دعم Redis distributed cache اختياريًا مع بقاء الذاكرة المحلية هي الوضع الافتراضي للـ single instance.
 
 ---
 
@@ -365,9 +366,10 @@ hosts/CORS غير آمن، أو secrets placeholder، أو startup migrations/se
 
 ### 17. CI/CD and Migrations
 
-- [ ] إضافة CI للـ API والويب والموبايل.
+- [x] إضافة CI للـ API والويب والموبايل.
 - [x] إضافة API CI يبني ويختبر Release وينتج publish artifact ويتحقق من بناء صورة الإنتاج بدون push.
-- [ ] تشغيل build، tests، lint، type checks وarchitecture checks.
+- [x] إضافة Web CI لتشغيل architecture وlint وtype checks العادية وstrict والاختبارات وNext production build دون أسرار.
+- [x] إضافة Mobile CI لتشغيل typecheck وlint وarchitecture والاختبارات، دون EAS أو نشر.
 - [x] إضافة فحص ثغرات NuGet المباشرة والمتعدية وSPDX SBOM مُتحقق منه كـCI artifacts.
 - [x] إضافة secret scanning للـ current tree باستخدام Gitleaks.
 - [x] فحص EF migration model drift لكل Module DbContext حالي.

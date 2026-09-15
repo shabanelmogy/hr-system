@@ -1,6 +1,10 @@
 export { moduleApi, moduleKeys } from "./moduleApi";
 export type { ErpModule, ModuleSubmodule } from "./types";
-export { useAccessibleModulesQuery, useInstalledModulesQuery } from "./useModulesQuery";
+export {
+  useAccessibleModulesQuery,
+  useInstalledModulesQuery,
+  useTenantEntitlementModulesQuery,
+} from "./useModulesQuery";
 export { toLauncherModule, toLauncherModules } from "./modulePresentation";
 export { ModuleContextSwitcher } from "./ModuleContextSwitcher";
 export {

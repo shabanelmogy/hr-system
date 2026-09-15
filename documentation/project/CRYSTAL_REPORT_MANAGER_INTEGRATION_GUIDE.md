@@ -8,6 +8,8 @@ database connection.
 This is the canonical integration contract for managed `.rpt` reports. The
 [Crystal Report Manager review artifact](../system/features/crystal-report-manager/CRYSTAL_REPORT_MANAGER-REVIEW-ARTIFACTS.md)
 contains the implementation evidence and current verification record.
+The phased plan for AI-assisted design-time SQL View/schema generation is
+[AI Report View Designer Implementation Plan](../system/features/crystal-report-manager/AI_REPORT_VIEW_DESIGNER_PLAN.md).
 
 ## 1. Make the reporting decision first
 
@@ -37,7 +39,7 @@ Crystal host: Reports\<Entity>\<Entity>-<Variant>.rpt
           |
           | administrator discovers/imports
           v
-HR API Report Manager: tenant-owned logical report + immutable versions
+Reporting API Report Manager: tenant-owned logical report + immutable versions
           |
           | publish one version + grant role rights for current company
           v
@@ -45,14 +47,14 @@ Feature report view: GET published catalog by entityKey
           |
           | POST report ID + language + bounded filters
           v
-HR API: authorize -> build allowlisted EF dataset -> resolve private RPT
+Reporting API: authorize -> resolve registered data provider -> resolve private RPT
           |
           | internal explicit-schema dataset + RPT
           v
 Crystal runtime: validate entity schema profile -> render PDF
 ```
 
-The browser or mobile app calls only the same-origin HR API. It never calls the
+The browser or mobile app calls only the same-origin ERP API. It never calls the
 Crystal host directly and never sends a report path, filename, SQL statement,
 connection string, tenant ID, or company ID.
 
@@ -61,7 +63,7 @@ connection string, tenant ID, or company ID.
 ### Entity key
 
 `entityKey` is the stable link between a business feature, the manager catalog,
-the HR API dataset provider, and the Crystal runtime schema profile. Use a
+the Reporting data provider, and the Crystal runtime schema profile. Use a
 canonical lower-case key such as `countries`, `states`, or `employees`. Keep it
 stable after reports have been imported.
 
@@ -112,7 +114,7 @@ The lifecycle is:
 
 Coarse permissions are `CrystalReports:View`, `Create`, `Download`, `Upload`,
 `Publish`, `ManageAccess`, and `Delete`. Per-report role rights are `Run`,
-`Download`, `Upload`, `Publish`, and `ManageAccess`. The HR API derives tenant and
+`Download`, `Upload`, `Publish`, and `ManageAccess`. The Reporting API derives tenant and
 company from the authenticated session and evaluates access server-side. A client
 must never send either scope identifier.
 
@@ -120,7 +122,7 @@ must never send either scope identifier.
 must surface a stale-write conflict and reload rather than silently retry with old
 state.
 
-## 5. Public HR API contract
+## 5. Public Reporting API contract
 
 All routes are below `/api/v1/crystal-reports`:
 
@@ -130,8 +132,8 @@ All routes are below `/api/v1/crystal-reports`:
 | `POST /{reportId}/render` | Feature viewer | Render the current published version as PDF |
 | `GET /manage` | Manager | Paged tenant management list |
 | `GET /manage/{reportId}` | Manager | Details, versions, and grants |
-| `GET /legacy-candidates?entityKey={key}` | Manager | Discover approved deployed `.rpt` sources |
-| `POST /legacy-imports` | Manager | Copy a discovered source into private version storage |
+| `GET /deployment-candidates?entityKey={key}` | Manager | Discover approved deployment-owned `.rpt` sources |
+| `POST /deployment-imports` | Manager | Copy a discovered source into private version storage |
 | `POST` | Manager | Create from a multipart `.rpt` upload |
 | `POST /{reportId}/versions` | Manager | Add an immutable version |
 | `GET /{reportId}/download` | Manager/authorized user | Download the published source |
@@ -156,9 +158,19 @@ with values up to 200 characters; the feature data provider must apply a smaller
 allowlist for the selected `entityKey`. Unknown or unsupported filters fail
 validation instead of becoming dynamic SQL.
 
+Deployment discovery is intentionally lighter than managed report validation.
+The runtime catalog checks the approved entity-folder/name convention, bounded
+file size, OLE signature, and SHA-256 identity without opening every candidate
+through the SAP Crystal SDK. Import then re-resolves and re-hashes the selected
+source and routes it through the same mandatory inspection/storage pipeline as a
+direct upload. This keeps discovery responsive and prevents catalog browsing from
+consuming native render/inspection execution slots without weakening the managed
+report policy.
+
 ## 6. Adding Crystal reports to a new feature
 
-The implemented runtime baseline currently supports `countries` and `states`.
+The implemented runtime baseline currently supports `countries`, `states`,
+`districts`, and `addresstypes`.
 Use those profiles as evidence for the integration shape, but do not copy their
 global reference-data scope into tenant/company-owned HR features.
 
@@ -174,54 +186,87 @@ Before implementation, record:
 - whether reports are global, tenant-owned, or company-owned data.
 
 The report may format data, but it must not define data-access security. Tenant,
-company, soft-delete, feature authorization, and filter rules belong in the HR API
-query.
+company, soft-delete, feature authorization, and filter rules belong in the owning
+module source and the Reporting adapter.
 
-### 6.2 Add the HR API dataset profile
+### 6.2 Add the Reporting data provider
 
-Extend the allowlisted `ICrystalReportDataSource` implementation at
-`api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs`.
+Add one `ICrystalReportDataProvider` implementation for the entity. The generic
+resolver remains at
+`api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs`;
+it must not grow a feature switch. Current ReferenceData examples live in
+`ReferenceDataCrystalReportProviders.cs` and consume only the public
+`IReferenceDataReportingSource` contract.
 
 The profile must:
 
-- switch/resolve only a known `entityKey`;
-- query through the HR API `ApplicationDbContext` with `AsNoTracking()`;
-- enforce tenant/company and feature visibility from trusted server context;
+- declare one stable `entityKey` and reject duplicate provider registration;
+- obtain business data from the owning module through its public Contracts/source
+  boundary rather than another module's DbContext;
+- enforce tenant/company and feature visibility from trusted server context in the
+  owning source;
 - exclude archived rows according to the documented report contract;
 - apply only approved filters and deterministic ordering;
 - project only the documented report columns;
 - emit one explicit-schema `ReportData` table;
 - honor `CancellationToken` and enforce a bounded result size.
 
-If the registry grows, extract one feature-owned provider per entity behind the
-same interface. Do not replace the allowlist with reflection, arbitrary table
-names, user SQL, or a client-supplied connection string.
+Every new reportable capability follows this provider pattern. Do not replace the
+allowlist with reflection, arbitrary table names, user SQL, direct cross-module
+DbContext access, or a client-supplied connection string.
 
 ### 6.3 Add the Crystal runtime schema profile
 
 Add the matching `entityKey` and required column set to
-`api/CrystalReportGeneratorApi/Helpers/CrystalReport/ManagedReportRuntime.cs`.
-The runtime validates that profile before binding data to the report. The HR API
-dataset columns and Crystal profile must remain identical.
+`api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportProfileRegistry.cs`.
+`CrystalReportRenderService` validates that profile before binding data to the
+report. The Reporting provider columns and Crystal runtime profile must remain
+identical.
 
 The Crystal runtime receives a private source stream and explicit-schema data from
-the HR API. It does not decide the tenant/company or connect to the HR database.
+the Reporting API. It does not decide tenant/company scope and does not connect to
+the ERP database.
+
+Every managed `.rpt` must also declare a Crystal parameter named `Language`.
+Inspection rejects templates that omit it, and render sets it to the already
+validated `ar` or `en` request value. The template may use that parameter in
+formulas, labels, visibility rules, or section formatting. The runtime does not
+rewrite report objects, mirror coordinates, inject generic formulas, or save
+layout changes during rendering; visual behavior remains owned by the `.rpt`
+created in SAP Crystal Reports Designer.
 
 ### 6.4 Prepare and publish report files
 
 1. Create the entity folder under the deployed Crystal `Reports` root.
 2. Name every `.rpt` with the entity prefix.
 3. Bind the report to the approved `ReportData` schema.
-4. Set SummaryInfo Title (Arabic) and Subject (English).
-5. Deploy the Crystal host changes needed for the new runtime profile.
-6. Import the candidate through Report Manager.
-7. Publish the intended version.
-8. Assign `Run` and any additional rights to the correct roles/company.
-9. Sign out and back in only when coarse role claims changed; per-report grants are
+4. Add the required string parameter `Language`; design the RPT itself to react to
+   `ar` / `en` when localized layout or labels are required.
+5. Set SummaryInfo Title (Arabic) and Subject (English).
+6. Deploy the Crystal host changes needed for the new runtime profile.
+7. Import the candidate through Report Manager.
+8. Publish the intended version.
+9. Assign `Run` and any additional rights to the correct roles/company.
+10. Sign out and back in only when coarse role claims changed; per-report grants are
    evaluated by the API from current persisted access.
 
 Never create a database connection inside a managed report definition or expose
 the deployment path to a client.
+
+The managed runtime currently accepts one pushed-data report shape only:
+
+- the report datasource must be Crystal `ADO.NET (XML)` using `crdb_adoplus.dll`;
+- the report must contain no saved data;
+- the report must declare the managed `Language` parameter;
+- server name, database name, user name, password, and integrated-security
+  metadata must be absent;
+- subreports are not supported. A report that requires a subreport is rejected at
+  inspection and is checked again immediately before render.
+
+These rules are deliberate isolation boundaries, not compatibility limitations to
+work around. If subreports are needed later, add an explicit pushed-data binding
+contract for every subreport before enabling them; never fall back to a Crystal
+database login.
 
 ## 7. Web feature integration
 
@@ -247,12 +292,13 @@ no list pagination and must be able to render before list rows exist. The curren
 pattern is `paginate: false` and `renderWhenEmpty: true` where those options are
 available.
 
-Do not use the legacy public `report/info` or `report/generate` endpoints,
-`ReportPath`, `ReportFileName`, or `NEXT_PUBLIC_REPORT_API_URL` for managed reports.
+The retired public `report/info` and `report/generate` endpoints no longer exist.
+Managed reports never send `ReportPath`, `ReportFileName`, or
+`NEXT_PUBLIC_REPORT_API_URL`.
 
 ## 8. Mobile feature integration
 
-Mobile must use the same HR API published catalog and render endpoint as web. The
+Mobile must use the same Reporting API published catalog and render endpoint as web. The
 first mobile Crystal consumer (Countries) introduced the shared reporting
 boundary; every other feature consumes reports only through its curated public
 API at `mobile-react/src/platform/reporting`:
@@ -295,15 +341,14 @@ through Expo Print, share through Expo Sharing, and dispose best-effort; web
 builds wrap the bytes into an object URL for open/download and revoke it on
 dispose.
 
-Do not use the legacy public `report/info` or `report/generate` endpoints, the
-`X-ApiKey` header, `ReportPath`/`ReportFileName` payloads, or
-`EXPO_PUBLIC_REPORT_API_URL` for managed reports. Remove that legacy variable and
-its helpers once no unmanaged mobile consumer remains; managed reports need only
-the authenticated HR API URL.
+The retired public `report/info` and `report/generate` endpoints and browser
+`X-ApiKey` flow are not part of the runtime contract. Mobile never sends
+`ReportPath`/`ReportFileName` or uses `EXPO_PUBLIC_REPORT_API_URL`; managed reports
+need only the authenticated ERP API URL.
 
 The shared mobile transport test must assert the exact feature `entityKey`,
 catalog schema failure, render endpoint/body, PDF response type, long timeout,
-read-only allowance, and authenticated HR API boundary. Feature tests separately
+read-only allowance, and authenticated Reporting API boundary. Feature tests separately
 cover localized display-name selection and approved filter mapping.
 
 The report view is independent from the table/card page and must not render its own
@@ -312,14 +357,44 @@ connection string from React Native.
 
 ## 9. Deployment contract
 
-The HR API calls the Crystal service configured by
-`CrystalReports:InspectorBaseUrl`. Inspection, discovery, and rendering are
+The Reporting API calls the Crystal service configured by
+`CrystalReports:RuntimeBaseUrl`. Inspection, deployment discovery, and rendering are
 internal adapter endpoints. For production, configure the same strong
-`CRYSTAL_REPORT_INTERNAL_API_KEY` in both services and set
-`RequireInternalApiKey=true` on the Crystal service. Do not commit the key.
+`CRYSTAL_REPORT_INTERNAL_API_KEY` in both services. The runtime is fail-closed:
+there is no development bypass flag, and a configured `RuntimeBaseUrl` without an
+effective API key fails Reporting startup validation. Do not commit the key.
 
-Adding a new entity runtime profile requires deploying both the HR API dataset
-profile and the Crystal API schema profile. Report content itself is then
+The runtime safety ceilings are intentionally bounded: an `.rpt` and the pushed
+XML dataset are each limited to 10 MiB; rendered PDF output defaults to 50 MiB;
+the deployment catalog defaults to 1,000 entries. Response bodies are bounded
+while streaming, including chunked responses without `Content-Length`. The public
+upload boundary enforces its request size before model binding, and IIS keeps a
+separate request-size ceiling above the combined default RPT + XML payload.
+
+`GET /internal/reports/health` is an authenticated, deterministic readiness probe.
+It verifies configuration, managed profiles, Crystal engine assembly presence,
+and writable temporary storage, but deliberately does not instantiate
+`ReportDocument`: SAP native initialization can block and must never make the
+health endpoint itself unbounded. Real inspect/render calls remain protected by
+the global Crystal execution gate.
+
+Runtime operational events are written to a bounded rolling log under
+`App_Data/Logs` (with a worker-temp fallback). Records contain only operation,
+stable result code, correlation ID, and exception type. They never log report
+data, report paths, API keys, connection metadata, or exception messages.
+
+IIS denies direct static serving of `.rpt` files. Deployment sources are available
+only through the authenticated source-id + expected-SHA256 endpoint. The runtime
+does not own public logo/localization asset folders; branding and localized layout
+belong to the managed `.rpt` and its explicit `Language` parameter.
+
+As a deployment defense in depth, the Crystal worker identity/network segment must
+have no ERP SQL credentials and no outbound database access. The runtime needs
+only the internal HTTP path from the ERP host, its controlled report/storage
+folders, temporary storage, and the installed SAP Crystal runtime.
+
+Adding a new entity runtime profile requires deploying both the Reporting data
+provider/owning-module source and the Crystal runtime schema profile. Report content itself is then
 imported/versioned/published through Report Manager. An unreachable runtime or
 internal authentication/configuration failure is a service-availability failure;
 an unknown entity/filter/schema is a validation/unsupported-contract failure.
@@ -335,6 +410,11 @@ API tests must prove:
   empty datasets;
 - exact dataset table/column schema and nullability;
 - unsupported entity/profile behavior;
+- rejection of saved-data, external-connection, and subreport `.rpt` definitions;
+- bounded RPT, XML, catalog, inspection, and rendered-PDF payload handling;
+- stale deployment source/hash conflict preservation;
+- runtime correlation propagation, fail-closed internal authentication, and
+  readiness behavior;
 - render adapter timeout/failure mapping and valid PDF response;
 - immutable versions, publish concurrency, access replacement, and archive.
 
@@ -357,11 +437,11 @@ A feature's managed Crystal reporting is complete only when:
 - [ ] the review records Required/Deferred/Excluded and the chosen engine;
 - [ ] one stable `entityKey` is used by folder, manager, dataset, runtime, and client;
 - [ ] report columns and filter allowlist are documented;
-- [ ] HR API data and Crystal runtime profiles match;
+- [ ] Reporting data provider and Crystal runtime profiles match;
 - [ ] SummaryInfo Title and Subject provide Arabic and English names;
 - [ ] at least one validated version is imported/uploaded and published;
 - [ ] current-company role grants include `Run` for intended users;
-- [ ] web/mobile uses the shared HR API catalog/render contract;
+- [ ] web/mobile uses the shared Reporting API catalog/render contract;
 - [ ] tenant/company, lifecycle, permission, concurrency, and failure tests pass;
 - [ ] both services are deployed/configured when runtime code changed;
 - [ ] the feature documentation links to this guide and records evidence.
@@ -373,18 +453,31 @@ granted, and both allowlisted runtime profiles support its `entityKey`.
 ## 12. Implementation anchors
 
 - Public controller:
-  `api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/Analytics/CrystalReports/V1/CrystalReportsController.cs`
+  `api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/CrystalReports/V1/CrystalReportsController.cs`
 - Application contracts and handlers:
-  `api/Modules/HR/ErpSystem.Modules.HR.Application/Features/Analytics/CrystalReports`
+  `api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports`
 - Dataset provider:
-  `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs`
+  `api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs`
+- Entity data providers:
+  `api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/ReferenceDataCrystalReportProviders.cs`
 - Internal runtime profile:
-  `api/CrystalReportGeneratorApi/Helpers/CrystalReport/ManagedReportRuntime.cs`
+  `api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportProfileRegistry.cs`
+- Internal runtime renderer:
+  `api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportRenderService.cs`
+- Managed datasource isolation policy:
+  `api/CrystalReportGeneratorApi/Runtime/CrystalReportManagedSourcePolicy.cs`
+- Runtime limits, execution gate, request workspace, and diagnostics:
+  `api/CrystalReportGeneratorApi/Runtime/CrystalReportRuntimeSettings.cs`,
+  `api/CrystalReportGeneratorApi/Runtime/CrystalReportExecutionGate.cs`,
+  `api/CrystalReportGeneratorApi/Runtime/CrystalReportRequestWorkspace.cs`, and
+  `api/CrystalReportGeneratorApi/Runtime/CrystalRuntimeDiagnostics.cs`
+- Internal deployment catalog:
+  `api/CrystalReportGeneratorApi/Runtime/Catalog/CrystalReportCatalogService.cs`
 - Internal render adapter:
   `api/CrystalReportGeneratorApi/Controllers/InternalReportRenderController.cs`
-- Web routes and shared service:
+- Web routes and Reporting module service:
   `web-next/src/config/api/crystalReports.ts` and
-  `web-next/src/shared/reporting/crystal-report-manager/services.ts`
+  `web-next/src/modules/reporting/crystal-report-manager/services.ts`
 - Applied web consumers:
   `web-next/src/modules/hr/basic-data/geographical-information/countries/reports` and
   `web-next/src/modules/hr/basic-data/geographical-information/states/reports`
@@ -394,4 +487,4 @@ granted, and both allowlisted runtime profiles support its `entityKey`.
 - Applied mobile consumer:
   `mobile-react/src/modules/hr/basic-data/countries/presentation/components/CountryReportView.tsx`
 - Manager administration page:
-  `web-next/src/shared/reporting/crystal-report-manager/CrystalReportManagerPage.tsx`
+  `web-next/src/modules/reporting/crystal-report-manager/CrystalReportManagerPage.tsx`

@@ -3,6 +3,13 @@ using ErpSystem.BuildingBlocks.Messaging;
 using ErpSystem.Modules.Accounting.Infrastructure.Messaging;
 using ErpSystem.Modules.Accounting.Application.Parties;
 using ErpSystem.Modules.Accounting.Infrastructure.Parties;
+using ErpSystem.Modules.Accounting.Contracts;
+using ErpSystem.Modules.Accounting.Infrastructure.Features.Finance.FiscalYears.Persistence;
+using ErpSystem.Modules.Accounting.Infrastructure.Features.Finance.FiscalYears.Jobs;
+using ErpSystem.Modules.Accounting.Application.Features.Finance.FiscalYears.Abstractions;
+using ErpSystem.Modules.Accounting.Application.Abstractions.Persistence;
+using ErpSystem.Modules.Accounting.Application.Features.Finance.Invoicing.Queries;
+using ErpSystem.Modules.Accounting.Infrastructure.Features.Finance.Invoicing.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,6 +42,14 @@ public static class DependencyInjection
         services.AddScoped<IAccountingInbox>(provider =>
             provider.GetRequiredService<AccountingInbox>());
         services.AddScoped<IAccountingPartyReferenceStore, AccountingPartyReferenceStore>();
+        services.AddScoped<IAccountingUnitOfWork>(provider => provider.GetRequiredService<AccountingDbContext>());
+        services.AddScoped<IFiscalYearReadStore, FiscalYearReadStore>();
+        services.AddScoped<IFiscalYearWriteStore, FiscalYearWriteStore>();
+        services.AddScoped<IFiscalYearAuditTrail, FiscalYearAuditTrail>();
+        services.AddScoped<IFiscalYearChangeScheduler, FiscalYearChangeScheduler>();
+        services.AddScoped<FiscalYearChangedJob>();
+        services.AddScoped<IFiscalYearPlanningSource, FiscalYearPlanningSource>();
+        services.AddSingleton<IInvoiceQrCodeGenerator, InvoiceQrCodeGenerator>();
 
         return services;
     }

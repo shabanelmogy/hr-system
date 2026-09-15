@@ -1,6 +1,11 @@
 # Domain Development Guide
 
-This guide defines the baseline for rebuilding HR features on the Clean Architecture solution. Organizational entities that are currently ignored by EF Core remain intentionally unpersisted until their individual domain reviews are complete.
+This is a specialized Domain-modeling reference for ERPSYSTEM modules. It is not
+the feature-delivery entry point. Start every change with
+`API_FEATURE_DEVELOPMENT_WORKFLOW.md`, and treat
+`ERP_ARCHITECTURE_CONSTITUTION.md` as the architecture authority. Use this document
+only when deciding how much behavior belongs in a Domain model after ownership and
+existing-system relationships have been reviewed.
 
 ## Pragmatic Hybrid DDD classification
 
@@ -36,11 +41,12 @@ API controller -> MediatR command/query -> Application handler -> Domain model
                                           Infrastructure implementation
 ```
 
-The API is the composition root and registers the layers explicitly:
+Each module bootstrap is its composition root. The API host composes module
+bootstraps and does not register module internals directly:
 
 ```csharp
-services.AddApplication();
-services.AddInfrastructure(configuration);
+services.Add<Module>Application();
+services.Add<Module>Infrastructure(configuration);
 ```
 
 Controllers translate HTTP concerns and send requests through `ISender`. New business orchestration does not belong in controllers or Infrastructure services.
@@ -58,14 +64,15 @@ Features/OrganizationalStructure/Branches/
   Contracts/BranchResponse.cs
 ```
 
-- Commands modify state and save once through `IUnitOfWork`.
+- Commands modify state through an Application-owned write port/transaction boundary;
+  use a module unit-of-work abstraction only where that module already owns one.
 - Queries return transport-neutral response models and do not mutate state.
 - Do not introduce a generic repository or a configurable base handler.
 - Add aggregate-specific repositories or narrow query interfaces only when a use case needs them.
 
 ## Domain rules and validation
 
-- FluentValidation validates request shape, required values, lengths, and asynchronous uniqueness checks.
+- FluentValidation validates request shape, required values, lengths, ranges, and formats.
 - Domain methods enforce business invariants and valid state transitions.
 - Database constraints remain the final protection for uniqueness and relationships.
 - Reference data may remain a simple CRUD model. Rule-heavy HR concepts such as employment, leave, payroll, and termination use domain methods with focused unit tests.
@@ -80,13 +87,23 @@ Application/Features/{Feature}/Contracts/{Request}Validator.cs
 Infrastructure/Features/{Feature}/Persistence/{Feature}ValidationQueries.cs
 ```
 
-The FluentValidation rule owns the validation decision and field message. The Infrastructure implementation only answers the required database question through EF Core. Validation-query interfaces inherit `IValidationQuery`, so Scrutor registers new implementations automatically. Do not add feature validation methods to `ApplicationDbContext`, inject EF Core into an Application validator, or place these queries in a generic repository.
+Use database-backed validation queries only when a real input-validation use case
+needs them. The Infrastructure implementation answers the narrow database question
+through EF Core; Application never sees a DbContext or `IQueryable`. Persisted-state,
+ownership, lifecycle, and race-sensitive decisions remain authoritative in the
+handler/domain plus database constraints. Do not duplicate the same database rule in
+both validator and handler merely for convenience.
 
-Asynchronous uniqueness validation improves field-level feedback but does not protect against concurrent requests. Every authoritative uniqueness rule also requires an appropriate database unique index and conflict handling.
+Optional asynchronous uniqueness feedback does not protect against concurrent
+requests. Every authoritative uniqueness rule requires the appropriate database
+unique index and stable conflict handling.
 
 ## Tenant and actor context
 
-Every tenant/company-owned write is validated by `ApplicationDbContext`. HTTP requests resolve the actor from claims. Background jobs must establish the actor explicitly before querying or changing scoped data:
+Every tenant/company-owned write derives trusted scope in Application and enforces it
+again in the owning persistence adapter/DbContext. HTTP requests resolve the actor
+through the platform execution context. Background jobs establish the required actor
+and scope explicitly before querying or changing scoped data:
 
 ```csharp
 using (currentActorScope.BeginScope(userId, tenantId, companyId))
@@ -109,15 +126,19 @@ New relationships between company-owned entities must enforce tenant and company
 
 ## Auditing, concurrency, and deletion
 
-- Audit stamping is owned by `ApplicationDbContext`.
+- Audit stamping is owned by the module's Infrastructure persistence boundary.
 - Row-version configuration is owned by Infrastructure, not Domain annotations.
 - A stale row version returns `409 Conflict` with code `ConcurrencyConflict`.
-- Calling EF Core Remove for an AuditableEntity is converted by ApplicationDbContext into a soft delete.
-- Normal reads of auditable entities must explicitly exclude IsDeleted; restore use cases query deleted rows deliberately.
-- Define restore behavior before adding soft deletion to a feature.
-- Decide whether a deleted record still reserves its business key, then match FluentValidation and the database unique index to that decision.
+- Soft delete is not a default. Choose hard delete, archive, deactivate, immutable
+  history, reversal, or soft delete from the business semantics of the aggregate.
+- When soft delete/archive is chosen, define normal-read visibility, restore behavior,
+  and whether inactive rows reserve business keys; align queries and indexes to that
+  decision.
 
-Do not set audit properties, actor identifiers, machine names, or current timestamps in feature services. ApplicationDbContext, ICurrentActor, and TimeProvider own those infrastructure concerns.
+Do not set audit properties, actor identifiers, machine names, or current timestamps
+inside Domain behavior or controller code. Execution-context abstractions,
+`TimeProvider`, and the owning Infrastructure persistence boundary provide those
+technical concerns.
 
 ## Security credentials
 

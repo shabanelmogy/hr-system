@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import ViewColumnOutlinedIcon from "@mui/icons-material/ViewColumnOutlined";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
@@ -23,16 +22,16 @@ import StageEditDialog from "./StageEditDialog";
 
 interface StagesSettingsTabProps {
   stages: RecruitmentStageConfig[];
+  canEdit: boolean;
   onAddStage: (stage: Omit<RecruitmentStageConfig, "id">) => void;
   onUpdateStage: (id: string, updates: Partial<RecruitmentStageConfig>) => void;
-  onDeleteStage: (id: string) => void;
 }
 
 export default function StagesSettingsTab({
   stages,
+  canEdit,
   onAddStage,
   onUpdateStage,
-  onDeleteStage,
 }: StagesSettingsTabProps) {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
@@ -81,14 +80,16 @@ export default function StagesSettingsTab({
             )}
           </Typography>
         </Box>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleOpenAdd}
-          sx={{ fontWeight: 600 }}
-        >
-          {t("recruitment.settings.newStageBtn", "إضافة مرحلة جديدة")}
-        </Button>
+        {canEdit && (
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={handleOpenAdd}
+            sx={{ fontWeight: 600 }}
+          >
+            {t("recruitment.settings.newStageBtn", "إضافة مرحلة جديدة")}
+          </Button>
+        )}
       </Box>
 
       <Alert severity="info" sx={{ mb: 3 }}>
@@ -185,21 +186,13 @@ export default function StagesSettingsTab({
                 />
               )}
 
-              <IconButton
-                size="small"
-                onClick={() => handleOpenEdit(stg)}
-                sx={{ color: "primary.main" }}
-              >
-                <EditOutlinedIcon fontSize="small" />
-              </IconButton>
-
-              {!stg.isDefault && (
+              {canEdit && (
                 <IconButton
                   size="small"
-                  onClick={() => onDeleteStage(stg.id)}
-                  sx={{ color: "error.main" }}
+                  onClick={() => handleOpenEdit(stg)}
+                  sx={{ color: "primary.main" }}
                 >
-                  <DeleteOutlineRoundedIcon fontSize="small" />
+                  <EditOutlinedIcon fontSize="small" />
                 </IconButton>
               )}
             </Box>

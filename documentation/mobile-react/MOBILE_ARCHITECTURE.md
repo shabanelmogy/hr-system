@@ -38,7 +38,7 @@ src/
 └── shell/
 ```
 
-Owner dependency direction is enforced by `scripts/module-boundaries.mjs`: business modules may depend on `core`, `shared`, and `platform`; `platform` never depends on a business module; `shell` is the composition root and may register modules; `app` consumes public APIs only. Cross-owner imports must use a curated public `index.ts` rather than another owner's internals.
+Owner dependency direction is enforced by `scripts/module-boundaries.mjs`: business modules may depend on `core`, `shared`, and `platform`; `platform` never depends on a business module; `shell` is the composition root and may register modules; `app` consumes public APIs only. Cross-owner imports must use a curated public `index.ts` rather than another owner's internals. `core` has an empty owner allowlist and may not import `shared`, platform, shell, or business modules. Root composition owns `AppFeedbackHost`; core providers remain independent of shared UI.
 
 Inside a business feature the dependency direction is:```text
 presentation -> application -> domain
@@ -48,12 +48,12 @@ data -----------------------> domain/application ports
 - `domain` contains pure business types, invariants, policies and repository/clock/ID ports. It must not import React, React Native, Expo, Axios, React Query, SQLite or `src/core`.
 - `application` contains use cases and orchestration over domain ports. It must stay UI-neutral and must not import React, React Native, Expo, Axios or React Query.
 - `data` implements application/domain ports. Remote data sources own transport DTO/schema mapping; local data sources own SQLite persistence; repositories choose local/remote behavior and sync policy.
-- `presentation` contains React components, screens and React Query controllers. Presentation talks to application use cases/repositories, never directly to Axios or feature remote data sources.
+- `presentation` contains React components, screens and React Query controllers. Presentation talks to application use cases/repositories, never directly to `apiService`, `axiosClient`, or feature remote data sources. Route files in `app/` are likewise limited to navigation, guards, and feature public APIs.
 - `composition` wires concrete dependencies for the feature and may depend on `core` infrastructure. External consumers still import only the feature public API.
 
 Legacy `api/`, `queries/`, `screens/` and `components/` folders may remain while a feature is being migrated. New business behavior must target the clean layers above, and migrations must preserve routed screens/public exports until all consumers move.
 
-Run `npm run check:architecture` to enforce these boundaries. The checker is intentionally small and supplements review; it does not replace TypeScript or tests.
+Run `npm run check:architecture` to enforce these boundaries. Its self-tests cover owner rules, prohibited transport imports, and narrow exceptions for API error helpers and authentication-provider wiring. The checker supplements review; it does not replace TypeScript or tests.
 
 ## Route and authorization ownership
 
@@ -108,21 +108,22 @@ React Query is a presentation cache/orchestrator, not the durable source of trut
 
 ## Offline-first data ownership
 
-- Durable business data uses SQLite through `src/core/offline`; AsyncStorage is reserved for lightweight preferences and non-business UI settings.
+- Durable business data uses encrypted SQLCipher SQLite through `src/core/offline`; the database key is a 256-bit SecureStore secret scoped to this device. AsyncStorage is reserved for lightweight preferences and non-business UI settings. The development database filename is versioned so a legacy plaintext file is never opened as encrypted data; native verification uses a development build, not Expo Go.
 - Every durable business row, sync cursor, draft and queued command is partitioned by the authenticated scope (`userId`, `tenantId`, `companyId` as applicable). Never replay commands from a previous tenant/company after a scope switch.
 - Offline behavior is governed by the cross-cutting **Offline Operations Policy**. Code owns an immutable safety registry per capability and declares which of `online-only`, `offline-read`, `offline-draft`, and `offline-command` are supported. The Platform API policy at `GET/PUT /api/v1/offline-operations/policy` is authoritative per tenant/company and can select only from those declared modes; it can never expand a capability beyond the code-owned allowlist. Unknown capabilities, invalid scope, missing policy, stale policy, malformed policy, or unsupported overrides resolve to `online-only`.
 - Mobile may retain a scoped cached policy (`userId + tenantId + companyId`) only as a bounded runtime fallback with version/fetched-at/valid-until metadata. Cached or fail-closed policy is never editable authority and must fail closed when absent, expired, incompatible, or for the wrong scope.
 - Device-local preferences may narrow an already permitted mode but never expand it. Countries is the first integrated example: cached reads require both central policy approval for `countries.read` and the existing local user opt-in. All Countries mutations remain online-authoritative.
 - `workforce-plan.update-draft` is the first certified offline mutation pilot. Its code-owned ceiling is `online-only` / `offline-draft` / `offline-command`, while the tenant/company policy defaults to `online-only` and must explicitly opt in. SQL Server integration coverage proves that child-only aggregate edits advance/check the parent rowVersion and reject stale overwrite; the mobile replay path persists draft + command atomically, carries the base rowVersion, reconciles ambiguous/409 outcomes before retry, and stops on a concurrent server change.
-- Inactive offline scopes are retained for 30 days and then pruned, except when a non-succeeded outbox entry still depends on that scope. Reading scoped records refreshes the scope access timestamp.
+- Inactive offline scopes are retained for 30 days and then pruned, except when a non-terminal outbox entry or protected user-authored record depends on that scope. Succeeded commands and explicitly discarded (`blocked`) commands are cleaned after the same retention window; dead-letter, conflict, uncertain, and protected drafts remain until the user resolves or discards them. Reading scoped records refreshes the scope access timestamp.
 - Local writes that are declared offline-capable update SQLite and enqueue their outbox command in one transaction. The UI may show them immediately with an explicit sync state.
 - Never convert a failed HTTP write into a synthetic success. Use explicit `pending`, `syncing`, `failed`, `conflict` and `uncertain` states.
-- A command may be queued only when its server contract is replay-safe (for example an idempotency key/client mutation ID) and has an explicit conflict policy. Non-idempotent POSTs with an ambiguous timeout become `uncertain` and must reconcile before retry.
+- New queue admission is controlled by the current tenant/company policy. A policy downgrade blocks new offline writes but does not strand existing drafts: replay drains only with server-authenticated, writable authority and a fresh policy. Registered command types are drained in bounded fair batches; retryable failures use exponential backoff with jitter and become dead-letter after the maximum attempts. Unsafe registered commands are quarantined with a reason, while unknown future command types cannot starve handlers installed by this build.
 - Concurrency-protected workflows carry the server `rowVersion`/ETag as the command's base version. A conflict stops automatic replay for that aggregate and requires authoritative refresh/resolution.
 - Authentication/session validation, tenant/company switching, RBAC/security administration, approval/lifecycle workflows without replay guarantees, file transfer/delete, Crystal rendering and operational dashboards remain online-authoritative unless their feature contract explicitly says otherwise.
 - SignalR/realtime is a sync accelerator only. A reconnect or event may wake reconciliation, but missed events must be recoverable from an authoritative delta/change feed or a normal refresh path.
-- Cached offline access never bypasses authorization. The app may expose a controlled offline session lease only from previously validated session/permission data, with all mutations additionally gated by the last known tenant read-only state and the operation's offline policy.
+- Cached offline access never bypasses authorization. The app may expose a controlled, versioned offline session lease only from previously validated session/permission data. The lease is scoped to user/tenant/company, expires within 24 hours, and exposes `authority: offline-lease`; it can render cached RBAC/UI but can never authorize network replay or online-only mutations. Reconnect and foreground events revalidate the server session. Android backups are disabled and SecureStore uses device-only accessibility.
 - Ordinary React Query mutations use `networkMode: 'always'` and no automatic retry so an offline request cannot become an implicit in-memory write queue. Durable replay exists only behind explicit, safety-certified feature outbox commands.
+- Sync is coordinated at the authenticated company shell, with startup, reconnect, foreground, and manual triggers. The Expo BackgroundTask registration performs encrypted local maintenance and retention only; headless execution has no React policy/session authority and therefore never fakes network replay.
 
 ## API and session
 
@@ -154,9 +155,34 @@ The mobile quality gate is `npm run check`, which runs:
 1. strict TypeScript;
 2. ESLint;
 3. architecture boundaries;
-4. Jest through the Expo-compatible `jest-expo` preset.
+4. AST localization, visible-string and EN/AR catalog parity;
+5. Jest through the Expo-compatible `jest-expo` preset.
 
-Keep tests outside `app`; every file under `app` is treated as a route. Add Maestro end-to-end flows later for login, tenant/company selection and critical HR workflows.
+CI also runs `npm run check:dependencies` and a moderate production audit,
+`npm run check:expo` for SDK/package compatibility, and
+`npm run check:native-config` for a disposable Android prebuild that asserts
+SQLCipher and disabled backups. It runs `npm run check:export` for an Android
+production bundle smoke test. The export
+uses a safe HTTPS example API URL and an OS temporary directory that is deleted
+afterward. CI checks production dependency advisories at moderate severity and runs
+the root documentation generator in check mode. Align Expo package patches with
+`npx expo install --fix`; do not force or downgrade packages to silence the
+doctor.
+
+Keep tests outside `app`; every file under `app` is treated as a route. Local
+`npm run android` and `npm run ios` wrappers set a private build flag that
+injects a reserved project ID and disables Observe delivery. EAS builds require
+one consistent real project ID from `EXPO_EAS_PROJECT_ID`,
+`extra.eas.projectId`, or EAS's built-in `EAS_BUILD_PROJECT_ID` and fail early
+when none is available.
+The root configures Expo Observe before mount with `dispatchInDebug: false` and filters
+email, code, user, invitation, token, and id route parameters. `ObserveRoot`
+and `ObserveErrorBoundary` capture startup/native and render errors while the
+existing localized retry UI remains the user-facing recovery path. Release
+evidence must include device-level sign-in, tenant/company switching, and
+critical HR workflows exercised with Maestro or an equivalent device
+automation tool. Do not claim device behavior is verified until that evidence
+is recorded.
 
 ## Adding a module
 

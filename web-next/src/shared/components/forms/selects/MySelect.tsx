@@ -265,8 +265,8 @@ const MySelect = <
               label={label}
               placeholder={formMode
                 ? loading
-                  ? loadingText || t("loading") || "Loading..."
-                  : placeholder || t("search") || "Search..."
+                  ? loadingText || t("general.loading")
+                  : placeholder || t("general.search")
                 : multiple
                   ? placeholder
                   : undefined}
@@ -324,11 +324,11 @@ const MySelect = <
             : undefined}
           noOptionsText={formMode
             ? loading
-              ? loadingText || t("loading") || "Loading..."
-              : noOptionsText || t("noOptionsFound") || "No options found"
+              ? loadingText || t("general.loading")
+              : noOptionsText || t("common.noOptionsFound")
             : undefined}
           loadingText={formMode
-            ? loadingText || t("loading") || "Loading..."
+            ? loadingText || t("general.loading")
             : undefined}
         />
       </FormControl>

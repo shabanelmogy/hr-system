@@ -1,10 +1,10 @@
-using ErpSystem.Modules.HR.Application.Common.Paginations;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Contracts;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Queries;
-using ErpSystem.Modules.HR.Domain.Common.Entities;
-using ErpSystem.Modules.HR.Domain.Common.Exceptions;
+using ErpSystem.BuildingBlocks.Domain.Entities;
+using ErpSystem.BuildingBlocks.Domain.Exceptions;
 using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities;
 using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Enums;
 using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;

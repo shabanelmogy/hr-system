@@ -109,9 +109,6 @@ async function fetchVerifiedSession(
       signal: AbortSignal.timeout(sessionValidationTimeoutMs),
     });
 
-    if (response.status === 404) {
-      return fetchValidatedClaimsFromCheckAuth(accessToken, backendUrl);
-    }
     if (response.status === 401 || response.status === 403) {
       return { status: "unauthenticated" };
     }
@@ -131,124 +128,6 @@ async function fetchVerifiedSession(
     }
     return { status: "unavailable" };
   }
-}
-
-async function fetchValidatedClaimsFromCheckAuth(
-  accessToken: string,
-  backendUrl: string,
-): Promise<SessionLookup> {
-  try {
-    const response = await fetch(`${backendUrl}/api/v1/auth/checkAuth/CheckAuth`, {
-      headers: { authorization: `Bearer ${accessToken}` },
-      cache: "no-store",
-      signal: AbortSignal.timeout(sessionValidationTimeoutMs),
-    });
-
-    if (response.status === 401 || response.status === 403) {
-      return { status: "unauthenticated" };
-    }
-    if (!response.ok) return { status: "unavailable" };
-
-    const session = decodeApiValidatedClaims(accessToken);
-    return session
-      ? { status: "authenticated", session }
-      : { status: "unavailable" };
-  } catch (error) {
-    if (isTimeoutError(error)) {
-      console.warn(`${TAG} Check-auth validation timed out after ${sessionValidationTimeoutMs}ms`);
-      return { status: "unavailable" };
-    }
-    return { status: "unavailable" };
-  }
-}
-
-// Safety buffer to prevent using tokens that are about to expire
-const TOKEN_EXPIRY_BUFFER_MS = 5000; // 5 seconds
-
-function decodeApiValidatedClaims(token: string): SessionClaims | null {
-  try {
-    const encodedPayload = token.split(".")[1];
-    if (!encodedPayload) return null;
-
-    const payload = JSON.parse(
-      Buffer.from(encodedPayload.replace(/-/g, "+").replace(/_/g, "/"), "base64").toString("utf8"),
-    ) as Record<string, unknown>;
-
-    const nameIdentifier = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
-    const name = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name";
-    const email = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress";
-    const role = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
-    const expiresAt = typeof payload.exp === "number" ? payload.exp * 1000 : 0;
-
-    const companyId = asPositiveInteger(payload.company_id ?? payload.companyId);
-    const fallbackCompanyLabel = String(companyId);
-    const session: SessionClaims = {
-      userId: asString(payload[nameIdentifier] ?? payload.sub),
-      tenantId: asString(payload.tenant_id ?? payload.tenantId),
-      tenantName: asString(payload.tenant_name ?? payload.tenantName),
-      tenantPlanName: asString(payload.tenant_plan ?? payload.tenantPlanName),
-      companyId,
-      companyCode: fallbackCompanyLabel,
-      companyNameAr: fallbackCompanyLabel,
-      companyNameEn: fallbackCompanyLabel,
-      companies: [{
-        id: companyId,
-        companyCode: fallbackCompanyLabel,
-        nameAr: fallbackCompanyLabel,
-        nameEn: fallbackCompanyLabel,
-      }],
-      userName: asString(payload[name] ?? payload.name),
-      email: asString(payload[email] ?? payload.email),
-      firstName: asString(payload.firstname ?? payload.firstName),
-      lastName: asString(payload.lastname ?? payload.lastName),
-      roles: asStringArray(payload[role] ?? payload.roles ?? payload.role),
-      permissions: asStringArray(payload.Permissions ?? payload.permissions),
-      tenantSubscriptionStatus: "active",
-      tenantSubscriptionEndsOn: null,
-      tenantReadOnly: false,
-      expiresAt,
-    };
-
-    // Add buffer to prevent accepting tokens that are about to expire
-    return isSessionClaims(session) && session.userId && expiresAt > Date.now() + TOKEN_EXPIRY_BUFFER_MS
-      ? session
-      : null;
-  } catch {
-    return null;
-  }
-}
-
-function asString(value: unknown) {
-  return typeof value === "string" ? value : "";
-}
-
-function asPositiveInteger(value: unknown): number {
-  if (typeof value === "number" && Number.isInteger(value) && value > 0) return value;
-  if (typeof value === "string") {
-    const parsed = Number(value);
-    if (Number.isInteger(parsed) && parsed > 0) return parsed;
-  }
-  return 0;
-}
-
-function asStringArray(value: unknown): string[] {
-  if (Array.isArray(value)) {
-    return value.filter((item): item is string => typeof item === "string");
-  }
-  if (typeof value !== "string") return [];
-
-  if (value.startsWith("[")) {
-    try {
-      const parsed: unknown = JSON.parse(value);
-      if (Array.isArray(parsed)) {
-        return parsed.filter((item): item is string => typeof item === "string");
-      }
-    } catch {
-      return [];
-    }
-  }
-
-  return [value];
 }
 
 async function requestTokenRefresh(

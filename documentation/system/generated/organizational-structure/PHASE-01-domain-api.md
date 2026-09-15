@@ -6,9 +6,9 @@
 
 Build the server contract first so both clients consume one stable model.
 
-Execution reference: `documentation/api/Feature_Module_Implementation_Checklist.md`.
-The applied feature profile supplies evidence; the generic checklist supplies the
-implementation discipline.
+Execution reference: `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`.
+The applied feature profile supplies evidence; the workflow supplies the mandatory
+existing-system review, implementation order, and Definition of Done.
 
 ## Required decisions
 
@@ -81,7 +81,7 @@ implementation discipline.
 | organizational-structure-master | 3 | `e45c90794d15330609e089c888b6a6af9df12bcf5a265e1f78d93e31f39b8a8c` |
 | organizational-structure-master | 4 | `834005c26053eb5eee6e85e186c98953501eda8584fb9e30055ec9bd16391cb8` |
 | organizational-structure-master | 6 | `2fdee62992580c5d76fc63348edf52701b1e514b1c18ff8be30c53dda4d1b0bf` |
-| organizational-structure-api | 1 | `b8c989473a06ddbe6a84a443aaac33642b06ab953cb22b6c2f51f1ce60e2adaf` |
+| organizational-structure-api | 1 | `195c929b29105c0d3f89001ca362cffca04f57fe22db2790bcfe914a83bed5e5` |
 | organizational-structure-api | 2 | `27a7d756ca282d4db9b1ab92e5b5df45479c9f85baf87951fcdf7a45b808d95a` |
 | organizational-structure-api | 3 | `974d6b6bf0aacb6deedf8d8fd873688c9b63a23ccd029e65c9ce5a3bf19837ff` |
 | organizational-structure-api | 4 | `20cdb676a33f799a7159dd0022486bbdac6600fd2379d7345facbff042394365` |

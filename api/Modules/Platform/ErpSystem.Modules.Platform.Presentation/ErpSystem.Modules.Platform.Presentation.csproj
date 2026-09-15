@@ -9,7 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Presentation\ErpSystem.BuildingBlocks.Presentation.csproj" />
     <PackageReference Include="Asp.Versioning.Mvc" />
+    <PackageReference Include="FluentValidation" />
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 

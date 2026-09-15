@@ -1,4 +1,4 @@
-using ErpSystem.Modules.HR.Domain.Common.Entities;
+using ErpSystem.BuildingBlocks.Domain.Entities;
 
 namespace ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 

@@ -20,7 +20,7 @@ const proficiencyLevels = [
 ];
 
 export function SkillsEditor({ skills = [], onChange, disabled = false }: Props) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isAr = i18n.language === "ar";
 
   const handleAdd = () => {
@@ -39,18 +39,18 @@ export function SkillsEditor({ skills = [], onChange, disabled = false }: Props)
     <Box sx={{ mt: 2, mb: 2 }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
         <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-          {isAr ? "المهارات المطلوبة ومستويات الإتقان" : "Required Skills & Proficiency Levels"}
+          {t("organizationalStructure.skillsEditor.requiredSkillsAndProficiencyLevels")}
         </Typography>
         {!disabled && (
           <Button size="small" startIcon={<AddRoundedIcon />} onClick={handleAdd} variant="outlined">
-            {isAr ? "إضافة مهارة" : "Add Skill"}
+            {t("organizationalStructure.skillsEditor.addSkill")}
           </Button>
         )}
       </Box>
 
       {skills.length === 0 ? (
         <Typography variant="caption" sx={{ color: "text.secondary" }}>
-          {isAr ? "لم تتم إضافة مهارات بعد. اضغط 'إضافة مهارة' للبدء." : "No skills added yet. Click 'Add Skill' to begin."}
+          {t("organizationalStructure.skillsEditor.emptyDescription")}
         </Typography>
       ) : (
         <Stack spacing={1}>
@@ -58,7 +58,7 @@ export function SkillsEditor({ skills = [], onChange, disabled = false }: Props)
             <Paper key={index} variant="outlined" sx={{ p: 1.5, display: "flex", gap: 1.5, alignItems: "center" }}>
               <TextField
                 size="small"
-                label={isAr ? "اسم المهارة" : "Skill Name"}
+                label={t("organizationalStructure.skillsEditor.skillName")}
                 value={skill.skillName}
                 disabled={disabled}
                 onChange={(e) => handleUpdate(index, { skillName: e.target.value })}
@@ -86,7 +86,7 @@ export function SkillsEditor({ skills = [], onChange, disabled = false }: Props)
                     size="small"
                   />
                 }
-                label={<Typography variant="caption">{isAr ? "إلزامية" : "Mandatory"}</Typography>}
+                label={<Typography variant="caption">{t("organizationalStructure.skillsEditor.mandatory")}</Typography>}
                 sx={{ m: 0 }}
               />
               {!disabled && (

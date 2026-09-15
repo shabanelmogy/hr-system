@@ -1,5 +1,9 @@
 # Realtime Application Updates
 
+This is a specialized realtime reference. New or changed API work starts with
+`API_FEATURE_DEVELOPMENT_WORKFLOW.md`; use this guide only after that workflow
+classifies realtime as an applicable post-commit concern.
+
 ## Purpose
 
 The application uses SignalR for live data refresh as well as persisted user
@@ -10,7 +14,7 @@ authorized API.
 ## Delivery Flow
 
 ```text
-Command or service
+Command handler
     -> SaveChangesAsync succeeds
     -> BackgroundJob.Enqueue(feature changed job)
     -> persist permission-based notifications when required
@@ -52,7 +56,7 @@ Never use `Clients.All` for entity changes. Never accept tenant, company, permis
 or user group identifiers from a Hub method. `GeneralHub` derives all memberships
 from the validated short-lived realtime token.
 
-## Adding A Feature
+## Adding Realtime To A Feature
 
 1. Use `RealtimeResource.For<TEntity>()`; do not add the entity to a central list.
    The convention maps `Country` to `countries` and `AddressType` to

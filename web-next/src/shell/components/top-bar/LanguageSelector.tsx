@@ -27,7 +27,7 @@ const LanguageSelector = ({ direction, handleLanguageChange }: { direction: stri
             color: theme.palette.mode === "dark" ? "white" : "black",
           }}
         >
-          English
+          {t("common.english")}
         </MenuItem>
         <MenuItem
           value="rtl"
@@ -35,7 +35,7 @@ const LanguageSelector = ({ direction, handleLanguageChange }: { direction: stri
             color: theme.palette.mode === "dark" ? "white" : "black",
           }}
         >
-          العربية
+          {t("common.arabic")}
         </MenuItem>
       </Select>
     </FormControl>

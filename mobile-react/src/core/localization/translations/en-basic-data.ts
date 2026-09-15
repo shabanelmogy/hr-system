@@ -103,6 +103,7 @@ export const enBasicData = {
     decision: { approve: 'Approve', reject: 'Reject', approveTitle: 'Approve job description', rejectTitle: 'Reject job description', subtitle: 'Record the controlled lifecycle decision for this draft version.', approved: 'Job description approved.', rejected: 'Job description rejected.', failed: 'Unable to save the job description decision.' },
     jobDescriptionDetails: {
       profileTitle: 'Job Description Profile',
+      versionValue: 'Version {{version}}',
       overview: 'Job Purpose & Overview',
       duties: 'Key Result Areas & Duties',
       skills: 'Required Skills Matrix',
@@ -121,6 +122,38 @@ export const enBasicData = {
       emptyDuties: 'No structured duties recorded yet.',
       emptySkills: 'No skills recorded yet.',
       emptyEducation: 'No education recorded yet.',
+    },
+    jobDescriptionEditors: {
+      duties: {
+        title: 'Duty Sections & Items', addSection: 'Add Section', empty: 'No duty sections added yet.',
+        sectionNumber: 'Duty Section #{{number}}', removeSection: 'Delete Section',
+        titleArabic: 'Section Title (Arabic)', titleEnglish: 'Section Title (English)', weightPercentage: 'Weight Percentage %',
+        itemsCount: 'Duty Items ({{count}}):', itemArabic: 'Item #{{number}} (Arabic)', itemEnglish: 'Item #{{number}} (English)',
+        removeItem: 'Remove Item', addItem: 'Add Duty Item',
+      },
+      education: {
+        title: 'Education Requirements', add: 'Add Education', empty: 'No education requirements added yet.',
+        number: 'Requirement #{{number}}', degreeLevel: 'Degree Level (Bachelor / Master)', fieldOfStudy: 'Field of Study',
+        mandatory: 'Mandatory requirement',
+      },
+      skills: {
+        title: 'Required Skills & Proficiency Levels', add: 'Add Skill', empty: 'No skills added yet.',
+        number: 'Skill #{{number}}', name: 'Skill Name', proficiency: 'Proficiency Level', mandatory: 'Mandatory for this job',
+        level: { beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced', expert: 'Expert' },
+      },
+    },
+    tree: {
+      centralized: 'Centralized', move: 'Move', addChild: 'Add child', dropAsParent: 'Drop here as parent of {{code}}',
+      movingNotice: 'Moving... select new parent or cancel', hierarchy: 'Tree Hierarchy ({{count}} {{entity}})',
+      expand: 'Expand', collapse: 'Collapse', companyRoot: 'Company root', noParentDepartment: 'No parent department (top-level)',
+      confirmMoveDescription: 'Are you sure you want to move {{code}} — {{name}} under {{target}}?', moveDepartment: 'Move Department',
+      confirmMove: 'Confirm Move', dropAtCompanyRoot: 'Drop here to set {{code}} at the company root',
+      moveDepartmentCode: 'Move Department: {{code}}',
+      close: 'Close', selectParent: 'Select the new parent department below:', searchDepartments: 'Search departments',
+      searchPlaceholder: 'Search by name or code...', noMatchingDepartments: 'No matching departments found',
+      companyRootLevel: 'Company Root Level (No Parent)', costCenterRoot: 'Company Root Cost Centers', cancel: 'Cancel', saveMove: 'Save Move',
+      costCenterEntity: 'Cost Center',
+      costCenterPlural: 'Cost Centers',
     },
   },
   countries: {

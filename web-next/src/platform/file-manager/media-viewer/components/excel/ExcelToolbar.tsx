@@ -103,7 +103,7 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
               <BackButton
                 onClick={onBack}
                 size="small"
-                ariaLabel="Back"
+                ariaLabel={t("common.back")}
               />
             )}
             {!isXs && (
@@ -177,7 +177,7 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
                     color: "text.secondary",
                     whiteSpace: "nowrap"
                   }}>
-                  {rowsCount} rows
+                  {t("common.rowsCount", { count: rowsCount })}
                 </Typography>
               </Box>
             )}
@@ -264,7 +264,7 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
               >
                 {sheetNames.map((name, index) => (
                   <MenuItem key={index} value={index}>
-                    {isXs ? `S${index + 1}` : name}
+                    {isXs ? t("files.sheetShort", { index: index + 1 }) : name}
                   </MenuItem>
                 ))}
               </Select>
@@ -288,7 +288,7 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
                 color: "text.secondary",
                 whiteSpace: "nowrap"
               }}>
-              {rowsCount} rows
+              {t("common.rowsCount", { count: rowsCount })}
             </Typography>
           </Box>
         )}
@@ -308,7 +308,7 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
               }}
               disabled={currentSheetIndex === 0}
             >
-              Previous Sheet
+              {t("files.previousSheet")}
             </MenuItem>
             <MenuItem
               onClick={() => {
@@ -317,7 +317,7 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
               }}
               disabled={currentSheetIndex === sheetNames.length - 1}
             >
-              Next Sheet
+              {t("files.nextSheet")}
             </MenuItem>
 
             {onRefresh && (
@@ -327,7 +327,7 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
                   setMenuAnchor(null);
                 }}
               >
-                Refresh
+                {t("files.refresh")}
               </MenuItem>
             )}
             {onPrint && (
@@ -337,7 +337,7 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
                   setMenuAnchor(null);
                 }}
               >
-                Print
+                {t("files.print")}
               </MenuItem>
             )}
             {onExport && (
@@ -347,7 +347,7 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
                   setMenuAnchor(null);
                 }}
               >
-                Export
+                {t("files.export")}
               </MenuItem>
             )}
             {onInfo && (
@@ -357,7 +357,7 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
                   setMenuAnchor(null);
                 }}
               >
-                Info
+                {t("common.info")}
               </MenuItem>
             )}
           </>
@@ -373,7 +373,7 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
                   setMenuAnchor(null);
                 }}
               >
-                Refresh
+                {t("files.refresh")}
               </MenuItem>
             )}
             {onPrint && (
@@ -383,7 +383,7 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
                   setMenuAnchor(null);
                 }}
               >
-                Print
+                {t("files.print")}
               </MenuItem>
             )}
             {onExport && (
@@ -393,7 +393,7 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
                   setMenuAnchor(null);
                 }}
               >
-                Export
+                {t("files.export")}
               </MenuItem>
             )}
             {onInfo && (
@@ -403,7 +403,7 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
                   setMenuAnchor(null);
                 }}
               >
-                Info
+                {t("common.info")}
               </MenuItem>
             )}
           </>

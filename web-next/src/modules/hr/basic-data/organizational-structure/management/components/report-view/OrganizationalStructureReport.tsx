@@ -5,7 +5,8 @@ import { Alert, Box, Button, CircularProgress } from "@mui/material";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MySelect, MyTextField } from "@/shared/components/forms";
-import { ReportViewer, crystalReportService, type ReportSearchParams, type UpdateReportSearchParams } from "@/shared/reporting";
+import { crystalReportService } from "@/modules/reporting";
+import { ReportViewer, type ReportSearchParams, type UpdateReportSearchParams } from "@/shared/reporting";
 import type { OrganizationalResource } from "../../types/OrganizationalStructure";
 
 export default function OrganizationalStructureReport({ resource, showFilterBar = true }: { resource: OrganizationalResource; showFilterBar?: boolean }) {

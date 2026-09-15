@@ -11,6 +11,13 @@ as the copy-ready scope contract and the review artifact as the evidence ledger.
 `Required` means current-release and gated, `Deferred` requires an owner/trigger,
 and `Excluded` means no runtime surface.
 
+For any API work, also follow
+`documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`. Phase 00 cannot close and
+runtime implementation cannot begin until the Existing-System Relationship Review
+and all three Business Readiness matrices in `IMPLEMENTATION-REQUEST.md` are
+complete for the known scope. Every Edge Cases & Validation category must contain
+scenarios or an explicit `N/A` with a reason.
+
 ## Required outputs
 
 1. Copy `FEATURE-REVIEW-ARTIFACTS.template.md` to `features/<feature>/<FEATURE>-REVIEW-ARTIFACTS.md`.
@@ -23,6 +30,8 @@ and `Excluded` means no runtime surface.
    reason for every platform difference.
 7. Separate verified current behavior, requested behavior, intentional platform differences, and unresolved findings.
 8. Record tests that prove each contract rather than only naming test folders.
+9. Complete the Business Rules Matrix, Edge Cases & Validation Matrix, and Impact
+   Matrix in `IMPLEMENTATION-REQUEST.md`; update them when discovery changes scope.
 
 ## Discovery checklist
 
@@ -39,6 +48,17 @@ and `Excluded` means no runtime surface.
       evidence path; no decision is inferred from the selected reference.
 - [ ] Verification gates are identified before coding, including manual and
       environment-dependent checks.
+- [ ] Existing-System Relationship Review is complete and the owning capability is
+      resolved; no parallel/workaround owner is being introduced.
+- [ ] Business Rules Matrix records every known rule with one primary owner,
+      stable outcome/error, and required test.
+- [ ] Every Edge Cases & Validation category is covered by scenarios or explicitly
+      marked `N/A` with a reason and has an enforcement layer plus required test.
+- [ ] Impact Matrix classifies Domain, CQRS, persistence, API, security/scope,
+      migration/data, integrations/runtime effects, tests, clients, and docs as
+      `Reuse`, `Extend`, `Change`, `Add`, or reasoned `N/A`.
+- [ ] No unresolved ownership, matrix placeholder, or unclassified edge-case row
+      remains before Phase 00 is closed.
 
 ## Approved references
 
@@ -51,18 +71,18 @@ and `Excluded` means no runtime surface.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 1 | `943c1c71eb2406d7b2314a11ae941c20722c8caaad64db5fa9a7abbe64b438d1` |
+| master | 1 | `798b69347ec7d57ac0316410cacf60d22b6c36e611f001e8a9c46528bfa58a1f` |
 | master | 2 | `0794481a43aa54cb296072e5a337fa49921243fe72d47443f2e40af16c493a1d` |
-| master | 5 | `468fe7a38b8c78400af07b8fdb39e4d5cae4a8187e629e948f02e405e497f1d1` |
+| master | 5 | `d1ce57b8f419de334ddea6c04f0bb927922654de3f2fc5f6093e5d8c40f83495` |
 | master | 8 | `f29c1f43d4c99ad67f8520f2bd4f2bc1af0abc7b40c7a9ab14e84c7d188f9952` |
-| master | 9 | `ed59b360ae53fc2f41202cdcd6a29204f1c4d31e6b95a83b08dbf773d0f21b7f` |
-| api | 1 | `e271ad8476b75e15178926775fd90916165a254ffc42d4743e325000a3beaea0` |
-| api | 10 | `09f8411b30c1b462ae52bbe73f77f5f6af82d57d7d681ed2a0c3b6335617e520` |
-| api | 11 | `225b3b882f78fad2d3924cfec3a655ae1f0b83b0d4a901c7e2be5296ac3a01cc` |
+| master | 9 | `a4ffe5ca7864d7fa197622257f5d2459398648d8ec1f3d60f0ce0c56f78b4766` |
+| api | 1 | `a0977b60e2a09823da430522f9939915d8529c5c078859a35c5c4f6125dff514` |
+| api | 10 | `1101f8462765ca7e0bfd63c534f2bed36aa85d10a528bc168655e1774e01d2fc` |
+| api | 11 | `059fff9e1378472918ee0a64ec018e379c25eaa0484a4f2aa51bfe6e6ab6e266` |
 | web | 1 | `7f43439bc1ffeab6c2042b322ac8bef67dbac2763e12a128700ee9d5e2c3ce5e` |
-| web | 2 | `2e8bad4d4a1be6d69a40f7a7b039bc52290053bb772117501de78f5a634f98bc` |
+| web | 2 | `a7dfd543a71ab0f53cc6de56e289e80fcc53265de11e68ae456b437f528e1323` |
 | web | 12 | `7e1719746bfe470e8b8e620c2aa6ae5618be17d388c4a6fdb1a58f9aa7d72ae8` |
-| web | 13 | `1c90d3dd20930778b30dc420364d74418afc2a33d49768e5462c7470d1cd31f7` |
+| web | 13 | `925292683f8fed347b4aa5f9293d3efa108806abd4dd474df7d04a02c0fefb14` |
 | mobile | 1 | `74f9d7542b03da6ef4970fc1de160f5e7deeb10f9865621b1e00d3d91b9defe1` |
 | mobile | 14 | `08cb057f3997117b0ae4d276616cec02b645fa8bfdff10907253644d7360112a` |
 | mobile | 15 | `7fd51151939907e42eeda66b24dcbcefc87b13a2563a2e8ee45715b98f02b0fb` |

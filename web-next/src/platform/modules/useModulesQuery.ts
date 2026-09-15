@@ -20,3 +20,12 @@ export function useInstalledModulesQuery(enabled = true) {
     staleTime: 5 * 60_000,
   });
 }
+
+export function useTenantEntitlementModulesQuery(enabled = true) {
+  return useQuery({
+    queryKey: moduleKeys.tenantEntitlements(),
+    queryFn: moduleApi.getTenantEntitlements,
+    enabled,
+    staleTime: 5 * 60_000,
+  });
+}

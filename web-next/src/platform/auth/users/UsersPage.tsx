@@ -4,20 +4,21 @@ import { ContentWrapper } from "@/shared/components/layout";
 import { PageHeader } from "@/shared/components/navigation/header";
 import { useTranslation } from "react-i18next";
 import UserForm from "./components/UserForm";
-import UsersDashboardHeader from "./components/UsersDashboardHeader";
 import UsersDataGrid from "./components/UsersDataGrid";
 import useUserGridLogic from "./hooks/useUserGridLogic";
 import { usePermissions } from "@/shared/hooks/usePermissions";
 import { permissions } from "@/lib/auth/permissions";
 import { ConfirmationDialog } from "@/shared/components/dialogs";
-import { Avatar, Box, Chip, Typography, Alert } from "@mui/material";
-import { ExitToApp } from "@mui/icons-material";
+import { Avatar, Box, Chip, Typography, Alert, TextField } from "@mui/material";
+import { ArchiveOutlined, ExitToApp, Restore } from "@mui/icons-material";
+import { useState } from "react";
+import type { User } from "../types";
 
 // ─── Content ─────────────────────────────────────────────────────────────────
 // Rendered only after the guard confirms access — hooks and API calls are safe here.
 const UsersPage = () => {
   const { t } = useTranslation();
-  const { hasAllPermissions, isReadOnly } = usePermissions();
+  const { hasAllPermissions, hasPermission, isReadOnly } = usePermissions();
   const canCreate = !isReadOnly && hasAllPermissions([
     permissions.CreateUsers,
     permissions.ViewRoles,
@@ -26,12 +27,26 @@ const UsersPage = () => {
     permissions.EditUsers,
     permissions.ViewRoles,
   ]);
+  const canDelete = !isReadOnly && hasPermission(permissions.DeleteUsers);
+  const [lifecycleTarget, setLifecycleTarget] = useState<User | null>(null);
+  const [lifecycleAction, setLifecycleAction] = useState<"archive" | "restore" | null>(null);
+  const [archiveReason, setArchiveReason] = useState("");
+  const [archiveReasonTouched, setArchiveReasonTouched] = useState(false);
 
   const {
     dialogType,
     selectedUser,
     loading,
+    isFetching,
+    error,
     users,
+    totalCount,
+    page,
+    pageSize,
+    searchValue,
+    sortColumn,
+    sortDirection,
+    includeArchived,
     apiRef,
     onAdd,
     onEdit,
@@ -39,6 +54,15 @@ const UsersPage = () => {
     onToggle,
     onUnlock,
     onRevoke,
+    archiveUser,
+    restoreUser,
+    onPageChange,
+    onPageSizeChange,
+    onSearchChange,
+    onSortChange,
+    onIncludeArchivedChange,
+    onResetList,
+    onRefresh,
     revokeTarget,
     isRevoking,
     onConfirmRevoke,
@@ -51,17 +75,54 @@ const UsersPage = () => {
   } = useUserGridLogic();
   const userFormDialogType =
     dialogType === "edit" || dialogType === "view" ? dialogType : "add";
+  const closeLifecycleDialog = () => {
+    if (loading) return;
+    setLifecycleTarget(null);
+    setLifecycleAction(null);
+    setArchiveReason("");
+    setArchiveReasonTouched(false);
+  };
+  const openArchive = (user: User) => {
+    setLifecycleTarget(user);
+    setLifecycleAction("archive");
+    setArchiveReason("");
+    setArchiveReasonTouched(false);
+  };
+  const openRestore = (user: User) => {
+    setLifecycleTarget(user);
+    setLifecycleAction("restore");
+    setArchiveReason("");
+    setArchiveReasonTouched(false);
+  };
+  const confirmLifecycle = async () => {
+    if (!lifecycleTarget || !lifecycleAction) return;
+    if (lifecycleAction === "archive") {
+      setArchiveReasonTouched(true);
+      if (!archiveReason.trim()) return;
+      if (await archiveUser(lifecycleTarget, archiveReason)) closeLifecycleDialog();
+      return;
+    }
+    if (await restoreUser(lifecycleTarget)) closeLifecycleDialog();
+  };
 
   return (
     <>
       <ContentWrapper>
         <PageHeader title={t("users.title")} subTitle={t("users.subTitle")} />
 
-        <UsersDashboardHeader users={users} loading={loading} t={t} />
+        {error ? (
+          <Alert
+            severity="error"
+            sx={{ mb: 2 }}
+            action={<button type="button" onClick={() => void onRefresh()}>{t("common.retry")}</button>}
+          >
+            {t("users.fetchError")}
+          </Alert>
+        ) : null}
 
         <UsersDataGrid
           users={users}
-          loading={loading}
+          loading={loading || isFetching}
           apiRef={apiRef}
           onAdd={onAdd}
           onEdit={onEdit}
@@ -69,10 +130,26 @@ const UsersPage = () => {
           onToggle={onToggle}
           onUnlock={onUnlock}
           onRevoke={onRevoke}
+          onArchive={openArchive}
+          onRestore={openRestore}
           lastAddedId={lastAddedId}
           lastEditedId={lastEditedId}
           canCreate={canCreate}
           canEdit={canEdit}
+          canDelete={canDelete}
+          page={page}
+          pageSize={pageSize}
+          totalCount={totalCount}
+          searchValue={searchValue}
+          sortColumn={sortColumn}
+          sortDirection={sortDirection}
+          includeArchived={includeArchived}
+          onPageChange={onPageChange}
+          onPageSizeChange={onPageSizeChange}
+          onSearchChange={onSearchChange}
+          onSortChange={onSortChange}
+          onIncludeArchivedChange={onIncludeArchivedChange}
+          onResetList={onResetList}
           t={t}
         />
 
@@ -152,6 +229,43 @@ const UsersPage = () => {
             </Box>
           </ConfirmationDialog>
         )}
+
+        {lifecycleTarget && lifecycleAction ? (
+          <ConfirmationDialog
+            open
+            title={lifecycleAction === "archive" ? t("users.archiveTitle") : t("users.restoreTitle")}
+            description={lifecycleAction === "archive" ? t("users.archiveDescription") : t("users.restoreDescription")}
+            confirmLabel={lifecycleAction === "archive" ? t("actions.archive") : t("actions.restore")}
+            cancelLabel={t("actions.cancel")}
+            confirmColor={lifecycleAction === "archive" ? "warning" : "success"}
+            confirmIcon={lifecycleAction === "archive" ? <ArchiveOutlined /> : <Restore />}
+            icon={lifecycleAction === "archive" ? <ArchiveOutlined color="warning" /> : <Restore color="success" />}
+            busy={loading}
+            onClose={closeLifecycleDialog}
+            onConfirm={() => void confirmLifecycle()}
+          >
+            <Typography sx={{ mt: 2, fontWeight: 700 }}>
+              {lifecycleTarget.firstName} {lifecycleTarget.lastName}
+            </Typography>
+            {lifecycleAction === "archive" ? (
+              <TextField
+                autoFocus
+                fullWidth
+                required
+                multiline
+                minRows={3}
+                sx={{ mt: 2 }}
+                label={t("users.archiveReason")}
+                value={archiveReason}
+                onChange={(event) => setArchiveReason(event.target.value)}
+                onBlur={() => setArchiveReasonTouched(true)}
+                error={archiveReasonTouched && !archiveReason.trim()}
+                helperText={archiveReasonTouched && !archiveReason.trim() ? t("validation.required") : " "}
+                slotProps={{ htmlInput: { maxLength: 1000 } }}
+              />
+            ) : null}
+          </ConfirmationDialog>
+        ) : null}
 
       </ContentWrapper>
       {SnackbarComponent}

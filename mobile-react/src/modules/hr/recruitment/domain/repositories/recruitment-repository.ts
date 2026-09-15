@@ -7,6 +7,7 @@ import type {
   CreateJobOfferMutation,
   EmploymentApplicationDto,
   HireCandidateMutation,
+  InterviewQuery,
   InterviewDto,
   InterviewScorecardTemplateDto,
   JobOfferDto,
@@ -30,17 +31,18 @@ export interface RecruitmentRepository {
   getOpenings(params?: JobOpeningQuery): Promise<RecruitmentPage<JobOpeningDto>>;
   getOpeningById(id: number): Promise<JobOpeningDto>;
   openOpening(id: number): Promise<JobOpeningDto>;
-  pauseOpening(id: number, reason?: string): Promise<JobOpeningDto>;
-  closeOpening(id: number, reason?: string): Promise<JobOpeningDto>;
+  pauseOpening(id: number, reason: string): Promise<JobOpeningDto>;
+  closeOpening(id: number, reason: string): Promise<JobOpeningDto>;
 
   getApplications(params?: ApplicationQuery): Promise<RecruitmentPage<EmploymentApplicationDto>>;
   getApplicationById(id: number): Promise<EmploymentApplicationDto>;
   changeStage(id: number, request: ChangeApplicationStageMutation): Promise<EmploymentApplicationDto>;
   createCandidate(request: CreateCandidateMutation): Promise<CandidateDto>;
   submitApplication(request: SubmitApplicationMutation): Promise<EmploymentApplicationDto>;
-  hireCandidate(id: number, request: HireCandidateMutation): Promise<void>;
+  hireCandidate(id: number, request: HireCandidateMutation): Promise<EmploymentApplicationDto>;
 
   scheduleInterview(request: ScheduleInterviewMutation): Promise<InterviewDto>;
+  getInterviews(params?: InterviewQuery): Promise<RecruitmentPage<InterviewDto>>;
   completeInterview(id: number): Promise<InterviewDto>;
   evaluateInterview(id: number, request: SubmitInterviewEvaluationMutation): Promise<InterviewDto>;
   getScorecardTemplate(interviewId: number): Promise<InterviewScorecardTemplateDto>;

@@ -5,17 +5,25 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useUnsavedChanges } from "@/shared/contexts/UnsavedChangesContext";
-import { ROLE_MODULES, PERMISSION_TYPES } from "../components/role-permissions/constants";
 import useRoleStore from "../store/useRoleStore";
 import type { RoleWithClaims } from "../../types";
 import {
   getRoleClaimsValidationSchema,
   type RoleClaimsFormData,
 } from "../utils/validation";
+import { permissions } from "@/lib/auth/permissions";
+import { usePermissions } from "@/shared/hooks/usePermissions";
+
+function splitPermission(value: string): { module: string; action: string } | null {
+  const separator = value.indexOf(":");
+  if (separator <= 0 || separator === value.length - 1) return null;
+  return { module: value.slice(0, separator), action: value.slice(separator + 1) };
+}
 
 export function useRolePermissions(roleId: string) {
   const router = useRouter();
   const { requestDiscard } = useUnsavedChanges();
+  const { hasPermission, isReadOnly } = usePermissions();
   const { showError, showSuccess, SnackbarComponent } = useNotifications();
   const { getRoleWithClaims, updateRoleClaims } = useRoleStore();
   const [role, setRole] = useState<RoleWithClaims | null>(null);
@@ -26,6 +34,7 @@ export function useRolePermissions(roleId: string) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [showOnlySelected, setShowOnlySelected] = useState(false);
+  const canEdit = !isReadOnly && hasPermission(permissions.EditRoles);
 
   const form = useForm<RoleClaimsFormData>({
     resolver: zodResolver(getRoleClaimsValidationSchema()),
@@ -69,13 +78,13 @@ export function useRolePermissions(roleId: string) {
   }, [form, getRoleWithClaims, roleId, showError]);
 
   const replaceClaims = (roleClaims: RoleClaimsFormData["roleClaims"]) => {
-    if (!role || role.isSystem) return;
+    if (!role || role.isSystem || !canEdit) return;
     setRole({ ...role, roleClaims });
     form.setValue("roleClaims", roleClaims, { shouldDirty: true, shouldValidate: true });
   };
 
   const selectAll = (type: string, isSelected: boolean) => {
-    if (!role || role.isSystem) return;
+    if (!role || role.isSystem || !canEdit) return;
     replaceClaims(
       role.roleClaims.map((claim) =>
         claim.displayValue.toLowerCase().endsWith(`:${type.toLowerCase()}`)
@@ -94,7 +103,7 @@ export function useRolePermissions(roleId: string) {
   };
 
   const toggleClaim = (claimIndex: number) => {
-    if (!role || role.isSystem || claimIndex < 0) return;
+    if (!role || role.isSystem || !canEdit || claimIndex < 0) return;
     replaceClaims(
       role.roleClaims.map((claim, index) =>
         index === claimIndex ? { ...claim, isSelected: !claim.isSelected } : claim,
@@ -102,8 +111,20 @@ export function useRolePermissions(roleId: string) {
     );
   };
 
+  const availableModules = useMemo(() => Array.from(new Set(
+    (role?.roleClaims ?? [])
+      .map((claim) => splitPermission(claim.displayValue)?.module)
+      .filter((module): module is string => Boolean(module)),
+  )).sort((left, right) => left.localeCompare(right)), [role]);
+
+  const permissionActions = useMemo(() => Array.from(new Set(
+    (role?.roleClaims ?? [])
+      .map((claim) => splitPermission(claim.displayValue)?.action)
+      .filter((action): action is string => Boolean(action)),
+  )).sort((left, right) => left.localeCompare(right)), [role]);
+
   const filteredModules = useMemo(() => {
-    let modules = ROLE_MODULES.filter(
+    let modules = availableModules.filter(
       (module) => !selectedModule || module.toLowerCase() === selectedModule.toLowerCase(),
     );
 
@@ -115,19 +136,15 @@ export function useRolePermissions(roleId: string) {
 
     if (showOnlySelected && role) {
       modules = modules.filter((module) =>
-        PERMISSION_TYPES.some((type) =>
-          role.roleClaims.some(
-            (claim) =>
-              claim.isSelected &&
-              claim.displayValue.toLowerCase().startsWith(module.toLowerCase()) &&
-              claim.displayValue.toLowerCase().endsWith(`:${type.toLowerCase()}`),
-          ),
-        ),
+        role.roleClaims.some((claim) => {
+          const parsed = splitPermission(claim.displayValue);
+          return claim.isSelected && parsed?.module.toLowerCase() === module.toLowerCase();
+        }),
       );
     }
 
     return modules;
-  }, [role, searchTerm, selectedModule, showOnlySelected]);
+  }, [availableModules, role, searchTerm, selectedModule, showOnlySelected]);
 
   const paginatedModules = useMemo(() => {
     const start = page * rowsPerPage;
@@ -141,7 +158,7 @@ export function useRolePermissions(roleId: string) {
   }, [role]);
 
   const updateRole = async (data: RoleClaimsFormData) => {
-    if (!role || role.isSystem) return;
+    if (!role || role.isSystem || !canEdit) return;
     setIsSaving(true);
     try {
       await updateRoleClaims(data);
@@ -166,6 +183,8 @@ export function useRolePermissions(roleId: string) {
   return {
     ...form,
     areAllSelected,
+    availableModules,
+    canEdit,
     filteredModules,
     goBack,
     goDashboard: async () => {
@@ -177,6 +196,7 @@ export function useRolePermissions(roleId: string) {
     notifications: { SnackbarComponent },
     page,
     paginatedModules,
+    permissionActions,
     role,
     rowsPerPage,
     searchTerm,

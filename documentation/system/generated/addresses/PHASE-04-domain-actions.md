@@ -60,8 +60,8 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | addresses-master | 4 | `561bbb66409a25f2f56fae62857a227d206afceac4c0a2ddf9fc35d01e4e06ba` |
 | addresses-master | 5 | `be429c9bb75de8fc649c7097750eb74710ba53166dd392c1cfc1260915c8fd41` |
 | addresses-api | 3 | `bfd1fff73dcec9a06d17661c141f21582853d046dab16d7f7ad5902273f90a98` |
-| addresses-api | 5 | `dc6d799c8138ce96e4320520fcd51d18c06db7bd43d92c9a12f352965aaf53e6` |
-| addresses-api | 6 | `48e84f584c86155649de0239680e6063836c2d484234ae85ca81b6d1f0a7feea` |
+| addresses-api | 5 | `9c08be5e148e21abd8ad8cd698da361d97baa34067cda08b362765f9892464e3` |
+| addresses-api | 6 | `e9346d11daa0f11fd4c864526ca6669d44b6f0e23a88a9afccf8bb18d3d295e4` |
 | addresses-web | 2 | `42ff61aee802dc6e2f1dda59633bde69d0c8d3e85cfbaecabe927b68200abbdb` |
 | addresses-web | 4 | `6ab933027d6080feaeff87e1514d968c3d4fbc9f7951e69a769d52a6916abbf9` |
 | addresses-mobile | 2 | `e675bb04e376c78d751a0170eed43d229dd88537467847369f7a53204bbffb00` |

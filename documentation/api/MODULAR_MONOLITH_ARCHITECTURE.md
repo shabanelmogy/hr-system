@@ -1,8 +1,9 @@
 # Modular Monolith Architecture
 
-This guide is authoritative for module boundaries, lifecycle, and adding future
-bounded contexts after their ownership is explicitly approved. Every deployable module
-uses the same six-project template from its first commit.
+This guide is authoritative for module boundaries, lifecycle, and the physical shape
+of an approved bounded context. The decision to create a new module starts in
+`API_FEATURE_DEVELOPMENT_WORKFLOW.md` with the Existing-System Relationship Review.
+Every deployable module uses the same six-project template from its first commit.
 
 ## Canonical solution structure
 
@@ -12,7 +13,10 @@ deployable host with explicit module composition:
 ```text
 api/
   ErpSystem.Api/                         # generic web host
-  ErpSystem.Tests/
+  Tests/
+    ErpSystem.ArchitectureTests/
+    ErpSystem.IntegrationTests/
+    ErpSystem.BuildingBlocks.Tests/
   BuildingBlocks/
     ErpSystem.BuildingBlocks.Application/       # shared MediatR logging + validation pipeline
     ErpSystem.BuildingBlocks.Authorization/
@@ -20,35 +24,18 @@ api/
     ErpSystem.BuildingBlocks.Messaging/
     ErpSystem.BuildingBlocks.Modularity/
   Modules/
-    HR/
-      ErpSystem.Modules.HR.Contracts/
-      ErpSystem.Modules.HR.Domain/
-      ErpSystem.Modules.HR.Application/
-      ErpSystem.Modules.HR.Infrastructure/
-      ErpSystem.Modules.HR.Presentation/
-      ErpSystem.Modules.HR/               # HRModule composition root
-    Accounting/
-      ErpSystem.Modules.Accounting.Contracts/
-      ErpSystem.Modules.Accounting.Domain/
-      ErpSystem.Modules.Accounting.Application/
-      ErpSystem.Modules.Accounting.Infrastructure/
-      ErpSystem.Modules.Accounting.Presentation/
-      ErpSystem.Modules.Accounting/       # AccountingModule composition root
-    Platform/                             # technical/internal module
-      ErpSystem.Modules.Platform.Contracts/
-      ErpSystem.Modules.Platform.Domain/
-      ErpSystem.Modules.Platform.Application/
-      ErpSystem.Modules.Platform.Infrastructure/
-      ErpSystem.Modules.Platform.Presentation/
-      ErpSystem.Modules.Platform/
-    Contacts/
-      ErpSystem.Modules.Contacts.Contracts/
-      ErpSystem.Modules.Contacts.Domain/
-      ErpSystem.Modules.Contacts.Application/
-      ErpSystem.Modules.Contacts.Infrastructure/
-      ErpSystem.Modules.Contacts.Presentation/
-      ErpSystem.Modules.Contacts/
+    <Module>/
+      ErpSystem.Modules.<Module>.Contracts/
+      ErpSystem.Modules.<Module>.Domain/
+      ErpSystem.Modules.<Module>.Application/
+      ErpSystem.Modules.<Module>.Infrastructure/
+      ErpSystem.Modules.<Module>.Presentation/
+      ErpSystem.Modules.<Module>/          # composition root / bootstrap
+      ErpSystem.Modules.<Module>.Tests/
 ```
+
+Current registered modules are HR, Accounting, Platform, Contacts, ReferenceData,
+Reporting, Inventory, CRM, and PointOfSale.
 
 `CrystalReportGeneratorApi` is an independent application and intentionally
 stays outside `ErpSystem.sln` and the ERP build gates.
@@ -61,8 +48,9 @@ stays outside `ErpSystem.sln` and the ERP build gates.
 
 `api/Directory.Packages.props` is the single package-version policy for the ERP
 solution. It enables NuGet Central Package Management only when the evaluated
-project identity is `ErpSystem.Api`, `ErpSystem.Tests`,
-`ErpSystem.BuildingBlocks.*`, or `ErpSystem.Modules.*`. The fallback is
+project identity is `ErpSystem.Api`, `ErpSystem.BuildingBlocks.*`,
+`ErpSystem.Modules.*`, `ErpSystem.ArchitectureTests`, or
+`ErpSystem.IntegrationTests`. The fallback is
 explicitly `ManagePackageVersionsCentrally=false`, so independent projects such
 as `CrystalReportGeneratorApi` and `ErpSystem.AttendanceConnector` are not
 silently changed by the ERP policy.
@@ -77,8 +65,10 @@ tests. Do not add a version back to an individual project. The module generator
 preflights this policy and emits versionless references for every new module.
 
 Every future module is created under `api/Modules/<ModuleName>` with exactly
-the same six projects. Use stable explicit UpperCamel module names rather than
-abbreviations in project names and CLR namespaces.
+the same six runtime projects plus its owned test project. Use the approved module
+identity consistently. The existing `CRM` identity is an explicit acronym case; the
+generator preserves project/module identity as `CRM` while emitting canonical `Crm*`
+CLR symbols.
 
 ## Reference directions
 
@@ -122,23 +112,27 @@ module inner-layer types. `ModuleCatalog` invokes registration, migration,
 initialization, middleware configuration, and endpoint mapping in deterministic
 registration order.
 
-Platform owns the reusable platform contracts, policy/orchestration seams,
-technical module-catalog behavior, authorization handlers, tenant/session read
-models, and token implementation. Legacy physical Identity/tenant tables and a
-small set of compatibility adapters may remain in HR when moving storage would
-risk wire or transactional behavior; Platform never references HR. HR owns
-HR-domain persistence plus those explicit legacy adapters. Accounting and
-Contacts own independent contexts/schemas and communicate only through public
-Contracts and durable messaging where required.
+Platform owns reusable platform contracts, policy/orchestration seams, technical
+module-catalog behavior, authorization handlers, Identity, tenant/company
+records, session state, entitlements, files, notifications, audit records, API
+keys, and token implementation in its own `platform` schema. HR owns only HR
+business persistence. Accounting, Contacts, ReferenceData, Reporting, Inventory,
+CRM, and POS own independent contexts and communicate through public Contracts
+and durable messaging where required.
 
-The existing tenant-management API remains wire-compatible through the Platform
-administration seam and the HR persistence adapter. Tenant creation is serialized
-by normalized identifier on SQL Server and atomically persists the tenant,
-`DEFAULT` company, module entitlements, and security audit in the HR context with
-one save. Realtime publication runs after commit as a non-critical, logged
-best-effort effect. Future initial-admin invitation, provisioning status,
-request-replay idempotency, tenant settings, and recoverable email delivery must
-be added through additive contracts; they are not implied by this foundation.
+Physical ownership is enforced at the EF model boundary: Platform maps only its
+own tables, while other modules keep scalar tenant/company identifiers and use
+public source contracts for cross-module decisions. No module maps another
+module's tables or imports another module's Infrastructure or EF model. During
+extraction, these contracts become remote or replicated adapters without
+changing business Application code.
+
+Tenant creation is serialized by normalized identifier on SQL Server and
+atomically persists the tenant, `DEFAULT` company, module entitlements, and
+security audit in `PlatformDbContext` with one save. Realtime publication runs
+after commit as a non-critical, logged best-effort effect. Initial-admin
+invitation, provisioning status, request-replay idempotency, tenant settings,
+and recoverable email delivery remain additive capabilities.
 
 `ErpSystem.BuildingBlocks.Application`, `.Authorization`, `.Context`, `.Messaging`,
 and `.Modularity` contain domain-neutral primitives only. The Application block
@@ -146,7 +140,7 @@ owns the payload-free request logging and asynchronous FluentValidation behavior
 its `AddApplicationPipeline()` registration is idempotent, so every module may
 call it without duplicate open-generic MediatR behaviors. Host runtime contributor
 interfaces let the host own startup/middleware/endpoint timing without moving
-legacy physical implementations into the host. `ModuleCatalog` runs
+module-owned physical implementations into the host. `ModuleCatalog` runs
 registration, migrations, initialization, middleware, and endpoint mapping in
 deterministic dependency order.
 
@@ -175,15 +169,11 @@ New pieces start module-local and may move to shared only when they are truly
 domain-neutral and used by multiple modules. HR and Accounting domain logic
 never belongs in shared code, and shared capabilities are never copy/pasted.
 
-HR previously lived in `dbo`; the `MoveHrTablesToHrSchema` migration moves
-every HR table (including Identity) into `hr` with pure renames, no data
-loss. Its bootstrap first ensures the `hr` schema exists (fresh databases
-need it before EF creates `hr.__EFMigrationsHistory`), then moves the legacy
-`dbo.__EFMigrationsHistory` into `hr` only when the `hr` history is absent
-and the `dbo` history exists, then runs `MigrateAsync`. New modules must
-create their schema before applying their first migration (the generated
-bootstrap ensures the schema before inspecting `GetMigrations()`) and must
-make startup migration idempotent.
+Each module bootstrap first ensures its own schema exists (fresh databases need
+it before EF creates `<schema>.__EFMigrationsHistory`) and then applies only
+that module's migration assembly. Migration history is never moved between
+module schemas. New modules must create their schema before applying their first
+migration and must make migration execution idempotent.
 
 ## Compatibility values
 
@@ -239,6 +229,17 @@ derive expectations from every `Modules/<ModuleName>` directory and verify the
 registry covers each one exactly once, so no test update is needed for the new
 module itself. Complete a reuse inventory and record it in the module package
 before creating the first feature slice.
+
+Generic uploads remain a Platform capability even while the HTTP compatibility
+controller is HR-owned. `IFileOperationsService` calls
+`IFileUploadInspectionService` before writing any binary or metadata record;
+bulk uploads inspect every item first. Supported content is checked against both
+the declared type and bounded signatures, and production enables the optional
+ClamAV TCP `INSTREAM` gate with fail-closed behavior. The protected local
+storage adapter remains the current provider. Existing profile-picture and
+Crystal Report writes also pass through the same inspection contract before
+their feature-owned persistence; shared object storage is a future deployment
+decision.
 
 Connection strings resolve per module with fallback: the generator reads
 `ConnectionStrings:<ModuleName>` first and falls back to
@@ -330,7 +331,8 @@ rather than sharing another module's outbox table.
 
 - `dotnet restore api/ErpSystem.sln`
 - `dotnet build api/ErpSystem.sln --no-restore`
-- full `ErpSystem.Tests` plus focused `ModuleModularityTests`
+- full `ErpSystem.sln` tests, including module-owned tests plus Architecture,
+  Integration, and BuildingBlocks system test projects
 - EF `migrations has-pending-model-changes` for every module context
 - documentation generator check and `git diff --check`
 - `.github/workflows/api-ci.yml` repeats restore, build, the full API test suite,
@@ -377,6 +379,22 @@ and `Meter` signals so every module receives CQRS latency, count, and outcome
 coverage without referencing the exporter. Request bodies, command values, and
 exception messages are excluded from telemetry tags. Collector choice,
 retention, dashboards, alerts, and SLO thresholds remain deployment ownership.
+
+The host exclusively owns reverse-proxy normalization. When explicitly enabled,
+it processes `X-Forwarded-For` and `X-Forwarded-Proto` before every security and
+module middleware, and only from configured exact proxies or non-universal CIDR
+networks. Modules never parse forwarding headers or configure their own proxy
+trust; they consume the normalized connection address and request scheme.
+
+The host also owns process topology. One replica uses local cache and SignalR
+lifetime services. The optional distributed-runtime mode replaces the cache with
+Redis and adds the Redis SignalR backplane without changing module contracts.
+Modules consume `IDistributedCache`, `HybridCache`, and the existing realtime
+abstractions; they never register a backplane or depend on Redis packages. A
+multi-replica declaration is rejected unless the deployment also declares its
+external aggregate rate limit, shared file storage, and session affinity. This
+keeps infrastructure selection at the composition root and leaves module code
+portable to a later service host.
 
 The separate Crystal application is verified independently when its own work is
 requested; it is not part of the ERP modular-monolith gate.

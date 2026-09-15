@@ -13,6 +13,7 @@ internal sealed class AccountingPartyReferenceConfiguration : IEntityTypeConfigu
         builder.Property(reference => reference.DisplayName).HasMaxLength(256).IsRequired();
         builder.Property(reference => reference.Email).HasMaxLength(320);
         builder.Property(reference => reference.Phone).HasMaxLength(64);
+        builder.Property(reference => reference.SourceRevision).HasDefaultValue(0L);
         builder.Property(reference => reference.RowVersion).IsRowVersion();
         builder.HasIndex(reference => reference.PartyId);
     }

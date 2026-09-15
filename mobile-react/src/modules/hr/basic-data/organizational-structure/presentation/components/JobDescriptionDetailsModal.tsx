@@ -92,7 +92,7 @@ export function JobDescriptionDetailsModal({
             <View style={styles.badgesRow}>
               <AppStatusBadge
                 color={theme.colors.primary}
-                label={`v${item.version ?? item.code}`}
+                label={t('organizationalStructure.jobDescriptionDetails.versionValue', { version: item.version ?? item.code })}
               />
               <AppStatusBadge
                 color={statusColor}

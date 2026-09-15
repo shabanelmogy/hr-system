@@ -14,7 +14,7 @@
 | ID | Requirement | Evidence | Status |
 | --- | --- | --- | --- |
 | R-01 | Stable module/submodule catalog | `BuildingBlocks.Modularity/ModuleDefinition.cs`, `HRModule.cs`, `AccountingModule.cs` | Complete |
-| R-02 | Tenant entitlement persistence and compatibility seed | HR domain/configuration and `20260909122310_AddTenantModuleEntitlements` migration | Complete |
+| R-02 | Tenant entitlement persistence and compatibility seed | Platform domain/configuration and the deployment-owned Platform migration | Complete |
 | R-03 | API catalog and tenant management contract | `ModulesController`, `TenantManagementService`, entitlement contracts | Complete |
 | R-04 | Database-backed RBAC plus entitlement enforcement | `PermissionAuthorizationHandler` and `TenantModuleEntitlementService` | Complete |
 | R-05 | Odoo-style web launcher, top-bar application switcher, and editor | `web-next/src/app/(main)/apps`, shared module launcher, shared `ContextSwitcher`, `ModuleContextSwitcher`, `TenantManagementPage` | Complete |
@@ -48,7 +48,7 @@ preselects the first option, and the API issues the session only after
 | Layer | Command | Result |
 | --- | --- | --- |
 | API | `dotnet build api/ErpSystem.sln --no-restore` | Passed, 0 warnings and 0 errors |
-| API tests | `dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-build` | Passed, 553 tests |
+| API tests | Current gate: `dotnet test api/ErpSystem.sln -c Release` | Current authoritative result is recorded in `documentation/api/FOUNDATION_CLOSURE_MATRIX.md` |
 | Database | `dotnet ef migrations has-pending-model-changes --context ApplicationDbContext`; `dotnet ef database update --context ApplicationDbContext` | No pending model changes; database is up to date |
 | Web | `npm run check`; `npm test -- --run`; `npm run build` | Passed architecture, lint, normal and strict type-checks; 366 tests; production build passed |
 | Mobile | `npm run check` | Passed type-check, lint, architecture; 174 tests |

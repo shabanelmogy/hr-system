@@ -44,13 +44,13 @@ export function useCollectionExports<T extends object>({
       try {
         const exported = await exporter();
         if (!exported) {
-          showSnackbar("warning", t("pagination.noData") || "No data available");
+          showSnackbar("warning", t("pagination.noData"));
         }
       } catch (error) {
         showSnackbar(
           "error",
           extractErrorMessageSilent(error),
-          t("messages.error") || "Export failed",
+          t("messages.error"),
         );
       }
     },
@@ -71,7 +71,7 @@ export function useCollectionExports<T extends object>({
       {
         id: "excel",
         format: "excel",
-        label: t("actions.exportExcel") || "Export to Excel",
+        label: t("actions.exportExcel"),
         onSelect: exportToExcel,
         loading: excel.isExporting,
         disabled: disabled || isExporting,
@@ -79,7 +79,7 @@ export function useCollectionExports<T extends object>({
       {
         id: "pdf",
         format: "pdf",
-        label: t("actions.exportPdf") || "Export to PDF",
+        label: t("actions.exportPdf"),
         onSelect: exportToPdf,
         loading: pdf.isExporting,
         disabled: disabled || isExporting,

@@ -377,7 +377,7 @@ for the canonical contract. Feature-specific behavior:
 
 The legacy `report/info`, `report/generate`, `X-ApiKey` header and
 `EXPO_PUBLIC_REPORT_API_URL` are not part of this feature anymore. Mobile
-environment configuration exposes only the authenticated HR API URL for managed
+environment configuration exposes only the authenticated ERP API URL for managed
 reports.
 
 ## 12. Localization, RTL, Responsive and Accessibility

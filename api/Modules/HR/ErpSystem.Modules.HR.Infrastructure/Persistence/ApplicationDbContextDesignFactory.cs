@@ -1,4 +1,4 @@
-using ErpSystem.Modules.HR.Application.Abstractions.Authentication;
+using ErpSystem.BuildingBlocks.Context.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;

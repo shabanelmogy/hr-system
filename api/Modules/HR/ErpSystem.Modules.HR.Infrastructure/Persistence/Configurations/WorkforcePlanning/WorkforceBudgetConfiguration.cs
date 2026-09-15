@@ -1,4 +1,3 @@
-using ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities;
 using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -28,11 +27,6 @@ public sealed class WorkforceBudgetConfiguration : IEntityTypeConfiguration<Work
             .IsUnique()
             .HasDatabaseName("UX_WorkforceBudgets_OneEffectivePerFiscalYear")
             .HasFilter("[Status] = 3 AND [ActivatedOn] IS NOT NULL AND [SupersededOn] IS NULL AND [IsDeleted] = 0");
-        builder.HasOne<FiscalYear>()
-            .WithMany()
-            .HasForeignKey(budget => new { budget.TenantId, budget.CompanyId, budget.FiscalYearId })
-            .HasPrincipalKey(year => new { year.TenantId, year.CompanyId, year.Id })
-            .OnDelete(DeleteBehavior.Restrict);
         builder.HasOne<WorkforcePlan>()
             .WithMany()
             .HasForeignKey(budget => new { budget.TenantId, budget.CompanyId, budget.WorkforcePlanId })
@@ -103,11 +97,6 @@ public sealed class WorkforceBudgetPeriodAllocationConfiguration : IEntityTypeCo
         builder.Property(allocation => allocation.AllocatedSalaryCost).HasColumnType("decimal(18,2)");
         builder.Property(allocation => allocation.AllocatedRecruitmentCost).HasColumnType("decimal(18,2)");
         builder.HasIndex(allocation => new { allocation.TenantId, allocation.CompanyId, allocation.WorkforceBudgetLineId, allocation.FiscalPeriodId }).IsUnique();
-        builder.HasOne<FiscalPeriod>()
-            .WithMany()
-            .HasForeignKey(allocation => new { allocation.TenantId, allocation.CompanyId, allocation.FiscalPeriodId })
-            .HasPrincipalKey(period => new { period.TenantId, period.CompanyId, period.Id })
-            .OnDelete(DeleteBehavior.Restrict);
     }
 }
 
@@ -147,11 +136,6 @@ public sealed class PositionEnvelopeConfiguration : IEntityTypeConfiguration<Pos
             .WithMany()
             .HasForeignKey(envelope => new { envelope.TenantId, envelope.CompanyId, envelope.WorkforcePlanLineId })
             .HasPrincipalKey(line => new { line.TenantId, line.CompanyId, line.Id })
-            .OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne<FiscalYear>()
-            .WithMany()
-            .HasForeignKey(envelope => new { envelope.TenantId, envelope.CompanyId, envelope.FiscalYearId })
-            .HasPrincipalKey(year => new { year.TenantId, year.CompanyId, year.Id })
             .OnDelete(DeleteBehavior.Restrict);
         builder.HasOne<Position>()
             .WithMany()

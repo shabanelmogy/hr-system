@@ -160,7 +160,7 @@ export const permissions = {
 } as const;
 ```
 
-**Mirrors backend:** `api/Modules/HR/ErpSystem.Modules.HR.Application/Common/Consts/Permissions.cs`
+**Mirrors backend:** `api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/Authorization/Consts/Permissions.cs`
 
 **Helper Functions:**
 - `getAllPermissions()` — Get all permission strings

@@ -29,6 +29,9 @@ builder.Host.UseSerilog((context, configuration) =>
 var app = builder.Build();
 var catalog = app.Services.GetRequiredService<ModuleCatalog>();
 
+if (HostForwardedHeadersServiceCollectionExtensions.IsForwardingEnabled(builder.Configuration))
+    app.UseForwardedHeaders();
+
 app.UseExceptionHandler();
 app.UseMiddleware<HostCorrelationIdMiddleware>();
 app.ConfigureModulesEarly(catalog);
@@ -53,9 +56,6 @@ app.UseRequestLocalization(new RequestLocalizationOptions()
     .AddSupportedCultures(supportedCultures));
 app.UseMiddleware<HostCultureMiddleware>();
 app.UseStaticFiles();
-app.UseAuthentication();
-app.UseRateLimiter();
-app.UseAuthorization();
 
 var swaggerEnabled = app.Environment.IsDevelopment() ||
     builder.Configuration.GetValue<bool>("SwaggerSettings:Enabled");
@@ -83,6 +83,10 @@ if (swaggerEnabled)
 
     app.MapSwagger().AllowAnonymous();
 }
+
+app.UseAuthentication();
+app.UseRateLimiter();
+app.UseAuthorization();
 
 await app.PrepareHostRuntimeAsync(catalog);
 app.ConfigureModules(catalog);

@@ -1,5 +1,3 @@
-using ErpSystem.Modules.HR.Domain.GeographicalInformation.Countries.Entities;
-using ErpSystem.Modules.HR.Domain.GeographicalInformation.States.Entities;
 using ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -29,19 +27,7 @@ public sealed class CandidateConfiguration : IEntityTypeConfiguration<Candidate>
         builder.HasIndex(x => new { x.TenantId, x.PhoneNumber });
         builder.HasIndex(x => new { x.TenantId, x.PortalUserId });
 
-        builder.HasOne<Country>()
-            .WithMany()
-            .HasForeignKey(x => x.NationalityCountryId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasOne<Country>()
-            .WithMany()
-            .HasForeignKey(x => x.CurrentCountryId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasOne<State>()
-            .WithMany()
-            .HasForeignKey(x => x.CurrentStateId)
-            .OnDelete(DeleteBehavior.Restrict);
+        // Geography is owned by ReferenceData. HR stores scalar reference ids
+        // and resolves the display data through module contracts.
     }
 }

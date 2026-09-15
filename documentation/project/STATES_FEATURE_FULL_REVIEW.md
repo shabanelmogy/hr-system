@@ -33,7 +33,7 @@ The versioned controller depends only on `ISender`. State read/write ports, Maps
 
 ## 7. Client architecture
 
-Next.js uses one `useServerListState` criteria controller plus the shared adaptive pagination hook, React Query prefix invalidation, the shared aligned Grid toolbar, Grid Options at the end of the toolbar row, Grid/Card/Chart/Report/Import views, modal form/detail retrieval, lifecycle dialogs, and state-specific fields. The same `MyDataGrid` runs in client mode through 5000 complete rows and server mode above the boundary. Unsupported column sorting is disabled, while Country sorting remains enabled because the API supports it. Initial loading is distinct from background fetching, which preserves current content under a linear progress indicator. Standard Multi View names come from the shared global labels and the shared toggle owns consistent inner padding. Chart mode keeps the same criteria, resets to the first page when entered, omits pagination controls, labels its page scope, and is not global aggregate analytics. Development forms can use the shared mock-data footer action to fill a State sample with an active Country without submitting. Import composes the shared bounded XLSX parser/card with State-owned headers, mapping, duplicate scope, Country dependency state, exact envelope, and reconciliation. Expo uses one controlled `useServerListState`, runtime Zod parsing, a guarded route, full-screen State form with an active Country selector, search-field/operator controls, status filter, table/cards/report modes, and touch-safe lifecycle actions; its development form has the equivalent non-submitting mock action.
+Next.js uses one `useServerListState` criteria controller plus the shared adaptive pagination hook, React Query prefix invalidation, the shared aligned Grid toolbar, Grid Options at the end of the toolbar row, Grid/Card/Chart/Import views, modal form/detail retrieval, lifecycle dialogs, and state-specific fields. The same `MyDataGrid` runs in client mode through 5000 complete rows and server mode above the boundary. Unsupported column sorting is disabled, while Country sorting remains enabled because the API supports it. Initial loading is distinct from background fetching, which preserves current content under a linear progress indicator. Standard Multi View names come from the shared global labels and the shared toggle owns consistent inner padding. Chart mode keeps the same criteria, resets to the first page when entered, omits pagination controls, labels its page scope, and is not global aggregate analytics. Development forms can use the shared mock-data footer action to fill a State sample with an active Country without submitting. Import composes the shared bounded XLSX parser/card with State-owned headers, mapping, duplicate scope, Country dependency state, exact envelope, and reconciliation. Expo uses one controlled `useServerListState`, runtime Zod parsing, a guarded route, full-screen State form with an active Country selector, search-field/operator controls, status filter, table/cards/report modes, and touch-safe lifecycle actions; its development form has the equivalent non-submitting mock action.
 
 ## 8. Realtime, localization, RTL, and accessibility
 
@@ -44,20 +44,14 @@ The State change job schedules only after persistence succeeds, sends the `state
 
 ## 9. State-specific report decision
 
-The browser Report mode uses the same Crystal viewer pattern as Countries, not a
-local State table. `CrystalReportGeneratorApi` now has a States catalog slot,
-the `V_AllStates` report dataset, and `report/states/generate` for State Arabic
-and English name parameters. `Reports/States/.gitkeep` intentionally creates an
-empty report location; no fake `.rpt` is generated. Until the owner adds a
-valid State Crystal template, browser Report mode presents a localized
-unavailable state and never calls report generation with a nonexistent file.
-The template filename must contain `States` (for example, `States.rpt`) to meet
-the existing report-catalog filter.
+The States-specific browser Report view is Excluded from the current web client.
+Reporting still owns its managed Crystal contracts and explicit State dataset,
+but the States feature does not expose a report route or composition.
 
 Expo retains its current-page report summary because it has no Crystal PDF
 viewer/file-handling integration. This is an intentional platform difference,
 not an indication that the browser should fall back to a local table. A future
-mobile Crystal experience must reuse the States catalog and generation contract
+mobile Crystal experience must reuse the managed States catalog and render contract
 and add explicit device PDF handling.
 
 ## 10. Verification and remaining review work

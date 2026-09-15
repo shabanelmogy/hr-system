@@ -23,837 +23,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.CrystalReports.Entities.CrystalReport", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("CurrentPublishedVersionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("EntityKey")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ReportKey")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("CurrentPublishedVersionId");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "EntityKey", "ReportKey")
-                        .IsUnique();
-
-                    b.HasIndex("TenantId", "EntityKey", "IsDeleted", "DisplayName");
-
-                    b.ToTable("CrystalReports", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.CrystalReports.Entities.CrystalReportRoleGrant", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("CrystalReportId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Rights")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("CrystalReportId");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.HasIndex("TenantId", "CompanyId", "CrystalReportId", "RoleId")
-                        .IsUnique()
-                        .HasFilter("[IsDeleted] = 0");
-
-                    b.ToTable("CrystalReportRoleGrants", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.CrystalReports.Entities.CrystalReportVersion", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("CrystalReportId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("OriginalFileName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("Sha256")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nchar(64)")
-                        .IsFixedLength();
-
-                    b.Property<long>("Size")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("StorageKey")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("SummarySubject")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("SummaryTitle")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ValidationReason")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("ValidationStatus")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<int>("VersionNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("CrystalReportId");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "StorageKey")
-                        .IsUnique();
-
-                    b.HasIndex("TenantId", "CrystalReportId", "VersionNumber")
-                        .IsUnique();
-
-                    b.ToTable("CrystalReportVersions", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.ReportTemplates.Entities.ReportTemplate", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ContentHash")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nchar(64)")
-                        .IsFixedLength();
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DataSourceKey")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("DefinitionJson")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("FeatureKey")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsPublished")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<int>("RevisionNumber")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "FeatureKey", "Name")
-                        .IsUnique();
-
-                    b.HasIndex("TenantId", "FeatureKey", "IsDeleted", "IsPublished", "Name");
-
-                    b.ToTable("ReportTemplates", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.ReportTemplates.Entities.ReportTemplateRevision", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ContentHash")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nchar(64)")
-                        .IsFixedLength();
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DataSourceKey")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("DefinitionJson")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<bool>("IsArchived")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsPublished")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("Operation")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<Guid>("ReportTemplateId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("RevisionNumber")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("ReportTemplateId");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "ReportTemplateId", "RevisionNumber")
-                        .IsUnique();
-
-                    b.ToTable("ReportTemplateRevisions", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.Reports.Entities.ReportCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.HasIndex("UpdatedById");
-
-                    b.ToTable("ReportsCategories", "hr", t =>
-                        {
-                            t.HasCheckConstraint("CHK_ReportCategory_Name_EnglishWithSpaces", "[Name] NOT LIKE '%[^A-Za-z ]%'");
-                        });
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.Reports.Entities.ReportDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ColumnName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PropertyName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("ReportMasterId")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("ReportMasterId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.ToTable("ReportsDetails", "hr", t =>
-                        {
-                            t.HasCheckConstraint("CHK_ReportDetail_ColumnName_EnglishOnly", "[ColumnName] NOT LIKE '%[^A-Za-z ]%'");
-
-                            t.HasCheckConstraint("CHK_ReportDetail_PropertyName_EnglishOnly", "[PropertyName] NOT LIKE N'%[^�-� ]%' COLLATE Arabic_CI_AS");
-                        });
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.Reports.Entities.ReportMaster", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ExportedName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Logo")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("ReportCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ReportName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("ReportPath")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ViewName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("ExportedName")
-                        .IsUnique();
-
-                    b.HasIndex("ReportCategoryId");
-
-                    b.HasIndex("ReportName")
-                        .IsUnique();
-
-                    b.HasIndex("UpdatedById");
-
-                    b.ToTable("ReportsMasters", "hr", t =>
-                        {
-                            t.HasCheckConstraint("CHK_ReportMaster_ExportedName_EnglishOnly", "[ExportedName] NOT LIKE '%[^A-Za-z ]%'");
-
-                            t.HasCheckConstraint("CHK_ReportMaster_Logo_EnglishOnly", "[Logo] NOT LIKE '%[^A-Za-z ]%'");
-
-                            t.HasCheckConstraint("CHK_ReportMaster_ReportName_EnglishOnly", "[ReportName] NOT LIKE '%[^A-Za-z ]%'");
-
-                            t.HasCheckConstraint("CHK_ReportMaster_ReportPath_EnglishOnly", "[ReportPath] NOT LIKE '%[^A-Za-z ]%'");
-
-                            t.HasCheckConstraint("CHK_ReportMaster_ViewName_EnglishOnly", "[ViewName] NOT LIKE '%[^A-Za-z ]%'");
-                        });
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Appointments.Entities.Appointment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTimeOffset>("End")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<bool>("IsAllDay")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<DateTimeOffset>("Start")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.ToTable("Appointments", "hr");
-                });
-
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities.AttendanceAgent", b =>
                 {
                     b.Property<Guid>("Id")
@@ -861,11 +30,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -875,7 +45,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -919,12 +89,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(16)");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -934,16 +105,10 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("SecretHash")
                         .IsUnique();
 
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -968,6 +133,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("ConnectionMode")
@@ -977,7 +143,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -987,7 +153,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -1037,6 +203,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -1047,7 +214,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -1057,13 +224,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -1091,11 +252,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -1105,7 +267,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -1128,12 +290,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -1143,13 +306,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -1177,11 +334,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -1191,7 +349,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -1253,6 +411,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(24)");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -1261,7 +420,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -1271,13 +430,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -1303,11 +456,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -1317,7 +471,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -1369,12 +523,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(4000)");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -1390,13 +545,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -1420,11 +569,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -1434,7 +584,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -1468,12 +618,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(4000)");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -1483,13 +634,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -1497,215 +642,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("RawDeviceUsers", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Catalog.Categories.Entities.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.HasIndex("TenantId", "CompanyId", "NameAr")
-                        .IsUnique();
-
-                    b.HasIndex("TenantId", "CompanyId", "NameEn")
-                        .IsUnique();
-
-                    b.ToTable("Categories", "hr", t =>
-                        {
-                            t.HasCheckConstraint("CHK_Category_NameAr_ArabicOnly", "[NameAr] NOT LIKE N'%[^�-� ]%' COLLATE Arabic_CI_AS");
-
-                            t.HasCheckConstraint("CHK_Category_NameEn_EnglishOnly", "[NameEn] NOT LIKE '%[^A-Za-z ]%'");
-                        });
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Catalog.Categories.Entities.CategorySubcategory", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.HasKey("CategoryId", "SubCategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("SubCategoryId");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.ToTable("CategorySubcategories", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Catalog.SubCategories.Entities.SubCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.HasIndex("TenantId", "CompanyId", "NameAr")
-                        .IsUnique();
-
-                    b.HasIndex("TenantId", "CompanyId", "NameEn")
-                        .IsUnique();
-
-                    b.ToTable("SubCategories", "hr", t =>
-                        {
-                            t.HasCheckConstraint("CHK_SubCategory_NameAr_ArabicOnly", "[NameAr] NOT LIKE N'%[^�-� ]%' COLLATE Arabic_CI_AS");
-
-                            t.HasCheckConstraint("CHK_SubCategory_NameEn_EnglishOnly", "[NameEn] NOT LIKE '%[^A-Za-z ]%'");
-                        });
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Employees.Entities.Employee", b =>
@@ -1720,11 +656,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -1734,7 +671,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -1787,6 +724,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -1795,7 +733,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -1809,13 +747,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CandidateId")
                         .HasFilter("[CandidateId] IS NOT NULL");
@@ -1844,11 +776,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -1858,7 +791,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -1900,12 +833,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -1917,13 +851,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasAlternateKey("TenantId", "CompanyId", "Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -1947,6 +875,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("ContractNumber")
@@ -1959,7 +888,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -1969,7 +898,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -2006,12 +935,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -2023,13 +953,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasAlternateKey("TenantId", "CompanyId", "Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -2039,879 +963,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     b.HasIndex("TenantId", "CompanyId", "EmployeeId");
 
                     b.ToTable("EmployeeContracts", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities.FiscalPeriod", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(24)
-                        .HasColumnType("nvarchar(24)");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateOnly>("EndDate")
-                        .HasColumnType("date");
-
-                    b.Property<int>("FiscalYearId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<int>("Sequence")
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly>("StartDate")
-                        .HasColumnType("date");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.HasIndex("TenantId", "CompanyId", "Code")
-                        .IsUnique();
-
-                    b.HasIndex("TenantId", "CompanyId", "FiscalYearId", "Sequence")
-                        .IsUnique();
-
-                    b.ToTable("FiscalPeriods", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities.FiscalYear", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateOnly>("EndDate")
-                        .HasColumnType("date");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("PeriodFrequency")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<DateOnly>("StartDate")
-                        .HasColumnType("date");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.HasIndex("TenantId", "CompanyId", "Code")
-                        .IsUnique();
-
-                    b.HasIndex("TenantId", "CompanyId", "StartDate", "EndDate", "IsDeleted");
-
-                    b.ToTable("FiscalYears", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.AddressTypes.Entities.AddressType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.HasIndex("TenantId", "CompanyId", "NameAr")
-                        .IsUnique();
-
-                    b.HasIndex("TenantId", "CompanyId", "NameEn")
-                        .IsUnique();
-
-                    b.ToTable("AddressTypes", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.Addresses.Entities.Address", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AdditionalInfo")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<int>("AddressTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ApartmentNumber")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("BuildingNumber")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("City")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("DistrictId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Floor")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<double?>("Latitude")
-                        .HasPrecision(18, 6)
-                        .HasColumnType("float(18)");
-
-                    b.Property<double?>("Longitude")
-                        .HasPrecision(18, 6)
-                        .HasColumnType("float(18)");
-
-                    b.Property<string>("PostalCode")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<int?>("StateId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StreetLine1")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("StreetLine2")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("DistrictId");
-
-                    b.HasIndex("StateId");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("Latitude", "Longitude");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.HasIndex("TenantId", "CompanyId", "AddressTypeId");
-
-                    b.ToTable("Addresses", "hr", t =>
-                        {
-                            t.HasCheckConstraint("CHK_Address_Coordinates_Paired", "([Latitude] IS NULL AND [Longitude] IS NULL) OR ([Latitude] IS NOT NULL AND [Longitude] IS NOT NULL)");
-
-                            t.HasCheckConstraint("CHK_Address_Latitude_Range", "[Latitude] IS NULL OR ([Latitude] >= -90 AND [Latitude] <= 90)");
-
-                            t.HasCheckConstraint("CHK_Address_Longitude_Range", "[Longitude] IS NULL OR ([Longitude] >= -180 AND [Longitude] <= 180)");
-                        });
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.Addresses.Entities.BranchAddress", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BranchId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsPrimary")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Purpose")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.HasIndex("TenantId", "CompanyId", "AddressId");
-
-                    b.HasIndex("TenantId", "CompanyId", "BranchId", "Purpose")
-                        .IsUnique()
-                        .HasFilter("[IsPrimary] = 1 AND [IsDeleted] = 0");
-
-                    b.HasIndex("TenantId", "CompanyId", "BranchId", "AddressId", "Purpose")
-                        .IsUnique();
-
-                    b.ToTable("BranchAddresses", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.Addresses.Entities.CompanyAddress", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsPrimary")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Purpose")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.HasIndex("TenantId", "CompanyId", "Purpose")
-                        .IsUnique()
-                        .HasFilter("[IsPrimary] = 1 AND [IsDeleted] = 0");
-
-                    b.HasIndex("TenantId", "CompanyId", "AddressId", "Purpose")
-                        .IsUnique();
-
-                    b.ToTable("CompanyAddresses", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.Countries.Entities.Country", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Alpha2Code")
-                        .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)");
-
-                    b.Property<string>("Alpha3Code")
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CurrencyCode")
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("PhoneCode")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Alpha2Code")
-                        .IsUnique()
-                        .HasFilter("[Alpha2Code] IS NOT NULL");
-
-                    b.HasIndex("Alpha3Code")
-                        .IsUnique()
-                        .HasFilter("[Alpha3Code] IS NOT NULL");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("NameAr")
-                        .IsUnique();
-
-                    b.HasIndex("NameEn")
-                        .IsUnique();
-
-                    b.HasIndex("UpdatedById");
-
-                    b.ToTable("Countries", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.Districts.Entities.District", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<int>("StateId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("StateId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("Code", "StateId")
-                        .IsUnique();
-
-                    b.HasIndex("NameAr", "StateId")
-                        .IsUnique();
-
-                    b.HasIndex("NameEn", "StateId")
-                        .IsUnique();
-
-                    b.ToTable("Districts", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.States.Entities.State", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("Code", "CountryId")
-                        .IsUnique();
-
-                    b.HasIndex("NameAr", "CountryId")
-                        .IsUnique();
-
-                    b.HasIndex("NameEn", "CountryId")
-                        .IsUnique();
-
-                    b.ToTable("States", "hr");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Branch", b =>
@@ -2931,11 +982,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("date");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -2945,7 +997,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -2993,6 +1045,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -3003,7 +1056,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -3013,13 +1066,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -3035,229 +1082,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     b.ToTable("Branches", "hr");
                 });
 
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Background")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyCode")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DefaultCurrencyCode")
-                        .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(254)
-                        .HasColumnType("nvarchar(254)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LegalName")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("Logo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int?>("ParentCompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Phone")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<int?>("RegistrationCountryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RegistrationNumber")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("TaxNumber")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("TimeZoneId")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Website")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("ParentCompanyId");
-
-                    b.HasIndex("RegistrationCountryId");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "CompanyCode")
-                        .IsUnique();
-
-                    b.HasIndex("TenantId", "NameAr")
-                        .IsUnique();
-
-                    b.HasIndex("TenantId", "NameEn")
-                        .IsUnique();
-
-                    b.ToTable("Companies", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.CompanyCountry", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "CompanyId")
-                        .IsUnique()
-                        .HasFilter("[IsDefault] = 1 AND [IsDeleted] = 0");
-
-                    b.HasIndex("TenantId", "CompanyId", "CountryId")
-                        .IsUnique();
-
-                    b.ToTable("CompanyCountries", "hr");
-                });
-
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.CostCenter", b =>
                 {
                     b.Property<int>("Id")
@@ -3267,6 +1091,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CostCenterCode")
@@ -3276,7 +1101,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -3286,7 +1111,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -3328,12 +1153,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -3343,13 +1169,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -3374,11 +1194,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -3393,7 +1214,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -3433,12 +1254,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -3450,13 +1272,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasAlternateKey("TenantId", "CompanyId", "Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -3478,6 +1294,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CostCenterCode")
@@ -3486,7 +1303,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -3496,7 +1313,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -3543,12 +1360,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -3558,13 +1376,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -3601,6 +1413,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CostCenterCode")
@@ -3609,7 +1422,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -3619,7 +1432,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -3666,12 +1479,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -3681,13 +1495,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -3716,11 +1524,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -3737,7 +1546,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -3814,6 +1623,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -3829,7 +1639,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -3846,13 +1656,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasAlternateKey("TenantId", "CompanyId", "Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -3880,11 +1684,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -3898,7 +1703,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -3953,12 +1758,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -3968,13 +1774,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -4002,11 +1802,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -4016,7 +1817,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -4039,6 +1840,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -4054,7 +1856,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -4064,13 +1866,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -4095,11 +1891,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -4109,7 +1906,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -4144,12 +1941,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -4159,13 +1957,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -4179,214 +1971,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Positions", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Platform.EntityChangeLogs.Entities.EntityChangeLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("ChangedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ChangedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ChangedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EntityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("EntityKey")
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("EntityName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JsonNewValues")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JsonOldValues")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.ToTable("EntityChangeLogs", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Platform.Files.Entities.UploadedFile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ContentType")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DeletedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FileExtension")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("StoredFileName")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpdatedByPc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.ToTable("Files", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Platform.SecurityAudits.Entities.SecurityAuditEvent", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Action")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("ActorUserId")
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CorrelationId")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("IpAddress")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("MetadataJson")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("OccurredOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Outcome")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<string>("Reason")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("TargetId")
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("TargetType")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("TenantId")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UserAgent")
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ActorUserId", "OccurredOn");
-
-                    b.HasIndex("TenantId", "OccurredOn");
-
-                    b.HasIndex("TargetType", "TargetId", "OccurredOn");
-
-                    b.ToTable("SecurityAuditEvents", "hr");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.ApplicationStatusHistory", b =>
@@ -4404,11 +1988,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -4418,7 +2003,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -4446,6 +2031,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -4454,7 +2040,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -4464,15 +2050,9 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("EmploymentApplicationId");
 
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -4498,7 +2078,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -4517,7 +2097,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -4586,12 +2166,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -4601,19 +2182,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("CurrentCountryId");
-
-                    b.HasIndex("CurrentStateId");
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("NationalityCountryId");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "Email")
                         .IsUnique();
@@ -4640,6 +2209,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CoverLetter")
@@ -4647,7 +2217,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -4657,7 +2227,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -4714,12 +2284,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -4729,13 +2300,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CandidateId");
 
@@ -4780,7 +2345,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -4790,7 +2355,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -4823,6 +2388,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -4838,7 +2404,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -4854,13 +2420,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasAlternateKey("TenantId", "Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "Code")
                         .IsUnique();
@@ -4881,6 +2441,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(1000)");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<DateTimeOffset?>("CompletedOn")
@@ -4888,7 +2449,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -4898,7 +2459,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -4932,6 +2493,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -4940,7 +2502,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -4952,13 +2514,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasAlternateKey("TenantId", "CompanyId", "Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -4983,11 +2539,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -4997,7 +2554,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5035,12 +2592,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5050,19 +2608,15 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("InterviewId", "InterviewerEmployeeId");
 
                     b.HasIndex("TenantId", "CompanyId");
 
                     b.HasIndex("TenantId", "CompanyId", "InterviewId");
+
+                    b.HasIndex("TenantId", "CompanyId", "InterviewerEmployeeId");
 
                     b.ToTable("InterviewEvaluations", "hr");
                 });
@@ -5076,11 +2630,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -5090,7 +2645,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5117,12 +2672,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5132,18 +2688,14 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("InterviewId", "EmployeeId")
                         .IsUnique();
 
                     b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "EmployeeId");
 
                     b.HasIndex("TenantId", "CompanyId", "InterviewId");
 
@@ -5192,11 +2744,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -5211,7 +2764,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5282,6 +2835,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -5290,7 +2844,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5303,13 +2857,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -5352,11 +2900,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -5366,7 +2915,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5397,6 +2946,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -5405,7 +2955,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5415,13 +2965,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -5449,11 +2993,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -5463,7 +3008,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5516,12 +3061,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5534,13 +3080,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -5580,11 +3120,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -5594,7 +3135,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5658,6 +3199,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -5673,7 +3215,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5683,13 +3225,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -5724,11 +3260,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -5742,7 +3279,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5817,6 +3354,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -5827,7 +3365,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasDefaultValue(1);
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5840,13 +3378,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -5883,7 +3415,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -5901,7 +3433,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5933,12 +3465,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -5950,14 +3483,8 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasAlternateKey("TenantId", "Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId")
                         .IsUnique();
-
-                    b.HasIndex("UpdatedById");
 
                     b.ToTable("RecruitmentPolicies", "hr");
                 });
@@ -5980,7 +3507,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -5990,7 +3517,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -6024,6 +3551,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -6034,7 +3562,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -6046,13 +3574,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasAlternateKey("TenantId", "Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "Code")
                         .IsUnique();
@@ -6080,7 +3602,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -6090,7 +3612,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -6137,12 +3659,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -6154,13 +3677,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasAlternateKey("TenantId", "Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "Code")
                         .IsUnique();
@@ -6190,7 +3707,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -6200,7 +3717,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -6247,12 +3764,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -6264,13 +3782,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasAlternateKey("TenantId", "Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "Category");
 
@@ -6278,207 +3790,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("RecruitmentRejectionReasons", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Security.ApiKeys.Entities.ApiKey", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClientUri")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETUTCDATE()");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime?>("ExpiresAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-
-                    b.Property<string>("KeyHash")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("KeyPrefix")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<string>("RevocationReason")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime?>("RevokedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientUri");
-
-                    b.HasIndex("KeyHash")
-                        .IsUnique();
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.ToTable("ApiKeys", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("ArchiveReason")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<DateTime?>("ArchivedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("BillingEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("ContactName")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("ContactPhone")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Identifier")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LifecycleStatus")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)")
-                        .HasDefaultValue("Active");
-
-                    b.Property<int>("MaxAdmins")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MaxUsers")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<string>("PlanName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime?>("PurgeScheduledOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<DateTime?>("SubscriptionEndsOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("SubscriptionStartedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("SubscriptionStatus")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Identifier")
-                        .IsUnique();
-
-                    b.ToTable("Tenants", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Tenancy.Entities.TenantModuleEntitlement", b =>
-                {
-                    b.Property<string>("TenantId")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("ModuleCode")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.HasKey("TenantId", "ModuleCode");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("TenantModuleEntitlements", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Tenancy.Entities.TenantSubmoduleEntitlement", b =>
-                {
-                    b.Property<string>("TenantId")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("ModuleCode")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("SubmoduleCode")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.HasKey("TenantId", "ModuleCode", "SubmoduleCode");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("TenantSubmoduleEntitlements", "hr");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.EnvelopeAmendment", b =>
@@ -6503,11 +3814,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -6521,7 +3833,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -6568,12 +3880,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -6585,13 +3898,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasAlternateKey("TenantId", "CompanyId", "Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -6625,6 +3932,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<decimal>("ContractedSalaryBudget")
@@ -6632,7 +3940,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -6647,7 +3955,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -6691,12 +3999,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -6718,13 +4027,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -6736,8 +4039,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasIndex("TenantId", "CompanyId", "EnvelopeCode")
                         .IsUnique();
-
-                    b.HasIndex("TenantId", "CompanyId", "FiscalYearId");
 
                     b.HasIndex("TenantId", "CompanyId", "PositionId");
 
@@ -6783,11 +4084,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -6806,7 +4108,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -6870,6 +4172,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -6878,7 +4181,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -6888,13 +4191,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -6933,11 +4230,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -6956,7 +4254,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -6998,12 +4296,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -7016,13 +4315,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -7061,11 +4354,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -7075,7 +4369,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -7102,12 +4396,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -7123,13 +4418,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -7164,11 +4453,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -7178,7 +4468,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -7202,12 +4492,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -7222,17 +4513,9 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasAlternateKey("TenantId", "CompanyId", "Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
 
-                    b.HasIndex("UpdatedById");
-
                     b.HasIndex("TenantId", "CompanyId");
-
-                    b.HasIndex("TenantId", "CompanyId", "FiscalPeriodId");
 
                     b.HasIndex("TenantId", "CompanyId", "WorkforceBudgetLineId", "FiscalPeriodId")
                         .IsUnique();
@@ -7258,11 +4541,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -7275,7 +4559,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -7332,6 +4616,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
@@ -7347,7 +4632,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -7357,13 +4642,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -7394,11 +4673,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnName("CurrentHeadcount");
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -7408,7 +4688,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -7449,12 +4729,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnName("BranchId");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -7467,13 +4748,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
-
-                    b.HasIndex("UpdatedById");
 
                     b.HasIndex("TenantId", "CompanyId");
 
@@ -7499,11 +4774,12 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByPc")
                         .IsRequired()
@@ -7513,7 +4789,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -7540,12 +4816,13 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedByPc")
                         .HasColumnType("nvarchar(max)");
@@ -7560,17 +4837,9 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
                     b.HasAlternateKey("TenantId", "CompanyId", "Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeletedById");
-
                     b.HasIndex("TenantId");
 
-                    b.HasIndex("UpdatedById");
-
                     b.HasIndex("TenantId", "CompanyId");
-
-                    b.HasIndex("TenantId", "CompanyId", "FiscalPeriodId");
 
                     b.HasIndex("TenantId", "CompanyId", "WorkforcePlanLineId", "FiscalPeriodId")
                         .IsUnique();
@@ -7578,919 +4847,8 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     b.ToTable("WorkforcePlanLinePeriodTargets", "hr");
                 });
 
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Platform.Notifications.Entities.Notification", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("ActionUrl")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("ActorUserId")
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("CorrelationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeduplicationKey")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<DateTime?>("DismissedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EntityId")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("EntityType")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("EventType")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<DateTime?>("ExpiresOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MessageKey")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("ParametersJson")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<DateTime?>("ReadOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RecipientUserId")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RequiredPermission")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("Severity")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("TitleKey")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ActorUserId");
-
-                    b.HasIndex("RecipientUserId");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.HasIndex("TenantId", "CompanyId", "RecipientUserId", "DeduplicationKey")
-                        .IsUnique()
-                        .HasFilter("[DeduplicationKey] IS NOT NULL");
-
-                    b.HasIndex("TenantId", "CompanyId", "RecipientUserId", "ReadOn")
-                        .HasFilter("[DismissedOn] IS NULL AND [ReadOn] IS NULL");
-
-                    b.HasIndex("TenantId", "CompanyId", "RecipientUserId", "CreatedOn", "Id");
-
-                    b.ToTable("Notifications", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSystem")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("TenantId")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("IX_AspNetRoles_System_NormalizedName")
-                        .HasFilter("[IsSystem] = 1 AND [NormalizedName] IS NOT NULL");
-
-                    b.HasIndex("TenantId", "NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("IX_AspNetRoles_Tenant_NormalizedName")
-                        .HasFilter("[IsSystem] = 0 AND [TenantId] IS NOT NULL AND [NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", "hr", t =>
-                        {
-                            t.HasCheckConstraint("CK_AspNetRoles_SystemTenantConsistency", "([IsSystem] = 1 AND [TenantId] IS NULL AND [NormalizedName] IN ('SUPER_ADMIN', 'ADMIN', 'USER')) OR ([IsSystem] = 0 AND [TenantId] IS NOT NULL AND ([NormalizedName] IS NULL OR [NormalizedName] NOT IN ('SUPER_ADMIN', 'ADMIN', 'USER')))");
-                        });
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ArchiveReason")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<DateTime?>("ArchivedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<bool>("IsDisabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("LifecycleStatus")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)")
-                        .HasDefaultValue("Active");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ProfilePicture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("TenantId", "LifecycleStatus");
-
-                    b.ToTable("AspNetUsers", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.AuthenticationSelectionChallenge", b =>
-                {
-                    b.Property<string>("JwtId")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ExpiresOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("Scope")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("TenantId")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("JwtId");
-
-                    b.HasIndex("ExpiresOn");
-
-                    b.HasIndex("UserId", "Scope");
-
-                    b.ToTable("AuthenticationSelectionChallenges", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.UserCompanyAccess", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.HasKey("UserId", "CompanyId");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.ToTable("UserCompanyAccesses", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.UserInvitation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("AcceptedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CompanyIdsJson")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DefaultCompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<DateTime>("ExpiresOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("InvitedByUserId")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("NormalizedEmail")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("RevokedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RolesJson")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("TokenHash")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InvitedByUserId");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("TokenHash")
-                        .IsUnique();
-
-                    b.HasIndex("TenantId", "NormalizedEmail", "Status");
-
-                    b.HasIndex("TenantId", "NormalizedUserName", "Status");
-
-                    b.ToTable("UserInvitations", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.UserLogin", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("LogOutDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("LoginDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("TenantId", "CompanyId");
-
-                    b.ToTable("LoginAudits", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.UserTenantAccess", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("TenantId")
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
-
-                    b.HasKey("UserId", "TenantId");
-
-                    b.HasIndex("TenantId");
-
-                    b.HasIndex("TenantId", "IsDefault");
-
-                    b.ToTable("UserTenantAccesses", "hr");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", "hr");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", "hr");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", "hr");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", "hr");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", "hr");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.CrystalReports.Entities.CrystalReport", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Analytics.CrystalReports.Entities.CrystalReportVersion", null)
-                        .WithMany()
-                        .HasForeignKey("CurrentPublishedVersionId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.CrystalReports.Entities.CrystalReportRoleGrant", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Analytics.CrystalReports.Entities.CrystalReport", "CrystalReport")
-                        .WithMany("RoleGrants")
-                        .HasForeignKey("CrystalReportId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CrystalReport");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.CrystalReports.Entities.CrystalReportVersion", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Analytics.CrystalReports.Entities.CrystalReport", "CrystalReport")
-                        .WithMany("Versions")
-                        .HasForeignKey("CrystalReportId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.Navigation("CrystalReport");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.ReportTemplates.Entities.ReportTemplate", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.ReportTemplates.Entities.ReportTemplateRevision", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Analytics.ReportTemplates.Entities.ReportTemplate", "ReportTemplate")
-                        .WithMany("Revisions")
-                        .HasForeignKey("ReportTemplateId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.Navigation("ReportTemplate");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.Reports.Entities.ReportCategory", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.Reports.Entities.ReportDetail", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Analytics.Reports.Entities.ReportMaster", "ReportMaster")
-                        .WithMany("ReportDetails")
-                        .HasForeignKey("ReportMasterId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.Navigation("ReportMaster");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.Reports.Entities.ReportMaster", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Analytics.Reports.Entities.ReportCategory", "ReportCategory")
-                        .WithMany("ReportMasters")
-                        .HasForeignKey("ReportCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.Navigation("ReportCategory");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Appointments.Entities.Appointment", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities.AttendanceAgent", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities.AttendanceDevice", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities.AttendanceAgent", "AttendanceAgent")
                         .WithMany("Devices")
                         .HasForeignKey("TenantId", "CompanyId", "AttendanceAgentId")
@@ -8510,33 +4868,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities.DeviceCredential", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities.AttendanceDevice", "AttendanceDevice")
                         .WithOne("Credential")
                         .HasForeignKey("ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities.DeviceCredential", "TenantId", "CompanyId", "AttendanceDeviceId")
@@ -8549,33 +4880,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities.DevicePullRun", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities.AttendanceDevice", "AttendanceDevice")
                         .WithMany("PullRuns")
                         .HasForeignKey("TenantId", "CompanyId", "AttendanceDeviceId")
@@ -8588,33 +4892,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities.RawAttendancePunch", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities.AttendanceDevice", "AttendanceDevice")
                         .WithMany("RawPunches")
                         .HasForeignKey("TenantId", "CompanyId", "AttendanceDeviceId")
@@ -8627,33 +4904,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities.RawDeviceUser", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities.AttendanceDevice", "AttendanceDevice")
                         .WithMany("RawUsers")
                         .HasForeignKey("TenantId", "CompanyId", "AttendanceDeviceId")
@@ -8664,157 +4914,8 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     b.Navigation("AttendanceDevice");
                 });
 
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Catalog.Categories.Entities.Category", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Catalog.Categories.Entities.CategorySubcategory", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Catalog.Categories.Entities.Category", "Category")
-                        .WithMany("CategorySubcategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Catalog.SubCategories.Entities.SubCategory", "SubCategory")
-                        .WithMany("CategorySubcategories")
-                        .HasForeignKey("SubCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("SubCategory");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Catalog.SubCategories.Entities.SubCategory", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Employees.Entities.Employee", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Employees.Entities.EmployeeAssignment", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.Employees.Entities.Employee", null)
                         .WithMany("Assignments")
                         .HasForeignKey("TenantId", "CompanyId", "EmployeeId")
@@ -8825,33 +4926,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Employees.Entities.EmployeeContract", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.Employees.Entities.Employee", null)
                         .WithMany("Contracts")
                         .HasForeignKey("TenantId", "CompanyId", "EmployeeId")
@@ -8860,456 +4934,8 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities.FiscalPeriod", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities.FiscalYear", "FiscalYear")
-                        .WithMany("Periods")
-                        .HasForeignKey("TenantId", "CompanyId", "FiscalYearId")
-                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("FiscalYear");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities.FiscalYear", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.AddressTypes.Entities.AddressType", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.Addresses.Entities.Address", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Domain.GeographicalInformation.Countries.Entities.Country", "Country")
-                        .WithMany("Addresses")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.GeographicalInformation.Districts.Entities.District", "District")
-                        .WithMany("Addresses")
-                        .HasForeignKey("DistrictId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.GeographicalInformation.States.Entities.State", "State")
-                        .WithMany("Addresses")
-                        .HasForeignKey("StateId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.GeographicalInformation.AddressTypes.Entities.AddressType", "AddressType")
-                        .WithMany("Addresses")
-                        .HasForeignKey("TenantId", "CompanyId", "AddressTypeId")
-                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("AddressType");
-
-                    b.Navigation("Country");
-
-                    b.Navigation("District");
-
-                    b.Navigation("State");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.Addresses.Entities.BranchAddress", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.GeographicalInformation.Addresses.Entities.Address", "Address")
-                        .WithMany("BranchAddresses")
-                        .HasForeignKey("TenantId", "CompanyId", "AddressId")
-                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Branch", "Branch")
-                        .WithMany("Addresses")
-                        .HasForeignKey("TenantId", "CompanyId", "BranchId")
-                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Address");
-
-                    b.Navigation("Branch");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.Addresses.Entities.CompanyAddress", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", "Company")
-                        .WithMany("Addresses")
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.GeographicalInformation.Addresses.Entities.Address", "Address")
-                        .WithMany("CompanyAddresses")
-                        .HasForeignKey("TenantId", "CompanyId", "AddressId")
-                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Address");
-
-                    b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.Countries.Entities.Country", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.Districts.Entities.District", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.GeographicalInformation.States.Entities.State", "State")
-                        .WithMany("Districts")
-                        .HasForeignKey("StateId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.Navigation("State");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.States.Entities.State", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Domain.GeographicalInformation.Countries.Entities.Country", "Country")
-                        .WithMany("States")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Branch", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", "ParentCompany")
-                        .WithMany("Subsidiaries")
-                        .HasForeignKey("ParentCompanyId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.GeographicalInformation.Countries.Entities.Country", "RegistrationCountry")
-                        .WithMany()
-                        .HasForeignKey("RegistrationCountryId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.Navigation("ParentCompany");
-
-                    b.Navigation("RegistrationCountry");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.CompanyCountry", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Domain.GeographicalInformation.Countries.Entities.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Country");
-                });
-
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.CostCenter", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.CostCenter", "ParentCostCenter")
                         .WithMany("ChildCostCenters")
                         .HasForeignKey("TenantId", "CompanyId", "ParentCostCenterId")
@@ -9319,65 +4945,8 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     b.Navigation("ParentCostCenter");
                 });
 
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Currency", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Department", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Branch", "Branch")
                         .WithMany("Departments")
                         .HasForeignKey("TenantId", "CompanyId", "BranchId")
@@ -9397,33 +4966,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Division", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Department", "Department")
                         .WithMany("Divisions")
                         .HasForeignKey("TenantId", "CompanyId", "DepartmentId")
@@ -9436,33 +4978,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.JobDescription", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Position", "Position")
                         .WithMany("JobDescriptions")
                         .HasForeignKey("TenantId", "CompanyId", "PositionId")
@@ -9587,95 +5102,8 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     b.Navigation("Skills");
                 });
 
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.JobLevel", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.JobTitle", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Position", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Division", "Division")
                         .WithMany("Positions")
                         .HasForeignKey("TenantId", "CompanyId", "DivisionId")
@@ -9704,158 +5132,20 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     b.Navigation("JobTitle");
                 });
 
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Platform.EntityChangeLogs.Entities.EntityChangeLog", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Platform.Files.Entities.UploadedFile", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.ApplicationStatusHistory", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.EmploymentApplication", null)
                         .WithMany("StatusHistory")
                         .HasForeignKey("EmploymentApplicationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.Candidate", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.GeographicalInformation.Countries.Entities.Country", null)
-                        .WithMany()
-                        .HasForeignKey("CurrentCountryId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.GeographicalInformation.States.Entities.State", null)
-                        .WithMany()
-                        .HasForeignKey("CurrentStateId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.GeographicalInformation.Countries.Entities.Country", null)
-                        .WithMany()
-                        .HasForeignKey("NationalityCountryId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.EmploymentApplication", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.Candidate", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.Candidate", "Candidate")
                         .WithMany()
                         .HasForeignKey("TenantId", "CandidateId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
                         .HasPrincipalKey("TenantId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -9866,247 +5156,125 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobOpening", null)
-                        .WithMany()
+                    b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobOpening", "JobOpening")
+                        .WithMany("Applications")
                         .HasForeignKey("TenantId", "CompanyId", "JobOpeningId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobPosting", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobPosting", "JobPosting")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "JobPostingId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.Navigation("Candidate");
+
                     b.Navigation("HiredEmployee");
-                });
 
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.EvaluationCriterion", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("JobOpening");
 
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
+                    b.Navigation("JobPosting");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.Interview", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.EmploymentApplication", null)
-                        .WithMany()
+                    b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.EmploymentApplication", "EmploymentApplication")
+                        .WithMany("Interviews")
                         .HasForeignKey("TenantId", "CompanyId", "EmploymentApplicationId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("EmploymentApplication");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.InterviewEvaluation", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.Interview", null)
                         .WithMany("Evaluations")
                         .HasForeignKey("InterviewId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.Employees.Entities.Employee", "InterviewerEmployee")
                         .WithMany()
-                        .HasForeignKey("TenantId")
+                        .HasForeignKey("TenantId", "CompanyId", "InterviewerEmployeeId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("InterviewerEmployee");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.InterviewParticipant", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.Interview", null)
                         .WithMany("Participants")
                         .HasForeignKey("InterviewId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.Employees.Entities.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("TenantId")
+                        .HasForeignKey("TenantId", "CompanyId", "EmployeeId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobOffer", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Branch", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "BranchId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Department", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Department", "Department")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "DepartmentId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Division", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Division", "Division")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "DivisionId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.EmploymentApplication", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.EmploymentApplication", "EmploymentApplication")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "EmploymentApplicationId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Position", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Position", "Position")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "PositionId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Division");
+
+                    b.Navigation("EmploymentApplication");
+
+                    b.Navigation("Position");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobOfferApprovalHistory", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobOffer", null)
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "JobOfferId")
@@ -10117,162 +5285,93 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobOpening", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Branch", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "BranchId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Department", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Department", "Department")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "DepartmentId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Division", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Division", "Division")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "DivisionId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobRequisition", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobRequisition", "JobRequisition")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "JobRequisitionId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Position", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Position", "Position")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "PositionId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Division");
+
+                    b.Navigation("JobRequisition");
+
+                    b.Navigation("Position");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobPosting", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobOpening", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobOpening", "JobOpening")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "JobOpeningId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("JobOpening");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobRequisition", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Branch", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "BranchId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Department", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Department", "Department")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "DepartmentId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Division", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Division", "Division")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "DivisionId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Position", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Position", "Position")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "PositionId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Employees.Entities.Employee", null)
+                    b.HasOne("ErpSystem.Modules.HR.Domain.Employees.Entities.Employee", "ReplacementEmployee")
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "ReplacementEmployeeId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
@@ -10283,163 +5382,20 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .HasForeignKey("TenantId", "CompanyId", "StaffingRequestId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict);
-                });
 
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.RecruitmentPolicy", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("Branch");
 
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
+                    b.Navigation("Department");
 
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("Division");
 
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-                });
+                    b.Navigation("Position");
 
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.RecruitmentSource", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.RecruitmentStage", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.RejectionReason", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Security.ApiKeys.Entities.ApiKey", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Tenancy.Entities.TenantModuleEntitlement", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Tenancy.Entities.TenantSubmoduleEntitlement", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.TenantModuleEntitlement", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "ModuleCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("ReplacementEmployee");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.EnvelopeAmendment", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.PositionEnvelope", null)
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "EnvelopeId")
@@ -10450,33 +5406,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.PositionEnvelope", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Branch", null)
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "BranchId")
@@ -10493,13 +5422,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Division", null)
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "DivisionId")
-                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities.FiscalYear", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId", "FiscalYearId")
                         .HasPrincipalKey("TenantId", "CompanyId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -10542,33 +5464,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.StaffingRequest", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.PositionEnvelope", null)
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "EnvelopeId")
@@ -10579,40 +5474,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.WorkforceBudget", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities.FiscalYear", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId", "FiscalYearId")
-                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.WorkforcePlan", null)
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "WorkforcePlanId")
@@ -10623,33 +5484,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.WorkforceBudgetLine", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Branch", null)
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "BranchId")
@@ -10696,40 +5530,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.WorkforceBudgetPeriodAllocation", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities.FiscalPeriod", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId", "FiscalPeriodId")
-                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.WorkforceBudgetLine", "WorkforceBudgetLine")
                         .WithMany("PeriodAllocations")
                         .HasForeignKey("TenantId", "CompanyId", "WorkforceBudgetLineId")
@@ -10740,72 +5540,8 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     b.Navigation("WorkforceBudgetLine");
                 });
 
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.WorkforcePlan", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities.FiscalYear", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId", "FiscalYearId")
-                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.WorkforcePlanLine", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Department", null)
                         .WithMany()
                         .HasForeignKey("TenantId", "CompanyId", "DepartmentId")
@@ -10845,40 +5581,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.WorkforcePlanLinePeriodTarget", b =>
                 {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities.FiscalPeriod", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId", "FiscalPeriodId")
-                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.WorkforcePlanLine", "WorkforcePlanLine")
                         .WithMany("PeriodTargets")
                         .HasForeignKey("TenantId", "CompanyId", "WorkforcePlanLineId")
@@ -10887,285 +5589,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("WorkforcePlanLine");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Platform.Notifications.Entities.Notification", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", "ActorUser")
-                        .WithMany()
-                        .HasForeignKey("ActorUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", "RecipientUser")
-                        .WithMany()
-                        .HasForeignKey("RecipientUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("ActorUser");
-
-                    b.Navigation("RecipientUser");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationRole", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.OwnsMany("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.RefreshToken", "RefreshTokens", b1 =>
-                        {
-                            b1.Property<string>("ApplicationUserId")
-                                .HasColumnType("nvarchar(450)");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
-
-                            b1.Property<int>("CompanyId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("CreatedByIp")
-                                .HasMaxLength(45)
-                                .HasColumnType("nvarchar(45)");
-
-                            b1.Property<string>("CreatedByUserAgent")
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)");
-
-                            b1.Property<DateTime>("CreatedOn")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<DateTime>("ExpiresOn")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<string>("JwtId")
-                                .IsRequired()
-                                .HasMaxLength(36)
-                                .HasColumnType("nvarchar(36)");
-
-                            b1.Property<string>("RevocationReason")
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)");
-
-                            b1.Property<DateTime?>("RevokedOn")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<string>("SessionId")
-                                .IsRequired()
-                                .HasMaxLength(32)
-                                .HasColumnType("nvarchar(32)");
-
-                            b1.Property<string>("TokenHash")
-                                .IsRequired()
-                                .HasMaxLength(64)
-                                .HasColumnType("nvarchar(64)");
-
-                            b1.HasKey("ApplicationUserId", "Id");
-
-                            b1.HasIndex("SessionId");
-
-                            b1.HasIndex("TokenHash")
-                                .IsUnique();
-
-                            b1.ToTable("RefreshToken", "hr");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ApplicationUserId");
-                        });
-
-                    b.Navigation("RefreshTokens");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.AuthenticationSelectionChallenge", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.UserCompanyAccess", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", "User")
-                        .WithMany("CompanyAccesses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.UserInvitation", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("InvitedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.UserLogin", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.HasOne("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId", "CompanyId")
-                        .HasPrincipalKey("TenantId", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.UserTenantAccess", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Domain.Tenancy.Entities.Tenant", "Tenant")
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", "User")
-                        .WithMany("TenantAccesses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Tenant");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.CrystalReports.Entities.CrystalReport", b =>
-                {
-                    b.Navigation("RoleGrants");
-
-                    b.Navigation("Versions");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.ReportTemplates.Entities.ReportTemplate", b =>
-                {
-                    b.Navigation("Revisions");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.Reports.Entities.ReportCategory", b =>
-                {
-                    b.Navigation("ReportMasters");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Analytics.Reports.Entities.ReportMaster", b =>
-                {
-                    b.Navigation("ReportDetails");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities.AttendanceAgent", b =>
@@ -11184,16 +5607,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     b.Navigation("RawUsers");
                 });
 
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Catalog.Categories.Entities.Category", b =>
-                {
-                    b.Navigation("CategorySubcategories");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Catalog.SubCategories.Entities.SubCategory", b =>
-                {
-                    b.Navigation("CategorySubcategories");
-                });
-
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Employees.Entities.Employee", b =>
                 {
                     b.Navigation("Assignments");
@@ -11201,54 +5614,9 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     b.Navigation("Contracts");
                 });
 
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities.FiscalYear", b =>
-                {
-                    b.Navigation("Periods");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.AddressTypes.Entities.AddressType", b =>
-                {
-                    b.Navigation("Addresses");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.Addresses.Entities.Address", b =>
-                {
-                    b.Navigation("BranchAddresses");
-
-                    b.Navigation("CompanyAddresses");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.Countries.Entities.Country", b =>
-                {
-                    b.Navigation("Addresses");
-
-                    b.Navigation("States");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.Districts.Entities.District", b =>
-                {
-                    b.Navigation("Addresses");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.GeographicalInformation.States.Entities.State", b =>
-                {
-                    b.Navigation("Addresses");
-
-                    b.Navigation("Districts");
-                });
-
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Branch", b =>
                 {
-                    b.Navigation("Addresses");
-
                     b.Navigation("Departments");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.Company", b =>
-                {
-                    b.Navigation("Addresses");
-
-                    b.Navigation("Subsidiaries");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities.CostCenter", b =>
@@ -11285,6 +5653,8 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.EmploymentApplication", b =>
                 {
+                    b.Navigation("Interviews");
+
                     b.Navigation("StatusHistory");
                 });
 
@@ -11293,6 +5663,11 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                     b.Navigation("Evaluations");
 
                     b.Navigation("Participants");
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.HR.Domain.Recruitment.Entities.JobOpening", b =>
+                {
+                    b.Navigation("Applications");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.WorkforceBudget", b =>
@@ -11313,13 +5688,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
             modelBuilder.Entity("ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities.WorkforcePlanLine", b =>
                 {
                     b.Navigation("PeriodTargets");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.HR.Infrastructure.Features.Security.Authentication.Entities.ApplicationUser", b =>
-                {
-                    b.Navigation("CompanyAccesses");
-
-                    b.Navigation("TenantAccesses");
                 });
 #pragma warning restore 612, 618
         }

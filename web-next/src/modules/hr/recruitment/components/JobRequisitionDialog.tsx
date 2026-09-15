@@ -19,7 +19,7 @@ export default function JobRequisitionDialog({ open, onClose }: JobRequisitionDi
   const optionsQuery = useApprovedStaffingRequestOptions(open);
   const { control, handleSubmit, reset, formState: { errors } } = useForm<JobRequisitionFormData>({
     resolver: zodResolver(jobRequisitionSchema) as Resolver<JobRequisitionFormData>,
-    defaultValues: { staffingRequestId: 0, requestedPositions: 1, businessReason: "", employmentType: EmploymentType.FullTime, workArrangement: WorkArrangement.OnSite, type: RequisitionType.NewPosition, targetHireDate: "" },
+    defaultValues: { staffingRequestId: undefined, requestedPositions: 1, businessReason: "", employmentType: EmploymentType.FullTime, workArrangement: WorkArrangement.OnSite, type: RequisitionType.NewPosition, targetHireDate: "" },
   });
 
   const staffingRequestId = Number(useWatch({ control, name: "staffingRequestId" }));
@@ -48,6 +48,7 @@ export default function JobRequisitionDialog({ open, onClose }: JobRequisitionDi
 
   const employmentTypeOptions = [
     { id: EmploymentType.FullTime, name: t("recruitment.types.fullTime") }, { id: EmploymentType.PartTime, name: t("recruitment.types.partTime") },
+    { id: EmploymentType.Temporary, name: t("recruitment.types.temporary") },
     { id: EmploymentType.Contract, name: t("recruitment.types.contract") }, { id: EmploymentType.Internship, name: t("recruitment.types.internship") },
   ];
   const workArrangementOptions = [

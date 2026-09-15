@@ -4,6 +4,10 @@ import { NextRequest } from "next/server";
 vi.mock("server-only", () => ({}));
 vi.mock("@/lib/env/server", () => ({
   getBackendUrl: () => "https://api.example.test",
+  getBufferedBodyLimit: () => {
+    const value = process.env.BFF_MAX_BUFFERED_BODY_BYTES;
+    return value === undefined ? 10 * 1024 * 1024 : Number(value);
+  },
   resolveRequestBackendUrl: () => "https://api.example.test",
 }));
 
@@ -121,6 +125,80 @@ describe("API BFF transport", () => {
     const [, init] = fetchMock.mock.calls[0] as [URL, RequestInit & { duplex?: string }];
     expect(init.body).toBeInstanceOf(ReadableStream);
     expect(init.duplex).toBe("half");
+    expect(new Headers(init.headers).get("x-forwarded-for")).toBeNull();
+  });
+
+  it("preserves problem details metadata and does not trust forwarded client IPs", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response(
+      JSON.stringify({ type: "urn:problem", title: "Scanner unavailable", status: 503, code: "FileScannerUnavailable" }),
+      { status: 503, headers: { "content-type": "application/problem+json", "retry-after": "10", "x-correlation-id": "corr-1" } },
+    ));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await POST(
+      new NextRequest("https://app.example.test/api/v1/Files/Upload", {
+        method: "POST",
+        headers: { "content-type": "application/json", "x-forwarded-for": "198.51.100.1" },
+        body: JSON.stringify({}),
+      }),
+      parameters("v1", "Files", "Upload"),
+    );
+
+    expect(response.status).toBe(503);
+    expect(response.headers.get("content-type")).toContain("application/problem+json");
+    expect(response.headers.get("retry-after")).toBe("10");
+    expect(response.headers.get("x-correlation-id")).toBe("corr-1");
+    await expect(response.json()).resolves.toMatchObject({ code: "FileScannerUnavailable" });
+    const [, init] = fetchMock.mock.calls[0] as [URL, RequestInit];
+    expect(new Headers(init.headers).get("x-forwarded-for")).toBeNull();
+  });
+
+  it("returns a Problem Details 413 before calling the backend for oversized JSON", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const previous = process.env.BFF_MAX_BUFFERED_BODY_BYTES;
+    process.env.BFF_MAX_BUFFERED_BODY_BYTES = "4";
+    try {
+      const response = await POST(
+        new NextRequest("https://app.example.test/api/v1/countries", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: "12345",
+        }),
+        parameters("v1", "countries"),
+      );
+      expect(response.status).toBe(413);
+      expect(response.headers.get("content-type")).toContain("application/problem+json");
+      expect(fetchMock).not.toHaveBeenCalled();
+    } finally {
+      if (previous === undefined) delete process.env.BFF_MAX_BUFFERED_BODY_BYTES;
+      else process.env.BFF_MAX_BUFFERED_BODY_BYTES = previous;
+    }
+  });
+
+  it("rejects unsafe catch-all path segments before fetching", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const response = await GET(
+      new NextRequest("https://app.example.test/api/v1/Files/%2E%2E/secret"),
+      parameters("v1", "Files", "%2E%2E", "secret"),
+    );
+    expect(response.status).toBe(400);
+    expect(response.headers.get("content-type")).toContain("application/problem+json");
+    await expect(response.json()).resolves.toMatchObject({ type: "about:blank", code: "UnsafeBackendPath" });
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it.each(["%3Fquery", "%23fragment"])("rejects encoded URL delimiter %s before fetching", async (unsafeSegment) => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const response = await GET(
+      new NextRequest(`https://app.example.test/api/v1/Files/${unsafeSegment}`),
+      parameters("v1", "Files", unsafeSegment),
+    );
+    expect(response.status).toBe(400);
+    expect(response.headers.get("content-type")).toContain("application/problem+json");
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });
 

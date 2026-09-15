@@ -8,15 +8,15 @@ import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 
 // Services and Constants
-import { apiRoutes } from "@/config";
 import { useSnackbar } from "@/shared/hooks";
-import { apiService, HandleApiError } from "@/shared/services";
+import { HandleApiError } from "@/shared/services";
 import { createImageFileValidationSchema } from "@/shared/validation/fileValidation";
 import { appRoutes } from "@/config/routes";
 import {
   getRegistrationValidationSchema,
 } from "./constants/validation";
 import type { RegistrationFormData } from "./types";
+import { authService } from "../services/authService";
 
 // Components
 import { EnhancedStepper } from "./components/EnhancedStepper";
@@ -203,10 +203,8 @@ const Register = () => {
 
     const validation = createImageFileValidationSchema({
       required: t("validation.required"),
-      tooLarge: t("validation.fileTooLarge") || "File too large (max 10MB)",
-      invalidType:
-        t("validation.invalidFileType") ||
-        "Invalid file type. Please upload a JPEG, PNG, GIF or WebP image",
+      tooLarge: t("validation.fileTooLarge"),
+      invalidType: t("validation.invalidFileType"),
     }).safeParse({ file });
 
     if (!validation.success) {
@@ -215,7 +213,7 @@ const Register = () => {
       showSnackbar(
         "error",
         messages,
-        t("messages.error") || "Error"
+        t("messages.error")
       );
       return;
     }
@@ -300,7 +298,7 @@ const Register = () => {
     };
 
     try {
-      await apiService.post(apiRoutes.auth.register, requestData);
+      await authService.register(requestData);
       reset();
 
       // Set progress to 100% to indicate completion
@@ -309,8 +307,8 @@ const Register = () => {
       // Show success message
       showSnackbar(
         "success",
-        [t("auth.registerSuccess") || "Registration successful!"],
-        t("messages.success") || "Success"
+        [t("auth.registerSuccess")],
+        t("messages.success")
       );
 
       // Keep the form locked while the success message is visible, then use

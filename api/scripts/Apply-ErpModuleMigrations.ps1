@@ -5,6 +5,9 @@ param(
     [ValidateSet("Debug", "Release")]
     [string]$Configuration = "Release",
 
+    [ValidateSet("Development", "Staging", "Production")]
+    [string]$Environment = "Development",
+
     [string]$ConnectionStringEnvironmentVariable = "ConnectionStrings__DefaultConnection",
 
     [switch]$NoBuild
@@ -29,7 +32,8 @@ function Get-ModuleEntries {
     $registrySource = Get-Content -LiteralPath $RegistryFile -Raw
     $matches = [regex]::Matches(
         $registrySource,
-        'new\s+ErpSystem\.Modules\.(?<name>[A-Za-z][A-Za-z0-9]*)\.\k<name>Module\s*\(\)')
+        'new\s+ErpSystem\.Modules\.(?<name>[A-Za-z][A-Za-z0-9]*)\.\k<name>Module\s*\(\)',
+        [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
     if ($matches.Count -eq 0) {
         throw "The explicit module registry contains no module registrations."
     }
@@ -158,29 +162,20 @@ if (-not $WhatIfPreference) {
             throw "Environment variable '$ConnectionStringEnvironmentVariable' must contain the deployment connection string."
         }
     }
-    else {
-        $missingConnections = @(
-            $entries | ForEach-Object {
-                $moduleVariable = "ConnectionStrings__$($_.Name)"
-                $moduleConnection = [Environment]::GetEnvironmentVariable($moduleVariable)
-                if ([string]::IsNullOrWhiteSpace($connectionString) -and
-                    [string]::IsNullOrWhiteSpace($moduleConnection)) {
-                    "$($_.Name) ($moduleVariable or $defaultConnectionVariable)"
-                }
-            }
-        )
-        if ($missingConnections.Count -gt 0) {
-            throw "No effective connection string was configured for: $($missingConnections -join ', ')."
-        }
-    }
 }
 
 # Design-time factories read the conventional ConnectionStrings__* variables.
 # An explicitly selected secret-store variable therefore temporarily overrides
-# the default and every discovered module variable for this run. Existing
+# the default and every discovered module variable for this run. The selected
+# ASP.NET Core environment is also applied to both environment variable names so
+# factories load the matching appsettings.<Environment>.json file. Existing
 # process values are restored in the finally block, and no secret value is
 # written to output.
 $environmentOverrides = @{}
+$processEnvironmentOverrides = @{
+    DOTNET_ENVIRONMENT = [Environment]::GetEnvironmentVariable("DOTNET_ENVIRONMENT", "Process")
+    ASPNETCORE_ENVIRONMENT = [Environment]::GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Process")
+}
 if (-not [string]::IsNullOrWhiteSpace($connectionString) -and $usesCustomSecretVariable) {
     $variablesToOverride = @(
         $defaultConnectionVariable
@@ -189,11 +184,19 @@ if (-not [string]::IsNullOrWhiteSpace($connectionString) -and $usesCustomSecretV
 
     foreach ($variable in $variablesToOverride) {
         $environmentOverrides[$variable] = [Environment]::GetEnvironmentVariable($variable)
-        [Environment]::SetEnvironmentVariable($variable, $connectionString, "Process")
     }
 }
 
 try {
+    [Environment]::SetEnvironmentVariable("DOTNET_ENVIRONMENT", $Environment, "Process")
+    [Environment]::SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", $Environment, "Process")
+
+    if (-not [string]::IsNullOrWhiteSpace($connectionString) -and $usesCustomSecretVariable) {
+        foreach ($variable in $environmentOverrides.Keys) {
+            [Environment]::SetEnvironmentVariable($variable, $connectionString, "Process")
+        }
+    }
+
     foreach ($entry in $entries) {
         $operation = "Apply $($entry.Name) database migrations using $($entry.Context)"
         if (-not $PSCmdlet.ShouldProcess($entry.Name, $operation)) {
@@ -207,8 +210,7 @@ try {
             "--project", $entry.Project,
             "--startup-project", $entry.Project,
             "--context", $entry.Context,
-            "--configuration", $Configuration,
-            "--verbosity", "minimal"
+            "--configuration", $Configuration
         )
         if ($NoBuild) {
             $arguments += "--no-build"
@@ -224,5 +226,9 @@ try {
 finally {
     foreach ($variable in $environmentOverrides.Keys) {
         [Environment]::SetEnvironmentVariable($variable, $environmentOverrides[$variable], "Process")
+    }
+
+    foreach ($variable in $processEnvironmentOverrides.Keys) {
+        [Environment]::SetEnvironmentVariable($variable, $processEnvironmentOverrides[$variable], "Process")
     }
 }

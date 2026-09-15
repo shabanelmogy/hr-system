@@ -11,7 +11,6 @@ export interface CrudRoutes {
 export interface StatesRoutes {
   page: string;
   lookup: (countryId?: Id) => string;
-  byCountry: (countryId: Id) => string;
   getById: (id: Id) => string;
   getWithDistricts: (id: Id) => string;
   create: string;
@@ -25,7 +24,6 @@ export interface StatesRoutes {
 export interface DistrictsRoutes {
   page: string;
   lookup: (stateId?: Id) => string;
-  byState: (stateId: Id) => string;
   getById: (id: Id) => string;
   getWithAddresses: (id: Id) => string;
   create: string;
@@ -79,11 +77,6 @@ export interface CountriesRoutes {
   update: (id: Id) => string;
   archive: (id: Id) => string;
   restore: (id: Id) => string;
-  /**
-   * Same-origin JSON endpoint consumed by ActiveReportsJS.  It is deliberately
-   * an API URL, never a database connection string.
-   */
-  reportData: string;
 }
 
 export interface ReportTemplatesRoutes {
@@ -110,9 +103,10 @@ export interface CrystalReportsRoutes {
   downloadVersion: (id: string, versionId: string) => string;
   publishVersion: (id: string, versionId: string) => string;
   access: (id: string) => string;
+  grantRoleOptions: string;
   archive: (id: string) => string;
-  legacyCandidates: string;
-  importLegacy: string;
+  deploymentCandidates: string;
+  importDeployment: string;
 }
 
 export interface UserInvitationsRoutes {
@@ -131,7 +125,6 @@ export interface ExportRoutes {
 export interface AdvancedToolsRoutes {
   getLocalizationApi: string;
   updateLocalizationApi: string;
-  trackChanges: string;
   healthCheck: string;
 }
 
@@ -166,7 +159,12 @@ export interface BoardTaskAttachmentsRoutes extends CrudRoutes {
 }
 
 export interface FilesRoute {
+  getAll: string;
   uploadMany: string;
-  download: (id: Id) => string;
-  delete: (id: Id) => string;
+  upload: string;
+  uploadImage: string;
+  checkAuthorization: string;
+  stream: (id: string) => string;
+  download: (storedFileName: string) => string;
+  delete: (storedFileName: string) => string;
 }

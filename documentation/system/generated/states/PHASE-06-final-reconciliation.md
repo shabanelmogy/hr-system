@@ -52,10 +52,10 @@ decision. A focused test pass alone is never a `Ready` decision.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | states-master | 8 | `103cda8ceabc6cdb194149434e646d558fac575baaa20e3f693ba7c38737ca22` |
-| states-master | 9 | `3bb32b0b771b82c4f9f9369d2aac0af5ad543878f7e223b3f4b989555486ff28` |
+| states-master | 9 | `232363ddf29efd9d4554dd161c1294ce4934a005d4d94628f6e3b5e5dedfa320` |
 | states-master | 10 | `0166f31ed3a894bd0e8caf2a191e128085fc6447772a6b564755b3bb02ca860f` |
 | states-api | 10 | `67f990428b9dbca4718c2f98282eab7cbd9bb777971adb9c3614260407765e8c` |
-| states-api | 11 | `539f37f24d7580f0ff02e92c6172aa48665203d2179e10f21b91074b929472a8` |
+| states-api | 11 | `5a38ee0366c7086b15c909303fb8df58af3cbdc1e11f8614f371572a6b78ef7f` |
 | states-web | 12 | `ecb38dd9b6149a025aa10b1edca9ed23050620cedf2f397b10ff34764e10874d` |
 | states-web | 13 | `6f4711600d21044390b0bccc326dadf61fbb4bb687b5c0b4aebe5f33772c42ca` |
 | states-web | 14 | `24a28864f93adb1f877c2b27fd13309b3a8fe3231a7dee92d0380ee502e062e1` |

@@ -1,13 +1,13 @@
 "use client";
 
-import { useFiscalYearLookup } from "@/modules/hr/finance";
+import { useFiscalYearLookup } from "@/modules/accounting";
 import { permissions } from "@/lib/auth/permissions";
 import { ConfirmationDialog } from "@/shared/components/dialogs";
 import { showToast } from "@/shared/components/feedback/transient";
 import { useAdaptivePagination } from "@/shared/hooks/useAdaptivePagination";
 import { usePermissions } from "@/shared/hooks/usePermissions";
 import { useServerListState } from "@/shared/hooks/useServerListState";
-import { extractErrorMessage } from "@/shared/utils/errorUtils";
+import { extractErrorMessage, getErrorStatus } from "@/shared/utils/errorUtils";
 import { Archive, CheckCircle, RateReview, Redo, Restore, Send, Undo } from "@mui/icons-material";
 import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
@@ -57,7 +57,7 @@ export default function WorkforcePlansPage() {
   const detail = useWorkforcePlan(selected?.id, dialog === "edit" || dialog === "view");
   const revisions = useWorkforcePlanRevisions(selected?.id, dialog === "view");
   const fiscalYears = useFiscalYearLookup();
-  const currentItem: WorkforcePlanDetail | null = detail.data ?? (selected ? { ...selected, previousRevisionId: null, description: null, submittedOn: null, submittedById: null, approvedOn: null, approvedById: null, rejectedOn: null, rejectedById: null, decisionReason: null, activatedOn: null, supersededOn: null, lines: [] } : null);
+  const currentItem: WorkforcePlanDetail | null = detail.data ?? null;
   const access = useMemo<WorkforcePlanPermissions>(() => ({
     canView: authorization.hasPermission(permissions.ViewWorkforcePlans),
     canCreate: !authorization.isReadOnly && authorization.hasPermission(permissions.CreateWorkforcePlans),
@@ -66,7 +66,17 @@ export default function WorkforcePlansPage() {
     canApprove: !authorization.isReadOnly && authorization.hasPermission(permissions.ApproveWorkforcePlans),
   }), [authorization]);
   const fiscalOptions = useMemo(() => (fiscalYears.data ?? []).map(year => ({ id: year.id, label: `${year.code} Ã¢â‚¬â€ ${i18n.language.startsWith("ar") ? year.nameAr : year.nameEn}` })), [fiscalYears.data, i18n.language]);
-  const fail = (error: Error, key: string) => showToast.error(error, t(key));
+  const fail = async (error: Error, key: string) => {
+    if (getErrorStatus(error) === 409) {
+      await data.refetch();
+      if (selected?.id) await detail.refetch();
+      setSelected(null);
+      setDialog(null);
+      showToast.warning(t("workforcePlanning.messages.conflictReloaded"));
+      return;
+    }
+    showToast.error(error, t(key));
+  };
   const toListItem = (item: WorkforcePlanDetail): WorkforcePlanListItem => ({
     id: item.id, planSeriesId: item.planSeriesId, planCode: item.planCode, fiscalYearId: item.fiscalYearId, revisionNumber: item.revisionNumber,
     titleEn: item.titleEn, titleAr: item.titleAr, status: item.status, linesCount: item.lines.length,
@@ -78,15 +88,15 @@ export default function WorkforcePlansPage() {
     createdOn: item.createdOn, updatedOn: item.updatedOn, rowVersion: item.rowVersion,
   });
   const completed = (key: string) => (item: WorkforcePlanDetail) => { showToast.success(t(key, { code: item.planCode })); setSelected(toListItem(item)); setDialog(null); };
-  const create = useCreateWorkforcePlan({ onSuccess: completed("workforcePlanning.messages.created"), onError: error => fail(error, "workforcePlanning.messages.createError") });
-  const update = useUpdateWorkforcePlan({ onSuccess: completed("workforcePlanning.messages.updated"), onError: error => fail(error, "workforcePlanning.messages.updateError") });
-  const archive = useArchiveWorkforcePlan({ onSuccess: () => { showToast.success(t("workforcePlanning.messages.archived")); setSelected(null); setDialog(null); }, onError: error => fail(error, "workforcePlanning.messages.archiveError") });
-  const restore = useRestoreWorkforcePlan({ onSuccess: completed("workforcePlanning.messages.restored"), onError: error => fail(error, "workforcePlanning.messages.restoreError") });
-  const submitPlan = useSubmitWorkforcePlan({ onSuccess: completed("workforcePlanning.messages.submitted"), onError: error => fail(error, "workforcePlanning.messages.lifecycleError") });
-  const beginReview = useBeginWorkforcePlanReview({ onSuccess: completed("workforcePlanning.messages.reviewStarted"), onError: error => fail(error, "workforcePlanning.messages.lifecycleError") });
-  const approve = useApproveWorkforcePlan({ onSuccess: completed("workforcePlanning.messages.approved"), onError: error => fail(error, "workforcePlanning.messages.lifecycleError") });
-  const reject = useRejectWorkforcePlan({ onSuccess: completed("workforcePlanning.messages.rejected"), onError: error => fail(error, "workforcePlanning.messages.lifecycleError") });
-  const revision = useCreateWorkforcePlanRevision({ onSuccess: item => { showToast.success(t("workforcePlanning.messages.revisionCreated", { revision: item.revisionNumber })); setSelected(toListItem(item)); setDialog("edit"); }, onError: error => fail(error, "workforcePlanning.messages.lifecycleError") });
+  const create = useCreateWorkforcePlan({ onSuccess: completed("workforcePlanning.messages.created"), onError: error => { void fail(error, "workforcePlanning.messages.createError"); } });
+  const update = useUpdateWorkforcePlan({ onSuccess: completed("workforcePlanning.messages.updated"), onError: error => { void fail(error, "workforcePlanning.messages.updateError"); } });
+  const archive = useArchiveWorkforcePlan({ onSuccess: () => { showToast.success(t("workforcePlanning.messages.archived")); setSelected(null); setDialog(null); }, onError: error => { void fail(error, "workforcePlanning.messages.archiveError"); } });
+  const restore = useRestoreWorkforcePlan({ onSuccess: completed("workforcePlanning.messages.restored"), onError: error => { void fail(error, "workforcePlanning.messages.restoreError"); } });
+  const submitPlan = useSubmitWorkforcePlan({ onSuccess: completed("workforcePlanning.messages.submitted"), onError: error => { void fail(error, "workforcePlanning.messages.lifecycleError"); } });
+  const beginReview = useBeginWorkforcePlanReview({ onSuccess: completed("workforcePlanning.messages.reviewStarted"), onError: error => { void fail(error, "workforcePlanning.messages.lifecycleError"); } });
+  const approve = useApproveWorkforcePlan({ onSuccess: completed("workforcePlanning.messages.approved"), onError: error => { void fail(error, "workforcePlanning.messages.lifecycleError"); } });
+  const reject = useRejectWorkforcePlan({ onSuccess: completed("workforcePlanning.messages.rejected"), onError: error => { void fail(error, "workforcePlanning.messages.lifecycleError"); } });
+  const revision = useCreateWorkforcePlanRevision({ onSuccess: item => { showToast.success(t("workforcePlanning.messages.revisionCreated", { revision: item.revisionNumber })); setSelected(toListItem(item)); setDialog("edit"); }, onError: error => { void fail(error, "workforcePlanning.messages.lifecycleError"); } });
   const select = (item: WorkforcePlanListItem, next: Dialog) => { setSelected(item); setReason(""); setReasonTouched(false); setDialog(next); };
   const lifecycleDialog = (item: WorkforcePlanListItem): Dialog => item.status === 2 ? "beginReview" : item.status === 3 ? "approve" : [4, 6].includes(item.status) ? "createRevision" : "submit";
   const action = dialog === "submit" ? submitPlan : dialog === "beginReview" ? beginReview : dialog === "approve" ? approve : revision;

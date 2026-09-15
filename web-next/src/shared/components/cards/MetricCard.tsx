@@ -19,6 +19,7 @@ import type { CardProps, SvgIconProps, TypographyProps } from "@mui/material";
 import { formatNumber, formatPercentage } from "../charts/core/chartUtils";
 import type { ChartFormatter } from "../charts/core/types";
 import { safePercentage } from "../charts/core/numeric";
+import { useTranslation } from "react-i18next";
 
 export type MetricColor = "primary" | "secondary" | "success" | "warning" | "error" | "info";
 export type MetricSize = "small" | "medium" | "large";
@@ -85,6 +86,7 @@ const MetricCard = ({
   ...cardProps
 }: MetricCardProps) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const isDark = theme.palette.mode === "dark";
 
   // Loading state
@@ -529,7 +531,7 @@ const MetricCard = ({
                 fontSize: "0.7rem",
               }}
             >
-              vs last period
+              {t("common.vsLastPeriod")}
             </Typography>
           </Box>
         )}
@@ -553,7 +555,7 @@ const MetricCard = ({
                   fontWeight: 500,
                 }}
               >
-                Progress to target
+                {t("common.progressToTarget")}
               </Typography>
               <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
                 <CircularProgress
@@ -608,7 +610,7 @@ const MetricCard = ({
         {showTarget && target !== null && (
           <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1 }}>
             <Chip
-              label={`Target: ${formatValue(target)}${unit}`}
+              label={t("common.targetValue", { value: `${formatValue(target)}${unit}` })}
               size={config.badgeSize}
               sx={{
                 backgroundColor: alpha(themeColor.main, 0.08),

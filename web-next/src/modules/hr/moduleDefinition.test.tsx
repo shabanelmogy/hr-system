@@ -1,10 +1,8 @@
 import { beforeEach, describe, expect, it } from "vitest";
+
 import { appRoutes } from "@/config/routes";
-import { permissions } from "@/lib/auth/permissions";
 import {
-  canAccessPathByModules,
   getFrontendSubmoduleDefinition,
-  hasModuleAccess,
   registerFrontendModule,
   requiredModuleForPath,
   resetFrontendModuleRegistryForTests,
@@ -17,47 +15,65 @@ describe("HR frontend module definition", () => {
     registerFrontendModule(hrModuleDefinition);
   });
 
-  it("maps legacy routes to their server-owned HR submodules", () => {
-    expect(requiredModuleForPath("/apps/hr/recruitment")).toEqual({ moduleCode: "hr", submoduleCode: "recruitment" });
-    expect(requiredModuleForPath(appRoutes.advancedTools.localizationApi)).toEqual({ moduleCode: "hr", submoduleCode: "basic-data" });
-    expect(requiredModuleForPath(appRoutes.advancedTools.trackChanges)).toEqual({ moduleCode: "hr", submoduleCode: "analytics" });
-    expect(requiredModuleForPath(appRoutes.attendanceTrends)).toEqual({ moduleCode: "hr", submoduleCode: "analytics" });
-    expect(requiredModuleForPath(appRoutes.auth.crystalReportsPage)).toEqual({ moduleCode: "hr", submoduleCode: "analytics" });
-    expect(requiredModuleForPath(appRoutes.auth.rolesPage)).toEqual({ moduleCode: "hr", submoduleCode: "administration" });
-    expect(requiredModuleForPath(appRoutes.auth.offlineOperationsPage)).toEqual({ moduleCode: "hr", submoduleCode: "administration" });
+  it("contains only server-owned HR submodules", () => {
+    expect(hrModuleDefinition.code).toBe("hr");
+    expect(hrModuleDefinition.submodules.map((item) => item.code)).toEqual([
+      "basic-data",
+      "recruitment",
+      "workforce",
+      "attendance",
+    ]);
+    expect(getFrontendSubmoduleDefinition("hr", "analytics")).toBeUndefined();
+    expect(getFrontendSubmoduleDefinition("hr", "administration")).toBeUndefined();
+    expect(getFrontendSubmoduleDefinition("hr", "collaboration")).toBeUndefined();
   });
 
-  it("does not let the attendance prefix capture attendance analytics", () => {
-    expect(requiredModuleForPath(appRoutes.attendanceDevices.index)).toEqual({ moduleCode: "hr", submoduleCode: "attendance" });
-    expect(requiredModuleForPath("/attendance/shifts")).toEqual({ moduleCode: "hr", submoduleCode: "attendance" });
-    expect(requiredModuleForPath(appRoutes.attendanceTrends)).not.toEqual({ moduleCode: "hr", submoduleCode: "attendance" });
-  });
-
-  it("keeps sidebar and guard entitlement checks on the same helper", () => {
-    const analyticsOnly = [{ code: "HR", submodules: [{ code: "ANALYTICS" }] }];
-    expect(hasModuleAccess(analyticsOnly, { moduleCode: "hr", submoduleCode: "analytics" })).toBe(true);
-    expect(canAccessPathByModules(appRoutes.auth.crystalReportsPage, analyticsOnly)).toBe(true);
-    expect(canAccessPathByModules(appRoutes.attendanceTrends, analyticsOnly)).toBe(true);
-    expect(canAccessPathByModules(appRoutes.attendanceDevices.index, analyticsOnly)).toBe(false);
-  });
-
-  it("owns launcher entry candidates in the module definition", () => {
-    expect(getFrontendSubmoduleDefinition("HR", "ANALYTICS")?.entryCandidates).toContain(appRoutes.auth.crystalReportsPage);
-    expect(getFrontendSubmoduleDefinition("hr", "administration")?.entryCandidates).not.toContain(appRoutes.auth.crystalReportsPage);
-
-    const administration = getFrontendSubmoduleDefinition("hr", "administration");
-    expect(administration?.entryCandidates).toContain(appRoutes.auth.offlineOperationsPage);
-    expect(administration?.requiredPermissions).toContain(permissions.ManageOfflineOperations);
-  });
-
-  it("lazy-loads the module translation resources for English and Arabic", async () => {
-    await expect(hrModuleDefinition.loadTranslations?.("en")).resolves.toMatchObject({
-      name: "Human Resources",
-      submodules: { analytics: "Analytics" },
+  it("maps only HR-owned routes to HR submodules", () => {
+    expect(requiredModuleForPath(appRoutes.basicData.organizationalStructure.index)).toEqual({
+      moduleCode: "hr",
+      submoduleCode: "basic-data",
     });
-    await expect(hrModuleDefinition.loadTranslations?.("ar")).resolves.toMatchObject({
+    expect(requiredModuleForPath(appRoutes.recruitment)).toEqual({
+      moduleCode: "hr",
+      submoduleCode: "recruitment",
+    });
+    expect(requiredModuleForPath(appRoutes.workforcePlanning.index)).toEqual({
+      moduleCode: "hr",
+      submoduleCode: "workforce",
+    });
+    expect(requiredModuleForPath(appRoutes.attendanceDevices.users)).toEqual({
+      moduleCode: "hr",
+      submoduleCode: "attendance",
+    });
+  });
+
+  it("does not claim Platform, Reporting, CRM or Accounting routes", () => {
+    expect(requiredModuleForPath(appRoutes.advancedTools.localizationApi)).toBeNull();
+    expect(requiredModuleForPath(appRoutes.auth.rolesPage)).toBeNull();
+    expect(requiredModuleForPath(appRoutes.auth.offlineOperationsPage)).toBeNull();
+    expect(requiredModuleForPath(appRoutes.auth.crystalReportsPage)).toBeNull();
+    expect(requiredModuleForPath(appRoutes.extras.appointments)).toBeNull();
+    expect(requiredModuleForPath(appRoutes.finance.fiscalYears)).toBeNull();
+  });
+
+  it("lazy-loads only current HR submodule translations", async () => {
+    await expect(hrModuleDefinition.loadTranslations?.("en")).resolves.toEqual({
+      name: "Human Resources",
+      submodules: {
+        "basic-data": "Basic data",
+        recruitment: "Recruitment",
+        workforce: "Workforce planning",
+        attendance: "Attendance",
+      },
+    });
+    await expect(hrModuleDefinition.loadTranslations?.("ar")).resolves.toEqual({
       name: "الموارد البشرية",
-      submodules: { analytics: "التحليلات" },
+      submodules: {
+        "basic-data": "البيانات الأساسية",
+        recruitment: "التوظيف",
+        workforce: "تخطيط القوى العاملة",
+        attendance: "الحضور والانصراف",
+      },
     });
   });
 });

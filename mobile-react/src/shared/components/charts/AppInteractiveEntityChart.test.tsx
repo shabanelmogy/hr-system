@@ -23,7 +23,13 @@ jest.mock('react-native-keyboard-controller', () => {
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
     i18n: { language: 'ar', resolvedLanguage: 'ar' },
-    t: (key: string) => key,
+    t: (key: string, options?: { entity?: string }) => ({
+      'interactiveChart.tapColumn': 'اضغط على أي عمود لعرض تفاصيل العنصر',
+      'interactiveChart.defaultEntity': 'العنصر',
+      'interactiveChart.viewDetails': `عرض تفاصيل ${options?.entity ?? 'العنصر'}`,
+      'common.close': 'إغلاق',
+      'common.edit': 'تعديل',
+    } as Record<string, string>)[key] ?? key,
   }),
 }));
 

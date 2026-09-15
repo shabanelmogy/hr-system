@@ -1,4 +1,4 @@
-using ErpSystem.Modules.HR.Application.Common.Errors;
+using ErpSystem.BuildingBlocks.Application.Common.Errors;
 
 namespace ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Errors;
 

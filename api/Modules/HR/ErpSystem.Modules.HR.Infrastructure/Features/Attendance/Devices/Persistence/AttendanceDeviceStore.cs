@@ -1,4 +1,4 @@
-using ErpSystem.Modules.HR.Application.Common.Paginations;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts;
 using ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities;
 using Mapster;
@@ -24,6 +24,12 @@ public sealed class AttendanceDeviceStore(ApplicationDbContext context, IMapper 
         context.AttendanceAgents.FirstOrDefaultAsync(x => x.Id == id, ct);
     public Task<bool> AgentNameExistsAsync(string normalizedName, CancellationToken ct) =>
         context.AttendanceAgents.AnyAsync(x => x.NormalizedName == normalizedName, ct);
+    public void ApplyRowVersion(AttendanceDevice device, string rowVersion)
+    {
+        var entry = context.Entry(device);
+        entry.Property(x => x.RowVersion).OriginalValue = Convert.FromBase64String(rowVersion);
+        entry.Property(x => x.UpdatedOn).IsModified = true;
+    }
     public void Add(AttendanceDevice device) => context.AttendanceDevices.Add(device);
     public void Add(AttendanceAgent agent) => context.AttendanceAgents.Add(agent);
     public void Add(DevicePullRun run) => context.DevicePullRuns.Add(run);

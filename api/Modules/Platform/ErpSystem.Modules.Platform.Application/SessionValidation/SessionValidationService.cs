@@ -1,5 +1,5 @@
-using ErpSystem.Modules.Platform.Contracts.SessionValidation;
-using ErpSystem.Modules.Platform.Contracts.Tenancy;
+using ErpSystem.Modules.Platform.Application.SessionValidation;
+using ErpSystem.Modules.Platform.Application.Tenancy;
 
 namespace ErpSystem.Modules.Platform.Application.SessionValidation;
 

@@ -78,7 +78,7 @@ export const FormFooter: React.FC = () => {
           >
             {t("actions.cancel")}
           </Button>
-          <Button
+          {!isViewMode && <Button
             type="submit"
             variant="contained"
             disabled={isSubmitting || submitDisabled || isReadOnly}
@@ -118,7 +118,7 @@ export const FormFooter: React.FC = () => {
             }}
           >
             {isSubmitting ? t("actions.submitting") : submitButtonText}
-          </Button>
+          </Button>}
         </Box>
       </DialogActions>
     </Box>

@@ -366,7 +366,7 @@ export default function RecruitmentKanbanBoard({
                             onMouseDown={(e) => e.stopPropagation()}
                           >
                             {app.status === ApplicationStatus.Shortlisted &&
-                              (perms.canEvaluateInterviews || perms.canManageApplications) && (
+                              perms.canManageApplications && (
                               <Button
                                 size="small"
                                 variant="outlined"
@@ -402,8 +402,7 @@ export default function RecruitmentKanbanBoard({
                                 {t("recruitment.actions.makeOffer", "عرض عمل / Offer")}
                               </Button>
                             )}
-                            {(app.status === ApplicationStatus.OfferIssued ||
-                              app.status === ApplicationStatus.OfferAccepted) &&
+                            {app.status === ApplicationStatus.OfferAccepted &&
                               perms.canHire && (
                               <Button
                                 size="small"

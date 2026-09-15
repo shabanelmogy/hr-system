@@ -1,13 +1,13 @@
 "use client";
 
-import { useFiscalYearLookup } from "@/modules/hr/finance";
+import { useFiscalYearLookup } from "@/modules/accounting";
 import { permissions } from "@/lib/auth/permissions";
 import { ConfirmationDialog } from "@/shared/components/dialogs";
 import { showToast } from "@/shared/components/feedback/transient";
 import { useAdaptivePagination } from "@/shared/hooks/useAdaptivePagination";
 import { usePermissions } from "@/shared/hooks/usePermissions";
 import { useServerListState } from "@/shared/hooks/useServerListState";
-import { extractErrorMessage } from "@/shared/utils/errorUtils";
+import { extractErrorMessage, getErrorStatus } from "@/shared/utils/errorUtils";
 import { CheckCircle, Send, Undo } from "@mui/icons-material";
 import { Alert, Box, Button, TextField } from "@mui/material";
 import { useMemo, useState } from "react";
@@ -65,13 +65,23 @@ export default function WorkforceBudgetsPage() {
   }), [authorization, canViewBudgets]);
   const fiscalOptions = useMemo(() => (fiscalYears.data ?? []).map(year => ({ id: year.id, label: `${year.code} Ã¢â‚¬â€ ${i18n.language.startsWith("ar") ? year.nameAr : year.nameEn}` })), [fiscalYears.data, i18n.language]);
   const planOptions = useMemo(() => (sourcePlans.data?.items ?? []).map(plan => ({ id: plan.id, label: `${plan.planCode} Ã¢â‚¬â€ ${i18n.language.startsWith("ar") ? plan.titleAr : plan.titleEn}` })), [sourcePlans.data, i18n.language]);
-  const fail = (error: Error, key: string) => showToast.error(error, t(key));
+  const fail = async (error: Error, key: string) => {
+    if (getErrorStatus(error) === 409) {
+      await data.refetch();
+      if (selected?.id) await detail.refetch();
+      setSelected(null);
+      setDialog(null);
+      showToast.warning(t("workforceBudget.messages.conflictReloaded"));
+      return;
+    }
+    showToast.error(error, t(key));
+  };
   const completed = (key: string) => (item: WorkforceBudgetDetail) => { showToast.success(t(key, { code: item.budgetCode })); setSelected(toListItem(item)); setDialog(null); };
-  const create = useCreateWorkforceBudget({ onSuccess: completed("workforceBudget.messages.created"), onError: error => fail(error, "workforceBudget.messages.createError") });
-  const update = useUpdateWorkforceBudget({ onSuccess: completed("workforceBudget.messages.updated"), onError: error => fail(error, "workforceBudget.messages.updateError") });
-  const submitBudget = useSubmitWorkforceBudget({ onSuccess: completed("workforceBudget.messages.submitted"), onError: error => fail(error, "workforceBudget.messages.lifecycleError") });
-  const approve = useApproveWorkforceBudget({ onSuccess: completed("workforceBudget.messages.approved"), onError: error => fail(error, "workforceBudget.messages.lifecycleError") });
-  const reject = useRejectWorkforceBudget({ onSuccess: completed("workforceBudget.messages.rejected"), onError: error => fail(error, "workforceBudget.messages.lifecycleError") });
+  const create = useCreateWorkforceBudget({ onSuccess: completed("workforceBudget.messages.created"), onError: error => { void fail(error, "workforceBudget.messages.createError"); } });
+  const update = useUpdateWorkforceBudget({ onSuccess: completed("workforceBudget.messages.updated"), onError: error => { void fail(error, "workforceBudget.messages.updateError"); } });
+  const submitBudget = useSubmitWorkforceBudget({ onSuccess: completed("workforceBudget.messages.submitted"), onError: error => { void fail(error, "workforceBudget.messages.lifecycleError"); } });
+  const approve = useApproveWorkforceBudget({ onSuccess: completed("workforceBudget.messages.approved"), onError: error => { void fail(error, "workforceBudget.messages.lifecycleError"); } });
+  const reject = useRejectWorkforceBudget({ onSuccess: completed("workforceBudget.messages.rejected"), onError: error => { void fail(error, "workforceBudget.messages.lifecycleError"); } });
   const select = (item: WorkforceBudgetListItem, next: Dialog) => { setSelected(item); setReason(""); setReasonTouched(false); setDialog(next); };
   const lifecycleDialog = (item: WorkforceBudgetListItem): Dialog => item.status === 2 ? "approve" : "submit";
   const action = dialog === "approve" ? approve : submitBudget;

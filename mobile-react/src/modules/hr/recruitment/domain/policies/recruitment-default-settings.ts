@@ -17,6 +17,8 @@ export const DEFAULT_STAGES: RecruitmentStageConfig[] = [
     foldedInKanban: false,
     isDefault: true,
     sendEmailNotification: true,
+    mappedStatus: 2,
+    emailTemplate: null,
   },
   {
     id: 'stage_screening',
@@ -27,6 +29,8 @@ export const DEFAULT_STAGES: RecruitmentStageConfig[] = [
     foldedInKanban: false,
     isDefault: false,
     sendEmailNotification: false,
+    mappedStatus: 3,
+    emailTemplate: null,
   },
   {
     id: 'stage_shortlist',
@@ -37,6 +41,8 @@ export const DEFAULT_STAGES: RecruitmentStageConfig[] = [
     foldedInKanban: false,
     isDefault: false,
     sendEmailNotification: true,
+    mappedStatus: 4,
+    emailTemplate: null,
   },
   {
     id: 'stage_tech_interview',
@@ -47,6 +53,8 @@ export const DEFAULT_STAGES: RecruitmentStageConfig[] = [
     foldedInKanban: false,
     isDefault: false,
     sendEmailNotification: true,
+    mappedStatus: 5,
+    emailTemplate: null,
   },
   {
     id: 'stage_hr_interview',
@@ -57,6 +65,8 @@ export const DEFAULT_STAGES: RecruitmentStageConfig[] = [
     foldedInKanban: false,
     isDefault: false,
     sendEmailNotification: true,
+    mappedStatus: 6,
+    emailTemplate: null,
   },
   {
     id: 'stage_offer_issued',
@@ -67,6 +77,8 @@ export const DEFAULT_STAGES: RecruitmentStageConfig[] = [
     foldedInKanban: false,
     isDefault: false,
     sendEmailNotification: true,
+    mappedStatus: 7,
+    emailTemplate: null,
   },
   {
     id: 'stage_offer_accepted',
@@ -77,6 +89,8 @@ export const DEFAULT_STAGES: RecruitmentStageConfig[] = [
     foldedInKanban: false,
     isDefault: false,
     sendEmailNotification: false,
+    mappedStatus: 8,
+    emailTemplate: null,
   },
   {
     id: 'stage_hired',
@@ -87,6 +101,8 @@ export const DEFAULT_STAGES: RecruitmentStageConfig[] = [
     foldedInKanban: true,
     isDefault: false,
     sendEmailNotification: true,
+    mappedStatus: 12,
+    emailTemplate: null,
   },
 ];
 
@@ -97,6 +113,10 @@ export const DEFAULT_REASONS: RejectionReasonConfig[] = [
     reasonEn: 'Expected salary exceeds budgeted compensation range',
     category: 'salary',
     sendAutoEmail: true,
+    emailSubjectAr: null,
+    emailSubjectEn: null,
+    emailBodyAr: null,
+    emailBodyEn: null,
   },
   {
     id: 'rr_tech_fail',
@@ -104,6 +124,10 @@ export const DEFAULT_REASONS: RejectionReasonConfig[] = [
     reasonEn: 'Did not pass technical assessment or practical evaluation',
     category: 'qualifications',
     sendAutoEmail: true,
+    emailSubjectAr: null,
+    emailSubjectEn: null,
+    emailBodyAr: null,
+    emailBodyEn: null,
   },
   {
     id: 'rr_insufficient_exp',
@@ -111,6 +135,10 @@ export const DEFAULT_REASONS: RejectionReasonConfig[] = [
     reasonEn: 'Insufficient years of relevant experience or required qualifications',
     category: 'qualifications',
     sendAutoEmail: true,
+    emailSubjectAr: null,
+    emailSubjectEn: null,
+    emailBodyAr: null,
+    emailBodyEn: null,
   },
   {
     id: 'rr_no_show',
@@ -118,6 +146,10 @@ export const DEFAULT_REASONS: RejectionReasonConfig[] = [
     reasonEn: 'Candidate did not attend scheduled interview without prior notice',
     category: 'other',
     sendAutoEmail: false,
+    emailSubjectAr: null,
+    emailSubjectEn: null,
+    emailBodyAr: null,
+    emailBodyEn: null,
   },
   {
     id: 'rr_withdrew',
@@ -125,6 +157,10 @@ export const DEFAULT_REASONS: RejectionReasonConfig[] = [
     reasonEn: 'Candidate withdrew application or accepted another offer',
     category: 'candidate_withdrew',
     sendAutoEmail: false,
+    emailSubjectAr: null,
+    emailSubjectEn: null,
+    emailBodyAr: null,
+    emailBodyEn: null,
   },
   {
     id: 'rr_culture_fit',
@@ -132,6 +168,10 @@ export const DEFAULT_REASONS: RejectionReasonConfig[] = [
     reasonEn: 'Culture and behavioral alignment mismatch',
     category: 'behavioral',
     sendAutoEmail: true,
+    emailSubjectAr: null,
+    emailSubjectEn: null,
+    emailBodyAr: null,
+    emailBodyEn: null,
   },
 ];
 
@@ -201,6 +241,8 @@ export const DEFAULT_CRITERIA: EvaluationCriterionConfig[] = [
     maxScore: 5,
     weight: 30,
     isMandatory: true,
+    descriptionAr: null,
+    descriptionEn: null,
   },
   {
     id: 'crit_comm',
@@ -210,6 +252,8 @@ export const DEFAULT_CRITERIA: EvaluationCriterionConfig[] = [
     maxScore: 5,
     weight: 20,
     isMandatory: true,
+    descriptionAr: null,
+    descriptionEn: null,
   },
   {
     id: 'crit_problem_solving',
@@ -219,6 +263,8 @@ export const DEFAULT_CRITERIA: EvaluationCriterionConfig[] = [
     maxScore: 5,
     weight: 25,
     isMandatory: true,
+    descriptionAr: null,
+    descriptionEn: null,
   },
   {
     id: 'crit_culture',
@@ -228,6 +274,8 @@ export const DEFAULT_CRITERIA: EvaluationCriterionConfig[] = [
     maxScore: 5,
     weight: 15,
     isMandatory: true,
+    descriptionAr: null,
+    descriptionEn: null,
   },
   {
     id: 'crit_leadership',
@@ -237,6 +285,8 @@ export const DEFAULT_CRITERIA: EvaluationCriterionConfig[] = [
     maxScore: 5,
     weight: 10,
     isMandatory: false,
+    descriptionAr: null,
+    descriptionEn: null,
   },
 ];
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useFiscalYearLookup } from "@/modules/hr/finance";
+import { useFiscalYearLookup } from "@/modules/accounting";
 import { MyForm, MySelect, MyTextField, toFormErrorMessages } from "@/shared/components/forms";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import { zodResolver } from "@hookform/resolvers/zod";

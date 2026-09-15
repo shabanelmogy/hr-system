@@ -1,15 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Stack, Grid } from "@mui/material";
+import { Alert, Grid, Stack } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { MyForm, MyTextField, MySelect } from "@/shared/components/forms";
 import { showToast } from "@/shared/components/feedback/transient/showToast";
 import { jobOfferSchema, type JobOfferFormData, type JobOfferFormInput } from "../validation/recruitmentValidation";
-import { PayFrequency, EmploymentType, WorkArrangement } from "../types";
-import { useCreateJobOffer, useSubmitJobOffer } from "../hooks/useRecruitment";
+import { PayFrequency } from "../types";
+import { useApplication, useCreateJobOffer, useJobOpening, useRecruitmentSettingsQuery, useSubmitJobOffer } from "../hooks/useRecruitment";
 
 interface JobOfferDialogProps {
   open: boolean;
@@ -25,37 +25,58 @@ export default function JobOfferDialog({
   const { t } = useTranslation();
   const createOfferMutation = useCreateJobOffer();
   const submitOfferMutation = useSubmitJobOffer();
+  const applicationQuery = useApplication(applicationId ?? 0);
+  const openingQuery = useJobOpening(applicationQuery.data?.jobOpeningId ?? 0);
+  const settingsQuery = useRecruitmentSettingsQuery();
 
   const {
     control,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<JobOfferFormInput, unknown, JobOfferFormData>({
     resolver: zodResolver(jobOfferSchema),
     defaultValues: {
-      baseSalary: 25000,
-      currencyCode: "EGP",
-      payFrequency: PayFrequency.Monthly,
+      baseSalary: "",
+      currencyCode: "",
+      payFrequency: undefined,
       proposedStartDate: "",
-      termsAndConditions: "Standard 3-month probation period with full health coverage.",
+      termsAndConditions: "",
     },
   });
 
+  useEffect(() => {
+    if (!open) return;
+    reset({
+      baseSalary: "",
+      currencyCode: "",
+      payFrequency: undefined,
+      proposedStartDate: "",
+      termsAndConditions: "",
+    });
+  }, [applicationId, open, reset]);
+
+  useEffect(() => {
+    const defaultCurrency = settingsQuery.data?.general.defaultCurrency;
+    if (open && defaultCurrency) setValue("currencyCode", defaultCurrency);
+  }, [open, setValue, settingsQuery.data?.general.defaultCurrency]);
+
   const onSubmit = async (data: JobOfferFormData) => {
-    if (!applicationId) return;
+    const opening = openingQuery.data;
+    if (!applicationId || !opening) return;
 
     try {
       const offer = await createOfferMutation.mutateAsync({
         employmentApplicationId: applicationId,
         baseSalary: data.baseSalary,
-        currencyCode: data.currencyCode,
+        currencyCode: data.currencyCode.trim().toUpperCase(),
         payFrequency: data.payFrequency,
-        employmentType: EmploymentType.FullTime,
-        workArrangement: WorkArrangement.Hybrid,
-      proposedStartDate: data.proposedStartDate,
-      termsAndConditions: data.termsAndConditions,
-    });
+        employmentType: opening.employmentType,
+        workArrangement: opening.workArrangement,
+        proposedStartDate: data.proposedStartDate,
+        termsAndConditions: data.termsAndConditions || undefined,
+      });
 
       // Governance: offers start as Draft; issuing requires approval first.
       await submitOfferMutation.mutateAsync(offer.id);
@@ -81,11 +102,14 @@ export default function JobOfferDialog({
       open={open}
       title={t("recruitment.offers.createTitle", "إصدار عرض عمل رسمي / Make Job Offer")}
       subtitle={t("recruitment.offers.createSubtitle", "تحديد الراتب الأساسي وتاريخ بدء العمل والشروط")}
-      isSubmitting={createOfferMutation.isPending || submitOfferMutation.isPending}
+      isSubmitting={createOfferMutation.isPending || submitOfferMutation.isPending || applicationQuery.isFetching || openingQuery.isFetching || settingsQuery.isFetching}
       onSubmit={handleSubmit(onSubmit)}
       onClose={onClose}
     >
       <Stack spacing={2.5} sx={{ mt: 1 }}>
+        {openingQuery.data ? <Alert severity="info">
+          {openingQuery.data.openingNumber} · {openingQuery.data.positionTitleAr || openingQuery.data.positionTitleEn}
+        </Alert> : null}
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 8 }}>
             <MyTextField

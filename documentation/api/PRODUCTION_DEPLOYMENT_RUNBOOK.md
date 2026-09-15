@@ -6,7 +6,9 @@ the health gates below.
 
 ## Release inputs
 
-- Use the commit that passed `.github/workflows/api-ci.yml`.
+- Use a commit that passed `.github/workflows/api-ci.yml` and the relevant
+  client workflow (`.github/workflows/web-ci.yml` or
+  `.github/workflows/mobile-ci.yml`) before releasing that client.
 - Retain the commit-scoped NuGet vulnerability report and validated SPDX SBOM
   with the release evidence.
 - Use the uploaded `erpsystem-api-<commit>` publish artifact or build the
@@ -15,6 +17,9 @@ the health gates below.
 - Resolve database, JWT, SMTP, Hangfire, bootstrap, and connector secrets from
   the deployment secret store. Do not place live values in an image or tracked
   settings file.
+- The web production-build CI job uses `https://api.ci.invalid/api/v1` only to
+  satisfy Next.js rewrite configuration; it is not a deployment endpoint.
+  Configure the real backend URL in the hosting environment.
 - Keep `DatabaseSettings__ApplyMigrationsOnStartup=false` and
   `DatabaseSettings__SeedOnStartup=false` in hosted environments.
 - Provide `ConnectionStrings__DefaultConnection`, or provide every installed
@@ -24,6 +29,28 @@ the health gates below.
   `OpenTelemetry__OtlpEndpoint`, `OpenTelemetry__OtlpProtocol` (`grpc` or
   `http/protobuf`), and an approved sampling ratio from `0` through `1`. Supply
   collector credentials through secret-backed `OTEL_EXPORTER_OTLP_HEADERS`.
+- When TLS terminates at a reverse proxy, set `ForwardedHeaders__Enabled=true`,
+  keep `RequireHeaderSymmetry=true`, choose the real proxy-chain `ForwardLimit`,
+  and enumerate exact proxy addresses/networks through `KnownProxies` and
+  `KnownNetworks`. Never use `0.0.0.0/0`, `::/0`, or the global
+  `ASPNETCORE_FORWARDEDHEADERS_ENABLED` shortcut because those configurations
+  can trust unlisted forwarders.
+- Keep `DistributedRuntime__ReplicaCount=1` for a single API process. Before
+  scaling out, enable `DistributedRuntime`, supply `ConnectionStrings__Redis`
+  from the secret store, assign deployment-specific cache/SignalR prefixes, and
+  set the replica count to the real maximum. Set the external-rate-limit,
+  shared-file-storage, and session-affinity assertions to true only after those
+  facilities exist in the deployment. Startup rejects an incomplete scale-out
+  contract.
+- Configure `DataProtection__KeyRingDirectory` as an absolute persistent volume,
+  provide the current PFX path/password, and set
+  `DataProtection__SharedKeyRing=true` for more than one replica. During
+  certificate rotation, deploy the new certificate as
+  `ProtectionCertificatePath` and retain the previous PFX entries under
+  `DataProtection__PreviousProtectionCertificates__0__Path` and
+  `DataProtection__PreviousProtectionCertificates__0__Password`
+  (add one entry per still-needed old certificate). Restart all replicas and run
+  a protect/unprotect smoke check before removing any old key or certificate.
 
 ## Pre-deployment gate
 
@@ -91,9 +118,23 @@ the health gates below.
 - When OpenTelemetry is enabled, confirm the collector receives an API server
   span, a CQRS child span, HTTP/runtime metrics, and the expected service resource
   attributes. Confirm health probes do not create request spans.
+- From the real proxy, confirm HTTPS scheme and the expected client IP reach the
+  API. Send a controlled direct request with spoofed `X-Forwarded-For` and
+  `X-Forwarded-Proto` headers and confirm the transport IP/scheme remain in use.
+- When distributed runtime is enabled, confirm `distributed-runtime:redis` is
+  healthy, cache entries are visible across two replicas, and a SignalR event
+  published by either replica reaches clients connected to both. Confirm load
+  balancer session affinity and gateway-wide rate limits, then verify an uploaded
+  file can be read after the next request is routed to another replica.
 - Record the deployed commit/image digest and the migration execution result.
 - Attach the NuGet audit report, SPDX SBOM, and SBOM validation result to the
   deployment record.
+- Set `FileSecurity:MalwareScanningEnabled=true` in production and provide a
+  valid `FileSecurity:ScannerHost` and `FileSecurity:ScannerPort` for a trusted
+  ClamAV sidecar/private service. Verify the `file-security:clamav` readiness
+  check is healthy and exercise a clean upload plus a controlled test signature.
+  Scanner failures are fail-closed; do not expose the scanner response or upload
+  name in logs or API problem details.
 
 Approval gates, environment promotion rules, collector retention, dashboards,
 SLOs, alert routing, backup schedules, restore drills, RPO/RTO, and

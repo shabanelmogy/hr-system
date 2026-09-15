@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { MyTextField } from '@/shared/components/forms';
+import { useTranslation } from 'react-i18next';
 
 export interface TextContentProps {
   loading: boolean;
@@ -12,13 +13,14 @@ export interface TextContentProps {
 }
 
 const TextContent: React.FC<TextContentProps> = ({ loading, error, content, searchTerm, fontSize, darkMode }) => {
+  const { t } = useTranslation();
   if (loading) {
     return (
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', flexDirection: 'column', gap: 2 }}>
         <CircularProgress />
         <Typography variant="body2" sx={{
           color: "text.secondary"
-        }}>Loading file...</Typography>
+        }}>{t("files.loadingFile")}</Typography>
       </Box>
     );
   }
@@ -26,7 +28,7 @@ const TextContent: React.FC<TextContentProps> = ({ loading, error, content, sear
   if (error) {
     return (
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', flexDirection: 'column', gap: 2 }}>
-        <Typography variant="body1" color="error">Error: {error}</Typography>
+        <Typography variant="body1" color="error">{t("common.errorValue", { error })}</Typography>
       </Box>
     );
   }

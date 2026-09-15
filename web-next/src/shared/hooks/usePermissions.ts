@@ -93,7 +93,7 @@ export const useDistrictsPermissions = () => {
   }), [hasGlobalGeographyPermission, isReadOnly]);
 };
 
-/** Super Admin owns the shared catalog; tenant roles require explicit claims. */
+/** Global geography requires both the Super Admin role and the exact catalog permission. */
 export const useGlobalGeographyPermissions = () => {
   const { hasPermission, userRoles } = usePermissions();
   const isSuperAdmin = userRoles.some(
@@ -101,7 +101,7 @@ export const useGlobalGeographyPermissions = () => {
   );
 
   const hasGlobalGeographyPermission = useCallback(
-    (permission: PermissionString) => isSuperAdmin || hasPermission(permission),
+    (permission: PermissionString) => isSuperAdmin && hasPermission(permission),
     [hasPermission, isSuperAdmin],
   );
 

@@ -113,7 +113,11 @@ $draftManifest = [ordered]@{
     )
     finalizationChecklist = @(
         'Replace every placeholder in the review artifact.',
-        'Complete every decision and remove every placeholder in IMPLEMENTATION-REQUEST.md before implementation.',
+        'Complete the Existing-System Relationship Review and every decision in IMPLEMENTATION-REQUEST.md before implementation.',
+        'Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.',
+        'Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.',
+        'Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.',
+        'Remove every remaining placeholder from IMPLEMENTATION-REQUEST.md before runtime implementation.',
         'Add existing API, web, mobile, configuration, localization, and test sources.',
         'Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.',
         'When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.',
@@ -231,4 +235,5 @@ Write-Host "Created $draftManifestRelativePath"
 Write-Host "Created $registrationDraftRelativePath"
 Write-Host "Reference selected: $ReferenceFeature"
 Write-Host 'The draft manifest is intentionally not registered in recipe-manifest.json.'
+Write-Host 'Runtime implementation starts only after the Existing-System Relationship Review and all three Business Readiness matrices are complete.'
 Write-Host "After runtime evidence and the four canonical books exist, finalize the manifest and register recipes under generated/$FeatureId/."

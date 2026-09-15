@@ -81,11 +81,13 @@ export function intersectAccessibleModulesWithFrontendRegistry(
     const knownSubmodules = new Set(
       frontend.submodules.map((submodule) => normalize(submodule.code)),
     );
+    const submodules = serverModule.submodules.filter((submodule) =>
+      knownSubmodules.has(normalize(submodule.code)),
+    );
+    if (submodules.length === 0) return [];
     return [{
       ...serverModule,
-      submodules: serverModule.submodules.filter((submodule) =>
-        knownSubmodules.has(normalize(submodule.code)),
-      ),
+      submodules,
     }];
   });
 }

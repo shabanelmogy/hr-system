@@ -1,0 +1,25 @@
+using ErpSystem.Modules.Platform.Application.Files.Validation;
+
+namespace ErpSystem.Modules.Platform.Application.Features.Platform.Files.Contracts
+{
+    public class UploadManyFilesRequestValidator : AbstractValidator<UploadManyFilesRequest>
+    {
+        private readonly IStringLocalizer<FileUpload> _fileLocalizer;
+
+        public UploadManyFilesRequestValidator(IStringLocalizer<FileUpload> fileLocalizer)
+        {
+            _fileLocalizer = fileLocalizer;
+
+            RuleFor(x => x.Files)
+                .NotEmpty()
+                .Must(files => files.Count <= FileSettings.MaxFilesPerRequest)
+                .WithMessage(_fileLocalizer[ValidationMessageKeys.TooManyFiles]);
+
+            RuleForEach(x => x.Files)
+                .SetValidator(new FileSizeValidator(_fileLocalizer))
+                .SetValidator(new BlockedSignaturesValidator(_fileLocalizer))
+                .SetValidator(new FileContentTypeValidator(_fileLocalizer))
+                .SetValidator(new FileNameValidator(_fileLocalizer));
+        }
+    }
+}

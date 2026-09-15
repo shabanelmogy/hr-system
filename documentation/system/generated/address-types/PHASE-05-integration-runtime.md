@@ -44,7 +44,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | address-types-master | 4 | `7308f8020bdbc0c722447f200a173af87d8fa4f5f3fb6bf250463bd9f057ef5a` |
-| address-types-master | 5 | `c31995a8d7c1c03131d3084fd78c2df2bd9034552868155d478365f5045521e3` |
+| address-types-master | 5 | `ccb14984128ac28dfb8f9a04adaa8b43aa73931d1240318268eca4ab25452ba3` |
 | address-types-master | 6 | `38ba2cceb96c08e8c3815c45b40fc5ef311b74eb1e6e3095936183f7ac67aeb4` |
 | address-types-master | 7 | `78e6057906c656526f8fb427486cc0fcf24d5fd8fb865fdb58d0a786b9cce3ba` |
 | address-types-master | 9 | `7600fe70c892d1e5b846ec248fa105756c3b54bf86e3d51b2ade23f848b9fe89` |

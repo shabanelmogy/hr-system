@@ -197,8 +197,8 @@ export const FormHeader: React.FC = () => {
           onClick={onClose}
           disabled={isSubmitting}
           type="button"
-          aria-label="Close"
-          title="Close"
+          aria-label={t("common.close")}
+          title={t("common.close")}
           sx={{
             color: theme.palette.grey[500],
             "&:hover": {

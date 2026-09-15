@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Features.Attendance.Devices.Services;
@@ -42,4 +43,41 @@ public sealed class AttendanceAgentInstallationSettings(IConfiguration configura
     }
 
     public int PollIntervalSeconds => Math.Clamp(configuration.GetValue<int?>("AttendanceAgent:PollIntervalSeconds") ?? 15, 5, 300);
+}
+
+public sealed class AttendanceAgentCredentialGenerator : IAttendanceAgentCredentialGenerator
+{
+    public AttendanceAgentCredential Create()
+    {
+        var secret = $"hra_{ToBase64Url(RandomNumberGenerator.GetBytes(32))}";
+        return new AttendanceAgentCredential(
+            secret,
+            Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(secret))),
+            secret[..Math.Min(secret.Length, 16)]);
+    }
+
+    private static string ToBase64Url(byte[] value) => Convert.ToBase64String(value)
+        .TrimEnd('=').Replace('+', '-').Replace('/', '_');
+}
+
+public sealed class AttendanceEventKeyGenerator : IAttendanceEventKeyGenerator
+{
+    public string Create(string providerId, ConnectorPunch punch)
+    {
+        // Names and configured timezone are mutable metadata, not device event identity.
+        var identity = !string.IsNullOrWhiteSpace(punch.ProviderEventId)
+            ? JsonSerializer.Serialize(new { providerId, eventId = punch.ProviderEventId })
+            : JsonSerializer.Serialize(new
+            {
+                providerId,
+                punch.ExternalCode,
+                local = DateTime.SpecifyKind(punch.OccurredAtDeviceLocal, DateTimeKind.Unspecified)
+                    .ToString("O", CultureInfo.InvariantCulture),
+                punch.VerifyMode,
+                punch.InOutMode,
+                punch.WorkCode
+            });
+
+        return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(identity)));
+    }
 }

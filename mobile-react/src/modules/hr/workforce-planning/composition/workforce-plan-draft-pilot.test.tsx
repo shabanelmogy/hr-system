@@ -42,7 +42,7 @@ describe('workforce plan offline draft pilot policy gate', () => {
     mockCanExecuteOfflineCommand = false;
   });
 
-  it('does not construct or expose local draft support in online-only mode', async () => {
+  it('keeps local draft support available while online-only mode blocks replay admission', async () => {
     const { result } = await renderHook(() => useWorkforcePlanDraftPilot());
     const { SyncCoordinator } = jest.requireMock('@/src/core/offline') as {
       SyncCoordinator: jest.Mock;
@@ -53,9 +53,9 @@ describe('workforce plan offline draft pilot policy gate', () => {
       tenantId: 'tenant-a',
       companyId: 7,
     });
-    expect(result.current.pilot).toBeNull();
+    expect(result.current.pilot).not.toBeNull();
     expect(result.current.canExecuteOfflineCommand).toBe(false);
-    expect(SyncCoordinator).not.toHaveBeenCalled();
+    expect(SyncCoordinator).toHaveBeenCalled();
   });
 
   it('exposes local draft persistence without command replay in offline-draft mode', async () => {

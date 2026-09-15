@@ -6,7 +6,7 @@
 - A required source file belongs in its application project. Reference it from a manifest; do not copy runtime source into `documentation/`.
 - Preserve the distinction between verified current behavior, desired behavior, and an unresolved finding.
 - Keep a new feature's required-file manifest as `required-files.draft.json` until all declared runtime sources exist. Only final manifests belong in `recipe-manifest.json`.
-- Complete the scaffolded `IMPLEMENTATION-REQUEST.md` and review artifact before runtime implementation. `Required`, `Deferred`, and `Excluded` decisions are platform-specific and retain their documented meanings from `documentation/system/README.md`.
+- Complete the scaffolded `IMPLEMENTATION-REQUEST.md` and review artifact before runtime implementation. Its Existing-System Relationship Review, Business Rules Matrix, Edge Cases & Validation Matrix, and Impact Matrix are mandatory readiness evidence: every edge-case category is covered or explicitly marked `N/A` with a reason, and unresolved ownership/placeholders block runtime work. For API work, `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md` remains the implementation authority. `Required`, `Deferred`, and `Excluded` decisions are platform-specific and retain their documented meanings from `documentation/system/README.md`.
 - Every non-reference feature uses feature-scoped recipe IDs and outputs under `generated/<feature>/`; the unscoped phase packets belong to Countries.
 - Every feature review must finish with phase 06 and a passing `Generate-Documentation.ps1 -Check` result.
 - Phase 06 separates feature regressions, inherited repository failures,

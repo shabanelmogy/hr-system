@@ -326,7 +326,9 @@ export default function JobOpeningsGrid({
                         {opening.activeApplicationsCount}{" "}
                         {t("recruitment.openings.applicationsCount", "متقدم / Applications")}
                       </Button>
-                      {(perms.canManageCandidates || perms.canManageApplications) && (
+                      {opening.status === JobOpeningStatus.Open &&
+                        perms.canManageCandidates &&
+                        perms.canManageApplications && (
                         <Button
                           size="small"
                           variant="outlined"

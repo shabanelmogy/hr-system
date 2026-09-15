@@ -6,9 +6,9 @@
 
 Build the server contract first so both clients consume one stable model.
 
-Execution reference: `documentation/api/Feature_Module_Implementation_Checklist.md`.
-The applied feature profile supplies evidence; the generic checklist supplies the
-implementation discipline.
+Execution reference: `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`.
+The applied feature profile supplies evidence; the workflow supplies the mandatory
+existing-system review, implementation order, and Definition of Done.
 
 ## Required decisions
 
@@ -85,9 +85,9 @@ implementation discipline.
 | districts-api | 2 | `acbcd927908b4fa5a19ff18d896f39795c0dc4718aaa3f432142a7992f979e1d` |
 | districts-api | 3 | `01443e47ae5fa805afd6d2edc3e345b5610267819a78871360abf4367502b367` |
 | districts-api | 4 | `fc13063d8cc49f699f637ffa96865c841c4714251ecd728b8209172124fb7148` |
-| districts-api | 5 | `817904cf7b037c0d4815e7389245629f1db4cbc6f435ac68ea4696789def8ff7` |
+| districts-api | 5 | `f5b3edfc8223504aa1e8858b1840994b3faa231611b2165adfcc68a1057bb476` |
 | districts-api | 6 | `e85e987e62cb205b6cc5a86b34fc905b3c977386331cdf9d5f931d1369c1c4cd` |
 | districts-api | 7 | `2feb4c7d8f96c8dd6ba0bc7494d972c5451aa12890e991504fa31b6778814a0b` |
 | districts-api | 8 | `808bf1aa73ef33b6517d65ccc0aa7d5595474cb438f80fb39f8338791b3d797e` |
-| districts-api | 9 | `0967a504ad230259d1b0ad0a4bf07bb0f0ba762151ccc5c045cc3fdcca5e7c74` |
+| districts-api | 9 | `aeac4e735beefd1c983a5f7d3f91dbb1940654f07a65e431741ba6610e13bf65` |
 | districts-api | 10 | `36d563363a7c0b878ef54b12ab23dc6eb7e77e583b14c5199eeed69540539ee0` |

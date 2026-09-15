@@ -44,7 +44,7 @@
 | --- | --- | --- |
 | S-F03 | Owner action | The State Crystal report template is intentionally not tracked in source. | Add a valid `.rpt` whose filename starts with `States` to the deployment-owned `Reports/States` folder on the Crystal host; the catalog and report contract will pick it up. |
 | S-F04 | Release gate | Automated checks cannot replace browser/device visual testing. | Execute the master review matrix before release. |
-| S-F12 | Environment | Full-solution build cannot load the legacy Crystal project's `Microsoft.WebApplication.targets`; the primary HR API project builds successfully with no errors. The full-solution path also exposes two existing lowercase migration-name warnings. | Build the Crystal project in a Visual Studio/MSBuild environment with Web Application targets, or migrate that project separately. |
+| S-F12 | Environment | `CrystalReportGeneratorApi` is an intentional independent .NET Framework 4.8 runtime outside `ErpSystem.sln`; it requires Visual Studio MSBuild/Web Application targets and therefore is verified separately from the .NET 10 solution gate. | Run the dedicated x64 Crystal runtime build whenever managed reporting runtime code changes. |
 
 ## Resolved findings
 
@@ -66,7 +66,7 @@
 | S-F20 | Background refetch keeps current Grid/Card/Chart content mounted and displays a non-destructive progress indicator distinct from initial loading. |
 | S-F21 | Country and State Import enforce read-only and feature create permission inside direct submit callbacks; State lookup permission/loading/error remains an independent prerequisite. |
 | S-F22 | Countries and States now have page wiring, exact bulk-envelope, mutation-invalidation, column-contract, shared bulk-limit, and import-authorization regression coverage. |
-| S-F01 | A repository-wide consumer audit found no runtime caller for the legacy `IStateService`/`StateService`, so both were removed. The old `StateChangedJob` remains only to execute already-persisted Hangfire payloads; current code cannot schedule it. |
+| S-F01 | A repository-wide consumer audit found no runtime caller for the former `IStateService`/`StateService`, so both were removed. A later current-source audit also finds no `StateChangedJob` compatibility executor; the State runtime now has one CQRS path. |
 | S-F23 | Mobile States now has screen criteria/view/form/action/permission coverage and mutation transport/invalidation tests; the unused detail hook/key were removed because list rows are form-authoritative. |
 | S-F24 | State/District/AddressType names now use one API/browser/mobile printable-Unicode rule with explicit tests; spaces, digits, punctuation, and mixed scripts are accepted, while control characters and line breaks are rejected. Technical codes retain their strict ASCII identifier rules. |
 
@@ -78,7 +78,7 @@
 | Focused State suite | Passed: 24 |
 | Primary HR API build | Passed: 0 warnings, 0 errors |
 | Full API tests | Passed: 349 |
-| Full solution build | Primary projects passed; legacy Crystal target unavailable (`S-F12`) |
+| Full solution build | ERP solution gate is independent from the Crystal runtime; dedicated Crystal x64 build is tracked separately (`S-F12`) |
 | Web normal and strict typechecks | Passed |
 | Web lint | Passed with 0 errors and 118 inherited warnings |
 | Web Countries/States regression coverage | Passed inside the full suite, including page wiring, query invalidation, columns, import, bulk selection, and service envelopes |

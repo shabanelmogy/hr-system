@@ -1,5 +1,4 @@
-using ErpSystem.Modules.HR.Application.Common.Consts;
-using ErpSystem.Modules.HR.Application.Common.Paginations;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Commands;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Contracts;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Queries;
@@ -14,14 +13,14 @@ namespace ErpSystem.Modules.HR.Presentation.Features.WorkforcePlanning.V1;
 public sealed class StaffingRequestsController(ISender sender) : ControllerBase
 {
     [HttpGet]
-    [HasPermission(Permissions.ViewStaffingRequests)]
+    [HasPermission(HrPermissions.ViewStaffingRequests)]
     [ProducesResponseType(typeof(PageResponse<StaffingRequestListItemResponse>), StatusCodes.Status200OK)]
     public Task<PageResponse<StaffingRequestListItemResponse>> GetPage(
         [FromQuery] GetStaffingRequestsQuery query,
         CancellationToken cancellationToken) => sender.Send(query, cancellationToken);
 
     [HttpGet("{id:int}")]
-    [HasPermission(Permissions.ViewStaffingRequests)]
+    [HasPermission(HrPermissions.ViewStaffingRequests)]
     public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new GetStaffingRequestByIdQuery(id), cancellationToken);
@@ -29,7 +28,7 @@ public sealed class StaffingRequestsController(ISender sender) : ControllerBase
     }
 
     [HttpPost]
-    [HasPermission(Permissions.CreateStaffingRequests)]
+    [HasPermission(HrPermissions.CreateStaffingRequests)]
     public async Task<IActionResult> Create(CreateStaffingRequestRequest request, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new CreateStaffingRequestCommand(request), cancellationToken);
@@ -39,7 +38,7 @@ public sealed class StaffingRequestsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/submit")]
-    [HasPermission(Permissions.CreateStaffingRequests)]
+    [HasPermission(HrPermissions.CreateStaffingRequests)]
     public async Task<IActionResult> Submit(int id, StaffingRequestActionRequest request, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new SubmitStaffingRequestCommand(id, request.RowVersion), cancellationToken);
@@ -47,7 +46,7 @@ public sealed class StaffingRequestsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/approve")]
-    [HasPermission(Permissions.ApproveStaffingRequests)]
+    [HasPermission(HrPermissions.ApproveStaffingRequests)]
     public async Task<IActionResult> Approve(int id, StaffingRequestActionRequest request, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new ApproveStaffingRequestCommand(id, request.RowVersion), cancellationToken);
@@ -55,7 +54,7 @@ public sealed class StaffingRequestsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/reject")]
-    [HasPermission(Permissions.ApproveStaffingRequests)]
+    [HasPermission(HrPermissions.ApproveStaffingRequests)]
     public async Task<IActionResult> Reject(int id, RejectStaffingRequestRequest request, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new RejectStaffingRequestCommand(id, request.Reason, request.RowVersion), cancellationToken);
@@ -63,7 +62,7 @@ public sealed class StaffingRequestsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/close")]
-    [HasPermission(Permissions.CreateStaffingRequests)]
+    [HasPermission(HrPermissions.CreateStaffingRequests)]
     public async Task<IActionResult> Close(int id, CloseStaffingRequestRequest request, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new CloseStaffingRequestCommand(id, request.CloseReason, request.RowVersion), cancellationToken);

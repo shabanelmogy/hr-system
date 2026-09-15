@@ -1,15 +1,17 @@
-using ErpSystem.Modules.HR.Application.Common.Paginations;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Contracts;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Queries;
+using ErpSystem.Modules.Accounting.Contracts;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Enums;
-using ErpSystem.Modules.HR.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Features.WorkforcePlanning.Persistence;
 
-public sealed class WorkforceBudgetReadStore(ApplicationDbContext context) : IWorkforceBudgetReadStore
+public sealed class WorkforceBudgetReadStore(
+    ApplicationDbContext context,
+    IFiscalYearPlanningSource fiscalYears,
+    ICurrentActor currentActor) : IWorkforceBudgetReadStore
 {
     public async Task<PageResponse<WorkforceBudgetListItemResponse>> GetPageAsync(GetWorkforceBudgetsQuery request, CancellationToken cancellationToken)
     {
@@ -89,12 +91,12 @@ public sealed class WorkforceBudgetReadStore(ApplicationDbContext context) : IWo
             .Include(plan => plan.Lines)
             .ThenInclude(line => line.PeriodTargets)
             .ToListAsync(cancellationToken);
-        var yearIds = plans.Select(plan => plan.FiscalYearId).Distinct().ToArray();
-        var periods = await context.FiscalYears.AsNoTracking()
-            .Where(year => yearIds.Contains(year.Id))
-            .SelectMany(year => year.Periods.Where(period => !period.IsDeleted).Select(period => new { YearId = year.Id, PeriodId = period.Id }))
-            .ToListAsync(cancellationToken);
-        var items = plans.Select(plan => ToSourcePlan(plan, periods.Where(period => period.YearId == plan.FiscalYearId).Select(period => period.PeriodId).ToArray())).ToList();
+        var items = new List<BudgetSourcePlanResponse>(plans.Count);
+        foreach (var plan in plans)
+        {
+            var snapshot = await GetFiscalYearAsync(plan.FiscalYearId, cancellationToken);
+            items.Add(ToSourcePlan(plan, snapshot?.PeriodIds.ToArray() ?? []));
+        }
         var page = new PagedList<BudgetSourcePlanResponse>(items, total, request.PageNumber, request.PageSize, PaginationRequest.MaxClientPageSize);
         return new PageResponse<BudgetSourcePlanResponse>(page, page.MetaData);
     }
@@ -106,11 +108,22 @@ public sealed class WorkforceBudgetReadStore(ApplicationDbContext context) : IWo
             .ThenInclude(line => line.PeriodTargets)
             .FirstOrDefaultAsync(item => item.Id == planId && !item.IsDeleted && item.Status == WorkforcePlanStatus.Approved, cancellationToken);
         if (plan is null) return null;
-        var periodIds = await context.FiscalYears.AsNoTracking()
-            .Where(year => year.Id == plan.FiscalYearId)
-            .SelectMany(year => year.Periods.Where(period => !period.IsDeleted).Select(period => period.Id))
-            .ToArrayAsync(cancellationToken);
+        var periodIds = (await GetFiscalYearAsync(plan.FiscalYearId, cancellationToken))?.PeriodIds.ToArray() ?? [];
         return ToSourcePlan(plan, periodIds);
+    }
+
+    private async Task<ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Abstractions.FiscalYearPlanningSnapshot?> GetFiscalYearAsync(
+        int fiscalYearId,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(currentActor.TenantId) || currentActor.CompanyId is not > 0)
+            return null;
+
+        var snapshot = await fiscalYears.GetAsync(currentActor.TenantId, currentActor.CompanyId.Value, fiscalYearId, cancellationToken);
+        return snapshot is null
+            ? null
+            : new ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Abstractions.FiscalYearPlanningSnapshot(
+                snapshot.Id, snapshot.StartDate, snapshot.EndDate, snapshot.PeriodIds, snapshot.Status);
     }
 
     public async Task<PageResponse<PositionEnvelopeListItemResponse>> GetEnvelopesAsync(GetPositionEnvelopesQuery request, CancellationToken cancellationToken)
@@ -265,7 +278,10 @@ public sealed class WorkforceBudgetReadStore(ApplicationDbContext context) : IWo
                     target.ReplacementSlots)).ToArray())).ToArray());
 }
 
-public sealed class WorkforceBudgetWriteStore(ApplicationDbContext context) : IWorkforceBudgetWriteStore
+public sealed class WorkforceBudgetWriteStore(
+    ApplicationDbContext context,
+    IFiscalYearPlanningSource fiscalYears,
+    ICurrentActor currentActor) : IWorkforceBudgetWriteStore
 {
     public void Add(WorkforceBudget budget) => context.WorkforceBudgets.Add(budget);
 
@@ -309,12 +325,16 @@ public sealed class WorkforceBudgetWriteStore(ApplicationDbContext context) : IW
                         target.ReplacementSlots)).ToArray())).ToArray());
     }
 
-    public async Task<FiscalYearPlanningSnapshot?> GetFiscalYearAsync(int fiscalYearId, CancellationToken cancellationToken)
+    public async Task<ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Abstractions.FiscalYearPlanningSnapshot?> GetFiscalYearAsync(int fiscalYearId, CancellationToken cancellationToken)
     {
-        var result = await context.FiscalYears.AsNoTracking().Where(year => year.Id == fiscalYearId && !year.IsDeleted)
-            .Select(year => new { year.Id, year.StartDate, year.EndDate, year.Status, PeriodIds = year.Periods.Where(period => !period.IsDeleted).Select(period => period.Id) })
-            .FirstOrDefaultAsync(cancellationToken);
-        return result is null ? null : new FiscalYearPlanningSnapshot(result.Id, result.StartDate, result.EndDate, result.PeriodIds.ToHashSet(), result.Status.ToString());
+        if (string.IsNullOrWhiteSpace(currentActor.TenantId) || currentActor.CompanyId is not > 0)
+            return null;
+
+        var snapshot = await fiscalYears.GetAsync(currentActor.TenantId, currentActor.CompanyId.Value, fiscalYearId, cancellationToken);
+        return snapshot is null
+            ? null
+            : new ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Abstractions.FiscalYearPlanningSnapshot(
+                snapshot.Id, snapshot.StartDate, snapshot.EndDate, snapshot.PeriodIds, snapshot.Status);
     }
 
     public Task<WorkforceBudget?> GetEffectiveBudgetAsync(int fiscalYearId, int? excludedId, CancellationToken cancellationToken) =>

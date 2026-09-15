@@ -1,270 +1,247 @@
 import { apiService } from '@/src/core/api';
-import { recruitmentEndpoints } from './recruitment-endpoints';
+import { z } from 'zod';
+
 import type {
-  ApprovedStaffingRequestOptionDto,
   ApplicationQuery,
-  CandidateDto,
   ChangeApplicationStageMutation,
   CreateCandidateMutation,
   CreateJobOfferMutation,
-  EmploymentApplicationDto,
   HireCandidateMutation,
-  InterviewDto,
-  InterviewScorecardTemplateDto,
-  JobOfferDto,
+  InterviewQuery,
   JobOfferQuery,
-  JobOpeningDto,
   JobOpeningQuery,
-  JobRequisitionDto,
   JobRequisitionMutation,
   JobRequisitionQuery,
-  PositionHeadcountSummaryDto,
-  RecruitmentPage,
-  RecruitmentSettingsDto,
-  RecruitmentSummaryDto,
   ScheduleInterviewMutation,
   SubmitApplicationMutation,
   SubmitInterviewEvaluationMutation,
 } from '../../domain/models/recruitment';
-import { ApplicationStatus } from '../../domain/models/recruitment';
 import type { RecruitmentRepository } from '../../domain/repositories/recruitment-repository';
+import { recruitmentEndpoints } from './recruitment-endpoints';
+import {
+  approvedStaffingRequestOptionSchema,
+  candidateSchema,
+  employmentApplicationSchema,
+  interviewScorecardTemplateSchema,
+  interviewSchema,
+  jobOfferSchema,
+  jobOpeningSchema,
+  jobRequisitionSchema,
+  positionHeadcountSummarySchema,
+  recruitmentPageSchema,
+  recruitmentSettingsSchema,
+  recruitmentSummarySchema,
+} from './recruitment-schemas';
 
 export type RecruitmentRemoteDataSource = RecruitmentRepository;
 
+async function getParsed<T>(url: string, schema: z.ZodType<T>): Promise<T> {
+  return schema.parse(await apiService.get<unknown>(url));
+}
+
+async function postParsed<T, Request>(url: string, body: Request, schema: z.ZodType<T>): Promise<T> {
+  return schema.parse(await apiService.post<unknown, Request>(url, body));
+}
+
+async function putParsed<T, Request>(url: string, body: Request, schema: z.ZodType<T>): Promise<T> {
+  return schema.parse(await apiService.put<unknown, Request>(url, body));
+}
+
+function buildQuery(values: Record<string, string | number | undefined>): string {
+  const query = new URLSearchParams();
+  for (const [key, value] of Object.entries(values)) {
+    if (value !== undefined) query.set(key, String(value));
+  }
+  const encoded = query.toString();
+  return encoded ? `?${encoded}` : '';
+}
+
 export const recruitmentRemoteDataSource: RecruitmentRemoteDataSource = {
-  async getSummary(): Promise<RecruitmentSummaryDto> {
-    return apiService.get<RecruitmentSummaryDto>(recruitmentEndpoints.dashboard.summary);
-  },
+  getSummary: () => getParsed(recruitmentEndpoints.dashboard.summary, recruitmentSummarySchema),
 
-  async getOpenings(params?: JobOpeningQuery): Promise<RecruitmentPage<JobOpeningDto>> {
-    const query = new URLSearchParams();
-    if (params?.pageNumber) query.set('pageNumber', String(params.pageNumber));
-    if (params?.pageSize) query.set('pageSize', String(params.pageSize));
-    if (params?.search?.trim()) query.set('search', params.search.trim());
-    if (params?.status !== undefined) query.set('status', String(params.status));
+  getOpenings: (params?: JobOpeningQuery) => getParsed(
+    recruitmentEndpoints.openings.base + buildQuery({
+      pageNumber: params?.pageNumber || undefined,
+      pageSize: params?.pageSize || undefined,
+      search: params?.search?.trim() || undefined,
+      status: params?.status,
+    }),
+    recruitmentPageSchema(jobOpeningSchema),
+  ),
 
-    const qs = query.toString();
-    return apiService.get<RecruitmentPage<JobOpeningDto>>(
-      `${recruitmentEndpoints.openings.base}${qs ? `?${qs}` : ''}`
-    );
-  },
+  getOpeningById: (id) => getParsed(recruitmentEndpoints.openings.byId(id), jobOpeningSchema),
 
-  async getOpeningById(id: number): Promise<JobOpeningDto> {
-    return apiService.get<JobOpeningDto>(recruitmentEndpoints.openings.byId(id));
-  },
+  openOpening: (id) => postParsed(recruitmentEndpoints.openings.open(id), undefined, jobOpeningSchema),
 
-  async getOffers(params?: JobOfferQuery): Promise<RecruitmentPage<JobOfferDto>> {
-    const query = new URLSearchParams();
-    if (params?.pageNumber) query.set('pageNumber', String(params.pageNumber));
-    if (params?.pageSize) query.set('pageSize', String(params.pageSize));
-    if (params?.applicationId) query.set('applicationId', String(params.applicationId));
-    if (params?.status !== undefined) query.set('status', String(params.status));
-    const qs = query.toString();
-    return apiService.get<RecruitmentPage<JobOfferDto>>(`${recruitmentEndpoints.offers.base}${qs ? `?${qs}` : ''}`);
-  },
+  pauseOpening: (id, reason) => postParsed(
+    recruitmentEndpoints.openings.pause(id),
+    { reason },
+    jobOpeningSchema,
+  ),
 
-  async openOpening(id: number): Promise<JobOpeningDto> {
-    return apiService.post<JobOpeningDto, undefined>(recruitmentEndpoints.openings.open(id), undefined);
-  },
+  closeOpening: (id, reason) => postParsed(
+    recruitmentEndpoints.openings.close(id),
+    { reason },
+    jobOpeningSchema,
+  ),
 
-  async pauseOpening(id: number, reason: string = 'إيقاف مؤقت للشاغر'): Promise<JobOpeningDto> {
-    return apiService.post<JobOpeningDto, { reason: string }>(recruitmentEndpoints.openings.pause(id), { reason });
-  },
+  getOffers: (params?: JobOfferQuery) => getParsed(
+    recruitmentEndpoints.offers.base + buildQuery({
+      pageNumber: params?.pageNumber || undefined,
+      pageSize: params?.pageSize || undefined,
+      applicationId: params?.applicationId || undefined,
+      status: params?.status,
+    }),
+    recruitmentPageSchema(jobOfferSchema),
+  ),
 
-  async closeOpening(id: number, reason: string = 'إغلاق الشاغر'): Promise<JobOpeningDto> {
-    return apiService.post<JobOpeningDto, { reason: string }>(recruitmentEndpoints.openings.close(id), { reason });
-  },
+  getApplications: (params?: ApplicationQuery) => getParsed(
+    recruitmentEndpoints.applications.base + buildQuery({
+      pageNumber: params?.pageNumber || undefined,
+      pageSize: params?.pageSize || undefined,
+      jobOpeningId: params?.jobOpeningId || undefined,
+      status: params?.status,
+      search: params?.search?.trim() || undefined,
+    }),
+    recruitmentPageSchema(employmentApplicationSchema),
+  ),
 
-  async getApplications(params?: ApplicationQuery): Promise<RecruitmentPage<EmploymentApplicationDto>> {
-    const query = new URLSearchParams();
-    if (params?.pageNumber) query.set('pageNumber', String(params.pageNumber));
-    if (params?.pageSize) query.set('pageSize', String(params.pageSize));
-    if (params?.jobOpeningId) query.set('jobOpeningId', String(params.jobOpeningId));
-    if (params?.status !== undefined) query.set('status', String(params.status));
-    if (params?.stage !== undefined) query.set('stage', String(params.stage));
-    if (params?.search?.trim()) query.set('search', params.search.trim());
+  getApplicationById: (id) => getParsed(recruitmentEndpoints.applications.byId(id), employmentApplicationSchema),
 
-    const qs = query.toString();
-    return apiService.get<RecruitmentPage<EmploymentApplicationDto>>(
-      `${recruitmentEndpoints.applications.base}${qs ? `?${qs}` : ''}`
-    );
-  },
-
-  async getApplicationById(id: number): Promise<EmploymentApplicationDto> {
-    return apiService.get<EmploymentApplicationDto>(recruitmentEndpoints.applications.byId(id));
-  },
-
-  async changeStage(
-    id: number,
-    request: ChangeApplicationStageMutation
-  ): Promise<EmploymentApplicationDto> {
-    const targetStatus = request.targetStatus ?? ((request.stage as number) || ApplicationStatus.UnderReview);
-    return apiService.post<EmploymentApplicationDto, { targetStatus: number; reason?: string }>(
+  changeStage: (id, request: ChangeApplicationStageMutation) => {
+    return postParsed(
       recruitmentEndpoints.applications.moveStage(id),
-      {
-        targetStatus,
-        reason: request.reason ?? request.notes,
-      }
+      request,
+      employmentApplicationSchema,
     );
   },
 
-  async createCandidate(request: CreateCandidateMutation): Promise<CandidateDto> {
-    return apiService.post<CandidateDto, typeof request>(
-      recruitmentEndpoints.candidates.base,
-      request
-    );
-  },
+  createCandidate: (request: CreateCandidateMutation) => postParsed(
+    recruitmentEndpoints.candidates.base,
+    request,
+    candidateSchema,
+  ),
 
-  async submitApplication(request: SubmitApplicationMutation): Promise<EmploymentApplicationDto> {
-    return apiService.post<EmploymentApplicationDto, typeof request>(
-      recruitmentEndpoints.applications.base,
-      request
-    );
-  },
+  submitApplication: (request: SubmitApplicationMutation) => postParsed(
+    recruitmentEndpoints.applications.base,
+    request,
+    employmentApplicationSchema,
+  ),
 
-  async scheduleInterview(request: ScheduleInterviewMutation): Promise<InterviewDto> {
-    return apiService.post<InterviewDto, typeof request>(
-      recruitmentEndpoints.interviews.base,
-      request
-    );
-  },
+  scheduleInterview: (request: ScheduleInterviewMutation) => postParsed(
+    recruitmentEndpoints.interviews.base,
+    request,
+    interviewSchema,
+  ),
 
-  async completeInterview(id: number): Promise<InterviewDto> {
-    return apiService.post<InterviewDto, undefined>(
-      recruitmentEndpoints.interviews.complete(id),
-      undefined
-    );
-  },
+  getInterviews: (params?: InterviewQuery) => getParsed(
+    recruitmentEndpoints.interviews.base + buildQuery({
+      pageNumber: params?.pageNumber || undefined,
+      pageSize: params?.pageSize || undefined,
+      applicationId: params?.applicationId || undefined,
+      status: params?.status,
+    }),
+    recruitmentPageSchema(interviewSchema),
+  ),
 
-  async evaluateInterview(
-    id: number,
-    request: SubmitInterviewEvaluationMutation
-  ): Promise<InterviewDto> {
-    return apiService.post<InterviewDto, typeof request>(
-      recruitmentEndpoints.interviews.evaluations(id),
-      request
-    );
-  },
+  completeInterview: (id) => postParsed(
+    recruitmentEndpoints.interviews.complete(id),
+    undefined,
+    interviewSchema,
+  ),
 
-  async getScorecardTemplate(interviewId: number): Promise<InterviewScorecardTemplateDto> {
-    return apiService.get<InterviewScorecardTemplateDto>(
-      recruitmentEndpoints.interviews.scorecardTemplate(interviewId)
-    );
-  },
+  evaluateInterview: (id, request: SubmitInterviewEvaluationMutation) => postParsed(
+    recruitmentEndpoints.interviews.evaluations(id),
+    request,
+    interviewSchema,
+  ),
 
-  async createOffer(request: CreateJobOfferMutation): Promise<JobOfferDto> {
-    return apiService.post<JobOfferDto, typeof request>(
-      recruitmentEndpoints.offers.base,
-      request
-    );
-  },
+  getScorecardTemplate: (interviewId) => getParsed(
+    recruitmentEndpoints.interviews.scorecardTemplate(interviewId),
+    interviewScorecardTemplateSchema,
+  ),
 
-  async issueOffer(id: number): Promise<JobOfferDto> {
-    return apiService.post<JobOfferDto, undefined>(
-      recruitmentEndpoints.offers.issue(id),
-      undefined
-    );
-  },
+  createOffer: (request: CreateJobOfferMutation) => postParsed(
+    recruitmentEndpoints.offers.base,
+    request,
+    jobOfferSchema,
+  ),
 
-  async submitOffer(id: number): Promise<JobOfferDto> {
-    return apiService.post<JobOfferDto, undefined>(
-      recruitmentEndpoints.offers.submit(id),
-      undefined
-    );
-  },
+  issueOffer: (id) => postParsed(recruitmentEndpoints.offers.issue(id), undefined, jobOfferSchema),
 
-  async approveOffer(id: number): Promise<JobOfferDto> {
-    return apiService.post<JobOfferDto, undefined>(
-      recruitmentEndpoints.offers.approve(id),
-      undefined
-    );
-  },
+  submitOffer: (id) => postParsed(recruitmentEndpoints.offers.submit(id), undefined, jobOfferSchema),
 
-  async rejectOffer(id: number, reason: string): Promise<JobOfferDto> {
-    return apiService.post<JobOfferDto, { reason: string }>(
-      recruitmentEndpoints.offers.reject(id),
-      { reason }
-    );
-  },
+  approveOffer: (id) => postParsed(recruitmentEndpoints.offers.approve(id), undefined, jobOfferSchema),
 
-  async hireCandidate(
-    id: number,
-    request: HireCandidateMutation
-  ): Promise<void> {
-    return apiService.post<void, typeof request>(
+  rejectOffer: (id, reason) => postParsed(
+    recruitmentEndpoints.offers.reject(id),
+    { reason },
+    jobOfferSchema,
+  ),
+
+  hireCandidate: (id: number, request: HireCandidateMutation) => postParsed(
       recruitmentEndpoints.applications.hire(id),
-      request
-    );
-  },
+      request,
+      employmentApplicationSchema,
+  ),
 
-  async getRequisitions(params?: JobRequisitionQuery): Promise<RecruitmentPage<JobRequisitionDto>> {
-    const query = new URLSearchParams();
-    if (params?.pageNumber) query.set('pageNumber', String(params.pageNumber));
-    if (params?.pageSize) query.set('pageSize', String(params.pageSize));
-    if (params?.search?.trim()) query.set('search', params.search.trim());
-    if (params?.status !== undefined) query.set('status', String(params.status));
+  getRequisitions: (params?: JobRequisitionQuery) => getParsed(
+    recruitmentEndpoints.requisitions.base + buildQuery({
+      pageNumber: params?.pageNumber || undefined,
+      pageSize: params?.pageSize || undefined,
+      search: params?.search?.trim() || undefined,
+      status: params?.status,
+    }),
+    recruitmentPageSchema(jobRequisitionSchema),
+  ),
 
-    const qs = query.toString();
-    return apiService.get<RecruitmentPage<JobRequisitionDto>>(
-      `${recruitmentEndpoints.requisitions.base}${qs ? `?${qs}` : ''}`
-    );
-  },
+  getRequisitionById: (id) => getParsed(recruitmentEndpoints.requisitions.byId(id), jobRequisitionSchema),
 
-  async getRequisitionById(id: number): Promise<JobRequisitionDto> {
-    return apiService.get<JobRequisitionDto>(recruitmentEndpoints.requisitions.byId(id));
-  },
+  getPositionHeadcountSummary: (positionId) => getParsed(
+    recruitmentEndpoints.requisitions.headcountSummary(positionId),
+    positionHeadcountSummarySchema,
+  ),
 
-  async getPositionHeadcountSummary(positionId: number): Promise<PositionHeadcountSummaryDto> {
-    return apiService.get<PositionHeadcountSummaryDto>(
-      recruitmentEndpoints.requisitions.headcountSummary(positionId)
-    );
-  },
+  getApprovedStaffingRequestOptions: () => getParsed(
+    recruitmentEndpoints.requisitions.staffingRequestOptions,
+    z.array(approvedStaffingRequestOptionSchema),
+  ),
 
-  async getApprovedStaffingRequestOptions(): Promise<ApprovedStaffingRequestOptionDto[]> {
-    return apiService.get<ApprovedStaffingRequestOptionDto[]>(
-      recruitmentEndpoints.requisitions.staffingRequestOptions
-    );
-  },
+  createRequisition: (request: JobRequisitionMutation) => postParsed(
+    recruitmentEndpoints.requisitions.base,
+    request,
+    jobRequisitionSchema,
+  ),
 
-  async createRequisition(request: JobRequisitionMutation): Promise<JobRequisitionDto> {
-    return apiService.post<JobRequisitionDto, JobRequisitionMutation>(
-      recruitmentEndpoints.requisitions.base,
-      request
-    );
-  },
+  submitRequisition: (id) => postParsed(
+    recruitmentEndpoints.requisitions.submit(id),
+    undefined,
+    jobRequisitionSchema,
+  ),
 
-  async submitRequisition(id: number): Promise<JobRequisitionDto> {
-    return apiService.post<JobRequisitionDto, undefined>(recruitmentEndpoints.requisitions.submit(id), undefined);
-  },
+  approveRequisition: (id) => postParsed(
+    recruitmentEndpoints.requisitions.approve(id),
+    undefined,
+    jobRequisitionSchema,
+  ),
 
-  async approveRequisition(id: number): Promise<JobRequisitionDto> {
-    return apiService.post<JobRequisitionDto, undefined>(
-      recruitmentEndpoints.requisitions.approve(id),
-      undefined
-    );
-  },
+  rejectRequisition: (id, reason) => postParsed(
+    recruitmentEndpoints.requisitions.reject(id),
+    { reason },
+    jobRequisitionSchema,
+  ),
 
-  async rejectRequisition(id: number, reason: string): Promise<JobRequisitionDto> {
-    return apiService.post<JobRequisitionDto, { reason: string }>(
-      recruitmentEndpoints.requisitions.reject(id),
-      { reason }
-    );
-  },
+  cancelRequisition: (id, reason) => postParsed(
+    recruitmentEndpoints.requisitions.cancel(id),
+    { reason },
+    jobRequisitionSchema,
+  ),
 
-  async cancelRequisition(id: number, reason: string): Promise<JobRequisitionDto> {
-    return apiService.post<JobRequisitionDto, { reason: string }>(
-      recruitmentEndpoints.requisitions.cancel(id), { reason }
-    );
-  },
+  getSettings: () => getParsed(recruitmentEndpoints.settings.base, recruitmentSettingsSchema),
 
-  async getSettings(): Promise<RecruitmentSettingsDto> {
-    return apiService.get<RecruitmentSettingsDto>(recruitmentEndpoints.settings.base);
-  },
-
-  async updateSettings(settings: RecruitmentSettingsDto): Promise<RecruitmentSettingsDto> {
-    return apiService.put<RecruitmentSettingsDto, RecruitmentSettingsDto>(
-      recruitmentEndpoints.settings.base,
-      settings
-    );
-  },
+  updateSettings: (settings) => putParsed(
+    recruitmentEndpoints.settings.base,
+    settings,
+    recruitmentSettingsSchema,
+  ),
 };

@@ -2,13 +2,21 @@
 
 ## 1. API responsibility
 
-The HR module exposes the installed and accessible catalogs and owns tenant
-entitlement persistence. Module implementations own only their definitions.
+The Platform module exposes the installed and accessible catalogs and owns tenant
+entitlement persistence in `PlatformDbContext` under the `platform` schema.
+Module implementations own only their definitions and public Contracts.
 
-## 2. Installed catalog endpoint
+## 2. Catalog endpoints
 
 GET /api/v1/modules/installed requires super_admin and returns module code,
 name, isDefault, submodules, required permissions, and entry paths.
+
+GET /api/v1/modules/tenant-entitlements requires super_admin and is the only
+catalog used by tenant administration. It returns only user-visible modules
+that allow tenant entitlements and only submodules whose access mode is
+TenantEntitlement. Global submodules such as reference-data:geography and
+tenant-scoped Platform capabilities are excluded and cannot be submitted as
+commercial tenant grants.
 
 ## 3. Accessible catalog endpoint
 
@@ -20,7 +28,9 @@ role permissions and returns only reachable modules and submodules.
 
 Create and update accept entitlements: [{ moduleCode, submoduleCodes }].
 Codes must be unique, lower-case catalog identifiers. Unknown modules or
-submodules fail validation.
+submodules fail validation. Installed but non-assignable Global/Tenant
+submodules fail with Tenant.InvalidEntitlement; the server never relies on
+client-side filtering for this invariant.
 
 ## 4.1. Explicit authentication scope sequence
 
@@ -37,6 +47,11 @@ issued only by `SelectCompany` after the single-use challenge is consumed.
 On create, an omitted entitlement list uses catalog defaults. On update, an
 omitted list preserves the current subscription. An explicit list, including an
 empty list, is authoritative and supports deliberate commercial revocation.
+The current catalog defaults are HR and ReferenceData `addresses`; the
+ReferenceData `geography` submodule is global and is excluded from tenant
+entitlements. The opt-in preview bootstrap merges these defaults with existing
+demo grants case-insensitively and never removes explicit module or submodule
+grants.
 
 ## 6. Domain and validation
 
@@ -47,10 +62,9 @@ membership.
 
 ## 7. Persistence algorithm
 
-TenantModuleEntitlementService.ApplyAsync calculates the desired set, removes
-only missing rows, and inserts only new rows. This prevents the previous
-delete-all/reinsert behavior and preserves unrelated HR submodules when
-Accounting is added.
+`PlatformContractSource.ApplyAsync` calculates the desired set, removes
+only missing rows, and inserts only new rows. This preserves unrelated module
+grants when a tenant adds or removes a capability.
 
 ## 8. Permission enforcement
 
@@ -71,18 +85,21 @@ one submodule, and checks the tenant grant. Unknown permissions fail closed.
 
 ## 9. Database migration
 
-Migration 20260909122310_AddTenantModuleEntitlements creates both tables in
-hr, seeds existing tenants with all current HR submodules, and uses cascading
-foreign keys. It was applied through ApplicationDbContext.
+The Platform-owned migration creates both tables in `platform` with tenant and
+module composite keys. The exact migration name is deployment-owned because
+the development database is being regenerated per module.
 
 ## 10. Tests and diagnostics
 
-TenantUserFoundationTests verifies that adding Accounting alongside HR
-preserves HR submodule rows. ModuleSchemaTests distinguishes tables created
-after the schema-move migration from tables that migration had to move.
+TenantUserFoundationTests and PlatformScopeIsolationTests verify entitlement
+ownership, tenant/company filters, and scope-safe writes. ModuleSchemaTests
+verifies module schema declarations independently.
 
 ## 11. Extension rule
 
 New modules register a ModuleDefinition; no central switch is needed. Marking a
-module IsDefault affects new-tenant defaults only. New tenant permissions must
-map to exactly one submodule so enforcement remains deterministic.
+module IsDefault affects new-tenant defaults (and additive preview bootstrap
+reconciliation). New tenant permissions must
+map to exactly one submodule so enforcement remains deterministic. A submodule
+appears in tenant administration only when its PermissionAccessMode is
+TenantEntitlement.

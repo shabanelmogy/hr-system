@@ -1,4 +1,4 @@
-using ErpSystem.Modules.HR.Application.Abstractions.Authentication;
+using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Commands;
 using ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts;
 using MediatR;

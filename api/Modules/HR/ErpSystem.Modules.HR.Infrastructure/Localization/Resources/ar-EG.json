@@ -277,6 +277,7 @@
     "CrystalReportRuntimeUnavailable": "خدمة تشغيل تقارير Crystal غير متاحة حالياً",
     "CrystalReportSourceUnavailable": "ملف النسخة المنشورة من تقرير Crystal غير متاح حالياً",
     "CrystalReportRenderUnsupported": "لا يوجد إعداد تشغيل معتمد لتقارير هذا الكيان",
+    "CrystalReportDataTooLarge": "بيانات التقرير تتجاوز حد التشغيل الآمن المسموح. قلل نطاق عوامل التصفية ثم أعد المحاولة",
     "CrystalReportInvalidRowVersion": "إصدار صف تقرير Crystal غير صالح",
     "CrystalReportConcurrencyConflict": "تم تعديل تقرير Crystal بواسطة طلب آخر",
     "CrystalReportInvalidRole": "دور واحد أو أكثر غير متاح داخل المنشأة الحالية",

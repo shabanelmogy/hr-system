@@ -1,7 +1,5 @@
 using FluentValidation;
 using ErpSystem.BuildingBlocks.Application;
-using ErpSystem.Modules.HR.Application.Features.Security.Authentication.PlatformCompatibility;
-using ErpSystem.Modules.Platform.Contracts.Authentication.SelectionChallenges;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -16,8 +14,6 @@ public static class DependencyInjection
             configuration.RegisterServicesFromAssembly(AssemblyReference.Assembly));
         services.AddValidatorsFromAssembly(AssemblyReference.Assembly, includeInternalTypes: true);
         services.AddApplicationPipeline();
-        services.AddScoped<ISelectionChallengeSource, PlatformSelectionChallengeSource>();
-
         return services;
     }
 }

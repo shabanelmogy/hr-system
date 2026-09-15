@@ -25,6 +25,7 @@ export interface SyncRunResult {
   skippedUnsafe: number;
   skippedOffline: boolean;
   skippedUnauthorized: boolean;
+  deadLettered: number;
 }
 
 export interface SyncAuthorization {
@@ -74,6 +75,7 @@ export class SyncCoordinator {
       skippedUnsafe: 0,
       skippedOffline: false,
       skippedUnauthorized: false,
+      deadLettered: 0,
     };
 
     if (!authorization.authenticated || authorization.readOnly) {
@@ -86,19 +88,38 @@ export class SyncCoordinator {
       return result;
     }
 
-    const commands = await this.outbox.listPending(scope);
-    for (const command of commands) {
-      const handler = this.handlers.get(command.commandType);
-      if (!handler || !hasRequiredReplayGuard(command, handler.replaySafety)) {
-        result.skippedUnsafe += 1;
-        continue;
-      }
+    const registeredTypes = [...this.handlers.keys()];
+    if (registeredTypes.length === 0) {
+      const unknown = await this.outbox.listPending(scope);
+      result.skippedUnsafe = unknown.length;
+      return result;
+    }
+    const listPending = (limit: number) => this.outbox.listPendingByTypes(scope, registeredTypes, limit);
 
-      if (!this.getConnectivity().isOnline) break;
-      if (!(await this.outbox.markProcessing(command.commandId))) continue;
-      result.processed += 1;
+    // Drain bounded batches. Querying only registered command types prevents an
+    // unknown future module from starving handlers already installed in this build.
+    const seen = new Set<string>();
+    for (let batch = 0; batch < 20; batch += 1) {
+      const commands = (await listPending(25)).filter((command) => !seen.has(command.commandId));
+      if (commands.length === 0) break;
+      let progressed = false;
+      for (const command of commands) {
+        seen.add(command.commandId);
+        const handler = this.handlers.get(command.commandType);
+        if (!handler) continue;
+        if (!hasRequiredReplayGuard(command, handler.replaySafety)) {
+          await this.outbox.markBlocked(command.commandId, 'Replay guard is missing for this command.');
+          result.skippedUnsafe += 1;
+          progressed = true;
+          continue;
+        }
 
-      try {
+        if (!this.getConnectivity().isOnline) break;
+        if (!(await this.outbox.markProcessing(command.commandId))) continue;
+        progressed = true;
+        result.processed += 1;
+
+        try {
         const outcome = await handler.execute(command);
         if (outcome.kind === 'succeeded') {
           await this.outbox.markSucceeded(command.commandId);
@@ -106,6 +127,7 @@ export class SyncCoordinator {
         } else if (outcome.kind === 'retry') {
           await this.outbox.markFailed(command.commandId, outcome.error, outcome.nextAttemptAt ?? null);
           result.failed += 1;
+          if (command.attempts >= 7) result.deadLettered += 1;
         } else if (outcome.kind === 'conflict') {
           await this.outbox.markConflict(command.commandId, outcome.error);
           result.conflicts += 1;
@@ -113,10 +135,14 @@ export class SyncCoordinator {
           await this.outbox.markUncertain(command.commandId, outcome.error);
           result.uncertain += 1;
         }
-      } catch (error) {
-        await this.outbox.markFailed(command.commandId, errorMessage(error));
-        result.failed += 1;
+        } catch (error) {
+          await this.outbox.markFailed(command.commandId, errorMessage(error));
+          result.failed += 1;
+          if (command.attempts >= 7) result.deadLettered += 1;
+        }
       }
+      if (!progressed) break;
+      if (!this.getConnectivity().isOnline) break;
     }
 
     return result;

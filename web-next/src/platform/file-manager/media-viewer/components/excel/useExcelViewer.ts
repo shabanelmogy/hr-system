@@ -55,7 +55,7 @@ export const useExcelViewer = (mediaUrl: string, onError: (message: string) => v
       } catch (error) {
         if (!active || (error instanceof DOMException && error.name === "AbortError")) return;
         console.error("Error loading Excel file:", error);
-        onErrorRef.current(t("media.failedToLoadExcel") || "Failed to load Excel file");
+        onErrorRef.current(t("media.failedToLoadExcel"));
         setLoadStatus({ sourceUrl: mediaUrl, status: "error" });
       }
     };

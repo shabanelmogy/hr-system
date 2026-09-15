@@ -42,6 +42,13 @@ or direct infrastructure calls.
 The first Party reference workflow is implemented and verified. Additional
 Contacts features must preserve this ownership and delivery boundary.
 
+Party revisions are monotonic aggregate versions, independent of timestamps.
+The API requires the caller's expected revision and EF protects the eventual
+write with concurrency tokens. Created/updated events carry the committed
+revision so downstream projections can reject delayed or duplicate updates
+even when producer clocks differ. `AddPartyRevision` initializes existing rows
+to revision 1 without replacing their identifiers or outbox history.
+
 The outbox health settings live under
 `Modules:Contacts:Messaging:Outbox` as `MaxDeadRows` and
 `MaxDueBacklogAge`. Operations and recovery steps are documented in

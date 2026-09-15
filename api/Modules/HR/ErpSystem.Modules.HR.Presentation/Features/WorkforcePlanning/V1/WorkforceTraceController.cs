@@ -1,9 +1,6 @@
-using ErpSystem.Modules.HR.Presentation.Common.Errors;
-using ErpSystem.Modules.HR.Application.Common.Consts;
-using ErpSystem.Modules.HR.Application.Common.Paginations;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Contracts;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Queries;
-using ErpSystem.Modules.HR.Presentation.Security.Authorization.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,10 +15,10 @@ public sealed class WorkforceTraceController(ISender sender) : ControllerBase
     private readonly ISender _sender = sender;
 
     private bool IncludeFinancials() =>
-        User.Claims.Any(claim => claim.Type == Permissions.Type && claim.Value == Permissions.ViewWorkforceFinancials);
+        User.Claims.Any(claim => claim.Type == PermissionClaimNames.Permission && claim.Value == HrPermissions.ViewWorkforceFinancials);
 
     [HttpGet("application/{applicationId:int}")]
-    [HasPermission(Permissions.ViewWorkforceTrace)]
+    [HasPermission(HrPermissions.ViewWorkforceTrace)]
     [ProducesResponseType(typeof(HiringTraceResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetByApplication([FromRoute] int applicationId, CancellationToken cancellationToken)
     {
@@ -30,7 +27,7 @@ public sealed class WorkforceTraceController(ISender sender) : ControllerBase
     }
 
     [HttpGet("offer/{offerId:int}")]
-    [HasPermission(Permissions.ViewWorkforceTrace)]
+    [HasPermission(HrPermissions.ViewWorkforceTrace)]
     [ProducesResponseType(typeof(HiringTraceResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetByOffer([FromRoute] int offerId, CancellationToken cancellationToken)
     {
@@ -39,7 +36,7 @@ public sealed class WorkforceTraceController(ISender sender) : ControllerBase
     }
 
     [HttpGet("employee/{employeeId:int}")]
-    [HasPermission(Permissions.ViewWorkforceTrace)]
+    [HasPermission(HrPermissions.ViewWorkforceTrace)]
     [ProducesResponseType(typeof(HiringTraceResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetByEmployee([FromRoute] int employeeId, CancellationToken cancellationToken)
     {
@@ -48,7 +45,7 @@ public sealed class WorkforceTraceController(ISender sender) : ControllerBase
     }
 
     [HttpGet("plan-commitment")]
-    [HasPermission(Permissions.ViewWorkforceTrace)]
+    [HasPermission(HrPermissions.ViewWorkforceTrace)]
     [ProducesResponseType(typeof(PageResponse<PlanCommitmentRowResponse>), StatusCodes.Status200OK)]
     public Task<PageResponse<PlanCommitmentRowResponse>> GetPlanCommitment(
         [FromQuery] int fiscalYearId,
@@ -67,4 +64,3 @@ public sealed class WorkforceTraceController(ISender sender) : ControllerBase
             IncludeFinancials = IncludeFinancials(),
         }, cancellationToken);
 }
-

@@ -3,7 +3,6 @@ import type { ManagementPageResponse } from "@/lib/api/pagination";
 export type AttendanceDeviceId = number;
 export type SortDirection = "asc" | "desc";
 export type PullOperation = "users" | "attendance";
-export type AttendanceDeviceSort = "name" | "providerId" | "host" | "enabled" | "updatedOn";
 
 export interface AttendanceDeviceListItem {
   id: AttendanceDeviceId; name: string; providerId: string; host: string; port: number;
@@ -25,7 +24,7 @@ export interface DeviceTestResult {
   platform: string | null; sdkVersion: string | null; errorCode: string | null; message: string | null;
 }
 export interface DetectDeviceRequest { host: string; port: number; }
-export interface DetectDeviceResult { host: string; port: number; detected: boolean; message: string | null; }
+export interface DetectDeviceResult { detected: boolean; providerId: string | null; confidence: number; message: string; }
 export interface AttendanceAgent { id: string; name: string; isActive: boolean; lastSeenAtUtc: string | null; deviceCount: number; }
 /** Returned exactly once when an agent is enrolled. Never persist the token in browser state. */
 export interface AttendanceAgentInstallConfiguration {
@@ -42,12 +41,12 @@ export interface CreatedAttendanceAgent {
 }
 export interface CreateAttendanceAgentRequest { name: string; }
 export interface CreateAttendanceDeviceRequest { name: string; providerId: string; host: string; port: number; timeZoneId: string; branchId?: number | null; connectionMode?: "tcp"; attendanceAgentId?: string | null; }
-export type UpdateAttendanceDeviceRequest = CreateAttendanceDeviceRequest;
+export type UpdateAttendanceDeviceRequest = CreateAttendanceDeviceRequest & { rowVersion: string };
 /** Secrets are write-only and must never be displayed after submission. */
 export interface UpdateCredentialsRequest { password?: string; commKey?: string; token?: string; }
 export interface AttendanceBranch { id: number; nameEn: string; nameAr: string; branchCode: string; }
-export interface StartPullRequest { fromUtc?: string; toUtc?: string; }
-export interface AttendanceDeviceQuery { pageNumber: number; pageSize: number; search?: string; sortBy: AttendanceDeviceSort; sortDirection: SortDirection; }
+export interface StartPullRequest { fromUtc?: string; toUtc?: string; operationId: string; }
+export interface AttendanceDeviceQuery { pageNumber: number; pageSize: number; search?: string; }
 export interface RawDeviceUser { id: number; deviceId: number; deviceName: string; externalCode: string; name: string | null; safeRawPayload: string | null; pulledAtUtc: string; }
 export interface RawPunch {
   id: number; deviceId: number; deviceName: string; externalCode: string; name: string | null;

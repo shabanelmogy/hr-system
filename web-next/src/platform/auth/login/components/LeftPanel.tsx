@@ -172,7 +172,7 @@ const FeatureList = ({ t }: { t: Translator }) => {
         ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
         : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
       title: t("auth.secureAccess"),
-      desc: t("auth.secureAccessDesc") || "End-to-end encryption for your data",
+      desc: t("auth.secureAccessDesc"),
     },
     {
       icon: "🔐",
@@ -180,7 +180,7 @@ const FeatureList = ({ t }: { t: Translator }) => {
         ? "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
         : "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
       title: t("auth.dataPrivacy"),
-      desc: t("auth.dataPrivacyDesc") || "Your information is never shared",
+      desc: t("auth.dataPrivacyDesc"),
     },
     {
       icon: "📊",
@@ -188,7 +188,7 @@ const FeatureList = ({ t }: { t: Translator }) => {
         ? "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
         : "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
       title: t("auth.analytics"),
-      desc: t("auth.analyticsDesc") || "Real-time insights and tracking",
+      desc: t("auth.analyticsDesc"),
     },
   ];
 
@@ -328,7 +328,7 @@ const FooterContent = ({ t }: { t: Translator }) => {
           letterSpacing: "0.02em",
         }}
       >
-        © {new Date().getFullYear()} {t("general.company") || "Company Name"}
+        © {new Date().getFullYear()} {t("general.company")}
       </Typography>
       <Box sx={{ display: "flex", gap: 2 }}>
         {socialIcons.map((item, i) => (

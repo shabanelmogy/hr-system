@@ -1,9 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { recruitmentUseCases } from '../../composition/recruitment-container';
 import type {
-  ApplicationStage,
-  ApplicationStatus,
+  ApplicationQuery,
+  ChangeApplicationStageMutation,
+  CreateCandidateMutation,
+  CreateJobOfferMutation,
+  HireCandidateMutation,
+  InterviewQuery,
+  JobOfferQuery,
   JobRequisitionMutation,
+  ScheduleInterviewMutation,
+  SubmitApplicationMutation,
   JobOpeningStatus,
   JobRequisitionStatus,
   RecruitmentSettingsDto,
@@ -53,7 +60,7 @@ export function usePauseJobOpening() {
   const queryClient = useQueryClient();
   return useMutation({
     networkMode: 'always',
-    mutationFn: (id: number) => recruitmentUseCases.pauseOpening(id),
+    mutationFn: ({ id, reason }: { id: number; reason: string }) => recruitmentUseCases.pauseOpening(id, reason),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: recruitmentKeys.all });
     },
@@ -64,21 +71,14 @@ export function useCloseJobOpening() {
   const queryClient = useQueryClient();
   return useMutation({
     networkMode: 'always',
-    mutationFn: (id: number) => recruitmentUseCases.closeOpening(id),
+    mutationFn: ({ id, reason }: { id: number; reason: string }) => recruitmentUseCases.closeOpening(id, reason),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: recruitmentKeys.all });
     },
   });
 }
 
-export function useApplications(params?: {
-  pageNumber?: number;
-  pageSize?: number;
-  jobOpeningId?: number;
-  status?: ApplicationStatus;
-  stage?: ApplicationStage;
-  search?: string;
-}) {
+export function useApplications(params?: ApplicationQuery) {
   return useQuery({
     queryKey: recruitmentKeys.applications(params),
     queryFn: () => recruitmentUseCases.getApplications(params),
@@ -93,7 +93,7 @@ export function useApplication(id: number) {
   });
 }
 
-export function useJobOffers(params?: { pageNumber?: number; pageSize?: number; applicationId?: number; status?: number }) {
+export function useJobOffers(params?: JobOfferQuery) {
   return useQuery({ queryKey: recruitmentKeys.offers(params), queryFn: () => recruitmentUseCases.getOffers(params) });
 }
 
@@ -101,17 +101,8 @@ export function useChangeApplicationStage() {
   const queryClient = useQueryClient();
   return useMutation({
     networkMode: 'always',
-    mutationFn: ({
-      id,
-      stage,
-      reason,
-      notes,
-    }: {
-      id: number;
-      stage: ApplicationStage;
-      reason?: string;
-      notes?: string;
-    }) => recruitmentUseCases.changeStage(id, { stage, reason, notes }),
+    mutationFn: ({ id, ...request }: { id: number } & ChangeApplicationStageMutation) =>
+      recruitmentUseCases.changeStage(id, request),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: recruitmentKeys.all });
     },
@@ -121,12 +112,7 @@ export function useChangeApplicationStage() {
 export function useCreateCandidate() {
   return useMutation({
     networkMode: 'always',
-    mutationFn: (request: {
-      firstName: string;
-      lastName: string;
-      email: string;
-      phoneNumber?: string;
-    }) => recruitmentUseCases.createCandidate(request),
+    mutationFn: (request: CreateCandidateMutation) => recruitmentUseCases.createCandidate(request),
   });
 }
 
@@ -134,15 +120,7 @@ export function useSubmitApplication() {
   const queryClient = useQueryClient();
   return useMutation({
     networkMode: 'always',
-    mutationFn: (request: {
-      candidateId: number;
-      jobOpeningId: number;
-      source: number;
-      expectedSalary?: number;
-      expectedSalaryCurrencyCode?: string;
-      availableFrom?: string;
-      coverLetter?: string;
-    }) => recruitmentUseCases.submitApplication(request),
+    mutationFn: (request: SubmitApplicationMutation) => recruitmentUseCases.submitApplication(request),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: recruitmentKeys.all });
     },
@@ -153,17 +131,18 @@ export function useScheduleInterview() {
   const queryClient = useQueryClient();
   return useMutation({
     networkMode: 'always',
-    mutationFn: (request: {
-      employmentApplicationId: number;
-      type: number;
-      startsOn: string;
-      endsOn: string;
-      locationOrMeetingUrl?: string;
-      leadEmployeeId?: number;
-    }) => recruitmentUseCases.scheduleInterview(request),
+    mutationFn: (request: ScheduleInterviewMutation) => recruitmentUseCases.scheduleInterview(request),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: recruitmentKeys.all });
     },
+  });
+}
+
+export function useInterviews(params?: InterviewQuery, enabled = true) {
+  return useQuery({
+    queryKey: recruitmentKeys.interviews(params),
+    queryFn: () => recruitmentUseCases.getInterviews(params),
+    enabled,
   });
 }
 
@@ -207,16 +186,7 @@ export function useCreateJobOffer() {
   const queryClient = useQueryClient();
   return useMutation({
     networkMode: 'always',
-    mutationFn: (request: {
-      employmentApplicationId: number;
-      baseSalary: number;
-      currencyCode: string;
-      payFrequency: number;
-      employmentType: number;
-      workArrangement: number;
-      proposedStartDate: string;
-      termsAndConditions?: string;
-    }) => recruitmentUseCases.createOffer(request),
+    mutationFn: (request: CreateJobOfferMutation) => recruitmentUseCases.createOffer(request),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: recruitmentKeys.all });
     },
@@ -272,17 +242,8 @@ export function useHireCandidate() {
   const queryClient = useQueryClient();
   return useMutation({
     networkMode: 'always',
-    mutationFn: ({
-      id,
-      employeeNumber,
-      hireDate,
-      idempotencyKey,
-    }: {
-      id: number;
-      employeeNumber?: string;
-      hireDate?: string;
-      idempotencyKey?: string;
-    }) => recruitmentUseCases.hireCandidate(id, { employeeNumber, hireDate, idempotencyKey }),
+    mutationFn: ({ id, ...request }: { id: number } & HireCandidateMutation) =>
+      recruitmentUseCases.hireCandidate(id, request),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: recruitmentKeys.all });
     },

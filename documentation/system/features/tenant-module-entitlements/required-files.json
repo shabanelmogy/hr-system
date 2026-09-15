@@ -92,19 +92,13 @@
       "id": "catalog-service",
       "layer": "api",
       "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Modules/ModuleCatalogPolicy.cs",
-      "purpose": "Installed and accessible catalog projection"
+      "purpose": "Installed, tenant-entitlement, and accessible catalog projections"
     },
     {
-      "id": "entitlement-service",
+      "id": "entitlement-source-adapter",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Tenancy/Services/TenantModuleEntitlementService.cs",
-      "purpose": "Differential persistence and database permission checks"
-    },
-    {
-      "id": "entitlement-migration",
-      "layer": "database",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Migrations/20260909122310_AddTenantModuleEntitlements.cs",
-      "purpose": "Schema and compatibility seed"
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformContractSource.cs",
+      "purpose": "Platform-owned entitlement persistence adapter and live permission checks"
     },
     {
       "id": "modules-controller",
@@ -113,9 +107,21 @@
       "purpose": "Catalog endpoints"
     },
     {
+      "id": "web-module-api",
+      "layer": "web",
+      "path": "web-next/src/platform/modules/moduleApi.ts",
+      "purpose": "Validated installed, tenant-entitlement, and accessible catalog transport"
+    },
+    {
+      "id": "web-tenant-editor",
+      "layer": "web",
+      "path": "web-next/src/platform/tenants/TenantManagementPage.tsx",
+      "purpose": "Tenant editor consuming only assignable catalog choices"
+    },
+    {
       "id": "api-regression-test",
       "layer": "test",
-      "path": "api/ErpSystem.Tests/TenantUserFoundationTests.cs",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/TenantUserFoundationTests.cs",
       "purpose": "HR plus Accounting persistence regression"
     },
     {
@@ -153,6 +159,18 @@
       "layer": "mobile",
       "path": "mobile-react/src/platform/modules/presentation/screens/ModuleLauncherScreen.tsx",
       "purpose": "Native Odoo-style launcher"
+    },
+    {
+      "id": "mobile-module-api",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/modules/data/remote/module-remote-data-source.ts",
+      "purpose": "Validated installed, tenant-entitlement, and accessible catalog transport"
+    },
+    {
+      "id": "mobile-tenant-editor",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenants/presentation/screens/TenantManagementScreen.tsx",
+      "purpose": "Tenant editor consuming only assignable catalog choices"
     },
     {
       "id": "mobile-submodule-route",

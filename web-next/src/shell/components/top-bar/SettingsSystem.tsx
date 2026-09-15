@@ -3,7 +3,7 @@ import { alpha, IconButton, Tooltip } from "@mui/material";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import apiClient from "@/lib/api/client";
+import { authService } from "@/platform/auth";
 import { useTheme } from "@mui/material/styles";
 import { useUnsavedChanges } from "@/shared/contexts/UnsavedChangesContext";
 
@@ -29,7 +29,7 @@ const SettingsSystem = () => {
   const handleLogout = async () => {
     if (!(await requestDiscard())) return;
     handleSettingsMenuClose();
-    void apiClient.logout();
+    void authService.logout();
   };
 
   const navigateToProfile = async () => {

@@ -3,6 +3,23 @@ import path from "node:path";
 
 const nextRoot = path.resolve(".next");
 const chunksRoot = path.join(nextRoot, "static", "chunks");
+const mib = 1024 * 1024;
+
+function readPositiveByteBudget(name, fallback) {
+  const raw = process.env[name];
+  if (raw === undefined) return fallback;
+  if (!/^[1-9]\d*$/.test(raw) || !Number.isSafeInteger(Number(raw))) {
+    console.error(`${name} must be a positive integer number of bytes.`);
+    process.exit(1);
+  }
+  return Number(raw);
+}
+
+const budgets = {
+  totalJavaScriptBytes: readPositiveByteBudget("WEB_BUNDLE_MAX_TOTAL_JS_BYTES", 26 * mib),
+  largestChunkBytes: readPositiveByteBudget("WEB_BUNDLE_MAX_CHUNK_BYTES", 12 * mib),
+  firstLoadRouteBytes: readPositiveByteBudget("WEB_BUNDLE_MAX_FIRST_LOAD_ROUTE_BYTES", 4.5 * mib),
+};
 
 if (!fs.existsSync(chunksRoot)) {
   console.error("No .next/static/chunks directory found. Run `npm run build` first.");
@@ -51,7 +68,7 @@ const routeEntries = rawRouteEntries
   })
   .toSorted((left, right) => right.bytes - left.bytes);
 
-console.log(JSON.stringify({
+const report = {
   generatedAt: new Date().toISOString(),
   routeCount,
   measuredFirstLoadRouteCount: routeEntries.length || null,
@@ -66,4 +83,28 @@ console.log(JSON.stringify({
     ...item,
     mib: Number((item.bytes / 1024 / 1024).toFixed(2)),
   })),
-}, null, 2));
+  budgets: {
+    ...budgets,
+    totalJavaScriptMiB: Number((budgets.totalJavaScriptBytes / mib).toFixed(2)),
+    largestChunkMiB: Number((budgets.largestChunkBytes / mib).toFixed(2)),
+    firstLoadRouteMiB: Number((budgets.firstLoadRouteBytes / mib).toFixed(2)),
+  },
+};
+
+console.log(JSON.stringify(report, null, 2));
+
+const violations = [];
+if (totalBytes > budgets.totalJavaScriptBytes) {
+  violations.push(`total JavaScript ${totalBytes} bytes exceeds ${budgets.totalJavaScriptBytes}`);
+}
+if (largest[0]?.bytes > budgets.largestChunkBytes) {
+  violations.push(`largest chunk ${largest[0].bytes} bytes exceeds ${budgets.largestChunkBytes}`);
+}
+if (routeEntries[0]?.bytes > budgets.firstLoadRouteBytes) {
+  violations.push(`largest first-load route ${routeEntries[0].bytes} bytes exceeds ${budgets.firstLoadRouteBytes}`);
+}
+if (violations.length > 0) {
+  console.error("Web bundle budget exceeded:");
+  for (const violation of violations) console.error(`  ${violation}`);
+  process.exit(1);
+}

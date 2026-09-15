@@ -1,15 +1,15 @@
-import { hrNavigation } from "./navigation";
-import AdminPanelSettingsRoundedIcon from "@mui/icons-material/AdminPanelSettingsRounded";
-import AnalyticsRoundedIcon from "@mui/icons-material/AnalyticsRounded";
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import DatasetRoundedIcon from "@mui/icons-material/DatasetRounded";
 import FingerprintRoundedIcon from "@mui/icons-material/FingerprintRounded";
-import ForumRoundedIcon from "@mui/icons-material/ForumRounded";
 import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
 import PersonSearchRoundedIcon from "@mui/icons-material/PersonSearchRounded";
 import { appRoutes } from "@/config/routes";
 import { permissions } from "@/lib/auth/permissions";
-import type { FrontendModuleDefinition } from "@/platform/modules";
+import type {
+  FrontendModuleDefinition,
+  FrontendNavigationEntry,
+} from "@/platform/modules";
+import { hrNavigation } from "./navigation";
 
 const definition: FrontendModuleDefinition = {
   navigation: hrNavigation,
@@ -19,7 +19,7 @@ const definition: FrontendModuleDefinition = {
   tone: "primary",
   accentColor: "#6366F1",
   requiredDependencies: [],
-  optionalDependencies: [],
+  optionalDependencies: ["acc"],
   translationNamespace: "module-hr",
   loadTranslations: async (language) => (
     language === "ar"
@@ -28,50 +28,14 @@ const definition: FrontendModuleDefinition = {
   ),
   submodules: [
     {
-      code: "analytics",
-      name: "Analytics",
-      icon: <AnalyticsRoundedIcon />,
-      tone: "success",
-      requiredPermissions: [
-        permissions.ViewChangeLogs,
-        permissions.ViewHangfireDashboard,
-        permissions.ViewCrystalReports,
-        permissions.ManageCrystalReportAccess,
-      ],
-      entryCandidates: [
-        appRoutes.kpis,
-        appRoutes.trends,
-        appRoutes.healthPipeline,
-        appRoutes.attendanceTrends,
-        appRoutes.auth.crystalReportsPage,
-        appRoutes.advancedTools.trackChanges,
-        appRoutes.advancedTools.hangfireDashboard,
-      ],
-      navigation: [],
-      routePrefixes: [
-        appRoutes.attendanceTrends,
-        appRoutes.kpis,
-        appRoutes.trends,
-        appRoutes.healthPipeline,
-        appRoutes.auth.crystalReportsPage,
-        appRoutes.advancedTools.trackChanges,
-        appRoutes.advancedTools.hangfireDashboard,
-      ],
-    },
-    {
       code: "basic-data",
       name: "Basic data",
       icon: <DatasetRoundedIcon />,
       tone: "info",
-      requiredPermissions: [
-        permissions.ViewAddressTypes,
-        permissions.ViewCompanyGeographicScope,
-        permissions.ViewOrganizationalStructure,
-        permissions.ViewLocalizations,
-      ],
-      entryCandidates: [appRoutes.basicData.index],
+      requiredPermissions: [permissions.ViewOrganizationalStructure],
+      entryCandidates: [appRoutes.basicData.organizationalStructure.index],
       navigation: [],
-      routePrefixes: [appRoutes.advancedTools.localizationApi, appRoutes.basicData.index],
+      routePrefixes: [appRoutes.basicData.organizationalStructure.index],
     },
     {
       code: "recruitment",
@@ -89,7 +53,6 @@ const definition: FrontendModuleDefinition = {
       icon: <BadgeRoundedIcon />,
       tone: "primary",
       requiredPermissions: [
-        permissions.ViewFiscalYears,
         permissions.ViewWorkforcePlans,
         permissions.ViewWorkforceBudgets,
         permissions.ViewPositionEnvelopes,
@@ -97,9 +60,9 @@ const definition: FrontendModuleDefinition = {
         permissions.ViewEnvelopeAmendments,
         permissions.ViewWorkforceTrace,
       ],
-      entryCandidates: [appRoutes.workforcePlanning.index, appRoutes.finance.fiscalYears],
+      entryCandidates: [appRoutes.workforcePlanning.index],
       navigation: [],
-      routePrefixes: [appRoutes.workforcePlanning.index, appRoutes.finance.fiscalYears],
+      routePrefixes: [appRoutes.workforcePlanning.index],
     },
     {
       code: "attendance",
@@ -109,62 +72,40 @@ const definition: FrontendModuleDefinition = {
       requiredPermissions: [permissions.ViewAttendanceDevices],
       entryCandidates: [appRoutes.attendanceDevices.index],
       navigation: [],
-      routePrefixes: [appRoutes.attendanceDevices.index, "/attendance"],
-    },
-    {
-      code: "administration",
-      name: "Administration",
-      icon: <AdminPanelSettingsRoundedIcon />,
-      tone: "error",
-      requiredPermissions: [
-        permissions.ViewRoles,
-        permissions.ViewUsers,
-        permissions.ManageOfflineOperations,
-      ],
-      entryCandidates: [
-        appRoutes.auth.rolesPage,
-        appRoutes.auth.usersPage,
-        appRoutes.auth.invitationsPage,
-        appRoutes.auth.offlineOperationsPage,
-        appRoutes.advancedTools.healthCheck,
-        appRoutes.advancedTools.apiEndpoints,
-        appRoutes.extras.filesManager,
-        appRoutes.extras.appointments,
-      ],
-      navigation: [],
-      routePrefixes: ["/administration", "/advanced-tools", appRoutes.extras.filesManager, appRoutes.extras.appointments],
-    },
-    {
-      code: "collaboration",
-      name: "Collaboration",
-      icon: <ForumRoundedIcon />,
-      tone: "info",
-      requiredPermissions: [],
-      entryCandidates: [],
-      navigation: [],
-      routePrefixes: [],
+      routePrefixes: [appRoutes.attendanceDevices.index],
     },
   ],
 };
 
-// Section links, their permissions and titles have one source. Submodule
-// navigation is projected by the same most-specific route ownership rule.
+// Project sidebar links into the server-owned HR submodules. This keeps the
+// launcher, route guard and sidebar on the same ownership source.
 export const hrModuleDefinition: FrontendModuleDefinition = {
   ...definition,
-  submodules: definition.submodules.map(submodule => ({
+  submodules: definition.submodules.map((submodule) => ({
     ...submodule,
-    navigation: hrNavigation.flatMap(section => {
-      const collect = (items: typeof section.items): import("@/platform/modules").FrontendNavigationEntry[] => (items ?? []).flatMap(item => [
-        ...(item.path ? [{ titleKey: item.title, path: item.path, requiredPermissions: item.permissions, requiredRoles: item.roles }] : []),
-        ...collect(item.items),
-      ]);
-      const entries = collect(section.items).filter(entry => {
-        const owner = definition.submodules.flatMap(candidate => candidate.routePrefixes.map(prefix => ({ candidate, prefix })))
-          .filter(({ prefix }) => entry.path === prefix || entry.path.startsWith(prefix + "/"))
+    navigation: hrNavigation.flatMap((section) => {
+      const collect = (items: typeof section.items): FrontendNavigationEntry[] =>
+        (items ?? []).flatMap((item) => [
+          ...(item.path
+            ? [{
+              titleKey: item.title,
+              path: item.path,
+              requiredPermissions: item.permissions,
+              requiredRoles: item.roles,
+            }]
+            : []),
+          ...collect(item.items),
+        ]);
+      const entries = collect(section.items).filter((entry) => {
+        const owner = definition.submodules
+          .flatMap((candidate) => candidate.routePrefixes.map((prefix) => ({ candidate, prefix })))
+          .filter(({ prefix }) => entry.path === prefix || entry.path.startsWith(`${prefix}/`))
           .sort((left, right) => right.prefix.length - left.prefix.length)[0]?.candidate;
         return owner?.code === submodule.code;
       });
-      return entries.length ? [{ id: section.id, titleKey: section.title, entries }] : [];
+      return entries.length
+        ? [{ id: section.id, titleKey: section.title, entries }]
+        : [];
     }),
   })),
 };

@@ -1,14 +1,7 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useRecruitmentSettingsQuery, useUpdateRecruitmentSettingsMutation } from "./useRecruitment";
-import {
-  DEFAULT_STAGES,
-  DEFAULT_REASONS,
-  DEFAULT_SOURCES,
-  DEFAULT_CRITERIA,
-  DEFAULT_GENERAL_SETTINGS,
-} from "../services/recruitmentSettingsService";
 import type {
   RecruitmentStageConfig,
   RejectionReasonConfig,
@@ -20,35 +13,34 @@ import type {
 
 export function useRecruitmentSettings() {
   const settingsQuery = useRecruitmentSettingsQuery();
-  const { mutate: updateSettings } = useUpdateRecruitmentSettingsMutation();
-  const [overrides, setOverrides] = useState<Partial<RecruitmentSettingsDto>>({});
+  const updateSettingsMutation = useUpdateRecruitmentSettingsMutation();
 
   const serverSettings = settingsQuery.data;
-  const stages = overrides.stages
-    ?? (serverSettings?.stages?.length ? serverSettings.stages : DEFAULT_STAGES);
-  const reasons = overrides.rejectionReasons
-    ?? (serverSettings?.rejectionReasons?.length
-      ? serverSettings.rejectionReasons
-      : DEFAULT_REASONS);
-  const sources = overrides.sources
-    ?? (serverSettings?.sources?.length ? serverSettings.sources : DEFAULT_SOURCES);
-  const criteria = overrides.evaluationCriteria
-    ?? (serverSettings?.evaluationCriteria?.length ? serverSettings.evaluationCriteria : DEFAULT_CRITERIA);
-  const generalSettings = overrides.general ?? serverSettings?.general ?? DEFAULT_GENERAL_SETTINGS;
+  const stages = useMemo(() => serverSettings?.stages ?? [], [serverSettings?.stages]);
+  const reasons = useMemo(
+    () => serverSettings?.rejectionReasons ?? [],
+    [serverSettings?.rejectionReasons],
+  );
+  const sources = useMemo(() => serverSettings?.sources ?? [], [serverSettings?.sources]);
+  const criteria = useMemo(
+    () => serverSettings?.evaluationCriteria ?? [],
+    [serverSettings?.evaluationCriteria],
+  );
+  const generalSettings = serverSettings?.general;
 
   const persistChanges = useCallback((changes: Partial<RecruitmentSettingsDto>) => {
+    if (!serverSettings) return;
     const payload: RecruitmentSettingsDto = {
-      stages: changes.stages ?? stages,
-      rejectionReasons: changes.rejectionReasons ?? reasons,
-      sources: changes.sources ?? sources,
-      evaluationCriteria: changes.evaluationCriteria ?? criteria,
-      general: changes.general ?? generalSettings,
+      stages: changes.stages ?? serverSettings.stages,
+      rejectionReasons: changes.rejectionReasons ?? serverSettings.rejectionReasons,
+      sources: changes.sources ?? serverSettings.sources,
+      evaluationCriteria: changes.evaluationCriteria ?? serverSettings.evaluationCriteria,
+      general: changes.general ?? serverSettings.general,
     };
-    updateSettings(payload);
-  }, [criteria, generalSettings, reasons, sources, stages, updateSettings]);
+    updateSettingsMutation.mutate(payload);
+  }, [serverSettings, updateSettingsMutation]);
 
   const saveStages = useCallback((nextStages: RecruitmentStageConfig[]) => {
-    setOverrides((current) => ({ ...current, stages: nextStages }));
     persistChanges({ stages: nextStages });
   }, [persistChanges]);
 
@@ -64,12 +56,7 @@ export function useRecruitmentSettings() {
       .sort((left, right) => left.sequence - right.sequence));
   }, [saveStages, stages]);
 
-  const deleteStage = useCallback((id: string) => {
-    saveStages(stages.filter((stage) => stage.id !== id));
-  }, [saveStages, stages]);
-
   const saveReasons = useCallback((nextReasons: RejectionReasonConfig[]) => {
-    setOverrides((current) => ({ ...current, rejectionReasons: nextReasons }));
     persistChanges({ rejectionReasons: nextReasons });
   }, [persistChanges]);
 
@@ -81,12 +68,7 @@ export function useRecruitmentSettings() {
     saveReasons(reasons.map((reason) => reason.id === id ? { ...reason, ...changes } : reason));
   }, [reasons, saveReasons]);
 
-  const deleteReason = useCallback((id: string) => {
-    saveReasons(reasons.filter((reason) => reason.id !== id));
-  }, [reasons, saveReasons]);
-
   const saveSources = useCallback((nextSources: RecruitmentSourceConfig[]) => {
-    setOverrides((current) => ({ ...current, sources: nextSources }));
     persistChanges({ sources: nextSources });
   }, [persistChanges]);
 
@@ -98,12 +80,7 @@ export function useRecruitmentSettings() {
     saveSources(sources.map((source) => source.id === id ? { ...source, ...changes } : source));
   }, [saveSources, sources]);
 
-  const deleteSource = useCallback((id: string) => {
-    saveSources(sources.filter((source) => source.id !== id));
-  }, [saveSources, sources]);
-
   const saveCriteria = useCallback((nextCriteria: EvaluationCriterionConfig[]) => {
-    setOverrides((current) => ({ ...current, evaluationCriteria: nextCriteria }));
     persistChanges({ evaluationCriteria: nextCriteria });
   }, [persistChanges]);
 
@@ -116,49 +93,32 @@ export function useRecruitmentSettings() {
       criterion.id === id ? { ...criterion, ...changes } : criterion));
   }, [criteria, saveCriteria]);
 
-  const deleteCriterion = useCallback((id: string) => {
-    saveCriteria(criteria.filter((criterion) => criterion.id !== id));
-  }, [criteria, saveCriteria]);
-
   const updateGeneralSettings = useCallback((changes: Partial<RecruitmentGeneralSettings>) => {
+    if (!generalSettings) return;
     const nextGeneralSettings = { ...generalSettings, ...changes };
-    setOverrides((current) => ({ ...current, general: nextGeneralSettings }));
     persistChanges({ general: nextGeneralSettings });
   }, [generalSettings, persistChanges]);
 
-  const resetAll = useCallback(() => {
-    const defaults: RecruitmentSettingsDto = {
-      stages: DEFAULT_STAGES,
-      rejectionReasons: DEFAULT_REASONS,
-      sources: DEFAULT_SOURCES,
-      evaluationCriteria: DEFAULT_CRITERIA,
-      general: DEFAULT_GENERAL_SETTINGS,
-    };
-    setOverrides(defaults);
-    persistChanges(defaults);
-  }, [persistChanges]);
-
   return {
-    isLoaded: !settingsQuery.isLoading,
+    isLoaded: settingsQuery.isSuccess,
+    isLoading: settingsQuery.isLoading,
+    isError: settingsQuery.isError,
+    error: settingsQuery.error,
+    isSaving: updateSettingsMutation.isPending,
     stages,
     saveStages,
     addStage,
     updateStage,
-    deleteStage,
     reasons,
     addReason,
     updateReason,
-    deleteReason,
     sources,
     addSource,
     updateSource,
-    deleteSource,
     criteria,
     addCriterion,
     updateCriterion,
-    deleteCriterion,
     generalSettings,
     updateGeneralSettings,
-    resetAll,
   };
 }

@@ -6,9 +6,9 @@
 
 Build the server contract first so both clients consume one stable model.
 
-Execution reference: `documentation/api/Feature_Module_Implementation_Checklist.md`.
-The applied feature profile supplies evidence; the generic checklist supplies the
-implementation discipline.
+Execution reference: `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`.
+The applied feature profile supplies evidence; the workflow supplies the mandatory
+existing-system review, implementation order, and Definition of Done.
 
 ## Required decisions
 
@@ -81,7 +81,7 @@ implementation discipline.
 | master | 3 | `8514635d9b88b4e74c315a3f0b0860314393524012944996853cce1ab76195cd` |
 | master | 4 | `640408799d07c9939468c39e65e9d2601daa6e89d7896f24b13a924f4ecbb04d` |
 | master | 6 | `b7fb453c6be690cf10f98e85664f30fb55fb590e628b0f8a0435f54cf67058ac` |
-| api | 1 | `e271ad8476b75e15178926775fd90916165a254ffc42d4743e325000a3beaea0` |
+| api | 1 | `a0977b60e2a09823da430522f9939915d8529c5c078859a35c5c4f6125dff514` |
 | api | 2 | `56d1a2a7f31bd99f31d6d47bc54ec7d9bc9857ea2e8acd28bac4ed2d601864a3` |
 | api | 3 | `1ed086d9c6342d4b59513fe93963fa4f837d0d896e5cfb9afa308ca8abebcecb` |
 | api | 4 | `c5136f272c114dce53d9dd30f70a745d81a32acd0d19c8b68a6f40d8c6991eb4` |
@@ -90,4 +90,4 @@ implementation discipline.
 | api | 7 | `d3c803b44c4e65794a60c9b31eeeab120922dc55a8da5e8c0de7e8a116913f93` |
 | api | 8 | `6ba0561bbba0e93a7ce34482ec27b468c6d56b5255c755acb11d8b29f74bb994` |
 | api | 9 | `c1c6f745e49d895fa7a91d52fd3616c3c0010c46c00cd5c472f2c7e65f1791d3` |
-| api | 10 | `09f8411b30c1b462ae52bbe73f77f5f6af82d57d7d681ed2a0c3b6335617e520` |
+| api | 10 | `1101f8462765ca7e0bfd63c534f2bed36aa85d10a528bc168655e1774e01d2fc` |

@@ -140,8 +140,8 @@ Do not combine Managed Crystal `.rpt` records with ActiveReports/RDLX
 | Runtime/deployment | `Shared ReportViewer is reachable from every entity multi-view selector.` |
 | Verification | `Catalog loading, no-report, filter toggle, and render paths are covered by the shared report pattern.` |
 
-For Managed Crystal, also record evidence that the HR API data profile and Crystal
-runtime schema profile match, that a manager-owned version is published, and that
+For Managed Crystal, also record evidence that the Reporting data provider/owning-
+module source and Crystal runtime schema profile match, that a manager-owned version is published, and that
 the intended current-company roles have `Run`. Clients send only report ID,
 `ar`/`en`, and bounded feature filters; they never send a path, filename, SQL,
 connection string, tenant ID, or company ID.
@@ -164,7 +164,7 @@ connection string, tenant ID, or company ID.
 | Layer | Command or check | Result | Date |
 | --- | --- | --- | --- |
 | Documentation | `./documentation/system/Generate-Documentation.ps1 -Check` | `Passed after registering four canonical books, final manifest, and seven recipes` | `2026-08-31` |
-| API | `dotnet build api/ErpSystem.Api/ErpSystem.Api.csproj --no-restore`; `dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore` | `Build passed; full API suite passed 380/380; focused OrganizationalStructure suite passed 6/6 and includes 210 SQL Server translation combinations` | `2026-08-31` |
+| API | Current gate: `dotnet build api/ErpSystem.sln -c Release`; `dotnet test api/ErpSystem.sln -c Release` | Original 2026-08-31 verification is historical; current authoritative API result is recorded in `documentation/api/FOUNDATION_CLOSURE_MATRIX.md` | `2026-08-31` |
 | Web | `npm run check:architecture`; `npm run lint`; `npm run test`; `npm run type-check`; `npm run build`; authenticated local API-proxy request | `Architecture/lint/type-check/build passed; Vitest previously passed 310/310; production route table includes the management route; initial Branches request through the local web proxy returned HTTP 200` | `2026-08-31` |
 | Mobile | `npm run typecheck`; `npm run check:architecture`; `npm run lint`; `npm run test -- --runInBand` | `TypeScript, architecture, lint, and full Jest suite passed (43 suites / 125 tests)` | `2026-08-31` |
 

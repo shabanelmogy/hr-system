@@ -4,7 +4,7 @@ Status: applied API contract for States. Base route: `/api/v1/states`.
 
 ## 1. Boundary
 
-`StatesController` is a thin `ISender` adapter. It uses `ApiRoutes.BaseRoute2`, the `super_admin` role guard, and States permission attributes. No controller action calls the legacy State service.
+`StatesController` is a thin `ISender` adapter. It uses `ApiRoutes.BaseRoute2`, the `super_admin` role guard, and States permission attributes. Controller actions dispatch only the owning Application commands and queries.
 
 ## 2. Transport contracts
 
@@ -70,16 +70,20 @@ Stable errors include duplicate State, missing State, missing/inactive Country, 
 
 ## 11. Browser Crystal report contract
 
-The legacy `CrystalReportGeneratorApi` exposes a States report catalog through
-`POST report/info` with `subFolderPath: "States"` and `reportCategory: "States"`.
-`POST` and `GET report/states/generate` accept `StateReportRequest`, including
-`NameAr`, `NameEn`, report path/file, export filename, logo, and language. They
-generate through `V_AllStates`, which contains State id/names/code and parent
-Country id/names. The States folder is checked in empty with `.gitkeep`; its
-absence of an `.rpt` is a valid catalog-empty state, not a generation error. A
-future template filename must contain `States` to satisfy the existing catalog
-filter.
+States uses the managed Reporting API, not a State-specific Crystal endpoint.
+The browser lists published reports with
+`GET /api/v1/crystal-reports?entityKey=states` and renders the selected managed
+report with `POST /api/v1/crystal-reports/{reportId}/render`. The request carries
+only `ar`/`en` plus allowlisted filters such as `NameAr` and `NameEn`; report paths,
+filenames, SQL, connection strings, tenant, and company are never client inputs.
 
-## 12. Tests and legacy note
+`StatesCrystalReportDataProvider` resolves the explicit State dataset through the
+ReferenceData reporting Contract and emits `StateId`, `StateAr`, `StateEn`,
+`StateCode`, `CountryId`, `CountryAr`, and `CountryEn`. The separate Crystal runtime
+validates the `states` schema profile and binds that DataSet without connecting to
+the ERP database. An empty published catalog is a valid unavailable state until a
+validated `.rpt` version is imported/uploaded and published through Report Manager.
 
-`StateCqrsArchitectureTests` verifies controller routes, message contracts, handler ports, mapping, and validators. `StatesControllerCqrsTests` verifies dispatch, the bulk envelope, and success status. `StateBulkCreateHandlerTests` proves cross-field values are allowed, same-field case-insensitive request duplicates fail, persistence checks remain field-scoped and case-insensitive, scheduling follows commit, and create/archive/restore select the required Country or State lifecycle resource. `GeographicParentReassignmentHandlerTests` proves same-parent edits remain allowed and dependent State reassignment is blocked. `BackgroundNotificationJobTests` proves plural bulk notification keys. The unused `IStateService` and `StateService` path was removed after a repository-wide consumer audit. `StateChangedJob` remains registered only as a compatibility executor for jobs persisted before the CQRS migration; no current producer schedules it, and it can be removed after the deployed Hangfire queues and retained job history no longer reference its serialized type.
+## 12. Tests and retired-path evidence
+
+`StateCqrsArchitectureTests` verifies controller routes, message contracts, handler ports, mapping, and validators. `StatesControllerCqrsTests` verifies dispatch, the bulk envelope, and success status. `StateBulkCreateHandlerTests` proves cross-field values are allowed, same-field case-insensitive request duplicates fail, persistence checks remain field-scoped and case-insensitive, scheduling follows commit, and create/archive/restore select the required Country or State lifecycle resource. `GeographicParentReassignmentHandlerTests` proves same-parent edits remain allowed and dependent State reassignment is blocked. `BackgroundNotificationJobTests` proves plural bulk notification keys. The retired `IStateService`/`StateService` path was removed after a repository-wide consumer audit, and the current runtime source contains no `StateChangedJob` compatibility executor. State business work therefore has one CQRS path.

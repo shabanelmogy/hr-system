@@ -1,5 +1,5 @@
 using System.Text.Json;
-using ErpSystem.Modules.HR.Application.Abstractions.Messaging;
+using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts;
 using ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Errors;
 using ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities;
@@ -67,7 +67,8 @@ public sealed class ClaimAttendanceAgentWorkCommandHandler(
 }
 
 public sealed class SubmitAttendanceAgentWorkResultCommandHandler(
-    IAttendanceRawStore raw, IUnitOfWork unitOfWork, TimeProvider clock, AttendanceDeviceEffects effects, AttendanceDeviceErrors errors)
+    IAttendanceRawStore raw, IAttendanceEventKeyGenerator eventKeyGenerator,
+    IUnitOfWork unitOfWork, TimeProvider clock, AttendanceDeviceEffects effects, AttendanceDeviceErrors errors)
     : ICommandHandler<SubmitAttendanceAgentWorkResultCommand, Result<AttendanceAgentWorkResultResponse>>
 {
     public async Task<Result<AttendanceAgentWorkResultResponse>> Handle(SubmitAttendanceAgentWorkResultCommand request, CancellationToken ct)
@@ -144,7 +145,7 @@ public sealed class SubmitAttendanceAgentWorkResultCommandHandler(
         }
     }
 
-    private static async Task StorePunchesAsync(DevicePullRun run, SubmitAttendanceAgentWorkResultRequest result, IAttendanceRawStore store, TimeProvider clock, CancellationToken ct)
+    private async Task StorePunchesAsync(DevicePullRun run, SubmitAttendanceAgentWorkResultRequest result, IAttendanceRawStore store, TimeProvider clock, CancellationToken ct)
     {
         var punches = result.Punches ?? [];
         run.ReadCount = Math.Max(result.ReadCount, punches.Count);
@@ -153,7 +154,7 @@ public sealed class SubmitAttendanceAgentWorkResultCommandHandler(
         TimeZoneInfo zone;
         try { zone = TimeZoneInfo.FindSystemTimeZoneById(run.AttendanceDevice.TimeZoneId); }
         catch (TimeZoneNotFoundException) { Fail(run, "TIME_ZONE_UNAVAILABLE", clock); return; }
-        var keys = punches.Select(x => RawAttendanceConversion.Key(run.AttendanceDevice.ProviderId,
+        var keys = punches.Select(x => eventKeyGenerator.Create(run.AttendanceDevice.ProviderId,
             new ConnectorPunch(x.ExternalCode, x.Name, x.OccurredAtDeviceLocal, x.VerifyMode, x.InOutMode, x.WorkCode, x.ProviderEventId))).Distinct().ToArray();
         var existing = new HashSet<string>(StringComparer.Ordinal);
         foreach (var batch in keys.Chunk(500)) existing.UnionWith(await store.FindPunchKeysAsync(run.AttendanceDeviceId, batch, ct));
@@ -162,7 +163,7 @@ public sealed class SubmitAttendanceAgentWorkResultCommandHandler(
             var connector = new ConnectorPunch(item.ExternalCode, item.Name, item.OccurredAtDeviceLocal, item.VerifyMode, item.InOutMode, item.WorkCode, item.ProviderEventId);
             if (!RawAttendanceConversion.ValidCode(item.ExternalCode) || item.ProviderEventId?.Length > 256 || !RawAttendanceConversion.TryUtc(item.OccurredAtDeviceLocal, zone, out var utc)) { run.SkippedCount++; continue; }
             if ((run.FromUtc.HasValue && utc < run.FromUtc) || (run.ToUtc.HasValue && utc > run.ToUtc)) { run.SkippedCount++; continue; }
-            var key = RawAttendanceConversion.Key(run.AttendanceDevice.ProviderId, connector);
+            var key = eventKeyGenerator.Create(run.AttendanceDevice.ProviderId, connector);
             if (!existing.Add(key)) { run.DuplicateCount++; continue; }
             store.Add(new RawAttendancePunch { AttendanceDeviceId = run.AttendanceDeviceId, ExternalCode = item.ExternalCode, Name = RawAttendanceConversion.SafeName(item.Name),
                 OccurredAtDeviceLocal = DateTime.SpecifyKind(item.OccurredAtDeviceLocal, DateTimeKind.Unspecified), OccurredAtUtc = utc,

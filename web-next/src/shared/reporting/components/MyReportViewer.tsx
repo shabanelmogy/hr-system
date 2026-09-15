@@ -16,6 +16,7 @@ import {
   KeyboardArrowUp,
 } from "@mui/icons-material";
 import type { ReportSearchParams } from "./ReportViewer";
+import { useTranslation } from "react-i18next";
 
 type MyReportViewerProps = {
   children?: ReactNode | ((updateSearchParams: (params: ReportSearchParams) => void, searchParams: ReportSearchParams) => ReactNode);
@@ -45,6 +46,7 @@ const MyReportViewer = ({
   const loadingTimerRef = useRef<number | null>(null);
 
   const theme = useTheme();
+  const { t } = useTranslation();
   const lang = theme.direction === "rtl" ? "ar" : "en";
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -155,7 +157,7 @@ const MyReportViewer = ({
           }}
           onClick={toggleSidebar}
         >
-          <Box sx={{ flexGrow: 1, pl: 2 }}>Search Options</Box>
+          <Box sx={{ flexGrow: 1, pl: 2 }}>{t("reports.searchOptions")}</Box>
           <IconButton color="inherit" size="small" sx={{ mr: 1 }}>
             {sidebarOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </IconButton>
@@ -202,7 +204,7 @@ const MyReportViewer = ({
             fullWidth
             sx={{ mt: 1 }}
           >
-            SEARCH
+            {t("reports.searchUpper")}
           </Button>
         </Box>
       </Paper>
@@ -276,7 +278,7 @@ const MyReportViewer = ({
               backgroundColor: theme.palette.background.default,
               colorScheme: theme.palette.mode,
             }}
-            title="Report Viewer"
+            title={t("reports.reportViewer")}
             allowFullScreen
           />
         )}

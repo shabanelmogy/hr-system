@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.BuildingBlocks.Presentation</AssemblyName>
+    <RootNamespace>ErpSystem.BuildingBlocks.Presentation</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ErpSystem.BuildingBlocks.Application\ErpSystem.BuildingBlocks.Application.csproj" />
+    <ProjectReference Include="..\ErpSystem.BuildingBlocks.Authorization\ErpSystem.BuildingBlocks.Authorization.csproj" />
+  </ItemGroup>
+</Project>

@@ -26,14 +26,14 @@ public sealed class EmploymentApplicationConfiguration : IEntityTypeConfiguratio
             .HasFilter("[HireIdempotencyKey] IS NOT NULL")
             .IsUnique();
 
-        builder.HasOne<Candidate>()
+        builder.HasOne(x => x.Candidate)
             .WithMany()
             .HasForeignKey(x => new { x.TenantId, x.CandidateId })
             .HasPrincipalKey(c => new { c.TenantId, c.Id })
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<JobOpening>()
-            .WithMany()
+        builder.HasOne(x => x.JobOpening)
+            .WithMany(x => x.Applications)
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.JobOpeningId })
             .HasPrincipalKey(o => new { o.TenantId, o.CompanyId, o.Id })
             .OnDelete(DeleteBehavior.Restrict);
@@ -45,7 +45,7 @@ public sealed class EmploymentApplicationConfiguration : IEntityTypeConfiguratio
             .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<JobPosting>()
+        builder.HasOne(x => x.JobPosting)
             .WithMany()
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.JobPostingId })
             .HasPrincipalKey(p => new { p.TenantId, p.CompanyId, p.Id })

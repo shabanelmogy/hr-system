@@ -1,5 +1,5 @@
-using ErpSystem.Modules.HR.Domain.Common.Entities;
-using static ErpSystem.Modules.HR.Domain.Common.Guards.DomainGuard;
+using ErpSystem.BuildingBlocks.Domain.Entities;
+using static ErpSystem.BuildingBlocks.Domain.Guards.DomainGuard;
 
 namespace ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities;
 

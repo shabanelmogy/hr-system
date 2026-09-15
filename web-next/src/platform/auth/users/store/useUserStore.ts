@@ -12,32 +12,28 @@ import type {
 import {
   parseUserResponse,
   parseUserCompanyOptionsResponse,
-  parseUsersResponse,
-  parseUsersPageResponse,
   parseUserInvitationResponse,
   parseUserInvitationsResponse,
 } from "../../utils/apiResponse";
-import type { ManagementPageQuery, ManagementPageResponse } from "@/lib/api/pagination";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 export interface UserStore {
-  users: User[];
   companyOptions: UserCompanyOption[];
   invitations: UserInvitation[];
-  hasLoaded: boolean;
-  fetchUsers: () => Promise<User[]>;
-  fetchUsersPage: (query: ManagementPageQuery) => Promise<ManagementPageResponse<User>>;
+  hasCompanyOptionsLoaded: boolean;
   fetchCompanyOptions: () => Promise<UserCompanyOption[]>;
   fetchInvitations: () => Promise<UserInvitation[]>;
   inviteUser: (request: CreateUserInvitationRequest) => Promise<UserInvitation>;
   resendInvitation: (id: string) => Promise<UserInvitation>;
   revokeInvitation: (id: string) => Promise<void>;
   addUser: (request: CreateUserRequest) => Promise<User>;
-  updateUser: (request: UpdateUserRequest) => Promise<User>;
+  updateUser: (request: UpdateUserRequest) => Promise<void>;
   changeUserPassword: (request: ChangeUserPasswordRequest) => Promise<void>;
-  toggleUser: (id: string) => Promise<User>;
-  unLockUser: (id: string) => Promise<User>;
+  toggleUser: (id: string) => Promise<void>;
+  unLockUser: (id: string) => Promise<void>;
+  archiveUser: (id: string, reason: string) => Promise<void>;
+  restoreUser: (id: string) => Promise<void>;
   revokeToken: (userId: string) => Promise<void>;
   resetUserData: () => void;
 }
@@ -49,35 +45,16 @@ let userStoreGeneration = 0;
 const useUserStore = create<UserStore>()(
   devtools(
       (set, get) => ({
-        users: [],
         companyOptions: [],
         invitations: [],
-        hasLoaded: false,
-
-        fetchUsers: async () => {
-          const generation = userStoreGeneration;
-          const response = await apiService.get<unknown>(apiRoutes.users.getAll);
-          const users = parseUsersResponse(response);
-          if (generation !== userStoreGeneration) return users;
-          set({ users, hasLoaded: true });
-          return users;
-        },
-
-        fetchUsersPage: async (query) => {
-          const generation = userStoreGeneration;
-          const response = await apiService.get<unknown>(apiRoutes.users.getPage, { ...query });
-          const page = parseUsersPageResponse(response);
-          if (generation !== userStoreGeneration) return page;
-          set({ users: page.items, hasLoaded: true });
-          return page;
-        },
+        hasCompanyOptionsLoaded: false,
 
         fetchCompanyOptions: async () => {
           const generation = userStoreGeneration;
           const response = await apiService.get<unknown>(apiRoutes.users.getCompanyOptions);
           const companyOptions = parseUserCompanyOptionsResponse(response);
           if (generation !== userStoreGeneration) return companyOptions;
-          set({ companyOptions });
+          set({ companyOptions, hasCompanyOptionsLoaded: true });
           return companyOptions;
         },
 
@@ -119,24 +96,15 @@ const useUserStore = create<UserStore>()(
           const generation = userStoreGeneration;
           await apiService.delete(apiRoutes.userInvitations.revoke(id));
           if (generation !== userStoreGeneration) return;
-          set((state) => ({
-            invitations: state.invitations.map((item) => item.id === id
-              ? { ...item, status: "revoked", revokedOn: new Date().toISOString() }
-              : item),
-          }));
+          await get().fetchInvitations();
         },
 
         addUser: async (request) => {
-          const generation = userStoreGeneration;
           const response = await apiService.post<unknown>(apiRoutes.users.add, request);
-          const user = parseUserResponse(response);
-          if (generation !== userStoreGeneration) return user;
-          set((state) => ({ users: [...state.users, user] }));
-          return user;
+          return parseUserResponse(response);
         },
 
         updateUser: async (request) => {
-          const generation = userStoreGeneration;
           await apiService.put<void>(apiRoutes.users.update(request.id), {
             firstName: request.firstName,
             lastName: request.lastName,
@@ -146,18 +114,6 @@ const useUserStore = create<UserStore>()(
             companyIds: request.companyIds,
             defaultCompanyId: request.defaultCompanyId,
           });
-
-          const current = get().users.find((user) => user.id === request.id);
-          if (!current) throw new Error("Updated user was not found in the local store.");
-
-          const updatedUser: User = { ...current, ...request };
-          if (generation !== userStoreGeneration) return updatedUser;
-          set((state) => ({
-            users: state.users.map((user) =>
-              user.id === request.id ? updatedUser : user,
-            ),
-          }));
-          return updatedUser;
         },
 
         changeUserPassword: async ({ id, newPassword, confirmPassword }) => {
@@ -168,31 +124,19 @@ const useUserStore = create<UserStore>()(
         },
 
         toggleUser: async (id) => {
-          const generation = userStoreGeneration;
           await apiService.put<void>(apiRoutes.users.toggle(id));
-          const current = get().users.find((user) => user.id === id);
-          if (!current) throw new Error("Toggled user was not found in the local store.");
-
-          const updatedUser = { ...current, isDisabled: !current.isDisabled };
-          if (generation !== userStoreGeneration) return updatedUser;
-          set((state) => ({
-            users: state.users.map((user) => user.id === id ? updatedUser : user),
-          }));
-          return updatedUser;
         },
 
         unLockUser: async (id) => {
-          const generation = userStoreGeneration;
           await apiService.put<void>(apiRoutes.users.unlock(id));
-          const current = get().users.find((user) => user.id === id);
-          if (!current) throw new Error("Unlocked user was not found in the local store.");
+        },
 
-          const updatedUser = { ...current, isLocked: false };
-          if (generation !== userStoreGeneration) return updatedUser;
-          set((state) => ({
-            users: state.users.map((user) => user.id === id ? updatedUser : user),
-          }));
-          return updatedUser;
+        archiveUser: async (id, reason) => {
+          await apiService.post<void>(apiRoutes.users.archive(id), { reason });
+        },
+
+        restoreUser: async (id) => {
+          await apiService.post<void>(apiRoutes.users.restore(id));
         },
 
         revokeToken: async (userId) => {
@@ -201,7 +145,7 @@ const useUserStore = create<UserStore>()(
 
         resetUserData: () => {
           userStoreGeneration += 1;
-          set({ users: [], companyOptions: [], invitations: [], hasLoaded: false });
+          set({ companyOptions: [], invitations: [], hasCompanyOptionsLoaded: false });
         },
       }),
   ),

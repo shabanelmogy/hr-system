@@ -67,7 +67,7 @@ export function AppAppBar({
             ) : null}
             {developmentRoleLabel ? (
               <View
-                accessibilityLabel={`Development role: ${developmentRoleLabel}`}
+                accessibilityLabel={t('navigation.developmentRole', { role: developmentRoleLabel })}
                 style={[
                   styles.roleBadge,
                   {
@@ -80,7 +80,7 @@ export function AppAppBar({
                   style={{ color: theme.colors.onPrimary }}
                   variant="caption"
                   weight="800">
-                  DEV · {developmentRoleLabel}
+                  {t('navigation.development')} · {developmentRoleLabel}
                 </AppText>
               </View>
             ) : null}

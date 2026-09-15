@@ -4,3 +4,7 @@ graphify-out/cache/
 .codex-tmp
 .kiro
 .codex
+
+# Local execution/build diagnostics
+*.log
+.tmp-*

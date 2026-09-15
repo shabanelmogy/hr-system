@@ -11,9 +11,8 @@ interface Props {
 }
 
 export function EducationRequirementsEditor({ requirements = [], onChange, disabled = false }: Props) {
-  const { i18n } = useTranslation();
+  const { t } = useTranslation();
   const { theme } = useAppTheme();
-  const isAr = i18n.language === 'ar';
 
   const handleAdd = () => {
     onChange([...requirements, { degreeLevel: '', fieldOfStudy: '', isRequired: true }]);
@@ -31,7 +30,7 @@ export function EducationRequirementsEditor({ requirements = [], onChange, disab
     <View style={styles.container}>
       <View style={styles.header}>
         <AppText variant="label" style={styles.title}>
-          {isAr ? 'المؤهلات العلمية المطلوبة' : 'Education Requirements'}
+          {t('organizationalStructure.jobDescriptionEditors.education.title')}
         </AppText>
         {!disabled && (
           <AppButton
@@ -39,14 +38,14 @@ export function EducationRequirementsEditor({ requirements = [], onChange, disab
             onPress={handleAdd}
             variant="outline"
           >
-            {isAr ? 'إضافة مؤهل' : 'Add Education'}
+            {t('organizationalStructure.jobDescriptionEditors.education.add')}
           </AppButton>
         )}
       </View>
 
       {requirements.length === 0 ? (
         <AppText color="muted" variant="caption">
-          {isAr ? 'لم تتم إضافة مؤهلات علمية بعد.' : 'No education requirements added yet.'}
+          {t('organizationalStructure.jobDescriptionEditors.education.empty')}
         </AppText>
       ) : (
         <View style={styles.list}>
@@ -57,33 +56,33 @@ export function EducationRequirementsEditor({ requirements = [], onChange, disab
             >
               <View style={styles.cardHeader}>
                 <AppText variant="label" style={styles.cardTitle}>
-                  {isAr ? `مؤهل #${index + 1}` : `Requirement #${index + 1}`}
+                  {t('organizationalStructure.jobDescriptionEditors.education.number', { number: index + 1 })}
                 </AppText>
                 {!disabled && (
                   <AppIconButton
                     icon="trash-outline"
-                    label={isAr ? 'حذف' : 'Delete'}
+                    label={t('common.delete')}
                     onPress={() => handleRemove(index)}
                   />
                 )}
               </View>
               <AppTextField
                 editable={!disabled}
-                label={isAr ? 'المستوى الدراسي (بكالوريوس / ماجستير)' : 'Degree Level (Bachelor / Master)'}
+                label={t('organizationalStructure.jobDescriptionEditors.education.degreeLevel')}
                 name={`degreeLevel_${index}`}
                 onChangeText={(val) => handleUpdate(index, { degreeLevel: val })}
                 value={req.degreeLevel}
               />
               <AppTextField
                 editable={!disabled}
-                label={isAr ? 'التخصص / مجال الدراسة' : 'Field of Study'}
+                label={t('organizationalStructure.jobDescriptionEditors.education.fieldOfStudy')}
                 name={`fieldOfStudy_${index}`}
                 onChangeText={(val) => handleUpdate(index, { fieldOfStudy: val })}
                 value={req.fieldOfStudy}
               />
               <AppSwitchField
                 disabled={disabled}
-                label={isAr ? 'مؤهل إلزامي' : 'Mandatory requirement'}
+                label={t('organizationalStructure.jobDescriptionEditors.education.mandatory')}
                 name={`isRequired_${index}`}
                 onValueChange={(val) => handleUpdate(index, { isRequired: val })}
                 value={req.isRequired}

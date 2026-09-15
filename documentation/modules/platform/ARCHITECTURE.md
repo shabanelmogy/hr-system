@@ -20,21 +20,18 @@ or direct infrastructure calls.
   tenant/company access policy, entitlements, module catalog policy, generic
   file workflow/orchestration and storage policy, localization policy,
   notifications, security-audit write policy, and offline-operations policy.
-- Infrastructure owns Platform persistence that has been safely separated,
-  token/authorization implementation, and direct legacy-HR read sources where
-  the Platform side can read compatibility tables without referencing HR.
-- Compatibility-sensitive writes or physical tables that have not moved remain
-  behind narrow HR adapters. For Files, HR retains the historical `UploadedFile`
-  persistence, protected filesystem layout, and realtime transport adapter while
-  Platform owns the generic workflow. For Notifications, Platform owns publication
-  and inbox lifecycle orchestration while HR retains the historical `Notifications`
-  table, Identity-backed recipient/permission resolution, SignalR delivery, and
-  legacy HTTP/DTO facade. These are explicit storage/transport compatibility
-  boundaries, not permission for Platform to depend on HR or for new platform
-  policy to be added to HR.
-- Platform Presentation owns technical endpoints such as the tenant-visible
-  module catalog surface. Existing legacy HTTP routes may remain in HR only when
-  wire compatibility is intentionally preserved and covered by tests.
+- Infrastructure owns Platform persistence and token/authorization implementation
+  through `PlatformDbContext` and the `platform` schema. Identity, tenants,
+  companies, memberships, entitlements, files, notifications, audit records,
+  API keys, and authentication challenges are Platform-owned tables.
+- Cross-module reads and writes use public Contracts. ReferenceData supplies the
+  global geographic catalog to Platform company-scope workflows; business
+  modules store only scalar tenant/company identifiers and never import Platform
+  Infrastructure or EF types.
+- Platform Presentation owns tenant, company, entitlement, authentication, and
+  technical module-catalog endpoints. A route can remain at its historical URL
+  only when the wire contract is deliberately preserved and covered by tests;
+  that does not move its persistence ownership back to HR.
 
 ## Authorization and execution scope
 
@@ -52,8 +49,8 @@ the current database role permission, and the tenant submodule entitlement.
 Platform permissions remain claim-only after authentication and are never gated
 by tenant entitlements. Unknown permissions fail closed.
 
-RBAC mutations in the HR compatibility boundary (`RoleService`) use
-`ApplicationDbContext.ExecuteAtomicallyAsync` on SQL Server. The lock resource is
+RBAC mutations in Platform (`RoleService`) use
+`PlatformDbContext.ExecuteAtomicallyAsync` on SQL Server. The lock resource is
 derived from the tenant plus the normalized role name for creation, or the role
 identifier for an existing role, and is hashed to a bounded value before being
 passed to `sp_getapplock`. Role writes, claim changes, affected-user security
@@ -64,16 +61,14 @@ an event for a mutation that was rolled back. These non-critical post-commit
 notifications are best-effort and logged if delivery fails; any future critical
 external effect must use a transactional outbox instead.
 
-Tenant creation remains exposed through the existing HR HTTP compatibility route
-and Platform administration orchestrator. Its HR persistence adapter now uses
-`ApplicationDbContext.ExecuteAtomicallyAsync` with a bounded SHA-256 lock derived
+Tenant creation is exposed by the Platform administration endpoints and uses
+`PlatformDbContext.ExecuteAtomicallyAsync` with a bounded SHA-256 lock derived
 from the normalized tenant identifier. One transaction and one `SaveChangesAsync`
 create the tenant, its `DEFAULT` company, module entitlements, and the
 `TenantCreated` security audit. Realtime refresh is dispatched only after commit
-and is logged as a best-effort failure. This is the atomic persistence foundation;
-initial-admin invitation, baseline tenant settings, an explicit idempotency/replay
-contract, provisioning status, and recoverable external delivery remain separate
-planned capabilities.
+and is logged as a best-effort failure. Initial-admin invitation, provisioning
+status, request-replay idempotency, tenant settings, and recoverable external
+delivery remain separate capabilities.
 
 Reuse-first is part of the module workflow: search shared BuildingBlocks and
 local abstractions before creating a new piece, and keep domain logic local.

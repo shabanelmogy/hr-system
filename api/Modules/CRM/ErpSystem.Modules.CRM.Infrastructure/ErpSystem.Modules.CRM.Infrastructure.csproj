@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.CRM.Infrastructure</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.CRM.Infrastructure</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+    <PackageReference Include="Hangfire.AspNetCore" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ErpSystem.Modules.CRM.Application\ErpSystem.Modules.CRM.Application.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.CRM.Contracts\ErpSystem.Modules.CRM.Contracts.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.CRM.Domain\ErpSystem.Modules.CRM.Domain.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Context\ErpSystem.BuildingBlocks.Context.csproj" />
+  </ItemGroup>
+</Project>

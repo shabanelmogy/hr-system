@@ -12,8 +12,8 @@ export class DefaultRecruitmentRepository implements RecruitmentRepository {
   getOpenings(params?: Parameters<RecruitmentRepository['getOpenings']>[0]) { return this.remote.getOpenings(params); }
   getOpeningById(id: number) { return this.remote.getOpeningById(id); }
   openOpening(id: number) { return this.remote.openOpening(id); }
-  pauseOpening(id: number, reason?: string) { return this.remote.pauseOpening(id, reason); }
-  closeOpening(id: number, reason?: string) { return this.remote.closeOpening(id, reason); }
+  pauseOpening(id: number, reason: string) { return this.remote.pauseOpening(id, reason); }
+  closeOpening(id: number, reason: string) { return this.remote.closeOpening(id, reason); }
 
   getApplications(params?: Parameters<RecruitmentRepository['getApplications']>[0]) { return this.remote.getApplications(params); }
   getApplicationById(id: number) { return this.remote.getApplicationById(id); }
@@ -23,6 +23,7 @@ export class DefaultRecruitmentRepository implements RecruitmentRepository {
   hireCandidate(id: number, request: Parameters<RecruitmentRepository['hireCandidate']>[1]) { return this.remote.hireCandidate(id, request); }
 
   scheduleInterview(request: Parameters<RecruitmentRepository['scheduleInterview']>[0]) { return this.remote.scheduleInterview(request); }
+  getInterviews(params?: Parameters<RecruitmentRepository['getInterviews']>[0]) { return this.remote.getInterviews(params); }
   completeInterview(id: number) { return this.remote.completeInterview(id); }
   evaluateInterview(id: number, request: Parameters<RecruitmentRepository['evaluateInterview']>[1]) { return this.remote.evaluateInterview(id, request); }
   getScorecardTemplate(interviewId: number) { return this.remote.getScorecardTemplate(interviewId); }

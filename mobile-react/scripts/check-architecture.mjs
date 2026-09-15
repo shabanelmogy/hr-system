@@ -59,16 +59,22 @@ function inspectFile(absoluteFile, source) {
     return;
   }
 
-  for (const importPath of extractModuleSpecifiers(source, relativeFile)) {
-    inspectImport(relativeFile, importPath);
+  for (const importedModule of extractModuleSpecifiers(source, relativeFile)) {
+    inspectImport(relativeFile, importedModule);
   }
 }
 
-function inspectImport(sourceFile, importPath) {
+function inspectImport(sourceFile, importedModule) {
+  const { importPath, importedNames } = importedModule;
   const sourceSegments = sourceFile.split('/');
   const sourceOwner = getOwnerInfo(sourceSegments);
   const sourceLayerInfo = getCleanLayerInfo(sourceSegments);
   const sourceLayer = sourceLayerInfo?.layer ?? null;
+
+  if (isForbiddenTransportImport(sourceFile, importPath, importedNames)) {
+    addViolation(sourceFile, importPath, 'presentation and route files must call feature use cases, not apiService or axiosClient');
+    return;
+  }
 
   if (sourceLayer === 'domain' && isExternalImport(importPath)) {
     addViolation(sourceFile, importPath, 'domain must stay framework- and infrastructure-free');
@@ -251,18 +257,48 @@ function extractModuleSpecifiers(source, fileName) {
 
   const visit = (node) => {
     if (
-      (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) &&
+      ts.isImportDeclaration(node) &&
       node.moduleSpecifier &&
       ts.isStringLiteralLike(node.moduleSpecifier)
     ) {
-      specifiers.push({ position: node.moduleSpecifier.getStart(sourceFile), value: node.moduleSpecifier.text });
+      const clause = node.importClause;
+      const names = [];
+      if (clause?.name) names.push('default');
+      if (clause?.namedBindings && ts.isNamespaceImport(clause.namedBindings)) names.push('*');
+      if (clause?.namedBindings && ts.isNamedImports(clause.namedBindings)) {
+        names.push(...clause.namedBindings.elements.map((element) => element.propertyName?.text ?? element.name.text));
+      }
+      specifiers.push({
+        position: node.moduleSpecifier.getStart(sourceFile),
+        importPath: node.moduleSpecifier.text,
+        importedNames: names,
+      });
+    } else if (
+      ts.isExportDeclaration(node) &&
+      node.moduleSpecifier &&
+      ts.isStringLiteralLike(node.moduleSpecifier)
+    ) {
+      const names = node.exportClause && ts.isNamedExports(node.exportClause)
+        ? node.exportClause.elements.map((element) => element.propertyName?.text ?? element.name.text)
+        : node.exportClause && ts.isNamespaceExport(node.exportClause)
+          ? ['*']
+          : [];
+      specifiers.push({
+        position: node.moduleSpecifier.getStart(sourceFile),
+        importPath: node.moduleSpecifier.text,
+        importedNames: names,
+      });
     } else if (
       ts.isCallExpression(node) &&
       node.expression.kind === ts.SyntaxKind.ImportKeyword &&
       node.arguments.length === 1 &&
       ts.isStringLiteralLike(node.arguments[0])
     ) {
-      specifiers.push({ position: node.arguments[0].getStart(sourceFile), value: node.arguments[0].text });
+      specifiers.push({
+        position: node.arguments[0].getStart(sourceFile),
+        importPath: node.arguments[0].text,
+        importedNames: ['*'],
+      });
     }
 
     ts.forEachChild(node, visit);
@@ -271,7 +307,20 @@ function extractModuleSpecifiers(source, fileName) {
   visit(sourceFile);
   return specifiers
     .sort((left, right) => left.position - right.position)
-    .map(({ value }) => value);
+    .map(({ importPath, importedNames }) => ({ importPath, importedNames }));
+}
+
+function isForbiddenTransportImport(sourceFile, importPath, importedNames) {
+  const segments = sourceFile.split('/');
+  const inPresentationOrRoute = segments[0] === 'app' || getCleanLayerInfo(segments)?.layer === 'presentation';
+  if (!inPresentationOrRoute) return false;
+
+  const targetFile = resolveProjectImport(sourceFile, importPath);
+  const isTransportModule = targetFile === 'src/core/api/api-service' || targetFile === 'src/core/api/axios-client';
+  const importsTransport = importedNames.includes('apiService') || importedNames.includes('axiosClient');
+  const importsUnknownTransportSurface = importedNames.includes('*') &&
+    (targetFile === 'src/core/api' || isTransportModule);
+  return importsTransport || (isTransportModule && importedNames.length === 0) || importsUnknownTransportSurface;
 }
 
 function isExternalImport(importPath) {
@@ -290,8 +339,39 @@ function runSelfTests() {
       ].join('\n'),
       'architecture-self-test.ts',
     ),
-    ['./static-import', './named-reexport', './star-reexport', './dynamic-import'],
+    [
+      { importPath: './static-import', importedNames: ['default'] },
+      { importPath: './named-reexport', importedNames: ['value'] },
+      { importPath: './star-reexport', importedNames: [] },
+      { importPath: './dynamic-import', importedNames: ['*'] },
+    ],
     'module specifier detection must cover static imports, re-exports, and literal dynamic imports only',
+  );
+
+  assert.equal(
+    isForbiddenTransportImport('app/(main)/index.tsx', '@/src/core/api', ['apiService']),
+    true,
+    'route files may not import the API service from its public barrel',
+  );
+  assert.equal(
+    isForbiddenTransportImport('app/(main)/index.tsx', '@/src/core/api', ['*']),
+    true,
+    'route files may not dynamically import the API barrel and access its transport',
+  );
+  assert.equal(
+    isForbiddenTransportImport('src/modules/hr/people/presentation/PeopleScreen.tsx', '@/src/core/api/axios-client', ['axiosClient']),
+    true,
+    'presentation files may not import the raw Axios client',
+  );
+  assert.equal(
+    isForbiddenTransportImport('src/modules/hr/people/presentation/PeopleScreen.tsx', '@/src/core/api', ['ApiError', 'toApiError']),
+    false,
+    'presentation files may use transport error types and helpers',
+  );
+  assert.equal(
+    isForbiddenTransportImport('src/platform/auth/presentation/Auth.tsx', '@/src/core/api/axios-client', ['configureAxiosAuthentication']),
+    false,
+    'auth provider plumbing may configure the shared transport',
   );
 
   assert.deepEqual(

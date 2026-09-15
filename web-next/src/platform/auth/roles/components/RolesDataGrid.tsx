@@ -1,4 +1,4 @@
-import { Delete, Edit, Key, Visibility } from "@mui/icons-material";
+import { Archive, Edit, Key, Restore, Visibility } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 import {
   GridActionsCellItem,
@@ -21,7 +21,11 @@ interface RolesDataGridProps {
   onDelete: (row: Role) => void;
   onView: (row: Role) => void;
   onManagePermissions: (row: Role) => void;
+  onRestore: (row: Role) => void | Promise<unknown>;
   onAdd: () => void;
+  canCreate: boolean;
+  canEdit: boolean;
+  canDelete: boolean;
   t: Translator;
   lastAddedId?: string | number | null;
   lastEditedId?: string | number | null;
@@ -36,7 +40,11 @@ const RolesDataGrid = ({
   onDelete,
   onView,
   onManagePermissions,
+  onRestore,
   onAdd,
+  canCreate,
+  canEdit,
+  canDelete,
   t,
   lastAddedId,
   lastEditedId,
@@ -46,54 +54,67 @@ const RolesDataGrid = ({
   const getActions = useCallback(
     (params: GridRowParams<Role>): ReactElement<GridActionsCellItemProps>[] => {
       const actions: ReactElement<GridActionsCellItemProps>[] = [
-      <Tooltip title={t("actions.view")} key={`view-${params.row.id}`} arrow>
-        <GridActionsCellItem
-          icon={<Visibility sx={{ fontSize: 25, color: "info.main" }} />}
-          label={t("actions.view")}
-          onClick={() => onView(params.row)}
-        />
-      </Tooltip>,
-      <Tooltip
-        title={params.row.isSystem ? t("roles.viewPermissions") : t("roles.managePermissions")}
-        key={`permissions-${params.row.id}`}
-        arrow
-      >
-        <GridActionsCellItem
-          icon={<Key sx={{ fontSize: 25, color: "secondary.main" }} />}
-          label={params.row.isSystem ? t("roles.viewPermissions") : t("roles.managePermissions")}
-          onClick={() => onManagePermissions(params.row)}
-        />
-      </Tooltip>,
+        <Tooltip title={t("actions.view")} key={`view-${params.row.id}`} arrow>
+          <GridActionsCellItem
+            icon={<Visibility sx={{ fontSize: 25, color: "info.main" }} />}
+            label={t("actions.view")}
+            onClick={() => onView(params.row)}
+          />
+        </Tooltip>,
       ];
+
+      if (!params.row.isDeleted) {
+        const permissionLabel = params.row.isSystem || !canEdit
+          ? t("roles.viewPermissions")
+          : t("roles.managePermissions");
+        actions.push(
+          <Tooltip title={permissionLabel} key={`permissions-${params.row.id}`} arrow>
+            <GridActionsCellItem
+              icon={<Key sx={{ fontSize: 25, color: "secondary.main" }} />}
+              label={permissionLabel}
+              onClick={() => onManagePermissions(params.row)}
+            />
+          </Tooltip>,
+        );
+      }
 
       if (params.row.isSystem) return actions;
 
-      actions.splice(1, 0,
-      <Tooltip title={t("actions.edit")} key={`edit-${params.row.id}`} arrow>
-        <GridActionsCellItem
-          icon={<Edit sx={{ fontSize: 25 }} />}
-          label={t("actions.edit")}
-          color="primary"
-          onClick={() => onEdit(params.row)}
-        />
-      </Tooltip>,
-      );
-      actions.push(
-      <Tooltip
-        title={t("actions.delete")}
-        key={`delete-${params.row.id}`}
-        arrow
-      >
-        <GridActionsCellItem
-          icon={<Delete sx={{ fontSize: 25, color: "error.main" }} />}
-          label={t("actions.delete")}
-          onClick={() => onDelete(params.row)}
-        />
-      </Tooltip>,
-      );
+      if (!params.row.isDeleted && canEdit) {
+        actions.splice(1, 0,
+          <Tooltip title={t("actions.edit")} key={`edit-${params.row.id}`} arrow>
+            <GridActionsCellItem
+              icon={<Edit sx={{ fontSize: 25 }} />}
+              label={t("actions.edit")}
+              color="primary"
+              onClick={() => onEdit(params.row)}
+            />
+          </Tooltip>,
+        );
+      }
+
+      if (canDelete) {
+        actions.push(params.row.isDeleted ? (
+          <Tooltip title={t("actions.restore")} key={`restore-${params.row.id}`} arrow>
+            <GridActionsCellItem
+              icon={<Restore sx={{ fontSize: 25, color: "success.main" }} />}
+              label={t("actions.restore")}
+              onClick={() => { void onRestore(params.row); }}
+            />
+          </Tooltip>
+        ) : (
+          <Tooltip title={t("actions.archive")} key={`archive-${params.row.id}`} arrow>
+            <GridActionsCellItem
+              icon={<Archive sx={{ fontSize: 25, color: "warning.main" }} />}
+              label={t("actions.archive")}
+              onClick={() => onDelete(params.row)}
+            />
+          </Tooltip>
+        ));
+      }
       return actions;
     },
-    [t, onEdit, onDelete, onView, onManagePermissions]
+    [canDelete, canEdit, onDelete, onEdit, onManagePermissions, onRestore, onView, t]
   );
 
   // Memoized columns
@@ -151,7 +172,7 @@ const RolesDataGrid = ({
       apiRef={apiRef}
       filterMode="client"
       initialSortModel={[{ field: "id", sort: "asc" }]}
-      onToolbarAdd={onAdd}
+      onToolbarAdd={canCreate ? onAdd : undefined}
       pagination
       pageSizeOptions={[5, 10, 25]}
       lastAddedId={lastAddedId}

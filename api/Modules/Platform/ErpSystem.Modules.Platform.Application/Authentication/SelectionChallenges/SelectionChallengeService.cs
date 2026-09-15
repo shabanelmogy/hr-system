@@ -1,4 +1,4 @@
-using ErpSystem.Modules.Platform.Contracts.Authentication.SelectionChallenges;
+using ErpSystem.Modules.Platform.Application.Authentication.SelectionChallenges;
 
 namespace ErpSystem.Modules.Platform.Application.Authentication.SelectionChallenges;
 

@@ -1,5 +1,3 @@
-using ErpSystem.Modules.Platform.Contracts.Tenancy;
-
 namespace ErpSystem.Modules.Platform.Application.Tenancy;
 
 internal sealed class TenantAccessService(

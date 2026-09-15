@@ -57,12 +57,12 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | fiscal-years-master | 3 | `8390cefc7a311be46bc6e92580fcbe7aff06ff47aaa4ac187f90cd7e66903da8` |
-| fiscal-years-master | 4 | `dea891749533e9690608c378a77d0fe3056c46fb0262d3412a75d6595a5c2bed` |
+| fiscal-years-master | 4 | `a138eeba03b2c75a88c481f8ecad0b88cd339b53f5c26f67fc52bf62d2da13bf` |
 | fiscal-years-master | 6 | `c61603f2d747c9ea9d5c5c0dbec61ba19af29c8f378afac7131e65ec8659b438` |
 | fiscal-years-master | 7 | `b3750a34f63ea59165176bbfdfde4267e123c0e9eed6ed0d09b5d821c9c45099` |
 | fiscal-years-master | 8 | `0608539faf50906c65ce836f3ec4d3ac23ed071fee40e136df580a996f2a1c73` |
 | fiscal-years-api | 6 | `748acbb8a884f50f81cdf9e854ef7f784765a8f2781f904bf2a90f5872ed6c64` |
-| fiscal-years-api | 7 | `c25d29f51a1e7ed2e7f3c4010197ff26f4c0c385fc4fb356666a1601585964fd` |
+| fiscal-years-api | 7 | `bb9330bdbdb4a33564e6b4560a0a2709d55cca905f26b079bd9507f9bb0276ad` |
 | fiscal-years-api | 8 | `da26f9374d1461299ddd9043d1a72414d6f63e7df4cd8babe579a9c9382cebb2` |
 | fiscal-years-web | 6 | `4a987d415b162e64422f9bb51141de6927512e52c13326d8d0f5b7718c2212ff` |
 | fiscal-years-web | 7 | `40edc2f5844933853f70e51361b2d32da035cc6ee8d53c774c87de4730a707d7` |

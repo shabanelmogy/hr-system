@@ -12,7 +12,6 @@ import { OnboardingProvider } from '@/src/core/onboarding';
 import { MockDataPreferencesProvider, OfflineReadPreferencesProvider } from '@/src/core/preferences';
 import { queryClient } from '@/src/core/query/query-client';
 import { AppThemeProvider, useAppTheme } from '@/src/core/theme';
-import { AppFeedbackHost } from '@/src/shared/components/feedback/transient';
 
 function DirectionRoot({ children }: PropsWithChildren) {
   const { direction } = useLocalization();
@@ -48,7 +47,6 @@ export function AppProviders({ children }: PropsWithChildren) {
                       <OnboardingProvider>
                         <DirectionRoot>
                           {children}
-                          <AppFeedbackHost />
                         </DirectionRoot>
                       </OnboardingProvider>
                     </AppThemeProvider>

@@ -1,12 +1,12 @@
 import { Avatar, Box, Checkbox, TableCell, TableRow, Tooltip, Typography } from "@mui/material";
 import { alpha, type Theme } from "@mui/material/styles";
 import type { RoleClaimsFormData } from "../../utils/validation";
-import { PERMISSION_TYPES, type PermissionType } from "./constants";
+import { useTranslation } from "react-i18next";
 
 type RolePermissionRowProps = {
   module: string;
+  actions: string[];
   claims: RoleClaimsFormData["roleClaims"];
-  colors: Record<PermissionType, string>;
   theme: Theme;
   onToggle: (claimIndex: number) => void;
   readOnly: boolean;
@@ -14,12 +14,13 @@ type RolePermissionRowProps = {
 
 export default function RolePermissionRow({
   module,
+  actions,
   claims,
-  colors,
   theme,
   onToggle,
   readOnly,
 }: RolePermissionRowProps) {
+  const { t } = useTranslation();
   return (
     <TableRow
       hover
@@ -44,17 +45,16 @@ export default function RolePermissionRow({
           <Typography variant="body1" sx={{ fontWeight: "medium" }}>{module}</Typography>
         </Box>
       </TableCell>
-      {PERMISSION_TYPES.map((type) => {
+      {actions.map((type) => {
         const matchesClaim = (displayValue: string) =>
-          displayValue.toLowerCase().startsWith(module.toLowerCase()) &&
-          displayValue.toLowerCase().endsWith(`:${type.toLowerCase()}`);
+          displayValue.toLowerCase() === `${module}:${type}`.toLowerCase();
         const claimIndex = claims.findIndex((claim) => matchesClaim(claim.displayValue));
         const claim = claims[claimIndex];
 
         return (
           <TableCell key={`${module}-${type}`} align="center">
             {claim && (
-              <Tooltip title={`${type} permission for ${module}`}>
+              <Tooltip title={t("roles.permissionFor", { type, module })}>
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
                   <input type="hidden" value={claim.displayValue} />
                   <Checkbox
@@ -62,9 +62,9 @@ export default function RolePermissionRow({
                     disabled={readOnly}
                     onChange={() => onToggle(claimIndex)}
                     sx={{
-                      color: colors[type],
+                      color: theme.palette.primary.main,
                       transform: "scale(1.1)",
-                      "&.Mui-checked": { color: colors[type] },
+                      "&.Mui-checked": { color: theme.palette.primary.main },
                     }}
                   />
                 </Box>

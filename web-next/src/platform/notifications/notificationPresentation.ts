@@ -10,9 +10,9 @@ export type NormalizedNotificationSeverity =
 export function normalizeSeverity(
   severity: NotificationSeverity,
 ): NormalizedNotificationSeverity {
-  if (severity === 2 || severity === "Success") return "success";
-  if (severity === 3 || severity === "Warning") return "warning";
-  if (severity === 4 || severity === "Critical") return "critical";
+  if (severity === 2) return "success";
+  if (severity === 3) return "warning";
+  if (severity === 4) return "critical";
   return "info";
 }
 

@@ -6,6 +6,7 @@ export const moduleKeys = {
   all: ['modules'] as const,
   accessible: () => [...moduleKeys.all, 'accessible'] as const,
   installed: () => [...moduleKeys.all, 'installed'] as const,
+  tenantEntitlements: () => [...moduleKeys.all, 'tenant-entitlements'] as const,
 };
 
 export const useAccessibleModules = (enabled = true) => {
@@ -24,6 +25,17 @@ export const useInstalledModules = (enabled = true) => {
   return useQuery({
     queryKey: moduleKeys.installed(),
     queryFn: async () => intersectModulesWithMobileRegistry(await useCases.getInstalled()),
+    enabled,
+    staleTime: 300_000,
+    networkMode: 'always',
+  });
+};
+
+export const useTenantEntitlementModules = (enabled = true) => {
+  const useCases = useModuleUseCases();
+  return useQuery({
+    queryKey: moduleKeys.tenantEntitlements(),
+    queryFn: useCases.getTenantEntitlements,
     enabled,
     staleTime: 300_000,
     networkMode: 'always',

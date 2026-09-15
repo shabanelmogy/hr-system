@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/src/core/api';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
-import { useInstalledModules, type ErpModule } from '@/src/platform/modules';
+import { useTenantEntitlementModules, type ErpModule } from '@/src/platform/modules';
 import {
   createDefaultEntitlements,
   hydrateEntitlements,
@@ -51,7 +51,7 @@ export function TenantManagementScreen() {
   const { theme } = useAppTheme();
   const tenantsQuery = useTenants();
   const saveMutation = useSaveTenant();
-  const installedModulesQuery = useInstalledModules();
+  const tenantEntitlementModulesQuery = useTenantEntitlementModules();
   const [editing, setEditing] = useState<TenantManagementResponse | null>(null);
   const [form, setForm] = useState<TenantFormState | null>(null);
 
@@ -92,13 +92,13 @@ export function TenantManagementScreen() {
   const openCreate = () => {
     saveMutation.reset();
     setEditing(null);
-    setForm(createEmptyForm(installedModulesQuery.data ?? []));
+    setForm(createEmptyForm(tenantEntitlementModulesQuery.data ?? []));
   };
 
   const openEdit = (tenant: TenantManagementResponse) => {
     saveMutation.reset();
     setEditing(tenant);
-    setForm(toForm(tenant, installedModulesQuery.data ?? []));
+    setForm(toForm(tenant, tenantEntitlementModulesQuery.data ?? []));
   };
 
   const closeForm = () => {
@@ -227,17 +227,17 @@ export function TenantManagementScreen() {
           tintColor={theme.colors.primary}
         />
       }>
-      {tenantsQuery.isLoading || installedModulesQuery.isLoading ? (
+      {tenantsQuery.isLoading || tenantEntitlementModulesQuery.isLoading ? (
         <AppStateView state="loading" />
-      ) : tenantsQuery.isError || installedModulesQuery.isError ? (
+      ) : tenantsQuery.isError || tenantEntitlementModulesQuery.isError ? (
         <AppStateView
           message={getErrorMessage(
-            tenantsQuery.error ?? installedModulesQuery.error,
+            tenantsQuery.error ?? tenantEntitlementModulesQuery.error,
             t('feedback.unknownError'),
           )}
           onRetry={() => {
             void tenantsQuery.refetch();
-            void installedModulesQuery.refetch();
+            void tenantEntitlementModulesQuery.refetch();
           }}
           state="error"
         />
@@ -317,7 +317,7 @@ export function TenantManagementScreen() {
           loading={saveMutation.isPending}
           onClose={closeForm}
           onSave={save}
-          installedModules={installedModulesQuery.data ?? []}
+          tenantEntitlementModules={tenantEntitlementModulesQuery.data ?? []}
         />
       ) : null}
     </AppScreen>
@@ -411,7 +411,7 @@ function Metric({ label, value }: { label: string; value: string | number }) {
   );
 }
 
-function createEmptyForm(installedModules: ErpModule[]): TenantFormState {
+function createEmptyForm(tenantEntitlementModules: ErpModule[]): TenantFormState {
   return {
     identifier: '',
     name: '',
@@ -426,13 +426,13 @@ function createEmptyForm(installedModules: ErpModule[]): TenantFormState {
     contactName: '',
     contactPhone: '',
     notes: '',
-    entitlements: createDefaultEntitlements(installedModules),
+    entitlements: createDefaultEntitlements(tenantEntitlementModules),
   };
 }
 
 function toForm(
   tenant: TenantManagementResponse,
-  installedModules: readonly ErpModule[],
+  tenantEntitlementModules: readonly ErpModule[],
 ): TenantFormState {
   return {
     identifier: tenant.identifier,
@@ -448,7 +448,7 @@ function toForm(
     contactName: tenant.contactName ?? '',
     contactPhone: tenant.contactPhone ?? '',
     notes: tenant.notes ?? '',
-    entitlements: hydrateEntitlements(tenant.entitlements, installedModules),
+    entitlements: hydrateEntitlements(tenant.entitlements, tenantEntitlementModules),
   };
 }
 

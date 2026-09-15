@@ -52,7 +52,7 @@ Import requires `Districts:Create` and `States:View` and checks global read-only
 
 ## 12. Managed Report
 
-`DistrictReportView` requires `CrystalReports:View`, lists only runnable published reports for entity key `districts`, and localizes catalog names from SummaryInfo Title/Subject with the manager display-name fallback. It renders only the selected report ID, `ar|en`, and nonblank approved filters `NameAr`, `NameEn`, `StateAr`, and `StateEn` through the authenticated HR API.
+`DistrictReportView` requires `CrystalReports:View`, lists only runnable published reports for entity key `districts`, and localizes catalog names from SummaryInfo Title/Subject with the manager display-name fallback. It renders only the selected report ID, `ar|en`, and nonblank approved filters `NameAr`, `NameEn`, `StateAr`, and `StateEn` through the authenticated ERP/Reporting API.
 
 The returned PDF is signature-checked, written to the sensitive preview cache, opened through native print/PDF handling, shared through Expo Sharing, and disposed when replaced or the view unmounts. Loading, denied, empty, catalog error/retry, render error, sharing-unavailable, generated, open, and share states are localized. The mobile app never receives a Crystal path, filename, connection string, tenant ID, or company ID.
 

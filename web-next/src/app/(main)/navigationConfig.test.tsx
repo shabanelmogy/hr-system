@@ -1,14 +1,23 @@
-import { hrModuleDefinition } from "@/modules/hr/moduleDefinition";
 import { beforeEach, describe, expect, it } from "vitest";
+
 import { appRoutes } from "@/config/routes";
 import { permissions } from "@/lib/auth/permissions";
+import { accountingModuleDefinition } from "@/modules/accounting";
+import { crmModuleDefinition } from "@/modules/crm";
+import { hrModuleDefinition } from "@/modules/hr";
+import { referenceDataModuleDefinition } from "@/modules/reference-data";
+import { reportingModuleDefinition } from "@/modules/reporting";
 import {
   registerFrontendModule,
   resetFrontendModuleRegistryForTests,
 } from "@/platform/modules";
 import { getNavigationConfig } from "@/shell/components/sidebar/navigationConfig";
 import { NavigationSectionId } from "@/shell/components/sidebar/navigationTypes";
-import { filterItems, filterNavigationConfig, filterNavigationConfigByModules } from "@/shell/components/sidebar/navigationUtils";
+import {
+  filterItems,
+  filterNavigationConfig,
+  filterNavigationConfigByModules,
+} from "@/shell/components/sidebar/navigationUtils";
 
 const paths = (config: ReturnType<typeof getNavigationConfig>) =>
   config.flatMap((section) => section.items ?? []).flatMap(function collect(item): string[] {
@@ -18,91 +27,104 @@ const paths = (config: ReturnType<typeof getNavigationConfig>) =>
   });
 
 describe("application navigation configuration", () => {
+  beforeEach(() => {
+    resetFrontendModuleRegistryForTests();
+    registerFrontendModule(hrModuleDefinition);
+    registerFrontendModule(accountingModuleDefinition);
+    registerFrontendModule(crmModuleDefinition);
+    registerFrontendModule(referenceDataModuleDefinition);
+    registerFrontendModule(reportingModuleDefinition);
+  });
+
   it("keeps authorized direct destinations with an empty items array", () => {
     const section = { id: "direct", title: "Direct", icon: <span />, path: "/direct", items: [] };
     expect(filterNavigationConfig([section], [], [])).toEqual([{ ...section, items: undefined }]);
     expect(filterNavigationConfig([{ ...section, path: undefined }], [], [])).toEqual([]);
   });
 
-  it("derives submodule navigation from the registered canonical sidebar links", () => {
-    const workforce = hrModuleDefinition.submodules.find(item => item.code === "workforce");
-    expect(workforce?.navigation.flatMap(section => section.entries).find(entry => entry.path === appRoutes.workforcePlanning.index)?.requiredPermissions).toContain(permissions.ViewEnvelopeAmendments);
-    const basicData = hrModuleDefinition.submodules.find(item => item.code === "basic-data");
-    const basicDataPaths = basicData?.navigation.flatMap(section => section.entries).map(entry => entry.path);
-    expect(basicDataPaths).toContain(appRoutes.basicData.organizationalStructure.costCenters);
-    expect(basicDataPaths).toContain(appRoutes.basicData.organizationalStructure.currencies);
-  });
-  beforeEach(() => {
-    resetFrontendModuleRegistryForTests();
-    registerFrontendModule({
-      code: "hr",
-      name: "HR",
-      navigation: hrModuleDefinition.navigation,
-      requiredDependencies: [],
-      optionalDependencies: [],
-      submodules: [
-        {
-          code: "analytics",
-          name: "Analytics",
-          requiredPermissions: [],
-          entryCandidates: [],
-          navigation: [],
-          routePrefixes: [appRoutes.auth.crystalReportsPage],
-        },
-        {
-          code: "administration",
-          name: "Administration",
-          requiredPermissions: [],
-          entryCandidates: [],
-          navigation: [],
-          routePrefixes: ["/administration"],
-        },
-      ],
-    });
+  it("derives HR workforce and organizational-structure entry navigation from HR", () => {
+    const workforce = hrModuleDefinition.submodules.find((item) => item.code === "workforce");
+    expect(workforce?.navigation.flatMap((section) => section.entries).find(
+      (entry) => entry.path === appRoutes.workforcePlanning.index,
+    )?.requiredPermissions).toContain(permissions.ViewEnvelopeAmendments);
+
+    const basicData = hrModuleDefinition.submodules.find((item) => item.code === "basic-data");
+    expect(basicData?.navigation.flatMap((section) => section.entries).map((entry) => entry.path)).toEqual([
+      appRoutes.basicData.organizationalStructure.index,
+    ]);
   });
 
-  it("exposes Workforce Planning as its own module for any module view permission", () => {
+  it("exposes Workforce Planning for any of its view permissions", () => {
     const config = getNavigationConfig([], [permissions.ViewEnvelopeAmendments]);
     const workforceSection = config.find(
       (section) => section.id === NavigationSectionId.WORKFORCE_PLANNING,
     );
-
     expect(workforceSection?.items).toHaveLength(1);
     expect(workforceSection?.items?.[0]?.path).toBe(appRoutes.workforcePlanning.index);
   });
 
-  it("keeps Finance limited to Fiscal Years", () => {
-    const config = getNavigationConfig([], [
-      permissions.ViewFiscalYears,
-      permissions.ViewWorkforcePlans,
-    ]);
+  it("gets Fiscal Years from Accounting, not HR", () => {
+    const config = getNavigationConfig([], [permissions.ViewFiscalYears]);
     const financeSection = config.find(
       (section) => section.id === NavigationSectionId.FINANCE,
     );
-
     expect(financeSection?.items?.map((item) => item.path)).toEqual([
       appRoutes.finance.fiscalYears,
     ]);
   });
 
-  it("keeps an allowed Crystal Reports link when Analytics is accessible", () => {
-    const permissionFiltered = getNavigationConfig([], [permissions.ManageCrystalReportAccess]);
-    expect(paths(permissionFiltered)).toContain(appRoutes.auth.crystalReportsPage);
-    const moduleFiltered = filterNavigationConfigByModules(permissionFiltered, [{
-      code: "hr",
-      submodules: [{ code: "analytics" }],
-    }]);
+  it("scopes the sidebar to the module that owns the active business route", () => {
+    const config = getNavigationConfig([], [
+      permissions.ViewFiscalYears,
+      permissions.ViewOrganizationalStructure,
+      permissions.ViewRecruitment,
+    ], "acc");
 
-    expect(paths(moduleFiltered)).toContain(appRoutes.auth.crystalReportsPage);
+    expect(paths(config)).toEqual([appRoutes.finance.fiscalYears]);
+    expect(config).toHaveLength(1);
+    expect(config[0]?.id).toBe(NavigationSectionId.FINANCE);
   });
 
-  it("removes Crystal Reports when only Administration is accessible", () => {
+  it("keeps Crystal Reports only when Reporting analytics is accessible", () => {
     const permissionFiltered = getNavigationConfig([], [permissions.ManageCrystalReportAccess]);
-    const moduleFiltered = filterNavigationConfigByModules(permissionFiltered, [{
-      code: "hr",
-      submodules: [{ code: "administration" }],
-    }]);
+    expect(paths(permissionFiltered)).toContain(appRoutes.auth.crystalReportsPage);
 
+    expect(paths(filterNavigationConfigByModules(permissionFiltered, [{
+      code: "reporting",
+      submodules: [{ code: "analytics" }],
+    }]))).toContain(appRoutes.auth.crystalReportsPage);
+
+    expect(paths(filterNavigationConfigByModules(permissionFiltered, [{
+      code: "hr",
+      submodules: [{ code: "basic-data" }],
+    }]))).not.toContain(appRoutes.auth.crystalReportsPage);
+  });
+
+  it("keeps authorized Platform links without tenant module entitlements", () => {
+    const permissionFiltered = getNavigationConfig([], [
+      permissions.ViewRoles,
+      permissions.ViewLocalizations,
+      permissions.ViewCompanyGeographicScope,
+    ]);
+    const moduleFiltered = filterNavigationConfigByModules(permissionFiltered, []);
+    expect(paths(moduleFiltered)).toEqual(expect.arrayContaining([
+      appRoutes.auth.rolesPage,
+      appRoutes.advancedTools.localizationApi,
+      appRoutes.basicData.companyGeographicScope,
+    ]));
+  });
+
+  it("fails closed for business links when accessible modules are unavailable", () => {
+    const permissionFiltered = getNavigationConfig([], [
+      permissions.ViewFiscalYears,
+      permissions.ViewAppointments,
+      permissions.ViewAddressTypes,
+      permissions.ManageCrystalReportAccess,
+    ]);
+    const moduleFiltered = filterNavigationConfigByModules(permissionFiltered, []);
+    expect(paths(moduleFiltered)).not.toContain(appRoutes.finance.fiscalYears);
+    expect(paths(moduleFiltered)).not.toContain(appRoutes.extras.appointments);
+    expect(paths(moduleFiltered)).not.toContain(appRoutes.basicData.addressTypes);
     expect(paths(moduleFiltered)).not.toContain(appRoutes.auth.crystalReportsPage);
   });
 
@@ -115,7 +137,6 @@ describe("application navigation configuration", () => {
         items: [{ title: "Hidden child", icon: <span />, permissions: [permissions.ViewRoles] }],
       },
     ], [], []);
-
     expect(filtered).toEqual([]);
   });
 
@@ -129,7 +150,6 @@ describe("application navigation configuration", () => {
         items: [{ title: "Child", icon: <span />, path: "/child", permissions: [permissions.ViewRoles] }],
       },
     ], [], [permissions.ViewRoles]);
-
     expect(filtered).toHaveLength(1);
     expect(filtered[0].path).toBeUndefined();
     expect(filtered[0].items?.[0]?.path).toBe("/child");

@@ -4,14 +4,11 @@ import { isPublicRoute } from "@/lib/auth/constants";
 import {
   clearAuthCookies,
   readAuthTokens,
-  setAuthCookies,
 } from "@/lib/auth/cookies";
 
 export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  const { accessToken, refreshToken, migrationPayload } = readAuthTokens(
-    request.cookies,
-  );
+  const { accessToken, refreshToken } = readAuthTokens(request.cookies);
 
   // Keep Proxy optimistic and network-free. The session Route Handler and the
   // backend API remain authoritative for authentication and authorization.
@@ -33,21 +30,10 @@ export function proxy(request: NextRequest) {
   }
 
   if (isPublicRoute(pathname)) {
-    return applyMigratedCookies(
-      NextResponse.redirect(new URL("/", request.url)),
-      migrationPayload,
-    );
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
-  return applyMigratedCookies(NextResponse.next(), migrationPayload);
-}
-
-function applyMigratedCookies(
-  response: NextResponse,
-  migrationPayload?: Parameters<typeof setAuthCookies>[1],
-) {
-  if (migrationPayload) setAuthCookies(response, migrationPayload);
-  return response;
+  return NextResponse.next();
 }
 
 export const config = {

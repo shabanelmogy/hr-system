@@ -1,7 +1,6 @@
 using System.Globalization;
-using ErpSystem.Modules.HR.Application.Abstractions.Authentication;
-using ErpSystem.Modules.HR.Application.Common.Consts;
-using ErpSystem.Modules.HR.Application.Common.Realtime;
+using ErpSystem.BuildingBlocks.Context.Authentication;
+using ErpSystem.BuildingBlocks.Application.Common.Realtime;
 using Microsoft.Extensions.Logging;
 
 namespace ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Commands;
@@ -17,7 +16,7 @@ public sealed class WorkforceBudgetEffects(
             RealtimeAudience.ForCompanyPermission(
                 TenantId(),
                 CompanyId(),
-                Permissions.ViewWorkforceBudgets),
+                HrPermissions.ViewWorkforceBudgets),
             "workforce-budgets",
             action,
             budgetId.ToString(CultureInfo.InvariantCulture),
@@ -30,7 +29,7 @@ public sealed class WorkforceBudgetEffects(
             RealtimeAudience.ForCompanyPermission(
                 TenantId(),
                 CompanyId(),
-                Permissions.ViewPositionEnvelopes),
+                HrPermissions.ViewPositionEnvelopes),
             "position-envelopes",
             "Approve",
             budgetId.ToString(CultureInfo.InvariantCulture),
@@ -39,7 +38,7 @@ public sealed class WorkforceBudgetEffects(
             RealtimeAudience.ForCompanyPermission(
                 TenantId(),
                 CompanyId(),
-                Permissions.ViewWorkforcePlans),
+                HrPermissions.ViewWorkforcePlans),
             "workforce-plans",
             "Activate",
             budgetId.ToString(CultureInfo.InvariantCulture),

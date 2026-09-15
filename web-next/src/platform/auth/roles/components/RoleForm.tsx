@@ -67,9 +67,9 @@ const RoleForm = ({
 
   // Get appropriate overlay message
   const getOverlayMessage = () => {
-    if (isAddMode) return t("roles.creatingRole") || "Creating role...";
-    if (isEditMode) return t("roles.updatingRole") || "Updating role...";
-    return t("roles.savingRole") || "Saving role...";
+    if (isAddMode) return t("roles.creatingRole");
+    if (isEditMode) return t("roles.updatingRole");
+    return t("roles.savingRole");
   };
 
   // Convert react-hook-form errors to simple error object for MyForm
@@ -82,15 +82,6 @@ const RoleForm = ({
       }
     });
     return errorMessages;
-  };
-
-  // Handle error found callback
-  const handleErrorFound = (fieldName: string, fieldElement: HTMLElement) => {
-    console.log(`Validation error in field: ${fieldName}`, fieldElement);
-    // You can add custom logic here, such as:
-    // - Analytics tracking
-    // - Custom focus behavior
-    // - Additional UI feedback
   };
 
   const handleFormSubmit = async (data: RoleFormData) => {
@@ -118,10 +109,10 @@ const RoleForm = ({
       }
       subtitle={
         isViewMode
-          ? t("roles.viewSubtitle") || "View role details"
+          ? t("roles.viewSubtitle")
           : isEditMode
-            ? t("roles.editSubtitle") || "Modify role information"
-            : t("roles.addSubtitle") || "Add a new role to the system"
+            ? t("roles.editSubtitle")
+            : t("roles.addSubtitle")
       }
       submitButtonText={
         isViewMode
@@ -142,7 +133,6 @@ const RoleForm = ({
       overlayMessage={getOverlayMessage()}
       // Error handling props
       errors={getErrorMessages()} // Pass the converted errors
-      onErrorFound={handleErrorFound} // Optional callback when error is found
     >
       {(isEditMode || isViewMode) && (
         <input type="hidden" value={selectedRole?.id || ""} readOnly />

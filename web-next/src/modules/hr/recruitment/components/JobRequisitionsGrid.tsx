@@ -150,6 +150,8 @@ export default function JobRequisitionsGrid({
         return t("recruitment.types.fullTime", "دوام كامل / Full Time");
       case EmploymentType.PartTime:
         return t("recruitment.types.partTime", "دوام جزئي / Part Time");
+      case EmploymentType.Temporary:
+        return t("recruitment.types.temporary", "مؤقت / Temporary");
       case EmploymentType.Contract:
         return t("recruitment.types.contract", "عقد / Contract");
       case EmploymentType.Internship:
@@ -479,7 +481,7 @@ export default function JobRequisitionsGrid({
                         </>
                       )}
 
-                      {req.status === JobRequisitionStatus.Approved && perms.canManageOpenings && (
+                      {req.status === JobRequisitionStatus.Approved && req.remainingPositions > 0 && perms.canManageOpenings && (
                         <Button
                           size="small"
                           variant="contained"

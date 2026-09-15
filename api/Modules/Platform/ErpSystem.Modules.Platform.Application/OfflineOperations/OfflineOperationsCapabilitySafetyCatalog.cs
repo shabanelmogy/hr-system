@@ -1,5 +1,3 @@
-using ErpSystem.Modules.Platform.Contracts.OfflineOperations;
-
 namespace ErpSystem.Modules.Platform.Application.OfflineOperations;
 
 internal static class OfflineOperationsCapabilitySafetyCatalog

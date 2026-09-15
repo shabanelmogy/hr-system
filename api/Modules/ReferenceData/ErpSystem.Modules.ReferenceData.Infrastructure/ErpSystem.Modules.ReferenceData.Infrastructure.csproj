@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.ReferenceData.Infrastructure</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.ReferenceData.Infrastructure</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire.AspNetCore" />
+    <PackageReference Include="Mapster" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Application\ErpSystem.BuildingBlocks.Application.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Context\ErpSystem.BuildingBlocks.Context.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Domain\ErpSystem.BuildingBlocks.Domain.csproj" />
+    <ProjectReference Include="..\..\Platform\ErpSystem.Modules.Platform.Contracts\ErpSystem.Modules.Platform.Contracts.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.ReferenceData.Application\ErpSystem.Modules.ReferenceData.Application.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.ReferenceData.Contracts\ErpSystem.Modules.ReferenceData.Contracts.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.ReferenceData.Domain\ErpSystem.Modules.ReferenceData.Domain.csproj" />
+  </ItemGroup>
+</Project>

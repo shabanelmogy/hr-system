@@ -23,6 +23,11 @@ public static class ErpModuleRegistry
         new ErpSystem.Modules.Accounting.AccountingModule(),
         new ErpSystem.Modules.Platform.PlatformModule(),
         new ErpSystem.Modules.Contacts.ContactsModule(),
+        new ErpSystem.Modules.ReferenceData.ReferenceDataModule(),
+        new ErpSystem.Modules.Inventory.InventoryModule(),
+        new ErpSystem.Modules.CRM.CrmModule(),
+        new ErpSystem.Modules.Reporting.ReportingModule(),
+        new ErpSystem.Modules.PointOfSale.PointOfSaleModule(),
         // </erp-module-registrations>
     ];
 }

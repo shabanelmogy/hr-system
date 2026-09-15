@@ -6,6 +6,7 @@ import { erpModulesSchema } from './module-schemas';
 export interface ModuleRemoteDataSource {
   getAccessible(): Promise<ErpModule[]>;
   getInstalled(): Promise<ErpModule[]>;
+  getTenantEntitlements(): Promise<ErpModule[]>;
 }
 
 export const moduleRemoteDataSource: ModuleRemoteDataSource = {
@@ -14,5 +15,8 @@ export const moduleRemoteDataSource: ModuleRemoteDataSource = {
   },
   async getInstalled() {
     return erpModulesSchema.parse(await apiService.get<unknown>(moduleEndpoints.installed));
+  },
+  async getTenantEntitlements() {
+    return erpModulesSchema.parse(await apiService.get<unknown>(moduleEndpoints.tenantEntitlements));
   },
 };

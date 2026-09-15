@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Authorization\ErpSystem.BuildingBlocks.Authorization.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.Contacts.Application\ErpSystem.Modules.Contacts.Application.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.Contacts.Contracts\ErpSystem.Modules.Contacts.Contracts.csproj" />
   </ItemGroup>

@@ -1,0 +1,11 @@
+global using ErpSystem.Modules.Inventory.Contracts.Authorization;
+global using System.Globalization;
+global using ErpSystem.BuildingBlocks.Application.Common.Errors;
+global using ErpSystem.BuildingBlocks.Application.Common.Realtime;
+global using ErpSystem.BuildingBlocks.Context.Authentication;
+global using ErpSystem.Modules.Inventory.Domain.Catalog.Categories.Entities;
+global using ErpSystem.Modules.Inventory.Domain.Catalog.SubCategories.Entities;
+global using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.Extensions.Caching.Hybrid;

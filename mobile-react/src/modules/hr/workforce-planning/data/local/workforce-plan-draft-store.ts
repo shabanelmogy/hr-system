@@ -9,9 +9,11 @@ import {
 import type {
   WorkforcePlanDraftState,
   WorkforcePlanLocalDraft,
+  WorkforcePlanEditingSnapshot,
 } from '../../domain/models/workforce-plan-draft';
 import type {
   UpdateWorkforcePlanRequest,
+  WorkforcePlan,
   WorkforcePlanDetail,
 } from '../../domain/models/workforce-plan';
 
@@ -25,6 +27,7 @@ export class WorkforcePlanDraftStore {
     scope: OfflineScope,
     baseDetail: WorkforcePlanDetail,
     request: UpdateWorkforcePlanRequest,
+    editingSnapshot: WorkforcePlanEditingSnapshot = emptyEditingSnapshot(),
   ): Promise<WorkforcePlanDraftState> {
     validateDraftBase(baseDetail, request);
 
@@ -53,7 +56,7 @@ export class WorkforcePlanDraftStore {
         }
       }
 
-      const draft = createLocalDraft(baseDetail, request, null);
+      const draft = createLocalDraft(baseDetail, request, editingSnapshot, null);
       await putDraft(records, scope, baseDetail, request, draft);
       return { draft, status: null, lastError: null };
     });
@@ -63,6 +66,7 @@ export class WorkforcePlanDraftStore {
     scope: OfflineScope,
     baseDetail: WorkforcePlanDetail,
     request: UpdateWorkforcePlanRequest,
+    editingSnapshot: WorkforcePlanEditingSnapshot = emptyEditingSnapshot(),
   ): Promise<WorkforcePlanDraftState> {
     validateDraftBase(baseDetail, request);
 
@@ -96,7 +100,7 @@ export class WorkforcePlanDraftStore {
         await outbox.enqueueWithinTransaction(createCommand(scope, baseDetail.id, commandId, request));
       }
 
-      const draft = createLocalDraft(baseDetail, request, commandId);
+      const draft = createLocalDraft(baseDetail, request, editingSnapshot, commandId);
       await putDraft(records, scope, baseDetail, request, draft);
       return { draft, status: 'pending', lastError: null };
     });
@@ -117,6 +121,19 @@ export class WorkforcePlanDraftStore {
       status: command?.status ?? null,
       lastError: command?.lastError ?? null,
     };
+  }
+
+  async list(scope: OfflineScope): Promise<WorkforcePlanDraftState[]> {
+    const records = await new ScopedRecordStore(this.db).list<WorkforcePlanLocalDraft>(scope, DRAFT_NAMESPACE);
+    const outbox = new OfflineOutboxRepository(this.db);
+    return Promise.all(records.filter((record) => !record.isDeleted).map(async (record) => {
+      const command = record.value.commandId ? await outbox.get(record.value.commandId) : null;
+      return {
+        draft: record.value,
+        status: command?.status ?? null,
+        lastError: command?.lastError ?? null,
+      };
+    }));
   }
 
   async removeSynced(
@@ -143,6 +160,16 @@ export class WorkforcePlanDraftStore {
       await records.remove(scope, DRAFT_NAMESPACE, String(planId));
       return true;
     });
+  }
+
+  async retry(scope: OfflineScope, planId: number): Promise<WorkforcePlanDraftState | null> {
+    const record = await new ScopedRecordStore(this.db).get<WorkforcePlanLocalDraft>(scope, DRAFT_NAMESPACE, String(planId));
+    if (!record?.value.commandId) return this.get(scope, planId);
+    const outbox = new OfflineOutboxRepository(this.db);
+    const command = await outbox.get(record.value.commandId);
+    if (command?.status !== 'dead-letter') return this.get(scope, planId);
+    await outbox.resetDeadLetterToPending(command.commandId);
+    return this.get(scope, planId);
   }
 
   async remove(scope: OfflineScope, planId: number): Promise<void> {
@@ -173,6 +200,32 @@ export class WorkforcePlanDraftStore {
   }
 }
 
+export function toLocalWorkforcePlan(state: WorkforcePlanDraftState): WorkforcePlan {
+  const { baseDetail, request } = state.draft;
+  const linesCount = request.lines.length;
+  const newHireSlots = request.lines.reduce((sum, line) => sum + line.newHireSlots, 0);
+  const replacementSlots = request.lines.reduce((sum, line) => sum + line.replacementSlots, 0);
+  return {
+    id: baseDetail.id,
+    planSeriesId: baseDetail.planSeriesId,
+    planCode: baseDetail.planCode,
+    fiscalYearId: baseDetail.fiscalYearId,
+    revisionNumber: baseDetail.revisionNumber,
+    titleEn: request.titleEn,
+    titleAr: request.titleAr,
+    status: baseDetail.status,
+    linesCount,
+    newHireSlots,
+    replacementSlots,
+    plannedHiringSlots: newHireSlots + replacementSlots,
+    isEffective: false,
+    isDeleted: baseDetail.isDeleted,
+    createdOn: baseDetail.createdOn,
+    updatedOn: baseDetail.updatedOn,
+    rowVersion: request.rowVersion,
+  };
+}
+
 function validateDraftBase(
   baseDetail: WorkforcePlanDetail,
   request: UpdateWorkforcePlanRequest,
@@ -188,6 +241,7 @@ function validateDraftBase(
 function createLocalDraft(
   baseDetail: WorkforcePlanDetail,
   request: UpdateWorkforcePlanRequest,
+  editingSnapshot: WorkforcePlanEditingSnapshot,
   commandId: string | null,
 ): WorkforcePlanLocalDraft {
   return {
@@ -195,6 +249,7 @@ function createLocalDraft(
     commandId,
     request,
     baseDetail,
+    editingSnapshot,
     savedAt: new Date().toISOString(),
   };
 }
@@ -213,6 +268,7 @@ function putDraft(
     value: draft,
     serverRowVersion: request.rowVersion,
     serverUpdatedAt: baseDetail.updatedOn,
+    isProtected: true,
   });
 }
 
@@ -239,4 +295,8 @@ function createCommandId(): string {
     const value = character === 'x' ? random : (random & 0x3) | 0x8;
     return value.toString(16);
   });
+}
+
+function emptyEditingSnapshot(): WorkforcePlanEditingSnapshot {
+  return { fiscalYears: [], positions: [], branches: [], fiscalPeriodsByYear: {} };
 }

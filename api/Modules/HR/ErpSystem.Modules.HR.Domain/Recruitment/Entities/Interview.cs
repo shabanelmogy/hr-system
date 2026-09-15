@@ -1,6 +1,6 @@
-using ErpSystem.Modules.HR.Domain.Common.Exceptions;
+using ErpSystem.BuildingBlocks.Domain.Exceptions;
 using ErpSystem.Modules.HR.Domain.Recruitment.Enums;
-using static ErpSystem.Modules.HR.Domain.Common.Guards.DomainGuard;
+using static ErpSystem.BuildingBlocks.Domain.Guards.DomainGuard;
 
 namespace ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 
@@ -30,6 +30,7 @@ public sealed class Interview : CompanyAuditableEntity
 
     public int Id { get; private set; }
     public int EmploymentApplicationId { get; private set; }
+    public EmploymentApplication EmploymentApplication { get; private set; } = null!;
     public InterviewType Type { get; private set; }
     public InterviewStatus Status { get; private set; } = InterviewStatus.Scheduled;
     public DateTimeOffset StartsOn { get; private set; }

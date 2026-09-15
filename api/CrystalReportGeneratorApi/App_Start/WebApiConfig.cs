@@ -1,5 +1,5 @@
-﻿using System.Web.Http;
-using System.Web.Http.Cors;
+using System.Web.Http;
+using CrystalReportGeneratorApi.Filters;
 
 namespace CrystalReportGeneratorApi
 {
@@ -7,17 +7,10 @@ namespace CrystalReportGeneratorApi
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
-
-            // Web API routes
-            
+            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Never;
+            config.MessageHandlers.Add(new InternalCorrelationIdHandler());
             config.MapHttpAttributeRoutes();
-            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+            SwaggerConfig.Register(config);
         }
     }
 }

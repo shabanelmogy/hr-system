@@ -44,15 +44,15 @@ export function JobRequisitionCard({
   const getStatusLabel = () => {
     switch (requisition.status) {
       case JobRequisitionStatus.Approved:
-        return t('recruitment.status.approved', 'معتمد / Approved');
+        return t('recruitment.status.approved');
       case JobRequisitionStatus.PendingApproval:
-        return t('recruitment.status.pending', 'قيد الاعتماد / Pending');
+        return t('recruitment.status.pending');
       case JobRequisitionStatus.Rejected:
-        return t('recruitment.status.rejected', 'مرفوض / Rejected');
+        return t('recruitment.status.rejected');
       case JobRequisitionStatus.Fulfilled:
-        return t('recruitment.status.fulfilled', 'مكتمل / Fulfilled');
+        return t('recruitment.status.fulfilled');
       default:
-        return t('recruitment.status.draft', 'مسودة / Draft');
+        return t('recruitment.status.draft');
     }
   };
 
@@ -82,7 +82,7 @@ export function JobRequisitionCard({
         <View style={[styles.headcountPill, { backgroundColor: `${theme.colors.primary}15` }]}>
           <AppIcon name="people" size={14} color={theme.colors.primary} />
           <AppText variant="caption" weight="800" style={{ color: theme.colors.primary }}>
-            {requisition.requestedPositions} {t('recruitment.openings.headcount', 'مقاعد')}
+            {requisition.requestedPositions} {t('recruitment.openings.headcount')}
           </AppText>
         </View>
       </View>
@@ -106,9 +106,9 @@ export function JobRequisitionCard({
           <AppText variant="caption" weight="700" style={{ color: theme.colors.secondary, fontSize: 11 }}>
             {requisition.type === RequisitionType.Replacement
               ? requisition.replacementEmployeeName
-                ? `${t('recruitment.requisitions.replacementFor', 'إحلال:')} ${requisition.replacementEmployeeName}`
-                : t('recruitment.requisitions.typeReplacement', 'إحلال / Replacement')
-              : t('recruitment.requisitions.typeNewPosition', 'وظيفة جديدة')}
+                ? `${t('recruitment.requisitions.replacementFor')} ${requisition.replacementEmployeeName}`
+                : t('recruitment.requisitions.typeReplacement')
+              : t('recruitment.requisitions.typeNewPosition')}
           </AppText>
         </View>
 
@@ -131,8 +131,8 @@ export function JobRequisitionCard({
             }}
           >
             {requisition.planningSource === PlanningSource.Planned
-              ? `${t('recruitment.requisitions.planned', 'مخطط')} · SR-${requisition.staffingRequestId}`
-              : t('recruitment.requisitions.legacy', 'قديم')}
+              ? t('recruitment.requisitions.plannedReference', { planned: t('recruitment.requisitions.planned'), id: requisition.staffingRequestId })
+              : t('recruitment.requisitions.legacy')}
           </AppText>
         </View>
       </View>
@@ -154,7 +154,7 @@ export function JobRequisitionCard({
       {!requisition.isBudgeted && Boolean(requisition.budgetJustification) && (
         <View style={[styles.reasonBox, { backgroundColor: `${theme.colors.warning}15`, borderColor: theme.colors.warning, borderWidth: 1 }]}>
           <AppText variant="caption" weight="700" style={{ color: theme.colors.warning }}>
-            {t('recruitment.requisitions.budgetJustificationShort', 'مبرر الموازنة:')} {requisition.budgetJustification}
+            {t('recruitment.requisitions.budgetJustificationShort')} {requisition.budgetJustification}
           </AppText>
         </View>
       )}
@@ -174,7 +174,7 @@ export function JobRequisitionCard({
           >
             <AppIcon name="briefcase" size={14} color="#fff" />
             <AppText variant="caption" weight="700" style={{ color: '#fff' }}>
-              {t('recruitment.requisitions.openOpeningBtn', 'فتح شاغر وظيفي')}
+              {t('recruitment.requisitions.openOpeningBtn')}
             </AppText>
           </Pressable>
         )}
@@ -194,7 +194,7 @@ export function JobRequisitionCard({
               >
                 <AppIcon name="checkmark" size={14} color="#fff" />
                 <AppText variant="caption" weight="700" style={{ color: '#fff' }}>
-                  {t('common.approve', 'اعتماد')}
+                  {t('common.approve')}
                 </AppText>
               </Pressable>
             )}
@@ -212,7 +212,7 @@ export function JobRequisitionCard({
               >
                 <AppIcon name="close" size={14} color="#fff" />
                 <AppText variant="caption" weight="700" style={{ color: '#fff' }}>
-                  {t('common.reject', 'رفض')}
+                  {t('common.reject')}
                 </AppText>
               </Pressable>
             )}

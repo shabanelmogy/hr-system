@@ -13,11 +13,14 @@ public sealed class AttendanceDeviceMapping : IRegister
             .Map(d => d.NormalizedName, s => s.Name.Trim().ToUpperInvariant())
             .Map(d => d.Host, s => s.Host.Trim())
             .Map(d => d.ProviderId, s => s.ProviderId.Trim().ToLowerInvariant());
+        config.NewConfig<UpdateAttendanceDeviceRequest, AttendanceDevice>()
+            .Ignore(d => d.RowVersion)
+            .Map(d => d.Name, s => s.Name.Trim())
+            .Map(d => d.NormalizedName, s => s.Name.Trim().ToUpperInvariant())
+            .Map(d => d.Host, s => s.Host.Trim())
+            .Map(d => d.ProviderId, s => s.ProviderId.Trim().ToLowerInvariant());
         config.NewConfig<AttendanceDevice, AttendanceDeviceResponse>()
-            .Map(d => d.HasCredentials, s => s.Credential != null)
-            .Map(d => d.AttendanceAgentName, s => s.AttendanceAgent == null ? null : s.AttendanceAgent.Name)
-            .Map(d => d.BranchNameEn, s => s.Branch == null ? null : s.Branch.NameEn)
-            .Map(d => d.BranchNameAr, s => s.Branch == null ? null : s.Branch.NameAr);
+            .Map(d => d.HasCredentials, s => s.Credential != null);
         config.NewConfig<DevicePullRun, PullRunResponse>()
             .Map(d => d.DeviceId, s => s.AttendanceDeviceId)
             .Map(d => d.Error, s => s.SafeError);

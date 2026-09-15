@@ -1,7 +1,7 @@
 import { Paper, useTheme, alpha } from "@mui/material";
 
 interface FormStepsWrapperProps {
-  formRef: React.RefObject<HTMLDivElement>;
+  formRef: React.RefObject<HTMLDivElement | null>;
   children: React.ReactNode;
 }
 

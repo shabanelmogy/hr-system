@@ -1,14 +1,15 @@
 # Core Feature CQRS and Web Implementation Guide
 
-This is the authoritative end-to-end guide for new core HR features. It joins the
-API CQRS rules with the `web-next` page architecture so a feature is designed as
-one vertical business slice instead of an unrelated controller and screen.
+This is a cross-platform implementation reference for joining an API CQRS slice
+with the `web-next` page architecture. API work always starts with
+`documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`; that workflow is the
+mandatory API delivery path and this document supplies web integration detail.
 
-Use `Countries` as the implemented **global reference-data** slice. It has the CQRS API, REST
-contract, server-managed collection, lookup endpoint, archive/restore lifecycle,
-Mapster mappings, and web grid/card implementation described here. The other
-geographical-information features are still visual and migration references; do not
-copy their legacy service APIs or client-managed collections.
+Use `Countries` as one implemented **global reference-data** slice. It demonstrates
+the CQRS API, REST contract, server-managed collection, lookup endpoint,
+archive/restore lifecycle, Mapster mappings, and web grid/card integration. It is an
+example, not a universal ownership or business-rule template. Always run the API
+Existing-System Relationship Review before copying or extending a pattern.
 
 The employee/functional-data model is frozen separately in
 [CORE_HR_DOMAIN_DESIGN_GUIDE.md](CORE_HR_DOMAIN_DESIGN_GUIDE.md). The minimal
@@ -58,10 +59,10 @@ The CQRS foundation already exists:
 - `api/Modules/HR/ErpSystem.Modules.HR.Application/Behaviors/ValidationBehavior.cs`
 - `api/Modules/HR/ErpSystem.Modules.HR.Application/DependencyInjection.cs`
 
-`Countries` is the first complete CQRS reference. Its controller injects `ISender`
-only; create, bulk create, update, archive, atomic bulk archive, restore, page, lookup, detail, and
-detail-with-states are separate use cases. The legacy country service, toggle-delete,
-count payload, client-managed list, and entity-carrying SignalR method are removed.
+The API CQRS foundation is closed and architecture-tested. `Countries` remains a
+useful complete global-reference example: its controller dispatches through
+`ISender`; create, bulk create, update, archive, atomic bulk archive, restore, page,
+lookup, detail, and detail-with-states are separate use cases.
 
 The Countries web feature provides these reference patterns:
 
@@ -75,17 +76,10 @@ The Countries web feature provides these reference patterns:
 - Arabic/English localization and RTL support;
 - feature-driven realtime query invalidation.
 
-The remaining geographical features still have gaps that must not be copied:
-
-- `Addresses` has an API but no `web-next` feature or route;
-- States, Districts, and Address Types still use client-side collection controls;
-- card control logic is repeated between features;
-- State-by-Country fetches all states and filters locally despite an API endpoint;
-- query-key coverage and related/count endpoints are inconsistent;
-- several labels use English fallback literals;
-- geographic feature tests are sparse;
-- chart/report/import views are present in older features even where business value
-  is unclear.
+Do not infer current completeness or business requirements for another feature from
+this example. Inspect that feature's live API, module documentation, client code,
+tests, and contracts before deciding what to reuse, extend, replace, defer, or
+exclude.
 
 ## 3. Target Vertical Slice
 
@@ -522,10 +516,10 @@ export const employeeKeys = {
 
 Use these files as the implemented reference:
 
-- Countries controller: `api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs`
-- Commands/queries: `api/Modules/HR/ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Countries`
-- Mapster rules: `api/Modules/HR/ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Countries/Mapping/CountryMappingConfig.cs`
-- Persistence ports: `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/GeographicalInformation/Countries/Persistence`
+- Countries controller: `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs`
+- Commands/queries: `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries`
+- Mapster rules: `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Mapping/CountryMappingConfig.cs`
+- Persistence ports: `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence`
 - Countries page: `web-next/src/modules/hr/basic-data/geographical-information/countries/pages/CountriesPage.tsx`
 - Countries multi-view: `web-next/src/modules/hr/basic-data/geographical-information/countries/components/CountriesMultiView.tsx`
 - Countries orchestration: `web-next/src/modules/hr/basic-data/geographical-information/countries/hooks/useCountryGridLogic.ts`
@@ -593,9 +587,9 @@ Deliver one aggregate end to end before opening several unfinished screens.
 8. Post-commit jobs and realtime registry contract.
 9. Migration inspection.
 10. Handler, persistence, authorization, and HTTP contract tests.
-11. When Managed Crystal is Required, add the allowlisted HR API dataset profile
-    and matching Crystal runtime schema profile; do not add a feature-specific
-    public render controller.
+11. When Managed Crystal is Required, add an allowlisted Reporting data provider
+    backed by the owning module's public Contract/source plus the matching Crystal
+    runtime schema profile; do not add a feature-specific public render controller.
 12. When Import is Required, add the typed bulk command/handler/store/controller
     contract, bounded validation, field-scoped duplicate and dependency checks,
     plural post-commit side effects, and exact HTTP contract tests.

@@ -1,4 +1,6 @@
 using FluentValidation;
+using ErpSystem.BuildingBlocks.Application;
+using ErpSystem.Modules.Platform.Contracts.Files;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +14,43 @@ public sealed class HostGlobalExceptionHandler(ILogger<HostGlobalExceptionHandle
         Exception exception,
         CancellationToken cancellationToken)
     {
+        if (exception is FileUploadSecurityException fileSecurityException)
+        {
+            logger.LogWarning(
+                "File upload security policy rejected a request. FailureKind: {FailureKind}, Code: {Code}, TraceId: {TraceId}",
+                fileSecurityException.FailureKind,
+                fileSecurityException.Code,
+                httpContext.TraceIdentifier);
+
+            var (status, title, detail) = fileSecurityException.FailureKind switch
+            {
+                FileUploadSecurityFailureKind.InvalidContent =>
+                    (StatusCodes.Status400BadRequest, "Invalid File Content", "The uploaded file content is not allowed."),
+                FileUploadSecurityFailureKind.MalwareDetected =>
+                    (StatusCodes.Status422UnprocessableEntity, "Malicious File Detected", "The uploaded file was rejected by malware protection."),
+                FileUploadSecurityFailureKind.ScannerUnavailable =>
+                    (StatusCodes.Status503ServiceUnavailable, "File Security Unavailable", "The file security service is temporarily unavailable."),
+                _ =>
+                    (StatusCodes.Status400BadRequest, "Invalid File Content", "The uploaded file content is not allowed.")
+            };
+
+            var problem = new ProblemDetails
+            {
+                Status = status,
+                Title = title,
+                Detail = detail,
+                Type = status switch
+                {
+                    StatusCodes.Status422UnprocessableEntity => "https://tools.ietf.org/html/rfc9110#section-15.5.21",
+                    StatusCodes.Status503ServiceUnavailable => "https://tools.ietf.org/html/rfc9110#section-15.6.4",
+                    _ => "https://tools.ietf.org/html/rfc9110#section-15.5.1"
+                }
+            };
+            problem.Extensions["code"] = fileSecurityException.Code;
+            await HostProblemDetails.WriteAsync(httpContext, problem, cancellationToken);
+            return true;
+        }
+
         if (exception is ValidationException validationException)
         {
             logger.LogWarning("Request validation failed. TraceId: {TraceId}", httpContext.TraceIdentifier);
@@ -48,7 +87,7 @@ public sealed class HostGlobalExceptionHandler(ILogger<HostGlobalExceptionHandle
             return true;
         }
 
-        if (exception is DbUpdateConcurrencyException)
+        if (exception is DbUpdateConcurrencyException or ConcurrencyConflictException)
         {
             logger.LogWarning("Database concurrency conflict. TraceId: {TraceId}", httpContext.TraceIdentifier);
             var problem = new ProblemDetails

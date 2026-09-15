@@ -147,7 +147,7 @@ const UserForm = ({
   };
 
   // Convert roles to autocomplete options
-  const roleOptions = roles.map((role) => ({
+  const roleOptions = roles.filter((role) => !role.isDeleted).map((role) => ({
       label: role.name,
       value: role.name,
       color: getRandomRoleColor(role.name),
@@ -176,12 +176,12 @@ const UserForm = ({
     const score = Object.values(checks).filter(Boolean).length;
     const strengths: Array<{ label: string; color: SvgIconProps["color"] }> = [
       { label: "", color: "disabled" },
-      { label: t("users.passwordVeryWeak") || "Very Weak", color: "error" },
-      { label: t("users.passwordWeak") || "Weak", color: "error" },
-      { label: t("users.passwordMedium") || "Medium", color: "warning" },
-      { label: t("users.passwordStrong") || "Strong", color: "info" },
+      { label: t("users.passwordVeryWeak"), color: "error" },
+      { label: t("users.passwordWeak"), color: "error" },
+      { label: t("users.passwordMedium"), color: "warning" },
+      { label: t("users.passwordStrong"), color: "info" },
       {
-        label: t("users.passwordVeryStrong") || "Very Strong",
+        label: t("users.passwordVeryStrong"),
         color: "success",
       },
     ];
@@ -189,6 +189,13 @@ const UserForm = ({
   };
 
   const passwordStrength = getPasswordStrength(watchedPassword);
+  const passwordCheckLabels: Record<keyof typeof passwordStrength.checks, string> = {
+    length: t("users.passwordLength"),
+    lowercase: t("users.passwordLowercase"),
+    uppercase: t("users.passwordUppercase"),
+    numbers: t("users.passwordNumbers"),
+    symbols: t("users.passwordSymbols"),
+  };
 
   // Reset form when dialog opens or selected user changes
   useEffect(() => {
@@ -219,7 +226,6 @@ const UserForm = ({
       };
 
       reset(userData);
-
       if (isEditMode) {
         clearErrors(["password", "confirmPassword"]);
       }
@@ -245,9 +251,9 @@ const UserForm = ({
 
   // Get appropriate overlay message
   const getOverlayMessage = () => {
-    if (isAddMode) return t("users.creatingUser") || "Creating user...";
-    if (isEditMode) return t("users.updatingUser") || "Updating user...";
-    return t("users.savingUser") || "Saving user...";
+    if (isAddMode) return t("users.creatingUser");
+    if (isEditMode) return t("users.updatingUser");
+    return t("users.savingUser");
   };
 
   // Convert react-hook-form errors to simple error object for MyForm
@@ -312,7 +318,6 @@ const UserForm = ({
       clearErrors(["password", "confirmPassword"]);
     }
   };
-
   const handleClose = () => {
     setPasswordSectionState({ lifecycleKey: "", visible: false });
     onClose();
@@ -331,10 +336,10 @@ const UserForm = ({
       }
       subtitle={
         isViewMode
-          ? t("users.viewSubtitle") || "View user details"
+          ? t("users.viewSubtitle")
           : isEditMode
-          ? t("users.editSubtitle") || "Modify user information"
-          : t("users.addSubtitle") || "Add new user"
+          ? t("users.editSubtitle")
+          : t("users.addSubtitle")
       }
       submitButtonText={
         isViewMode
@@ -426,11 +431,11 @@ const UserForm = ({
           disabled={isViewMode || loading}
           placeholder={
             rolesLoading
-              ? t("users.loadingRoles") || "Loading roles..."
-              : t("users.rolesPlaceholder") || "Select roles"
+              ? t("users.loadingRoles")
+              : t("users.rolesPlaceholder")
           }
-          loadingText={t("users.loadingRoles") || "Loading roles..."}
-          noOptionsText={t("users.noRolesFound") || "No roles found"}
+          loadingText={t("users.loadingRoles")}
+          noOptionsText={t("users.noRolesFound")}
           isViewMode={isViewMode}
           filterSelectedOptions={true}
           defaultChipColor="primary"
@@ -512,7 +517,7 @@ const UserForm = ({
             <Typography variant="body2" sx={{
               color: "text.secondary"
             }}>
-              {t("users.passwordSection") || "Password Settings"}
+              {t("users.passwordSection")}
             </Typography>
           </Divider>
 
@@ -525,14 +530,13 @@ const UserForm = ({
                 onClick={handlePasswordSectionToggle}
               >
                 {showPasswordSection
-                  ? t("users.hidePasswordFields") || "Hide Password Fields"
-                  : t("users.changePassword") || "Change Password"}
+                  ? t("users.hidePasswordFields")
+                  : t("users.changePassword")}
               </Button>
 
               {showPasswordSection && (
                 <Alert severity="info" sx={{ mt: 1 }}>
-                  {t("users.passwordChangeNote") ||
-                    "Leave empty to keep current password"}
+                  {t("users.passwordChangeNote")}
                 </Alert>
               )}
             </Box>
@@ -543,13 +547,13 @@ const UserForm = ({
               {/* Password Field */}
               <MyTextField
                 fieldName="password"
-                labelKey={t("users.password") || "Password"}
+                labelKey={t("users.password")}
                 inputRef={passwordRef}
                 loading={loading}
                 errors={errors}
                 control={control}
                 maxValue={50}
-                placeholder={t("users.passwordPlaceholder") || "Enter password"}
+                placeholder={t("users.passwordPlaceholder")}
                 showCounter={false}
                 readOnly={false}
                 type="password"
@@ -594,7 +598,10 @@ const UserForm = ({
                   </Box>
 
                   <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
-                    {Object.entries(passwordStrength.checks || {}).map(
+                    {(Object.entries(passwordStrength.checks) as Array<[
+                      keyof typeof passwordStrength.checks,
+                      boolean,
+                    ]>).map(
                       ([check, passed]) => (
                         <Typography
                           key={check}
@@ -603,11 +610,7 @@ const UserForm = ({
                           sx={{ fontSize: "0.7rem" }}
                         >
                           {passed ? "✓" : "○"}{" "}
-                          {t(
-                            `users.password${
-                              check.charAt(0).toUpperCase() + check.slice(1)
-                            }`
-                          ) || check}
+                          {passwordCheckLabels[check]}
                         </Typography>
                       )
                     )}
@@ -618,15 +621,13 @@ const UserForm = ({
               {/* Confirm Password Field */}
               <MyTextField
                 fieldName="confirmPassword"
-                labelKey={t("users.confirmPassword") || "Confirm Password"}
+                labelKey={t("users.confirmPassword")}
                 inputRef={confirmPasswordRef}
                 loading={loading}
                 errors={errors}
                 control={control}
                 maxValue={50}
-                placeholder={
-                  t("users.confirmPasswordPlaceholder") || "Confirm password"
-                }
+                placeholder={t("users.confirmPasswordPlaceholder")}
                 showCounter={false}
                 readOnly={false}
                 type="password"

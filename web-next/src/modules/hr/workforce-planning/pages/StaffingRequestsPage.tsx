@@ -10,7 +10,7 @@ import { CardViewPagination, CardViewSkeleton } from "@/shared/components/lists/
 import { PageHeader } from "@/shared/components/navigation/header";
 import { usePermissions } from "@/shared/hooks/usePermissions";
 import { useServerListState } from "@/shared/hooks/useServerListState";
-import { extractErrorMessage } from "@/shared/utils/errorUtils";
+import { extractErrorMessage, getErrorStatus } from "@/shared/utils/errorUtils";
 import { Cancel, CheckCircle, Close, Send, Undo, Visibility } from "@mui/icons-material";
 import { Alert, Box, Button, Chip, Grid, LinearProgress, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { GridActionsCellItem, type GridColDef } from "@mui/x-data-grid";
@@ -53,7 +53,16 @@ export default function StaffingRequestsPage() {
   const canApprove = !auth.isReadOnly && auth.hasPermission(permissions.ApproveStaffingRequests);
   const select = useCallback((item: StaffingRequestListItem, next: Dialog) => { setSelected(item); setReason(""); setCloseReason(item.remainingToHire === 0 ? 1 : item.remainingToHire < item.requestedHeadcount ? 3 : 2); setDialog(next); }, []);
   const finish = (key: string) => { showToast.success(t(key)); setDialog(null); setSelected(null); };
-  const run = async (work: () => Promise<unknown>, key: string) => { try { await work(); finish(key); } catch (error) { showToast.error(error instanceof Error ? error : new Error(t("staffing.messages.lifecycleError")), t("staffing.messages.lifecycleError")); } };
+  const run = async (work: () => Promise<unknown>, key: string) => { try { await work(); finish(key); } catch (error) {
+    if (getErrorStatus(error) === 409) {
+      await data.refetch();
+      setDialog(null);
+      setSelected(null);
+      showToast.warning(t("staffing.messages.conflictReloaded"));
+      return;
+    }
+    showToast.error(error instanceof Error ? error : new Error(t("staffing.messages.lifecycleError")), t("staffing.messages.lifecycleError"));
+  } };
   const createRequest = async (request: StaffingRequestMutation) => run(() => create.mutateAsync(request), "staffing.messages.created");
 
   const actions = useCallback((item: StaffingRequestListItem): CardActionItem[] => {

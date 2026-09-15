@@ -1,0 +1,20 @@
+namespace ErpSystem.Modules.Platform.Contracts.Authentication.Tokens;
+
+/// <summary>Canonical token claim names and scope values shared across module boundaries.</summary>
+public static class AuthenticationTokenClaimNames
+{
+    public const string FirstName = "firstname";
+    public const string LastName = "lastname";
+    public const string JwtId = "jti";
+    public const string SessionId = "sid";
+    public const string SecurityStamp = "security_stamp";
+    public const string TenantId = "tenant_id";
+    public const string TenantName = "tenant_name";
+    public const string TenantPlanName = "tenant_plan";
+    public const string CompanyId = "company_id";
+    public const string TenantRoleId = "tenant_role_id";
+    public const string Scope = "scope";
+    public const string RealtimeScope = "signalr";
+    public const string CompanySelectionScope = "company_selection";
+    public const string TenantSelectionScope = "tenant_selection";
+}

@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Application\ErpSystem.BuildingBlocks.Application.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Context\ErpSystem.BuildingBlocks.Context.csproj" />
     <ProjectReference Include="..\..\Platform\ErpSystem.Modules.Platform.Contracts\ErpSystem.Modules.Platform.Contracts.csproj" />
+    <ProjectReference Include="..\..\Accounting\ErpSystem.Modules.Accounting.Contracts\ErpSystem.Modules.Accounting.Contracts.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.HR.Contracts\ErpSystem.Modules.HR.Contracts.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.HR.Domain\ErpSystem.Modules.HR.Domain.csproj" />
   </ItemGroup>

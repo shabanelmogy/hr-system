@@ -59,14 +59,14 @@ describe("frontend module registry", () => {
 
     const result = intersectAccessibleModulesWithFrontendRegistry([
       { code: "hr", name: "HR", submodules: [
-        { code: "attendance", name: "Attendance", requiredPermissions: [] },
-        { code: "unknown", name: "Unknown", requiredPermissions: [] },
-      ] },
-      { code: "not-in-build", name: "Not in build", submodules: [] },
+        { code: "attendance", name: "Attendance", requiredPermissions: [], entryPath: null },
+        { code: "unknown", name: "Unknown", requiredPermissions: [], entryPath: null },
+      ], isDefault: true },
+      { code: "not-in-build", name: "Not in build", submodules: [], isDefault: false },
     ]);
 
     expect(result).toEqual([{ code: "hr", name: "HR", submodules: [
-      { code: "attendance", name: "Attendance", requiredPermissions: [] },
-    ] }]);
+      { code: "attendance", name: "Attendance", requiredPermissions: [], entryPath: null },
+    ], isDefault: true }]);
   });
 });

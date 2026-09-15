@@ -11,7 +11,8 @@ export type OutboxCommandStatus =
   | 'failed'
   | 'conflict'
   | 'uncertain'
-  | 'blocked';
+  | 'blocked'
+  | 'dead-letter';
 
 export interface OutboxCommand {
   commandId: string;
@@ -62,11 +63,15 @@ interface OutboxRow {
 
 export interface OutboxStore {
   listPending(scope: OfflineScope, limit?: number): Promise<OutboxCommand[]>;
+  listPendingByTypes(scope: OfflineScope, commandTypes: readonly string[], limit?: number): Promise<OutboxCommand[]>;
   markProcessing(commandId: string): Promise<boolean>;
   markSucceeded(commandId: string): Promise<void>;
   markFailed(commandId: string, error: string, nextAttemptAt?: string | null): Promise<void>;
   markConflict(commandId: string, error: string): Promise<void>;
   markUncertain(commandId: string, error: string): Promise<void>;
+  markBlocked(commandId: string, error: string): Promise<void>;
+  markDeadLetter(commandId: string, error: string): Promise<void>;
+  resetDeadLetterToPending(commandId: string): Promise<boolean>;
 }
 
 export class OfflineOutboxRepository implements OutboxStore {
@@ -192,6 +197,28 @@ export class OfflineOutboxRepository implements OutboxStore {
     return rows.map(mapOutboxRow);
   }
 
+  async listPendingByTypes(scope: OfflineScope, commandTypes: readonly string[], limit = 50): Promise<OutboxCommand[]> {
+    const normalized = normalizeOfflineScope(scope);
+    const types = commandTypes.map((type) => requireText(type, 'command type'));
+    if (types.length === 0) return [];
+    const placeholders = types.map(() => '?').join(', ');
+    const safeLimit = Math.min(250, Math.max(1, Math.trunc(limit)));
+    const rows = await this.db.getAllAsync<OutboxRow>(
+      `SELECT * FROM offline_outbox
+       WHERE user_id = ? AND tenant_id = ? AND company_id = ?
+         AND command_type IN (${placeholders}) AND status IN ('pending', 'failed')
+         AND (next_attempt_at IS NULL OR next_attempt_at <= ?)
+       ORDER BY created_at ASC LIMIT ?`,
+      normalized.userId,
+      normalized.tenantId,
+      normalized.companyId,
+      ...types,
+      new Date().toISOString(),
+      safeLimit,
+    );
+    return rows.map(mapOutboxRow);
+  }
+
   async markProcessing(commandId: string): Promise<boolean> {
     const result = await this.db.runAsync(
       `UPDATE offline_outbox
@@ -207,8 +234,14 @@ export class OfflineOutboxRepository implements OutboxStore {
     return this.updateStatus(commandId, 'succeeded', null, null);
   }
 
-  markFailed(commandId: string, error: string, nextAttemptAt: string | null = null): Promise<void> {
-    return this.updateStatus(commandId, 'failed', error, nextAttemptAt);
+  async markFailed(commandId: string, error: string, nextAttemptAt: string | null = null): Promise<void> {
+    const current = await this.get(commandId);
+    if (current && current.attempts >= 8) {
+      await this.markDeadLetter(commandId, `Maximum retry attempts reached. ${error}`);
+      return;
+    }
+    const retryAt = normalizeRetryAt(nextAttemptAt, current?.attempts ?? 1);
+    await this.updateStatus(commandId, 'failed', error, retryAt);
   }
 
   markConflict(commandId: string, error: string): Promise<void> {
@@ -221,6 +254,21 @@ export class OfflineOutboxRepository implements OutboxStore {
 
   markBlocked(commandId: string, error: string): Promise<void> {
     return this.updateStatus(commandId, 'blocked', error, null);
+  }
+
+  markDeadLetter(commandId: string, error: string): Promise<void> {
+    return this.updateStatus(commandId, 'dead-letter', error, null);
+  }
+
+  async resetDeadLetterToPending(commandId: string): Promise<boolean> {
+    const result = await this.db.runAsync(
+      `UPDATE offline_outbox
+       SET status = 'pending', attempts = 0, last_error = NULL, next_attempt_at = NULL, updated_at = ?
+       WHERE command_id = ? AND status = 'dead-letter'`,
+      new Date().toISOString(),
+      requireUuid(commandId),
+    );
+    return result.changes === 1;
   }
 
   private async updateStatus(
@@ -240,6 +288,20 @@ export class OfflineOutboxRepository implements OutboxStore {
       commandId,
     );
   }
+}
+
+function computeBackoff(attempts: number): string {
+  const bounded = Math.min(8, Math.max(1, attempts));
+  const base = Math.min(15 * 60 * 1000, 1_000 * (2 ** bounded));
+  const jitter = Math.floor(Math.random() * Math.max(250, base * 0.2));
+  return new Date(Date.now() + base + jitter).toISOString();
+}
+
+function normalizeRetryAt(requested: string | null, attempts: number): string {
+  const requestedMs = requested ? Date.parse(requested) : Number.NaN;
+  return Number.isFinite(requestedMs) && requestedMs > Date.now()
+    ? new Date(requestedMs).toISOString()
+    : computeBackoff(attempts);
 }
 
 function mapOutboxRow(row: OutboxRow): OutboxCommand {

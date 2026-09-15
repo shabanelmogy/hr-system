@@ -1,0 +1,29 @@
+{
+  "moduleName": "Inventory",
+  "docSlug": "inventory",
+  "databaseSchema": "inv",
+  "version": "1.0.0",
+  "requiredModuleDependencies": [],
+  "optionalModuleDependencies": [],
+  "isUserVisible": true,
+  "allowsTenantEntitlement": true,
+  "lifecycle": "active",
+  "status": "foundation",
+  "runtimePaths": {
+    "root": "api/Modules/Inventory",
+    "contracts": "api/Modules/Inventory/ErpSystem.Modules.Inventory.Contracts",
+    "domain": "api/Modules/Inventory/ErpSystem.Modules.Inventory.Domain",
+    "application": "api/Modules/Inventory/ErpSystem.Modules.Inventory.Application",
+    "infrastructure": "api/Modules/Inventory/ErpSystem.Modules.Inventory.Infrastructure",
+    "presentation": "api/Modules/Inventory/ErpSystem.Modules.Inventory.Presentation",
+    "bootstrap": "api/Modules/Inventory/ErpSystem.Modules.Inventory"
+  },
+  "documentationPaths": {
+    "root": "documentation/modules/inventory",
+    "api": "documentation/modules/inventory/api/README.md",
+    "webNext": "documentation/modules/inventory/web-next/README.md",
+    "mobileReact": "documentation/modules/inventory/mobile-react/README.md",
+    "features": "documentation/modules/inventory/features/README.md",
+    "phases": "documentation/modules/inventory/phases/README.md"
+  }
+}

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { apiService } from "@/shared/services";
 import useSnackbar from "@/shared/hooks/useSnackbar";
 import HandleApiError from "@/shared/services/apiError";
 import {
@@ -8,7 +7,7 @@ import {
 } from "../constants/fileUpload.type";
 import { FileUploadItem, UseFileUploadArgs } from "../types/fileUpload.type";
 import { useTranslation } from "react-i18next";
-import { apiRoutes } from "@/config";
+import { useUploadFiles } from "../../../hooks/useFileQueries";
 
 export default function useFileUpload({
   onSuccess,
@@ -16,10 +15,11 @@ export default function useFileUpload({
   multiple = true,
 }: UseFileUploadArgs) {
   const [files, setFiles] = useState<FileUploadItem[]>([]);
-  const [isUploading, setIsUploading] = useState(false);
   const [globalError, setGlobalError] = useState<string | null>(null);
   const { showSnackbar, SnackbarComponent } = useSnackbar();
   const { t } = useTranslation();
+  const uploadMutation = useUploadFiles();
+  const isUploading = uploadMutation.isPending;
 
   const validateFiles = (fileList: File[]) => {
     const validationErrors: string[] = [];
@@ -100,25 +100,13 @@ export default function useFileUpload({
       return;
     }
 
-    setIsUploading(true);
-    const uploadUrl = apiRoutes.files.uploadMany;
-
     // Update all files to uploading status
     setFiles((prevFiles) =>
       prevFiles.map((f) => ({ ...f, status: "uploading", progress: 0 }))
     );
 
     try {
-      const formData = new FormData();
-
-      // Append all files to FormData
-      files.forEach((fileItem) => {
-        formData.append("files", fileItem.file);
-      });
-
-      await apiService.post(uploadUrl, formData, {
-        "Content-Type": "multipart/form-data",
-      });
+      await uploadMutation.mutateAsync(files.map((fileItem) => fileItem.file));
 
       // Update all files to success status
       setFiles((prevFiles) =>
@@ -151,8 +139,6 @@ export default function useFileUpload({
       HandleApiError(error, (updatedState) => {
         showSnackbar("error", updatedState.messages, updatedState.title || t('messages.error'));
       });
-    } finally {
-      setIsUploading(false);
     }
   };
 

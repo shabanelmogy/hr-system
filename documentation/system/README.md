@@ -2,6 +2,12 @@
 
 This system turns reviewed implementations such as Countries and States into repeatable evidence-based workflows for API, Next.js, and Expo features. It follows the useful structure of the Sigma ERP recipe system while remaining specific to this repository.
 
+For any change that includes API work, implementation starts with
+[`../api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](../api/API_FEATURE_DEVELOPMENT_WORKFLOW.md)
+and the API Architecture Constitution. This documentation system records decisions,
+evidence, and client coordination; it does not override bounded-context ownership or
+the mandatory Existing-System Relationship Review.
+
 For the product-wide ownership and reuse workflow, start with the [ERP
 documentation guide](../project/ERP_DOCUMENTATION_GUIDE_AR.md) and its [shared
 reuse catalog](../project/SHARED_REUSE_CATALOG.md). This system owns the shared
@@ -81,9 +87,14 @@ From the repository root:
 Generation validates every required file and source collection before writing. Check mode also recomputes every selected output and fails when a packet is missing or stale.
 
 The new-feature scaffold also writes a copy-ready `IMPLEMENTATION-REQUEST.md`.
-Complete its decision tables, then use that file as the request given to an
-implementing agent. The review artifact records evidence and findings; the request
-records the desired work. Neither replaces the canonical applied profiles.
+Complete its decision tables and mandatory Business Readiness Gate, then use that
+file as the request given to an implementing agent. The gate consists of a
+Business Rules Matrix, an Edge Cases & Validation Matrix, and an Impact Matrix. Every
+edge-case category must contain scenarios or an explicit `N/A` with a reason, and
+runtime work does not start while ownership, an impact decision, or a matrix
+placeholder remains unresolved. The review artifact records evidence and findings;
+the request records the desired work. Neither replaces the canonical applied
+profiles or the API feature workflow.
 
 `New-FeatureDocumentation.ps1` currently accepts only `countries` and `states`
 as `-ReferenceFeature` values and initially plans central canonical book paths.
@@ -116,7 +127,10 @@ when requirements change.
    - `countries`: flat global reference data, lifecycle, bulk actions, reports, and multi-view lists;
    - `states`: parent-dependent reference data and parent-filter/selector behavior.
 3. Run `New-FeatureDocumentation.ps1`. Complete the generated
-   `IMPLEMENTATION-REQUEST.md` and review artifact before runtime work. Its
+   `IMPLEMENTATION-REQUEST.md` and review artifact before runtime work. Complete its
+   Existing-System Relationship Review plus Business Rules, Edge Cases & Validation,
+   and Impact matrices; every edge-case category must be covered or explicitly
+   reasoned `N/A`. Its
    required-file and recipe-registration manifests remain draft files and are
    intentionally excluded from `recipe-manifest.json` while runtime paths are
    being created.
@@ -147,9 +161,12 @@ the rule into `generated/` files or feature-local documentation by hand.
 
 1. Run check mode before starting. Resolve stale registered documentation first.
 2. Read the selected reference's phase 00 and create a feature evidence artifact from `templates/FEATURE-REVIEW-ARTIFACTS.template.md`.
-3. Complete phases 01 through 05 in order. Record evidence using repository-relative paths and exact symbols.
-4. Complete phase 06 after tests and cross-client reconciliation.
-5. If a canonical rule changes, update the canonical book and regenerate. Never patch generated output.
+3. Complete the Existing-System Relationship Review and all three Business
+   Readiness matrices in `IMPLEMENTATION-REQUEST.md`; Phase 00 is not closed while
+   ownership, any matrix row, or an Edge Cases & Validation category is unresolved.
+4. Complete phases 01 through 05 in order. Record evidence using repository-relative paths and exact symbols.
+5. Complete phase 06 after tests and cross-client reconciliation.
+6. If a canonical rule changes, update the canonical book and regenerate. Never patch generated output.
 
 ## Change-impact matrix
 

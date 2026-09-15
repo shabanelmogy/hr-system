@@ -74,7 +74,7 @@ Before changing runtime source:
 | Render contract | `Both clients render(reportId, { language, filters }); clients send only the managed report ID, ar|en, and approved filters.` |
 | Dataset | `One ReportData table with DistrictId, DistrictAr, DistrictEn, DistrictCode, StateId, StateAr, StateEn, AddressesCount; active Districts whose State and Country are active; deterministic DistrictId order.` |
 | Filters | `Optional exact-match NameAr/NameEn aliases and StateAr/StateEn aliases only; unknown nonblank filters reject the dataset request.` |
-| Runtime profile | `The HR API dataset schema and CrystalReportGeneratorApi managed runtime profile must match exactly.` |
+| Runtime profile | `The Reporting data-provider schema and Crystal runtime profile must match exactly; business truth comes through the owning module's public source Contract.` |
 | UI states | `Published-report loading, permission, empty, error/retry, localized catalog selection, bounded filters, PDF loading/error/open/print/share behavior, and mobile cache cleanup.` |
 | Tests | `Dataset schema/filter/active-parent behavior, approved entity profile, both-client report wiring/query key/filter payload/localized names, locales, mobile PDF boundary, and production builds.` |
 

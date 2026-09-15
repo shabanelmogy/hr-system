@@ -5,7 +5,8 @@ Status: final implementation profile. Base route: `/api/v1/organizational-struct
 ## 1. Boundary
 
 `OrganizationalStructureController` is a thin versioned adapter over
-`ISender`/feature-owned management ports. It does not call legacy services.
+`ISender`/feature-owned Application management ports; business orchestration stays
+behind the CQRS/Application boundary.
 
 ## 2. Resources and contracts
 

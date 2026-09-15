@@ -9,22 +9,22 @@ describe("module route requirements", () => {
   beforeEach(() => {
     resetFrontendModuleRegistryForTests();
     registerFrontendModule({
-      code: "hr",
-      name: "HR",
+      code: "test-module",
+      name: "Test module",
       requiredDependencies: [],
       optionalDependencies: [],
       submodules: [
         {
-          code: "analytics",
-          name: "Analytics",
+          code: "parent",
+          name: "Parent",
           requiredPermissions: [],
           entryCandidates: [],
           navigation: [],
           routePrefixes: ["/attendance", "/attendance-trends"],
         },
         {
-          code: "attendance",
-          name: "Attendance",
+          code: "nested",
+          name: "Nested",
           requiredPermissions: [],
           entryCandidates: [],
           navigation: [],
@@ -36,12 +36,12 @@ describe("module route requirements", () => {
 
   it("assigns overlapping routes to the longest registered prefix", () => {
     expect(requiredModuleForPath("/attendance/devices/42")).toEqual({
-      moduleCode: "hr",
-      submoduleCode: "attendance",
+      moduleCode: "test-module",
+      submoduleCode: "nested",
     });
     expect(requiredModuleForPath("/attendance-trends/")).toEqual({
-      moduleCode: "hr",
-      submoduleCode: "analytics",
+      moduleCode: "test-module",
+      submoduleCode: "parent",
     });
   });
 

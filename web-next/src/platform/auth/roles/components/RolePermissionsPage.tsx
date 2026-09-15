@@ -28,7 +28,7 @@ export default function RolePermissionsPage({ id }: RolePermissionsPageProps) {
   const theme = useTheme();
   const { t } = useTranslation();
   useUnsavedChangesRegistration(
-    Boolean(!permissions.role?.isSystem && permissions.formState.isDirty),
+    Boolean(permissions.canEdit && !permissions.role?.isSystem && permissions.formState.isDirty),
     permissions.isSaving,
   );
 
@@ -37,7 +37,7 @@ export default function RolePermissionsPage({ id }: RolePermissionsPageProps) {
       <ContentWrapper>
         <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: 400, gap: 2 }}>
           <CircularProgress size={60} />
-          <Typography variant="h6" sx={{ color: "text.secondary" }}>Loading role permissions...</Typography>
+          <Typography variant="h6" sx={{ color: "text.secondary" }}>{t("roles.loadingRolePermissions")}</Typography>
         </Box>
       </ContentWrapper>
     );
@@ -47,7 +47,7 @@ export default function RolePermissionsPage({ id }: RolePermissionsPageProps) {
     return (
       <ContentWrapper>
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: 400 }}>
-          <Alert severity="warning" sx={{ maxWidth: 400 }}>Role not found</Alert>
+          <Alert severity="warning" sx={{ maxWidth: 400 }}>{t("roles.roleNotFound")}</Alert>
         </Box>
         {permissions.notifications.SnackbarComponent}
       </ContentWrapper>
@@ -71,6 +71,7 @@ export default function RolePermissionsPage({ id }: RolePermissionsPageProps) {
           <Card sx={{ borderRadius: 2, boxShadow: 3, bgcolor: "background.paper" }}>
             <Box sx={{ p: 3, borderBottom: 1, borderColor: "divider" }}>
               <RolePermissionsFilters
+                modules={permissions.availableModules}
                 searchTerm={permissions.searchTerm}
                 selectedModule={permissions.selectedModule}
                 showOnlySelected={permissions.showOnlySelected}
@@ -80,19 +81,20 @@ export default function RolePermissionsPage({ id }: RolePermissionsPageProps) {
                 onShowOnlySelectedChange={permissions.setShowOnlySelected}
               />
             </Box>
-            <form onSubmit={permissions.role.isSystem ? undefined : permissions.submit} noValidate>
+            <form onSubmit={permissions.role.isSystem || !permissions.canEdit ? undefined : permissions.submit} noValidate>
               {Object.keys(permissions.formState.errors).length > 0 && (
                 <Alert severity="error" sx={{ mb: 2 }}>
-                  Please review the role permissions before saving.
+                  {t("roles.reviewPermissions")}
                 </Alert>
               )}
               <RolePermissionsTable
                 modules={permissions.paginatedModules}
+                actions={permissions.permissionActions}
                 claims={permissions.role.roleClaims}
                 areAllSelected={permissions.areAllSelected}
                 onSelectAll={permissions.selectAll}
                 onToggle={permissions.toggleClaim}
-                readOnly={permissions.role.isSystem}
+                readOnly={permissions.role.isSystem || !permissions.canEdit}
               />
               <TablePagination
                 component="div"
@@ -119,7 +121,7 @@ export default function RolePermissionsPage({ id }: RolePermissionsPageProps) {
                 total={permissions.statistics.total}
                 isSaving={permissions.isSaving}
                 onBack={permissions.goBack}
-                readOnly={permissions.role.isSystem}
+                readOnly={permissions.role.isSystem || !permissions.canEdit}
               />
             </form>
           </Card>

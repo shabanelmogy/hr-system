@@ -8,7 +8,8 @@ public sealed record PartyResponse(
     string? Email,
     string? Phone,
     DateTimeOffset CreatedOnUtc,
-    DateTimeOffset? UpdatedOnUtc);
+    DateTimeOffset? UpdatedOnUtc,
+    long Revision);
 
 public interface IPartyStore
 {
@@ -28,5 +29,6 @@ internal static class PartyResponseMapper
             party.Email,
             party.Phone,
             party.CreatedOnUtc,
-            party.UpdatedOnUtc);
+            party.UpdatedOnUtc,
+            party.Revision);
 }

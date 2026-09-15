@@ -4,6 +4,7 @@ import type {
   CreateCandidateMutation,
   CreateJobOfferMutation,
   HireCandidateMutation,
+  InterviewQuery,
   JobOfferQuery,
   JobOpeningQuery,
   JobRequisitionMutation,
@@ -21,8 +22,8 @@ export function createRecruitmentUseCases(repository: RecruitmentRepository) {
     getOpenings: (params?: JobOpeningQuery) => repository.getOpenings(params),
     getOpeningById: (id: number) => repository.getOpeningById(id),
     openOpening: (id: number) => repository.openOpening(id),
-    pauseOpening: (id: number, reason?: string) => repository.pauseOpening(id, reason),
-    closeOpening: (id: number, reason?: string) => repository.closeOpening(id, reason),
+    pauseOpening: (id: number, reason: string) => repository.pauseOpening(id, reason),
+    closeOpening: (id: number, reason: string) => repository.closeOpening(id, reason),
 
     getApplications: (params?: ApplicationQuery) => repository.getApplications(params),
     getApplicationById: (id: number) => repository.getApplicationById(id),
@@ -32,6 +33,7 @@ export function createRecruitmentUseCases(repository: RecruitmentRepository) {
     hireCandidate: (id: number, request: HireCandidateMutation) => repository.hireCandidate(id, request),
 
     scheduleInterview: (request: ScheduleInterviewMutation) => repository.scheduleInterview(request),
+    getInterviews: (params?: InterviewQuery) => repository.getInterviews(params),
     completeInterview: (id: number) => repository.completeInterview(id),
     evaluateInterview: (id: number, request: SubmitInterviewEvaluationMutation) => repository.evaluateInterview(id, request),
     getScorecardTemplate: (interviewId: number) => repository.getScorecardTemplate(interviewId),

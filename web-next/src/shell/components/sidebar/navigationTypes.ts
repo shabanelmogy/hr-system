@@ -54,8 +54,6 @@ export enum NavigationTitles {
   ADDRESS_TYPES = "menu.addressTypes",
   STATES = "menu.states",
   DISTRICTS = "menu.districts",
-  COUNTRY_REPORT = "menu.countryReport",
-  GLOBAL_PRESENCE = "menu.globalPresence",
   ORGANIZATIONAL_STRUCTURE = "menu.organizationalStructure",
   ORGANIZATIONAL_STRUCTURE_MANAGEMENT = "menu.organizationalStructureManagement",
   COMPANY_GEOGRAPHIC_SCOPE = "menu.companyGeographicScope",
@@ -78,7 +76,6 @@ export enum NavigationTitles {
 
   // Advanced tools
   ADVANCED_TOOLS_TITLE = "advancedTools.title",
-  TRACK_CHANGES = "advancedTools.trackChanges",
   LOCALIZATION_API = "advancedTools.localizationApi",
   HEALTH_CHECK = "advancedTools.healthCheck",
   API_ENDPOINTS = "advancedTools.apiEndPoints",

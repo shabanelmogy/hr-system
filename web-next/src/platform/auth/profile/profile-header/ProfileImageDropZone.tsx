@@ -22,7 +22,7 @@ const ProfileImageDropZone = ({
     <FileDropZone
       ref={fileInputRef}
       variant="compact"
-      accept={["image/jpeg", "image/png", "image/webp"]}
+      accept={["image/jpeg", "image/png"]}
       title={isDragging ? t("actions.dropImage") : t("actions.updateProfile")}
       description={t("actions.dragPhoto")}
       ariaLabel={t("actions.updateProfile")}

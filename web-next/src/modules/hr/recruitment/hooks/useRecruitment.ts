@@ -394,11 +394,13 @@ export const useRecruitmentSettingsQuery = () =>
 
 export const useUpdateRecruitmentSettingsMutation = () => {
   const queryClient = useQueryClient();
+  const settingsKey = [...recruitmentKeys.all, "settings"] as const;
   return useMutation({
     mutationFn: (data: import("../types/recruitmentSettingsTypes").RecruitmentSettingsDto) =>
       RecruitmentService.updateSettings(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [...recruitmentKeys.all, "settings"] });
+    onSuccess: (settings) => {
+      queryClient.setQueryData(settingsKey, settings);
+      queryClient.invalidateQueries({ queryKey: settingsKey });
     },
   });
 };

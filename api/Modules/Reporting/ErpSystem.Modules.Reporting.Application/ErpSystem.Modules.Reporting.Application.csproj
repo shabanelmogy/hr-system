@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.Reporting.Application</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.Reporting.Application</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Application\ErpSystem.BuildingBlocks.Application.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Context\ErpSystem.BuildingBlocks.Context.csproj" />
+    <ProjectReference Include="..\..\Platform\ErpSystem.Modules.Platform.Contracts\ErpSystem.Modules.Platform.Contracts.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Reporting.Contracts\ErpSystem.Modules.Reporting.Contracts.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Reporting.Domain\ErpSystem.Modules.Reporting.Domain.csproj" />
+  </ItemGroup>
+</Project>

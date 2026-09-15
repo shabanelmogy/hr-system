@@ -28,6 +28,7 @@ interface Props {
   mode: "add" | "edit" | "view";
   resource: OrganizationalResource;
   item?: OrganizationalStructureItem | null;
+  initialValues?: Partial<OrganizationalStructureMutation> | null;
   loading: boolean;
   onClose: () => void;
   onSubmit: (values: OrganizationalStructureMutation) => Promise<void>;
@@ -46,8 +47,8 @@ const boolOptions = [
   { value: false, label: "organizationalStructure.no" },
 ] as const;
 
-const toFormValues = (item?: OrganizationalStructureItem | null): OrganizationalStructureMutation => {
-  if (!item) return emptyValues;
+const toFormValues = (item?: OrganizationalStructureItem | null, initialValues?: Partial<OrganizationalStructureMutation> | null): OrganizationalStructureMutation => {
+  if (!item) return { ...emptyValues, ...initialValues };
   return {
     code: item.code ?? "",
     nameEn: item.nameEn ?? "",
@@ -100,7 +101,7 @@ const toFormValues = (item?: OrganizationalStructureItem | null): Organizational
 };
 
 export default function OrganizationalStructureForm({
-  open, mode, resource, item, loading, onClose, onSubmit,
+  open, mode, resource, item, initialValues, loading, onClose, onSubmit,
 }: Props) {
   const { t } = useTranslation();
   const isView = mode === "view";
@@ -136,8 +137,8 @@ export default function OrganizationalStructureForm({
   };
 
   useEffect(() => {
-    if (open) reset(toFormValues(item));
-  }, [item, open, reset, resource]);
+    if (open) reset(toFormValues(item, initialValues));
+  }, [initialValues, item, open, reset, resource]);
 
   const options = (values = [] as { id: number; code: string; nameEn: string; nameAr: string }[]) =>
     values.map((value) => ({ id: value.id, displayName: `${value.code} — ${value.nameEn} (${value.nameAr})` }));

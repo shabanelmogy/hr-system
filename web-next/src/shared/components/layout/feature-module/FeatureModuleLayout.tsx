@@ -15,7 +15,8 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
+import { useSidebar } from "@/shared/contexts/SidebarContext";
 import FeatureModuleNavigation from "./FeatureModuleNavigation";
 import { findActiveNavigationTrail } from "./navigation";
 import type { FeatureModuleLayoutProps } from "./types";
@@ -37,6 +38,7 @@ export default function FeatureModuleLayout({
   children,
 }: FeatureModuleLayoutProps) {
   const theme = useTheme();
+  const { open: primarySidebarOpen, setOpen: setPrimarySidebarOpen } = useSidebar();
   const pathname = usePathname();
   const navigationId = useId();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -45,6 +47,18 @@ export default function FeatureModuleLayout({
     () => (pathname === moduleHref ? [] : findActiveNavigationTrail(items, pathname)),
     [items, moduleHref, pathname],
   );
+
+  useEffect(() => {
+    if (!primarySidebarOpen) return;
+
+    setMobileOpen(false);
+    setDesktopExpanded(false);
+  }, [primarySidebarOpen]);
+
+  const handleOpenMobileNavigation = () => {
+    setPrimarySidebarOpen(false);
+    setMobileOpen(true);
+  };
 
   return (
     <Box
@@ -67,7 +81,7 @@ export default function FeatureModuleLayout({
         breadcrumbLabel={navigationLabel}
         openNavigationLabel={openNavigationLabel}
         navigationId={navigationId}
-        onOpenNavigation={() => setMobileOpen(true)}
+        onOpenNavigation={handleOpenMobileNavigation}
       />
 
       <Box
@@ -117,7 +131,10 @@ export default function FeatureModuleLayout({
             pathname={pathname}
             compact={!desktopExpanded}
             onClose={() => setDesktopExpanded(false)}
-            onExpand={() => setDesktopExpanded(true)}
+            onExpand={() => {
+              setPrimarySidebarOpen(false);
+              setDesktopExpanded(true);
+            }}
           />
         </Paper>
 

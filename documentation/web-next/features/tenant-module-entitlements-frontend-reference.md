@@ -15,8 +15,10 @@ accessible catalog before rendering or redirecting.
 ## 3. API client
 
 moduleApi uses the existing shared API service and central API route
-configuration. Query keys separate installed catalog data from tenant-specific
-accessible data.
+configuration. Query keys separate installed, tenant-entitlement, and
+tenant-specific accessible catalog data. Tenant administration consumes only
+the server-filtered /modules/tenant-entitlements catalog, so Global capabilities
+such as reference-data:geography never appear as tenant choices.
 
 ## 4. Odoo-style launcher
 
@@ -62,7 +64,13 @@ direct URL and visible navigation cannot disagree about commercial access.
 
 The super-admin tenant screen uses the shared MyForm, MyTextField, and MySelect
 components. The domain-specific entitlement tree uses controlled checkboxes
-inside that shared form shell.
+inside that shared form shell. It does not infer assignability from the installed
+catalog; the Platform API is authoritative.
+
+When the current route belongs to a registered business module, the sidebar is
+scoped to that module's permission-filtered navigation. For example,
+/finance/fiscal-years shows Accounting navigation rather than every entitled
+module. The top-bar search remains cross-module.
 
 ## 10. Selection integrity
 

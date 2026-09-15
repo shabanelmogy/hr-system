@@ -54,12 +54,14 @@ describe("authentication API response parsing", () => {
     expect(page.metaData.totalCount).toBe(1);
   });
 
-  it("unwraps result envelopes and wrapped collection items", () => {
+  it("rejects obsolete result envelopes and wrapped collection items", () => {
     const response = {
       isSuccess: true,
       value: [{ isSuccess: true, value: role }],
     };
-    expect(parseRolesResponse(response)).toEqual([role]);
+    expect(() => parseRolesResponse(response)).toThrow(
+      "Invalid roles response: expected an array.",
+    );
   });
 
   it("normalizes missing role claims to an empty collection", () => {

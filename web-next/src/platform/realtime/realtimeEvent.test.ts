@@ -30,9 +30,6 @@ describe("realtime entity changes", () => {
     expect(getRealtimeQueryKeys("users")).toContainEqual(["userProfile"]);
     expect(getRealtimeQueryKeys("users")).toContainEqual(["tenant-admins"]);
     expect(getRealtimeQueryKeys("notifications")).toEqual([["notifications"]]);
-    expect(getRealtimeQueryKeys("entity-change-logs")).toEqual([
-      ["advancedTools", "trackChanges"],
-    ]);
   });
 
   it("distinguishes targeted resources from generic fallback resources", () => {

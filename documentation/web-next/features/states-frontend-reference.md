@@ -29,8 +29,7 @@ feedback instead of truncating or sending an invalid bulk request.
 
 The shared multi-view header Filter button begins pressed and toggles only
 criteria-bar visibility. It controls the Grid toolbar in Grid, the State
-criteria header in Cards and Chart, and the `ReportViewer` criteria sidebar in
-Report. It never resets or locally applies controlled criteria, and it exposes
+criteria header in Cards and Chart. It never resets or locally applies controlled criteria, and it exposes
 its pressed state for keyboard and screen-reader users. The implementation
 comes from shared `PageHeader` and `HeaderActions`, so future multi-view
 features reuse the same props instead of creating another header toggle.
@@ -40,12 +39,7 @@ features reuse the same props instead of creating another header toggle.
 Grid is the default. Cards render the same adaptive display page and actions through the
 shared `EntityCard` scaffold, shared card criteria toolbar, loading/empty/no-results
 states, highlight behavior, and shared pagination. State-specific content is
-Country, State code, District count, quality, and created date. Report mode uses
-the shared Crystal `ReportViewer`, a States-only report catalog, and the
-States-only generation route; it does not render a local table as a pretend
-report. The checked-in `Reports/States` slot is intentionally empty, so report
-mode displays a localized unavailable state until a valid State `.rpt` is
-added. Chart mode is Required and uses the same controlled criteria, resets to
+Country, State code, District count, quality, and created date. Chart mode is Required and uses the same controlled criteria, resets to
 the first page when entered, and does not render pagination controls. Its notice
 and metric labels explicitly distinguish matching authoritative totals from
 first-page-scoped Country, State, District, and timeline data.
@@ -181,20 +175,10 @@ create.
 
 ## 10. Crystal report integration
 
-`StateReportPage` follows Country report catalog and viewer behavior. It sends
-`{ subFolderPath: "States", reportCategory: "States" }` to `report/info` and
-only mounts `ReportViewer` after the catalog supplies a valid `.rpt`. The viewer
-calls `report/states/generate`, whose request supports Arabic and English State
-name parameters and uses the `V_AllStates` dataset. The shared viewer accepts a
-feature generation route and a controlled filter-sidebar state, preserving the
-existing Countries route.
-
-`api/CrystalReportGeneratorApi/Reports/States/.gitkeep` deliberately creates a
-catalog location without inventing an invalid report file. When the State
-Crystal template is ready, place the valid `.rpt` in that folder with `States`
-in its filename (for example, `States.rpt`); the current catalog filter will
-then expose it without a browser replacement. The Crystal template itself must
-use the documented State dataset fields rather than Country-only report fields.
+A States-specific web report view is Excluded from the current client surface.
+The managed Reporting and Crystal contracts remain available to their owning
+module, but States does not claim runtime integration until a route, composition,
+permissions, and focused client tests exist.
 
 ## 11. Localization and RTL
 

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.Reporting.Presentation</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.Reporting.Presentation</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Mvc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Authorization\ErpSystem.BuildingBlocks.Authorization.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Presentation\ErpSystem.BuildingBlocks.Presentation.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Reporting.Application\ErpSystem.Modules.Reporting.Application.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Reporting.Contracts\ErpSystem.Modules.Reporting.Contracts.csproj" />
+    <ProjectReference Include="..\..\Platform\ErpSystem.Modules.Platform.Contracts\ErpSystem.Modules.Platform.Contracts.csproj" />
+  </ItemGroup>
+</Project>

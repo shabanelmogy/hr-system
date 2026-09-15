@@ -16,35 +16,35 @@ export function RecruitmentSummaryStats({ summary }: RecruitmentSummaryStatsProp
 
   const items = [
     {
-      title: t('recruitment.stats.openings', 'الوظائف المفتوحة / Openings'),
+      title: t('recruitment.stats.openings'),
       count: summary?.totalOpenings ?? 0,
       icon: 'briefcase-outline' as const,
       color: theme.colors.primary,
       bgColor: `${theme.colors.primary}15`,
     },
     {
-      title: t('recruitment.stats.candidates', 'المرشحون / Candidates'),
+      title: t('recruitment.stats.candidates'),
       count: summary?.totalActiveCandidates ?? 0,
       icon: 'people-outline' as const,
       color: '#8B5CF6',
       bgColor: '#8B5CF615',
     },
     {
-      title: t('recruitment.stats.interviews', 'المقابلات / Interviews'),
-      count: summary?.scheduledInterviewsCount ?? 0,
+      title: t('recruitment.stats.interviews'),
+      count: summary?.totalScheduledInterviews ?? 0,
       icon: 'calendar-outline' as const,
       color: '#F59E0B',
       bgColor: '#F59E0B15',
     },
     {
-      title: t('recruitment.stats.offers', 'عروض العمل / Offers'),
-      count: summary?.pendingOffersCount ?? 0,
+      title: t('recruitment.stats.offers'),
+      count: summary?.totalPendingOffers ?? 0,
       icon: 'mail-outline' as const,
       color: '#06B6D4',
       bgColor: '#06B6D415',
     },
     {
-      title: t('recruitment.stats.hired', 'تم التعيين / Hired'),
+      title: t('recruitment.stats.hired'),
       count: summary?.totalHiredCount ?? 0,
       icon: 'checkmark-circle-outline' as const,
       color: theme.colors.success,

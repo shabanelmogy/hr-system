@@ -1,0 +1,29 @@
+{
+  "moduleName": "PointOfSale",
+  "docSlug": "point-of-sale",
+  "databaseSchema": "pos",
+  "version": "1.0.0",
+  "requiredModuleDependencies": [],
+  "optionalModuleDependencies": [],
+  "isUserVisible": true,
+  "allowsTenantEntitlement": true,
+  "lifecycle": "active",
+  "status": "foundation",
+  "runtimePaths": {
+    "root": "api/Modules/PointOfSale",
+    "contracts": "api/Modules/PointOfSale/ErpSystem.Modules.PointOfSale.Contracts",
+    "domain": "api/Modules/PointOfSale/ErpSystem.Modules.PointOfSale.Domain",
+    "application": "api/Modules/PointOfSale/ErpSystem.Modules.PointOfSale.Application",
+    "infrastructure": "api/Modules/PointOfSale/ErpSystem.Modules.PointOfSale.Infrastructure",
+    "presentation": "api/Modules/PointOfSale/ErpSystem.Modules.PointOfSale.Presentation",
+    "bootstrap": "api/Modules/PointOfSale/ErpSystem.Modules.PointOfSale"
+  },
+  "documentationPaths": {
+    "root": "documentation/modules/point-of-sale",
+    "api": "documentation/modules/point-of-sale/api/README.md",
+    "webNext": "documentation/modules/point-of-sale/web-next/README.md",
+    "mobileReact": "documentation/modules/point-of-sale/mobile-react/README.md",
+    "features": "documentation/modules/point-of-sale/features/README.md",
+    "phases": "documentation/modules/point-of-sale/phases/README.md"
+  }
+}

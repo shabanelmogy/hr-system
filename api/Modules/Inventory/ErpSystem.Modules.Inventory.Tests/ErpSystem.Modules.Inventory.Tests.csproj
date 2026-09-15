@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework><AssemblyName>ErpSystem.Modules.Inventory.Tests</AssemblyName><RootNamespace>ErpSystem.Modules.Inventory.Tests</RootNamespace><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable><IsPackable>false</IsPackable><IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+  <ItemGroup><PackageReference Include="Microsoft.NET.Test.Sdk" /><PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" /><PackageReference Include="Microsoft.Extensions.Caching.Hybrid" /><PackageReference Include="xunit" /><PackageReference Include="xunit.runner.visualstudio"><PrivateAssets>all</PrivateAssets><IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets></PackageReference></ItemGroup>
+  <ItemGroup><ProjectReference Include="..\ErpSystem.Modules.Inventory.Contracts\ErpSystem.Modules.Inventory.Contracts.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Inventory.Domain\ErpSystem.Modules.Inventory.Domain.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Inventory.Application\ErpSystem.Modules.Inventory.Application.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Inventory.Infrastructure\ErpSystem.Modules.Inventory.Infrastructure.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Inventory.Presentation\ErpSystem.Modules.Inventory.Presentation.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Inventory\ErpSystem.Modules.Inventory.csproj" /></ItemGroup>
+</Project>

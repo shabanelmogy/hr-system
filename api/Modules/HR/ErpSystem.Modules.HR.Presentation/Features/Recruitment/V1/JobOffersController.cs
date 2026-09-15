@@ -1,10 +1,9 @@
 using Asp.Versioning;
-using ErpSystem.Modules.HR.Presentation.Common.Errors;
-using ErpSystem.Modules.HR.Application.Common.Consts;
-using ErpSystem.Modules.HR.Application.Common.Paginations;
-using ErpSystem.Modules.HR.Application.Features.Recruitment.Abstractions;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.Recruitment.Contracts;
-using ErpSystem.Modules.HR.Presentation.Security.Authorization.Filters;
+using ErpSystem.Modules.HR.Application.Features.Recruitment.JobOffers.Commands;
+using ErpSystem.Modules.HR.Application.Features.Recruitment.JobOffers.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ErpSystem.Modules.HR.Presentation.Features.Recruitment.V1;
@@ -15,12 +14,12 @@ public sealed record DeclineOfferRequest(string Reason);
 [Route("api/v{version:apiVersion}/recruitment/offers")]
 [ApiController]
 [TenantMember]
-public sealed class JobOffersController(IRecruitmentService recruitmentService) : ControllerBase
+public sealed class JobOffersController(ISender sender) : ControllerBase
 {
-    private readonly IRecruitmentService _recruitmentService = recruitmentService;
+    private readonly ISender _sender = sender;
 
     [HttpGet]
-    [HasPermission(Permissions.ViewRecruitment)]
+    [HasPermission(HrPermissions.ViewRecruitment)]
     [ProducesResponseType(typeof(PageResponse<JobOfferDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPage(
         [FromQuery] int pageNumber = 1,
@@ -29,88 +28,85 @@ public sealed class JobOffersController(IRecruitmentService recruitmentService) 
         [FromQuery] JobOfferStatusFilter? status = null,
         CancellationToken cancellationToken = default)
     {
-        var result = await _recruitmentService.GetJobOffersPageAsync(
-            pageNumber,
-            pageSize,
-            applicationId,
-            status,
+        var result = await _sender.Send(
+            new GetJobOffersPageQuery(pageNumber, pageSize, applicationId, status),
             cancellationToken);
 
         return Ok(result);
     }
 
     [HttpGet("{id:int}")]
-    [HasPermission(Permissions.ViewRecruitment)]
+    [HasPermission(HrPermissions.ViewRecruitment)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
     {
-        var result = await _recruitmentService.GetJobOfferByIdAsync(id, cancellationToken);
+        var result = await _sender.Send(new GetJobOfferByIdQuery(id), cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
     [HttpPost]
-    [HasPermission(Permissions.ManageJobOffers)]
+    [HasPermission(HrPermissions.ManageJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] JobOfferMutation mutation, CancellationToken cancellationToken)
     {
-        var result = await _recruitmentService.CreateJobOfferAsync(mutation, cancellationToken);
+        var result = await _sender.Send(new CreateJobOfferCommand(mutation), cancellationToken);
         return result.IsSuccess
             ? CreatedAtAction(nameof(GetById), new { id = result.Value.Id }, result.Value)
             : result.ToProblem();
     }
 
     [HttpPost("{id:int}/submit")]
-    [HasPermission(Permissions.ManageJobOffers)]
+    [HasPermission(HrPermissions.ManageJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Submit(int id, CancellationToken cancellationToken)
     {
-        var result = await _recruitmentService.SubmitJobOfferAsync(id, cancellationToken);
+        var result = await _sender.Send(new SubmitJobOfferCommand(id), cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
     [HttpPost("{id:int}/approve")]
-    [HasPermission(Permissions.ApproveJobOffers)]
+    [HasPermission(HrPermissions.ApproveJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Approve(int id, CancellationToken cancellationToken)
     {
-        var result = await _recruitmentService.ApproveJobOfferAsync(id, cancellationToken);
+        var result = await _sender.Send(new ApproveJobOfferCommand(id), cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
     [HttpPost("{id:int}/reject")]
-    [HasPermission(Permissions.ApproveJobOffers)]
+    [HasPermission(HrPermissions.ApproveJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Reject(int id, [FromBody] DeclineOfferRequest request, CancellationToken cancellationToken)
     {
-        var result = await _recruitmentService.RejectJobOfferAsync(id, request.Reason, cancellationToken);
+        var result = await _sender.Send(new RejectJobOfferCommand(id, request.Reason), cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
     [HttpPost("{id:int}/issue")]
-    [HasPermission(Permissions.ManageJobOffers)]
+    [HasPermission(HrPermissions.ManageJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Issue(int id, CancellationToken cancellationToken)
     {
-        var result = await _recruitmentService.IssueJobOfferAsync(id, cancellationToken);
+        var result = await _sender.Send(new IssueJobOfferCommand(id), cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
     [HttpPost("{id:int}/accept")]
-    [HasPermission(Permissions.ApproveJobOffers)]
+    [HasPermission(HrPermissions.ApproveJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Accept(int id, CancellationToken cancellationToken)
     {
-        var result = await _recruitmentService.AcceptJobOfferAsync(id, cancellationToken);
+        var result = await _sender.Send(new AcceptJobOfferCommand(id), cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
     [HttpPost("{id:int}/decline")]
-    [HasPermission(Permissions.ApproveJobOffers)]
+    [HasPermission(HrPermissions.ApproveJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Decline(int id, [FromBody] DeclineOfferRequest request, CancellationToken cancellationToken)
     {
-        var result = await _recruitmentService.DeclineJobOfferAsync(id, request.Reason, cancellationToken);
+        var result = await _sender.Send(new DeclineJobOfferCommand(id, request.Reason), cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 }

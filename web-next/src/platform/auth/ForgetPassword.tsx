@@ -1,7 +1,7 @@
 "use client";
 
 import { useSnackbar } from "@/shared/hooks";
-import { apiService, HandleApiError } from "@/shared/services";
+import { HandleApiError } from "@/shared/services";
 import { MyTextField } from "@/shared/components/forms";
 import EmailIcon from "@mui/icons-material/Email";
 import LockResetIcon from "@mui/icons-material/LockReset";
@@ -25,7 +25,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { apiRoutes } from "@/config";
+import { authService } from "./services/authService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   EmailRecoveryFormData,
@@ -63,7 +63,7 @@ const ForgetPassword = () => {
   const onSubmit = async (data: EmailRecoveryFormData) => {
     setIsSubmitting(true);
     try {
-      await apiService.post(apiRoutes.auth.forgetPassword, data, {
+      await authService.forgetPassword(data, {
         ReturnUrl: "resetPassword",
       });
       reset();
@@ -330,7 +330,7 @@ const ForgetPassword = () => {
                   }}
                 >
                   {isSubmitting
-                    ? t("actions.sending") || "Sending..."
+                    ? t("actions.sending")
                     : t("auth.resetPassword")}
                 </Button>
               </Stack>

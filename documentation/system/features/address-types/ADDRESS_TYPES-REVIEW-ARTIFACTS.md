@@ -94,7 +94,7 @@ deployment prerequisites.
 - Notification action `/basic-data/address-types` maps to the geographical Expo route.
 - Expo adds typed route, policy, geographical-navigation item, public export,
   EN/AR translations, and realtime mapping.
-- Report profile changes require HR API + Crystal runtime deployment, manager
+- Report profile changes require Reporting provider/owner source + Crystal runtime deployment, manager
   import/publish, and role `Run` grant.
 
 Address Types are company-scoped (`TenantId` + `CompanyId`). The active-company
@@ -121,7 +121,7 @@ remains Branch/Site/WorkLocation.
 | Layer | Command/check | Result | Date |
 | --- | --- | --- | --- |
 | Documentation | `Generate-Documentation.ps1`, then `Generate-Documentation.ps1 -Check` | Passed: phases regenerated; 35 registered recipes checked | 2026-08-25 |
-| API | `dotnet test ErpSystem.Tests.csproj --no-restore`; API project build; EF pending-model check | Passed: 351 tests; build has 0 warnings/errors; no pending model changes | 2026-08-25 |
+| API | Current gate: `dotnet test api/ErpSystem.sln -c Release`; solution build; dynamic registered-module EF drift check | Original 2026-08-25 verification is historical; current authoritative API result is recorded in `documentation/api/FOUNDATION_CLOSURE_MATRIX.md` | 2026-08-25 |
 | Web | Address Type service test, strict type check, lint | Passed: 2 tests; strict type check; lint has existing repository warnings | 2026-08-24 |
 | Web full gate | `npm.cmd run check` | Inherited failure: existing architecture/circular-dependency violations outside Address Types | 2026-08-24 |
 | Mobile | typecheck, lint, architecture check, Jest | Passed: 35 suites / 104 tests, including EN/AR literal-key coverage | 2026-08-24 |

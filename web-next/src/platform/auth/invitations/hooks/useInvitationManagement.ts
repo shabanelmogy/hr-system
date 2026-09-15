@@ -1,10 +1,9 @@
-import type { CreateUserInvitationRequest } from "@/platform/auth/types";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useApiHandler from "@/shared/hooks/useApiHandler";
 import useNotifications from "@/shared/hooks/useNotifications";
 import useUserStore from "@/platform/auth/users/store/useUserStore";
-import type { UserFormData } from "@/platform/auth/users/utils/validation";
+import type { InvitationFormData } from "../utils/validation";
 
 const useInvitationManagement = () => {
   const { t } = useTranslation();
@@ -26,9 +25,9 @@ const useInvitationManagement = () => {
 
   const closeForm = useCallback(() => setIsFormOpen(false), []);
 
-  const submitInvitation = useCallback(async (formData: UserFormData) => {
+  const submitInvitation = useCallback(async (formData: InvitationFormData) => {
     const invitation = await handleApiCall(
-      () => inviteUser(toCreateUserInvitationRequest(formData)),
+      () => inviteUser(formData),
       t("users.invitationSent"),
       null,
       true,
@@ -56,17 +55,5 @@ const useInvitationManagement = () => {
     SnackbarComponent,
   };
 };
-
-function toCreateUserInvitationRequest(formData: UserFormData): CreateUserInvitationRequest {
-  return {
-    firstName: formData.firstName,
-    lastName: formData.lastName,
-    userName: formData.userName,
-    email: formData.email,
-    roles: formData.roles,
-    companyIds: formData.companyIds,
-    defaultCompanyId: formData.defaultCompanyId,
-  };
-}
 
 export default useInvitationManagement;

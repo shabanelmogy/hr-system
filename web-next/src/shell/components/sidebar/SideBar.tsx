@@ -18,17 +18,15 @@ import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { usePathname } from "next/navigation";
 import DrawerHeader from "./DrawerHeader";
-import { getNavigationConfig } from "./navigationConfig";
-import { filterNavigationConfigByModules } from "./navigationUtils";
 import NavigationSection from "./NavigationSection";
 import SidebarNavigationItem from "./NavigationItem";
 import UserProfile from "./UserProfile";
-import { useSession } from "@/lib/auth/SessionContext";
 import { MyTextField } from "@/shared/components/forms";
 import { useSidebar } from "@/shared/contexts/SidebarContext";
 import type { NavigationItem, NavigationSection as NavigationSectionModel } from "./navigationTypes";
 import { compactSidebarWidth, expandedSidebarWidth } from "./sidebarConstants";
-import { toLauncherModule, useAccessibleModulesQuery } from "@/platform/modules";
+import { toLauncherModule } from "@/platform/modules";
+import { useAuthorizedNavigation } from "@/shell/navigation/useAuthorizedNavigation";
 import { requiredModuleForPath } from "@/platform/modules";
 import { appRoutes } from "@/config/routes";
 // Drawer Sizes
@@ -137,10 +135,9 @@ function SideBar({
   const { t } = useTranslation();
   const pathname = usePathname();
   const [searchTerm, setSearchTerm] = useState("");
-  const { user } = useSession();
-  const modulesQuery = useAccessibleModulesQuery();
-  const { setOpen } = useSidebar();
   const activeModuleCode = requiredModuleForPath(pathname)?.moduleCode.toLowerCase() ?? null;
+  const { navigation: navigationSections, modulesQuery } = useAuthorizedNavigation(activeModuleCode);
+  const { setOpen } = useSidebar();
   const activeModule = activeModuleCode
     ? modulesQuery.data?.find((module) => module.code.toLowerCase() === activeModuleCode)
     : undefined;
@@ -167,18 +164,6 @@ function SideBar({
 
   // Track expanded sections with an object
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
-
-  // Get navigation configuration
-  const navigationSections = useMemo(
-    () => {
-      const config = getNavigationConfig(user?.roles, user?.permissions);
-      // Fail closed while entitlements are loading or unavailable. Platform
-      // links with no module requirement remain visible; module-owned links
-      // wait for the server response instead of leaking into the drawer.
-      return filterNavigationConfigByModules(config, modulesQuery.data ?? []);
-    },
-    [modulesQuery.data, user?.permissions, user?.roles]
-  );
 
   const isSectionVisible = useCallback(
     (section: NavigationSectionModel) => {
@@ -413,9 +398,9 @@ function SideBar({
                   color: alpha(theme.palette.text.secondary, 0.6),
                 }}
               />
-              <Typography variant="body2">{t("No results found")}</Typography>
+              <Typography variant="body2">{t("general.noResults")}</Typography>
               <Typography variant="caption" sx={{ maxWidth: "80%" }}>
-                {t("Try different keywords")}
+                {t("general.tryDifferentSearch")}
               </Typography>
             </Box>
           )}
@@ -450,7 +435,7 @@ function SideBar({
             </>
           )}
 
-          {/* Keep the drawer useful when every legacy section is filtered out by module access. */}
+          {/* Keep the drawer useful when module access leaves no navigation sections. */}
           {!isModuleLauncherRoute && navigationSections.length === 0 && (
             <SidebarNavigationItem
               open={open}

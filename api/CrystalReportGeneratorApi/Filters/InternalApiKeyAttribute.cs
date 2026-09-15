@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using CrystalReportGeneratorApi.Runtime;
 
 namespace CrystalReportGeneratorApi.Filters
 {
@@ -19,37 +20,44 @@ namespace CrystalReportGeneratorApi.Filters
     {
         private const string HeaderName = "X-Internal-Api-Key";
         private const string SettingName = "InternalApiKey";
-        private const string RequireSettingName = "RequireInternalApiKey";
 
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             var expected = Environment.GetEnvironmentVariable("CRYSTAL_REPORT_INTERNAL_API_KEY")
                 ?? ConfigurationManager.AppSettings[SettingName];
-            var supplied = actionContext.Request.Headers.Contains(HeaderName)
-                ? actionContext.Request.Headers.GetValues(HeaderName).FirstOrDefault()
-                : null;
 
             if (string.IsNullOrWhiteSpace(expected))
             {
-                var requireKey = bool.TryParse(
-                    ConfigurationManager.AppSettings[RequireSettingName],
-                    out var configuredRequireKey) && configuredRequireKey;
-                if (requireKey)
-                {
-                    actionContext.Response = actionContext.Request.CreateErrorResponse(
-                        HttpStatusCode.ServiceUnavailable,
-                        "The internal Crystal Report API key is required but not configured.");
-                    return;
-                }
-
-                base.OnActionExecuting(actionContext);
+                CrystalRuntimeDiagnostics.Error(
+                    actionContext.Request,
+                    "authentication",
+                    InternalReportErrorCodes.ApiKeyNotConfigured);
+                actionContext.Response = InternalReportResponseFactory.Create(
+                    actionContext.Request,
+                    HttpStatusCode.ServiceUnavailable,
+                    InternalReportErrorCodes.ApiKeyNotConfigured,
+                    "The internal Crystal Report API key is not configured.");
                 return;
+            }
+
+            string supplied = null;
+            if (actionContext.Request.Headers.TryGetValues(HeaderName, out var suppliedValues))
+            {
+                var values = suppliedValues.Take(2).ToArray();
+                if (values.Length == 1)
+                    supplied = values[0];
             }
 
             if (string.IsNullOrWhiteSpace(supplied) || !FixedTimeEquals(expected, supplied))
             {
-                actionContext.Response = actionContext.Request.CreateErrorResponse(
+                CrystalRuntimeDiagnostics.Warning(
+                    actionContext.Request,
+                    "authentication",
+                    InternalReportErrorCodes.Unauthorized);
+                actionContext.Response = InternalReportResponseFactory.Create(
+                    actionContext.Request,
                     HttpStatusCode.Unauthorized,
+                    InternalReportErrorCodes.Unauthorized,
                     "Invalid internal API key.");
                 return;
             }

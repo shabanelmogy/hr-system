@@ -31,13 +31,20 @@ Before changing runtime source:
 
 1. Run `./documentation/system/Generate-Documentation.ps1 -Check`.
 2. Read `AGENTS.md`, `documentation/system/README.md`,
+   `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md` when API work is in scope,
    `documentation/project/ERP_DOCUMENTATION_GUIDE_AR.md`,
    `documentation/project/SHARED_REUSE_CATALOG.md`, this request, the review
    artifact, the feature's generated phase packets, and the selected reference's
    required-file manifest.
 3. Verify every referenced runtime path and record current, requested,
    intentionally different, and unresolved behavior separately.
-4. Freeze the decisions below. Do not infer a missing decision from the reference.
+4. Complete the Existing-System Relationship Review and the Business Readiness Gate
+   below. Do not infer a missing decision from the reference.
+5. Freeze the remaining product/platform decisions below.
+
+Runtime implementation is blocked while ownership is unresolved, any Business
+Readiness row still contains a placeholder, or an edge-case category is neither
+covered nor explicitly marked `N/A` with a reason.
 
 ## Frozen product decisions
 
@@ -54,7 +61,22 @@ Before changing runtime source:
 | Import | `<Required | Deferred | Excluded independently for web and mobile>` |
 | Realtime and notifications | `<resource, actions, audience, route, localized keys>` |
 
-## Ownership, contracts, and reuse inventory
+## Existing-System Relationship Review
+
+Inspect the current owning capability before proposing new runtime types. Record the
+owning capability, the primary relationship classification from the API workflow,
+the existing behavior affected by the request, and the source/tests/contracts used
+as evidence. The target is one canonical owner after the change.
+
+| Concern | Required decision |
+| --- | --- |
+| Owning capability | `<module, capability, and exact source/docs>` |
+| Primary relationship | `<classification from API_FEATURE_DEVELOPMENT_WORKFLOW.md>` |
+| Existing behavior affected | `<behavior that remains valid or must change>` |
+| Existing path disposition | `<kept as canonical | replaced by canonical path | N/A with reason>` |
+| Evidence inspected | `<source paths, symbols, routes, tests, contracts, consumers>` |
+
+### Ownership, contracts, and reuse inventory
 
 Record the owning bounded context and the allowed dependency direction. List
 the shared BuildingBlocks and module-local pieces inspected before implementation
@@ -69,6 +91,89 @@ compatibility, and tests; link every affected consumer profile.
 | Domain rules and persistence | `<module and exact paths>` | `<decision>` |
 | Cross-module Contract/event | `<public contract path>` | `<version, consumers, compatibility>` |
 | Shared piece inspected | `<catalog or source path>` | `<reused | extended | rejected | new local; reason>` |
+
+## Mandatory Business Readiness Gate
+
+Complete all three matrices before runtime implementation. They are execution
+evidence, not optional documentation. Update them when implementation discovery
+changes a rule, relationship, edge case, or affected surface.
+
+### Business Rules Matrix
+
+Record every known rule that can make the requested behavior valid, invalid,
+conditional, state-dependent, calculated, limited, or historically constrained.
+Add rows as needed; do not leave example or placeholder rows at handoff.
+
+Primary ownership must be explicit. Use `Domain` for business invariants,
+calculations, and lifecycle behavior; `Application` for persisted-state, trusted
+scope, authorization-dependent, or orchestration decisions; and `Database` for
+race-safe uniqueness/referential/data integrity. `Presentation` may own HTTP
+mapping, but it is not the owner of a business rule.
+
+| ID | Business rule | Owner / enforcement layer | Stable error or outcome | Required test |
+| --- | --- | --- | --- | --- |
+| `BR-001` | `<exact business rule>` | `<Domain | Application | Database; exact owner>` | `<stable error/outcome>` | `<test that proves allowed and rejected behavior>` |
+
+At minimum review creation/uniqueness, lifecycle transitions, approvals/limits,
+calculations/rounding, effective dates/period locks, correction/reversal semantics,
+dependency eligibility, business scope, idempotency where it affects outcome, and
+immutable/reconstructable history. Record `N/A: <reason>` only when a category is
+genuinely irrelevant.
+
+### Edge Cases & Validation Matrix
+
+Every category below must contain concrete scenarios or `N/A: <reason>`. Add
+scenario rows when a category contains more than one materially different case.
+The enforcement layer must follow the API workflow's validation ownership rather
+than duplicating the same decision across layers.
+
+| Category | Scenario | Expected behavior | Stable error / HTTP outcome | Enforcement layer | Required test |
+| --- | --- | --- | --- | --- | --- |
+| Input shape / null / format / range | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<FluentValidation/Application/etc.>` | `<test>` |
+| Duplicate input / normalization | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<layer>` | `<test>` |
+| Duplicate persisted data / uniqueness race | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<Application + Database where race-safe>` | `<test>` |
+| Relationship existence / active or archived state | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<layer>` | `<test>` |
+| Tenant / company / branch / site / warehouse scope | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<layer>` | `<test>` |
+| Permission / entitlement / actor state | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<layer>` | `<test>` |
+| Lifecycle / invalid, repeated, or out-of-order transition | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<Domain/Application>` | `<test>` |
+| Concurrency / stale revision / competing writes | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<Application + Database/Infrastructure>` | `<test>` |
+| Idempotency / retry / double-submit | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<layer>` | `<test>` |
+| Transaction rollback / commit failure | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<layer>` | `<test>` |
+| Post-commit side-effect failure | `<scenario or N/A: reason>` | `<behavior>` | `<error/status/recovery>` | `<layer>` | `<test>` |
+| Archive / restore / delete / dependency behavior | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<layer>` | `<test>` |
+| Paging / filtering / sorting / deterministic ordering / query shape | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<layer>` | `<test>` |
+| Money / quantity / UOM / rounding / currency | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<layer>` | `<test>` |
+| Dates / timezone / effective dates / closed periods | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<layer>` | `<test>` |
+| Bulk / import / partial-versus-atomic behavior | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<layer>` | `<test>` |
+| Integration duplicate / out-of-order / timeout / retry exhaustion / reconciliation | `<scenario or N/A: reason>` | `<behavior>` | `<error/status/recovery>` | `<layer>` | `<test>` |
+| File / security-sensitive input / ownership / unsafe paths or secrets | `<scenario or N/A: reason>` | `<behavior>` | `<error/status>` | `<layer>` | `<test>` |
+| Compatibility / versioning / existing-data migration | `<scenario or N/A: reason>` | `<behavior>` | `<error/status/migration behavior>` | `<layer>` | `<test>` |
+| Cancellation / timeout / unexpected failure | `<scenario or N/A: reason>` | `<behavior>` | `<stable ProblemDetails/error>` | `<layer>` | `<test>` |
+| Scale / N+1 / hot-path index / operability / replay-recovery | `<scenario or N/A: reason>` | `<behavior>` | `<operational outcome>` | `<layer>` | `<test/evidence>` |
+
+### Impact Matrix
+
+Classify every area as exactly one of `Reuse`, `Extend`, `Change`, `Add`, or `N/A`.
+For `N/A`, record the reason. For every other decision, identify the current owner
+or artifact before stating the required change. An unresolved owner or impact blocks
+implementation.
+
+| Area | Decision | Existing owner / artifact | Required change | Evidence / required test |
+| --- | --- | --- | --- | --- |
+| Domain | `<Reuse | Extend | Change | Add | N/A>` | `<path/symbol or N/A: reason>` | `<change>` | `<evidence/test>` |
+| Application / CQRS | `<decision>` | `<path/symbol or N/A: reason>` | `<change>` | `<evidence/test>` |
+| Infrastructure / persistence | `<decision>` | `<path/symbol or N/A: reason>` | `<change>` | `<evidence/test>` |
+| Presentation / API contract | `<decision>` | `<route/contract or N/A: reason>` | `<change>` | `<evidence/test>` |
+| Permissions / security | `<decision>` | `<permission/policy or N/A: reason>` | `<change>` | `<evidence/test>` |
+| Tenant / company / business scope | `<decision>` | `<scope owner or N/A: reason>` | `<change>` | `<evidence/test>` |
+| Migration / data compatibility | `<decision>` | `<DbContext/migration/data path or N/A: reason>` | `<change>` | `<evidence/test>` |
+| Integration contracts / events / projections | `<decision>` | `<contract/consumer or N/A: reason>` | `<change>` | `<evidence/test>` |
+| Jobs / realtime / cache | `<decision>` | `<owner/artifact or N/A: reason>` | `<change>` | `<evidence/test>` |
+| Module tests | `<decision>` | `<test project/path>` | `<change>` | `<required tests>` |
+| Architecture / integration tests | `<decision>` | `<test project/path or N/A: reason>` | `<change>` | `<required tests>` |
+| Web consumer | `<decision>` | `<feature/route or N/A: reason>` | `<change>` | `<evidence/test>` |
+| Mobile consumer | `<decision>` | `<feature/route or N/A: reason>` | `<change>` | `<evidence/test>` |
+| Documentation / runbook | `<decision>` | `<book/profile/runbook>` | `<change>` | `<regeneration/check>` |
 
 ## Import contract
 

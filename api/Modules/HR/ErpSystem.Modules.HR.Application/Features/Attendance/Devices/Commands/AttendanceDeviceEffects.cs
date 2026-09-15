@@ -1,8 +1,6 @@
-using ErpSystem.Modules.HR.Application.Abstractions.Authentication;
-using ErpSystem.Modules.HR.Application.Common.Realtime;
-using ErpSystem.Modules.HR.Application.Features.Platform.SecurityAudits.Contracts;
-using ErpSystem.Modules.HR.Application.Features.Platform.SecurityAudits.Services;
-using ErpSystem.Modules.HR.Domain.Platform.SecurityAudits.Enums;
+using ErpSystem.BuildingBlocks.Context.Authentication;
+using ErpSystem.BuildingBlocks.Application.Common.Realtime;
+using ErpSystem.Modules.Platform.Contracts.SecurityAudits;
 using Microsoft.Extensions.Logging;
 
 namespace ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Commands;
@@ -26,7 +24,7 @@ public sealed class AttendanceDeviceEffects(
     {
         try
         {
-            foreach (var permission in new[] { Permissions.ViewAttendanceDevices, Permissions.ViewRawAttendanceDevices })
+            foreach (var permission in new[] { HrPermissions.ViewAttendanceDevices, HrPermissions.ViewRawAttendanceDevices })
                 realtime.Dispatch(new RealtimeChangeRequest(
                     RealtimeAudience.ForCompanyPermission(actor.TenantId!, actor.CompanyId!.Value, permission),
                     "attendance-devices", "Refresh", deviceId.ToString(CultureInfo.InvariantCulture), Guid.NewGuid()));

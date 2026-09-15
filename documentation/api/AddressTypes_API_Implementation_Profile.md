@@ -74,7 +74,7 @@ scheduling, controller routes/permissions, and report schema/filter behavior.
 
 ## 11. Deployment
 
-Deploy HR API and Crystal runtime profile together. Drain old Address Type
+Deploy the Reporting provider/owning-module source and Crystal runtime profile together. Drain old Address Type
 Hangfire jobs, apply the global-to-company data migration (cloning existing rows
 to every existing company), then import/publish reports and grant role `Run` to
 intended current-company users. New companies start empty unless a future

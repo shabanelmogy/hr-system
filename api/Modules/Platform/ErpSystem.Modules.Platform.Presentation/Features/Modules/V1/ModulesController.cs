@@ -9,16 +9,22 @@ namespace ErpSystem.Modules.Platform.Presentation.Features.Modules.V1;
 [Route("api/v{version:apiVersion}/modules")]
 [ApiController]
 [Authorize]
-public sealed class ModulesController(IModuleCatalogQueries catalog) : ControllerBase
+public sealed class ModulesController(ISender sender) : ControllerBase
 {
     [HttpGet("installed")]
     [Authorize(Roles = "super_admin")]
-    public IActionResult GetInstalled() => Ok(catalog.GetInstalled());
+    public async Task<IActionResult> GetInstalled(CancellationToken cancellationToken) =>
+        Ok(await sender.Send(new GetInstalledModulesQuery(), cancellationToken).ConfigureAwait(false));
+
+    [HttpGet("tenant-entitlements")]
+    [Authorize(Roles = "super_admin")]
+    public async Task<IActionResult> GetTenantEntitlements(CancellationToken cancellationToken) =>
+        Ok(await sender.Send(new GetTenantEntitlementModulesQuery(), cancellationToken).ConfigureAwait(false));
 
     [HttpGet("accessible")]
     public async Task<IActionResult> GetAccessible(CancellationToken cancellationToken)
     {
-        var result = await catalog.GetAccessibleAsync(cancellationToken).ConfigureAwait(false);
+        var result = await sender.Send(new GetAccessibleModulesQuery(), cancellationToken).ConfigureAwait(false);
         return result is null ? Unauthorized() : Ok(result);
     }
 }

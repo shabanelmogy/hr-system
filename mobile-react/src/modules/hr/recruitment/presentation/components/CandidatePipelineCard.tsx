@@ -8,15 +8,16 @@ import {
   ApplicationStatus,
   EmploymentApplicationDto,
 } from '../../domain/models/recruitment';
+import { getApplicationPipelineStage } from '../utils/application-pipeline-stage';
 
 interface CandidatePipelineCardProps {
   application: EmploymentApplicationDto;
   onPress?: (app: EmploymentApplicationDto) => void;
   onScheduleInterview?: (appId: number) => void;
   onEvaluateInterview?: (appId: number) => void;
-  onMakeOffer?: (appId: number, positionId: number, branchId: number, departmentId: number) => void;
+  onMakeOffer?: (appId: number) => void;
   onHire?: (appId: number) => void;
-  onMoveStage?: (appId: number, nextStage: ApplicationStage) => void;
+  onMoveStage?: (appId: number, targetStatus: ApplicationStatus) => void;
 }
 
 export function CandidatePipelineCard({
@@ -31,6 +32,7 @@ export function CandidatePipelineCard({
   const { i18n, t } = useTranslation();
   const { theme } = useAppTheme();
   const isArabic = i18n.language.startsWith('ar');
+  const pipelineStage = getApplicationPipelineStage(application.status);
 
   const positionTitle = isArabic
     ? application.positionTitleAr
@@ -45,21 +47,23 @@ export function CandidatePipelineCard({
     .toUpperCase();
 
   const getStageBadgeProps = () => {
-    switch (application.stage) {
+    switch (pipelineStage) {
       case ApplicationStage.Applied:
-        return { label: t('recruitment.stages.applied', 'تم التقديم / Applied'), color: '#3B82F6' };
+        return { label: t('recruitment.stages.applied'), color: '#3B82F6' };
       case ApplicationStage.Shortlisted:
-        return { label: t('recruitment.stages.shortlisted', 'القائمة المختصرة / Shortlisted'), color: '#8B5CF6' };
+        return { label: t('recruitment.stages.shortlisted'), color: '#8B5CF6' };
       case ApplicationStage.Interview:
-        return { label: t('recruitment.stages.interview', 'المقابلة / Interview'), color: '#F59E0B' };
+        return { label: t('recruitment.stages.interview'), color: '#F59E0B' };
       case ApplicationStage.Offer:
-        return { label: t('recruitment.stages.offer', 'عرض العمل / Offer'), color: '#06B6D4' };
+        return { label: t('recruitment.stages.offer'), color: '#06B6D4' };
       case ApplicationStage.Hired:
-        return { label: t('recruitment.stages.hired', 'تم التعيين / Hired'), color: theme.colors.success };
+        return { label: t('recruitment.stages.hired'), color: theme.colors.success };
       case ApplicationStage.Rejected:
-        return { label: t('recruitment.stages.rejected', 'مرفوض / Rejected'), color: theme.colors.danger ?? '#EF4444' };
+        return { label: t('recruitment.stages.rejected'), color: theme.colors.danger ?? '#EF4444' };
+      case ApplicationStage.Withdrawn:
+        return { label: t('recruitment.stages.withdrawn'), color: theme.colors.textMuted };
       default:
-        return { label: String(application.stage), color: theme.colors.textMuted };
+        return { label: t('recruitment.stages.unknown'), color: theme.colors.textMuted };
     }
   };
 
@@ -124,61 +128,53 @@ export function CandidatePipelineCard({
             size="sm"
             variant="outline"
             icon="arrow-forward-outline"
-            onPress={() => onMoveStage(application.id, ApplicationStage.Shortlisted)}
+            onPress={() => onMoveStage(application.id, ApplicationStatus.Shortlisted)}
           >
-            {t('recruitment.actions.shortlist', 'ترشيح / Shortlist')}
+            {t('recruitment.actions.shortlist')}
           </AppButton>
         )}
 
         {onScheduleInterview &&
           (application.status === ApplicationStatus.Shortlisted ||
-            application.stage === ApplicationStage.Shortlisted) && (
+            pipelineStage === ApplicationStage.Shortlisted) && (
           <AppButton
             size="sm"
             variant="outline"
             icon="calendar-outline"
             onPress={() => onScheduleInterview(application.id)}
           >
-            {t('recruitment.actions.scheduleInterview', 'مقابلة / Interview')}
+            {t('recruitment.actions.scheduleInterview')}
           </AppButton>
         )}
 
         {onEvaluateInterview &&
           (application.status === ApplicationStatus.InterviewScheduled ||
-            application.status === ApplicationStatus.Interviewed ||
-            application.stage === ApplicationStage.Interview) && (
+            application.status === ApplicationStatus.Interviewed) && (
           <AppButton
             size="sm"
             variant="outline"
             icon="ribbon-outline"
             onPress={() => onEvaluateInterview(application.id)}
           >
-            {t('recruitment.actions.evaluate', 'تقييم / Evaluate')}
+            {t('recruitment.actions.evaluate')}
           </AppButton>
         )}
 
-        {onMakeOffer &&
-          (application.status === ApplicationStatus.Interviewed ||
-            application.stage === ApplicationStage.Interview) && (
+        {onMakeOffer && application.status === ApplicationStatus.Interviewed && (
           <AppButton
             size="sm"
             variant="outline"
             icon="mail-outline"
             onPress={() =>
-              onMakeOffer(
-                application.id,
-                application.jobOpeningId,
-                1,
-                1
-              )
+              onMakeOffer(application.id)
             }
           >
-            {t('recruitment.actions.makeOffer', 'عرض عمل / Offer')}
+            {t('recruitment.actions.makeOffer')}
           </AppButton>
         )}
 
         {onHire &&
-          (application.stage === ApplicationStage.Offer ||
+          (pipelineStage === ApplicationStage.Offer ||
             application.status === ApplicationStatus.OfferIssued ||
             application.status === ApplicationStatus.OfferAccepted) && (
           <AppButton
@@ -187,7 +183,7 @@ export function CandidatePipelineCard({
             icon="checkmark-circle-outline"
             onPress={() => onHire(application.id)}
           >
-            {t('recruitment.actions.hireCandidate', 'تعيين كموظف / Hire')}
+            {t('recruitment.actions.hireCandidate')}
           </AppButton>
         )}
 
@@ -197,7 +193,7 @@ export function CandidatePipelineCard({
           icon="eye-outline"
           onPress={() => onPress?.(application)}
         >
-          {t('common.details', 'التفاصيل / Details')}
+          {t('common.details')}
         </AppButton>
       </View>
     </Pressable>

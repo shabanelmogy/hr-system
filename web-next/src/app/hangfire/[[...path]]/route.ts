@@ -45,9 +45,7 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
   }
 
   const { path = [] } = await parameters.params;
-  const { accessToken, refreshToken, migrationPayload } = readAuthTokens(
-    request.cookies,
-  );
+  const { accessToken, refreshToken } = readAuthTokens(request.cookies);
   const targetBackendUrl = resolveRequestBackendUrl(request);
   const body = request.method === "GET" || request.method === "HEAD"
     ? undefined
@@ -100,7 +98,7 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
 
   const response = await createProxyResponse(
     backendResponse,
-    refreshedAuth ?? migrationPayload,
+    refreshedAuth,
     request.method !== "HEAD",
     targetBackendUrl,
   );

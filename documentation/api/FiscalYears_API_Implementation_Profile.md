@@ -51,7 +51,10 @@ Target-state repeats are idempotent and do not create audit/realtime noise.
 Every mutation executes atomically under `FiscalYearLocks.CompanyCalendar`.
 Domain/persistence changes and `EntityChangeLog` commit once. Update audit records
 changed fields; lifecycle records status. Scheduler invocation occurs only after a
-successful commit and sends resource `fiscal-years`.
+successful commit and sends resource `fiscal-years`. Fiscal Year handlers depend on
+the Accounting-owned `IAccountingUnitOfWork`, which resolves to the same scoped
+`AccountingDbContext` used by the read/write stores. This prevents another module's
+shared `IUnitOfWork` registration from intercepting Accounting commits.
 
 ## 8. HTTP surface and permissions
 
@@ -76,6 +79,9 @@ status. The explicit route prevents the conventional `[controller]` token from
 silently exposing `/api/v1/FiscalYears` while clients request
 `/api/v1/fiscal-years`. The API suite, API build, migration apply, localization
 JSON, and pending-model check are mandatory release evidence.
+`AccountingUnitOfWorkRegistrationTests` composes competing shared unit-of-work
+registrations both before and after Accounting and verifies that create persists the
+year and all generated periods through Accounting before scheduling the change.
 
 ## 11. Deferred and next integration
 

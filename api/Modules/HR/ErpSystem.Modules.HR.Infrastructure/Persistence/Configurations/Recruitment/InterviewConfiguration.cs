@@ -19,8 +19,8 @@ public sealed class InterviewConfiguration : IEntityTypeConfiguration<Interview>
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.Status });
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.StartsOn });
 
-        builder.HasOne<EmploymentApplication>()
-            .WithMany()
+        builder.HasOne(x => x.EmploymentApplication)
+            .WithMany(x => x.Interviews)
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.EmploymentApplicationId })
             .HasPrincipalKey(a => new { a.TenantId, a.CompanyId, a.Id })
             .OnDelete(DeleteBehavior.Restrict);

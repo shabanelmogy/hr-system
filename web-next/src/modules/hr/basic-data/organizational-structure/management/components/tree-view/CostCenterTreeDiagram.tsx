@@ -233,7 +233,7 @@ export default function CostCenterTreeDiagram({
             </Typography>
             {isSelected && (
               <Chip
-                label={isAr ? "محدد" : "Selected"}
+                label={t("organizationalStructure.costCenterTree.selected")}
                 size="small"
                 color="primary"
                 sx={{ height: 18, fontSize: "0.65rem", fontWeight: 700 }}
@@ -243,7 +243,7 @@ export default function CostCenterTreeDiagram({
 
           <Box sx={{ display: "flex", alignItems: "center", gap: 0.25 }}>
             {permissions.canEdit && (
-              <Tooltip title={isAr ? "نقل مركز التكلفة" : "Move Cost Center"}>
+              <Tooltip title={t("organizationalStructure.costCenterTree.moveCostCenter")}>
                 <IconButton
                   size="small"
                   onPointerDown={(e) => e.stopPropagation()}
@@ -266,7 +266,7 @@ export default function CostCenterTreeDiagram({
               </Tooltip>
             )}
             {permissions.canCreate && onAddChild && (
-              <Tooltip title={isAr ? "إضافة مركز تكلفة فرعي" : "Add Sub-Cost Center"}>
+              <Tooltip title={t("organizationalStructure.costCenterTree.addSubCostCenter")}>
                 <IconButton
                   size="small"
                   onPointerDown={(e) => e.stopPropagation()}
@@ -325,7 +325,7 @@ export default function CostCenterTreeDiagram({
               }}
             >
               <AccountBalanceWallet sx={{ fontSize: 13, color: "text.disabled" }} />
-              {isAr ? `${childrenCount} مراكز فرعية` : `${childrenCount} sub-centers`}
+              {t("organizationalStructure.costCenterTree.subCentersCount", { count: childrenCount })}
             </Typography>
 
             {hasChildren ? (
@@ -349,7 +349,7 @@ export default function CostCenterTreeDiagram({
                   fontWeight: 700,
                 }}
               >
-                {isExpanded ? (isAr ? "طي" : "Collapse") : (isAr ? "فرد" : "Expand")}
+                {isExpanded ? (t("organizationalStructure.costCenterTree.collapse")) : (t("organizationalStructure.costCenterTree.expand"))}
               </Button>
             ) : (
               permissions.canCreate && onAddChild && (
@@ -372,7 +372,7 @@ export default function CostCenterTreeDiagram({
                     fontWeight: 700,
                   }}
                 >
-                  {isAr ? "إضافة فرعية" : "Add Sub"}
+                  {t("organizationalStructure.costCenterTree.addSub")}
                 </Button>
               )
             )}
@@ -429,7 +429,7 @@ export default function CostCenterTreeDiagram({
                   {isAr ? selectedItem.nameAr : selectedItem.nameEn}
                 </Typography>
                 <AppChip
-                  label={selectedItem.isDeleted ? (isAr ? "مؤرشف" : "Archived") : (isAr ? "نشط" : "Active")}
+                  label={selectedItem.isDeleted ? (t("organizationalStructure.costCenterTree.archived")) : (t("organizationalStructure.costCenterTree.active"))}
                   colorKey={selectedItem.isDeleted ? "error" : "success"}
                   variant="soft"
                   size="small"
@@ -457,7 +457,7 @@ export default function CostCenterTreeDiagram({
               onClick={() => onEdit(selectedItem)}
               sx={{ textTransform: "none", fontWeight: 700, borderRadius: 1.5 }}
             >
-              {isAr ? "تعديل" : "Edit"}
+              {t("organizationalStructure.costCenterTree.edit")}
             </Button>
           )}
 
@@ -470,7 +470,7 @@ export default function CostCenterTreeDiagram({
               onClick={() => onViewLogs(selectedItem)}
               sx={{ textTransform: "none", fontWeight: 700, borderRadius: 1.5 }}
             >
-              {isAr ? "سجل التعديلات" : "Change Log"}
+              {t("organizationalStructure.costCenterTree.changeLog")}
             </Button>
           )}
 
@@ -483,7 +483,7 @@ export default function CostCenterTreeDiagram({
               onClick={() => onAddChild(selectedItem)}
               sx={{ textTransform: "none", fontWeight: 700, borderRadius: 1.5 }}
             >
-              {isAr ? "إضافة فرعي" : "Add Sub-Center"}
+              {t("organizationalStructure.costCenterTree.addSubCenter")}
             </Button>
           )}
 
@@ -500,7 +500,7 @@ export default function CostCenterTreeDiagram({
               }}
               sx={{ textTransform: "none", fontWeight: 700, borderRadius: 1.5 }}
             >
-              {isAr ? "نقل المركز" : "Move"}
+              {t("organizationalStructure.costCenterTree.move")}
             </Button>
           )}
 
@@ -513,7 +513,7 @@ export default function CostCenterTreeDiagram({
               onClick={() => onLifecycle(selectedItem)}
               sx={{ textTransform: "none", fontWeight: 700, borderRadius: 1.5 }}
             >
-              {selectedItem.isDeleted ? (isAr ? "استعادة" : "Restore") : (isAr ? "أرشفة" : "Archive")}
+              {selectedItem.isDeleted ? (t("organizationalStructure.costCenterTree.restore")) : (t("organizationalStructure.costCenterTree.archive"))}
             </Button>
           )}
         </Stack>
@@ -523,7 +523,7 @@ export default function CostCenterTreeDiagram({
         {/* Section: Breadcrumbs Path */}
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <Typography variant="overline" sx={{ fontWeight: 800, color: "text.secondary", letterSpacing: 0.5 }}>
-            {isAr ? "المسار والتسلسل الهرمي" : "Hierarchy Trail"}
+            {t("organizationalStructure.costCenterTree.hierarchyTrail")}
           </Typography>
 
           <Box
@@ -541,7 +541,7 @@ export default function CostCenterTreeDiagram({
             <Chip
               size="small"
               icon={<CorporateFare sx={{ fontSize: "14px !important" }} />}
-              label={isAr ? "الشركة" : "Company"}
+              label={t("organizationalStructure.costCenterTree.company")}
               onClick={() => setSelectedCostCenterId(null)}
               clickable
               variant="outlined"
@@ -599,7 +599,7 @@ export default function CostCenterTreeDiagram({
         {/* Section: Hierarchy Position */}
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1.25 }}>
           <Typography variant="overline" sx={{ fontWeight: 800, color: "text.secondary", letterSpacing: 0.5 }}>
-            {isAr ? "الموقع في الهيكل التنظيمي" : "Hierarchy & Relationships"}
+            {t("organizationalStructure.costCenterTree.hierarchyAndRelationships")}
           </Typography>
 
           <Box
@@ -616,11 +616,16 @@ export default function CostCenterTreeDiagram({
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <Typography variant="body2" color="text.secondary" sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
                 <Layers sx={{ fontSize: 16 }} />
-                {isAr ? "المستوى الهرمي:" : "Depth Level:"}
+                {t("organizationalStructure.costCenterTree.depthLevel")}
               </Typography>
               <Chip
                 size="small"
-                label={isAr ? `المستوى ${depth} ${depth === 1 ? "(رئيسي)" : ""}` : `Level ${depth} ${depth === 1 ? "(Root)" : ""}`}
+                label={t(
+                  depth === 1
+                    ? "organizationalStructure.costCenterTree.rootDepthLabel"
+                    : "organizationalStructure.costCenterTree.depthLabel",
+                  { depth },
+                )}
                 color={depth === 1 ? "primary" : "default"}
                 sx={{ fontWeight: 700 }}
               />
@@ -628,7 +633,7 @@ export default function CostCenterTreeDiagram({
 
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <Typography variant="body2" color="text.secondary">
-                {isAr ? "المركز الأب:" : "Parent Center:"}
+                {t("organizationalStructure.costCenterTree.parentCenter")}
               </Typography>
               {parent ? (
                 <Button
@@ -642,7 +647,7 @@ export default function CostCenterTreeDiagram({
                 </Button>
               ) : (
                 <Typography variant="body2" sx={{ fontWeight: 600, color: "primary.main" }}>
-                  {isAr ? "مركز رئيسي للشركة" : "Company Root"}
+                  {t("organizationalStructure.costCenterTree.companyRoot")}
                 </Typography>
               )}
             </Box>
@@ -653,14 +658,14 @@ export default function CostCenterTreeDiagram({
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <Typography variant="overline" sx={{ fontWeight: 800, color: "text.secondary", letterSpacing: 0.5 }}>
-              {isAr ? "مراكز التكلفة الفرعية" : "Sub-Cost Centers"}
+              {t("organizationalStructure.costCenterTree.subCostCenters")}
             </Typography>
             <Chip size="small" label={String(subCenters.length)} color="primary" variant="outlined" sx={{ fontWeight: 700 }} />
           </Box>
 
           {subCenters.length === 0 ? (
             <Typography variant="body2" color="text.secondary" sx={{ fontStyle: "italic" }}>
-              {isAr ? "لا توجد مراكز تكلفة فرعية تابعة لهذا المركز." : "No sub-cost centers under this center."}
+              {t("organizationalStructure.costCenterTree.noSubCenters")}
             </Typography>
           ) : (
             <Stack spacing={0.75}>
@@ -704,14 +709,14 @@ export default function CostCenterTreeDiagram({
         {/* Section: Linked Organizational Units */}
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <Typography variant="overline" sx={{ fontWeight: 800, color: "text.secondary", letterSpacing: 0.5 }}>
-            {isAr ? "الوحدات التنظيمية المرتبطة بهذا المركز" : "Linked Organizational Units"}
+            {t("organizationalStructure.costCenterTree.linkedOrganizationalUnits")}
           </Typography>
 
           {linkedDepartments.length > 0 && (
             <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
               <Typography variant="caption" color="text.secondary" sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
                 <CorporateFare sx={{ fontSize: 14 }} />
-                {isAr ? "الإدارات:" : "Departments:"}
+                {t("organizationalStructure.costCenterTree.departments")}
               </Typography>
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                 {linkedDepartments.map((d) => (
@@ -725,7 +730,7 @@ export default function CostCenterTreeDiagram({
             <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5, mt: 0.5 }}>
               <Typography variant="caption" color="text.secondary" sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
                 <Domain sx={{ fontSize: 14 }} />
-                {isAr ? "الأقسام:" : "Divisions:"}
+                {t("organizationalStructure.costCenterTree.divisions")}
               </Typography>
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                 {linkedDivisions.map((div) => (
@@ -737,7 +742,7 @@ export default function CostCenterTreeDiagram({
 
           {linkedDepartments.length === 0 && linkedDivisions.length === 0 && (
             <Typography variant="body2" color="text.secondary" sx={{ fontStyle: "italic" }}>
-              {isAr ? "لم يتم ربط هذا المركز بإدارات أو أقسام بعد." : "No departments or divisions currently linked."}
+              {t("organizationalStructure.costCenterTree.noLinkedUnits")}
             </Typography>
           )}
         </Box>
@@ -746,32 +751,32 @@ export default function CostCenterTreeDiagram({
         <Divider />
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <Typography variant="overline" sx={{ fontWeight: 800, color: "text.secondary", letterSpacing: 0.5 }}>
-            {isAr ? "الوصف وتفاصيل التدقيق" : "Description & Metadata"}
+            {t("organizationalStructure.costCenterTree.descriptionAndMetadata")}
           </Typography>
 
           {(selectedItem.descriptionAr || selectedItem.descriptionEn) ? (
             <Box sx={{ display: "flex", flexDirection: "column", gap: 0.75 }}>
               {selectedItem.descriptionAr && (
                 <Typography variant="body2" color="text.secondary">
-                  <strong>{isAr ? "الوصف (عربي):" : "Arabic Description:"}</strong> {selectedItem.descriptionAr}
+                  <strong>{t("organizationalStructure.costCenterTree.arabicDescription")}</strong> {selectedItem.descriptionAr}
                 </Typography>
               )}
               {selectedItem.descriptionEn && (
                 <Typography variant="body2" color="text.secondary">
-                  <strong>{isAr ? "الوصف (إنجليزي):" : "English Description:"}</strong> {selectedItem.descriptionEn}
+                  <strong>{t("organizationalStructure.costCenterTree.englishDescription")}</strong> {selectedItem.descriptionEn}
                 </Typography>
               )}
             </Box>
           ) : (
             <Typography variant="body2" color="text.secondary" sx={{ fontStyle: "italic" }}>
-              {isAr ? "لا يوجد وصف مدخل لهذا المركز." : "No description provided."}
+              {t("organizationalStructure.costCenterTree.noDescriptionProvided")}
             </Typography>
           )}
 
           <Box sx={{ pt: 1, display: "flex", alignItems: "center", gap: 1, color: "text.secondary" }}>
             <CalendarMonth sx={{ fontSize: 14 }} />
             <Typography variant="caption">
-              {isAr ? "تاريخ الإنشاء:" : "Created:"} {selectedItem.createdOn ? new Date(selectedItem.createdOn).toLocaleDateString() : "-"}
+              {t("organizationalStructure.costCenterTree.created")} {selectedItem.createdOn ? new Date(selectedItem.createdOn).toLocaleDateString() : "-"}
             </Typography>
           </Box>
         </Box>
@@ -802,12 +807,10 @@ export default function CostCenterTreeDiagram({
 
         <Box>
           <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>
-            {isAr ? "شجرة مراكز التكلفة" : "Cost Centers Tree"}
+            {t("organizationalStructure.costCenterTree.costCentersTree")}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-            {isAr
-              ? "اضغط على أي بطاقة مركز تكلفة في الشجرة لعرض تفاصيل الارتباط الهرمي، الإدارات المرتبطة، والإجراءات المتاحة."
-              : "Click on any cost center card in the tree to inspect hierarchy links, assigned units, and management actions."}
+            {t("organizationalStructure.costCenterTree.instructions")}
           </Typography>
         </Box>
 
@@ -829,7 +832,7 @@ export default function CostCenterTreeDiagram({
               {activeItems.length}
             </Typography>
             <Typography variant="caption" color="text.secondary">
-              {isAr ? "إجمالي المراكز" : "Total Centers"}
+              {t("organizationalStructure.costCenterTree.totalCenters")}
             </Typography>
           </Box>
           <Box>
@@ -837,7 +840,7 @@ export default function CostCenterTreeDiagram({
               {rootCount}
             </Typography>
             <Typography variant="caption" color="text.secondary">
-              {isAr ? "مراكز رئيسية" : "Root Centers"}
+              {t("organizationalStructure.costCenterTree.rootCenters")}
             </Typography>
           </Box>
         </Box>
@@ -879,8 +882,8 @@ export default function CostCenterTreeDiagram({
         }
         selectedId={selectedCostCenterId}
         onSelect={(item) => setSelectedCostCenterId(item ? item.id : null)}
-        rootTitle={isAr ? "الشركة / مراكز التكلفة الرئيسية (بدون مركز أب)" : "Company / Root Cost Centers"}
-        searchPlaceholder={isAr ? "بحث في شجرة مراكز التكلفة..." : "Search cost centers tree..."}
+        rootTitle={t("organizationalStructure.costCenterTree.companyRootCostCenters")}
+        searchPlaceholder={t("organizationalStructure.costCenterTree.searchCostCentersTree")}
         loading={loading}
         detailPanelWidth={420}
       />
@@ -894,13 +897,14 @@ export default function CostCenterTreeDiagram({
           fullWidth
         >
           <DialogTitle sx={{ fontWeight: 700 }}>
-            {isAr ? "نقل مركز التكلفة" : "Move Cost Center"}
+            {t("organizationalStructure.costCenterTree.moveCostCenter")}
           </DialogTitle>
           <DialogContent sx={{ pt: 2 }}>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-              {isAr
-                ? `اختر مركز التكلفة الأب الجديد للمركز: "${isAr ? moveItem.nameAr : moveItem.nameEn}" (${moveItem.code})`
-                : `Select the new parent for: "${moveItem.nameEn}" (${moveItem.code})`}
+              {t("organizationalStructure.costCenterTree.selectNewParentFor", {
+                name: isAr ? moveItem.nameAr : moveItem.nameEn,
+                code: moveItem.code,
+              })}
             </Typography>
 
             {moveError && (
@@ -911,12 +915,12 @@ export default function CostCenterTreeDiagram({
 
             <FormControl fullWidth size="small">
               <InputLabel id="select-new-parent-label">
-                {isAr ? "مركز التكلفة الأب الجديد" : "New Parent Cost Center"}
+                {t("organizationalStructure.costCenterTree.newParentCostCenter")}
               </InputLabel>
               <Select
                 labelId="select-new-parent-label"
                 value={selectedNewParent}
-                label={isAr ? "مركز التكلفة الأب الجديد" : "New Parent Cost Center"}
+                label={t("organizationalStructure.costCenterTree.newParentCostCenter")}
                 onChange={(e) => setSelectedNewParent(e.target.value as number | "root")}
                 disabled={isSubmittingMove}
               >
@@ -924,7 +928,7 @@ export default function CostCenterTreeDiagram({
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <Business fontSize="small" color="primary" />
                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                      {isAr ? "الشركة / مركز تكلفة رئيسي" : "Company / Top-Level Cost Center"}
+                      {t("organizationalStructure.costCenterTree.companyTopLevelCostCenter")}
                     </Typography>
                   </Box>
                 </MenuItem>
@@ -953,7 +957,7 @@ export default function CostCenterTreeDiagram({
               variant="contained"
               disabled={isSubmittingMove}
             >
-              {isSubmittingMove ? t("general.loading") : (isAr ? "حفظ النقل" : "Save Move")}
+              {isSubmittingMove ? t("general.loading") : (t("organizationalStructure.costCenterTree.saveMove"))}
             </Button>
           </DialogActions>
         </Dialog>

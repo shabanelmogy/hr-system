@@ -1,9 +1,6 @@
 export const ACCESS_TOKEN_COOKIE = "__Host-hrms-access-token";
 export const REFRESH_TOKEN_COOKIE = "__Host-hrms-refresh-token";
 
-export const LEGACY_ACCESS_TOKEN_COOKIE = "hrms_access_token";
-export const LEGACY_REFRESH_TOKEN_COOKIE = "hrms_refresh_token";
-
 export const SESSION_REFRESHED_HEADER = "x-hrms-session-refreshed";
 export const SESSION_CHANGED_EVENT = "auth:session-changed";
 

@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import PublicIcon from "@mui/icons-material/Public";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
@@ -25,16 +24,16 @@ import SourceEditDialog from "./SourceEditDialog";
 
 interface SourcesSettingsTabProps {
   sources: RecruitmentSourceConfig[];
+  canEdit: boolean;
   onAddSource: (data: Omit<RecruitmentSourceConfig, "id">) => void;
   onUpdateSource: (id: string, updates: Partial<RecruitmentSourceConfig>) => void;
-  onDeleteSource: (id: string) => void;
 }
 
 export default function SourcesSettingsTab({
   sources,
+  canEdit,
   onAddSource,
   onUpdateSource,
-  onDeleteSource,
 }: SourcesSettingsTabProps) {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === "ar";
@@ -100,14 +99,16 @@ export default function SourcesSettingsTab({
             )}
           </Typography>
         </Box>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleOpenAdd}
-          sx={{ fontWeight: 600 }}
-        >
-          {t("recruitment.settings.newSourceBtn", "إضافة قناة جديدة")}
-        </Button>
+        {canEdit && (
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={handleOpenAdd}
+            sx={{ fontWeight: 600 }}
+          >
+            {t("recruitment.settings.newSourceBtn", "إضافة قناة جديدة")}
+          </Button>
+        )}
       </Box>
 
       <Alert severity="info" sx={{ mb: 3 }}>
@@ -202,20 +203,15 @@ export default function SourcesSettingsTab({
 
                 {/* Actions */}
                 <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleOpenEdit(src)}
-                    sx={{ color: "primary.main" }}
-                  >
-                    <EditOutlinedIcon fontSize="small" />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    onClick={() => onDeleteSource(src.id)}
-                    sx={{ color: "error.main" }}
-                  >
-                    <DeleteOutlineRoundedIcon fontSize="small" />
-                  </IconButton>
+                  {canEdit && (
+                    <IconButton
+                      size="small"
+                      onClick={() => handleOpenEdit(src)}
+                      sx={{ color: "primary.main" }}
+                    >
+                      <EditOutlinedIcon fontSize="small" />
+                    </IconButton>
+                  )}
                 </Box>
               </Card>
             </Grid>

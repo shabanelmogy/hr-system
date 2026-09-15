@@ -16,6 +16,7 @@ import {
   Download as DownloadIcon,
   ContentCopy as CopyIcon,
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 export interface TextToolbarProps {
   fileName: string;
@@ -68,6 +69,7 @@ const TextToolbar: React.FC<TextToolbarProps> = (props) => {
   const isXs = useMediaQuery(theme.breakpoints.down('sm'));
   const isSm = useMediaQuery(theme.breakpoints.down('md'));
   const isMd = useMediaQuery(theme.breakpoints.down('lg'));
+  const { t } = useTranslation();
 
   return (
     <MuiToolbar
@@ -98,7 +100,7 @@ const TextToolbar: React.FC<TextToolbarProps> = (props) => {
             margin="none"
             maxValue={200}
             size="small"
-            placeholder="Search in text..."
+            placeholder={t("files.searchInText")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -108,37 +110,37 @@ const TextToolbar: React.FC<TextToolbarProps> = (props) => {
       <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
         {!isMd && (
           <>
-            <Tooltip title="Search">
+            <Tooltip title={t("common.search")}>
               <IconButton onClick={onToggleSearch} size="small" sx={{ bgcolor: showSearch ? 'primary.main' : 'action.hover', color: showSearch ? 'white' : 'inherit' }}>
                 <SearchIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Font Size -">
+            <Tooltip title={t("files.fontSizeDown")}>
               <IconButton onClick={onFontDec} size="small" sx={{ bgcolor: 'action.hover' }}>
                 <TextDecreaseIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Font Size +">
+            <Tooltip title={t("files.fontSizeUp")}>
               <IconButton onClick={onFontInc} size="small" sx={{ bgcolor: 'action.hover' }}>
                 <TextIncreaseIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title={darkMode ? 'Light Mode' : 'Dark Mode'}>
+            <Tooltip title={darkMode ? t("general.lightMode") : t("general.darkMode")}>
               <IconButton onClick={onToggleTheme} size="small" sx={{ bgcolor: 'action.hover' }}>
                 {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
               </IconButton>
             </Tooltip>
-            <Tooltip title="Refresh">
+            <Tooltip title={t("files.refresh")}>
               <IconButton onClick={onRefresh} size="small" sx={{ bgcolor: 'action.hover' }}>
                 <RefreshIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Share">
+            <Tooltip title={t("common.share")}>
               <IconButton onClick={onShare} size="small" disabled={loading || hasError} sx={{ bgcolor: 'action.hover' }}>
                 <ShareIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Info">
+            <Tooltip title={t("common.info")}>
               <IconButton onClick={onInfo} size="small" sx={{ bgcolor: 'action.hover' }}>
                 <InfoIcon />
               </IconButton>
@@ -148,17 +150,17 @@ const TextToolbar: React.FC<TextToolbarProps> = (props) => {
 
         {isMd && !isSm && (
           <>
-            <Tooltip title="Search">
+            <Tooltip title={t("common.search")}>
               <IconButton onClick={onToggleSearch} size="small" sx={{ bgcolor: showSearch ? 'primary.main' : 'action.hover', color: showSearch ? 'white' : 'inherit' }}>
                 <SearchIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Font Size -">
+            <Tooltip title={t("files.fontSizeDown")}>
               <IconButton onClick={onFontDec} size="small" sx={{ bgcolor: 'action.hover' }}>
                 <TextDecreaseIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Font Size +">
+            <Tooltip title={t("files.fontSizeUp")}>
               <IconButton onClick={onFontInc} size="small" sx={{ bgcolor: 'action.hover' }}>
                 <TextIncreaseIcon />
               </IconButton>
@@ -167,14 +169,14 @@ const TextToolbar: React.FC<TextToolbarProps> = (props) => {
         )}
 
         {isSm && !isXs && (
-          <Tooltip title="Search">
+          <Tooltip title={t("common.search")}>
             <IconButton onClick={onToggleSearch} size="small" sx={{ bgcolor: showSearch ? 'primary.main' : 'action.hover', color: showSearch ? 'white' : 'inherit' }}>
               <SearchIcon />
             </IconButton>
           </Tooltip>
         )}
 
-        <Tooltip title={copied ? 'Copied!' : 'Copy to clipboard'}>
+        <Tooltip title={copied ? t("common.copied") : t("common.copyClipboard")}>
           <IconButton onClick={onCopy} size="small" disabled={loading || hasError} sx={{ bgcolor: 'action.hover' }}>
             <CopyIcon />
           </IconButton>
@@ -182,12 +184,12 @@ const TextToolbar: React.FC<TextToolbarProps> = (props) => {
 
         {!isXs && (
           <>
-            <Tooltip title="Print">
+            <Tooltip title={t("files.print")}>
               <IconButton onClick={onPrint} size="small" disabled={loading || hasError} sx={{ bgcolor: 'action.hover' }}>
                 <PrintIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Download">
+            <Tooltip title={t("files.download")}>
               <IconButton onClick={onDownload} size="small" disabled={loading || hasError} sx={{ bgcolor: 'action.hover' }}>
                 <DownloadIcon />
               </IconButton>
@@ -196,7 +198,7 @@ const TextToolbar: React.FC<TextToolbarProps> = (props) => {
         )}
 
         {(isMd || isSm || isXs) && (
-          <Tooltip title="More">
+          <Tooltip title={t("files.more")}>
             <IconButton size="small" onClick={(e) => onOpenMenu(e.currentTarget)} sx={{ bgcolor: 'action.hover' }}>
               <MoreVertIcon />
             </IconButton>
@@ -204,7 +206,7 @@ const TextToolbar: React.FC<TextToolbarProps> = (props) => {
         )}
 
         {isXs && (
-          <Tooltip title="Download">
+          <Tooltip title={t("files.download")}>
             <IconButton onClick={onDownload} size="small" disabled={loading || hasError} sx={{ bgcolor: 'action.hover' }}>
               <DownloadIcon />
             </IconButton>

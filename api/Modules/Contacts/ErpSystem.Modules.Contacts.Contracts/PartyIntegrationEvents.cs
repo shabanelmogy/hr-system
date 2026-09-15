@@ -12,7 +12,8 @@ public sealed record PartyCreatedIntegrationEvent(
     Guid EventId,
     DateTimeOffset OccurredOnUtc,
     string? CorrelationId = null,
-    string? CausationId = null)
+    string? CausationId = null,
+    long Revision = 0)
     : IntegrationEvent(EventId, OccurredOnUtc, CorrelationId, CausationId)
 {
     public const string EventNameValue = "contacts.party.created";
@@ -29,7 +30,8 @@ public sealed record PartyUpdatedIntegrationEvent(
     Guid EventId,
     DateTimeOffset OccurredOnUtc,
     string? CorrelationId = null,
-    string? CausationId = null)
+    string? CausationId = null,
+    long Revision = 0)
     : IntegrationEvent(EventId, OccurredOnUtc, CorrelationId, CausationId)
 {
     public const string EventNameValue = "contacts.party.updated";

@@ -7,80 +7,432 @@
   "reviewArtifact": "documentation/system/features/fiscal-years/FISCAL_YEARS-REVIEW-ARTIFACTS.md",
   "implementationRequest": "documentation/system/features/fiscal-years/IMPLEMENTATION-REQUEST.md",
   "sourceCollections": [
-    { "id": "domain-feature", "layer": "api-domain", "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/Finance/FiscalYears", "minimumFiles": 5, "purpose": "Aggregate, periods, and lifecycle enums" },
-    { "id": "application-feature", "layer": "api-application", "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/Finance/FiscalYears", "minimumFiles": 12, "purpose": "CQRS, contracts, validation, ports, locks, errors, and mapping" },
-    { "id": "infrastructure-feature", "layer": "api-infrastructure", "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Finance/FiscalYears", "minimumFiles": 2, "purpose": "Tenant/company persistence, audit, scheduler, and realtime job" },
-    { "id": "web-feature", "layer": "web-next", "path": "web-next/src/modules/hr/finance/fiscal-years", "minimumFiles": 12, "purpose": "Browser contracts, service, hooks, validation, period preview, form, Grid, Cards, page, and tests" },
-    { "id": "mobile-feature", "layer": "mobile-react", "path": "mobile-react/src/modules/hr/finance/fiscal-years", "minimumFiles": 12, "purpose": "Expo runtime schemas, API, queries, validation, period preview, form, filter, Table/Cards screen, and tests" }
+    {
+      "id": "domain-feature",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/FiscalYears",
+      "minimumFiles": 5,
+      "purpose": "Aggregate, periods, and lifecycle enums"
+    },
+    {
+      "id": "application-feature",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/FiscalYears",
+      "minimumFiles": 12,
+      "purpose": "CQRS, contracts, validation, ports, locks, errors, and mapping"
+    },
+    {
+      "id": "infrastructure-feature",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Features/Finance/FiscalYears",
+      "minimumFiles": 2,
+      "purpose": "Tenant/company persistence, audit, scheduler, and realtime job"
+    },
+    {
+      "id": "web-feature",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/fiscal-years",
+      "minimumFiles": 12,
+      "purpose": "Browser contracts, service, hooks, validation, period preview, form, Grid, Cards, page, and tests"
+    },
+    {
+      "id": "mobile-feature",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/hr/finance/fiscal-years",
+      "minimumFiles": 12,
+      "purpose": "Expo runtime schemas, API, queries, validation, period preview, form, filter, Table/Cards screen, and tests"
+    }
   ],
   "requiredFiles": [
-    { "id": "root-agent-guidance", "layer": "configuration", "path": "AGENTS.md", "purpose": "Repository-wide implementation and documentation rules" },
-    { "id": "implementation-request", "layer": "documentation", "path": "documentation/system/features/fiscal-years/IMPLEMENTATION-REQUEST.md", "purpose": "Frozen scope, contract, optional-view decisions, and gates" },
-    { "id": "review-artifact", "layer": "documentation", "path": "documentation/system/features/fiscal-years/FISCAL_YEARS-REVIEW-ARTIFACTS.md", "purpose": "Requirements, evidence, findings, and reconciliation" },
-    { "id": "master-review", "layer": "documentation", "path": "documentation/project/FISCAL_YEARS_FEATURE_FULL_REVIEW.md", "purpose": "Cross-platform source of truth" },
-    { "id": "api-profile", "layer": "documentation", "path": "documentation/api/FiscalYears_API_Implementation_Profile.md", "purpose": "API implementation contract" },
-    { "id": "web-profile", "layer": "documentation", "path": "documentation/web-next/features/fiscal-years-frontend-reference.md", "purpose": "Next.js implementation contract" },
-    { "id": "mobile-profile", "layer": "documentation", "path": "documentation/mobile-react/fiscal-years-mobile-reference.md", "purpose": "Expo implementation contract" },
-
-    { "id": "api-controller", "layer": "api", "path": "api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/Finance/FiscalYears/V1/FiscalYearsController.cs", "purpose": "Thin versioned HTTP and permission boundary" },
-    { "id": "domain-fiscal-year", "layer": "api-domain", "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/Finance/FiscalYears/Entities/FiscalYear.cs", "purpose": "Aggregate invariants and lifecycle" },
-    { "id": "domain-fiscal-period", "layer": "api-domain", "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/Finance/FiscalYears/Entities/FiscalPeriod.cs", "purpose": "Generated period child and internal lifecycle" },
-    { "id": "application-commands", "layer": "api-application", "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/Finance/FiscalYears/Commands/FiscalYearCommands.cs", "purpose": "Atomic company-locked mutations" },
-    { "id": "application-page-query", "layer": "api-application", "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/Finance/FiscalYears/Queries/GetFiscalYears/GetFiscalYearsQuery.cs", "purpose": "Validated server-list contract" },
-    { "id": "application-contracts", "layer": "api-application", "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/Finance/FiscalYears/Contracts/FiscalYearContracts.cs", "purpose": "HTTP and CQRS DTO contract" },
-    { "id": "application-validation", "layer": "api-application", "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/Finance/FiscalYears/Validation/FiscalYearValidation.cs", "purpose": "Mutation validation and RowVersion checks" },
-    { "id": "infrastructure-store", "layer": "api-infrastructure", "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Finance/FiscalYears/Persistence/FiscalYearStores.cs", "purpose": "Scoped reads/writes, overlap checks, audit" },
-    { "id": "infrastructure-realtime", "layer": "api-infrastructure", "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Finance/FiscalYears/Jobs/FiscalYearChangedJob.cs", "purpose": "Post-commit notification and realtime delivery" },
-    { "id": "entity-configuration", "layer": "api-infrastructure", "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/Configurations/Finance/FiscalYearConfiguration.cs", "purpose": "Database tables, composite relationships, indexes, and RowVersion" },
-    { "id": "db-context", "layer": "api-infrastructure", "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/ApplicationDbContext.cs", "purpose": "FiscalYear/FiscalPeriod DbSets and company filters/stamping" },
-    { "id": "api-permissions", "layer": "api-config", "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Common/Consts/Permissions.cs", "purpose": "Five server permission constants" },
-    { "id": "api-di", "layer": "api-config", "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/EntitiesService.cs", "purpose": "Feature store, audit, scheduler, and job registration" },
-    { "id": "api-error-di", "layer": "api-config", "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/ErrorsService.cs", "purpose": "FiscalYearErrors registration" },
-    { "id": "api-localization-en", "layer": "api-config", "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Localization/Resources/en-US.json", "purpose": "English validation/error/notification text" },
-    { "id": "api-localization-ar", "layer": "api-config", "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Localization/Resources/ar-EG.json", "purpose": "Arabic validation/error/notification text" },
-    { "id": "ef-migration", "layer": "api-migration", "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Migrations/20260906112413_create-database.cs", "purpose": "Consolidated baseline containing the fiscal calendar schema" },
-    { "id": "ef-snapshot", "layer": "api-migration", "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Migrations/ApplicationDbContextModelSnapshot.cs", "purpose": "Current EF model evidence" },
-    { "id": "domain-tests", "layer": "api-test", "path": "api/ErpSystem.Tests/FiscalYearDomainTests.cs", "purpose": "Period generation, duration, lifecycle, and immutability" },
-    { "id": "company-isolation-tests", "layer": "api-test", "path": "api/ErpSystem.Tests/FiscalYearCompanyIsolationTests.cs", "purpose": "Tenant/company visibility, fail-closed scope, and composite relationship coverage" },
-    { "id": "controller-tests", "layer": "api-test", "path": "api/ErpSystem.Tests/FiscalYearsControllerContractTests.cs", "purpose": "Thin CQRS dispatch, route, permission, and status contract" },
-
-    { "id": "web-route", "layer": "web-next", "path": "web-next/src/app/(main)/finance/fiscal-years/page.tsx", "purpose": "Thin App Router entry" },
-    { "id": "web-page", "layer": "web-next", "path": "web-next/src/modules/hr/finance/fiscal-years/pages/FiscalYearsPage.tsx", "purpose": "Browser orchestration and authorization" },
-    { "id": "web-form", "layer": "web-next", "path": "web-next/src/modules/hr/finance/fiscal-years/components/FiscalYearForm.tsx", "purpose": "Shared add/edit/view form and period detail" },
-    { "id": "web-grid", "layer": "web-next", "path": "web-next/src/modules/hr/finance/fiscal-years/components/FiscalYearsDataGrid.tsx", "purpose": "Shared Grid, toolbar, server sort/filter/page, actions" },
-    { "id": "web-cards", "layer": "web-next", "path": "web-next/src/modules/hr/finance/fiscal-years/components/FiscalYearsCardView.tsx", "purpose": "Responsive Cards view" },
-    { "id": "web-service", "layer": "web-next", "path": "web-next/src/modules/hr/finance/fiscal-years/services/fiscalYearService.ts", "purpose": "Only browser API caller" },
-    { "id": "web-period-preview", "layer": "web-next", "path": "web-next/src/modules/hr/finance/fiscal-years/utils/fiscalPeriodPreview.ts", "purpose": "Live contiguous period preview aligned with Domain" },
-    { "id": "web-lifecycle", "layer": "web-next", "path": "web-next/src/modules/hr/finance/fiscal-years/utils/fiscalYearLifecycle.ts", "purpose": "Exact lifecycle actions including separate Closed-state reopen and lock choices" },
-    { "id": "web-lifecycle-tests", "layer": "web-next-test", "path": "web-next/src/modules/hr/finance/fiscal-years/utils/fiscalYearLifecycle.test.ts", "purpose": "Every status maps to its exact allowed actions, including both choices from Closed" },
-    { "id": "web-service-tests", "layer": "web-next-test", "path": "web-next/src/modules/hr/finance/fiscal-years/services/fiscalYearService.test.ts", "purpose": "Normalization, concurrency, lifecycle, validation, and preview coverage" },
-    { "id": "web-api-config", "layer": "web-next-config", "path": "web-next/src/config/api/fiscalYears.ts", "purpose": "Typed endpoints" },
-    { "id": "web-routes", "layer": "web-next-config", "path": "web-next/src/config/routes.ts", "purpose": "Typed page route" },
-    { "id": "web-permissions", "layer": "web-next-config", "path": "web-next/src/lib/auth/permissions.ts", "purpose": "Client permission parity" },
-    { "id": "web-route-access", "layer": "web-next-config", "path": "web-next/src/lib/auth/route-access.ts", "purpose": "View-route authorization" },
-    { "id": "web-route-tests", "layer": "web-next-test", "path": "web-next/src/lib/auth/route-access.test.ts", "purpose": "Fiscal Years route denial/allow coverage" },
-    { "id": "web-navigation", "layer": "web-next-config", "path": "web-next/src/modules/hr/navigation/financeConfig.tsx", "purpose": "Canonical HR Finance navigation definition" },
-    { "id": "web-realtime", "layer": "web-next-config", "path": "web-next/src/platform/realtime/realtimeQueryRegistry.ts", "purpose": "Realtime query invalidation" },
-    { "id": "web-realtime-tests", "layer": "web-next-test", "path": "web-next/src/platform/realtime/realtimeQueryRegistry.test.ts", "purpose": "Fiscal Years resource/key coverage" },
-    { "id": "web-en", "layer": "web-next-config", "path": "web-next/src/locales/en/translation.json", "purpose": "English UI text" },
-    { "id": "web-ar", "layer": "web-next-config", "path": "web-next/src/locales/ar/translation.json", "purpose": "Arabic UI text and RTL labels" },
-
-    { "id": "mobile-route", "layer": "mobile-react", "path": "mobile-react/app/(main)/finance/fiscal-years.tsx", "purpose": "Thin guarded Expo route" },
-    { "id": "mobile-layout", "layer": "mobile-react", "path": "mobile-react/app/(main)/finance/_layout.tsx", "purpose": "Nested shared Finance route layout" },
-    { "id": "mobile-screen", "layer": "mobile-react", "path": "mobile-react/src/modules/hr/finance/fiscal-years/presentation/screens/FiscalYearsScreen.tsx", "purpose": "Table/Cards, filtering, permissions, actions, and lifecycle" },
-    { "id": "mobile-form", "layer": "mobile-react", "path": "mobile-react/src/modules/hr/finance/fiscal-years/presentation/components/FiscalYearForm.tsx", "purpose": "Shared full-screen create/edit/view form and periods" },
-    { "id": "mobile-api", "layer": "mobile-react", "path": "mobile-react/src/modules/hr/finance/fiscal-years/data/remote/fiscal-year-remote-data-source.ts", "purpose": "Transport and query serialization" },
-    { "id": "mobile-schemas", "layer": "mobile-react", "path": "mobile-react/src/modules/hr/finance/fiscal-years/data/remote/fiscal-year-schemas.ts", "purpose": "Runtime response validation" },
-    { "id": "mobile-period-preview", "layer": "mobile-react", "path": "mobile-react/src/modules/hr/finance/fiscal-years/domain/policies/fiscal-period-preview.ts", "purpose": "Live contiguous period preview aligned with Domain" },
-    { "id": "mobile-lifecycle", "layer": "mobile-react", "path": "mobile-react/src/modules/hr/finance/fiscal-years/domain/policies/fiscal-year-lifecycle.ts", "purpose": "Exact lifecycle actions including separate Closed-state reopen and lock choices" },
-    { "id": "mobile-api-tests", "layer": "mobile-react-test", "path": "mobile-react/src/modules/hr/finance/fiscal-years/data/remote/__tests__/fiscal-year-remote-boundary.test.ts", "purpose": "Endpoint, list, detail, period, validation, and preview coverage" },
-    { "id": "mobile-routes", "layer": "mobile-react-config", "path": "mobile-react/src/core/constants/routes.ts", "purpose": "Typed Expo route" },
-    { "id": "mobile-permissions", "layer": "mobile-react-config", "path": "mobile-react/src/platform/auth/presentation/rbac/permissions.ts", "purpose": "Client permission parity" },
-    { "id": "mobile-route-manifest", "layer": "mobile-react-config", "path": "mobile-react/src/platform/auth/presentation/rbac/route-manifest.ts", "purpose": "Route and drawer authorization" },
-    { "id": "mobile-route-tests", "layer": "mobile-react-test", "path": "mobile-react/src/platform/auth/presentation/rbac/__tests__/route-access.test.ts", "purpose": "Shared Finance route permission coverage" },
-    { "id": "mobile-realtime", "layer": "mobile-react-config", "path": "mobile-react/src/platform/realtime/application/realtime-query-registry.ts", "purpose": "Realtime query invalidation" },
-    { "id": "mobile-realtime-tests", "layer": "mobile-react-test", "path": "mobile-react/src/platform/realtime/application/realtime-query-registry.test.ts", "purpose": "Fiscal Years realtime resource/key coverage" },
-    { "id": "mobile-en", "layer": "mobile-react-config", "path": "mobile-react/src/core/localization/translations/en-fiscal-years.ts", "purpose": "English UI vocabulary" },
-    { "id": "mobile-ar", "layer": "mobile-react-config", "path": "mobile-react/src/core/localization/translations/ar-fiscal-years.ts", "purpose": "Arabic UI vocabulary" }
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide implementation and documentation rules"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/system/features/fiscal-years/IMPLEMENTATION-REQUEST.md",
+      "purpose": "Frozen scope, contract, optional-view decisions, and gates"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/system/features/fiscal-years/FISCAL_YEARS-REVIEW-ARTIFACTS.md",
+      "purpose": "Requirements, evidence, findings, and reconciliation"
+    },
+    {
+      "id": "master-review",
+      "layer": "documentation",
+      "path": "documentation/project/FISCAL_YEARS_FEATURE_FULL_REVIEW.md",
+      "purpose": "Cross-platform source of truth"
+    },
+    {
+      "id": "api-profile",
+      "layer": "documentation",
+      "path": "documentation/api/FiscalYears_API_Implementation_Profile.md",
+      "purpose": "API implementation contract"
+    },
+    {
+      "id": "web-profile",
+      "layer": "documentation",
+      "path": "documentation/web-next/features/fiscal-years-frontend-reference.md",
+      "purpose": "Next.js implementation contract"
+    },
+    {
+      "id": "mobile-profile",
+      "layer": "documentation",
+      "path": "documentation/mobile-react/fiscal-years-mobile-reference.md",
+      "purpose": "Expo implementation contract"
+    },
+    {
+      "id": "api-controller",
+      "layer": "api",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Presentation/Features/Finance/FiscalYears/V1/FiscalYearsController.cs",
+      "purpose": "Thin versioned HTTP and permission boundary"
+    },
+    {
+      "id": "domain-fiscal-year",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/FiscalYears/Entities/FiscalYear.cs",
+      "purpose": "Aggregate invariants and lifecycle"
+    },
+    {
+      "id": "domain-fiscal-period",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/FiscalYears/Entities/FiscalPeriod.cs",
+      "purpose": "Generated period child and internal lifecycle"
+    },
+    {
+      "id": "application-commands",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/FiscalYears/Commands/FiscalYearCommands.cs",
+      "purpose": "Atomic company-locked mutations"
+    },
+    {
+      "id": "application-page-query",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/FiscalYears/Queries/GetFiscalYears/GetFiscalYearsQuery.cs",
+      "purpose": "Validated server-list contract"
+    },
+    {
+      "id": "application-contracts",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/FiscalYears/Contracts/FiscalYearContracts.cs",
+      "purpose": "HTTP and CQRS DTO contract"
+    },
+    {
+      "id": "accounting-unit-of-work",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Abstractions/Persistence/IAccountingUnitOfWork.cs",
+      "purpose": "Accounting-owned transaction boundary isolated from other module registrations"
+    },
+    {
+      "id": "application-validation",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/FiscalYears/Validation/FiscalYearValidation.cs",
+      "purpose": "Mutation validation and RowVersion checks"
+    },
+    {
+      "id": "infrastructure-store",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Features/Finance/FiscalYears/Persistence/FiscalYearStores.cs",
+      "purpose": "Scoped reads/writes, overlap checks, audit"
+    },
+    {
+      "id": "infrastructure-realtime",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Features/Finance/FiscalYears/Jobs/FiscalYearChangedJob.cs",
+      "purpose": "Post-commit notification and realtime delivery"
+    },
+    {
+      "id": "entity-configuration",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/AccountingDbContext.cs",
+      "purpose": "Database tables, composite relationships, indexes, and RowVersion"
+    },
+    {
+      "id": "db-context",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/ApplicationDbContext.cs",
+      "purpose": "FiscalYear/FiscalPeriod DbSets and company filters/stamping"
+    },
+    {
+      "id": "api-permissions",
+      "layer": "api-config",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Contracts/Authorization/AccountingPermissions.cs",
+      "purpose": "Five server permission constants"
+    },
+    {
+      "id": "api-di",
+      "layer": "api-config",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/DependencyInjection.cs",
+      "purpose": "Accounting context, unit-of-work, feature store, audit, scheduler, and job registration"
+    },
+    {
+      "id": "api-error-di",
+      "layer": "api-config",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/ErrorsService.cs",
+      "purpose": "FiscalYearErrors registration"
+    },
+    {
+      "id": "api-localization-en",
+      "layer": "api-config",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Localization/Resources/en-US.json",
+      "purpose": "English validation/error/notification text"
+    },
+    {
+      "id": "api-localization-ar",
+      "layer": "api-config",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Localization/Resources/ar-EG.json",
+      "purpose": "Arabic validation/error/notification text"
+    },
+    {
+      "id": "domain-tests",
+      "layer": "api-test",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/FiscalYearDomainTests.cs",
+      "purpose": "Period generation, duration, lifecycle, and immutability"
+    },
+    {
+      "id": "company-isolation-tests",
+      "layer": "api-test",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/FiscalYearCompanyIsolationTests.cs",
+      "purpose": "Tenant/company visibility, fail-closed scope, and composite relationship coverage"
+    },
+    {
+      "id": "controller-tests",
+      "layer": "api-test",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/FiscalYearsControllerContractTests.cs",
+      "purpose": "Thin CQRS dispatch, route, permission, and status contract"
+    },
+    {
+      "id": "accounting-unit-of-work-tests",
+      "layer": "api-test",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/AccountingUnitOfWorkRegistrationTests.cs",
+      "purpose": "Competing shared registrations cannot intercept Fiscal Year persistence"
+    },
+    {
+      "id": "web-route",
+      "layer": "web-next",
+      "path": "web-next/src/app/(main)/finance/fiscal-years/page.tsx",
+      "purpose": "Thin App Router entry"
+    },
+    {
+      "id": "web-page",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/fiscal-years/pages/FiscalYearsPage.tsx",
+      "purpose": "Browser orchestration and authorization"
+    },
+    {
+      "id": "web-form",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/fiscal-years/components/FiscalYearForm.tsx",
+      "purpose": "Shared add/edit/view form and period detail"
+    },
+    {
+      "id": "web-grid",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/fiscal-years/components/FiscalYearsDataGrid.tsx",
+      "purpose": "Shared Grid, toolbar, server sort/filter/page, actions"
+    },
+    {
+      "id": "web-cards",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/fiscal-years/components/FiscalYearsCardView.tsx",
+      "purpose": "Responsive Cards view"
+    },
+    {
+      "id": "web-service",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/fiscal-years/services/fiscalYearService.ts",
+      "purpose": "Only browser API caller"
+    },
+    {
+      "id": "web-period-preview",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/fiscal-years/utils/fiscalPeriodPreview.ts",
+      "purpose": "Live contiguous period preview aligned with Domain"
+    },
+    {
+      "id": "web-lifecycle",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/fiscal-years/utils/fiscalYearLifecycle.ts",
+      "purpose": "Exact lifecycle actions including separate Closed-state reopen and lock choices"
+    },
+    {
+      "id": "web-lifecycle-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/modules/accounting/fiscal-years/utils/fiscalYearLifecycle.test.ts",
+      "purpose": "Every status maps to its exact allowed actions, including both choices from Closed"
+    },
+    {
+      "id": "web-service-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/modules/accounting/fiscal-years/services/fiscalYearService.test.ts",
+      "purpose": "Normalization, concurrency, lifecycle, validation, and preview coverage"
+    },
+    {
+      "id": "web-api-config",
+      "layer": "web-next-config",
+      "path": "web-next/src/config/api/fiscalYears.ts",
+      "purpose": "Typed endpoints"
+    },
+    {
+      "id": "web-routes",
+      "layer": "web-next-config",
+      "path": "web-next/src/config/routes.ts",
+      "purpose": "Typed page route"
+    },
+    {
+      "id": "web-permissions",
+      "layer": "web-next-config",
+      "path": "web-next/src/lib/auth/permissions.ts",
+      "purpose": "Client permission parity"
+    },
+    {
+      "id": "web-route-access",
+      "layer": "web-next-config",
+      "path": "web-next/src/lib/auth/route-access.ts",
+      "purpose": "View-route authorization"
+    },
+    {
+      "id": "web-route-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/lib/auth/route-access.test.ts",
+      "purpose": "Fiscal Years route denial/allow coverage"
+    },
+    {
+      "id": "web-accounting-module-definition",
+      "layer": "web-next-config",
+      "path": "web-next/src/modules/accounting/moduleDefinition.tsx",
+      "purpose": "Canonical Accounting Fiscal Years navigation and module ownership definition"
+    },
+    {
+      "id": "web-realtime",
+      "layer": "web-next-config",
+      "path": "web-next/src/platform/realtime/realtimeQueryRegistry.ts",
+      "purpose": "Realtime query invalidation"
+    },
+    {
+      "id": "web-realtime-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/platform/realtime/realtimeQueryRegistry.test.ts",
+      "purpose": "Fiscal Years resource/key coverage"
+    },
+    {
+      "id": "web-en",
+      "layer": "web-next-config",
+      "path": "web-next/src/locales/en/translation.json",
+      "purpose": "English UI text"
+    },
+    {
+      "id": "web-ar",
+      "layer": "web-next-config",
+      "path": "web-next/src/locales/ar/translation.json",
+      "purpose": "Arabic UI text and RTL labels"
+    },
+    {
+      "id": "mobile-route",
+      "layer": "mobile-react",
+      "path": "mobile-react/app/(main)/finance/fiscal-years.tsx",
+      "purpose": "Thin guarded Expo route"
+    },
+    {
+      "id": "mobile-layout",
+      "layer": "mobile-react",
+      "path": "mobile-react/app/(main)/finance/_layout.tsx",
+      "purpose": "Nested shared Finance route layout"
+    },
+    {
+      "id": "mobile-screen",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/hr/finance/fiscal-years/presentation/screens/FiscalYearsScreen.tsx",
+      "purpose": "Table/Cards, filtering, permissions, actions, and lifecycle"
+    },
+    {
+      "id": "mobile-form",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/hr/finance/fiscal-years/presentation/components/FiscalYearForm.tsx",
+      "purpose": "Shared full-screen create/edit/view form and periods"
+    },
+    {
+      "id": "mobile-api",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/hr/finance/fiscal-years/data/remote/fiscal-year-remote-data-source.ts",
+      "purpose": "Transport and query serialization"
+    },
+    {
+      "id": "mobile-schemas",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/hr/finance/fiscal-years/data/remote/fiscal-year-schemas.ts",
+      "purpose": "Runtime response validation"
+    },
+    {
+      "id": "mobile-period-preview",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/hr/finance/fiscal-years/domain/policies/fiscal-period-preview.ts",
+      "purpose": "Live contiguous period preview aligned with Domain"
+    },
+    {
+      "id": "mobile-lifecycle",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/hr/finance/fiscal-years/domain/policies/fiscal-year-lifecycle.ts",
+      "purpose": "Exact lifecycle actions including separate Closed-state reopen and lock choices"
+    },
+    {
+      "id": "mobile-api-tests",
+      "layer": "mobile-react-test",
+      "path": "mobile-react/src/modules/hr/finance/fiscal-years/data/remote/__tests__/fiscal-year-remote-boundary.test.ts",
+      "purpose": "Endpoint, list, detail, period, validation, and preview coverage"
+    },
+    {
+      "id": "mobile-routes",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/src/core/constants/routes.ts",
+      "purpose": "Typed Expo route"
+    },
+    {
+      "id": "mobile-permissions",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/permissions.ts",
+      "purpose": "Client permission parity"
+    },
+    {
+      "id": "mobile-route-manifest",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/route-manifest.ts",
+      "purpose": "Route and drawer authorization"
+    },
+    {
+      "id": "mobile-route-tests",
+      "layer": "mobile-react-test",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/__tests__/route-access.test.ts",
+      "purpose": "Shared Finance route permission coverage"
+    },
+    {
+      "id": "mobile-realtime",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/src/platform/realtime/application/realtime-query-registry.ts",
+      "purpose": "Realtime query invalidation"
+    },
+    {
+      "id": "mobile-realtime-tests",
+      "layer": "mobile-react-test",
+      "path": "mobile-react/src/platform/realtime/application/realtime-query-registry.test.ts",
+      "purpose": "Fiscal Years realtime resource/key coverage"
+    },
+    {
+      "id": "mobile-en",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/src/core/localization/translations/en-fiscal-years.ts",
+      "purpose": "English UI vocabulary"
+    },
+    {
+      "id": "mobile-ar",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/src/core/localization/translations/ar-fiscal-years.ts",
+      "purpose": "Arabic UI vocabulary"
+    }
   ]
 }

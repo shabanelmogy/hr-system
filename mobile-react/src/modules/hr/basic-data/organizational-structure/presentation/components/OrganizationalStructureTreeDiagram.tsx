@@ -336,7 +336,7 @@ function DepartmentTreeDiagram({
               {resource === 'departments' && item.isCentralized ? (
                 <AppStatusBadge
                   color={theme.colors.secondary}
-                  label={isAr ? 'مركزية' : 'Centralized'}
+                  label={t('organizationalStructure.tree.centralized')}
                 />
               ) : null}
             </View>
@@ -389,7 +389,7 @@ function DepartmentTreeDiagram({
               >
                 <AppIcon color={theme.colors.primary} name="swap-vertical-outline" size={14} />
                 <AppText color="primary" style={styles.actionButtonText} weight="700">
-                  {isAr ? 'نقل' : 'Move'}
+                  {t('organizationalStructure.tree.move')}
                 </AppText>
               </Pressable>
             ) : null}
@@ -451,7 +451,7 @@ function DepartmentTreeDiagram({
               >
                 <AppIcon color={theme.colors.primary} name="add-circle-outline" size={14} />
                 <AppText color="primary" style={styles.actionButtonText}>
-                  {isAr ? 'فرع جديد' : 'Add child'}
+                  {t('organizationalStructure.tree.addChild')}
                 </AppText>
               </Pressable>
             ) : null}
@@ -468,9 +468,7 @@ function DepartmentTreeDiagram({
             >
               <AppIcon color={theme.colors.primary} name="enter-outline" size={18} />
               <AppText color="primary" style={styles.dropTargetText} weight="700">
-                {isAr
-                  ? `إفلات هنا لتعيين كإدارة أب لـ (${draggingItem.code})`
-                  : `Drop here as parent of (${draggingItem.code})`}
+                {t('organizationalStructure.tree.dropAsParent', { code: draggingItem.code })}
               </AppText>
             </Pressable>
           ) : isCurrentDragging ? (
@@ -481,7 +479,7 @@ function DepartmentTreeDiagram({
               ]}
             >
               <AppText color="primary" style={styles.activeDragText} weight="700">
-                {isAr ? 'جاري النقل... اختر الإدارة الأب أو ألغِ' : 'Moving... select new parent or cancel'}
+                {t('organizationalStructure.tree.movingNotice')}
               </AppText>
             </View>
           ) : null}
@@ -512,11 +510,10 @@ function DepartmentTreeDiagram({
           <View style={styles.toolbarSummary}>
             <AppIcon color={theme.colors.primary} name="business-outline" size={20} />
             <AppText style={styles.toolbarTitle} weight="700">
-              {isAr
-                ? `الهيكل الشجري (${items.length} ${
-                    resource === 'departments' ? 'إدارة' : 'مركز تكلفة'
-                  })`
-                : `Tree Hierarchy (${items.length} items)`}
+              {t('organizationalStructure.tree.hierarchy', {
+                count: items.length,
+                entity: t(`organizationalStructure.resources.${resource}`),
+              })}
             </AppText>
           </View>
 
@@ -524,7 +521,7 @@ function DepartmentTreeDiagram({
             <Pressable hitSlop={6} onPress={expandAll} style={styles.toolButton}>
               <AppIcon color={theme.colors.primary} name="expand-outline" size={16} />
               <AppText color="primary" variant="caption" weight="700">
-                {isAr ? 'فرد الكل' : 'Expand'}
+                {t('organizationalStructure.tree.expand')}
               </AppText>
             </Pressable>
 
@@ -533,7 +530,7 @@ function DepartmentTreeDiagram({
             <Pressable hitSlop={6} onPress={collapseAll} style={styles.toolButton}>
               <AppIcon color={theme.colors.textMuted} name="contract-outline" size={16} />
               <AppText color="muted" variant="caption" weight="700">
-                {isAr ? 'طي الكل' : 'Collapse'}
+                {t('organizationalStructure.tree.collapse')}
               </AppText>
             </Pressable>
           </View>
@@ -547,7 +544,7 @@ function DepartmentTreeDiagram({
             requestMove(
               draggingItem,
               null,
-              isAr ? 'المستوى الرئيسي للشركة' : 'Company Root Level'
+              t('organizationalStructure.tree.companyRoot')
             )
           }
           style={[
@@ -561,12 +558,10 @@ function DepartmentTreeDiagram({
           <AppIcon color={theme.colors.primary} name="home-outline" size={22} />
           <View style={styles.rootDropZoneTextGroup}>
             <AppText color="primary" weight="700">
-              {isAr
-                ? `إفلات هنا لتعيين (${draggingItem.code}) في المستوى الرئيسي للشركة`
-                : `Drop here to set (${draggingItem.code}) as Company Root`}
+              {t('organizationalStructure.tree.dropAtCompanyRoot', { code: draggingItem.code })}
             </AppText>
             <AppText color="muted" variant="caption">
-              {isAr ? 'بدون إدارة أب (إدارة رئيسية مستقلة)' : 'No parent department (top-level)'}
+              {t('organizationalStructure.tree.noParentDepartment')}
             </AppText>
           </View>
         </Pressable>
@@ -577,14 +572,14 @@ function DepartmentTreeDiagram({
 
       {/* Move Confirmation Dialog */}
       <ConfirmationDialog
-        confirmLabel={isAr ? 'تأكيد النقل' : 'Confirm Move'}
+        confirmLabel={t('organizationalStructure.tree.confirmMove')}
         description={
           pendingMoveTarget
-            ? isAr
-              ? `هل أنت متأكد من نقل (${pendingMoveTarget.item.code} - ${
-                  isAr ? pendingMoveTarget.item.nameAr : pendingMoveTarget.item.nameEn
-                }) لتصبح تابعة لـ [${pendingMoveTarget.targetName}]؟`
-              : `Are you sure you want to move (${pendingMoveTarget.item.code}) under [${pendingMoveTarget.targetName}]?`
+            ? t('organizationalStructure.tree.confirmMoveDescription', {
+                code: pendingMoveTarget.item.code,
+                name: isAr ? pendingMoveTarget.item.nameAr : pendingMoveTarget.item.nameEn,
+                target: pendingMoveTarget.targetName,
+              })
             : ''
         }
         loading={isConfirmingMove}
@@ -598,7 +593,7 @@ function DepartmentTreeDiagram({
             setIsConfirmingMove(false);
           }
         }}
-        title={isAr ? 'نقل الإدارة' : 'Move Department'}
+        title={t('organizationalStructure.tree.moveDepartment')}
         tone="default"
         visible={pendingMoveTarget !== null}
       />
@@ -615,21 +610,17 @@ function DepartmentTreeDiagram({
             <AppCard style={[styles.modalCard, { backgroundColor: theme.colors.surface }]}>
               <View style={styles.modalHeader}>
                 <AppText style={styles.modalTitle} weight="700">
-                  {isAr
-                    ? `نقل الإدارة: ${moveModalItem.code}`
-                    : `Move Department: ${moveModalItem.code}`}
+                  {t('organizationalStructure.tree.moveDepartmentCode', { code: moveModalItem.code })}
                 </AppText>
                 <AppIconButton
                   icon="close-outline"
-                  label={isAr ? 'إغلاق' : 'Close'}
+                  label={t('organizationalStructure.tree.close')}
                   onPress={closeMoveModal}
                 />
               </View>
 
               <AppText color="muted" style={styles.modalSubtitle} variant="caption">
-                {isAr
-                  ? 'اختر الإدارة الأب الجديدة من القائمة أدناه:'
-                  : 'Select the new parent department below:'}
+                {t('organizationalStructure.tree.selectParent')}
               </AppText>
 
               {/* Real-time Search Input */}
@@ -637,8 +628,8 @@ function DepartmentTreeDiagram({
                 <AppTextField
                   compact
                   leadingIcon="search-outline"
-                  label={isAr ? 'بحث في الإدارات' : 'Search departments'}
-                  placeholder={isAr ? 'ابحث بالاسم أو الكود...' : 'Search by name or code...'}
+                  label={t('organizationalStructure.tree.searchDepartments')}
+                  placeholder={t('organizationalStructure.tree.searchPlaceholder')}
                   value={moveSearchQuery}
                   onChangeText={setMoveSearchQuery}
                   showClearButton={Boolean(moveSearchQuery)}
@@ -651,9 +642,7 @@ function DepartmentTreeDiagram({
                   const query = moveSearchQuery.trim().toLowerCase();
                   const showRoot =
                     !query ||
-                    (isAr
-                      ? 'المستوى الرئيسي للشركة بدون إدارة أب'.toLowerCase().includes(query)
-                      : 'company root level no parent'.includes(query));
+                      t('organizationalStructure.tree.companyRootLevel').toLowerCase().includes(query);
 
                   const forbidden = getDescendantIds(moveModalItem.id);
                   forbidden.add(moveModalItem.id);
@@ -673,7 +662,7 @@ function DepartmentTreeDiagram({
                       <View style={styles.modalEmptySearch}>
                         <AppIcon color={theme.colors.textMuted} name="search-outline" size={28} />
                         <AppText align="center" color="muted" variant="caption">
-                          {isAr ? 'لا توجد إدارات مطابقة للبحث' : 'No matching departments found'}
+                          {t('organizationalStructure.tree.noMatchingDepartments')}
                         </AppText>
                       </View>
                     );
@@ -701,9 +690,7 @@ function DepartmentTreeDiagram({
                         >
                           <AppIcon color={theme.colors.primary} name="home-outline" size={18} />
                           <AppText weight={selectedTargetId === 'root' ? '700' : '500'}>
-                            {isAr
-                              ? 'المستوى الرئيسي للشركة (بدون إدارة أب)'
-                              : 'Company Root Level (No Parent)'}
+                            {t('organizationalStructure.tree.companyRootLevel')}
                           </AppText>
                         </Pressable>
                       ) : null}
@@ -744,7 +731,7 @@ function DepartmentTreeDiagram({
                   style={styles.modalButton}
                   variant="outline"
                 >
-                  {isAr ? 'إلغاء' : 'Cancel'}
+                  {t('organizationalStructure.tree.cancel')}
                 </AppButton>
                 <AppButton
                   onPress={async () => {
@@ -754,7 +741,7 @@ function DepartmentTreeDiagram({
                   style={styles.modalButton}
                   variant="primary"
                 >
-                  {isAr ? 'حفظ النقل' : 'Save Move'}
+                  {t('organizationalStructure.tree.saveMove')}
                 </AppButton>
               </View>
             </AppCard>
@@ -1019,7 +1006,7 @@ function CostCenterTreeView({
   canCreate,
   canDelete,
 }: OrganizationalStructureTreeDiagramProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isAr = (i18n.resolvedLanguage ?? i18n.language).startsWith('ar');
 
   return (
@@ -1027,8 +1014,8 @@ function CostCenterTreeView({
       canCreate={canCreate}
       canDelete={canDelete}
       canEdit={canEdit}
-      entityName={isAr ? 'مركز تكلفة' : 'Cost Center'}
-      entityNamePlural={isAr ? 'مراكز تكلفة' : 'Cost Centers'}
+      entityName={t('organizationalStructure.tree.costCenterEntity')}
+      entityNamePlural={t('organizationalStructure.tree.costCenterPlural')}
       getCode={(item) => item.code ?? item.costCenterCode}
       getId={(item) => item.id}
       getLabel={(item) => (isAr ? (item.nameAr || item.nameEn) : (item.nameEn || item.nameAr))}
@@ -1046,7 +1033,7 @@ function CostCenterTreeView({
           : undefined
       }
       onView={onView}
-      rootLabel={isAr ? 'المستوى الرئيسي للشركة (بدون مركز أب)' : 'Company Root Cost Centers'}
+      rootLabel={t('organizationalStructure.tree.costCenterRoot')}
     />
   );
 }

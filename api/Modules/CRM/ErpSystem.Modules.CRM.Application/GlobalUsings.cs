@@ -1,0 +1,15 @@
+global using System.Globalization;
+global using System.Text;
+global using FluentValidation;
+global using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
+global using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
+global using ErpSystem.BuildingBlocks.Application.Abstractions.Validation;
+global using ErpSystem.BuildingBlocks.Application.Common.Errors;
+global using ErpSystem.BuildingBlocks.Application.Common.Extensions;
+global using ErpSystem.BuildingBlocks.Application.Common.Paginations;
+global using ErpSystem.BuildingBlocks.Application.Common.Realtime;
+global using ErpSystem.BuildingBlocks.Context.Authentication;
+global using ErpSystem.Modules.Platform.Contracts.Authentication.Tokens;
+global using ErpSystem.Modules.CRM.Application.Validation;
+global using ErpSystem.Modules.Platform.Contracts.Files.Models;
+global using Microsoft.Extensions.Localization;

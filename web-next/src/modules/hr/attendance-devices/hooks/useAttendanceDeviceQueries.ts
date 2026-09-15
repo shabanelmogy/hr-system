@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { attendanceDeviceService } from "../services/attendanceDeviceService";
-import type { AttendanceDeviceQuery, CreateAttendanceAgentRequest, CreatedAttendanceAgent, DeviceTestResult, PullRunQuery, RawPunchQuery, RawUserQuery, UpdateAttendanceDeviceRequest, UpdateCredentialsRequest } from "../types/attendanceDevices";
+import type { AttendanceDeviceQuery, CreateAttendanceAgentRequest, CreatedAttendanceAgent, DeviceTestResult, PullRunQuery, RawPunchQuery, RawUserQuery, StartPullRequest, UpdateAttendanceDeviceRequest, UpdateCredentialsRequest } from "../types/attendanceDevices";
 export const attendanceDeviceKeys = { all: ["attendance-devices"] as const, page: (q: AttendanceDeviceQuery) => [...attendanceDeviceKeys.all, "page", q] as const, providers: () => [...attendanceDeviceKeys.all, "providers"] as const, branches: () => [...attendanceDeviceKeys.all, "branches"] as const, agents: () => [...attendanceDeviceKeys.all, "agents"] as const, health: () => [...attendanceDeviceKeys.all, "health"] as const, users: (q: RawUserQuery) => [...attendanceDeviceKeys.all, "users", q] as const, punches: (q: RawPunchQuery) => [...attendanceDeviceKeys.all, "punches", q] as const, runs: (q: PullRunQuery) => [...attendanceDeviceKeys.all, "runs", q] as const };
 export const useAttendanceDevicePage = (query: AttendanceDeviceQuery) => useQuery({ queryKey: attendanceDeviceKeys.page(query), queryFn: () => attendanceDeviceService.getPage(query), placeholderData: (previous) => previous, staleTime: 30_000 });
 export const useProviders = () => useQuery({ queryKey: attendanceDeviceKeys.providers(), queryFn: attendanceDeviceService.providers, staleTime: 300_000 });
@@ -20,8 +20,8 @@ export const useAttendanceMutation = <T, V>(fn: (value: V) => Promise<T>) => { c
 export const useCreateDevice = () => useAttendanceMutation(attendanceDeviceService.create);
 export const useCreateAttendanceAgent = () => useAttendanceMutation<CreatedAttendanceAgent, CreateAttendanceAgentRequest>(attendanceDeviceService.createAgent);
 export const useUpdateDevice = () => useAttendanceMutation<unknown, { id: number; request: UpdateAttendanceDeviceRequest }>(({ id, request }) => attendanceDeviceService.update(id, request));
-export const useSetDeviceEnabled = () => useAttendanceMutation<unknown, { id: number; enabled: boolean }>(({ id, enabled }) => attendanceDeviceService.setEnabled(id, enabled));
+export const useSetDeviceEnabled = () => useAttendanceMutation<void, { id: number; enabled: boolean; rowVersion: string }>(({ id, enabled, rowVersion }) => attendanceDeviceService.setEnabled(id, enabled, rowVersion));
 export const useCredentials = () => useAttendanceMutation<void, { id: number; request: UpdateCredentialsRequest }>(({ id, request }) => attendanceDeviceService.updateCredentials(id, request));
 export const useTestDevice = () => useAttendanceMutation<DeviceTestResult, number>(attendanceDeviceService.test);
-export const usePullUsers = () => useAttendanceMutation<unknown, number>(attendanceDeviceService.pullUsers);
-export const usePullAttendance = () => useAttendanceMutation<unknown, { id: number; request: { fromUtc?: string; toUtc?: string } }>(({ id, request }) => attendanceDeviceService.pullAttendance(id, request));
+export const usePullUsers = () => useAttendanceMutation<unknown, { id: number; request: StartPullRequest }>(({ id, request }) => attendanceDeviceService.pullUsers(id, request));
+export const usePullAttendance = () => useAttendanceMutation<unknown, { id: number; request: StartPullRequest }>(({ id, request }) => attendanceDeviceService.pullAttendance(id, request));

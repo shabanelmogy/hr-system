@@ -31,6 +31,8 @@ import { useTranslation } from "react-i18next";
 import Link from "next/link";
 
 import { appRoutes, type AppPath } from "@/config/routes";
+import { permissions } from "@/lib/auth/permissions";
+import { usePermissions } from "@/shared/hooks/usePermissions";
 import { MetricCard, type MetricColor } from "@/shared/components/cards";
 import { ContentWrapper } from "@/shared/components/layout";
 import { PageHeader } from "@/shared/components/navigation/header";
@@ -54,6 +56,8 @@ const dashboardListSx = {
 export default function TenantDashboardPage() {
   const { t, i18n } = useTranslation();
   const tenantsQuery = useTenantsQuery();
+  const { hasPermission } = usePermissions();
+  const canViewGlobalGeography = hasPermission(permissions.ViewCountries);
   const tenants = useMemo(() => tenantsQuery.data ?? [], [tenantsQuery.data]);
   const summary = useMemo(() => summarizeTenants(tenants), [tenants]);
 
@@ -70,12 +74,14 @@ export default function TenantDashboardPage() {
             spacing={1.5}
             sx={{ width: "100%" }}
           >
-            <DashboardActionButton
-              color="info"
-              href={appRoutes.superAdmin.geography.countries}
-              icon={<PublicIcon fontSize="small" />}
-              label={t("menu.globalGeography")}
-            />
+            {canViewGlobalGeography ? (
+              <DashboardActionButton
+                color="info"
+                href={appRoutes.superAdmin.geography.countries}
+                icon={<PublicIcon fontSize="small" />}
+                label={t("menu.globalGeography")}
+              />
+            ) : null}
             <DashboardActionButton
               color="primary"
               filled

@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using ErpSystem.BuildingBlocks.Modularity;
 using ErpSystem.Modules.HR.Application;
 using ErpSystem.Modules.HR.Infrastructure;
@@ -6,15 +5,12 @@ using ErpSystem.Modules.HR.Infrastructure.Common.Observability;
 using ErpSystem.Modules.HR.Infrastructure.Common.Settings;
 using ErpSystem.Modules.HR.Infrastructure.Localization;
 using ErpSystem.Modules.HR.Infrastructure.Persistence;
-using ErpSystem.Modules.HR.Infrastructure.Persistence.Seeds;
 using ErpSystem.Modules.HR.Presentation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-
-[assembly: InternalsVisibleTo("ErpSystem.Tests")]
 
 namespace ErpSystem.Modules.HR;
 
@@ -29,10 +25,6 @@ public sealed class HRModule : IModule
         services.AddApplication();
         services.AddInfrastructure(configuration);
         services.AddHRPresentation();
-        services.AddSingleton<IHostRuntimeApplicationContributor, LegacyHangfireDashboardRuntimeContributor>();
-        services.AddSingleton<IHostRuntimeEndpointContributor, LegacyCompanyRealtimeEndpointContributor>();
-        services.AddSingleton<IHostRuntimeStartupTask, LegacyProtectedFileStorageStartupTask>();
-        services.AddScoped<IHostRuntimeStartupTask, LegacySystemRolePermissionStartupTask>();
     }
 
     /// <summary>
@@ -43,16 +35,6 @@ public sealed class HRModule : IModule
     /// </summary>
     internal static string EnsureSchemaSql =>
         $"IF SCHEMA_ID(N'{ApplicationDbContext.Schema}') IS NULL EXEC(N'CREATE SCHEMA [{ApplicationDbContext.Schema}]');";
-
-    /// <summary>
-    /// Moves the legacy dbo EF migrations history into the hr schema. Runs only
-    /// when the hr history is absent and the dbo history exists, so it is a
-    /// no-op on fresh databases and on already-moved databases.
-    /// </summary>
-    internal static string MoveHistoryToModuleSchemaSql =>
-        $"IF OBJECT_ID(N'[{ApplicationDbContext.Schema}].[__EFMigrationsHistory]', N'U') IS NULL " +
-        "AND OBJECT_ID(N'[dbo].[__EFMigrationsHistory]', N'U') IS NOT NULL " +
-        $"EXEC(N'ALTER SCHEMA [{ApplicationDbContext.Schema}] TRANSFER [dbo].[__EFMigrationsHistory];');";
 
     public async Task MigrateAsync(
         IServiceProvider services,
@@ -66,10 +48,6 @@ public sealed class HRModule : IModule
         var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         // Fresh databases need the schema before EF creates hr.__EFMigrationsHistory.
         await db.Database.ExecuteSqlRawAsync(EnsureSchemaSql, cancellationToken).ConfigureAwait(false);
-        // Existing databases created before the hr schema keep their applied
-        // migrations in dbo.__EFMigrationsHistory; move that single history
-        // table so subsequent MigrateAsync calls resume from hr history.
-        await db.Database.ExecuteSqlRawAsync(MoveHistoryToModuleSchemaSql, cancellationToken).ConfigureAwait(false);
         await db.Database.MigrateAsync(cancellationToken).ConfigureAwait(false);
     }
 
@@ -86,8 +64,6 @@ public sealed class HRModule : IModule
         WebApplication app,
         CancellationToken cancellationToken = default)
     {
-        var settings = app.Services.GetRequiredService<IOptions<DatabaseSettings>>().Value;
-        if (settings.SeedOnStartup)
-            await app.AddSeedsRequest().WaitAsync(cancellationToken).ConfigureAwait(false);
+        await Task.CompletedTask;
     }
 }

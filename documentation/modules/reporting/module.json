@@ -1,0 +1,29 @@
+{
+  "moduleName": "Reporting",
+  "docSlug": "reporting",
+  "databaseSchema": "rpt",
+  "version": "1.0.0",
+  "requiredModuleDependencies": [],
+  "optionalModuleDependencies": [],
+  "isUserVisible": true,
+  "allowsTenantEntitlement": true,
+  "lifecycle": "active",
+  "status": "foundation",
+  "runtimePaths": {
+    "root": "api/Modules/Reporting",
+    "contracts": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts",
+    "domain": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain",
+    "application": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application",
+    "infrastructure": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure",
+    "presentation": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation",
+    "bootstrap": "api/Modules/Reporting/ErpSystem.Modules.Reporting"
+  },
+  "documentationPaths": {
+    "root": "documentation/modules/reporting",
+    "api": "documentation/modules/reporting/api/README.md",
+    "webNext": "documentation/modules/reporting/web-next/README.md",
+    "mobileReact": "documentation/modules/reporting/mobile-react/README.md",
+    "features": "documentation/modules/reporting/features/README.md",
+    "phases": "documentation/modules/reporting/phases/README.md"
+  }
+}

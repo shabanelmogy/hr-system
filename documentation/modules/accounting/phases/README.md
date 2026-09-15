@@ -80,7 +80,7 @@ N/A decision before it can be skipped. No taxable document goes live before the
 mandatory country gates in 14.
 
 For this repository, Phase 00 must also confirm the platform ownership boundary:
-Accounting consumes HR/platform identity, tenancy, company, and branch
+Accounting consumes Platform identity, tenancy, company, and branch
 capabilities through Contracts or stable abstractions. It does not recreate
 their tables, services, or UI; only Accounting-specific financial authorization
 belongs inside the module.

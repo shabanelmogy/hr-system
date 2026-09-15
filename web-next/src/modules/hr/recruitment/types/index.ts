@@ -55,7 +55,6 @@ export enum ApplicationSource {
   EmployeeReferral = 3,
   RecruitmentAgency = 4,
   Manual = 5,
-  Other = 6,
 }
 
 export enum ApplicationStatus {

@@ -44,7 +44,7 @@
 git status --short
 ./documentation/system/Generate-Documentation.ps1 -Check
 dotnet build ./api/ErpSystem.Api/ErpSystem.Api.csproj --no-restore
-dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore
+dotnet test ./api/Modules/HR/ErpSystem.Modules.HR.Tests/ErpSystem.Modules.HR.Tests.csproj --no-restore
 npm --prefix ./web-next run type-check
 npm --prefix ./web-next run check:architecture
 npm --prefix ./mobile-react run typecheck
@@ -125,7 +125,7 @@ npx next dev --webpack --experimental-https --experimental-https-key ./certifica
 ### اختبارات آلية
 
 ```powershell
-dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~WorkforcePlan"
+dotnet test ./api/Modules/HR/ErpSystem.Modules.HR.Tests/ErpSystem.Modules.HR.Tests.csproj --no-restore --filter "FullyQualifiedName~WorkforcePlan"
 npm --prefix ./web-next test -- workforcePlanService.test.ts
 npm --prefix ./mobile-react test -- workforce-plan-api.test.ts
 ```
@@ -154,8 +154,8 @@ npm --prefix ./mobile-react test -- workforce-plan-api.test.ts
 ### اختبارات آلية
 
 ```powershell
-dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~WorkforceBudget"
-dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~Workforce"
+dotnet test ./api/Modules/HR/ErpSystem.Modules.HR.Tests/ErpSystem.Modules.HR.Tests.csproj --no-restore --filter "FullyQualifiedName~WorkforceBudget"
+dotnet test ./api/Modules/HR/ErpSystem.Modules.HR.Tests/ErpSystem.Modules.HR.Tests.csproj --no-restore --filter "FullyQualifiedName~Workforce"
 npm --prefix ./web-next test -- workforceBudgetService.test.ts
 npm --prefix ./mobile-react test -- workforce-budget-api.test.ts
 ```
@@ -187,7 +187,7 @@ npm --prefix ./mobile-react test -- workforce-budget-api.test.ts
 ### اختبارات آلية بعد التنفيذ
 
 ```powershell
-dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~StaffingRequest|FullyQualifiedName~EnvelopeAmendment"
+dotnet test ./api/Modules/HR/ErpSystem.Modules.HR.Tests/ErpSystem.Modules.HR.Tests.csproj --no-restore --filter "FullyQualifiedName~StaffingRequest|FullyQualifiedName~EnvelopeAmendment"
 npm --prefix ./web-next test -- staffingRequest envelopeAmendment
 npm --prefix ./mobile-react test -- staffing-request envelope-amendment
 ```
@@ -225,7 +225,7 @@ npm --prefix ./mobile-react test -- staffing-request envelope-amendment
 ### اختبارات آلية بعد التنفيذ
 
 ```powershell
-dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~Recruitment|FullyQualifiedName~StaffingRequest"
+dotnet test ./api/Modules/HR/ErpSystem.Modules.HR.Tests/ErpSystem.Modules.HR.Tests.csproj --no-restore --filter "FullyQualifiedName~Recruitment|FullyQualifiedName~StaffingRequest"
 npm --prefix ./web-next test -- recruitment
 npm --prefix ./mobile-react test -- recruitment
 ```
@@ -255,7 +255,7 @@ npm --prefix ./mobile-react test -- recruitment
 ### اختبارات آلية بعد التنفيذ
 
 ```powershell
-dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~JobOffer|FullyQualifiedName~Hire|FullyQualifiedName~RecruitmentLifecycle"
+dotnet test ./api/Modules/HR/ErpSystem.Modules.HR.Tests/ErpSystem.Modules.HR.Tests.csproj --no-restore --filter "FullyQualifiedName~JobOffer|FullyQualifiedName~Hire|FullyQualifiedName~RecruitmentLifecycle"
 npm --prefix ./web-next test -- recruitment offer hire
 npm --prefix ./mobile-react test -- recruitment offer hire
 ```
@@ -294,7 +294,7 @@ npm --prefix ./mobile-react test -- recruitment offer hire
 ### اختبارات آلية بعد التنفيذ
 
 ```powershell
-dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~WorkforceTrace|FullyQualifiedName~PlanCommitment"
+dotnet test ./api/Modules/HR/ErpSystem.Modules.HR.Tests/ErpSystem.Modules.HR.Tests.csproj --no-restore --filter "FullyQualifiedName~WorkforceTrace|FullyQualifiedName~PlanCommitment"
 npm --prefix ./web-next test -- workforce trace commitment
 npm --prefix ./mobile-react test -- workforce trace commitment
 ```
@@ -342,7 +342,7 @@ dotnet ef database update --project ./api/Modules/HR/ErpSystem.Modules.HR.Infras
 dotnet ef migrations list --project ./api/Modules/HR/ErpSystem.Modules.HR.Infrastructure --startup-project ./api/ErpSystem.Api
 dotnet ef migrations has-pending-model-changes --project ./api/Modules/HR/ErpSystem.Modules.HR.Infrastructure --startup-project ./api/ErpSystem.Api
 dotnet build ./api/ErpSystem.Api/ErpSystem.Api.csproj --no-restore
-dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore
+dotnet test ./api/Modules/HR/ErpSystem.Modules.HR.Tests/ErpSystem.Modules.HR.Tests.csproj --no-restore
 npm --prefix ./web-next run test
 npm --prefix ./web-next run lint
 npm --prefix ./web-next run type-check
@@ -412,8 +412,8 @@ The current source pass covers Phases 3–6 and the Phase 7 documentation handof
 
 ```powershell
 dotnet build ./api/ErpSystem.Api/ErpSystem.Api.csproj --no-restore
-dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~Recruitment"
-dotnet test ./api/ErpSystem.Tests/ErpSystem.Tests.csproj --no-restore --filter "FullyQualifiedName~Workforce"
+dotnet test ./api/Modules/HR/ErpSystem.Modules.HR.Tests/ErpSystem.Modules.HR.Tests.csproj --no-restore --filter "FullyQualifiedName~Recruitment"
+dotnet test ./api/Modules/HR/ErpSystem.Modules.HR.Tests/ErpSystem.Modules.HR.Tests.csproj --no-restore --filter "FullyQualifiedName~Workforce"
 dotnet ef migrations list --project ./api/Modules/HR/ErpSystem.Modules.HR.Infrastructure --startup-project ./api/ErpSystem.Api
 dotnet ef migrations has-pending-model-changes --project ./api/Modules/HR/ErpSystem.Modules.HR.Infrastructure --startup-project ./api/ErpSystem.Api
 npm --prefix ./web-next run type-check

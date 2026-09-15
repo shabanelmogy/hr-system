@@ -29,9 +29,9 @@ export default function FormHeader({ children, t }: FormHeaderProps) {
         textAlign: "center",
         borderRadius: { xs: "0px", sm: "16px 16px 0 0" },
         boxShadow: `0 4px 20px ${alpha("#000", 0.15)}`,
+        ...authHeaderStyles.gradientBackground,
         position: "relative",
         overflow: "hidden",
-        ...authHeaderStyles.gradientBackground,
       }}
     >
       <Box sx={{ position: "relative", zIndex: 1 }}>
@@ -74,7 +74,7 @@ export default function FormHeader({ children, t }: FormHeaderProps) {
             textShadow: "0 2px 4px rgba(0,0,0,0.1)",
             letterSpacing: "0.5px"
           }}>
-          {t("auth.createAccount") || "Create Your Account"}
+          {t("auth.createAccount")}
         </Typography>
 
         {/* Stepper */}

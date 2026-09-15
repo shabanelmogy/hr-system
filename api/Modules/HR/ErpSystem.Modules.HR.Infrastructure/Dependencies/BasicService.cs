@@ -1,6 +1,4 @@
 using System.Text.Json.Serialization;
-using ErpSystem.Modules.HR.Application.Abstractions.Authentication;
-using ErpSystem.Modules.HR.Infrastructure.Security.Authentication;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Dependencies;
 
@@ -18,11 +16,6 @@ public static class BasicService
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         });
 
-        services.AddScoped<CurrentActor>();
-        services.AddScoped<ICurrentActor>(serviceProvider =>
-            serviceProvider.GetRequiredService<CurrentActor>());
-        services.AddScoped<ICurrentActorScope>(serviceProvider =>
-            serviceProvider.GetRequiredService<CurrentActor>());
         services.AddHttpClient("Google", client =>
         {
             client.BaseAddress = new Uri("https://www.googleapis.com/");

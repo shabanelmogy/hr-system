@@ -64,14 +64,14 @@ export function CandidateDetailModal({
         idempotencyKey,
       });
 
-      showToast.success(t('recruitment.candidate.hiredSuccess', 'تم تعيين المرشح بنجاح كموظف رسمي!'));
+      showToast.success(t('recruitment.candidate.hiredSuccess'));
       setConfirmHireVisible(false);
       hireIdempotencyKey.current = null;
       hireKeyApplicationId.current = null;
       onSuccess?.();
       onClose();
     } catch (error) {
-      showToast.error(error, t('common.error', 'حدث خطأ أثناء التعيين'));
+      showToast.error(error, t('common.error'));
     }
   };
 
@@ -108,7 +108,7 @@ export function CandidateDetailModal({
               {/* Contact Information */}
               <View style={[styles.section, { backgroundColor: theme.colors.surfaceMuted, borderColor: theme.colors.border }]}>
                 <AppText variant="label" weight="800" style={{ color: theme.colors.primary, marginBottom: 8 }}>
-                  {t('recruitment.candidate.contactInfo', 'معلومات الاتصال / Contact Info')}
+                  {t('recruitment.candidate.contactInfo')}
                 </AppText>
 
                 <View style={styles.infoRow}>
@@ -127,7 +127,7 @@ export function CandidateDetailModal({
                   <View style={styles.infoRow}>
                     <AppIcon name="cash-outline" size={16} color={theme.colors.textMuted} />
                     <AppText variant="bodySmall">
-                      {t('recruitment.candidate.salary', 'الراتب المتوقع')}: {application.expectedSalary}{' '}
+                      {t('recruitment.candidate.salary')}: {application.expectedSalary}{' '}
                       {application.expectedSalaryCurrencyCode}
                     </AppText>
                   </View>
@@ -138,7 +138,7 @@ export function CandidateDetailModal({
               {application.coverLetter && (
                 <View style={[styles.section, { backgroundColor: theme.colors.surfaceMuted, borderColor: theme.colors.border }]}>
                   <AppText variant="label" weight="800" style={{ color: theme.colors.primary, marginBottom: 6 }}>
-                    {t('recruitment.candidate.coverLetter', 'خطاب التقديم / Cover Letter')}
+                    {t('recruitment.candidate.coverLetter')}
                   </AppText>
                   <AppText variant="bodySmall" style={{ color: theme.colors.text }}>
                     {application.coverLetter}
@@ -149,7 +149,7 @@ export function CandidateDetailModal({
               {/* Scorecard / Evaluation summary */}
               <View style={[styles.section, { backgroundColor: theme.colors.surfaceMuted, borderColor: theme.colors.border }]}>
                 <AppText variant="label" weight="800" style={{ color: theme.colors.primary, marginBottom: 8 }}>
-                  {t('recruitment.candidate.evaluations', 'تقييم المقابلات / Scorecard')}
+                  {t('recruitment.candidate.evaluations')}
                 </AppText>
 
                 {application.averageEvaluationScore ? (
@@ -161,28 +161,33 @@ export function CandidateDetailModal({
                   </View>
                 ) : (
                   <AppText variant="caption" style={{ color: theme.colors.textMuted }}>
-                    {t('recruitment.candidate.noEvaluations', 'لم يتم تسجيل تقييمات بعد')}
+                    {t('recruitment.candidate.noEvaluations')}
                   </AppText>
                 )}
               </View>
 
               {/* Stage Timeline */}
-              {application.timeline && application.timeline.length > 0 && (
+              {application.statusHistory.length > 0 && (
                 <View style={[styles.section, { backgroundColor: theme.colors.surfaceMuted, borderColor: theme.colors.border }]}>
                   <AppText variant="label" weight="800" style={{ color: theme.colors.primary, marginBottom: 8 }}>
-                    {t('recruitment.candidate.statusTimeline', 'سجل المراحل / Timeline')}
+                    {t('recruitment.candidate.statusTimeline')}
                   </AppText>
 
-                  {application.timeline.map((item, idx) => (
-                    <View key={idx} style={styles.timelineItem}>
+                  {application.statusHistory.map((item) => (
+                    <View key={item.id} style={styles.timelineItem}>
                       <View style={[styles.timelineDot, { backgroundColor: theme.colors.primary }]} />
                       <View style={styles.timelineContent}>
                         <AppText variant="caption" weight="700">
-                          {ApplicationStatus[item.fromStatus]} → {ApplicationStatus[item.toStatus]}
+                          {item.fromStatus === null
+                            ? t('recruitment.candidate.applicationCreated')
+                            : t(`recruitment.applicationStatuses.${ApplicationStatus[item.fromStatus]}`)}
+                          {' → '}
+                          {t(`recruitment.applicationStatuses.${ApplicationStatus[item.toStatus]}`)}
                         </AppText>
                         <AppText variant="caption" style={{ color: theme.colors.textMuted }}>
                           {new Date(item.changedOn).toLocaleString(i18n.language)}
                         </AppText>
+                        {item.reason ? <AppText variant="caption" color="muted">{item.reason}</AppText> : null}
                       </View>
                     </View>
                   ))}
@@ -193,7 +198,7 @@ export function CandidateDetailModal({
             {/* Footer Action: One-Click Hire Candidate */}
             <View style={styles.footer}>
               <AppButton variant="outline" onPress={onClose}>
-                {t('common.close', 'إغلاق / Close')}
+                {t('common.close')}
               </AppButton>
 
               {application.status === ApplicationStatus.OfferAccepted && perms.canHire && (
@@ -202,7 +207,7 @@ export function CandidateDetailModal({
                   icon="checkmark-circle-outline"
                   onPress={() => setConfirmHireVisible(true)}
                 >
-                  {t('recruitment.actions.hireCandidate', 'تعيين كموظف / Hire Candidate')}
+                  {t('recruitment.actions.hireCandidate')}
                 </AppButton>
               )}
               {application.status !== ApplicationStatus.OfferAccepted && application.status !== ApplicationStatus.Hired && perms.canHire ? <AppText variant="caption" color="muted">{t('recruitment.candidate.acceptedOfferRequired')}</AppText> : null}
@@ -214,12 +219,11 @@ export function CandidateDetailModal({
       {/* Confirmation Dialog for Hiring */}
       <ConfirmationDialog
         visible={confirmHireVisible}
-        title={t('recruitment.candidate.confirmHireTitle', 'تأكيد التعيين')}
+        title={t('recruitment.candidate.confirmHireTitle')}
         description={t(
-          'recruitment.candidate.confirmHire',
-          'هل أنت متأكد من تعيين هذا المرشح كموظف رسمي في المنشأة؟'
+          'recruitment.candidate.confirmHire'
         )}
-        confirmLabel={t('recruitment.actions.hireCandidate', 'تعيين الآن')}
+        confirmLabel={t('recruitment.actions.hireCandidate')}
         loading={hireMutation.isPending}
         tone="default"
         onConfirm={handleConfirmHire}

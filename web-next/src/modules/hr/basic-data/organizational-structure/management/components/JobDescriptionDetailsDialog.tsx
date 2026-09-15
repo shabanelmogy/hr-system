@@ -160,7 +160,7 @@ export default function JobDescriptionDetailsDialog({
             >
               {t("organizationalStructure.jobDescriptionDetails.print")}
             </Button>
-            <IconButton onClick={onClose} size="small" aria-label="close">
+            <IconButton onClick={onClose} size="small" aria-label={t("common.close")}>
               <CloseRoundedIcon />
             </IconButton>
           </Box>

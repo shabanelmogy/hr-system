@@ -73,7 +73,7 @@ export function GlobalSearchBar({
               fontSize: "0.75rem",
             }}
           >
-            Ctrl K
+            {t("common.ctrlK")}
           </Box>
         )}
       </Button>

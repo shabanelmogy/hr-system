@@ -6,28 +6,28 @@
     {
       "id": "api-application-feature",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Countries",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries",
       "minimumFiles": 30,
       "purpose": "CQRS contracts, handlers, validators, errors, abstractions, and mapping"
     },
     {
       "id": "api-infrastructure-feature",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/GeographicalInformation/Countries",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries",
       "minimumFiles": 7,
       "purpose": "Persistence stores, configuration, audit, scheduling, and background delivery"
     },
     {
       "id": "api-report-template-application",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/Analytics/ReportTemplates",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates",
       "minimumFiles": 20,
       "purpose": "Reusable tenant-scoped report-template CQRS, contracts, permissions, validation, revisions, and lifecycle"
     },
     {
       "id": "web-feature",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries",
       "minimumFiles": 45,
       "purpose": "Complete browser feature boundary including views, forms, import, reports, hooks, services, and tests"
     },
@@ -75,13 +75,13 @@
     {
       "id": "egypt-reference-seed",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/Seeds/EgyptGeographicSeed.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Seeds/EgyptGeographicSeed.cs",
       "purpose": "Additive idempotent Egypt and 27-governorate deployment baseline"
     },
     {
       "id": "egypt-reference-seed-tests",
       "layer": "api-test",
-      "path": "api/ErpSystem.Tests/EgyptGeographicSeedTests.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/EgyptGeographicSeedTests.cs",
       "purpose": "Egypt baseline completeness, idempotency, and administrator-data preservation coverage"
     },
     {
@@ -105,55 +105,55 @@
     {
       "id": "api-controller",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs",
       "purpose": "Versioned HTTP surface and permission boundary"
     },
     {
       "id": "api-entity",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/GeographicalInformation/Countries/Entities/Country.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Domain/GeographicalInformation/Countries/Entities/Country.cs",
       "purpose": "Domain state and relationships"
     },
     {
       "id": "api-report-template-controller",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/Analytics/ReportTemplates/V1/ReportTemplatesController.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/ReportTemplates/V1/ReportTemplatesController.cs",
       "purpose": "Published/management routes, explicit permissions, lifecycle, revisions, and tenant-safe HTTP boundary"
     },
     {
       "id": "api-report-template-entity",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/Analytics/ReportTemplates/Entities/ReportTemplate.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/ReportTemplates/Entities/ReportTemplate.cs",
       "purpose": "Current tenant-owned report definition, publication state, content hash, and revision number"
     },
     {
       "id": "api-report-template-revision",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/Analytics/ReportTemplates/Entities/ReportTemplateRevision.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/ReportTemplates/Entities/ReportTemplateRevision.cs",
       "purpose": "Immutable tenant-owned report-template snapshots"
     },
     {
       "id": "api-report-template-store",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/ReportTemplates/Persistence/ReportTemplateStore.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/ReportTemplates/Persistence/ReportTemplateStore.cs",
       "purpose": "Tenant-filtered published/management projections and optimistic-concurrency persistence"
     },
     {
       "id": "api-report-template-safety",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/Analytics/ReportTemplates/Validation/ReportTemplateDefinitionSafety.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Validation/ReportTemplateDefinitionSafety.cs",
       "purpose": "RDLX size/structure/connection validation and approved Countries API descriptor"
     },
     {
       "id": "api-country-report-data",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Countries/Queries/GetCountryReportData/GetCountryReportDataQuery.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryReportData/GetCountryReportDataQuery.cs",
       "purpose": "Approved stable Countries JSON data query for browser report rendering"
     },
     {
       "id": "api-entity-configuration",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryConfiguration.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryConfiguration.cs",
       "purpose": "Database shape, lengths, indexes, and relationship mapping"
     },
     {
@@ -165,25 +165,25 @@
     {
       "id": "api-unit-of-work",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Abstractions/Persistence/IUnitOfWork.cs",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Abstractions/Persistence/IUnitOfWork.cs",
       "purpose": "Application-owned atomic operation and commit contract"
     },
     {
       "id": "api-geographical-lifecycle-locks",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/GeographicalInformation/GeographicalLifecycleLocks.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/GeographicalLifecycleLocks.cs",
       "purpose": "Shared Country and State dependency lock identities"
     },
     {
       "id": "api-state-lifecycle-participant",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/GeographicalInformation/States/Commands/StateCommands.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/States/Commands/StateCommands.cs",
       "purpose": "State writes that share Country lifecycle resources"
     },
     {
       "id": "api-district-lifecycle-participant",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/GeographicalInformation/Districts/Services/DistrictService.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Districts/Commands/DistrictCommands.cs",
       "purpose": "District writes that share State lifecycle resources"
     },
     {
@@ -201,13 +201,13 @@
     {
       "id": "api-mapping-scan",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/MapsetrService.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Mapping/MapsterService.cs",
       "purpose": "Mapster configuration discovery"
     },
     {
       "id": "api-permissions",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Common/Consts/Permissions.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Contracts/Authorization/ReferenceDataPermissions.cs",
       "purpose": "Countries permission constants"
     },
     {
@@ -225,31 +225,31 @@
     {
       "id": "api-handler-tests",
       "layer": "api-test",
-      "path": "api/ErpSystem.Tests/CountryCqrsHandlerTests.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/CountryCqrsHandlerTests.cs",
       "purpose": "CQRS behavior coverage"
     },
     {
       "id": "api-architecture-tests",
       "layer": "api-test",
-      "path": "api/ErpSystem.Tests/CountryCqrsArchitectureTests.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/CountryCqrsArchitectureTests.cs",
       "purpose": "Feature boundary and architecture coverage"
     },
     {
       "id": "api-controller-tests",
       "layer": "api-test",
-      "path": "api/ErpSystem.Tests/CountriesControllerCqrsTests.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/CountriesControllerCqrsTests.cs",
       "purpose": "HTTP-to-CQRS surface coverage"
     },
     {
       "id": "api-report-template-tests",
       "layer": "api-test",
-      "path": "api/ErpSystem.Tests/ReportTemplateFeatureTests.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ReportTemplateFeatureTests.cs",
       "purpose": "Definition safety, tenant isolation, revision loading, and append-only coverage"
     },
     {
       "id": "api-report-template-controller-tests",
       "layer": "api-test",
-      "path": "api/ErpSystem.Tests/ReportTemplatesControllerContractTests.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ReportTemplatesControllerContractTests.cs",
       "purpose": "Published/management routes, permissions, lifecycle RowVersion, and thin CQRS controller coverage"
     },
     {
@@ -267,97 +267,97 @@
     {
       "id": "web-public-api",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/index.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/index.ts",
       "purpose": "Feature boundary"
     },
     {
       "id": "web-page-controller",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/pages/CountriesPage.tsx",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/pages/CountriesPage.tsx",
       "purpose": "Feature orchestration"
     },
     {
       "id": "web-page-controller-tests",
       "layer": "web-next-test",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/pages/CountriesPage.test.tsx",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/pages/CountriesPage.test.tsx",
       "purpose": "Controller/view/loading/form/bulk wiring coverage"
     },
     {
       "id": "web-list-logic",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/hooks/useCountryGridLogic.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryGridLogic.ts",
       "purpose": "Single server-list state owner"
     },
     {
       "id": "web-query-hooks",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/hooks/useCountryQueries.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryQueries.ts",
       "purpose": "Query keys, reads, mutations, and invalidation"
     },
     {
       "id": "web-query-hook-tests",
       "layer": "web-next-test",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/hooks/useCountryQueries.test.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryQueries.test.ts",
       "purpose": "Mutation invalidation order coverage"
     },
     {
       "id": "web-service",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/services/countryService.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/services/countryService.ts",
       "purpose": "HTTP serialization"
     },
     {
       "id": "web-service-tests",
       "layer": "web-next-test",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/services/countryService.test.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/services/countryService.test.ts",
       "purpose": "Request normalization and exact bulk create/archive envelopes"
     },
     {
       "id": "web-types",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/types/Country.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/types/Country.ts",
       "purpose": "Browser-side shared contract types"
     },
     {
       "id": "web-query-mapper",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/utils/countryPageQuery.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPageQuery.ts",
       "purpose": "Paging, search, filter, and sort mapping"
     },
     {
       "id": "web-permission-matrix",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/utils/countryPermissions.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPermissions.ts",
       "purpose": "Feature action eligibility"
     },
     {
       "id": "web-multi-view",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/components/CountriesMultiView.tsx",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesMultiView.tsx",
       "purpose": "Grid, cards, chart, report, and import composition"
     },
     {
       "id": "web-import-view",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/components/import-data/ImportCountries.tsx",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/ImportCountries.tsx",
       "purpose": "Permission-aware Countries XLSX Import composition and uncertainty reconciliation"
     },
     {
       "id": "web-import-controller",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/components/import-data/useCountryImport.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/useCountryImport.ts",
       "purpose": "Countries preview, validation, explicit row states, atomic submit, and invalidation"
     },
     {
       "id": "web-import-profile",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/components/import-data/countryImport.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/countryImport.ts",
       "purpose": "Canonical headers, mapping, limits, template, and field-scoped duplicate rules"
     },
     {
       "id": "web-import-profile-tests",
       "layer": "web-next-test",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/components/import-data/countryImport.test.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/countryImport.test.ts",
       "purpose": "Countries field-scoped duplicate preflight coverage"
     },
     {
@@ -379,57 +379,21 @@
       "purpose": "Reusable accessible file policy, template, action, lock, and preview composition"
     },
     {
-      "id": "web-active-report-designer",
-      "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/reports/components/CountryActiveReportsDesigner.tsx",
-      "purpose": "Countries composition of the reusable server-managed ActiveReportsJS designer"
-    },
-    {
-      "id": "web-server-report-designer",
-      "layer": "web-next-shared",
-      "path": "web-next/src/shared/reporting/components/ServerReportDesignerClient.tsx",
-      "purpose": "Reusable management catalog, Designer callbacks, Save/Save As, publish, dirty guards, and RowVersion feedback"
-    },
-    {
-      "id": "web-server-report-viewer",
-      "layer": "web-next-shared",
-      "path": "web-next/src/shared/reporting/components/ServerReportViewerClient.tsx",
-      "purpose": "Reusable published tenant-template selector and ActiveReportsJS viewer"
-    },
-    {
-      "id": "web-report-template-service",
-      "layer": "web-next-shared",
-      "path": "web-next/src/shared/reporting/services/reportTemplateService.ts",
-      "purpose": "Published and management report-template HTTP repository"
-    },
-    {
-      "id": "web-report-template-service-tests",
-      "layer": "web-next-test",
-      "path": "web-next/src/shared/reporting/services/reportTemplateService.test.ts",
-      "purpose": "Tenant-free management routes, approved descriptor query, and RowVersion request coverage"
-    },
-    {
-      "id": "web-active-report-template",
-      "layer": "web-next",
-      "path": "web-next/public/reports/countries/countries-directory.rdlx-json",
-      "purpose": "Editable Countries ActiveReportsJS starter bound only to the approved relative Countries API source"
-    },
-    {
       "id": "web-grid",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/components/grid-view/CountriesDataGrid.tsx",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/CountriesDataGrid.tsx",
       "purpose": "Server-driven grid and toolbar integration"
     },
     {
       "id": "web-grid-columns",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/components/grid-view/Columns.tsx",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/Columns.tsx",
       "purpose": "API-aligned sortable column contract"
     },
     {
       "id": "web-grid-column-tests",
       "layer": "web-next-test",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/components/grid-view/Columns.test.tsx",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/Columns.test.tsx",
       "purpose": "Supported and unsupported sort affordance coverage"
     },
     {
@@ -495,8 +459,8 @@
     {
       "id": "web-navigation",
       "layer": "web-next-config",
-      "path": "web-next/src/modules/hr/basic-data/navigation/basicDataNavigation.tsx",
-      "purpose": "Basic-data navigation entry"
+      "path": "web-next/src/shell/components/sidebar/configs/superAdminConfig.tsx",
+      "purpose": "Super-admin global geography navigation entry"
     },
     {
       "id": "web-realtime",
@@ -568,7 +532,7 @@
       "id": "mobile-crystal-report-api",
       "layer": "mobile-react-shared",
       "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-remote-data-source.ts",
-      "purpose": "Authenticated HR API catalog and binary render transport"
+      "purpose": "Authenticated ERP Reporting API catalog and binary render transport"
     },
     {
       "id": "mobile-crystal-report-schemas",
@@ -717,25 +681,25 @@
     {
       "id": "geographical-name-validation",
       "layer": "shared-validation",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Validation/GeographicalNameRules.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Validation/GeographicalNameRules.cs",
       "purpose": "Shared printable-Unicode name invariant"
     },
     {
       "id": "geographical-name-validation-test",
       "layer": "api-test",
-      "path": "api/ErpSystem.Tests/GeographicalNameRulesTests.cs",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/GeographicalNameRulesTests.cs",
       "purpose": "Printable-Unicode names with spaces and digits, and control-character rejection"
     },
     {
       "id": "web-geographical-name-validation",
       "layer": "web-next-shared",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/validation/nameValidation.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/validation/nameValidation.ts",
       "purpose": "Browser name validation aligned with API"
     },
     {
       "id": "web-geographical-name-validation-test",
       "layer": "web-next-test",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/validation/nameValidation.test.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/validation/nameValidation.test.ts",
       "purpose": "Browser printable-Unicode name validation coverage"
     },
     {
@@ -765,13 +729,13 @@
     {
       "id": "web-form",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/components/CountryForm.tsx",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryForm.tsx",
       "purpose": "Country data-entry form and development mock-data action"
     },
     {
       "id": "web-mock-data",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/utils/countryMockData.ts",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryMockData.ts",
       "purpose": "Domain-valid development-only Country samples"
     },
     {

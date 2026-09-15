@@ -14,7 +14,7 @@
 | Concern | Decision |
 | --- | --- |
 | Ownership | Tenant-owned commercial grants; company remains data scope only |
-| Persistence | `hr.TenantModuleEntitlements` and `hr.TenantSubmoduleEntitlements`; lower-case codes, composite keys, cascading foreign keys |
+| Persistence | `platform.TenantModuleEntitlements` and `platform.TenantSubmoduleEntitlements`; lower-case codes, composite keys, cascading foreign keys |
 | Compatibility | Create omission uses catalog defaults; update omission preserves stored grants; explicit lists replace prior grants, including empty lists |
 | Catalog | Installed `IModule.Definition`; HR code `hr`, Accounting code `acc`; Accounting has no business submodules yet |
 | Authorization | Existing RBAC claims plus database revalidation plus tenant grant; unknown permissions fail closed; super-admin/global geography stay platform-managed |
@@ -32,7 +32,7 @@ database-backed role permissions. Tenant create/update accepts
 `entitlements: [{ moduleCode, submoduleCodes }]`.
 
 Selection is immutable per module: enabling Accounting appends or restores the
-`acc` entitlement and never removes the `hr` entry or its selected submodules.
+an Accounting entitlement and never removes another module's grant or its selected submodules.
 
 ## Verification request
 

@@ -28,23 +28,25 @@ export const exportGridToExcel = (apiRef: GridApiRef, options: ExportOptions = {
   if (!apiRef?.current) return false;
 
   try {
+    const api = apiRef.current;
+    if (!api) return false;
     // Get rows based on selection mode
     let rows: GridRow[];
     if (selectedOnly) {
-      const selectedRowIds = apiRef.current.getSelectedRows();
+      const selectedRowIds = api.getSelectedRows();
       if (selectedRowIds.size === 0) return false;
 
       rows = Array.from(selectedRowIds.keys())
-        .map((id) => apiRef.current.getRow(id))
+        .map((id) => api.getRow(id))
       .filter((row): row is GridRow => row !== null);
     } else {
-      rows = Array.from(apiRef.current.getRowModels().values());
+      rows = Array.from(api.getRowModels().values());
     }
 
     if (!rows.length) return false;
 
     // Get columns for proper field mapping
-    const columns = apiRef.current
+    const columns = api
       .getAllColumns()
       .filter(
         (col) =>

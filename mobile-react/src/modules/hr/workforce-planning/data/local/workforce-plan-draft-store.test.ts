@@ -45,6 +45,14 @@ const request = {
   lines: [],
   rowVersion: 'base-rv',
 } as never;
+const editingSnapshot = {
+  fiscalYears: [{ id: 2026, code: 'FY26', nameEn: '2026', nameAr: '٢٠٢٦' }],
+  positions: [{ id: 9, code: 'DEV', nameEn: 'Developer', nameAr: 'مطور' }],
+  branches: [{ id: 3, code: 'HQ', nameEn: 'Head Office', nameAr: 'المقر الرئيسي' }],
+  fiscalPeriodsByYear: {
+    '2026': [{ id: 1, code: 'P01', nameEn: 'January', nameAr: 'يناير' }],
+  },
+};
 
 describe('WorkforcePlanDraftStore', () => {
   beforeEach(() => {
@@ -62,7 +70,7 @@ describe('WorkforcePlanDraftStore', () => {
   it('persists offline-draft locally without creating an outbox command', async () => {
     const store = new WorkforcePlanDraftStore({} as SQLiteDatabase);
 
-    const state = await store.saveLocalDraft(scope, baseDetail, request);
+    const state = await store.saveLocalDraft(scope, baseDetail, request, editingSnapshot);
 
     expect(state.status).toBeNull();
     expect(state.draft.commandId).toBeNull();
@@ -70,9 +78,21 @@ describe('WorkforcePlanDraftStore', () => {
       scope,
       key: '41',
       serverRowVersion: 'base-rv',
-      value: expect.objectContaining({ commandId: null, request }),
+      value: expect.objectContaining({ commandId: null, request, editingSnapshot }),
     }));
     expect(mockEnqueue).not.toHaveBeenCalled();
+  });
+
+  it('round-trips the editing snapshot for a cold offline reopen', async () => {
+    const store = new WorkforcePlanDraftStore({} as SQLiteDatabase);
+    await store.saveLocalDraft(scope, baseDetail, request, editingSnapshot);
+
+    const persisted = mockRecordPut.mock.calls[0][0].value;
+    mockRecordGet.mockResolvedValue({ value: persisted });
+
+    await expect(store.get(scope, 41)).resolves.toEqual(expect.objectContaining({
+      draft: expect.objectContaining({ editingSnapshot }),
+    }));
   });
 
   it('promotes a local-only draft to a row-versioned outbox command when command replay is enabled', async () => {

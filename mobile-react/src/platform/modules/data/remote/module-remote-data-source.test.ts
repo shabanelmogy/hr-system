@@ -14,13 +14,15 @@ const modules = [{
 }];
 
 describe('module remote data source', () => {
-  it('loads and validates accessible and installed module catalogs', async () => {
+  it('loads and validates accessible, installed, and tenant entitlement catalogs', async () => {
     (apiService.get as jest.Mock).mockResolvedValue(modules);
 
     await expect(moduleRemoteDataSource.getAccessible()).resolves.toEqual(modules);
     expect(apiService.get).toHaveBeenNthCalledWith(1, 'modules/accessible');
     await expect(moduleRemoteDataSource.getInstalled()).resolves.toEqual(modules);
     expect(apiService.get).toHaveBeenNthCalledWith(2, 'modules/installed');
+    await expect(moduleRemoteDataSource.getTenantEntitlements()).resolves.toEqual(modules);
+    expect(apiService.get).toHaveBeenNthCalledWith(3, 'modules/tenant-entitlements');
   });
 
   it('rejects malformed catalog rows at the transport boundary', async () => {

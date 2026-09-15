@@ -1,12 +1,15 @@
 # Clean Architecture and CQRS Guide
 
-This guide is authoritative for API architecture. For the complete backend-to-web
-workflow, also follow `../project/CORE_FEATURE_CQRS_WEB_GUIDE.md`.
+This is the technical pattern reference for Clean Architecture and CQRS in the API.
+For every new feature or business change, start with
+`API_FEATURE_DEVELOPMENT_WORKFLOW.md`; it defines the mandatory relationship review,
+implementation order, and Definition of Done. `ERP_ARCHITECTURE_CONSTITUTION.md`
+remains the architecture authority.
 
 ## Architecture
 
 The API uses a Clean Architecture modular monolith. The current runtime modules
-are HR, Accounting, Platform, and Contacts. Each module follows the same
+are HR, Accounting, Platform, Contacts, ReferenceData, Reporting, Inventory, CRM, and PointOfSale. Each module follows the same
 six-project shape, while shared technical primitives live in neutral
 BuildingBlocks:
 
@@ -16,6 +19,11 @@ ErpSystem.Api (generic host)
     -> ErpSystem.Modules.Accounting (bootstrap)
     -> ErpSystem.Modules.Platform (bootstrap; technical/internal)
     -> ErpSystem.Modules.Contacts (bootstrap)
+    -> ErpSystem.Modules.ReferenceData (bootstrap)
+    -> ErpSystem.Modules.Reporting (bootstrap)
+    -> ErpSystem.Modules.Inventory (bootstrap)
+    -> ErpSystem.Modules.CRM (bootstrap)
+    -> ErpSystem.Modules.PointOfSale (bootstrap)
 
 Module bootstrap
     -> own Application + Infrastructure + Presentation
@@ -38,15 +46,20 @@ The physical migration from the original web project is complete:
 
 | Project | Owns |
 | --- | --- |
-| `ErpSystem.Modules.HR.Domain` | Entities, tenant/company scope markers, and domain state |
+| `ErpSystem.Modules.HR.Domain` | HR workforce, recruitment, attendance, and organizational entities |
 | `ErpSystem.Modules.HR.Contracts` | Cross-module integration contracts and marker (not every HTTP DTO) |
-| `ErpSystem.Modules.HR.Application` | HTTP/application DTOs, validators, results, service ports, and MediatR requests |
-| `ErpSystem.Modules.HR.Infrastructure` | EF Core, migrations, Identity, service implementations, Hangfire, SignalR, files, email, cache, localization, and external integrations |
+| `ErpSystem.Modules.HR.Application` | Application DTOs, validators, results, intent-specific ports, and MediatR requests |
+| `ErpSystem.Modules.HR.Infrastructure` | HR EF Core context, migrations, persistence/provider adapters, jobs, and HR integrations |
 | `ErpSystem.Modules.HR.Presentation` | Controllers, HTTP attributes, routes, result translation, and MVC application part |
-| `ErpSystem.Modules.HR` | HR composition root plus explicit legacy adapters for physical Identity/HR storage that have not moved |
-| `ErpSystem.Modules.Platform.*` | Reusable platform contracts/policy/orchestration, authorization/token infrastructure, technical module catalog, and platform-owned persistence/read models |
+| `ErpSystem.Modules.HR` | HR composition root and module lifecycle |
+| `ErpSystem.Modules.Platform.*` | Identity, authentication, tenant/company/membership, entitlements, authorization/token infrastructure, technical module catalog, and platform-owned persistence/read models |
 | `ErpSystem.Modules.Contacts.*` | Contacts bounded context plus its durable integration-event/outbox boundary |
 | `ErpSystem.Modules.Accounting.*` | Accounting bounded context plus inbox/outbox integration foundation |
+| `ErpSystem.Modules.ReferenceData.*` | Global and company-scoped geographic reference data and its schema |
+| `ErpSystem.Modules.Reporting.*` | Report templates, Crystal metadata, approved data sources, and reporting schema |
+| `ErpSystem.Modules.Inventory.*` | Inventory catalog and stock bounded-context foundation |
+| `ErpSystem.Modules.CRM.*` | CRM bounded-context foundation |
+| `ErpSystem.Modules.PointOfSale.*` | POS bounded-context foundation |
 | `ErpSystem.BuildingBlocks.*` | Domain-neutral application pipeline, Authorization, execution Context, durable-message contracts, and module/runtime composition primitives |
 | `ErpSystem.Api` | Generic host, operational middleware, health/observability, and explicit module/runtime composition only |
 
@@ -59,13 +72,15 @@ ErpSystem.Modules.HR.Infrastructure.*
 ErpSystem.Modules.HR.Presentation.*
 ```
 
-Do not add entities, validators, jobs, persistence configurations, or service
-implementations to the API host. A controller may reference Application ports and
-contracts. Infrastructure implements those ports.
+Do not add entities, validators, jobs, persistence configurations, or provider
+implementations to the API host. Presentation references its Application requests and
+contracts; business controllers dispatch through `ISender`. Infrastructure implements
+Application-owned ports.
 
 Keep feature code inside its owning module's Application, Infrastructure, and
 Presentation projects. Existing bounded contexts are HR, Accounting, Platform,
-and Contacts. Any later bounded context is created under
+Contacts, ReferenceData, Reporting, Inventory, CRM,
+and PointOfSale. Any later bounded context is created under
 `api/Modules/<ModuleName>` only after its ownership is approved, following
 `MODULAR_MONOLITH_ARCHITECTURE.md`; technical preparation does not imply a
 business-module plan.
@@ -99,15 +114,11 @@ Each module's Presentation project owns HTTP endpoints and keeps its feature tre
 shallow:
 
 ```text
-Modules/HR/ErpSystem.Modules.HR.Presentation/Features/
-  GeographicalInformation/
-    Countries/
+Modules/<Module>/ErpSystem.Modules.<Module>.Presentation/Features/
+  <Area>/
+    <Feature>/
       V1/
-        CountriesController.cs
-  Security/
-    Authentication/
-      V1/
-        AuthController.cs
+        <Feature>Controller.cs
 ```
 
 Do not recreate `Contracts`, `Entities`, `Services`, `Persistence`, `Jobs`, or an
@@ -124,10 +135,10 @@ version 13.
 CQRS in this project means separate command and query code paths. It does not mean
 event sourcing, separate databases, or distributed messaging.
 
-The MediatR foundation is active, but most existing production features were built
-with the older feature-service pattern. `Countries` is the first complete CQRS
-reference. The remaining geographical services are migration inputs, not templates
-for new core HR features.
+CQRS is the canonical business-use-case pattern across the current API foundation.
+Every new or changed business use case follows the same sender/handler/port flow.
+`Countries` remains a useful applied global-reference example, but examples do not
+override the owning module's business model or the mandatory existing-system review.
 
 ```text
 Features/
@@ -168,7 +179,7 @@ Do not run the same database rule independently in both the validator and handle
 - Apply pagination, filtering, sorting, tenant, and company scope in the query.
 - Do not modify state from a query handler.
 - A thin query handler may delegate to one feature-owned read-projection port. The
-  prohibition on one-line delegation applies to legacy CRUD workflow services, not
+  prohibition on one-line delegation applies to broad CRUD workflow facades, not
   to a query-specific store that owns filtering, projection, and paging.
 
 ## Controllers
@@ -177,18 +188,17 @@ Do not run the same database rule independently in both the validator and handle
 - Translate HTTP input into a command or query.
 - Send one request and translate its result into the HTTP response.
 - Keep authorization attributes, API versioning, and response metadata in the API.
-- Do not inject `ApplicationDbContext` or feature services into migrated controllers.
+- Do not inject a DbContext, business service, store, repository, or unit of work into business controllers.
 - Use `[Route(ApiRoutes.BaseRoute2)]` for the versioned REST resource shape. Put
   operations such as `bulk-archive` or `{id}/restore` in explicit action templates;
-  do not use the legacy `[action]` route shape for new CQRS resources.
+  do not use an `[action]` route shape for new CQRS resources.
 - Direct command binding is allowed when the JSON body and command are intentionally
   the same public contract. Otherwise bind a transport request and construct one
   command in the action.
 
-During an endpoint-by-endpoint migration, a legacy controller may temporarily inject
-both `ISender` and its feature service, but only unmigrated actions may use the
-service. New/fully migrated controllers, including `CountriesController`, inject
-`ISender` only.
+Business controllers use `ISender` as their business dependency. Any additional
+constructor dependency must be transport-only and satisfy the executable controller
+architecture gate; it must never become a second business execution path.
 
 ## Pipeline Behaviors
 
@@ -233,11 +243,62 @@ remain HTTP 500 responses with a trace identifier.
 
 ## Mapping
 
-Use Mapster for request, entity, response, and query projection mapping. Convention
-mapping is the default; configure only members that genuinely differ or require a
-transform. Do not add empty mapping files, same-name rules, or mapper wrappers.
-Normalization and preservation of identity/audit/navigation fields may use explicit
-rules. Business validation and authorization never belong in mapping configuration.
+Use Mapster when it makes request/entity/response mapping or database projection
+shorter and clearer. Do not add a Mapster dependency, config file, or wrapper only
+for consistency when a small manual mapper or explicit projection is clearer.
+When Mapster is used, convention is the default: configure only members that cannot
+be inferred or that require a real transform, computation, filter, or ordering rule.
+Do not add empty mapping files, same-name rules, or mapper wrappers. Business
+validation and authorization never belong in mapping configuration.
+
+Mapster recursively flattens navigation/member names. These require no explicit
+`.Map(...)` rule:
+
+```text
+BranchNameEn        <- Branch.NameEn
+AttendanceAgentName <- AttendanceAgent.Name
+SupervisorName      <- Supervisor.Name
+```
+
+These do require an explicit rule because the destination name does not describe the
+source path, or because the value is computed:
+
+```text
+DeviceName       <- AttendanceDevice.Name
+OpeningNumber    <- JobOpening.OpeningNumber
+PositionTitleEn  <- JobOpening.Position.JobTitle.TitleEn
+RemainingPositions <- RequestedPositions - HiredPositions
+```
+
+Place mappings according to ownership. A mapping between Domain entities and
+Application commands/DTOs belongs in the module's **Application** project. An
+Infrastructure mapping configuration is justified only when an Infrastructure-owned
+persistence/provider model is one side of the mapping. Do not move ordinary
+entity-to-response mappings into Infrastructure merely because EF Core executes the
+projection there.
+
+For ordinary same-module relational reads where Mapster reduces code, model the real
+relationship in the Domain entity and EF configuration with navigation properties,
+then project the entity graph directly with `ProjectToType<TResponse>(mappingConfig)`.
+Do not introduce an intermediate `*ReadProjection` type or hand-written join merely
+to make related fields visible to Mapster. EF Core translates navigation access used
+by the projection into the required SQL joins; `Include(...)` is not required for a
+pure projection.
+
+Example preferred path:
+
+```text
+JobPosting -> JobOpening -> Position -> JobTitle
+    -> ProjectToType<JobPostingDto>()
+```
+
+Use explicit `Select(...)`, joins, or a dedicated projection/read model only when the
+query is genuinely not an entity-graph projection, for example aggregates, grouped
+analytics, unions, reporting shapes, cross-module read models, provider-specific SQL,
+or relationships that are intentionally not part of the domain model. Do not add
+navigation properties for accidental/report-only correlations just to satisfy a
+mapper. The rule is: **natural relationship = navigation + Mapster projection;
+synthetic read model = explicit projection**.
 
 ## Notifications
 
@@ -288,36 +349,28 @@ verify it in the handler, and translate `DbUpdateConcurrencyException` to a stab
 conflict response. Reference-data features may omit it only after an explicit risk
 decision.
 
-## Migration Rule
+## Change Rule
 
-Migrate one feature or use case at a time. Existing services and controllers can
-remain operational until their replacement is tested. Remove legacy code only
-after the migrated endpoint preserves its current contract and passes integration
-tests.
+Before changing a feature, complete the Existing-System Relationship Review in
+`API_FEATURE_DEVELOPMENT_WORKFLOW.md`. Extend or correct the current owner when the
+business requirement belongs there; do not introduce a parallel service or
+compatibility path to avoid modifying existing code.
 
-The existing service-based features are now isolated behind Application-owned
-interfaces in Infrastructure. New or substantially changed business workflows
-should be implemented as MediatR commands and queries instead of adding methods to
-those legacy services.
+Preserve public wire compatibility when it remains correct. If the business change
+requires an incompatible contract, use explicit versioning/migration and update all
+in-repository consumers in the same delivery. When a replacement is complete,
+remove the obsolete implementation so one canonical path remains.
 
-Do not create a one-line handler that delegates to the legacy service merely to make
-the controller use `ISender`. A migrated handler owns the use case and depends on
-small Application-owned persistence or scheduling ports. Keep the legacy endpoint
-on its service until that real migration can be completed.
-
-Preserve an existing HTTP contract while migrating unless an early-stage redesign is
-explicitly chosen and every in-repository consumer is updated in the same change.
-Add contract and handler tests before removing its service method. New core list
-endpoints start with server-side paging, filtering, and a feature-owned sort
-allowlist. `Countries` demonstrates this split with a paged management collection
-and a separate lightweight lookup endpoint.
+New collection endpoints use server-side paging/filtering and a feature-owned sort
+allowlist. Separate lightweight lookup contracts from management/detail contracts
+when their usage and scale differ.
 
 Create and inspect EF migrations from the `api` solution directory, which owns the
-local `dotnet-ef` tool manifest:
+local `dotnet-ef` tool manifest. Substitute the owning module project and DbContext:
 
 ```powershell
-dotnet ef migrations add MigrationName `
-  --project Modules\HR\ErpSystem.Modules.HR.Infrastructure\ErpSystem.Modules.HR.Infrastructure.csproj `
+dotnet ef migrations add <MigrationName> `
+  --project Modules\<Module>\ErpSystem.Modules.<Module>.Infrastructure\ErpSystem.Modules.<Module>.Infrastructure.csproj `
   --startup-project ErpSystem.Api\ErpSystem.Api.csproj `
-  --context ErpSystem.Modules.HR.Infrastructure.Persistence.ApplicationDbContext
+  --context <ModuleDbContext>
 ```

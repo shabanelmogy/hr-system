@@ -1,8 +1,7 @@
-using ErpSystem.Modules.HR.Domain.Common.Entities;
-using ErpSystem.Modules.HR.Domain.Common.Exceptions;
-using ErpSystem.Modules.HR.Domain.GeographicalInformation.Addresses.Entities;
+using ErpSystem.BuildingBlocks.Domain.Entities;
+using ErpSystem.BuildingBlocks.Domain.Exceptions;
 using ErpSystem.Modules.HR.Domain.Employees.Entities;
-using static ErpSystem.Modules.HR.Domain.Common.Guards.DomainGuard;
+using static ErpSystem.BuildingBlocks.Domain.Guards.DomainGuard;
 
 namespace ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities;
 
@@ -29,7 +28,6 @@ public class Branch : CompanyAuditableEntity
     public string TimeZoneId { get; private set; } = "UTC";
     public DateOnly OpenedOn { get; private set; }
     public DateOnly? ClosedOn { get; private set; }
-    public Company Company { get; private set; } = null!;
     public string? Email { get; private set; }
     public string? Phone { get; private set; }
     public int? ManagerId { get; private set; }
@@ -39,7 +37,6 @@ public class Branch : CompanyAuditableEntity
 
     public ICollection<Department> Departments { get; private set; } = [];
     public ICollection<Employee> Employees { get; private set; } = [];
-    public ICollection<BranchAddress> Addresses { get; private set; } = [];
 
     public void UpdateIdentity(
         string branchCode,

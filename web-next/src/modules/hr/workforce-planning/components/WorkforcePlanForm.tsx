@@ -1,6 +1,6 @@
 "use client";
 
-import { useFiscalYear, useFiscalYearLookup } from "@/modules/hr/finance";
+import { useFiscalYear, useFiscalYearLookup } from "@/modules/accounting";
 import { useOrganizationalLookup } from "@/modules/hr/basic-data/organizational-structure/management";
 import { MyForm, MySelect, MyTextField, toFormErrorMessages } from "@/shared/components/forms";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
@@ -132,8 +132,7 @@ export default function WorkforcePlanForm({ open, mode, item, revisions = [], lo
   const fiscalYears = useFiscalYearLookup();
   const positions = useOrganizationalLookup("positions", undefined, open);
   const branches = useOrganizationalLookup("branches", undefined, open);
-  const fallbackFiscalYearId = fiscalYears.data?.find(year => year.status === 2)?.id ?? fiscalYears.data?.find(year => year.status === 1)?.id ?? 0;
-  const fiscalYear = useFiscalYear(selectedFiscalYearId || fallbackFiscalYearId, open && Boolean(selectedFiscalYearId || fallbackFiscalYearId));
+  const fiscalYear = useFiscalYear(selectedFiscalYearId, open && selectedFiscalYearId > 0);
   const isArabic = i18n.language.startsWith("ar");
   const optionLabel = useCallback((value: { code: string; nameAr: string; nameEn: string }) => `${value.code} Ã¢â‚¬â€ ${isArabic ? value.nameAr : value.nameEn}`, [isArabic]);
   const fiscalYearOptions = useMemo<LookupOption[]>(() => (fiscalYears.data ?? []).map(value => ({ id: value.id, displayName: optionLabel(value) })), [fiscalYears.data, optionLabel]);
@@ -164,7 +163,7 @@ export default function WorkforcePlanForm({ open, mode, item, revisions = [], lo
     <MyTextField fieldName={name} labelKey={label} type={type} control={form.control} errors={form.formState.errors} readOnly={readOnly || locked || Boolean(detailError)} loading={loading} />
   );
   const generateMockData = () => {
-    const fiscalId = selectedFiscalYearId || fallbackFiscalYearId;
+    const fiscalId = selectedFiscalYearId;
     const periods = fiscalYear.data?.periods ?? [];
     const firstPosition = positions.data?.[0];
     if (!fiscalId || !firstPosition || periods.length === 0) return;
@@ -215,7 +214,7 @@ export default function WorkforcePlanForm({ open, mode, item, revisions = [], lo
     focusFieldName="planCode"
     autoFocusFirst
     errors={errors}
-    mockDataAction={process.env.NODE_ENV !== "production" && !readOnly ? { onGenerate: generateMockData, disabled: loading || !fallbackFiscalYearId || !positions.data?.length || !fiscalYear.data?.periods.length } : undefined}
+    mockDataAction={process.env.NODE_ENV !== "production" && !readOnly ? { onGenerate: generateMockData, disabled: loading || !selectedFiscalYearId || !positions.data?.length || !fiscalYear.data?.periods.length } : undefined}
   >
     {detailError ? <Alert severity="error" action={onRetryDetail ? <Button color="inherit" onClick={onRetryDetail}>{t("common.retry")}</Button> : undefined}>{detailError}</Alert> : null}
     <Stack direction={{ xs: "column", md: "row" }} spacing={2}>

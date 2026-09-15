@@ -13,6 +13,8 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ClientDataGrid } from "@/shared/components/data-grid";
 import { DEFAULT_ROWS_PER_PAGE } from "@/shared/constants/pagination";
+import { permissions } from "@/lib/auth/permissions";
+import { usePermissions } from "@/shared/hooks/usePermissions";
 import useLocalizationRowEditing from "../hooks/useLocalizationRowEditing";
 import type { LocalizationEntry } from "../types/localization";
 
@@ -26,6 +28,8 @@ export default function LocalizationDataGrid({
   rows,
 }: LocalizationDataGridProps) {
   const { t } = useTranslation();
+  const { hasPermission, isReadOnly } = usePermissions();
+  const canEdit = !isReadOnly && hasPermission(permissions.EditLocalizations);
   const [paginationModel, setPaginationModel] = useState({
     pageSize: DEFAULT_ROWS_PER_PAGE,
     page: 0,
@@ -40,62 +44,71 @@ export default function LocalizationDataGrid({
     processRowUpdate,
     handleProcessRowUpdateError,
     SnackbarComponent,
-  } = useLocalizationRowEditing(culture);
+  } = useLocalizationRowEditing(culture, canEdit);
 
   const columns = useMemo<GridColDef<LocalizationEntry>[]>(
-    () => [
-      {
-        field: "key",
-        headerName: t("general.key"),
-        flex: 1,
-        editable: false,
-      },
-      {
-        field: "value",
-        headerName: t("general.value"),
-        flex: 2,
-        editable: true,
-      },
-      {
-        field: "actions",
-        headerName: t("actions.buttons"),
-        width: 100,
-        cellClassName: "actions",
-        getActions: ({ id }: GridRowParams<LocalizationEntry>) => {
-          const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+    () => {
+      const baseColumns: GridColDef<LocalizationEntry>[] = [
+        {
+          field: "key",
+          headerName: t("general.key"),
+          flex: 1,
+          editable: false,
+        },
+        {
+          field: "value",
+          headerName: t("general.value"),
+          flex: 2,
+          editable: canEdit,
+        },
+      ];
 
-          if (isInEditMode) {
+      if (!canEdit) return baseColumns;
+
+      return [
+        ...baseColumns,
+        {
+          field: "actions",
+          headerName: t("actions.buttons"),
+          width: 100,
+          cellClassName: "actions",
+          getActions: ({ id }: GridRowParams<LocalizationEntry>) => {
+            const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+            if (isInEditMode) {
+              return [
+                <GridActionsCellItem
+                  key="save"
+                  icon={<SaveIcon />}
+                  label={t("actions.save")}
+                  onClick={handleSaveClick(id)}
+                  color="primary"
+                />,
+                <GridActionsCellItem
+                  key="cancel"
+                  icon={<CancelIcon />}
+                  label={t("actions.cancel")}
+                  onClick={handleCancelClick(id)}
+                  color="inherit"
+                />,
+              ];
+            }
+
             return [
               <GridActionsCellItem
-                key="save"
-                icon={<SaveIcon />}
-                label="Save"
-                onClick={handleSaveClick(id)}
-                color="primary"
-              />,
-              <GridActionsCellItem
-                key="cancel"
-                icon={<CancelIcon />}
-                label="Cancel"
-                onClick={handleCancelClick(id)}
+                key="edit"
+                icon={<EditIcon />}
+                label={t("actions.edit")}
+                onClick={handleEditClick(id)}
                 color="inherit"
               />,
             ];
-          }
-
-          return [
-            <GridActionsCellItem
-              key="edit"
-              icon={<EditIcon />}
-              label="Edit"
-              onClick={handleEditClick(id)}
-              color="inherit"
-            />,
-          ];
+          },
         },
-      },
-    ],
+      ];
+    },
     [
+      canEdit,
       handleCancelClick,
       handleEditClick,
       handleSaveClick,

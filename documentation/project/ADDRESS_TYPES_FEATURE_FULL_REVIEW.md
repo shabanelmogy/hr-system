@@ -55,7 +55,10 @@ break. The default is `createdOn desc`.
 
 ## 5. Permissions and errors
 
-`AddressTypes:View` covers list/detail/lookup/relation; `Create` covers create
+`AddressTypes:View` covers list/detail/lookup/relation. Address Types belong to
+the tenant-entitlement `reference-data:addresses` capability, which is granted
+by default to new tenants; the sibling `reference-data:geography` capability
+is global and is not a tenant choice. `Create` covers create
 and Import; `Edit` updates active rows; `Delete` archives, restores, and bulk
 archives. `CrystalReports:View` and per-report `Run` apply to Report. Stable
 errors include validation, `AddressType.NoAddressTypesProvided`,

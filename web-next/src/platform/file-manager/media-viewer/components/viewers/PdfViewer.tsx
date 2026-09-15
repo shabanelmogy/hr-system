@@ -24,6 +24,7 @@ import "@syncfusion/ej2-navigations/styles/material.css";
 import "@syncfusion/ej2-popups/styles/material.css";
 import "@syncfusion/ej2-splitbuttons/styles/material.css";
 import "@syncfusion/ej2-pdfviewer/styles/material.css";
+import { useTranslation } from "react-i18next";
 
 interface PdfViewerProps {
   mediaUrl: string;
@@ -32,6 +33,7 @@ interface PdfViewerProps {
 }
 
 const PdfViewer: React.FC<PdfViewerProps> = ({ mediaUrl, onError }) => {
+  const { t } = useTranslation();
   const viewerRef = useRef<PdfViewerComponent>(null);
   const [isComponentReady, setIsComponentReady] = useState(false);
   const theme = useTheme();
@@ -72,10 +74,6 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ mediaUrl, onError }) => {
     loadDocument();
   }, [mediaUrl, isComponentReady, onError]);
 
-  const handleDocumentLoad = () => {
-    console.log("Document loaded successfully");
-  };
-
   const isDarkMode = theme.palette.mode === 'dark';
   const appBarHeight = theme.mixins.toolbar.minHeight || 64;
 
@@ -102,7 +100,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ mediaUrl, onError }) => {
           fontSize: "18px",
           color: theme.palette.text.primary
         }}>
-          Loading PDF Viewer...
+          {t("files.loadingPdfViewer")}
         </div>
       )}
       {isComponentReady && (
@@ -112,7 +110,6 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ mediaUrl, onError }) => {
           resourceUrl="https://cdn.syncfusion.com/ej2/26.2.11/dist/ej2-pdfviewer-lib"
           enableToolbar={true}
           enableNavigationToolbar={true}
-          documentLoad={handleDocumentLoad}
           style={{ 
             height: "100%", 
             width: "100%",

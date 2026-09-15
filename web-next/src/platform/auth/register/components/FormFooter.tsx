@@ -29,7 +29,7 @@ export default function FormFooter({ t, appRoutes }: FormFooterProps) {
           color: "text.secondary",
           fontSize: "0.85rem"
         }}>
-        {t("auth.alreadyHaveAccount") || "Already have an account?"}{" "}
+        {t("auth.alreadyHaveAccount")}{" "}
         <MuiLink
           component={Link as ElementType}
           href={appRoutes.login as Route}
@@ -41,7 +41,7 @@ export default function FormFooter({ t, appRoutes }: FormFooterProps) {
             "&:hover": { textDecoration: "underline" },
           }}
         >
-          {t("auth.signIn") || "Sign in"}
+          {t("auth.signIn")}
         </MuiLink>
       </Typography>
     </Box>

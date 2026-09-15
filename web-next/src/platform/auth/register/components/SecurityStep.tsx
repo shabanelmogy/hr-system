@@ -18,7 +18,7 @@ import LockIcon from "@mui/icons-material/Lock";
 interface SecurityStepProps {
   register: UseFormRegister<RegistrationFormData>;
   errors: FieldErrors<RegistrationFormData>;
-  emailRef: React.RefObject<HTMLInputElement>;
+  emailRef: React.RefObject<HTMLInputElement | null>;
   watchPassword: string;
   passwordStrength: number;
   showPassword: boolean;
@@ -71,14 +71,14 @@ const SecurityStep = ({
           mb: 0.5,
         }}
       >
-        {t("auth.accountSecurity") || "Account Security"}
+        {t("auth.accountSecurity")}
       </Typography>
       <MyTextField
         counter
         errors={errors}
         fieldName="email"
         inputRef={emailRef}
-        label={t("auth.email") || "Email"}
+        label={t("auth.email")}
         maxValue={254}
         register={register("email")}
         required
@@ -91,7 +91,7 @@ const SecurityStep = ({
           counter={false}
           errors={errors}
           fieldName="password"
-          label={t("auth.password") || "Password"}
+          label={t("auth.password")}
           maxValue={128}
           register={register("password")}
           required
@@ -113,10 +113,10 @@ const SecurityStep = ({
                 color: strengthColors[passwordStrength],
               }}
             >
-              {passwordStrength === 0 && (t("auth.passwordWeak") || "Weak")}
-              {passwordStrength === 1 && (t("auth.passwordFair") || "Fair")}
-              {passwordStrength === 2 && (t("auth.passwordGood") || "Good")}
-              {passwordStrength === 3 && (t("auth.passwordStrong") || "Strong")}
+              {passwordStrength === 0 && (t("auth.passwordWeak"))}
+              {passwordStrength === 1 && (t("auth.passwordFair"))}
+              {passwordStrength === 2 && (t("auth.passwordGood"))}
+              {passwordStrength === 3 && (t("auth.passwordStrong"))}
             </Typography>
             <Box sx={{ flexGrow: 1, display: "flex", gap: 0.75 }}>
               {[0, 1, 2, 3].map((level) => (
@@ -142,7 +142,7 @@ const SecurityStep = ({
         counter={false}
         errors={errors}
         fieldName="confirmPassword"
-        label={t("auth.confirmPassword") || "Confirm Password"}
+        label={t("auth.confirmPassword")}
         maxValue={128}
         register={register("confirmPassword")}
         required
@@ -170,7 +170,7 @@ const SecurityStep = ({
             mb: 0.5,
           }}
         >
-          {t("auth.passwordRequirementsTitle") || "Password Requirements:"}
+          {t("auth.passwordRequirementsTitle")}
         </Typography>
         <Stack
           direction="row"
@@ -180,23 +180,23 @@ const SecurityStep = ({
           }}>
           {[
             {
-              label: t("validation.min8Chars") || "8+ characters",
+              label: t("validation.min8Chars"),
               check: watchPassword?.length >= 8,
             },
             {
-              label: t("validation.uppercase") || "Uppercase",
+              label: t("validation.uppercase"),
               check: /[A-Z]/.test(watchPassword || ""),
             },
             {
-              label: t("validation.lowercase") || "Lowercase",
+              label: t("validation.lowercase"),
               check: /[a-z]/.test(watchPassword || ""),
             },
             {
-              label: t("validation.number") || "Number",
+              label: t("validation.number"),
               check: /[0-9]/.test(watchPassword || ""),
             },
             {
-              label: t("validation.special") || "Special character",
+              label: t("validation.special"),
               check: /[^A-Za-z0-9]/.test(watchPassword || ""),
             },
           ].map((req, idx) => (

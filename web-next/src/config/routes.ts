@@ -15,7 +15,6 @@ export interface ExtrasRoutes {
 }
 
 export interface AdvancedToolsRoutes {
-  trackChanges: AppPath;
   healthCheck: AppPath;
   apiEndpoints: AppPath;
   localizationApi: AppPath;
@@ -24,12 +23,7 @@ export interface AdvancedToolsRoutes {
 
 export interface BasicDataRoutes {
   index: AppPath;
-  countries: AppPath;
   addressTypes: AppPath;
-  states: AppPath;
-  districts: AppPath;
-  countryReport: AppPath;
-  globalPresence: AppPath;
   companyGeographicScope: AppPath;
   organizationalStructure: OrganizationalStructureRoutes;
 }
@@ -95,10 +89,6 @@ export interface AppRoutes {
   basicData: BasicDataRoutes;
   auth: AuthRoutes;
   superAdmin: SuperAdminRoutes;
-  kpis: AppPath;
-  trends: AppPath;
-  healthPipeline: AppPath;
-  attendanceTrends: AppPath;
   attendanceDevices: {
     index: AppPath;
     users: AppPath;
@@ -134,7 +124,6 @@ export const appRoutes: AppRoutes = {
   },
 
   advancedTools: {
-    trackChanges: "/advanced-tools/track-changes",
     healthCheck: "/advanced-tools/health-check",
     apiEndpoints: "/advanced-tools/api-endpoints",
     localizationApi: "/advanced-tools/localization-api",
@@ -143,12 +132,7 @@ export const appRoutes: AppRoutes = {
 
   basicData: {
     index: toAppPath("/basic-data"),
-    countries: "/basic-data/countries",
     addressTypes: "/basic-data/address-types",
-    states: "/basic-data/states",
-    districts: "/basic-data/districts",
-    countryReport: "/basic-data/country-report",
-    globalPresence: "/basic-data/global-presence",
     companyGeographicScope: toAppPath("/basic-data/organizational-structure/geographic-scope"),
     organizationalStructure: {
       index: toAppPath("/basic-data/organizational-structure"),
@@ -186,10 +170,6 @@ export const appRoutes: AppRoutes = {
     },
   },
 
-  kpis: "/kpis",
-  trends: "/trends",
-  healthPipeline: "/health-pipeline",
-  attendanceTrends: "/attendance-trends",
   attendanceDevices: {
     index: toAppPath("/attendance-devices"),
     users: toAppPath("/attendance-devices/users"),

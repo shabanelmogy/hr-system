@@ -32,6 +32,12 @@ const matchesPrefix = (pathname: string, prefix: string) => {
 export function requiredModuleForPath(pathname: string): ModuleRequirement | null {
   const normalizedPathname = normalizePath(pathname);
   if (normalizedPathname === APPS_ROUTE) return null;
+  // Platform is an internal module and global ReferenceData geography is not a
+  // tenant entitlement. These routes are protected by role/permission policies,
+  // not by /modules/accessible.
+  if (matchesPrefix(normalizedPathname, "/basic-data/organizational-structure/geographic-scope")) {
+    return null;
+  }
   if (normalizedPathname.startsWith(`${APPS_ROUTE}/`)) {
     const [, , moduleCode, submoduleCode] = normalizedPathname.split("/");
     return moduleCode ? { moduleCode, submoduleCode } : null;

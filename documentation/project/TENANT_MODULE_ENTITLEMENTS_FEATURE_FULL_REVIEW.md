@@ -10,7 +10,7 @@ permission. The effective access set is the intersection of both.
 
 Entitlements are tenant-owned because the subscription is sold to the tenant.
 The selected company remains data scope only. Tenancy and identity currently
-belong to HR, so persistence lives in the short hr schema.
+belong to Platform, so persistence lives in the platform schema.
 
 ## 3. Stable catalog
 
@@ -21,10 +21,13 @@ permission ownership.
 
 ## 4. Persistence contract
 
-hr.TenantModuleEntitlements owns module grants and
-hr.TenantSubmoduleEntitlements owns submodule grants. Composite primary keys
+platform.TenantModuleEntitlements owns module grants and
+platform.TenantSubmoduleEntitlements owns submodule grants. Composite primary keys
 prevent duplicates, and tenant-to-module-to-submodule foreign keys cascade.
-The migration grants all current HR submodules to existing tenants.
+New tenants receive catalog defaults through the Platform tenant administration
+flow. HR and the ReferenceData `addresses` submodule are current defaults;
+ReferenceData `geography` is global and is never granted to a tenant. Migration
+creation remains module-owned deployment work.
 
 ## 5. Authentication and selection flow
 
@@ -54,7 +57,7 @@ claim-only behavior after authentication and are not tenant-entitlement gated.
 Unknown permissions fail closed. Super administrators use platform routes and do
 not receive tenant data access through the tenant permission handler.
 
-Role and permission mutations use the HR module's SQL Server transaction boundary:
+Role and permission mutations use the Platform module's SQL Server transaction boundary:
 the role/claims, affected-user security-stamp and refresh-token invalidation,
 and the security-audit record are committed together under a bounded hashed
 tenant/role application lock. Realtime refreshes and session-revocation
@@ -78,10 +81,24 @@ overview and only modules returned by the tenant-scoped accessible catalog.
 
 ## 8. Entitlement editing rules
 
-A new tenant receives catalog-defined default modules; HR is currently the only
-default. An explicit create list is authoritative. On update, omission preserves
-stored entitlements, while an explicit list replaces them. Selecting Accounting
-in either client preserves the existing HR entry and all selected HR submodules.
+A new tenant receives catalog-defined default modules; HR and ReferenceData
+`addresses` are current defaults. An explicit create list is authoritative. On
+update, omission preserves stored entitlements, while an explicit list replaces
+them. The preview bootstrap is additive: it merges missing defaults into the
+existing demo tenant grants without deleting explicit Accounting or other
+module/submodule grants. Selecting Accounting in either client preserves the
+existing HR and ReferenceData entries and their selected submodules.
+Both tenant administration clients obtain their choices from the dedicated
+super-admin /modules/tenant-entitlements endpoint. The projection contains only
+TenantEntitlement submodules; Global capabilities such as ReferenceData
+geography remain Platform/Super Admin permissions and never appear in tenant
+choices. The API independently rejects forged non-assignable codes.
+
+On web business routes, the sidebar is scoped to the module that owns the active
+route after RBAC and entitlement filtering. Opening Accounting Fiscal Years
+therefore shows the Accounting navigation rather than the full cross-module
+navigation; cross-module discovery remains available from the application
+launcher and top-bar search.
 
 ## 9. Verification evidence
 

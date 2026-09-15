@@ -52,14 +52,6 @@ export default function makeFileColumns({
       valueFormatter: renderDate,
     },
     {
-      field: "updatedOn",
-      headerName: t("general.updatedOn"),
-      flex: 1,
-      align: "center",
-      headerAlign: "center",
-      valueFormatter: renderDate,
-    },
-    {
       field: "actions",
       type: "actions",
       headerName: t("actions.buttons"),

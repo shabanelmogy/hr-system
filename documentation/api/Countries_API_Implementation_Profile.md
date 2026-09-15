@@ -9,26 +9,26 @@
 | Ownership scope | Global Platform reference data; access requires `super_admin` plus action permission |
 | Lifecycle | Active, archived, restore; no hard delete and no toggle endpoint |
 | Permissions | `Countries:View`, `Countries:Create`, `Countries:Edit`, `Countries:Delete` |
-| Persistence | EF Core/SQL Server through `ApplicationDbContext` and `IUnitOfWork` |
+| Persistence | EF Core/SQL Server through `ReferenceDataDbContext` and `IUnitOfWork` |
 | Application pattern | One MediatR command/query per controller action |
 | Post-commit integration | Hangfire notification and permission-scoped realtime event |
-| General API guide | [Feature Module Implementation Guide](Feature_Module_Implementation_Checklist.md) |
+| General API workflow | [API Feature Development Workflow](API_FEATURE_DEVELOPMENT_WORKFLOW.md) |
 | HTTP contract | [Countries Controller Contract](Controllers/Geographic/CountriesController.md) |
 | Cross-platform master | [Countries Full Review](../project/COUNTRIES_FEATURE_FULL_REVIEW.md) |
 
 This document records how the current Countries API is built. It is an applied
-profile, not permission to copy Countries' global ownership into tenant/company
-HR data. For a new feature, preserve the layer boundaries and transaction flow;
+ReferenceData profile, not permission to copy global ownership into tenant/company
+data. For a new feature, preserve the layer boundaries and transaction flow;
 replace the entity invariants, scope, permissions, DTOs, filters, dependencies,
 errors and concurrency requirements.
 
 ## 1. Exact Source Inventory
 
 ```text
-ErpSystem.Modules.HR.Domain/GeographicalInformation/Countries/
+ErpSystem.Modules.ReferenceData.Domain/GeographicalInformation/Countries/
   Entities/Country.cs
 
-ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Countries/
+ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/
   Abstractions/
     ICountryReadStore.cs
     ICountryWriteStore.cs
@@ -57,7 +57,7 @@ ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Countries/
   Errors/CountryErrors.cs
   Mapping/CountryMappingConfig.cs
 
-ErpSystem.Modules.HR.Infrastructure/Features/GeographicalInformation/Countries/
+ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/
   Persistence/
     CountryConfiguration.cs
     CountryReadStore.cs
@@ -68,13 +68,13 @@ ErpSystem.Modules.HR.Infrastructure/Features/GeographicalInformation/Countries/
     CountryChangeScheduler.cs
     CountryChangedJob.cs
 
-Modules/HR/ErpSystem.Modules.HR.Presentation/Features/GeographicalInformation/Countries/V1/
+Modules/HR/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/
   CountriesController.cs
 ```
 
 Registration and composition also require:
 
-- `ApplicationDbContext.Countries` and assembly-applied EF configurations;
+- `ReferenceDataDbContext.Countries` and assembly-applied EF configurations;
 - `EntitiesService` scoped registrations for read/write stores, audit trail,
   scheduler and `CountryChangedJob`;
 - `DatabaseService` scanning `IValidationQuery` implementations;
@@ -338,14 +338,14 @@ connection string.
 The source inventory for this extension is:
 
 ```text
-ErpSystem.Modules.HR.Domain/Analytics/ReportTemplates/
-ErpSystem.Modules.HR.Application/Features/Analytics/ReportTemplates/
-ErpSystem.Modules.HR.Infrastructure/Features/Analytics/ReportTemplates/
-Modules/HR/ErpSystem.Modules.HR.Presentation/Features/Analytics/ReportTemplates/V1/
-ErpSystem.Modules.HR.Application/Features/GeographicalInformation/Countries/
+ErpSystem.Modules.Reporting.Domain/Analytics/ReportTemplates/
+ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/
+ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/ReportTemplates/
+Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/ReportTemplates/V1/
+ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/
   Contracts/CountryReportDataResponse.cs
   Queries/GetCountryReportData/
-ErpSystem.Tests/ReportTemplateFeatureTests.cs
+Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ReportTemplateFeatureTests.cs
 ```
 
 This is a reusable platform capability with a currently allow-listed Countries
@@ -357,7 +357,7 @@ endpoint; it must not accept arbitrary client URLs or database connection string
 | Test source | Proven behavior |
 |---|---|
 | `CountryCqrsHandlerTests.cs` | Mapping, page/search/filter/sort, detail/relation, transaction order and lifecycle lock resources, duplicate checks, atomic bulk behavior and validators |
-| `CountryCqrsArchitectureTests.cs` | Thin controller, canonical routes/contracts, narrow ports, no legacy service/toggle/count, feature mapping ownership |
+| `CountryCqrsArchitectureTests.cs` | Thin controller, canonical routes/contracts, narrow ports, no obsolete business-service facade/toggle/count, feature mapping ownership |
 | `CountriesControllerCqrsTests.cs` | Every action dispatches the correct slice and returns the canonical success result |
 | `ValidationQueriesTests.cs` | Infrastructure validation-query registration |
 | `ApplicationDbContextAuditTests.cs` | Auditable entity persistence behavior |
@@ -366,7 +366,7 @@ endpoint; it must not accept arbitrary client URLs or database connection string
 Focused gate from the repository root:
 
 ```powershell
-dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj --filter CountryCqrs
+dotnet test api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/ErpSystem.Modules.ReferenceData.Tests.csproj --filter CountryCqrs
 ```
 
 For a copied feature, add persistence tests for scope, unique indexes and
@@ -387,5 +387,5 @@ in-memory handler suite.
 | No count endpoint | Does page metadata fully satisfy every client view? |
 
 An exact implementation follows the source sequence and tests above. It does not
-rename a legacy service, return one DTO everywhere, add a toggle endpoint, save
+wrap the CQRS slice in a broad business-service facade, return one DTO everywhere, add a toggle endpoint, save
 inside stores, schedule before commit, or filter a downloaded page in a client.

@@ -3,7 +3,7 @@ import { version } from "./constants";
 
 export const roles: RolesRoutes = {
   getAll: `${version}/roles/getAll`,
-  getById: (id: Id) => `${version}/roles/${id}`,
+  getById: (id: Id) => `${version}/Roles/Get/${encodeURIComponent(String(id))}`,
   add: `${version}/roles/add`,
   update: `${version}/roles/update`,
   toggle: (id: Id) => `${version}/roles/toggle/${id}`,

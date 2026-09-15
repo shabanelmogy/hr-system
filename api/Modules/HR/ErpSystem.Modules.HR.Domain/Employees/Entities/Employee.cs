@@ -1,6 +1,6 @@
-using ErpSystem.Modules.HR.Domain.Common.Exceptions;
+using ErpSystem.BuildingBlocks.Domain.Exceptions;
 using ErpSystem.Modules.HR.Domain.Employees.Enums;
-using static ErpSystem.Modules.HR.Domain.Common.Guards.DomainGuard;
+using static ErpSystem.BuildingBlocks.Domain.Guards.DomainGuard;
 
 namespace ErpSystem.Modules.HR.Domain.Employees.Entities;
 

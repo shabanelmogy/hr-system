@@ -14,11 +14,12 @@ import {
   useTheme,
 } from "@mui/material";
 import type { RoleClaimsFormData } from "../../utils/validation";
-import { getPermissionColors, PERMISSION_TYPES } from "./constants";
 import RolePermissionRow from "./RolePermissionRow";
+import { useTranslation } from "react-i18next";
 
 type RolePermissionsTableProps = {
   modules: string[];
+  actions: string[];
   claims: RoleClaimsFormData["roleClaims"];
   areAllSelected: (type: string) => boolean;
   onSelectAll: (type: string, selected: boolean) => void;
@@ -28,7 +29,7 @@ type RolePermissionsTableProps = {
 
 export default function RolePermissionsTable(props: RolePermissionsTableProps) {
   const theme = useTheme();
-  const colors = getPermissionColors(theme);
+  const { t } = useTranslation();
   const headerBackground = theme.palette.mode === "dark"
     ? alpha(theme.palette.background.paper, 0.8)
     : "grey.50";
@@ -40,10 +41,10 @@ export default function RolePermissionsTable(props: RolePermissionsTableProps) {
           <TableRow>
             <TableCell sx={{ bgcolor: headerBackground, fontWeight: "bold", minWidth: 150 }}>
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <ViewModule color="primary" /> Module
+                <ViewModule color="primary" /> {t("roles.module")}
               </Box>
             </TableCell>
-            {PERMISSION_TYPES.map((type) => {
+            {props.actions.map((type) => {
               const allSelected = props.areAllSelected(type);
               return (
                 <TableCell key={type} align="center" sx={{ bgcolor: headerBackground, minWidth: 120 }}>
@@ -52,12 +53,12 @@ export default function RolePermissionsTable(props: RolePermissionsTableProps) {
                       size="small"
                       label={type}
                       sx={{
-                        bgcolor: colors[type],
-                        color: theme.palette.getContrastText(colors[type]),
+                        bgcolor: theme.palette.primary.main,
+                        color: theme.palette.primary.contrastText,
                         fontWeight: "bold",
                       }}
                     />
-                    {!props.readOnly && <Tooltip title={allSelected ? "Unselect All" : "Select All"}>
+                    {!props.readOnly && <Tooltip title={allSelected ? t("common.unselectAll") : t("common.selectAll")}>
                       <IconButton
                         size="small"
                         onClick={() => props.onSelectAll(type, !allSelected)}
@@ -85,8 +86,8 @@ export default function RolePermissionsTable(props: RolePermissionsTableProps) {
             <RolePermissionRow
               key={module}
               module={module}
+              actions={props.actions}
               claims={props.claims}
-              colors={colors}
               theme={theme}
               onToggle={props.onToggle}
               readOnly={props.readOnly}

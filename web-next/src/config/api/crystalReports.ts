@@ -13,7 +13,8 @@ export const crystalReports: CrystalReportsRoutes = {
   downloadVersion: (id, versionId) => `${version}/crystal-reports/${id}/versions/${versionId}/download`,
   publishVersion: (id, versionId) => `${version}/crystal-reports/${id}/versions/${versionId}/publish`,
   access: (id) => `${version}/crystal-reports/${id}/access`,
+  grantRoleOptions: `${version}/crystal-reports/grant-role-options`,
   archive: (id) => `${version}/crystal-reports/${id}`,
-  legacyCandidates: `${version}/crystal-reports/legacy-candidates`,
-  importLegacy: `${version}/crystal-reports/legacy-imports`,
+  deploymentCandidates: `${version}/crystal-reports/deployment-candidates`,
+  importDeployment: `${version}/crystal-reports/deployment-imports`,
 };

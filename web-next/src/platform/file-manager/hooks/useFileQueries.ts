@@ -1,13 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
 import fileService, { FileService, type FileErrorResponse } from "../services/fileService";
-import type { FileItem, UploadResult } from "../types/File";
+import type { FileItem } from "../types/File";
 
 // Query Keys
 export const fileKeys = {
   all: ["files"] as const,
   list: () => [...fileKeys.all, "list"] as const,
-  detail: (id: number) => [...fileKeys.all, "detail", id] as const,
 };
 
 // Query Hooks
@@ -15,15 +14,6 @@ export const useFiles = (options?: UseQueryOptions<FileItem[], Error>) =>
   useQuery({
     queryKey: fileKeys.list(),
     queryFn: FileService.getAll,
-    staleTime: 5 * 60 * 1000,
-    ...options,
-  });
-
-export const useFile = (id: number | null | undefined, options?: UseQueryOptions<FileItem, Error>) =>
-  useQuery({
-    queryKey: fileKeys.detail(id!),
-    queryFn: () => FileService.getById(id!),
-    enabled: !!id && id > 0,
     staleTime: 5 * 60 * 1000,
     ...options,
   });
@@ -46,7 +36,7 @@ function useFileMutation<TData = unknown, TVariables = unknown>(
   });
 }
 
-export const useUploadFiles = (options?: UseMutationOptions<UploadResult, Error, File[]>) =>
+export const useUploadFiles = (options?: UseMutationOptions<void, Error, File[]>) =>
   useFileMutation(FileService.uploadMany, options);
 
 

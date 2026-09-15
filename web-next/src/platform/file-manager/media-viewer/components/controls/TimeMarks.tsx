@@ -15,6 +15,7 @@ import {
   Chip,
 } from '@mui/material';
 import { MyTextField } from '@/shared/components/forms';
+import { useTranslation } from 'react-i18next';
 import {
   Bookmark as BookmarkIcon,
   Delete as DeleteIcon,
@@ -43,6 +44,7 @@ const formatTime = (seconds: number): string => {
 };
 
 const TimeMarks: React.FC<TimeMarksProps> = ({ currentTime, onSeek, isOpen, onClose }) => {
+  const { t } = useTranslation();
   const [marks, setMarks] = useState<TimeMark[]>([]);
   const [newMarkLabel, setNewMarkLabel] = useState('');
   const [noteDialog, setNoteDialog] = useState<{ open: boolean; markId: string; note: string }>({ open: false, markId: '', note: '' });
@@ -78,7 +80,7 @@ const TimeMarks: React.FC<TimeMarksProps> = ({ currentTime, onSeek, isOpen, onCl
   return (
     <Drawer anchor="right" open={isOpen} onClose={onClose}>
       <Box sx={{ width: 300, p: 2 }}>
-        <Typography variant="h6" sx={{ mb: 2 }}>Time Marks</Typography>
+        <Typography variant="h6" sx={{ mb: 2 }}>{t("files.timeMarks")}</Typography>
         
         <Box sx={{ mb: 2 }}>
           <MyTextField
@@ -88,7 +90,7 @@ const TimeMarks: React.FC<TimeMarksProps> = ({ currentTime, onSeek, isOpen, onCl
             margin="none"
             maxValue={100}
             size="small"
-            placeholder="Mark label"
+            placeholder={t("files.markLabel")}
             value={newMarkLabel}
             onChange={(e) => setNewMarkLabel(e.target.value)}
             containerSx={{ mb: 1 }}
@@ -99,7 +101,7 @@ const TimeMarks: React.FC<TimeMarksProps> = ({ currentTime, onSeek, isOpen, onCl
             startIcon={<BookmarkIcon />}
             onClick={addMark}
           >
-            Add Mark at {formatTime(currentTime)}
+            {t("files.addMarkAt", { time: formatTime(currentTime) })}
           </Button>
         </Box>
 
@@ -143,7 +145,7 @@ const TimeMarks: React.FC<TimeMarksProps> = ({ currentTime, onSeek, isOpen, onCl
         </List>
 
         <Dialog open={noteDialog.open} onClose={() => setNoteDialog({ open: false, markId: '', note: '' })} maxWidth="sm" fullWidth>
-          <DialogTitle>Add Note to Bookmark</DialogTitle>
+          <DialogTitle>{t("files.addNoteBookmark")}</DialogTitle>
           <DialogContent>
             <MyTextField
               counter
@@ -152,15 +154,15 @@ const TimeMarks: React.FC<TimeMarksProps> = ({ currentTime, onSeek, isOpen, onCl
               maxValue={2000}
               multiline
               rows={4}
-              placeholder="Add your note here..."
+              placeholder={t("files.addNotePlaceholder")}
               value={noteDialog.note}
               onChange={(e) => setNoteDialog({ ...noteDialog, note: e.target.value })}
               sx={{ mt: 1 }}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setNoteDialog({ open: false, markId: '', note: '' })}>Cancel</Button>
-            <Button onClick={saveNote} variant="contained">Save Note</Button>
+            <Button onClick={() => setNoteDialog({ open: false, markId: '', note: '' })}>{t("actions.cancel")}</Button>
+            <Button onClick={saveNote} variant="contained">{t("files.saveNote")}</Button>
           </DialogActions>
         </Dialog>
       </Box>

@@ -27,6 +27,7 @@ public sealed class UpdatePartyCommandValidator : AbstractValidator<UpdatePartyC
     public UpdatePartyCommandValidator()
     {
         RuleFor(command => command.Id).NotEmpty();
+        RuleFor(command => command.ExpectedRevision).GreaterThan(0);
         RuleFor(command => command.DisplayName)
             .Cascade(CascadeMode.Stop)
             .NotEmpty()

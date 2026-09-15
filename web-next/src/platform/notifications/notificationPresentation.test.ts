@@ -5,11 +5,11 @@ import {
 } from "./notificationPresentation";
 
 describe("notification presentation", () => {
-  it("normalizes numeric and string severity values", () => {
+  it("normalizes the current numeric severity contract", () => {
     expect(normalizeSeverity(1)).toBe("info");
-    expect(normalizeSeverity("Success")).toBe("success");
+    expect(normalizeSeverity(2)).toBe("success");
     expect(normalizeSeverity(3)).toBe("warning");
-    expect(normalizeSeverity("Critical")).toBe("critical");
+    expect(normalizeSeverity(4)).toBe("critical");
   });
 
   it("only permits application-relative action URLs", () => {

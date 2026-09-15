@@ -31,31 +31,31 @@ public sealed class JobOfferConfiguration : IEntityTypeConfiguration<JobOffer>
             .HasFilter("[Status] IN (1, 2, 3, 7, 8)")
             .IsUnique();
 
-        builder.HasOne<EmploymentApplication>()
+        builder.HasOne(x => x.EmploymentApplication)
             .WithMany()
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.EmploymentApplicationId })
             .HasPrincipalKey(a => new { a.TenantId, a.CompanyId, a.Id })
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<Position>()
+        builder.HasOne(x => x.Position)
             .WithMany()
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.PositionId })
             .HasPrincipalKey(p => new { p.TenantId, p.CompanyId, p.Id })
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<Branch>()
+        builder.HasOne(x => x.Branch)
             .WithMany()
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.BranchId })
             .HasPrincipalKey(b => new { b.TenantId, b.CompanyId, b.Id })
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<Department>()
+        builder.HasOne(x => x.Department)
             .WithMany()
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.DepartmentId })
             .HasPrincipalKey(d => new { d.TenantId, d.CompanyId, d.Id })
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<Division>()
+        builder.HasOne(x => x.Division)
             .WithMany()
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.DivisionId })
             .HasPrincipalKey(d => new { d.TenantId, d.CompanyId, d.Id })

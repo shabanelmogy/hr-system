@@ -12,7 +12,8 @@ public sealed record AccountingPartyReferenceUpdate(
     string? Email,
     string? Phone,
     Guid SourceEventId,
-    DateTimeOffset SourceOccurredOnUtc);
+    DateTimeOffset SourceOccurredOnUtc,
+    long SourceRevision = 0);
 
 public interface IAccountingPartyReferenceStore
 {
@@ -65,7 +66,8 @@ public sealed class AccountingPartyIntegrationConsumer(
                 created.Email,
                 created.Phone,
                 created.EventId,
-                created.OccurredOnUtc),
+                created.OccurredOnUtc,
+                created.Revision),
             PartyUpdatedIntegrationEvent updated => new AccountingPartyReferenceUpdate(
                 updated.PartyId,
                 updated.TenantId,
@@ -74,7 +76,8 @@ public sealed class AccountingPartyIntegrationConsumer(
                 updated.Email,
                 updated.Phone,
                 updated.EventId,
-                updated.OccurredOnUtc),
+                updated.OccurredOnUtc,
+                updated.Revision),
             _ => throw new ArgumentOutOfRangeException(nameof(integrationEvent))
         };
 

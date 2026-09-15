@@ -1,7 +1,7 @@
-using ErpSystem.Modules.HR.Domain.Common.Exceptions;
+using ErpSystem.BuildingBlocks.Domain.Exceptions;
 using ErpSystem.Modules.HR.Domain.Employees.Entities;
 using ErpSystem.Modules.HR.Domain.Recruitment.Enums;
-using static ErpSystem.Modules.HR.Domain.Common.Guards.DomainGuard;
+using static ErpSystem.BuildingBlocks.Domain.Guards.DomainGuard;
 
 namespace ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 
@@ -55,8 +55,11 @@ public sealed class EmploymentApplication : CompanyAuditableEntity
     public int Id { get; private set; }
     public Guid PublicId { get; private set; }
     public int CandidateId { get; private set; }
+    public Candidate Candidate { get; private set; } = null!;
     public int JobOpeningId { get; private set; }
+    public JobOpening JobOpening { get; private set; } = null!;
     public int? JobPostingId { get; private set; }
+    public JobPosting? JobPosting { get; private set; }
     public int? EmployeeId { get; private set; }
     public Employee? HiredEmployee { get; private set; }
     /// <summary>
@@ -74,6 +77,7 @@ public sealed class EmploymentApplication : CompanyAuditableEntity
     public DateTimeOffset? SubmittedOn { get; private set; }
     public DateTimeOffset LastStatusChangedOn { get; private set; }
     public IReadOnlyCollection<ApplicationStatusHistory> StatusHistory => _statusHistory.AsReadOnly();
+    public ICollection<Interview> Interviews { get; private set; } = [];
 
     public void UpdateDraft(
         string? coverLetter,

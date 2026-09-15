@@ -66,8 +66,8 @@ export function AppHierarchicalTree<T>({
   onAddChild,
   onReparent,
   renderBadges,
-  entityName = 'Element',
-  entityNamePlural = 'Elements',
+  entityName,
+  entityNamePlural,
   canEdit = true,
   canCreate = true,
   canDelete = false,
@@ -76,10 +76,10 @@ export function AppHierarchicalTree<T>({
   searchPlaceholder,
   isItemDisabled,
 }: AppHierarchicalTreeProps<T>) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { theme } = useAppTheme();
   const { isRTL } = useLocalization();
-  const isAr = (i18n.resolvedLanguage ?? i18n.language).startsWith('ar');
+  const resolvedEntityName = entityName ?? t('treeDiagram.defaultEntity');
 
   // Direct move modal state
   const [movingItem, setMovingItem] = useState<T | null>(null);
@@ -274,7 +274,7 @@ export function AppHierarchicalTree<T>({
             {/* Folder chevron / expander */}
             {hasChildren ? (
               <Pressable
-                accessibilityLabel={isExpanded ? 'Collapse' : 'Expand'}
+                accessibilityLabel={isExpanded ? t('treeDiagram.collapse') : t('treeDiagram.expand')}
                 accessibilityRole="button"
                 hitSlop={10}
                 onPress={() => toggleExpand(id)}
@@ -415,7 +415,7 @@ export function AppHierarchicalTree<T>({
             {/* Action 1: Add Child (+) */}
             {canCreate && onAddChild ? (
               <Pressable
-                accessibilityLabel={isAr ? 'إضافة فرعي' : 'Add Child'}
+                accessibilityLabel={t('treeDiagram.addChild')}
                 accessibilityRole="button"
                 hitSlop={6}
                 onPress={() => onAddChild(item)}
@@ -435,7 +435,7 @@ export function AppHierarchicalTree<T>({
             {/* Action 2: View (👁️) */}
             {onView ? (
               <Pressable
-                accessibilityLabel={isAr ? 'عرض' : 'View'}
+                accessibilityLabel={t('treeDiagram.view')}
                 accessibilityRole="button"
                 hitSlop={6}
                 onPress={() => onView(item)}
@@ -455,7 +455,7 @@ export function AppHierarchicalTree<T>({
             {/* Action 3: Delete (✕ / 🗑️) */}
             {canDelete && onDelete ? (
               <Pressable
-                accessibilityLabel={isAr ? 'حذف' : 'Delete'}
+                accessibilityLabel={t('treeDiagram.delete')}
                 accessibilityRole="button"
                 hitSlop={6}
                 onPress={() => onDelete(item)}
@@ -520,14 +520,14 @@ export function AppHierarchicalTree<T>({
               style={styles.webRootBannerText}
               weight="700"
             >
-              {rootLabel ?? (isAr ? 'المستوى الرئيسي للشركة (بدون مركز أب)' : 'Company Top Level (No Parent)')}
+              {rootLabel ?? t('treeDiagram.companyRoot')}
             </AppText>
           </View>
 
           {/* Quick expand/collapse controls */}
           <View style={[styles.webRootBannerActions, isRTL && styles.webRootBannerActionsRTL]}>
             <Pressable
-              accessibilityLabel={isAr ? 'فتح الكل' : 'Expand All'}
+              accessibilityLabel={t('treeDiagram.expandAll')}
               hitSlop={8}
               onPress={expandAll}
               style={styles.bannerActionBtn}
@@ -536,7 +536,7 @@ export function AppHierarchicalTree<T>({
               <AppIcon color={theme.colors.textMuted} name="chevron-down-outline" size={16} />
             </Pressable>
             <Pressable
-              accessibilityLabel={isAr ? 'إغلاق الكل' : 'Collapse All'}
+              accessibilityLabel={t('treeDiagram.collapseAll')}
               hitSlop={8}
               onPress={collapseAll}
               style={styles.bannerActionBtn}
@@ -569,12 +569,10 @@ export function AppHierarchicalTree<T>({
               ]}
             >
               <AppText style={styles.modalTitle} weight="800">
-                {isAr ? `نقل ${entityName}` : `Move ${entityName}`}
+                {t('treeDiagram.moveEntity', { entity: resolvedEntityName })}
               </AppText>
               <AppText color="muted" variant="body" style={styles.modalSubtitle}>
-                {isAr
-                  ? `اختر المستوى الجديد للعنصر: "${getLabel(movingItem)}"`
-                  : `Select new parent for: "${getLabel(movingItem)}"`}
+                {t('treeDiagram.selectNewParent', { label: getLabel(movingItem) })}
               </AppText>
 
               {reparentError ? (
@@ -607,7 +605,7 @@ export function AppHierarchicalTree<T>({
                     color={selectedNewParentId === null ? 'primary' : 'default'}
                     weight={selectedNewParentId === null ? '700' : '400'}
                   >
-                    {rootLabel ?? (isAr ? 'المستوى الرئيسي (بدون أب)' : 'Root (No parent)')}
+                    {rootLabel ?? t('treeDiagram.rootNoParent')}
                   </AppText>
                 </Pressable>
 
@@ -673,7 +671,7 @@ export function AppHierarchicalTree<T>({
                   onPress={handleConfirmReparent}
                   variant="primary"
                 >
-                  {isAr ? 'تأكيد النقل' : 'Confirm Move'}
+                  {t('treeDiagram.confirmMove')}
                 </AppButton>
               </View>
             </View>

@@ -1,8 +1,9 @@
-using ErpSystem.Modules.HR.Application.Common.Paginations;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 
 namespace ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts;
 
 public sealed record AttendanceDeviceRequest(string Name, string ProviderId, string Host, int Port, string TimeZoneId, int? BranchId = null, string ConnectionMode = "tcp", Guid? AttendanceAgentId = null);
+public sealed record UpdateAttendanceDeviceRequest(string Name, string ProviderId, string Host, int Port, string TimeZoneId, string RowVersion, int? BranchId = null, string ConnectionMode = "tcp", Guid? AttendanceAgentId = null);
 public sealed record AttendanceDeviceResponse(int Id, string Name, string ProviderId, string Host, int Port, string TimeZoneId, bool Enabled, DateTime? LastSeenAtUtc, DateTime? LastPullAtUtc, bool HasCredentials, byte[] RowVersion, int? BranchId = null, string? BranchNameEn = null, string? BranchNameAr = null, string ConnectionMode = "tcp", Guid? AttendanceAgentId = null, string? AttendanceAgentName = null);
 public sealed record AttendanceBranchResponse(int Id, string NameEn, string NameAr, string BranchCode);
 public sealed record AttendanceAgentResponse(Guid Id, string Name, bool IsActive, DateTime? LastSeenAtUtc, int DeviceCount);
@@ -15,7 +16,7 @@ public sealed record UpdateDeviceCredentialsRequest(string? Password, string? Co
 {
     public override string ToString() => "Attendance device credentials [REDACTED]";
 }
-public sealed record SetDeviceEnabledRequest(bool Enabled);
+public sealed record SetDeviceEnabledRequest(bool Enabled, string RowVersion);
 public sealed record ProviderResponse(string ProviderId, string DisplayName, bool Available, bool Configured, bool SupportsTestConnection, bool SupportsUsers, bool SupportsAttendance, bool SupportsDetection, string? AvailabilityDetail);
 public sealed record ConnectorHealthResponse(string Status, bool Available, string Architecture, IReadOnlyList<ProviderResponse> Providers);
 public sealed record DetectDeviceRequest(string Host, int Port = 4370);

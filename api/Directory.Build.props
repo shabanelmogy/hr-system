@@ -1,0 +1,22 @@
+<Project>
+  <!--
+    Repository-wide quality policy for the ERPSYSTEM modular-monolith solution.
+    Independent utilities that are intentionally outside ErpSystem.sln are not
+    forced into this policy merely because they live under api/.
+  -->
+  <PropertyGroup Condition="$([System.String]::Copy('$(MSBuildProjectName)').StartsWith('ErpSystem.Modules.')) or $([System.String]::Copy('$(MSBuildProjectName)').StartsWith('ErpSystem.BuildingBlocks.')) or '$(MSBuildProjectName)' == 'ErpSystem.Api' or '$(MSBuildProjectName)' == 'ErpSystem.ArchitectureTests' or '$(MSBuildProjectName)' == 'ErpSystem.IntegrationTests'">
+    <Nullable>enable</Nullable>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!--
+      Compiler warnings are hard failures immediately. Analyzer diagnostics stay
+      visible during the project-by-project foundation review so intentional
+      public contracts are not renamed blindly for style/performance suggestions.
+      Each reviewed project must close its applicable analyzer findings before
+      it is marked CLOSED; the final gate can then promote analyzer warnings
+      globally without maintaining a suppression baseline.
+    -->
+    <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
+  </PropertyGroup>
+</Project>

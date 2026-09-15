@@ -55,7 +55,7 @@ decision. A focused test pass alone is never a `Ready` decision.
 | address-types-master | 9 | `7600fe70c892d1e5b846ec248fa105756c3b54bf86e3d51b2ade23f848b9fe89` |
 | address-types-master | 10 | `650db926fa75626216c197eadd1921f3da5ff22870c370e747998a8f118616c1` |
 | address-types-api | 10 | `a6b047ce552f06a101f0d842e1d2a5073f8422c48228f4a1f548e88a7a481079` |
-| address-types-api | 11 | `545a74147c539ef7388c9f349fd4f3fcc94399ffa23988ee2e199395c87dbd8f` |
+| address-types-api | 11 | `12fedea5d53799940a3d74558d235c8e70543d220aa2c651dfb8f0da1123a1cb` |
 | address-types-web | 12 | `79c8b65d2b3da2c9f670533292936c9cc7c268333fc03488b6e3f321ea75e4da` |
 | address-types-web | 13 | `2bd84244023861a16a3969ed4ce8128912ee46de5ae8b9cf76fe928dd7480d5f` |
 | address-types-web | 14 | `182eeaa92e4fb5eba01131311770bc0c9db3f31f0f6fdb0eb1b40d7dd5a73c50` |

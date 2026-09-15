@@ -368,7 +368,7 @@ export default function CandidateDetailDialog({
 
         {onScheduleInterview &&
           application.status === ApplicationStatus.Shortlisted &&
-          (perms.canEvaluateInterviews || perms.canManageApplications) && (
+          perms.canManageApplications && (
           <Button
             variant="outlined"
             color="warning"

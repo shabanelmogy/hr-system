@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { FileDownload as DownloadIcon, PictureInPicture as PipIcon, MenuOpen as SidebarIcon } from '@mui/icons-material';
+import { FileDownload as DownloadIcon, PictureInPicture as PipIcon } from '@mui/icons-material';
 import BackButton from '@/shared/components/navigation/BackButton';
 import { useTranslation } from 'react-i18next';
 
@@ -24,12 +24,10 @@ interface TopBarProps {
   show: boolean;
   onDownload: () => void;
   onPip: () => void;
-  sidebarActive: boolean;
-  onToggleSidebar: () => void;
   onBack?: () => void;
 }
 
-export const TopBar: React.FC<TopBarProps> = ({ title, show, onDownload, onPip, sidebarActive, onToggleSidebar, onBack }) => {
+export const TopBar: React.FC<TopBarProps> = ({ title, show, onDownload, onPip, onBack }) => {
   
   const {t} = useTranslation();
 
@@ -39,7 +37,7 @@ export const TopBar: React.FC<TopBarProps> = ({ title, show, onDownload, onPip, 
         {onBack && (
           <BackButton
             onClick={onBack}
-            ariaLabel="Back"
+            ariaLabel={t("common.back")}
             sx={{ color: '#fff', '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' } }}
           />
         )}
@@ -54,11 +52,6 @@ export const TopBar: React.FC<TopBarProps> = ({ title, show, onDownload, onPip, 
         <Tooltip title={t("files.pictureInPicture")}>
           <IconButton onClick={onPip} sx={{ color: '#fff', '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' } }}>
             <PipIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title={t("files.notesAndBookmarks")}>
-          <IconButton onClick={onToggleSidebar} sx={{ color: sidebarActive ? '#1976d2' : '#fff', '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' } }}>
-            <SidebarIcon />
           </IconButton>
         </Tooltip>
       </Box>

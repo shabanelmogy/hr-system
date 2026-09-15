@@ -14,6 +14,7 @@ import Download from "@mui/icons-material/Download";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import Refresh from "@mui/icons-material/Refresh";
 import { useSidebar } from "@/shared/contexts/SidebarContext";
+import { useTranslation } from "react-i18next";
 
 interface MediaErrorViewProps {
   fileName?: string;
@@ -33,6 +34,7 @@ const MediaErrorView: React.FC<MediaErrorViewProps> = ({
   errorMessage = "Unable to preview this file",
 }) => {
   const { open: sidebarOpen } = useSidebar();
+  const { t } = useTranslation();
 
   const handleBack = () => {
     if (onBack) onBack();
@@ -63,7 +65,7 @@ const MediaErrorView: React.FC<MediaErrorViewProps> = ({
       >
         <Grid container sx={{ width: "100%", alignItems: "center" }}>
           <Grid size={{ xs: 4 }}>
-            <Tooltip title="Back">
+            <Tooltip title={t("common.back")}>
               <IconButton size="small" onClick={handleBack}>
                 <ArrowBack />
               </IconButton>
@@ -107,7 +109,7 @@ const MediaErrorView: React.FC<MediaErrorViewProps> = ({
             color: "text.primary",
           }}
         >
-          Preview Not Available
+          {t("files.previewNotAvailable")}
         </Typography>
 
         <Typography
@@ -131,7 +133,7 @@ const MediaErrorView: React.FC<MediaErrorViewProps> = ({
             maxWidth: 400,
           }}
         >
-          You can download the file to view it with an appropriate application.
+          {t("files.downloadToView")}
         </Typography>
 
         <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
@@ -143,7 +145,7 @@ const MediaErrorView: React.FC<MediaErrorViewProps> = ({
               size="large"
               sx={{ minWidth: 140 }}
             >
-              Download File
+              {t("common.downloadFile")}
             </Button>
           )}
 
@@ -155,7 +157,7 @@ const MediaErrorView: React.FC<MediaErrorViewProps> = ({
               size="large"
               sx={{ minWidth: 120 }}
             >
-              Try Again
+              {t("common.tryAgain")}
             </Button>
           )}
         </Box>
@@ -170,7 +172,7 @@ const MediaErrorView: React.FC<MediaErrorViewProps> = ({
               letterSpacing: 1,
             }}
           >
-            {fileExtension} File
+            {t("files.fileType", { extension: fileExtension })}
           </Typography>
         )}
       </Box>

@@ -4,11 +4,13 @@ import type { ModuleRepository } from '../domain/repositories/module-repository'
 export interface ModuleUseCases {
   getAccessible(): Promise<ErpModule[]>;
   getInstalled(): Promise<ErpModule[]>;
+  getTenantEntitlements(): Promise<ErpModule[]>;
 }
 
 export function createModuleUseCases(repository: ModuleRepository): ModuleUseCases {
   return {
     getAccessible: () => repository.getAccessible(),
     getInstalled: () => repository.getInstalled(),
+    getTenantEntitlements: () => repository.getTenantEntitlements(),
   };
 }

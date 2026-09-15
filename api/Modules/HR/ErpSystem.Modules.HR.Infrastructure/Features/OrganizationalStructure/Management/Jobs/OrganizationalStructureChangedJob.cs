@@ -1,4 +1,4 @@
-using ErpSystem.Modules.HR.Application.Common.Realtime;
+using ErpSystem.BuildingBlocks.Application.Common.Realtime;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Contracts;
 using ErpSystem.Modules.Platform.Contracts.Notifications;
@@ -18,7 +18,7 @@ public sealed class OrganizationalStructureChangedJob(
             ["NameAr"] = request.NameAr ?? request.Resource
         };
         var notification = NotificationPublishRequestFactory.Create(
-            Permissions.ViewOrganizationalStructure,
+            HrPermissions.ViewOrganizationalStructure,
             "OrganizationalStructure",
             "OrganizationalStructureItem",
             "OrganizationalStructure",
@@ -33,7 +33,7 @@ public sealed class OrganizationalStructureChangedJob(
             throw new InvalidOperationException($"Organizational structure notification failed: {result.Error.Code}");
 
         await realtimePublisher.PublishAsync(new RealtimeChangeRequest(
-            RealtimeAudience.ForPermission(Permissions.ViewOrganizationalStructure),
+            RealtimeAudience.ForPermission(HrPermissions.ViewOrganizationalStructure),
             "organizational-structure",
             request.Action,
             request.EntityId?.ToString(CultureInfo.InvariantCulture),

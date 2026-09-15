@@ -18,8 +18,11 @@ compatibility field, before data reaches screens.
 
 ## 4. Query ownership
 
-React Query maintains separate installed and accessible catalog caches. The
-accessible cache is short-lived because grants and role permissions can change.
+React Query maintains separate installed, tenant-entitlement, and accessible
+catalog caches. Tenant administration reads the dedicated server-filtered
+tenant-entitlement catalog without intersecting it with the mobile screen
+registry. The accessible cache is short-lived because grants and role
+permissions can change.
 
 ## 5. Odoo-style launcher
 
@@ -54,7 +57,9 @@ destinations remain filtered through RBAC and entitlement requirements.
 ## 10. Tenant editor
 
 TenantFormModal reuses the existing full-screen AppForm and AppSwitchField
-controls for module and submodule selection.
+controls for module and submodule selection. Global capabilities such as
+reference-data:geography are absent because the Platform API never returns them
+from /modules/tenant-entitlements.
 
 ## 11. Selection integrity
 

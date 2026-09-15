@@ -48,6 +48,7 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
   const [searchOperator, setSearchOperator] = useState<OrganizationalSearchOperator>("contains");
   const [dialog, setDialog] = useState<DialogMode>(null);
   const [selected, setSelected] = useState<OrganizationalStructureItem | null>(null);
+  const [addSeed, setAddSeed] = useState<Partial<OrganizationalStructureMutation> | null>(null);
   const canView = hasPermission(permissions.ViewOrganizationalStructure);
   const permissionSet = useMemo(() => ({
     canCreate: hasPermission(permissions.CreateOrganizationalStructure),
@@ -75,7 +76,7 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
   const approveMutation = useApproveJobDescription();
   const rejectMutation = useRejectJobDescription();
   const mutationLoading = createMutation.isPending || updateMutation.isPending || archiveMutation.isPending || restoreMutation.isPending || approveMutation.isPending || rejectMutation.isPending;
-  const close = () => { if (!mutationLoading) { setDialog(null); setSelected(null); } };
+  const close = () => { if (!mutationLoading) { setDialog(null); setSelected(null); setAddSeed(null); } };
   const submit = async (values: OrganizationalStructureMutation) => {
     const request = resource === "job-descriptions" ? { ...values, version: values.code } : values;
     if (dialog === "edit" && selected) {
@@ -87,6 +88,7 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
     }
     setDialog(null);
     setSelected(null);
+    setAddSeed(null);
   };
   const lifecycle = async () => {
     if (!selected) return;
@@ -167,33 +169,18 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
   };
   const handleAddChild = (parentItem: OrganizationalStructureItem) => {
     if (resource === "cost-centers") {
-      setSelected({
-        id: 0,
-        code: "",
-        nameEn: "",
-        nameAr: "",
-        descriptionEn: "",
-        descriptionAr: "",
-        isDeleted: false,
-        createdOn: "",
+      setAddSeed({
         parentCostCenterId: parentItem.id,
-      } as OrganizationalStructureItem);
+      });
     } else {
-      setSelected({
-        id: 0,
-        code: "",
-        nameEn: "",
-        nameAr: "",
-        descriptionEn: "",
-        descriptionAr: "",
-        isDeleted: false,
-        createdOn: "",
+      setAddSeed({
         parentDepartmentId: parentItem.id,
         branchId: parentItem.branchId,
         isCentralized: parentItem.isCentralized ?? !parentItem.branchId,
         costCenterCode: parentItem.costCenterCode,
-      } as OrganizationalStructureItem);
+      });
     }
+    setSelected(null);
     setDialog("add");
   };
   const resetList = () => {
@@ -223,7 +210,7 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
       searchField={searchField} searchOperator={searchOperator}
       onSearchFieldChange={(value) => { setSearchField(value); setPage(0); }}
       onSearchOperatorChange={(value) => { setSearchOperator(value); setPage(0); }}
-      onAdd={() => { setSelected(null); setDialog("add"); }}
+      onAdd={() => { setSelected(null); setAddSeed(null); setDialog("add"); }}
       onAddChild={handleAddChild}
       onView={(item) => { setSelected(item); setDialog("view"); }}
       onEdit={(item) => { setSelected(item); setDialog("edit"); }}
@@ -237,7 +224,7 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
     />
     {dialog === "add" || dialog === "edit" || (dialog === "view" && resource !== "job-descriptions") ? (
       <OrganizationalStructureForm
-        open mode={dialog} resource={resource} item={selected} loading={mutationLoading}
+        open mode={dialog} resource={resource} item={selected} initialValues={addSeed} loading={mutationLoading}
         onClose={close} onSubmit={submit} />
     ) : null}
     {dialog === "view" && resource === "job-descriptions" ? (

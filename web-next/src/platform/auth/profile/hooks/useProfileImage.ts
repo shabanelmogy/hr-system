@@ -83,8 +83,8 @@ const useProfileImage = () => {
   const handleFileSelect = async (file: File | null) => {
     const validation = createImageFileValidationSchema({
       required: t("validation.required"),
-      tooLarge: t("validation.fileTooLarge") || "File too large (max 10MB)",
-      invalidType: t("validation.invalidFileType") || "Invalid image file",
+      tooLarge: t("validation.fileTooLarge"),
+      invalidType: t("validation.invalidFileType"),
     }).safeParse({ file });
 
     if (validation.success) {

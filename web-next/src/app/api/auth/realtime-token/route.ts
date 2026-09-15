@@ -7,9 +7,7 @@ import { resolveRequestBackendUrl } from "@/lib/env/server";
 const TAG = "[Realtime Token]";
 
 export async function GET(request: NextRequest) {
-  const { accessToken, refreshToken, migrationPayload } = readAuthTokens(
-    request.cookies,
-  );
+  const { accessToken, refreshToken } = readAuthTokens(request.cookies);
   const backendBaseUrl = resolveRequestBackendUrl(request);
 
   const resolved = await resolveSession(accessToken, refreshToken, backendBaseUrl);
@@ -65,9 +63,7 @@ export async function GET(request: NextRequest) {
       { token: payload.token },
       { headers: { "cache-control": "no-store" } },
     );
-    if (resolved.authPayload ?? migrationPayload) {
-      setAuthCookies(response, resolved.authPayload ?? migrationPayload!);
-    }
+    if (resolved.authPayload) setAuthCookies(response, resolved.authPayload);
     return response;
   } catch (err) {
     console.error(`${TAG} Backend fetch error:`, err);

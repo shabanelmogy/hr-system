@@ -157,6 +157,7 @@ manifest.
 | F-03 | Medium | Full reports/import depend on an unimplemented Workforce Budget dataset | Architecture review | Finance | Deferred with reopening trigger |
 | F-04 | High | Draft update replaced every generated period, causing SQL unique-index conflicts when the same codes were inserted before prior rows were soft-archived | Production edit response and update-handler review | API | Resolved by sequence reconciliation, identity preservation, archived-period restoration, and regression tests |
 | F-05 | Manual | Runtime visual/device matrix requires live authenticated environments | Web/Mobile guides | Release owner | Automated UI contract audited; authenticated browser/device smoke remains |
+| F-06 | High | Fiscal Year mutation handlers requested the shared `IUnitOfWork`; later module registrations could route the commit away from `AccountingDbContext`, leaving the new year unreadable and returning an unexpected error | Host module composition, Accounting handler/store/DI review, and error report `b23c4526-17cb-469e-9ca7-ba0196c0cb8b` | Accounting API | Resolved with `IAccountingUnitOfWork` and competing-registration regression coverage |
 
 ## Verification ledger
 
@@ -170,6 +171,7 @@ manifest.
 | Mobile | Feature lint, types, architecture, focused tests, full Jest suite | Fiscal Years and translation parity passed; full suite 146/148 with unrelated Recruitment translation debt and a concurrent tree timeout; the tree suite passed 7/7 standalone | 2026-09-06 |
 | Mobile full tests | `npm test` | 143 passed; inherited Recruitment translation failure and shared-tree timeout | 2026-09-05 |
 | UI audit | Creation, editing, viewing, listing/filtering, mock data on Web/Mobile | Passed source/contract audit; live authenticated viewport/device smoke is manual | 2026-09-05 |
+| Accounting unit-of-work binding | Focused `AccountingUnitOfWorkRegistrationTests`; Accounting module suite | Competing shared registrations before/after Accounting cannot intercept Fiscal Year persistence; create stores one year and 12 monthly periods | 2026-09-15 |
 
 ## Final reconciliation
 

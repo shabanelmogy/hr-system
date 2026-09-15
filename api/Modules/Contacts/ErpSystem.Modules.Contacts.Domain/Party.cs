@@ -38,6 +38,9 @@ public sealed class Party
 
     public DateTimeOffset? UpdatedOnUtc { get; private set; }
 
+    /// <summary>Monotonic aggregate revision included in API and integration contracts.</summary>
+    public long Revision { get; private set; } = 1;
+
     public byte[] RowVersion { get; private set; } = [];
 
     public static Party Create(
@@ -63,6 +66,7 @@ public sealed class Party
     {
         ApplyContactDetails(displayName, email, phone);
         UpdatedOnUtc = updatedOnUtc.ToUniversalTime();
+        Revision = checked(Revision + 1);
     }
 
     private void ApplyContactDetails(string displayName, string? email, string? phone)

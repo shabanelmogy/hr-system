@@ -528,9 +528,7 @@ export default function DepartmentTreeDiagram({
                 {permissions.canEdit && (
                   <Tooltip
                     title={
-                      isAr
-                        ? "اسحب لإعادة ربط هذه الإدارة"
-                        : "Drag to reparent this department"
+                      t("organizationalStructure.departmentTree.dragToReparentThisDepartment")
                     }
                   >
                     <Box
@@ -652,10 +650,8 @@ export default function DepartmentTreeDiagram({
               <AppChip
                 label={
                   item.isCentralized || !item.branchId
-                    ? isAr
-                      ? "مركزية (عامة)"
-                      : "Centralized"
-                    : branchName || (isAr ? "فرع" : "Branch")
+                    ? t("organizationalStructure.departmentTree.centralized")
+                    : branchName || (t("organizationalStructure.departmentTree.branch"))
                 }
                 colorKey={
                   item.isCentralized || !item.branchId ? "secondary" : "info"
@@ -692,9 +688,7 @@ export default function DepartmentTreeDiagram({
               >
                 {hasChildren
                   ? `${children.length} ${t("organizationalStructure.tree.subDepartments")}`
-                  : isAr
-                    ? "إدارة طرفية"
-                    : "Terminal"}
+                  : t("organizationalStructure.departmentTree.terminal")}
               </Typography>
 
               <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 0.5, flexShrink: 0 }}>
@@ -716,7 +710,7 @@ export default function DepartmentTreeDiagram({
                       fontWeight: 700,
                     }}
                   >
-                    {isExpanded ? (isAr ? "طي" : "Collapse") : (isAr ? "فرد" : "Expand")}
+                    {isExpanded ? (t("organizationalStructure.departmentTree.collapse")) : (t("organizationalStructure.departmentTree.expand"))}
                   </Button>
                 ) : (
                   permissions.canCreate && onAddChild && (
@@ -736,7 +730,7 @@ export default function DepartmentTreeDiagram({
                         fontWeight: 700,
                       }}
                     >
-                      {isAr ? "إضافة فرعية" : "Add Sub"}
+                      {t("organizationalStructure.departmentTree.addSub")}
                     </Button>
                   )
                 )}
@@ -908,7 +902,7 @@ export default function DepartmentTreeDiagram({
             sx={{ fontWeight: 600 }}
           />
 
-          <Tooltip title={isAr ? "تكبير" : "Zoom in"}>
+          <Tooltip title={t("organizationalStructure.departmentTree.zoomIn")}>
             <IconButton
               size="small"
               onClick={() => setZoom((z) => Math.min(1.4, Number((z + 0.1).toFixed(1))))}
@@ -918,7 +912,7 @@ export default function DepartmentTreeDiagram({
             </IconButton>
           </Tooltip>
 
-          <Tooltip title={isAr ? "إعادة الضبط" : "Reset zoom"}>
+          <Tooltip title={t("organizationalStructure.departmentTree.resetZoom")}>
             <Button
               size="small"
               variant="text"
@@ -929,7 +923,7 @@ export default function DepartmentTreeDiagram({
             </Button>
           </Tooltip>
 
-          <Tooltip title={isAr ? "تصغير" : "Zoom out"}>
+          <Tooltip title={t("organizationalStructure.departmentTree.zoomOut")}>
             <IconButton
               size="small"
               onClick={() => setZoom((z) => Math.max(0.6, Number((z - 0.1).toFixed(1))))}
@@ -1157,9 +1151,7 @@ export default function DepartmentTreeDiagram({
           </DialogContentText>
           <Alert severity={pendingMove?.isSwap ? "warning" : "info"}>
             {pendingMove?.isSwap
-              ? isAr
-                ? "سيتم ترقية الإدارة التابعة لتصبح إدارة عليا، ونقل الإدارة الحالية لتصبح تابعة لها."
-                : "The sub-department will be promoted, and the current department will be nested underneath it."
+              ? t("organizationalStructure.departmentTree.descendantMoveWarning")
               : t("organizationalStructure.tree.dragInstruction")}
           </Alert>
         </DialogContent>
@@ -1179,9 +1171,7 @@ export default function DepartmentTreeDiagram({
             autoFocus
           >
             {isSubmitting
-              ? isAr
-                ? "جارٍ النقل..."
-                : "Moving..."
+              ? t("organizationalStructure.departmentTree.moving")
               : pendingMove?.isSwap
                 ? t("organizationalStructure.tree.confirmSwap")
                 : t("actions.confirm")}
@@ -1215,7 +1205,7 @@ export default function DepartmentTreeDiagram({
             <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
               {moveItem?.parentNameAr ||
                 moveItem?.parentNameEn ||
-                (isAr ? "الشركة / الإدارة العامة (بدون أب)" : "Company / Top Level")}
+                (t("organizationalStructure.departmentTree.companyTopLevel"))}
             </Typography>
           </Box>
           <FormControl fullWidth size="small" sx={{ mt: 1 }}>
@@ -1229,7 +1219,7 @@ export default function DepartmentTreeDiagram({
               onChange={(e) => setSelectedNewParent(e.target.value as number | "root")}
             >
               <MenuItem value="root">
-                🏢 {t("organizationalStructure.tree.rootNode")} ({isAr ? "إدارة رئيسية عليا بدون أب" : "Top-level root"})
+                🏢 {t("organizationalStructure.tree.rootNode")} ({t("organizationalStructure.departmentTree.topLevelRoot")})
               </MenuItem>
               {items
                 .filter((d) => moveItem && !isNodeOrDescendant(moveItem.id, d.id, itemMap))
@@ -1259,7 +1249,7 @@ export default function DepartmentTreeDiagram({
             variant="contained"
             color="primary"
           >
-            {isSubmitting ? (isAr ? "جارٍ الحفظ..." : "Saving...") : t("organizationalStructure.tree.saveMove")}
+            {isSubmitting ? (t("organizationalStructure.departmentTree.saving")) : t("organizationalStructure.tree.saveMove")}
           </Button>
         </DialogActions>
       </Dialog>

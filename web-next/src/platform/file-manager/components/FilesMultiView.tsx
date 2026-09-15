@@ -122,7 +122,7 @@ const FilesMultiView = ({
         title={
           selectedGroup
             ? selectedGroup.name
-            : t("files.title") || "Files Management"
+            : t("files.title")
         }
         titleIcon={selectedGroup?.icon}
         showBackButton={!!selectedGroup}
@@ -134,8 +134,8 @@ const FilesMultiView = ({
         dataCount={displayFiles?.length || 0}
         totalLabel={
           searchTerm
-            ? t("files.filtered") || "Filtered"
-            : t("files.total") || "Total"
+            ? t("files.filtered")
+            : t("files.total")
         }
         onRefresh={onRefresh}
         onViewTypeChange={handleViewTypeChange}

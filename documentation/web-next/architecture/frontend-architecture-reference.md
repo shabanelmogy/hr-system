@@ -2,7 +2,7 @@
 
 Status: Applied to `web-next`; modular migration phases 1-8 foundation completed 2026-09-10.
 
-This document is the architecture baseline for future frontend work. It covers ownership, dependency direction, routing, naming, and scalability. It does not define authentication behavior, API implementation, UI design, or performance policy.
+This document is the architecture baseline for future frontend work. It covers ownership, dependency direction, routing, naming, and scalability. It does not define authentication behavior, API implementation, UI design, or performance policy. The current transport and API parity gate is recorded in [Web/API Readiness Review](../WEB_API_READINESS_REVIEW.md).
 
 ## Feature Implementation Guides
 
@@ -85,6 +85,10 @@ coverage lives in `shared/components/layout/feature-module/navigation.test.ts`
 and the consuming Basic Data, Workforce Planning, and Attendance layouts are
 the compatibility examples.
 
+Opening the internal mobile navigation drawer closes the primary sidebar; at
+`lg` and above, an expanded internal navigation also closes it. The primary
+mobile sidebar remains available whenever the internal mobile drawer is closed.
+
 ### User and company context lifecycle
 
 `SessionContext` owns the abort controller and generation gate for session and
@@ -139,8 +143,10 @@ error states and is covered by its focused hook checks.
 
 - `/attendance-trends` is owned by HR `analytics`; prefix matching must not
   classify it as `attendance`.
-- `/administration/crystal-reports` keeps its legacy URL but is owned by HR
-  `analytics`, matching the server's `CrystalReports:*` permission catalog.
+- `/administration/crystal-reports` is owned by the frontend Reporting module
+  and the server Reporting module. It must not be classified under HR
+  `analytics`; authorization still uses the server's `CrystalReports:*`
+  permission catalog.
 - Sidebar module filtering and route authorization use the same module-access
   predicate. Permission filtering must preserve leaf navigation items rather than
   converting them into empty containers that the module filter removes.
@@ -158,6 +164,22 @@ error states and is covered by its focused hook checks.
 - Server `/modules/accessible` remains authoritative for purchased/enabled
   modules and user permission filtering. The frontend registry only intersects
   those server results with capabilities present in the current build.
+
+### API boundary and contract rules
+
+- Browser code calls same-origin `/api` routes through feature-owned services;
+  App Router handlers are the only BFF boundary.
+- Backend URLs are canonical origins. Runtime overrides are opt-in and exact
+  allowlist matches; production defaults keep the override disabled.
+- File paths use URL encoded stored filenames and the server scanner's accepted
+  extension/MIME pairs. Do not add a client format without updating the API
+  contract and its review evidence.
+- Problem Details fields (`type`, `title`, `status`, `detail`, `code`, and
+  `traceId`) are preserved for feature error handling. Field validation errors
+  remain separate from machine error codes.
+- `npm run check:architecture` rejects direct HTTP calls from TSX, and
+  `npm run check:i18n` scans every non-test TSX/JSX source file and rejects any
+  visible literal without translation keys.
 
 ## Target Structure
 

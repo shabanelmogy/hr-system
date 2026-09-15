@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "ERP System page for Basic Data Address Types."
 };
 
-import PageComponent from "@/modules/hr/basic-data/geographical-information/address-types/pages/AddressTypesPage";
+import { AddressTypesPage as PageComponent } from "@/modules/reference-data/geographical-information/address-types";
 
 export default function Page() {
   return <PageComponent />;

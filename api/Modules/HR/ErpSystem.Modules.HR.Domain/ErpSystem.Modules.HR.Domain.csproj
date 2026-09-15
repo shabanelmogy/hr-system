@@ -6,4 +6,5 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup><ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Domain\ErpSystem.BuildingBlocks.Domain.csproj" /></ItemGroup>
 </Project>

@@ -43,9 +43,11 @@ function createDocumentStub() {
 }
 
 describe("normalizeBackendUrl", () => {
-  it("accepts absolute http(s) URLs and trims trailing slashes", () => {
+  it("accepts canonical absolute http(s) origins", () => {
     expect(normalizeBackendUrl("https://localhost:7037/")).toBe("https://localhost:7037");
-    expect(normalizeBackendUrl("  http://api.example.test/// ")).toBe("http://api.example.test");
+    expect(normalizeBackendUrl("  http://api.example.test/ ")).toBe("http://api.example.test");
+    expect(normalizeBackendUrl("https://api.example.test/api")).toBeNull();
+    expect(normalizeBackendUrl("https://user:pass@api.example.test")).toBeNull();
   });
 
   it("rejects invalid values", () => {
@@ -59,8 +61,8 @@ describe("normalizeBackendUrl", () => {
 describe("storage-backed override", () => {
   it("returns null outside the browser", () => {
     vi.stubGlobal("window", undefined);
-    expect(getStoredBackendOverride()).toBeNull();
-    expect(saveBackendOverride("https://api.example.test")).toBeNull();
+    expect(getStoredBackendOverride([])).toBeNull();
+    expect(saveBackendOverride("https://api.example.test", [])).toBeNull();
     expect(() => clearBackendOverride()).not.toThrow();
   });
 
@@ -69,9 +71,10 @@ describe("storage-backed override", () => {
     const documentStub = createDocumentStub();
     vi.stubGlobal("document", documentStub);
 
-    const saved = saveBackendOverride("https://demo.example.test/");
+    const allowed = ["https://demo.example.test"];
+    const saved = saveBackendOverride("https://demo.example.test/", allowed);
     expect(saved).toBe("https://demo.example.test");
-    expect(getStoredBackendOverride()).toBe("https://demo.example.test");
+    expect(getStoredBackendOverride(allowed)).toBe("https://demo.example.test");
     expect(documentStub.cookie).toBe(
       `${BACKEND_OVERRIDE_COOKIE}=${encodeURIComponent("https://demo.example.test")}`,
     );
@@ -82,9 +85,9 @@ describe("storage-backed override", () => {
     vi.stubGlobal("window", { localStorage: storage });
     vi.stubGlobal("document", createDocumentStub());
 
-    expect(saveBackendOverride("nope")).toBeNull();
+    expect(saveBackendOverride("nope", [])).toBeNull();
     expect(storage.getItem("hrms.backendUrl")).toBeNull();
-    expect(getStoredBackendOverride()).toBeNull();
+    expect(getStoredBackendOverride([])).toBeNull();
   });
 
   it("clears both storage and cookie", () => {
@@ -93,10 +96,10 @@ describe("storage-backed override", () => {
     const documentStub = createDocumentStub();
     vi.stubGlobal("document", documentStub);
 
-    saveBackendOverride("https://demo.example.test");
+    saveBackendOverride("https://demo.example.test", ["https://demo.example.test"]);
     clearBackendOverride();
 
-    expect(getStoredBackendOverride()).toBeNull();
+    expect(getStoredBackendOverride([])).toBeNull();
     expect(documentStub.cookie.includes(BACKEND_OVERRIDE_COOKIE)).toBe(false);
   });
 
@@ -117,7 +120,7 @@ describe("storage-backed override", () => {
     const documentStub = createDocumentStub();
     vi.stubGlobal("document", documentStub);
 
-    expect(saveBackendOverride("https://demo.example.test")).toBe("https://demo.example.test");
+    expect(saveBackendOverride("https://demo.example.test", ["https://demo.example.test"])).toBe("https://demo.example.test");
     expect(documentStub.cookie).toContain(BACKEND_OVERRIDE_COOKIE);
     expect(() => clearBackendOverride()).not.toThrow();
     expect(documentStub.cookie.includes(BACKEND_OVERRIDE_COOKIE)).toBe(false);

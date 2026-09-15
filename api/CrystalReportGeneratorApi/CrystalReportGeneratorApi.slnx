@@ -1,0 +1,9 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="CrystalReportGeneratorApi.csproj" Id="4560ffb6-ab1f-4e59-bf8c-c78eee9f8eb1">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>

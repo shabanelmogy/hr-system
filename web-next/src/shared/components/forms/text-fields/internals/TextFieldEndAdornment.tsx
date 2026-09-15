@@ -59,7 +59,7 @@ export default function TextFieldEndAdornment(props: TextFieldEndAdornmentProps)
             pointerEvents: "none",
           }}
           aria-live="polite"
-          aria-label={`Character count: ${props.counterText}`}
+          aria-label={t("common.characterCount", { value: props.counterText })}
         >
           {props.counterText}
         </Typography>
@@ -67,7 +67,7 @@ export default function TextFieldEndAdornment(props: TextFieldEndAdornmentProps)
       {Boolean(value) && props.showClearButton && props.type !== "date" && (
         <ClearFieldButton
           type="button"
-          ariaLabel={props.clearButtonAriaLabel ?? `Clear ${props.fieldName}`}
+          ariaLabel={props.clearButtonAriaLabel ?? t("general.clear")}
           onClick={props.onClear}
           disabled={props.loading}
           edge="end"
@@ -86,8 +86,8 @@ export default function TextFieldEndAdornment(props: TextFieldEndAdornmentProps)
           size="small"
           disabled={props.loading}
           aria-label={props.showPassword
-            ? t("hidePassword", { field: props.fieldName }) || "Hide password"
-            : t("showPassword", { field: props.fieldName }) || "Show password"}
+            ? t("hidePassword", { field: props.fieldName })
+            : t("showPassword", { field: props.fieldName })}
           sx={{ color: "text.secondary", "&:hover": { color: "primary.main", bgcolor: alpha(theme.palette.primary.main, 0.08) } }}
         >
           {props.showPassword ? <VisibilityOff /> : <Visibility />}

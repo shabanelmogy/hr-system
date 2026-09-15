@@ -25,15 +25,6 @@ export function RealtimeEntityBridge() {
     const pendingResources = new Set<string>();
     let flushTimer: ReturnType<typeof setTimeout> | null = null;
 
-    const refreshUsersIfLoaded = () => {
-      const userStore = useUserStore.getState();
-      if (!userStore.hasLoaded) return;
-
-      void userStore.fetchUsers().catch((error: unknown) => {
-        console.warn("[Realtime] User refresh delayed", error);
-      });
-    };
-
     const refreshRolesIfLoaded = () => {
       const roleStore = useRoleStore.getState();
       if (!roleStore.hasLoaded) return;
@@ -45,7 +36,7 @@ export function RealtimeEntityBridge() {
 
     const refreshCompanyOptionsIfLoaded = () => {
       const userStore = useUserStore.getState();
-      if (!userStore.hasLoaded) return;
+      if (!userStore.hasCompanyOptionsLoaded) return;
 
       void userStore.fetchCompanyOptions().catch((error: unknown) => {
         console.warn("[Realtime] Company-option refresh delayed", error);
@@ -60,7 +51,6 @@ export function RealtimeEntityBridge() {
           void queryClient.invalidateQueries({ queryKey, refetchType: "active" });
         }
 
-        if (resource === realtimeResources.users) refreshUsersIfLoaded();
         if (
           resource === realtimeResources.roles ||
           resource === realtimeResources.roleClaims
@@ -109,12 +99,10 @@ export function RealtimeEntityBridge() {
       void queryClient.invalidateQueries({ refetchType: "active" });
 
       const userStore = useUserStore.getState();
-      if (userStore.hasLoaded) {
-        void Promise.all([userStore.fetchUsers(), userStore.fetchCompanyOptions()]).catch(
-          (error: unknown) => {
-            console.warn("[Realtime] User reconnect refresh delayed", error);
-          },
-        );
+      if (userStore.hasCompanyOptionsLoaded) {
+        void userStore.fetchCompanyOptions().catch((error: unknown) => {
+          console.warn("[Realtime] Company-option reconnect refresh delayed", error);
+        });
       }
 
       const roleStore = useRoleStore.getState();

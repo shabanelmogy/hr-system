@@ -1,7 +1,8 @@
-using ErpSystem.Modules.HR.Domain.Common.Exceptions;
+using ErpSystem.BuildingBlocks.Domain.Exceptions;
+using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities;
 using ErpSystem.Modules.HR.Domain.Recruitment.Enums;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities;
-using static ErpSystem.Modules.HR.Domain.Common.Guards.DomainGuard;
+using static ErpSystem.BuildingBlocks.Domain.Guards.DomainGuard;
 
 namespace ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 
@@ -46,10 +47,15 @@ public sealed class JobOffer : CompanyAuditableEntity
     public Guid PublicId { get; private set; }
     public string OfferNumber { get; private set; } = string.Empty;
     public int EmploymentApplicationId { get; private set; }
+    public EmploymentApplication EmploymentApplication { get; private set; } = null!;
     public int PositionId { get; private set; }
+    public Position Position { get; private set; } = null!;
     public int BranchId { get; private set; }
+    public Branch Branch { get; private set; } = null!;
     public int DepartmentId { get; private set; }
+    public Department Department { get; private set; } = null!;
     public int? DivisionId { get; private set; }
+    public Division? Division { get; private set; }
     public decimal BaseSalary { get; private set; }
     public string CurrencyCode { get; private set; } = string.Empty;
     public PayFrequency PayFrequency { get; private set; }

@@ -13,11 +13,12 @@ import { shouldRefreshAccessToken } from "@/lib/auth/token-expiration";
 import {
   copyBackendResponseHeaders,
   prepareBackendBody,
+  RequestBodyTooLargeError,
   type PreparedBackendBody,
 } from "@/lib/api/proxy-transport";
-import { resolveRequestBackendUrl } from "@/lib/env/server";
+import { getBufferedBodyLimit, resolveRequestBackendUrl } from "@/lib/env/server";
 
-const TAG = "[📡 API Proxy]";
+const TAG = "[ðŸ“¡ API Proxy]";
 const backendRequestTimeoutMs = 30_000;
 const reportRenderTimeoutMs = 120_000;
 
@@ -32,7 +33,6 @@ const forwardedHeaders = [
   "if-range",
   "range",
   "user-agent",
-  "x-forwarded-for",
 ] as const;
 
 function createBackendHeaders(request: NextRequest, token?: string) {
@@ -99,11 +99,13 @@ async function toNextResponse(backendResponse: Response, authPayload?: AuthPaylo
   let response: NextResponse;
 
   try {
-    if (contentType.includes("application/json")) {
+    if (contentType.includes("application/json") || /application\/[^;]+\+json/i.test(contentType)) {
       const body = await backendResponse.text();
       if (!body.trim()) {
         response = new NextResponse(null, { status: backendResponse.status });
         applyAuthPayload(response, authPayload);
+        copyBackendResponseHeaders(backendResponse.headers, response.headers);
+        response.headers.delete("content-length");
         response.headers.set("cache-control", "no-store");
         return response;
       }
@@ -115,6 +117,8 @@ async function toNextResponse(backendResponse: Response, authPayload?: AuthPaylo
         { status: backendResponse.status }
       );
       applyAuthPayload(response, discoveredAuth);
+      copyBackendResponseHeaders(backendResponse.headers, response.headers);
+      response.headers.delete("content-length");
     } else {
       response = new NextResponse(backendResponse.body, { status: backendResponse.status });
       copyBackendResponseHeaders(backendResponse.headers, response.headers);
@@ -122,10 +126,7 @@ async function toNextResponse(backendResponse: Response, authPayload?: AuthPaylo
     }
   } catch (error) {
     console.error(`${TAG} Invalid backend response body`, error);
-    const response = NextResponse.json(
-      { title: "Invalid response from backend service" },
-      { status: 502 },
-    );
+    const response = problemResponse(502, "Invalid response from backend service", "InvalidBackendResponse");
     applyAuthPayload(response, authPayload);
     return response;
   }
@@ -148,18 +149,30 @@ function applyAuthPayload(
 
 async function handle(request: NextRequest, parameters: RouteParameters) {
   if (isCrossSiteMutation(request)) {
-    return NextResponse.json({ title: "Cross-site request rejected" }, { status: 403 });
+    return problemResponse(403, "Cross-site request rejected", "CrossSiteRequestRejected");
   }
 
   const { path } = await parameters.params;
+  if (path.some(isUnsafeBackendPathSegment)) {
+    return problemResponse(400, "Invalid backend path", "UnsafeBackendPath");
+  }
   const route = path.join("/");
   const backendUrl = resolveRequestBackendUrl(request);
-  const { accessToken, refreshToken, migrationPayload } = readAuthTokens(
-    request.cookies,
-  );
+  const { accessToken, refreshToken } = readAuthTokens(request.cookies);
 
-  console.log(`${TAG} 📋 Request to /api/${route}`);
-  const preparedBody = await prepareBackendBody(request);
+  console.log(`${TAG} ðŸ“‹ Request to /api/${route}`);
+  let preparedBody: PreparedBackendBody;
+  try {
+    preparedBody = await prepareBackendBody(
+      request,
+      getBufferedBodyLimit(),
+    );
+  } catch (error) {
+    if (error instanceof RequestBodyTooLargeError) {
+      return problemResponse(413, "Request body is too large", "RequestBodyTooLarge");
+    }
+    throw error;
+  }
   let requestAccessToken = accessToken;
   let refreshedAuth: AuthPayload | null = null;
 
@@ -171,16 +184,10 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
   ) {
     const refreshResult = await refreshAuthTokens(accessToken, refreshToken, backendUrl);
     if (refreshResult.status === "unavailable") {
-      return NextResponse.json(
-        { title: "Authentication service unavailable" },
-        { status: 503 },
-      );
+      return problemResponse(503, "Authentication service unavailable", "AuthenticationServiceUnavailable");
     }
     if (refreshResult.status === "rejected") {
-      return NextResponse.json(
-        { title: "Unauthorized" },
-        { status: 401, headers: { "cache-control": "no-store" } },
-      );
+      return problemResponse(401, "Unauthorized", "Unauthorized");
     }
 
     refreshedAuth = refreshResult.payload;
@@ -205,40 +212,40 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
     accessToken &&
     refreshToken
   ) {
-    console.log(`${TAG} 🔄 Got 401, attempting token refresh for /api/${route}`);
+    console.log(`${TAG} ðŸ”„ Got 401, attempting token refresh for /api/${route}`);
     const refreshResult = await refreshAuthTokens(accessToken, refreshToken, backendUrl);
     
     if (refreshResult.status === "unavailable") {
-      console.warn(`${TAG} ❌ Auth service unavailable during refresh`);
-      return NextResponse.json({ title: "Authentication service unavailable" }, { status: 503 });
+      console.warn(`${TAG} âŒ Auth service unavailable during refresh`);
+      return problemResponse(503, "Authentication service unavailable", "AuthenticationServiceUnavailable");
     }
     
     if (refreshResult.status === "refreshed") {
-      console.log(`${TAG} ✅ Token refreshed successfully!`);
-      console.log(`${TAG} 🔁 Retrying /api/${route} with new token...`);
+      console.log(`${TAG} âœ… Token refreshed successfully!`);
+      console.log(`${TAG} ðŸ” Retrying /api/${route} with new token...`);
       refreshedAuth = refreshResult.payload;
       try {
         backendResponse = await callBackend(request, path, refreshedAuth.token, preparedBody);
-        console.log(`${TAG} ✅ Retry successful: ${backendResponse.status} for /api/${route}`);
+        console.log(`${TAG} âœ… Retry successful: ${backendResponse.status} for /api/${route}`);
       } catch (error) {
         const response = backendFailureResponse(error);
         applyAuthPayload(response, refreshedAuth);
         return response;
       }
     } else {
-      console.warn(`${TAG} ❌ Refresh rejected for /api/${route}`);
+      console.warn(`${TAG} âŒ Refresh rejected for /api/${route}`);
     }
   }
 
   const response = await toNextResponse(
     backendResponse,
-    refreshedAuth ?? migrationPayload,
+    refreshedAuth,
   );
   if (backendResponse.status === 401) {
     // A request started before a company switch can finish after the replacement
     // cookies are stored. It must not clear the newer session. The verified
     // session endpoint owns the final logout decision.
-    console.warn(`${TAG} ❌ Backend rejected this request; scheduling session revalidation`);
+    console.warn(`${TAG} âŒ Backend rejected this request; scheduling session revalidation`);
   }
   return response;
 }
@@ -257,10 +264,35 @@ function backendFailureResponse(error: unknown) {
   const timedOut = error instanceof DOMException &&
     (error.name === "TimeoutError" || error.name === "AbortError");
 
-  return NextResponse.json(
-    { title: timedOut ? "Backend request timed out" : "Backend service unavailable" },
-    { status: timedOut ? 504 : 502 },
+  return problemResponse(
+    timedOut ? 504 : 502,
+    timedOut ? "Backend request timed out" : "Backend service unavailable",
+    timedOut ? "BackendRequestTimedOut" : "BackendServiceUnavailable",
   );
+}
+
+function problemResponse(status: number, title: string, code: string) {
+  return NextResponse.json(
+    { type: "about:blank", title, status, detail: title, code },
+    {
+      status,
+      headers: {
+        "content-type": "application/problem+json",
+        "cache-control": "no-store",
+      },
+    },
+  );
+}
+
+function isUnsafeBackendPathSegment(segment: string): boolean {
+  if (!segment || segment === "." || segment === "..") return true;
+  if (/[\\/?#\u0000-\u001F\u007F]/.test(segment)) return true;
+  try {
+    const decoded = decodeURIComponent(segment);
+    return decoded !== segment && isUnsafeBackendPathSegment(decoded);
+  } catch {
+    return true;
+  }
 }
 
 export const dynamic = "force-dynamic";

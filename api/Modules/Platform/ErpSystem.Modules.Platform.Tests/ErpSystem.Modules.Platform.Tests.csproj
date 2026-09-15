@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework><AssemblyName>ErpSystem.Modules.Platform.Tests</AssemblyName><RootNamespace>ErpSystem.Modules.Platform.Tests</RootNamespace><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable><IsPackable>false</IsPackable><IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+  <ItemGroup><PackageReference Include="Microsoft.NET.Test.Sdk" /><PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" /><PackageReference Include="xunit" /><PackageReference Include="xunit.runner.visualstudio"><PrivateAssets>all</PrivateAssets><IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets></PackageReference></ItemGroup>
+  <ItemGroup><ProjectReference Include="..\ErpSystem.Modules.Platform.Contracts\ErpSystem.Modules.Platform.Contracts.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Platform.Domain\ErpSystem.Modules.Platform.Domain.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Platform.Application\ErpSystem.Modules.Platform.Application.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Platform.Infrastructure\ErpSystem.Modules.Platform.Infrastructure.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Platform.Presentation\ErpSystem.Modules.Platform.Presentation.csproj" /><ProjectReference Include="..\ErpSystem.Modules.Platform\ErpSystem.Modules.Platform.csproj" /></ItemGroup>
+</Project>

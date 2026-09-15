@@ -51,13 +51,13 @@ export function JobOpeningCard({
   const getStatusLabel = () => {
     switch (opening.status) {
       case JobOpeningStatus.Open:
-        return t('recruitment.status.open', 'مفتوح / Open');
+        return t('recruitment.status.open');
       case JobOpeningStatus.Paused:
-        return t('recruitment.status.paused', 'معلق / Paused');
+        return t('recruitment.status.paused');
       case JobOpeningStatus.Closed:
-        return t('recruitment.status.closed', 'مغلق / Closed');
+        return t('recruitment.status.closed');
       default:
-        return t('recruitment.status.draft', 'مسودة / Draft');
+        return t('recruitment.status.draft');
     }
   };
 
@@ -89,7 +89,7 @@ export function JobOpeningCard({
           <View style={[styles.selectedBadge, { backgroundColor: `${theme.colors.primary}20` }]}>
             <AppIcon name="checkmark-circle" size={16} color={theme.colors.primary} />
             <AppText variant="caption" weight="700" style={{ color: theme.colors.primary }}>
-              {t('recruitment.pipeline.selected', 'محدد / Filtered')}
+              {t('recruitment.pipeline.selected')}
             </AppText>
           </View>
         )}
@@ -112,7 +112,7 @@ export function JobOpeningCard({
       <View style={styles.progressSection}>
         <View style={styles.progressLabelRow}>
           <AppText variant="caption" style={{ color: theme.colors.textMuted }}>
-            {t('recruitment.openings.hiredProgress', 'تم تعيين:')} {opening.hiredCount} / {opening.positionCount}
+            {t('recruitment.openings.hiredProgress')} {opening.hiredCount} / {opening.positionCount}
           </AppText>
           <AppText variant="caption" weight="700" style={{ color: theme.colors.primary }}>
             {progressPercent}%
@@ -138,7 +138,7 @@ export function JobOpeningCard({
           <AppIcon name="people-outline" size={16} color={theme.colors.primary} />
           <AppText variant="bodySmall" weight="700" style={{ color: theme.colors.primary }}>
             {opening.activeApplicationsCount}{' '}
-            {t('recruitment.openings.applicationsCount', 'متقدم / Applicants')}
+            {t('recruitment.openings.applicationsCount')}
           </AppText>
         </View>
 

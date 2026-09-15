@@ -63,6 +63,10 @@ Evaluations are no longer arbitrary or static:
 
 ### Requisition Types & Replacement Governance
 - **RequisitionType**: `NewPosition = 1` or `Replacement = 2`.
+- Persistence keeps `JobRequisition.Type` defaulted to `NewPosition` and
+  `PlanningSource` defaulted to `Legacy`. EF uses an explicit zero-valued
+  sentinel for each property; zero is outside both enums and exists only to
+  identify an unset value during insert generation.
 - When `Type == Replacement`, `ReplacementEmployeeId` is mandatory and must reference an active employee in the same tenant/company.
 
 ### Automated Headcount Availability

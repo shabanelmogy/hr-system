@@ -1,6 +1,7 @@
 using Asp.Versioning;
 using ErpSystem.BuildingBlocks.Authorization;
-using ErpSystem.Modules.Platform.Contracts.OfflineOperations;
+using ErpSystem.Modules.Platform.Application.OfflineOperations;
+using ErpSystem.Modules.Platform.Contracts.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ namespace ErpSystem.Modules.Platform.Presentation.Features.OfflineOperations.V1;
 [Route("api/v{version:apiVersion}/offline-operations")]
 [ApiController]
 [Authorize]
-public sealed class OfflineOperationsController(IOfflineOperationsPolicyService policyService)
+public sealed class OfflineOperationsController(ISender sender)
     : ControllerBase
 {
     [HttpGet("policy")]
@@ -21,7 +22,8 @@ public sealed class OfflineOperationsController(IOfflineOperationsPolicyService 
     {
         try
         {
-            return Ok(await policyService.GetCurrentAsync(cancellationToken).ConfigureAwait(false));
+            return Ok(await sender.Send(new GetOfflineOperationsPolicyQuery(), cancellationToken)
+                .ConfigureAwait(false));
         }
         catch (OfflineOperationsPolicyScopeException exception)
         {
@@ -31,14 +33,15 @@ public sealed class OfflineOperationsController(IOfflineOperationsPolicyService 
 
     [HttpPut("policy")]
     [TenantMember]
-    [HasPermission(OfflineOperationsPermissions.Manage)]
+    [HasPermission(PlatformPermissions.ManageOfflineOperations)]
     public async Task<ActionResult<OfflineOperationsPolicyResponse>> UpdatePolicy(
         [FromBody] UpdateOfflineOperationsPolicyRequest request,
         CancellationToken cancellationToken)
     {
         try
         {
-            return Ok(await policyService.UpdateCurrentAsync(request, cancellationToken).ConfigureAwait(false));
+            return Ok(await sender.Send(new UpdateOfflineOperationsPolicyCommand(request), cancellationToken)
+                .ConfigureAwait(false));
         }
         catch (OfflineOperationsPolicyValidationException exception)
         {

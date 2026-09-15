@@ -114,19 +114,19 @@
     {
       "id": "api-domain-tests",
       "layer": "test",
-      "path": "api/ErpSystem.Tests/WorkforcePlanDomainTests.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Tests/WorkforcePlanDomainTests.cs",
       "purpose": "Lifecycle and period invariant tests"
     },
     {
       "id": "api-workforce-dependency-tests",
       "layer": "test",
-      "path": "api/ErpSystem.Tests/WorkforcePlanningDependencyRegistrationTests.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Tests/WorkforcePlanningDependencyRegistrationTests.cs",
       "purpose": "Runtime dependency-registration regression coverage for workforce error catalogs"
     },
     {
       "id": "api-persistence-tests",
       "layer": "test",
-      "path": "api/ErpSystem.Tests/WorkforcePlanPersistenceTests.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Tests/WorkforcePlanPersistenceTests.cs",
       "purpose": "Baseline, revision ordering, and index-model tests"
     },
     {
@@ -150,25 +150,25 @@
     {
       "id": "api-budget-domain-tests",
       "layer": "test",
-      "path": "api/ErpSystem.Tests/WorkforceBudgetDomainTests.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Tests/WorkforceBudgetDomainTests.cs",
       "purpose": "Phase 2 lifecycle, reconciliation, and envelope derivation tests"
     },
     {
       "id": "api-budget-handler-tests",
       "layer": "test",
-      "path": "api/ErpSystem.Tests/WorkforceBudgetHandlerTests.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Tests/WorkforceBudgetHandlerTests.cs",
       "purpose": "Phase 2 coverage/ceiling, atomic approval, supersession, and fault-injection tests"
     },
     {
       "id": "api-budget-persistence-tests",
       "layer": "test",
-      "path": "api/ErpSystem.Tests/WorkforceBudgetPersistenceTests.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Tests/WorkforceBudgetPersistenceTests.cs",
       "purpose": "Phase 2 index-model and projection tests"
     },
     {
       "id": "api-budget-contract-tests",
       "layer": "test",
-      "path": "api/ErpSystem.Tests/WorkforceBudgetsControllerContractTests.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Tests/WorkforceBudgetsControllerContractTests.cs",
       "purpose": "Phase 2 route/permission/concurrency contract tests"
     },
     {
@@ -212,18 +212,6 @@
       "layer": "api",
       "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/WorkforcePlanning/Persistence/WorkforceTraceStore.cs",
       "purpose": "Phase 6 tenant-scoped AsNoTracking trace projection"
-    },
-    {
-      "id": "api-hire-idempotency-migration",
-      "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Migrations/20260907095412_AddHireIdempotency.cs",
-      "purpose": "Phase 5 tenant/company scoped hire idempotency uniqueness"
-    },
-    {
-      "id": "api-hire-employee-relationship-migration",
-      "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Migrations/20260907095527_AddHireEmployeeRelationship.cs",
-      "purpose": "Phase 5 atomic employee graph relationship"
     },
     {
       "id": "web-trace-page",
@@ -295,19 +283,13 @@
       "purpose": "Self-approval, capacity, amendment, and fault-injection coverage",
       "id": "api-staffing-handler-tests",
       "layer": "test",
-      "path": "api/ErpSystem.Tests/StaffingPlanningHandlerTests.cs"
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Tests/StaffingPlanningHandlerTests.cs"
     },
     {
       "purpose": "Staffing and amendment invariant coverage",
       "id": "api-staffing-domain-tests",
       "layer": "test",
-      "path": "api/ErpSystem.Tests/StaffingPlanningDomainTests.cs"
-    },
-    {
-      "purpose": "Additive staffing request and envelope amendment schema",
-      "id": "api-staffing-migration",
-      "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Migrations/20260907060942_AddStaffingRequestsAndEnvelopeAmendments.cs"
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Tests/StaffingPlanningDomainTests.cs"
     },
     {
       "purpose": "Planned requisition bridge HTTP boundary",
@@ -323,9 +305,9 @@
     },
     {
       "purpose": "Recruitment bridge, offer governance, and atomic hire orchestration",
-      "id": "api-recruitment-service",
+      "id": "api-recruitment-hire-commands",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Recruitment/Services/RecruitmentService.cs"
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/Recruitment/EmploymentApplications/Commands/EmploymentApplicationCommands.cs"
     },
     {
       "purpose": "Server-derived requisition and offer mutation contracts",
@@ -352,28 +334,10 @@
       "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/Recruitment/Entities/JobOfferApprovalHistory.cs"
     },
     {
-      "purpose": "Staffing request to requisition bridge schema",
-      "id": "api-recruitment-bridge-migration",
-      "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Migrations/20260907063534_LinkStaffingRequestsToJobRequisitions.cs"
-    },
-    {
-      "purpose": "Offer governance and approval history schema",
-      "id": "api-offer-governance-migration",
-      "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Migrations/20260907093220_AddJobOfferApprovalGovernance.cs"
-    },
-    {
-      "purpose": "Atomic application-to-employee relationship schema",
-      "id": "api-hire-relationship-migration",
-      "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Migrations/20260907095527_AddHireEmployeeRelationship.cs"
-    },
-    {
       "purpose": "Offer lifecycle and idempotent Accepted-offer-only hire coverage",
       "id": "api-recruitment-lifecycle-tests",
       "layer": "test",
-      "path": "api/ErpSystem.Tests/RecruitmentLifecycleTests.cs"
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Tests/RecruitmentLifecycleTests.cs"
     },
     {
       "purpose": "Staffing request list/detail/action journey",
@@ -487,7 +451,7 @@
       "purpose": "Trace edges, redaction, isolation, and commitment pagination coverage",
       "id": "trace-persistence-tests",
       "layer": "test",
-      "path": "api/ErpSystem.Tests/WorkforceTracePersistenceTests.cs"
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Tests/WorkforceTracePersistenceTests.cs"
     },
     {
       "purpose": "Web trace schema and service boundary",

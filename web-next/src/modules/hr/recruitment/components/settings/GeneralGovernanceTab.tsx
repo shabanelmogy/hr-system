@@ -15,9 +15,7 @@ import {
   Snackbar,
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useTranslation } from "react-i18next";
-import { ConfirmationDialog } from "@/shared/components/dialogs";
 import { MySelect, MyTextField } from "@/shared/components/forms";
 import type { RecruitmentGeneralSettings } from "../../types/recruitmentSettingsTypes";
 import {
@@ -31,14 +29,14 @@ const PROBATION_MONTHS = [1, 3, 6] as const;
 
 interface GeneralGovernanceTabProps {
   settings: RecruitmentGeneralSettings;
+  canEdit: boolean;
   onUpdateSettings: (updates: Partial<RecruitmentGeneralSettings>) => void;
-  onResetAll: () => void;
 }
 
 export default function GeneralGovernanceTab({
   settings,
+  canEdit,
   onUpdateSettings,
-  onResetAll,
 }: GeneralGovernanceTabProps) {
   const { t } = useTranslation();
   const schema = useMemo(() => createGeneralSettingsSchema(t), [t]);
@@ -60,7 +58,6 @@ export default function GeneralGovernanceTab({
     GeneralSettingsFormData
   >({ resolver: zodResolver(schema), defaultValues });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [resetDialogOpen, setResetDialogOpen] = useState(false);
 
   useEffect(() => {
     reset(defaultValues);
@@ -71,12 +68,6 @@ export default function GeneralGovernanceTab({
       ...data,
       inboundEmailAlias: data.inboundEmailAlias || undefined,
     });
-    setSnackbarOpen(true);
-  };
-
-  const handleReset = () => {
-    onResetAll();
-    setResetDialogOpen(false);
     setSnackbarOpen(true);
   };
 
@@ -111,6 +102,7 @@ export default function GeneralGovernanceTab({
               dataSource={currencyOptions}
               valueMember="id"
               displayMember="name"
+              disabled={!canEdit}
               required
             />
           </Grid>
@@ -125,6 +117,7 @@ export default function GeneralGovernanceTab({
               minValue={1}
               maxValue={365}
               helperText={t("recruitment.settings.offerExpiryHint", "المدة المتاحة للمرشح للموافقة على العرض قبل انتهائه آلياً")}
+              readOnly={!canEdit}
               required
             />
           </Grid>
@@ -138,6 +131,7 @@ export default function GeneralGovernanceTab({
               dataSource={probationOptions}
               valueMember="id"
               displayMember="name"
+              disabled={!canEdit}
               required
             />
           </Grid>
@@ -150,6 +144,7 @@ export default function GeneralGovernanceTab({
               type="email"
               label={t("recruitment.settings.inboundEmail", "بريد استقبال السير الذاتية الآلي (Job Email Alias)")}
               helperText={t("recruitment.settings.inboundEmailHint", "مثل أودو: السير الذاتية المرسلة لهذا البريد تتحول تلقائياً لطلبات تقديم")}
+              readOnly={!canEdit}
             />
           </Grid>
 
@@ -162,7 +157,7 @@ export default function GeneralGovernanceTab({
               control={control}
               name="autoPublishOpening"
               render={({ field }) => <FormControlLabel
-                control={<Switch checked={field.value} onChange={(_, value) => field.onChange(value)} color="primary" />}
+                control={<Switch checked={field.value} onChange={(_, value) => field.onChange(value)} color="primary" disabled={!canEdit} />}
                 label={<Box><Typography variant="subtitle2" sx={{ fontWeight: 700 }}>{t("recruitment.settings.autoPublishLabel", "النشر التلقائي للشاغر عند اعتماد طلب الاحتياج")}</Typography><Typography variant="caption" sx={{ color: "text.secondary" }}>{t("recruitment.settings.autoPublishDesc", "إنشاء شاغر وظيفي ونشره على لوحة التوظيف فوراً بمجرد اعتماد طلب الاحتياج")}</Typography></Box>}
               />}
             />
@@ -173,7 +168,7 @@ export default function GeneralGovernanceTab({
               control={control}
               name="enforceHeadcountCapacity"
               render={({ field }) => <FormControlLabel
-                control={<Switch checked={field.value} onChange={(_, value) => field.onChange(value)} color="warning" />}
+                control={<Switch checked={field.value} onChange={(_, value) => field.onChange(value)} color="warning" disabled={!canEdit} />}
                 label={<Box><Typography variant="subtitle2" sx={{ fontWeight: 700 }}>{t("recruitment.settings.headcountStrictLabel", "التحقق الصارم من السعة المتبقية (Headcount Protection)")}</Typography><Typography variant="caption" sx={{ color: "text.secondary" }}>{t("recruitment.settings.headcountStrictDesc", "منع تعيين أي مرشح في حال اكتمال العدد المطلوب للشاغر وإغلاقه آلياً")}</Typography></Box>}
               />}
             />
@@ -184,33 +179,25 @@ export default function GeneralGovernanceTab({
               control={control}
               name="enablePublicPortal"
               render={({ field }) => <FormControlLabel
-                control={<Switch checked={field.value} onChange={(_, value) => field.onChange(value)} color="success" />}
+                control={<Switch checked={field.value} onChange={(_, value) => field.onChange(value)} color="success" disabled={!canEdit} />}
                 label={<Box><Typography variant="subtitle2" sx={{ fontWeight: 700 }}>{t("recruitment.settings.publicPortalLabel", "تفعيل بوابة التقديم الخارجية للجمهور (Public Careers Portal)")}</Typography><Typography variant="caption" sx={{ color: "text.secondary" }}>{t("recruitment.settings.publicPortalDesc", "إتاحة التقديم المباشر للمرشحين ورفع السيرة الذاتية عبر رابط الشركة الخارجي")}</Typography></Box>}
               />}
             />
           </Grid>
         </Grid>
 
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 4, pt: 2, borderTop: 1, borderColor: "divider" }}>
-          <Button
-            type="button"
-            variant="outlined"
-            color="error"
-            startIcon={<RestartAltIcon />}
-            onClick={() => setResetDialogOpen(true)}
-          >
-            {t("recruitment.settings.resetDefaults", "استعادة الإعدادات الافتراضية")}
-          </Button>
-
-          <Button
-            type="submit"
-            variant="contained"
-            startIcon={<SaveIcon />}
-            sx={{ fontWeight: 700, px: 3 }}
-          >
-            {t("common.saveChanges", "حفظ كافة التغييرات")}
-          </Button>
-        </Box>
+        {canEdit && (
+          <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center", mt: 4, pt: 2, borderTop: 1, borderColor: "divider" }}>
+            <Button
+              type="submit"
+              variant="contained"
+              startIcon={<SaveIcon />}
+              sx={{ fontWeight: 700, px: 3 }}
+            >
+              {t("common.saveChanges", "حفظ كافة التغييرات")}
+            </Button>
+          </Box>
+        )}
       </Card>
 
       <Snackbar
@@ -218,16 +205,6 @@ export default function GeneralGovernanceTab({
         autoHideDuration={3000}
         onClose={() => setSnackbarOpen(false)}
         message={t("recruitment.settings.savedSuccess", "تم حفظ إعدادات وسياسات التوظيف بنجاح!")}
-      />
-      <ConfirmationDialog
-        open={resetDialogOpen}
-        title={t("recruitment.settings.resetDefaults")}
-        description={t("recruitment.settings.confirmReset")}
-        confirmLabel={t("recruitment.settings.resetDefaults")}
-        cancelLabel={t("actions.cancel")}
-        confirmColor="error"
-        onClose={() => setResetDialogOpen(false)}
-        onConfirm={handleReset}
       />
     </Box>
   );

@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.Inventory</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.Inventory</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.IdentityModel.Protocols" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Modularity\ErpSystem.BuildingBlocks.Modularity.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Inventory.Application\ErpSystem.Modules.Inventory.Application.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Inventory.Infrastructure\ErpSystem.Modules.Inventory.Infrastructure.csproj" />
+    <ProjectReference Include="..\ErpSystem.Modules.Inventory.Presentation\ErpSystem.Modules.Inventory.Presentation.csproj" />
+  </ItemGroup>
+</Project>

@@ -47,6 +47,7 @@ import {
   JobRequisitionMutation,
   JobOfferStatus,
   type JobOfferDto,
+  type InterviewDto,
 } from '../../domain/models/recruitment';
 import { useRecruitmentPermissions } from '../hooks/use-recruitment-permissions';
 import { CandidateDetailModal } from '../components/CandidateDetailModal';
@@ -59,6 +60,8 @@ import { RecruitmentSettingsViewMobile } from '../components/RecruitmentSettings
 import { RecruitmentSummaryStats } from '../components/RecruitmentSummaryStats';
 import { ScheduleInterviewModal } from '../components/ScheduleInterviewModal';
 import { InterviewEvaluationModal } from '../components/InterviewEvaluationModal';
+import { ApplicationInterviewPickerModal } from '../components/ApplicationInterviewPickerModal';
+import { getApplicationPipelineStage } from '../utils/application-pipeline-stage';
 
 type ActiveTab = 'openings' | 'requisitions' | 'pipeline' | 'offers' | 'settings';
 type PendingOfferAction = { action: 'submit' | 'approve' | 'reject' | 'issue'; offer: JobOfferDto } | null;
@@ -80,7 +83,8 @@ export function RecruitmentScreen() {
   const [interviewAppId, setInterviewAppId] = useState<number | null>(null);
   const [offerAppId, setOfferAppId] = useState<number | null>(null);
   const [hireAppId, setHireAppId] = useState<number | null>(null);
-  const [evaluateInterviewId, setEvaluateInterviewId] = useState<number | null>(null);
+  const [evaluateApplicationId, setEvaluateApplicationId] = useState<number | null>(null);
+  const [selectedInterview, setSelectedInterview] = useState<InterviewDto | null>(null);
   const [requisitionFormOpen, setRequisitionFormOpen] = useState(false);
 
   // Queries
@@ -88,8 +92,9 @@ export function RecruitmentScreen() {
   const openingsQuery = useJobOpenings({ search });
   const requisitionsQuery = useJobRequisitions({ search });
   const applicationsQuery = useApplications({
+    pageNumber: 1,
+    pageSize: 100,
     jobOpeningId: selectedOpeningId ?? undefined,
-    stage: selectedStage === 'all' ? undefined : selectedStage,
     search,
   });
   const offersQuery = useJobOffers({ pageNumber: offersPage + 1, pageSize: 10 });
@@ -126,16 +131,21 @@ export function RecruitmentScreen() {
 
   const openings = openingsQuery.data?.items ?? [];
   const requisitions = requisitionsQuery.data?.items ?? [];
-  const applications = applicationsQuery.data?.items ?? [];
+  const loadedApplications = applicationsQuery.data?.items ?? [];
+  const applications = selectedStage === 'all'
+    ? loadedApplications
+    : loadedApplications.filter((application) => getApplicationPipelineStage(application.status) === selectedStage);
   const offers = offersQuery.data?.items ?? [];
 
   const stageChips: { id: ApplicationStage | 'all'; label: string }[] = [
-    { id: 'all', label: t('common.all', 'الكل / All') },
-    { id: ApplicationStage.Applied, label: t('recruitment.stages.applied', 'تم التقديم / Applied') },
-    { id: ApplicationStage.Shortlisted, label: t('recruitment.stages.shortlisted', 'المختصرة / Shortlisted') },
-    { id: ApplicationStage.Interview, label: t('recruitment.stages.interview', 'المقابلات / Interviews') },
-    { id: ApplicationStage.Offer, label: t('recruitment.stages.offer', 'العروض / Offers') },
-    { id: ApplicationStage.Hired, label: t('recruitment.stages.hired', 'تم التعيين / Hired') },
+    { id: 'all', label: t('common.all') },
+    { id: ApplicationStage.Applied, label: t('recruitment.stages.applied') },
+    { id: ApplicationStage.Shortlisted, label: t('recruitment.stages.shortlisted') },
+    { id: ApplicationStage.Interview, label: t('recruitment.stages.interview') },
+    { id: ApplicationStage.Offer, label: t('recruitment.stages.offer') },
+    { id: ApplicationStage.Hired, label: t('recruitment.stages.hired') },
+    { id: ApplicationStage.Rejected, label: t('recruitment.stages.rejected') },
+    { id: ApplicationStage.Withdrawn, label: t('recruitment.stages.withdrawn') },
   ];
 
   const handleConfirmHire = async () => {
@@ -147,10 +157,10 @@ export function RecruitmentScreen() {
         hireDate: new Date().toISOString().split('T')[0],
         idempotencyKey: `hire-${hireAppId}`,
       });
-      showToast.success(t('recruitment.candidate.hiredSuccess', 'تم تعيين المرشح بنجاح!'));
+      showToast.success(t('recruitment.candidate.hiredSuccess'));
       setHireAppId(null);
     } catch (error) {
-      showToast.error(error, t('common.error', 'حدث خطأ أثناء التعيين'));
+      showToast.error(error, t('common.error'));
     }
   };
 
@@ -171,7 +181,7 @@ export function RecruitmentScreen() {
       setOfferRejectReason('');
       await offersQuery.refetch();
     } catch (error) {
-      showToast.error(error, t('common.error', 'حدث خطأ أثناء تحديث العرض'));
+      showToast.error(error, t('common.error'));
     }
   };
 
@@ -224,7 +234,7 @@ export function RecruitmentScreen() {
                 color: activeTab === 'openings' ? theme.colors.primary : theme.colors.textMuted,
               }}
             >
-              {t('recruitment.tabs.openingsShort', 'الشواغر')}
+              {t('recruitment.tabs.openingsShort')}
             </AppText>
           </Pressable>
 
@@ -233,7 +243,7 @@ export function RecruitmentScreen() {
             style={[styles.tabBtn, activeTab === 'offers' && { backgroundColor: theme.colors.surface, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 4, elevation: 2 }]}
           >
             <AppIcon name="mail-outline" size={15} color={activeTab === 'offers' ? theme.colors.primary : theme.colors.textMuted} />
-            <AppText variant="caption" weight={activeTab === 'offers' ? '800' : '600'} style={{ color: activeTab === 'offers' ? theme.colors.primary : theme.colors.textMuted }}>{t('recruitment.tabs.offersShort', 'العروض')} ({offers.length})</AppText>
+            <AppText variant="caption" weight={activeTab === 'offers' ? '800' : '600'} style={{ color: activeTab === 'offers' ? theme.colors.primary : theme.colors.textMuted }}>{t('recruitment.tabs.offersShort')} ({offers.length})</AppText>
           </Pressable> : null}
 
           <Pressable
@@ -261,7 +271,7 @@ export function RecruitmentScreen() {
                 color: activeTab === 'requisitions' ? theme.colors.primary : theme.colors.textMuted,
               }}
             >
-              {t('recruitment.tabs.requisitionsShort', 'الاحتياجات')} ({requisitions.length})
+              {t('recruitment.tabs.requisitionsShort')} ({requisitions.length})
             </AppText>
           </Pressable>
 
@@ -290,7 +300,7 @@ export function RecruitmentScreen() {
                 color: activeTab === 'pipeline' ? theme.colors.primary : theme.colors.textMuted,
               }}
             >
-              {t('recruitment.tabs.pipelineShort', 'المسار')}
+              {t('recruitment.tabs.pipelineShort')}
             </AppText>
           </Pressable>
 
@@ -320,7 +330,7 @@ export function RecruitmentScreen() {
                   color: activeTab === 'settings' ? theme.colors.primary : theme.colors.textMuted,
                 }}
               >
-                {t('recruitment.tabs.settingsShort', 'الإعدادات')}
+                {t('recruitment.tabs.settingsShort')}
               </AppText>
             </Pressable>
           )}
@@ -335,10 +345,10 @@ export function RecruitmentScreen() {
               onChangeText={setSearch}
               placeholder={
                 activeTab === 'openings'
-                  ? t('recruitment.openings.searchPlaceholder', 'بحث عن وظيفة...')
+                  ? t('recruitment.openings.searchPlaceholder')
                   : activeTab === 'requisitions'
-                  ? t('recruitment.requisitions.searchPlaceholder', 'بحث عن طلب احتياج...')
-                : activeTab === 'offers' ? t('recruitment.offers.managementTitle') : t('recruitment.pipeline.searchPlaceholder', 'بحث عن مرشح بالاسم أو البريد...')
+                  ? t('recruitment.requisitions.searchPlaceholder')
+                : activeTab === 'offers' ? t('recruitment.offers.managementTitle') : t('recruitment.pipeline.searchPlaceholder')
               }
               placeholderTextColor={theme.colors.textMuted}
               style={[styles.searchInput, { color: theme.colors.text }]}
@@ -357,7 +367,7 @@ export function RecruitmentScreen() {
             {selectedOpeningId && (
               <View style={[styles.activeOpeningPill, { backgroundColor: `${theme.colors.primary}15`, borderColor: theme.colors.primary }]}>
                 <AppText variant="caption" weight="700" style={{ color: theme.colors.primary }}>
-                  {t('recruitment.pipeline.filteredByOpening', 'مصفاة حسب الوظيفة المحددة')}
+                  {t('recruitment.pipeline.filteredByOpening')}
                 </AppText>
                 <Pressable onPress={() => setSelectedOpeningId(null)}>
                   <AppIcon name="close-circle" size={16} color={theme.colors.primary} />
@@ -407,7 +417,7 @@ export function RecruitmentScreen() {
           ) : openings.length === 0 ? (
             <AppStateView
               state="empty"
-              message={t('recruitment.openings.noPositions', 'لا توجد وظائف معلنة حالياً')}
+              message={t('recruitment.openings.noPositions')}
             />
           ) : (
             <View style={styles.listContent}>
@@ -421,8 +431,14 @@ export function RecruitmentScreen() {
                     setActiveTab('pipeline');
                   }}
                   onOpen={perms.canManageOpenings ? (id) => openOpeningMutation.mutate(id) : undefined}
-                  onPause={perms.canManageOpenings ? (id) => pauseOpeningMutation.mutate(id) : undefined}
-                  onClose={perms.canManageOpenings ? (id) => closeOpeningMutation.mutate(id) : undefined}
+                  onPause={perms.canManageOpenings ? (id) => pauseOpeningMutation.mutate({
+                    id,
+                    reason: t('recruitment.openings.pauseReason'),
+                  }) : undefined}
+                  onClose={perms.canManageOpenings ? (id) => closeOpeningMutation.mutate({
+                    id,
+                    reason: t('recruitment.openings.closeReason'),
+                  }) : undefined}
                 />
               ))}
             </View>
@@ -433,7 +449,7 @@ export function RecruitmentScreen() {
           ) : requisitions.length === 0 ? (
             <AppStateView
               state="empty"
-              message={t('recruitment.requisitions.noRequisitions', 'لا توجد طلبات احتياج مسجلة')}
+              message={t('recruitment.requisitions.noRequisitions')}
             />
           ) : (
             <View style={styles.listContent}>
@@ -454,7 +470,7 @@ export function RecruitmentScreen() {
           ) : applications.length === 0 ? (
             <AppStateView
               state="empty"
-              message={t('recruitment.pipeline.noApplicants', 'لا يوجد متقدمون في هذه المرحلة')}
+              message={t('recruitment.pipeline.noApplicants')}
             />
           ) : (
             <View style={styles.listContent}>
@@ -464,13 +480,13 @@ export function RecruitmentScreen() {
                   application={item}
                   onPress={(app) => setSelectedApplication(app)}
                   onScheduleInterview={
-                    perms.canEvaluateInterviews || perms.canManageApplications
+                    perms.canManageApplications
                       ? (appId) => setInterviewAppId(appId)
                       : undefined
                   }
                   onEvaluateInterview={
                     perms.canEvaluateInterviews
-                      ? (appId) => setEvaluateInterviewId(appId)
+                      ? (appId) => setEvaluateApplicationId(appId)
                       : undefined
                   }
                   onMakeOffer={
@@ -485,7 +501,7 @@ export function RecruitmentScreen() {
                   }
                   onMoveStage={
                     perms.canManageApplications
-                      ? (appId, nextStage) => changeStageMutation.mutate({ id: appId, stage: nextStage })
+                      ? (appId, targetStatus) => changeStageMutation.mutate({ id: appId, targetStatus })
                       : undefined
                   }
                 />
@@ -495,7 +511,7 @@ export function RecruitmentScreen() {
         ) : activeTab === 'offers' ? (
            offersQuery.isLoading ? <AppStateView state="loading" /> : offers.length === 0 ? <AppStateView state="empty" message={t('recruitment.offers.noOffers')} /> : <View style={styles.listContent}>{offers.filter(offer => !search || offer.offerNumber.toLowerCase().includes(search.toLowerCase())).map(offer => {
              const statusKey = JobOfferStatus[offer.status] ?? String(offer.status);
-             return <AppDataCard key={offer.id} padding="md"><View style={styles.offerHeader}><AppText weight="800">{offer.offerNumber}</AppText><AppStatusBadge label={t(`recruitment.offers.statusValues.${statusKey}`, statusKey)} color={offer.status === JobOfferStatus.Approved ? theme.colors.success : theme.colors.primary} /></View><AppText variant="bodySmall">{offer.candidateName ?? `#${offer.employmentApplicationId}`}</AppText><AppText color="muted" variant="caption">{t('recruitment.offers.annualSnapshot')}: {offer.annualSalarySnapshot ?? 0} {offer.currencyCode} • {t('recruitment.offers.fiscalSnapshot')}: {offer.fiscalYearCostSnapshot ?? 0} {offer.currencyCode}</AppText><AppText color="muted" variant="caption">{t('recruitment.offers.reservationDelta')}: {offer.reservationDelta ?? 0} {offer.currencyCode}</AppText>{offer.approvalHistory?.map(history => <AppText key={history.id} color="muted" variant="caption">{t(`recruitment.offers.history.${history.action}`, history.action)} • {history.actorUserId} • {new Date(history.occurredOn).toLocaleDateString()}</AppText>)}<View style={styles.offerActions}>{perms.canManageOffers && offer.status === JobOfferStatus.Draft ? <AppIconButton icon="send-outline" label={t('recruitment.offers.submit')} onPress={() => setPendingOfferAction({ action: 'submit', offer })} /> : null}{perms.canApproveOffers && offer.status === JobOfferStatus.PendingApproval ? <><AppIconButton icon="checkmark-circle-outline" label={t('recruitment.offers.approveOffer')} onPress={() => setPendingOfferAction({ action: 'approve', offer })} /><AppIconButton icon="close-circle-outline" label={t('recruitment.offers.rejectApproval')} onPress={() => { setOfferRejectReason(''); setPendingOfferAction({ action: 'reject', offer }); }} /></> : null}{perms.canManageOffers && offer.status === JobOfferStatus.Approved ? <AppIconButton icon="send-outline" label={t('recruitment.offers.issue')} onPress={() => setPendingOfferAction({ action: 'issue', offer })} /> : null}</View></AppDataCard>;
+             return <AppDataCard key={offer.id} padding="md"><View style={styles.offerHeader}><AppText weight="800">{offer.offerNumber}</AppText><AppStatusBadge label={t(`recruitment.offers.statusValues.${statusKey}`, statusKey)} color={offer.status === JobOfferStatus.Approved ? theme.colors.success : theme.colors.primary} /></View><AppText variant="bodySmall">{offer.candidateName}</AppText><AppText color="muted" variant="caption">{t('recruitment.offers.annualSnapshot')}: {offer.annualSalarySnapshot} {offer.currencyCode} • {t('recruitment.offers.fiscalSnapshot')}: {offer.fiscalYearCostSnapshot} {offer.currencyCode}</AppText><AppText color="muted" variant="caption">{t('recruitment.offers.reservationDelta')}: {offer.reservationDelta} {offer.currencyCode}</AppText>{offer.approvalHistory.map(history => <AppText key={history.id} color="muted" variant="caption">{t(`recruitment.offers.history.${history.action}`, history.action)} • {history.actorUserId} • {new Date(history.occurredOn).toLocaleDateString()}</AppText>)}<View style={styles.offerActions}>{perms.canManageOffers && offer.status === JobOfferStatus.Draft ? <AppIconButton icon="send-outline" label={t('recruitment.offers.submit')} onPress={() => setPendingOfferAction({ action: 'submit', offer })} /> : null}{perms.canApproveOffers && offer.status === JobOfferStatus.PendingApproval ? <><AppIconButton icon="checkmark-circle-outline" label={t('recruitment.offers.approveOffer')} onPress={() => setPendingOfferAction({ action: 'approve', offer })} /><AppIconButton icon="close-circle-outline" label={t('recruitment.offers.rejectApproval')} onPress={() => { setOfferRejectReason(''); setPendingOfferAction({ action: 'reject', offer }); }} /></> : null}{perms.canManageOffers && offer.status === JobOfferStatus.Approved ? <AppIconButton icon="send-outline" label={t('recruitment.offers.issue')} onPress={() => setPendingOfferAction({ action: 'issue', offer })} /> : null}</View></AppDataCard>;
            })}{offersQuery.data?.metaData.totalPages && offersQuery.data.metaData.totalPages > 1 ? <AppPaginationNavigation page={offersPage} pageCount={offersQuery.data.metaData.totalPages} onPageChange={setOffersPage} /> : null}</View>
         ) : (
           <RecruitmentSettingsViewMobile />
@@ -510,11 +526,25 @@ export function RecruitmentScreen() {
         onSuccess={() => applicationsQuery.refetch()}
       />
 
+      <ApplicationInterviewPickerModal
+        visible={evaluateApplicationId !== null}
+        applicationId={evaluateApplicationId}
+        canEvaluateInterviews={perms.canEvaluateInterviews}
+        canManageApplications={perms.canManageApplications}
+        onClose={() => setEvaluateApplicationId(null)}
+        onSelect={(interview) => {
+          setEvaluateApplicationId(null);
+          setSelectedInterview(interview);
+        }}
+      />
+
       {/* Interview Evaluation Modal */}
       <InterviewEvaluationModal
-        visible={evaluateInterviewId !== null}
-        interviewId={evaluateInterviewId}
-        onClose={() => setEvaluateInterviewId(null)}
+        visible={selectedInterview !== null}
+        interview={selectedInterview}
+        canManageApplications={perms.canManageApplications}
+        canEvaluateInterviews={perms.canEvaluateInterviews}
+        onClose={() => setSelectedInterview(null)}
         onSuccess={() => applicationsQuery.refetch()}
       />
 
@@ -552,12 +582,11 @@ export function RecruitmentScreen() {
       {/* Confirmation Dialog for Hiring */}
       <ConfirmationDialog
         visible={hireAppId !== null}
-        title={t('recruitment.candidate.confirmHireTitle', 'تأكيد تعيين المرشح')}
+        title={t('recruitment.candidate.confirmHireTitle')}
         description={t(
-          'recruitment.candidate.confirmHire',
-          'هل أنت متأكد من تعيين هذا المرشح كموظف رسمي في المنشأة؟'
+          'recruitment.candidate.confirmHire'
         )}
-        confirmLabel={t('recruitment.actions.hireCandidate', 'تعيين كموظف')}
+        confirmLabel={t('recruitment.actions.hireCandidate')}
         loading={hireMutation.isPending}
         tone="default"
         onConfirm={handleConfirmHire}

@@ -38,7 +38,7 @@ const ImageMenu: React.FC<ImageMenuProps> = ({
           onClose();
         }}
       >
-        <FlipHIcon sx={{ mr: 1 }} /> Flip Horizontal
+        <FlipHIcon sx={{ mr: 1 }} /> {t("files.flipHorizontal")}
       </MenuItem>
       <MenuItem
         onClick={() => {
@@ -46,7 +46,7 @@ const ImageMenu: React.FC<ImageMenuProps> = ({
           onClose();
         }}
       >
-        <FlipVIcon sx={{ mr: 1 }} /> Flip Vertical
+        <FlipVIcon sx={{ mr: 1 }} /> {t("files.flipVertical")}
       </MenuItem>
       <MenuItem
         onClick={() => {

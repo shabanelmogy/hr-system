@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
-import { copyBackendResponseHeaders, prepareBackendBody } from "./proxy-transport";
+import { copyBackendResponseHeaders, prepareBackendBody, RequestBodyTooLargeError } from "./proxy-transport";
 
 describe("prepareBackendBody", () => {
   it("keeps multipart bodies as non-replayable streams", async () => {
@@ -32,6 +32,16 @@ describe("prepareBackendBody", () => {
     expect(prepared.replayable).toBe(true);
     expect(new TextDecoder().decode(prepared.body as ArrayBuffer)).toContain("Egypt");
   });
+
+  it("rejects replayable bodies above the proxy limit", async () => {
+    const request = new Request("https://app.example.test/api/v1/countries", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: "123456789",
+    });
+
+    await expect(prepareBackendBody(request, 8)).rejects.toBeInstanceOf(RequestBodyTooLargeError);
+  });
 });
 
 describe("copyBackendResponseHeaders", () => {
@@ -42,6 +52,8 @@ describe("copyBackendResponseHeaders", () => {
       "content-length": "100",
       "content-type": "video/mp4",
       "x-internal-header": "secret",
+      "retry-after": "5",
+      "x-correlation-id": "trace-1",
     });
     const target = new Headers();
 
@@ -52,5 +64,7 @@ describe("copyBackendResponseHeaders", () => {
     expect(target.get("content-length")).toBe("100");
     expect(target.get("content-type")).toBe("video/mp4");
     expect(target.has("x-internal-header")).toBe(false);
+    expect(target.get("retry-after")).toBe("5");
+    expect(target.get("x-correlation-id")).toBe("trace-1");
   });
 });

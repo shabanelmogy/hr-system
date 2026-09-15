@@ -1,8 +1,7 @@
-﻿using System.Web;
+using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using CrystalReportGeneratorApi.Services;
+using CrystalReportGeneratorApi.Runtime;
+using System;
 
 namespace CrystalReportGeneratorApi
 {
@@ -10,19 +9,24 @@ namespace CrystalReportGeneratorApi
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
+            CrystalReportRuntimeSettings.Validate();
+            CrystalReportExecutionGate.ValidateConfiguration();
+            CrystalReportRequestWorkspace.ScavengeStaleDirectories(TimeSpan.FromHours(6));
+            CrystalRuntimeDiagnostics.Initialize();
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
 
-            try
-            {
-                // Initialize database tables
-                var tableService = new DatabaseService();
-            }
-            catch
-            {
-            }
+        protected void Application_BeginRequest()
+        {
+            if (!string.Equals(
+                    Request.AppRelativeCurrentExecutionFilePath,
+                    "~/",
+                    StringComparison.Ordinal) ||
+                !string.IsNullOrEmpty(Request.PathInfo))
+                return;
+
+            Response.Redirect(VirtualPathUtility.ToAbsolute("~/swagger"), false);
+            CompleteRequest();
         }
     }
 }

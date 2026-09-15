@@ -1,16 +1,19 @@
-using ErpSystem.Modules.HR.Application.Common.Paginations;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Contracts;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Queries;
-using ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Entities;
-using ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Enums;
+using ErpSystem.Modules.Accounting.Contracts;
+using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Enums;
 using ErpSystem.Modules.HR.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Features.WorkforcePlanning.Persistence;
 
-public sealed class WorkforceTraceReadStore(ApplicationDbContext context) : IWorkforceTraceReadStore
+public sealed class WorkforceTraceReadStore(
+    ApplicationDbContext context,
+    IFiscalYearPlanningSource fiscalYears,
+    ICurrentActor currentActor) : IWorkforceTraceReadStore
 {
     public async Task<HiringTraceResponse?> GetTraceByApplicationAsync(int applicationId, bool includeFinancials, CancellationToken cancellationToken)
     {
@@ -52,9 +55,7 @@ public sealed class WorkforceTraceReadStore(ApplicationDbContext context) : IWor
                     && budget.Status == WorkforceBudgetStatus.Approved
                     && budget.ActivatedOn.HasValue
                     && !budget.SupersededOn.HasValue)
-                && context.FiscalYears.Any(year => year.Id == envelope.FiscalYearId
-                    && !year.IsDeleted
-                    && year.Status == FiscalYearStatus.Open));
+                );
         if (request.PositionId.HasValue)
             query = query.Where(envelope => envelope.PositionId == request.PositionId.Value);
         if (request.BranchId.HasValue)
@@ -64,6 +65,22 @@ public sealed class WorkforceTraceReadStore(ApplicationDbContext context) : IWor
         var total = await query.CountAsync(cancellationToken);
         var envelopes = await query.Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize)
             .ToListAsync(cancellationToken);
+
+        if (currentActor.TenantId is not null && currentActor.CompanyId is > 0)
+        {
+            var openYears = new HashSet<int>();
+            foreach (var yearId in envelopes.Select(item => item.FiscalYearId).Distinct())
+            {
+                var year = await fiscalYears.GetAsync(currentActor.TenantId, currentActor.CompanyId.Value, yearId, cancellationToken);
+                if (year?.Status.Equals("Open", StringComparison.OrdinalIgnoreCase) == true)
+                    openYears.Add(yearId);
+            }
+            envelopes = envelopes.Where(item => openYears.Contains(item.FiscalYearId)).ToList();
+        }
+        else
+        {
+            envelopes = [];
+        }
 
         var envelopeIds = envelopes.Select(envelope => envelope.Id).ToList();
         var staffingRequests = await context.StaffingRequests.AsNoTracking()
@@ -180,10 +197,13 @@ public sealed class WorkforceTraceReadStore(ApplicationDbContext context) : IWor
             ? null
             : await context.WorkforcePlans.AsNoTracking()
                 .FirstOrDefaultAsync(item => item.Id == envelope.WorkforcePlanId, cancellationToken);
-        var fiscalYear = envelope is null
+        var fiscalYear = envelope is null || currentActor.TenantId is null || currentActor.CompanyId is not > 0
             ? null
-            : await context.FiscalYears.AsNoTracking()
-                .FirstOrDefaultAsync(item => item.Id == envelope.FiscalYearId, cancellationToken);
+            : await fiscalYears.GetAsync(
+                currentActor.TenantId,
+                currentActor.CompanyId.Value,
+                envelope.FiscalYearId,
+                cancellationToken);
         var offers = await context.JobOffers.AsNoTracking()
             .Where(item => item.EmploymentApplicationId == application.Id)
             .OrderBy(item => item.Id)
@@ -206,7 +226,7 @@ public sealed class WorkforceTraceReadStore(ApplicationDbContext context) : IWor
         }
 
         if (fiscalYear is not null)
-            Append($"fiscal-year-{fiscalYear.Id}", "FiscalYear", fiscalYear.Code, fiscalYear.Status.ToString(), null, null, null);
+            Append($"fiscal-year-{fiscalYear.Id}", "FiscalYear", fiscalYear.Code, fiscalYear.Status, null, null, null);
         if (plan is not null)
             Append($"plan-{plan.Id}", "WorkforcePlan", plan.PlanCode, plan.Status.ToString(), plan.ApprovedOn ?? plan.SubmittedOn, null, null);
         if (budget is not null)

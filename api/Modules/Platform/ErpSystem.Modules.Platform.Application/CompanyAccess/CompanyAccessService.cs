@@ -1,5 +1,4 @@
-using ErpSystem.Modules.Platform.Contracts.CompanyAccess;
-using ErpSystem.Modules.Platform.Contracts.TenantMembership;
+using ErpSystem.Modules.Platform.Application.TenantMembership;
 
 namespace ErpSystem.Modules.Platform.Application.CompanyAccess;
 

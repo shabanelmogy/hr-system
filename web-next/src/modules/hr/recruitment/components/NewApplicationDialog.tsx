@@ -8,8 +8,8 @@ import { useTranslation } from "react-i18next";
 import { MyForm, MyTextField, MySelect } from "@/shared/components/forms";
 import { showToast } from "@/shared/components/feedback/transient/showToast";
 import { newApplicationSchema, type NewApplicationFormData, type NewApplicationFormInput } from "../validation/recruitmentValidation";
-import { ApplicationSource } from "../types";
-import { useCreateCandidate, useSubmitApplication } from "../hooks/useRecruitment";
+import { ApplicationSource, JobOpeningStatus } from "../types";
+import { useCreateCandidate, useJobOpenings, useRecruitmentSettingsQuery, useSubmitApplication } from "../hooks/useRecruitment";
 
 interface NewApplicationDialogProps {
   open: boolean;
@@ -25,6 +25,8 @@ export default function NewApplicationDialog({
   const { t } = useTranslation();
   const createCandidateMutation = useCreateCandidate();
   const submitAppMutation = useSubmitApplication();
+  const openingsQuery = useJobOpenings({ pageNumber: 1, pageSize: 100, status: JobOpeningStatus.Open });
+  const settingsQuery = useRecruitmentSettingsQuery();
 
   const {
     control,
@@ -39,17 +41,21 @@ export default function NewApplicationDialog({
       lastName: "",
       email: "",
       phoneNumber: "",
-      jobOpeningId: openingId ?? 1,
-      source: ApplicationSource.CareersPortal,
-      expectedSalaryCurrencyCode: "EGP",
+      jobOpeningId: openingId ?? undefined,
+      source: undefined,
+      expectedSalaryCurrencyCode: "",
     },
   });
 
   useEffect(() => {
-    if (openingId) {
-      setValue("jobOpeningId", openingId);
-    }
-  }, [openingId, setValue]);
+    if (!open) return;
+    setValue("jobOpeningId", openingId ?? undefined);
+  }, [open, openingId, setValue]);
+
+  useEffect(() => {
+    const defaultCurrency = settingsQuery.data?.general.defaultCurrency;
+    if (open && defaultCurrency) setValue("expectedSalaryCurrencyCode", defaultCurrency);
+  }, [open, setValue, settingsQuery.data?.general.defaultCurrency]);
 
   const onSubmit = async (data: NewApplicationFormData) => {
     try {
@@ -84,8 +90,13 @@ export default function NewApplicationDialog({
     { id: ApplicationSource.CareersPortal, name: t("recruitment.sources.careersPortal", "بوابة التوظيف / Careers Portal") },
     { id: ApplicationSource.Internal, name: t("recruitment.sources.internal", "داخلي / Internal") },
     { id: ApplicationSource.EmployeeReferral, name: t("recruitment.sources.referral", "ترشيح موظف / Employee Referral") },
+    { id: ApplicationSource.RecruitmentAgency, name: t("recruitment.sources.agency", "وكالة توظيف / Recruitment Agency") },
     { id: ApplicationSource.Manual, name: t("recruitment.sources.manual", "إدخال يدوي / Manual Direct") },
   ];
+  const openingOptions = (openingsQuery.data?.items ?? []).map((opening) => ({
+    id: opening.id,
+    name: `${opening.openingNumber} — ${opening.positionTitleAr || opening.positionTitleEn}`,
+  }));
 
   return (
     <MyForm
@@ -97,6 +108,17 @@ export default function NewApplicationDialog({
       onClose={onClose}
     >
       <Stack spacing={2.5} sx={{ mt: 1 }}>
+        <MySelect
+          control={control}
+          errors={errors}
+          name="jobOpeningId"
+          label={t("recruitment.openings.requisition", "الشاغر الوظيفي / Job Opening")}
+          dataSource={openingOptions}
+          valueMember="id"
+          displayMember="name"
+          loading={openingsQuery.isLoading}
+          required
+        />
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <MyTextField
@@ -149,6 +171,17 @@ export default function NewApplicationDialog({
               type="number"
             />
           </Grid>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <MyTextField
+              control={control}
+              errors={errors}
+              fieldName="expectedSalaryCurrencyCode"
+              label={t("recruitment.offers.currency", "العملة / Currency")}
+              required
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <MySelect
               control={control}

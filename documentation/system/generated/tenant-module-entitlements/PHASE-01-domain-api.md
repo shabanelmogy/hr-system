@@ -6,9 +6,9 @@
 
 Build the server contract first so both clients consume one stable model.
 
-Execution reference: `documentation/api/Feature_Module_Implementation_Checklist.md`.
-The applied feature profile supplies evidence; the generic checklist supplies the
-implementation discipline.
+Execution reference: `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`.
+The applied feature profile supplies evidence; the workflow supplies the mandatory
+existing-system review, implementation order, and Definition of Done.
 
 ## Required decisions
 
@@ -79,15 +79,15 @@ implementation discipline.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | tenant-module-entitlements-master | 3 | `212764afdc3ce2ce0f4bd27da0a48644dadb0f63c0edd3b9102bbabe1a727e99` |
-| tenant-module-entitlements-master | 4 | `e555dc9d04feebee880d75fafd06d4fa2c525673d99cc4476055e8b15cfe36ab` |
-| tenant-module-entitlements-master | 6 | `5dda69ba2342bfa1f8caee1dee1868a383b4d7c1ce1f7596a753e20c4aba1cfb` |
-| tenant-module-entitlements-api | 1 | `5da0d07803f38c790d1b6f8d545ab301c5469f1e42b4f9fe1f0da8012419e128` |
-| tenant-module-entitlements-api | 2 | `baaea80c2d3ba4ba222f653018a9db08222128a6289bb2ec07f18327d165913f` |
+| tenant-module-entitlements-master | 4 | `6ce0ac78f838937858372f8bd73c02c85b8d3495d904c9196b95944943a8de12` |
+| tenant-module-entitlements-master | 6 | `89544550aa2d052292f9b9095338d67eb4992cb1b1c89fc2d289082f0d031f38` |
+| tenant-module-entitlements-api | 1 | `040a7eab03d342360325a061f06bf27f1b2c9cacc8559af835b40daf87950528` |
+| tenant-module-entitlements-api | 2 | `2008c62d24b2cb2df80acb00790041590b4be651ba2b8cd5dbfa848913890ff6` |
 | tenant-module-entitlements-api | 3 | `b446d78a5c1e23da512f04a98540550f0374d6aaa6dabad5d7ade5e56a3da52f` |
-| tenant-module-entitlements-api | 4 | `f0d0baac0931a1b0bd2719182cb288a3ccc110cac2cb40725af98f689b2cbad8` |
-| tenant-module-entitlements-api | 5 | `92dea9195f8302c0a561f2c51ea535fcac4965f9a38ba6b341c28df9d8332ef6` |
+| tenant-module-entitlements-api | 4 | `7c311be251eaf055491c3edb19e0f8455e40da93ea4c2340b88a2749c35434f6` |
+| tenant-module-entitlements-api | 5 | `b95ecbbd85c4228cb12cd82d830356499f08415b246c81a5d4a7cd1183ce6a12` |
 | tenant-module-entitlements-api | 6 | `c28dea9f9be1779904436fbc0e7db9b0303a16d90b7c6a279f165f878c551bfe` |
-| tenant-module-entitlements-api | 7 | `a6814b16a6f916017847c1eee0b2a6f2a183f657f2813f888675eaaa4dbbe58a` |
+| tenant-module-entitlements-api | 7 | `707d740b2d6ea936b2f0c0133719623b9930aa17f58eec1de9824b7388eb81df` |
 | tenant-module-entitlements-api | 8 | `c37c50acf4176e243388ef9a13427e4eae964c0da2d59c75c49a3ca3f8226094` |
-| tenant-module-entitlements-api | 9 | `0adb2ee75634988ab88fd78d7351ee7fc600985d803b15bb47e399b0144152f9` |
-| tenant-module-entitlements-api | 10 | `bcc7ef77c03aba1632b982232bdf6c92b819081cab9cb1805446bd76096aaf6b` |
+| tenant-module-entitlements-api | 9 | `cda0cba8aa4a43c8673c3596a8521692d458a36947bd3cbbad9c68493de2c2da` |
+| tenant-module-entitlements-api | 10 | `479d38c1e960adbe09bc5ce6f8690f88f99ada41c5d71bdc25a8197d56d9913e` |

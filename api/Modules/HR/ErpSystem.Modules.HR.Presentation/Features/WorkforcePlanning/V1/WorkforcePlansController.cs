@@ -1,5 +1,4 @@
-using ErpSystem.Modules.HR.Application.Common.Consts;
-using ErpSystem.Modules.HR.Application.Common.Paginations;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Commands;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Contracts;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Queries;
@@ -14,13 +13,13 @@ namespace ErpSystem.Modules.HR.Presentation.Features.WorkforcePlanning.V1;
 public sealed class WorkforcePlansController(ISender sender) : ControllerBase
 {
     [HttpGet]
-    [HasPermission(Permissions.ViewWorkforcePlans)]
+    [HasPermission(HrPermissions.ViewWorkforcePlans)]
     [ProducesResponseType(typeof(PageResponse<WorkforcePlanListItemResponse>), StatusCodes.Status200OK)]
     public Task<PageResponse<WorkforcePlanListItemResponse>> GetPage([FromQuery] GetWorkforcePlansQuery query, CancellationToken cancellationToken) =>
         sender.Send(query, cancellationToken);
 
     [HttpGet("{id:int}")]
-    [HasPermission(Permissions.ViewWorkforcePlans)]
+    [HasPermission(HrPermissions.ViewWorkforcePlans)]
     [ProducesResponseType(typeof(WorkforcePlanDetailResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetById([FromRoute] int id, CancellationToken cancellationToken)
     {
@@ -29,7 +28,7 @@ public sealed class WorkforcePlansController(ISender sender) : ControllerBase
     }
 
     [HttpPost]
-    [HasPermission(Permissions.CreateWorkforcePlans)]
+    [HasPermission(HrPermissions.CreateWorkforcePlans)]
     [ProducesResponseType(typeof(WorkforcePlanDetailResponse), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] CreateWorkforcePlanRequest request, CancellationToken cancellationToken)
     {
@@ -40,7 +39,7 @@ public sealed class WorkforcePlansController(ISender sender) : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    [HasPermission(Permissions.EditWorkforcePlans)]
+    [HasPermission(HrPermissions.EditWorkforcePlans)]
     [ProducesResponseType(typeof(WorkforcePlanDetailResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateWorkforcePlanRequest request, CancellationToken cancellationToken)
     {
@@ -49,7 +48,7 @@ public sealed class WorkforcePlansController(ISender sender) : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    [HasPermission(Permissions.DeleteWorkforcePlans)]
+    [HasPermission(HrPermissions.DeleteWorkforcePlans)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Archive([FromRoute] int id, [FromBody] WorkforcePlanActionRequest request, CancellationToken cancellationToken)
     {
@@ -58,7 +57,7 @@ public sealed class WorkforcePlansController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/restore")]
-    [HasPermission(Permissions.DeleteWorkforcePlans)]
+    [HasPermission(HrPermissions.DeleteWorkforcePlans)]
     [ProducesResponseType(typeof(WorkforcePlanDetailResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> Restore([FromRoute] int id, [FromBody] WorkforcePlanActionRequest request, CancellationToken cancellationToken)
     {
@@ -67,7 +66,7 @@ public sealed class WorkforcePlansController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/submit")]
-    [HasPermission(Permissions.EditWorkforcePlans)]
+    [HasPermission(HrPermissions.EditWorkforcePlans)]
     public async Task<IActionResult> Submit([FromRoute] int id, [FromBody] WorkforcePlanActionRequest request, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new SubmitWorkforcePlanCommand(id, request.RowVersion), cancellationToken);
@@ -75,7 +74,7 @@ public sealed class WorkforcePlansController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/begin-review")]
-    [HasPermission(Permissions.ApproveWorkforcePlans)]
+    [HasPermission(HrPermissions.ApproveWorkforcePlans)]
     public async Task<IActionResult> BeginReview([FromRoute] int id, [FromBody] WorkforcePlanActionRequest request, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new BeginWorkforcePlanReviewCommand(id, request.RowVersion), cancellationToken);
@@ -83,7 +82,7 @@ public sealed class WorkforcePlansController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/approve")]
-    [HasPermission(Permissions.ApproveWorkforcePlans)]
+    [HasPermission(HrPermissions.ApproveWorkforcePlans)]
     public async Task<IActionResult> Approve([FromRoute] int id, [FromBody] WorkforcePlanActionRequest request, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new ApproveWorkforcePlanCommand(id, request.RowVersion), cancellationToken);
@@ -91,7 +90,7 @@ public sealed class WorkforcePlansController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/reject")]
-    [HasPermission(Permissions.ApproveWorkforcePlans)]
+    [HasPermission(HrPermissions.ApproveWorkforcePlans)]
     public async Task<IActionResult> Reject([FromRoute] int id, [FromBody] RejectWorkforcePlanRequest request, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new RejectWorkforcePlanCommand(id, request.Reason, request.RowVersion), cancellationToken);
@@ -99,7 +98,7 @@ public sealed class WorkforcePlansController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/revisions")]
-    [HasPermission(Permissions.CreateWorkforcePlans)]
+    [HasPermission(HrPermissions.CreateWorkforcePlans)]
     public async Task<IActionResult> CreateRevision([FromRoute] int id, [FromBody] WorkforcePlanActionRequest request, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new CreateWorkforcePlanRevisionCommand(id, request.RowVersion), cancellationToken);
@@ -109,7 +108,7 @@ public sealed class WorkforcePlansController(ISender sender) : ControllerBase
     }
 
     [HttpGet("{id:int}/revisions")]
-    [HasPermission(Permissions.ViewWorkforcePlans)]
+    [HasPermission(HrPermissions.ViewWorkforcePlans)]
     [ProducesResponseType(typeof(IReadOnlyList<WorkforcePlanDetailResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetRevisions([FromRoute] int id, CancellationToken cancellationToken)
     {

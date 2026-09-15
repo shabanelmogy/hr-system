@@ -22,7 +22,7 @@ public sealed class JobPostingConfiguration : IEntityTypeConfiguration<JobPostin
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.Status });
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.JobOpeningId });
 
-        builder.HasOne<JobOpening>()
+        builder.HasOne(x => x.JobOpening)
             .WithMany()
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.JobOpeningId })
             .HasPrincipalKey(o => new { o.TenantId, o.CompanyId, o.Id })

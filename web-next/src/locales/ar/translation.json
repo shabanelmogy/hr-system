@@ -37,7 +37,8 @@
     "excellent": "ممتاز",
     "good": "جيد",
     "average": "متوسط",
-    "poor": "ضعيف"
+    "poor": "ضعيف",
+    "close": "إغلاق"
   },
   "common": {
     "all": "الكل",
@@ -54,7 +55,57 @@
     "validationErrorCount_few": "{{count}} أخطاء",
     "validationErrorCount_many": "{{count}} خطأ",
     "validationErrorCount_other": "{{count}} خطأ",
-    "reviewValidationErrors": "عرض أخطاء التحقق وعددها {{count}}"
+    "reviewValidationErrors": "عرض أخطاء التحقق وعددها {{count}}",
+    "actual": "الفعلي",
+    "arabic": "العربية",
+    "back": "رجوع",
+    "characterCount": "عدد الأحرف: {{value}}",
+    "chartLegend": "مفتاح الرسم البياني",
+    "copied": "تم النسخ",
+    "copyClipboard": "نسخ إلى الحافظة",
+    "ctrlK": "Ctrl K",
+    "daysValue": "{{count}} يوم",
+    "downloadFile": "تنزيل ملف",
+    "employees": "الموظفون",
+    "english": "الإنجليزية",
+    "errorValue": "خطأ: {{error}}",
+    "expected": "المتوقع",
+    "from": "من",
+    "globalPresenceActivity": "نشاط الحضور العالمي",
+    "goToDashboard": "الانتقال إلى لوحة التحكم",
+    "idValue": "المعرف: {{id}}",
+    "itemCount": "{{count}} عناصر",
+    "noOptionsFound": "لا توجد خيارات",
+    "pageAction": "صفحة {{title}}",
+    "progressToTarget": "التقدم نحو الهدف",
+    "risk": "المخاطر",
+    "rowsCount": "{{count}} صف",
+    "saving": "جارٍ الحفظ",
+    "search": "بحث",
+    "selectAll": "تحديد كل",
+    "share": "مشاركة",
+    "showAll": "إظهار كل",
+    "showLess": "إظهار أقل",
+    "showMore": "إظهار المزيد",
+    "targetValue": "الهدف: {{value}}",
+    "to": "إلى",
+    "total": "الإجمالي",
+    "tryAgain": "حاول مرة أخرى",
+    "unselectAll": "إلغاء تحديد الكل",
+    "viewAll": "عرض الكل",
+    "vsLastPeriod": "مقارنة بالفترة السابقة",
+    "xValue": "قيمة X",
+    "yValue": "قيمة Y",
+    "loading": "جارٍ التحميل…",
+    "cancel": "إلغاء",
+    "processing": "جارٍ التنفيذ…",
+    "create": "إنشاء",
+    "reject": "رفض",
+    "save": "حفظ",
+    "saveChanges": "حفظ التغييرات",
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "accessDenied": "الوصول مرفوض"
   },
   "offlineOperations": {
     "title": "العمليات دون اتصال",
@@ -132,6 +183,7 @@
     "validation": {
       "countriesRequired": "اختر دولة تشغيل واحدة على الأقل",
       "countryLimit": "لا يمكن اختيار أكثر من 100 دولة",
+      "countriesUnique": "لا يمكن اختيار دولة التشغيل نفسها أكثر من مرة",
       "registrationRequired": "اختر دولة التسجيل القانوني",
       "registrationMustBeSelected": "يجب أن تكون دولة التسجيل القانوني ضمن دول التشغيل المختارة",
       "defaultRequired": "اختر دولة التشغيل الافتراضية",
@@ -158,7 +210,6 @@
     "unknownCountry": "دولة غير معروفة"
   },
   "navigation": {
-    "dashboardNotice": "لوحة التحكم قيد الإنشاء باستخدام بيانات تجريبية، وسيتم طرح التحديثات تدريجيا.",
     "total": "الإجمالي",
     "refresh": "تحديث",
     "filter": "تصفية",
@@ -197,7 +248,21 @@
     "overview": "نظرة عامة على الانتشار العالمي",
     "viewAll": "عرض الكل",
     "recentActivity": "أحدث أنشطة الموارد البشرية",
-    "latestMilestones": "أحدث الإنجازات والتغييرات"
+    "latestMilestones": "أحدث الإنجازات والتغييرات",
+    "globalPresenceSubtitle": "نشاط القوى العاملة عالميًا",
+    "headcountByCountry": "عدد الموظفين حسب الدولة",
+    "allCountries": "كل الدول",
+    "officesByCountry": "المكاتب حسب الدولة",
+    "counts": "الأعداد",
+    "revenueByCountry": "الإيرادات حسب الدولة",
+    "relativeContribution": "المساهمة النسبية",
+    "employeesByTimezone": "الموظفون حسب المنطقة الزمنية",
+    "summedHeadcount": "إجمالي عدد الموظفين",
+    "regionalGrowth": "النمو الإقليمي",
+    "quarterlyHeadcountTrend": "الاتجاه الفصلي لعدد الموظفين",
+    "americas": "الأمريكتان",
+    "emea": "أوروبا والشرق الأوسط وأفريقيا",
+    "apac": "آسيا والمحيط الهادئ"
   },
   "displayDebugger": {
     "title": "معلومات العرض",
@@ -246,6 +311,7 @@
     "dismissAllTitle": "إزالة جميع الإشعارات؟",
     "dismissAllDescription": "سيؤدي ذلك إلى إزالة جميع الإشعارات من صندوقك، ولا يمكن التراجع عن هذا الإجراء.",
     "cancel": "إلغاء",
+    "close": "إغلاق",
     "confirm": "إزالة الكل",
     "loadMore": "تحميل المزيد",
     "retry": "إعادة المحاولة",
@@ -398,8 +464,10 @@
     "retry": "إعادة المحاولة",
     "addTitle": "موعد جديد",
     "editTitle": "تعديل الموعد",
+    "viewTitle": "تفاصيل الموعد",
     "addSubtitle": "جدول ةموعد جديد",
     "editSubtitle": "تحديث بيانات الموعد",
+    "viewSubtitle": "مراجعة تفاصيل الموعد",
     "titleLabel": "العنوان",
     "titlePlaceholder": "ما موضوع الموعد؟",
     "start": "البداية",
@@ -417,8 +485,7 @@
       "endRequired": "النهاية مطلوبة",
       "invalidDate": "أدخل تاريخاً صحيحاً",
       "endAfterStart": "يجب أن تكون النهاية بعد البداية",
-      "allDayEnd": "يجب أن يكون يوم النهاية في نفس يوم البداية أو بعده",
-      "pastStart": "لا يمكن أن تبدأ المواعيد في يوم سابق"
+      "allDayEnd": "يجب أن يكون يوم النهاية في نفس يوم البداية أو بعده"
     }
   },
   "actions": {
@@ -474,9 +541,19 @@
     "gridOptions": "خيارات الجدول",
     "generateMockData": "توليد بيانات تجريبية",
     "unlock": "الغاء الحظر",
-    "submitting": "جارى الإرسال ..."
+    "submitting": "جارى الإرسال ...",
+    "confirm": "تأكيد",
+    "remove": "إزالة",
+    "retry": "إعادة المحاولة",
+    "search": "بحث",
+    "refresh": "تحديث"
   },
   "auth": {
+    "confirmingEmail": "جارٍ تأكيد بريدك الإلكتروني...",
+    "emailConfirmed": "تم تأكيد بريدك الإلكتروني بنجاح.",
+    "emailConfirmationFailed": "تعذر تأكيد بريدك الإلكتروني. اطلب رابط تأكيد جديدًا ثم أعد المحاولة.",
+    "invalidEmailConfirmationLink": "رابط تأكيد البريد الإلكتروني غير مكتمل أو غير صالح.",
+    "returnToLogin": "العودة إلى تسجيل الدخول",
     "personalInfo": "البيانات الشخصية",
     "profileOverview": "إدارة بيانات الحساب وإعدادات الأمان",
     "profilePageDescription": "إدارة بياناتك الشخصية وصورة الصفحة الشخصية وإعدادات الأمان.",
@@ -549,6 +626,7 @@
     "securitySettings": "الاعدادات الامنية",
     "alreadyHaveAccount": "هل تمتلك حساب بالفعل؟",
     "error": "خطأ",
+    "updateYourPasswordToStaySecure": "حدّث كلمة المرور للحفاظ على أمان حسابك",
     "failedLoadImage": "فشل تحميل الصورة",
     "selectValidImage": "حدد صورة صحيحة",
     "profilePictureRemoved": "تم حذف صورة الصفحة الشخصية",
@@ -606,6 +684,7 @@
   },
   "validation": {
     "required": "حقل مطلوب",
+    "duplicateValues": "القيم المكررة غير مسموح بها",
     "invalidEmail": "البريد الإلكتروني غير صحيح",
     "minLength": "يجب أن يكون على الأقل {{count}} أحرف",
     "maxLength": "يجب أن يكون {{count}} أحرف أو أقل",
@@ -634,7 +713,9 @@
     "fileTooLarge": "حجم الملف يجب ان يكون اقل من 5 ميجا",
     "invalidFileType": "نوع الملف غير صحيح",
     "positiveNumber": "مسموح أرقام موجبة فقط",
-    "integerNumber": "مسموح أرقام صحيحة فقط"
+    "integerNumber": "مسموح أرقام صحيحة فقط",
+    "invalidValues": "بعض القيم غير صالحة",
+    "endDateBeforeStart": "يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء"
   },
   "messages": {
     "profileUpdated": "تم تعديل بيانات الحساب بنجاح",
@@ -695,6 +776,7 @@
     "resultCount": "{{count}} من نتائج البحث"
   },
   "pagination": {
+    "summary": "عرض {{start}}-{{end}} من {{total}} {{items}}",
     "dataTable": "جدول البيانات",
     "rowsPerPage": " عدد الصفوف في الصفحة",
     "showing": "عرض",
@@ -791,6 +873,11 @@
     "noData": "لا توجد أنواع عناوين متاحة",
     "noDataDescription": "ابدأ بإضافة أول نوع عنوان لرؤية التحليلات",
     "total": "المجموع",
+    "all": "كل أنواع العناوين",
+    "recent30Days": "احدث (30 يوما)",
+    "recent60Days": "آخر 60 يومًا",
+    "recent90Days": "آخر 90 يومًا",
+    "recent120Days": "آخر 120 يومًا",
     "mainTitle": "قائمة أنواع العناوين",
     "mainSubTitle": "لا توجد أنواع عناوين متاحة لعرضها",
     "browseAndManage": "تصفح وادارة",
@@ -799,8 +886,6 @@
     "addressType": "نوع العنوان",
     "addresses": "العناوين",
     "cardSelectionAriaLabel": "تحديد {{name}}",
-    "all": "كل أنواع العناوين",
-    "recent30Days": "احدث (30 يوما)",
     "viewSubtitle": "إضافة نوع عنوان جديد",
     "editSubtitle": "تعديل نوع العنوان الحالى",
     "addSubtitle": "إضافة نوع عنوان جديد",
@@ -834,7 +919,9 @@
       "uploading": "جارٍ رفع أنواع العناوين...",
       "duplicateInFile": "هذا الصف مكرر لصف نوع عنوان آخر في الملف",
       "importSuccess": "تم رفع {{count}} نوع عنوان"
-    }
+    },
+    "listSummary": "تصفح وأدر {{count}} نوعًا من العناوين",
+    "totalCount": "{{count}} نوع عنوان"
   },
   "countries": {
     "dashboard": {
@@ -878,6 +965,7 @@
     },
     "fetched": "تم تحميل قائمة الدول بنجاح",
     "title": "الدول",
+    "name": "اسم الدولة",
     "subTitle": "قائمة الدول",
     "viewSubtitle": "اظهار بيانات الدولة",
     "editSubtitle": "تعديل بيانات الدولة",
@@ -1219,10 +1307,19 @@
     "views": {
       "grid": "عرض الجدول",
       "cards": "عرض البطاقات",
+      "map": "عرض الخريطة",
       "chart": "عرض الرسوم البيانية"
     },
     "charts": {
+      "barChart": "مخطط أعمدة",
+      "pieChart": "مخطط دائري",
       "districtsByState": "توزيع الأحياء حسب المحافظة",
+      "totalDistricts": "إجمالي الأحياء",
+      "acrossStates": "عبر {{count}} محافظات",
+      "averageDistrictsPerState": "متوسط الأحياء لكل محافظة",
+      "distributionMetric": "مقياس التوزيع",
+      "topStates": "أعلى المحافظات حسب عدد الأحياء",
+      "title": "تحليلات الأحياء",
       "districtsByStateDescription": "الأحياء المحملة مجمعة حسب محافظتها",
       "stateShare": "حصة المحافظة في هذه الصفحة",
       "addressesByDistrict": "أعلى الأحياء حسب عدد العناوين",
@@ -1231,11 +1328,22 @@
       "noData": "لا توجد بيانات أحياء متاحة"
     },
     "title": "الأحياء",
+    "subTitle": "قائمة الأحياء",
     "viewTitle": "إدارة الأحياء",
     "viewSubtitle": "عرض بيانات الحي",
     "editSubtitle": "تعديل بيانات الحي",
     "addSubtitle": "إضافة حي جديد",
     "browseAndManage": "تصفح وادارة",
+    "name": "اسم الحي",
+    "delete": "حذف الحي",
+    "list": "قائمة الأحياء",
+    "details": "تفاصيل الحي",
+    "notFound": "الحي غير موجود",
+    "invalidStateId": "اختيار المحافظة غير صالح",
+    "creatingDistrict": "جارٍ إنشاء حي جديد",
+    "updatingDistrict": "جارٍ تحديث الحي",
+    "deletingDistrict": "جارٍ حذف الحي",
+    "savingDistrict": "جارٍ حفظ الحي",
     "districts": "الأحياء",
     "addresses": "العناوين",
     "addressesCount": "{{count}} عناوين",
@@ -1290,9 +1398,17 @@
     "filters": {
       "all": "كل الأحياء",
       "recent30Days": "احدث (30 يوما)",
+      "recent60Days": "آخر 60 يومًا",
+      "recent90Days": "آخر 90 يومًا",
+      "recent120Days": "آخر 120 يومًا",
       "hasState": "مع المحافظة"
     },
     "total": "المجموع",
+    "all": "الكل",
+    "recent30Days": "آخر 30 يومًا",
+    "recent60Days": "آخر 60 يومًا",
+    "recent90Days": "آخر 90 يومًا",
+    "recent120Days": "آخر 120 يومًا",
     "listSummary": "تصفح وأدر {{count}} أحياء ببحث وتصفية من الخادم",
     "totalCount": "{{count}} أحياء",
     "highlight": {
@@ -1305,14 +1421,22 @@
     "stateNameEn": "اسم المحافظة بالإنجليزية",
     "state": "المحافظة",
     "code": "رمز الحي",
+    "district": "الحي",
+    "districtCode": "رمز الحي",
+    "createdDate": "تاريخ الإنشاء",
     "view": "عرض الحي",
     "add": "اضافة حي",
     "edit": "تعديل الحي",
     "nameArPlaceholder": "أحرف عربية فقط : الحي الأول , الحي الغربي",
     "nameEnPlaceholder": "أحرف انجليزية فقط : First District , West District",
+    "codePlaceholder": "رمز الحي مثل: NC أو NR",
     "selectState": "اختر المحافظة",
     "generateMockData": "توليد بيانات تجريبية",
     "fetched": "تم تحميل قائمة الأحياء بنجاح",
+    "noData": "لا توجد أحياء متاحة",
+    "noDataDescription": "ابدأ بإضافة أول حي لك",
+    "districtsCount": "أحياء",
+    "withCodes": "ذات رموز",
     "created": "تم انشاء الحي بنجاح",
     "updated": "تم تحديث بيانات الحي بنجاح",
     "deleted": "تم حذف الحي بنجاح",
@@ -1320,8 +1444,10 @@
     "createError": "فشل في إنشاء الحي",
     "updateError": "فشل في تحديث الحي",
     "deleteError": "فشل في حذف الحي",
+    "errorMessage": "فشل تحميل الأحياء",
     "mainTitle": "قائمة الأحياء",
     "mainSubTitle": "لا توجد أحياء متاحة لعرضها",
+    "browseDescription": "الأحياء مع بحث وتصفية محسّنين",
     "noDistrictsAvailable": "لا توجد أحياء متاحة",
     "noDistrictsAvailableDescription": "ابدء بإضافة حي جديد",
     "addFirstDistrict": "إضافة حي جديد",
@@ -1338,7 +1464,8 @@
         "forbidden": "يتطلب استيراد الأحياء صلاحية States:View للتحقق من أسماء المحافظات. اطلب هذه الصلاحية من المسؤول.",
         "error": "تعذر تحميل قائمة المحافظات النشطة. لم يتم اعتبار أي صف ذا محافظة غير معروفة. أعد محاولة تحميل القائمة."
       }
-    }
+    },
+    "addFirstState": "أضف أول حي"
   },
   "roles": {
     "creatingRole": "جارى انشاء صلاحية جديد",
@@ -1358,7 +1485,22 @@
     "created": "تم انشاء تصنيف الصلاحية بنجاح",
     "deleted": "تم حذف تصنيف الصلاحية بنجاح",
     "title": "قائمة التصنيفات",
-    "subTitle": "عرض تفاصيل قائمة التصنيفات"
+    "subTitle": "عرض تفاصيل قائمة التصنيفات",
+    "permissionFor": "صلاحية {{type}} لـ {{module}}",
+    "permissionsSelected": "تم تحديد {{selected}} من أصل {{total}} صلاحية",
+    "backToRoles": "العودة إلى الأدوار",
+    "searchModules": "البحث في الوحدات",
+    "filterByModule": "تصفية حسب الوحدة",
+    "allModules": "كل الوحدات",
+    "showOnlySelected": "إظهار المحدد فقط",
+    "moduleCount": "{{count}} وحدات",
+    "permissionsSummary": "{{selected}} من {{total}} صلاحية ({{percentage}}٪)",
+    "module": "الوحدة",
+    "loadingRolePermissions": "جارٍ تحميل صلاحيات الدور…",
+    "roleNotFound": "الدور غير موجود",
+    "reviewPermissions": "مراجعة الصلاحيات",
+    "archiveTitle": "أرشفة الدور؟",
+    "archiveDescription": "لن يكون الدور متاحًا للإسناد بعد الأرشفة، ويمكن استعادته لاحقًا."
   },
   "users": {
     "dashboard": {
@@ -1419,6 +1561,11 @@
     "passwordMedium": "جيدة",
     "passwordStrong": "قوية",
     "passwordVeryStrong": "قوية جدا",
+    "passwordLength": "8 أحرف على الأقل",
+    "passwordLowercase": "حرف إنجليزي صغير",
+    "passwordUppercase": "حرف إنجليزي كبير",
+    "passwordNumbers": "رقم",
+    "passwordSymbols": "رمز خاص",
     "loadingRoles": "جارى تحميل التصنيفات",
     "noRolesFound": "لم يتم العثور على تصنيفات",
     "passwordSection": "قسم كلمة المرور",
@@ -1456,7 +1603,21 @@
     "revokeInvitation": "إلغاء",
     "invitationResent": "تمت إعادة إرسال الدعوة بنجاح",
     "invitationRevoked": "تم إلغاء الدعوة بنجاح",
-    "expiresOn": "تنتهي في {{date}}"
+    "expiresOn": "تنتهي في {{date}}",
+    "locked": "مقفل",
+    "searchPlaceholder": "ابحث بالاسم أو اسم المستخدم أو البريد الإلكتروني",
+    "includeArchived": "عرض المستخدمين المؤرشفين",
+    "lifecycleStatus": "دورة حياة السجل",
+    "activeStatus": "نشط",
+    "archivedStatus": "مؤرشف",
+    "archived": "تمت أرشفة المستخدم بنجاح",
+    "restored": "تمت استعادة المستخدم بنجاح",
+    "archiveTitle": "أرشفة المستخدم؟",
+    "archiveDescription": "سيتم أرشفة الحساب وإنهاء جلساته النشطة، ويمكن استعادته لاحقًا.",
+    "restoreTitle": "استعادة المستخدم؟",
+    "restoreDescription": "إعادة هذا الحساب المؤرشف إلى إدارة المستخدمين النشطين؟",
+    "archiveReason": "سبب الأرشفة",
+    "fetchError": "تعذر تحميل المستخدمين."
   },
   "invitations": {
     "title": "الدعوات",
@@ -1550,7 +1711,14 @@
     }
   },
   "reports": {
-    "reportForms": "اشكال التقارير"
+    "reportForms": "اشكال التقارير",
+    "searchOptions": "البحث في الخيارات",
+    "searchUpper": "بحث",
+    "reportViewer": "عارض التقارير",
+    "noResultsFound": "لا توجد نتائج",
+    "noDataMatches": "لا توجد بيانات مطابقة",
+    "clearFilters": "مسح عوامل التصفية",
+    "generatingReport": "جارٍ إنشاء التقرير…"
   },
   "files": {
     "download": "تحميل",
@@ -1607,12 +1775,40 @@
     "previousSheet": "الشيت السابق",
     "nextSheet": "الشيت التالى",
     "search": "البحث",
+    "export": "تصدير",
+    "exitFullscreen": "الخروج من ملء الشاشة",
+    "fullScreen": "ملء الشاشة",
+    "searchInSheet": "البحث داخل الورقة",
+    "column": "العمود {{index}}",
+    "sheetShort": "و{{index}}",
     "refresh": "تحديث",
     "print": "طباعة",
     "more": "المزيد",
     "pictureInPicture": "صورة مع الفيديو",
-    "notesAndBookmarks": "ملاحظات والعلامات",
-    "loadingImage": "تحميل الصورة ...."
+    "loadingImage": "تحميل الصورة ....",
+    "fileRequired": "اختر ملفًا للرفع",
+    "invalidFileName": "اسم الملف غير صالح",
+    "tooManyFiles": "يمكنك رفع {{count}} ملفات كحد أقصى",
+    "backToGroups": "العودة إلى المجموعات",
+    "searchInGroup": "البحث داخل المجموعة",
+    "timeMarks": "علامات الوقت",
+    "markLabel": "العلامة",
+    "addMarkAt": "إضافة علامة عند {{time}}",
+    "addNoteBookmark": "إضافة ملاحظة إشارة مرجعية",
+    "addNotePlaceholder": "أدخل ملاحظة لعلامة الوقت…",
+    "saveNote": "حفظ ملاحظة",
+    "flipHorizontal": "قلب أفقي",
+    "flipVertical": "قلب عمودي",
+    "previewNotAvailable": "المعاينة غير متاحة",
+    "downloadToView": "نزّل الملف لعرضه",
+    "fileType": "ملف {{extension}}",
+    "loadingFile": "جارٍ تحميل الملف…",
+    "fontSizeDown": "تصغير حجم الخط",
+    "fontSizeUp": "تكبير حجم الخط",
+    "searchInText": "البحث داخل النص",
+    "skipSeconds": "تخطي {{seconds}} ثانية",
+    "loadingPdfViewer": "جارٍ تحميل عارض PDF…",
+    "loadingWordDocument": "جارٍ تحميل مستند Word…"
   },
   "media": {
     "unsupportedFormat": "صيغة غير مدعومة",
@@ -1656,7 +1852,8 @@
     "off": "مغلق",
     "rotate90": "دوران 90",
     "flipVertical": "عكس الرأسى",
-    "flipHorizontal": "عكس الأفقى"
+    "flipHorizontal": "عكس الأفقى",
+    "failedToLoadExcel": "تعذر تحميل جدول البيانات"
   },
   "tenantAccess": {
     "title": "انتهى الاشتراك",
@@ -1723,6 +1920,7 @@
     "loadError": "تعذر تحميل المستأجرين.",
     "addTenant": "إضافة مستأجر",
     "editTenant": "تعديل المستأجر",
+    "formSubtitle": "إعداد بيانات المستأجر والاشتراك والسعة وجهات الاتصال والتطبيقات المشتراة.",
     "edit": "تعديل",
     "identifier": "المعرّف",
     "name": "اسم المستأجر",
@@ -1743,9 +1941,42 @@
     "contactPhone": "هاتف جهة الاتصال",
     "notes": "ملاحظات",
     "entitlements": "التطبيقات والوحدات المشتراة",
+    "entitlementSummary": "صلاحية الوصول للتطبيقات",
+    "enabledModulesCount": "تم تفعيل {{enabled}} من {{total}} تطبيقات",
+    "moduleAreasCount_zero": "لا توجد وحدات وظيفية",
+    "moduleAreasCount_one": "وحدة وظيفية واحدة",
+    "moduleAreasCount_two": "وحدتان وظيفيتان",
+    "moduleAreasCount_few": "{{count}} وحدات وظيفية",
+    "moduleAreasCount_many": "{{count}} وحدة وظيفية",
+    "moduleAreasCount_other": "{{count}} وحدة وظيفية",
+    "moduleNoAreas": "بدون وحدات وظيفية",
+    "functionalAreas": "الوحدات الوظيفية",
+    "selectedAreasCount": "تم تحديد {{selected}} من {{total}}",
     "tenantEnabled": "السماح بتسجيل دخول المستأجر",
     "enabled": "مفعّل",
     "disabled": "معطّل",
+    "unsavedChanges": "تغييرات غير محفوظة",
+    "readyToConfigure": "جاهز للإعداد",
+    "tabs": {
+      "label": "أقسام إعداد المستأجر",
+      "identity": "بيانات المستأجر",
+      "subscription": "الاشتراك والحدود",
+      "contact": "الفوترة والتواصل",
+      "entitlements": "التطبيقات",
+      "notes": "الملاحظات"
+    },
+    "sections": {
+      "identity": "بيانات المستأجر",
+      "identityDescription": "حدد هوية المستأجر وما إذا كان مسموحًا لمستخدميه بتسجيل الدخول.",
+      "subscription": "الاشتراك",
+      "subscriptionDescription": "حدد الخطة التجارية وحالة الاشتراك وفترة سريانه.",
+      "capacity": "سعة الحسابات",
+      "capacityDescription": "حدد الحد الأقصى لحسابات المديرين والمستخدمين المتاحة للمستأجر.",
+      "contact": "الفوترة والتواصل",
+      "contactDescription": "احتفظ ببيانات الفوترة وجهة الاتصال التشغيلية الأساسية في مكان واحد.",
+      "entitlementsDescription": "حدد تطبيقات ERP والوحدات الوظيفية التي اشتراها المستأجر.",
+      "notesDescription": "أضف ملاحظات إدارية داخلية خاصة بهذا المستأجر."
+    },
     "validation": {
       "invalidIdentifier": "ابدأ بحرف أو رقم واستخدم الحروف الإنجليزية والأرقام والشرطات فقط.",
       "invalidOption": "اختر قيمة صحيحة.",
@@ -1853,8 +2084,7 @@
       "Run": "تشغيل",
       "Download": "تنزيل",
       "Upload": "رفع إصدار",
-      "Publish": "نشر",
-      "ManageAccess": "إدارة الصلاحيات"
+      "Publish": "نشر"
     },
     "accessReadOnly": "يمكنك عرض تعيينات الصلاحيات، لكن لا يمكنك تعديلها.",
     "loadError": "تعذر تحميل تقارير Crystal.",
@@ -1869,7 +2099,8 @@
     "accessError": "تعذر حفظ صلاحيات التقرير.",
     "archiveError": "تعذر أرشفة هذا التقرير.",
     "downloadError": "تعذر تنزيل التقرير.",
-    "rolesLoadError": "تعذر تحميل الأدوار الخاصة بصلاحيات التقرير."
+    "rolesLoadError": "تعذر تحميل الأدوار الخاصة بصلاحيات التقرير.",
+    "conflictReloaded": "تم تعديل التقرير بواسطة عملية أخرى. تم تحميل أحدث نسخة من الخادم؛ راجعها قبل إعادة المحاولة."
   },
   "organizationalStructure": {
     "title": "الهيكل التنظيمي",
@@ -2085,6 +2316,104 @@
       "emptySkills": "لم يتم تسجيل مهارات بعد.",
       "emptyEducation": "لم يتم تسجيل مؤهلات علمية بعد.",
       "close": "إغلاق"
+    },
+    "grid": {
+      "centralized": "مركزية (عامة)",
+      "branchScoped": "فرعية",
+      "allBranches": "كافة الفروع",
+      "topLevel": "إدارة رئيسية (مستوى 1)",
+      "central": "مركزي",
+      "yrs": "سنوات"
+    },
+    "dutyEditor": {
+      "dutySectionsAndStructuredDuties": "مجالات العمل والواجبات المهيكلة (Duty Sections & Items)",
+      "addDutySection": "إضافة قسم واجبات",
+      "emptyDescription": "لم يتم إضافة أقسام مهام بعد. يمكنك تقسيم الوصف إلى مجالات (مثل: المهام الإدارية، المسؤوليات الفنية) مع أوزانها النسبية.",
+      "sectionTitleArabic": "عنوان المجال بالعربية",
+      "sectionTitleEnglish": "عنوان المجال بالإنجليزية",
+      "weight": "الوزن %",
+      "dutyTextInArabic": "البند بالعربية...",
+      "dutyTextInEnglish": "البند بالإنجليزية...",
+      "addDutyItem": "إضافة بند مسؤولية",
+      "dutyItemsCount": "بنود الواجبات والمسؤوليات ({{count}})"
+    },
+    "educationEditor": {
+      "educationAndDegreeRequirements": "المؤهلات العلمية والشهادات المطلوبة",
+      "addEducation": "إضافة مؤهل",
+      "emptyDescription": "لم تتم إضافة مؤهلات بعد. اضغط 'إضافة مؤهل' للبدء.",
+      "degreeLevelLabel": "المستوى الدراسي (مثل: بكالوريوس / ماجستير)",
+      "fieldOfStudy": "التخصص / المجال",
+      "required": "إلزامي"
+    },
+    "skillsEditor": {
+      "requiredSkillsAndProficiencyLevels": "المهارات المطلوبة ومستويات الإتقان",
+      "addSkill": "إضافة مهارة",
+      "emptyDescription": "لم تتم إضافة مهارات بعد. اضغط 'إضافة مهارة' للبدء.",
+      "skillName": "اسم المهارة",
+      "mandatory": "إلزامية"
+    },
+    "costCenterTree": {
+      "selected": "محدد",
+      "moveCostCenter": "نقل مركز التكلفة",
+      "addSubCostCenter": "إضافة مركز تكلفة فرعي",
+      "collapse": "طي",
+      "expand": "فرد",
+      "addSub": "إضافة فرعية",
+      "archived": "مؤرشف",
+      "active": "نشط",
+      "edit": "تعديل",
+      "changeLog": "سجل التعديلات",
+      "addSubCenter": "إضافة فرعي",
+      "move": "نقل المركز",
+      "restore": "استعادة",
+      "archive": "أرشفة",
+      "hierarchyTrail": "المسار والتسلسل الهرمي",
+      "company": "الشركة",
+      "hierarchyAndRelationships": "الموقع في الهيكل التنظيمي",
+      "depthLevel": "المستوى الهرمي:",
+      "parentCenter": "المركز الأب:",
+      "companyRoot": "مركز رئيسي للشركة",
+      "subCostCenters": "مراكز التكلفة الفرعية",
+      "noSubCenters": "لا توجد مراكز تكلفة فرعية تابعة لهذا المركز.",
+      "linkedOrganizationalUnits": "الوحدات التنظيمية المرتبطة بهذا المركز",
+      "departments": "الإدارات:",
+      "divisions": "الأقسام:",
+      "noLinkedUnits": "لم يتم ربط هذا المركز بإدارات أو أقسام بعد.",
+      "descriptionAndMetadata": "الوصف وتفاصيل التدقيق",
+      "arabicDescription": "الوصف (عربي):",
+      "englishDescription": "الوصف (إنجليزي):",
+      "noDescriptionProvided": "لا يوجد وصف مدخل لهذا المركز.",
+      "created": "تاريخ الإنشاء:",
+      "costCentersTree": "شجرة مراكز التكلفة",
+      "instructions": "اضغط على أي بطاقة مركز تكلفة في الشجرة لعرض تفاصيل الارتباط الهرمي، الإدارات المرتبطة، والإجراءات المتاحة.",
+      "totalCenters": "إجمالي المراكز",
+      "rootCenters": "مراكز رئيسية",
+      "companyRootCostCenters": "الشركة / مراكز التكلفة الرئيسية (بدون مركز أب)",
+      "searchCostCentersTree": "بحث في شجرة مراكز التكلفة...",
+      "newParentCostCenter": "مركز التكلفة الأب الجديد",
+      "companyTopLevelCostCenter": "الشركة / مركز تكلفة رئيسي",
+      "saveMove": "حفظ النقل",
+      "subCentersCount": "{{count}} مراكز فرعية",
+      "rootDepthLabel": "المستوى {{depth}} (رئيسي)",
+      "depthLabel": "المستوى {{depth}}",
+      "selectNewParentFor": "اختر مركز التكلفة الأب الجديد للمركز: \"{{name}}\" ({{code}})"
+    },
+    "departmentTree": {
+      "dragToReparentThisDepartment": "اسحب لإعادة ربط هذه الإدارة",
+      "centralized": "مركزية (عامة)",
+      "branch": "فرع",
+      "terminal": "إدارة طرفية",
+      "collapse": "طي",
+      "expand": "فرد",
+      "addSub": "إضافة فرعية",
+      "zoomIn": "تكبير",
+      "resetZoom": "إعادة الضبط",
+      "zoomOut": "تصغير",
+      "descendantMoveWarning": "سيتم ترقية الإدارة التابعة لتصبح إدارة عليا، ونقل الإدارة الحالية لتصبح تابعة لها.",
+      "moving": "جارٍ النقل...",
+      "companyTopLevel": "الشركة / الإدارة العامة (بدون أب)",
+      "topLevelRoot": "إدارة رئيسية عليا بدون أب",
+      "saving": "جارٍ الحفظ..."
     }
   },
   "attendanceDevices": {
@@ -2109,6 +2438,7 @@
     "operationQueued": "تم طلب العملية بنجاح.",
     "permissionDenied": "لا تملك صلاحية لهذا الإجراء على جهاز الحضور.",
     "saved": "تم حفظ جهاز الحضور.",
+    "conflictReloaded": "تم تعديل جهاز الحضور في عملية أخرى. تم تحميل أحدث بيانات الخادم؛ راجعها قبل إعادة المحاولة.",
     "credentialsSaved": "تم تحديث بيانات الاعتماد بأمان.",
     "viewTitle": "أجهزة الحضور",
     "viewSubtitle": "سجل أجهزة موقع العميل ثم اقرأ بياناتها الخام بأمان.",
@@ -2185,33 +2515,152 @@
       "timeZoneRequired": "المنطقة الزمنية مطلوبة.",
       "agentRequired": "اختر وكيل موقع.",
       "agentNameRequired": "اسم الوكيل مطلوب."
-    }
+    },
+    "credentialsDescription": "أدخل بيانات اعتماد الجهاز",
+    "commKey": "مفتاح الاتصال",
+    "saveCredentials": "حفظ بيانات الاعتماد",
+    "updateCredentials": "تحديث بيانات الاعتماد",
+    "devicePullRuns": "تشغيلات سحب البيانات من الجهاز",
+    "pullRunsSubtitle": "سجل تشغيلات سحب الحضور",
+    "pullRunsSearchUnavailable": "البحث في تشغيلات السحب غير متاح",
+    "rawAttendancePunches": "سجلات الحضور الخام",
+    "rawAttendancePunchesSubtitle": "أحداث الحضور الخام من الأجهزة",
+    "device": "الجهاز",
+    "allDevices": "كل الأجهزة",
+    "externalCodeSearch": "البحث بالرمز الخارجي",
+    "rawDeviceUsers": "مستخدمو الأجهزة الخام",
+    "rawDeviceUsersSubtitle": "المستخدمون المبلغ عنهم من أجهزة الحضور",
+    "rawDeviceUsersSearch": "البحث عن مستخدمي أجهزة الحضور"
   },
   "fiscalYears": {
     "title": "السنوات المالية",
     "totalLabel": "سنوات مالية",
-    "fields": { "code": "الكود", "startDate": "تاريخ البداية", "endDate": "تاريخ النهاية", "frequency": "دورية الفترات", "periods": "الفترات", "status": "الحالة" },
-    "frequency": { "monthly": "شهرية", "quarterly": "ربع سنوية" },
-    "status": { "all": "كل الحالات", "draft": "مسودة", "open": "مفتوحة", "closing": "قيد الإقفال", "closed": "تم الإقفال", "locked": "مقفولة" },
-    "recordStatus": { "active": "السجلات النشطة", "archived": "السجلات المؤرشفة", "all": "كل السجلات" },
-    "filters": { "recordStatus": "حالة السجل", "lifecycle": "حالة الدورة" },
-    "search": {
-      "placeholder": "ابحث في السنوات المالية...", "column": "عمود البحث", "condition": "الشرط",
-      "fields": { "all": "كل الأعمدة", "code": "الكود", "nameAr": "الاسم العربي", "nameEn": "الاسم الإنجليزي" },
-      "operators": { "contains": "يحتوي", "doesNotContain": "لا يحتوي", "equals": "يساوي", "doesNotEqual": "لا يساوي", "startsWith": "يبدأ بـ", "endsWith": "ينتهي بـ" }
+    "fields": {
+      "code": "الكود",
+      "startDate": "تاريخ البداية",
+      "endDate": "تاريخ النهاية",
+      "frequency": "دورية الفترات",
+      "periods": "الفترات",
+      "status": "الحالة"
     },
-    "sort": { "startDate": "تاريخ البداية", "endDate": "تاريخ النهاية", "code": "الكود", "nameAr": "الاسم العربي", "nameEn": "الاسم الإنجليزي", "status": "الحالة", "createdOn": "تاريخ الإنشاء" },
-    "actions": { "add": "إضافة سنة مالية", "lifecycle": "نقل الحالة", "reset": "إعادة ضبط الفلاتر" },
-    "lifecycle": { "open": "فتح السنة", "beginClosing": "بدء الإقفال", "close": "إقفال السنة", "lock": "تثبيت الإقفال", "reopen": "إعادة فتح السنة" },
-    "form": { "addTitle": "إضافة سنة مالية", "editTitle": "تعديل سنة مالية", "viewTitle": "تفاصيل السنة المالية", "subtitle": "تعريف التقويم المالي المستخدم في خطط القوى العاملة والميزانيات.", "endDateHelper": "يُحسب تلقائيًا ليغطي اثني عشر شهرًا بالضبط.", "periodsHelper": "تُنشأ الفترات الشهرية أو ربع السنوية تلقائيًا وتصبح للقراءة فقط بعد فتح السنة." },
-    "periods": { "title": "الفترات المُنشأة", "count": "{{count}} فترة", "item": "الفترة {{sequence}}" },
-    "validation": { "code": "أدخل كودًا صحيحًا من 2 إلى 20 حرفًا أو رقمًا أو رمزًا مسموحًا.", "name": "أدخل اسمًا صحيحًا من 2 إلى 100 حرف.", "startDate": "اختر تاريخ البداية.", "endDate": "اختر تاريخ النهاية.", "duration": "يجب أن تغطي السنة المالية اثني عشر شهرًا بالضبط." },
-    "empty": { "title": "لا توجد سنوات مالية", "subtitle": "أنشئ أول تقويم مالي قبل إعداد ميزانيات القوى العاملة." },
-    "noResults": { "title": "لا توجد سنوات مالية مطابقة", "subtitle": "أعد ضبط البحث أو فلاتر الحالة ثم حاول مرة أخرى." },
-    "messages": { "created": "تم إنشاء السنة المالية {{code}}.", "updated": "تم تحديث السنة المالية {{code}}.", "archived": "تمت أرشفة السنة المالية.", "restored": "تمت استعادة السنة المالية.", "lifecycleChanged": "تم نقل السنة المالية إلى {{status}}.", "fetchError": "تعذر تحميل السنوات المالية.", "createError": "تعذر إنشاء السنة المالية.", "updateError": "تعذر تحديث السنة المالية.", "archiveError": "تعذر أرشفة السنة المالية.", "restoreError": "تعذر استعادة السنة المالية.", "lifecycleError": "تعذر نقل حالة السنة المالية." },
+    "frequency": {
+      "monthly": "شهرية",
+      "quarterly": "ربع سنوية"
+    },
+    "status": {
+      "all": "كل الحالات",
+      "draft": "مسودة",
+      "open": "مفتوحة",
+      "closing": "قيد الإقفال",
+      "closed": "تم الإقفال",
+      "locked": "مقفولة"
+    },
+    "recordStatus": {
+      "active": "السجلات النشطة",
+      "archived": "السجلات المؤرشفة",
+      "all": "كل السجلات"
+    },
+    "filters": {
+      "recordStatus": "حالة السجل",
+      "lifecycle": "حالة الدورة"
+    },
+    "search": {
+      "placeholder": "ابحث في السنوات المالية...",
+      "column": "عمود البحث",
+      "condition": "الشرط",
+      "fields": {
+        "all": "كل الأعمدة",
+        "code": "الكود",
+        "nameAr": "الاسم العربي",
+        "nameEn": "الاسم الإنجليزي"
+      },
+      "operators": {
+        "contains": "يحتوي",
+        "doesNotContain": "لا يحتوي",
+        "equals": "يساوي",
+        "doesNotEqual": "لا يساوي",
+        "startsWith": "يبدأ بـ",
+        "endsWith": "ينتهي بـ"
+      }
+    },
+    "sort": {
+      "startDate": "تاريخ البداية",
+      "endDate": "تاريخ النهاية",
+      "code": "الكود",
+      "nameAr": "الاسم العربي",
+      "nameEn": "الاسم الإنجليزي",
+      "status": "الحالة",
+      "createdOn": "تاريخ الإنشاء"
+    },
+    "actions": {
+      "add": "إضافة سنة مالية",
+      "lifecycle": "نقل الحالة",
+      "reset": "إعادة ضبط الفلاتر"
+    },
+    "lifecycle": {
+      "open": "فتح السنة",
+      "beginClosing": "بدء الإقفال",
+      "close": "إقفال السنة",
+      "lock": "تثبيت الإقفال",
+      "reopen": "إعادة فتح السنة"
+    },
+    "form": {
+      "addTitle": "إضافة سنة مالية",
+      "editTitle": "تعديل سنة مالية",
+      "viewTitle": "تفاصيل السنة المالية",
+      "subtitle": "تعريف التقويم المالي المستخدم في خطط القوى العاملة والميزانيات.",
+      "endDateHelper": "يُحسب تلقائيًا ليغطي اثني عشر شهرًا بالضبط.",
+      "periodsHelper": "تُنشأ الفترات الشهرية أو ربع السنوية تلقائيًا وتصبح للقراءة فقط بعد فتح السنة."
+    },
+    "periods": {
+      "title": "الفترات المُنشأة",
+      "count": "{{count}} فترة",
+      "item": "الفترة {{sequence}}"
+    },
+    "validation": {
+      "code": "أدخل كودًا صحيحًا من 2 إلى 20 حرفًا أو رقمًا أو رمزًا مسموحًا.",
+      "name": "أدخل اسمًا صحيحًا من 2 إلى 100 حرف.",
+      "startDate": "اختر تاريخ البداية.",
+      "endDate": "اختر تاريخ النهاية.",
+      "duration": "يجب أن تغطي السنة المالية اثني عشر شهرًا بالضبط."
+    },
+    "empty": {
+      "title": "لا توجد سنوات مالية",
+      "subtitle": "أنشئ أول تقويم مالي قبل إعداد ميزانيات القوى العاملة."
+    },
+    "noResults": {
+      "title": "لا توجد سنوات مالية مطابقة",
+      "subtitle": "أعد ضبط البحث أو فلاتر الحالة ثم حاول مرة أخرى."
+    },
+    "messages": {
+      "created": "تم إنشاء السنة المالية {{code}}.",
+      "updated": "تم تحديث السنة المالية {{code}}.",
+      "archived": "تمت أرشفة السنة المالية.",
+      "restored": "تمت استعادة السنة المالية.",
+      "lifecycleChanged": "تم نقل السنة المالية إلى {{status}}.",
+      "fetchError": "تعذر تحميل السنوات المالية.",
+      "createError": "تعذر إنشاء السنة المالية.",
+      "updateError": "تعذر تحديث السنة المالية.",
+      "archiveError": "تعذر أرشفة السنة المالية.",
+      "restoreError": "تعذر استعادة السنة المالية.",
+      "lifecycleError": "تعذر نقل حالة السنة المالية.",
+      "conflictReloaded": "تم تعديل السنة المالية بواسطة عملية أخرى. تم تحميل أحدث نسخة من الخادم؛ راجعها قبل إعادة المحاولة."
+    },
     "confirm": {
-      "archiveTitle": "أرشفة السنة المالية؟", "archiveDescription": "يمكن أرشفة السنوات المالية في حالة المسودة فقط.", "restoreTitle": "استعادة السنة المالية؟", "restoreDescription": "سيعود التقويم المالي المسودة إلى السجلات النشطة.",
-      "openTitle": "فتح السنة المالية؟", "openDescription": "سيصبح التقويم متاحًا لخطط القوى العاملة ولن يمكن تعديل بياناته.", "beginClosingTitle": "بدء إقفال السنة المالية؟", "beginClosingDescription": "ستدخل السنة مرحلة إقفال محكومة.", "closeTitle": "إقفال السنة المالية؟", "closeDescription": "سيتم إقفال جميع الفترات المُنشأة.", "lockTitle": "تثبيت إقفال السنة المالية؟", "lockDescription": "سيتم قفل السنة وكل فتراتها لمنع التغييرات التشغيلية، ويمكن للمستخدم المخول إعادة فتحها لاحقًا.", "reopenTitle": "إعادة فتح السنة المالية؟", "reopenDescription": "سيتم إعادة فتح السنة سواء كانت في حالة تم الإقفال أو مقفولة، وستعود كل فتراتها إلى الحالة المفتوحة مع الاحتفاظ بسجل التدقيق."
+      "archiveTitle": "أرشفة السنة المالية؟",
+      "archiveDescription": "يمكن أرشفة السنوات المالية في حالة المسودة فقط.",
+      "restoreTitle": "استعادة السنة المالية؟",
+      "restoreDescription": "سيعود التقويم المالي المسودة إلى السجلات النشطة.",
+      "openTitle": "فتح السنة المالية؟",
+      "openDescription": "سيصبح التقويم متاحًا لخطط القوى العاملة ولن يمكن تعديل بياناته.",
+      "beginClosingTitle": "بدء إقفال السنة المالية؟",
+      "beginClosingDescription": "ستدخل السنة مرحلة إقفال محكومة.",
+      "closeTitle": "إقفال السنة المالية؟",
+      "closeDescription": "سيتم إقفال جميع الفترات المُنشأة.",
+      "lockTitle": "تثبيت إقفال السنة المالية؟",
+      "lockDescription": "سيتم قفل السنة وكل فتراتها لمنع التغييرات التشغيلية، ويمكن للمستخدم المخول إعادة فتحها لاحقًا.",
+      "reopenTitle": "إعادة فتح السنة المالية؟",
+      "reopenDescription": "سيتم إعادة فتح السنة سواء كانت في حالة تم الإقفال أو مقفولة، وستعود كل فتراتها إلى الحالة المفتوحة مع الاحتفاظ بسجل التدقيق."
     }
   },
   "workforcePlanning": {
@@ -2231,48 +2680,276 @@
     },
     "title": "خطط القوى العاملة",
     "totalLabel": "خطط القوى العاملة",
-    "fields": { "planCode": "كود الخطة", "fiscalYear": "السنة المالية", "titleEn": "العنوان بالإنجليزية", "titleAr": "العنوان بالعربية", "description": "الوصف", "position": "الوظيفة", "targetBranch": "الفرع المستهدف", "targetHeadcount": "العدد المتوقع بنهاية السنة", "plannedHiringSlots": "إجمالي المطلوب توظيفه", "justification": "سبب الاحتياج", "fiscalPeriod": "فترة التوظيف", "newHireSlots": "وظائف جديدة (زيادة العدد)", "replacementSlots": "وظائف إحلال (بدلاء)", "revision": "الإصدار", "lines": "البنود", "status": "الحالة", "decisionReason": "سبب الرفض" },
-    "status": { "draft": "مسودة", "submitted": "مقدمة", "underReview": "قيد المراجعة", "approved": "معتمدة", "rejected": "مرفوضة", "superseded": "مستبدلة" },
-    "recordStatus": { "active": "السجلات النشطة", "archived": "مؤرشفة", "all": "كل السجلات" },
-    "search": { "placeholder": "ابحث في خطط القوى العاملة..." },
-    "form": { "addTitle": "إنشاء خطة قوى عاملة", "editTitle": "تعديل خطة القوى العاملة", "viewTitle": "تفاصيل خطة القوى العاملة", "subtitle": "تسجيل احتياج القوى العاملة بشكل محكوم لسنة مالية مسودة أو مفتوحة.", "branchHelper": "اتركه فارغًا فقط إذا كانت الوظيفة على مستوى الشركة." },
-    "lines": { "title": "بنود الخطة", "add": "إضافة بند", "item": "البند {{number}}", "count": "{{count}} بنود" },
-    "periodTargets": { "title": "متى تتوقع التوظيف؟", "add": "إضافة فترة توظيف" },
-    "actions": { "add": "إضافة خطة قوى عاملة", "moveUp": "تحريك لأعلى", "moveDown": "تحريك لأسفل", "submit": "تقديم", "beginReview": "بدء المراجعة", "approve": "اعتماد", "reject": "رفض", "createRevision": "إنشاء إصدار جديد", "archive": "أرشفة", "restore": "استعادة" },
-    "filters": { "status": "حالة الخطة", "recordStatus": "السجلات" },
-    "sort": { "createdOn": "تاريخ الإنشاء", "planCode": "كود الخطة", "titleEn": "العنوان الإنجليزي", "titleAr": "العنوان العربي", "status": "الحالة" },
-    "baseline": { "count": "عدد الموظفين الحالي: {{count}}", "asOf": "تم الاحتساب في {{date}}" },
-    "summary": { "currentEmployees": "عدد الموظفين الحالي: {{count}}", "expectedEmployees": "العدد المتوقع بنهاية السنة: {{count}}", "totalHiring": "إجمالي المطلوب توظيفه: {{count}}", "baselineOnSave": "سيحسب النظام عدد الموظفين الحالي عند الحفظ" },
-    "revisions": { "title": "سجل الإصدارات والمقارنة", "item": "الإصدار {{revision}} • {{slots}} شواغر", "delta": "التغير عن الإصدار {{revision}}: {{count}} شواغر تعيين", "short": "الإصدار {{revision}}" },
-    "slots": { "count": "إجمالي المطلوب توظيفه: {{count}}", "new": "وظائف جديدة: {{count}}", "replacement": "إحلال: {{count}}" },
+    "fields": {
+      "planCode": "كود الخطة",
+      "fiscalYear": "السنة المالية",
+      "titleEn": "العنوان بالإنجليزية",
+      "titleAr": "العنوان بالعربية",
+      "description": "الوصف",
+      "position": "الوظيفة",
+      "targetBranch": "الفرع المستهدف",
+      "targetHeadcount": "العدد المتوقع بنهاية السنة",
+      "plannedHiringSlots": "إجمالي المطلوب توظيفه",
+      "justification": "سبب الاحتياج",
+      "fiscalPeriod": "فترة التوظيف",
+      "newHireSlots": "وظائف جديدة (زيادة العدد)",
+      "replacementSlots": "وظائف إحلال (بدلاء)",
+      "revision": "الإصدار",
+      "lines": "البنود",
+      "status": "الحالة",
+      "decisionReason": "سبب الرفض"
+    },
+    "status": {
+      "draft": "مسودة",
+      "submitted": "مقدمة",
+      "underReview": "قيد المراجعة",
+      "approved": "معتمدة",
+      "rejected": "مرفوضة",
+      "superseded": "مستبدلة"
+    },
+    "recordStatus": {
+      "active": "السجلات النشطة",
+      "archived": "مؤرشفة",
+      "all": "كل السجلات"
+    },
+    "search": {
+      "placeholder": "ابحث في خطط القوى العاملة..."
+    },
+    "form": {
+      "addTitle": "إنشاء خطة قوى عاملة",
+      "editTitle": "تعديل خطة القوى العاملة",
+      "viewTitle": "تفاصيل خطة القوى العاملة",
+      "subtitle": "تسجيل احتياج القوى العاملة بشكل محكوم لسنة مالية مسودة أو مفتوحة.",
+      "branchHelper": "اتركه فارغًا فقط إذا كانت الوظيفة على مستوى الشركة."
+    },
+    "lines": {
+      "title": "بنود الخطة",
+      "add": "إضافة بند",
+      "item": "البند {{number}}",
+      "count": "{{count}} بنود"
+    },
+    "periodTargets": {
+      "title": "متى تتوقع التوظيف؟",
+      "add": "إضافة فترة توظيف"
+    },
+    "actions": {
+      "add": "إضافة خطة قوى عاملة",
+      "moveUp": "تحريك لأعلى",
+      "moveDown": "تحريك لأسفل",
+      "submit": "تقديم",
+      "beginReview": "بدء المراجعة",
+      "approve": "اعتماد",
+      "reject": "رفض",
+      "createRevision": "إنشاء إصدار جديد",
+      "archive": "أرشفة",
+      "restore": "استعادة"
+    },
+    "filters": {
+      "status": "حالة الخطة",
+      "recordStatus": "السجلات"
+    },
+    "sort": {
+      "createdOn": "تاريخ الإنشاء",
+      "planCode": "كود الخطة",
+      "titleEn": "العنوان الإنجليزي",
+      "titleAr": "العنوان العربي",
+      "status": "الحالة"
+    },
+    "baseline": {
+      "count": "عدد الموظفين الحالي: {{count}}",
+      "asOf": "تم الاحتساب في {{date}}"
+    },
+    "summary": {
+      "currentEmployees": "عدد الموظفين الحالي: {{count}}",
+      "expectedEmployees": "العدد المتوقع بنهاية السنة: {{count}}",
+      "totalHiring": "إجمالي المطلوب توظيفه: {{count}}",
+      "baselineOnSave": "سيحسب النظام عدد الموظفين الحالي عند الحفظ"
+    },
+    "revisions": {
+      "title": "سجل الإصدارات والمقارنة",
+      "item": "الإصدار {{revision}} • {{slots}} شواغر",
+      "delta": "التغير عن الإصدار {{revision}}: {{count}} شواغر تعيين",
+      "short": "الإصدار {{revision}}"
+    },
+    "slots": {
+      "count": "إجمالي المطلوب توظيفه: {{count}}",
+      "new": "وظائف جديدة: {{count}}",
+      "replacement": "إحلال: {{count}}"
+    },
     "effective": "الخطة السارية",
-    "validation": { "planCode": "أدخل كود خطة صحيحًا.", "fiscalYear": "اختر سنة مالية.", "title": "أدخل عنوانًا من 2 إلى 200 حرف.", "description": "استخدم 2000 حرف كحد أقصى.", "position": "اختر وظيفة.", "period": "أضف فترة توظيف صحيحة واحدة على الأقل.", "lines": "أضف بندًا واحدًا على الأقل.", "nonNegative": "استخدم رقمًا غير سالب.", "reason": "أدخل سبب رفض واضحًا.", "duplicatePeriod": "لا يمكن تكرار نفس فترة التوظيف داخل البند.", "newHirePeriodTotals": "وزّع كل الوظائف الجديدة على فترات التوظيف.", "replacementPeriodTotals": "وزّع كل وظائف الإحلال على فترات التوظيف." },
-    "empty": { "title": "لا توجد خطط قوى عاملة بعد", "subtitle": "أنشئ الخطة الأولى لتسجيل احتياج القوى العاملة." },
-    "noResults": { "title": "لا توجد خطط مطابقة", "subtitle": "غيّر عوامل التصفية الحالية أو امسحها." },
-    "messages": { "fetchError": "تعذر تحميل خطط القوى العاملة.", "created": "تم إنشاء الخطة {{code}}.", "updated": "تم تحديث الخطة {{code}}.", "submitted": "تم تقديم الخطة {{code}}.", "reviewStarted": "بدأت مراجعة الخطة {{code}}.", "approved": "تم اعتماد الخطة {{code}}.", "rejected": "تم رفض الخطة {{code}}.", "revisionCreated": "تم إنشاء الإصدار {{revision}}.", "archived": "تمت أرشفة خطة القوى العاملة.", "restored": "تمت استعادة الخطة {{code}}.", "createError": "تعذر إنشاء خطة القوى العاملة.", "updateError": "تعذر تحديث خطة القوى العاملة.", "archiveError": "تعذر أرشفة خطة القوى العاملة.", "restoreError": "تعذر استعادة خطة القوى العاملة.", "lifecycleError": "تعذر إتمام إجراء الخطة." },
-    "confirm": { "submitTitle": "تقديم خطة القوى العاملة؟", "submitDescription": "ستصبح المسودة للقراءة فقط وتدخل دورة الاعتماد.", "beginReviewTitle": "بدء مراجعة الخطة؟", "beginReviewDescription": "ستنتقل الخطة المقدمة إلى مرحلة المراجعة المحكومة.", "approveTitle": "اعتماد خطة القوى العاملة؟", "approveDescription": "يؤكد الاعتماد احتياج القوى العاملة لهذه السنة المالية المفتوحة.", "rejectTitle": "رفض خطة القوى العاملة؟", "rejectDescription": "اكتب سببًا واضحًا ليتمكن المخطط من التعديل وإعادة التقديم.", "createRevisionTitle": "إنشاء إصدار جديد؟", "createRevisionDescription": "سيتم نسخ إصدار مسودة جديد قابل للتعديل من هذا الإصدار.", "archiveTitle": "أرشفة خطة القوى العاملة؟", "archiveDescription": "يمكن أرشفة الخطة المسودة أو المرفوضة فقط، وستظل محفوظة في الأرشيف.", "restoreTitle": "استعادة خطة القوى العاملة؟", "restoreDescription": "ستعود الخطة المؤرشفة المسودة أو المرفوضة إلى السجلات النشطة." }
+    "validation": {
+      "planCode": "أدخل كود خطة صحيحًا.",
+      "fiscalYear": "اختر سنة مالية.",
+      "title": "أدخل عنوانًا من 2 إلى 200 حرف.",
+      "description": "استخدم 2000 حرف كحد أقصى.",
+      "position": "اختر وظيفة.",
+      "period": "أضف فترة توظيف صحيحة واحدة على الأقل.",
+      "lines": "أضف بندًا واحدًا على الأقل.",
+      "nonNegative": "استخدم رقمًا غير سالب.",
+      "reason": "أدخل سبب رفض واضحًا.",
+      "duplicatePeriod": "لا يمكن تكرار نفس فترة التوظيف داخل البند.",
+      "newHirePeriodTotals": "وزّع كل الوظائف الجديدة على فترات التوظيف.",
+      "replacementPeriodTotals": "وزّع كل وظائف الإحلال على فترات التوظيف."
+    },
+    "empty": {
+      "title": "لا توجد خطط قوى عاملة بعد",
+      "subtitle": "أنشئ الخطة الأولى لتسجيل احتياج القوى العاملة."
+    },
+    "noResults": {
+      "title": "لا توجد خطط مطابقة",
+      "subtitle": "غيّر عوامل التصفية الحالية أو امسحها."
+    },
+    "messages": {
+      "fetchError": "تعذر تحميل خطط القوى العاملة.",
+      "created": "تم إنشاء الخطة {{code}}.",
+      "updated": "تم تحديث الخطة {{code}}.",
+      "submitted": "تم تقديم الخطة {{code}}.",
+      "reviewStarted": "بدأت مراجعة الخطة {{code}}.",
+      "approved": "تم اعتماد الخطة {{code}}.",
+      "rejected": "تم رفض الخطة {{code}}.",
+      "revisionCreated": "تم إنشاء الإصدار {{revision}}.",
+      "archived": "تمت أرشفة خطة القوى العاملة.",
+      "restored": "تمت استعادة الخطة {{code}}.",
+      "createError": "تعذر إنشاء خطة القوى العاملة.",
+      "updateError": "تعذر تحديث خطة القوى العاملة.",
+      "archiveError": "تعذر أرشفة خطة القوى العاملة.",
+      "restoreError": "تعذر استعادة خطة القوى العاملة.",
+      "lifecycleError": "تعذر إتمام إجراء الخطة.",
+      "conflictReloaded": "تم تعديل خطة القوى العاملة في عملية أخرى. تم تحميل أحدث بيانات الخادم؛ راجعها قبل إعادة المحاولة."
+    },
+    "confirm": {
+      "submitTitle": "تقديم خطة القوى العاملة؟",
+      "submitDescription": "ستصبح المسودة للقراءة فقط وتدخل دورة الاعتماد.",
+      "beginReviewTitle": "بدء مراجعة الخطة؟",
+      "beginReviewDescription": "ستنتقل الخطة المقدمة إلى مرحلة المراجعة المحكومة.",
+      "approveTitle": "اعتماد خطة القوى العاملة؟",
+      "approveDescription": "يؤكد الاعتماد احتياج القوى العاملة لهذه السنة المالية المفتوحة.",
+      "rejectTitle": "رفض خطة القوى العاملة؟",
+      "rejectDescription": "اكتب سببًا واضحًا ليتمكن المخطط من التعديل وإعادة التقديم.",
+      "createRevisionTitle": "إنشاء إصدار جديد؟",
+      "createRevisionDescription": "سيتم نسخ إصدار مسودة جديد قابل للتعديل من هذا الإصدار.",
+      "archiveTitle": "أرشفة خطة القوى العاملة؟",
+      "archiveDescription": "يمكن أرشفة الخطة المسودة أو المرفوضة فقط، وستظل محفوظة في الأرشيف.",
+      "restoreTitle": "استعادة خطة القوى العاملة؟",
+      "restoreDescription": "ستعود الخطة المؤرشفة المسودة أو المرفوضة إلى السجلات النشطة."
+    }
   },
   "workforceBudget": {
     "title": "موازنات القوى العاملة",
     "totalLabel": "موازنات القوى العاملة",
-    "fields": { "budgetCode": "كود الموازنة", "plan": "خطة القوى العاملة", "fiscalYear": "السنة المالية", "currency": "العملة", "revision": "الإصدار", "headcount": "الأعداد المعتمدة", "salary": "موازنة الرواتب", "recruitment": "موازنة الاستقطاب", "grandTotal": "الإجمالي الكلي", "status": "الحالة", "fiscalPeriod": "فترة الموازنة", "decisionReason": "سبب الرفض" },
-    "status": { "draft": "مسودة", "submitted": "مقدمة", "approved": "معتمدة", "rejected": "مرفوضة", "superseded": "مستبدلة", "closed": "مغلقة" },
-    "search": { "placeholder": "ابحث في موازنات القوى العاملة..." },
-    "form": { "addTitle": "إنشاء موازنة قوى عاملة", "editTitle": "تعديل موازنة القوى العاملة", "viewTitle": "تفاصيل موازنة القوى العاملة", "subtitle": "اعتماد الأعداد والمبالغ مقابل خطة معتمدة. يجب أن تتطابق توزيعات الفترات تمامًا.", "selectPlanFirst": "اختر خطة قوى عاملة معتمدة لتحميل بنودها وفتراتها المالية." },
-    "lines": { "title": "بنود الموازنة", "item": "البند {{number}}", "coverage": "{{count}} بنود خطة", "ceiling": "الخطة تسمح بـ {{count}} أفراد" },
-    "allocations": { "title": "كيف يتوزع هذا البند على الفترات؟", "add": "إضافة فترة موازنة" },
-    "sums": { "headcount": "الأفراد: {{sum}} / {{total}}", "salary": "الرواتب: {{sum}} / {{total}} {{currency}}", "recruitment": "الاستقطاب: {{sum}} / {{total}} {{currency}}" },
-    "summary": { "headcount": "{{count}} أفراد", "grandTotal": "{{amount}} {{currency}}", "salary": "الرواتب: {{amount}} {{currency}}", "recruitment": "الاستقطاب: {{amount}} {{currency}}" },
-    "revision": { "short": "الإصدار {{revision}}" },
+    "fields": {
+      "budgetCode": "كود الموازنة",
+      "plan": "خطة القوى العاملة",
+      "fiscalYear": "السنة المالية",
+      "currency": "العملة",
+      "revision": "الإصدار",
+      "headcount": "الأعداد المعتمدة",
+      "salary": "موازنة الرواتب",
+      "recruitment": "موازنة الاستقطاب",
+      "grandTotal": "الإجمالي الكلي",
+      "status": "الحالة",
+      "fiscalPeriod": "فترة الموازنة",
+      "decisionReason": "سبب الرفض"
+    },
+    "status": {
+      "draft": "مسودة",
+      "submitted": "مقدمة",
+      "approved": "معتمدة",
+      "rejected": "مرفوضة",
+      "superseded": "مستبدلة",
+      "closed": "مغلقة"
+    },
+    "search": {
+      "placeholder": "ابحث في موازنات القوى العاملة..."
+    },
+    "form": {
+      "addTitle": "إنشاء موازنة قوى عاملة",
+      "editTitle": "تعديل موازنة القوى العاملة",
+      "viewTitle": "تفاصيل موازنة القوى العاملة",
+      "subtitle": "اعتماد الأعداد والمبالغ مقابل خطة معتمدة. يجب أن تتطابق توزيعات الفترات تمامًا.",
+      "selectPlanFirst": "اختر خطة قوى عاملة معتمدة لتحميل بنودها وفتراتها المالية."
+    },
+    "lines": {
+      "title": "بنود الموازنة",
+      "item": "البند {{number}}",
+      "coverage": "{{count}} بنود خطة",
+      "ceiling": "الخطة تسمح بـ {{count}} أفراد"
+    },
+    "allocations": {
+      "title": "كيف يتوزع هذا البند على الفترات؟",
+      "add": "إضافة فترة موازنة"
+    },
+    "sums": {
+      "headcount": "الأفراد: {{sum}} / {{total}}",
+      "salary": "الرواتب: {{sum}} / {{total}} {{currency}}",
+      "recruitment": "الاستقطاب: {{sum}} / {{total}} {{currency}}"
+    },
+    "summary": {
+      "headcount": "{{count}} أفراد",
+      "grandTotal": "{{amount}} {{currency}}",
+      "salary": "الرواتب: {{amount}} {{currency}}",
+      "recruitment": "الاستقطاب: {{amount}} {{currency}}"
+    },
+    "revision": {
+      "short": "الإصدار {{revision}}"
+    },
     "effective": "الموازنة السارية",
-    "actions": { "add": "إضافة موازنة قوى عاملة", "submit": "تقديم", "approve": "اعتماد", "reject": "رفض" },
-    "filters": { "status": "حالة الموازنة" },
-    "sort": { "createdOn": "تاريخ الإنشاء", "budgetCode": "كود الموازنة", "status": "الحالة", "grandTotal": "الإجمالي الكلي" },
-    "validation": { "budgetCode": "أدخل كود موازنة صحيحًا.", "plan": "اختر خطة قوى عاملة معتمدة.", "currency": "أدخل كود عملة من 3 حروف.", "lines": "أضف بندًا واحدًا على الأقل.", "period": "أضف فترة موازنة صحيحة واحدة على الأقل.", "nonNegative": "استخدم رقمًا غير سالب.", "reason": "أدخل سبب رفض واضحًا.", "duplicatePeriod": "لا يمكن تكرار نفس فترة الموازنة داخل البند.", "headcountTotals": "وزّع كل الأفراد المعتمدين على فترات الموازنة.", "salaryTotals": "وزّع كامل موازنة الرواتب على فترات الموازنة.", "recruitmentTotals": "وزّع كامل موازنة الاستقطاب على فترات الموازنة." },
-    "empty": { "title": "لا توجد موازنات قوى عاملة بعد", "subtitle": "أنشئ أول موازنة من خطة قوى عاملة معتمدة." },
-    "noResults": { "title": "لا توجد موازنات مطابقة", "subtitle": "غيّر عوامل التصفية الحالية أو امسحها." },
-    "messages": { "fetchError": "تعذر تحميل موازنات القوى العاملة.", "created": "تم إنشاء الموازنة {{code}}.", "updated": "تم تحديث الموازنة {{code}}.", "submitted": "تم تقديم الموازنة {{code}}.", "approved": "تم اعتماد الموازنة {{code}} وإنشاء المظاريف.", "rejected": "تم رفض الموازنة {{code}}.", "createError": "تعذر إنشاء موازنة القوى العاملة.", "updateError": "تعذر تحديث موازنة القوى العاملة.", "lifecycleError": "تعذر إتمام إجراء الموازنة." },
-    "confirm": { "submitTitle": "تقديم موازنة القوى العاملة؟", "submitDescription": "ستصبح المسودة للقراءة فقط وتدخل دورة الاعتماد.", "approveTitle": "اعتماد موازنة القوى العاملة؟", "approveDescription": "يؤدي الاعتماد إلى تفعيل الموازنة مع خطتها وإنشاء مظروف وظيفة لكل بند.", "rejectTitle": "رفض موازنة القوى العاملة؟", "rejectDescription": "اكتب سببًا واضحًا ليتمكن المخطط من التعديل وإعادة التقديم." }
+    "actions": {
+      "add": "إضافة موازنة قوى عاملة",
+      "submit": "تقديم",
+      "approve": "اعتماد",
+      "reject": "رفض"
+    },
+    "filters": {
+      "status": "حالة الموازنة"
+    },
+    "sort": {
+      "createdOn": "تاريخ الإنشاء",
+      "budgetCode": "كود الموازنة",
+      "status": "الحالة",
+      "grandTotal": "الإجمالي الكلي"
+    },
+    "validation": {
+      "budgetCode": "أدخل كود موازنة صحيحًا.",
+      "plan": "اختر خطة قوى عاملة معتمدة.",
+      "currency": "أدخل كود عملة من 3 حروف.",
+      "lines": "أضف بندًا واحدًا على الأقل.",
+      "period": "أضف فترة موازنة صحيحة واحدة على الأقل.",
+      "nonNegative": "استخدم رقمًا غير سالب.",
+      "reason": "أدخل سبب رفض واضحًا.",
+      "duplicatePeriod": "لا يمكن تكرار نفس فترة الموازنة داخل البند.",
+      "headcountTotals": "وزّع كل الأفراد المعتمدين على فترات الموازنة.",
+      "salaryTotals": "وزّع كامل موازنة الرواتب على فترات الموازنة.",
+      "recruitmentTotals": "وزّع كامل موازنة الاستقطاب على فترات الموازنة."
+    },
+    "empty": {
+      "title": "لا توجد موازنات قوى عاملة بعد",
+      "subtitle": "أنشئ أول موازنة من خطة قوى عاملة معتمدة."
+    },
+    "noResults": {
+      "title": "لا توجد موازنات مطابقة",
+      "subtitle": "غيّر عوامل التصفية الحالية أو امسحها."
+    },
+    "messages": {
+      "fetchError": "تعذر تحميل موازنات القوى العاملة.",
+      "created": "تم إنشاء الموازنة {{code}}.",
+      "updated": "تم تحديث الموازنة {{code}}.",
+      "submitted": "تم تقديم الموازنة {{code}}.",
+      "approved": "تم اعتماد الموازنة {{code}} وإنشاء المظاريف.",
+      "rejected": "تم رفض الموازنة {{code}}.",
+      "createError": "تعذر إنشاء موازنة القوى العاملة.",
+      "updateError": "تعذر تحديث موازنة القوى العاملة.",
+      "lifecycleError": "تعذر إتمام إجراء الموازنة.",
+      "conflictReloaded": "تم تعديل موازنة القوى العاملة في عملية أخرى. تم تحميل أحدث بيانات الخادم؛ راجعها قبل إعادة المحاولة."
+    },
+    "confirm": {
+      "submitTitle": "تقديم موازنة القوى العاملة؟",
+      "submitDescription": "ستصبح المسودة للقراءة فقط وتدخل دورة الاعتماد.",
+      "approveTitle": "اعتماد موازنة القوى العاملة؟",
+      "approveDescription": "يؤدي الاعتماد إلى تفعيل الموازنة مع خطتها وإنشاء مظروف وظيفة لكل بند.",
+      "rejectTitle": "رفض موازنة القوى العاملة؟",
+      "rejectDescription": "اكتب سببًا واضحًا ليتمكن المخطط من التعديل وإعادة التقديم."
+    }
   },
   "workforceTrace": {
     "title": "مسار القوى العاملة والالتزام",
@@ -2303,31 +2980,169 @@
     "title": "مظاريف الوظائف",
     "totalLabel": "مظاريف الوظائف",
     "companyWide": "على مستوى الشركة",
-    "fields": { "envelopeCode": "كود المظروف", "currency": "العملة", "fiscalYear": "السنة المالية", "headcountCapacity": "سعة الأفراد", "salaryCapacity": "سعة الرواتب", "position": "الوظيفة {{id}}", "branch": "الفرع {{id}}", "department": "القسم {{id}}", "division": "الشعبة {{id}}" },
-    "search": { "placeholder": "ابحث في مظاريف الوظائف..." },
-    "sort": { "createdOn": "تاريخ الإنشاء", "envelopeCode": "كود المظروف" },
-    "capacity": { "headcount": "{{available}} من {{total}} أفراد متاح", "reserved": "محجوز: {{count}}", "hired": "معيّن: {{count}}", "salary": "{{available}} من {{total}} {{currency}} متاح", "money": "{{amount}} {{currency}}", "used": "المستخدم {{used}} من {{total}}", "available": "المتاح {{amount}}" },
-    "lineage": { "budget": "الموازنة {{id}}", "plan": "الخطة {{id}}", "year": "السنة {{id}}", "policy": "السياسة {{version}}" },
-    "details": { "title": "تفاصيل مظروف الوظيفة", "subtitle": "لقطة سعة مولدة من النظام", "loading": "جارٍ تحميل تفاصيل المظروف...", "capacity": "السعة المتاحة", "snapshots": "لقطات الهيكل التنظيمي" },
-    "empty": { "title": "لا توجد مظاريف وظائف بعد", "subtitle": "تظهر المظاريف تلقائيًا عند اعتماد موازنة قوى عاملة." },
-    "noResults": { "title": "لا توجد مظاريف مطابقة", "subtitle": "غيّر عوامل التصفية الحالية أو امسحها." },
-    "messages": { "fetchError": "تعذر تحميل مظاريف الوظائف." }
+    "fields": {
+      "envelopeCode": "كود المظروف",
+      "currency": "العملة",
+      "fiscalYear": "السنة المالية",
+      "headcountCapacity": "سعة الأفراد",
+      "salaryCapacity": "سعة الرواتب",
+      "position": "الوظيفة {{id}}",
+      "branch": "الفرع {{id}}",
+      "department": "القسم {{id}}",
+      "division": "الشعبة {{id}}"
+    },
+    "search": {
+      "placeholder": "ابحث في مظاريف الوظائف..."
+    },
+    "sort": {
+      "createdOn": "تاريخ الإنشاء",
+      "envelopeCode": "كود المظروف"
+    },
+    "capacity": {
+      "headcount": "{{available}} من {{total}} أفراد متاح",
+      "reserved": "محجوز: {{count}}",
+      "hired": "معيّن: {{count}}",
+      "salary": "{{available}} من {{total}} {{currency}} متاح",
+      "money": "{{amount}} {{currency}}",
+      "used": "المستخدم {{used}} من {{total}}",
+      "available": "المتاح {{amount}}"
+    },
+    "lineage": {
+      "budget": "الموازنة {{id}}",
+      "plan": "الخطة {{id}}",
+      "year": "السنة {{id}}",
+      "policy": "السياسة {{version}}"
+    },
+    "details": {
+      "title": "تفاصيل مظروف الوظيفة",
+      "subtitle": "لقطة سعة مولدة من النظام",
+      "loading": "جارٍ تحميل تفاصيل المظروف...",
+      "capacity": "السعة المتاحة",
+      "snapshots": "لقطات الهيكل التنظيمي"
+    },
+    "empty": {
+      "title": "لا توجد مظاريف وظائف بعد",
+      "subtitle": "تظهر المظاريف تلقائيًا عند اعتماد موازنة قوى عاملة."
+    },
+    "noResults": {
+      "title": "لا توجد مظاريف مطابقة",
+      "subtitle": "غيّر عوامل التصفية الحالية أو امسحها."
+    },
+    "messages": {
+      "fetchError": "تعذر تحميل مظاريف الوظائف."
+    }
   },
   "staffing": {
     "search": "ابحث بالمظروف أو المبرر...",
-    "requests": { "title": "طلبات التوظيف", "total": "طلبات التوظيف", "createTitle": "إنشاء طلب توظيف", "viewTitle": "تفاصيل طلب التوظيف", "subtitle": "حجز سعة الأفراد وتكلفة الرواتب للسنة المالية" },
-    "amendments": { "title": "تعديلات المظاريف", "total": "تعديلات المظاريف", "createTitle": "إنشاء تعديل للمظروف", "viewTitle": "تفاصيل تعديل المظروف", "subtitle": "طلب زيادة موجبة في السعة", "capacityHint": "يوسع الاعتماد سعة الأفراد والرواتب ذريًا." },
-    "fields": { "envelope": "مظروف الوظيفة", "additionalHeadcount": "العدد الإضافي", "additionalSalaryCost": "تكلفة الرواتب الإضافية", "justification": "المبرر", "requestedHeadcount": "العدد المطلوب", "annualSalary": "الراتب السنوي لكل مقعد", "targetStartDate": "تاريخ البدء المستهدف", "requestType": "نوع الطلب", "priority": "الأولوية", "status": "الحالة", "remainingAllocatable": "المتاح لطلبات الاستقطاب", "remainingToHire": "المتبقي للتعيين", "totalReservedCost": "التكلفة المالية المحجوزة", "createdOn": "تاريخ الإنشاء", "reason": "سبب القرار", "closeReason": "سبب الإغلاق" },
-    "type": { "newHire": "تعيين جديد", "replacement": "بديل" },
-    "priority": { "1": "منخفضة", "2": "عادية", "3": "مرتفعة", "4": "عاجلة" },
-    "status": { "1": "مسودة", "2": "مقدّم", "3": "معتمد", "4": "مرفوض", "5": "مغلق" },
-    "amendmentStatus": { "1": "مسودة", "2": "مقدّم", "3": "معتمد", "4": "مرفوض" },
-    "closeReason": { "1": "مكتمل", "2": "ملغي", "3": "مكتمل جزئيًا وملغي" },
-    "capacity": { "allocatable": "المتاح للتخصيص: {{count}}", "toHire": "المتبقي للتعيين: {{count}}" },
-    "actions": { "submit": "تقديم", "approve": "اعتماد", "reject": "رفض", "close": "إغلاق" },
-    "validation": { "envelope": "اختر مظروف وظيفة", "positiveHeadcount": "يجب أن يكون العدد أكبر من صفر", "positiveCost": "يجب أن تكون التكلفة الإضافية أكبر من صفر", "nonNegativeSalary": "لا يمكن أن يكون الراتب سالبًا", "targetStartDate": "اختر تاريخ البدء المستهدف", "justification": "أدخل المبرر" },
-    "messages": { "fetchError": "تعذر تحميل بيانات تخطيط التوظيف.", "lifecycleError": "تعذر إتمام إجراء التوظيف.", "created": "تم إنشاء طلب التوظيف.", "submitted": "تم تقديم طلب التوظيف.", "approved": "تم اعتماد طلب التوظيف وحجز السعة.", "rejected": "تم رفض طلب التوظيف.", "closed": "تم إغلاق طلب التوظيف وتحرير السعة غير المستخدمة.", "amendmentCreated": "تم إنشاء تعديل المظروف.", "amendmentSubmitted": "تم تقديم تعديل المظروف.", "amendmentApproved": "تم اعتماد تعديل المظروف وتوسيع السعة.", "amendmentRejected": "تم رفض تعديل المظروف." },
-    "confirm": { "submitTitle": "تقديم طلب التوظيف؟", "submitDescription": "سيدخل الطلب دورة الاعتماد.", "approveTitle": "اعتماد طلب التوظيف؟", "approveDescription": "يحجز الاعتماد سعة الأفراد والرواتب. لا يمكنك اعتماد طلبك.", "rejectTitle": "رفض طلب التوظيف؟", "rejectDescription": "أدخل سببًا واضحًا للقرار.", "closeTitle": "إغلاق طلب التوظيف؟", "closeDescription": "سيتم تحرير السعة غير المستخدمة وغير المعيّنة فقط.", "submitAmendmentTitle": "تقديم تعديل المظروف؟", "submitAmendmentDescription": "سيدخل التعديل دورة الاعتماد.", "approveAmendmentTitle": "اعتماد تعديل المظروف؟", "approveAmendmentDescription": "يوسع الاعتماد المظروف ذريًا. لا يمكنك اعتماد تعديلك.", "rejectAmendmentTitle": "رفض تعديل المظروف؟", "rejectAmendmentDescription": "أدخل سببًا واضحًا للقرار." }
+    "requests": {
+      "title": "طلبات التوظيف",
+      "total": "طلبات التوظيف",
+      "createTitle": "إنشاء طلب توظيف",
+      "viewTitle": "تفاصيل طلب التوظيف",
+      "subtitle": "حجز سعة الأفراد وتكلفة الرواتب للسنة المالية"
+    },
+    "amendments": {
+      "title": "تعديلات المظاريف",
+      "total": "تعديلات المظاريف",
+      "createTitle": "إنشاء تعديل للمظروف",
+      "viewTitle": "تفاصيل تعديل المظروف",
+      "subtitle": "طلب زيادة موجبة في السعة",
+      "capacityHint": "يوسع الاعتماد سعة الأفراد والرواتب ذريًا."
+    },
+    "fields": {
+      "envelope": "مظروف الوظيفة",
+      "additionalHeadcount": "العدد الإضافي",
+      "additionalSalaryCost": "تكلفة الرواتب الإضافية",
+      "justification": "المبرر",
+      "requestedHeadcount": "العدد المطلوب",
+      "annualSalary": "الراتب السنوي لكل مقعد",
+      "targetStartDate": "تاريخ البدء المستهدف",
+      "requestType": "نوع الطلب",
+      "priority": "الأولوية",
+      "status": "الحالة",
+      "remainingAllocatable": "المتاح لطلبات الاستقطاب",
+      "remainingToHire": "المتبقي للتعيين",
+      "totalReservedCost": "التكلفة المالية المحجوزة",
+      "createdOn": "تاريخ الإنشاء",
+      "reason": "سبب القرار",
+      "closeReason": "سبب الإغلاق"
+    },
+    "type": {
+      "newHire": "تعيين جديد",
+      "replacement": "بديل"
+    },
+    "priority": {
+      "1": "منخفضة",
+      "2": "عادية",
+      "3": "مرتفعة",
+      "4": "عاجلة"
+    },
+    "status": {
+      "1": "مسودة",
+      "2": "مقدّم",
+      "3": "معتمد",
+      "4": "مرفوض",
+      "5": "مغلق"
+    },
+    "amendmentStatus": {
+      "1": "مسودة",
+      "2": "مقدّم",
+      "3": "معتمد",
+      "4": "مرفوض"
+    },
+    "closeReason": {
+      "1": "مكتمل",
+      "2": "ملغي",
+      "3": "مكتمل جزئيًا وملغي"
+    },
+    "capacity": {
+      "allocatable": "المتاح للتخصيص: {{count}}",
+      "toHire": "المتبقي للتعيين: {{count}}"
+    },
+    "actions": {
+      "submit": "تقديم",
+      "approve": "اعتماد",
+      "reject": "رفض",
+      "close": "إغلاق"
+    },
+    "validation": {
+      "envelope": "اختر مظروف وظيفة",
+      "positiveHeadcount": "يجب أن يكون العدد أكبر من صفر",
+      "positiveCost": "يجب أن تكون التكلفة الإضافية أكبر من صفر",
+      "nonNegativeSalary": "لا يمكن أن يكون الراتب سالبًا",
+      "targetStartDate": "اختر تاريخ البدء المستهدف",
+      "justification": "أدخل المبرر"
+    },
+    "messages": {
+      "fetchError": "تعذر تحميل بيانات تخطيط التوظيف.",
+      "lifecycleError": "تعذر إتمام إجراء التوظيف.",
+      "conflictReloaded": "تم تعديل سجل التوظيف في عملية أخرى. تم تحميل أحدث بيانات الخادم؛ راجعه قبل إعادة المحاولة.",
+      "created": "تم إنشاء طلب التوظيف.",
+      "submitted": "تم تقديم طلب التوظيف.",
+      "approved": "تم اعتماد طلب التوظيف وحجز السعة.",
+      "rejected": "تم رفض طلب التوظيف.",
+      "closed": "تم إغلاق طلب التوظيف وتحرير السعة غير المستخدمة.",
+      "amendmentCreated": "تم إنشاء تعديل المظروف.",
+      "amendmentSubmitted": "تم تقديم تعديل المظروف.",
+      "amendmentApproved": "تم اعتماد تعديل المظروف وتوسيع السعة.",
+      "amendmentRejected": "تم رفض تعديل المظروف."
+    },
+    "confirm": {
+      "submitTitle": "تقديم طلب التوظيف؟",
+      "submitDescription": "سيدخل الطلب دورة الاعتماد.",
+      "approveTitle": "اعتماد طلب التوظيف؟",
+      "approveDescription": "يحجز الاعتماد سعة الأفراد والرواتب. لا يمكنك اعتماد طلبك.",
+      "rejectTitle": "رفض طلب التوظيف؟",
+      "rejectDescription": "أدخل سببًا واضحًا للقرار.",
+      "closeTitle": "إغلاق طلب التوظيف؟",
+      "closeDescription": "سيتم تحرير السعة غير المستخدمة وغير المعيّنة فقط.",
+      "submitAmendmentTitle": "تقديم تعديل المظروف؟",
+      "submitAmendmentDescription": "سيدخل التعديل دورة الاعتماد.",
+      "approveAmendmentTitle": "اعتماد تعديل المظروف؟",
+      "approveAmendmentDescription": "يوسع الاعتماد المظروف ذريًا. لا يمكنك اعتماد تعديلك.",
+      "rejectAmendmentTitle": "رفض تعديل المظروف؟",
+      "rejectAmendmentDescription": "أدخل سببًا واضحًا للقرار."
+    }
   },
   "Action": {
     "Close": "إغلاق"
@@ -2337,7 +3152,8 @@
     "page": {
       "title": "دورة التعيينات والتوظيف",
       "newCandidate": "مرشح جديد",
-      "newPosition": "وظيفة جديدة"
+      "newPosition": "وظيفة جديدة",
+      "subtitle": "إدارة الوظائف والمرشحين والمقابلات والعروض"
     },
     "pipeline": {
       "title": "مسار المرشحين والمراحل",
@@ -2345,7 +3161,10 @@
       "allOpenings": "عرض كافة المتقدمين عبر جميع الوظائف",
       "clearFilter": "عرض كل الوظائف",
       "noApplicants": "لا يوجد متقدمون في هذه المرحلة",
-      "dragHelp": "اسحب بطاقة المرشح بين المراحل أو استخدم قائمة الإجراءات"
+      "dragHelp": "اسحب بطاقة المرشح بين المراحل أو استخدم قائمة الإجراءات",
+      "hireSuccess": "تم تعيين المرشح بنجاح",
+      "rejectSuccess": "تم رفض المرشح بنجاح",
+      "emptyStage": "لا يوجد مرشحون في هذه المرحلة"
     },
     "openings": {
       "title": "الوظائف والفرص المتاحة",
@@ -2376,7 +3195,8 @@
     "tabs": {
       "openings": "الشواغر الوظيفية ومسار التعيين",
       "requisitions": "طلبات الاحتياج الوظيفي",
-      "settings": "إعدادات وتهيئة التوظيف"
+      "settings": "إعدادات وتهيئة التوظيف",
+      "offers": "العروض"
     },
     "requisitions": {
       "title": "طلبات الاحتياج الوظيفي",
@@ -2410,7 +3230,18 @@
       "typeReplacement": "إحلال",
       "planned": "مخطط",
       "legacy": "قديم",
-      "remainingPositions": "{{count}} وظيفة متبقية"
+      "remainingPositions": "{{count}} وظيفة متبقية",
+      "approvedSuccess": "تم اعتماد الطلب",
+      "rejectedSuccess": "تم رفض الطلب",
+      "submittedSuccess": "تم إرسال طلب التوظيف",
+      "replacementFor": "بديل عن",
+      "budgetJustificationShort": "مبرر الميزانية",
+      "submitBtn": "إرسال الطلب",
+      "approveBtn": "اعتماد الطلب",
+      "rejectBtn": "رفض الطلب",
+      "rejectDialogTitle": "رفض طلب التوظيف",
+      "rejectDialogHelp": "اذكر سبب رفض هذا الطلب.",
+      "rejectReasonLabel": "سبب الرفض"
     },
     "requisitionStatus": {
       "draft": "مسودة",
@@ -2436,7 +3267,11 @@
       "hrInterview": "مقابلة الموارد البشرية",
       "jobOffer": "عرض عمل",
       "hired": "تم التعيين",
-      "rejected": "مرفوض"
+      "rejected": "مرفوض",
+      "underReview": "قيد المراجعة",
+      "shortlist": "القائمة المختصرة",
+      "interview": "مقابلة",
+      "offer": "عرض"
     },
     "actions": {
       "openOpening": "تنشيط الوظيفة",
@@ -2447,7 +3282,10 @@
       "hireCandidate": "تعيين كموظف",
       "rejectCandidate": "رفض الطلب",
       "viewDetails": "عرض التفاصيل",
-      "moveTo": "نقل إلى مرحلة"
+      "moveTo": "نقل إلى مرحلة",
+      "reject": "رفض المرشح",
+      "hire": "تعيين المرشح",
+      "evaluate": "تقييم المرشح"
     },
     "candidate": {
       "contactInfo": "معلومات الاتصال",
@@ -2469,7 +3307,14 @@
       "rateCandidate": "تقييم المرشح",
       "score": "الدرجة",
       "recommendation": "التوصية",
-      "notes": "الملاحظات"
+      "notes": "الملاحظات",
+      "openScorecard": "فتح بطاقة التقييم",
+      "firstName": "الاسم الأول",
+      "lastName": "اسم العائلة",
+      "email": "البريد الإلكتروني",
+      "phone": "الهاتف",
+      "expectedSalary": "الراتب المتوقع",
+      "source": "المصدر"
     },
     "interviews": {
       "scheduleTitle": "جدولة مقابلة شخصية",
@@ -2479,7 +3324,9 @@
       "endsOn": "وقت الانتهاء",
       "locationOrUrl": "المكان أو رابط الاجتماع",
       "interviewerNotes": "ملاحظات المقابلين",
-      "scheduledSuccess": "تمت جدولة المقابلة بنجاح"
+      "scheduledSuccess": "تمت جدولة المقابلة بنجاح",
+      "countBadge": "{{count}} مقابلة",
+      "noInterviewsYet": "لم تُجدول مقابلات بعد"
     },
     "offers": {
       "createTitle": "إصدار عرض عمل رسمي",
@@ -2490,7 +3337,49 @@
       "expiryDate": "تاريخ انتهاء صلاحية العرض",
       "termsAndConditions": "الشروط والأحكام",
       "benefitsSummary": "ملخص المزايا الإضافية",
-      "offerCreatedSuccess": "تم إنشاء عرض العمل بنجاح","offerSubmittedSuccess": "تم إنشاء العرض وإرساله للاعتماد بنجاح","submitForApproval": "إرسال للاعتماد","approveOffer": "اعتماد العرض","rejectApproval": "إعادة إلى المسودة","approvalHistory": "سجل الاعتماد","pendingApproval": "بانتظار الاعتماد","approved": "معتمد","noOffers": "لا توجد عروض وظيفية.","fetchError": "تعذر تحميل العروض الوظيفية.","annualSnapshot": "اللقطة السنوية","fiscalSnapshot": "لقطة السنة المالية","reservationDelta": "فرق الحجز","returnReason": "تمت الإعادة بواسطة المعتمد","rejectReason": "سبب الإعادة","rejectReasonRequired": "أدخل سبب الإعادة (حتى 1000 حرف).","total": "عروض وظيفية","actionDescription": "أكد إجراء حوكمة العرض.","actions": {"submit": "إرسال للاعتماد","approve": "اعتماد","reject": "إعادة للمسودة","issue": "إصدار العرض"},"status": {"Draft": "مسودة","PendingApproval": "بانتظار الاعتماد","Approved": "معتمد","Issued": "مصدر","Accepted": "مقبول","Declined": "مرفوض","Withdrawn": "مسحوب","Expired": "منتهي"},"history": {"Submitted": "أُرسل","Approved": "اعتمد","Rejected": "أُعيد","Declined": "رُفض"}
+      "offerCreatedSuccess": "تم إنشاء عرض العمل بنجاح",
+      "offerSubmittedSuccess": "تم إنشاء العرض وإرساله للاعتماد بنجاح",
+      "submitForApproval": "إرسال للاعتماد",
+      "approveOffer": "اعتماد العرض",
+      "rejectApproval": "إعادة إلى المسودة",
+      "approvalHistory": "سجل الاعتماد",
+      "pendingApproval": "بانتظار الاعتماد",
+      "approved": "معتمد",
+      "noOffers": "لا توجد عروض وظيفية.",
+      "fetchError": "تعذر تحميل العروض الوظيفية.",
+      "annualSnapshot": "اللقطة السنوية",
+      "fiscalSnapshot": "لقطة السنة المالية",
+      "reservationDelta": "فرق الحجز",
+      "returnReason": "تمت الإعادة بواسطة المعتمد",
+      "rejectReason": "سبب الإعادة",
+      "rejectReasonRequired": "أدخل سبب الإعادة (حتى 1000 حرف).",
+      "total": "عروض وظيفية",
+      "actionDescription": "أكد إجراء حوكمة العرض.",
+      "actions": {
+        "submit": "إرسال للاعتماد",
+        "approve": "اعتماد",
+        "reject": "إعادة للمسودة",
+        "issue": "إصدار العرض"
+      },
+      "status": {
+        "Draft": "مسودة",
+        "PendingApproval": "بانتظار الاعتماد",
+        "Approved": "معتمد",
+        "Issued": "مصدر",
+        "Accepted": "مقبول",
+        "Declined": "مرفوض",
+        "Withdrawn": "مسحوب",
+        "Expired": "منتهي"
+      },
+      "history": {
+        "Submitted": "أُرسل",
+        "Approved": "اعتمد",
+        "Rejected": "أُعيد",
+        "Declined": "رُفض"
+      },
+      "baseSalary": "الراتب الأساسي",
+      "payFrequency": "دورية الدفع",
+      "terms": "شروط العرض"
     },
     "interviewTypes": {
       "technical": "مقابلة تقنية",
@@ -2498,7 +3387,9 @@
       "phone": "فرز هاتفي",
       "behavioral": "مقابلة سلوكية",
       "onSite": "مقابلة بالفرع",
-      "executive": "مقابلة الإدارة العليا"
+      "executive": "مقابلة الإدارة العليا",
+      "hr": "مقابلة موارد بشرية",
+      "panel": "مقابلة لجنة"
     },
     "stats": {
       "activeOpenings": "الوظائف المفتوحة",
@@ -2510,7 +3401,16 @@
       "offersExtended": "عروض عمل معلقة",
       "offersExtendedSubtitle": "بانتظار رد المرشحين",
       "hiredThisMonth": "تم تعيينهم هذا الشهر",
-      "hiredThisMonthSubtitle": "إضافات جديدة لفريق العمل"
+      "hiredThisMonthSubtitle": "إضافات جديدة لفريق العمل",
+      "openings": "الوظائف الشاغرة",
+      "active": "طلبات التوظيف النشطة",
+      "candidates": "المرشحون",
+      "interviews": "المقابلات",
+      "upcoming": "القادمة",
+      "offers": "العروض",
+      "pendingDecision": "قرارات معلقة",
+      "hired": "المعينون",
+      "totalHired": "إجمالي المعينين"
     },
     "settings": {
       "tabStages": "مراحل الكانبان",
@@ -2616,6 +3516,7 @@
       "publicPortalDesc": "إتاحة التقديم المباشر للمرشحين ورفع السيرة الذاتية عبر رابط الشركة الخارجي",
       "resetDefaults": "استعادة الإعدادات الافتراضية",
       "savedSuccess": "تم حفظ إعدادات وسياسات التوظيف بنجاح!",
+      "loadFailed": "تعذر تحميل إعدادات التوظيف من الخادم. حاول مرة أخرى.",
       "confirmReset": "هل أنت متأكد من استعادة كافة إعدادات التوظيف الافتراضية؟",
       "defaultEmailSubjectAr": "تحديث بخصوص طلب التوظيف",
       "defaultEmailSubjectEn": "Update regarding your application",
@@ -2641,6 +3542,66 @@
         "three": "3 أشهر (المعتاد قانونياً)",
         "six": "6 أشهر"
       }
+    },
+    "hire": {
+      "confirmTitle": "تأكيد التعيين",
+      "confirmHelp": "راجع العرض المقبول قبل إنشاء سجل الموظف.",
+      "employeeNumber": "رقم الموظف",
+      "execute": "تعيين المرشح",
+      "acceptedOfferRequired": "يجب قبول عرض قبل التعيين."
+    },
+    "recommendations": {
+      "strongHire": "توصية قوية بالتعيين",
+      "hire": "تعيين",
+      "hold": "قيد المراجعة",
+      "noHire": "عدم التعيين",
+      "strongNoHire": "عدم التعيين قطعًا"
+    },
+    "evaluation": {
+      "submittedSuccess": "تم إرسال تقييم المقابلة",
+      "submitFailed": "تعذر إرسال تقييم المقابلة",
+      "dialogTitle": "تقييم المقابلة",
+      "dialogSubtitle": "سجل تقييم المحاور",
+      "candidateName": "اسم المرشح",
+      "position": "الوظيفة",
+      "weightedScore": "النتيجة الموزونة",
+      "mandatoryWarning": "أكمل كل معيار مطلوب قبل الإرسال.",
+      "skillsTitle": "تقييم المهارات",
+      "finalDecision": "القرار النهائي",
+      "recommendation": "التوصية",
+      "generalComments": "ملاحظات عامة",
+      "commentsPlaceholder": "أضف ملاحظات عن المقابلة"
+    },
+    "skills": {
+      "mandatory": "مهارة مطلوبة",
+      "weight": "الوزن",
+      "interviewerNotes": "ملاحظات المحاور"
+    },
+    "pay": {
+      "monthly": "شهري",
+      "weekly": "أسبوعي",
+      "annually": "سنوي",
+      "daily": "يومي",
+      "hourly": "بالساعة"
+    },
+    "types": {
+      "fullTime": "دوام كامل",
+      "partTime": "دوام جزئي",
+      "temporary": "مؤقت",
+      "contract": "تعاقد",
+      "internship": "تدريب"
+    },
+    "work": {
+      "onSite": "في مقر العمل",
+      "remote": "عن بُعد",
+      "hybrid": "مختلط"
+    },
+    "sources": {
+      "careersPortal": "بوابة الوظائف",
+      "internal": "إحالة داخلية",
+      "referral": "إحالة موظف",
+      "agency": "وكالة توظيف",
+      "manual": "إدخال يدوي"
     }
   },
   "modules": {
@@ -2668,5 +3629,199 @@
         "collaboration": "التعاون"
       }
     }
+  },
+  "personalDetails": "البيانات الشخصية",
+  "accountSecurity": "أمان الحساب",
+  "profilePicture": "صورة الملف الشخصي",
+  "tenantAdmins": {
+    "title": "مديرو المنشآت",
+    "subtitle": "إدارة حسابات مديري المنشآت",
+    "add": "إضافة مدير منشأة",
+    "empty": "لا يوجد مديرو منشآت",
+    "disabled": "معطل",
+    "locked": "مقفل",
+    "active": "نشط",
+    "assignedTenants": "المنشآت المسندة",
+    "default": "افتراضي",
+    "edit": "تعديل مدير المنشأة",
+    "formSubtitle": "أدخل بيانات المدير",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "userName": "اسم المستخدم",
+    "email": "البريد الإلكتروني",
+    "newPassword": "كلمة المرور الجديدة",
+    "password": "كلمة المرور",
+    "tenants": "المنشآت",
+    "defaultTenant": "المنشأة الافتراضية",
+    "disableAccount": "تعطيل الحساب"
+  },
+  "loading": "جارٍ التحميل…",
+  "noOptionsFound": "لا توجد خيارات",
+  "hidePassword": "إخفاء كلمة المرور",
+  "showPassword": "إظهار كلمة المرور",
+  "exportSuccess": "اكتمل التصدير بنجاح",
+  "success": "نجاح",
+  "noRowsSelected": "حدد صفًا واحدًا على الأقل",
+  "warning": "تحذير",
+  "noDataToExport": "لا توجد بيانات لتصديرها",
+  "exportFailed": "فشل التصدير",
+  "error": "خطأ",
+  "darkMode": "الوضع الداكن",
+  "lightMode": "الوضع الفاتح",
+  "account": "الحساب",
+  "profile": "الملف الشخصي",
+  "logout": "تسجيل الخروج",
+  "home": {
+    "attendanceMicroTrends": "الاتجاهات الدقيقة للحضور",
+    "attendancePatternsSubtitle": "أنماط الحضور حسب الوقت والموقع",
+    "inOfficeRateArea": "معدل الحضور من المكتب حسب المنطقة",
+    "filledAreaVisualization": "مخطط المساحة المعبأة",
+    "rollingAverage": "المتوسط المتحرك",
+    "smoothedTrend": "الاتجاه الممهّد",
+    "actualExpectedAttendance": "الحضور الفعلي والمتوقع",
+    "compareBaseline": "مقارنة خط الأساس",
+    "peopleHealthPipeline": "مسار صحة الموظفين",
+    "deepDiveCharts": "الرسوم التفصيلية",
+    "trainingCompliance": "الامتثال للتدريب",
+    "completedPendingOverdue": "مكتمل ومعلّق ومتأخر",
+    "trainingCompletionDept": "إكمال التدريب حسب الإدارة",
+    "percentCompleted": "نسبة الإنجاز",
+    "engagementTrend": "اتجاه التفاعل",
+    "companyWideIndex": "مؤشر الشركة الشامل",
+    "timeToFillTarget": "هدف مدة شغل الوظيفة",
+    "daysToFillRoles": "أيام شغل الوظائف",
+    "pipelineDropoff": "تسرب المسار",
+    "netChangesStages": "مراحل التغير الصافي",
+    "offersAcceptance": "معدل قبول العروض",
+    "monthlyAcceptanceTrend": "اتجاه القبول الشهري",
+    "keyKpis": "مؤشرات الأداء الرئيسية",
+    "performanceMetrics": "مقاييس الأداء",
+    "peopleTrendsDistribution": "توزيع اتجاهات الأفراد",
+    "workforceComposition": "تركيبة القوى العاملة",
+    "trendsOverview": "نظرة عامة على الاتجاهات",
+    "worldwideFootprint": "الانتشار العالمي",
+    "engagementCompliance": "الامتثال للمشاركة",
+    "healthPipelineOverview": "نظرة عامة على مسار صحة الموظفين",
+    "attendanceHeatmap": "خريطة كثافة الحضور",
+    "inOfficeSignals": "مؤشرات الحضور من المكتب",
+    "attendanceOverview": "نظرة عامة على الحضور",
+    "hiringMomentum": "زخم التوظيف",
+    "loadingDashboard": "جارٍ تحميل لوحة التحكم…",
+    "allKpis": "كل مؤشرات الأداء",
+    "kpisSubtitle": "مؤشرات الأداء الرئيسية لهذه الفترة",
+    "allPeopleTrends": "كل اتجاهات الأفراد",
+    "trendsSubtitle": "اتجاهات الفترة المحددة",
+    "quickInsights": "رؤى سريعة",
+    "hiring": "التوظيف",
+    "hires7d": "التعيينات خلال آخر 7 أيام",
+    "timeToHire": "مدة التوظيف",
+    "satisfaction7d": "الرضا خلال آخر 7 أيام",
+    "overtime7d": "العمل الإضافي خلال آخر 7 أيام",
+    "pipelineOffers": "عروض المسار",
+    "applicants7d": "المتقدمون خلال آخر 7 أيام",
+    "offerAcceptance": "قبول العرض",
+    "workforce": "القوى العاملة",
+    "headcount": "عدد الموظفين",
+    "absenceRate": "معدل الغياب",
+    "development": "التطوير",
+    "trainingCompletion": "اكتمال التدريب",
+    "remoteRatio": "نسبة العمل عن بُعد",
+    "attritionRisk": "مخاطر دوران الموظفين",
+    "timeOffWellbeing": "الإجازات والرفاهية",
+    "ptoUtilization": "استخدام الإجازات المدفوعة",
+    "sickDays7d": "أيام المرض خلال آخر 7 أيام",
+    "onboardingMobility": "الحراك أثناء التهيئة",
+    "onboardingCompletion": "اكتمال التهيئة",
+    "internalMobility": "الحراك الوظيفي الداخلي",
+    "inclusionCulture": "الاندماج والثقافة",
+    "diversityIndex": "مؤشر التنوع",
+    "genderBalance": "التوازن بين الجنسين",
+    "enps": "صافي نقاط ترشيح الموظفين",
+    "compliance": "الامتثال",
+    "incidents7d": "الحوادث خلال آخر 7 أيام",
+    "weekdayHourDensity": "كثافة الساعات حسب أيام الأسبوع",
+    "microTrends": "الاتجاهات الدقيقة",
+    "inOfficeLastTwoWeeks": "الحضور من المكتب خلال آخر أسبوعين",
+    "checkinsWeekday": "تسجيلات الدخول حسب يوم الأسبوع",
+    "summedOverHours": "الإجمالي حسب الساعة",
+    "checkinsHour": "تسجيلات الدخول حسب الساعة",
+    "summedOverWeekdays": "الإجمالي حسب يوم الأسبوع",
+    "inOfficeRate": "معدل الحضور من المكتب",
+    "shortTermAttendance": "الحضور قصير الأجل",
+    "presenceBreakdown": "تفصيل الحضور",
+    "onSiteRemoteAbsent": "في مقر العمل أو عن بُعد أو غائب",
+    "people": "الأفراد",
+    "absenceRateTarget": "الحد المستهدف لمعدل الغياب",
+    "latestDayThresholds": "حدود أحدث يوم",
+    "employeeEngagement": "مشاركة الموظفين",
+    "companyWideEngagement": "مشاركة الموظفين على مستوى الشركة",
+    "policyCompliance": "الامتثال للسياسات",
+    "mandatoryTrainingChecks": "فحوصات التدريب الإلزامية",
+    "recruitmentPipeline": "مسار التوظيف",
+    "applicationHireConversion": "معدل التحويل من طلب التوظيف إلى تعيين",
+    "payrollTrend": "اتجاه الرواتب",
+    "lastSixMonths": "آخر ستة أشهر",
+    "cumulativeGrossPayroll": "إجمالي الرواتب التراكمي",
+    "openRolesDept": "الوظائف الشاغرة حسب الإدارة",
+    "activeRequisitions": "طلبات التوظيف النشطة",
+    "departmentDistribution": "توزيع الإدارات",
+    "headcountHiringTrends": "اتجاهات عدد الموظفين والتوظيف",
+    "trackHeadcountGrowth": "تتبع نمو عدد الموظفين",
+    "workforceDepartment": "القوى العاملة حسب الإدارة",
+    "keyFunctionDistribution": "توزيع الوظائف الرئيسية",
+    "monthlyNetAdds": "صافي الإضافات الشهرية",
+    "hiresMinusAttrition": "التعيينات ناقص معدل الدوران",
+    "hiresVsAttrition": "التعيينات مقابل معدل الدوران",
+    "monthlyComparison": "مقارنة شهرية",
+    "hires": "التعيينات",
+    "attrition": "دوران الموظفين",
+    "headcountWithHiresAttrition": "عدد الموظفين مع التعيينات ومعدل الدوران",
+    "combinedBarsLine": "مخطط أعمدة وخط",
+    "departmentSizeFunnel": "مخطط قمع حجم الإدارات",
+    "largestSmallestDepartments": "أكبر وأصغر الإدارات",
+    "hiresAttritionScatter": "مخطط التعيينات والدوران",
+    "netGrowthLossMonths": "أشهر النمو أو الانخفاض الصافي",
+    "netGrowth": "النمو الصافي",
+    "netLoss": "الانخفاض الصافي"
+  },
+  "externalTools": {
+    "apiUrlRequired": "يجب إدخال رابط واجهة البرمجة",
+    "apiEndpoints": "نقاط نهاية واجهة البرمجة"
+  },
+  "auditLog": {
+    "system": "النظام",
+    "changeHistoryAndAuditTrail": "سجل التعديلات والتدقيق",
+    "loadingChangeHistory": "جاري تحميل سجل التعديلات...",
+    "failedToLoadChangeHistory": "حدث خطأ أثناء تحميل السجل",
+    "retry": "إعادة المحاولة",
+    "noRecordedChangesFound": "لا توجد حركات تعديل سابقة",
+    "noModificationsHaveBeenRecordedForThisItemYet": "لم يتم تسجيل أي تعديل على هذا العنصر حتى الآن",
+    "field": "الحقل",
+    "oldValue": "القيمة السابقة",
+    "newValue": "القيمة الجديدة",
+    "empty": "فارغ",
+    "close": "إغلاق"
+  },
+  "treeView": {
+    "parent": "رئيسي",
+    "sub": "فرعي",
+    "archived": "مؤرشف",
+    "addSubItem": "إضافة عنصر فرعي",
+    "moveItem": "نقل العنصر",
+    "edit": "تعديل",
+    "dragToMove": "اسحب لإعادة الترتيب أو النقل",
+    "companyTopLevelNoParent": "المستوى الرئيسي للشركة (بدون مركز أب)",
+    "expandAll": "فرد الكل",
+    "collapseAll": "طي الكل",
+    "zoomIn": "تكبير",
+    "resetZoom": "إعادة الضبط",
+    "zoomOut": "تصغير",
+    "exitFullscreen": "خروج من ملء الشاشة",
+    "fullscreen": "ملء الشاشة",
+    "hideDetails": "إخفاء لوحة التفاصيل",
+    "showDetails": "عرض لوحة التفاصيل",
+    "companyRootLevel": "المستوى الرئيسي للشركة",
+    "selectItemPrompt": "اختر عنصراً من الشجرة لعرض تفاصيله",
+    "itemCount": "{{count}} عنصر"
   }
 }

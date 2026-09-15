@@ -13,8 +13,7 @@ interface Props {
 }
 
 export function EducationRequirementsEditor({ requirements = [], onChange, disabled = false }: Props) {
-  const { i18n } = useTranslation();
-  const isAr = i18n.language === "ar";
+  const { t } = useTranslation();
 
   const handleAdd = () => {
     onChange([...requirements, { degreeLevel: "", fieldOfStudy: "", isRequired: true }]);
@@ -32,18 +31,18 @@ export function EducationRequirementsEditor({ requirements = [], onChange, disab
     <Box sx={{ mt: 2, mb: 2 }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
         <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-          {isAr ? "المؤهلات العلمية والشهادات المطلوبة" : "Education & Degree Requirements"}
+          {t("organizationalStructure.educationEditor.educationAndDegreeRequirements")}
         </Typography>
         {!disabled && (
           <Button size="small" startIcon={<AddRoundedIcon />} onClick={handleAdd} variant="outlined">
-            {isAr ? "إضافة مؤهل" : "Add Education"}
+            {t("organizationalStructure.educationEditor.addEducation")}
           </Button>
         )}
       </Box>
 
       {requirements.length === 0 ? (
         <Typography variant="caption" sx={{ color: "text.secondary" }}>
-          {isAr ? "لم تتم إضافة مؤهلات بعد. اضغط 'إضافة مؤهل' للبدء." : "No education requirements added yet. Click 'Add Education' to begin."}
+          {t("organizationalStructure.educationEditor.emptyDescription")}
         </Typography>
       ) : (
         <Stack spacing={1}>
@@ -51,7 +50,7 @@ export function EducationRequirementsEditor({ requirements = [], onChange, disab
             <Paper key={index} variant="outlined" sx={{ p: 1.5, display: "flex", gap: 1.5, alignItems: "center" }}>
               <TextField
                 size="small"
-                label={isAr ? "المستوى الدراسي (مثل: بكالوريوس / ماجستير)" : "Degree Level (e.g. Bachelor / Master)"}
+                label={t("organizationalStructure.educationEditor.degreeLevelLabel")}
                 value={req.degreeLevel}
                 disabled={disabled}
                 onChange={(e) => handleUpdate(index, { degreeLevel: e.target.value })}
@@ -59,7 +58,7 @@ export function EducationRequirementsEditor({ requirements = [], onChange, disab
               />
               <TextField
                 size="small"
-                label={isAr ? "التخصص / المجال" : "Field of Study"}
+                label={t("organizationalStructure.educationEditor.fieldOfStudy")}
                 value={req.fieldOfStudy}
                 disabled={disabled}
                 onChange={(e) => handleUpdate(index, { fieldOfStudy: e.target.value })}
@@ -74,7 +73,7 @@ export function EducationRequirementsEditor({ requirements = [], onChange, disab
                     size="small"
                   />
                 }
-                label={<Typography variant="caption">{isAr ? "إلزامي" : "Required"}</Typography>}
+                label={<Typography variant="caption">{t("organizationalStructure.educationEditor.required")}</Typography>}
                 sx={{ m: 0 }}
               />
               {!disabled && (

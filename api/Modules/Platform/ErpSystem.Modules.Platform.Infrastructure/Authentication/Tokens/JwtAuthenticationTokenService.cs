@@ -125,7 +125,10 @@ public sealed class JwtAuthenticationTokenService(
             AuthenticationTokenClaimNames.CompanyId
         };
         var claims = principalClaims
-            .Where(claim => requiredClaims.Contains(claim.Type))
+            .Where(claim =>
+                requiredClaims.Contains(claim.Type) ||
+                claim.Type == ClaimTypes.Role ||
+                claim.Type == PermissionClaimNames.Permission)
             .ToList();
         claims.Add(new AccessTokenClaimValue(AuthenticationTokenClaimNames.JwtId, Guid.NewGuid().ToString("N")));
         claims.Add(new AccessTokenClaimValue(AuthenticationTokenClaimNames.Scope, AuthenticationTokenClaimNames.RealtimeScope));

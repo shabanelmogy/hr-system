@@ -1,5 +1,6 @@
 using ErpSystem.BuildingBlocks.Modularity;
 using ErpSystem.Modules.Contacts.Application;
+using ErpSystem.Modules.Contacts.Application.Parties;
 using ErpSystem.Modules.Contacts.Infrastructure;
 using ErpSystem.Modules.Contacts.Presentation;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,10 @@ namespace ErpSystem.Modules.Contacts;
 public sealed class ContactsModule : IModule
 {
     public string Name => "Contacts";
-    public ModuleDefinition Definition => new("contacts", "Contacts", [])
+    public ModuleDefinition Definition => new("contacts", "Contacts",
+    [
+        new SubmoduleDefinition("parties", "Parties", PartyPermissions.All)
+    ])
     {
         Version = "1.0.0"
     };

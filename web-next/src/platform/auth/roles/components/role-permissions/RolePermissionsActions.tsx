@@ -1,5 +1,6 @@
 import { ArrowBack, SaveAlt } from "@mui/icons-material";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 type RolePermissionsActionsProps = {
   selected: number;
@@ -10,10 +11,11 @@ type RolePermissionsActionsProps = {
 };
 
 export default function RolePermissionsActions(props: RolePermissionsActionsProps) {
+  const { t } = useTranslation();
   return (
     <Box sx={{ p: 3, display: "flex", gap: 2, justifyContent: "space-between", alignItems: "center" }}>
       <Typography variant="body2" sx={{ color: "text.secondary" }}>
-        {props.selected} of {props.total} permissions selected
+        {t("roles.permissionsSelected", { selected: props.selected, total: props.total })}
       </Typography>
       <Box sx={{ display: "flex", gap: 2 }}>
         <Button
@@ -22,7 +24,7 @@ export default function RolePermissionsActions(props: RolePermissionsActionsProp
           onClick={props.onBack}
           disabled={props.isSaving}
         >
-          Back To Roles
+          {t("roles.backToRoles")}
         </Button>
         {!props.readOnly && <Button
           type="submit"
@@ -37,7 +39,7 @@ export default function RolePermissionsActions(props: RolePermissionsActionsProp
             "&:hover": { boxShadow: 4, transform: "translateY(-1px)" },
           }}
         >
-          {props.isSaving ? "Saving..." : "Save Changes"}
+          {props.isSaving ? t("common.saving") : t("actions.save")}
         </Button>}
       </Box>
     </Box>

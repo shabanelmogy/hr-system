@@ -1,6 +1,7 @@
-using ErpSystem.Modules.HR.Domain.Common.Exceptions;
+using ErpSystem.BuildingBlocks.Domain.Exceptions;
+using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities;
 using ErpSystem.Modules.HR.Domain.Recruitment.Enums;
-using static ErpSystem.Modules.HR.Domain.Common.Guards.DomainGuard;
+using static ErpSystem.BuildingBlocks.Domain.Guards.DomainGuard;
 
 namespace ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 
@@ -37,10 +38,15 @@ public sealed class JobOpening : CompanyAuditableEntity
     public Guid PublicId { get; private set; }
     public string OpeningNumber { get; private set; } = string.Empty;
     public int JobRequisitionId { get; private set; }
+    public JobRequisition JobRequisition { get; private set; } = null!;
     public int PositionId { get; private set; }
+    public Position Position { get; private set; } = null!;
     public int BranchId { get; private set; }
+    public Branch Branch { get; private set; } = null!;
     public int DepartmentId { get; private set; }
+    public Department Department { get; private set; } = null!;
     public int? DivisionId { get; private set; }
+    public Division? Division { get; private set; }
     public int PositionCount { get; private set; }
     public int HiredCount { get; private set; }
     public int AvailablePositions => PositionCount - HiredCount;
@@ -50,6 +56,7 @@ public sealed class JobOpening : CompanyAuditableEntity
     public DateTimeOffset? OpenedOn { get; private set; }
     public DateTimeOffset? ClosedOn { get; private set; }
     public string? ClosureReason { get; private set; }
+    public ICollection<EmploymentApplication> Applications { get; private set; } = [];
 
     public void Open(DateTimeOffset openedOn)
     {

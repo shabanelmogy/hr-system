@@ -24,6 +24,7 @@ import {
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ApiClientError } from "@/lib/api/client";
 import { EmptyState } from "@/shared/components/feedback/states";
 import { MyDateTimeField } from "@/shared/components/forms";
 import { Section } from "@/shared/components/layout";
@@ -51,7 +52,7 @@ import {
   useUpdateDevice,
 } from "../hooks/useAttendanceDeviceQueries";
 import { attendanceDeviceService } from "../services/attendanceDeviceService";
-import type { AttendanceDeviceListItem, AttendanceDeviceSort } from "../types/attendanceDevices";
+import type { AttendanceDeviceListItem } from "../types/attendanceDevices";
 import { toAttendanceDeviceQuery } from "../utils/attendanceDeviceQuery";
 import { getAttendancePermissions } from "../utils/permissions";
 
@@ -59,9 +60,8 @@ export default function AttendanceDevicesPage() {
   const { t } = useTranslation();
   const { userPermissions, isReadOnly } = usePermissions();
   const permissions = getAttendancePermissions(userPermissions, isReadOnly);
-  const list = useServerListState<AttendanceDeviceSort, Record<string, never>>({
-    defaultColumn: "updatedOn",
-    defaultSortDirection: "DESC",
+  const list = useServerListState<"name", Record<string, never>>({
+    defaultColumn: "name",
     defaultFilters: {},
     defaultPageSize: 10,
   });
@@ -114,6 +114,14 @@ export default function AttendanceDevicesPage() {
       await work();
       setFeedback(message);
     } catch (error) {
+      if (error instanceof ApiClientError && error.status === 409 && error.code === "ConcurrencyConflict") {
+        await devices.refetch();
+        setSelectedId(null);
+        setEditing(null);
+        setFormOpen(false);
+        setFeedback(t("attendanceDevices.conflictReloaded"));
+        return;
+      }
       setFeedback(extractErrorMessage(error));
     }
   };
@@ -252,7 +260,7 @@ export default function AttendanceDevicesPage() {
                       color={selected.enabled ? "warning" : "success"}
                       disabled={!permissions.canManage || setEnabled.isPending}
                       onClick={() => void run(
-                        () => setEnabled.mutateAsync({ id: selected.id, enabled: !selected.enabled }),
+                        () => setEnabled.mutateAsync({ id: selected.id, enabled: !selected.enabled, rowVersion: selected.rowVersion }),
                         selected.enabled ? t("attendanceDevices.deviceDisabled") : t("attendanceDevices.deviceEnabled"),
                       )}
                     >
@@ -328,7 +336,7 @@ export default function AttendanceDevicesPage() {
                 fullWidth
                 disabled={!permissions.canPull || !canOperateSelected || pullUsers.isPending}
                 onClick={() => {
-                  if (selected) void run(() => pullUsers.mutateAsync(selected.id), t("attendanceDevices.userPullQueued"));
+                  if (selected) void run(() => pullUsers.mutateAsync({ id: selected.id, request: { operationId: crypto.randomUUID() } }), t("attendanceDevices.userPullQueued"));
                 }}
               >
                 {t("attendanceDevices.pullUsers")}
@@ -357,6 +365,7 @@ export default function AttendanceDevicesPage() {
                       request: {
                         fromUtc: range.fromUtc ? new Date(range.fromUtc).toISOString() : undefined,
                         toUtc: range.toUtc ? new Date(range.toUtc).toISOString() : undefined,
+                        operationId: crypto.randomUUID(),
                       },
                     }),
                     t("attendanceDevices.attendancePullQueued"),
@@ -381,7 +390,7 @@ export default function AttendanceDevicesPage() {
           disabled={!permissions.canManage || create.isPending || update.isPending}
           onClose={() => setFormOpen(false)}
           onSubmit={(request) => void run(async () => {
-            if (editing) await update.mutateAsync({ id: editing.id, request });
+            if (editing) await update.mutateAsync({ id: editing.id, request: { ...request, rowVersion: editing.rowVersion } });
             else await create.mutateAsync(request);
             setFormOpen(false);
           }, t("attendanceDevices.saved"))}

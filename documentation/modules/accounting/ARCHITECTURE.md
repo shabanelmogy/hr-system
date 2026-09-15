@@ -19,8 +19,8 @@ or event. Resolve the boundary before implementing either workflow.
 
 ## Repository-specific platform reuse
 
-HR and the shared platform currently own identity, authentication, tenancy,
-users, companies, branches, and the common authorization plumbing. Accounting
+Platform owns identity, authentication, tenancy, users, companies, branches,
+and the common authorization plumbing. Accounting
 must consume those capabilities through stable Contracts or platform abstractions
 and must not create duplicate auth/user/company/branch tables, services, or UI.
 Accounting owns only financial permissions and authorization policies (for
@@ -50,6 +50,9 @@ Phase 01 implementation.
   Contracts through the Accounting inbox and maintains an Accounting-owned
   `PartyReference`. Duplicate delivery is suppressed by the inbox receipt and
   failed consumption can be retried without duplicate projection effects.
+  Positive source revisions order updates independently of timestamps; legacy
+  revision-zero payloads cannot overwrite a versioned projection. See the
+  [API contract](api/README.md) for ordering and migration rules.
 - Every posting operation must be auditable, idempotent, balanced, and tied to a
   fiscal period before it can affect the ledger.
 

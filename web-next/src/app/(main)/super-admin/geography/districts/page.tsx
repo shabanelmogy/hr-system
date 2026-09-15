@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DistrictsPage } from "@/modules/hr/basic-data/geographical-information/districts";
+import { DistrictsPage } from "@/modules/reference-data/geographical-information/districts";
 
 export const metadata: Metadata = {
   title: "Global Districts | ERP System",

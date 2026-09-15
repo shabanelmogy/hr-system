@@ -35,38 +35,46 @@ describe("route access policies", () => {
     expect(canAccessRoute("/not-configured", session)).toBe(false);
   });
 
-  it("keeps legacy tenant geography management routes unavailable", () => {
+  it("fails closed for removed legacy tenant geography URLs", () => {
     const tenantCatalogSession = {
       ...session,
       roles: ["admin"],
-      permissions: [
-        permissions.ViewCountries,
-        permissions.ViewStates,
-        permissions.ViewDistricts,
-      ],
+      permissions: [permissions.ViewCountries, permissions.ViewStates, permissions.ViewDistricts],
     };
 
-    expect(canAccessRoute(appRoutes.basicData.countries, tenantCatalogSession)).toBe(false);
-    expect(canAccessRoute(`${appRoutes.basicData.countries}/new`, tenantCatalogSession)).toBe(false);
-    expect(canAccessRoute(appRoutes.basicData.states, tenantCatalogSession)).toBe(false);
-    expect(canAccessRoute(appRoutes.basicData.districts, tenantCatalogSession)).toBe(false);
+    expect(canAccessRoute("/basic-data/countries", tenantCatalogSession)).toBe(false);
+    expect(canAccessRoute("/basic-data/countries/new", tenantCatalogSession)).toBe(false);
+    expect(canAccessRoute("/basic-data/states", tenantCatalogSession)).toBe(false);
+    expect(canAccessRoute("/basic-data/districts", tenantCatalogSession)).toBe(false);
+    expect(canAccessRoute("/basic-data/country-report", tenantCatalogSession)).toBe(false);
+    expect(canAccessRoute("/basic-data/global-presence", tenantCatalogSession)).toBe(false);
   });
 
-  it("allows only Super Admin to access global geography management", () => {
+  it("requires both Super Admin and the exact global geography permission", () => {
     expect(canAccessRoute(appRoutes.superAdmin.geography.countries, session)).toBe(false);
     expect(canAccessRoute(appRoutes.superAdmin.geography.states, {
       ...session,
       roles: ["SUPER_ADMIN"],
+    })).toBe(false);
+    expect(canAccessRoute(appRoutes.superAdmin.geography.districts, {
+      ...session,
+      permissions: [permissions.ViewDistricts],
+    })).toBe(false);
+    expect(canAccessRoute(appRoutes.superAdmin.geography.countries, {
+      ...session,
+      roles: ["super_admin"],
+      permissions: [permissions.ViewCountries],
+    })).toBe(true);
+    expect(canAccessRoute(appRoutes.superAdmin.geography.states, {
+      ...session,
+      roles: ["super_admin"],
+      permissions: [permissions.ViewStates],
     })).toBe(true);
     expect(canAccessRoute(appRoutes.superAdmin.geography.districts, {
       ...session,
       roles: ["super_admin"],
+      permissions: [permissions.ViewDistricts],
     })).toBe(true);
-    expect(canAccessRoute(appRoutes.basicData.countries, {
-      ...session,
-      roles: ["super_admin"],
-      permissions: [permissions.ViewCountries],
-    })).toBe(false);
     expect(canAccessRoute(appRoutes.apps, {
       ...session,
       roles: ["super_admin"],
@@ -150,12 +158,31 @@ describe("route access policies", () => {
     })).toBe(true);
   });
 
-  it("requires OfflineOperations:Manage for the offline operations administration page", () => {
-    expect(canAccessRoute(appRoutes.auth.offlineOperationsPage, session)).toBe(false);
-    expect(canAccessRoute(appRoutes.auth.offlineOperationsPage, {
+  it("matches the Platform file API tenant-member access model", () => {
+    expect(canAccessRoute(appRoutes.extras.filesManager, session)).toBe(true);
+  });
+
+  it("requires ViewRaw for attendance raw-data screens", () => {
+    const deviceViewer = {
       ...session,
-      permissions: [permissions.ManageOfflineOperations],
-    })).toBe(true);
+      permissions: [permissions.ViewAttendanceDevices],
+    };
+    expect(canAccessRoute(appRoutes.attendanceDevices.index, deviceViewer)).toBe(true);
+    expect(canAccessRoute(appRoutes.attendanceDevices.users, deviceViewer)).toBe(false);
+    expect(canAccessRoute(appRoutes.attendanceDevices.punches, deviceViewer)).toBe(false);
+    expect(canAccessRoute(appRoutes.attendanceDevices.pullRuns, deviceViewer)).toBe(false);
+
+    const rawViewer = {
+      ...session,
+      permissions: [permissions.ViewRawAttendanceDevices],
+    };
+    expect(canAccessRoute(appRoutes.attendanceDevices.users, rawViewer)).toBe(true);
+    expect(canAccessRoute(appRoutes.attendanceDevices.punches, rawViewer)).toBe(true);
+    expect(canAccessRoute(appRoutes.attendanceDevices.pullRuns, rawViewer)).toBe(true);
+  });
+
+  it("allows tenant members to read offline operations policy without manage permission", () => {
+    expect(canAccessRoute(appRoutes.auth.offlineOperationsPage, session)).toBe(true);
   });
 
   it("requires FiscalYears:View for the shared Finance fiscal-years route", () => {

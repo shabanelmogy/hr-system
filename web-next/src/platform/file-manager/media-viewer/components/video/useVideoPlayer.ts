@@ -28,7 +28,6 @@ export const useVideoPlayer = ({
   const [playbackRate, setPlaybackRate] = useState(1);
   const [repeatMode, setRepeatMode] = useState<RepeatMode>("off");
   const [showTimeMarks, setShowTimeMarks] = useState(false);
-  const [showSidebar, setShowSidebar] = useState(false);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -207,8 +206,6 @@ export const useVideoPlayer = ({
     repeatMode,
     showTimeMarks,
     setShowTimeMarks,
-    showSidebar,
-    setShowSidebar,
     // handlers
     handlePlayPause,
     handleProgressChange,

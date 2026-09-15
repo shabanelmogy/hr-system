@@ -15,7 +15,7 @@ export function parseUsersResponse(response: unknown): User[] {
 }
 
 export function parseUserResponse(response: unknown): User {
-  return parseUser(unwrapApiValue(response));
+  return parseUser(response);
 }
 
 export function parseUserCompanyOptionsResponse(response: unknown): UserCompanyOption[] {
@@ -27,7 +27,7 @@ export function parseUserInvitationsResponse(response: unknown): UserInvitation[
 }
 
 export function parseUserInvitationResponse(response: unknown): UserInvitation {
-  return parseUserInvitation(unwrapApiValue(response));
+  return parseUserInvitation(response);
 }
 
 export function parseRolesResponse(response: unknown): Role[] {
@@ -35,7 +35,7 @@ export function parseRolesResponse(response: unknown): Role[] {
 }
 
 export function parseRoleResponse(response: unknown): Role {
-  return parseRole(unwrapApiValue(response));
+  return parseRole(response);
 }
 
 export function parseRoleWithClaimsResponse(response: unknown): RoleWithClaims {
@@ -48,11 +48,10 @@ function parseArray<T>(
   parser: (value: unknown) => T,
   label: string,
 ): T[] {
-  const value = unwrapApiValue(response);
-  if (!Array.isArray(value)) {
+  if (!Array.isArray(response)) {
     throw new Error(`Invalid ${label} response: expected an array.`);
   }
-  return value.map((item) => parser(unwrapApiValue(item)));
+  return response.map((item) => parser(item));
 }
 
 function parseUser(value: unknown): User {
@@ -100,7 +99,7 @@ function parseUserInvitation(value: unknown): UserInvitation {
 }
 
 export function parseUsersPageResponse(response: unknown): ManagementPageResponse<User> {
-  const page = requireRecord(unwrapApiValue(response), "users page");
+  const page = requireRecord(response, "users page");
   const metadata = requireRecord(page.metaData, "users page metadata");
   return {
     items: parseArray(page.items, parseUser, "users"),
@@ -155,14 +154,6 @@ function parseRoleClaims(value: unknown): RoleClaim[] {
       isSelected: requireBoolean(record.isSelected, "roleClaim.isSelected"),
     };
   });
-}
-
-function unwrapApiValue(response: unknown): unknown {
-  const record = asRecord(response);
-  if (!record) return response;
-  if (record.isSuccess === true && "value" in record) return record.value;
-  if ("data" in record) return record.data;
-  return response;
 }
 
 function requireRecord(value: unknown, label: string): UnknownRecord {

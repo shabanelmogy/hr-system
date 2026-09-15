@@ -42,7 +42,7 @@ interface TenantFormModalProps {
   loading: boolean;
   onClose: () => void;
   onSave: (form: TenantFormState) => void | Promise<void>;
-  installedModules?: ErpModule[];
+  tenantEntitlementModules?: ErpModule[];
 }
 
 export function TenantFormModal({
@@ -51,7 +51,7 @@ export function TenantFormModal({
   loading,
   onClose,
   onSave,
-  installedModules = [],
+  tenantEntitlementModules = [],
 }: TenantFormModalProps) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
@@ -107,7 +107,7 @@ export function TenantFormModal({
         render={({ field }) => (
           <View style={styles.entitlements}>
             <AppText variant="label">{t('tenantManagement.entitlements')}</AppText>
-            {installedModules.map((module) => {
+            {tenantEntitlementModules.map((module) => {
               const current = field.value.find(
                 item => item.moduleCode.toLowerCase() === module.code.toLowerCase(),
               );

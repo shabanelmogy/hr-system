@@ -20,31 +20,31 @@ public sealed class JobOpeningConfiguration : IEntityTypeConfiguration<JobOpenin
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.Status });
         builder.HasIndex(x => new { x.TenantId, x.CompanyId, x.JobRequisitionId });
 
-        builder.HasOne<JobRequisition>()
+        builder.HasOne(x => x.JobRequisition)
             .WithMany()
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.JobRequisitionId })
             .HasPrincipalKey(r => new { r.TenantId, r.CompanyId, r.Id })
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<Position>()
+        builder.HasOne(x => x.Position)
             .WithMany()
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.PositionId })
             .HasPrincipalKey(p => new { p.TenantId, p.CompanyId, p.Id })
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<Branch>()
+        builder.HasOne(x => x.Branch)
             .WithMany()
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.BranchId })
             .HasPrincipalKey(b => new { b.TenantId, b.CompanyId, b.Id })
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<Department>()
+        builder.HasOne(x => x.Department)
             .WithMany()
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.DepartmentId })
             .HasPrincipalKey(d => new { d.TenantId, d.CompanyId, d.Id })
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<Division>()
+        builder.HasOne(x => x.Division)
             .WithMany()
             .HasForeignKey(x => new { x.TenantId, x.CompanyId, x.DivisionId })
             .HasPrincipalKey(d => new { d.TenantId, d.CompanyId, d.Id })

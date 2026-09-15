@@ -5,8 +5,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { apiRoutes } from "@/config";
-import { apiService, HandleApiError } from "@/shared/services";
+import { HandleApiError } from "@/shared/services";
+import { authService } from "../../../services/authService";
 import Validation from "./utils/validation";
 
 // Import components
@@ -15,7 +15,12 @@ import SecurityHeader from "./components/SecurityHeader";
 import StyledCard, { StyledDivider } from "./components/StyledCard";
 import type { PasswordChangeValues } from "./components/PasswordChangeForm";
 
-const ChangePassword = ({ showSuccess = null, showError = null }) => {
+interface ChangePasswordProps {
+  showSuccess?: (message: string, title: string) => void;
+  showError?: (message: string, title: string) => void;
+}
+
+const ChangePassword = ({ showSuccess, showError }: ChangePasswordProps) => {
   const { t } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -38,7 +43,7 @@ const ChangePassword = ({ showSuccess = null, showError = null }) => {
   const handleChangePassword = async (data: PasswordChangeValues) => {
     setIsSubmitting(true);
     try {
-      await apiService.put(apiRoutes.auth.changePassword, data);
+      await authService.changePassword(data);
 
       // Use the showSuccess function passed from parent
       if (showSuccess) {
@@ -47,7 +52,7 @@ const ChangePassword = ({ showSuccess = null, showError = null }) => {
 
       reset();
       setIsEditing(false);
-      await apiService.logout();
+      await authService.logout();
       return true;
     } catch (error) {
       HandleApiError(error, (updatedState) => {

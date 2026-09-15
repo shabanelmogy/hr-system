@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+    <PackageReference Include="Hangfire.AspNetCore" />
+    <PackageReference Include="QRCoder" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
@@ -20,9 +22,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Messaging\ErpSystem.BuildingBlocks.Messaging.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Context\ErpSystem.BuildingBlocks.Context.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.Accounting.Application\ErpSystem.Modules.Accounting.Application.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.Accounting.Contracts\ErpSystem.Modules.Accounting.Contracts.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.Accounting.Domain\ErpSystem.Modules.Accounting.Domain.csproj" />
+    <ProjectReference Include="..\..\Platform\ErpSystem.Modules.Platform.Contracts\ErpSystem.Modules.Platform.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

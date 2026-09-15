@@ -16,21 +16,21 @@
     {
       "id": "api-application-feature",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/Analytics/CrystalReports",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports",
       "minimumFiles": 8,
       "purpose": "Crystal report CQRS contracts, commands, queries, validation, errors, and ports"
     },
     {
       "id": "api-infrastructure-feature",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports",
       "minimumFiles": 7,
       "purpose": "EF persistence, company ACL evaluation, private storage, and Crystal inspection/render adapters"
     },
     {
       "id": "web-feature",
       "layer": "web-next",
-      "path": "web-next/src/shared/reporting/crystal-report-manager",
+      "path": "web-next/src/modules/reporting/crystal-report-manager",
       "minimumFiles": 5,
       "purpose": "Management grid, multipart workflow, versions, permissions, service, types, and tests"
     },
@@ -64,103 +64,175 @@
     {
       "id": "api-controller",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Presentation/Features/Analytics/CrystalReports/V1/CrystalReportsController.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/CrystalReports/V1/CrystalReportsController.cs",
       "purpose": "Versioned management, upload, download, publish, ACL, and archive HTTP surface"
     },
     {
       "id": "api-domain-report",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/Analytics/CrystalReports/Entities/CrystalReport.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/CrystalReports/Entities/CrystalReport.cs",
       "purpose": "Tenant-owned stable report identity and published-version pointer"
     },
     {
       "id": "api-domain-version",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/Analytics/CrystalReports/Entities/CrystalReportVersion.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/CrystalReports/Entities/CrystalReportVersion.cs",
       "purpose": "Immutable private source revision metadata"
     },
     {
       "id": "api-domain-grant",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/Analytics/CrystalReports/Entities/CrystalReportRoleGrant.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/CrystalReports/Entities/CrystalReportRoleGrant.cs",
       "purpose": "Company-scoped per-role report rights"
     },
     {
       "id": "api-store",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportStore.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportStore.cs",
       "purpose": "Tenant/company filtering, server paging, projections, ACL checks, and persistence"
     },
     {
       "id": "api-private-storage",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Storage/PrivateCrystalReportFileStorage.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/PrivateCrystalReportFileStorage.cs",
       "purpose": "Opaque private storage, size/signature checks, hash, and containment"
     },
     {
       "id": "api-inspector-client",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportInspectorClient.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportInspectorClient.cs",
       "purpose": "Authenticated service-to-service SummaryInfo and Crystal runtime inspection"
     },
     {
-      "id": "api-legacy-source-client",
+      "id": "api-deployment-source-client",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportLegacySourceClient.cs",
-      "purpose": "Authenticated catalog and bounded source-copy adapter for existing reports"
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportDeploymentSourceClient.cs",
+      "purpose": "Authenticated catalog and bounded source-copy adapter for deployment-owned reports"
     },
     {
       "id": "api-renderer-client",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportRendererClient.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportRendererClient.cs",
       "purpose": "Streams the authorized published RPT to the internal Crystal runtime and validates the PDF response"
     },
     {
       "id": "api-report-data-source",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs",
-      "purpose": "Builds allowlisted explicit-schema report data from the HR API EF context"
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs",
+      "purpose": "Resolves allowlisted explicit-schema report data providers"
     },
     {
-      "id": "legacy-inspector-controller",
+      "id": "api-reference-data-report-providers",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/ReferenceDataCrystalReportProviders.cs",
+      "purpose": "Current per-entity ReferenceData report provider implementations"
+    },
+    {
+      "id": "runtime-inspector-controller",
       "layer": "api",
       "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportInspectorController.cs",
       "purpose": "Crystal SDK inspection and automatic SummaryInfo extraction"
     },
     {
-      "id": "legacy-inspector-auth",
+      "id": "runtime-internal-auth",
       "layer": "api",
       "path": "api/CrystalReportGeneratorApi/Filters/InternalApiKeyAttribute.cs",
       "purpose": "Service-to-service secret boundary independent of browser Origin"
     },
     {
-      "id": "legacy-catalog-controller",
+      "id": "runtime-catalog-controller",
       "layer": "api",
       "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportCatalogController.cs",
       "purpose": "Path-safe discovery and source streaming for deployment-owned report files"
     },
     {
-      "id": "legacy-render-controller",
+      "id": "runtime-render-controller",
       "layer": "api",
       "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportRenderController.cs",
       "purpose": "Internal path-free multipart rendering boundary"
     },
     {
-      "id": "legacy-runtime-profiles",
+      "id": "runtime-health-controller",
       "layer": "api",
-      "path": "api/CrystalReportGeneratorApi/Helpers/CrystalReport/ManagedReportRuntime.cs",
-      "purpose": "Allowlisted entity data/view/filter profiles for managed reports"
+      "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportHealthController.cs",
+      "purpose": "Authenticated bounded readiness contract for the standalone Crystal worker"
+    },
+    {
+      "id": "runtime-correlation-handler",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Filters/InternalCorrelationIdHandler.cs",
+      "purpose": "Canonical X-Correlation-ID propagation and normalization"
+    },
+    {
+      "id": "runtime-managed-source-policy",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Runtime/CrystalReportManagedSourcePolicy.cs",
+      "purpose": "Rejects saved data, subreports, and external datasource metadata; permits only pushed ADO.NET XML"
+    },
+    {
+      "id": "runtime-execution-gate",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Runtime/CrystalReportExecutionGate.cs",
+      "purpose": "Bounds concurrent SAP native execution and queue wait"
+    },
+    {
+      "id": "runtime-settings",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Runtime/CrystalReportRuntimeSettings.cs",
+      "purpose": "Fail-fast bounded runtime limits for source, data, PDF, and catalog sizes"
+    },
+    {
+      "id": "runtime-request-workspace",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Runtime/CrystalReportRequestWorkspace.cs",
+      "purpose": "Per-request temporary directories, deterministic cleanup, and stale workspace scavenging"
+    },
+    {
+      "id": "runtime-diagnostics",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Runtime/CrystalRuntimeDiagnostics.cs",
+      "purpose": "Bounded rolling operational log with safe correlation/result metadata only"
+    },
+    {
+      "id": "runtime-profiles",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportProfileRegistry.cs",
+      "purpose": "Allowlisted entity schema profiles for managed reports"
+    },
+    {
+      "id": "runtime-managed-parameters",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportManagedParameters.cs",
+      "purpose": "Requires and binds the explicit Language parameter without mutating Crystal report layout"
+    },
+    {
+      "id": "runtime-inspection-service",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Inspection/CrystalReportInspectionService.cs",
+      "purpose": "Crystal SDK inspection, saved-data rejection, and embedded-credential rejection"
+    },
+    {
+      "id": "runtime-catalog-service",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Catalog/CrystalReportCatalogService.cs",
+      "purpose": "Path-safe bounded deployment catalog, structural eligibility, hashing, and source streaming without consuming SAP execution capacity"
+    },
+    {
+      "id": "runtime-render-service",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportRenderService.cs",
+      "purpose": "Schema validation, DataSet binding, PDF rendering, size bound, and PDF signature validation"
     },
     {
       "id": "web-page",
       "layer": "web-next",
-      "path": "web-next/src/shared/reporting/crystal-report-manager/CrystalReportManagerPage.tsx",
+      "path": "web-next/src/modules/reporting/crystal-report-manager/CrystalReportManagerPage.tsx",
       "purpose": "User Manager-style administration workflow"
     },
     {
       "id": "web-service",
       "layer": "web-next",
-      "path": "web-next/src/shared/reporting/crystal-report-manager/services.ts",
+      "path": "web-next/src/modules/reporting/crystal-report-manager/services.ts",
       "purpose": "Typed API mapping, multipart upload, source download, lifecycle, and ACL transport"
     },
     {
@@ -214,13 +286,13 @@
     {
       "id": "api-tests",
       "layer": "test",
-      "path": "api/ErpSystem.Tests/CrystalReportsControllerContractTests.cs",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportsControllerContractTests.cs",
       "purpose": "Controller route and permission contract verification"
     },
     {
       "id": "web-tests",
       "layer": "test",
-      "path": "web-next/src/shared/reporting/crystal-report-manager/services.test.ts",
+      "path": "web-next/src/modules/reporting/crystal-report-manager/services.test.ts",
       "purpose": "HTTP criteria, row-version, lifecycle, and scope transport verification"
     }
   ],

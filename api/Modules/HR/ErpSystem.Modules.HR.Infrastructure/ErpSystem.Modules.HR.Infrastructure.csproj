@@ -32,7 +32,6 @@
     <PackageReference Include="QRCoder" />
     <PackageReference Include="Scrutor" />
     <PackageReference Include="Serilog.AspNetCore" />
-    <PackageReference Include="Serilog.Sinks.MSSqlServer" />
     <PackageReference Include="Syncfusion.Blazor.SfPdfViewer" />
     <PackageReference Include="System.Data.SqlClient" />
     <PackageReference Include="System.Drawing.Common" />
@@ -47,6 +46,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ErpSystem.Modules.HR.Application\ErpSystem.Modules.HR.Application.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.HR.Domain\ErpSystem.Modules.HR.Domain.csproj" />
+    <ProjectReference Include="..\..\Accounting\ErpSystem.Modules.Accounting.Contracts\ErpSystem.Modules.Accounting.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

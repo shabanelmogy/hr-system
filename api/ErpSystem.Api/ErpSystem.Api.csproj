@@ -19,12 +19,14 @@
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" />
     <PackageReference Include="FluentValidation" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.StackExchangeRedis" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
     <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
     <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
     <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
@@ -43,6 +45,11 @@
     <ProjectReference Include="..\Modules\Accounting\ErpSystem.Modules.Accounting\ErpSystem.Modules.Accounting.csproj" />
     <ProjectReference Include="..\Modules\Platform\ErpSystem.Modules.Platform\ErpSystem.Modules.Platform.csproj" />
     <ProjectReference Include="..\Modules\Contacts\ErpSystem.Modules.Contacts\ErpSystem.Modules.Contacts.csproj" />
+    <ProjectReference Include="..\Modules\ReferenceData\ErpSystem.Modules.ReferenceData\ErpSystem.Modules.ReferenceData.csproj" />
+    <ProjectReference Include="..\Modules\Inventory\ErpSystem.Modules.Inventory\ErpSystem.Modules.Inventory.csproj" />
+    <ProjectReference Include="..\Modules\CRM\ErpSystem.Modules.CRM\ErpSystem.Modules.CRM.csproj" />
+    <ProjectReference Include="..\Modules\Reporting\ErpSystem.Modules.Reporting\ErpSystem.Modules.Reporting.csproj" />
+    <ProjectReference Include="..\Modules\PointOfSale\ErpSystem.Modules.PointOfSale\ErpSystem.Modules.PointOfSale.csproj" />
     <!-- </erp-module-references> -->
   </ItemGroup>
 

@@ -73,6 +73,17 @@ public sealed class ModuleCatalog
             throw new InvalidOperationException(
                 $"Duplicate module codes: {string.Join(", ", duplicateCodes)}. Module codes must be unique (case-insensitive).");
 
+        var duplicatePermissions = _definitions
+            .SelectMany(definition => definition.Submodules.SelectMany(submodule =>
+                submodule.RequiredPermissions.Select(permission => (ModuleCode: definition.Code, SubmoduleCode: submodule.Code, Permission: permission))))
+            .GroupBy(item => item.Permission, StringComparer.Ordinal)
+            .Where(group => group.Count() > 1)
+            .Select(group => $"{group.Key} ({string.Join(", ", group.Select(item => $"{item.ModuleCode}/{item.SubmoduleCode}"))})")
+            .ToArray();
+        if (duplicatePermissions.Length > 0)
+            throw new InvalidOperationException(
+                "A permission may be owned by only one module/submodule: " + string.Join("; ", duplicatePermissions));
+
         _lifecycleModules = BuildLifecycleOrder(_modules, _definitions);
         _userVisibleDefinitions = _definitions.Where(static definition => definition.IsUserVisible).ToList();
         _tenantEntitlementDefinitions = _definitions.Where(static definition => definition.AllowsTenantEntitlement).ToList();
@@ -124,6 +135,10 @@ public sealed class ModuleCatalog
         if (definition.IsDefault && !definition.AllowsTenantEntitlement)
             throw new InvalidOperationException(
                 $"Module '{moduleName}' cannot be a default tenant entitlement when tenant entitlement is disabled.");
+        if (!definition.AllowsTenantEntitlement && definition.Submodules.Any(static submodule =>
+                submodule.PermissionAccessMode == PermissionAccessMode.TenantEntitlement))
+            throw new InvalidOperationException(
+                $"Module '{moduleName}' disables tenant entitlements but declares an entitlement-gated submodule.");
 
         ValidateDependencies(definition, moduleName);
 

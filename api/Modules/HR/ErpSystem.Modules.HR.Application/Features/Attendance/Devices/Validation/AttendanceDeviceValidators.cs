@@ -10,6 +10,15 @@ internal static class AttendancePageValidation
     public static bool IsAllowedPageSize(int value) => value is 5 or 10 or 25 or 50;
 }
 
+internal static class AttendanceConcurrencyValidation
+{
+    public static bool IsRowVersion(string value)
+    {
+        try { return Convert.FromBase64String(value).Length > 0; }
+        catch (FormatException) { return false; }
+    }
+}
+
 public sealed class AttendanceDeviceRequestValidator : AbstractValidator<AttendanceDeviceRequest>
 {
     public AttendanceDeviceRequestValidator(IStringLocalizer<AttendanceDeviceRequest> l)
@@ -38,10 +47,31 @@ public sealed class CreateAttendanceDeviceValidator : AbstractValidator<CreateAt
 }
 public sealed class UpdateAttendanceDeviceValidator : AbstractValidator<UpdateAttendanceDeviceCommand>
 {
-    public UpdateAttendanceDeviceValidator(AttendanceDeviceRequestValidator validator)
+    public UpdateAttendanceDeviceValidator(IStringLocalizer<AttendanceDeviceRequest> l)
     {
         RuleFor(x => x.Id).GreaterThan(0);
-        RuleFor(x => x.Request).NotNull().SetValidator(validator);
+        RuleFor(x => x.Request).NotNull();
+        When(x => x.Request is not null, () =>
+        {
+            RuleFor(x => x.Request.Name).NotEmpty().MaximumLength(120).WithMessage(l["AttendanceDeviceInvalidRequest"]);
+            RuleFor(x => x.Request.ProviderId).Must(AttendanceProviderCatalog.IsKnown).WithMessage(l["AttendanceDeviceProviderUnavailable"]);
+            RuleFor(x => x.Request.Host).Must(x => !string.IsNullOrWhiteSpace(x) && IPAddress.TryParse(x.Trim(), out _))
+                .WithMessage(l["AttendanceDeviceUntrustedHost"]);
+            RuleFor(x => x.Request.Port).InclusiveBetween(1, 65535).WithMessage(l["AttendanceDeviceInvalidRequest"]);
+            RuleFor(x => x.Request.BranchId).GreaterThan(0).When(x => x.Request.BranchId.HasValue).WithMessage(l["AttendanceDeviceInvalidBranch"]);
+            RuleFor(x => x.Request.ConnectionMode).Equal("tcp").WithMessage(l["AttendanceDeviceInvalidRequest"]);
+            RuleFor(x => x.Request.TimeZoneId).Must(AttendanceDeviceRequestValidator.IsTimeZone).WithMessage(l["AttendanceDeviceInvalidTimeZone"]);
+            RuleFor(x => x.Request.RowVersion).NotEmpty().Must(AttendanceConcurrencyValidation.IsRowVersion)
+                .WithMessage("A valid row version is required.");
+        });
+    }
+}
+public sealed class SetAttendanceDeviceEnabledValidator : AbstractValidator<SetAttendanceDeviceEnabledCommand>
+{
+    public SetAttendanceDeviceEnabledValidator()
+    {
+        RuleFor(x => x.Id).GreaterThan(0);
+        RuleFor(x => x.RowVersion).NotEmpty().Must(AttendanceConcurrencyValidation.IsRowVersion);
     }
 }
 public sealed class DeviceCredentialsValidator : AbstractValidator<UpdateAttendanceDeviceCredentialsCommand>

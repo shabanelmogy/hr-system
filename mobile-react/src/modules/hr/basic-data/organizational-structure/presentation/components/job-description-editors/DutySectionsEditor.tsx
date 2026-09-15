@@ -11,9 +11,8 @@ interface Props {
 }
 
 export function DutySectionsEditor({ sections = [], onChange, disabled = false }: Props) {
-  const { i18n } = useTranslation();
+  const { t } = useTranslation();
   const { theme } = useAppTheme();
-  const isAr = i18n.language === 'ar';
 
   const handleAddSection = () => {
     onChange([
@@ -60,7 +59,7 @@ export function DutySectionsEditor({ sections = [], onChange, disabled = false }
     <View style={styles.container}>
       <View style={styles.header}>
         <AppText variant="label" style={styles.title}>
-          {isAr ? 'مجالات العمل والواجبات المهيكلة' : 'Duty Sections & Items'}
+          {t('organizationalStructure.jobDescriptionEditors.duties.title')}
         </AppText>
         {!disabled && (
           <AppButton
@@ -68,14 +67,14 @@ export function DutySectionsEditor({ sections = [], onChange, disabled = false }
             onPress={handleAddSection}
             variant="outline"
           >
-            {isAr ? 'إضافة قسم' : 'Add Section'}
+            {t('organizationalStructure.jobDescriptionEditors.duties.addSection')}
           </AppButton>
         )}
       </View>
 
       {sections.length === 0 ? (
         <AppText color="muted" variant="caption">
-          {isAr ? 'لم تتم إضافة أقسام مهام بعد.' : 'No duty sections added yet.'}
+          {t('organizationalStructure.jobDescriptionEditors.duties.empty')}
         </AppText>
       ) : (
         <View style={styles.list}>
@@ -86,12 +85,12 @@ export function DutySectionsEditor({ sections = [], onChange, disabled = false }
             >
               <View style={styles.cardHeader}>
                 <AppText variant="label" style={styles.cardTitle}>
-                  {isAr ? `قسم واجبات #${sIdx + 1}` : `Duty Section #${sIdx + 1}`}
+                  {t('organizationalStructure.jobDescriptionEditors.duties.sectionNumber', { number: sIdx + 1 })}
                 </AppText>
                 {!disabled && (
                   <AppIconButton
                     icon="trash-outline"
-                    label={isAr ? 'حذف القسم' : 'Delete Section'}
+                    label={t('organizationalStructure.jobDescriptionEditors.duties.removeSection')}
                     onPress={() => handleRemoveSection(sIdx)}
                   />
                 )}
@@ -99,14 +98,14 @@ export function DutySectionsEditor({ sections = [], onChange, disabled = false }
 
               <AppTextField
                 editable={!disabled}
-                label={isAr ? 'عنوان المجال (عربي)' : 'Section Title (Ar)'}
+                label={t('organizationalStructure.jobDescriptionEditors.duties.titleArabic')}
                 name={`secTitleAr_${sIdx}`}
                 onChangeText={(val) => handleUpdateSection(sIdx, { sectionTitleAr: val })}
                 value={sec.sectionTitleAr}
               />
               <AppTextField
                 editable={!disabled}
-                label={isAr ? 'عنوان المجال (إنجليزي)' : 'Section Title (En)'}
+                label={t('organizationalStructure.jobDescriptionEditors.duties.titleEnglish')}
                 name={`secTitleEn_${sIdx}`}
                 onChangeText={(val) => handleUpdateSection(sIdx, { sectionTitleEn: val })}
                 value={sec.sectionTitleEn}
@@ -114,7 +113,7 @@ export function DutySectionsEditor({ sections = [], onChange, disabled = false }
               <AppTextField
                 editable={!disabled}
                 keyboardType="numeric"
-                label={isAr ? 'الوزن النسبي %' : 'Weight Percentage %'}
+                label={t('organizationalStructure.jobDescriptionEditors.duties.weightPercentage')}
                 name={`secWeight_${sIdx}`}
                 onChangeText={(val) => handleUpdateSection(sIdx, { weightPercentage: val ? Number(val) : undefined })}
                 value={sec.weightPercentage != null ? String(sec.weightPercentage) : ''}
@@ -123,7 +122,7 @@ export function DutySectionsEditor({ sections = [], onChange, disabled = false }
               <AppDivider style={styles.divider} />
 
               <AppText variant="caption" color="muted" style={styles.itemsHeader}>
-                {isAr ? `بنود الواجبات والمسؤوليات (${sec.items.length}):` : `Duty Items (${sec.items.length}):`}
+                {t('organizationalStructure.jobDescriptionEditors.duties.itemsCount', { count: sec.items.length })}
               </AppText>
 
               {sec.items.map((it, iIdx) => (
@@ -131,14 +130,14 @@ export function DutySectionsEditor({ sections = [], onChange, disabled = false }
                   <View style={styles.itemInputs}>
                     <AppTextField
                       editable={!disabled}
-                      label={isAr ? `بند #${iIdx + 1} (عربي)` : `Item #${iIdx + 1} (Ar)`}
+                      label={t('organizationalStructure.jobDescriptionEditors.duties.itemArabic', { number: iIdx + 1 })}
                       name={`itemAr_${sIdx}_${iIdx}`}
                       onChangeText={(val) => handleUpdateItem(sIdx, iIdx, { textAr: val })}
                       value={it.textAr}
                     />
                     <AppTextField
                       editable={!disabled}
-                      label={isAr ? `بند #${iIdx + 1} (إنجليزي)` : `Item #${iIdx + 1} (En)`}
+                      label={t('organizationalStructure.jobDescriptionEditors.duties.itemEnglish', { number: iIdx + 1 })}
                       name={`itemEn_${sIdx}_${iIdx}`}
                       onChangeText={(val) => handleUpdateItem(sIdx, iIdx, { textEn: val })}
                       value={it.textEn}
@@ -147,7 +146,7 @@ export function DutySectionsEditor({ sections = [], onChange, disabled = false }
                   {!disabled && (
                     <AppIconButton
                       icon="close-circle-outline"
-                      label={isAr ? 'حذف البند' : 'Remove Item'}
+                      label={t('organizationalStructure.jobDescriptionEditors.duties.removeItem')}
                       onPress={() => handleRemoveItem(sIdx, iIdx)}
                     />
                   )}
@@ -160,7 +159,7 @@ export function DutySectionsEditor({ sections = [], onChange, disabled = false }
                   onPress={() => handleAddItem(sIdx)}
                   variant="ghost"
                 >
-                  {isAr ? 'إضافة بند مسؤولية' : 'Add Duty Item'}
+                  {t('organizationalStructure.jobDescriptionEditors.duties.addItem')}
                 </AppButton>
               )}
             </View>

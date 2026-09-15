@@ -1,9 +1,9 @@
 "use client";
 
-import { apiRoutes } from "@/config";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNotifications } from "@/shared/hooks";
-import { apiService, HandleApiError } from "@/shared/services";
+import { HandleApiError } from "@/shared/services";
+import { authService } from "./services/authService";
 import { MyTextField } from "@/shared/components/forms";
 import EmailIcon from "@mui/icons-material/Email";
 import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
@@ -63,10 +63,9 @@ const ResendEmailConfirmation = () => {
   const onSubmit = async (data: EmailRecoveryFormData) => {
     setIsSubmitting(true);
     try {
-      await apiService.post(
-        apiRoutes.auth.resendEmailConfirmation,
+      await authService.resendEmailConfirmation(
         { email: data.email },
-        { ReturnUrl: "emailConfirmed" }
+        { ReturnUrl: "emailConfirmed" },
       );
       reset();
       showSuccess(t("auth.confirmationEmailSent"), t("messages.success"));

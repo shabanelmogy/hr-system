@@ -1,10 +1,5 @@
 import type { NextResponse } from "next/server";
-import {
-  ACCESS_TOKEN_COOKIE,
-  LEGACY_ACCESS_TOKEN_COOKIE,
-  LEGACY_REFRESH_TOKEN_COOKIE,
-  REFRESH_TOKEN_COOKIE,
-} from "./constants";
+import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from "./constants";
 
 export type AuthPayload = {
   token: string;
@@ -21,7 +16,6 @@ export type AuthCookieSource = {
 export type AuthTokens = {
   accessToken?: string;
   refreshToken?: string;
-  migrationPayload?: AuthPayload;
 };
 
 const ACCESS_TOKEN_CHUNK_SIZE = 3_000;
@@ -29,23 +23,9 @@ const MAX_ACCESS_TOKEN_CHUNKS = 8;
 const ACCESS_TOKEN_CHUNK_MARKER = "chunks-";
 
 export function readAuthTokens(source: AuthCookieSource): AuthTokens {
-  const currentAccessToken = readCurrentAccessToken(source);
-  const legacyAccessToken = source.get(LEGACY_ACCESS_TOKEN_COOKIE)?.value || undefined;
-  const currentRefreshToken = source.get(REFRESH_TOKEN_COOKIE)?.value || undefined;
-  const legacyRefreshToken = source.get(LEGACY_REFRESH_TOKEN_COOKIE)?.value || undefined;
-  const accessToken = currentAccessToken ?? legacyAccessToken;
-  const refreshToken = currentRefreshToken ?? legacyRefreshToken;
-  const usesLegacyCookie =
-    (!currentAccessToken && Boolean(legacyAccessToken)) ||
-    (!currentRefreshToken && Boolean(legacyRefreshToken));
-
   return {
-    accessToken,
-    refreshToken,
-    migrationPayload:
-      usesLegacyCookie && accessToken && refreshToken
-        ? { token: accessToken, refreshToken }
-        : undefined,
+    accessToken: readCurrentAccessToken(source),
+    refreshToken: source.get(REFRESH_TOKEN_COOKIE)?.value || undefined,
   };
 }
 
@@ -92,8 +72,6 @@ export function setAuthCookies(response: NextResponse, payload: AuthPayload) {
   // so the server can access the expired token for refresh requests.
   setAccessTokenCookies(response, payload.token, payload.refreshTokenExpiration);
   response.cookies.set(REFRESH_TOKEN_COOKIE, payload.refreshToken, cookieOptions(payload.refreshTokenExpiration));
-  clearCookie(response, LEGACY_ACCESS_TOKEN_COOKIE);
-  clearCookie(response, LEGACY_REFRESH_TOKEN_COOKIE);
   
   // Ensure no-store is always present, even if other middleware sets cache-control
   const existingCC = response.headers.get("cache-control");
@@ -106,8 +84,6 @@ export function clearAuthCookies(response: NextResponse) {
   clearCookie(response, ACCESS_TOKEN_COOKIE);
   clearAccessTokenChunks(response);
   clearCookie(response, REFRESH_TOKEN_COOKIE);
-  clearCookie(response, LEGACY_ACCESS_TOKEN_COOKIE);
-  clearCookie(response, LEGACY_REFRESH_TOKEN_COOKIE);
   
   // Ensure no-store is always present
   const existingCC = response.headers.get("cache-control");
@@ -118,15 +94,15 @@ export function clearAuthCookies(response: NextResponse) {
 
 /**
  * Removes sensitive token fields from auth payload for safe logging.
- * ⚠️ WARNING: This does NOT sanitize the original payload object.
+ * âš ï¸ WARNING: This does NOT sanitize the original payload object.
  * Always call this BEFORE logging, never log the raw payload.
  * 
  * @example
- * // ❌ WRONG - tokens already logged
+ * // âŒ WRONG - tokens already logged
  * console.log("Raw:", payload);
  * const safe = sanitizeAuthPayload(payload);
  * 
- * // ✅ CORRECT - only sanitized data logged
+ * // âœ… CORRECT - only sanitized data logged
  * const safe = sanitizeAuthPayload(payload);
  * console.log("Safe:", safe);
  */
@@ -145,20 +121,7 @@ export function sanitizeAuthPayload(payload: AuthPayload) {
 }
 
 function clearCookie(response: NextResponse, name: string) {
-  // Clear with current secure options
   response.cookies.set(name, "", { ...cookieOptions(), maxAge: 0 });
-  
-  // For legacy cookies, also try clearing with insecure options
-  // (in case they were set before __Host- migration)
-  if (name === LEGACY_ACCESS_TOKEN_COOKIE || name === LEGACY_REFRESH_TOKEN_COOKIE) {
-    response.cookies.set(name, "", {
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax" as const,
-      path: "/",
-      maxAge: 0,
-    });
-  }
 }
 
 function readCurrentAccessToken(source: AuthCookieSource): string | undefined {

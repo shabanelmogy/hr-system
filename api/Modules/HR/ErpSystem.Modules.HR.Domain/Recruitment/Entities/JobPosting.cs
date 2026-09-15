@@ -1,6 +1,6 @@
-using ErpSystem.Modules.HR.Domain.Common.Exceptions;
+using ErpSystem.BuildingBlocks.Domain.Exceptions;
 using ErpSystem.Modules.HR.Domain.Recruitment.Enums;
-using static ErpSystem.Modules.HR.Domain.Common.Guards.DomainGuard;
+using static ErpSystem.BuildingBlocks.Domain.Guards.DomainGuard;
 
 namespace ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 
@@ -28,6 +28,7 @@ public sealed class JobPosting : CompanyAuditableEntity
     public int Id { get; private set; }
     public Guid PublicId { get; private set; }
     public int JobOpeningId { get; private set; }
+    public JobOpening JobOpening { get; private set; } = null!;
     public string Slug { get; private set; } = string.Empty;
     public JobPostingAudience Audience { get; private set; }
     public string TitleEn { get; private set; } = string.Empty;

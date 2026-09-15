@@ -1,4 +1,4 @@
-using ErpSystem.Modules.HR.Application.Common.Paginations;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts;
 using ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities;
 
@@ -23,6 +23,7 @@ public interface IAttendanceDeviceWriteStore
     Task<DevicePullRun?> FindRunByOperationAsync(int deviceId, Guid operationId, CancellationToken cancellationToken);
     Task<AttendanceAgent?> FindAgentAsync(Guid id, CancellationToken cancellationToken);
     Task<bool> AgentNameExistsAsync(string normalizedName, CancellationToken cancellationToken);
+    void ApplyRowVersion(AttendanceDevice device, string rowVersion);
     void Add(AttendanceDevice device);
     void Add(AttendanceAgent agent);
     void Add(DevicePullRun run);
@@ -40,6 +41,15 @@ public interface IAttendanceAgentInstallationSettings
 {
     string HostedApiBaseUrl { get; }
     int PollIntervalSeconds { get; }
+}
+public sealed record AttendanceAgentCredential(string Secret, string SecretHash, string SecretPrefix);
+public interface IAttendanceAgentCredentialGenerator
+{
+    AttendanceAgentCredential Create();
+}
+public interface IAttendanceEventKeyGenerator
+{
+    string Create(string providerId, ConnectorPunch punch);
 }
 public interface IAttendanceNetworkPolicy
 {

@@ -90,7 +90,7 @@ export function EntityChangeLogDialog({
       if (!map.has(groupKey)) {
         map.set(groupKey, {
           changeLogId: log.changeLogId,
-          changedBy: log.changedBy || (isAr ? 'النظام' : 'System'),
+          changedBy: log.changedBy || (t("auditLog.system")),
           changedAt: log.changedAt,
           changedByPc: log.changedByPc,
           items: [],
@@ -100,13 +100,13 @@ export function EntityChangeLogDialog({
     }
 
     return Array.from(map.values());
-  }, [logs, isAr]);
+  }, [logs, t]);
 
   const formatDate = (isoString: string) => {
     if (!isoString) return '';
     try {
       const date = new Date(isoString);
-      return new Intl.DateTimeFormat(isAr ? 'ar-EG' : 'en-US', {
+      return new Intl.DateTimeFormat(isAr ? "ar-EG" : "en-US", {
         dateStyle: 'medium',
         timeStyle: 'short',
       }).format(date);
@@ -144,7 +144,7 @@ export function EntityChangeLogDialog({
           <HistoryIcon color="primary" />
           <Box>
             <Typography variant="h6" component="div" sx={{ fontWeight: 700 }}>
-              {title || (isAr ? 'سجل التعديلات والتدقيق' : 'Change History & Audit Trail')}
+              {title || (t("auditLog.changeHistoryAndAuditTrail"))}
             </Typography>
             {(subtitle || entityCode || entityName) && (
               <Typography variant="caption" color="text.secondary">
@@ -154,7 +154,7 @@ export function EntityChangeLogDialog({
           </Box>
         </Box>
         <IconButton
-          aria-label="close"
+          aria-label={t("common.close")}
           onClick={onClose}
           sx={{ color: (theme) => theme.palette.grey[500] }}
         >
@@ -178,17 +178,17 @@ export function EntityChangeLogDialog({
           >
             <CircularProgress size={36} />
             <Typography variant="body2" color="text.secondary">
-              {isAr ? 'جاري تحميل سجل التعديلات...' : 'Loading change history...'}
+              {t("auditLog.loadingChangeHistory")}
             </Typography>
           </Box>
         ) : error ? (
           <Box sx={{ textAlign: 'center', py: 6 }}>
             <Typography color="error" variant="body2" sx={{ mb: 2 }}>
-              {isAr ? 'حدث خطأ أثناء تحميل السجل' : 'Failed to load change history'}
+              {t("auditLog.failedToLoadChangeHistory")}
             </Typography>
             {onRetry && (
               <Button variant="outlined" size="small" onClick={() => onRetry()}>
-                {isAr ? 'إعادة المحاولة' : 'Retry'}
+                {t("auditLog.retry")}
               </Button>
             )}
           </Box>
@@ -205,12 +205,10 @@ export function EntityChangeLogDialog({
           >
             <HistoryIcon sx={{ fontSize: 48, color: 'text.disabled' }} />
             <Typography variant="body1" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-              {isAr ? 'لا توجد حركات تعديل سابقة' : 'No recorded changes found'}
+              {t("auditLog.noRecordedChangesFound")}
             </Typography>
             <Typography variant="caption" color="text.disabled">
-              {isAr
-                ? 'لم يتم تسجيل أي تعديل على هذا العنصر حتى الآن'
-                : 'No modifications have been recorded for this item yet'}
+              {t("auditLog.noModificationsHaveBeenRecordedForThisItemYet")}
             </Typography>
           </Box>
         ) : (
@@ -268,12 +266,12 @@ export function EntityChangeLogDialog({
                 <Table size="small" sx={{ bgcolor: 'background.paper', borderRadius: 1 }}>
                   <TableHead>
                     <TableRow sx={{ '& th': { fontWeight: 700, fontSize: '0.75rem' } }}>
-                      <TableCell>{isAr ? 'الحقل' : 'Field'}</TableCell>
-                      <TableCell>{isAr ? 'القيمة السابقة' : 'Old Value'}</TableCell>
+                      <TableCell>{t("auditLog.field")}</TableCell>
+                      <TableCell>{t("auditLog.oldValue")}</TableCell>
                       <TableCell align="center" sx={{ width: 40 }}>
                         <ArrowForwardIcon sx={{ fontSize: 14, color: 'text.secondary' }} />
                       </TableCell>
-                      <TableCell>{isAr ? 'القيمة الجديدة' : 'New Value'}</TableCell>
+                      <TableCell>{t("auditLog.newValue")}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -293,7 +291,7 @@ export function EntityChangeLogDialog({
                             />
                           ) : (
                             <Typography variant="caption" color="text.disabled">
-                              {isAr ? 'فارغ' : 'Empty'}
+                              {t("auditLog.empty")}
                             </Typography>
                           )}
                         </TableCell>
@@ -311,7 +309,7 @@ export function EntityChangeLogDialog({
                             />
                           ) : (
                             <Typography variant="caption" color="text.disabled">
-                              {isAr ? 'فارغ' : 'Empty'}
+                              {t("auditLog.empty")}
                             </Typography>
                           )}
                         </TableCell>
@@ -329,7 +327,7 @@ export function EntityChangeLogDialog({
 
       <DialogActions sx={{ p: 2 }}>
         <Button onClick={onClose} variant="contained" color="primary">
-          {isAr ? 'إغلاق' : 'Close'}
+          {t("auditLog.close")}
         </Button>
       </DialogActions>
     </Dialog>

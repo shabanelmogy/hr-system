@@ -4,11 +4,101 @@ The API operational baseline is intentionally small and uses the infrastructure 
 
 ## Logging and correlation
 
-Serilog writes structured events to the console and rolling JSON files under `Logs/`. Files are retained for 30 days. The SQL sink is restricted to error events to avoid turning request logging into an unbounded operational table.
+Serilog writes structured events to stdout through the console sink only. Logger
+creation performs no filesystem or database I/O, so startup does not depend on a
+module database or on a writable application directory. Deployment platforms,
+sidecars, or external agents own collection, retention, indexing, and routing of
+stdout/stderr. The API deliberately has no direct file or MSSQL logging sink and
+does not auto-create logging tables. When enabled, OpenTelemetry exports traces
+and metrics through OTLP to the configured collector; telemetry export remains
+separate from application log delivery.
 
 Every HTTP request has an `X-Correlation-ID`. A valid client value is preserved; otherwise the API creates one. The value is returned in the response, exposed by the browser CORS policy, added to the Serilog context, and included together with `traceId` in host and module MVC Problem Details responses.
 
 Authentication runs before authorization and before rate limiting. The rate limiter can therefore partition authenticated traffic by the canonical name-identifier claim instead of collapsing signed-in users onto a shared proxy/IP bucket. Request events can include `UserId` and `UserName` for authenticated requests without logging tokens or credentials.
+
+## Reverse proxy trust
+
+Forwarded headers are host-owned and disabled by default. A deployment behind a
+reverse proxy or load balancer enables them only after listing every trusted
+proxy address or network:
+
+```text
+ForwardedHeaders__Enabled=true
+ForwardedHeaders__ForwardLimit=1
+ForwardedHeaders__RequireHeaderSymmetry=true
+ForwardedHeaders__KnownProxies__0=10.0.0.10
+ForwardedHeaders__KnownNetworks__0=10.20.0.0/16
+```
+
+The host accepts only `X-Forwarded-For` and `X-Forwarded-Proto`; it never accepts
+`X-Forwarded-Host`. The configured trusted lists replace framework defaults,
+`ForwardLimit` must be from `1` through `5`, and IPv4/IPv6 `/0` networks are
+rejected. Enabling the feature without at least one valid trusted IP or CIDR,
+or enabling the framework's unbounded `ASPNETCORE_FORWARDEDHEADERS_ENABLED`
+shortcut, fails startup before migrations or other side effects.
+
+`UseForwardedHeaders` runs before exception handling, correlation, HTTPS
+redirection, authentication, rate limiting, and module middleware. Consequently,
+session and audit IP capture plus anonymous rate limiting use the normalized
+client address, while headers sent directly by an untrusted client are ignored.
+Modules consume `HttpContext.Connection.RemoteIpAddress` and `Request.Scheme`;
+they must never parse forwarded-header values themselves.
+
+## Distributed runtime and horizontal scale
+
+The host uses process-local `IDistributedCache` and SignalR services by default,
+which is the safe zero-dependency mode for one replica. Redis is an explicit
+opt-in for deployments that need shared cache state or a SignalR backplane:
+
+```text
+DistributedRuntime__Enabled=true
+DistributedRuntime__ReplicaCount=2
+DistributedRuntime__RedisConnectionStringName=Redis
+DistributedRuntime__CacheInstanceName=ErpSystem:Production:
+DistributedRuntime__SignalRChannelPrefix=ErpSystem.Production
+DistributedRuntime__ExternalRateLimitingEnabled=true
+DistributedRuntime__SharedFileStorageEnabled=true
+DistributedRuntime__SessionAffinityEnabled=true
+ConnectionStrings__Redis=<secret-store-reference>
+```
+
+When enabled, the host replaces `DistributedMemoryCache` with the Redis
+`IDistributedCache` implementation and configures the SignalR Redis backplane.
+Separate cache and SignalR prefixes prevent collisions with other applications.
+The Redis connection must be valid, non-placeholder secret-backed configuration;
+its value is never included in validation diagnostics. Readiness adds
+`distributed-runtime:redis` and becomes unhealthy when the cache cannot reach
+Redis.
+
+`ReplicaCount` defaults to `1`. A higher value fails startup unless Redis is
+enabled and the deployment explicitly attests that an external gateway owns the
+aggregate rate limit, uploaded files use storage shared by every replica, and
+session affinity is enabled. These booleans are deployment assertions: they do
+not provision a gateway or storage. Keep `SharedFileStorageEnabled=false` until
+the current file adapter has a shared persistent volume or is replaced by an
+object-storage adapter. Redis SignalR delivery is transient; messages emitted
+while Redis is unavailable are not replayed, so business-critical integration
+facts continue to use module-owned outbox/inbox storage.
+
+## Data Protection key-ring continuity
+
+Production must configure an absolute persistent `DataProtection:KeyRingDirectory`
+and a current PFX certificate with its private key. The certificate encrypts the
+key ring at rest; `DataProtection:SharedKeyRing=true` is required whenever more
+than one replica reads the ring. Certificate rotation is additive: configure the
+new certificate as `ProtectionCertificatePath` and keep each still-needed old
+certificate in `PreviousProtectionCertificates` with its password. Previous
+certificates are used only for decryption and may be expired, but must retain a
+private key. Do not delete old key XML files until every protected cookie, token,
+and payload has expired and all replicas have loaded the replacement certificate.
+After rotation, restart every replica and verify that an artifact protected by
+the previous process can be unprotected by the new process before routing traffic.
+Keep `ApplicationName` stable across restarts and replicas. Configure previous
+PFX entries via `DataProtection__PreviousProtectionCertificates__0__Path` and
+`DataProtection__PreviousProtectionCertificates__0__Password`. Credentials belong
+in the secret store. The design follows the framework's
+[Data Protection configuration guidance](https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/configuration/overview?view=aspnetcore-10.0).
 
 ## Traces and metrics
 
@@ -80,6 +170,19 @@ External websites are not health dependencies. A Google or public-internet failu
 
 ## Startup database work
 
+SQL Server LocalDB is a development-only option. In the current two-file layout,
+the ignored `ErpSystem.Api/appsettings.json` carries the host SQL Server
+connection and the ignored `appsettings.Development.json` overrides it with
+LocalDB during local development. A deployment secret store or the
+`ConnectionStrings__DefaultConnection` process environment variable may override
+the base value when the host supports it. Do not place connection values or
+credentials in tracked files. Module-specific
+`ConnectionStrings__<ModuleName>` keys remain optional overrides, and
+`ConnectionStrings__HangfireConnection` is optional because it falls back to
+`ConnectionStrings__DefaultConnection`. The host rejects any effective LocalDB
+connection outside `Development`, including when strict production-readiness
+validation is explicitly deferred.
+
 `DatabaseSettings` controls startup behavior:
 
 ```json
@@ -94,27 +197,36 @@ External websites are not health dependencies. A Google or public-internet failu
 Both settings are enabled in local Development. Hosted environments default to disabled so multiple API instances do not race while applying migrations or seeds. Apply production migrations as a deployment step, or explicitly opt in for a controlled single-instance deployment.
 
 The supported deployment command is the module-owned migration script from the
-`api` directory. Provide the connection through the process environment or a
-secret-store integration; the script does not print or persist the value:
+`api` directory. The module design-time factories read the ignored
+`ErpSystem.Api/appsettings.json` host connection, then the ignored
+`appsettings.Development.json` LocalDB override when the environment is
+`Development`, and finally process environment variables. Preview the module
+discovery and dependency order without changing a database:
 
 ```powershell
-$env:ConnectionStrings__DefaultConnection = '<secret-store-value>'
-./scripts/Apply-ErpModuleMigrations.ps1 -Configuration Release
+.\scripts\Apply-ErpModuleMigrations.ps1 -Environment Production -WhatIf
 ```
 
-Use `-WhatIf` to inspect discovered modules, contexts, and dependency order
-without requiring a connection. Set
+After reviewing the preview, the exact production migration command is:
+
+```powershell
+.\scripts\Apply-ErpModuleMigrations.ps1 -Environment Production
+```
+
+No process connection variable is required when the two appsettings files or
+module-specific configuration provide the effective values. Set
 `ConnectionStrings__<ModuleName>` when extracting a module to its own database;
 the module's design-time factory and runtime registration use that override
 before `ConnectionStrings__DefaultConnection`. Design-time factories locate the
 API from `ErpSystem.Api.csproj` or `appsettings.example.json`, treat all JSON
 files as optional, apply environment variables last, and reject empty or
-`<...>` placeholder values before invoking EF.
+`<...>` placeholder values before invoking EF. The script sets both
+`DOTNET_ENVIRONMENT` and `ASPNETCORE_ENVIRONMENT` for the run and restores their
+prior process values afterward.
 
-In the normal mode, `ConnectionStrings__DefaultConnection` may be omitted when
-every installed module has its own non-empty `ConnectionStrings__<ModuleName>`
-value. The script fails before invoking EF and lists only the missing setting
-names when an installed module has no effective connection.
+When a design-time factory cannot resolve an effective connection, EF remains
+responsible for reporting that failure; the script does not preflight process
+variables and does not log connection values.
 
 If the secret store exposes a different variable name, pass
 `-ConnectionStringEnvironmentVariable`. That value temporarily overrides the
@@ -159,11 +271,35 @@ deployment-platform responsibilities.
 
 Before any migration or startup task can mutate external state, the host executes all ValidateOnStart option validators and validates every installed module migration switch. Startup then runs the optional module migrations and performs a module-neutral pending-migration compatibility check. Host runtime startup tasks and module initialization run only after every installed module reports a compatible schema. This prevents role/permission reconciliation or other startup writes from running against a database whose externally managed migrations have not yet been applied.
 
-System-role permission reconciliation remains active when `SeedOnStartup` is disabled. That path first creates any missing built-in `super_admin`, `admin`, and `user` roles, then reconciles their owned permissions. It is therefore safe after recreating an already-migrated database and remains idempotent across later startups. It does not create bootstrap users, companies, geography, or sample data; those remain controlled by `SeedOnStartup`.
+System-role permission reconciliation remains active when `SeedOnStartup` is disabled. That path first creates any missing built-in `super_admin`, `admin`, and `user` roles, then reconciles their owned permissions. It is therefore safe after recreating an already-migrated database and remains idempotent across later startups. The system-role task itself does not create bootstrap users, companies, geography, or sample data; preview bootstrap is controlled separately by `BootstrapUsers:Enabled` below.
+
+`PlatformBootstrapUsersStartupTask` is a separate opt-in preview bootstrap. When
+`BootstrapUsers:Enabled=true`, it creates or reuses the configured preview
+users, their demo tenant/company scope, memberships, and module entitlements
+idempotently. It merges current catalog defaults (HR and ReferenceData
+`addresses`) into the existing demo grants case-insensitively, so explicit
+Accounting or other module/submodule grants are preserved; global ReferenceData
+`geography` is never added. This is useful for a hosted development or preview
+environment where demo login must read the shared database. Keep it disabled for
+a real production deployment and provide the passwords through the deployment
+secret store; the task does not run when the switch is false.
 
 ## Configuration validation
 
-JWT, Hangfire, CORS, mail, frontend URL, OpenTelemetry when enabled, module migration switches, and effective per-module database connection settings are validated before startup side effects. Production JWT configuration additionally rejects the development signing key and known placeholder/sentinel values; the checked-in example configuration intentionally leaves the signing key empty so it cannot accidentally satisfy validation. Hosted configuration must provide valid values before the API begins serving requests. Development secrets may remain in development-only configuration, but production secrets belong in environment variables or a secret store.
+JWT, Hangfire, CORS, mail, frontend URL, OpenTelemetry when enabled, module migration switches, file-security scanner settings, and effective per-module database connection settings are validated before startup side effects. Production JWT configuration additionally rejects the development signing key and known placeholder/sentinel values, and production requires explicitly enabled malware scanning with a valid ClamAV host and port for Platform-managed uploads. The checked-in example configuration intentionally leaves the signing key empty and malware scanning disabled so it cannot accidentally satisfy production validation. Hosted configuration must provide valid values before the API begins serving requests. Development secrets may remain in development-only configuration, but production secrets belong in environment variables or a secret store.
+
+The Platform file gate validates supported extension/content-type pairs and bounded
+content signatures before persistence. Generic files, profile pictures, and
+Crystal Report uploads all invoke this contract before their owning storage writes.
+When enabled, ClamAV receives bounded
+`zINSTREAM` chunks over a trusted private TCP network; clean, malware, malformed,
+and unavailable responses have stable safe API mappings. Object storage,
+encryption, retention, and backup remain deployment/provider responsibilities.
+The client accepts only the NUL framing required for `z` commands by the
+[official ClamAV protocol](https://docs.clamav.net/manual/Usage/ClamdProtocol.html).
+It does not authenticate or encrypt the TCP channel; deployment must restrict
+that channel to the trusted scanner service. Signature checks inspect a bounded
+prefix and are not a complete format parser or a substitute for malware scanning.
 
 The tracked `ErpSystem.Api/appsettings.example.json` contains placeholders only;
 live `appsettings*.json` files are local and ignored. Supply JWT, SMTP, database,

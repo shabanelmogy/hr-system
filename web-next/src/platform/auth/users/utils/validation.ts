@@ -70,7 +70,7 @@ export const getUserValidationSchema = (t: Translator, isEditMode: boolean = fal
           ctx.addIssue({
             code: "custom",
             path: ["confirmPassword"],
-            message: t("validation.passwordsMustMatch") || "Passwords must match",
+            message: t("validation.passwordsMustMatch"),
           });
         }
       }

@@ -1,0 +1,10 @@
+global using System.Globalization;
+global using ErpSystem.BuildingBlocks.Application.Common.Errors;
+global using ErpSystem.BuildingBlocks.Context.Authentication;
+global using ErpSystem.Modules.CRM.Domain.Appointments.Entities;
+global using Hangfire;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.Extensions.Options;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.AspNetCore.Http;

@@ -9,11 +9,11 @@ import { useOrganizationalLookup } from '@/src/modules/hr/basic-data';
 import { AppButton, AppCard, AppForm, AppFormSection, AppIconButton, AppSelectField, AppStatusBadge, AppText, AppTextField, type AppSelectOption } from '@/src/shared/components';
 import { useAppTheme } from '@/src/core/theme';
 import { createWorkforcePlanSchema } from '../validation/workforce-plan-schema';
-import type { WorkforcePlanDraftSyncStatus } from '../../domain/models/workforce-plan-draft';
+import type { WorkforcePlanDraftSyncStatus, WorkforcePlanEditingSnapshot } from '../../domain/models/workforce-plan-draft';
 import type { UpdateWorkforcePlanRequest, WorkforcePlanDetail, WorkforcePlanLine, WorkforcePlanRequest } from '../../domain/models/workforce-plan';
 
 type Values = z.infer<ReturnType<typeof createWorkforcePlanSchema>>;
-interface Props { item: WorkforcePlanDetail | null; revisions: WorkforcePlanDetail[]; mode: 'create' | 'edit' | 'view'; loading: boolean; detailLoading?: boolean; detailError?: string | null; draftRequest?: UpdateWorkforcePlanRequest | null; draftStatus?: WorkforcePlanDraftSyncStatus | null; onDiscardDraft?: () => void; onRetryDetail?: () => void; onClose: () => void; onSave: (request: WorkforcePlanRequest) => Promise<void>; }
+interface Props { item: WorkforcePlanDetail | null; revisions: WorkforcePlanDetail[]; mode: 'create' | 'edit' | 'view'; loading: boolean; detailLoading?: boolean; detailError?: string | null; draftRequest?: UpdateWorkforcePlanRequest | null; draftStatus?: WorkforcePlanDraftSyncStatus | null; draftError?: string | null; editingSnapshot?: WorkforcePlanEditingSnapshot | null; onDiscardDraft?: () => void; onRetryDraft?: () => void; onRetryDetail?: () => void; onClose: () => void; onSave: (request: WorkforcePlanRequest, snapshot: WorkforcePlanEditingSnapshot) => Promise<void>; onSaveLocally?: (request: WorkforcePlanRequest, snapshot: WorkforcePlanEditingSnapshot) => Promise<void>; }
 const emptyPeriod = () => ({ fiscalPeriodId: 0, newHireSlots: 0, replacementSlots: 0 });
 const emptyLine = () => ({ positionId: 0, targetBranchId: null as number | null, newHireSlots: 0, replacementSlots: 0, justification: '', periodTargets: [emptyPeriod()] });
 const emptyValues = (): Values => ({ planCode: '', fiscalYearId: 0, titleEn: '', titleAr: '', description: '', lines: [emptyLine()] });
@@ -66,7 +66,7 @@ function LineFields({ control, index, disabled, positions, branches, periods: pe
   </AppCard>;
 }
 
-export function WorkforcePlanForm({ item, revisions, mode, loading, detailLoading = false, detailError, draftRequest, draftStatus, onDiscardDraft, onRetryDetail, onClose, onSave }: Props) {
+export function WorkforcePlanForm({ item, revisions, mode, loading, detailLoading = false, detailError, draftRequest, draftStatus, draftError, editingSnapshot, onDiscardDraft, onRetryDraft, onRetryDetail, onClose, onSave, onSaveLocally }: Props) {
   const { t, i18n } = useTranslation(); const { theme } = useAppTheme(); const readOnly = mode === 'view'; const disabled = readOnly || loading || detailLoading;
   const schema = useMemo(() => createWorkforcePlanSchema(t), [t]);
   const form = useZodForm<Values>(schema, { defaultValues: valuesFrom(item, draftRequest) });
@@ -79,10 +79,16 @@ export function WorkforcePlanForm({ item, revisions, mode, loading, detailLoadin
   const fiscalYear = useFiscalYear(fiscalYearId || fallbackFiscalYearId || null, Boolean(fiscalYearId || fallbackFiscalYearId));
   const isArabic = i18n.language.startsWith('ar');
   const options = (values: { id: number; code: string; nameEn: string; nameAr: string }[], icon: AppSelectOption<number>['icon']) => values.map(value => ({ value: value.id, label: `${value.code} — ${isArabic ? value.nameAr : value.nameEn}`, icon }));
-  const fiscalOptions = options(fiscalYears.data ?? [], 'calendar-outline');
-  const positionOptions = options(positionsLookup.data ?? [], 'briefcase-outline');
-  const branchOptions: AppSelectOption<number>[] = [{ value: 0, label: t('workforcePlanning.form.noBranch'), icon: 'business-outline' }, ...options(branchesLookup.data ?? [], 'business-outline')];
-  const periodOptions: AppSelectOption<number>[] = (fiscalYear.data?.periods ?? []).map(period => ({ value: period.id, label: `${period.code} — ${isArabic ? period.nameAr : period.nameEn}`, icon: 'calendar-outline' }));
+  const fiscalYearValues = fiscalYears.data?.length ? fiscalYears.data : editingSnapshot?.fiscalYears ?? [];
+  const positionValues = positionsLookup.data?.length ? positionsLookup.data : editingSnapshot?.positions ?? [];
+  const branchValues = branchesLookup.data?.length ? branchesLookup.data : editingSnapshot?.branches ?? [];
+  const periodValues = fiscalYear.data?.periods?.length
+    ? fiscalYear.data.periods
+    : editingSnapshot?.fiscalPeriodsByYear[String(fiscalYearId || fallbackFiscalYearId)] ?? [];
+  const fiscalOptions = options(fiscalYearValues, 'calendar-outline');
+  const positionOptions = options(positionValues, 'briefcase-outline');
+  const branchOptions: AppSelectOption<number>[] = [{ value: 0, label: t('workforcePlanning.form.noBranch'), icon: 'business-outline' }, ...options(branchValues, 'business-outline')];
+  const periodOptions: AppSelectOption<number>[] = periodValues.map(period => ({ value: period.id, label: `${period.code} — ${isArabic ? period.nameAr : period.nameEn}`, icon: 'calendar-outline' }));
   useEffect(() => { form.reset(valuesFrom(item, draftRequest)); }, [draftRequest, form, item, mode]);
   const generateMockData = () => {
     const fiscalId = fiscalYearId || fallbackFiscalYearId; const periods = fiscalYear.data?.periods ?? []; const position = positionsLookup.data?.[0];
@@ -92,13 +98,25 @@ export function WorkforcePlanForm({ item, revisions, mode, loading, detailLoadin
     form.setValue('titleEn', 'Annual workforce growth plan', next); form.setValue('titleAr', 'خطة نمو القوى العاملة السنوية', next); form.setValue('description', 'Planned hiring demand distributed across fiscal periods.', next);
     form.setValue('lines', [{ positionId: position.id, targetBranchId: branchesLookup.data?.[0]?.id ?? null, newHireSlots: periods.length, replacementSlots: 0, justification: 'Capacity growth', periodTargets: periods.map(period => ({ fiscalPeriodId: period.id, newHireSlots: 1, replacementSlots: 0 })) }], next);
   };
-  const save = form.handleSubmit(values => onSave({ ...values, description: values.description || null, lines: values.lines.map(line => ({ ...line, justification: line.justification || null })) }));
+  const createEditingSnapshot = (): WorkforcePlanEditingSnapshot => ({
+    fiscalYears: fiscalYearValues.map(({ id, code, nameEn, nameAr }) => ({ id, code, nameEn, nameAr })),
+    positions: positionValues.map(({ id, code, nameEn, nameAr }) => ({ id, code, nameEn, nameAr })),
+    branches: branchValues.map(({ id, code, nameEn, nameAr }) => ({ id, code, nameEn, nameAr })),
+    fiscalPeriodsByYear: {
+      ...(editingSnapshot?.fiscalPeriodsByYear ?? {}),
+      [String(fiscalYearId || fallbackFiscalYearId)]: periodValues.map(({ id, code, nameEn, nameAr }) => ({ id, code, nameEn, nameAr })),
+    },
+  });
+  const save = form.handleSubmit(values => onSave({ ...values, description: values.description || null, lines: values.lines.map(line => ({ ...line, justification: line.justification || null })) }, createEditingSnapshot()));
+  const saveLocally = form.handleSubmit(values => onSaveLocally?.({ ...values, description: values.description || null, lines: values.lines.map(line => ({ ...line, justification: line.justification || null })) }, createEditingSnapshot()));
   const totalSlots = (plan: WorkforcePlanDetail) => plan.lines.reduce((sum, line) => sum + line.plannedHiringSlots, 0);
   const previous = revisions.find(revision => revision.revisionNumber === (item?.revisionNumber ?? 1) - 1);
-  return <AppForm visible presentation="fullScreen" title={t(`workforcePlanning.form.${mode}Title`)} subtitle={t('workforcePlanning.form.subtitle')} icon={mode === 'create' ? 'add-circle-outline' : readOnly ? 'eye-outline' : 'create-outline'} errors={toFormErrorMap(form.formState.errors)} isDirty={form.formState.isDirty} submitting={loading || form.formState.isSubmitting} serverError={detailError} onCancel={onClose} onSubmit={readOnly ? undefined : save} submitLabel={t(mode === 'edit' ? 'common.save' : 'common.create')} contentContainerStyle={styles.content} footer={detailError && onRetryDetail ? <AppButton variant="outline" onPress={onRetryDetail}>{t('common.retry')}</AppButton> : undefined} mockDataAction={__DEV__ && !readOnly ? { onGenerate: generateMockData, disabled: disabled || !fallbackFiscalYearId || !positionsLookup.data?.length || !fiscalYear.data?.periods.length } : undefined}>
+  return <AppForm visible presentation="fullScreen" title={t(`workforcePlanning.form.${mode}Title`)} subtitle={t('workforcePlanning.form.subtitle')} icon={mode === 'create' ? 'add-circle-outline' : readOnly ? 'eye-outline' : 'create-outline'} errors={toFormErrorMap(form.formState.errors)} isDirty={form.formState.isDirty} submitting={loading || form.formState.isSubmitting} serverError={detailError} onCancel={onClose} onSubmit={readOnly ? undefined : save} submitLabel={t(mode === 'edit' ? 'common.save' : 'common.create')} contentContainerStyle={styles.content} footer={detailError && onRetryDetail ? <AppButton variant="outline" onPress={onRetryDetail}>{t('common.retry')}</AppButton> : mode === 'edit' && onSaveLocally ? <AppButton variant="outline" onPress={saveLocally}>{t('workforcePlanning.offline.saveLocally')}</AppButton> : undefined} mockDataAction={__DEV__ && !readOnly ? { onGenerate: generateMockData, disabled: disabled || !fallbackFiscalYearId || !positionsLookup.data?.length || !fiscalYear.data?.periods.length } : undefined}>
     {draftStatus ? <AppFormSection title={t('workforcePlanning.offline.title')} icon="cloud-offline-outline">
-      <AppStatusBadge color={draftStatus === 'conflict' ? theme.colors.danger : draftStatus === 'uncertain' ? theme.colors.warning : theme.colors.primary} label={t(`workforcePlanning.offline.${draftStatus}`)} />
-      {onDiscardDraft && ['conflict', 'uncertain'].includes(draftStatus) ? <AppButton variant="outline" onPress={onDiscardDraft}>{t('workforcePlanning.offline.discard')}</AppButton> : null}
+      <AppStatusBadge color={['conflict', 'dead-letter'].includes(draftStatus) ? theme.colors.danger : draftStatus === 'uncertain' ? theme.colors.warning : theme.colors.primary} label={t(`workforcePlanning.offline.${draftStatus}`)} />
+      {draftError ? <AppText color="danger" variant="bodySmall">{draftError}</AppText> : null}
+      {onRetryDraft && draftStatus === 'dead-letter' ? <AppButton variant="outline" onPress={onRetryDraft}>{t('workforcePlanning.offline.retry')}</AppButton> : null}
+      {onDiscardDraft && ['conflict', 'uncertain', 'dead-letter'].includes(draftStatus) ? <AppButton variant="outline" onPress={onDiscardDraft}>{t('workforcePlanning.offline.discard')}</AppButton> : null}
     </AppFormSection> : null}
     <AppFormSection title={t('workforcePlanning.form.identity')} icon="document-text-outline">
       <Controller control={form.control} name="planCode" render={({ field, fieldState }) => <AppTextField name={field.name} label={t('workforcePlanning.fields.planCode')} value={field.value} onChangeText={field.onChange} onBlur={field.onBlur} editable={!disabled && mode === 'create'} error={fieldState.error?.message} required />} />

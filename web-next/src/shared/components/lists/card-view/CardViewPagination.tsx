@@ -90,9 +90,15 @@ const CardViewPagination = ({
             }}
             aria-live="polite"
           >
-            {totalItems === 0
-              ? `${t("pagination.showing")} 0 of 0 ${itemsLabel}`
-              : `${t("pagination.showing")} ${pagination.start}-${pagination.end} ${t("pagination.of")} ${totalItems} ${itemsLabel}`}
+            {t("pagination.summary", {
+              start: totalItems === 0 ? 0 : pagination.start,
+              end: totalItems === 0 ? 0 : pagination.end,
+              total: totalItems,
+              items: itemsLabel,
+              defaultValue: totalItems === 0
+                ? `${t("pagination.showing")} 0 ${t("pagination.of")} 0 ${itemsLabel}`
+                : `${t("pagination.showing")} ${pagination.start}-${pagination.end} ${t("pagination.of")} ${totalItems} ${itemsLabel}`,
+            })}
           </Typography>
 
           <FormControl size="small" sx={{ minWidth: 148 }}>

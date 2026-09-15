@@ -1,13 +1,20 @@
 import { Platform } from 'react-native';
 import type { SQLiteDatabase } from 'expo-sqlite';
 
-export const OFFLINE_DATABASE_NAME = 'erp-offline.db';
-export const OFFLINE_SCHEMA_VERSION = 2;
+import { secureSession } from '@/src/core/storage/secure-storage';
+
+// Versioned so the development plaintext store is never opened as SQLCipher.
+export const OFFLINE_DATABASE_NAME = 'erp-offline-v3.db';
+export const OFFLINE_SCHEMA_VERSION = 3;
 export const OFFLINE_SCOPE_RETENTION_DAYS = 30;
 
 let webTransactionTail: Promise<void> = Promise.resolve();
 
 export async function initializeOfflineDatabase(db: SQLiteDatabase): Promise<void> {
+  if (Platform.OS !== 'web') {
+    const key = await secureSession.getOrCreateOfflineDatabaseKey();
+    await db.execAsync(`PRAGMA key = "x'${key}'";`);
+  }
   await db.execAsync('PRAGMA journal_mode = WAL;');
   await db.execAsync('PRAGMA foreign_keys = ON;');
 
@@ -18,13 +25,14 @@ export async function initializeOfflineDatabase(db: SQLiteDatabase): Promise<voi
   }
 
   if (version === 0) {
-    await createVersion2Schema(db);
-  } else if (version === 1) {
+    await createVersion3Schema(db);
+  } else if (version < OFFLINE_SCHEMA_VERSION) {
     // Version 1 predated per-user partitioning. It never backed a released
     // offline feature, so discard that unsafe cache rather than guessing ownership.
-    await migrateVersion1To2(db);
+    await migrateToVersion3(db);
   }
 
+  await cleanupTerminalOutbox(db);
   await pruneExpiredOfflineScopes(db);
 }
 
@@ -43,13 +51,21 @@ export async function pruneExpiredOfflineScopes(
          WHERE o.user_id = s.user_id
            AND o.tenant_id = s.tenant_id
            AND o.company_id = s.company_id
-           AND o.status <> 'succeeded'
+           AND o.status NOT IN ('succeeded', 'blocked')
+       )
+       AND NOT EXISTS (
+         SELECT 1
+         FROM offline_records AS r
+         WHERE r.user_id = s.user_id
+           AND r.tenant_id = s.tenant_id
+           AND r.company_id = s.company_id
+           AND r.is_protected = 1
        )`,
     cutoff,
   );
 }
 
-async function migrateVersion1To2(db: SQLiteDatabase): Promise<void> {
+async function migrateToVersion3(db: SQLiteDatabase): Promise<void> {
   await runInOfflineWriteTransaction(db, async (tx) => {
     await tx.execAsync(`
       DROP TABLE IF EXISTS offline_outbox;
@@ -58,10 +74,10 @@ async function migrateVersion1To2(db: SQLiteDatabase): Promise<void> {
       DROP TABLE IF EXISTS offline_scopes;
     `);
   });
-  await createVersion2Schema(db);
+  await createVersion3Schema(db);
 }
 
-async function createVersion2Schema(db: SQLiteDatabase): Promise<void> {
+async function createVersion3Schema(db: SQLiteDatabase): Promise<void> {
   await runInOfflineWriteTransaction(db, async (tx) => {
     await tx.execAsync(`
       CREATE TABLE IF NOT EXISTS offline_scopes (
@@ -84,6 +100,7 @@ async function createVersion2Schema(db: SQLiteDatabase): Promise<void> {
         server_updated_at TEXT NULL,
         local_updated_at TEXT NOT NULL,
         is_deleted INTEGER NOT NULL DEFAULT 0 CHECK (is_deleted IN (0, 1)),
+        is_protected INTEGER NOT NULL DEFAULT 0 CHECK (is_protected IN (0, 1)),
         PRIMARY KEY (user_id, tenant_id, company_id, namespace, record_key),
         FOREIGN KEY (user_id, tenant_id, company_id)
           REFERENCES offline_scopes (user_id, tenant_id, company_id)
@@ -117,7 +134,7 @@ async function createVersion2Schema(db: SQLiteDatabase): Promise<void> {
         aggregate_id TEXT NULL,
         payload_json TEXT NOT NULL,
         status TEXT NOT NULL DEFAULT 'pending'
-          CHECK (status IN ('pending', 'processing', 'succeeded', 'failed', 'conflict', 'uncertain', 'blocked')),
+          CHECK (status IN ('pending', 'processing', 'succeeded', 'failed', 'conflict', 'uncertain', 'blocked', 'dead-letter')),
         attempts INTEGER NOT NULL DEFAULT 0 CHECK (attempts >= 0),
         base_row_version TEXT NULL,
         idempotency_key TEXT NULL,
@@ -137,9 +154,18 @@ async function createVersion2Schema(db: SQLiteDatabase): Promise<void> {
         ON offline_outbox (user_id, tenant_id, company_id, idempotency_key)
         WHERE idempotency_key IS NOT NULL;
 
-      PRAGMA user_version = 2;
+      PRAGMA user_version = 3;
     `);
   });
+}
+
+async function cleanupTerminalOutbox(db: SQLiteDatabase, now = new Date()): Promise<void> {
+  const cutoff = new Date(now.getTime() - OFFLINE_SCOPE_RETENTION_DAYS * 24 * 60 * 60 * 1000).toISOString();
+  await db.runAsync(
+    `DELETE FROM offline_outbox
+     WHERE status IN ('succeeded', 'blocked') AND updated_at < ?`,
+    cutoff,
+  );
 }
 
 export async function runInOfflineWriteTransaction<T>(

@@ -3,19 +3,15 @@ import type { RefObject } from "react";
 export type FileDialogType = "upload" | "delete" | null;
 
 export interface FileItem {
-  id: number;
+  id: string;
   fileName: string;
   storedFileName: string;
-  fileExtension: string; // e.g. ".pdf"
-  contentType?: string;
-  isDeleted?: boolean;
-  createdOn?: string; // ISO string
-  updatedOn?: string; // ISO string
-}
-
-export interface UploadResult {
-  success: boolean;
-  message?: string;
+  contentType: string;
+  fileExtension: string;
+  createdOn: string;
+  createdByPc: string;
+  createdById: string;
+  isDeleted: boolean;
 }
 
 export interface UseFileGridLogicReturn {
@@ -43,7 +39,6 @@ export interface UseFileGridLogicReturn {
   handleView: (file: FileItem) => void;
 
   // Mutation states for advanced UI feedback
-  isUploading: boolean;
   isDeleting: boolean;
 
   // Highlighting/Navigation state for card view

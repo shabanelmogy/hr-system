@@ -2,7 +2,7 @@ namespace ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 
 /// <summary>
 /// Platform-owned change-log write projection. Persistence may remain in a
-/// legacy module schema while consumers depend only on this neutral contract.
+/// Platform schema while consumers depend only on this neutral contract.
 /// </summary>
 public sealed class EntityChangeLogsRequest
 {
@@ -40,38 +40,10 @@ public sealed record EntityChangeLogRecord(
     string ChangedByPc,
     DateTime ChangedAt);
 
-/// <summary>
-/// Raw persisted/query projection. User existence is kept separate from the
-/// optional display name so Platform can preserve the existing wire fallback
-/// semantics without coupling the query adapter to presentation policy.
-/// </summary>
-public sealed record EntityChangeLogQueryRecord(
-    int Id,
-    int EntityId,
-    string? EntityKey,
-    string? EntityName,
-    string? JsonOldValues,
-    string? JsonNewValues,
-    DateTime ChangedAt,
-    string? ChangedByPc,
-    bool ChangedByUserExists,
-    string? ChangedByUserName);
-
 public interface IEntityChangeLogStore
 {
     Task AddAsync(
         EntityChangeLogRecord record,
-        CancellationToken cancellationToken = default);
-}
-
-public interface IEntityChangeLogQueryStore
-{
-    Task<IReadOnlyList<EntityChangeLogQueryRecord>> GetAllAsync(
-        CancellationToken cancellationToken = default);
-
-    Task<IReadOnlyList<EntityChangeLogQueryRecord>> GetByEntityAsync(
-        string entityName,
-        int entityId,
         CancellationToken cancellationToken = default);
 }
 

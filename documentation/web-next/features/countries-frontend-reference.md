@@ -11,7 +11,7 @@
 | Web guide | [Server-Managed Feature Frontend Reference](server-managed-feature-reference.md) |
 | Web architecture | [Frontend Architecture Reference](../architecture/frontend-architecture-reference.md) |
 | Mobile profile/guides | [Countries profile](../../mobile-react/countries-mobile-reference.md), [architecture](../../mobile-react/MOBILE_ARCHITECTURE.md), [feature guide](../../mobile-react/MOBILE_FEATURE_GUIDE.md), [implementation guide](../../mobile-react/mobile-feature-implementation-guide.md), [style guide](../../mobile-react/MOBILE_STYLE_GUIDE.md) |
-| Backend guide | [Feature Module Implementation Guide](../../api/Feature_Module_Implementation_Checklist.md) |
+| Backend workflow | [API Feature Development Workflow](../../api/API_FEATURE_DEVELOPMENT_WORKFLOW.md) |
 | API profile | [Countries API Implementation Profile](../../api/Countries_API_Implementation_Profile.md) |
 
 This is the feature-specific review artifact for Countries. Its manifest,
@@ -103,11 +103,9 @@ Expo Router page + RouteGuard
 | Card presentation | `components/card-view/` and `components/CountriesCardView.tsx` |
 | Page-scoped analytics | `components/chart-view/` and `components/CountriesChartView.tsx` |
 | Submitted-batch import | `components/import-data/` |
-| Domain report page | `reports/pages/CountryReportPage.tsx` |
-| Browser report composition | `reports/components/CountryActiveReportsDesigner.tsx`, shared `src/shared/reporting` designer/viewer/repository, and `public/reports/countries/countries-directory.rdlx-json` |
 | Deliberate public API | `index.ts` |
 
-The feature public API exports only the page, report page, lookup hook,
+The feature public API exports only the page, lookup hook,
 query-key prefix, and `CountryLookup`. States must not import Countries forms,
 services, controller logic, or internal view components.
 
@@ -342,30 +340,12 @@ falls back to server pagination until the updated Countries API is deployed.
 Optional views are not mandatory for the next feature. Add them only when the
 product and API contracts justify them.
 
-### Web Report engines
+### Web Reports
 
-`CountryReportPage` renders an accessible exclusive engine selector. **Crystal
-Reports** remains the default selection and retains the existing report catalog,
-parameters, PDF generation, print, and export flow without modification.
-**ActiveReportsJS Viewer** is available to users with `ReportTemplates:View` and
-loads only published templates from the current tenant. **ActiveReportsJS
-Designer** is available to non-read-only authors with View and Edit; create,
-overwrite, publish, and future lifecycle controls are additionally guarded by
-their explicit permissions.
-
-Both ActiveReports controls are dynamically imported with `ssr: false` because
-the vendor controls use browser APIs. The reusable reporting layer owns the
-repository callbacks, published/management selectors, Save, Save As from the
-current edited definition, dirty-switch guard, data-source descriptor validation,
-and RowVersion conflict feedback. Countries supplies only feature vocabulary,
-the starter template, approved dataset fields, and expected logical source key.
-
-The starter contains the approved REST binding, not database access:
-`DataProvider=JSON`, `ConnectString=endpoint=/api/v1/countries/report-data`, and
-`jpath=$.[*]`. The API returns the stable active-country array. Local and hosted
-deployments use the same stored template because the Next same-origin API proxy
-derives the backend host and carries the authenticated session. Server-side
-ActiveReports rendering/export remains a separate explicit product decision.
+A Countries-specific web report page and designer are Excluded from the current
+client surface. The shared reporting infrastructure remains Platform-owned, but
+it is not Countries runtime evidence until Countries registers a real route,
+composition component, permissions, and focused tests.
 
 Mobile view switching is owned by `AppListScreen`/`AppMultiView`. Switching to
 Table or Cards applies that view's server page size and returns to page zero;
@@ -799,12 +779,11 @@ instead of recreating the original gap.
 | Shared bulk limit normalization | `shared/utils/bulkSelection.test.ts` |
 | Shared XLSX safety contract | `shared/services/excelService.test.ts` |
 | Countries Import duplicate scope | `components/import-data/countryImport.test.ts` |
-| ActiveReportsJS templates | Shared service route tests, strict TypeScript compilation of SSR-safe Designer/Viewer wrappers, API safety/scope tests, and JSON parsing of the bound `public/reports/countries/countries-directory.rdlx-json` starter |
 | Mobile endpoint/query and response schemas | `mobile-react/src/modules/hr/basic-data/countries/data/remote/__tests__/country-remote-boundary.test.ts` |
 | Mobile shared list debounce/reset | `mobile-react/src/shared/listing/__tests__/useServerListState.test.ts` |
 | Mobile route authorization | `mobile-react/src/platform/auth/presentation/rbac/__tests__/route-access.test.ts` |
 | Mobile realtime resource mapping | `mobile-react/src/platform/realtime/application/realtime-query-registry.test.ts` |
-| CQRS handlers, validation and lifecycle | `api/ErpSystem.Tests/CountryCqrsHandlerTests.cs` |
+| CQRS handlers, validation and lifecycle | `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/CountryCqrsHandlerTests.cs` |
 | CQRS/controller architecture | `CountryCqrsArchitectureTests.cs`, `CountriesControllerCqrsTests.cs` |
 
 ### Required commands
@@ -823,7 +802,7 @@ npm.cmd run build
 From the repository root for focused backend verification:
 
 ```powershell
-dotnet test api/ErpSystem.Tests/ErpSystem.Tests.csproj --filter CountryCqrs
+dotnet test api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/ErpSystem.Modules.ReferenceData.Tests.csproj --filter CountryCqrs
 ```
 
 From `mobile-react`:

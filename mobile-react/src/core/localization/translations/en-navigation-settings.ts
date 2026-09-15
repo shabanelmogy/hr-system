@@ -33,6 +33,8 @@ export const enNavigationSettings = {
     recruitment: 'Recruitment',
     workforcePlanning: 'Workforce planning',
     finance: 'Finance',
+    development: 'DEV',
+    developmentRole: 'Development role: {{role}}',
   },
   settings: {
     title: 'Settings',

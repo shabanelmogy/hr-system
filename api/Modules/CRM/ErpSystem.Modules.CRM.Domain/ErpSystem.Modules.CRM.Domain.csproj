@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ErpSystem.Modules.CRM.Domain</AssemblyName>
+    <RootNamespace>ErpSystem.Modules.CRM.Domain</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup><ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Domain\ErpSystem.BuildingBlocks.Domain.csproj" /></ItemGroup>
+</Project>

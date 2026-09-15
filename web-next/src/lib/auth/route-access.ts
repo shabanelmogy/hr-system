@@ -42,34 +42,21 @@ export const routePolicies: readonly RoutePolicy[] = [
   { path: appRoutes.superAdmin.tenants, roles: [superAdminRole] },
   { path: appRoutes.superAdmin.tenantAdmins, roles: [superAdminRole] },
   { path: appRoutes.superAdmin.dashboard, roles: [superAdminRole] },
-  { path: appRoutes.superAdmin.geography.countries, roles: [superAdminRole] },
-  { path: appRoutes.superAdmin.geography.states, roles: [superAdminRole] },
-  { path: appRoutes.superAdmin.geography.districts, roles: [superAdminRole] },
+  { path: appRoutes.superAdmin.geography.countries, roles: [superAdminRole], permissions: [permissions.ViewCountries] },
+  { path: appRoutes.superAdmin.geography.states, roles: [superAdminRole], permissions: [permissions.ViewStates] },
+  { path: appRoutes.superAdmin.geography.districts, roles: [superAdminRole], permissions: [permissions.ViewDistricts] },
   {
     path: rolePermissionsBase,
-    permissions: [permissions.EditRoles],
+    permissions: [permissions.ViewRoles],
   },
   { path: appRoutes.auth.rolesPage, permissions: [permissions.ViewRoles] },
   { path: appRoutes.auth.usersPage, permissions: [permissions.ViewUsers] },
   { path: appRoutes.auth.invitationsPage, permissions: [permissions.ViewUsers] },
-  { path: appRoutes.auth.offlineOperationsPage, permissions: [permissions.ManageOfflineOperations] },
+  { path: appRoutes.auth.offlineOperationsPage },
   {
     path: appRoutes.auth.crystalReportsPage,
     permissions: [permissions.ManageCrystalReportAccess],
   },
-  {
-    path: appRoutes.basicData.countryReport,
-    permissions: [permissions.ViewCountries],
-  },
-  {
-    path: appRoutes.basicData.globalPresence,
-    permissions: [permissions.ViewCountries],
-  },
-  // Legacy catalog URLs intentionally terminate before the Basic Data parent
-  // policy. Global catalog management now lives under /super-admin/geography.
-  { path: appRoutes.basicData.countries, deny: true },
-  { path: appRoutes.basicData.states, deny: true },
-  { path: appRoutes.basicData.districts, deny: true },
   {
     path: appRoutes.basicData.addressTypes,
     permissions: [permissions.ViewAddressTypes],
@@ -118,14 +105,10 @@ export const routePolicies: readonly RoutePolicy[] = [
       permissions.ViewOrganizationalStructure,
     ],
   },
-  { path: appRoutes.extras.filesManager, roles: [adminRole] },
+  { path: appRoutes.extras.filesManager },
   {
     path: appRoutes.extras.appointments,
-    permissions: [permissions.ViewUsers],
-  },
-  {
-    path: appRoutes.advancedTools.trackChanges,
-    permissions: [permissions.ViewChangeLogs],
+    permissions: [permissions.ViewAppointments],
   },
   {
     path: appRoutes.advancedTools.localizationApi,
@@ -141,10 +124,18 @@ export const routePolicies: readonly RoutePolicy[] = [
     path: HANGFIRE_PROXY_ROUTE,
     permissions: [permissions.ViewHangfireDashboard],
   },
-  { path: appRoutes.kpis },
-  { path: appRoutes.trends },
-  { path: appRoutes.healthPipeline },
-  { path: appRoutes.attendanceTrends },
+  {
+    path: appRoutes.attendanceDevices.users,
+    permissions: [permissions.ViewRawAttendanceDevices],
+  },
+  {
+    path: appRoutes.attendanceDevices.punches,
+    permissions: [permissions.ViewRawAttendanceDevices],
+  },
+  {
+    path: appRoutes.attendanceDevices.pullRuns,
+    permissions: [permissions.ViewRawAttendanceDevices],
+  },
   {
     path: appRoutes.attendanceDevices.index,
     permissions: [permissions.ViewAttendanceDevices],
@@ -213,7 +204,9 @@ export function canAccessRoute(pathname: string, session: SessionClaims): boolea
     return false;
   }
 
-  const rule = routePolicies.find(({ path }) => matchesRoute(pathname, path));
+  const rule = routePolicies
+    .filter(({ path }) => matchesRoute(pathname, path))
+    .sort((left, right) => right.path.length - left.path.length)[0];
   if (!rule) return false;
   if (rule.deny) return false;
 

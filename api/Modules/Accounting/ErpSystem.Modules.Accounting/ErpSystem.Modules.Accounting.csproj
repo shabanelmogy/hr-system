@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" />
     <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Modularity\ErpSystem.BuildingBlocks.Modularity.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.Accounting.Application\ErpSystem.Modules.Accounting.Application.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.Accounting.Infrastructure\ErpSystem.Modules.Accounting.Infrastructure.csproj" />

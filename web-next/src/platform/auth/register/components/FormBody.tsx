@@ -63,7 +63,7 @@ export default function FormBody({
             }}
             disabled={activeStep === 0}
           >
-            {t("actions.back") || "Back"}
+            {t("actions.back")}
           </Button>
 
           <Button
@@ -82,7 +82,7 @@ export default function FormBody({
               },
             }}
           >
-            {t("actions.next") || "Next"}
+            {t("actions.next")}
           </Button>
         </Box>
       )}

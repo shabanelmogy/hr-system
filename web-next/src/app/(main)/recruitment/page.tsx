@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import PageComponent from "@/modules/hr/recruitment/pages/RecruitmentPage";
+import { RecruitmentPage as PageComponent } from "@/modules/hr/recruitment";
 
 export const metadata: Metadata = {
   title: "Recruitment & Hiring Lifecycle | ERP System",

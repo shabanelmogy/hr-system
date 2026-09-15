@@ -51,11 +51,11 @@ decision. A focused test pass alone is never a `Ready` decision.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| tenant-module-entitlements-master | 8 | `600f4185fb40b51e4d07cfc5bfb174e431721fd540d5d784cd9f15a2cddb499f` |
+| tenant-module-entitlements-master | 8 | `9e8b5674dbf4c97a1895c5d66c203aa67822631d4a66c0fc6db7f1af3d97aafe` |
 | tenant-module-entitlements-master | 9 | `60c69fc638e2b14a82907e3c7d6c6a9b1df99042b776f0ba848ff33754256bfe` |
 | tenant-module-entitlements-master | 10 | `79ae789f8f6f2f3d65c73884c19222f4b0b18667ea1e45a8a925fe82c7b104bb` |
-| tenant-module-entitlements-api | 10 | `bcc7ef77c03aba1632b982232bdf6c92b819081cab9cb1805446bd76096aaf6b` |
-| tenant-module-entitlements-api | 11 | `62b4bda820b48962d43bc70ca3fcc4a591d655617bff17b8bf4bd36d811e221a` |
+| tenant-module-entitlements-api | 10 | `479d38c1e960adbe09bc5ce6f8690f88f99ada41c5d71bdc25a8197d56d9913e` |
+| tenant-module-entitlements-api | 11 | `2a6817fbd4f4f819446478653927804e26295f987e42cfd9a22c7b13a30074f0` |
 | tenant-module-entitlements-web | 12 | `e78b2a2fdec5376b2db3df3a3445f1a1540910ebb1a87b98bb58214ec3561493` |
 | tenant-module-entitlements-web | 13 | `8d4e22b075f697513becfe7f146ec4fa5f7448c429f001a46927bb8b448c0529` |
 | tenant-module-entitlements-web | 14 | `45049c6ed92558938b1cd17774df06a83f8e78e245bb023080261ab4ce7127b8` |

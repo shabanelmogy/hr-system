@@ -12,15 +12,21 @@ import type {
   OrganizationalChangeLogItem,
 } from "../types/OrganizationalStructure";
 
-const normalizeRequest = (request: OrganizationalStructureMutation): OrganizationalStructureMutation => ({
-  ...request,
-  code: request.code.trim().toUpperCase(),
-  nameEn: request.nameEn.trim(),
-  nameAr: request.nameAr.trim(),
-  version: request.version?.trim().toUpperCase(),
-  currencyCode: request.currencyCode?.trim().toUpperCase(),
-  costCenterCode: request.costCenterCode?.trim().toUpperCase(),
-});
+type OrganizationalStructureApiMutation = Omit<OrganizationalStructureMutation, "isCentralized">;
+
+const normalizeRequest = (request: OrganizationalStructureMutation): OrganizationalStructureApiMutation => {
+  const wire = { ...request };
+  delete wire.isCentralized;
+  return {
+    ...wire,
+    code: request.code.trim().toUpperCase(),
+    nameEn: request.nameEn.trim(),
+    nameAr: request.nameAr.trim(),
+    version: request.version?.trim().toUpperCase(),
+    currencyCode: request.currencyCode?.trim().toUpperCase(),
+    costCenterCode: request.costCenterCode?.trim().toUpperCase(),
+  };
+};
 
 export const organizationalStructureService = {
   getPage(query: OrganizationalStructurePageQuery): Promise<OrganizationalStructurePageResponse> {

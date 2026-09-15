@@ -123,3 +123,8 @@ The EF model enforces:
 - One interview participant and one interview evaluation per employee and interview.
 - Non-negative opening capacity and salary values.
 - Concurrency tokens on mutable aggregate roots.
+- `JobRequisition.Type` keeps the database default `NewPosition` and
+  `JobRequisition.PlanningSource` keeps the database default `Legacy`; both
+  enum properties use an explicit zero-valued sentinel so EF can distinguish an
+  unset value from their valid domain defaults. Zero is not a domain enum member
+  and does not change the stored schema values.

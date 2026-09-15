@@ -274,6 +274,7 @@
     "CrystalReportRuntimeUnavailable": "The Crystal report runtime is unavailable",
     "CrystalReportSourceUnavailable": "The published Crystal report source file is unavailable",
     "CrystalReportRenderUnsupported": "This report entity does not have an approved runtime profile",
+    "CrystalReportDataTooLarge": "The report data exceeds the configured safe rendering limit. Narrow the report filters and try again",
     "CrystalReportInvalidRowVersion": "The Crystal report row version is invalid",
     "CrystalReportConcurrencyConflict": "The Crystal report was changed by another request",
     "CrystalReportInvalidRole": "One or more selected roles are not available in the current tenant",

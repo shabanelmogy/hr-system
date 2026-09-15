@@ -1,9 +1,0 @@
-namespace ErpSystem.Modules.HR.Application.Features.Security.Users.Contracts
-{
-    public record UpdateProfileRequest(
-        string? Id,
-        string UserName,
-        string FirstName,
-        string LastName
-    );
-}

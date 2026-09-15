@@ -1,3 +1,3 @@
 import './module-registration';
 
-export {};
+export { OfflineSyncCoordinator } from './offline/OfflineSyncCoordinator';

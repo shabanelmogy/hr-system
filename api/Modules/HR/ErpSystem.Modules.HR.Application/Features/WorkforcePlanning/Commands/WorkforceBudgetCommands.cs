@@ -1,12 +1,11 @@
 using FluentValidation;
-using ErpSystem.Modules.HR.Application.Abstractions.Authentication;
-using ErpSystem.Modules.HR.Application.Abstractions.Messaging;
-using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
+using ErpSystem.BuildingBlocks.Context.Authentication;
+using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
+using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Contracts;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Errors;
-using ErpSystem.Modules.HR.Domain.Common.Exceptions;
-using ErpSystem.Modules.HR.Domain.Finance.FiscalYears.Enums;
+using ErpSystem.BuildingBlocks.Domain.Exceptions;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Enums;
 
@@ -146,7 +145,7 @@ public sealed class CreateWorkforceBudgetCommandHandler(
                     return Result.Failure<WorkforceBudgetDetailResponse>(errors.PlanNotApproved);
                 var fiscalYear = await writeStore.GetFiscalYearAsync(plan.FiscalYearId, token);
                 if (fiscalYear is null) return Result.Failure<WorkforceBudgetDetailResponse>(errors.FiscalYearNotFound);
-                if (fiscalYear.Status is not (nameof(FiscalYearStatus.Draft) or nameof(FiscalYearStatus.Open)))
+                if (fiscalYear.Status is not ("Draft" or "Open"))
                     return Result.Failure<WorkforceBudgetDetailResponse>(errors.FiscalYearNotEditable);
 
                 var code = request.BudgetCode.Trim().ToUpperInvariant();
@@ -194,7 +193,7 @@ public sealed class UpdateWorkforceBudgetCommandHandler(
                 if (plan is null) return Result.Failure<WorkforceBudgetDetailResponse>(errors.PlanNotFound);
                 var fiscalYear = await writeStore.GetFiscalYearAsync(budget.FiscalYearId, token);
                 if (fiscalYear is null) return Result.Failure<WorkforceBudgetDetailResponse>(errors.FiscalYearNotFound);
-                if (fiscalYear.Status is not (nameof(FiscalYearStatus.Draft) or nameof(FiscalYearStatus.Open)))
+                if (fiscalYear.Status is not ("Draft" or "Open"))
                     return Result.Failure<WorkforceBudgetDetailResponse>(errors.FiscalYearNotEditable);
                 writeStore.ApplyRowVersion(budget, command.Request.RowVersion);
                 try { budget.UpdateDraft(command.Request.CurrencyCode); }
@@ -226,7 +225,7 @@ public sealed class SubmitWorkforceBudgetCommandHandler(IWorkforceBudgetWriteSto
             if (budget is null || budget.IsDeleted) return Result.Failure<WorkforceBudgetDetailResponse>(errors.NotFound);
             var fiscalYear = await store.GetFiscalYearAsync(budget.FiscalYearId, token);
             if (fiscalYear is null) return Result.Failure<WorkforceBudgetDetailResponse>(errors.FiscalYearNotFound);
-            if (!string.Equals(fiscalYear.Status, nameof(FiscalYearStatus.Open), StringComparison.Ordinal))
+            if (!string.Equals(fiscalYear.Status, "Open", StringComparison.Ordinal))
                 return Result.Failure<WorkforceBudgetDetailResponse>(errors.FiscalYearMustBeOpen);
             store.ApplyRowVersion(budget, command.RowVersion);
             try { budget.Submit(clock.GetUtcNow(), actor.UserId ?? string.Empty); }
@@ -260,7 +259,7 @@ public sealed class ApproveWorkforceBudgetCommandHandler(IWorkforceBudgetWriteSt
             var revalidation = WorkforceBudgetCommandSupport.Revalidate(budget, planSnapshot, fiscalYear, errors);
             if (revalidation is not null) return Result.Failure<WorkforceBudgetDetailResponse>(revalidation);
             var now = clock.GetUtcNow();
-            try { budget.Approve(now, actor.UserId ?? string.Empty, string.Equals(fiscalYear.Status, nameof(FiscalYearStatus.Open), StringComparison.Ordinal)); }
+            try { budget.Approve(now, actor.UserId ?? string.Empty, string.Equals(fiscalYear.Status, "Open", StringComparison.Ordinal)); }
             catch (DomainRuleException exception) when (exception.Code == "WorkforceBudget.FiscalYearMustBeOpen") { return Result.Failure<WorkforceBudgetDetailResponse>(errors.FiscalYearMustBeOpen); }
             catch (DomainRuleException) { return Result.Failure<WorkforceBudgetDetailResponse>(errors.InvalidTransition); }
             budget.Activate(now);
@@ -305,7 +304,7 @@ public sealed class RejectWorkforceBudgetCommandHandler(IWorkforceBudgetWriteSto
             if (budget is null || budget.IsDeleted) return Result.Failure<WorkforceBudgetDetailResponse>(errors.NotFound);
             var fiscalYear = await store.GetFiscalYearAsync(budget.FiscalYearId, token);
             if (fiscalYear is null) return Result.Failure<WorkforceBudgetDetailResponse>(errors.FiscalYearNotFound);
-            if (!string.Equals(fiscalYear.Status, nameof(FiscalYearStatus.Open), StringComparison.Ordinal))
+            if (!string.Equals(fiscalYear.Status, "Open", StringComparison.Ordinal))
                 return Result.Failure<WorkforceBudgetDetailResponse>(errors.FiscalYearMustBeOpen);
             store.ApplyRowVersion(budget, command.RowVersion);
             try { budget.Reject(clock.GetUtcNow(), actor.UserId ?? string.Empty, command.Reason); }

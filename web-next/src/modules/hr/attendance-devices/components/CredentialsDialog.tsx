@@ -11,6 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { UpdateCredentialsRequest } from "../types/attendanceDevices";
 
 type CredentialsFormProps = {
@@ -22,16 +23,17 @@ type CredentialsFormProps = {
 
 const CredentialsForm = ({ deviceId, disabled, onClose, onSubmit }: CredentialsFormProps) => {
   const [commKey, setCommKey] = useState("");
+  const { t } = useTranslation();
 
   return (
     <>
       <DialogContent>
         <Stack spacing={2} sx={{ pt: 1 }}>
           <Alert severity="info">
-            Existing secret values are never shown. The installed ZKTeco adapter accepts a numeric Comm Key only.
+            {t("attendanceDevices.credentialsDescription")}
           </Alert>
           <TextField
-            label="Comm key"
+            label={t("attendanceDevices.commKey")}
             type="password"
             value={commKey}
             onChange={(event) => setCommKey(event.target.value)}
@@ -40,13 +42,13 @@ const CredentialsForm = ({ deviceId, disabled, onClose, onSubmit }: CredentialsF
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onClose}>{t("actions.cancel")}</Button>
         <Button
           variant="contained"
           disabled={disabled || !deviceId || !commKey.trim()}
           onClick={() => deviceId && onSubmit(deviceId, { commKey: commKey.trim() })}
         >
-          Save credentials
+          {t("attendanceDevices.saveCredentials")}
         </Button>
       </DialogActions>
     </>
@@ -66,9 +68,10 @@ export function CredentialsDialog({
   onClose: () => void;
   onSubmit: (id: number, values: UpdateCredentialsRequest) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Update credentials</DialogTitle>
+      <DialogTitle>{t("attendanceDevices.updateCredentials")}</DialogTitle>
       {open ? (
         <CredentialsForm
           key={deviceId ?? "new"}

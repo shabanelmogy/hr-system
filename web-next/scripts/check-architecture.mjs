@@ -110,10 +110,55 @@ const violations = [];
 const moduleBoundaryViolations = [];
 const formSafetyViolations = [];
 const cacheSafetyViolations = [];
+const directHttpViolations = [];
+const compatibilityViolations = [];
+
+const forbiddenCompatibilityPatterns = [
+  {
+    pattern: /\bLEGACY_(?:ACCESS|REFRESH)_TOKEN_COOKIE\b/,
+    message: "legacy authentication cookie identifiers are forbidden; only the canonical __Host cookie contract is supported",
+  },
+  {
+    pattern: /\bmigrationPayload\b/,
+    message: "authentication cookie migration payloads are forbidden",
+  },
+  {
+    pattern: /\/api\/v1\/auth\/checkAuth\/CheckAuth/,
+    message: "the removed checkAuth authentication fallback endpoint must not be used",
+  },
+  {
+    pattern: /\b(?:fetchValidatedClaimsFromCheckAuth|decodeApiValidatedClaims)\b/,
+    message: "client-side session reconstruction from JWT claims is forbidden; use the canonical backend session contract",
+  },
+  {
+    pattern: /\bMyForm\.(?:Container|Header|Content|Footer)\b/,
+    message: "removed MyForm compound compatibility members must not be restored",
+  },
+  {
+    pattern: /\bBackwards? compatibility\b/i,
+    message: "explicit backward-compatibility shims are not allowed in production source",
+  },
+  {
+    pattern: /modules\/hr\/finance\/fiscal-years|modules\/hr\/appointments|shared\/reporting\/crystal-report-manager|modules\/hr\/basic-data\/geographical-information|modules\/hr\/basic-data\/organizational-structure\/company-geographic-scope/,
+    message: "imports must use the canonical bounded-context owner; removed legacy ownership paths are forbidden",
+  },
+];
 
 for (const filePath of sourceFiles) {
   const source = fs.readFileSync(filePath, "utf8");
   const relativePath = path.relative(sourceRoot, filePath);
+  const normalizedRelativePath = relativePath.split(path.sep).join("/");
+  const isProductionSource = !/\.(?:test|spec)\.[^.]+$/.test(normalizedRelativePath);
+  if (isProductionSource) {
+    for (const { pattern, message } of forbiddenCompatibilityPatterns) {
+      if (pattern.test(source)) {
+        compatibilityViolations.push(`${relativePath}: ${message}`);
+      }
+    }
+  }
+  if (filePath.endsWith(".tsx") && /\b(?:apiService|apiClient)\s*\.(?:get|getBlob|post|postBlob|put|patch|delete|request|logout)\s*\(/.test(source)) {
+    directHttpViolations.push(`${relativePath}: presentation components must call an owning service, not apiService/apiClient directly`);
+  }
   const isValidationSource = /(?:validation|schema)/i.test(relativePath);
   const transformedUndefinedUnion = /z\.union\s*\(\s*\[[\s\S]*?z\.undefined\s*\(\s*\)[\s\S]*?\]\s*\)\s*\.transform\s*\(/;
   if (isValidationSource && transformedUndefinedUnion.test(source)) {
@@ -130,7 +175,7 @@ for (const filePath of sourceFiles) {
   }
 
   if (
-    relativePath.split(path.sep).join("/") === "shared/config/queryClient.ts" &&
+    normalizedRelativePath === "shared/config/queryClient.ts" &&
     /refetchOnMount\s*:\s*false/.test(source)
   ) {
     cacheSafetyViolations.push(
@@ -157,7 +202,12 @@ for (const filePath of sourceFiles) {
     }
 
     const fromOwner = ownerOf(filePath);
-    const targetOwner = ownerOf(target);
+    const targetOwner = ownerOf(target);    if (fromLayer === "app" && targetLayer === "modules" && !isPublicApi(target)) {
+      moduleBoundaryViolations.push(
+        `${path.relative(process.cwd(), filePath)} -> ${path.relative(process.cwd(), target)} ` +
+        "(app composition must import module capabilities through an index.ts public API)",
+      );
+    }
     if (
       fromOwner &&
       targetOwner &&
@@ -170,7 +220,7 @@ for (const filePath of sourceFiles) {
         );
       }
 
-      if (["platform", "hr", "accounting", "shell"].includes(targetOwner) && !isPublicApi(target)) {
+      if (targetOwner !== "shared" && !isPublicApi(target)) {
         moduleBoundaryViolations.push(
           `${path.relative(process.cwd(), filePath)} -> ${path.relative(process.cwd(), target)} ` +
           `(cross-owner imports must target a deliberate index.ts public API)`,
@@ -211,7 +261,9 @@ if (
   ownershipViolations.length ||
   cycles.size ||
   formSafetyViolations.length ||
-  cacheSafetyViolations.length
+  cacheSafetyViolations.length ||
+  directHttpViolations.length ||
+  compatibilityViolations.length
 ) {
   if (violations.length) {
     console.error("Forbidden architecture dependencies:");
@@ -237,9 +289,17 @@ if (
     console.error("Unsafe query cache configuration:");
     for (const violation of cacheSafetyViolations) console.error(`  ${violation}`);
   }
+  if (directHttpViolations.length) {
+    console.error("Direct HTTP calls from TSX:");
+    for (const violation of directHttpViolations) console.error(`  ${violation}`);
+  }
+  if (compatibilityViolations.length) {
+    console.error("Forbidden compatibility shims:");
+    for (const violation of compatibilityViolations) console.error(`  ${violation}`);
+  }
   process.exit(1);
 }
 
 console.log(
-  "Architecture checks passed: target ownership, public APIs, static/dynamic dependency direction, cycles, form validation safety, and query cache consistency are clean.",
+  "Architecture checks passed: target ownership, public APIs, dependency direction, cycles, form validation safety, query cache consistency, and compatibility-shim protection are clean.",
 );

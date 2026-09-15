@@ -1,12 +1,11 @@
 import {
-  AxiosError,
   create,
   isAxiosError,
   type AxiosRequestConfig,
   type InternalAxiosRequestConfig,
 } from 'axios';
 
-import { ApiError, type ApiProblemDetails } from '@/src/core/api/api-error';
+import { ApiError, toApiError } from '@/src/core/api/api-error';
 import { ENV } from '@/src/core/config/env';
 import { APP_CONFIG } from '@/src/core/constants/app-constants';
 import { secureSession } from '@/src/core/storage/secure-storage';
@@ -215,33 +214,6 @@ axiosClient.interceptors.response.use(
     }
   },
 );
-
-function isProblemDetails(value: unknown): value is ApiProblemDetails {
-  return value !== null && typeof value === 'object';
-}
-
-export function toApiError(error: unknown): ApiError {
-  if (error instanceof ApiError) {
-    return error;
-  }
-
-  if (error instanceof AxiosError || isAxiosError(error)) {
-    const problem = isProblemDetails(error.response?.data) ? error.response.data : undefined;
-    const status = error.response?.status ?? 0;
-    const fallbackMessage =
-      error.code === AxiosError.ETIMEDOUT || error.code === AxiosError.ECONNABORTED
-        ? 'The request timed out.'
-        : error.message || 'Unable to reach the server.';
-
-    return new ApiError(
-      status,
-      problem?.detail ?? problem?.title ?? fallbackMessage,
-      problem,
-    );
-  }
-
-  return new ApiError(0, error instanceof Error ? error.message : 'An unexpected error occurred.');
-}
 
 export type ApiRequestConfig = AxiosRequestConfig;
 

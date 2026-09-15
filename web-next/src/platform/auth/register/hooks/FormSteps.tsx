@@ -10,17 +10,17 @@ export const useFormSteps = ({ t }: UseFormStepsParams) => {
   const formSteps = [
     {
       id: "personal-details",
-      label: t("personalDetails") || "Personal Details",
+      label: t("personalDetails"),
       icon: <Person2Icon />,
     },
     {
       id: "account-security",
-      label: t("accountSecurity") || "Account Security",
+      label: t("accountSecurity"),
       icon: <LockIcon />,
     },
     {
       id: "profile-picture",
-      label: t("profilePicture") || "Profile Picture",
+      label: t("profilePicture"),
       icon: <PhotoCameraIcon />,
     },
   ];

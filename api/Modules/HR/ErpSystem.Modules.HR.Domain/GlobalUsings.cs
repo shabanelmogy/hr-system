@@ -1,1 +1,1 @@
-global using ErpSystem.Modules.HR.Domain.Common.Entities;
+global using ErpSystem.BuildingBlocks.Domain.Entities;
