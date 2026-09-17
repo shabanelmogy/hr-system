@@ -1,3 +1,5 @@
+import { appRoutes } from "@/config/routes";
+
 export const ACCESS_TOKEN_COOKIE = "__Host-hrms-access-token";
 export const REFRESH_TOKEN_COOKIE = "__Host-hrms-refresh-token";
 
@@ -6,13 +8,13 @@ export const SESSION_CHANGED_EVENT = "auth:session-changed";
 
 export const PUBLIC_ROUTES = [
   // Auth pages
-  "/login",
-  "/register",
-  "/forget-password",
-  "/reset-password",
-  "/accept-invitation",
-  "/resend-email-confirmation",
-  "/confirm-email",
+  appRoutes.auth.login,
+  appRoutes.auth.register,
+  appRoutes.auth.forgetPassword,
+  appRoutes.auth.resetPassword,
+  appRoutes.auth.acceptInvitation,
+  appRoutes.auth.resendEmailConfirmation,
+  appRoutes.auth.emailConfirmed,
   "/.well-known",
   
   // Static assets (Next.js)

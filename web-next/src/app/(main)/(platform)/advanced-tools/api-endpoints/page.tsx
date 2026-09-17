@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "ERP System page for Advanced Tools Api Endpoints."
 };
 
-import PageComponent from "@/platform/advanced-tools/external-tools/pages/ApiEndpointsPage";
+import { ApiEndpointsPage as PageComponent } from "@/platform/advanced-tools";
 
 export default function Page() {
   return <PageComponent />;

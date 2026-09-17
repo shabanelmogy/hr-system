@@ -25,6 +25,7 @@ import { CompanyContextSwitcher } from "@/platform/tenant-access";
 import { ModuleContextSwitcher } from "@/platform/modules";
 import { useUnsavedChanges } from "@/shared/contexts/UnsavedChangesContext";
 import { useAuthorizedNavigation } from "@/shell/navigation/useAuthorizedNavigation";
+import { appRoutes } from "@/config/routes";
 
 const DisplayDebugger = dynamic(() => import("./DisplayDebugger"), { ssr: false });
 const GlobalSearchButton = dynamic(
@@ -105,7 +106,7 @@ const TopBar = ({
 
   const navigateToProfile = async () => {
     if (!(await requestDiscard())) return;
-    router.push("/profile");
+    router.push(appRoutes.platform.profile);
     handleMobileMenuClose();
   };
 
@@ -161,7 +162,7 @@ const TopBar = ({
               </Tooltip>
             )}
             <Link
-              href="/"
+              href={appRoutes.shell.home}
               style={{
                 display: "flex",
                 minWidth: 0,

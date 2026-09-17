@@ -1,4 +1,4 @@
-﻿// recruitmentConfig.tsx
+// recruitmentConfig.tsx
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import WorkOutlineRoundedIcon from "@mui/icons-material/WorkOutlineRounded";
 import { appRoutes } from "@/config/routes";
@@ -18,7 +18,7 @@ export const getRecruitmentConfig = () => {
     createNavItem(
       "menu.recruitment",
       itemIcon,
-      appRoutes.recruitment,
+      appRoutes.modules.hr.recruitment,
       undefined,
       [permissions.ViewRecruitment]
     ),

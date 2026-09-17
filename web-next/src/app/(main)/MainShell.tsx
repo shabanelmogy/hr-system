@@ -61,8 +61,10 @@ function ContextShell({ children }: { children: ReactNode }) {
       <UnsavedChangesProvider>
         <SignalRProvider>
           <TenantAccessBoundary>
-            <NotificationRealtimeBridge />
-            <RealtimeEntityBridge />
+            <Suspense fallback={null}>
+              <NotificationRealtimeBridge />
+              <RealtimeEntityBridge />
+            </Suspense>
             <MainLayout>
               <RouteAuthorizationGuard fallback={<RouteLoading />}>
                 <Suspense fallback={<RouteLoading />}>{children}</Suspense>
@@ -72,7 +74,9 @@ function ContextShell({ children }: { children: ReactNode }) {
         </SignalRProvider>
       </UnsavedChangesProvider>
       {process.env.NODE_ENV === "development" && (
-        <ReactQueryDevtools initialIsOpen={false} />
+        <Suspense fallback={null}>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </Suspense>
       )}
     </QueryClientProvider>
   );

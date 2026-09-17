@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "ERP System page for Advanced Tools Hangfire Dashboard."
 };
 
-import PageComponent from "@/platform/advanced-tools/hangfire-dashboard/pages/HangfireDashboardPage";
+import { HangfireDashboardPage as PageComponent } from "@/platform/advanced-tools";
 
 export default function Page() {
   return <PageComponent />;

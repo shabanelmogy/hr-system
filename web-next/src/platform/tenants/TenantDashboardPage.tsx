@@ -77,7 +77,7 @@ export default function TenantDashboardPage() {
             {canViewGlobalGeography ? (
               <DashboardActionButton
                 color="info"
-                href={appRoutes.superAdmin.geography.countries}
+                href={appRoutes.modules.referenceData.geography.countries}
                 icon={<PublicIcon fontSize="small" />}
                 label={t("menu.globalGeography")}
               />
@@ -85,7 +85,7 @@ export default function TenantDashboardPage() {
             <DashboardActionButton
               color="primary"
               filled
-              href={appRoutes.superAdmin.tenants}
+              href={appRoutes.platform.superAdmin.tenants}
               icon={<ApartmentIcon fontSize="small" />}
               label={t("superAdminDashboard.manageTenants")}
             />

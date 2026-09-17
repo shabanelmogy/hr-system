@@ -2,7 +2,6 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { refreshAuthTokens } from "@/lib/auth/backend-session";
 import {
-  clearAuthCookies,
   readAuthTokens,
   setAuthCookies,
   type AuthPayload,
@@ -13,6 +12,11 @@ import {
   rewriteHangfireAntiforgeryCookie,
   rewriteHangfireLocation,
 } from "@/lib/api/hangfireProxy";
+import {
+  hasUnsafeBackendPath,
+  isCrossSiteMutation,
+  isUntrustedForwardingHeader,
+} from "@/lib/api/proxy-security";
 import { getBackendUrl, resolveRequestBackendUrl } from "@/lib/env/server";
 
 type RouteParameters = { params: Promise<{ path?: string[] }> };
@@ -26,9 +30,6 @@ const excludedRequestHeaders = new Set([
   "origin",
   "referer",
   "transfer-encoding",
-  "x-forwarded-for",
-  "x-forwarded-host",
-  "x-forwarded-proto",
 ]);
 
 const excludedResponseHeaders = new Set([
@@ -45,6 +46,12 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
   }
 
   const { path = [] } = await parameters.params;
+  if (hasUnsafeBackendPath(path)) {
+    return NextResponse.json(
+      { title: "Invalid backend path", code: "UnsafeBackendPath" },
+      { status: 400, headers: { "cache-control": "no-store" } },
+    );
+  }
   const { accessToken, refreshToken } = readAuthTokens(request.cookies);
   const targetBackendUrl = resolveRequestBackendUrl(request);
   const body = request.method === "GET" || request.method === "HEAD"
@@ -102,8 +109,12 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
     request.method !== "HEAD",
     targetBackendUrl,
   );
-  if (backendResponse.status === 401 && !refreshedAuth) {
-    clearAuthCookies(response);
+  if (backendResponse.status === 401) {
+    // Keep parity with the generic BFF: a request that started before a company
+    // switch may finish after newer cookies are stored. Never let that stale
+    // response delete the replacement session; verified session revalidation
+    // owns the final logout decision.
+    console.warn("[Hangfire Proxy] Backend rejected the request; preserving session cookies for revalidation");
   }
   return response;
 }
@@ -131,7 +142,10 @@ async function callBackend(
 function createBackendHeaders(request: NextRequest, accessToken?: string) {
   const headers = new Headers();
   request.headers.forEach((value, name) => {
-    if (!excludedRequestHeaders.has(name.toLowerCase())) {
+    if (
+      !excludedRequestHeaders.has(name.toLowerCase()) &&
+      !isUntrustedForwardingHeader(name)
+    ) {
       headers.set(name, value);
     }
   });
@@ -191,16 +205,6 @@ function getSetCookies(headers: Headers): string[] {
 function hasResponseBody(status: number) {
   return ![204, 205, 304].includes(status);
 }
-
-function isCrossSiteMutation(request: NextRequest) {
-  if (["GET", "HEAD", "OPTIONS"].includes(request.method)) return false;
-  if (request.headers.get("sec-fetch-site") === "cross-site") return true;
-
-  const origin = request.headers.get("origin");
-  return Boolean(origin && origin !== request.nextUrl.origin);
-}
-
-export const dynamic = "force-dynamic";
 
 export const GET = handle;
 export const HEAD = handle;

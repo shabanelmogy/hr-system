@@ -22,7 +22,24 @@ import SidebarContext from "@/shared/contexts/SidebarContext";
 import TopBar from "../components/top-bar/TopBar";
 import ToolbarSpacer from "../components/top-bar/ToolbarSpacer";
 
-const MainLayout = ({ children }: { children: React.ReactNode }) => {
+const fallbackSidebarContextValue = {
+  open: false,
+  setOpen: (() => undefined) as React.Dispatch<React.SetStateAction<boolean>>,
+};
+
+const MainLayout = ({ children }: { children: React.ReactNode }) => (
+  <React.Suspense
+    fallback={(
+      <SidebarContext.Provider value={fallbackSidebarContextValue}>
+        {children}
+      </SidebarContext.Provider>
+    )}
+  >
+    <PathAwareMainLayout>{children}</PathAwareMainLayout>
+  </React.Suspense>
+);
+
+const PathAwareMainLayout = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme();
   const desktopNavigation = useMediaQuery(theme.breakpoints.up("md"));
   const { t } = useTranslation();
@@ -30,65 +47,55 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const [toolbarHeight, setToolbarHeight] = React.useState(64);
   const dedicatedLayoutRoute =
-    pathname === appRoutes.basicData.index ||
-    pathname.startsWith(`${appRoutes.basicData.index}/`);
+    pathname === appRoutes.shell.basicData ||
+    pathname.startsWith(`${appRoutes.shell.basicData}/`);
   const isSuperAdminDashboard =
-    pathname === appRoutes.superAdmin.dashboard ||
-    (pathname === appRoutes.home && hasRole(["super_admin"]));
+    pathname === appRoutes.platform.superAdmin.dashboard ||
+    (pathname === appRoutes.shell.home && hasRole(["super_admin"]));
   const fixedHeightRoute =
     dedicatedLayoutRoute ||
-    pathname === appRoutes.workforcePlanning.index ||
-    pathname.startsWith(`${appRoutes.workforcePlanning.index}/`) ||
-    pathname === appRoutes.attendanceDevices.index ||
-    pathname.startsWith(`${appRoutes.attendanceDevices.index}/`) ||
+    pathname === appRoutes.modules.hr.workforcePlanning.index ||
+    pathname.startsWith(`${appRoutes.modules.hr.workforcePlanning.index}/`) ||
+    pathname === appRoutes.modules.hr.attendanceDevices.index ||
+    pathname.startsWith(`${appRoutes.modules.hr.attendanceDevices.index}/`) ||
     isSuperAdminDashboard ||
-    pathname === appRoutes.superAdmin.tenants;
-  const sidebarScope = dedicatedLayoutRoute ? appRoutes.basicData.index : "main";
+    pathname === appRoutes.platform.superAdmin.tenants;
+  const sidebarScope = dedicatedLayoutRoute ? appRoutes.shell.basicData : "main";
   const activeModuleCode = requiredModuleForPath(pathname)?.moduleCode.toLowerCase() ?? null;
   useModuleTranslations(activeModuleCode);
   const isModuleLauncher =
-    pathname === appRoutes.apps ||
-    (pathname === appRoutes.home && !hasRole(["super_admin"]));
+    pathname === appRoutes.platform.apps.index ||
+    (pathname === appRoutes.shell.home && !hasRole(["super_admin"]));
   const activeSidebarContextKey = activeModuleCode
     ? `${sidebarScope}:${activeModuleCode}`
     : null;
   const [sidebarState, setSidebarState] = React.useState({
-    scope: "main",
+    contextKey: null as string | null,
     open: false,
   });
-  const previousSidebarContextRef = React.useRef<string | null>(null);
-  const open = sidebarState.scope === sidebarScope && sidebarState.open;
+  const defaultSidebarOpen =
+    !isModuleLauncher && Boolean(activeSidebarContextKey) && desktopNavigation;
+  const open = isModuleLauncher
+    ? false
+    : sidebarState.contextKey === activeSidebarContextKey
+      ? sidebarState.open
+      : defaultSidebarOpen;
   const setOpen = React.useCallback<React.Dispatch<React.SetStateAction<boolean>>>(
     (value) => {
       setSidebarState((current) => {
-        const currentOpen = current.scope === sidebarScope && current.open;
+        const currentOpen = current.contextKey === activeSidebarContextKey
+          ? current.open
+          : defaultSidebarOpen;
         const nextOpen = typeof value === "function" ? value(currentOpen) : value;
 
-        return { scope: sidebarScope, open: nextOpen };
+        return { contextKey: activeSidebarContextKey, open: nextOpen };
       });
     },
-    [sidebarScope],
+    [activeSidebarContextKey, defaultSidebarOpen],
   );
 
   const handleDrawerClose = () => setOpen(false);
   const handleDrawerToggle = () => setOpen((current) => !current);
-
-  React.useEffect(() => {
-    if (isModuleLauncher) {
-      setOpen(false);
-      previousSidebarContextRef.current = null;
-      return;
-    }
-
-    if (
-      activeSidebarContextKey &&
-      activeSidebarContextKey !== previousSidebarContextRef.current
-    ) {
-      setOpen(desktopNavigation);
-    }
-
-    previousSidebarContextRef.current = activeSidebarContextKey;
-  }, [activeSidebarContextKey, desktopNavigation, isModuleLauncher, setOpen]);
 
   useTokenRevocation();
 

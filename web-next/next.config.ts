@@ -13,6 +13,8 @@ validateBufferedBodyLimit();
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   typedRoutes: true,
+  cacheComponents: true,
+  poweredByHeader: false,
   async headers() {
     return [{
       source: "/(.*)",

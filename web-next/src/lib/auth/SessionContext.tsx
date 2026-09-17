@@ -1,7 +1,7 @@
 "use client";
 
 import type { Route } from "next";
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { Suspense, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { isSessionClaims, type SessionClaims } from "./session";
 import type { PermissionString } from "./permissions";
@@ -12,6 +12,7 @@ import { UNAVAILABLE_ROUTE } from "./route-access";
 import { SessionRequestState } from "./session-request-state";
 import { auth as authRoutes } from "@/config/api/auth";
 import { verifyTargetCompany } from "./company-switch-verification";
+import { appRoutes } from "@/config/routes";
 
 const sessionRevalidationIntervalMs = 5 * 60_000;
 const sessionExpiryBufferMs = 30_000;
@@ -43,10 +44,11 @@ const SessionContext = createContext<SessionContextValue | null>(null);
 
 export function SessionProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
-  const pathname = usePathname();
-  const requiresSession = !isPublicRoute(pathname) && pathname !== UNAVAILABLE_ROUTE;
   const [user, setUser] = useState<SessionClaims | null>(null);
-  const [isLoading, setIsLoading] = useState(requiresSession);
+  // SessionProvider is mounted only for the protected `(main)` route group.
+  // Default to loading so protected consumers do not briefly observe an
+  // unauthenticated settled state before the route observer hydrates.
+  const [isLoading, setIsLoading] = useState(true);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isSwitchingCompany, setIsSwitchingCompany] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -60,15 +62,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const lastRefreshAtRef = useRef(0);
   const userRef = useRef<SessionClaims | null>(null);
   const bootstrappedRef = useRef(false);
-  const pathnameRef = useRef(pathname);
+  const pathnameRef = useRef<string>(appRoutes.shell.home);
   const revalidationResultRef = useRef<RevalidationResult>("skipped");
   if (refreshStateRef.current == null) {
     refreshStateRef.current = new SessionRequestState();
   }
-
-  useEffect(() => {
-    pathnameRef.current = pathname;
-  }, [pathname]);
 
   const revalidate = useCallback(async (duringSwitch = false, suppressFailureRedirect = false) => {
     if (loggingOutRef.current || (companySwitchTransitionRef.current && !duringSwitch)) {
@@ -162,17 +160,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const refresh = useCallback(() => revalidate(), [revalidate]);
 
   useEffect(() => {
-    if (!requiresSession) {
-      bootstrappedRef.current = false;
-      return;
-    }
-    if (bootstrappedRef.current) return;
-    bootstrappedRef.current = true;
-    setIsLoading(true);
-    void refresh();
-  }, [refresh, requiresSession]);
-
-  useEffect(() => {
     const handleSessionChanged = () => {
       if (!companySwitchTransitionRef.current) void refresh();
     };
@@ -255,7 +242,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         ]);
 
         // Keep the history stack clean so Back cannot reopen a protected page.
-        router.replace("/login");
+        router.replace(appRoutes.auth.login);
         userRef.current = null;
         setUser(null);
         setError(null);
@@ -391,7 +378,52 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     }
   }), [isLoading, isLoggingOut, isSwitchingCompany, error, refresh, logout, switchCompany, user]);
 
-  return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
+  return (
+    <SessionContext.Provider value={value}>
+      <Suspense fallback={null}>
+        <SessionRouteObserver
+          bootstrappedRef={bootstrappedRef}
+          pathnameRef={pathnameRef}
+          refresh={refresh}
+          setIsLoading={setIsLoading}
+        />
+      </Suspense>
+      {children}
+    </SessionContext.Provider>
+  );
+}
+
+function SessionRouteObserver({
+  bootstrappedRef,
+  pathnameRef,
+  refresh,
+  setIsLoading,
+}: {
+  bootstrappedRef: { current: boolean };
+  pathnameRef: { current: string };
+  refresh: () => Promise<void>;
+  setIsLoading: (value: boolean) => void;
+}) {
+  const pathname = usePathname();
+  const requiresSession = !isPublicRoute(pathname) && pathname !== UNAVAILABLE_ROUTE;
+
+  useEffect(() => {
+    pathnameRef.current = pathname;
+  }, [pathname, pathnameRef]);
+
+  useEffect(() => {
+    if (!requiresSession) {
+      bootstrappedRef.current = false;
+      setIsLoading(false);
+      return;
+    }
+    if (bootstrappedRef.current) return;
+    bootstrappedRef.current = true;
+    setIsLoading(true);
+    void refresh();
+  }, [bootstrappedRef, refresh, requiresSession, setIsLoading]);
+
+  return null;
 }
 
 async function readProblemMessage(response: Response) {

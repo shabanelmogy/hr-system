@@ -144,8 +144,8 @@ function SideBar({
   const activeModulePresentation = activeModule ? toLauncherModule(activeModule) : undefined;
   const isModuleLauncherRoute = Boolean(
     activeModule &&
-      (pathname === appRoutes.module(activeModule.code) ||
-        pathname.startsWith(`${appRoutes.module(activeModule.code)}/`)),
+      (pathname === appRoutes.platform.apps.module(activeModule.code) ||
+        pathname.startsWith(`${appRoutes.platform.apps.module(activeModule.code)}/`)),
   );
   const currentDrawerWidth = isSmallScreen
     ? expandedSidebarWidth
@@ -412,7 +412,7 @@ function SideBar({
                 open={open}
                 title={t("modules.title")}
                 icon={<AppsRoundedIcon />}
-                path={appRoutes.apps}
+                path={appRoutes.platform.apps.index}
                 searchTerm={searchTerm}
                 onNavigate={handleNavigate}
                 onRequestOpen={() => setOpen(true)}
@@ -425,7 +425,13 @@ function SideBar({
                     defaultValue: submodule.name,
                   })}
                   icon={submodule.icon ?? <AppsRoundedIcon />}
-                  path={submodule.entryPath || `/apps/${activeModulePresentation.code}/${submodule.code}`}
+                  path={
+                    submodule.entryPath ||
+                    appRoutes.platform.apps.submodule(
+                      activeModulePresentation.code,
+                      submodule.code,
+                    )
+                  }
                   searchTerm={searchTerm}
                   onNavigate={handleNavigate}
                   onRequestOpen={() => setOpen(true)}
@@ -441,7 +447,7 @@ function SideBar({
               open={open}
               title={t("modules.title")}
               icon={<AppsRoundedIcon />}
-              path="/apps"
+              path={appRoutes.platform.apps.index}
               searchTerm={searchTerm}
               onNavigate={handleNavigate}
               onRequestOpen={() => setOpen(true)}

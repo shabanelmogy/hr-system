@@ -21,10 +21,10 @@ describe("Accounting frontend module definition", () => {
     expect(accountingModuleDefinition.submodules[0]).toMatchObject({
       code: "fiscal-years",
       requiredPermissions: [permissions.ViewFiscalYears],
-      entryCandidates: [appRoutes.finance.fiscalYears],
-      routePrefixes: [appRoutes.finance.fiscalYears],
+      entryCandidates: [appRoutes.modules.accounting.fiscalYears],
+      routePrefixes: [appRoutes.modules.accounting.fiscalYears],
     });
-    expect(requiredModuleForPath(appRoutes.finance.fiscalYears)).toEqual({
+    expect(requiredModuleForPath(appRoutes.modules.accounting.fiscalYears)).toEqual({
       moduleCode: "acc",
       submoduleCode: "fiscal-years",
     });

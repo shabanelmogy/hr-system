@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
-import type { ReactNode } from "react";
-import type { ThemeMode } from "@/theme/ThemePreferences";
+import { Suspense, type ReactNode } from "react";
 import { Providers } from "./providers";
+import { RuntimePreferencesBoundary } from "./RuntimePreferencesBoundary";
+import {
+  DEFAULT_RUNTIME_PREFERENCES,
+  runtimePreferenceBootstrapScript,
+} from "./runtime-preferences";
 import "@/index.css";
 
 export const metadata: Metadata = {
@@ -10,28 +13,22 @@ export const metadata: Metadata = {
   description: "Operational ERP dashboard"
 };
 
-export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
-  const cookieStore = await cookies();
-  const savedMode = cookieStore.get("currentMode")?.value;
-  const initialThemeMode: ThemeMode = savedMode === "dark" ? "dark" : "light";
-
-  const savedLang = cookieStore.get("i18next")?.value === "ar" ? "ar" : "en";
-  const dir = savedLang === "ar" ? "rtl" : "ltr";
-
-  const fg = initialThemeMode === "dark" ? "#90caf9" : "#1976d2";
-
+export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang={savedLang} dir={dir} data-theme={initialThemeMode}>
+    <html lang="en" dir="ltr" data-theme="light" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: runtimePreferenceBootstrapScript }} />
         {/* FullCalendar reuses this SSR placeholder during client module evaluation. */}
         <style data-fullcalendar="" />
         <style dangerouslySetInnerHTML={{ __html: `
           html[data-theme="light"] {
             --app-background: #ffffff;
+            --app-accent: #1976d2;
             color-scheme: light;
           }
           html[data-theme="dark"] {
             --app-background: #121212;
+            --app-accent: #90caf9;
             color-scheme: dark;
           }
           html, body {
@@ -42,6 +39,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             position: fixed; inset: 0; z-index: 9999;
             display: flex; align-items: center; justify-content: center;
             background: var(--app-background);
+            color: var(--app-accent);
             opacity: 1;
             visibility: visible;
             pointer-events: all;
@@ -56,19 +54,22 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           @keyframes spin { to { transform: rotate(360deg); } }
         `}} />
       </head>
-      <body className={initialThemeMode}>
+      <body>
         <div id="app-loader">
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <circle cx="24" cy="24" r="20" stroke={fg} strokeOpacity="0.2" strokeWidth="4" />
-            <path d="M44 24a20 20 0 0 0-20-20" stroke={fg} strokeWidth="4" strokeLinecap="round" />
+            <circle cx="24" cy="24" r="20" stroke="currentColor" strokeOpacity="0.2" strokeWidth="4" />
+            <path d="M44 24a20 20 0 0 0-20-20" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
           </svg>
         </div>
         <Providers
-          initialThemeMode={initialThemeMode}
-          initialDirection={dir}
-          initialLanguage={savedLang}
+          initialThemeMode={DEFAULT_RUNTIME_PREFERENCES.themeMode}
+          initialDirection={DEFAULT_RUNTIME_PREFERENCES.direction}
+          initialLanguage={DEFAULT_RUNTIME_PREFERENCES.language}
         >
           {children}
+          <Suspense fallback={null}>
+            <RuntimePreferencesBoundary />
+          </Suspense>
         </Providers>
       </body>
     </html>

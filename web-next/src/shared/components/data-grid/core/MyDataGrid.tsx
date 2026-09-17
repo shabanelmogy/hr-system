@@ -7,7 +7,6 @@ import {
 import {
   gridFilteredSortedRowIdsSelector,
   type GridColDef,
-  type GridEventListener,
   type GridRowClassNameParams,
   type GridRowId,
   type GridValidRowModel,
@@ -240,7 +239,7 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
     [activeRowId, getRowClassName, lastAddedId, lastEditedId],
   );
 
-  const resolvedOnRowClick = useCallback<GridEventListener<"rowClick">>(
+  const resolvedOnRowClick = useCallback<NonNullable<MyDataGridProps<TRow>["onRowClick"]>>(
     (params, event, details) => {
       setActiveRowId(params.id);
       onRowClick?.(params, event, details);

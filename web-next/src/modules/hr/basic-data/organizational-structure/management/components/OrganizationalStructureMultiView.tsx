@@ -1,9 +1,9 @@
 "use client";
 
 import { Box, Button, Chip, Grid, LinearProgress, Stack, Typography } from "@mui/material";
+import dynamic from "next/dynamic";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { BarChart, COLOR_PALETTES } from "@/shared/components/charts";
 import { EntityCard } from "@/shared/components/cards";
 import { EmptyState } from "@/shared/components/feedback/states";
 import { CardViewPagination } from "@/shared/components/lists/card-view";
@@ -13,10 +13,6 @@ import { usePermissions } from "@/shared/hooks/usePermissions";
 import { useAccessibleModulesQuery } from "@/platform/modules";
 import OrganizationalStructureCardViewHeader from "./card-view/OrganizationalStructureCardViewHeader";
 import OrganizationalStructureDataGrid from "./grid-view/OrganizationalStructureDataGrid";
-import OrganizationalStructureReport from "./report-view/OrganizationalStructureReport";
-import OrganizationalStructureImport from "./import-view/OrganizationalStructureImport";
-import DepartmentTreeDiagram from "./tree-view/DepartmentTreeDiagram";
-import CostCenterTreeDiagram from "./tree-view/CostCenterTreeDiagram";
 import {
   type OrganizationalResource,
   type OrganizationalSearchField,
@@ -25,6 +21,12 @@ import {
   type OrganizationalStructureItem,
   type OrganizationalView,
 } from "../types/OrganizationalStructure";
+
+const OrganizationalStructureChartView = dynamic(() => import("./chart-view/OrganizationalStructureChartView"));
+const OrganizationalStructureReport = dynamic(() => import("./report-view/OrganizationalStructureReport"));
+const OrganizationalStructureImport = dynamic(() => import("./import-view/OrganizationalStructureImport"));
+const DepartmentTreeDiagram = dynamic(() => import("./tree-view/DepartmentTreeDiagram"));
+const CostCenterTreeDiagram = dynamic(() => import("./tree-view/CostCenterTreeDiagram"));
 
 interface PermissionSet { canCreate: boolean; canEdit: boolean; canDelete: boolean; canApprove: boolean }
 interface Props {
@@ -226,11 +228,7 @@ export default function OrganizationalStructureMultiView(props: Props) {
           )
         )}
 
-        {visibleView === "chart" && <Box sx={{ boxSizing: "border-box", display: "flex", flexDirection: "column", height: "100%", minHeight: 0, minWidth: 0, overflow: "hidden", p: { xs: 0.5, md: 1 }, width: "100%" }}>
-          <BarChart data={chartData} title={t("organizationalStructure.chart.title")}
-            subtitle={t("organizationalStructure.chart.pageScope")} xKey="name" yKey="value" fullHeight compact
-            colors={COLOR_PALETTES.primary} loading={props.loading} formatValue={(value) => String(value)} height={280} />
-        </Box>}
+        {visibleView === "chart" && <OrganizationalStructureChartView data={chartData} loading={props.loading} />}
         {visibleView === "report" && <Box sx={{ height: "100%", minHeight: 0, minWidth: 0, overflowX: "hidden", overflowY: "auto", p: { xs: 0.5, md: 1 }, width: "100%" }}><OrganizationalStructureReport resource={props.resource} showFilterBar={isFilterBarVisible} /></Box>}
         {visibleView === "import" && props.permissions.canCreate && <Box sx={{ height: "100%", minHeight: 0, minWidth: 0, overflowX: "hidden", overflowY: "auto", width: "100%" }}><OrganizationalStructureImport resource={props.resource} /></Box>}
       </Box>

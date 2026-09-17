@@ -11,7 +11,12 @@ export interface MyFormProps {
   title: string;
   subtitle?: string;
   submitButtonText?: string;
-  onSubmit?: (event?: React.FormEvent) => void | Promise<void>;
+  /**
+   * Submission adapters may return framework-specific values (for example
+   * React Hook Form's Promise<unknown>). The dialog only awaits completion and
+   * never consumes the resolved value.
+   */
+  onSubmit?: (event?: React.FormEvent) => unknown | Promise<unknown>;
   children?: ReactNode;
   isSubmitting?: boolean;
   /** Blocks the primary mutation while prerequisite data is unavailable. */

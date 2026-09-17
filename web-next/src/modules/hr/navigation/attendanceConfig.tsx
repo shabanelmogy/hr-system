@@ -7,7 +7,7 @@ export const getAttendanceConfig = () => createNavSection(
   "attendanceDevices.title",
   createColoredIcon(<FingerprintRoundedIcon />, "#2e7d32"),
   [
-    createNavItem("attendanceDevices.devices", createColoredIcon(<FingerprintRoundedIcon />, "#388e3c"), appRoutes.attendanceDevices.index, undefined, [permissions.ViewAttendanceDevices]),
+    createNavItem("attendanceDevices.devices", createColoredIcon(<FingerprintRoundedIcon />, "#388e3c"), appRoutes.modules.hr.attendanceDevices.index, undefined, [permissions.ViewAttendanceDevices]),
   ],
   undefined,
   [permissions.ViewAttendanceDevices],

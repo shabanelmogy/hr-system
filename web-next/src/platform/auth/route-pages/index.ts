@@ -1,0 +1,13 @@
+export { default as AcceptInvitationPage } from "../accept-invitation/AcceptInvitationPage";
+export { default as ChangePasswordPage } from "../profile/profile-tabs/change-password/ChangePassword";
+export { default as ConfirmEmailPage } from "../EmailConfirmed";
+export { default as ForgetPasswordPage } from "../ForgetPassword";
+export { default as InvitationsPage } from "../invitations/InvitationsPage";
+export { default as LoginPage } from "../login/Login";
+export { default as ProfilePage } from "../profile/ProfilePage";
+export { default as RegisterPage } from "../register/Register";
+export { default as ResendEmailConfirmationPage } from "../ResendEmailConfirmation";
+export { default as ResetPasswordPage } from "../ResetPassword";
+export { default as RolePermissionsPage } from "../roles/components/RolePermissionsPage";
+export { default as RolesPage } from "../roles/RolesPage";
+export { default as UsersPage } from "../users/UsersPage";

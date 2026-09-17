@@ -1,4 +1,4 @@
-import * as XLSX from "xlsx";
+import type { CellObject } from "xlsx";
 
 export const XLSX_MIME_TYPE =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -119,6 +119,7 @@ export async function parseSpreadsheetImportFile(
       throw new SpreadsheetImportError("invalidWorkbook");
     }
 
+    const XLSX = await import("xlsx");
     const workbook = XLSX.read(fileBuffer, {
       type: "array",
       cellDates: false,
@@ -143,7 +144,7 @@ export async function parseSpreadsheetImportFile(
     for (const address of Object.keys(worksheet)) {
       if (address.startsWith("!")) continue;
 
-      const cell = worksheet[address] as XLSX.CellObject | undefined;
+      const cell = worksheet[address] as CellObject | undefined;
       if (!cell) continue;
       const { r: rowIndex, c: columnIndex } = XLSX.utils.decode_cell(address);
       if (rowIndex !== 0) continue;
@@ -157,7 +158,7 @@ export async function parseSpreadsheetImportFile(
     for (const address of Object.keys(worksheet)) {
       if (address.startsWith("!")) continue;
 
-      const cell = worksheet[address] as XLSX.CellObject | undefined;
+      const cell = worksheet[address] as CellObject | undefined;
       if (!cell) continue;
       const { r: rowIndex, c: columnIndex } = XLSX.utils.decode_cell(address);
       if (rowIndex === 0) continue;
@@ -197,10 +198,11 @@ export async function parseSpreadsheetImportFile(
   }
 }
 
-export function downloadSpreadsheetImportTemplate(
+export async function downloadSpreadsheetImportTemplate(
   headers: readonly string[],
   fileName: string,
 ) {
+  const XLSX = await import("xlsx");
   const worksheet = XLSX.utils.aoa_to_sheet([[...headers]]);
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Import");

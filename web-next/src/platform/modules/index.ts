@@ -7,6 +7,9 @@ export {
 } from "./useModulesQuery";
 export { toLauncherModule, toLauncherModules } from "./modulePresentation";
 export { ModuleContextSwitcher } from "./ModuleContextSwitcher";
+export { ModuleLauncherPage } from "./ModuleLauncherPage";
+export { ModuleOverviewPage } from "./ModuleOverviewPage";
+export { SubmoduleEntryPage } from "./SubmoduleEntryPage";
 export {
   registerFrontendModule,
   getFrontendModuleDefinition,

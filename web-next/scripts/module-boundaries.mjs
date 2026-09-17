@@ -28,3 +28,31 @@ export const moduleDirectories = Object.freeze({
   "reference-data": "src/modules/reference-data",
   reporting: "src/modules/reporting",
 });
+
+/**
+ * App Router route groups are ownership markers only; Next.js removes them from
+ * the public URL. Every protected page must sit beneath exactly one of these
+ * owner groups so filesystem routing cannot drift away from source ownership.
+ */
+export const appRouteOwnerGroups = Object.freeze({
+  "(platform)": "platform",
+  "(shell)": "shell",
+  "(hr)": "hr",
+  "(accounting)": "accounting",
+  "(crm)": "crm",
+  "(reference-data)": "reference-data",
+  "(reporting)": "reporting",
+});
+
+/** Structural group for standalone business-module route prefixes. */
+export const appBusinessRouteGroup = "(modules)";
+
+/**
+ * These public URL prefixes intentionally contain routes from more than one
+ * owner. They stay concrete once and place owner groups below the shared prefix.
+ */
+export const sharedMainRouteRoots = Object.freeze([
+  "administration",
+  "basic-data",
+  "super-admin",
+]);

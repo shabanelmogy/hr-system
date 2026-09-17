@@ -340,7 +340,7 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
   const handleView = useCallback(
     (file: FileItem) => {
       try {
-        const url = appRoutes.extras.mediaViewer(String(file.id), file.fileExtension, file.storedFileName, file.fileName);
+        const url = appRoutes.platform.files.mediaViewer(String(file.id), file.fileExtension, file.storedFileName, file.fileName);
         router.push(url);
       } catch {
         showToast.error(t("files.failedToOpenViewer"));

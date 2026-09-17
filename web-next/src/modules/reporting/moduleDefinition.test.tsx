@@ -19,7 +19,7 @@ describe("Reporting frontend module definition", () => {
     expect(reportingModuleDefinition.code).toBe("reporting");
     expect(reportingModuleDefinition.submodules[0]).toMatchObject({
       code: "analytics",
-      entryCandidates: [appRoutes.auth.crystalReportsPage],
+      entryCandidates: [appRoutes.modules.reporting.crystalReports],
     });
     expect(reportingModuleDefinition.submodules[0]?.requiredPermissions).toEqual(
       expect.arrayContaining([
@@ -27,7 +27,7 @@ describe("Reporting frontend module definition", () => {
         permissions.ManageCrystalReportAccess,
       ]),
     );
-    expect(requiredModuleForPath(appRoutes.auth.crystalReportsPage)).toEqual({
+    expect(requiredModuleForPath(appRoutes.modules.reporting.crystalReports)).toEqual({
       moduleCode: "reporting",
       submoduleCode: "analytics",
     });

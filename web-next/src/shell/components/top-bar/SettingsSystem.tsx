@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { authService } from "@/platform/auth";
 import { useTheme } from "@mui/material/styles";
 import { useUnsavedChanges } from "@/shared/contexts/UnsavedChangesContext";
+import { appRoutes } from "@/config/routes";
 
 // Import sub-components
 import SettingsMenu from "./SettingsMenu";
@@ -34,7 +35,7 @@ const SettingsSystem = () => {
 
   const navigateToProfile = async () => {
     if (!(await requestDiscard())) return;
-    router.push("/profile");
+    router.push(appRoutes.platform.profile);
     handleSettingsMenuClose();
   };
 

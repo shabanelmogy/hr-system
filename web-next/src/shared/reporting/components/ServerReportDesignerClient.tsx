@@ -3,6 +3,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ComponentProps } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Designer } from "@mescius/activereportsjs-react";
+import "@mescius/activereportsjs/styles/ar-js-ui.css";
+import "@mescius/activereportsjs/styles/ar-js-designer.css";
+import "@mescius/activereportsjs/styles/ar-js-viewer.css";
 import {
   Alert,
   Box,

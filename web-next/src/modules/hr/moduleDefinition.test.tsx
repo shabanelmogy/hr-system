@@ -29,31 +29,31 @@ describe("HR frontend module definition", () => {
   });
 
   it("maps only HR-owned routes to HR submodules", () => {
-    expect(requiredModuleForPath(appRoutes.basicData.organizationalStructure.index)).toEqual({
+    expect(requiredModuleForPath(appRoutes.modules.hr.organizationalStructure.index)).toEqual({
       moduleCode: "hr",
       submoduleCode: "basic-data",
     });
-    expect(requiredModuleForPath(appRoutes.recruitment)).toEqual({
+    expect(requiredModuleForPath(appRoutes.modules.hr.recruitment)).toEqual({
       moduleCode: "hr",
       submoduleCode: "recruitment",
     });
-    expect(requiredModuleForPath(appRoutes.workforcePlanning.index)).toEqual({
+    expect(requiredModuleForPath(appRoutes.modules.hr.workforcePlanning.index)).toEqual({
       moduleCode: "hr",
       submoduleCode: "workforce",
     });
-    expect(requiredModuleForPath(appRoutes.attendanceDevices.users)).toEqual({
+    expect(requiredModuleForPath(appRoutes.modules.hr.attendanceDevices.users)).toEqual({
       moduleCode: "hr",
       submoduleCode: "attendance",
     });
   });
 
   it("does not claim Platform, Reporting, CRM or Accounting routes", () => {
-    expect(requiredModuleForPath(appRoutes.advancedTools.localizationApi)).toBeNull();
-    expect(requiredModuleForPath(appRoutes.auth.rolesPage)).toBeNull();
-    expect(requiredModuleForPath(appRoutes.auth.offlineOperationsPage)).toBeNull();
-    expect(requiredModuleForPath(appRoutes.auth.crystalReportsPage)).toBeNull();
-    expect(requiredModuleForPath(appRoutes.extras.appointments)).toBeNull();
-    expect(requiredModuleForPath(appRoutes.finance.fiscalYears)).toBeNull();
+    expect(requiredModuleForPath(appRoutes.platform.advancedTools.localizationApi)).toBeNull();
+    expect(requiredModuleForPath(appRoutes.platform.administration.roles)).toBeNull();
+    expect(requiredModuleForPath(appRoutes.platform.administration.offlineOperations)).toBeNull();
+    expect(requiredModuleForPath(appRoutes.modules.reporting.crystalReports)).toBeNull();
+    expect(requiredModuleForPath(appRoutes.modules.crm.appointments)).toBeNull();
+    expect(requiredModuleForPath(appRoutes.modules.accounting.fiscalYears)).toBeNull();
   });
 
   it("lazy-loads only current HR submodule translations", async () => {

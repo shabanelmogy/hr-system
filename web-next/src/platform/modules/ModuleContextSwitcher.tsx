@@ -59,8 +59,8 @@ export function ModuleContextSwitcher({ iconOnly = false }: { iconOnly?: boolean
   const handleChange = async (value: string) => {
     if (!(await requestDiscard())) return;
     const destination = value === overviewValue
-      ? appRoutes.apps
-      : appRoutes.module(value);
+      ? appRoutes.platform.apps.index
+      : appRoutes.platform.apps.module(value);
     router.push(destination);
   };
 

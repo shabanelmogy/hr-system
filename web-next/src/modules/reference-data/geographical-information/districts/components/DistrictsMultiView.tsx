@@ -1,6 +1,7 @@
 import { PageHeader } from "@/shared/components/navigation/header";
 import { Box, LinearProgress } from "@mui/material";
 import type { GridApi, GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
+import dynamic from "next/dynamic";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type {
@@ -13,10 +14,11 @@ import type {
 import type { DistrictPermissionSet } from "../utils/districtPermissions";
 import { isDistrictManagementView, type DistrictManagementView } from "../utils/districtViews";
 import DistrictsCardView from "./DistrictsCardView";
-import DistrictsChartView from "./DistrictsChartView";
 import DistrictCardViewHeader from "./card-view/DistrictCardViewHeader";
 import DistrictsDataGrid from "./grid-view/DistrictsDataGrid";
-import ImportDistricts from "./import-data/ImportDistricts";
+
+const DistrictsChartView = dynamic(() => import("./DistrictsChartView"));
+const ImportDistricts = dynamic(() => import("./import-data/ImportDistricts"));
 
 const sortableColumns = new Set<DistrictSortColumn>(["nameEn", "nameAr", "code", "state", "createdOn"]);
 

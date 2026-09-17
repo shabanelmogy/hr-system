@@ -15,7 +15,7 @@ export const getOrganizationalStructureConfig = () => createNavSection(
     createNavItem(
       "menu.organizationalStructure",
       createColoredIcon(<AccountTreeRoundedIcon />, "#5c7cbc"),
-      appRoutes.basicData.organizationalStructure.index,
+      appRoutes.modules.hr.organizationalStructure.index,
       undefined,
       [permissions.ViewOrganizationalStructure],
     ),

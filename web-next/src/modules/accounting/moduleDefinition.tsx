@@ -17,7 +17,7 @@ const fiscalYearsNavigation = createNavSection(
     createNavItem(
       "menu.fiscalYears",
       createColoredIcon(<CalendarMonthRoundedIcon />, "#8e24aa"),
-      appRoutes.finance.fiscalYears,
+      appRoutes.modules.accounting.fiscalYears,
       undefined,
       [permissions.ViewFiscalYears],
     ),
@@ -48,17 +48,17 @@ export const accountingModuleDefinition: FrontendModuleDefinition = {
       icon: <CalendarMonthRoundedIcon />,
       tone: "success",
       requiredPermissions: [permissions.ViewFiscalYears],
-      entryCandidates: [appRoutes.finance.fiscalYears],
+      entryCandidates: [appRoutes.modules.accounting.fiscalYears],
       navigation: [{
         id: fiscalYearsNavigation.id,
         titleKey: fiscalYearsNavigation.title,
         entries: [{
           titleKey: "menu.fiscalYears",
-          path: appRoutes.finance.fiscalYears,
+          path: appRoutes.modules.accounting.fiscalYears,
           requiredPermissions: [permissions.ViewFiscalYears],
         }],
       }],
-      routePrefixes: [appRoutes.finance.fiscalYears],
+      routePrefixes: [appRoutes.modules.accounting.fiscalYears],
     },
   ],
 };

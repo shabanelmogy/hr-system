@@ -9,6 +9,7 @@ import Link from "next/link";
 import type { Route } from "next";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { appRoutes } from "@/config/routes";
 
 export type LauncherTone = "primary" | "secondary" | "success" | "info" | "warning" | "error";
 type LauncherVariant = "module" | "submodule";
@@ -45,7 +46,7 @@ export function ModuleLauncher({ modules }: { modules: readonly ModuleLauncherMo
           {modules.map((module) => (
             <LauncherTile
               key={module.code}
-              href={`/apps/${module.code}`}
+              href={appRoutes.platform.apps.module(module.code)}
               icon={module.icon}
               label={getModuleName(module, t)}
               tone={module.tone}
@@ -79,7 +80,10 @@ export function SubmoduleLauncher({ module }: { module: ModuleLauncherModule }) 
           {module.submodules.map((submodule) => (
             <LauncherTile
               key={submodule.code}
-              href={submodule.entryPath || `/apps/${module.code}/${submodule.code}`}
+              href={
+                submodule.entryPath ||
+                appRoutes.platform.apps.submodule(module.code, submodule.code)
+              }
               icon={submodule.icon}
               label={t(`modules.submodules.${module.code}.${submodule.code}`, {
                 defaultValue: submodule.name,

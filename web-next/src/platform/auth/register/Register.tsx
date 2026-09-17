@@ -314,7 +314,7 @@ const Register = () => {
       // Keep the form locked while the success message is visible, then use
       // client-side navigation to the configured confirmation route.
       await new Promise((resolve) => setTimeout(resolve, 1200));
-      router.replace(appRoutes.resendEmailConfirmation);
+      router.replace(appRoutes.auth.resendEmailConfirmation);
     } catch (error) {
       HandleApiError(error, (updatedState) => {
         showSnackbar("error", updatedState.messages, updatedState.title);
@@ -407,10 +407,7 @@ const Register = () => {
         />
 
         {/* Footer */}
-        <FormFooter
-          t={t}
-          appRoutes={appRoutes}
-        />
+        <FormFooter t={t} />
       </FormStepsWrapper>
       {SnackbarComponent}
     </Box>

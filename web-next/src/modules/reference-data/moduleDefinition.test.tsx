@@ -20,9 +20,9 @@ describe("ReferenceData frontend module definition", () => {
     expect(referenceDataModuleDefinition.submodules[0]).toMatchObject({
       code: "addresses",
       requiredPermissions: [permissions.ViewAddressTypes],
-      entryCandidates: [appRoutes.basicData.addressTypes],
+      entryCandidates: [appRoutes.modules.referenceData.addressTypes],
     });
-    expect(requiredModuleForPath(appRoutes.basicData.addressTypes)).toEqual({
+    expect(requiredModuleForPath(appRoutes.modules.referenceData.addressTypes)).toEqual({
       moduleCode: "reference-data",
       submoduleCode: "addresses",
     });

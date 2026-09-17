@@ -8,24 +8,58 @@ const toAppPath = (path: string): AppPath => path as AppPath;
 export const normalizeAppPath = (path: string): AppPath =>
   toAppPath(`/${path.replace(/^\/+/, "")}`);
 
-export interface ExtrasRoutes {
-  filesManager: AppPath;
-  mediaViewer: (id: string, fileExtension: string, storedFileName: string, fileName: string) => AppPath;
-  appointments: AppPath;
+export interface AuthenticationRoutes {
+  login: AppPath;
+  register: AppPath;
+  resendEmailConfirmation: AppPath;
+  emailConfirmed: AppPath;
+  forgetPassword: AppPath;
+  resetPassword: AppPath;
+  acceptInvitation: AppPath;
+  changePassword: AppPath;
 }
 
-export interface AdvancedToolsRoutes {
-  healthCheck: AppPath;
-  apiEndpoints: AppPath;
-  localizationApi: AppPath;
-  hangfireDashboard: AppPath;
+export interface ShellRoutes {
+  home: AppPath;
+  basicData: AppPath;
+  routeUnavailable: AppPath;
 }
 
-export interface BasicDataRoutes {
-  index: AppPath;
-  addressTypes: AppPath;
+export interface PlatformRoutes {
+  apps: {
+    index: AppPath;
+    module: (moduleCode: string) => AppPath;
+    submodule: (moduleCode: string, submoduleCode: string) => AppPath;
+  };
+  profile: AppPath;
+  files: {
+    manager: AppPath;
+    mediaViewer: (
+      id: string,
+      fileExtension: string,
+      storedFileName: string,
+      fileName: string,
+    ) => AppPath;
+  };
+  advancedTools: {
+    healthCheck: AppPath;
+    apiEndpoints: AppPath;
+    localizationApi: AppPath;
+    hangfireDashboard: AppPath;
+  };
+  administration: {
+    roles: AppPath;
+    users: AppPath;
+    invitations: AppPath;
+    offlineOperations: AppPath;
+    rolePermissions: (id: string) => AppPath;
+  };
+  superAdmin: {
+    dashboard: AppPath;
+    tenants: AppPath;
+    tenantAdmins: AppPath;
+  };
   companyGeographicScope: AppPath;
-  organizationalStructure: OrganizationalStructureRoutes;
 }
 
 export interface OrganizationalStructureRoutes {
@@ -39,15 +73,7 @@ export interface OrganizationalStructureRoutes {
   jobDescriptions: AppPath;
   costCenters: AppPath;
   currencies: AppPath;
-}
-
-export interface AuthRoutes {
-  rolesPage: AppPath;
-  usersPage: AppPath;
-  invitationsPage: AppPath;
-  offlineOperationsPage: AppPath;
-  rolePermissionsPage: (id: string) => AppPath;
-  crystalReportsPage: AppPath;
+  manage: AppPath;
 }
 
 export interface WorkforcePlanningRoutes {
@@ -60,134 +86,150 @@ export interface WorkforcePlanningRoutes {
   trace: AppPath;
 }
 
-export interface SuperAdminRoutes {
-  dashboard: AppPath;
-  tenants: AppPath;
-  tenantAdmins: AppPath;
-  geography: {
-    countries: AppPath;
-    states: AppPath;
-    districts: AppPath;
+export interface ModuleRoutes {
+  hr: {
+    organizationalStructure: OrganizationalStructureRoutes;
+    attendanceDevices: {
+      index: AppPath;
+      users: AppPath;
+      punches: AppPath;
+      pullRuns: AppPath;
+    };
+    recruitment: AppPath;
+    workforcePlanning: WorkforcePlanningRoutes;
+  };
+  accounting: {
+    fiscalYears: AppPath;
+  };
+  crm: {
+    appointments: AppPath;
+  };
+  referenceData: {
+    addressTypes: AppPath;
+    geography: {
+      countries: AppPath;
+      states: AppPath;
+      districts: AppPath;
+    };
+  };
+  reporting: {
+    crystalReports: AppPath;
   };
 }
 
 export interface AppRoutes {
-  login: "/login";
-  register: "/register";
-  resendEmailConfirmation: "/resend-email-confirmation";
-  emailConfirmed: "/confirm-email";
-  forgetPassword: "/forget-password";
-  resetPassword: "/reset-password";
-  acceptInvitation: "/accept-invitation";
-  changePassword: "/change-password";
-  home: "/";
-  apps: AppPath;
-  module: (moduleCode: string) => AppPath;
-  profile: "/profile";
-  extras: ExtrasRoutes;
-  advancedTools: AdvancedToolsRoutes;
-  basicData: BasicDataRoutes;
-  auth: AuthRoutes;
-  superAdmin: SuperAdminRoutes;
-  attendanceDevices: {
-    index: AppPath;
-    users: AppPath;
-    punches: AppPath;
-    pullRuns: AppPath;
-  };
-  recruitment: AppPath;
-  workforcePlanning: WorkforcePlanningRoutes;
-  finance: {
-    fiscalYears: AppPath;
-  };
+  auth: AuthenticationRoutes;
+  shell: ShellRoutes;
+  platform: PlatformRoutes;
+  modules: ModuleRoutes;
 }
 
 export const appRoutes: AppRoutes = {
-  login: "/login",
-  register: "/register",
-  resendEmailConfirmation: "/resend-email-confirmation",
-  emailConfirmed: "/confirm-email",
-  forgetPassword: "/forget-password",
-  resetPassword: "/reset-password",
-  acceptInvitation: "/accept-invitation",
-  changePassword: "/change-password",
-  home: "/",
-  apps: toAppPath("/apps"),
-  module: (moduleCode) => toAppPath(`/apps/${moduleCode}`),
-  profile: "/profile",
-
-  extras: {
-    filesManager: "/files",
-    mediaViewer: (id, fileExtension, storedFileName, fileName) =>
-      toAppPath(`/files/view/${id}/${fileExtension}/${storedFileName}/${fileName}`),
-    appointments: "/appointments",
-  },
-
-  advancedTools: {
-    healthCheck: "/advanced-tools/health-check",
-    apiEndpoints: "/advanced-tools/api-endpoints",
-    localizationApi: "/advanced-tools/localization-api",
-    hangfireDashboard: "/advanced-tools/hangfire-dashboard",
-  },
-
-  basicData: {
-    index: toAppPath("/basic-data"),
-    addressTypes: "/basic-data/address-types",
-    companyGeographicScope: toAppPath("/basic-data/organizational-structure/geographic-scope"),
-    organizationalStructure: {
-      index: toAppPath("/basic-data/organizational-structure"),
-      branches: toAppPath("/basic-data/organizational-structure/branches"),
-      departments: toAppPath("/basic-data/organizational-structure/departments"),
-      divisions: toAppPath("/basic-data/organizational-structure/divisions"),
-      jobTitles: toAppPath("/basic-data/organizational-structure/job-titles"),
-      jobLevels: toAppPath("/basic-data/organizational-structure/job-levels"),
-      positions: toAppPath("/basic-data/organizational-structure/positions"),
-      jobDescriptions: toAppPath("/basic-data/organizational-structure/job-descriptions"),
-      costCenters: toAppPath("/basic-data/organizational-structure/cost-centers"),
-      currencies: toAppPath("/basic-data/organizational-structure/currencies"),
-    },
-  },
-
   auth: {
-    rolesPage: "/administration/roles",
-    usersPage: "/administration/users",
-    invitationsPage: toAppPath("/administration/invitations"),
-    offlineOperationsPage: toAppPath("/administration/offline-operations"),
-    rolePermissionsPage: (id) =>
-      toAppPath(`/administration/manage-role-permissions/${id}`),
-    // Cast while Next's generated typed-route declarations catch up to this new App Router page.
-    crystalReportsPage: toAppPath("/administration/crystal-reports"),
+    login: "/login",
+    register: "/register",
+    resendEmailConfirmation: "/resend-email-confirmation",
+    emailConfirmed: "/confirm-email",
+    forgetPassword: "/forget-password",
+    resetPassword: "/reset-password",
+    acceptInvitation: "/accept-invitation",
+    changePassword: "/change-password",
   },
 
-  superAdmin: {
-    dashboard: "/super-admin",
-    tenants: "/super-admin/tenants",
-    tenantAdmins: "/super-admin/tenant-admins",
-    geography: {
-      countries: toAppPath("/super-admin/geography/countries"),
-      states: toAppPath("/super-admin/geography/states"),
-      districts: toAppPath("/super-admin/geography/districts"),
+  shell: {
+    home: "/",
+    basicData: toAppPath("/basic-data"),
+    routeUnavailable: toAppPath("/route-unavailable"),
+  },
+
+  platform: {
+    apps: {
+      index: toAppPath("/apps"),
+      module: (moduleCode) => toAppPath(`/apps/${moduleCode}`),
+      submodule: (moduleCode, submoduleCode) =>
+        toAppPath(`/apps/${moduleCode}/${submoduleCode}`),
     },
+    profile: "/profile",
+    files: {
+      manager: "/files",
+      mediaViewer: (id, fileExtension, storedFileName, fileName) =>
+        toAppPath(`/files/view/${id}/${fileExtension}/${storedFileName}/${fileName}`),
+    },
+    advancedTools: {
+      healthCheck: "/advanced-tools/health-check",
+      apiEndpoints: "/advanced-tools/api-endpoints",
+      localizationApi: "/advanced-tools/localization-api",
+      hangfireDashboard: "/advanced-tools/hangfire-dashboard",
+    },
+    administration: {
+      roles: "/administration/roles",
+      users: "/administration/users",
+      invitations: toAppPath("/administration/invitations"),
+      offlineOperations: toAppPath("/administration/offline-operations"),
+      rolePermissions: (id) =>
+        toAppPath(`/administration/manage-role-permissions/${id}`),
+    },
+    superAdmin: {
+      dashboard: "/super-admin",
+      tenants: "/super-admin/tenants",
+      tenantAdmins: "/super-admin/tenant-admins",
+    },
+    companyGeographicScope: toAppPath(
+      "/basic-data/organizational-structure/geographic-scope",
+    ),
   },
 
-  attendanceDevices: {
-    index: toAppPath("/attendance-devices"),
-    users: toAppPath("/attendance-devices/users"),
-    punches: toAppPath("/attendance-devices/punches"),
-    pullRuns: toAppPath("/attendance-devices/pull-runs"),
-  },
-  recruitment: toAppPath("/recruitment"),
-  workforcePlanning: {
-    index: toAppPath("/workforce-planning"),
-    plans: toAppPath("/workforce-planning/plans"),
-    budgets: toAppPath("/workforce-planning/budgets"),
-    positionEnvelopes: toAppPath("/workforce-planning/position-envelopes"),
-    staffingRequests: toAppPath("/workforce-planning/staffing-requests"),
-    envelopeAmendments: toAppPath("/workforce-planning/envelope-amendments"),
-    trace: toAppPath("/workforce-planning/trace"),
-  },
-  finance: {
-    fiscalYears: toAppPath("/finance/fiscal-years"),
+  modules: {
+    hr: {
+      organizationalStructure: {
+        index: toAppPath("/basic-data/organizational-structure"),
+        branches: toAppPath("/basic-data/organizational-structure/branches"),
+        departments: toAppPath("/basic-data/organizational-structure/departments"),
+        divisions: toAppPath("/basic-data/organizational-structure/divisions"),
+        jobTitles: toAppPath("/basic-data/organizational-structure/job-titles"),
+        jobLevels: toAppPath("/basic-data/organizational-structure/job-levels"),
+        positions: toAppPath("/basic-data/organizational-structure/positions"),
+        jobDescriptions: toAppPath(
+          "/basic-data/organizational-structure/job-descriptions",
+        ),
+        costCenters: toAppPath("/basic-data/organizational-structure/cost-centers"),
+        currencies: toAppPath("/basic-data/organizational-structure/currencies"),
+        manage: toAppPath("/basic-data/organizational-structure/manage"),
+      },
+      attendanceDevices: {
+        index: toAppPath("/attendance-devices"),
+        users: toAppPath("/attendance-devices/users"),
+        punches: toAppPath("/attendance-devices/punches"),
+        pullRuns: toAppPath("/attendance-devices/pull-runs"),
+      },
+      recruitment: toAppPath("/recruitment"),
+      workforcePlanning: {
+        index: toAppPath("/workforce-planning"),
+        plans: toAppPath("/workforce-planning/plans"),
+        budgets: toAppPath("/workforce-planning/budgets"),
+        positionEnvelopes: toAppPath("/workforce-planning/position-envelopes"),
+        staffingRequests: toAppPath("/workforce-planning/staffing-requests"),
+        envelopeAmendments: toAppPath("/workforce-planning/envelope-amendments"),
+        trace: toAppPath("/workforce-planning/trace"),
+      },
+    },
+    accounting: {
+      fiscalYears: toAppPath("/finance/fiscal-years"),
+    },
+    crm: {
+      appointments: "/appointments",
+    },
+    referenceData: {
+      addressTypes: "/basic-data/address-types",
+      geography: {
+        countries: toAppPath("/super-admin/geography/countries"),
+        states: toAppPath("/super-admin/geography/states"),
+        districts: toAppPath("/super-admin/geography/districts"),
+      },
+    },
+    reporting: {
+      crystalReports: toAppPath("/administration/crystal-reports"),
+    },
   },
 } as const;
 

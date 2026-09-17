@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Viewer } from "@mescius/activereportsjs-react";
+import "@mescius/activereportsjs/styles/ar-js-ui.css";
+import "@mescius/activereportsjs/styles/ar-js-viewer.css";
 import { Alert, Box, MenuItem, Select, Stack, Typography } from "@mui/material";
 import reportTemplateService from "../services/reportTemplateService";
 

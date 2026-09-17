@@ -14,12 +14,12 @@ export function AttendanceModuleLayout({ children }: { children: ReactNode }) {
   const { hasPermission } = useSession();
   const canViewRaw = hasPermission([permissions.ViewRawAttendanceDevices]);
   const items = [
-    { id: "devices", label: t("attendanceDevices.devices"), href: appRoutes.attendanceDevices.index, icon: <FingerprintRoundedIcon /> },
+    { id: "devices", label: t("attendanceDevices.devices"), href: appRoutes.modules.hr.attendanceDevices.index, icon: <FingerprintRoundedIcon /> },
     ...(canViewRaw ? [
-      { id: "users", label: t("attendanceDevices.rawUsers"), href: appRoutes.attendanceDevices.users, icon: <PeopleAltRoundedIcon /> },
-      { id: "punches", label: t("attendanceDevices.rawPunches"), href: appRoutes.attendanceDevices.punches, icon: <ManageSearchRoundedIcon /> },
-      { id: "runs", label: t("attendanceDevices.pullRuns"), href: appRoutes.attendanceDevices.pullRuns, icon: <QueryStatsRoundedIcon /> },
+      { id: "users", label: t("attendanceDevices.rawUsers"), href: appRoutes.modules.hr.attendanceDevices.users, icon: <PeopleAltRoundedIcon /> },
+      { id: "punches", label: t("attendanceDevices.rawPunches"), href: appRoutes.modules.hr.attendanceDevices.punches, icon: <ManageSearchRoundedIcon /> },
+      { id: "runs", label: t("attendanceDevices.pullRuns"), href: appRoutes.modules.hr.attendanceDevices.pullRuns, icon: <QueryStatsRoundedIcon /> },
     ] : []),
   ];
-  return <FeatureModuleLayout title={t("attendanceDevices.title")} description={t("attendanceDevices.description")} moduleHref={appRoutes.attendanceDevices.index} moduleIcon={<FingerprintRoundedIcon />} navigationLabel={t("attendanceDevices.navigation")} openNavigationLabel={t("attendanceDevices.openNavigation")} closeNavigationLabel={t("attendanceDevices.closeNavigation")} backLabel={t("menu.dashboard")} backHref={appRoutes.home} items={items}>{children}</FeatureModuleLayout>;
+  return <FeatureModuleLayout title={t("attendanceDevices.title")} description={t("attendanceDevices.description")} moduleHref={appRoutes.modules.hr.attendanceDevices.index} moduleIcon={<FingerprintRoundedIcon />} navigationLabel={t("attendanceDevices.navigation")} openNavigationLabel={t("attendanceDevices.openNavigation")} closeNavigationLabel={t("attendanceDevices.closeNavigation")} backLabel={t("menu.dashboard")} backHref={appRoutes.shell.home} items={items}>{children}</FeatureModuleLayout>;
 }

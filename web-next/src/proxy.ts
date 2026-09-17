@@ -5,6 +5,7 @@ import {
   clearAuthCookies,
   readAuthTokens,
 } from "@/lib/auth/cookies";
+import { appRoutes } from "@/config/routes";
 
 export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
@@ -19,7 +20,7 @@ export function proxy(request: NextRequest) {
       return response;
     }
 
-    const loginUrl = new URL("/login", request.url);
+    const loginUrl = new URL(appRoutes.auth.login, request.url);
     loginUrl.searchParams.set(
       "returnTo",
       `${pathname}${request.nextUrl.search}`,
@@ -30,7 +31,7 @@ export function proxy(request: NextRequest) {
   }
 
   if (isPublicRoute(pathname)) {
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(new URL(appRoutes.shell.home, request.url));
   }
 
   return NextResponse.next();

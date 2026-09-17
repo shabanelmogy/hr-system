@@ -16,6 +16,10 @@ import {
   RequestBodyTooLargeError,
   type PreparedBackendBody,
 } from "@/lib/api/proxy-transport";
+import {
+  hasUnsafeBackendPath,
+  isCrossSiteMutation,
+} from "@/lib/api/proxy-security";
 import { getBufferedBodyLimit, resolveRequestBackendUrl } from "@/lib/env/server";
 
 const TAG = "[ðŸ“¡ API Proxy]";
@@ -153,7 +157,7 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
   }
 
   const { path } = await parameters.params;
-  if (path.some(isUnsafeBackendPathSegment)) {
+  if (hasUnsafeBackendPath(path)) {
     return problemResponse(400, "Invalid backend path", "UnsafeBackendPath");
   }
   const route = path.join("/");
@@ -250,16 +254,6 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
   return response;
 }
 
-function isCrossSiteMutation(request: NextRequest) {
-  if (["GET", "HEAD", "OPTIONS"].includes(request.method)) return false;
-
-  const fetchSite = request.headers.get("sec-fetch-site");
-  if (fetchSite === "cross-site") return true;
-
-  const origin = request.headers.get("origin");
-  return Boolean(origin && origin !== request.nextUrl.origin);
-}
-
 function backendFailureResponse(error: unknown) {
   const timedOut = error instanceof DOMException &&
     (error.name === "TimeoutError" || error.name === "AbortError");
@@ -283,19 +277,6 @@ function problemResponse(status: number, title: string, code: string) {
     },
   );
 }
-
-function isUnsafeBackendPathSegment(segment: string): boolean {
-  if (!segment || segment === "." || segment === "..") return true;
-  if (/[\\/?#\u0000-\u001F\u007F]/.test(segment)) return true;
-  try {
-    const decoded = decodeURIComponent(segment);
-    return decoded !== segment && isUnsafeBackendPathSegment(decoded);
-  } catch {
-    return true;
-  }
-}
-
-export const dynamic = "force-dynamic";
 
 export const GET = handle;
 export const POST = handle;
