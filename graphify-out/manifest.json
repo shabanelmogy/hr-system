@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "web-next/next-env.d.ts": {
-    "mtime": 1789648125.8654714,
-    "ast_hash": "c7b887684e81cfa5830eeeb7286485f6",
+    "mtime": 1789650488.5512826,
+    "ast_hash": "0e4a65e8b2b9aa3ed0f8957b9406bd41",
     "semantic_hash": ""
   },
   "web-next/next.config.ts": {
@@ -365,8 +365,8 @@
     "semantic_hash": ""
   },
   "web-next/src/lib/signalr/signalRService.ts": {
-    "mtime": 1789544709.8694327,
-    "ast_hash": "ffe0d29948d8077fc650b2886d514556",
+    "mtime": 1789649885.369528,
+    "ast_hash": "3b23ccd80bb2a6ee1b69551c98f94c7d",
     "semantic_hash": ""
   },
   "web-next/src/lib/signalr/useSignalR.ts": {
@@ -1400,8 +1400,8 @@
     "semantic_hash": ""
   },
   "web-next/src/theme/AppEmotionCacheProvider.tsx": {
-    "mtime": 1784018256.76055,
-    "ast_hash": "f6ec08571b763e5ef98b86e65c230a3a",
+    "mtime": 1789649671.8541505,
+    "ast_hash": "1bf4982d3ac1265b6c0de3f548ffaa40",
     "semantic_hash": ""
   },
   "web-next/src/theme/ThemePreferences.tsx": {
@@ -3010,8 +3010,8 @@
     "semantic_hash": ""
   },
   "documentation/web-next/architecture/frontend-architecture-reference.md": {
-    "mtime": 1789647444.708961,
-    "ast_hash": "7d4755798fa609b55057f78e7472cc0c",
+    "mtime": 1789651062.2742498,
+    "ast_hash": "8fecec69f090691c01562267cd80a111",
     "semantic_hash": ""
   },
   "documentation/web-next/features/countries-frontend-reference.md": {
@@ -19110,8 +19110,8 @@
     "semantic_hash": ""
   },
   "ERP_FRONTEND_MASTER_PLAN.md": {
-    "mtime": 1789647444.71,
-    "ast_hash": "2feadfd013f558ad6d97b1b1dc2c76db",
+    "mtime": 1789651365.633272,
+    "ast_hash": "7da87c7d0df3c60d4142c7ce0aacb854",
     "semantic_hash": ""
   },
   "api/ErpSystem.Api/CONFIGURATION.md": {
@@ -20182,6 +20182,16 @@
   "web-next/src/shell/dashboard/SuperAdminDashboard.tsx": {
     "mtime": 1789637876.8813064,
     "ast_hash": "823a13c9bb8dacdcf43bb7f486591c79",
+    "semantic_hash": ""
+  },
+  "web-next/src/lib/signalr/signalRHubUrl.test.ts": {
+    "mtime": 1789649671.8586829,
+    "ast_hash": "1e2873d49b68eef3ebdcb4daddb98f23",
+    "semantic_hash": ""
+  },
+  "web-next/src/lib/signalr/signalRHubUrl.ts": {
+    "mtime": 1789649671.8576863,
+    "ast_hash": "cbd69ba3453885236ad0ce9b199b405e",
     "semantic_hash": ""
   }
 }

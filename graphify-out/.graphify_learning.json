@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-17T12:37:01.269880+00:00",
+  "generated_at": "2026-09-17T13:24:27.926439+00:00",
   "nodes": {
     "api_erpsystem": {
       "code_fingerprint": "92477bcbb995489ccf6a5eeac80028eea2dd28c87c9a02f16e65fa45e5dd8cf5",
@@ -12,7 +12,7 @@
           "q": "المفروض HR يكون داخل Modules مثل Accounting واسم المشروع العام ERP System"
         }
       ],
-      "score": 0.808271532,
+      "score": 0.807656472,
       "source_file": "api/ErpSystem.sln",
       "status": "tentative",
       "uses": 1
@@ -28,7 +28,7 @@
           "q": "مراجعة شاملة لهيكل المشروع وتجهيزه كـ Modular Monolith لإضافة موديول حسابات وأنشطة مستقبلية"
         }
       ],
-      "score": 0.80530952,
+      "score": 0.804696714,
       "source_file": "api/Modules/Accounting/ErpSystem.Modules.Accounting/AccountingModule.cs",
       "status": "tentative",
       "uses": 1
@@ -44,7 +44,7 @@
           "q": "مراجعة شاملة لهيكل المشروع وتجهيزه كـ Modular Monolith لإضافة موديول حسابات وأنشطة مستقبلية"
         }
       ],
-      "score": 0.80530952,
+      "score": 0.804696714,
       "source_file": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/AccountingDbContext.cs",
       "status": "tentative",
       "uses": 1
@@ -60,7 +60,7 @@
           "q": "Why did the Organizational Structure management route return HTTP 500?"
         }
       ],
-      "score": 0.673165196,
+      "score": 0.672652947,
       "source_file": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/OrganizationalStructure/Management/Contracts/OrganizationalStructureContracts.cs",
       "status": "tentative",
       "uses": 1
@@ -76,7 +76,7 @@
           "q": "Why did the Organizational Structure management route return HTTP 500?"
         }
       ],
-      "score": 0.673165196,
+      "score": 0.672652947,
       "source_file": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/OrganizationalStructure/Management/Queries/OrganizationalStructureQueries.cs",
       "status": "tentative",
       "uses": 1
@@ -92,7 +92,7 @@
           "q": "اعمل migartion"
         }
       ],
-      "score": 0.672039631,
+      "score": 0.671528237,
       "source_file": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/DatabaseService.cs",
       "status": "tentative",
       "uses": 1
@@ -108,7 +108,7 @@
           "q": "Why did the Organizational Structure management route return HTTP 500?"
         }
       ],
-      "score": 0.673165196,
+      "score": 0.672652947,
       "source_file": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/OrganizationalStructure/Management/OrganizationalStructureManagement.cs",
       "status": "tentative",
       "uses": 1
@@ -124,7 +124,7 @@
           "q": "مراجعة شاملة لهيكل المشروع وتجهيزه كـ Modular Monolith لإضافة موديول حسابات وأنشطة مستقبلية"
         }
       ],
-      "score": 0.80530952,
+      "score": 0.804696714,
       "source_file": "documentation/api/MODULAR_MONOLITH_ARCHITECTURE.md",
       "status": "tentative",
       "uses": 1
@@ -140,7 +140,7 @@
           "q": "اعمل migartion"
         }
       ],
-      "score": 0.672039631,
+      "score": 0.671528237,
       "source_file": "",
       "status": "tentative",
       "uses": 1
@@ -156,7 +156,7 @@
           "q": "when focus input keyboard cover input"
         }
       ],
-      "score": 0.426978001,
+      "score": 0.426653089,
       "source_file": "mobile-react/app.json",
       "status": "tentative",
       "uses": 1
@@ -172,7 +172,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.427934758,
+      "score": 0.427609118,
       "source_file": "web-next/package.json",
       "status": "tentative",
       "uses": 1
@@ -188,7 +188,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.427816666,
+      "score": 0.427491116,
       "source_file": "web-next/README.md",
       "status": "tentative",
       "uses": 1
@@ -204,7 +204,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.427816666,
+      "score": 0.427491116,
       "source_file": "web-next/scripts/setup-local-https.ps1",
       "status": "tentative",
       "uses": 1
@@ -220,7 +220,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.427934758,
+      "score": 0.427609118,
       "source_file": "web-next/src/app/(auth)/login/page.tsx",
       "status": "tentative",
       "uses": 1
@@ -236,7 +236,7 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.427725144,
+      "score": 0.427399663,
       "source_file": "web-next/src/lib/auth/route-access.ts",
       "status": "tentative",
       "uses": 1
@@ -252,7 +252,7 @@
           "q": "i want like attach screen"
         }
       ],
-      "score": 0.428422532,
+      "score": 0.428096521,
       "source_file": "web-next/src/platform/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
@@ -268,7 +268,7 @@
           "q": "fix style for buton : login as admin"
         }
       ],
-      "score": 0.427036142,
+      "score": 0.426711185,
       "source_file": "web-next/src/platform/auth/login/Login.tsx",
       "status": "tentative",
       "uses": 1
@@ -289,7 +289,7 @@
           "q": "create dashborad and tenetamanagement in web-next and mobile"
         }
       ],
-      "score": 0.855771601,
+      "score": 0.855120396,
       "source_file": "web-next/src/platform/tenants/TenantDashboardPage.tsx",
       "status": "preferred",
       "uses": 2
@@ -310,7 +310,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.856046743,
+      "score": 0.855395328,
       "source_file": "web-next/src/proxy.ts",
       "status": "preferred",
       "uses": 2
@@ -332,7 +332,7 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": -4.5361e-05,
+      "score": -4.5326e-05,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/characterCount.ts",
       "status": "contested",
       "uses": 1,
@@ -355,7 +355,7 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": -4.5361e-05,
+      "score": -4.5326e-05,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/inputConstraints.ts",
       "status": "contested",
       "uses": 1,
@@ -383,7 +383,7 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": 0.428377171,
+      "score": 0.428051194,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/TextFieldEndAdornment.tsx",
       "status": "contested",
       "uses": 2,
@@ -411,7 +411,7 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": 0.428377171,
+      "score": 0.428051194,
       "source_file": "web-next/src/shared/components/forms/text-fields/MyTextField.tsx",
       "status": "contested",
       "uses": 2,
@@ -428,7 +428,7 @@
           "q": "انا سجلت دخول بالادمن والصفحات مش ظاهرة ؟"
         }
       ],
-      "score": 0.671876283,
+      "score": 0.671365014,
       "source_file": "web-next/src/shell/basic-data/navigation/basicDataNavigation.tsx",
       "status": "tentative",
       "uses": 1
