@@ -146,49 +146,49 @@
     {
       "id": "web-route-branches",
       "layer": "web",
-      "path": "web-next/src/app/(main)/basic-data/(organizational-structure)/organizational-structure/branches/page.tsx",
+      "path": "web-next/src/app/(main)/basic-data/organizational-structure/(hr)/branches/page.tsx",
       "purpose": "Thin Branches App Router entry"
     },
     {
       "id": "web-route-departments",
       "layer": "web",
-      "path": "web-next/src/app/(main)/basic-data/(organizational-structure)/organizational-structure/departments/page.tsx",
+      "path": "web-next/src/app/(main)/basic-data/organizational-structure/(hr)/departments/page.tsx",
       "purpose": "Thin Departments App Router entry"
     },
     {
       "id": "web-route-divisions",
       "layer": "web",
-      "path": "web-next/src/app/(main)/basic-data/(organizational-structure)/organizational-structure/divisions/page.tsx",
+      "path": "web-next/src/app/(main)/basic-data/organizational-structure/(hr)/divisions/page.tsx",
       "purpose": "Thin Divisions App Router entry"
     },
     {
       "id": "web-route-job-titles",
       "layer": "web",
-      "path": "web-next/src/app/(main)/basic-data/(organizational-structure)/organizational-structure/job-titles/page.tsx",
+      "path": "web-next/src/app/(main)/basic-data/organizational-structure/(hr)/job-titles/page.tsx",
       "purpose": "Thin Job Titles App Router entry"
     },
     {
       "id": "web-route-job-levels",
       "layer": "web",
-      "path": "web-next/src/app/(main)/basic-data/(organizational-structure)/organizational-structure/job-levels/page.tsx",
+      "path": "web-next/src/app/(main)/basic-data/organizational-structure/(hr)/job-levels/page.tsx",
       "purpose": "Thin Job Levels App Router entry"
     },
     {
       "id": "web-route-positions",
       "layer": "web",
-      "path": "web-next/src/app/(main)/basic-data/(organizational-structure)/organizational-structure/positions/page.tsx",
+      "path": "web-next/src/app/(main)/basic-data/organizational-structure/(hr)/positions/page.tsx",
       "purpose": "Thin Positions App Router entry"
     },
     {
       "id": "web-route-job-descriptions",
       "layer": "web",
-      "path": "web-next/src/app/(main)/basic-data/(organizational-structure)/organizational-structure/job-descriptions/page.tsx",
+      "path": "web-next/src/app/(main)/basic-data/organizational-structure/(hr)/job-descriptions/page.tsx",
       "purpose": "Thin Job Descriptions App Router entry"
     },
     {
       "id": "web-route-index",
       "layer": "web",
-      "path": "web-next/src/app/(main)/basic-data/(organizational-structure)/organizational-structure/page.tsx",
+      "path": "web-next/src/app/(main)/basic-data/organizational-structure/(hr)/page.tsx",
       "purpose": "Organizational Structure index redirect to Branches"
     },
     {
@@ -278,7 +278,7 @@
     {
       "id": "web-legacy-route",
       "layer": "web",
-      "path": "web-next/src/app/(main)/basic-data/(organizational-structure)/organizational-structure/manage/page.tsx",
+      "path": "web-next/src/app/(main)/basic-data/organizational-structure/(hr)/manage/page.tsx",
       "purpose": "Legacy management URL redirect to Branches"
     },
     {
@@ -296,13 +296,13 @@
     {
       "id": "web-translations-en",
       "layer": "web",
-      "path": "web-next/src/locales/en/translation.json",
+      "path": "web-next/src/locales/resources/hr-org-structure/en.json",
       "purpose": "English feature strings"
     },
     {
       "id": "web-translations-ar",
       "layer": "web",
-      "path": "web-next/src/locales/ar/translation.json",
+      "path": "web-next/src/locales/resources/hr-org-structure/ar.json",
       "purpose": "Arabic feature strings"
     },
     {

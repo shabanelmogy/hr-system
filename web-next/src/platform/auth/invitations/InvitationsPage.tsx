@@ -5,9 +5,11 @@ import { permissions } from "@/lib/auth/permissions";
 import { ContentWrapper } from "@/shared/components/layout";
 import { PageHeader } from "@/shared/components/navigation/header";
 import { usePermissions } from "@/shared/hooks/usePermissions";
+import dynamic from "next/dynamic";
 import { useTranslation } from "react-i18next";
 import useInvitationManagement from "./hooks/useInvitationManagement";
-import InvitationForm from "./components/InvitationForm";
+
+const InvitationForm = dynamic(() => import("./components/InvitationForm"), { ssr: false });
 
 const InvitationsPage = () => {
   const { t } = useTranslation();
@@ -45,13 +47,13 @@ const InvitationsPage = () => {
           onRevoke={onRevoke}
           t={t}
         />
-        <InvitationForm
+        {isFormOpen ? <InvitationForm
           open={isFormOpen}
           onClose={closeForm}
           onSubmit={submitInvitation}
           loading={loading}
           t={t}
-        />
+        /> : null}
       </ContentWrapper>
       {SnackbarComponent}
     </>

@@ -39,39 +39,33 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ mediaUrl, onError }) => {
   const theme = useTheme();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsComponentReady(true);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+    const controller = new AbortController();
 
-  useEffect(() => {
     const loadDocument = async () => {
       if (mediaUrl && viewerRef.current && isComponentReady) {
         try {
-          const response = await fetch(mediaUrl);
+          const response = await fetch(mediaUrl, { signal: controller.signal });
           if (!response.ok) throw new Error("Failed to fetch PDF");
           
           const arrayBuffer = await response.arrayBuffer();
+          if (controller.signal.aborted) return;
           const uint8Array = new Uint8Array(arrayBuffer);
           let binaryString = '';
           for (let i = 0; i < uint8Array.length; i++) {
             binaryString += String.fromCharCode(uint8Array[i]);
           }
           const base64String = btoa(binaryString);
-          
-          setTimeout(() => {
-            viewerRef.current?.load(`data:application/pdf;base64,${base64String}`, "");
-          }, 500);
-          
+          viewerRef.current?.load(`data:application/pdf;base64,${base64String}`, "");
         } catch (error) {
+          if (controller.signal.aborted) return;
           console.error("Error loading PDF:", error);
           onError?.(error instanceof Error ? error.message : "Failed to load PDF");
         }
       }
     };
 
-    loadDocument();
+    void loadDocument();
+    return () => controller.abort();
   }, [mediaUrl, isComponentReady, onError]);
 
   const isDarkMode = theme.palette.mode === 'dark';
@@ -93,6 +87,9 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ mediaUrl, onError }) => {
     }}>
       {!isComponentReady && (
         <div style={{ 
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
           display: "flex", 
           justifyContent: "center", 
           alignItems: "center", 
@@ -103,37 +100,36 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ mediaUrl, onError }) => {
           {t("files.loadingPdfViewer")}
         </div>
       )}
-      {isComponentReady && (
-        <PdfViewerComponent
-          ref={viewerRef}
-          id="container"
-          resourceUrl="https://cdn.syncfusion.com/ej2/26.2.11/dist/ej2-pdfviewer-lib"
-          enableToolbar={true}
-          enableNavigationToolbar={true}
-          style={{ 
-            height: "100%", 
-            width: "100%",
-            display: "block"
-          }}
-        >
-          <Inject
-            services={[
-              Toolbar,
-              Magnification,
-              Navigation,
-              LinkAnnotation,
-              BookmarkView,
-              ThumbnailView,
-              Print,
-              TextSelection,
-              TextSearch,
-              Annotation,
-              FormFields,
-              FormDesigner,
-            ]}
-          />
-        </PdfViewerComponent>
-      )}
+      <PdfViewerComponent
+        ref={viewerRef}
+        id="container"
+        created={() => setIsComponentReady(true)}
+        resourceUrl="https://cdn.syncfusion.com/ej2/26.2.11/dist/ej2-pdfviewer-lib"
+        enableToolbar={true}
+        enableNavigationToolbar={true}
+        style={{
+          height: "100%",
+          width: "100%",
+          display: "block"
+        }}
+      >
+        <Inject
+          services={[
+            Toolbar,
+            Magnification,
+            Navigation,
+            LinkAnnotation,
+            BookmarkView,
+            ThumbnailView,
+            Print,
+            TextSelection,
+            TextSearch,
+            Annotation,
+            FormFields,
+            FormDesigner,
+          ]}
+        />
+      </PdfViewerComponent>
       <style>{`
         #container_toolbarContainer {
           z-index: 999 !important;

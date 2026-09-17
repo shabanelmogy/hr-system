@@ -538,7 +538,7 @@ SignalR negotiation warnings remain a separate runtime item.
 
 ---
 
-# Phase 4 — Provider & Client Runtime Optimization 🟠
+# Phase 4 — Provider & Client Runtime Optimization ✅
 
 ## Objective
 
@@ -553,6 +553,14 @@ Target:
 - preserve SSR/hydration language correctness;
 - avoid render-time global language mutation where possible.
 
+Applied:
+
+- the root i18n instance eagerly loads only the shared `core` namespace;
+- EN/AR feature bundles are registered synchronously at route/feature scopes;
+- nested `I18nextProvider` scopes preserve existing bare `useTranslation()` consumers;
+- feature namespaces fall back to shared `core` keys;
+- route-local translation resources no longer make every ERP route pay for the complete catalog.
+
 ## 4.2 Date provider scoping
 
 Review the global date adapter/provider.
@@ -561,6 +569,12 @@ Target:
 
 - only date-heavy areas load date-picker runtime;
 - avoid making every ERP route pay for it.
+
+Applied:
+
+- `LocalizationProvider` is local to `MyDateTimeField`;
+- `AdapterDayjs` and MUI X date-picker runtime load only where a date control is a real consumer;
+- date controls inside lazy forms inherit the form interaction boundary and do not load at route entry.
 
 ## 4.3 Syncfusion isolation
 
@@ -579,6 +593,11 @@ not:
 application starts
 → load Syncfusion globally
 ```
+
+Applied:
+
+- Syncfusion viewer/bootstrap work is isolated to the first consuming viewer path;
+- it is not part of root application startup.
 
 ## 4.4 Other heavy client packages
 
@@ -599,9 +618,42 @@ Rules:
 - keep client boundaries local;
 - avoid pushing heavy packages into the shared shell bundle.
 
+Applied runtime policy:
+
+- route entry contains only first-paint UI;
+- local interaction-only `*Form` and `*Dialog` components use dynamic boundaries;
+- lazy components are not mounted while closed, because `open={false}` can still request their chunk;
+- optional tabs/views, charts, reporting, file upload/viewer surfaces, and similar heavy UI load at first consumer;
+- `check:architecture` rejects static local `*Form` / `*Dialog` imports from feature `*Page.tsx` files;
+- primary first-paint forms such as authentication pages remain static by design.
+
+Representative applied areas:
+
+- Fiscal Years;
+- Workforce Planning;
+- Countries / States / Districts / Address Types;
+- Recruitment;
+- Attendance Devices;
+- Organizational Structure;
+- Users / Roles / Invitations;
+- Crystal Reports;
+- File Manager.
+
+Measured after the runtime-boundary pass:
+
+- `/finance/fiscal-years`: about `2.78 MiB` First Load, versus the earlier documented baseline of about `3.76 MiB`;
+- largest measured First Load route: about `3.10 MiB`;
+- Recruitment: about `2.96 MiB`.
+
+These measurements are point-in-time build evidence, not permanent route budgets.
+
 ## Status
 
-⏳ **Planned**
+✅ **Runtime policy implemented**
+
+Follow-up dependency/package cleanup remains part of the dependency strategy and
+performance-engineering phases; it is not required for the Phase 4 runtime-loading
+contract to remain enforced.
 
 ---
 
@@ -1014,9 +1066,223 @@ Techniques:
 - avoid huge barrel imports;
 - move static work to Server Components where appropriate.
 
+## Applied authentication performance findings — 2026-09-17
+
+The login investigation established an important distinction between **route
+load performance** and **authentication transition performance**.
+
+Verified findings and decisions:
+
+- `/login` route-level barrel imports pulled unrelated authentication pages into
+  the initial graph; route adapters should use direct imports for primary pages.
+- tenant/company selection UI is interaction-only and should stay outside the
+  initial login path until required by the server;
+- login response validation remains required, but its parser/runtime can be
+  warmed during browser idle time so the first submit does not pay its full
+  compile/download cost;
+- protected destinations such as `/` must **not** be prefetched before login is
+  committed, because the prefetched tree can represent the unauthenticated
+  request context;
+- post-login navigation currently favors a fresh document request so Proxy,
+  cookies and `SessionProvider` all bootstrap from the newly committed session;
+- session validation DB work may be consolidated only when all current security
+  predicates remain identical;
+- development and production Next.js builds must not write the same `.next`
+  directory concurrently; restart `next dev` after local `next build` work when
+  necessary.
+
+Performance reviews should measure this sequence independently:
+
+```text
+/login first paint
+-> POST login
+-> parser/validation
+-> cookie/session commit
+-> protected navigation
+-> /api/auth/session
+-> dashboard bootstrap queries
+```
+
+This prevents a fast login page from hiding a slow authentication or dashboard
+bootstrap path.
+
+## Comprehensive page-loading hardening — 2026-09-17
+
+The route-wide production review found that the remaining cost was dominated by
+shared protected-shell behavior and request amplification rather than by one
+single page. The important findings are now treated as permanent architecture
+rules rather than route-by-route tuning.
+
+### Protected bootstrap / duplicate request wave
+
+**Problem:** the initial protected render could start page queries, then repeat
+them after `/api/auth/session` resolved.
+
+**Root cause:** `MainShell` keyed the entire context/QueryClient by a session
+identity that begins as null. The null-to-authenticated transition destroyed the
+first QueryClient and replayed page queries.
+
+**Decision:** preserve one QueryClient during initial session bootstrap. A real
+company switch or logout remains an explicit unmount/reset boundary; never gate
+all first page queries behind session completion just to avoid duplication.
+
+**Impact:** initial page/session work can stay parallel without sacrificing
+cross-company cache isolation.
+
+### Realtime startup amplification
+
+**Problem:** first SignalR connection triggered another refetch wave immediately
+after first-page data loaded.
+
+**Root cause:** initial connection was treated as a reconnect.
+
+**Decision:** the first connection performs no reconciliation. A genuine
+reconnect invalidates only registered realtime query roots and refreshes role /
+company-option stores only when those stores had already been loaded. Realtime
+bridges mount only after tenant/company session context exists and not for
+`super_admin`.
+
+**Impact:** normal route startup no longer pays for a first-connect global query
+invalidation. Notification payload Zod validation remains authoritative but is
+loaded on the first realtime notification rather than as shared startup code.
+
+### ERP list request waterfalls
+
+**Problem:** generic adaptive pagination made a `pageSize: 1` probe and then a
+second request, sometimes downloading up to 5,000 matching records.
+
+**Decision:** ERP list startup is server-paginated by default: one requested
+page, one query. Whole-dataset chart/export/analytics data must use an explicit,
+on-demand contract owned by that optional view.
+
+**Impact:** Fiscal Years, Workforce Planning, Countries, States and Districts no
+longer inherit the probe/fetch-all pattern. The 5,000-row client threshold was
+removed.
+
+### Shared-shell API and bundle graph
+
+**Problem:** shell startup made a redundant user-info request for display
+identity, while global realtime registration imported feature hook/service
+graphs into unrelated protected routes.
+
+**Decision:** sidebar identity is derived from validated session claims; only the
+separate user-photo query remains. Global registration imports lightweight
+metadata/query-key leaves only. Realtime registration crosses a narrow public
+registry API rather than a broad barrel that also exposes runtime bridge code.
+
+**Impact:** one protected-startup API call is removed and feature query/service
+graphs are no longer intentionally rooted by global realtime registration. The
+pre-change bundle audit attributed about `338.6 KB` of common emitted JavaScript
+to chunks containing those feature registration graphs; production build
+measurement after the refactor is the final authority for the actual reduction.
+
+### Optional post-hydration runtime
+
+**Problem:** dynamic imports can still be immediate startup cost when mounted on
+every route, and the PDF viewer contained fixed 1,000 ms + 500 ms readiness
+delays.
+
+**Decision:** pull-to-refresh loads only on touch/coarse-pointer clients and
+during idle time. The PDF viewer keeps Syncfusion isolated to the viewer route,
+uses the component readiness event, aborts stale document fetches and does not
+sleep before loading the file.
+
+### Dashboard API shape
+
+The super-admin dashboard was found to fetch the complete tenant management
+catalog and entitlement-rich tenant responses merely to derive aggregate cards,
+recent tenants and expiring subscriptions. The durable direction is a dedicated
+Super Admin tenant dashboard summary endpoint with aggregate counts and bounded
+recent/expiring lists. Dashboard first paint must not scale its transfer payload
+linearly with the complete management catalog.
+
+That endpoint is now implemented end-to-end. It is SuperAdmin-only through the
+existing controller authorization, uses `TimeProvider`, performs server-side
+aggregate/count queries, returns bounded recent/expiring projections, and does
+not call the full tenant response builder or load tenant entitlement rows. The
+frontend dashboard consumes this summary rather than `tenantApi.getAll()`.
+
+### Protected auth utility route composition
+
+The final production build exposed `/change-password` as a protected page inside
+the otherwise public auth shell. Its form requires session/logout state and
+unsaved-change registration, but moving those providers into the shared auth
+layout would make `/login` and the other public auth routes pay that runtime.
+
+The route now owns a narrow protected wrapper: route-local `SessionProvider`, an
+authenticated loading gate, and `UnsavedChangesProvider` around the form. The
+public auth shell stays lightweight and the production prerender succeeds.
+
+### Final production measurements
+
+The cross-route loading phase is closed against production artifacts, not dev
+compile timing.
+
+```text
+Before shared protected intersection: 47 chunks / ~2.89 MB
+Final shared protected intersection:  36 chunks / ~1.61 MB
+
+/                              ~2.75 -> 1.61 MiB
+/login                         ~1.13 -> 1.13 MiB
+/administration/users          ~3.09 -> 1.80 MiB
+/profile                       ~3.09 -> 2.09 MiB
+/appointments                  ~3.02 -> 2.77 MiB
+/recruitment                   ~2.96 -> 1.86 MiB
+/finance/fiscal-years          ~2.78 -> 2.32 MiB
+largest measured First Load    ~3.09 -> 2.77 MiB
+```
+
+Final emitted-JS inventory is `263` chunks / `24.22 MiB` versus the earlier
+`230` / `23.36 MiB`; it remains below the `26 MiB` total-JS budget. The route
+startup result is materially better despite the larger split-chunk inventory,
+which is why per-route/shared First Load remains the primary startup metric.
+ActiveReports and Syncfusion remain isolated from ordinary first-load routes.
+
+Final gates for this closure: architecture, normal + strict TypeScript, full
+lint, module-generator self-test, full Vitest, documentation check, production
+build, `measure:build`, focused backend tenant-summary tests and runtime smoke.
+
+### Verification / regression policy
+
+For any future protected-page loading change:
+
+```text
+problem
+-> root cause
+-> architecture decision
+-> implementation impact
+-> focused verification
+-> production build + measure:build
+-> prevention rule in the canonical Guide
+```
+
+Do not judge runtime performance from development Turbopack compile timing, and
+do not run `next build` concurrently with `next dev` against the same `.next`.
+The canonical implementation rules live in
+`documentation/web-next/architecture/frontend-architecture-reference.md`.
+
+### Accepted follow-up optimizations after the cross-route pass
+
+These are documented rather than mixed into the shared-runtime closure work:
+
+- active-language-only EN/AR resource loading after preserving the current
+  hydration-safe feature namespace model;
+- root loader/runtime-preference decoupling only as one coherent theme/language
+  bootstrap change, because removing the mask alone can expose a dark/RTL flash
+  or hydration mismatch;
+- realtime-token session-hop reduction only after an auth/security review;
+- route-local FullCalendar / Recruitment drag-drop tuning only if the new
+  production route measurements still justify it;
+- tenant entitlement-module fetch-on-intent for the management editor, provided
+  the form can never initialize against an incomplete catalog.
+
+These are not reasons to keep the old duplicate QueryClient, first-connect
+realtime refetch, fetch-all pagination, redundant shell identity request, or
+feature-hook registration graph.
+
 ## Status
 
-⏳ **Planned / partially benefited from Phase 3**
+✅ **Cross-route page-loading/runtime baseline closed; future work is evidence-driven feature-local tuning**
 
 ---
 
@@ -1091,6 +1357,25 @@ code change
 + documentation generation/check
 ```
 
+### Continuous guide update rule
+
+Do not wait until the end of a phase to document important findings. After each
+material architecture/runtime/security/business-safety observation, update the
+owning canonical guide in the same work session with:
+
+```text
+Observed problem
+-> root cause
+-> decision/rule
+-> implementation impact
+-> verification evidence
+-> regression-prevention note
+```
+
+The chat is not the project record. If a finding would change how the next
+engineer should implement, debug, test, or operate the ERP, it belongs in the
+Guide before handoff.
+
 ## Status
 
 🟠 **Needs final cleanup after Route Group reorganization**
@@ -1137,7 +1422,7 @@ Correctness
 | Phase 1 — Business Safety | ✅ Complete |
 | Phase 2 — Authentication & BFF Hardening | ✅ Complete |
 | Phase 3 — Next.js Runtime Architecture | 🟠 Final verification |
-| Phase 4 — Provider/runtime optimization | ⏳ Planned |
+| Phase 4 — Provider/runtime optimization | ✅ Runtime policy implemented |
 | Phase 5 — Navigation/mobile safety | ⏳ Planned |
 | Phase 6 — Observability | ⏳ Planned |
 | Phase 7 — CSP/browser security | ⏳ Planned |
@@ -1152,7 +1437,8 @@ Correctness
 
 # Immediate Next Actions
 
-Before Phase 4, close Phase 3 completely:
+Phase 4 runtime boundaries are now applied and guarded. Continue Phase 3 final
+runtime verification where needed, then move to the remaining hardening phases:
 
 ```bash
 npm run type-check:strict
@@ -1161,7 +1447,7 @@ npm test
 npm run build
 ```
 
-Then:
+Runtime verification:
 
 1. authenticated smoke test for `/`;
 2. navigate between multiple PPR routes;
@@ -1171,14 +1457,10 @@ Then:
 6. fix stale architecture documentation/manifests;
 7. rerun documentation gate.
 
-After that:
-
-```text
-i18n lazy loading
-→ date provider scoping
-→ Syncfusion first-consumer bootstrap
-→ heavy client-library bundle audit
-```
+Phase 4 is no longer an immediate-next-action block. Future runtime work should
+preserve its enforced first-consumer loading contract while Phase 5+ work
+continues. Package removal, dependency upgrades, and deeper route-budget tuning
+belong to Phases 10 and 11.
 
 ---
 

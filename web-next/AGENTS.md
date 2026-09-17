@@ -8,3 +8,15 @@ For server-managed feature work, also read [`../documentation/web-next/features/
 Use the States profiles when a parent selector or parent-dependent list contract makes them the closer reference. Do not use the unscoped Countries generated packets as evidence for a different feature.
 
 Run `../documentation/system/Generate-Documentation.ps1 -Check` before handoff when a feature contract, source manifest, or guide changes. Do not create a new `web-next/docs/` directory.
+
+After every material frontend finding (architecture, runtime, performance, security, business-safety, or a regression/root-cause decision), update the owning canonical guide in `../documentation/` in the same work session. Record the observed problem, root cause, decision, verification, and regression-prevention rule; do not leave important implementation knowledge only in chat history.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

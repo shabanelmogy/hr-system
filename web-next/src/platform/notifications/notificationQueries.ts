@@ -14,14 +14,9 @@ import {
   markNotificationUnread,
 } from "./notificationApi";
 import type { NotificationFilter, NotificationReadStatus } from "./types";
+import { notificationKeys } from "./notificationQueryKeys";
 
-export const notificationKeys = {
-  all: ["notifications"] as const,
-  lists: () => [...notificationKeys.all, "list"] as const,
-  list: (filter: NotificationFilter) =>
-    [...notificationKeys.lists(), filter] as const,
-  unreadCount: () => [...notificationKeys.all, "unread-count"] as const,
-};
+export { notificationKeys } from "./notificationQueryKeys";
 
 export function useUnreadNotificationCount(options?: { enabled?: boolean }) {
   return useQuery({

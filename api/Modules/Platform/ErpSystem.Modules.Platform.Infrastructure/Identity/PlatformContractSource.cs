@@ -55,26 +55,52 @@ public sealed class PlatformContractSource(PlatformDbContext db) :
     async Task<SessionValidationSnapshot?> ISessionValidationSource.GetAsync(
         string userId, string sessionId, string tenantId, int companyId, CancellationToken token)
     {
-        var user = await db.Users.AsNoTracking().SingleOrDefaultAsync(item => item.Id == userId, token);
-        if (user is null) return null;
-        var tenant = await db.Tenants.AsNoTracking().SingleOrDefaultAsync(item => item.Id == tenantId, token);
-        var hasMembership = await db.UserTenantAccesses.IgnoreQueryFilters().AsNoTracking()
-            .AnyAsync(item => item.UserId == userId && item.TenantId == tenantId, token);
-        var companyAccess = await (from access in db.UserCompanyAccesses.IgnoreQueryFilters().AsNoTracking()
-                                join company in db.Companies.IgnoreQueryFilters().AsNoTracking()
-                                    on new { access.TenantId, access.CompanyId }
-                                    equals new { company.TenantId, CompanyId = company.Id }
-                                where access.UserId == userId && access.TenantId == tenantId && access.CompanyId == companyId
-                                select new { company.IsActive }).SingleOrDefaultAsync(token);
+        // Session validation runs for every authenticated request. Keep the
+        // identity/tenant/membership/company scope check in one SQL round-trip
+        // instead of serially querying each table.
+        var scope = await db.Users.AsNoTracking()
+            .Where(user => user.Id == userId)
+            .Select(user => new
+            {
+                user.IsDisabled,
+                user.LockoutEnd,
+                user.SecurityStamp,
+                HasTenantMembership = db.UserTenantAccesses
+                    .IgnoreQueryFilters()
+                    .Any(access => access.UserId == userId && access.TenantId == tenantId),
+                Tenant = db.Tenants
+                    .AsNoTracking()
+                    .Where(tenant => tenant.Id == tenantId)
+                    .Select(tenant => new
+                    {
+                        tenant.IsActive,
+                        tenant.SubscriptionStatus
+                    })
+                    .SingleOrDefault(),
+                Company = (from access in db.UserCompanyAccesses.IgnoreQueryFilters().AsNoTracking()
+                           join company in db.Companies.IgnoreQueryFilters().AsNoTracking()
+                               on new { access.TenantId, access.CompanyId }
+                               equals new { company.TenantId, CompanyId = company.Id }
+                           where access.UserId == userId &&
+                                 access.TenantId == tenantId &&
+                                 access.CompanyId == companyId
+                           select new { company.IsActive })
+                    .SingleOrDefault()
+            })
+            .SingleOrDefaultAsync(token);
+        if (scope is null) return null;
+
+        // Keep refresh-session timestamps raw so the application layer remains
+        // the owner of the TimeProvider-based activity boundary.
         var sessions = await db.Users.AsNoTracking().Where(item => item.Id == userId)
             .SelectMany(item => item.RefreshTokens)
             .Where(item => item.SessionId == sessionId && item.CompanyId == companyId)
             .Select(item => new RefreshSessionSnapshot(item.SessionId, item.CompanyId, item.ExpiresOn, item.RevokedOn))
             .ToArrayAsync(token);
-        return new SessionValidationSnapshot(user.IsDisabled, user.LockoutEnd, user.SecurityStamp,
-            hasMembership, tenant?.IsActive == true,
-            tenant is null ? null : (TenantSubscriptionStatus)tenant.SubscriptionStatus,
-            companyAccess is not null, companyAccess?.IsActive == true, sessions);
+        return new SessionValidationSnapshot(scope.IsDisabled, scope.LockoutEnd, scope.SecurityStamp,
+            scope.HasTenantMembership, scope.Tenant?.IsActive == true,
+            scope.Tenant is null ? null : (TenantSubscriptionStatus)scope.Tenant.SubscriptionStatus,
+            scope.Company is not null, scope.Company?.IsActive == true, sessions);
     }
 
     async Task<AccessTokenClaimMaterialSourceSnapshot> IAccessTokenClaimMaterialSource.GetAsync(string userId, string tenantId, CancellationToken token)

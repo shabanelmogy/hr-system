@@ -5,11 +5,9 @@ import type {
   CreateAppointmentRequest,
   UpdateAppointmentRequest,
 } from "../types/appointment";
+import { appointmentKeys } from "./appointmentQueryKeys";
 
-export const appointmentKeys = {
-  all: ["appointments"] as const,
-  list: (range: AppointmentRange) => [...appointmentKeys.all, "list", range] as const,
-};
+export { appointmentKeys } from "./appointmentQueryKeys";
 
 export const useAppointments = (range: AppointmentRange) =>
   useQuery({

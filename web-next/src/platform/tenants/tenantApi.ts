@@ -1,16 +1,13 @@
 import { apiRoutes } from "@/config/api";
 import apiService from "@/shared/services/apiService";
 import type {
+  TenantDashboardSummaryResponse,
   TenantManagementRequest,
   TenantManagementResponse,
 } from "./types";
 import type { ManagementPageQuery, ManagementPageResponse } from "@/lib/api/pagination";
 
-export const tenantKeys = {
-  all: ["tenants"] as const,
-  pages: () => [...tenantKeys.all, "page"] as const,
-  page: (query: ManagementPageQuery) => [...tenantKeys.pages(), query] as const,
-};
+export { tenantKeys } from "./tenantQueryKeys";
 
 export const tenantApi = {
   getPage: (query: ManagementPageQuery) =>
@@ -20,6 +17,8 @@ export const tenantApi = {
     ),
   getAll: () =>
     apiService.get<TenantManagementResponse[]>(apiRoutes.tenants.getAll),
+  getDashboardSummary: () =>
+    apiService.get<TenantDashboardSummaryResponse>(apiRoutes.tenants.getDashboardSummary),
   create: (request: TenantManagementRequest) =>
     apiService.post<TenantManagementResponse>(apiRoutes.tenants.create, request),
   update: (id: string, request: TenantManagementRequest) =>

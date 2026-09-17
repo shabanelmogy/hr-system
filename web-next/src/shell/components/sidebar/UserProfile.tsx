@@ -6,7 +6,6 @@ import { Avatar, Box, Tooltip, Typography, useTheme } from "@mui/material";
 import { useMemo } from "react";
 import {
   getUserPhotoDataUrl,
-  useUserInfo,
   useUserPhoto,
 } from "@/platform/auth/profile";
 import {
@@ -23,8 +22,7 @@ interface UserProfileProps {
 
 const UserProfile = ({ open }: UserProfileProps) => {
   const theme = useTheme();
-  const { data: info, isLoading: infoLoading } = useUserInfo();
-  const { data: photoData, isLoading: photoLoading } = useUserPhoto();
+  const { data: photoData } = useUserPhoto();
   const { user } = useSession();
 
   const userRole = useMemo(() => {
@@ -33,17 +31,18 @@ const UserProfile = ({ open }: UserProfileProps) => {
   }, [user]);
 
   const displayName = useMemo(() => {
-    if (!info) return "User";
-    if (info.firstName && info.lastName) return `${info.firstName} ${info.lastName}`;
-    return info.userName || info.email || "User";
-  }, [info]);
+    const fullName = [user?.firstName, user?.lastName]
+      .filter((part): part is string => Boolean(part?.trim()))
+      .join(" ");
+    return fullName || user?.userName || user?.email || "User";
+  }, [user?.email, user?.firstName, user?.lastName, user?.userName]);
 
-  const initials = useMemo(() => {
-    if (!info) return "U";
-    if (info.firstName && info.lastName) return `${info.firstName[0]}${info.lastName[0]}`.toUpperCase();
-    if (info.userName) return info.userName.charAt(0).toUpperCase();
-    return "U";
-  }, [info]);
+  const nameInitials = [user?.firstName, user?.lastName]
+    .filter((part): part is string => Boolean(part?.trim()))
+    .map((part) => part.trim().charAt(0))
+    .join("")
+    .toUpperCase();
+  const initials = nameInitials || user?.userName?.charAt(0).toUpperCase() || "U";
 
   const avatarSrc = getUserPhotoDataUrl(photoData);
 
@@ -60,42 +59,6 @@ const UserProfile = ({ open }: UserProfileProps) => {
     }
     return <PersonIcon fontSize="small" sx={{ color: "#a8dadc" }} />;
   };
-
-  if (infoLoading && photoLoading) {
-    return (
-      <Box
-        sx={{
-          p: open ? 1.5 : 0.5,
-          mx: 1,
-          mt: 1,
-          mb: 0,
-          borderRadius: 2,
-          textAlign: "center",
-          background: theme.palette.mode === "dark"
-            ? "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #6366f1 100%)"
-            : "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%)",
-          boxShadow: theme.palette.mode === "dark"
-            ? "0 4px 12px rgba(0, 0, 0, 0.3)"
-            : "0 4px 12px rgba(99, 102, 241, 0.2)",
-        }}
-      >
-        <Avatar
-          sx={{
-            mx: "auto",
-            width: open ? 64 : 38,
-            height: open ? 64 : 38,
-            transition: theme.transitions.create(["width", "height"], {
-              duration: open
-                ? theme.transitions.duration.enteringScreen
-                : theme.transitions.duration.leavingScreen,
-            }),
-          }}
-        >
-          <PersonIcon />
-        </Avatar>
-      </Box>
-    );
-  }
 
   return (
     <Box

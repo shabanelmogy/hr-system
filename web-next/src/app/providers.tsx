@@ -14,21 +14,13 @@ type ProvidersProps = {
   children: ReactNode;
   initialThemeMode: ThemeMode;
   initialDirection: ThemeDirection;
-  initialLanguage: "en" | "ar";
 };
 
 export function Providers({
   children,
   initialThemeMode,
   initialDirection,
-  initialLanguage,
 }: ProvidersProps) {
-  // Match the server-selected cookie language before any translated client
-  // component renders, preventing an English/Arabic hydration mismatch.
-  if (i18n.resolvedLanguage !== initialLanguage) {
-    void i18n.changeLanguage(initialLanguage);
-  }
-
   return (
     <ThemePreferencesProvider
       initialMode={initialThemeMode}

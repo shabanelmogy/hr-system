@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "ERP System page for Files."
 };
 
-import PageComponent from "@/platform/file-manager/pages/FilesPage";
+import { FilesPage as PageComponent } from "@/platform/file-manager/pages";
 
 export default function Page() {
   return <PageComponent />;

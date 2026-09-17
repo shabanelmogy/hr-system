@@ -1,4 +1,4 @@
-import { BarChart } from '@/shared/components/charts';
+import BarChart from '@/shared/components/charts/cartesian/BarChart';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

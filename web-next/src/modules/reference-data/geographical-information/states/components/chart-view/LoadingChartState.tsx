@@ -1,4 +1,4 @@
-import { ChartContainer } from "@/shared/components/charts";
+import ChartContainer from "@/shared/components/charts/core/ChartContainer";
 import { useTranslation } from "react-i18next";
 
 const LoadingChartState = () => {

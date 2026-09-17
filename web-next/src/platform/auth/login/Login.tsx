@@ -7,31 +7,30 @@ import {
   alpha,
   useTheme,
 } from "@mui/material";
-import { useEffect } from "react";
-import useRoleStore from "../roles/store/useRoleStore";
+import { lazy, Suspense, useEffect } from "react";
 
 // Components
 import LeftPanel from "./components/LeftPanel";
 import LoginForm from "./components/LoginForm";
-import CompanySelectionDialog from "./components/CompanySelectionDialog";
-import TenantSelectionDialog from "./components/TenantSelectionDialog";
 
 import useLoginForm from "./hooks/useLoginForm";
+
+const TenantSelectionDialog = lazy(() => import("./components/TenantSelectionDialog"));
+const CompanySelectionDialog = lazy(() => import("./components/CompanySelectionDialog"));
 
 const Login = () => {
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
-  const resetRoleData = useRoleStore((state) => state.resetRoleData);
 
-  // Clear session storage on login page mount (after logout)
+  // Auth logout already clears any loaded role store through its own logout
+  // listener. Avoid importing the role-management graph into the login route.
   useEffect(() => {
-    resetRoleData();
     try {
       sessionStorage.clear();
     } catch {
       // Ignore storage errors
     }
-  }, [resetRoleData]);
+  }, []);
 
   // Get all form-related props and handlers from custom hook
   const {
@@ -108,18 +107,26 @@ const Login = () => {
           />
         </Paper>
       </Container>
-      <TenantSelectionDialog
-        selection={tenantSelection}
-        loading={isSelectingTenant}
-        onSelect={selectTenant}
-        onCancel={cancelTenantSelection}
-      />
-      <CompanySelectionDialog
-        selection={companySelection}
-        loading={isSelectingCompany}
-        onSelect={selectCompany}
-        onCancel={cancelCompanySelection}
-      />
+      {tenantSelection && (
+        <Suspense fallback={null}>
+          <TenantSelectionDialog
+            selection={tenantSelection}
+            loading={isSelectingTenant}
+            onSelect={selectTenant}
+            onCancel={cancelTenantSelection}
+          />
+        </Suspense>
+      )}
+      {companySelection && (
+        <Suspense fallback={null}>
+          <CompanySelectionDialog
+            selection={companySelection}
+            loading={isSelectingCompany}
+            onSelect={selectCompany}
+            onCancel={cancelCompanySelection}
+          />
+        </Suspense>
+      )}
       {SnackbarComponent}
     </>
   );

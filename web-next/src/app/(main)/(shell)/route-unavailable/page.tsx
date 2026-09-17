@@ -1,4 +1,5 @@
-import { PageUnavailable } from "@/shared/components/feedback/routes";
+import { Suspense } from "react";
+import { PageUnavailable, RouteLoading } from "@/shared/components/feedback/routes";
 
 type UnavailableRouteProps = {
   searchParams: Promise<{
@@ -7,7 +8,17 @@ type UnavailableRouteProps = {
   }>;
 };
 
-export default async function UnavailableRoute({
+export default function UnavailableRoute({
+  searchParams,
+}: UnavailableRouteProps) {
+  return (
+    <Suspense fallback={<RouteLoading />}>
+      <UnavailableRouteContent searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+async function UnavailableRouteContent({
   searchParams,
 }: UnavailableRouteProps) {
   const params = await searchParams;

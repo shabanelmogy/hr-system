@@ -7,6 +7,8 @@ import { useTranslation } from "react-i18next";
 
 import { HandleApiError } from "@/shared/services";
 import { authService } from "../../../services/authService";
+import { useSession } from "@/lib/auth/SessionContext";
+import { useUnsavedChangesRegistration } from "@/shared/contexts/UnsavedChangesContext";
 import Validation from "./utils/validation";
 
 // Import components
@@ -22,6 +24,7 @@ interface ChangePasswordProps {
 
 const ChangePassword = ({ showSuccess, showError }: ChangePasswordProps) => {
   const { t } = useTranslation();
+  const { logout } = useSession();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const validationScheme = Validation(t);
@@ -39,6 +42,7 @@ const ChangePassword = ({ showSuccess, showError }: ChangePasswordProps) => {
       newPassword: "",
     },
   });
+  useUnsavedChangesRegistration(isDirty || isSubmitting, isSubmitting);
 
   const handleChangePassword = async (data: PasswordChangeValues) => {
     setIsSubmitting(true);
@@ -52,7 +56,7 @@ const ChangePassword = ({ showSuccess, showError }: ChangePasswordProps) => {
 
       reset();
       setIsEditing(false);
-      await authService.logout();
+      await logout();
       return true;
     } catch (error) {
       HandleApiError(error, (updatedState) => {

@@ -15,8 +15,9 @@ import { usePathname } from "next/navigation";
 
 import { appRoutes } from "@/config/routes";
 import { useSession } from "@/lib/auth/SessionContext";
-import { requiredModuleForPath, useModuleTranslations } from "@/platform/modules";
-import { useTokenRevocation } from "@/platform/auth";
+import { requiredModuleForPath } from "@/platform/modules/route-access";
+import { useModuleTranslations } from "@/platform/modules/translations";
+import { useTokenRevocation } from "@/platform/auth/session-runtime";
 import SideBar from "../components/sidebar/SideBar";
 import SidebarContext from "@/shared/contexts/SidebarContext";
 import TopBar from "../components/top-bar/TopBar";

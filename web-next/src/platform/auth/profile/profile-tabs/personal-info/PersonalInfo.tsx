@@ -11,6 +11,7 @@ import {
   useUserInfo,
 } from "@/platform/auth/profile/hooks/useUserProfile";
 import { HandleApiError } from "@/shared/services";
+import { useUnsavedChangesRegistration } from "@/shared/contexts/UnsavedChangesContext";
 import PersonalInfoForm from "./components/PersonalInfoForm";
 import PersonalInfoHeader from "./components/PersonalInfoHeader";
 import getPersonalDetailsSchema from "./utils/validation";
@@ -58,6 +59,7 @@ const PersonalInfo = ({ onInfoUpdated, showSuccess, showError }: PersonalInfoPro
       userName: user?.userName ?? "",
     },
   });
+  useUnsavedChangesRegistration(isDirty || isSaving, isSaving);
 
   useEffect(() => {
     if (!user) return;

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import WorkforcePlanningHomePage from "@/modules/hr/workforce-planning/pages/WorkforcePlanningHomePage";
+import { WorkforcePlanningHomePage } from "@/modules/hr/workforce-planning/routes/home";
 
 export const metadata: Metadata = {
   title: "Workforce Planning | ERP System",

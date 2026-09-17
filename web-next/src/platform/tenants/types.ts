@@ -45,6 +45,34 @@ export interface TenantManagementResponse {
   entitlements?: TenantModuleEntitlementResponse[] | null;
 }
 
+export interface TenantDashboardRecentTenant {
+  id: string;
+  identifier: string;
+  name: string;
+  subscriptionStatus: SubscriptionStatus;
+}
+
+export interface TenantDashboardExpiringTenant {
+  id: string;
+  name: string;
+  planName: string | null;
+  subscriptionEndsOn: string;
+}
+
+export interface TenantDashboardSummaryResponse {
+  totalTenants: number;
+  enabledTenants: number;
+  admins: number;
+  users: number;
+  companies: number;
+  maxAdmins: number;
+  maxUsers: number;
+  expiringWithin30Days: number;
+  subscriptionStatusCounts: Record<SubscriptionStatus, number>;
+  recentTenants: TenantDashboardRecentTenant[];
+  expiringWithin30DaysTenants: TenantDashboardExpiringTenant[];
+}
+
 export interface TenantModuleEntitlementRequest {
   moduleCode: string;
   submoduleCodes: string[];

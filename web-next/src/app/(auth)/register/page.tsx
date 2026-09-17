@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "ERP System page for Register."
 };
 
-import { RegisterPage as PageComponent } from "@/platform/auth/route-pages";
+import { RegisterPage as PageComponent } from "@/platform/auth/register";
 import { publicSelfRegistrationEnabled } from "@/config/publicEnv";
 import { appRoutes } from "@/config/routes";
 import { redirect } from "next/navigation";

@@ -1,4 +1,4 @@
-import { PieChart } from "@/shared/components/charts";
+import PieChart from "@/shared/components/charts/polar/PieChart";
 import type { StatesCoverageData } from "./chartDataUtils";
 import { useTranslation } from "react-i18next";
 

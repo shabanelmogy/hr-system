@@ -2,6 +2,7 @@ import { version } from "./constants";
 
 export const tenants = {
   getAll: `${version}/tenants/getAll`,
+  getDashboardSummary: `${version}/tenants/getDashboardSummary`,
   getPage: `${version}/tenants/getPage`,
   getById: (id: string) => `${version}/tenants/get/${id}`,
   create: `${version}/tenants/create`,

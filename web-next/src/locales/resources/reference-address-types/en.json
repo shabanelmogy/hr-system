@@ -1,0 +1,103 @@
+{
+  "addressTypes": {
+    "dashboard": {
+      "totalAddressTypes": "Total Address Types",
+      "completeProfiles": "Complete Profiles",
+      "recentlyAdded": "Recently Added",
+      "avgNameLength": "Avg Name Length",
+      "totalMatching": "Matching Address Types",
+      "visibleAddressTypes": "Address Types on This Page",
+      "withAddressesOnPage": "With Addresses on This Page",
+      "withoutAddressesOnPage": "Without Addresses on This Page",
+      "dataQuality": "Data Quality"
+    },
+    "charts": {
+      "byInitialLetter": "Address Types by Initial Letter",
+      "languageDistribution": "Language Distribution",
+      "nameLength": "Name Length Distribution",
+      "timeline": "Address Types Added Over Time",
+      "title": "Address Types Analytics",
+      "noData": "No Address Type Data Available"
+    },
+    "views": {
+      "grid": "Grid",
+      "chart": "Chart",
+      "card": "Card",
+      "cards": "Card View",
+      "report": "Report",
+      "import": "Import"
+    },
+    "title": "Address Types",
+    "subTitle": "List of address types",
+    "viewTitle": "Address Types Management",
+    "view": "View Address Type",
+    "add": "Add Address Type",
+    "edit": "Edit Address Type",
+    "delete": "Delete Address Type",
+    "created": "Address type created successfully",
+    "updated": "Address type updated successfully",
+    "deleted": "Address type deleted successfully",
+    "creating": "Creating address type",
+    "updating": "Updating address type",
+    "saving": "Saving address type",
+    "errorMessage": "Failed to load address types",
+    "fetchError": "Failed to fetch address types",
+    "createError": "Failed to create address type",
+    "updateError": "Failed to update address type",
+    "deleteError": "Failed to delete address type",
+    "nameArPlaceholder": "Arabic only like : المنزل , العمل",
+    "nameEnPlaceholder": "English only like : Home , Work",
+    "recent60Days": "Recent (60 days)",
+    "recent90Days": "Recent (90 days)",
+    "recent120Days": "Recent (120 days)",
+    "noData": "No Address Types Available",
+    "noDataDescription": "Start by adding your first address type to see analytics",
+    "total": "Total",
+    "mainTitle": "Address Types Card View",
+    "mainSubTitle": "No Address Types Available To Display",
+    "browseAndManage": "Browse and manage",
+    "browseDescription": "address types with enhanced search and filtering",
+    "searchPlaceHolder": "Search address types by name...",
+    "addressType": "Address Type",
+    "addresses": "Addresses",
+    "cardSelectionAriaLabel": "Select {{name}}",
+    "all": "All Address Types",
+    "recent30Days": "Recent (30 days)",
+    "viewSubtitle": "Add New AddressType",
+    "editSubtitle": "Edit Current AddressType",
+    "addSubtitle": "Add New AddressType",
+    "generateMockData": "Generate Mock Data",
+    "search": {
+      "placeholder": "Search Address Types",
+      "column": "Column",
+      "condition": "Condition",
+      "allColumns": "All columns",
+      "operators": {
+        "contains": "Contains",
+        "doesNotContain": "Does not contain",
+        "equals": "Equals",
+        "doesNotEqual": "Does not equal",
+        "startsWith": "Starts with",
+        "endsWith": "Ends with"
+      }
+    },
+    "status": {
+      "label": "Status",
+      "active": "Active",
+      "archived": "Archived",
+      "all": "All statuses"
+    },
+    "bulkArchiveAction": "Archive selected",
+    "permissionDenied": "You do not have permission to import Address Types.",
+    "reportCatalogError": "Could not load published reports.",
+    "reportUnavailable": "No published Address Type report is available.",
+    "import": {
+      "rows": "{{count}} address type rows",
+      "uploading": "Uploading Address Types...",
+      "duplicateInFile": "Duplicate of another address type row in this file",
+      "importSuccess": "{{count}} address types uploaded"
+    },
+    "listSummary": "Browse and manage {{count}} address types",
+    "totalCount": "{{count}} address types"
+  }
+}

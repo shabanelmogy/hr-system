@@ -1,6 +1,11 @@
 import type { ReactNode } from "react";
-import WorkforcePlanningLayout from "@/modules/hr/workforce-planning/layout/WorkforcePlanningLayout";
+import { HrWorkforceTranslationScope } from "@/locales/scopes/HrWorkforceTranslationScope";
+import { WorkforcePlanningLayout } from "@/modules/hr/workforce-planning/routes/layout";
 
 export default function Layout({ children }: { children: ReactNode }) {
-  return <WorkforcePlanningLayout>{children}</WorkforcePlanningLayout>;
+  return (
+    <HrWorkforceTranslationScope>
+      <WorkforcePlanningLayout>{children}</WorkforcePlanningLayout>
+    </HrWorkforceTranslationScope>
+  );
 }

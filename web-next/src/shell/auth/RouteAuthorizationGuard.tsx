@@ -3,13 +3,13 @@
 import { usePathname } from "next/navigation";
 import { Suspense, type ReactNode } from "react";
 
-import { useAccessibleModulesQuery } from "@/platform/modules";
+import { useAccessibleModulesQuery } from "@/platform/modules/queries";
 import { useSession } from "@/lib/auth/SessionContext";
 import {
   canAccessRoute,
   UNAVAILABLE_ROUTE,
 } from "@/lib/auth/route-access";
-import { hasModuleAccess, requiredModuleForPath } from "@/platform/modules";
+import { hasModuleAccess, requiredModuleForPath } from "@/platform/modules/route-access";
 import ForbiddenPage from "@/shared/components/auth/ForbiddenPage";
 
 export interface RouteAuthorizationGuardProps {

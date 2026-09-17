@@ -2,11 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRoleStore, useUserStore } from "@/platform/auth";
+import useRoleStore from "@/platform/auth/roles/store/useRoleStore";
+import useUserStore from "@/platform/auth/users/store/useUserStore";
 import { useSignalRConnection } from "@/lib/signalr/SignalRProvider";
 import signalRService from "@/lib/signalr/signalRService";
 import { parseRealtimeEntityChanged } from "./realtimeEvent";
 import {
+  getAllRealtimeQueryKeys,
   getRealtimeQueryKeys,
   isKnownRealtimeResource,
   realtimeResources,
@@ -19,6 +21,7 @@ export function RealtimeEntityBridge() {
   const queryClient = useQueryClient();
   const { isConnected } = useSignalRConnection();
   const wasConnected = useRef(false);
+  const hasConnectedOnce = useRef(false);
   const recentEventIds = useRef(new Set<string>());
 
   useEffect(() => {
@@ -96,21 +99,27 @@ export function RealtimeEntityBridge() {
 
   useEffect(() => {
     if (isConnected && !wasConnected.current) {
-      void queryClient.invalidateQueries({ refetchType: "active" });
+      if (hasConnectedOnce.current) {
+        for (const queryKey of getAllRealtimeQueryKeys()) {
+          void queryClient.invalidateQueries({ queryKey, refetchType: "active" });
+        }
 
-      const userStore = useUserStore.getState();
-      if (userStore.hasCompanyOptionsLoaded) {
-        void userStore.fetchCompanyOptions().catch((error: unknown) => {
-          console.warn("[Realtime] Company-option reconnect refresh delayed", error);
-        });
+        const userStore = useUserStore.getState();
+        if (userStore.hasCompanyOptionsLoaded) {
+          void userStore.fetchCompanyOptions().catch((error: unknown) => {
+            console.warn("[Realtime] Company-option reconnect refresh delayed", error);
+          });
+        }
+
+        const roleStore = useRoleStore.getState();
+        if (roleStore.hasLoaded) {
+          void roleStore.fetchRoles().catch((error: unknown) => {
+            console.warn("[Realtime] Role reconnect refresh delayed", error);
+          });
+        }
       }
 
-      const roleStore = useRoleStore.getState();
-      if (roleStore.hasLoaded) {
-        void roleStore.fetchRoles().catch((error: unknown) => {
-          console.warn("[Realtime] Role reconnect refresh delayed", error);
-        });
-      }
+      hasConnectedOnce.current = true;
     }
 
     wasConnected.current = isConnected;

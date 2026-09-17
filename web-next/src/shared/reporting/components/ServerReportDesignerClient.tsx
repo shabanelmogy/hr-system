@@ -180,7 +180,11 @@ const ServerReportDesignerClient = ({
   const { hasPermission, isReadOnly } = usePermissions();
   const [currentTemplate, setCurrentTemplate] = useState<ReportTemplateDetail | null>(null);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  useUnsavedChangesRegistration(hasUnsavedChanges);
+  const [isWritingTemplate, setIsWritingTemplate] = useState(false);
+  useUnsavedChangesRegistration(
+    hasUnsavedChanges || isWritingTemplate,
+    isWritingTemplate,
+  );
   const [error, setError] = useState<string | null>(null);
   const [isOpenDialogVisible, setOpenDialogVisible] = useState(false);
   const canView = hasPermission("ReportTemplates:View");
@@ -275,6 +279,7 @@ const ServerReportDesignerClient = ({
     const name = options.displayName?.trim() || currentTemplate?.name || starterReport.displayName;
     const definitionJson = serializeDefinition(options.definition);
 
+    setIsWritingTemplate(true);
     try {
       let saved: ReportTemplateDetail;
       if (!saveAs && currentTemplate) {
@@ -314,6 +319,8 @@ const ServerReportDesignerClient = ({
           : apiErrorMessage(saveError, labels.templateSaveError),
       );
       return undefined;
+    } finally {
+      setIsWritingTemplate(false);
     }
   }, [canCreate, canEdit, currentTemplate, dataSource.key, featureKey, invalidateTemplates, labels.concurrencyError, labels.permissionDenied, labels.templateSaveError, starterReport.displayName]);
 
@@ -333,11 +340,12 @@ const ServerReportDesignerClient = ({
   );
 
   const publishCurrentTemplate = useCallback(async () => {
-    if (!currentTemplate || !canPublish) {
+    if (!currentTemplate || !canPublish || isWritingTemplate) {
       setError(labels.permissionDenied);
       return;
     }
 
+    setIsWritingTemplate(true);
     try {
       await reportTemplateService.publish(currentTemplate.id, currentTemplate.rowVersion);
       const published = await reportTemplateService.getForManagement(currentTemplate.id);
@@ -348,8 +356,10 @@ const ServerReportDesignerClient = ({
       setError(isConcurrencyError(publishError)
         ? labels.concurrencyError
         : apiErrorMessage(publishError, labels.templateSaveError));
+    } finally {
+      setIsWritingTemplate(false);
     }
-  }, [canPublish, currentTemplate, invalidateTemplates, labels.concurrencyError, labels.permissionDenied, labels.templateSaveError]);
+  }, [canPublish, currentTemplate, invalidateTemplates, isWritingTemplate, labels.concurrencyError, labels.permissionDenied, labels.templateSaveError]);
 
   return (
     <Box sx={{ display: "flex", flex: 1, flexDirection: "column", gap: 1.5, minHeight: 0, p: { xs: 1, sm: 1.5 } }}>
@@ -366,7 +376,7 @@ const ServerReportDesignerClient = ({
           <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
             <Chip color={currentTemplate.isPublished ? "success" : "default"} label={currentTemplate.isPublished ? labels.published : labels.draft} size="small" />
             {!currentTemplate.isPublished && canPublish ? (
-              <Button onClick={() => void publishCurrentTemplate()} size="small" variant="outlined">{labels.publish}</Button>
+              <Button disabled={isWritingTemplate} onClick={() => void publishCurrentTemplate()} size="small" variant="outlined">{labels.publish}</Button>
             ) : null}
           </Stack>
         ) : null}

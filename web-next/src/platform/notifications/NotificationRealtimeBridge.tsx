@@ -3,33 +3,26 @@
 import { useEffect, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { z } from "zod";
 import { useSession } from "@/lib/auth/SessionContext";
 import { useSignalRConnection } from "@/lib/signalr/SignalRProvider";
 import signalRService from "@/lib/signalr/signalRService";
 import { showToast } from "@/shared/components/feedback/transient";
-import { notificationKeys } from "./notificationQueries";
+import { notificationKeys } from "./notificationQueryKeys";
 import {
   normalizeSeverity,
   translateNotification,
 } from "./notificationPresentation";
-import type { RealtimeNotification } from "./types";
 
-const notificationSchema = z.object({
-  id: z.number().int().positive(),
-  category: z.string(),
-  eventType: z.string(),
-  severity: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]),
-  titleKey: z.string(),
-  messageKey: z.string(),
-  parameters: z.record(z.string(), z.string()),
-  entityType: z.string().nullable(),
-  entityId: z.string().nullable(),
-  actionUrl: z.string().nullable(),
-  correlationId: z.string(),
-  createdOn: z.string(),
-  actorUserId: z.string().nullable(),
-});
+type NotificationParserModule = typeof import("./notificationRealtimeParser");
+let notificationParserPromise: Promise<NotificationParserModule> | null = null;
+
+function loadNotificationParser() {
+  notificationParserPromise ??= import("./notificationRealtimeParser").catch((error: unknown) => {
+    notificationParserPromise = null;
+    throw error;
+  });
+  return notificationParserPromise;
+}
 
 export function NotificationRealtimeBridge() {
   const queryClient = useQueryClient();
@@ -37,51 +30,62 @@ export function NotificationRealtimeBridge() {
   const { user } = useSession();
   const { isConnected } = useSignalRConnection();
   const wasConnected = useRef(false);
+  const hasConnectedOnce = useRef(false);
   const receivedIds = useRef(new Set<number>());
 
   useEffect(() => {
+    let disposed = false;
+
     const receiveNotification = (...args: unknown[]) => {
-      const result = notificationSchema.safeParse(args[0]);
-      if (!result.success) {
-        console.warn("[Notifications] Ignored an invalid realtime payload");
-        return;
-      }
+      void loadNotificationParser()
+        .then(({ parseRealtimeNotification }) => {
+          if (disposed) return;
+          const notification = parseRealtimeNotification(args[0]);
+          if (!notification) {
+            console.warn("[Notifications] Ignored an invalid realtime payload");
+            return;
+          }
 
-      const notification = result.data as RealtimeNotification;
-      if (receivedIds.current.has(notification.id)) return;
-      receivedIds.current.add(notification.id);
-      if (receivedIds.current.size > 200) {
-        const oldestId = receivedIds.current.values().next().value;
-        if (oldestId !== undefined) receivedIds.current.delete(oldestId);
-      }
-      queryClient.setQueryData<number>(notificationKeys.unreadCount(), (count) =>
-        (count ?? 0) + 1,
-      );
-      void queryClient.invalidateQueries({ queryKey: notificationKeys.lists() });
-      void queryClient.invalidateQueries({ queryKey: notificationKeys.unreadCount() });
+          if (receivedIds.current.has(notification.id)) return;
+          receivedIds.current.add(notification.id);
+          if (receivedIds.current.size > 200) {
+            const oldestId = receivedIds.current.values().next().value;
+            if (oldestId !== undefined) receivedIds.current.delete(oldestId);
+          }
+          queryClient.setQueryData<number>(notificationKeys.unreadCount(), (count) =>
+            (count ?? 0) + 1,
+          );
+          void queryClient.invalidateQueries({ queryKey: notificationKeys.lists() });
+          void queryClient.invalidateQueries({ queryKey: notificationKeys.unreadCount() });
 
-      // The actor also receives the persisted notification, but should not see
-      // a second toast for the action they just performed.
-      if (notification.actorUserId && notification.actorUserId === user?.userId) {
-        return;
-      }
+          if (notification.actorUserId && notification.actorUserId === user?.userId) return;
 
-      const { title, message } = translateNotification(notification, t);
-      const toastMessage = `${title}: ${message}`;
-      const severity = normalizeSeverity(notification.severity);
-      if (severity === "success") showToast.success(toastMessage);
-      else if (severity === "warning" || severity === "critical") {
-        showToast.warning(toastMessage);
-      } else showToast.info(toastMessage);
+          const { title, message } = translateNotification(notification, t);
+          const toastMessage = `${title}: ${message}`;
+          const severity = normalizeSeverity(notification.severity);
+          if (severity === "success") showToast.success(toastMessage);
+          else if (severity === "warning" || severity === "critical") {
+            showToast.warning(toastMessage);
+          } else showToast.info(toastMessage);
+        })
+        .catch((error: unknown) => {
+          if (!disposed) console.warn("[Notifications] Realtime validator failed to load", error);
+        });
     };
 
     signalRService.on("ReceiveNotification", receiveNotification);
-    return () => signalRService.off("ReceiveNotification", receiveNotification);
+    return () => {
+      disposed = true;
+      signalRService.off("ReceiveNotification", receiveNotification);
+    };
   }, [queryClient, t, user?.userId]);
 
   useEffect(() => {
     if (isConnected && !wasConnected.current) {
-      void queryClient.invalidateQueries({ queryKey: notificationKeys.all });
+      if (hasConnectedOnce.current) {
+        void queryClient.invalidateQueries({ queryKey: notificationKeys.all });
+      }
+      hasConnectedOnce.current = true;
     }
     wasConnected.current = isConnected;
   }, [isConnected, queryClient]);

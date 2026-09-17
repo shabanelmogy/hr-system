@@ -3,6 +3,7 @@
 import { Add, Archive, Download, FolderOpen, Refresh, Visibility } from "@mui/icons-material";
 import { Alert, Box, Button, Chip, MenuItem, Stack, TextField } from "@mui/material";
 import { GridActionsCellItem, type GridColDef, type GridPaginationModel, type GridRowParams } from "@mui/x-data-grid";
+import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ContentWrapper } from "@/shared/components/layout";
@@ -15,12 +16,22 @@ import { permissions } from "@/lib/auth/permissions";
 import { ApiClientError } from "@/lib/api/client";
 import { showToast } from "@/shared/components/feedback/transient";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
-import { CrystalReportCreateDialog } from "./CrystalReportCreateDialog";
-import { CrystalReportDetailDialog } from "./CrystalReportDetailDialog";
-import { CrystalReportImportDialog } from "./CrystalReportImportDialog";
 import { downloadCrystalReportBlob } from "./files";
 import { crystalReportService } from "./services";
 import type { CrystalReportCapabilities, CrystalReportDetail, CrystalReportListItem, CrystalReportRoleOption, CrystalReportStatus, ImportDiscoveredCrystalReportRequest } from "./types";
+
+const CrystalReportCreateDialog = dynamic(
+  () => import("./CrystalReportCreateDialog").then((module) => module.CrystalReportCreateDialog),
+  { ssr: false },
+);
+const CrystalReportDetailDialog = dynamic(
+  () => import("./CrystalReportDetailDialog").then((module) => module.CrystalReportDetailDialog),
+  { ssr: false },
+);
+const CrystalReportImportDialog = dynamic(
+  () => import("./CrystalReportImportDialog").then((module) => module.CrystalReportImportDialog),
+  { ssr: false },
+);
 
 export default function CrystalReportManagerPage() {
   const { t, i18n } = useTranslation();
@@ -75,11 +86,11 @@ export default function CrystalReportManagerPage() {
     </Stack>
     {error && <Alert severity="error" action={<Button color="inherit" size="small" onClick={() => void load()}>{t("actions.retry")}</Button>}>{error}</Alert>}
     <MyDataGrid rows={items} columns={columns} loading={loading || busy} getRowId={(row) => row.id} checkboxSelection={false} pagination paginationMode="server" rowCount={totalCount} paginationModel={paginationModel} onPaginationModelChange={setPaginationModel} pageSizeOptions={[5, 10, 25]} autoSelectFirstRow={false} />
-    <CrystalReportCreateDialog key={createOpen ? "open" : "closed"} open={createOpen} busy={busy} onClose={() => setCreateOpen(false)} onSubmit={async (request) => { if (!guard(can.create)) return; try { setBusy(true); await crystalReportService.create(request); showToast.success(t("crystalReports.created")); setCreateOpen(false); await load(); } catch (cause) { showToast.error(cause, t("crystalReports.createError")); } finally { setBusy(false); } }} />
+    {createOpen ? <CrystalReportCreateDialog key="open" open busy={busy} onClose={() => setCreateOpen(false)} onSubmit={async (request) => { if (!guard(can.create)) return; try { setBusy(true); await crystalReportService.create(request); showToast.success(t("crystalReports.created")); setCreateOpen(false); await load(); } catch (cause) { showToast.error(cause, t("crystalReports.createError")); } finally { setBusy(false); } }} /> : null}
     {importOpen && <CrystalReportImportDialog open busy={busy} onClose={() => setImportOpen(false)} onImport={importDeployment} />}
     {selected && <CrystalReportDetailDialog key={`${selected.id}:${selected.rowVersion}`} report={selected} roles={roles} can={can} busy={busy} onClose={() => setSelected(null)} onRefresh={() => openDetails(selected)} onChanged={load} guard={guard} />}
-    <ConfirmationDialog
-      open={archiveTarget !== null}
+    {archiveTarget ? <ConfirmationDialog
+      open
       title={t("crystalReports.archive")}
       description={archiveTarget ? t("crystalReports.archiveConfirm", { name: archiveTarget.displayName }) : ""}
       confirmLabel={t("crystalReports.archive")}
@@ -89,6 +100,6 @@ export default function CrystalReportManagerPage() {
       busy={busy}
       onClose={() => setArchiveTarget(null)}
       onConfirm={() => void archive()}
-    />
+    /> : null}
   </ContentWrapper>;
 }

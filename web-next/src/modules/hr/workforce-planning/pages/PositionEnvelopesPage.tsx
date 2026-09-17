@@ -1,6 +1,6 @@
 "use client";
 
-import { useFiscalYearLookup } from "@/modules/accounting";
+import { useFiscalYearLookup } from "@/modules/accounting/public";
 import { permissions } from "@/lib/auth/permissions";
 import { useAdaptivePagination } from "@/shared/hooks/useAdaptivePagination";
 import { usePermissions } from "@/shared/hooks/usePermissions";

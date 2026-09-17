@@ -1,10 +1,27 @@
 "use client";
 
-import type { CSSProperties, ReactNode } from "react";
+import {
+  lazy,
+  Suspense,
+  useSyncExternalStore,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 import { useTheme } from "@mui/material/styles";
 import { Toaster } from "react-hot-toast";
 import type { DefaultToastOptions, ToastPosition } from "react-hot-toast";
-import { ErrorDialogHost } from "./error-dialog/ErrorDialogHost";
+import {
+  getErrorDialogSnapshot,
+  subscribeToErrorDialog,
+} from "./error-dialog/errorDialogStore";
+
+const ErrorDialogHost = lazy(() =>
+  import("./error-dialog/ErrorDialogHost").then((module) => ({
+    default: module.ErrorDialogHost,
+  })),
+);
+
+const getServerErrorDialogSnapshot = () => null;
 
 export interface ToastProviderProps {
   children: ReactNode;
@@ -83,8 +100,24 @@ export function ToastProvider({
         containerStyle={containerStyle}
         toastOptions={themedOptions}
       />
-      <ErrorDialogHost />
+      <DeferredErrorDialogHost />
     </>
+  );
+}
+
+function DeferredErrorDialogHost() {
+  const error = useSyncExternalStore(
+    subscribeToErrorDialog,
+    getErrorDialogSnapshot,
+    getServerErrorDialogSnapshot,
+  );
+
+  if (!error) return null;
+
+  return (
+    <Suspense fallback={null}>
+      <ErrorDialogHost />
+    </Suspense>
   );
 }
 

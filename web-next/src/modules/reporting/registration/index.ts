@@ -1,0 +1,1 @@
+export { reportingModuleDefinition } from "../moduleDefinition";

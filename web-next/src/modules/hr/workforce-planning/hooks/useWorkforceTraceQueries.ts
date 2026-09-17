@@ -1,14 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import WorkforceTraceService from "../services/workforceTraceService";
 import type { PlanCommitmentPageQuery } from "../types/WorkforceTrace";
+import { workforceTraceKeys } from "./workforceQueryKeys";
 
-export const workforceTraceKeys = {
-  all: ["workforceTrace"] as const,
-  byApplication: (applicationId: number) => [...workforceTraceKeys.all, "application", applicationId] as const,
-  byOffer: (offerId: number) => [...workforceTraceKeys.all, "offer", offerId] as const,
-  byEmployee: (employeeId: number) => [...workforceTraceKeys.all, "employee", employeeId] as const,
-  planCommitment: (query: PlanCommitmentPageQuery) => [...workforceTraceKeys.all, "plan-commitment", query] as const,
-};
+export { workforceTraceKeys } from "./workforceQueryKeys";
 
 export const useHiringTraceByApplication = (applicationId?: number | null, enabled = true) =>
   useQuery({

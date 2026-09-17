@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "ERP System page for Resend Email Confirmation."
 };
 
-import { ResendEmailConfirmationPage as PageComponent } from "@/platform/auth/route-pages";
+import { ResendEmailConfirmationPage as PageComponent } from "@/platform/auth/resend-email-confirmation";
 import { publicSelfRegistrationEnabled } from "@/config/publicEnv";
 import { appRoutes } from "@/config/routes";
 import { redirect } from "next/navigation";

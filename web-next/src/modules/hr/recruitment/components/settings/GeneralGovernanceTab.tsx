@@ -23,6 +23,7 @@ import {
   type GeneralSettingsFormData,
   type GeneralSettingsFormInput,
 } from "../../validation/recruitmentValidation";
+import { useUnsavedChangesRegistration } from "@/shared/contexts/UnsavedChangesContext";
 
 const CURRENCY_CODES = ["EGP", "SAR", "AED", "USD", "EUR"] as const;
 const PROBATION_MONTHS = [1, 3, 6] as const;
@@ -30,12 +31,14 @@ const PROBATION_MONTHS = [1, 3, 6] as const;
 interface GeneralGovernanceTabProps {
   settings: RecruitmentGeneralSettings;
   canEdit: boolean;
+  isSaving: boolean;
   onUpdateSettings: (updates: Partial<RecruitmentGeneralSettings>) => void;
 }
 
 export default function GeneralGovernanceTab({
   settings,
   canEdit,
+  isSaving,
   onUpdateSettings,
 }: GeneralGovernanceTabProps) {
   const { t } = useTranslation();
@@ -52,11 +55,12 @@ export default function GeneralGovernanceTab({
     id: months,
     name: t(`recruitment.settings.probationOptions.${months === 1 ? "one" : months === 3 ? "three" : "six"}`),
   })), [t]);
-  const { control, handleSubmit, reset, formState: { errors } } = useForm<
+  const { control, handleSubmit, reset, formState: { errors, isDirty } } = useForm<
     GeneralSettingsFormInput,
     unknown,
     GeneralSettingsFormData
   >({ resolver: zodResolver(schema), defaultValues });
+  useUnsavedChangesRegistration(isDirty || isSaving, isSaving);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(() => {

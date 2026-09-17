@@ -1,12 +1,9 @@
 import { useMutation, useQuery, useQueryClient, type UseMutationOptions } from "@tanstack/react-query";
 import AddressTypeService from "../services/addressTypeService";
 import type { AddressTypeDetail, AddressTypePageQuery, CreateAddressTypeRequest, UpdateAddressTypeMutation } from "../types/AddressType";
+import { addressTypeKeys } from "./addressTypeQueryKeys";
 
-export const addressTypeKeys = {
-  all: ["addressTypes"] as const,
-  list: () => [...addressTypeKeys.all, "list"] as const,
-  page: (query: AddressTypePageQuery) => [...addressTypeKeys.list(), query] as const,
-};
+export { addressTypeKeys } from "./addressTypeQueryKeys";
 
 export const useAddressTypePage = (query: AddressTypePageQuery) => useQuery({ queryKey: addressTypeKeys.page(query), queryFn: () => AddressTypeService.getPage(query), placeholderData: (previous) => previous });
 

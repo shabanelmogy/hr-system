@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "ERP System page for Reset Password."
 };
 
-import { ResetPasswordPage as PageComponent } from "@/platform/auth/route-pages";
+import { ResetPasswordPage as PageComponent } from "@/platform/auth/reset-password";
 
 export default function Page() {
   return <PageComponent />;

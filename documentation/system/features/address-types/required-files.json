@@ -172,7 +172,7 @@
     {
       "id": "web-route",
       "layer": "web-next",
-      "path": "web-next/src/app/(main)/basic-data/(geographical-information)/address-types/page.tsx",
+      "path": "web-next/src/app/(main)/basic-data/(reference-data)/address-types/page.tsx",
       "purpose": "Browser route"
     },
     {

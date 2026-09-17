@@ -261,7 +261,7 @@
     {
       "id": "web-route",
       "layer": "web-next",
-      "path": "web-next/src/app/(main)/super-admin/geography/countries/page.tsx",
+      "path": "web-next/src/app/(main)/super-admin/(reference-data)/geography/countries/page.tsx",
       "purpose": "Thin super-admin App Router entry"
     },
     {
@@ -471,13 +471,13 @@
     {
       "id": "web-translation-en",
       "layer": "web-next-config",
-      "path": "web-next/src/locales/en/translation.json",
+      "path": "web-next/src/locales/resources/reference-countries/en.json",
       "purpose": "English labels and messages"
     },
     {
       "id": "web-translation-ar",
       "layer": "web-next-config",
-      "path": "web-next/src/locales/ar/translation.json",
+      "path": "web-next/src/locales/resources/reference-countries/ar.json",
       "purpose": "Arabic labels and RTL content"
     },
     {

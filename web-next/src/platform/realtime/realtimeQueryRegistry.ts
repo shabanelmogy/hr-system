@@ -1,5 +1,5 @@
-import { tenantAdminKeys } from "@/platform/tenant-admins";
-import { tenantKeys } from "@/platform/tenants";
+import { tenantAdminKeys } from "../tenant-admins/tenantAdminQueryKeys";
+import { tenantKeys } from "../tenants/tenantQueryKeys";
 
 export type RealtimeQueryKey = readonly unknown[];
 

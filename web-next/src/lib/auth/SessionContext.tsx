@@ -45,9 +45,9 @@ const SessionContext = createContext<SessionContextValue | null>(null);
 export function SessionProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const [user, setUser] = useState<SessionClaims | null>(null);
-  // SessionProvider is mounted only for the protected `(main)` route group.
-  // Default to loading so protected consumers do not briefly observe an
-  // unauthenticated settled state before the route observer hydrates.
+  // SessionProvider is mounted only around protected route scopes. Default to
+  // loading so protected consumers do not briefly observe an unauthenticated
+  // settled state before the route observer hydrates.
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isSwitchingCompany, setIsSwitchingCompany] = useState(false);

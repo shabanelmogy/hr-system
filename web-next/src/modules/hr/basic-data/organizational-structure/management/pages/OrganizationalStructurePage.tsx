@@ -1,6 +1,7 @@
 "use client";
 
 import { Alert, Box, Button } from "@mui/material";
+import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { permissions } from "@/lib/auth/permissions";
@@ -9,11 +10,7 @@ import { ConfirmationDialog } from "@/shared/components/dialogs";
 import { ContentWrapper } from "@/shared/components/layout";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
 import { showToast } from "@/shared/components/feedback/transient";
-import OrganizationalStructureForm from "../components/OrganizationalStructureForm";
 import OrganizationalStructureMultiView from "../components/OrganizationalStructureMultiView";
-import JobDescriptionDecisionDialog from "../components/JobDescriptionDecisionDialog";
-import JobDescriptionDetailsDialog from "../components/JobDescriptionDetailsDialog";
-import { EntityChangeLogDialog } from "@/shared/components/audit-log";
 import {
   useApproveJobDescription,
   useArchiveOrganizationalItem,
@@ -32,6 +29,14 @@ import type {
   OrganizationalStructureItem,
   OrganizationalStructureMutation,
 } from "../types/OrganizationalStructure";
+
+const OrganizationalStructureForm = dynamic(() => import("../components/OrganizationalStructureForm"), { ssr: false });
+const JobDescriptionDecisionDialog = dynamic(() => import("../components/JobDescriptionDecisionDialog"), { ssr: false });
+const JobDescriptionDetailsDialog = dynamic(() => import("../components/JobDescriptionDetailsDialog"), { ssr: false });
+const EntityChangeLogDialog = dynamic(
+  () => import("@/shared/components/audit-log").then((module) => module.EntityChangeLogDialog),
+  { ssr: false },
+);
 
 type DialogMode = "add" | "edit" | "view" | "lifecycle" | "approve" | "reject" | "logs" | null;
 
@@ -264,11 +269,11 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
         onRetry={() => void changeLogsQuery.refetch()}
       />
     ) : null}
-    <ConfirmationDialog open={dialog === "lifecycle"} onClose={close} onConfirm={() => void lifecycle()}
+    {dialog === "lifecycle" ? <ConfirmationDialog open onClose={close} onConfirm={() => void lifecycle()}
       busy={mutationLoading} confirmColor={selected?.isDeleted ? "success" : "warning"}
       title={t(selected?.isDeleted ? "organizationalStructure.restoreTitle" : "organizationalStructure.archiveTitle")}
       description={t(selected?.isDeleted ? "organizationalStructure.restoreDescription" : "organizationalStructure.archiveDescription", { name: selected?.nameEn })}
-      confirmLabel={t(selected?.isDeleted ? "actions.restore" : "actions.archive")} cancelLabel={t("actions.cancel")} />
+      confirmLabel={t(selected?.isDeleted ? "actions.restore" : "actions.archive")} cancelLabel={t("actions.cancel")} /> : null}
     {dialog === "approve" || dialog === "reject" ? <JobDescriptionDecisionDialog
       open mode={dialog} loading={mutationLoading} onClose={close} onSubmit={decide} /> : null}
   </ContentWrapper>;

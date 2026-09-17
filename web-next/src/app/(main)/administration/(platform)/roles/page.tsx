@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "Manage roles and authorization settings."
 };
 
-import { RolesPage as PageComponent } from "@/platform/auth/route-pages";
+import { RolesPage as PageComponent } from "@/platform/auth/roles/list";
 
 export default function Page() {
   return <PageComponent />;

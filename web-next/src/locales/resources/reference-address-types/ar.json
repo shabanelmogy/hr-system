@@ -1,0 +1,103 @@
+{
+  "addressTypes": {
+    "dashboard": {
+      "totalAddressTypes": "إجمالي أنواع العناوين",
+      "completeProfiles": "الملفات المكتملة",
+      "recentlyAdded": "المضافة حديثاً",
+      "avgNameLength": "متوسط طول الاسم",
+      "totalMatching": "أنواع العناوين المطابقة",
+      "visibleAddressTypes": "أنواع العناوين في هذه الصفحة",
+      "withAddressesOnPage": "المرتبطة بعناوين في هذه الصفحة",
+      "withoutAddressesOnPage": "غير المرتبطة بعناوين في هذه الصفحة",
+      "dataQuality": "جودة البيانات"
+    },
+    "charts": {
+      "byInitialLetter": "أنواع العناوين حسب الحرف الأول",
+      "languageDistribution": "توزيع اللغات",
+      "nameLength": "توزيع طول الأسماء",
+      "timeline": "أنواع العناوين المضافة عبر الوقت",
+      "title": "تحليلات أنواع العناوين",
+      "noData": "لا توجد بيانات أنواع عناوين متاحة"
+    },
+    "views": {
+      "grid": "عرض الجدول",
+      "chart": "الرسم البياني",
+      "card": "عرض البطاقات",
+      "cards": "عرض البطاقات",
+      "report": "التقرير",
+      "import": "استيراد"
+    },
+    "title": "انواع العناوين",
+    "subTitle": "قائمة انواع العناوين",
+    "viewTitle": "إدارة انواع العناوين",
+    "view": "عرض نوع العنوان",
+    "add": "إضافة نوع عنوان",
+    "edit": "تعديل نوع العنوان",
+    "delete": "حذف نوع العنوان",
+    "created": "تم انشاء نوع العنوان بنجاح",
+    "updated": "تم تحديث نوع العنوان بنجاح",
+    "deleted": "تم حذف نوع العنوان بنجاح",
+    "creating": "جارى انشاء نوع عنوان",
+    "updating": "جارى تحديث نوع العنوان",
+    "saving": "جارى حفظ نوع العنوان",
+    "errorMessage": "فشل في تحميل انواع العناوين",
+    "fetchError": "فشل في جلب انواع العناوين",
+    "createError": "فشل في إنشاء نوع العنوان",
+    "updateError": "فشل في تحديث نوع العنوان",
+    "deleteError": "فشل في حذف نوع العنوان",
+    "nameArPlaceholder": "أحرف عربية فقط : المنزل , العمل",
+    "nameEnPlaceholder": "أحرف انجليزية فقط : Home , Work",
+    "noData": "لا توجد أنواع عناوين متاحة",
+    "noDataDescription": "ابدأ بإضافة أول نوع عنوان لرؤية التحليلات",
+    "total": "المجموع",
+    "all": "كل أنواع العناوين",
+    "recent30Days": "احدث (30 يوما)",
+    "recent60Days": "آخر 60 يومًا",
+    "recent90Days": "آخر 90 يومًا",
+    "recent120Days": "آخر 120 يومًا",
+    "mainTitle": "قائمة أنواع العناوين",
+    "mainSubTitle": "لا توجد أنواع عناوين متاحة لعرضها",
+    "browseAndManage": "تصفح وادارة",
+    "browseDescription": "أنواع العناوين مع بحث وتصنيف محسن",
+    "searchPlaceHolder": "ابحث في أنواع العناوين بالاسم...",
+    "addressType": "نوع العنوان",
+    "addresses": "العناوين",
+    "cardSelectionAriaLabel": "تحديد {{name}}",
+    "viewSubtitle": "إضافة نوع عنوان جديد",
+    "editSubtitle": "تعديل نوع العنوان الحالى",
+    "addSubtitle": "إضافة نوع عنوان جديد",
+    "generateMockData": "توليد بيانات تجريبية",
+    "search": {
+      "placeholder": "البحث في أنواع العناوين",
+      "column": "العمود",
+      "condition": "الشرط",
+      "allColumns": "كل الأعمدة",
+      "operators": {
+        "contains": "يحتوي على",
+        "doesNotContain": "لا يحتوي على",
+        "equals": "يساوي",
+        "doesNotEqual": "لا يساوي",
+        "startsWith": "يبدأ بـ",
+        "endsWith": "ينتهي بـ"
+      }
+    },
+    "status": {
+      "label": "الحالة",
+      "active": "نشط",
+      "archived": "مؤرشف",
+      "all": "كل الحالات"
+    },
+    "bulkArchiveAction": "أرشفة المحدد",
+    "permissionDenied": "ليس لديك صلاحية لاستيراد أنواع العناوين.",
+    "reportCatalogError": "تعذر تحميل التقارير المنشورة.",
+    "reportUnavailable": "لا يوجد تقرير منشور متاح لأنواع العناوين.",
+    "import": {
+      "rows": "{{count}} صف نوع عنوان",
+      "uploading": "جارٍ رفع أنواع العناوين...",
+      "duplicateInFile": "هذا الصف مكرر لصف نوع عنوان آخر في الملف",
+      "importSuccess": "تم رفع {{count}} نوع عنوان"
+    },
+    "listSummary": "تصفح وأدر {{count}} نوعًا من العناوين",
+    "totalCount": "{{count}} نوع عنوان"
+  }
+}

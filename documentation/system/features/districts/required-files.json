@@ -168,7 +168,7 @@
     {
       "id": "web-route",
       "layer": "web-next",
-      "path": "web-next/src/app/(main)/super-admin/geography/districts/page.tsx",
+      "path": "web-next/src/app/(main)/super-admin/(reference-data)/geography/districts/page.tsx",
       "purpose": "Thin super-admin browser route"
     },
     {
@@ -282,13 +282,13 @@
     {
       "id": "web-localization-en",
       "layer": "web-next",
-      "path": "web-next/src/locales/en/translation.json",
+      "path": "web-next/src/locales/resources/reference-districts/en.json",
       "purpose": "English District strings"
     },
     {
       "id": "web-localization-ar",
       "layer": "web-next",
-      "path": "web-next/src/locales/ar/translation.json",
+      "path": "web-next/src/locales/resources/reference-districts/ar.json",
       "purpose": "Arabic District strings"
     },
     {

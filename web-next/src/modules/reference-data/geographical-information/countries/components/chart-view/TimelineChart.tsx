@@ -1,4 +1,4 @@
-import { AreaChart } from '@/shared/components/charts';
+import AreaChart from '@/shared/components/charts/cartesian/AreaChart';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

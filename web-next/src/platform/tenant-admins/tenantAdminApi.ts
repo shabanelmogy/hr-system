@@ -3,9 +3,7 @@ import apiService from "@/shared/services/apiService";
 import type { TenantAdminRequest, TenantAdminResponse } from "./types";
 import type { ManagementPageQuery, ManagementPageResponse } from "@/lib/api/pagination";
 
-export const tenantAdminKeys = {
-  all: ["tenant-admins"] as const,
-};
+export { tenantAdminKeys } from "./tenantAdminQueryKeys";
 
 export const tenantAdminApi = {
   getPage: (query: ManagementPageQuery) =>

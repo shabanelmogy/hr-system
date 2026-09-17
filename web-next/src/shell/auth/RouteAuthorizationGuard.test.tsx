@@ -20,10 +20,13 @@ vi.mock("@/lib/auth/SessionContext", () => ({
   useSession: () => ({ user: mocks.user, isLoading: mocks.isLoading }),
 }));
 
-vi.mock("@/platform/modules", () => ({
+vi.mock("@/platform/modules/queries", () => ({
+  useAccessibleModulesQuery: () => mocks.modulesQuery,
+}));
+
+vi.mock("@/platform/modules/route-access", () => ({
   requiredModuleForPath: () => null,
   hasModuleAccess: () => true,
-  useAccessibleModulesQuery: () => mocks.modulesQuery,
 }));
 
 vi.mock("@/lib/auth/route-access", () => ({

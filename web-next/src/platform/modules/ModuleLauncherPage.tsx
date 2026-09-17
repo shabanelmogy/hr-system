@@ -2,7 +2,7 @@
 
 import { Box } from "@mui/material";
 import { ModuleLauncher } from "@/shared/components/layout/module-launcher";
-import { RouteLoading } from "@/shared/components/feedback/routes";
+import { RouteLoading } from "@/shared/components/feedback/routes/RouteLoading";
 import RouteError from "@/shared/components/feedback/routes/RouteError";
 import { toLauncherModules } from "./modulePresentation";
 import { useAccessibleModulesQuery } from "./useModulesQuery";

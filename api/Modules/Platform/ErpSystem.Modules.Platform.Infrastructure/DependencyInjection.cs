@@ -172,6 +172,7 @@ public static class DependencyInjection
         services.AddScoped<ITenantModuleEntitlementSource>(provider => provider.GetRequiredService<PlatformContractSource>());
         services.AddScoped<ISelectionChallengeSource>(provider => provider.GetRequiredService<PlatformContractSource>());
         services.AddScoped<ITenantManagementAdapter, PlatformTenantManagementAdapter>();
+        services.AddScoped<ITenantDashboardSummaryAdapter, PlatformTenantDashboardSummaryAdapter>();
         services.AddScoped<ITenantAdministratorAdapter, PlatformTenantAdministratorAdapter>();
         services.AddPlatformIdentity(configuration);
         services.AddHttpClient<IGoogleIdentityVerifier, GoogleIdentityVerifier>();

@@ -14,11 +14,13 @@ import { extractErrorMessage, getErrorStatus } from "@/shared/utils/errorUtils";
 import { Cancel, CheckCircle, Send, Undo, Visibility } from "@mui/icons-material";
 import { Alert, Box, Button, Chip, Grid, LinearProgress, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { GridActionsCellItem, type GridColDef } from "@mui/x-data-grid";
+import dynamic from "next/dynamic";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import EnvelopeAmendmentForm from "../components/EnvelopeAmendmentForm";
 import { useApproveEnvelopeAmendment, useCreateEnvelopeAmendment, useEnvelopeAmendment, useEnvelopeAmendments, useRejectEnvelopeAmendment, useSubmitEnvelopeAmendment } from "../hooks/useStaffingQueries";
 import type { EnvelopeAmendmentListItem, EnvelopeAmendmentMutation, EnvelopeAmendmentPageQuery } from "../types/Staffing";
+
+const EnvelopeAmendmentForm = dynamic(() => import("../components/EnvelopeAmendmentForm"), { ssr: false });
 
 type Dialog = "add" | "view" | "submit" | "approve" | "reject" | null;
 interface Filters { status: string }

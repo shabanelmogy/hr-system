@@ -3,10 +3,10 @@ import { alpha, IconButton, Tooltip } from "@mui/material";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { authService } from "@/platform/auth";
 import { useTheme } from "@mui/material/styles";
 import { useUnsavedChanges } from "@/shared/contexts/UnsavedChangesContext";
 import { appRoutes } from "@/config/routes";
+import { useSession } from "@/lib/auth/SessionContext";
 
 // Import sub-components
 import SettingsMenu from "./SettingsMenu";
@@ -17,6 +17,7 @@ const SettingsSystem = () => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { requestDiscard } = useUnsavedChanges();
+  const { logout } = useSession();
   const settingsOpen = Boolean(settingsAnchorEl);
 
   const handleSettingsMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -30,7 +31,7 @@ const SettingsSystem = () => {
   const handleLogout = async () => {
     if (!(await requestDiscard())) return;
     handleSettingsMenuClose();
-    void authService.logout();
+    void logout();
   };
 
   const navigateToProfile = async () => {

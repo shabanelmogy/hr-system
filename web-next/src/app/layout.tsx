@@ -64,7 +64,6 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <Providers
           initialThemeMode={DEFAULT_RUNTIME_PREFERENCES.themeMode}
           initialDirection={DEFAULT_RUNTIME_PREFERENCES.direction}
-          initialLanguage={DEFAULT_RUNTIME_PREFERENCES.language}
         >
           {children}
           <Suspense fallback={null}>

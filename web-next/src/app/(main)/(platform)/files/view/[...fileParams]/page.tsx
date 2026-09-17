@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "Preview and download files in ERP System."
 };
 
-import PageComponent from "@/platform/file-manager/media-viewer/pages/MediaViewer";
+import { MediaViewerPage as PageComponent } from "@/platform/file-manager/media-viewer/pages";
 
 export default function Page() {
   return <PageComponent />;

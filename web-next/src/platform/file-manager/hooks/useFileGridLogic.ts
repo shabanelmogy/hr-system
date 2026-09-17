@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 import { FileItem, UseFileGridLogicReturn } from "../types/File";
 import { appRoutes } from "@/config";
+import { useUnsavedChanges } from "@/shared/contexts/UnsavedChangesContext";
 import {
   useFiles,
   useDeleteFile,
@@ -25,6 +26,7 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
   // Hooks
   const { t } = useTranslation();
   const router = useRouter();
+  const { requestDiscard } = useUnsavedChanges();
 
   // TanStack Query hooks
   const {
@@ -338,15 +340,16 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
 
   // View file handler - navigates to media viewer
   const handleView = useCallback(
-    (file: FileItem) => {
+    async (file: FileItem) => {
       try {
+        if (!(await requestDiscard())) return;
         const url = appRoutes.platform.files.mediaViewer(String(file.id), file.fileExtension, file.storedFileName, file.fileName);
         router.push(url);
       } catch {
         showToast.error(t("files.failedToOpenViewer"));
       }
     },
-    [router, t]
+    [requestDiscard, router, t]
   );
 
   // Refresh handler

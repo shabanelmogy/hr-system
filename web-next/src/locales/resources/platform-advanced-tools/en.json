@@ -1,0 +1,60 @@
+{
+  "advancedTools": {
+    "title": "Advanced Tools",
+    "trackChanges": "Track Changes",
+    "healthCheck": "Health Check",
+    "apiEndPoints": "API Endpoints",
+    "localizationApi": "Localization API",
+    "hangfireDashboard": "Hangfire Dashboard"
+  },
+  "localizationApi": {
+    "keyAndValueMustNotBeEmpty": "Key and value must not be empty",
+    "localizationUpdated": "Localization updated successfully",
+    "title": "Localization messages",
+    "subTitle": "Enter a key and value to update localization"
+  },
+  "healthCheck": {
+    "title": "System Health",
+    "subTitle": "Live status of the system services and dependencies",
+    "overallStatus": "Overall status",
+    "totalDuration": "Total duration: {{duration}}",
+    "refresh": "Refresh",
+    "component": "Component",
+    "status": "Status",
+    "duration": "Duration",
+    "details": "Details",
+    "noIssuesReported": "No issues reported",
+    "lastChecked": "Last checked: {{time}}",
+    "loading": "Checking system health",
+    "retry": "Retry",
+    "loadError": "Unable to load the system health report.",
+    "tableLabel": "System health checks",
+    "statuses": {
+      "healthy": "Healthy",
+      "degraded": "Degraded",
+      "unhealthy": "Unhealthy",
+      "unknown": "Unknown"
+    }
+  },
+  "hangfireDashboard": {
+    "loading": "Loading the Hangfire dashboard",
+    "loadError": "The Hangfire dashboard could not be loaded. Verify your permission and the backend connection.",
+    "retry": "Retry"
+  },
+  "trackChanges": {
+    "changeLogId": "ID",
+    "entityName": "Entity Name",
+    "key": "Key",
+    "oldValue": "Old Value",
+    "newValue": "New Value",
+    "changedBy": "Changed By",
+    "changedAt": "Changed At",
+    "changedByPc": "Changed By PC",
+    "title": "Track Changes",
+    "subTitle": "Show Track Change Of Data"
+  },
+  "externalTools": {
+    "apiUrlRequired": "API URL is required",
+    "apiEndpoints": "API endpoints"
+  }
+}

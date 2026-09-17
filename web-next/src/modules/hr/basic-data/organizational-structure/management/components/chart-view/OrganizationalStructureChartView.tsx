@@ -2,7 +2,8 @@
 
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { BarChart, COLOR_PALETTES } from "@/shared/components/charts";
+import BarChart from "@/shared/components/charts/cartesian/BarChart";
+import { COLOR_PALETTES } from "@/shared/components/charts/palette";
 
 interface OrganizationalStructureChartViewProps {
   data: Array<{ name: string; value: number }>;

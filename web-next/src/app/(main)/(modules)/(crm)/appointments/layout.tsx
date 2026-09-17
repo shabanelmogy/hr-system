@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
+import { CrmTranslationScope } from "@/locales/scopes/CrmTranslationScope";
 
 export default function AppointmentsLayout({ children }: { children: ReactNode }) {
-  return children;
+  return <CrmTranslationScope>{children}</CrmTranslationScope>;
 }

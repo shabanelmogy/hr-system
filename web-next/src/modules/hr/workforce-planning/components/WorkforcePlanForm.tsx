@@ -1,7 +1,7 @@
 "use client";
 
-import { useFiscalYear, useFiscalYearLookup } from "@/modules/accounting";
-import { useOrganizationalLookup } from "@/modules/hr/basic-data/organizational-structure/management";
+import { useFiscalYear, useFiscalYearLookup } from "@/modules/accounting/public";
+import { useOrganizationalLookup } from "@/modules/hr/basic-data/organizational-structure/management/public";
 import { MyForm, MySelect, MyTextField, toFormErrorMessages } from "@/shared/components/forms";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import { zodResolver } from "@hookform/resolvers/zod";

@@ -136,7 +136,7 @@
     {
       "id": "web-route",
       "layer": "web-next",
-      "path": "web-next/src/app/(main)/basic-data/(organizational-structure)/organizational-structure/geographic-scope/page.tsx",
+      "path": "web-next/src/app/(main)/basic-data/organizational-structure/(platform)/geographic-scope/page.tsx",
       "purpose": "Thin browser route"
     },
     {
@@ -202,7 +202,7 @@
     {
       "id": "web-platform-country-route",
       "layer": "web-next",
-      "path": "web-next/src/app/(main)/super-admin/geography/countries/page.tsx",
+      "path": "web-next/src/app/(main)/super-admin/(reference-data)/geography/countries/page.tsx",
       "purpose": "Canonical Platform country route"
     },
     {

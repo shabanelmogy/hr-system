@@ -26,7 +26,7 @@ import {
   alpha,
   useTheme,
 } from "@mui/material";
-import { useMemo, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
 
@@ -39,11 +39,9 @@ import { PageHeader } from "@/shared/components/navigation/header";
 import {
   subscriptionStatuses,
   type SubscriptionStatus,
-  type TenantManagementResponse,
 } from "./types";
-import { useTenantsQuery } from "./useTenantsQuery";
+import { useTenantDashboardSummaryQuery } from "./useTenantsQuery";
 
-const EXPIRING_WINDOW_DAYS = 30;
 const dashboardListSx = {
   height: "100%",
   minHeight: 0,
@@ -55,11 +53,10 @@ const dashboardListSx = {
 
 export default function TenantDashboardPage() {
   const { t, i18n } = useTranslation();
-  const tenantsQuery = useTenantsQuery();
+  const summaryQuery = useTenantDashboardSummaryQuery();
   const { hasPermission } = usePermissions();
   const canViewGlobalGeography = hasPermission(permissions.ViewCountries);
-  const tenants = useMemo(() => tenantsQuery.data ?? [], [tenantsQuery.data]);
-  const summary = useMemo(() => summarizeTenants(tenants), [tenants]);
+  const summary = summaryQuery.data;
 
   return (
     <ContentWrapper fillAvailable>
@@ -93,12 +90,12 @@ export default function TenantDashboardPage() {
         )}
       />
 
-      {tenantsQuery.isLoading ? (
+      {summaryQuery.isLoading ? (
         <Box sx={{ display: "grid", flex: 1, minHeight: 0, placeItems: "center" }}>
           <CircularProgress />
         </Box>
-      ) : tenantsQuery.isError ? (
-        <Alert severity="error">{getErrorMessage(tenantsQuery.error)}</Alert>
+      ) : summaryQuery.isError || !summary ? (
+        <Alert severity="error">{getErrorMessage(summaryQuery.error)}</Alert>
       ) : (
         <Box
           sx={{
@@ -191,7 +188,7 @@ export default function TenantDashboardPage() {
               showTrend={false}
               size="small"
               title={t("superAdminDashboard.expiringSoon")}
-              value={summary.expiringSoon.length}
+              value={summary.expiringWithin30Days}
               sx={{ height: "100%", minWidth: 0, scrollSnapAlign: "start" }}
             />
           </Box>
@@ -234,7 +231,7 @@ export default function TenantDashboardPage() {
               title={t("superAdminDashboard.subscriptionOverview")}
             >
               <SubscriptionOverview
-                counts={summary.statusCounts}
+                counts={summary.subscriptionStatusCounts}
                 total={summary.totalTenants}
               />
             </DashboardPanel>
@@ -258,9 +255,9 @@ export default function TenantDashboardPage() {
               icon={<ScheduleIcon fontSize="small" />}
               title={t("superAdminDashboard.expiringSubscriptions")}
             >
-              {summary.expiringSoon.length ? (
+              {summary.expiringWithin30DaysTenants.length ? (
                   <Box sx={dashboardListSx}>
-                    {summary.expiringSoon.map((tenant) => (
+                    {summary.expiringWithin30DaysTenants.map((tenant) => (
                       <Stack
                         key={tenant.id}
                         direction="row"
@@ -623,39 +620,6 @@ function CapacityRow({ label, used, limit }: { label: string; used: number; limi
       />
     </Stack>
   );
-}
-
-function summarizeTenants(tenants: TenantManagementResponse[]) {
-  const now = Date.now();
-  const expiringThreshold = now + EXPIRING_WINDOW_DAYS * 24 * 60 * 60 * 1000;
-  const statusCounts = Object.fromEntries(
-    subscriptionStatuses.map((status) => [status, 0]),
-  ) as Record<SubscriptionStatus, number>;
-
-  for (const tenant of tenants) statusCounts[tenant.subscriptionStatus] += 1;
-
-  return {
-    totalTenants: tenants.length,
-    enabledTenants: tenants.filter((tenant) => tenant.isActive).length,
-    admins: tenants.reduce((total, tenant) => total + tenant.adminCount, 0),
-    users: tenants.reduce((total, tenant) => total + tenant.userCount, 0),
-    companies: tenants.reduce((total, tenant) => total + tenant.companyCount, 0),
-    maxAdmins: tenants.reduce((total, tenant) => total + tenant.maxAdmins, 0),
-    maxUsers: tenants.reduce((total, tenant) => total + tenant.maxUsers, 0),
-    statusCounts,
-    expiringSoon: tenants
-      .filter((tenant) => {
-        if (!tenant.subscriptionEndsOn) return false;
-        const endsOn = new Date(tenant.subscriptionEndsOn).getTime();
-        return endsOn >= now && endsOn <= expiringThreshold;
-      })
-      .sort((left, right) =>
-        new Date(left.subscriptionEndsOn!).getTime() - new Date(right.subscriptionEndsOn!).getTime()
-      ),
-    recentTenants: [...tenants].sort((left, right) =>
-      new Date(right.createdOn).getTime() - new Date(left.createdOn).getTime()
-    ),
-  };
 }
 
 function getDaysUntil(value: string | null): number {

@@ -133,13 +133,13 @@
     {
       "id": "web-apps-route",
       "layer": "web",
-      "path": "web-next/src/app/(main)/apps/page.tsx",
+      "path": "web-next/src/app/(main)/(platform)/apps/page.tsx",
       "purpose": "Applications entry route"
     },
     {
       "id": "web-submodule-route",
       "layer": "web",
-      "path": "web-next/src/app/(main)/apps/[moduleCode]/[submoduleCode]/page.tsx",
+      "path": "web-next/src/app/(main)/(platform)/apps/[moduleCode]/[submoduleCode]/page.tsx",
       "purpose": "Validated submodule entry"
     },
     {

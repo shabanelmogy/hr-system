@@ -1,0 +1,133 @@
+{
+  "fiscalYears": {
+    "title": "Fiscal Years",
+    "totalLabel": "fiscal years",
+    "fields": {
+      "code": "Code",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "frequency": "Period frequency",
+      "periods": "Periods",
+      "status": "Status"
+    },
+    "frequency": {
+      "monthly": "Monthly",
+      "quarterly": "Quarterly"
+    },
+    "status": {
+      "all": "All statuses",
+      "draft": "Draft",
+      "open": "Open",
+      "closing": "Closing",
+      "closed": "Closed",
+      "locked": "Locked"
+    },
+    "recordStatus": {
+      "active": "Active records",
+      "archived": "Archived records",
+      "all": "All records"
+    },
+    "filters": {
+      "recordStatus": "Record status",
+      "lifecycle": "Lifecycle status"
+    },
+    "search": {
+      "placeholder": "Search fiscal years...",
+      "column": "Search column",
+      "condition": "Condition",
+      "fields": {
+        "all": "All columns",
+        "code": "Code",
+        "nameAr": "Arabic name",
+        "nameEn": "English name"
+      },
+      "operators": {
+        "contains": "Contains",
+        "doesNotContain": "Does not contain",
+        "equals": "Equals",
+        "doesNotEqual": "Does not equal",
+        "startsWith": "Starts with",
+        "endsWith": "Ends with"
+      }
+    },
+    "sort": {
+      "startDate": "Start date",
+      "endDate": "End date",
+      "code": "Code",
+      "nameAr": "Arabic name",
+      "nameEn": "English name",
+      "status": "Status",
+      "createdOn": "Created on"
+    },
+    "actions": {
+      "add": "Add fiscal year",
+      "lifecycle": "Advance lifecycle",
+      "reset": "Reset filters"
+    },
+    "lifecycle": {
+      "open": "Open year",
+      "beginClosing": "Begin closing",
+      "close": "Close year",
+      "lock": "Lock year",
+      "reopen": "Reopen year"
+    },
+    "form": {
+      "addTitle": "Add Fiscal Year",
+      "editTitle": "Edit Fiscal Year",
+      "viewTitle": "Fiscal Year Details",
+      "subtitle": "Define the financial calendar used by workforce plans and budgets.",
+      "endDateHelper": "Calculated automatically to cover exactly twelve months.",
+      "periodsHelper": "Monthly or quarterly periods are generated automatically and become read-only after the year is opened."
+    },
+    "periods": {
+      "title": "Generated periods",
+      "count": "{{count}} periods",
+      "item": "Period {{sequence}}"
+    },
+    "validation": {
+      "code": "Enter a valid code of 2–20 letters, numbers, dots, slashes, underscores, or hyphens.",
+      "name": "Enter a valid name of 2–100 characters.",
+      "startDate": "Select the start date.",
+      "endDate": "Select the end date.",
+      "duration": "The fiscal year must cover exactly twelve months."
+    },
+    "empty": {
+      "title": "No fiscal years yet",
+      "subtitle": "Create the first financial calendar before preparing workforce budgets."
+    },
+    "noResults": {
+      "title": "No matching fiscal years",
+      "subtitle": "Reset the search or lifecycle filters and try again."
+    },
+    "messages": {
+      "created": "Fiscal year {{code}} was created.",
+      "updated": "Fiscal year {{code}} was updated.",
+      "archived": "Fiscal year archived.",
+      "restored": "Fiscal year restored.",
+      "lifecycleChanged": "Fiscal year moved to {{status}}.",
+      "fetchError": "Unable to load fiscal years.",
+      "createError": "Unable to create the fiscal year.",
+      "updateError": "Unable to update the fiscal year.",
+      "archiveError": "Unable to archive the fiscal year.",
+      "restoreError": "Unable to restore the fiscal year.",
+      "lifecycleError": "Unable to advance the fiscal year lifecycle.",
+      "conflictReloaded": "This fiscal year was changed by another operation. The latest server version has been reloaded; review it before trying again."
+    },
+    "confirm": {
+      "archiveTitle": "Archive fiscal year?",
+      "archiveDescription": "Only draft fiscal years can be archived.",
+      "restoreTitle": "Restore fiscal year?",
+      "restoreDescription": "The draft financial calendar will become active again.",
+      "openTitle": "Open fiscal year?",
+      "openDescription": "The calendar becomes available to workforce plans and can no longer be edited.",
+      "beginClosingTitle": "Begin fiscal-year closing?",
+      "beginClosingDescription": "The year enters a controlled closing phase.",
+      "closeTitle": "Close fiscal year?",
+      "closeDescription": "All generated periods will be closed.",
+      "lockTitle": "Lock fiscal year?",
+      "lockDescription": "The year and all its periods will be locked against operational changes. An authorized lifecycle manager can still reopen it.",
+      "reopenTitle": "Reopen fiscal year?",
+      "reopenDescription": "This returns either a Closed or Locked year and all its periods to Open while preserving the audit history."
+    }
+  }
+}

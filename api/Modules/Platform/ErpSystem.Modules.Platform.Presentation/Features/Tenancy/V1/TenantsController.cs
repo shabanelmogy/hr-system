@@ -20,6 +20,10 @@ public sealed class TenantsController(ISender sender)
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken) =>
         Ok(await sender.Send(new GetAllTenantsQuery(), cancellationToken));
 
+    [HttpGet]
+    public async Task<IActionResult> GetDashboardSummary(CancellationToken cancellationToken) =>
+        Ok(await sender.Send(new GetTenantDashboardSummaryQuery(), cancellationToken));
+
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(
         [FromRoute] string id,

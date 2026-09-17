@@ -5,7 +5,7 @@ import { Alert, Box, Button, CircularProgress } from "@mui/material";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MySelect, MyTextField } from "@/shared/components/forms";
-import { crystalReportService } from "@/modules/reporting";
+import { crystalReportService } from "@/modules/reporting/public";
 import { ReportViewer, type ReportSearchParams, type UpdateReportSearchParams } from "@/shared/reporting";
 import type { OrganizationalResource } from "../../types/OrganizationalStructure";
 

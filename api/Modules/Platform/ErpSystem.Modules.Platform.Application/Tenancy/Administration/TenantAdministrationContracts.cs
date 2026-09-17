@@ -131,6 +131,40 @@ public sealed record TenantManagementResponse(
     string RowVersion,
     IReadOnlyList<TenantModuleEntitlementResponse>? Entitlements = null);
 
+public sealed record TenantDashboardSubscriptionStatusCounts(
+    int Free,
+    int Trial,
+    int Active,
+    int PastDue,
+    int Suspended,
+    int Expired,
+    int Cancelled);
+
+public sealed record TenantDashboardRecentTenantResponse(
+    string Id,
+    string Identifier,
+    string Name,
+    string SubscriptionStatus);
+
+public sealed record TenantDashboardExpiringTenantResponse(
+    string Id,
+    string Name,
+    string? PlanName,
+    DateTime SubscriptionEndsOn);
+
+public sealed record TenantDashboardSummaryResponse(
+    int TotalTenants,
+    int EnabledTenants,
+    int Admins,
+    int Users,
+    int Companies,
+    int MaxAdmins,
+    int MaxUsers,
+    int ExpiringWithin30Days,
+    TenantDashboardSubscriptionStatusCounts SubscriptionStatusCounts,
+    IReadOnlyList<TenantDashboardRecentTenantResponse> RecentTenants,
+    IReadOnlyList<TenantDashboardExpiringTenantResponse> ExpiringWithin30DaysTenants);
+
 public sealed record ArchiveTenantRequest(
     string Reason,
     DateTime? PurgeScheduledOn,
@@ -173,6 +207,13 @@ public interface ITenantManagementFlow
 
 /// <summary>Platform persistence port for tenant administration.</summary>
 public interface ITenantManagementAdapter : ITenantManagementFlow;
+
+/// <summary>Lightweight read port for the super-admin tenant dashboard.</summary>
+public interface ITenantDashboardSummaryAdapter
+{
+    Task<TenantDashboardSummaryResponse> GetSummaryAsync(
+        CancellationToken cancellationToken = default);
+}
 
 public sealed record CreateTenantAdministratorRequest(
     string FirstName,

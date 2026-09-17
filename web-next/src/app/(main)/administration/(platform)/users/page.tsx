@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "Manage system users and account access."
 };
 
-import { UsersPage as PageComponent } from "@/platform/auth/route-pages";
+import { UsersPage as PageComponent } from "@/platform/auth/users/route";
 
 export default function Page() {
   return <PageComponent />;

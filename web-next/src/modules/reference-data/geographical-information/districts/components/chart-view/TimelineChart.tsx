@@ -1,4 +1,5 @@
-import { AreaChart, COLOR_PALETTES } from "@/shared/components/charts";
+import AreaChart from "@/shared/components/charts/cartesian/AreaChart";
+import { COLOR_PALETTES } from "@/shared/components/charts/palette";
 import { useTranslation } from "react-i18next";
 import type { TimelineData } from "./chartDataUtils";
 

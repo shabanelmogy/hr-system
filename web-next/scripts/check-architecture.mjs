@@ -137,6 +137,24 @@ const formSafetyViolations = [];
 const cacheSafetyViolations = [];
 const directHttpViolations = [];
 const compatibilityViolations = [];
+const interactionBoundaryViolations = [];
+const navigationSafetyViolations = [];
+
+const guardedNavigationBypassAllowlist = new Set([
+  // Session/authentication failures and logout are forced security transitions.
+  "lib/auth/SessionContext.tsx",
+  // These public-auth flows are outside the protected ERP editing shell.
+  "platform/auth/accept-invitation/AcceptInvitationPage.tsx",
+  "platform/auth/EmailConfirmed.tsx",
+  "platform/auth/register/Register.tsx",
+  "platform/auth/ResetPassword.tsx",
+  // Automatic entry/fallback redirects do not leave an editable child mounted.
+  "platform/modules/SubmoduleEntryPage.tsx",
+  "shared/components/auth/ForbiddenPage.tsx",
+  "shared/components/feedback/routes/PageUnavailable.tsx",
+  // The central unsaved-changes provider performs the guarded replay itself.
+  "shared/contexts/UnsavedChangesContext.tsx",
+]);
 
 const appRoot = path.join(sourceRoot, "app");
 const mainAppRoot = path.join(appRoot, "(main)");
@@ -282,6 +300,43 @@ for (const filePath of sourceFiles) {
     );
   }
 
+  const isFeaturePage =
+    filePath.endsWith("Page.tsx") &&
+    (normalizedRelativePath.startsWith("modules/") || normalizedRelativePath.startsWith("platform/"));
+  if (isFeaturePage) {
+    const staticLocalInteractionImport = /^\s*import\s+(?!type\b)[^;]+?\s+from\s+["'](\.[^"']+)["'];?/gm;
+    for (const match of source.matchAll(staticLocalInteractionImport)) {
+      const specifier = match[1];
+      const importedFileName = specifier.split("/").at(-1) ?? "";
+      if (/(?:Form|Dialog)$/.test(importedFileName)) {
+        interactionBoundaryViolations.push(
+          `${relativePath}: interaction-only '${importedFileName}' must be loaded with next/dynamic and mounted only while active`,
+        );
+      }
+    }
+
+    if (
+      /(?:from\s+["']pulltorefreshjs["']|import\s*\(\s*["']pulltorefreshjs["']\s*\))/.test(source) &&
+      normalizedRelativePath !== "shell/bootstrap/MainClientBootstrap.tsx"
+    ) {
+      navigationSafetyViolations.push(
+        `${relativePath}: pulltorefreshjs must remain isolated to MainClientBootstrap so mobile refresh policy stays centralized`,
+      );
+    }
+
+    const usesClientRouterNavigation = /\brouter\.(?:push|replace|refresh)\s*\(/.test(source);
+    if (
+      usesClientRouterNavigation &&
+      !guardedNavigationBypassAllowlist.has(normalizedRelativePath) &&
+      !/\brequestDiscard\b/.test(source)
+    ) {
+      navigationSafetyViolations.push(
+        `${relativePath}: protected client navigation must pass through the unsaved-changes guard; ` +
+          "add requestDiscard or explicitly document a forced/system redirect in the architecture checker",
+      );
+    }
+  }
+
   for (const specifier of collectImportSpecifiers(source)) {
     const target = resolveImport(filePath, specifier);
     if (!target) continue;
@@ -369,8 +424,10 @@ if (
   cycles.size ||
   formSafetyViolations.length ||
   cacheSafetyViolations.length ||
-  directHttpViolations.length ||
-  compatibilityViolations.length
+    directHttpViolations.length ||
+    compatibilityViolations.length ||
+    interactionBoundaryViolations.length ||
+    navigationSafetyViolations.length
 ) {
   if (violations.length) {
     console.error("Forbidden architecture dependencies:");
@@ -408,9 +465,17 @@ if (
     console.error("Forbidden compatibility shims:");
     for (const violation of compatibilityViolations) console.error(`  ${violation}`);
   }
+  if (interactionBoundaryViolations.length) {
+    console.error("Eager interaction-only feature imports:");
+    for (const violation of interactionBoundaryViolations) console.error(`  ${violation}`);
+  }
+  if (navigationSafetyViolations.length) {
+    console.error("Unsafe navigation/runtime patterns:");
+    for (const violation of navigationSafetyViolations) console.error(`  ${violation}`);
+  }
   process.exit(1);
 }
 
 console.log(
-  "Architecture checks passed: target ownership, App Router ownership/collisions/thin adapters, public APIs, dependency direction, cycles, form validation safety, query cache consistency, and compatibility-shim protection are clean.",
+  "Architecture checks passed: target ownership, App Router ownership/collisions/thin adapters, public APIs, dependency direction, cycles, form validation safety, query cache consistency, lazy interaction boundaries, navigation/runtime safety, and compatibility-shim protection are clean.",
 );

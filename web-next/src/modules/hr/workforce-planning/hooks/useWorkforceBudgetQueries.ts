@@ -12,21 +12,13 @@ import type {
   WorkforceBudgetMutationRequest,
   WorkforceBudgetPageQuery,
 } from "../types/WorkforceBudget";
-import { workforcePlanKeys } from "./useWorkforcePlanQueries";
+import {
+  positionEnvelopeKeys,
+  workforceBudgetKeys,
+  workforcePlanKeys,
+} from "./workforceQueryKeys";
 
-export const workforceBudgetKeys = {
-  all: ["workforceBudgets"] as const,
-  page: (query: WorkforceBudgetPageQuery) => [...workforceBudgetKeys.all, "page", query] as const,
-  detail: (id: number) => [...workforceBudgetKeys.all, "detail", id] as const,
-  sourcePlans: (query: BudgetSourcePlanPageQuery) => [...workforceBudgetKeys.all, "source-plans", query] as const,
-  sourcePlan: (planId: number) => [...workforceBudgetKeys.all, "source-plan", planId] as const,
-};
-
-export const positionEnvelopeKeys = {
-  all: ["positionEnvelopes"] as const,
-  page: (query: PositionEnvelopePageQuery) => [...positionEnvelopeKeys.all, "page", query] as const,
-  detail: (id: number) => [...positionEnvelopeKeys.all, "detail", id] as const,
-};
+export { positionEnvelopeKeys, workforceBudgetKeys } from "./workforceQueryKeys";
 
 export const useWorkforceBudgetPage = (query: WorkforceBudgetPageQuery) => useQuery({ queryKey: workforceBudgetKeys.page(query), queryFn: () => WorkforceBudgetService.getPage(query), placeholderData: previous => previous });
 export const useWorkforceBudget = (id?: number | null, enabled = true) => useQuery({ queryKey: workforceBudgetKeys.detail(id ?? 0), queryFn: () => WorkforceBudgetService.getById(id!), enabled: enabled && !!id });

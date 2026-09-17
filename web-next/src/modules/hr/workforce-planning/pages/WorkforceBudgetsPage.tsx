@@ -1,6 +1,6 @@
 "use client";
 
-import { useFiscalYearLookup } from "@/modules/accounting";
+import { useFiscalYearLookup } from "@/modules/accounting/public";
 import { permissions } from "@/lib/auth/permissions";
 import { ConfirmationDialog } from "@/shared/components/dialogs";
 import { showToast } from "@/shared/components/feedback/transient";
@@ -10,9 +10,9 @@ import { useServerListState } from "@/shared/hooks/useServerListState";
 import { extractErrorMessage, getErrorStatus } from "@/shared/utils/errorUtils";
 import { CheckCircle, Send, Undo } from "@mui/icons-material";
 import { Alert, Box, Button, TextField } from "@mui/material";
+import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import WorkforceBudgetForm from "../components/WorkforceBudgetForm";
 import WorkforceBudgetsMultiView from "../components/WorkforceBudgetsMultiView";
 import {
   useApproveWorkforceBudget,
@@ -26,6 +26,8 @@ import {
 } from "../hooks/useWorkforceBudgetQueries";
 import WorkforceBudgetService from "../services/workforceBudgetService";
 import type { WorkforceBudgetDetail, WorkforceBudgetListItem, WorkforceBudgetMutationRequest, WorkforceBudgetPageQuery, WorkforceBudgetPermissions } from "../types/WorkforceBudget";
+
+const WorkforceBudgetForm = dynamic(() => import("../components/WorkforceBudgetForm"), { ssr: false });
 
 type Dialog = "add" | "edit" | "view" | "submit" | "approve" | "reject" | null;
 interface Filters { status: string; fiscalYearId?: number; workforcePlanId?: number }

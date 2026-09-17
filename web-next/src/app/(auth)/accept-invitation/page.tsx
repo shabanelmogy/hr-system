@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AcceptInvitationPage } from "@/platform/auth/route-pages";
+import { AcceptInvitationPage } from "@/platform/auth/accept-invitation";
 
 export const metadata: Metadata = {
   title: "Accept Invitation | ERP System",

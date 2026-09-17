@@ -3,11 +3,13 @@
 // RolesPage.js
 import { ContentWrapper } from "@/shared/components/layout";
 import { PageHeader } from "@/shared/components/navigation/header";
+import dynamic from "next/dynamic";
 import { useTranslation } from "react-i18next";
-import RoleArchiveDialog from "./components/RoleArchiveDialog";
-import RoleForm from "./components/RoleForm";
 import RolesDataGrid from "./components/RolesDataGrid";
 import useRoleGridLogic from "./hooks/UseRoleGridLogic";
+
+const RoleForm = dynamic(() => import("./components/RoleForm"), { ssr: false });
+const RoleArchiveDialog = dynamic(() => import("./components/RoleArchiveDialog"), { ssr: false });
 
 const RolesPage = () => {
   const { t } = useTranslation();
@@ -66,7 +68,7 @@ const RolesPage = () => {
           t={t}
         />
 
-        <RoleForm
+        {dialogType === "edit" || dialogType === "add" || dialogType === "view" ? <RoleForm
           open={dialogType === "edit" || dialogType === "add" || dialogType === "view"}
           dialogType={roleFormDialogType}
           selectedRole={selectedRole}
@@ -74,14 +76,14 @@ const RolesPage = () => {
           onSubmit={handleFormSubmit}
           loading={loading}
           t={t}
-        />
+        /> : null}
 
-        <RoleArchiveDialog
-          open={dialogType === "delete"}
+        {dialogType === "delete" ? <RoleArchiveDialog
+          open
           onClose={closeDialog}
           onConfirm={handleDelete}
           selectedRole={selectedRole}
-        />
+        /> : null}
       </ContentWrapper>
       {SnackbarComponent}
     </>

@@ -3,7 +3,6 @@ import { google as googleRoutes } from "@/config/api/advanced";
 import useNotifications from "@/shared/hooks/useNotifications";
 import apiService from "@/shared/services/apiService";
 import HandleApiError from "@/shared/services/apiError";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -12,11 +11,22 @@ import type {
   TenantSelectionResponse,
   SocialLoginHandler,
 } from "../types";
-import { parseLoginResult } from "../loginResult";
 import {
-  createLoginValidationSchema,
+  createLoginResolver,
   type LoginFormData,
 } from "../validation/loginValidation";
+
+type LoginResultModule = typeof import("../loginResult");
+
+let loginResultModulePromise: Promise<LoginResultModule> | null = null;
+
+const loadLoginResultModule = () => {
+  loginResultModulePromise ??= import("../loginResult").catch((error: unknown) => {
+    loginResultModulePromise = null;
+    throw error;
+  });
+  return loginResultModulePromise;
+};
 
 const DEV_CREDENTIALS = {
   user: { username: "user", password: "P@ssword123" },
@@ -35,7 +45,6 @@ const useLoginForm = () => {
   const [isSelectingCompany, setIsSelectingCompany] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const userNameRef = useRef<HTMLInputElement>(null);
-  const validationSchema = createLoginValidationSchema(t);
 
   const {
     handleSubmit,
@@ -46,12 +55,32 @@ const useLoginForm = () => {
     setValue,
   } = useForm<LoginFormData>({
     defaultValues: { username: "", password: "" },
-    resolver: zodResolver(validationSchema),
+    resolver: createLoginResolver(t),
     mode: "onChange",
   });
 
   useEffect(() => {
     userNameRef.current?.focus();
+
+    const warmLoginRuntime = () => {
+      // Keep the first paint light, but move the response validator off the
+      // user's eventual click path. Do not prefetch protected routes before
+      // authentication: their RSC payload can be resolved with anonymous
+      // request state and then reused after the auth cookie changes.
+      void loadLoginResultModule().catch(() => undefined);
+    };
+
+    const idleWindow = window as Window & {
+      requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+    if (typeof idleWindow.requestIdleCallback === "function") {
+      const idleId = idleWindow.requestIdleCallback(warmLoginRuntime, { timeout: 1_000 });
+      return () => idleWindow.cancelIdleCallback?.(idleId);
+    }
+
+    const timerId = window.setTimeout(warmLoginRuntime, 400);
+    return () => window.clearTimeout(timerId);
   }, []);
 
   const completeAuthentication = () => {
@@ -59,10 +88,17 @@ const useLoginForm = () => {
     setCompanySelection(null);
     showSuccess(t("messages.loginSuccessful"), t("messages.success"));
     setTenantSelection(null);
+    // Authentication changes the server-visible cookie state. Force a fresh
+    // document request so Proxy, the protected App Router tree and the session
+    // bootstrap all observe the newly committed credentials consistently.
     window.location.replace(returnTo);
   };
 
-  const handleLoginResult = async (data: unknown): Promise<boolean> => {
+  const handleLoginResult = async (
+    data: unknown,
+    parserModule = loadLoginResultModule(),
+  ): Promise<boolean> => {
+    const { parseLoginResult } = await parserModule;
     const result = parseLoginResult(data);
     if (result?.kind === "authenticated") {
       completeAuthentication();
@@ -84,11 +120,13 @@ const useLoginForm = () => {
     submittingRef.current = true;
     setIsSubmittingState(true);
     try {
+      // Start downloading the response validator while the login request is in flight.
+      const parserModule = loadLoginResultModule();
       const data = await apiService.post<unknown>(authRoutes.login, {
         username,
         password,
       });
-      if (!await handleLoginResult(data)) {
+      if (!await handleLoginResult(data, parserModule)) {
         showError(t("googleAuth.invalidCredentials"), t("messages.error"));
       }
     } catch (error) {
@@ -118,10 +156,11 @@ const useLoginForm = () => {
       const token = getGoogleToken(credentialResponse);
       if (!token) throw new Error("Invalid credential response");
 
+      const parserModule = loadLoginResultModule();
       const data = await apiService.post<unknown>(googleRoutes.auth, {
         credential: token,
       });
-      if (!await handleLoginResult(data)) {
+      if (!await handleLoginResult(data, parserModule)) {
         showError(t("googleAuth.googleLoginFailed"), t("messages.error"));
       }
     } catch (error) {
@@ -148,10 +187,12 @@ const useLoginForm = () => {
     if (!tenantSelection || isSelectingTenant) return;
     setIsSelectingTenant(true);
     try {
+      const parserModule = loadLoginResultModule();
       const data = await apiService.post<unknown>(authRoutes.selectTenant, {
         tenantSelectionToken: tenantSelection.tenantSelectionToken,
         tenantId,
       });
+      const { parseLoginResult } = await parserModule;
       const result = parseLoginResult(data);
       if (result?.kind === "authenticated") {
         completeAuthentication();
@@ -176,10 +217,12 @@ const useLoginForm = () => {
 
     setIsSelectingCompany(true);
     try {
+      const parserModule = loadLoginResultModule();
       const data = await apiService.post<unknown>(authRoutes.selectCompany, {
         companySelectionToken: companySelection.companySelectionToken,
         companyId,
       });
+      const { parseLoginResult } = await parserModule;
       const result = parseLoginResult(data);
       if (result?.kind !== "authenticated") {
         showError(t("auth.invalidCompanySelection"), t("messages.error"));

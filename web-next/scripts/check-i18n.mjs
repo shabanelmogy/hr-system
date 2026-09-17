@@ -4,6 +4,7 @@ import ts from "typescript";
 
 const root = path.resolve("src");
 const localeRoot = path.resolve("src/locales");
+const resourceRoot = path.join(localeRoot, "resources");
 const visibleAttributes = new Set([
   "label", "title", "placeholder", "helperText", "description", "aria-label", "ariaLabel",
   "confirmLabel", "cancelLabel", "emptyMessage", "loadingMessage", "errorMessage", "noRowsLabel",
@@ -111,21 +112,67 @@ function flatten(value, prefix = "") {
 }
 
 function normalizeKey(key) { return key.replace(/_(?:zero|one|two|few|many|other)$/g, ""); }
-const catalogs = {
-  en: flatten(JSON.parse(fs.readFileSync(path.join(localeRoot, "en/translation.json"), "utf8"))),
-  ar: flatten(JSON.parse(fs.readFileSync(path.join(localeRoot, "ar/translation.json"), "utf8"))),
-};
-const enKeys = new Set([...catalogs.en.keys()].map(normalizeKey));
-const arKeys = new Set([...catalogs.ar.keys()].map(normalizeKey));
-for (const key of [...enKeys].filter((item) => !arKeys.has(item))) missingKeys.push(`missing in ar: ${key}`);
-for (const key of [...arKeys].filter((item) => !enKeys.has(item))) missingKeys.push(`missing in en: ${key}`);
-for (const [key, value] of catalogs.ar) {
-  if (value === "النص") missingKeys.push(`ar catalog placeholder: ${key}`);
-}
-for (const [key, value] of catalogs.en) {
-  if (typeof value === "string" && /Placeholder$/.test(value) && !/placeholder/i.test(key)) {
-    missingKeys.push(`en catalog placeholder: ${key}`);
+const namespaceCatalogs = loadNamespaceCatalogs();
+const enKeys = new Set();
+const arKeys = new Set();
+const duplicateValues = { en: new Map(), ar: new Map() };
+
+for (const [namespace, catalogs] of namespaceCatalogs) {
+  const namespaceEnKeys = new Set([...catalogs.en.keys()].map(normalizeKey));
+  const namespaceArKeys = new Set([...catalogs.ar.keys()].map(normalizeKey));
+  for (const key of namespaceEnKeys) enKeys.add(key);
+  for (const key of namespaceArKeys) arKeys.add(key);
+
+  for (const key of [...namespaceEnKeys].filter((item) => !namespaceArKeys.has(item))) {
+    missingKeys.push(`${namespace}: missing in ar: ${key}`);
   }
+  for (const key of [...namespaceArKeys].filter((item) => !namespaceEnKeys.has(item))) {
+    missingKeys.push(`${namespace}: missing in en: ${key}`);
+  }
+
+  for (const language of ["en", "ar"]) {
+    for (const [key, value] of catalogs[language]) {
+      const previous = duplicateValues[language].get(key);
+      if (previous && previous.value !== value) {
+        missingKeys.push(
+          `${language} duplicate key differs: ${key} (${previous.namespace}, ${namespace})`,
+        );
+      } else if (!previous) {
+        duplicateValues[language].set(key, { namespace, value });
+      }
+    }
+  }
+
+  for (const [key, value] of catalogs.ar) {
+    if (value === "النص") missingKeys.push(`${namespace}: ar catalog placeholder: ${key}`);
+  }
+  for (const [key, value] of catalogs.en) {
+    if (typeof value === "string" && /Placeholder$/.test(value) && !/placeholder/i.test(key)) {
+      missingKeys.push(`${namespace}: en catalog placeholder: ${key}`);
+    }
+  }
+}
+
+for (const key of [...enKeys].filter((item) => !arKeys.has(item))) missingKeys.push(`missing in ar catalogs: ${key}`);
+for (const key of [...arKeys].filter((item) => !enKeys.has(item))) missingKeys.push(`missing in en catalogs: ${key}`);
+
+function loadNamespaceCatalogs() {
+  const catalogs = new Map();
+  for (const entry of fs.readdirSync(resourceRoot, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const namespace = entry.name;
+    const enPath = path.join(resourceRoot, namespace, "en.json");
+    const arPath = path.join(resourceRoot, namespace, "ar.json");
+    if (!fs.existsSync(enPath) || !fs.existsSync(arPath)) {
+      missingKeys.push(`${namespace}: expected both en.json and ar.json`);
+      continue;
+    }
+    catalogs.set(namespace, {
+      en: flatten(JSON.parse(fs.readFileSync(enPath, "utf8"))),
+      ar: flatten(JSON.parse(fs.readFileSync(arPath, "utf8"))),
+    });
+  }
+  return catalogs;
 }
 function checkTranslationKey(key, filePath, node) {
   const normalized = normalizeKey(key);
@@ -142,4 +189,4 @@ if (allFailures.length) {
   allFailures.forEach((item) => console.error(`  ${item}`));
   process.exit(1);
 }
-console.log("i18n checks passed: source literals, locale parity, and static translation keys are clean.");
+console.log("i18n checks passed: source literals, namespace parity, duplicate values, and static translation keys are clean.");

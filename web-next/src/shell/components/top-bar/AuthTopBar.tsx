@@ -5,14 +5,14 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Box, IconButton, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useState, type MouseEvent } from "react";
-import AuthMobileMenu from "./AuthMobileMenu";
+import { lazy, Suspense, useState, type MouseEvent } from "react";
 import LanguageSelector from "./LanguageSelector";
 import ThemeToggler from "./ThemeToggler";
 import { AppBar, StyledToolbar } from "./TopBarStyles";
 import { useTopBarPreferences } from "./useTopBarPreferences";
 
 const DisplayDebugger = dynamic(() => import("./DisplayDebugger"), { ssr: false });
+const AuthMobileMenu = lazy(() => import("./AuthMobileMenu"));
 
 export default function AuthTopBar() {
   const [mobileAnchor, setMobileAnchor] = useState<HTMLElement | null>(null);
@@ -82,15 +82,19 @@ export default function AuthTopBar() {
           </IconButton>
         </Box>
 
-        <AuthMobileMenu
-          anchorEl={mobileAnchor}
-          open={Boolean(mobileAnchor)}
-          onClose={closeMobileMenu}
-          theme={theme}
-          direction={direction}
-          onThemeToggle={toggleThemeAndClose}
-          onLanguageToggle={() => changeLanguageAndClose(direction === "ltr" ? "rtl" : "ltr")}
-        />
+        {mobileAnchor && (
+          <Suspense fallback={null}>
+            <AuthMobileMenu
+              anchorEl={mobileAnchor}
+              open
+              onClose={closeMobileMenu}
+              theme={theme}
+              direction={direction}
+              onThemeToggle={toggleThemeAndClose}
+              onLanguageToggle={() => changeLanguageAndClose(direction === "ltr" ? "rtl" : "ltr")}
+            />
+          </Suspense>
+        )}
       </StyledToolbar>
     </AppBar>
   );
