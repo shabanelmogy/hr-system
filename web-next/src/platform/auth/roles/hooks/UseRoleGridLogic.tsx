@@ -105,7 +105,7 @@ const useRoleGridLogic = () => {
 
   const handleManagePermissions = useCallback(async (role: Role) => {
     if (!(await requestDiscard())) return;
-    router.push(normalizeAppPath(appRoutes.auth.rolePermissionsPage(role.id)));
+    router.push(normalizeAppPath(appRoutes.platform.administration.rolePermissions(role.id)));
   }, [requestDiscard, router]);
 
   useEffect(() => {

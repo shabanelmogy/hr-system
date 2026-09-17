@@ -1,89 +1,79 @@
 "use client";
 
 import { useEffect, type ReactNode } from "react";
-import cookies from "js-cookie";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { SessionProvider } from "@/lib/auth/SessionContext";
 import i18n from "@/locales/i18n";
 import {
   ThemePreferencesProvider,
   type ThemeDirection,
   type ThemeMode,
 } from "@/theme/ThemePreferences";
-import { ThemeShell } from "@/theme/ThemeShell";
+import { ThemeShell, useThemeSettingsContext } from "@/theme/ThemeShell";
+import type { RuntimePreferences } from "./runtime-preferences";
 
 type ProvidersProps = {
   children: ReactNode;
   initialThemeMode: ThemeMode;
   initialDirection: ThemeDirection;
-  initialLanguage: "en" | "ar";
 };
 
 export function Providers({
   children,
   initialThemeMode,
   initialDirection,
-  initialLanguage,
 }: ProvidersProps) {
-  // Match the server-selected cookie language before any translated client
-  // component renders, preventing an English/Arabic hydration mismatch.
-  if (i18n.resolvedLanguage !== initialLanguage) {
-    void i18n.changeLanguage(initialLanguage);
-  }
-
-  useEffect(() => {
-    // Keep the static loader visible until the client provider tree and theme are mounted.
-    document.documentElement.dataset.appReady = "true";
-  }, []);
-
-  useEffect(() => {
-    let destroyPullToRefresh: (() => void) | undefined;
-
-    void import("@syncfusion/ej2-base").then(({ registerLicense }) => {
-      const licenseKey = process.env.NEXT_PUBLIC_SYNCFUSION_LICENSE_KEY;
-      if (licenseKey && !licenseKey.startsWith("replace-")) {
-        registerLicense(licenseKey);
-      }
-    });
-
-    void import("pulltorefreshjs").then(({ default: PullToRefresh }) => {
-      const pullToRefresh = PullToRefresh.init({
-        mainElement: "body",
-        onRefresh() {
-          window.location.reload();
-        }
-      });
-
-      destroyPullToRefresh = () => {
-        PullToRefresh.destroyAll();
-        pullToRefresh?.destroy?.();
-      };
-    });
-
-    return () => {
-      destroyPullToRefresh?.();
-    };
-  }, []);
-
-  useEffect(() => {
-    const savedLanguage = cookies.get("i18next") === "ar" ? "ar" : "en";
-
-    document.documentElement.lang = savedLanguage;
-    document.documentElement.dir = savedLanguage === "ar" ? "rtl" : "ltr";
-    void i18n.changeLanguage(savedLanguage);
-  }, []);
-
   return (
     <ThemePreferencesProvider
       initialMode={initialThemeMode}
       initialDirection={initialDirection}
     >
       <ThemeShell>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <SessionProvider>{children}</SessionProvider>
-        </LocalizationProvider>
+        {children}
       </ThemeShell>
     </ThemePreferencesProvider>
   );
+}
+
+/**
+ * Applies request-specific visual preferences after the static App Shell is
+ * already renderable. Keeping this synchronizer separate from the route tree
+ * lets cookies() stream independently without preventing Instant Navigation
+ * from reaching the destination segment.
+ */
+export function RuntimePreferencesClientSync({
+  preferences,
+}: {
+  preferences: RuntimePreferences;
+}) {
+  const { setMode } = useThemeSettingsContext();
+
+  useEffect(() => {
+    let cancelled = false;
+    let readyFrame = 0;
+
+    document.documentElement.lang = preferences.language;
+    document.documentElement.dir = preferences.direction;
+    document.documentElement.dataset.theme = preferences.themeMode;
+    setMode(preferences.themeMode);
+
+    const languageChange = i18n.resolvedLanguage === preferences.language
+      ? Promise.resolve()
+      : i18n.changeLanguage(preferences.language);
+
+    void languageChange.finally(() => {
+      if (cancelled) return;
+      readyFrame = window.requestAnimationFrame(() => {
+        if (cancelled) return;
+        document.body.classList.remove("dark", "light");
+        document.body.classList.add(preferences.themeMode);
+        document.documentElement.dataset.appReady = "true";
+      });
+    });
+
+    return () => {
+      cancelled = true;
+      if (readyFrame) window.cancelAnimationFrame(readyFrame);
+    };
+  }, [preferences.direction, preferences.language, preferences.themeMode, setMode]);
+
+  return null;
 }

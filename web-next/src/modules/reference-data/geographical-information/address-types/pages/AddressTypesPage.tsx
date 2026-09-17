@@ -1,12 +1,14 @@
 "use client";
 
 import { Alert, Box, Button } from "@mui/material";
+import dynamic from "next/dynamic";
 import { useTranslation } from "react-i18next";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
-import AddressTypeDeleteDialog from "../components/AddressTypeDeleteDialog";
-import AddressTypeForm from "../components/AddressTypeForm";
 import AddressTypesMultiView from "../components/AddressTypesMultiView";
 import useAddressTypeGridLogic from "../hooks/useAddressTypeGridLogic";
+
+const AddressTypeForm = dynamic(() => import("../components/AddressTypeForm"), { ssr: false });
+const AddressTypeDeleteDialog = dynamic(() => import("../components/AddressTypeDeleteDialog"), { ssr: false });
 
 /** Thin feature composition, matching the States page ownership boundary. */
 export default function AddressTypesPage() {
@@ -49,6 +51,6 @@ export default function AddressTypesPage() {
       isBulkArchiving={logic.isBulkArchiving}
     />
     {logic.dialogType ? <AddressTypeForm open dialogType={logic.dialogType} selectedItem={logic.selectedItem} onClose={logic.closeDialog} onSubmit={logic.save} loading={logic.isSaving} /> : null}
-    <AddressTypeDeleteDialog open={logic.archiveTarget !== null} selectedItem={logic.archiveTarget} onClose={logic.closeArchive} onConfirm={logic.confirmArchive} loading={logic.isArchiving} />
+    {logic.archiveTarget ? <AddressTypeDeleteDialog open selectedItem={logic.archiveTarget} onClose={logic.closeArchive} onConfirm={logic.confirmArchive} loading={logic.isArchiving} /> : null}
   </>;
 }

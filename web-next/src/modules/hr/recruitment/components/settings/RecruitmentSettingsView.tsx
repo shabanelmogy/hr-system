@@ -16,6 +16,7 @@ import HubOutlinedIcon from "@mui/icons-material/HubOutlined";
 import FactCheckOutlinedIcon from "@mui/icons-material/FactCheckOutlined";
 import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import { useTranslation } from "react-i18next";
+import { useUnsavedChanges } from "@/shared/contexts/UnsavedChangesContext";
 import { useRecruitmentSettings } from "../../hooks/useRecruitmentSettings";
 import StagesSettingsTab from "./StagesSettingsTab";
 import RejectionReasonsTab from "./RejectionReasonsTab";
@@ -29,12 +30,21 @@ interface RecruitmentSettingsViewProps {
 
 export default function RecruitmentSettingsView({ canEdit }: RecruitmentSettingsViewProps) {
   const { t } = useTranslation();
+  const { requestDiscard } = useUnsavedChanges();
 
   const [activeSubTab, setActiveSubTab] = useState<
     "stages" | "reasons" | "sources" | "criteria" | "general"
   >("stages");
 
   const settingsState = useRecruitmentSettings();
+
+  const handleSubTabChange = async (
+    nextTab: "stages" | "reasons" | "sources" | "criteria" | "general",
+  ) => {
+    if (nextTab === activeSubTab) return;
+    if (!(await requestDiscard())) return;
+    setActiveSubTab(nextTab);
+  };
 
   if (settingsState.isLoading) {
     return (
@@ -67,7 +77,7 @@ export default function RecruitmentSettingsView({ canEdit }: RecruitmentSettings
       >
         <Tabs
           value={activeSubTab}
-          onChange={(_, val) => setActiveSubTab(val)}
+          onChange={(_, val) => void handleSubTabChange(val)}
           variant="scrollable"
           scrollButtons="auto"
           sx={{
@@ -187,6 +197,7 @@ export default function RecruitmentSettingsView({ canEdit }: RecruitmentSettings
         <GeneralGovernanceTab
           settings={settingsState.generalSettings}
           canEdit={canEdit && !settingsState.isSaving}
+          isSaving={settingsState.isSaving}
           onUpdateSettings={settingsState.updateGeneralSettings}
         />
       )}

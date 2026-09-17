@@ -9,6 +9,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useUnsavedChanges } from "@/shared/contexts/UnsavedChangesContext";
 import ChangePassword from "./change-password/ChangePassword";
 import PersonalInfo from "./personal-info/PersonalInfo";
 import type { ProfileUserData } from "../types";
@@ -30,6 +31,13 @@ const ProfileTabs = ({
 }: ProfileTabsProps) => {
   const theme = useTheme();
   const { t } = useTranslation();
+  const { requestDiscard } = useUnsavedChanges();
+
+  const handleTabChange = async (newIndex: number) => {
+    if (newIndex === tabIndex) return;
+    if (!(await requestDiscard())) return;
+    setTabIndex(newIndex);
+  };
 
   return (
     <Box
@@ -39,7 +47,7 @@ const ProfileTabs = ({
     >
       <Tabs
         value={tabIndex}
-        onChange={(_, newIndex) => setTabIndex(newIndex)}
+        onChange={(_, newIndex) => void handleTabChange(newIndex)}
         variant="scrollable"
         scrollButtons="auto"
         sx={{
@@ -90,24 +98,28 @@ const ProfileTabs = ({
           position: "relative",
         }}
       >
-        <Fade in={tabIndex === 0} timeout={600}>
-          <Box sx={{ display: tabIndex === 0 ? "block" : "none" }}>
+        {tabIndex === 0 ? (
+          <Fade in timeout={600}>
+            <Box>
             <PersonalInfo
               showSuccess={showSuccess}
               showError={showError}
               onInfoUpdated={onInfoUpdated}
             />
-          </Box>
-        </Fade>
+            </Box>
+          </Fade>
+        ) : null}
 
-        <Fade in={tabIndex === 1} timeout={600}>
-          <Box sx={{ display: tabIndex === 1 ? "block" : "none" }}>
+        {tabIndex === 1 ? (
+          <Fade in timeout={600}>
+            <Box>
             <ChangePassword
               showSuccess={showSuccess}
               showError={showError}
             />
-          </Box>
-        </Fade>
+            </Box>
+          </Fade>
+        ) : null}
       </Box>
     </Box>
   );

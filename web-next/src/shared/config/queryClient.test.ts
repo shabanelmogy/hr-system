@@ -1,4 +1,4 @@
-import { QueryObserver } from "@tanstack/react-query";
+import { MutationObserver, QueryObserver } from "@tanstack/react-query";
 import { describe, expect, it, vi } from "vitest";
 import { createQueryClient } from "./queryClient";
 
@@ -28,5 +28,19 @@ describe("shared QueryClient cache consistency", () => {
       unsubscribe();
       client.clear();
     }
+  });
+
+  it("does not retry failed mutations implicitly", async () => {
+    const client = createQueryClient();
+    const mutationFn = vi.fn(async () => {
+      throw new Error("response lost after write");
+    });
+    const observer = new MutationObserver(client, { mutationFn });
+
+    await expect(observer.mutate()).rejects.toThrow("response lost after write");
+
+    expect(mutationFn).toHaveBeenCalledTimes(1);
+    expect(client.getDefaultOptions().mutations?.retry).toBe(0);
+    client.clear();
   });
 });

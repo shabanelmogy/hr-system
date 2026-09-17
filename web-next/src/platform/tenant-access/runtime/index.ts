@@ -1,0 +1,1 @@
+export { TenantAccessBoundary } from "../TenantAccessBoundary";

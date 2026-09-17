@@ -1,5 +1,5 @@
-import { registerRealtimeQueryKeys } from "@/platform/realtime";
-import { fiscalYearKeys } from "./fiscal-years/hooks/useFiscalYearQueries";
+import { registerRealtimeQueryKeys } from "@/platform/realtime/registry";
+import { fiscalYearKeys } from "./fiscal-years/hooks/fiscalYearQueryKeys";
 
 export const accountingRealtimeResources = {
   fiscalYears: "fiscal-years",

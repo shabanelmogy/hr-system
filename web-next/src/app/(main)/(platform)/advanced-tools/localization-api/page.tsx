@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "ERP System page for Advanced Tools Localization Api."
 };
 
-import PageComponent from "@/platform/advanced-tools/localization/pages/LocalizationPage";
+import { LocalizationPage as PageComponent } from "@/platform/advanced-tools";
 
 export default function Page() {
   return <PageComponent />;

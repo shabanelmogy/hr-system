@@ -2,14 +2,16 @@
 
 import { useTranslation } from "react-i18next";
 import { Alert, Box, Button } from "@mui/material";
+import dynamic from "next/dynamic";
 import CountriesMultiView from "../components/CountriesMultiView";
-import CountryArchiveDialog from "../components/CountryArchiveDialog";
-import CountryBulkArchiveDialog from "../components/CountryBulkArchiveDialog";
-import CountryForm from "../components/CountryForm";
-import CountryRestoreDialog from "../components/CountryRestoreDialog";
 import useCountryGridLogic from "../hooks/useCountryGridLogic";
 import { useCountry } from "../hooks/useCountryQueries";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
+
+const CountryForm = dynamic(() => import("../components/CountryForm"), { ssr: false });
+const CountryArchiveDialog = dynamic(() => import("../components/CountryArchiveDialog"), { ssr: false });
+const CountryRestoreDialog = dynamic(() => import("../components/CountryRestoreDialog"), { ssr: false });
+const CountryBulkArchiveDialog = dynamic(() => import("../components/CountryBulkArchiveDialog"), { ssr: false });
 
 const CountriesPage = () => {
   const { t } = useTranslation();
@@ -137,7 +139,7 @@ const CountriesPage = () => {
         isBulkArchiving={isBulkArchiving}
       />
 
-      <CountryForm
+      {formDialogType ? <CountryForm
         open={formDialogType !== null}
         dialogType={formDialogType ?? "add"}
         selectedCountry={formCountry}
@@ -148,30 +150,30 @@ const CountriesPage = () => {
           ? extractErrorMessage(detailQuery.error) || t("countries.detailLoadError")
           : undefined}
         onRetryDetails={() => void detailQuery.refetch()}
-      />
+      /> : null}
 
-      <CountryArchiveDialog
+      {dialogType === "delete" ? <CountryArchiveDialog
         open={dialogType === "delete"}
         onClose={closeDialog}
         onConfirm={handleDelete}
         selectedCountry={selectedCountry}
         loading={isArchiving}
-      />
+      /> : null}
 
-      <CountryRestoreDialog
+      {restoreCountry ? <CountryRestoreDialog
         country={restoreCountry}
         loading={isRestoring}
         onClose={closeRestore}
         onConfirm={() => void handleRestore()}
-      />
+      /> : null}
 
-      <CountryBulkArchiveDialog
+      {bulkArchiveOpen ? <CountryBulkArchiveDialog
         open={bulkArchiveOpen}
         selectedCount={selectedCountryIds.length}
         loading={isBulkArchiving}
         onClose={closeBulkArchive}
         onConfirm={handleBulkArchive}
-      />
+      /> : null}
     </>
   );
 };

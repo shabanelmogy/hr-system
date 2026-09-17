@@ -28,7 +28,11 @@ export default function RolePermissionsPage({ id }: RolePermissionsPageProps) {
   const theme = useTheme();
   const { t } = useTranslation();
   useUnsavedChangesRegistration(
-    Boolean(permissions.canEdit && !permissions.role?.isSystem && permissions.formState.isDirty),
+    Boolean(
+      permissions.canEdit &&
+      !permissions.role?.isSystem &&
+      (permissions.formState.isDirty || permissions.isSaving)
+    ),
     permissions.isSaving,
   );
 

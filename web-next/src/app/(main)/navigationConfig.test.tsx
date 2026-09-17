@@ -45,12 +45,12 @@ describe("application navigation configuration", () => {
   it("derives HR workforce and organizational-structure entry navigation from HR", () => {
     const workforce = hrModuleDefinition.submodules.find((item) => item.code === "workforce");
     expect(workforce?.navigation.flatMap((section) => section.entries).find(
-      (entry) => entry.path === appRoutes.workforcePlanning.index,
+      (entry) => entry.path === appRoutes.modules.hr.workforcePlanning.index,
     )?.requiredPermissions).toContain(permissions.ViewEnvelopeAmendments);
 
     const basicData = hrModuleDefinition.submodules.find((item) => item.code === "basic-data");
     expect(basicData?.navigation.flatMap((section) => section.entries).map((entry) => entry.path)).toEqual([
-      appRoutes.basicData.organizationalStructure.index,
+      appRoutes.modules.hr.organizationalStructure.index,
     ]);
   });
 
@@ -60,7 +60,7 @@ describe("application navigation configuration", () => {
       (section) => section.id === NavigationSectionId.WORKFORCE_PLANNING,
     );
     expect(workforceSection?.items).toHaveLength(1);
-    expect(workforceSection?.items?.[0]?.path).toBe(appRoutes.workforcePlanning.index);
+    expect(workforceSection?.items?.[0]?.path).toBe(appRoutes.modules.hr.workforcePlanning.index);
   });
 
   it("gets Fiscal Years from Accounting, not HR", () => {
@@ -69,7 +69,7 @@ describe("application navigation configuration", () => {
       (section) => section.id === NavigationSectionId.FINANCE,
     );
     expect(financeSection?.items?.map((item) => item.path)).toEqual([
-      appRoutes.finance.fiscalYears,
+      appRoutes.modules.accounting.fiscalYears,
     ]);
   });
 
@@ -80,24 +80,24 @@ describe("application navigation configuration", () => {
       permissions.ViewRecruitment,
     ], "acc");
 
-    expect(paths(config)).toEqual([appRoutes.finance.fiscalYears]);
+    expect(paths(config)).toEqual([appRoutes.modules.accounting.fiscalYears]);
     expect(config).toHaveLength(1);
     expect(config[0]?.id).toBe(NavigationSectionId.FINANCE);
   });
 
   it("keeps Crystal Reports only when Reporting analytics is accessible", () => {
     const permissionFiltered = getNavigationConfig([], [permissions.ManageCrystalReportAccess]);
-    expect(paths(permissionFiltered)).toContain(appRoutes.auth.crystalReportsPage);
+    expect(paths(permissionFiltered)).toContain(appRoutes.modules.reporting.crystalReports);
 
     expect(paths(filterNavigationConfigByModules(permissionFiltered, [{
       code: "reporting",
       submodules: [{ code: "analytics" }],
-    }]))).toContain(appRoutes.auth.crystalReportsPage);
+    }]))).toContain(appRoutes.modules.reporting.crystalReports);
 
     expect(paths(filterNavigationConfigByModules(permissionFiltered, [{
       code: "hr",
       submodules: [{ code: "basic-data" }],
-    }]))).not.toContain(appRoutes.auth.crystalReportsPage);
+    }]))).not.toContain(appRoutes.modules.reporting.crystalReports);
   });
 
   it("keeps authorized Platform links without tenant module entitlements", () => {
@@ -108,9 +108,9 @@ describe("application navigation configuration", () => {
     ]);
     const moduleFiltered = filterNavigationConfigByModules(permissionFiltered, []);
     expect(paths(moduleFiltered)).toEqual(expect.arrayContaining([
-      appRoutes.auth.rolesPage,
-      appRoutes.advancedTools.localizationApi,
-      appRoutes.basicData.companyGeographicScope,
+      appRoutes.platform.administration.roles,
+      appRoutes.platform.advancedTools.localizationApi,
+      appRoutes.platform.companyGeographicScope,
     ]));
   });
 
@@ -122,10 +122,10 @@ describe("application navigation configuration", () => {
       permissions.ManageCrystalReportAccess,
     ]);
     const moduleFiltered = filterNavigationConfigByModules(permissionFiltered, []);
-    expect(paths(moduleFiltered)).not.toContain(appRoutes.finance.fiscalYears);
-    expect(paths(moduleFiltered)).not.toContain(appRoutes.extras.appointments);
-    expect(paths(moduleFiltered)).not.toContain(appRoutes.basicData.addressTypes);
-    expect(paths(moduleFiltered)).not.toContain(appRoutes.auth.crystalReportsPage);
+    expect(paths(moduleFiltered)).not.toContain(appRoutes.modules.accounting.fiscalYears);
+    expect(paths(moduleFiltered)).not.toContain(appRoutes.modules.crm.appointments);
+    expect(paths(moduleFiltered)).not.toContain(appRoutes.modules.referenceData.addressTypes);
+    expect(paths(moduleFiltered)).not.toContain(appRoutes.modules.reporting.crystalReports);
   });
 
   it("removes empty permissioned groups instead of rendering blank sections", () => {

@@ -22,6 +22,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiClientError } from "@/lib/api/client";
@@ -33,10 +34,7 @@ import { PageHeader } from "@/shared/components/navigation/header";
 import { usePermissions } from "@/shared/hooks/usePermissions";
 import { useServerListState } from "@/shared/hooks/useServerListState";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
-import { AttendanceAgentEnrollmentDialog } from "../components/AttendanceAgentEnrollmentDialog";
 import { AttendanceModuleLayout } from "../components/AttendanceModuleLayout";
-import { CredentialsDialog } from "../components/CredentialsDialog";
-import { DeviceFormDialog } from "../components/DeviceFormDialog";
 import {
   useAttendanceAgents,
   useAttendanceBranches,
@@ -55,6 +53,19 @@ import { attendanceDeviceService } from "../services/attendanceDeviceService";
 import type { AttendanceDeviceListItem } from "../types/attendanceDevices";
 import { toAttendanceDeviceQuery } from "../utils/attendanceDeviceQuery";
 import { getAttendancePermissions } from "../utils/permissions";
+
+const AttendanceAgentEnrollmentDialog = dynamic(
+  () => import("../components/AttendanceAgentEnrollmentDialog").then((module) => module.AttendanceAgentEnrollmentDialog),
+  { ssr: false },
+);
+const CredentialsDialog = dynamic(
+  () => import("../components/CredentialsDialog").then((module) => module.CredentialsDialog),
+  { ssr: false },
+);
+const DeviceFormDialog = dynamic(
+  () => import("../components/DeviceFormDialog").then((module) => module.DeviceFormDialog),
+  { ssr: false },
+);
 
 export default function AttendanceDevicesPage() {
   const { t } = useTranslation();
@@ -381,7 +392,7 @@ export default function AttendanceDevicesPage() {
           </Section>
         </Box>
 
-        <DeviceFormDialog
+        {formOpen ? <DeviceFormDialog
           open={formOpen}
           device={editing}
           providers={providers.data ?? []}
@@ -394,8 +405,8 @@ export default function AttendanceDevicesPage() {
             else await create.mutateAsync(request);
             setFormOpen(false);
           }, t("attendanceDevices.saved"))}
-        />
-        <AttendanceAgentEnrollmentDialog
+        /> : null}
+        {agentOpen ? <AttendanceAgentEnrollmentDialog
           open={agentOpen}
           disabled={!permissions.canManage || createAgent.isPending}
           created={createdAgent}
@@ -407,8 +418,8 @@ export default function AttendanceDevicesPage() {
           onCreate={(name) => void run(async () => {
             setCreatedAgent(await createAgent.mutateAsync({ name }));
           }, t("attendanceDevices.createEnrollment"))}
-        />
-        <CredentialsDialog
+        /> : null}
+        {credentialsOpen ? <CredentialsDialog
           open={credentialsOpen}
           deviceId={selected?.id ?? null}
           disabled={!permissions.canCredentials || credentials.isPending}
@@ -417,7 +428,7 @@ export default function AttendanceDevicesPage() {
             await credentials.mutateAsync({ id, request: values });
             setCredentialsOpen(false);
           }, t("attendanceDevices.credentialsSaved"))}
-        />
+        /> : null}
       </Box>
     </AttendanceModuleLayout>
   );

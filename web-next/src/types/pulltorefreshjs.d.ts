@@ -1,7 +1,10 @@
 declare module "pulltorefreshjs" {
   type PullToRefreshOptions = {
     mainElement?: string;
-    onRefresh?: () => void;
+    triggerElement?: string;
+    refreshTimeout?: number;
+    onRefresh?: () => void | Promise<void>;
+    shouldPullToRefresh?: () => boolean;
   };
 
   type PullToRefreshInstance = {

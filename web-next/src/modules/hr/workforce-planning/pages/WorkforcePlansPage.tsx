@@ -1,6 +1,6 @@
 "use client";
 
-import { useFiscalYearLookup } from "@/modules/accounting";
+import { useFiscalYearLookup } from "@/modules/accounting/public";
 import { permissions } from "@/lib/auth/permissions";
 import { ConfirmationDialog } from "@/shared/components/dialogs";
 import { showToast } from "@/shared/components/feedback/transient";
@@ -10,9 +10,9 @@ import { useServerListState } from "@/shared/hooks/useServerListState";
 import { extractErrorMessage, getErrorStatus } from "@/shared/utils/errorUtils";
 import { Archive, CheckCircle, RateReview, Redo, Restore, Send, Undo } from "@mui/icons-material";
 import { Alert, Box, Button, TextField, Typography } from "@mui/material";
+import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import WorkforcePlanForm from "../components/WorkforcePlanForm";
 import WorkforcePlansMultiView from "../components/WorkforcePlansMultiView";
 import {
   workforcePlanKeys,
@@ -30,6 +30,8 @@ import {
 } from "../hooks/useWorkforcePlanQueries";
 import WorkforcePlanService from "../services/workforcePlanService";
 import type { WorkforcePlanDetail, WorkforcePlanListItem, WorkforcePlanMutationRequest, WorkforcePlanPageQuery, WorkforcePlanPermissions } from "../types/WorkforcePlan";
+
+const WorkforcePlanForm = dynamic(() => import("../components/WorkforcePlanForm"), { ssr: false });
 
 type Dialog = "add" | "edit" | "view" | "submit" | "beginReview" | "approve" | "reject" | "createRevision" | "archive" | "restore" | null;
 interface Filters { status: string; recordStatus: "active" | "archived" | "all"; fiscalYearId?: number }

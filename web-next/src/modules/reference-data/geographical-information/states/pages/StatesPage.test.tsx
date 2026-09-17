@@ -38,7 +38,7 @@ describe("StatesPage wiring", () => {
     capture.logic = createStateLogic();
   });
 
-  it("keeps initial loading separate from background fetching and wires mutations", () => {
+  it("keeps initial loading separate from background fetching and leaves closed interaction UI unmounted", () => {
     renderToStaticMarkup(<StatesPage />);
 
     expect(capture.multiViewProps).toMatchObject({
@@ -48,14 +48,14 @@ describe("StatesPage wiring", () => {
     });
     expect(capture.multiViewProps?.onBulkArchive).toBe(capture.logic.onBulkArchive);
     expect(capture.multiViewProps?.onSearchChange).toBe(capture.logic.setSearchValue);
-    expect(capture.formProps?.onSubmit).toBe(capture.logic.handleFormSubmit);
+    expect(capture.formProps).toBeNull();
   });
 });
 
 function createStateLogic(): Record<string, unknown> {
   const callback = () => undefined;
   return {
-    dialogType: "add",
+    dialogType: null,
     selectedState: null,
     restoreState: null,
     selectedStateIds: [7],

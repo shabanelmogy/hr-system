@@ -1,4 +1,4 @@
-import { LineChart } from "@/shared/components/charts";
+import LineChart from "@/shared/components/charts/cartesian/LineChart";
 import { useTranslation } from "react-i18next";
 import type { TimelineChartProps } from "./AddressTypeChart.types";
 

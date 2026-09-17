@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "ERP System page for Login."
 };
 
-import PageComponent from "@/platform/auth/login/Login";
+import { LoginPage as PageComponent } from "@/platform/auth/login";
 
 export default function Page() {
   return <PageComponent />;

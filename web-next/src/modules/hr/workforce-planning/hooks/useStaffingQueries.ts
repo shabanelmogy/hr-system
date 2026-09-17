@@ -9,19 +9,13 @@ import type {
   StaffingRequestMutation,
   StaffingRequestPageQuery,
 } from "../types/Staffing";
-import { positionEnvelopeKeys } from "./useWorkforceBudgetQueries";
+import {
+  envelopeAmendmentKeys,
+  positionEnvelopeKeys,
+  staffingRequestKeys,
+} from "./workforceQueryKeys";
 
-export const envelopeAmendmentKeys = {
-  all: ["envelopeAmendments"] as const,
-  page: (query: EnvelopeAmendmentPageQuery) => [...envelopeAmendmentKeys.all, "page", query] as const,
-  detail: (id: number) => [...envelopeAmendmentKeys.all, "detail", id] as const,
-};
-
-export const staffingRequestKeys = {
-  all: ["staffingRequests"] as const,
-  page: (query: StaffingRequestPageQuery) => [...staffingRequestKeys.all, "page", query] as const,
-  detail: (id: number) => [...staffingRequestKeys.all, "detail", id] as const,
-};
+export { envelopeAmendmentKeys, staffingRequestKeys } from "./workforceQueryKeys";
 
 export const useEnvelopeAmendments = (query: EnvelopeAmendmentPageQuery) => useQuery({ queryKey: envelopeAmendmentKeys.page(query), queryFn: () => StaffingService.getAmendments(query), placeholderData: previous => previous });
 export const useEnvelopeAmendment = (id?: number | null, enabled = true) => useQuery({ queryKey: envelopeAmendmentKeys.detail(id ?? 0), queryFn: () => StaffingService.getAmendment(id!), enabled: enabled && !!id });

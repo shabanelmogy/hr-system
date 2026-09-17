@@ -35,13 +35,13 @@ export default function BasicDataLayout({ children }: { children: ReactNode }) {
     <FeatureModuleLayout
       title={t("menu.basicData")}
       description={t("menu.basicDataDescription")}
-      moduleHref={appRoutes.basicData.index}
+      moduleHref={appRoutes.shell.basicData}
       moduleIcon={<DatasetRoundedIcon />}
       navigationLabel={t("menu.basicDataNavigation")}
       openNavigationLabel={t("menu.openBasicDataNavigation")}
       closeNavigationLabel={t("menu.closeBasicDataNavigation")}
       backLabel={t("menu.dashboard")}
-      backHref={appRoutes.home}
+      backHref={appRoutes.shell.home}
       items={navigationItems}
     >
       {children}

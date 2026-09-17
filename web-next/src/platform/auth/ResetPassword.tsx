@@ -18,6 +18,7 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { appRoutes } from "@/config/routes";
 import {
   ResetPasswordFormData,
   getResetPasswordLinkSchema,
@@ -88,7 +89,7 @@ const ResetPassword = () => {
       await authService.resetPassword(data);
       reset();
       setTimeout(() => {
-        router.replace("/login");
+        router.replace(appRoutes.auth.login);
       }, 1000); // Adjust delay if necessary
     } catch (error) {
       HandleApiError(error as Error, (updatedState) => {

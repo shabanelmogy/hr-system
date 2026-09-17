@@ -2,8 +2,8 @@
 
 import { ContentWrapper } from "@/shared/components/layout";
 import { PageHeader } from "@/shared/components/navigation/header";
+import dynamic from "next/dynamic";
 import { useTranslation } from "react-i18next";
-import UserForm from "./components/UserForm";
 import UsersDataGrid from "./components/UsersDataGrid";
 import useUserGridLogic from "./hooks/useUserGridLogic";
 import { usePermissions } from "@/shared/hooks/usePermissions";
@@ -13,6 +13,8 @@ import { Avatar, Box, Chip, Typography, Alert, TextField } from "@mui/material";
 import { ArchiveOutlined, ExitToApp, Restore } from "@mui/icons-material";
 import { useState } from "react";
 import type { User } from "../types";
+
+const UserForm = dynamic(() => import("./components/UserForm"), { ssr: false });
 
 // ─── Content ─────────────────────────────────────────────────────────────────
 // Rendered only after the guard confirms access — hooks and API calls are safe here.
@@ -153,7 +155,7 @@ const UsersPage = () => {
           t={t}
         />
 
-        <UserForm
+        {dialogType === "edit" || dialogType === "add" || dialogType === "view" ? <UserForm
           open={dialogType === "edit" || dialogType === "add" || dialogType === "view"}
           dialogType={userFormDialogType}
           selectedUser={selectedUser}
@@ -161,7 +163,7 @@ const UsersPage = () => {
           onSubmit={handleFormSubmit}
           loading={loading}
           t={t}
-        />
+        /> : null}
 
         {revokeTarget && (
           <ConfirmationDialog

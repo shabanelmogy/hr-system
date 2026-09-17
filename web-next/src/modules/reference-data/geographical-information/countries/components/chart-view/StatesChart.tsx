@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { BarChart } from "@/shared/components/charts";
+import BarChart from "@/shared/components/charts/cartesian/BarChart";
 import type { StatesData } from "./chartDataUtils";
 
 interface StatesChartProps {

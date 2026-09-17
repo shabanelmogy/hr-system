@@ -13,10 +13,12 @@ import { FeedbackState } from "../states/FeedbackState";
 export interface RouteErrorProps {
   error: Error & { digest?: string };
   reset: () => void;
+  retry?: () => void;
 }
 
-export function RouteError({ error, reset }: RouteErrorProps) {
+export function RouteError({ error, reset, retry }: RouteErrorProps) {
   const { t } = useTranslation();
+  const retryRoute = retry ?? reset;
 
   return (
     <FeedbackState
@@ -26,7 +28,7 @@ export function RouteError({ error, reset }: RouteErrorProps) {
       description={t("feedback.routes.errorDescription")}
       actions={
         <>
-          <Button variant="contained" onClick={reset} startIcon={<RetryIcon />}>
+          <Button variant="contained" onClick={retryRoute} startIcon={<RetryIcon />}>
             {t("feedback.routes.retry")}
           </Button>
           <Button

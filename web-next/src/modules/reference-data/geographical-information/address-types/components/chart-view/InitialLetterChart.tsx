@@ -1,4 +1,5 @@
-import { BarChart, COLOR_PALETTES } from "@/shared/components/charts";
+import BarChart from "@/shared/components/charts/cartesian/BarChart";
+import { COLOR_PALETTES } from "@/shared/components/charts/palette";
 import { useTranslation } from "react-i18next";
 import type { InitialLetterChartProps } from "./AddressTypeChart.types";
 

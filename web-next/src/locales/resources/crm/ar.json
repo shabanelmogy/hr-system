@@ -1,0 +1,33 @@
+{
+  "appointments": {
+    "loading": "جارٍ تحميل المواعيد...",
+    "loadErrorTitle": "تعذر تحميل المواعيد",
+    "loadErrorDescription": "خدمة المواعيد غير متاحة مؤقتاً.",
+    "retry": "إعادة المحاولة",
+    "addTitle": "موعد جديد",
+    "editTitle": "تعديل الموعد",
+    "viewTitle": "تفاصيل الموعد",
+    "addSubtitle": "جدول ةموعد جديد",
+    "editSubtitle": "تحديث بيانات الموعد",
+    "viewSubtitle": "مراجعة تفاصيل الموعد",
+    "titleLabel": "العنوان",
+    "titlePlaceholder": "ما موضوع الموعد؟",
+    "start": "البداية",
+    "end": "النهاية",
+    "allDay": "طوال اليوم",
+    "addAppointment": "إضافة موعد",
+    "saveChanges": "حفظ التعديلات",
+    "creating": "جارٍ إنشاء الموعد...",
+    "updating": "جارٍ تحديث الموعد...",
+    "validation": {
+      "titleRequired": "العنوان مطلوب",
+      "titleMin": "يجب أن يكون العنوان 3 أحرف على الأقل",
+      "titleMax": "يجب ألا يتجاوز العنوان 200 حرف",
+      "startRequired": "البداية مطلوبة",
+      "endRequired": "النهاية مطلوبة",
+      "invalidDate": "أدخل تاريخاً صحيحاً",
+      "endAfterStart": "يجب أن تكون النهاية بعد البداية",
+      "allDayEnd": "يجب أن يكون يوم النهاية في نفس يوم البداية أو بعده"
+    }
+  }
+}

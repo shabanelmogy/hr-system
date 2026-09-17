@@ -20,9 +20,9 @@ describe("CRM frontend module definition", () => {
     expect(crmModuleDefinition.submodules[0]).toMatchObject({
       code: "appointments",
       requiredPermissions: [permissions.ViewAppointments],
-      entryCandidates: [appRoutes.extras.appointments],
+      entryCandidates: [appRoutes.modules.crm.appointments],
     });
-    expect(requiredModuleForPath(appRoutes.extras.appointments)).toEqual({
+    expect(requiredModuleForPath(appRoutes.modules.crm.appointments)).toEqual({
       moduleCode: "crm",
       submoduleCode: "appointments",
     });

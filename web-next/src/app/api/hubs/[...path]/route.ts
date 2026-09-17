@@ -1,5 +1,9 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import {
+  hasUnsafeBackendPath,
+  isCrossSiteMutation,
+} from "@/lib/api/proxy-security";
 import { resolveRequestBackendUrl } from "@/lib/env/server";
 
 type RouteParameters = { params: Promise<{ path: string[] }> };
@@ -18,7 +22,20 @@ const TAG = "[SignalR Proxy]";
  * development uses the backend HTTP launch URL, avoiding untrusted certificates.
  */
 async function handle(request: NextRequest, parameters: RouteParameters) {
+  if (isCrossSiteMutation(request)) {
+    return NextResponse.json(
+      { type: "about:blank", title: "Cross-site request rejected", status: 403, code: "CrossSiteRequestRejected" },
+      { status: 403, headers: { "content-type": "application/problem+json", "cache-control": "no-store" } },
+    );
+  }
+
   const { path } = await parameters.params;
+  if (hasUnsafeBackendPath(path)) {
+    return NextResponse.json(
+      { type: "about:blank", title: "Invalid backend path", status: 400, code: "UnsafeBackendPath" },
+      { status: 400, headers: { "content-type": "application/problem+json", "cache-control": "no-store" } },
+    );
+  }
   const hubPath = path.join("/");
 
   const backendUrl = new URL(`${resolveRequestBackendUrl(request)}/hubs/${hubPath}`);
@@ -33,7 +50,7 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
   }
 
   const forwardHeaders = new Headers();
-  for (const name of ["authorization", "content-type", "user-agent", "x-forwarded-for"] as const) {
+  for (const name of ["authorization", "content-type", "user-agent"] as const) {
     const value = request.headers.get(name);
     if (value) forwardHeaders.set(name, value);
   }
@@ -72,8 +89,6 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
     headers: responseHeaders,
   });
 }
-
-export const dynamic = "force-dynamic";
 
 export const GET = handle;
 export const POST = handle;

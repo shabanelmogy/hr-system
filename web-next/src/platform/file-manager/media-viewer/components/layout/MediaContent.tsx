@@ -7,13 +7,17 @@ import { CircularProgress } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { MediaContentProps } from "../../types/mediaViewer.type";
 import MediaErrorView from "../modals/MediaErrorView";
+import { ensureSyncfusionLicense } from "../viewers/syncfusionRuntime";
 
 const viewerLoading = () => <CircularProgress size={40} />;
 const AudioPlayer = dynamic(() => import("../viewers/AudioPlayer"), { ssr: false, loading: viewerLoading });
 const VideoPlayer = dynamic(() => import("../viewers/VideoPlayer"), { ssr: false, loading: viewerLoading });
 const ImageViewer = dynamic(() => import("../viewers/ImageViewer"), { ssr: false, loading: viewerLoading });
 const ExcelViewer = dynamic(() => import("../viewers/ExcelViewer"), { ssr: false, loading: viewerLoading });
-const PdfViewer = dynamic(() => import("../viewers/PdfViewer"), { ssr: false, loading: viewerLoading });
+const PdfViewer = dynamic(async () => {
+  await ensureSyncfusionLicense();
+  return import("../viewers/PdfViewer");
+}, { ssr: false, loading: viewerLoading });
 const WordViewer = dynamic(() => import("../viewers/WordViewer"), { ssr: false, loading: viewerLoading });
 const TxtViewer = dynamic(() => import("../viewers/TxtViewer"), { ssr: false, loading: viewerLoading });
 

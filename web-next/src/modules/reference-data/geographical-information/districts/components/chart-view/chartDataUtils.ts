@@ -1,4 +1,4 @@
-import { getColorPalette } from "@/shared/components/charts";
+import { getColorPalette } from "@/shared/components/charts/palette";
 import type { DistrictListItem } from "../../types/District";
 
 export interface StateData {

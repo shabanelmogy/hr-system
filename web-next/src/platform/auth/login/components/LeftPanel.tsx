@@ -1,5 +1,10 @@
 import { Box, keyframes, Typography, useTheme } from "@mui/material";
+import { useSyncExternalStore } from "react";
 import type { Translator } from "../../types";
+
+const subscribeToCurrentYear = () => () => undefined;
+const getCurrentYear = (): number | null => new Date().getFullYear();
+const getServerYear = (): number | null => null;
 
 // Define animations
 const float = keyframes`
@@ -297,6 +302,11 @@ const FeatureList = ({ t }: { t: Translator }) => {
 const FooterContent = ({ t }: { t: Translator }) => {
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
+  const currentYear = useSyncExternalStore(
+    subscribeToCurrentYear,
+    getCurrentYear,
+    getServerYear,
+  );
 
   const socialIcons = [
     { icon: "🌐", label: "Website", color: "#2196f3" },
@@ -328,7 +338,7 @@ const FooterContent = ({ t }: { t: Translator }) => {
           letterSpacing: "0.02em",
         }}
       >
-        © {new Date().getFullYear()} {t("general.company")}
+        © {currentYear !== null ? `${currentYear} ` : ""}{t("general.company")}
       </Typography>
       <Box sx={{ display: "flex", gap: 2 }}>
         {socialIcons.map((item, i) => (

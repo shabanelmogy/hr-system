@@ -1,5 +1,6 @@
 import { LinearProgress, Box } from "@mui/material";
 import type { GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
+import dynamic from "next/dynamic";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PageHeader } from "@/shared/components/navigation/header";
@@ -8,12 +9,13 @@ import { usePermissions } from "@/shared/hooks/usePermissions";
 import { useAccessibleModulesQuery } from "@/platform/modules";
 import type { AddressType, AddressTypeSearchField, AddressTypeSearchOperator, AddressTypeSortColumn, AddressTypeStatus } from "../types/AddressType";
 import type { AddressTypePermissionSet } from "../utils/addressTypePermissions";
-import AddressTypeReportPage from "../reports/pages/AddressTypeReportPage";
 import AddressTypesCardView from "./AddressTypesCardView";
-import AddressTypesChartView from "./AddressTypesChartView";
 import AddressTypeCardViewHeader from "./card-view/AddressTypeCardViewHeader";
 import AddressTypesDataGrid from "./grid-view/AddressTypesDataGrid";
-import AddressTypeImportView from "./import-data/AddressTypeImportView";
+
+const AddressTypeReportPage = dynamic(() => import("../reports/pages/AddressTypeReportPage"));
+const AddressTypesChartView = dynamic(() => import("./AddressTypesChartView"));
+const AddressTypeImportView = dynamic(() => import("./import-data/AddressTypeImportView"));
 
 type AddressTypeView = "grid" | "cards" | "chart" | "report" | "import";
 const sortableColumns = new Set<AddressTypeSortColumn>(["nameEn", "nameAr", "createdOn"]);

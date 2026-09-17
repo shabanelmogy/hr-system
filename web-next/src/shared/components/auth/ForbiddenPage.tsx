@@ -129,7 +129,7 @@ export default function ForbiddenPage({ message }: ForbiddenPageProps) {
         <Button
           variant="contained"
           startIcon={<HomeOutlinedIcon />}
-          onClick={() => router.replace(appRoutes.home)}
+          onClick={() => router.replace(appRoutes.shell.home)}
           sx={{
             width: "100%",
             maxWidth: 260,

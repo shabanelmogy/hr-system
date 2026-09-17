@@ -1,5 +1,5 @@
 import { useQuery, type UseMutationOptions } from "@tanstack/react-query";
-import { createEntityQueryKeys, useInvalidatingMutation } from "@/shared/query";
+import { useInvalidatingMutation } from "@/shared/query";
 import FiscalYearService from "../services/fiscalYearService";
 import type {
   FiscalYearDetail,
@@ -8,8 +8,9 @@ import type {
   FiscalYearPageQuery,
   UpdateFiscalYearMutation,
 } from "../types/FiscalYear";
+import { fiscalYearKeys } from "./fiscalYearQueryKeys";
 
-export const fiscalYearKeys = createEntityQueryKeys("fiscalYears");
+export { fiscalYearKeys } from "./fiscalYearQueryKeys";
 
 export const useFiscalYearPage = (query: FiscalYearPageQuery) =>
   useQuery({ queryKey: fiscalYearKeys.page(query), queryFn: () => FiscalYearService.getPage(query), placeholderData: previous => previous });

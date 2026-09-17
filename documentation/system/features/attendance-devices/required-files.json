@@ -45,7 +45,7 @@
     {
       "id": "web-routes",
       "layer": "web-next",
-      "path": "web-next/src/app/(main)/attendance-devices",
+      "path": "web-next/src/app/(main)/(modules)/(hr)/attendance-devices",
       "minimumFiles": 4,
       "purpose": "Thin device, raw users, punches and pull runs routes"
     },
@@ -181,7 +181,7 @@
     {
       "id": "web-route",
       "layer": "web-next",
-      "path": "web-next/src/app/(main)/attendance-devices/page.tsx",
+      "path": "web-next/src/app/(main)/(modules)/(hr)/attendance-devices/page.tsx",
       "purpose": "Thin master route"
     },
     {
@@ -217,13 +217,13 @@
     {
       "id": "web-translations-en",
       "layer": "web-next-config",
-      "path": "web-next/src/locales/en/translation.json",
+      "path": "web-next/src/locales/resources/hr-attendance/en.json",
       "purpose": "English feature labels"
     },
     {
       "id": "web-translations-ar",
       "layer": "web-next-config",
-      "path": "web-next/src/locales/ar/translation.json",
+      "path": "web-next/src/locales/resources/hr-attendance/ar.json",
       "purpose": "Arabic feature labels and RTL"
     },
     {

@@ -1,8 +1,8 @@
-import { registerRealtimeQueryKeys } from "@/platform/realtime";
-import { addressTypeKeys } from "./geographical-information/address-types";
-import { countryKeys } from "./geographical-information/countries";
-import { districtKeys } from "./geographical-information/districts";
-import { stateKeys } from "./geographical-information/states";
+import { registerRealtimeQueryKeys } from "@/platform/realtime/registry";
+import { addressTypeKeys } from "./geographical-information/address-types/hooks/addressTypeQueryKeys";
+import { countryKeys } from "./geographical-information/countries/hooks/countryQueryKeys";
+import { districtKeys } from "./geographical-information/districts/hooks/districtQueryKeys";
+import { stateKeys } from "./geographical-information/states/hooks/stateQueryKeys";
 
 export const referenceDataRealtimeResources = {
   countries: "countries",

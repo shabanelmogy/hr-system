@@ -4,8 +4,11 @@ import process from "node:process";
 import { collectImportSpecifiers } from "./import-specifiers.mjs";
 import {
   allowedOwnerDependencies,
+  appBusinessRouteGroup,
+  appRouteOwnerGroups,
   moduleDirectories,
   ownershipGroups,
+  sharedMainRouteRoots,
 } from "./module-boundaries.mjs";
 
 const sourceRoot = path.resolve("src");
@@ -60,6 +63,27 @@ function isPublicApi(filePath) {
   return /^index\.(?:ts|tsx|js|jsx)$/.test(path.basename(filePath));
 }
 
+function normalizedSegments(filePath, root) {
+  return path.relative(root, filePath).split(path.sep);
+}
+
+function canonicalAppRoute(pageFile) {
+  const appRoot = path.join(sourceRoot, "app");
+  const segments = normalizedSegments(pageFile, appRoot)
+    .slice(0, -1)
+    .filter((segment) => !/^\(.+\)$/.test(segment));
+  return `/${segments.join("/")}`.replace(/\/$/, "") || "/";
+}
+
+function directoryContainsSourceFiles(directory) {
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const item = path.join(directory, entry.name);
+    if (entry.isDirectory() && directoryContainsSourceFiles(item)) return true;
+    if (entry.isFile() && /\.(?:ts|tsx|js|jsx)$/.test(entry.name)) return true;
+  }
+  return false;
+}
+
 
 const ownershipViolations = [];
 const legacyFeatureRoot = path.join(sourceRoot, "features");
@@ -108,10 +132,103 @@ if (fs.existsSync(modulesRoot)) {
 const graph = new Map(sourceFiles.map((filePath) => [filePath, []]));
 const violations = [];
 const moduleBoundaryViolations = [];
+const appRouteViolations = [];
 const formSafetyViolations = [];
 const cacheSafetyViolations = [];
 const directHttpViolations = [];
 const compatibilityViolations = [];
+const interactionBoundaryViolations = [];
+const navigationSafetyViolations = [];
+
+const guardedNavigationBypassAllowlist = new Set([
+  // Session/authentication failures and logout are forced security transitions.
+  "lib/auth/SessionContext.tsx",
+  // These public-auth flows are outside the protected ERP editing shell.
+  "platform/auth/accept-invitation/AcceptInvitationPage.tsx",
+  "platform/auth/EmailConfirmed.tsx",
+  "platform/auth/register/Register.tsx",
+  "platform/auth/ResetPassword.tsx",
+  // Automatic entry/fallback redirects do not leave an editable child mounted.
+  "platform/modules/SubmoduleEntryPage.tsx",
+  "shared/components/auth/ForbiddenPage.tsx",
+  "shared/components/feedback/routes/PageUnavailable.tsx",
+  // The central unsaved-changes provider performs the guarded replay itself.
+  "shared/contexts/UnsavedChangesContext.tsx",
+]);
+
+const appRoot = path.join(sourceRoot, "app");
+const mainAppRoot = path.join(appRoot, "(main)");
+const appPageFiles = sourceFiles.filter(
+  (filePath) =>
+    filePath.startsWith(`${appRoot}${path.sep}`) && path.basename(filePath) === "page.tsx",
+);
+
+const pagesByCanonicalRoute = new Map();
+for (const pageFile of appPageFiles) {
+  const route = canonicalAppRoute(pageFile);
+  const existing = pagesByCanonicalRoute.get(route);
+  if (existing) {
+    appRouteViolations.push(
+      `${path.relative(process.cwd(), existing)} and ${path.relative(process.cwd(), pageFile)} ` +
+        `both resolve to '${route}' after route groups are removed`,
+    );
+  } else {
+    pagesByCanonicalRoute.set(route, pageFile);
+  }
+
+  const source = fs.readFileSync(pageFile, "utf8");
+  if (/^\s*["']use client["'];?/m.test(source)) {
+    appRouteViolations.push(
+      `${path.relative(process.cwd(), pageFile)}: App Router pages must remain thin server adapters; ` +
+        "move client state, hooks, and presentation into the owning module/platform/shell capability",
+    );
+  }
+
+  if (!pageFile.startsWith(`${mainAppRoot}${path.sep}`)) continue;
+  const segments = normalizedSegments(pageFile, mainAppRoot).slice(0, -1);
+  const owners = [
+    ...new Set(
+      segments
+        .map((segment) => appRouteOwnerGroups[segment])
+        .filter(Boolean),
+    ),
+  ];
+  if (owners.length !== 1) {
+    appRouteViolations.push(
+      `${path.relative(process.cwd(), pageFile)}: protected page must declare exactly one route owner group; ` +
+        `found ${owners.length ? owners.join(", ") : "none"}`,
+    );
+    continue;
+  }
+
+  const owner = owners[0];
+  if (segments.includes(appBusinessRouteGroup) && !Object.hasOwn(moduleDirectories, owner)) {
+    appRouteViolations.push(
+      `${path.relative(process.cwd(), pageFile)}: '${appBusinessRouteGroup}' may contain only registered business-module owners`,
+    );
+  }
+}
+
+if (fs.existsSync(mainAppRoot)) {
+  const allowedMainRouteRoots = new Set([
+    appBusinessRouteGroup,
+    "(platform)",
+    "(shell)",
+    ...sharedMainRouteRoots,
+  ]);
+  for (const entry of fs.readdirSync(mainAppRoot, { withFileTypes: true })) {
+    const directory = path.join(mainAppRoot, entry.name);
+    if (
+      entry.isDirectory() &&
+      directoryContainsSourceFiles(directory) &&
+      !allowedMainRouteRoots.has(entry.name)
+    ) {
+      appRouteViolations.push(
+        `src/app/(main)/${entry.name}: protected route roots must be grouped by owner or use an approved shared URL prefix`,
+      );
+    }
+  }
+}
 
 const forbiddenCompatibilityPatterns = [
   {
@@ -183,6 +300,43 @@ for (const filePath of sourceFiles) {
     );
   }
 
+  const isFeaturePage =
+    filePath.endsWith("Page.tsx") &&
+    (normalizedRelativePath.startsWith("modules/") || normalizedRelativePath.startsWith("platform/"));
+  if (isFeaturePage) {
+    const staticLocalInteractionImport = /^\s*import\s+(?!type\b)[^;]+?\s+from\s+["'](\.[^"']+)["'];?/gm;
+    for (const match of source.matchAll(staticLocalInteractionImport)) {
+      const specifier = match[1];
+      const importedFileName = specifier.split("/").at(-1) ?? "";
+      if (/(?:Form|Dialog)$/.test(importedFileName)) {
+        interactionBoundaryViolations.push(
+          `${relativePath}: interaction-only '${importedFileName}' must be loaded with next/dynamic and mounted only while active`,
+        );
+      }
+    }
+
+    if (
+      /(?:from\s+["']pulltorefreshjs["']|import\s*\(\s*["']pulltorefreshjs["']\s*\))/.test(source) &&
+      normalizedRelativePath !== "shell/bootstrap/MainClientBootstrap.tsx"
+    ) {
+      navigationSafetyViolations.push(
+        `${relativePath}: pulltorefreshjs must remain isolated to MainClientBootstrap so mobile refresh policy stays centralized`,
+      );
+    }
+
+    const usesClientRouterNavigation = /\brouter\.(?:push|replace|refresh)\s*\(/.test(source);
+    if (
+      usesClientRouterNavigation &&
+      !guardedNavigationBypassAllowlist.has(normalizedRelativePath) &&
+      !/\brequestDiscard\b/.test(source)
+    ) {
+      navigationSafetyViolations.push(
+        `${relativePath}: protected client navigation must pass through the unsaved-changes guard; ` +
+          "add requestDiscard or explicitly document a forced/system redirect in the architecture checker",
+      );
+    }
+  }
+
   for (const specifier of collectImportSpecifiers(source)) {
     const target = resolveImport(filePath, specifier);
     if (!target) continue;
@@ -202,10 +356,17 @@ for (const filePath of sourceFiles) {
     }
 
     const fromOwner = ownerOf(filePath);
-    const targetOwner = ownerOf(target);    if (fromLayer === "app" && targetLayer === "modules" && !isPublicApi(target)) {
+    const targetOwner = ownerOf(target);
+    if (fromLayer === "app" && targetLayer === "modules" && !isPublicApi(target)) {
       moduleBoundaryViolations.push(
         `${path.relative(process.cwd(), filePath)} -> ${path.relative(process.cwd(), target)} ` +
         "(app composition must import module capabilities through an index.ts public API)",
+      );
+    }
+    if (fromLayer === "app" && targetLayer === "platform" && !isPublicApi(target)) {
+      moduleBoundaryViolations.push(
+        `${path.relative(process.cwd(), filePath)} -> ${path.relative(process.cwd(), target)} ` +
+        "(app composition must import platform capabilities through an index.ts public API)",
       );
     }
     if (
@@ -258,12 +419,15 @@ for (const filePath of sourceFiles) {
 if (
   violations.length ||
   moduleBoundaryViolations.length ||
+  appRouteViolations.length ||
   ownershipViolations.length ||
   cycles.size ||
   formSafetyViolations.length ||
   cacheSafetyViolations.length ||
-  directHttpViolations.length ||
-  compatibilityViolations.length
+    directHttpViolations.length ||
+    compatibilityViolations.length ||
+    interactionBoundaryViolations.length ||
+    navigationSafetyViolations.length
 ) {
   if (violations.length) {
     console.error("Forbidden architecture dependencies:");
@@ -281,6 +445,10 @@ if (
     console.error("Module boundary violations:");
     for (const violation of moduleBoundaryViolations) console.error(`  ${violation}`);
   }
+  if (appRouteViolations.length) {
+    console.error("App Router ownership violations:");
+    for (const violation of appRouteViolations) console.error(`  ${violation}`);
+  }
   if (formSafetyViolations.length) {
     console.error("Unsafe form validation patterns:");
     for (const violation of formSafetyViolations) console.error(`  ${violation}`);
@@ -297,9 +465,17 @@ if (
     console.error("Forbidden compatibility shims:");
     for (const violation of compatibilityViolations) console.error(`  ${violation}`);
   }
+  if (interactionBoundaryViolations.length) {
+    console.error("Eager interaction-only feature imports:");
+    for (const violation of interactionBoundaryViolations) console.error(`  ${violation}`);
+  }
+  if (navigationSafetyViolations.length) {
+    console.error("Unsafe navigation/runtime patterns:");
+    for (const violation of navigationSafetyViolations) console.error(`  ${violation}`);
+  }
   process.exit(1);
 }
 
 console.log(
-  "Architecture checks passed: target ownership, public APIs, dependency direction, cycles, form validation safety, query cache consistency, and compatibility-shim protection are clean.",
+  "Architecture checks passed: target ownership, App Router ownership/collisions/thin adapters, public APIs, dependency direction, cycles, form validation safety, query cache consistency, lazy interaction boundaries, navigation/runtime safety, and compatibility-shim protection are clean.",
 );

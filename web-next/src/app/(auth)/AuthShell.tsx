@@ -2,7 +2,7 @@
 
 import { Suspense, type ReactNode } from "react";
 import AuthLayout from "@/shell/auth-layout/AuthLayout";
-import { RouteLoading } from "@/shared/components/feedback/routes";
+import { RouteLoading } from "@/shared/components/feedback/routes/RouteLoading";
 
 export default function AuthShell({ children }: { children: ReactNode }) {
   return (

@@ -66,7 +66,7 @@ const AcceptInvitationPage = () => {
         password: data.password,
       });
       showSnackbar("success", t("auth.invitationAccepted"));
-      window.setTimeout(() => router.replace(appRoutes.login), 800);
+      window.setTimeout(() => router.replace(appRoutes.auth.login), 800);
     } catch (error) {
       HandleApiError(error as Error, (state) => showSnackbar("error", state.messages, state.title));
     } finally {

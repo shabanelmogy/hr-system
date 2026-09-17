@@ -29,13 +29,13 @@ export default function WorkforcePlanningLayout({ children }: { children: ReactN
     <FeatureModuleLayout
       title={t("menu.workforcePlanning")}
       description={t("menu.workforcePlanningDescription")}
-      moduleHref={appRoutes.workforcePlanning.index}
+      moduleHref={appRoutes.modules.hr.workforcePlanning.index}
       moduleIcon={<AccountTreeRoundedIcon />}
       navigationLabel={t("menu.workforcePlanningNavigation")}
       openNavigationLabel={t("menu.openWorkforcePlanningNavigation")}
       closeNavigationLabel={t("menu.closeWorkforcePlanningNavigation")}
       backLabel={t("menu.dashboard")}
-      backHref={appRoutes.home}
+      backHref={appRoutes.shell.home}
       items={items}
     >
       {children}

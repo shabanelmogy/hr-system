@@ -10,13 +10,15 @@ import { showToast } from "@/shared/components/feedback/transient";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
 import { Alert, Box, Button, Typography } from "@mui/material";
 import { Archive, LockClock, LockOpen, Restore } from "@mui/icons-material";
+import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import FiscalYearForm from "../components/FiscalYearForm";
 import FiscalYearsMultiView from "../components/FiscalYearsMultiView";
 import { fiscalYearKeys, useArchiveFiscalYear, useChangeFiscalYearLifecycle, useCreateFiscalYear, useFiscalYear, useRestoreFiscalYear, useUpdateFiscalYear } from "../hooks/useFiscalYearQueries";
 import FiscalYearService from "../services/fiscalYearService";
 import type { FiscalYearDetail, FiscalYearLifecycleAction, FiscalYearLifecycleFilter, FiscalYearListItem, FiscalYearMutationRequest, FiscalYearPermissions, FiscalYearRecordStatus, FiscalYearSearchField, FiscalYearSearchOperator, FiscalYearSortColumn } from "../types/FiscalYear";
+
+const FiscalYearForm = dynamic(() => import("../components/FiscalYearForm"), { ssr: false });
 
 type Dialog = "add" | "edit" | "view" | "archive" | "restore" | "lifecycle" | null;
 interface Filters { recordStatus: FiscalYearRecordStatus; lifecycleStatus: FiscalYearLifecycleFilter; searchField: FiscalYearSearchField; searchOperator: FiscalYearSearchOperator }

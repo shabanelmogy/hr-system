@@ -31,7 +31,7 @@ const session: SessionClaims = {
 
 describe("route access policies", () => {
   it("allows registered unrestricted routes and denies unknown routes", () => {
-    expect(canAccessRoute(appRoutes.home, session)).toBe(true);
+    expect(canAccessRoute(appRoutes.shell.home, session)).toBe(true);
     expect(canAccessRoute("/not-configured", session)).toBe(false);
   });
 
@@ -51,75 +51,75 @@ describe("route access policies", () => {
   });
 
   it("requires both Super Admin and the exact global geography permission", () => {
-    expect(canAccessRoute(appRoutes.superAdmin.geography.countries, session)).toBe(false);
-    expect(canAccessRoute(appRoutes.superAdmin.geography.states, {
+    expect(canAccessRoute(appRoutes.modules.referenceData.geography.countries, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.modules.referenceData.geography.states, {
       ...session,
       roles: ["SUPER_ADMIN"],
     })).toBe(false);
-    expect(canAccessRoute(appRoutes.superAdmin.geography.districts, {
+    expect(canAccessRoute(appRoutes.modules.referenceData.geography.districts, {
       ...session,
       permissions: [permissions.ViewDistricts],
     })).toBe(false);
-    expect(canAccessRoute(appRoutes.superAdmin.geography.countries, {
+    expect(canAccessRoute(appRoutes.modules.referenceData.geography.countries, {
       ...session,
       roles: ["super_admin"],
       permissions: [permissions.ViewCountries],
     })).toBe(true);
-    expect(canAccessRoute(appRoutes.superAdmin.geography.states, {
+    expect(canAccessRoute(appRoutes.modules.referenceData.geography.states, {
       ...session,
       roles: ["super_admin"],
       permissions: [permissions.ViewStates],
     })).toBe(true);
-    expect(canAccessRoute(appRoutes.superAdmin.geography.districts, {
+    expect(canAccessRoute(appRoutes.modules.referenceData.geography.districts, {
       ...session,
       roles: ["super_admin"],
       permissions: [permissions.ViewDistricts],
     })).toBe(true);
-    expect(canAccessRoute(appRoutes.apps, {
+    expect(canAccessRoute(appRoutes.platform.apps.index, {
       ...session,
       roles: ["super_admin"],
     })).toBe(false);
   });
 
   it("requires ViewUsers for the invitations administration page", () => {
-    expect(canAccessRoute(appRoutes.auth.invitationsPage, session)).toBe(false);
-    expect(canAccessRoute(appRoutes.auth.invitationsPage, {
+    expect(canAccessRoute(appRoutes.platform.administration.invitations, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.platform.administration.invitations, {
       ...session,
       permissions: [permissions.ViewUsers],
     })).toBe(true);
   });
 
   it("requires report-management access for the Crystal Report Manager", () => {
-    expect(canAccessRoute(appRoutes.auth.crystalReportsPage, session)).toBe(false);
-    expect(canAccessRoute(appRoutes.auth.crystalReportsPage, {
+    expect(canAccessRoute(appRoutes.modules.reporting.crystalReports, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.modules.reporting.crystalReports, {
       ...session,
       permissions: [permissions.ManageCrystalReportAccess],
     })).toBe(true);
   });
 
   it("allows the Basic Data workspace for any Basic Data view permission", () => {
-    expect(canAccessRoute(appRoutes.basicData.index, session)).toBe(false);
-    expect(canAccessRoute(appRoutes.basicData.index, {
+    expect(canAccessRoute(appRoutes.shell.basicData, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.shell.basicData, {
       ...session,
       permissions: [permissions.ViewCompanyGeographicScope],
     })).toBe(true);
-    expect(canAccessRoute(appRoutes.basicData.companyGeographicScope, {
+    expect(canAccessRoute(appRoutes.platform.companyGeographicScope, {
       ...session,
       permissions: [permissions.ViewCompanyGeographicScope],
     })).toBe(true);
   });
 
   it("enforces administrator-only routes case-insensitively", () => {
-    expect(canAccessRoute(appRoutes.advancedTools.healthCheck, session)).toBe(false);
-    expect(canAccessRoute(appRoutes.advancedTools.healthCheck, {
+    expect(canAccessRoute(appRoutes.platform.advancedTools.healthCheck, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.platform.advancedTools.healthCheck, {
       ...session,
       roles: ["ADMIN"],
     })).toBe(true);
   });
 
   it("allows Hangfire access through an assignable permission", () => {
-    expect(canAccessRoute(appRoutes.advancedTools.hangfireDashboard, session)).toBe(false);
-    expect(canAccessRoute(appRoutes.advancedTools.hangfireDashboard, {
+    expect(canAccessRoute(appRoutes.platform.advancedTools.hangfireDashboard, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.platform.advancedTools.hangfireDashboard, {
       ...session,
       permissions: [permissions.ViewHangfireDashboard],
     })).toBe(true);
@@ -147,19 +147,19 @@ describe("route access policies", () => {
   });
 
   it("allows recruitment access to admin or users with ViewRecruitment", () => {
-    expect(canAccessRoute(appRoutes.recruitment, session)).toBe(false);
-    expect(canAccessRoute(appRoutes.recruitment, {
+    expect(canAccessRoute(appRoutes.modules.hr.recruitment, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.modules.hr.recruitment, {
       ...session,
       roles: ["admin"],
     })).toBe(true);
-    expect(canAccessRoute(appRoutes.recruitment, {
+    expect(canAccessRoute(appRoutes.modules.hr.recruitment, {
       ...session,
       permissions: [permissions.ViewRecruitment],
     })).toBe(true);
   });
 
   it("matches the Platform file API tenant-member access model", () => {
-    expect(canAccessRoute(appRoutes.extras.filesManager, session)).toBe(true);
+    expect(canAccessRoute(appRoutes.platform.files.manager, session)).toBe(true);
   });
 
   it("requires ViewRaw for attendance raw-data screens", () => {
@@ -167,27 +167,27 @@ describe("route access policies", () => {
       ...session,
       permissions: [permissions.ViewAttendanceDevices],
     };
-    expect(canAccessRoute(appRoutes.attendanceDevices.index, deviceViewer)).toBe(true);
-    expect(canAccessRoute(appRoutes.attendanceDevices.users, deviceViewer)).toBe(false);
-    expect(canAccessRoute(appRoutes.attendanceDevices.punches, deviceViewer)).toBe(false);
-    expect(canAccessRoute(appRoutes.attendanceDevices.pullRuns, deviceViewer)).toBe(false);
+    expect(canAccessRoute(appRoutes.modules.hr.attendanceDevices.index, deviceViewer)).toBe(true);
+    expect(canAccessRoute(appRoutes.modules.hr.attendanceDevices.users, deviceViewer)).toBe(false);
+    expect(canAccessRoute(appRoutes.modules.hr.attendanceDevices.punches, deviceViewer)).toBe(false);
+    expect(canAccessRoute(appRoutes.modules.hr.attendanceDevices.pullRuns, deviceViewer)).toBe(false);
 
     const rawViewer = {
       ...session,
       permissions: [permissions.ViewRawAttendanceDevices],
     };
-    expect(canAccessRoute(appRoutes.attendanceDevices.users, rawViewer)).toBe(true);
-    expect(canAccessRoute(appRoutes.attendanceDevices.punches, rawViewer)).toBe(true);
-    expect(canAccessRoute(appRoutes.attendanceDevices.pullRuns, rawViewer)).toBe(true);
+    expect(canAccessRoute(appRoutes.modules.hr.attendanceDevices.users, rawViewer)).toBe(true);
+    expect(canAccessRoute(appRoutes.modules.hr.attendanceDevices.punches, rawViewer)).toBe(true);
+    expect(canAccessRoute(appRoutes.modules.hr.attendanceDevices.pullRuns, rawViewer)).toBe(true);
   });
 
   it("allows tenant members to read offline operations policy without manage permission", () => {
-    expect(canAccessRoute(appRoutes.auth.offlineOperationsPage, session)).toBe(true);
+    expect(canAccessRoute(appRoutes.platform.administration.offlineOperations, session)).toBe(true);
   });
 
   it("requires FiscalYears:View for the shared Finance fiscal-years route", () => {
-    expect(canAccessRoute(appRoutes.finance.fiscalYears, session)).toBe(false);
-    expect(canAccessRoute(appRoutes.finance.fiscalYears, {
+    expect(canAccessRoute(appRoutes.modules.accounting.fiscalYears, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.modules.accounting.fiscalYears, {
       ...session,
       permissions: [permissions.ViewFiscalYears],
     })).toBe(true);
@@ -199,9 +199,9 @@ describe("route access policies", () => {
       permissions: [permissions.ViewStaffingRequests],
     };
 
-    expect(canAccessRoute(appRoutes.workforcePlanning.index, session)).toBe(false);
-    expect(canAccessRoute(appRoutes.workforcePlanning.index, staffingViewer)).toBe(true);
-    expect(canAccessRoute(appRoutes.workforcePlanning.staffingRequests, staffingViewer)).toBe(true);
+    expect(canAccessRoute(appRoutes.modules.hr.workforcePlanning.index, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.modules.hr.workforcePlanning.index, staffingViewer)).toBe(true);
+    expect(canAccessRoute(appRoutes.modules.hr.workforcePlanning.staffingRequests, staffingViewer)).toBe(true);
   });
 
   it("keeps Workforce Planning leaf permissions isolated", () => {
@@ -210,8 +210,8 @@ describe("route access policies", () => {
       permissions: [permissions.ViewWorkforcePlans],
     };
 
-    expect(canAccessRoute(appRoutes.workforcePlanning.plans, planViewer)).toBe(true);
-    expect(canAccessRoute(appRoutes.workforcePlanning.budgets, planViewer)).toBe(false);
-    expect(canAccessRoute(appRoutes.workforcePlanning.trace, planViewer)).toBe(false);
+    expect(canAccessRoute(appRoutes.modules.hr.workforcePlanning.plans, planViewer)).toBe(true);
+    expect(canAccessRoute(appRoutes.modules.hr.workforcePlanning.budgets, planViewer)).toBe(false);
+    expect(canAccessRoute(appRoutes.modules.hr.workforcePlanning.trace, planViewer)).toBe(false);
   });
 });

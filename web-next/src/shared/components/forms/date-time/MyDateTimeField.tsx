@@ -1,6 +1,8 @@
 import { InputAdornment } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs, { type Dayjs } from "dayjs";
 import type { ReactNode } from "react";
 
@@ -73,30 +75,34 @@ export default function MyDateTimeField({
 
   if (mode === "date") {
     return (
-      <DatePicker
-        label={label}
-        value={pickerValue}
-        onChange={(nextValue) => onChange(nextValue?.format("YYYY-MM-DD") ?? "")}
-        disabled={disabled}
-        minDate={minDate}
-        disablePast={disablePast}
-        format={format}
-        slotProps={{ textField: textFieldProps }}
-      />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          label={label}
+          value={pickerValue}
+          onChange={(nextValue) => onChange(nextValue?.format("YYYY-MM-DD") ?? "")}
+          disabled={disabled}
+          minDate={minDate}
+          disablePast={disablePast}
+          format={format}
+          slotProps={{ textField: textFieldProps }}
+        />
+      </LocalizationProvider>
     );
   }
 
   return (
-    <DateTimePicker
-      label={label}
-      value={pickerValue}
-      onChange={(nextValue) => onChange(nextValue?.toISOString() ?? "")}
-      disabled={disabled}
-      minDateTime={minDateTime}
-      disablePast={disablePast}
-      ampm={ampm}
-      format={format}
-      slotProps={{ textField: textFieldProps }}
-    />
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DateTimePicker
+        label={label}
+        value={pickerValue}
+        onChange={(nextValue) => onChange(nextValue?.toISOString() ?? "")}
+        disabled={disabled}
+        minDateTime={minDateTime}
+        disablePast={disablePast}
+        ampm={ampm}
+        format={format}
+        slotProps={{ textField: textFieldProps }}
+      />
+    </LocalizationProvider>
   );
 }

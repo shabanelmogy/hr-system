@@ -15,15 +15,9 @@ import type {
   CreateCountryRequest,
   UpdateCountryMutation,
 } from "../types/Country";
+import { countryKeys } from "./countryQueryKeys";
 
-export const countryKeys = {
-  all: ["countries"] as const,
-  pages: () => [...countryKeys.all, "page"] as const,
-  page: (query: CountryPageQuery) => [...countryKeys.pages(), query] as const,
-  lookup: () => [...countryKeys.all, "lookup"] as const,
-  details: () => [...countryKeys.all, "detail"] as const,
-  detail: (id: number) => [...countryKeys.details(), id] as const,
-};
+export { countryKeys } from "./countryQueryKeys";
 
 export const useCountryPage = (
   query: CountryPageQuery,

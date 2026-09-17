@@ -1,13 +1,9 @@
 import { useMutation, useQuery, useQueryClient, type UseMutationOptions } from "@tanstack/react-query";
 import WorkforcePlanService from "../services/workforcePlanService";
 import type { RejectWorkforcePlanMutation, WorkforcePlanActionMutation, WorkforcePlanDetail, WorkforcePlanMutationRequest, WorkforcePlanPageQuery, UpdateWorkforcePlanMutation } from "../types/WorkforcePlan";
+import { workforcePlanKeys } from "./workforceQueryKeys";
 
-export const workforcePlanKeys = {
-  all: ["workforcePlans"] as const,
-  page: (query: WorkforcePlanPageQuery) => [...workforcePlanKeys.all, "page", query] as const,
-  detail: (id: number) => [...workforcePlanKeys.all, "detail", id] as const,
-  revisions: (id: number) => [...workforcePlanKeys.all, "revisions", id] as const,
-};
+export { workforcePlanKeys } from "./workforceQueryKeys";
 
 export const useWorkforcePlanPage = (query: WorkforcePlanPageQuery) => useQuery({ queryKey: workforcePlanKeys.page(query), queryFn: () => WorkforcePlanService.getPage(query), placeholderData: previous => previous });
 export const useWorkforcePlan = (id?: number | null, enabled = true) => useQuery({ queryKey: workforcePlanKeys.detail(id ?? 0), queryFn: () => WorkforcePlanService.getById(id!), enabled: enabled && !!id });

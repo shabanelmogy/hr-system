@@ -1,8 +1,9 @@
 # Frontend Architecture Reference
 
-Status: Applied to `web-next`; modular migration phases 1-8 foundation completed 2026-09-10.
+Status: Applied to `web-next`; modular foundation completed 2026-09-10 and the
+provider/client-runtime loading policy was consolidated 2026-09-17.
 
-This document is the architecture baseline for future frontend work. It covers ownership, dependency direction, routing, naming, and scalability. It does not define authentication behavior, API implementation, UI design, or performance policy. The current transport and API parity gate is recorded in [Web/API Readiness Review](../WEB_API_READINESS_REVIEW.md).
+This document is the architecture baseline for future frontend work. It covers ownership, dependency direction, routing, naming, scalability, and client-runtime loading policy. It does not define authentication behavior, API implementation, or UI design. The current transport and API parity gate is recorded in [Web/API Readiness Review](../WEB_API_READINESS_REVIEW.md).
 
 ## Feature Implementation Guides
 
@@ -56,8 +57,8 @@ under `src/platform`, and application chrome under `src/shell`.
 | Owner | Current directories | Dependency notes |
 | --- | --- | --- |
 | Platform | `advanced-tools`, `auth`, `file-manager`, `global-search`, `modules`, `notifications`, `realtime`, `tenant-access`, `tenant-admins`, `tenants` | Depends only on shared/low-level infrastructure. Business modules register integrations such as realtime invalidation into Platform public APIs. |
-| HR | `appointments`, `attendance-devices`, `basic-data`, `finance/fiscal-years`, `home`, `recruitment`, `workforce-planning` | Matches the server HR module catalog. Fiscal Years belongs to HR `workforce`, not Accounting. |
-| Accounting | module definition and module-local infrastructure | The server Accounting module currently publishes no business submodules. Do not invent frontend business routes before the backend contract exists. |
+| HR | `attendance-devices`, `basic-data`, `home`, `recruitment`, `workforce-planning` | HR-owned workforce, recruitment, attendance, and organizational capabilities. |
+| Accounting | `fiscal-years` plus module definition and module-local infrastructure | Fiscal Years is owned by Accounting and is exposed to dependent modules only through the Accounting public API. |
 | Shell | sidebar, top bar, layout, route guard | Consumes Platform public APIs and shared UI only; it does not import business-module internals. |
 | Shared | domain-neutral UI/infrastructure plus `reporting` | Must remain business-neutral. Domain report pages stay with their module owner. |
 
@@ -97,10 +98,15 @@ the previous identity are aborted and their results cannot publish into the new
 identity. The API client remains gated until the transition has completed; it
 does not replay a request that was started under the previous context.
 
-`MainShell` remounts the QueryClient and feature subtree with the complete
-user/tenant/company identity key during a switch or logout. This clears query
-cache and feature-local stores before the new subtree mounts, so a previous
-company's data cannot remain visible while the next context is loading.
+`MainShell` must distinguish **initial session bootstrap** from a real identity
+transition. The initial `null -> authenticated user` bootstrap keeps the same
+`ContextShell` and QueryClient so page queries that were allowed to start from
+the authenticated cookie context are not cancelled and replayed when
+`/api/auth/session` resolves. A real company switch or logout sets the explicit
+transition flags in `SessionContext`; while either flag is active `MainShell`
+unmounts `ContextShell`, which clears the QueryClient and feature-local stores
+before the next authenticated context mounts. This preserves company/user cache
+isolation without paying for a duplicate initial request wave.
 
 The shared `UnsavedChangesProvider` exposes
 `requestDiscard(): Promise<boolean>`. Same-tab links, sidebar items, module
@@ -131,6 +137,57 @@ final unsuccessful verification redirects to service-unavailable; a session 401
 terminates verification through logout. Stale generations cannot overwrite the
 verification result; a concurrent logout invalidates the switch via its epoch.
 
+### Navigation and mobile runtime safety baseline
+
+**Problem.** An ERP route can contain dirty form state or an in-flight write
+while navigation may originate from many surfaces: links, sidebar buttons,
+global search, notifications, company/module switchers, logout, browser history,
+refresh/close, or mobile pull-to-refresh. Handling only ordinary `Link`
+navigation leaves several paths capable of discarding edits or replaying work.
+
+**Root cause.** Navigation is not one API. Next links and `router.push()` are
+application navigation, browser traversal has its own pre-commit lifecycle,
+full-document unload is separate again, and pull-to-refresh is a gesture-driven
+query action rather than route navigation.
+
+**Decision.** Protected user-initiated navigation must pass through the shared
+unsaved-change decision before leaving an editing context. The provider guards
+same-origin links, `beforeunload`, and cancelable same-document browser traversal;
+programmatic protected navigation calls `requestDiscard()` explicitly. Company
+switching additionally rotates/cancels the previous request context and relies on
+the `MainShell` transition boundary to clear the old QueryClient. Forced
+authentication/session/security redirects are exempt: an expired or invalid
+session must leave protected content even when a form was dirty.
+
+Mobile pull-to-refresh follows a separate safety policy. It is loaded only on a
+touch/coarse-pointer client and during idle time. A gesture is rejected when the
+page is not at the top, a form is dirty or submitting, any React Query mutation
+is pending, a dialog/modal is active, the gesture starts in a grid/tree-grid or
+blocked surface, or an editable control has focus. An accepted gesture refetches
+active read queries only; it never invokes or retries mutations.
+
+**Implementation impact.** Sidebar items/sections, module and company switchers,
+global search, notification destinations, file viewing, profile navigation and
+user-initiated logout use the shared guard. `check:architecture` enforces that a
+protected source containing `router.push`, `router.replace` or `router.refresh`
+also contains the unsaved-change guard unless it is a documented system redirect.
+The same architecture gate prevents `pulltorefreshjs` from escaping
+`MainClientBootstrap`, keeping gesture policy centralized.
+
+**Verification.** The Phase 5 closure run passed `56/56` focused tests covering
+history traversal, unsaved-change registry, pull-to-refresh policy, company
+switch/session verification, platform navigation and navigation composition.
+`check:architecture`, normal and strict TypeScript, and the existing full
+frontend suite are green. The authenticated runtime smoke from the page-loading
+closure also exercised normal protected navigation without browser runtime
+errors.
+
+**Prevention rule.** Do not add a protected imperative navigation path that
+bypasses `requestDiscard()`, do not implement popstate/history rewrites as an
+unsaved-change workaround, and do not add a second pull-to-refresh integration.
+Security-forced redirects may bypass the prompt only when that exception is
+explicitly documented in the architecture checker.
+
 ### On-demand feature tooling
 
 Heavy export dependencies are loaded only when the export action is invoked.
@@ -138,6 +195,441 @@ Heavy export dependencies are loaded only when the export action is invoked.
 the spreadsheet tool on demand, so ordinary list and dashboard routes do not
 pay the export bundle cost. The export path retains the shared loading and
 error states and is covered by its focused hook checks.
+
+Interaction-only feature UI follows the same rule. Route-entry pages keep the
+list/dashboard surface static, while local forms and workflow dialogs are
+loaded with `next/dynamic` and are not mounted until their interaction state is
+active. A closed dialog must not be rendered merely with `open={false}`, because
+rendering the dynamic boundary still requests its chunk. Tabs and optional
+chart/import/report views use the same first-consumer loading rule when they
+carry a materially separate client runtime. Authentication forms or other UI
+that is the route's primary first paint remain static. `check:architecture`
+guards feature `*Page.tsx` files against reintroducing static local `*Form` or
+`*Dialog` imports.
+
+This is the canonical client-runtime loading policy for the application:
+
+1. **Route entry loads only first-paint UI.** A route may statically import the
+   list, dashboard, header, filters, or controls that are visible immediately.
+2. **Interaction-only UI is lazy.** Local create/edit/view forms, workflow
+   dialogs, upload surfaces, detail dialogs, optional settings panels, and
+   similar user-triggered UI must use a dynamic boundary when they carry
+   meaningful client runtime or dependencies.
+3. **Do not mount closed lazy UI.** Prefer
+   `{open ? <LazyDialog open /> : null}` over `<LazyDialog open={false} />`.
+   The latter can still request and compile the lazy chunk.
+4. **Optional views load at first consumer.** Cards, charts, reports, importers,
+   document viewers, PDF viewers, spreadsheet tooling, maps, drag/drop engines,
+   and other materially separate views should not be part of route entry unless
+   that view is the initial surface.
+5. **Providers follow the same locality rule.** Date-picker providers,
+   reporting/viewer bootstraps, and other heavy client providers belong at the
+   nearest real consumer rather than the application root.
+6. **Do not lazy-load primary first paint just to reduce a number.** Login,
+   registration, or another route whose form is the page itself should keep the
+   required UI static unless a measured reason proves otherwise.
+7. **Measure, do not guess.** After a runtime-boundary change, run the production
+   build and `measure:build`; development Turbopack compile logs alone are not a
+   bundle-size metric.
+
+Current applied examples include Fiscal Years, Workforce Planning, Countries,
+States, Districts, Address Types, Recruitment, Attendance Devices,
+Organizational Structure, Users, Roles, Invitations, Crystal Reports, and File
+Manager. Fiscal Years is the reference example: its form, React Hook Form/Zod
+path, and MUI date-picker runtime are not part of route entry and are first
+loaded when Add/Edit/View is opened. The measured production First Load for
+`/finance/fiscal-years` after this isolation is about `2.78 MiB`, down from the
+previous documented baseline of about `3.76 MiB`. Treat that number as a point-in-time
+measurement, not a permanent budget.
+
+The date runtime is intentionally local. `MyDateTimeField` owns its
+`LocalizationProvider`, `AdapterDayjs`, and picker imports; routes that visibly
+render a date control on first paint will still load that runtime immediately.
+Routes that only need date controls inside a lazy form inherit the form's lazy
+boundary and do not pay that cost at route entry.
+
+Translation loading follows the same principle without sacrificing hydration
+correctness. The root i18n instance eagerly contains only the shared `core`
+namespace. Route/feature scopes synchronously register their EN/AR bundles and
+provide the feature namespace through `I18nextProvider`, so existing bare
+`useTranslation()` consumers resolve locally while shared keys fall back to
+`core`. Translation resources are loaded at the owning route/feature boundary,
+not globally at application startup.
+
+### Authentication startup and post-login runtime rules
+
+The login route is a performance-sensitive platform entry point. Optimize its
+first paint and its post-submit transition separately; making `/login` fast must
+not move avoidable work onto the user's first Login click or weaken session
+correctness.
+
+Current applied rules and verified findings:
+
+1. **Login route adapters use direct imports.** Do not import the login page
+   through a broad authentication barrel that also exports Users, Roles,
+   password-reset, profile, or other route pages. A broad route barrel previously
+   caused unrelated authentication pages to enter the `/login` initial graph.
+2. **Keep primary login UI static; defer interaction-only UI.** Tenant/company
+   selection dialogs load only after the server requires that selection. The
+   primary username/password form remains first-paint UI.
+3. **Response validation remains authoritative but may be warmed after paint.**
+   The login response parser/Zod runtime may be loaded during browser idle time so
+   its download/compile cost does not land on the first Login click. Do not remove
+   response validation merely to reduce bundle size.
+4. **Never prefetch a protected destination before authentication is committed.**
+   Prefetching `/` (or another protected route) while the browser is still
+   unauthenticated can cache/render a request state that does not represent the
+   newly issued session. Only prefetch public/session-independent assets before
+   login. Protected route navigation must observe the newly committed cookies.
+5. **Prefer correctness over soft navigation after authentication.** Until the
+   protected shell has an explicit authenticated bootstrap handoff, use a fresh
+   post-login document navigation so Proxy, App Router and `SessionProvider` all
+   evaluate the new cookies from the same request context. A future client-side
+   handoff is allowed only when it carries/validates the new session state without
+   reusing an unauthenticated prefetched tree.
+6. **Keep session verification round-trips bounded.** Live bearer/session
+   validation may combine compatible database reads, but must preserve all
+   existing checks: user disabled/lockout/security stamp, tenant membership and
+   subscription eligibility, company access/activity, and active refresh-session
+   identity. Performance work must not weaken those semantics.
+7. **Do not run `next build` concurrently with `next dev` against the same `.next`
+   directory.** This can leave the development server listening on its port while
+   returning empty/broken responses. Stop/restart the dev server after production
+   build work when both use the same workspace.
+
+Operationally, measure these as distinct stages:
+
+```text
+login page first paint
+-> login request duration
+-> response-parser/runtime cost
+-> cookie commit
+-> protected navigation
+-> /api/auth/session verification
+-> dashboard/module bootstrap queries
+```
+
+Do not attribute a slow post-login dashboard to the `/login` bundle without
+measuring the stages separately.
+
+### Protected page loading and bootstrap performance
+
+This section is the canonical cross-route loading policy established by the
+2026-09-17 full page-loading review. The review measured the production build,
+then traced shared shell imports and initial network waterfalls across unrelated
+protected routes.
+
+#### 1. QueryClient bootstrap identity
+
+**Problem.** Protected pages could issue their first data requests while the
+session request was still resolving, then issue the same requests again.
+
+**Root cause.** `MainShell` keyed `ContextShell` by
+`userId/tenantId/companyId`. The first render used a null identity; when the
+session response arrived the key changed, destroying the first QueryClient and
+mounting a second one. Cancelling a React Query observer also does not guarantee
+that an already-started HTTP request without an AbortSignal stops at the
+transport layer.
+
+**Decision.** Keep one `ContextShell` across the initial null-to-authenticated
+bootstrap. Do not globally delay page queries until `user` exists merely to
+avoid duplication, because that converts parallel bootstrap into a serial
+`session -> page data` waterfall. Genuine company/user transitions remain
+explicit transition boundaries and must unmount/reset the cache.
+
+**Implementation impact.** `MainShell` no longer uses the initial session
+identity as a React key. `SessionContext` still raises `isSwitchingCompany` /
+`isLoggingOut`; those states unmount the context shell, rotate request context,
+and prevent data from the previous company from surviving the transition.
+
+**Verification.** The company-switch path was traced through
+`SessionContext.switchCompany()` and `useCompanyContextTransition()`, and the
+frontend type/lint gates passed after the bootstrap change. Company switching
+remains part of the authenticated smoke-test release gate.
+
+**Prevention rule.** Never solve initial-query duplication by keying the entire
+protected QueryClient to session data that is null during bootstrap. Cache
+identity changes must correspond to a real authenticated context transition.
+
+#### 2. Realtime first connection versus reconnect
+
+**Problem.** A normal first SignalR connection created a second application-wide
+refetch wave immediately after route data had loaded. Notifications performed a
+second first-connect invalidation as well.
+
+**Root cause.** The realtime bridges treated `disconnected -> connected` during
+normal startup as if connectivity had been lost after the application had
+already been running.
+
+**Decision.** The first successful realtime connection is not reconciliation.
+Only a subsequent reconnect may refresh potentially stale server state, and
+that reconciliation must use registered realtime query roots rather than a
+blanket invalidation of every active query.
+
+**Implementation impact.** Both realtime bridges track whether a successful
+connection has already occurred. `RealtimeEntityBridge` invalidates the bounded
+set returned by `getAllRealtimeQueryKeys()` only on a true reconnect, and only
+then refreshes role/company option stores that had previously been loaded.
+`NotificationRealtimeBridge` reconciles notification queries only on reconnect.
+The bridges are mounted only after a real tenant/company session is known and
+are not mounted for `super_admin`, for whom tenant SignalR is disabled anyway.
+Notification payload Zod validation remains intact but its parser is loaded on
+the first realtime notification instead of being static shell startup code.
+
+**Verification.** Realtime registry/event and notification focused tests passed
+after the change, together with frontend type-check and lint. Production bundle
+measurement remains mandatory after any future registry/runtime change.
+
+**Prevention rule.** Never call an application-wide query invalidation merely
+because SignalR connected for the first time. Register resource-owned query
+roots and reconcile only those roots after a real reconnect.
+
+#### 3. ERP list pagination is server-first
+
+**Problem.** The previous adaptive pagination hook always made a `pageSize: 1`
+probe and then either fetched the current page or downloaded as many as 5,000
+matching rows. A normal list could therefore require two serial requests before
+becoming ready and could transfer an entire business collection unnecessarily.
+
+**Root cause.** Client pagination was selected implicitly at runtime by probing
+the total count instead of being an explicit feature requirement.
+
+**Decision.** ERP list startup uses server pagination by default. One requested
+page means one query. Whole-dataset charts, exports, or analytics are separate
+capabilities and, when required, fetch their own aggregate/data contract on
+demand at the first consumer.
+
+**Implementation impact.** `useAdaptivePagination` preserves its caller-facing
+shape but always executes the requested server page and reports server mode;
+`allItems` and `pageItems` both represent the current page. The obsolete
+5,000-row threshold was removed. Fiscal Years, Workforce Planning, Countries,
+States, and Districts no longer perform the probe/fetch-all startup sequence.
+
+**Verification.** Focused adaptive-pagination and Countries/States tests passed;
+callers were reviewed for current-page grid/card semantics. Existing optional
+geography charts remain lazy and consume visible/current-page data; a future
+whole-dataset analytics requirement must use an explicit on-demand contract.
+
+**Prevention rule.** Do not infer client pagination by probing collection size,
+and never hide a fetch-all request inside a generic list hook.
+
+#### 4. Shell data should not duplicate session identity
+
+**Problem.** Every protected startup fetched user information again only to
+render sidebar display name and initials even though the session response
+already carried those fields.
+
+**Root cause.** The shell used a profile query as an identity source in addition
+to `SessionClaims`.
+
+**Decision / impact.** Shell display identity comes from session claims
+(`firstName`, `lastName`, `userName`, `email`). The separately needed photo query
+remains and React Query may deduplicate other photo observers.
+
+**Verification.** The sidebar change passed focused type/lint verification.
+
+**Prevention rule.** Do not add a protected-startup API request for data already
+present in the validated session contract. Profile/edit screens may still fetch
+their authoritative profile resource when they need fields not carried by the
+session.
+
+#### 5. Global registration code is metadata-only
+
+**Problem.** `MainShell -> moduleRegistration` caused unrelated protected routes
+to inherit feature query/service graphs. The production audit found about
+`338.6 KB` of common emitted JavaScript in chunks containing these registration
+dependencies.
+
+**Root cause.** Business realtime registration imported query-key constants from
+full React Query hook modules, and some registration paths crossed the broad
+`platform/realtime` barrel that also exposed the runtime bridge.
+
+**Decision.** Global registration may import module definitions, lightweight
+metadata, and dependency-light query-key leaves only. Query hooks, services,
+page implementations, forms, or runtime bridges do not belong in the global
+registration dependency graph. Cross-owner registration uses a deliberately
+narrow public `index.ts` boundary rather than a broad barrel or an internal deep
+import.
+
+**Implementation impact.** Realtime query keys were extracted into leaf modules
+for HR workforce/organizational structure, Accounting Fiscal Years, CRM
+Appointments, Reference Data geography/address types, Tenants and Tenant Admins.
+Business registrars use the narrow `platform/realtime/registry` public API while
+existing feature hooks/API modules re-export their former key names for source
+compatibility.
+
+**Verification.** Focused query-hook tests, type checks and lint passed for the
+registration refactor. The architecture checker no longer reports the business
+realtime registry imports; final production `measure:build` is the authority for
+the emitted shared-bundle reduction.
+
+**Prevention rule.** If adding a global registry entry makes an unrelated route
+import React Query feature hooks, API services, a viewer, form, or page, the
+registration boundary is wrong. Extract metadata to a leaf and expose only the
+minimal public contract.
+
+#### 6. Post-hydration optional runtime and viewer readiness
+
+**Problem.** A dynamic import is still startup work if every protected route
+immediately mounts it after hydration. Separately, the PDF viewer imposed fixed
+1,000 ms and 500 ms timers before it could load a document.
+
+**Decision / impact.** Mobile pull-to-refresh is now touch/coarse-pointer only and
+loads during browser idle time instead of every desktop hydration. The PDF
+viewer keeps Syncfusion route-local but uses the viewer's `created` readiness
+signal and loads the document immediately when ready; stale document fetches are
+aborted instead of waiting on fixed timers.
+
+**Verification.** Type-check accepts the viewer readiness contract and the
+bootstrap change; the complete production build is the release gate.
+
+**Prevention rule.** `dynamic()` is not a performance boundary by itself:
+conditional mounting/first-consumer timing matters. Do not use arbitrary sleep
+timers to model third-party component readiness when the component exposes a
+real lifecycle signal.
+
+#### 7. Dashboard API shape follows dashboard needs
+
+Admin dashboards must not download management catalogs merely to calculate a
+few aggregate cards. Prefer a dedicated server summary contract containing
+aggregate counts and bounded recent/attention lists. In particular, the
+super-admin tenant dashboard summary must not require tenant entitlement payloads
+or the full tenant management collection. Treat a dashboard that scales transfer
+and client aggregation linearly with the complete management catalog as an API
+shape defect, not a frontend rendering optimization problem.
+
+The same principle applies to future dashboards: return the smallest
+authoritative summary shape the first paint needs, then fetch management/detail
+data only when its owning screen or interaction is entered.
+
+#### 8. Protected utility routes own only the providers they require
+
+**Problem.** The production build exposed `/change-password` as a protected
+route rendered inside the public-auth route group while its page component used
+`useSession()` and unsaved-change registration. The shared auth shell intentionally
+does not mount `SessionProvider`, because doing so would make lightweight public
+routes such as `/login` inherit protected-session runtime.
+
+**Root cause.** Route-group placement described the visual auth shell but did not
+also provide the protected runtime contexts required by this one authenticated
+utility page.
+
+**Decision / impact.** Keep the public auth shell lightweight. A protected auth
+utility route mounts a route-local `SessionProvider`, waits for an authenticated
+session, and mounts `UnsavedChangesProvider` around the form. Do not promote those
+providers to every auth route merely because one route needs them.
+
+**Verification.** The route-local boundary passed architecture, type-check and
+lint, and the subsequent Next.js production build prerendered `/change-password`
+successfully as a PPR route.
+
+**Prevention rule.** Provider placement follows capability requirements, not
+route-group naming. When a protected utility page lives in an otherwise public
+shell, give that page the narrow protected provider scope it needs instead of
+raising session/form runtime to the shared public layout.
+
+#### 9. Production closure baseline — 2026-09-17
+
+The full cross-route pass is accepted only from production artifacts. The final
+build generated all `68/68` static/PPR pages and `measure:build` passed every
+configured budget.
+
+Measured before -> after:
+
+| Metric | Before | Final |
+| --- | ---: | ---: |
+| Common protected-route intersection | 47 chunks / ~2.89 MB | 36 chunks / ~1.61 MB |
+| `/` First Load | ~2.75 MiB | **1.61 MiB** |
+| `/login` First Load | ~1.13 MiB | **1.13 MiB** |
+| `/administration/users` | ~3.09 MiB | **1.80 MiB** |
+| `/profile` | ~3.09 MiB | **2.09 MiB** |
+| `/appointments` | ~3.02 MiB | **2.77 MiB** |
+| `/recruitment` | ~2.96 MiB | **1.86 MiB** |
+| `/finance/fiscal-years` | ~2.78 MiB | **2.32 MiB** |
+| Largest measured First Load route | ~3.09 MiB | **2.77 MiB** |
+
+The emitted JavaScript set changed from `230` chunks / `23.36 MiB` to `263`
+chunks / `24.22 MiB`. That total-on-disk number remains below the `26 MiB`
+budget and is not used as a proxy for route startup: the important shared and
+per-route first-load measurements decreased substantially while heavyweight
+report/PDF runtimes remain isolated from ordinary routes. The largest emitted
+chunk remains under the `12 MiB` budget and the largest route remains well under
+the `4.5 MiB` First Load budget.
+
+Final verification for this closure includes architecture check, normal and
+strict TypeScript, full quiet lint, module-generator self-test, full Vitest,
+documentation generation/check, production build, bundle measurement, focused
+backend summary tests, and the post-build runtime smoke gate. Future page-loading
+work should be evidence-driven feature tuning rather than reopening these shared
+bootstrap decisions.
+
+The authenticated browser smoke used the built-in development Admin flow and
+verified `login -> dashboard -> /finance/fiscal-years` with real client
+hydration. The final run had no console/runtime errors, session and realtime-token
+requests returned `200`, and SignalR negotiated through the same-origin BFF and
+started directly on Long Polling. The super-admin smoke separately verified
+`login -> / -> /super-admin -> tenant dashboard summary`; the warmed
+`/super-admin` document completed in about `0.19 s` and the dedicated summary
+request in about `0.29 s` on the local development stack. Treat the first dev
+compile separately from these warmed runtime timings.
+
+The same smoke exposed a development SSR failure in the hand-maintained Emotion
+streaming registry (`Stylis` stack overflow on a normal Fiscal Years render).
+The project now delegates App Router Emotion streaming to MUI's version-aware
+`AppRouterCacheProvider` from `@mui/material-nextjs/v16-appRouter`, while keeping
+the RTL Stylis configuration and remounting the cache when direction changes.
+Do not copy MUI/Emotion's private insert/flush integration into project code;
+use the framework adapter that matches the installed Next/MUI major version.
+
+#### 10. Review closure and intentionally deferred optimizations
+
+The comprehensive review also found several real but lower-priority costs. They
+are recorded here so future work does not rediscover them or accidentally trade
+correctness for a smaller development timing number:
+
+- **Root application loader / runtime preferences.** The inline bootstrap already
+  applies language, direction and theme DOM attributes synchronously, but the
+  full-screen loader remains until the request-specific cookie boundary and i18n
+  synchronization finish. Removing that mask independently would require the
+  client theme/i18n provider state to be initialized from the same synchronous
+  source; otherwise dark/RTL users can see a flash or a hydration mismatch.
+  Rework this only as one coherent runtime-preference change and re-verify PPR /
+  Instant Navigation.
+- **Active-language-only translation payloads.** Feature namespace scoping is
+  already correct and prevents unrelated namespaces from entering a route, but
+  each owning feature currently packages EN and AR resources together. Loading
+  only the active language is a valid future bundle refinement, not a reason to
+  move translation mutation back into render or weaken hydration correctness.
+- **Realtime token startup.** Regular tenant users still obtain a dedicated
+  realtime token through the BFF. Any removal of an authentication/session hop
+  requires a security review; do not bypass tenant/company/session validation
+  merely to shorten connection startup.
+- **Local SignalR transport.** Development must not force the browser directly to
+  a backend hub URL. That can trigger mixed-content, CORS, or local-certificate
+  failures and an endless reconnect loop even though the same-origin
+  `/api/hubs/company` BFF is available. Development always resolves the hub to the
+  same-origin BFF; production may preserve an explicit secure hub URL, while an
+  HTTPS page still falls back to the BFF rather than making a mixed-content HTTP
+  connection. When the BFF is selected, SignalR uses Long Polling directly
+  because a Next Route Handler is not a transparent WebSocket/SSE tunnel; do not
+  waste startup time failing those transports before falling back. Keep this
+  transport decision centralized;
+  do not fix local realtime failures by weakening browser TLS/CORS policy.
+- **Route-local first-paint packages.** FullCalendar on Appointments and
+  drag/drop/Kanban runtime in Recruitment remain feature-scoped rather than
+  global. Optimize them only if the post-shared-baseline production measurement
+  shows they are still material. A primary first-paint calendar is not made
+  faster simply by wrapping it in `dynamic()` and mounting it immediately.
+- **Interaction metadata on tenant management.** Tenant entitlement-module data
+  is currently useful only when create/edit is entered and may later be fetched
+  or prefetched on user intent. This is route-local work and must preserve the
+  editor's complete entitlement defaults; do not defer the request by allowing a
+  form to initialize against an empty catalog.
+
+These items are accepted follow-up optimizations, not unresolved causes of the
+cross-route duplicate-request and shared-bundle problems fixed above. Re-open
+them only with a production measurement or a concrete user-visible latency
+trace.
 
 ### Route and entitlement ownership baseline
 
@@ -297,15 +789,14 @@ and shared loading/error/empty states.
 
 Current examples:
 
-- Geographical pages live under `src/modules/hr/basic-data/geographical-information`.
-- Global presence is owned by geographical information.
+- Geographical reference-data pages live under `src/modules/reference-data/geographical-information`.
 - Home dashboard composition lives under `src/modules/hr/home`.
 - File listing and media preview live under `src/platform/file-manager`.
 - Advanced tools are split by capability into `external-tools`, `localization`, and `track-changes`; reusable code stays inside the owning subfeature unless it is domain-neutral and used elsewhere.
 - Notification API access, query state, realtime handling, and UI live under `src/platform/notifications`.
 - User-profile API access and query hooks live under `src/platform/auth/profile`.
 - Cross-domain report viewers and report API access live under `src/shared/reporting`; domain report pages remain with their owning module feature.
-- Fiscal Years live under `src/modules/hr/finance/fiscal-years` because the server HR module catalog assigns `FiscalYears:*` to the `workforce` submodule.
+- Fiscal Years live under `src/modules/accounting/fiscal-years`; other modules consume their lookup/query surface through the Accounting public API.
 - Generic SignalR connection infrastructure lives under `src/lib/signalr`.
 - Reusable content wrapping and sidebar context live under `src/shared`.
 
@@ -348,8 +839,10 @@ ownership declarations in `scripts/module-boundaries.mjs`. It checks static and
 literal dynamic dependency direction, target module completeness, declared
 cross-owner dependencies, public APIs, import cycles, unsafe
 transformed-optional Zod schemas, manual top-level-only `MyForm` error projection,
-and global disabling of stale-query refetch on mount. Any new exception must be
-justified in code review and reflected here.
+global disabling of stale-query refetch on mount, and static local `*Form` /
+`*Dialog` imports from feature `*Page.tsx` files that would violate the lazy
+interaction-boundary policy. Any new exception must be justified in code review
+and reflected here.
 
 ## Future Change Checklist
 
@@ -359,6 +852,10 @@ justified in code review and reflected here.
 - [ ] Inspect existing shared components and tests before creating or replacing UI.
 - [ ] Preserve shared behavior and configure it through public props; document any explicit exception.
 - [ ] Keep the App Router adapter thin.
+- [ ] Keep route entry limited to first-paint UI; dynamically load and conditionally mount interaction-only forms, dialogs, and heavy optional views.
+- [ ] Keep heavy providers and runtimes at their nearest real consumer; do not promote date/report/viewer providers to the root for convenience.
+- [ ] For auth changes, measure login first paint and post-login transition separately; never prefetch a protected route before the new session is committed.
+- [ ] After every material runtime/architecture finding, update this canonical guide with the observed problem, root cause, decision, verification, and any regression-prevention rule before handoff.
 - [ ] Keep business code independent from Shell and App Router internals.
 - [ ] Confirm shared code has no feature-specific imports.
 - [ ] Build optional control schemas from the shared Zod form primitives.
@@ -366,4 +863,4 @@ justified in code review and reflected here.
 - [ ] Invalidate stable root/dependency keys after mutations and verify stale inactive data refetches on remount.
 - [ ] Use the established lowercase directory and PascalCase component naming.
 - [ ] Add or update a feature/module `index.ts` only when a public boundary is needed.
-- [ ] Run the architecture, type, lint, test, and build checks.
+- [ ] Run the architecture, type, lint, test, production build, and `measure:build` checks.

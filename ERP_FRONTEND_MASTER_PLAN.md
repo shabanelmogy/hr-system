@@ -1,0 +1,1583 @@
+# ERP Frontend Foundation — Master Hardening Plan
+
+**Project:** `/hr-system/web-next`  
+**Goal:** Build a strong, scalable ERP frontend foundation in Next.js — not just isolated fixes.
+
+---
+
+## 1. Architecture Goal
+
+The frontend foundation should follow these rules:
+
+- `src/app` stays a **thin App Router layer** for routing, layouts, metadata, loading/error boundaries, and composition only.
+- Business ownership lives under `src/modules`.
+- Platform capabilities live under `src/platform`.
+- Application shell/navigation/dashboard composition lives under `src/shell`.
+- Shared generic UI and utilities live under `src/shared`.
+- Public URLs must remain stable.
+- Route Groups may reorganize code ownership without changing URLs.
+- Route ownership should be explicit and enforceable.
+- Cross-module access must go through public APIs.
+- Business logic should not leak into App Router files.
+- The architecture should support long-term ERP growth: more modules, more companies/tenants, permissions, reporting, and real-time features.
+- Demo Login remains available during development and will be removed later for Production.
+
+---
+
+# Phase 0 — Green Baseline & Architecture Foundation ✅
+
+## Objective
+
+Before deeper hardening, establish a clean baseline so later changes are measurable and safe.
+
+## Scope
+
+### App Router organization
+
+```text
+src/app/
+├── (auth)/
+├── (main)/
+│   ├── (shell)/
+│   ├── (platform)/
+│   ├── (modules)/
+│   │   ├── (hr)/
+│   │   ├── (accounting)/
+│   │   ├── (crm)/
+│   │   ├── (reference-data)/
+│   │   └── (reporting)/
+│   └── ...
+├── api/
+├── .well-known/
+└── hangfire/
+```
+
+### Ownership rules
+
+- HR business routes → HR module.
+- Accounting routes → Accounting.
+- CRM routes → CRM.
+- Geographic/reference data → Reference Data.
+- Crystal Reports → Reporting.
+- Authentication/system capabilities → Platform.
+- Home/dashboard/module launch → Shell.
+
+### Typed routes
+
+Centralize routes in `src/config/routes.ts`.
+
+```text
+appRoutes.auth.*
+appRoutes.shell.*
+appRoutes.platform.*
+appRoutes.modules.*
+```
+
+Avoid scattered route literals.
+
+### Architecture enforcement
+
+Strengthen `scripts/check-architecture.mjs` to verify:
+
+- route ownership;
+- duplicate URLs after stripping Route Groups;
+- one owner per route;
+- thin App Router adapters;
+- no inappropriate `"use client"` route pages;
+- no deep imports into another module/platform area;
+- public APIs for cross-owner access;
+- dependency direction;
+- circular dependency detection;
+- compatibility-shim protection.
+
+### Dependency/type baseline
+
+Target/current baseline:
+
+- Next.js `16.3.5`
+- React `19.3.0`
+- ReactDOM `19.3.0`
+- TypeScript `5.9.3`
+
+Fix dependency-upgrade regressions centrally, not with unsafe casts.
+
+Examples already addressed:
+
+- React Hook Form `Promise<unknown>` submit contract.
+- MUI X DataGrid callback typing changes.
+
+## Exit gates
+
+```bash
+npm run type-check
+npm run type-check:strict
+npm run lint
+npm run check:architecture
+npm test
+npm audit
+```
+
+## Status
+
+✅ **Completed / green baseline closed**
+
+Closure evidence on 2026-09-17:
+
+- Route Group ownership, thin App Router adapters, public APIs, dependency
+  direction, cycle detection, compatibility shims, navigation/runtime safety and
+  route collisions are enforced by `check:architecture` and the gate passes.
+- The post-runtime boundary cleanup removed the remaining direct App/Shell imports
+  into Platform internals. Auth route adapters, `MainShell`, module registration,
+  route authorization, dashboard composition, module translations and token
+  revocation now cross narrow feature-scoped `index.ts` public surfaces instead
+  of broad Platform barrels. This keeps the architecture gate green without
+  re-expanding protected-route bundle graphs.
+- normal and strict TypeScript checks pass;
+- i18n static/parity checks pass;
+- the documentation source/manifests are synchronized and the generated
+  documentation check passes for all `77` recipes;
+- `npm audit --audit-level=high` reports `0 vulnerabilities`.
+
+The foundation baseline is therefore no longer a cleanup workstream. Future
+architecture changes must preserve these gates rather than reopening Phase 0.
+
+---
+
+# Phase 1 — Business Safety 🔴
+
+## Objective
+
+Prevent frontend infrastructure from accidentally duplicating ERP business operations.
+
+ERP write operations are not automatically safe to replay.
+
+Examples:
+
+- creating employees;
+- posting invoices;
+- approving requests;
+- creating fiscal periods;
+- inventory movements;
+- payments;
+- workflow transitions.
+
+A backend may successfully commit while the browser loses the response. Automatic mutation retry can then create duplicates.
+
+## Changes
+
+### Disable global mutation retries
+
+`src/shared/config/queryClient.ts`
+
+```ts
+mutations: {
+  retry: 0
+}
+```
+
+Queries may retain safe read retry behavior.
+
+### Regression test
+
+Verify:
+
+- mutation retry default is `0`;
+- failed mutations execute their mutation function only once.
+
+## Future rule
+
+Retries for writes are allowed only when an endpoint explicitly supports idempotency.
+
+Potential future mechanism:
+
+```text
+Idempotency-Key
+```
+
+or another backend-supported idempotency contract.
+
+## Status
+
+✅ **Completed**
+
+---
+
+# Phase 2 — Authentication & BFF Hardening 🔴
+
+## Objective
+
+Make the Next.js BFF a trustworthy security boundary between browser traffic and the backend.
+
+## 2.1 Shared proxy security policy
+
+Create:
+
+```text
+src/lib/api/proxy-security.ts
+```
+
+Responsibilities:
+
+- reject unsafe backend path segments;
+- reject traversal/delimiter abuse;
+- protect state-changing endpoints from cross-site requests;
+- define which forwarding headers may be trusted.
+
+## 2.2 Generic BFF hardening
+
+File:
+
+```text
+src/app/api/[...path]/route.ts
+```
+
+Requirements:
+
+- validate backend path;
+- reject cross-site mutations;
+- do not trust browser-provided network identity;
+- preserve refresh-token behavior safely;
+- use request-context-aware backend routing.
+
+## 2.3 SignalR BFF hardening
+
+File:
+
+```text
+src/app/api/hubs/[...path]/route.ts
+```
+
+Do **not** trust caller-controlled headers such as:
+
+```text
+x-forwarded-for
+forwarded
+x-forwarded-host
+x-forwarded-proto
+x-real-ip
+cf-connecting-ip
+```
+
+Apply:
+
+- safe path validation;
+- same-origin mutation protection;
+- controlled forwarding headers only.
+
+## 2.4 Hangfire BFF hardening
+
+File:
+
+```text
+src/app/hangfire/[[...path]]/route.ts
+```
+
+Requirements:
+
+- safe path handling;
+- remove untrusted forwarding headers;
+- prevent an old/stale 401 response from deleting cookies created by a newer company/session switch.
+
+## 2.5 Logout hardening
+
+File:
+
+```text
+src/app/api/auth/logout/route.ts
+```
+
+Requirements:
+
+- resolve backend origin from the current request;
+- support backend override correctly;
+- use a short upstream logout timeout;
+- clear local cookies even when upstream logout is temporarily unavailable;
+- reject cross-site logout.
+
+## 2.6 Session/company transition safety
+
+Maintain strong isolation between:
+
+```text
+user
+tenant
+company
+query cache
+in-flight requests
+```
+
+When company/session context changes:
+
+- abort stale requests;
+- invalidate request context;
+- cancel React Query work;
+- clear old query cache;
+- avoid replaying old-screen writes with new company cookies.
+
+## 2.7 Demo Login
+
+**Keep Demo Login in development.**
+
+- User Demo Login stays.
+- Admin Demo Login stays.
+- Super Admin Demo Login stays.
+- Current login behavior stays.
+- Remove later only when preparing Production.
+
+## Previous verification
+
+```text
+58/58 focused security tests
+138 test files
+471 tests
+```
+
+## Status
+
+✅ **Completed**
+
+---
+
+# Phase 3 — Next.js Runtime Architecture 🟠
+
+## Objective
+
+Use Next.js 16 runtime architecture correctly rather than treating the entire ERP as request-dynamic.
+
+Target:
+
+```text
+Static shell
++
+Partial Prerendering
++
+small request-dependent runtime islands
+```
+
+## 3.1 Cache Components
+
+`next.config.ts`
+
+```ts
+cacheComponents: true
+reactStrictMode: true
+typedRoutes: true
+poweredByHeader: false
+```
+
+Do **not** disable Cache Components just to hide runtime issues.
+
+## 3.2 Static Root Layout
+
+Remove direct request APIs such as:
+
+```ts
+await cookies()
+```
+
+from `src/app/layout.tsx`.
+
+Target:
+
+```text
+RootLayout
+  └── static shell
+      └── Suspense
+          └── RuntimePreferencesBoundary
+```
+
+## 3.3 Runtime preferences boundary
+
+Files:
+
+```text
+src/app/runtime-preferences.ts
+src/app/RuntimePreferencesBoundary.tsx
+```
+
+Responsibilities:
+
+- theme;
+- language;
+- direction;
+- cookie normalization.
+
+## 3.4 Partial Prerendering
+
+Expected production classification:
+
+```text
+○ Static
+◐ Partial Prerender
+ƒ Dynamic
+```
+
+Desired result:
+
+- most ERP screens: `◐ Partial Prerender`;
+- BFF/API routes: `ƒ Dynamic`;
+- `.well-known`: `○ Static`.
+
+## 3.5 Remove incompatible route flags
+
+Avoid broad:
+
+```ts
+export const dynamic = "force-dynamic";
+```
+
+Already removed where unnecessary from:
+
+```text
+/api/[...path]
+/api/hubs/[...path]
+/hangfire/[[...path]]
+/.well-known/apple-app-site-association
+/.well-known/assetlinks.json
+```
+
+## 3.6 Client-only dynamic components
+
+Components using:
+
+```ts
+dynamic(..., { ssr: false })
+```
+
+must not interfere with Instant Navigation validation.
+
+Already isolated behind Suspense where needed:
+
+```text
+NotificationRealtimeBridge
+RealtimeEntityBridge
+ReactQueryDevtools
+```
+
+## 3.7 Instant Navigation compatibility
+
+The shared `(main)` shell must not prevent the target App Router segment from reaching Next.js Instant Navigation validation boundaries.
+
+Current resolved direction:
+
+- the target route subtree must remain renderable during initial session bootstrap;
+- business/dashboard content remains protected until session state is known;
+- never disable Instant Navigation globally;
+- never turn off Cache Components to hide the issue.
+
+Dashboard behavior:
+
+- show `RouteLoading` during session bootstrap;
+- do not start accessible-module/dashboard queries before the session state is known.
+
+## 3.8 Security layering
+
+Authorization remains layered:
+
+```text
+Browser UI authorization
++
+BFF/session protection
++
+Backend authorization
+```
+
+Client guards improve UX but are not the sole security boundary.
+
+## 3.9 Runtime verification
+
+Verify:
+
+```text
+/
+apps
+module pages
+auth flows
+company switch
+logout
+super admin
+normal user
+navigation between PPR routes
+```
+
+Watch for:
+
+```text
+Could not validate instant
+instant UI
+blocking prerender
+BailoutToCSR
+hydration mismatch
+```
+
+## Exit gates
+
+```bash
+npm run type-check
+npm run type-check:strict
+npm run lint
+npm run check:architecture
+npm test
+npm run build
+```
+
+## Status
+
+✅ **Completed / runtime architecture verified**
+
+Completed:
+
+- Next `16.3.5`;
+- React `19.3.0`;
+- Cache Components;
+- static-root/runtime-preference split;
+- PPR production build previously succeeded;
+- first realtime Instant UI issue fixed;
+- `/` Instant Navigation root cause identified and route/session boundary corrected;
+- regression tests added;
+- normal and strict TypeScript checks passed;
+- architecture and lint gates passed;
+- full Vitest suite passed during final runtime closure;
+- production build and `measure:build` completed successfully;
+- authenticated Admin and Super Admin browser smoke completed without the
+  original Instant Navigation validation failure;
+- company/session/realtime startup behavior was verified after the protected
+  QueryClient and SignalR startup fixes.
+
+Any future SignalR diagnostics or transport tuning belongs to Phase 6 and must
+not reopen the completed Cache Components / PPR / Instant Navigation baseline.
+
+---
+
+# Phase 4 — Provider & Client Runtime Optimization ✅
+
+## Objective
+
+Reduce root/provider cost and stop heavy client libraries from becoming global dependencies.
+
+## 4.1 i18n lazy loading
+
+Target:
+
+- avoid eagerly loading every translation namespace;
+- load namespaces per feature/module;
+- preserve SSR/hydration language correctness;
+- avoid render-time global language mutation where possible.
+
+Applied:
+
+- the root i18n instance eagerly loads only the shared `core` namespace;
+- EN/AR feature bundles are registered synchronously at route/feature scopes;
+- nested `I18nextProvider` scopes preserve existing bare `useTranslation()` consumers;
+- feature namespaces fall back to shared `core` keys;
+- route-local translation resources no longer make every ERP route pay for the complete catalog.
+
+## 4.2 Date provider scoping
+
+Review the global date adapter/provider.
+
+Target:
+
+- only date-heavy areas load date-picker runtime;
+- avoid making every ERP route pay for it.
+
+Applied:
+
+- `LocalizationProvider` is local to `MyDateTimeField`;
+- `AdapterDayjs` and MUI X date-picker runtime load only where a date control is a real consumer;
+- date controls inside lazy forms inherit the form interaction boundary and do not load at route entry.
+
+## 4.3 Syncfusion isolation
+
+Load Syncfusion only when the first consuming feature is entered.
+
+Target:
+
+```text
+feature enters
+→ bootstrap/import Syncfusion
+```
+
+not:
+
+```text
+application starts
+→ load Syncfusion globally
+```
+
+Applied:
+
+- Syncfusion viewer/bootstrap work is isolated to the first consuming viewer path;
+- it is not part of root application startup.
+
+## 4.4 Other heavy client packages
+
+Audit:
+
+- FullCalendar;
+- charts;
+- XLSX;
+- PDF viewers;
+- document viewers;
+- reporting engines;
+- drag/drop;
+- maps.
+
+Rules:
+
+- load at first consumer;
+- keep client boundaries local;
+- avoid pushing heavy packages into the shared shell bundle.
+
+Applied runtime policy:
+
+- route entry contains only first-paint UI;
+- local interaction-only `*Form` and `*Dialog` components use dynamic boundaries;
+- lazy components are not mounted while closed, because `open={false}` can still request their chunk;
+- optional tabs/views, charts, reporting, file upload/viewer surfaces, and similar heavy UI load at first consumer;
+- `check:architecture` rejects static local `*Form` / `*Dialog` imports from feature `*Page.tsx` files;
+- primary first-paint forms such as authentication pages remain static by design.
+
+Representative applied areas:
+
+- Fiscal Years;
+- Workforce Planning;
+- Countries / States / Districts / Address Types;
+- Recruitment;
+- Attendance Devices;
+- Organizational Structure;
+- Users / Roles / Invitations;
+- Crystal Reports;
+- File Manager.
+
+Measured after the runtime-boundary pass:
+
+- `/finance/fiscal-years`: about `2.78 MiB` First Load, versus the earlier documented baseline of about `3.76 MiB`;
+- largest measured First Load route: about `3.10 MiB`;
+- Recruitment: about `2.96 MiB`.
+
+These measurements are point-in-time build evidence, not permanent route budgets.
+
+## Status
+
+✅ **Runtime policy implemented**
+
+Follow-up dependency/package cleanup remains part of the dependency strategy and
+performance-engineering phases; it is not required for the Phase 4 runtime-loading
+contract to remain enforced.
+
+---
+
+# Phase 5 — Navigation & Mobile Runtime Safety ✅
+
+## Objective
+
+Make navigation reliable for ERP forms and mobile/PWA-style usage.
+
+## 5.1 Unsaved changes
+
+Preserve protection for:
+
+- internal links;
+- browser history;
+- refresh/close;
+- company/module navigation.
+
+Avoid double navigation and stale form writes.
+
+## 5.2 Pull-to-refresh safety
+
+Audit `pulltorefreshjs`.
+
+Requirements:
+
+- no activation while editing;
+- no conflict with data-grid scrolling;
+- no activation inside dialogs;
+- no replaying writes;
+- refresh queries intentionally, not blindly.
+
+## 5.3 Navigation transition consistency
+
+Ensure these all respect unsaved changes, request cancellation, query isolation, and Instant Navigation:
+
+```text
+Link navigation
+router.push
+company switch
+module switch
+logout
+authorization redirect
+```
+
+## Applied closure
+
+The protected shell now has one explicit navigation-safety contract:
+
+- `UnsavedChangesProvider` intercepts same-origin application links before
+  navigation, protects refresh/close through `beforeunload`, and protects
+  same-document Back/Forward through the cancelable Navigation API traversal
+  guard without rewriting browser history;
+- sidebar navigation, global search, notification actions, file viewing,
+  profile navigation, module switching, company switching and user-initiated
+  logout all call `requestDiscard()` before leaving the current editing context;
+- forced authentication/session/security redirects are intentionally exempt from
+  dirty-form confirmation because an expired or invalid session must not remain
+  on protected content;
+- a genuine company switch cancels/invalidates the previous session request
+  generation and unmounts the protected QueryClient boundary, preventing stale
+  company results from publishing into the new context;
+- pull-to-refresh is touch/coarse-pointer only, loaded during browser idle time,
+  disabled for dirty/busy forms, pending mutations, focused editors, grids,
+  tree-grids and modal/dialog surfaces, and refreshes active read queries only;
+  it never retries/replays mutations;
+- `check:architecture` rejects protected `router.push`, `router.replace` or
+  `router.refresh` call sites that bypass `requestDiscard`, unless the file is an
+  explicitly documented forced/system redirect, and keeps `pulltorefreshjs`
+  centralized in `MainClientBootstrap`.
+
+Focused closure verification on 2026-09-17 passed `56/56` tests across history
+traversal, unsaved-change registry, pull-to-refresh policy, company switching,
+company verification, platform navigation and navigation composition, in
+addition to the full frontend suite already passing `496/496` tests.
+
+## Status
+
+✅ **Completed / navigation and mobile runtime safety closed**
+
+---
+
+# Phase 6 — Observability & Production Diagnostics 🟡
+
+## Objective
+
+Establish production diagnostics before the ERP grows further.
+
+## 6.1 OpenTelemetry
+
+Use Next instrumentation to trace:
+
+```text
+frontend request
+BFF request
+backend call
+duration
+status
+correlation ID
+tenant/company context where safe
+```
+
+Never log secrets or tokens.
+
+## 6.2 Error telemetry
+
+Capture:
+
+- global errors;
+- route errors;
+- BFF failures;
+- timeout failures;
+- SignalR failures;
+- session revalidation failures.
+
+## 6.3 Performance telemetry
+
+Measure:
+
+```text
+navigation latency
+route rendering
+API latency
+bundle growth
+large client chunks
+slow dashboard queries
+```
+
+## 6.4 SignalR diagnostics
+
+Current warnings to investigate independently:
+
+```text
+Failed to fetch
+Failed to complete negotiation
+Failed to start the connection
+Connection delayed
+```
+
+Target:
+
+- clear failure classification;
+- bounded reconnect strategy;
+- no noisy repeated console errors;
+- no impact on page rendering.
+
+## Status
+
+⏳ **Planned**
+
+---
+
+# Phase 7 — Browser Security Hardening 🟡
+
+## Objective
+
+Move from basic security headers to a production-grade browser security posture.
+
+Existing headers include:
+
+```text
+X-Content-Type-Options
+Referrer-Policy
+Permissions-Policy
+X-Frame-Options
+Strict-Transport-Security
+```
+
+## 7.1 CSP Report-Only
+
+Start with:
+
+```text
+Content-Security-Policy-Report-Only
+```
+
+Inventory sources required by:
+
+- Next.js;
+- MUI/Emotion;
+- Google auth;
+- SignalR;
+- reports;
+- workers;
+- blobs;
+- images/fonts.
+
+## 7.2 CSP enforcement
+
+```text
+report-only
+→ fix violations
+→ enforce CSP
+```
+
+## 7.3 Production Demo Login removal
+
+When preparing Production:
+
+- remove Demo Login buttons;
+- remove hardcoded demo credentials;
+- verify no demo credentials exist in production bundles.
+
+## Status
+
+⏳ **Planned**
+
+---
+
+# Phase 8 — Testing Strategy 🟡
+
+## Objective
+
+Move from mainly unit/regression coverage to a complete ERP confidence model.
+
+## 8.1 Unit tests
+
+Continue testing:
+
+- parsers;
+- route policies;
+- validation;
+- security helpers;
+- pure UI logic.
+
+## 8.2 Integration tests
+
+Cover:
+
+```text
+SessionProvider
+company switch
+query cache isolation
+BFF refresh
+authorization
+forms
+mutation failures
+runtime preferences
+```
+
+## 8.3 Playwright E2E
+
+Critical flows:
+
+### Authentication
+
+```text
+login
+demo login
+logout
+session expiration
+```
+
+### Company context
+
+```text
+login
+select/switch company
+old queries canceled
+new context loaded
+```
+
+### Authorization
+
+```text
+allowed route
+denied route
+super-admin boundaries
+```
+
+### Business smoke
+
+```text
+open module
+open list
+filter/search
+open form
+create/update safe flow
+validation failure
+API failure
+```
+
+### Runtime
+
+```text
+client navigation
+back/forward
+hard refresh
+PPR route
+Instant Navigation
+```
+
+## 8.4 Coverage thresholds
+
+Introduce thresholds gradually, prioritizing:
+
+```text
+auth
+security
+routing
+query safety
+business-critical shared infrastructure
+```
+
+## Status
+
+⏳ **Planned**
+
+---
+
+# Phase 9 — TypeScript & Code Quality 🟡
+
+## Objective
+
+Gradually move toward a stricter and safer ERP codebase.
+
+## 9.1 Strict TypeScript baseline
+
+Keep both:
+
+```bash
+npm run type-check
+npm run type-check:strict
+```
+
+until strict mode can become the normal default.
+
+## 9.2 Remove unsafe escape hatches
+
+Avoid:
+
+```text
+any
+as unknown as ...
+unverified API casts
+silent parsing assumptions
+```
+
+Prefer:
+
+```text
+Zod parsing
+typed adapters
+shared contracts
+narrowing
+```
+
+## 9.3 Boundary enforcement
+
+Keep strengthening architecture rules when new violation categories appear.
+
+## Status
+
+🟠 **Partially established; long-term hardening remains**
+
+---
+
+# Phase 10 — Dependency Upgrade Strategy 🟡
+
+## Objective
+
+Keep dependencies modern without destabilizing the ERP.
+
+## Policy
+
+Upgrade major packages one by one:
+
+```text
+1. read migration notes
+2. update
+3. type-check
+4. focused tests
+5. full tests
+6. build
+7. runtime smoke
+```
+
+Important packages:
+
+- Next.js;
+- React;
+- MUI;
+- MUI X;
+- React Hook Form;
+- TanStack Query;
+- i18next;
+- Syncfusion;
+- FullCalendar;
+- charts;
+- document/report viewers.
+
+## Current baseline
+
+```text
+Next.js 16.3.5
+React 19.3.0
+ReactDOM 19.3.0
+TypeScript 5.9.3
+```
+
+Earlier audit:
+
+```text
+npm audit: 0 vulnerabilities
+```
+
+## Status
+
+🟠 **Baseline upgraded; future majors should be controlled batches**
+
+---
+
+# Phase 11 — Performance & Bundle Engineering 🟢
+
+## Objective
+
+Keep startup/navigation fast as the ERP grows.
+
+Measure:
+
+```text
+initial JS
+route JS
+shared shell JS
+largest client chunks
+navigation latency
+hydration cost
+dashboard render cost
+query waterfalls
+```
+
+Techniques:
+
+- route-local dynamic imports;
+- provider scoping;
+- feature lazy loading;
+- Server/Client boundary optimization;
+- PPR;
+- justified query prefetch;
+- eliminate duplicate requests;
+- avoid huge barrel imports;
+- move static work to Server Components where appropriate.
+
+## Applied authentication performance findings — 2026-09-17
+
+The login investigation established an important distinction between **route
+load performance** and **authentication transition performance**.
+
+Verified findings and decisions:
+
+- `/login` route-level barrel imports pulled unrelated authentication pages into
+  the initial graph; route adapters should use direct imports for primary pages.
+- tenant/company selection UI is interaction-only and should stay outside the
+  initial login path until required by the server;
+- login response validation remains required, but its parser/runtime can be
+  warmed during browser idle time so the first submit does not pay its full
+  compile/download cost;
+- protected destinations such as `/` must **not** be prefetched before login is
+  committed, because the prefetched tree can represent the unauthenticated
+  request context;
+- post-login navigation currently favors a fresh document request so Proxy,
+  cookies and `SessionProvider` all bootstrap from the newly committed session;
+- session validation DB work may be consolidated only when all current security
+  predicates remain identical;
+- development and production Next.js builds must not write the same `.next`
+  directory concurrently; restart `next dev` after local `next build` work when
+  necessary.
+
+Performance reviews should measure this sequence independently:
+
+```text
+/login first paint
+-> POST login
+-> parser/validation
+-> cookie/session commit
+-> protected navigation
+-> /api/auth/session
+-> dashboard bootstrap queries
+```
+
+This prevents a fast login page from hiding a slow authentication or dashboard
+bootstrap path.
+
+## Comprehensive page-loading hardening — 2026-09-17
+
+The route-wide production review found that the remaining cost was dominated by
+shared protected-shell behavior and request amplification rather than by one
+single page. The important findings are now treated as permanent architecture
+rules rather than route-by-route tuning.
+
+### Protected bootstrap / duplicate request wave
+
+**Problem:** the initial protected render could start page queries, then repeat
+them after `/api/auth/session` resolved.
+
+**Root cause:** `MainShell` keyed the entire context/QueryClient by a session
+identity that begins as null. The null-to-authenticated transition destroyed the
+first QueryClient and replayed page queries.
+
+**Decision:** preserve one QueryClient during initial session bootstrap. A real
+company switch or logout remains an explicit unmount/reset boundary; never gate
+all first page queries behind session completion just to avoid duplication.
+
+**Impact:** initial page/session work can stay parallel without sacrificing
+cross-company cache isolation.
+
+### Realtime startup amplification
+
+**Problem:** first SignalR connection triggered another refetch wave immediately
+after first-page data loaded.
+
+**Root cause:** initial connection was treated as a reconnect.
+
+**Decision:** the first connection performs no reconciliation. A genuine
+reconnect invalidates only registered realtime query roots and refreshes role /
+company-option stores only when those stores had already been loaded. Realtime
+bridges mount only after tenant/company session context exists and not for
+`super_admin`.
+
+**Impact:** normal route startup no longer pays for a first-connect global query
+invalidation. Notification payload Zod validation remains authoritative but is
+loaded on the first realtime notification rather than as shared startup code.
+
+### ERP list request waterfalls
+
+**Problem:** generic adaptive pagination made a `pageSize: 1` probe and then a
+second request, sometimes downloading up to 5,000 matching records.
+
+**Decision:** ERP list startup is server-paginated by default: one requested
+page, one query. Whole-dataset chart/export/analytics data must use an explicit,
+on-demand contract owned by that optional view.
+
+**Impact:** Fiscal Years, Workforce Planning, Countries, States and Districts no
+longer inherit the probe/fetch-all pattern. The 5,000-row client threshold was
+removed.
+
+### Shared-shell API and bundle graph
+
+**Problem:** shell startup made a redundant user-info request for display
+identity, while global realtime registration imported feature hook/service
+graphs into unrelated protected routes.
+
+**Decision:** sidebar identity is derived from validated session claims; only the
+separate user-photo query remains. Global registration imports lightweight
+metadata/query-key leaves only. Realtime registration crosses a narrow public
+registry API rather than a broad barrel that also exposes runtime bridge code.
+
+**Impact:** one protected-startup API call is removed and feature query/service
+graphs are no longer intentionally rooted by global realtime registration. The
+pre-change bundle audit attributed about `338.6 KB` of common emitted JavaScript
+to chunks containing those feature registration graphs; production build
+measurement after the refactor is the final authority for the actual reduction.
+
+### App / Shell / Platform public-boundary cleanup
+
+**Problem:** after the runtime refactor, `check:architecture` still identified a
+small set of direct imports from App Router and Shell composition into Platform
+implementation files. Replacing them with a single broad Platform barrel would
+have satisfied ownership rules while undoing part of the route-local bundle work.
+
+**Decision:** expose only the symbol needed by each composition point through
+narrow feature-scoped public APIs. Examples include auth route entry points,
+module registration/query/route-access/translation/launcher surfaces, realtime
+runtime bridges, tenant-access runtime composition, session runtime utilities and
+context-store reset access.
+
+**Impact:** `check:architecture` is green again, App/Shell no longer deep-import
+Platform internals, and route composition does not depend on a broad auth/modules/
+realtime barrel that would eagerly reconnect unrelated feature graphs.
+
+### Optional post-hydration runtime
+
+**Problem:** dynamic imports can still be immediate startup cost when mounted on
+every route, and the PDF viewer contained fixed 1,000 ms + 500 ms readiness
+delays.
+
+**Decision:** pull-to-refresh loads only on touch/coarse-pointer clients and
+during idle time. The PDF viewer keeps Syncfusion isolated to the viewer route,
+uses the component readiness event, aborts stale document fetches and does not
+sleep before loading the file.
+
+### Dashboard API shape
+
+The super-admin dashboard was found to fetch the complete tenant management
+catalog and entitlement-rich tenant responses merely to derive aggregate cards,
+recent tenants and expiring subscriptions. The durable direction is a dedicated
+Super Admin tenant dashboard summary endpoint with aggregate counts and bounded
+recent/expiring lists. Dashboard first paint must not scale its transfer payload
+linearly with the complete management catalog.
+
+That endpoint is now implemented end-to-end. It is SuperAdmin-only through the
+existing controller authorization, uses `TimeProvider`, performs server-side
+aggregate/count queries, returns bounded recent/expiring projections, and does
+not call the full tenant response builder or load tenant entitlement rows. The
+frontend dashboard consumes this summary rather than `tenantApi.getAll()`.
+
+### Protected auth utility route composition
+
+The final production build exposed `/change-password` as a protected page inside
+the otherwise public auth shell. Its form requires session/logout state and
+unsaved-change registration, but moving those providers into the shared auth
+layout would make `/login` and the other public auth routes pay that runtime.
+
+The route now owns a narrow protected wrapper: route-local `SessionProvider`, an
+authenticated loading gate, and `UnsavedChangesProvider` around the form. The
+public auth shell stays lightweight and the production prerender succeeds.
+
+### Final production measurements
+
+The cross-route loading phase is closed against production artifacts, not dev
+compile timing.
+
+```text
+Before shared protected intersection: 47 chunks / ~2.89 MB
+Final shared protected intersection:  36 chunks / ~1.61 MB
+
+/                              ~2.75 -> 1.61 MiB
+/login                         ~1.13 -> 1.13 MiB
+/administration/users          ~3.09 -> 1.80 MiB
+/profile                       ~3.09 -> 2.09 MiB
+/appointments                  ~3.02 -> 2.77 MiB
+/recruitment                   ~2.96 -> 1.86 MiB
+/finance/fiscal-years          ~2.78 -> 2.32 MiB
+largest measured First Load    ~3.09 -> 2.77 MiB
+```
+
+Final emitted-JS inventory is `263` chunks / `24.22 MiB` versus the earlier
+`230` / `23.36 MiB`; it remains below the `26 MiB` total-JS budget. The route
+startup result is materially better despite the larger split-chunk inventory,
+which is why per-route/shared First Load remains the primary startup metric.
+ActiveReports and Syncfusion remain isolated from ordinary first-load routes.
+
+Final gates for this closure: architecture, normal + strict TypeScript, full
+lint, module-generator self-test, full Vitest, documentation check, production
+build, `measure:build`, focused backend tenant-summary tests and runtime smoke.
+
+Authenticated browser smoke is also complete. The built-in Admin path reached
+the dashboard and `/finance/fiscal-years` with `ERROR_COUNT 0`; session,
+realtime-token and hub requests were same-origin and successful. The smoke found
+and closed two final runtime defects: the project-local Emotion streaming cache
+was replaced by MUI's Next 16 App Router cache provider, and development SignalR
+now uses the same-origin BFF with Long Polling directly instead of failing
+WebSocket/SSE transports first. Super-admin login, `/super-admin`, geography and
+the dedicated tenant summary endpoint also returned successfully; warmed local
+dashboard/summary requests were approximately `0.19 s` / `0.29 s`.
+
+### Verification / regression policy
+
+For any future protected-page loading change:
+
+```text
+problem
+-> root cause
+-> architecture decision
+-> implementation impact
+-> focused verification
+-> production build + measure:build
+-> prevention rule in the canonical Guide
+```
+
+Do not judge runtime performance from development Turbopack compile timing, and
+do not run `next build` concurrently with `next dev` against the same `.next`.
+The canonical implementation rules live in
+`documentation/web-next/architecture/frontend-architecture-reference.md`.
+
+### Accepted follow-up optimizations after the cross-route pass
+
+These are documented rather than mixed into the shared-runtime closure work:
+
+- active-language-only EN/AR resource loading after preserving the current
+  hydration-safe feature namespace model;
+- root loader/runtime-preference decoupling only as one coherent theme/language
+  bootstrap change, because removing the mask alone can expose a dark/RTL flash
+  or hydration mismatch;
+- realtime-token session-hop reduction only after an auth/security review;
+- keep local HTTPS SignalR on the same-origin hub BFF when a configured loopback
+  backend URL would otherwise cause mixed-content/certificate reconnect loops;
+  the BFF transport uses Long Polling directly rather than failing WebSocket and
+  SSE attempts before fallback;
+- route-local FullCalendar / Recruitment drag-drop tuning only if the new
+  production route measurements still justify it;
+- tenant entitlement-module fetch-on-intent for the management editor, provided
+  the form can never initialize against an incomplete catalog.
+
+These are not reasons to keep the old duplicate QueryClient, first-connect
+realtime refetch, fetch-all pagination, redundant shell identity request, or
+feature-hook registration graph.
+
+## Status
+
+✅ **Cross-route page-loading/runtime baseline closed; future work is evidence-driven feature-local tuning**
+
+---
+
+# Phase 12 — CI Quality Gates 🟢
+
+## Objective
+
+Prevent regressions as the ERP grows.
+
+Required CI gates:
+
+```bash
+npm run check:architecture
+npm run check:i18n
+npm run lint
+npm run type-check
+npm run type-check:strict
+npm test
+npm run build
+```
+
+Documentation gate when architecture/contracts/manifests change:
+
+```powershell
+./documentation/system/Generate-Documentation.ps1 -Check
+```
+
+Future gates:
+
+- Playwright E2E;
+- coverage thresholds;
+- bundle-size regression limits;
+- dependency/security audit;
+- generated documentation consistency.
+
+## Status
+
+🟠 **Most individual gates exist; consolidated enforcement still needs completion**
+
+---
+
+# Phase 13 — Documentation & Architecture Governance 🟢
+
+## Objective
+
+Keep the architecture understandable without reverse-engineering the repository.
+
+Required documentation includes:
+
+```text
+documentation/web-next/architecture/frontend-architecture-reference.md
+documentation/web-next/features/server-managed-feature-reference.md
+module/route manifests
+architecture reference docs
+```
+
+Ownership examples that must remain correct:
+
+```text
+Fiscal Years → Accounting
+Appointments → CRM
+Countries / States / Districts → Reference Data
+Crystal Reports → Reporting
+```
+
+Rule:
+
+```text
+code change
++ architecture gate
++ documentation update
++ documentation generation/check
+```
+
+### Continuous guide update rule
+
+Do not wait until the end of a phase to document important findings. After each
+material architecture/runtime/security/business-safety observation, update the
+owning canonical guide in the same work session with:
+
+```text
+Observed problem
+-> root cause
+-> decision/rule
+-> implementation impact
+-> verification evidence
+-> regression-prevention note
+```
+
+The chat is not the project record. If a finding would change how the next
+engineer should implement, debug, test, or operate the ERP, it belongs in the
+Guide before handoff.
+
+## Status
+
+✅ **Baseline complete / ongoing governance**
+
+The Route Group and public-boundary cleanup is complete. Canonical architecture
+documentation and generated documentation checks were included in the final
+runtime closure gates. This phase now operates as a continuous rule: future
+material architecture/runtime changes must keep the guides and generated checks
+synchronized in the same workstream.
+
+---
+
+# Execution Order
+
+```text
+Phase 0  — Green baseline / architecture
+Phase 1  — Business Safety
+Phase 2  — Authentication & BFF Hardening
+Phase 3  — Next.js Runtime Architecture
+Phase 4  — Provider/client runtime optimization
+Phase 5  — Navigation/mobile safety
+Phase 6  — Observability
+Phase 7  — Browser security / CSP
+Phase 8  — E2E & testing depth
+Phase 9  — TypeScript/code-quality hardening
+Phase 10 — Controlled dependency upgrades
+Phase 11 — Performance engineering
+Phase 12 — CI quality gates
+Phase 13 — Documentation/governance
+```
+
+Governing rule:
+
+```text
+Correctness
+→ Security / Protection
+→ Runtime Architecture
+→ Performance
+→ Developer Experience
+→ Continuous Governance
+```
+
+---
+
+# Current Overall Status
+
+| Phase | Status |
+|---|---|
+| Phase 0 — Foundation / green baseline | ✅ Complete |
+| Phase 1 — Business Safety | ✅ Complete |
+| Phase 2 — Authentication & BFF Hardening | ✅ Complete |
+| Phase 3 — Next.js Runtime Architecture | ✅ Complete |
+| Phase 4 — Provider/runtime optimization | ✅ Runtime policy implemented |
+| Phase 5 — Navigation/mobile safety | ✅ Complete |
+| Phase 6 — Observability | ⏳ Planned |
+| Phase 7 — CSP/browser security | ⏳ Planned |
+| Phase 8 — E2E/testing depth | ⏳ Planned |
+| Phase 9 — TypeScript/code quality | 🟠 Ongoing |
+| Phase 10 — Dependency strategy | 🟠 Baseline done |
+| Phase 11 — Performance engineering | ✅ Cross-route/runtime baseline complete |
+| Phase 12 — CI quality gates | 🟠 Partial |
+| Phase 13 — Documentation/governance | ✅ Baseline complete / ongoing governance |
+
+---
+
+# Immediate Next Actions
+
+The frontend foundation/runtime cleanup is no longer a blocker for business
+feature work. Phase 0, Phase 3, Phase 4, Phase 5, Phase 11 and the documentation
+baseline are closed. The latest architecture pass also restored a fully green
+`check:architecture` after the performance refactors by using narrow public APIs
+instead of broad barrels.
+
+The remaining hardening work is independent and can proceed in parallel with ERP
+business functionality:
+
+1. **Phase 6 — Observability:** production request/error/performance telemetry and
+   bounded SignalR diagnostics.
+2. **Phase 7 — Browser security:** CSP report-only inventory, remediation and
+   eventual enforcement; remove Demo Login only at Production-readiness time.
+3. **Phase 8 — E2E/testing depth:** Playwright coverage for authentication,
+   company context, authorization, business smoke and runtime navigation.
+4. **Phase 9 — TypeScript/code quality:** continue reducing unsafe escape hatches
+   while preserving the already-green normal/strict type gates.
+5. **Phase 12 — CI quality gates:** consolidate the existing architecture, i18n,
+   lint, type, test, build, documentation and security checks into enforced CI.
+
+Performance work should now be reopened only from evidence: production route
+measurement or a concrete user-visible latency. Deferred items such as
+active-language-only translation loading, chart-specific whole-dataset contracts,
+realtime-token hop reduction, FullCalendar/Kanban tuning and tenant entitlement
+fetch-on-intent are not startup blockers.
+
+---
+
+# Non-Negotiable Constraints
+
+Do not:
+
+- remove Demo Login yet;
+- disable `cacheComponents` to hide a runtime issue;
+- disable/suppress Instant Navigation validation;
+- reintroduce broad `dynamic = "force-dynamic"`;
+- change public URLs during Route Group refactors;
+- put business logic inside `src/app`;
+- bypass shared architecture with deep imports;
+- use unsafe casts as dependency-upgrade fixes;
+- re-enable global mutation retry;
+- trust browser-provided forwarded/IP headers;
+- allow stale Hangfire 401 responses to clear a newer session;
+- clean/reset unrelated dirty-tree work;
+- treat documentation as correct without rerunning its gate.
+
+---
+
+# Definition of Done
+
+The ERP frontend foundation is production-grade when:
+
+- architecture ownership is enforced;
+- business writes are retry-safe;
+- BFF/auth/session transitions are hardened;
+- Cache Components/PPR/Instant Navigation work cleanly;
+- heavy providers/libraries are scoped;
+- navigation and unsaved changes are safe;
+- observability exists;
+- CSP is enforced;
+- critical E2E tests exist;
+- strict typing is the normal baseline;
+- bundle/performance regressions are measured;
+- CI blocks architectural, type, test, build, i18n, docs, and security regressions;
+- architecture documentation matches the real codebase.

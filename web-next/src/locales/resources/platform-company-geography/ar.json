@@ -1,0 +1,43 @@
+{
+  "companyGeographicScope": {
+    "title": "دول التشغيل",
+    "description": "اختر دول التشغيل ودولة التسجيل القانوني ودولة التشغيل الافتراضية.",
+    "selectionSectionTitle": "اختر دول التشغيل والتسجيل والدولة الافتراضية",
+    "operatingCountries": "دول التشغيل",
+    "registrationCountry": "دولة التسجيل القانوني",
+    "defaultOperatingCountry": "دولة التشغيل الافتراضية",
+    "selectCountries": "اختر دولة واحدة أو أكثر",
+    "selectDefaultCountry": "اختر الدولة الافتراضية",
+    "selectRegistrationCountry": "اختر دولة التسجيل القانوني",
+    "selectOperatingCountriesFirst": "اختر دول التشغيل أولًا",
+    "selectedCount": "المحدد: {{count}}",
+    "selectedColumn": "التشغيل",
+    "selected": "محددة",
+    "notSelected": "غير محددة",
+    "defaultColumn": "الافتراضية",
+    "registrationColumn": "التسجيل",
+    "registrationCountryHelp": "الدولة التي تُسجل فيها الشركة قانونيًا، ويجب أن تكون من دول التشغيل.",
+    "currentDefault": "دولة التشغيل الافتراضية الحالية",
+    "setAsDefault": "تعيين كافتراضية",
+    "setCountryAsDefault": "تعيين {{country}} كدولة التشغيل الافتراضية",
+    "selectCountry": "تحديد {{country}} كدولة تشغيل",
+    "sortByName": "اسم الدولة",
+    "searchPlaceholder": "ابحث باسم الدولة أو كود ISO...",
+    "noSearchResults": "لا توجد دول مطابقة للبحث",
+    "noCountries": "لا توجد دول نشطة متاحة",
+    "loading": "جار تحميل دول التشغيل",
+    "save": "حفظ النطاق",
+    "saved": "تم حفظ النطاق الجغرافي للشركة.",
+    "permissionDenied": "ليست لديك صلاحية إدارة النطاق الجغرافي للشركة.",
+    "nationalityNote": "يمكن لكل فرع استخدام دولة مفعّلة أو محافظة أو حي مختلف. الدولة الافتراضية تملأ العنوان الجديد مبدئيًا فقط. جنسية الموظف مستقلة ويمكنها استخدام أي دولة نشطة في المرجع العام.",
+    "validation": {
+      "countriesRequired": "اختر دولة تشغيل واحدة على الأقل",
+      "countryLimit": "لا يمكن اختيار أكثر من 100 دولة",
+      "countriesUnique": "لا يمكن اختيار دولة التشغيل نفسها أكثر من مرة",
+      "registrationRequired": "اختر دولة التسجيل القانوني",
+      "registrationMustBeSelected": "يجب أن تكون دولة التسجيل القانوني ضمن دول التشغيل المختارة",
+      "defaultRequired": "اختر دولة التشغيل الافتراضية",
+      "defaultMustBeSelected": "يجب أن تكون الدولة الافتراضية ضمن الدول المختارة"
+    }
+  }
+}

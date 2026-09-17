@@ -9,8 +9,6 @@ function getCertificateFingerprints(): string[] {
     .filter(Boolean);
 }
 
-export const dynamic = "force-dynamic";
-
 export function GET() {
   const fingerprints = getCertificateFingerprints();
   const body = fingerprints.length === 0

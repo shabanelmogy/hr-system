@@ -3,12 +3,14 @@
 import ContentsWrapper from "@/shared/components/layout/ContentWrapper";
 import { useSnackbar } from "@/shared/hooks";
 import { Dialog } from "@mui/material";
+import dynamic from "next/dynamic";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import FileDeleteDialog from "@/platform/file-manager/components/dialog/FileDeleteDialog";
 import FilesMultiView from "../components/FilesMultiView";
-import FileUpload from "../components/file-upload/FileUploadPage";
 import useFileGridLogic from "../hooks/useFileGridLogic";
+
+const FileDeleteDialog = dynamic(() => import("@/platform/file-manager/components/dialog/FileDeleteDialog"), { ssr: false });
+const FileUpload = dynamic(() => import("../components/file-upload/FileUploadPage"), { ssr: false });
 
 const FilesPage = () => {
 
@@ -59,8 +61,8 @@ const FilesPage = () => {
           t={t}
         />
 
-        <Dialog
-          open={dialogType === "upload"}
+        {dialogType === "upload" ? <Dialog
+          open
           onClose={(_, reason) => {
             if (!loading || reason !== "escapeKeyDown") closeDialog();
           }}
@@ -72,15 +74,15 @@ const FilesPage = () => {
             onClose={closeDialog}
             multiple={true}
           />
-        </Dialog>
+        </Dialog> : null}
 
-        <FileDeleteDialog
-          open={dialogType === "delete"}
+        {dialogType === "delete" ? <FileDeleteDialog
+          open
           onClose={closeDialog}
           onConfirm={handleDelete}
           selectedFile={selectedFile}
           loading={loading}
-        />
+        /> : null}
       </ContentsWrapper>
       {SnackbarComponent}
     </>

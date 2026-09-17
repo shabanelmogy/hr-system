@@ -14,7 +14,12 @@ export function createQueryClient() {
         refetchOnMount: true
       },
       mutations: {
-        retry: 1
+        // ERP writes must never be replayed implicitly. A create/update/delete may
+        // have committed on the server even when the response was lost, so a
+        // transport retry can duplicate business effects. Individual mutations
+        // may opt in only when the operation is proven idempotent (or protected
+        // by an idempotency key at the API boundary).
+        retry: 0
       }
     }
   });

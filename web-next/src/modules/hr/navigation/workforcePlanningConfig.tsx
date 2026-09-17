@@ -18,7 +18,7 @@ export const getWorkforcePlanningConfig = () => createNavSection(
   [createNavItem(
     "menu.workforcePlanning",
     createColoredIcon(<AccountTreeRoundedIcon />, "#388e3c"),
-    appRoutes.workforcePlanning.index,
+    appRoutes.modules.hr.workforcePlanning.index,
     undefined,
     workforcePlanningViewPermissions,
   )],

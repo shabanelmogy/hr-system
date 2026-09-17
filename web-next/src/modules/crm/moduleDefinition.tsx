@@ -17,7 +17,7 @@ const navigation = createNavSection(
     createNavItem(
       "menu.appointments",
       createColoredIcon(<EventNoteRoundedIcon />, "#8b5cf6"),
-      appRoutes.extras.appointments,
+      appRoutes.modules.crm.appointments,
       undefined,
       [permissions.ViewAppointments],
     ),
@@ -40,16 +40,16 @@ export const crmModuleDefinition: FrontendModuleDefinition = {
     icon: <EventNoteRoundedIcon />,
     tone: "secondary",
     requiredPermissions: [permissions.ViewAppointments],
-    entryCandidates: [appRoutes.extras.appointments],
+    entryCandidates: [appRoutes.modules.crm.appointments],
     navigation: [{
       id: navigation.id,
       titleKey: navigation.title,
       entries: [{
         titleKey: "menu.appointments",
-        path: appRoutes.extras.appointments,
+        path: appRoutes.modules.crm.appointments,
         requiredPermissions: [permissions.ViewAppointments],
       }],
     }],
-    routePrefixes: [appRoutes.extras.appointments],
+    routePrefixes: [appRoutes.modules.crm.appointments],
   }],
 };

@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Alert, Button, Card, CardContent, CircularProgress, Stack, Typography } from "@mui/material";
 import { authService } from "./services/authService";
+import { appRoutes } from "@/config/routes";
 
 const EmailConfirmed = () => {
   const searchParams = useSearchParams();
@@ -35,7 +36,7 @@ const EmailConfirmed = () => {
         if (!active) return;
         setStatus("success");
         redirectTimer = setTimeout(() => {
-          router.replace("/login");
+          router.replace(appRoutes.auth.login);
         }, 1000);
       } catch {
         if (active) setStatus("error");
@@ -70,7 +71,11 @@ const EmailConfirmed = () => {
             </Alert>
           )}
           {status !== "loading" && status !== "success" ? (
-            <Button type="button" variant="contained" onClick={() => router.replace("/login")}>
+            <Button
+              type="button"
+              variant="contained"
+              onClick={() => router.replace(appRoutes.auth.login)}
+            >
               {t("auth.returnToLogin")}
             </Button>
           ) : null}

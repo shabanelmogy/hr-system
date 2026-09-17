@@ -215,7 +215,7 @@
     {
       "id": "web-route",
       "layer": "web-next",
-      "path": "web-next/src/app/(main)/finance/fiscal-years/page.tsx",
+      "path": "web-next/src/app/(main)/(modules)/(accounting)/finance/fiscal-years/page.tsx",
       "purpose": "Thin App Router entry"
     },
     {
@@ -323,13 +323,13 @@
     {
       "id": "web-en",
       "layer": "web-next-config",
-      "path": "web-next/src/locales/en/translation.json",
+      "path": "web-next/src/locales/resources/accounting/en.json",
       "purpose": "English UI text"
     },
     {
       "id": "web-ar",
       "layer": "web-next-config",
-      "path": "web-next/src/locales/ar/translation.json",
+      "path": "web-next/src/locales/resources/accounting/ar.json",
       "purpose": "Arabic UI text and RTL labels"
     },
     {

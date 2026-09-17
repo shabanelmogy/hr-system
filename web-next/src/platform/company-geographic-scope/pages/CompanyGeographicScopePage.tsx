@@ -92,7 +92,6 @@ export default function CompanyGeographicScopePage() {
     mode: "onChange",
     defaultValues: emptyValues,
   });
-  useUnsavedChangesRegistration(isDirty);
 
   const scopeQuery = useCompanyGeographicScope(canView);
   const updateMutation = useUpdateCompanyGeographicScope({
@@ -106,6 +105,10 @@ export default function CompanyGeographicScopePage() {
     },
     onError: (error) => showError(extractErrorMessage(error)),
   });
+  useUnsavedChangesRegistration(
+    isDirty || updateMutation.isPending,
+    updateMutation.isPending,
+  );
 
   useEffect(() => {
     if (!scopeQuery.data) return;

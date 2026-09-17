@@ -1,6 +1,7 @@
 import { PageHeader } from "@/shared/components/navigation/header";
 import { Box, LinearProgress } from "@mui/material";
 import type { GridApi, GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
+import dynamic from "next/dynamic";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type {
@@ -16,10 +17,11 @@ import {
   type StateManagementView,
 } from "../utils/stateViews";
 import StatesCardView from "./StatesCardView";
-import StatesChartView from "./StatesChartView";
 import StateCardViewHeader from "./card-view/StateCardViewHeader";
 import StatesDataGrid from "./grid-view/StatesDataGrid";
-import ImportStates from "./import-data/ImportStates";
+
+const StatesChartView = dynamic(() => import("./StatesChartView"));
+const ImportStates = dynamic(() => import("./import-data/ImportStates"));
 
 const sortableColumns = new Set<StateSortColumn>([
   "nameEn",

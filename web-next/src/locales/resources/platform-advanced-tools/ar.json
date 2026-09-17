@@ -1,0 +1,60 @@
+{
+  "advancedTools": {
+    "title": "أدوات متقدمة",
+    "trackChanges": "تتبع التغييرات",
+    "healthCheck": "حالة النظام",
+    "apiEndPoints": "واجهات API",
+    "localizationApi": "إدارة الترجمات",
+    "hangfireDashboard": "لوحة مهام الخلفية"
+  },
+  "localizationApi": {
+    "keyAndValueMustNotBeEmpty": "المفتاح والقيمة لا يمكن ان تكون فارغة",
+    "localizationUpdated": "تم تحديث الترجمة بنجاح",
+    "title": "ترجمة الرسائل",
+    "subTitle": "ادخل المفتاح والقيمة لتحديث الترجمة"
+  },
+  "healthCheck": {
+    "title": "صحة النظام",
+    "subTitle": "الحالة المباشرة لخدمات النظام والتبعيات",
+    "overallStatus": "الحالة العامة",
+    "totalDuration": "المدة الإجمالية: {{duration}}",
+    "refresh": "تحديث",
+    "component": "المكوّن",
+    "status": "الحالة",
+    "duration": "المدة",
+    "details": "التفاصيل",
+    "noIssuesReported": "لم يتم الإبلاغ عن مشكلات",
+    "lastChecked": "آخر فحص: {{time}}",
+    "loading": "جارٍ فحص صحة النظام",
+    "retry": "إعادة المحاولة",
+    "loadError": "تعذر تحميل تقرير صحة النظام.",
+    "tableLabel": "فحوصات صحة النظام",
+    "statuses": {
+      "healthy": "سليم",
+      "degraded": "متدهور",
+      "unhealthy": "غير سليم",
+      "unknown": "غير معروف"
+    }
+  },
+  "hangfireDashboard": {
+    "loading": "جارٍ تحميل لوحة مهام Hangfire",
+    "loadError": "تعذر تحميل لوحة مهام Hangfire. تحقق من الصلاحية والاتصال بالخادم.",
+    "retry": "إعادة المحاولة"
+  },
+  "trackChanges": {
+    "changeLogId": "مرجع البيان",
+    "entityName": "اسم الوحدة",
+    "key": "المفتاح",
+    "oldValue": "قيمة قديمة",
+    "newValue": "قيمة جديدة",
+    "changedBy": "تم التغيير بواسطة",
+    "changedAt": "تاريخ التغيير",
+    "changedByPc": "جهاز التغيير",
+    "title": "تتبع تغييرات البيانات",
+    "subTitle": "عرض تفاصيل التغيير فى البيانات"
+  },
+  "externalTools": {
+    "apiUrlRequired": "يجب إدخال رابط واجهة البرمجة",
+    "apiEndpoints": "نقاط نهاية واجهة البرمجة"
+  }
+}

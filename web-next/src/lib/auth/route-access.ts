@@ -3,9 +3,9 @@ import type { SessionClaims } from "./session";
 import { permissions, type PermissionString } from "./permissions";
 import { isAuthorized } from "./authorization";
 
-export const UNAVAILABLE_ROUTE = "/route-unavailable";
+export const UNAVAILABLE_ROUTE = appRoutes.shell.routeUnavailable;
 export const HANGFIRE_PROXY_ROUTE = "/hangfire";
-export const APPS_ROUTE = "/apps";
+export const APPS_ROUTE = appRoutes.platform.apps.index;
 
 export type RoutePolicy = {
   path: string;
@@ -20,104 +20,104 @@ export type RoutePolicy = {
 
 const adminRole = "admin";
 const superAdminRole = "super_admin";
-const rolePermissionsBase = appRoutes.auth.rolePermissionsPage("").replace(/\/$/, "");
+const rolePermissionsBase = appRoutes.platform.administration.rolePermissions("").replace(/\/$/, "");
 const superAdminAllowedRoutes = [
-  appRoutes.home,
-  appRoutes.profile,
-  appRoutes.changePassword,
-  appRoutes.superAdmin.dashboard,
-  appRoutes.superAdmin.tenants,
-  appRoutes.superAdmin.tenantAdmins,
-  appRoutes.superAdmin.geography.countries,
-  appRoutes.superAdmin.geography.states,
-  appRoutes.superAdmin.geography.districts,
+  appRoutes.shell.home,
+  appRoutes.platform.profile,
+  appRoutes.auth.changePassword,
+  appRoutes.platform.superAdmin.dashboard,
+  appRoutes.platform.superAdmin.tenants,
+  appRoutes.platform.superAdmin.tenantAdmins,
+  appRoutes.modules.referenceData.geography.countries,
+  appRoutes.modules.referenceData.geography.states,
+  appRoutes.modules.referenceData.geography.districts,
   UNAVAILABLE_ROUTE,
 ] as const;
 
 export const routePolicies: readonly RoutePolicy[] = [
-  { path: appRoutes.home },
+  { path: appRoutes.shell.home },
   { path: APPS_ROUTE },
-  { path: appRoutes.profile },
-  { path: appRoutes.changePassword },
-  { path: appRoutes.superAdmin.tenants, roles: [superAdminRole] },
-  { path: appRoutes.superAdmin.tenantAdmins, roles: [superAdminRole] },
-  { path: appRoutes.superAdmin.dashboard, roles: [superAdminRole] },
-  { path: appRoutes.superAdmin.geography.countries, roles: [superAdminRole], permissions: [permissions.ViewCountries] },
-  { path: appRoutes.superAdmin.geography.states, roles: [superAdminRole], permissions: [permissions.ViewStates] },
-  { path: appRoutes.superAdmin.geography.districts, roles: [superAdminRole], permissions: [permissions.ViewDistricts] },
+  { path: appRoutes.platform.profile },
+  { path: appRoutes.auth.changePassword },
+  { path: appRoutes.platform.superAdmin.tenants, roles: [superAdminRole] },
+  { path: appRoutes.platform.superAdmin.tenantAdmins, roles: [superAdminRole] },
+  { path: appRoutes.platform.superAdmin.dashboard, roles: [superAdminRole] },
+  { path: appRoutes.modules.referenceData.geography.countries, roles: [superAdminRole], permissions: [permissions.ViewCountries] },
+  { path: appRoutes.modules.referenceData.geography.states, roles: [superAdminRole], permissions: [permissions.ViewStates] },
+  { path: appRoutes.modules.referenceData.geography.districts, roles: [superAdminRole], permissions: [permissions.ViewDistricts] },
   {
     path: rolePermissionsBase,
     permissions: [permissions.ViewRoles],
   },
-  { path: appRoutes.auth.rolesPage, permissions: [permissions.ViewRoles] },
-  { path: appRoutes.auth.usersPage, permissions: [permissions.ViewUsers] },
-  { path: appRoutes.auth.invitationsPage, permissions: [permissions.ViewUsers] },
-  { path: appRoutes.auth.offlineOperationsPage },
+  { path: appRoutes.platform.administration.roles, permissions: [permissions.ViewRoles] },
+  { path: appRoutes.platform.administration.users, permissions: [permissions.ViewUsers] },
+  { path: appRoutes.platform.administration.invitations, permissions: [permissions.ViewUsers] },
+  { path: appRoutes.platform.administration.offlineOperations },
   {
-    path: appRoutes.auth.crystalReportsPage,
+    path: appRoutes.modules.reporting.crystalReports,
     permissions: [permissions.ManageCrystalReportAccess],
   },
   {
-    path: appRoutes.basicData.addressTypes,
+    path: appRoutes.modules.referenceData.addressTypes,
     permissions: [permissions.ViewAddressTypes],
   },
   {
-    path: appRoutes.basicData.companyGeographicScope,
+    path: appRoutes.platform.companyGeographicScope,
     permissions: [permissions.ViewCompanyGeographicScope],
   },
   {
-    path: appRoutes.basicData.organizationalStructure.branches,
+    path: appRoutes.modules.hr.organizationalStructure.branches,
     permissions: [permissions.ViewOrganizationalStructure],
   },
   {
-    path: appRoutes.basicData.organizationalStructure.departments,
+    path: appRoutes.modules.hr.organizationalStructure.departments,
     permissions: [permissions.ViewOrganizationalStructure],
   },
   {
-    path: appRoutes.basicData.organizationalStructure.divisions,
+    path: appRoutes.modules.hr.organizationalStructure.divisions,
     permissions: [permissions.ViewOrganizationalStructure],
   },
   {
-    path: appRoutes.basicData.organizationalStructure.jobTitles,
+    path: appRoutes.modules.hr.organizationalStructure.jobTitles,
     permissions: [permissions.ViewOrganizationalStructure],
   },
   {
-    path: appRoutes.basicData.organizationalStructure.jobLevels,
+    path: appRoutes.modules.hr.organizationalStructure.jobLevels,
     permissions: [permissions.ViewOrganizationalStructure],
   },
   {
-    path: appRoutes.basicData.organizationalStructure.positions,
+    path: appRoutes.modules.hr.organizationalStructure.positions,
     permissions: [permissions.ViewOrganizationalStructure],
   },
   {
-    path: appRoutes.basicData.organizationalStructure.jobDescriptions,
+    path: appRoutes.modules.hr.organizationalStructure.jobDescriptions,
     permissions: [permissions.ViewOrganizationalStructure],
   },
   {
-    path: appRoutes.basicData.organizationalStructure.index,
+    path: appRoutes.modules.hr.organizationalStructure.index,
     permissions: [permissions.ViewOrganizationalStructure],
   },
   {
-    path: appRoutes.basicData.index,
+    path: appRoutes.shell.basicData,
     permissions: [
       permissions.ViewAddressTypes,
       permissions.ViewCompanyGeographicScope,
       permissions.ViewOrganizationalStructure,
     ],
   },
-  { path: appRoutes.extras.filesManager },
+  { path: appRoutes.platform.files.manager },
   {
-    path: appRoutes.extras.appointments,
+    path: appRoutes.modules.crm.appointments,
     permissions: [permissions.ViewAppointments],
   },
   {
-    path: appRoutes.advancedTools.localizationApi,
+    path: appRoutes.platform.advancedTools.localizationApi,
     permissions: [permissions.ViewLocalizations],
   },
-  { path: appRoutes.advancedTools.healthCheck, roles: [adminRole] },
-  { path: appRoutes.advancedTools.apiEndpoints, roles: [adminRole] },
+  { path: appRoutes.platform.advancedTools.healthCheck, roles: [adminRole] },
+  { path: appRoutes.platform.advancedTools.apiEndpoints, roles: [adminRole] },
   {
-    path: appRoutes.advancedTools.hangfireDashboard,
+    path: appRoutes.platform.advancedTools.hangfireDashboard,
     permissions: [permissions.ViewHangfireDashboard],
   },
   {
@@ -125,58 +125,58 @@ export const routePolicies: readonly RoutePolicy[] = [
     permissions: [permissions.ViewHangfireDashboard],
   },
   {
-    path: appRoutes.attendanceDevices.users,
+    path: appRoutes.modules.hr.attendanceDevices.users,
     permissions: [permissions.ViewRawAttendanceDevices],
   },
   {
-    path: appRoutes.attendanceDevices.punches,
+    path: appRoutes.modules.hr.attendanceDevices.punches,
     permissions: [permissions.ViewRawAttendanceDevices],
   },
   {
-    path: appRoutes.attendanceDevices.pullRuns,
+    path: appRoutes.modules.hr.attendanceDevices.pullRuns,
     permissions: [permissions.ViewRawAttendanceDevices],
   },
   {
-    path: appRoutes.attendanceDevices.index,
+    path: appRoutes.modules.hr.attendanceDevices.index,
     permissions: [permissions.ViewAttendanceDevices],
   },
   {
-    path: appRoutes.recruitment,
+    path: appRoutes.modules.hr.recruitment,
     anyOf: [
       { roles: [adminRole] },
       { permissions: [permissions.ViewRecruitment] },
     ],
   },
   {
-    path: appRoutes.finance.fiscalYears,
+    path: appRoutes.modules.accounting.fiscalYears,
     permissions: [permissions.ViewFiscalYears],
   },
   {
-    path: appRoutes.workforcePlanning.plans,
+    path: appRoutes.modules.hr.workforcePlanning.plans,
     permissions: [permissions.ViewWorkforcePlans],
   },
   {
-    path: appRoutes.workforcePlanning.budgets,
+    path: appRoutes.modules.hr.workforcePlanning.budgets,
     permissions: [permissions.ViewWorkforceBudgets],
   },
   {
-    path: appRoutes.workforcePlanning.positionEnvelopes,
+    path: appRoutes.modules.hr.workforcePlanning.positionEnvelopes,
     permissions: [permissions.ViewPositionEnvelopes],
   },
   {
-    path: appRoutes.workforcePlanning.staffingRequests,
+    path: appRoutes.modules.hr.workforcePlanning.staffingRequests,
     permissions: [permissions.ViewStaffingRequests],
   },
   {
-    path: appRoutes.workforcePlanning.envelopeAmendments,
+    path: appRoutes.modules.hr.workforcePlanning.envelopeAmendments,
     permissions: [permissions.ViewEnvelopeAmendments],
   },
   {
-    path: appRoutes.workforcePlanning.trace,
+    path: appRoutes.modules.hr.workforcePlanning.trace,
     permissions: [permissions.ViewWorkforceTrace],
   },
   {
-    path: appRoutes.workforcePlanning.index,
+    path: appRoutes.modules.hr.workforcePlanning.index,
     anyOf: [
       { permissions: [permissions.ViewWorkforcePlans] },
       { permissions: [permissions.ViewWorkforceBudgets] },
@@ -191,7 +191,7 @@ export const routePolicies: readonly RoutePolicy[] = [
 
 const matchesRoute = (pathname: string, routePath: string) =>
   pathname === routePath ||
-  (routePath !== appRoutes.home && pathname.startsWith(`${routePath}/`));
+  (routePath !== appRoutes.shell.home && pathname.startsWith(`${routePath}/`));
 
 export function canAccessRoute(pathname: string, session: SessionClaims): boolean {
   const isSuperAdmin = session.roles.some(

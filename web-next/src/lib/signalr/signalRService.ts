@@ -1,5 +1,6 @@
 import * as signalR from "@microsoft/signalr";
 import { SESSION_CHANGED_EVENT } from "@/lib/auth/constants";
+import { resolveSignalRHubUrl } from "./signalRHubUrl";
 
 const SIGNALR_TAG = "[SignalR]";
 const RESTART_DELAY_MS = 5_000;
@@ -23,6 +24,13 @@ class SignalRService {
     const options: signalR.IHttpConnectionOptions = {
       accessTokenFactory: () => this.fetchRealtimeToken(),
       withCredentials: false,
+      // The same-origin Next.js hub BFF proxies ordinary HTTP requests; it is
+      // not a transparent WebSocket/SSE tunnel. Selecting LongPolling directly
+      // avoids failed WebSocket + SSE startup attempts before SignalR reaches
+      // the transport the BFF actually supports.
+      ...(hubUrl.startsWith("/api/hubs/")
+        ? { transport: signalR.HttpTransportType.LongPolling }
+        : {}),
     };
 
     this.connection = new signalR.HubConnectionBuilder()
@@ -252,9 +260,6 @@ function getJwtExpiration(token: string): number {
   }
 }
 
-const hubUrl =
-  process.env.NEXT_PUBLIC_SIGNALR_HUB_URL?.trim() || "/api/hubs/company";
-
 const noopSignalRService = {
   async setEnabled() {},
   async start() {
@@ -272,6 +277,11 @@ const noopSignalRService = {
 >;
 
 const signalRService =
-  typeof window !== "undefined" ? new SignalRService(hubUrl) : noopSignalRService;
+  typeof window !== "undefined"
+    ? new SignalRService(resolveSignalRHubUrl(
+      process.env.NEXT_PUBLIC_SIGNALR_HUB_URL,
+      window.location,
+    ))
+    : noopSignalRService;
 
 export default signalRService;

@@ -1,0 +1,1 @@
+export { useModuleTranslations } from "../useModuleTranslations";

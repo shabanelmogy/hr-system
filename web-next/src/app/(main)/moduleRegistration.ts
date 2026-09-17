@@ -1,18 +1,24 @@
 import {
   accountingModuleDefinition,
   registerAccountingRealtimeResources,
-} from "@/modules/accounting";
-import { crmModuleDefinition, registerCrmRealtimeResources } from "@/modules/crm";
-import { hrModuleDefinition, registerHrRealtimeResources } from "@/modules/hr";
+} from "@/modules/accounting/registration";
+import {
+  crmModuleDefinition,
+  registerCrmRealtimeResources,
+} from "@/modules/crm/registration";
+import {
+  hrModuleDefinition,
+  registerHrRealtimeResources,
+} from "@/modules/hr/registration";
 import {
   referenceDataModuleDefinition,
   registerReferenceDataRealtimeResources,
-} from "@/modules/reference-data";
-import { reportingModuleDefinition } from "@/modules/reporting";
+} from "@/modules/reference-data/registration";
+import { reportingModuleDefinition } from "@/modules/reporting/registration";
 import {
   registerFrontendModule,
   validateFrontendModuleRegistry,
-} from "@/platform/modules";
+} from "@/platform/modules/registration";
 
 registerFrontendModule(hrModuleDefinition);
 registerFrontendModule(accountingModuleDefinition);

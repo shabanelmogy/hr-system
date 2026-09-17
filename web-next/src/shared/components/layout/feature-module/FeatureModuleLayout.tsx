@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useMemo, useState } from "react";
+import { Suspense, useId, useMemo, useState } from "react";
 import { useSidebar } from "@/shared/contexts/SidebarContext";
 import FeatureModuleNavigation from "./FeatureModuleNavigation";
 import { findActiveNavigationTrail } from "./navigation";
@@ -25,6 +25,17 @@ const expandedSidebarWidth = 272;
 const compactSidebarWidth = 64;
 
 export default function FeatureModuleLayout({
+  children,
+  ...props
+}: FeatureModuleLayoutProps) {
+  return (
+    <Suspense fallback={<>{children}</>}>
+      <PathAwareFeatureModuleLayout {...props}>{children}</PathAwareFeatureModuleLayout>
+    </Suspense>
+  );
+}
+
+function PathAwareFeatureModuleLayout({
   title,
   description,
   moduleHref,
@@ -41,23 +52,18 @@ export default function FeatureModuleLayout({
   const { open: primarySidebarOpen, setOpen: setPrimarySidebarOpen } = useSidebar();
   const pathname = usePathname();
   const navigationId = useId();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [desktopExpanded, setDesktopExpanded] = useState(true);
+  const [mobileOpenRequested, setMobileOpenRequested] = useState(false);
+  const [desktopExpandedRequested, setDesktopExpandedRequested] = useState(true);
+  const mobileOpen = mobileOpenRequested && !primarySidebarOpen;
+  const desktopExpanded = desktopExpandedRequested && !primarySidebarOpen;
   const activeTrail = useMemo(
     () => (pathname === moduleHref ? [] : findActiveNavigationTrail(items, pathname)),
     [items, moduleHref, pathname],
   );
 
-  useEffect(() => {
-    if (!primarySidebarOpen) return;
-
-    setMobileOpen(false);
-    setDesktopExpanded(false);
-  }, [primarySidebarOpen]);
-
   const handleOpenMobileNavigation = () => {
     setPrimarySidebarOpen(false);
-    setMobileOpen(true);
+    setMobileOpenRequested(true);
   };
 
   return (
@@ -130,10 +136,10 @@ export default function FeatureModuleLayout({
             items={items}
             pathname={pathname}
             compact={!desktopExpanded}
-            onClose={() => setDesktopExpanded(false)}
+            onClose={() => setDesktopExpandedRequested(false)}
             onExpand={() => {
               setPrimarySidebarOpen(false);
-              setDesktopExpanded(true);
+              setDesktopExpandedRequested(true);
             }}
           />
         </Paper>
@@ -163,7 +169,7 @@ export default function FeatureModuleLayout({
         id={navigationId}
         anchor={theme.direction === "rtl" ? "right" : "left"}
         open={mobileOpen}
-        onClose={() => setMobileOpen(false)}
+        onClose={() => setMobileOpenRequested(false)}
         ModalProps={{ keepMounted: true }}
         slotProps={{
           paper: {
@@ -185,8 +191,8 @@ export default function FeatureModuleLayout({
           backHref={backHref}
           items={items}
           pathname={pathname}
-          onNavigate={() => setMobileOpen(false)}
-          onClose={() => setMobileOpen(false)}
+          onNavigate={() => setMobileOpenRequested(false)}
+          onClose={() => setMobileOpenRequested(false)}
         />
       </Drawer>
     </Box>

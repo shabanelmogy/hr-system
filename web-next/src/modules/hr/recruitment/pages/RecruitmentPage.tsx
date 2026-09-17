@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { Box, Button, Typography, Tabs, Tab, Badge } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
@@ -12,23 +13,24 @@ import { useTranslation } from "react-i18next";
 import PageHeader from "@/shared/components/navigation/header/PageHeader";
 import RecruitmentDashboardStats from "../components/RecruitmentDashboardStats";
 import JobOpeningsGrid from "../components/JobOpeningsGrid";
-import JobRequisitionsGrid from "../components/JobRequisitionsGrid";
-import RecruitmentSettingsView from "../components/settings/RecruitmentSettingsView";
 import RecruitmentKanbanBoard from "../components/RecruitmentKanbanBoard";
-import CandidateDetailDialog from "../components/CandidateDetailDialog";
-import JobOpeningDialog from "../components/JobOpeningDialog";
-import JobRequisitionDialog from "../components/JobRequisitionDialog";
-import NewApplicationDialog from "../components/NewApplicationDialog";
-import ScheduleInterviewDialog from "../components/ScheduleInterviewDialog";
-import JobOfferDialog from "../components/JobOfferDialog";
-import JobOffersGrid from "../components/JobOffersGrid";
-import InterviewEvaluationDialog from "../components/InterviewEvaluationDialog";
 import RecruitmentService from "../services/recruitmentService";
 import { showToast } from "@/shared/components/feedback/transient/showToast";
 import type { EmploymentApplicationDto, JobRequisitionDto } from "../types";
 import type { JobOpeningFormData } from "../validation/recruitmentValidation";
 import { useJobRequisitions } from "../hooks/useRecruitment";
 import { useRecruitmentPermissions } from "@/shared/hooks/usePermissions";
+
+const JobRequisitionsGrid = dynamic(() => import("../components/JobRequisitionsGrid"));
+const JobOffersGrid = dynamic(() => import("../components/JobOffersGrid"));
+const RecruitmentSettingsView = dynamic(() => import("../components/settings/RecruitmentSettingsView"));
+const CandidateDetailDialog = dynamic(() => import("../components/CandidateDetailDialog"), { ssr: false });
+const JobOpeningDialog = dynamic(() => import("../components/JobOpeningDialog"), { ssr: false });
+const JobRequisitionDialog = dynamic(() => import("../components/JobRequisitionDialog"), { ssr: false });
+const NewApplicationDialog = dynamic(() => import("../components/NewApplicationDialog"), { ssr: false });
+const ScheduleInterviewDialog = dynamic(() => import("../components/ScheduleInterviewDialog"), { ssr: false });
+const JobOfferDialog = dynamic(() => import("../components/JobOfferDialog"), { ssr: false });
+const InterviewEvaluationDialog = dynamic(() => import("../components/InterviewEvaluationDialog"), { ssr: false });
 
 export default function RecruitmentPage() {
   const { t } = useTranslation();
@@ -261,45 +263,45 @@ export default function RecruitmentPage() {
       )}
 
       {/* Modals and Dialogs */}
-      <CandidateDetailDialog
+      {selectedApplication ? <CandidateDetailDialog
         open={Boolean(selectedApplication)}
         application={selectedApplication}
         onClose={() => setSelectedApplication(null)}
         onScheduleInterview={(appId) => setInterviewAppId(appId)}
         onEvaluateInterview={handleOpenEvaluation}
         onMakeOffer={(appId) => setOfferAppId(appId)}
-      />
+      /> : null}
 
-      <JobOpeningDialog
+      {openOpeningDialog ? <JobOpeningDialog
         open={openOpeningDialog}
         initialValues={openingInitialValues}
         onClose={() => {
           setOpenOpeningDialog(false);
           setOpeningInitialValues(undefined);
         }}
-      />
+      /> : null}
 
-      <JobRequisitionDialog
+      {openRequisitionDialog ? <JobRequisitionDialog
         open={openRequisitionDialog}
         onClose={() => setOpenRequisitionDialog(false)}
-      />
+      /> : null}
 
-      <NewApplicationDialog
+      {openApplicationDialog ? <NewApplicationDialog
         open={openApplicationDialog}
         openingId={targetOpeningIdForApp}
         onClose={() => {
           setOpenApplicationDialog(false);
           setTargetOpeningIdForApp(null);
         }}
-      />
+      /> : null}
 
-      <ScheduleInterviewDialog
+      {interviewAppId ? <ScheduleInterviewDialog
         open={Boolean(interviewAppId)}
         applicationId={interviewAppId}
         onClose={() => setInterviewAppId(null)}
-      />
+      /> : null}
 
-      <InterviewEvaluationDialog
+      {evaluateInterviewId ? <InterviewEvaluationDialog
         open={Boolean(evaluateInterviewId)}
         interviewId={evaluateInterviewId}
         candidateName={evaluateCandidateName}
@@ -309,13 +311,13 @@ export default function RecruitmentPage() {
           setEvaluateCandidateName(undefined);
           setEvaluatePositionTitle(undefined);
         }}
-      />
+      /> : null}
 
-      <JobOfferDialog
+      {offerAppId ? <JobOfferDialog
         open={Boolean(offerAppId)}
         applicationId={offerAppId}
         onClose={() => setOfferAppId(null)}
-      />
+      /> : null}
     </Box>
   );
 }

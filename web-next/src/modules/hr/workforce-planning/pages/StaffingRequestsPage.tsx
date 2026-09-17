@@ -14,9 +14,9 @@ import { extractErrorMessage, getErrorStatus } from "@/shared/utils/errorUtils";
 import { Cancel, CheckCircle, Close, Send, Undo, Visibility } from "@mui/icons-material";
 import { Alert, Box, Button, Chip, Grid, LinearProgress, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { GridActionsCellItem, type GridColDef } from "@mui/x-data-grid";
+import dynamic from "next/dynamic";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import StaffingRequestForm from "../components/StaffingRequestForm";
 import {
   useApproveStaffingRequest,
   useCloseStaffingRequest,
@@ -27,6 +27,8 @@ import {
   useSubmitStaffingRequest,
 } from "../hooks/useStaffingQueries";
 import type { StaffingRequestCloseReason, StaffingRequestListItem, StaffingRequestMutation, StaffingRequestPageQuery } from "../types/Staffing";
+
+const StaffingRequestForm = dynamic(() => import("../components/StaffingRequestForm"), { ssr: false });
 
 type Dialog = "add" | "view" | "submit" | "approve" | "reject" | "close" | null;
 interface Filters { status: string }

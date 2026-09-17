@@ -1,5 +1,5 @@
-import { registerRealtimeQueryKeys } from "@/platform/realtime";
-import { appointmentKeys } from "./appointments";
+import { registerRealtimeQueryKeys } from "@/platform/realtime/registry";
+import { appointmentKeys } from "./appointments/hooks/appointmentQueryKeys";
 
 export const crmRealtimeResources = {
   appointments: "appointments",

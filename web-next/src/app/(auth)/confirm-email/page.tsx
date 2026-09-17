@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import PageComponent from "@/platform/auth/EmailConfirmed";
+import { ConfirmEmailPage as PageComponent } from "@/platform/auth/confirm-email";
 
 export const metadata: Metadata = {
   title: "Email Confirmation | ERP System",

@@ -7,6 +7,8 @@ public sealed record GetTenantsPageQuery(TenantAdministrationPageRequest Request
 
 public sealed record GetAllTenantsQuery : IQuery<IReadOnlyList<TenantManagementResponse>>;
 
+public sealed record GetTenantDashboardSummaryQuery : IQuery<TenantDashboardSummaryResponse>;
+
 public sealed record GetTenantQuery(string Id)
     : IQuery<TenantAdministrationResult<TenantManagementResponse>>;
 
@@ -59,6 +61,15 @@ public sealed class GetAllTenantsQueryHandler(ITenantManagementAdapter adapter)
         GetAllTenantsQuery request,
         CancellationToken cancellationToken) =>
         adapter.GetAllAsync(cancellationToken);
+}
+
+public sealed class GetTenantDashboardSummaryQueryHandler(ITenantDashboardSummaryAdapter adapter)
+    : IQueryHandler<GetTenantDashboardSummaryQuery, TenantDashboardSummaryResponse>
+{
+    public Task<TenantDashboardSummaryResponse> Handle(
+        GetTenantDashboardSummaryQuery request,
+        CancellationToken cancellationToken) =>
+        adapter.GetSummaryAsync(cancellationToken);
 }
 
 public sealed class GetTenantQueryHandler(ITenantManagementAdapter adapter)

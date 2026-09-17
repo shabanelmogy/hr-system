@@ -215,7 +215,7 @@ const ForgotPasswordLink = ({
   >
     <Typography variant="body2">
       <Link
-        href={appRoutes.forgetPassword}
+        href={appRoutes.auth.forgetPassword}
         style={{
           textDecoration: "none",
           color: theme.palette.primary.main,
@@ -277,7 +277,7 @@ const RegisterLink = ({
   <Typography variant="body2">
     {t("auth.dontHaveAccount")}{" "}
     <Link
-      href={appRoutes.register}
+      href={appRoutes.auth.register}
       style={{
         textDecoration: "none",
         color: theme.palette.primary.main,

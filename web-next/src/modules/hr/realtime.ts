@@ -1,4 +1,4 @@
-import { organizationalStructureKeys } from "./basic-data";
+import { organizationalStructureKeys } from "./basic-data/organizational-structure/management/hooks/organizationalStructureQueryKeys";
 import {
   envelopeAmendmentKeys,
   positionEnvelopeKeys,
@@ -6,8 +6,8 @@ import {
   workforceBudgetKeys,
   workforcePlanKeys,
   workforceTraceKeys,
-} from "./workforce-planning";
-import { registerRealtimeQueryKeys } from "@/platform/realtime";
+} from "./workforce-planning/hooks/workforceQueryKeys";
+import { registerRealtimeQueryKeys } from "@/platform/realtime/registry";
 
 export const hrRealtimeResources = {
   workforcePlans: "workforce-plans",

@@ -13,6 +13,7 @@ import {
 } from "../utils/validation";
 import { permissions } from "@/lib/auth/permissions";
 import { usePermissions } from "@/shared/hooks/usePermissions";
+import { appRoutes } from "@/config/routes";
 
 function splitPermission(value: string): { module: string; action: string } | null {
   const separator = value.indexOf(":");
@@ -164,7 +165,7 @@ export function useRolePermissions(roleId: string) {
       await updateRoleClaims(data);
       showSuccess("Role permissions updated successfully");
       form.reset(data);
-      router.push("/administration/roles");
+      router.push(appRoutes.platform.administration.roles);
     } catch (error) {
       applyApiFieldErrors(error, form.setError, { Name: "name" });
       showError(
@@ -177,7 +178,7 @@ export function useRolePermissions(roleId: string) {
 
   const goBack = async () => {
     if (!(await requestDiscard())) return;
-    router.push("/administration/roles");
+    router.push(appRoutes.platform.administration.roles);
   };
 
   return {
@@ -189,7 +190,7 @@ export function useRolePermissions(roleId: string) {
     goBack,
     goDashboard: async () => {
       if (!(await requestDiscard())) return;
-      router.push("/");
+      router.push(appRoutes.shell.home);
     },
     isLoading,
     isSaving,

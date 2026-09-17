@@ -38,7 +38,7 @@ describe("CountriesPage wiring", () => {
     capture.logic = createCountryLogic();
   });
 
-  it("keeps initial loading separate from background fetching and wires mutations", () => {
+  it("keeps initial loading separate from background fetching and leaves closed interaction UI unmounted", () => {
     renderToStaticMarkup(<CountriesPage />);
 
     expect(capture.multiViewProps).toMatchObject({
@@ -48,14 +48,14 @@ describe("CountriesPage wiring", () => {
     });
     expect(capture.multiViewProps?.onBulkArchive).toBe(capture.logic.onBulkArchive);
     expect(capture.multiViewProps?.onSearchChange).toBe(capture.logic.setSearchValue);
-    expect(capture.formProps?.onSubmit).toBe(capture.logic.handleFormSubmit);
+    expect(capture.formProps).toBeNull();
   });
 });
 
 function createCountryLogic(): Record<string, unknown> {
   const callback = () => undefined;
   return {
-    dialogType: "add",
+    dialogType: null,
     selectedCountry: null,
     restoreCountry: null,
     selectedCountryIds: [4],

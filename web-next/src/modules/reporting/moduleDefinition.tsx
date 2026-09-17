@@ -17,7 +17,7 @@ const navigation = createNavSection(
     createNavItem(
       "menu.crystalReportsManagement",
       createColoredIcon(<AssessmentRoundedIcon />, "#0ea5e9"),
-      appRoutes.auth.crystalReportsPage,
+      appRoutes.modules.reporting.crystalReports,
       undefined,
       [permissions.ManageCrystalReportAccess],
     ),
@@ -43,16 +43,16 @@ export const reportingModuleDefinition: FrontendModuleDefinition = {
       permissions.ViewCrystalReports,
       permissions.ManageCrystalReportAccess,
     ],
-    entryCandidates: [appRoutes.auth.crystalReportsPage],
+    entryCandidates: [appRoutes.modules.reporting.crystalReports],
     navigation: [{
       id: navigation.id,
       titleKey: navigation.title,
       entries: [{
         titleKey: "menu.crystalReportsManagement",
-        path: appRoutes.auth.crystalReportsPage,
+        path: appRoutes.modules.reporting.crystalReports,
         requiredPermissions: [permissions.ManageCrystalReportAccess],
       }],
     }],
-    routePrefixes: [appRoutes.auth.crystalReportsPage],
+    routePrefixes: [appRoutes.modules.reporting.crystalReports],
   }],
 };

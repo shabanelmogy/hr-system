@@ -3,15 +3,13 @@ import { Box, Typography, Link as MuiLink, useTheme } from "@mui/material";
 import Link from "next/link";
 import type { Route } from "next";
 import type { ElementType } from "react";
+import { appRoutes } from "@/config/routes";
 
 interface FormFooterProps {
   t: (key: string) => string;
-  appRoutes: {
-    login: Route;
-  };
 }
 
-export default function FormFooter({ t, appRoutes }: FormFooterProps) {
+export default function FormFooter({ t }: FormFooterProps) {
   const theme = useTheme();
 
   return (
@@ -32,7 +30,7 @@ export default function FormFooter({ t, appRoutes }: FormFooterProps) {
         {t("auth.alreadyHaveAccount")}{" "}
         <MuiLink
           component={Link as ElementType}
-          href={appRoutes.login as Route}
+          href={appRoutes.auth.login as Route}
           color="primary"
           sx={{
             textDecoration: "none",

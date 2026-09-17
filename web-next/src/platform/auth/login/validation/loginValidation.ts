@@ -1,15 +1,47 @@
-import { z } from "zod";
+import type { FieldErrors, Resolver } from "react-hook-form";
 import type { Translator } from "../../types";
 
-export const createLoginValidationSchema = (t: Translator) =>
-  z.object({
-    username: z
-      .string()
-      .trim()
-      .min(1, t("validation.required"))
-      .min(3, t("validation.minLength", { count: 3 }))
-      .max(50, t("validation.maxLength", { count: 50 })),
-    password: z.string().trim().min(1, t("validation.required")),
-  });
+export type LoginFormData = {
+  username: string;
+  password: string;
+};
 
-export type LoginFormData = z.infer<ReturnType<typeof createLoginValidationSchema>>;
+export const createLoginResolver = (t: Translator): Resolver<LoginFormData> =>
+  (values) => {
+    const username = values.username.trim();
+    const password = values.password.trim();
+    const errors: FieldErrors<LoginFormData> = {};
+
+    if (!username) {
+      errors.username = {
+        type: "required",
+        message: t("validation.required"),
+      };
+    } else if (username.length < 3) {
+      errors.username = {
+        type: "minLength",
+        message: t("validation.minLength", { count: 3 }),
+      };
+    } else if (username.length > 50) {
+      errors.username = {
+        type: "maxLength",
+        message: t("validation.maxLength", { count: 50 }),
+      };
+    }
+
+    if (!password) {
+      errors.password = {
+        type: "required",
+        message: t("validation.required"),
+      };
+    }
+
+    if (Object.keys(errors).length > 0) {
+      return { values: {} as Record<string, never>, errors };
+    }
+
+    return {
+      values: { username, password },
+      errors: {},
+    };
+  };

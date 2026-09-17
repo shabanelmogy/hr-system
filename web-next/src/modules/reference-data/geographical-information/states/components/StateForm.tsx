@@ -1,5 +1,5 @@
 import { MyForm, MySelect, MyTextField, toFormErrorMessages } from "@/shared/components/forms";
-import { useCountryLookup } from "@/modules/reference-data/geographical-information/countries";
+import { useCountryLookup } from "@/modules/reference-data/geographical-information/countries/public";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Button } from "@mui/material";

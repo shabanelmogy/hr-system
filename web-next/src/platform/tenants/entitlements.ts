@@ -9,10 +9,10 @@ export function createDefaultEntitlements(
   tenantEntitlementModules: readonly ErpModule[],
 ): EditableEntitlement[] {
   return tenantEntitlementModules
-    .filter((module) => module.isDefault)
-    .map((module) => ({
-      moduleCode: module.code,
-      submoduleCodes: module.submodules.map((item) => item.code),
+    .filter((erpModule) => erpModule.isDefault)
+    .map((erpModule) => ({
+      moduleCode: erpModule.code,
+      submoduleCodes: erpModule.submodules.map((item) => item.code),
     }));
 }
 
@@ -22,15 +22,15 @@ export function hydrateEntitlements(
 ): EditableEntitlement[] {
   if (saved == null) return createDefaultEntitlements(tenantEntitlementModules);
   return saved.flatMap((item) => {
-    const module = tenantEntitlementModules.find(
+    const erpModule = tenantEntitlementModules.find(
       (candidate) => candidate.code.toLowerCase() === item.moduleCode.toLowerCase(),
     );
-    if (!module) return [];
+    if (!erpModule) return [];
 
     const savedSubmodules = new Set(item.submoduleCodes.map((code) => code.toLowerCase()));
     return [{
-      moduleCode: module.code,
-      submoduleCodes: module.submodules
+      moduleCode: erpModule.code,
+      submoduleCodes: erpModule.submodules
         .filter((submodule) => savedSubmodules.has(submodule.code.toLowerCase()))
         .map((submodule) => submodule.code),
     }];
@@ -39,11 +39,11 @@ export function hydrateEntitlements(
 
 export function toggleModuleEntitlement(
   current: readonly EditableEntitlement[],
-  module: ErpModule,
+  erpModule: ErpModule,
   enabled: boolean,
 ): EditableEntitlement[] {
   const sameModule = (item: EditableEntitlement) =>
-    item.moduleCode.localeCompare(module.code, undefined, { sensitivity: "accent" }) === 0;
+    item.moduleCode.localeCompare(erpModule.code, undefined, { sensitivity: "accent" }) === 0;
   const existing = current.find(sameModule);
   const unchangedModules = current.filter((item) => !sameModule(item));
 
@@ -51,8 +51,8 @@ export function toggleModuleEntitlement(
   return [
     ...unchangedModules,
     existing ?? {
-      moduleCode: module.code,
-      submoduleCodes: module.submodules.map((item) => item.code),
+      moduleCode: erpModule.code,
+      submoduleCodes: erpModule.submodules.map((item) => item.code),
     },
   ];
 }

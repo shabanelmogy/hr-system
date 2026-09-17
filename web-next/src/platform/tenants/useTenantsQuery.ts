@@ -26,3 +26,11 @@ export function useTenantsQuery() {
     queryFn: tenantApi.getAll,
   });
 }
+
+export function useTenantDashboardSummaryQuery() {
+  return useQuery({
+    queryKey: tenantKeys.dashboardSummary(),
+    queryFn: tenantApi.getDashboardSummary,
+    staleTime: 60_000,
+  });
+}

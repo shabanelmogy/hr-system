@@ -17,7 +17,7 @@ const navigation = createNavSection(
     createNavItem(
       "menu.addressTypes",
       createColoredIcon(<CategoryRoundedIcon />, "#06b6d4"),
-      appRoutes.basicData.addressTypes,
+      appRoutes.modules.referenceData.addressTypes,
       undefined,
       [permissions.ViewAddressTypes],
     ),
@@ -40,16 +40,16 @@ export const referenceDataModuleDefinition: FrontendModuleDefinition = {
     icon: <CategoryRoundedIcon />,
     tone: "info",
     requiredPermissions: [permissions.ViewAddressTypes],
-    entryCandidates: [appRoutes.basicData.addressTypes],
+    entryCandidates: [appRoutes.modules.referenceData.addressTypes],
     navigation: [{
       id: navigation.id,
       titleKey: navigation.title,
       entries: [{
         titleKey: "menu.addressTypes",
-        path: appRoutes.basicData.addressTypes,
+        path: appRoutes.modules.referenceData.addressTypes,
         requiredPermissions: [permissions.ViewAddressTypes],
       }],
     }],
-    routePrefixes: [appRoutes.basicData.addressTypes],
+    routePrefixes: [appRoutes.modules.referenceData.addressTypes],
   }],
 };

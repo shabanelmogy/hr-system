@@ -6,7 +6,7 @@ interface UseFormDialogStateOptions {
   isSubmitting: boolean;
   submitDisabled?: boolean;
   onClose: () => void;
-  onSubmit?: (event?: FormEvent) => void | Promise<void>;
+  onSubmit?: (event?: FormEvent) => unknown | Promise<unknown>;
 }
 
 export function useFormDialogState({
