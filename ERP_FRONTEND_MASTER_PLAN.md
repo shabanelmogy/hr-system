@@ -24,7 +24,7 @@ The frontend foundation should follow these rules:
 
 ---
 
-# Phase 0 — Green Baseline & Architecture Foundation
+# Phase 0 — Green Baseline & Architecture Foundation ✅
 
 ## Objective
 
@@ -119,12 +119,27 @@ npm audit
 
 ## Status
 
-✅ **Foundation substantially completed**
+✅ **Completed / green baseline closed**
 
-Remaining cleanup:
+Closure evidence on 2026-09-17:
 
-- documentation/manifests must be brought fully in sync with Route Group ownership;
-- rerun documentation generation/check gate before calling the architecture documentation fully clean.
+- Route Group ownership, thin App Router adapters, public APIs, dependency
+  direction, cycle detection, compatibility shims, navigation/runtime safety and
+  route collisions are enforced by `check:architecture` and the gate passes.
+- The post-runtime boundary cleanup removed the remaining direct App/Shell imports
+  into Platform internals. Auth route adapters, `MainShell`, module registration,
+  route authorization, dashboard composition, module translations and token
+  revocation now cross narrow feature-scoped `index.ts` public surfaces instead
+  of broad Platform barrels. This keeps the architecture gate green without
+  re-expanding protected-route bundle graphs.
+- normal and strict TypeScript checks pass;
+- i18n static/parity checks pass;
+- the documentation source/manifests are synchronized and the generated
+  documentation check passes for all `77` recipes;
+- `npm audit --audit-level=high` reports `0 vulnerabilities`.
+
+The foundation baseline is therefore no longer a cleanup workstream. Future
+architecture changes must preserve these gates rather than reopening Phase 0.
 
 ---
 
@@ -508,7 +523,7 @@ npm run build
 
 ## Status
 
-🟠 **Core architecture implemented; final verification still required**
+✅ **Completed / runtime architecture verified**
 
 Completed:
 
@@ -520,21 +535,17 @@ Completed:
 - first realtime Instant UI issue fixed;
 - `/` Instant Navigation root cause identified and route/session boundary corrected;
 - regression tests added;
-- `type-check` passed;
-- architecture check passed;
-- latest dev Instant smoke no longer reported the original validation error.
+- normal and strict TypeScript checks passed;
+- architecture and lint gates passed;
+- full Vitest suite passed during final runtime closure;
+- production build and `measure:build` completed successfully;
+- authenticated Admin and Super Admin browser smoke completed without the
+  original Instant Navigation validation failure;
+- company/session/realtime startup behavior was verified after the protected
+  QueryClient and SignalR startup fixes.
 
-Still required before closing Phase 3:
-
-```text
-type-check:strict
-lint
-full npm test
-production build
-authenticated navigation smoke
-```
-
-SignalR negotiation warnings remain a separate runtime item.
+Any future SignalR diagnostics or transport tuning belongs to Phase 6 and must
+not reopen the completed Cache Components / PPR / Instant Navigation baseline.
 
 ---
 
@@ -657,7 +668,7 @@ contract to remain enforced.
 
 ---
 
-# Phase 5 — Navigation & Mobile Runtime Safety 🟠
+# Phase 5 — Navigation & Mobile Runtime Safety ✅
 
 ## Objective
 
@@ -699,9 +710,40 @@ logout
 authorization redirect
 ```
 
+## Applied closure
+
+The protected shell now has one explicit navigation-safety contract:
+
+- `UnsavedChangesProvider` intercepts same-origin application links before
+  navigation, protects refresh/close through `beforeunload`, and protects
+  same-document Back/Forward through the cancelable Navigation API traversal
+  guard without rewriting browser history;
+- sidebar navigation, global search, notification actions, file viewing,
+  profile navigation, module switching, company switching and user-initiated
+  logout all call `requestDiscard()` before leaving the current editing context;
+- forced authentication/session/security redirects are intentionally exempt from
+  dirty-form confirmation because an expired or invalid session must not remain
+  on protected content;
+- a genuine company switch cancels/invalidates the previous session request
+  generation and unmounts the protected QueryClient boundary, preventing stale
+  company results from publishing into the new context;
+- pull-to-refresh is touch/coarse-pointer only, loaded during browser idle time,
+  disabled for dirty/busy forms, pending mutations, focused editors, grids,
+  tree-grids and modal/dialog surfaces, and refreshes active read queries only;
+  it never retries/replays mutations;
+- `check:architecture` rejects protected `router.push`, `router.replace` or
+  `router.refresh` call sites that bypass `requestDiscard`, unless the file is an
+  explicitly documented forced/system redirect, and keeps `pulltorefreshjs`
+  centralized in `MainClientBootstrap`.
+
+Focused closure verification on 2026-09-17 passed `56/56` tests across history
+traversal, unsaved-change registry, pull-to-refresh policy, company switching,
+company verification, platform navigation and navigation composition, in
+addition to the full frontend suite already passing `496/496` tests.
+
 ## Status
 
-⏳ **Planned**
+✅ **Completed / navigation and mobile runtime safety closed**
 
 ---
 
@@ -1176,6 +1218,23 @@ pre-change bundle audit attributed about `338.6 KB` of common emitted JavaScript
 to chunks containing those feature registration graphs; production build
 measurement after the refactor is the final authority for the actual reduction.
 
+### App / Shell / Platform public-boundary cleanup
+
+**Problem:** after the runtime refactor, `check:architecture` still identified a
+small set of direct imports from App Router and Shell composition into Platform
+implementation files. Replacing them with a single broad Platform barrel would
+have satisfied ownership rules while undoing part of the route-local bundle work.
+
+**Decision:** expose only the symbol needed by each composition point through
+narrow feature-scoped public APIs. Examples include auth route entry points,
+module registration/query/route-access/translation/launcher surfaces, realtime
+runtime bridges, tenant-access runtime composition, session runtime utilities and
+context-store reset access.
+
+**Impact:** `check:architecture` is green again, App/Shell no longer deep-import
+Platform internals, and route composition does not depend on a broad auth/modules/
+realtime barrel that would eagerly reconnect unrelated feature graphs.
+
 ### Optional post-hydration runtime
 
 **Problem:** dynamic imports can still be immediate startup cost when mounted on
@@ -1242,6 +1301,16 @@ Final gates for this closure: architecture, normal + strict TypeScript, full
 lint, module-generator self-test, full Vitest, documentation check, production
 build, `measure:build`, focused backend tenant-summary tests and runtime smoke.
 
+Authenticated browser smoke is also complete. The built-in Admin path reached
+the dashboard and `/finance/fiscal-years` with `ERROR_COUNT 0`; session,
+realtime-token and hub requests were same-origin and successful. The smoke found
+and closed two final runtime defects: the project-local Emotion streaming cache
+was replaced by MUI's Next 16 App Router cache provider, and development SignalR
+now uses the same-origin BFF with Long Polling directly instead of failing
+WebSocket/SSE transports first. Super-admin login, `/super-admin`, geography and
+the dedicated tenant summary endpoint also returned successfully; warmed local
+dashboard/summary requests were approximately `0.19 s` / `0.29 s`.
+
 ### Verification / regression policy
 
 For any future protected-page loading change:
@@ -1271,6 +1340,10 @@ These are documented rather than mixed into the shared-runtime closure work:
   bootstrap change, because removing the mask alone can expose a dark/RTL flash
   or hydration mismatch;
 - realtime-token session-hop reduction only after an auth/security review;
+- keep local HTTPS SignalR on the same-origin hub BFF when a configured loopback
+  backend URL would otherwise cause mixed-content/certificate reconnect loops;
+  the BFF transport uses Long Polling directly rather than failing WebSocket and
+  SSE attempts before fallback;
 - route-local FullCalendar / Recruitment drag-drop tuning only if the new
   production route measurements still justify it;
 - tenant entitlement-module fetch-on-intent for the management editor, provided
@@ -1378,7 +1451,13 @@ Guide before handoff.
 
 ## Status
 
-🟠 **Needs final cleanup after Route Group reorganization**
+✅ **Baseline complete / ongoing governance**
+
+The Route Group and public-boundary cleanup is complete. Canonical architecture
+documentation and generated documentation checks were included in the final
+runtime closure gates. This phase now operates as a continuous rule: future
+material architecture/runtime changes must keep the guides and generated checks
+synchronized in the same workstream.
 
 ---
 
@@ -1418,49 +1497,50 @@ Correctness
 
 | Phase | Status |
 |---|---|
-| Phase 0 — Foundation / green baseline | ✅ Mostly complete |
+| Phase 0 — Foundation / green baseline | ✅ Complete |
 | Phase 1 — Business Safety | ✅ Complete |
 | Phase 2 — Authentication & BFF Hardening | ✅ Complete |
-| Phase 3 — Next.js Runtime Architecture | 🟠 Final verification |
+| Phase 3 — Next.js Runtime Architecture | ✅ Complete |
 | Phase 4 — Provider/runtime optimization | ✅ Runtime policy implemented |
-| Phase 5 — Navigation/mobile safety | ⏳ Planned |
+| Phase 5 — Navigation/mobile safety | ✅ Complete |
 | Phase 6 — Observability | ⏳ Planned |
 | Phase 7 — CSP/browser security | ⏳ Planned |
 | Phase 8 — E2E/testing depth | ⏳ Planned |
 | Phase 9 — TypeScript/code quality | 🟠 Ongoing |
 | Phase 10 — Dependency strategy | 🟠 Baseline done |
-| Phase 11 — Performance engineering | ⏳ Planned |
+| Phase 11 — Performance engineering | ✅ Cross-route/runtime baseline complete |
 | Phase 12 — CI quality gates | 🟠 Partial |
-| Phase 13 — Documentation/governance | 🟠 Cleanup required |
+| Phase 13 — Documentation/governance | ✅ Baseline complete / ongoing governance |
 
 ---
 
 # Immediate Next Actions
 
-Phase 4 runtime boundaries are now applied and guarded. Continue Phase 3 final
-runtime verification where needed, then move to the remaining hardening phases:
+The frontend foundation/runtime cleanup is no longer a blocker for business
+feature work. Phase 0, Phase 3, Phase 4, Phase 5, Phase 11 and the documentation
+baseline are closed. The latest architecture pass also restored a fully green
+`check:architecture` after the performance refactors by using narrow public APIs
+instead of broad barrels.
 
-```bash
-npm run type-check:strict
-npm run lint
-npm test
-npm run build
-```
+The remaining hardening work is independent and can proceed in parallel with ERP
+business functionality:
 
-Runtime verification:
+1. **Phase 6 — Observability:** production request/error/performance telemetry and
+   bounded SignalR diagnostics.
+2. **Phase 7 — Browser security:** CSP report-only inventory, remediation and
+   eventual enforcement; remove Demo Login only at Production-readiness time.
+3. **Phase 8 — E2E/testing depth:** Playwright coverage for authentication,
+   company context, authorization, business smoke and runtime navigation.
+4. **Phase 9 — TypeScript/code quality:** continue reducing unsafe escape hatches
+   while preserving the already-green normal/strict type gates.
+5. **Phase 12 — CI quality gates:** consolidate the existing architecture, i18n,
+   lint, type, test, build, documentation and security checks into enforced CI.
 
-1. authenticated smoke test for `/`;
-2. navigate between multiple PPR routes;
-3. verify no Instant Navigation console errors;
-4. verify company switch/logout;
-5. investigate SignalR negotiation warnings separately;
-6. fix stale architecture documentation/manifests;
-7. rerun documentation gate.
-
-Phase 4 is no longer an immediate-next-action block. Future runtime work should
-preserve its enforced first-consumer loading contract while Phase 5+ work
-continues. Package removal, dependency upgrades, and deeper route-budget tuning
-belong to Phases 10 and 11.
+Performance work should now be reopened only from evidence: production route
+measurement or a concrete user-visible latency. Deferred items such as
+active-language-only translation loading, chart-specific whole-dataset contracts,
+realtime-token hop reduction, FullCalendar/Kanban tuning and tenant entitlement
+fetch-on-intent are not startup blockers.
 
 ---
 

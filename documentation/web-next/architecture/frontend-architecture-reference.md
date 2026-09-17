@@ -137,6 +137,57 @@ final unsuccessful verification redirects to service-unavailable; a session 401
 terminates verification through logout. Stale generations cannot overwrite the
 verification result; a concurrent logout invalidates the switch via its epoch.
 
+### Navigation and mobile runtime safety baseline
+
+**Problem.** An ERP route can contain dirty form state or an in-flight write
+while navigation may originate from many surfaces: links, sidebar buttons,
+global search, notifications, company/module switchers, logout, browser history,
+refresh/close, or mobile pull-to-refresh. Handling only ordinary `Link`
+navigation leaves several paths capable of discarding edits or replaying work.
+
+**Root cause.** Navigation is not one API. Next links and `router.push()` are
+application navigation, browser traversal has its own pre-commit lifecycle,
+full-document unload is separate again, and pull-to-refresh is a gesture-driven
+query action rather than route navigation.
+
+**Decision.** Protected user-initiated navigation must pass through the shared
+unsaved-change decision before leaving an editing context. The provider guards
+same-origin links, `beforeunload`, and cancelable same-document browser traversal;
+programmatic protected navigation calls `requestDiscard()` explicitly. Company
+switching additionally rotates/cancels the previous request context and relies on
+the `MainShell` transition boundary to clear the old QueryClient. Forced
+authentication/session/security redirects are exempt: an expired or invalid
+session must leave protected content even when a form was dirty.
+
+Mobile pull-to-refresh follows a separate safety policy. It is loaded only on a
+touch/coarse-pointer client and during idle time. A gesture is rejected when the
+page is not at the top, a form is dirty or submitting, any React Query mutation
+is pending, a dialog/modal is active, the gesture starts in a grid/tree-grid or
+blocked surface, or an editable control has focus. An accepted gesture refetches
+active read queries only; it never invokes or retries mutations.
+
+**Implementation impact.** Sidebar items/sections, module and company switchers,
+global search, notification destinations, file viewing, profile navigation and
+user-initiated logout use the shared guard. `check:architecture` enforces that a
+protected source containing `router.push`, `router.replace` or `router.refresh`
+also contains the unsaved-change guard unless it is a documented system redirect.
+The same architecture gate prevents `pulltorefreshjs` from escaping
+`MainClientBootstrap`, keeping gesture policy centralized.
+
+**Verification.** The Phase 5 closure run passed `56/56` focused tests covering
+history traversal, unsaved-change registry, pull-to-refresh policy, company
+switch/session verification, platform navigation and navigation composition.
+`check:architecture`, normal and strict TypeScript, and the existing full
+frontend suite are green. The authenticated runtime smoke from the page-loading
+closure also exercised normal protected navigation without browser runtime
+errors.
+
+**Prevention rule.** Do not add a protected imperative navigation path that
+bypasses `requestDiscard()`, do not implement popstate/history rewrites as an
+unsaved-change workaround, and do not add a second pull-to-refresh integration.
+Security-forced redirects may bypass the prompt only when that exception is
+explicitly documented in the architecture checker.
+
 ### On-demand feature tooling
 
 Heavy export dependencies are loaded only when the export action is invoked.
@@ -512,6 +563,24 @@ backend summary tests, and the post-build runtime smoke gate. Future page-loadin
 work should be evidence-driven feature tuning rather than reopening these shared
 bootstrap decisions.
 
+The authenticated browser smoke used the built-in development Admin flow and
+verified `login -> dashboard -> /finance/fiscal-years` with real client
+hydration. The final run had no console/runtime errors, session and realtime-token
+requests returned `200`, and SignalR negotiated through the same-origin BFF and
+started directly on Long Polling. The super-admin smoke separately verified
+`login -> / -> /super-admin -> tenant dashboard summary`; the warmed
+`/super-admin` document completed in about `0.19 s` and the dedicated summary
+request in about `0.29 s` on the local development stack. Treat the first dev
+compile separately from these warmed runtime timings.
+
+The same smoke exposed a development SSR failure in the hand-maintained Emotion
+streaming registry (`Stylis` stack overflow on a normal Fiscal Years render).
+The project now delegates App Router Emotion streaming to MUI's version-aware
+`AppRouterCacheProvider` from `@mui/material-nextjs/v16-appRouter`, while keeping
+the RTL Stylis configuration and remounting the cache when direction changes.
+Do not copy MUI/Emotion's private insert/flush integration into project code;
+use the framework adapter that matches the installed Next/MUI major version.
+
 #### 10. Review closure and intentionally deferred optimizations
 
 The comprehensive review also found several real but lower-priority costs. They
@@ -535,6 +604,17 @@ correctness for a smaller development timing number:
   realtime token through the BFF. Any removal of an authentication/session hop
   requires a security review; do not bypass tenant/company/session validation
   merely to shorten connection startup.
+- **Local SignalR transport.** Development must not force the browser directly to
+  a backend hub URL. That can trigger mixed-content, CORS, or local-certificate
+  failures and an endless reconnect loop even though the same-origin
+  `/api/hubs/company` BFF is available. Development always resolves the hub to the
+  same-origin BFF; production may preserve an explicit secure hub URL, while an
+  HTTPS page still falls back to the BFF rather than making a mixed-content HTTP
+  connection. When the BFF is selected, SignalR uses Long Polling directly
+  because a Next Route Handler is not a transparent WebSocket/SSE tunnel; do not
+  waste startup time failing those transports before falling back. Keep this
+  transport decision centralized;
+  do not fix local realtime failures by weakening browser TLS/CORS policy.
 - **Route-local first-paint packages.** FullCalendar on Appointments and
   drag/drop/Kanban runtime in Recruitment remain feature-scoped rather than
   global. Optimize them only if the post-shared-baseline production measurement
