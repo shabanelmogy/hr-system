@@ -7,6 +7,7 @@ import {
   annotateActiveVerifiedSessionScope,
   classifyTransportFailure,
 } from "@/lib/observability/serverTelemetry";
+import { parseRealtimeTokenPayload } from "@/lib/signalr/realtimeToken";
 
 const TAG = "[Realtime Token]";
 
@@ -59,14 +60,15 @@ export async function GET(request: NextRequest) {
       return response;
     }
 
-    const payload = (await backendResponse.json()) as { token?: unknown };
-    if (typeof payload.token !== "string") {
+    const payload: unknown = await backendResponse.json();
+    const realtimeToken = parseRealtimeTokenPayload(payload);
+    if (!realtimeToken) {
       console.warn(`${TAG} Invalid token response`);
       return NextResponse.json({ message: "Invalid realtime token response" }, { status: 502 });
     }
 
     const response = NextResponse.json(
-      { token: payload.token },
+      { token: realtimeToken },
       { headers: { "cache-control": "no-store" } },
     );
     if (resolved.authPayload) setAuthCookies(response, resolved.authPayload);

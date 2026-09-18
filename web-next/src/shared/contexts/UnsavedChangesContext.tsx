@@ -20,8 +20,8 @@ import {
   type UnsavedChangesRegistry,
 } from "./unsavedChangesRegistry";
 import {
+  asNavigationTraversalController,
   installHistoryTraversalGuard,
-  type NavigationTraversalController,
 } from "./historyTraversalGuard";
 
 type UnsavedChangesContextValue = UnsavedChangesRegistry & { requestDiscard(): Promise<boolean> };
@@ -55,7 +55,7 @@ export function UnsavedChangesProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useLayoutEffect(() => {
-    const navigation = ('navigation' in window ? window.navigation : undefined) as unknown as NavigationTraversalController | undefined;
+    const navigation = asNavigationTraversalController(Reflect.get(window, "navigation"));
     return installHistoryTraversalGuard({
       navigation,
       hasUnsavedChanges: registry.hasUnsavedChanges,

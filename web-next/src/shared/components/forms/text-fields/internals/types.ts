@@ -1,4 +1,5 @@
 import type { ChangeEventHandler, ReactNode, Ref } from "react";
+import type { CounterPaletteColor } from "./characterCount";
 import type { InputConstraintValue } from "./inputConstraints";
 
 export type RegisteredField = {
@@ -51,9 +52,9 @@ export type MyTextFieldProps = {
   warningThreshold?: number;
   errorThreshold?: number;
   required?: boolean;
-  normalColor?: string;
-  warningColor?: string;
-  errorColor?: string;
+  normalColor?: CounterPaletteColor;
+  warningColor?: CounterPaletteColor;
+  errorColor?: CounterPaletteColor;
   appearance?: "enhanced" | "plain";
   clearButtonAriaLabel?: string;
   onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;

@@ -101,15 +101,27 @@ export const getOrganizationalStructureSchema = (resource: OrganizationalResourc
   }
 });
 
-export const getJobDescriptionApprovalSchema = (t: TFunction) => z.object({
-  effectiveDate: z.string().trim().min(1, t("validation.required")),
-  expiryDate: z.string().trim().optional(),
+export const getJobDescriptionDecisionSchema = (
+  mode: "approve" | "reject",
+  t: TFunction,
+) => z.object({
+  effectiveDate: z.string().trim(),
+  expiryDate: z.string().trim(),
+  reason: z.string().trim().max(1000),
 }).superRefine((value, context) => {
-  if (value.expiryDate && value.expiryDate < value.effectiveDate) {
-    context.addIssue({ code: "custom", path: ["expiryDate"], message: t("validation.endDateBeforeStart") });
+  if (mode === "approve") {
+    if (!value.effectiveDate) {
+      context.addIssue({ code: "custom", path: ["effectiveDate"], message: t("validation.required") });
+    }
+    if (value.expiryDate && value.expiryDate < value.effectiveDate) {
+      context.addIssue({ code: "custom", path: ["expiryDate"], message: t("validation.endDateBeforeStart") });
+    }
+    return;
+  }
+
+  if (!value.reason) {
+    context.addIssue({ code: "custom", path: ["reason"], message: t("validation.required") });
   }
 });
 
-export const getJobDescriptionRejectionSchema = (t: TFunction) => z.object({
-  reason: z.string().trim().min(1, t("validation.required")).max(1000),
-});
+export type JobDescriptionDecisionValues = z.infer<ReturnType<typeof getJobDescriptionDecisionSchema>>;

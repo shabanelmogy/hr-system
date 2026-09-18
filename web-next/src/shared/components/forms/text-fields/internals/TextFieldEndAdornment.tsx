@@ -28,8 +28,7 @@ export default function TextFieldEndAdornment(props: TextFieldEndAdornmentProps)
   const { t } = useTranslation();
   const theme = useTheme();
   const value = String(props.value ?? "");
-  const paletteColor = (theme.palette as unknown as Record<string, { main?: string }>)[props.counter.color]?.main
-    ?? theme.palette.primary.main;
+  const paletteColor = theme.palette[props.counter.color].main;
 
   const hasContent =
     (props.showCounter && !props.isPassword) ||

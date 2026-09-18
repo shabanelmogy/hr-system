@@ -1,11 +1,10 @@
+import { isValidElement } from "react";
 import { describe, expect, it, vi } from "vitest";
 import EditableTextField from "./EditableTextField";
 
-type ControllerElement = {
-  props: {
-    render: (parameters: { field: Record<string, unknown> }) => {
-      props: Record<string, unknown>;
-    };
+type ControllerProps = {
+  render: (parameters: { field: Record<string, unknown> }) => {
+    props: Record<string, unknown>;
   };
 };
 
@@ -18,7 +17,11 @@ function renderControlledField(value: unknown) {
     getCommonProps: () => ({}),
     onClear: vi.fn(),
     onRegisterChange: vi.fn(),
-  }) as unknown as ControllerElement;
+  });
+
+  if (!isValidElement<ControllerProps>(controller)) {
+    throw new Error("Expected EditableTextField to render a controlled field");
+  }
 
   return controller.props.render({
     field: {

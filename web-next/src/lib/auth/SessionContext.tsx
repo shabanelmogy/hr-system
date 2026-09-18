@@ -3,7 +3,7 @@
 import type { Route } from "next";
 import { Suspense, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { isSessionClaims, type SessionClaims } from "./session";
+import { parseSessionClaimsEnvelope, type SessionClaims } from "./session";
 import type { PermissionString } from "./permissions";
 import { isAuthorized } from "./authorization";
 import apiClient from "@/lib/api/client";
@@ -119,16 +119,17 @@ export function SessionProvider({ children }: { children: ReactNode }) {
           return;
         }
         
-        const payload = (await response.json()) as { user?: unknown };
+        const payload: unknown = await response.json();
+        const sessionUser = parseSessionClaimsEnvelope(payload);
         if (!refreshStateRef.current!.isCurrent(requestGeneration)) return;
-        if (isSessionClaims(payload.user)) {
+        if (sessionUser) {
           revalidationResultRef.current = "ok";
           const previous = userRef.current;
-          if (previous && (previous.userId !== payload.user.userId || previous.tenantId !== payload.user.tenantId || previous.companyId !== payload.user.companyId)) {
+          if (previous && (previous.userId !== sessionUser.userId || previous.tenantId !== sessionUser.tenantId || previous.companyId !== sessionUser.companyId)) {
             apiClient.rotateRequestContext();
           }
-          userRef.current = payload.user;
-          setUser(payload.user);
+          userRef.current = sessionUser;
+          setUser(sessionUser);
           setIsLoggingOut(false);
           setError(null);
         } else {
@@ -432,9 +433,12 @@ function SessionRouteObserver({
 
 async function readProblemMessage(response: Response) {
   try {
-    const problem = await response.json() as { detail?: unknown; title?: unknown };
-    if (typeof problem.detail === "string" && problem.detail.trim()) return problem.detail;
-    if (typeof problem.title === "string" && problem.title.trim()) return problem.title;
+    const problem: unknown = await response.json();
+    if (problem && typeof problem === "object") {
+      const record = problem as Record<string, unknown>;
+      if (typeof record.detail === "string" && record.detail.trim()) return record.detail;
+      if (typeof record.title === "string" && record.title.trim()) return record.title;
+    }
   } catch {
     // The status text below remains a useful fallback for non-JSON proxy errors.
   }

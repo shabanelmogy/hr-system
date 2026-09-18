@@ -83,7 +83,7 @@ Dynamic.
 | 6 | Observability | ⬜ Planned |
 | 7 | CSP / Security Headers | ⬜ Planned |
 | 8 | E2E Testing | ✅ Completed |
-| 9 | Coverage Strategy | ⬜ Planned |
+| 9 | Coverage Strategy | ✅ Completed |
 | 10 | Dependency Upgrade Policy | ⬜ Planned |
 | 11 | Performance Budget / Measurement | ⬜ Planned |
 | 12 | CI as Definition of Done | 🟡 In Progress |
@@ -114,8 +114,8 @@ features. A failing baseline makes later regressions difficult to identify.
 - React Hook Form type regressions caused by dependency refresh were fixed in the
   shared form dialog contract rather than hidden with local casts.
 - MUI X DataGrid callback type drift was fixed in the shared grid layer.
-- `npm run type-check` passed at a previous checkpoint.
-- `npm run type-check:strict` passed at a previous checkpoint.
+- `npm run type-check` is now the single strict TypeScript gate (`strict: true`,
+  `noImplicitAny: true`) for editor, CI and production-build source.
 - `npm run lint` passed at a previous checkpoint.
 - `npm run check:architecture` passed at a previous checkpoint.
 - A production build passed after the Phase 3 Cache Components work.
@@ -612,7 +612,7 @@ deterministic Phase 8 browser suite.
 
 ---
 
-## Phase 9 — Coverage Strategy ⬜
+## Phase 9 — Coverage Strategy ✅
 
 ### Objective
 
@@ -644,6 +644,27 @@ chase an arbitrary 100% number.
 - CI publishes a repeatable coverage report.
 - Thresholds protect critical infrastructure without encouraging meaningless
   tests.
+
+### Closed baseline — 2026-09-18
+
+Coverage now uses Vitest V8 over an explicit critical-infrastructure surface:
+auth/session and company switching, BFF proxy/security routes, realtime token
+parsing, platform auth/tenant-admin response parsers, query/mutation primitives,
+shared form/grid safety helpers, module registration, route access, runtime
+preferences and safe error/return-path utilities. The first repeatable baseline
+is `80.81%` statements, `76.35%` branches, `81.54%` functions and `83.18%`
+lines across that scope.
+
+CI runs `npm run test:coverage` as the unit-test gate, publishes LCOV/JSON output,
+and fails below `79%` statements, `74%` branches, `80%` functions or `82%` lines.
+These floors deliberately sit below the observed baseline rather than targeting
+an arbitrary repository-wide percentage. The closing run passed `162/162` test
+files and `565/565` tests.
+
+Status: **Complete.** New shared or security-critical infrastructure should add
+focused regressions and remain inside the measured critical scope when it becomes
+part of the foundation contract; low-value UI tests must not be added solely to
+raise the metric.
 
 ---
 
@@ -784,7 +805,6 @@ npm.cmd run check:architecture
 npm.cmd run check:i18n
 npm.cmd run lint -- --quiet
 npm.cmd run type-check
-npm.cmd run type-check:strict
 npm.cmd run test:module-generator
 npm.cmd test
 npm.cmd run build
@@ -873,10 +893,11 @@ Use this order unless a new production-critical defect overrides it:
 
 1. Keep the completed Phase 0–7 foundation gates green while business work
    continues; do not reopen them without concrete regression evidence.
-2. Continue Phase 9 code-quality/coverage hardening based on real critical paths.
+2. Keep the completed Phase 9 strict/runtime-boundary and critical coverage gates
+   green while business work continues.
 3. Continue Phase 10 dependency majors incrementally.
-4. Extend Phase 12 CI with coverage, accessibility and the established
-   browser-security gates; Playwright E2E is already enforced.
+4. Extend Phase 12 CI with accessibility and the remaining consolidated
+   browser-security/release gates; coverage and Playwright E2E are already enforced.
 5. At Production-readiness time, run the documented authenticated CSP integration
    smoke and remove Demo Login; treat these as release gates rather than reverting
    Phase 7 to Report-Only.

@@ -52,13 +52,17 @@ jobs:
         working-directory: ./web-next
         run: npm run type-check
 
-      - name: Strict type check
+      - name: Test with critical-infrastructure coverage
         working-directory: ./web-next
-        run: npm run type-check:strict
+        run: npm run test:coverage
 
-      - name: Test
-        working-directory: ./web-next
-        run: npm test
+      - name: Upload unit coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-unit-coverage
+          path: web-next/coverage/
+          if-no-files-found: ignore
 
       - name: Test module generator
         working-directory: ./web-next

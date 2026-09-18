@@ -139,6 +139,15 @@ const directHttpViolations = [];
 const compatibilityViolations = [];
 const interactionBoundaryViolations = [];
 const navigationSafetyViolations = [];
+const codeQualityViolations = [];
+const hardenedRuntimeBoundaryFiles = new Set([
+  "lib/auth/SessionContext.tsx",
+  "app/api/auth/realtime-token/route.ts",
+  "lib/signalr/signalRService.ts",
+  "platform/auth/profile/services/userProfileService.ts",
+  "platform/tenants/tenantApi.ts",
+  "platform/tenant-admins/tenantAdminApi.ts",
+]);
 
 const guardedNavigationBypassAllowlist = new Set([
   // Session/authentication failures and logout are forced security transitions.
@@ -271,6 +280,30 @@ for (const filePath of sourceFiles) {
       if (pattern.test(source)) {
         compatibilityViolations.push(`${relativePath}: ${message}`);
       }
+    }
+  }
+  if (/\bas\s+unknown\s+as\b/.test(source)) {
+    codeQualityViolations.push(
+      `${relativePath}: chained 'as unknown as' casts are forbidden; validate/narrow the boundary or use a typed adapter`,
+    );
+  }
+  if (/\/\/\s*@ts-(?:ignore|nocheck)\b/.test(source)) {
+    codeQualityViolations.push(
+      `${relativePath}: @ts-ignore/@ts-nocheck are forbidden; model or narrow the actual contract instead`,
+    );
+  }
+  if (hardenedRuntimeBoundaryFiles.has(normalizedRelativePath)) {
+    const trustedApiResponseGeneric = /\bapiService\s*\.\s*(?:get|post|put|patch)\s*<\s*(?!unknown\b|void\b)/;
+    const trustedJsonCast = /\.json\s*\(\s*\)[^;\n]{0,32}\bas\s+(?!const\b)/;
+    if (trustedApiResponseGeneric.test(source)) {
+      codeQualityViolations.push(
+        `${relativePath}: hardened auth/platform boundaries must receive unknown (or void) and runtime-parse successful API responses`,
+      );
+    }
+    if (trustedJsonCast.test(source)) {
+      codeQualityViolations.push(
+        `${relativePath}: hardened auth/platform boundaries must not cast response.json(); parse/narrow unknown instead`,
+      );
     }
   }
   if (filePath.endsWith(".tsx") && /\b(?:apiService|apiClient)\s*\.(?:get|getBlob|post|postBlob|put|patch|delete|request|logout)\s*\(/.test(source)) {
@@ -427,7 +460,8 @@ if (
     directHttpViolations.length ||
     compatibilityViolations.length ||
     interactionBoundaryViolations.length ||
-    navigationSafetyViolations.length
+    navigationSafetyViolations.length ||
+    codeQualityViolations.length
 ) {
   if (violations.length) {
     console.error("Forbidden architecture dependencies:");
@@ -473,9 +507,13 @@ if (
     console.error("Unsafe navigation/runtime patterns:");
     for (const violation of navigationSafetyViolations) console.error(`  ${violation}`);
   }
+  if (codeQualityViolations.length) {
+    console.error("Unsafe TypeScript escape hatches:");
+    for (const violation of codeQualityViolations) console.error(`  ${violation}`);
+  }
   process.exit(1);
 }
 
 console.log(
-  "Architecture checks passed: target ownership, App Router ownership/collisions/thin adapters, public APIs, dependency direction, cycles, form validation safety, query cache consistency, lazy interaction boundaries, navigation/runtime safety, and compatibility-shim protection are clean.",
+  "Architecture checks passed: target ownership, App Router ownership/collisions/thin adapters, public APIs, dependency direction, cycles, form validation safety, query cache consistency, lazy interaction boundaries, navigation/runtime safety, TypeScript escape-hatch protection, and compatibility-shim protection are clean.",
 );

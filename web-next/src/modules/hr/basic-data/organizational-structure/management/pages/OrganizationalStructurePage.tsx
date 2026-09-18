@@ -29,6 +29,7 @@ import type {
   OrganizationalStructureItem,
   OrganizationalStructureMutation,
 } from "../types/OrganizationalStructure";
+import type { JobDescriptionDecisionValues } from "../validation/organizationalStructureSchema";
 
 const OrganizationalStructureForm = dynamic(() => import("../components/OrganizationalStructureForm"), { ssr: false });
 const JobDescriptionDecisionDialog = dynamic(() => import("../components/JobDescriptionDecisionDialog"), { ssr: false });
@@ -108,7 +109,7 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
     setDialog(null);
     setSelected(null);
   };
-  const decide = async (values: { effectiveDate: string; expiryDate: string; reason: string }) => {
+  const decide = async (values: JobDescriptionDecisionValues) => {
     if (!selected) return;
     if (dialog === "approve") {
       await approveMutation.mutateAsync({ id: selected.id, effectiveDate: values.effectiveDate, expiryDate: values.expiryDate || undefined });

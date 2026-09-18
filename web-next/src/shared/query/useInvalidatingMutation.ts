@@ -5,6 +5,19 @@ import {
   type UseMutationOptions,
 } from "@tanstack/react-query";
 
+type QueryInvalidator = {
+  invalidateQueries: (filters: { queryKey: QueryKey }) => Promise<unknown>;
+};
+
+export async function invalidateQueryKeys(
+  queryClient: QueryInvalidator,
+  invalidate: readonly QueryKey[],
+) {
+  await Promise.all(
+    invalidate.map((queryKey) => queryClient.invalidateQueries({ queryKey })),
+  );
+}
+
 /**
  * Standard mutation wrapper for online-authoritative features. Business rules
  * remain inside the feature; this helper only standardizes cache reconciliation.
@@ -23,9 +36,7 @@ export function useInvalidatingMutation<
     mutationFn,
     ...options,
     onSuccess: async (data, variables, context, mutationContext) => {
-      await Promise.all(
-        invalidate.map((queryKey) => queryClient.invalidateQueries({ queryKey })),
-      );
+      await invalidateQueryKeys(queryClient, invalidate);
       await options?.onSuccess?.(data, variables, context, mutationContext);
     },
   });

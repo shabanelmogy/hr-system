@@ -794,7 +794,6 @@ From `web-next`:
 npm.cmd run check:architecture
 npm.cmd run lint -- --quiet
 npm.cmd run type-check
-npm.cmd run type-check:strict
 npm.cmd test -- --run
 npm.cmd run build
 ```

@@ -133,7 +133,7 @@ const useProfileImage = () => {
           formData.append("Remove", "true");
         }
 
-        await apiService.put(apiRoutes.auth.updateUserPhoto, formData);
+        await apiService.put<void>(apiRoutes.auth.updateUserPhoto, formData);
 
         {
           showSuccess(

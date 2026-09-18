@@ -11,6 +11,26 @@ export type NavigationTraversalController = {
   addEventListener(type: "navigate", listener: (event: NavigationNavigateEventLike) => void): void;
   removeEventListener(type: "navigate", listener: (event: NavigationNavigateEventLike) => void): void;
 };
+
+export function asNavigationTraversalController(
+  value: unknown,
+): NavigationTraversalController | undefined {
+  if (!value || typeof value !== "object") return undefined;
+  if (!("addEventListener" in value) || typeof value.addEventListener !== "function") return undefined;
+  if (!("removeEventListener" in value) || typeof value.removeEventListener !== "function") return undefined;
+
+  const addEventListener = value.addEventListener;
+  const removeEventListener = value.removeEventListener;
+  return {
+    addEventListener(type, listener) {
+      addEventListener.call(value, type, listener);
+    },
+    removeEventListener(type, listener) {
+      removeEventListener.call(value, type, listener);
+    },
+  };
+}
+
 /** Cancel before commit without changing the history stack. */
 export function installHistoryTraversalGuard({ navigation, hasUnsavedChanges, requestDiscard }: {
   navigation?: NavigationTraversalController;

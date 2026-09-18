@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isSessionClaims } from "./session";
+import { isSessionClaims, parseSessionClaimsEnvelope } from "./session";
 
 const validSession = {
   userId: "user-id",
@@ -47,5 +47,13 @@ describe("isSessionClaims", () => {
 
   it("rejects expired sessions", () => {
     expect(isSessionClaims({ ...validSession, expiresAt: Date.now() - 1 })).toBe(false);
+  });
+});
+
+describe("parseSessionClaimsEnvelope", () => {
+  it("returns only a verified session nested under user", () => {
+    expect(parseSessionClaimsEnvelope({ user: validSession })).toEqual(validSession);
+    expect(parseSessionClaimsEnvelope({ user: { ...validSession, permissions: "Users:View" } })).toBeNull();
+    expect(parseSessionClaimsEnvelope(null)).toBeNull();
   });
 });

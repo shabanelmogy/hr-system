@@ -1210,10 +1210,9 @@ Before completing a structural change, run:
 ```powershell
 npm.cmd run check:architecture
 npm.cmd run type-check
-npm.cmd run type-check:strict
 npm.cmd run lint -- --quiet
 npm.cmd run test:module-generator
-npm.cmd test
+npm.cmd run test:coverage
 npm.cmd run build
 npm.cmd run measure:build
 ```
@@ -1225,8 +1224,55 @@ cross-owner dependencies, public APIs, import cycles, unsafe
 transformed-optional Zod schemas, manual top-level-only `MyForm` error projection,
 global disabling of stale-query refetch on mount, and static local `*Form` /
 `*Dialog` imports from feature `*Page.tsx` files that would violate the lazy
-interaction-boundary policy. Any new exception must be justified in code review
-and reflected here.
+interaction-boundary policy. It also rejects chained `as unknown as` and silent
+`@ts-ignore`/`@ts-nocheck` escape hatches. The hardened auth/session/realtime/
+profile/tenant-management boundary files additionally reject trusted non-`unknown`
+API response generics and direct `response.json()` casts. Any new exception must
+be justified in code review and reflected here.
+
+### Strict TypeScript and escape-hatch policy
+
+**Observed problem.** The frontend historically kept a relaxed `tsconfig.json`
+beside a second `tsconfig.strict.json`. Although both gates had become green, the
+split left the editor/default `tsc` policy weaker than the CI-only strict policy
+and encouraged local casts such as `as unknown as` to bridge mismatched contracts.
+
+**Root cause.** Strictness was introduced as a migration check instead of being
+promoted after the migration succeeded. A second configuration also made it
+possible for test/config files outside the narrow strict include set to avoid the
+same policy used by production source.
+
+**Decision.** `tsconfig.json` is now the single TypeScript authority with
+`strict: true` and `noImplicitAny: true`; `npm run type-check` checks the complete
+project selected by that configuration. The duplicate strict config/script/CI
+step is removed. ESLint treats explicit `any` and banned TypeScript comments as
+errors. Chained `as unknown as` casts are forbidden by the architecture gate;
+untrusted boundaries must narrow, parse, or adapt `unknown` instead.
+
+Applied examples include a runtime-narrowed Navigation API adapter, a finite MUI
+palette-token contract for shared text-field counters, a typed Zod/RHF Job
+Description decision schema, removal of the Address Types query double cast, and
+runtime parsers for session, realtime token/JWT, profile, tenant-management and
+tenant-admin response contracts.
+
+**Verification.** The full project passes the canonical strict `npm run
+type-check` and architecture checks. The Phase 9 covered suite passes `162/162`
+files and `565/565` tests. Its explicit critical-infrastructure baseline is
+`80.81%` statements, `76.35%` branches, `81.54%` functions and `83.18%` lines;
+CI floors are `79%`, `74%`, `80%` and `82%` respectively and the LCOV/JSON report
+is uploaded by the web workflow. Production build, bundle, browser E2E and
+documentation-generation checks remain part of the normal final handoff gate.
+
+**Prevention rule.** Do not add a relaxed secondary TypeScript config, explicit
+`any`, `@ts-ignore`/`@ts-nocheck`, or chained `as unknown as` to make a library/API
+boundary compile. Model the real contract, validate `unknown` at untrusted runtime
+boundaries, or add a narrow typed adapter. Prefer one project-wide strict policy
+over parallel migration configurations. At security-critical and shared platform
+response boundaries, generic TypeScript return types are not runtime validation:
+receive untrusted successful data as `unknown` and parse/narrow it before use.
+Coverage thresholds apply to the explicit critical-infrastructure inventory, not
+to every rendered component; extend that inventory when new foundation behavior
+becomes critical rather than writing metric-only tests.
 
 ## Future Change Checklist
 

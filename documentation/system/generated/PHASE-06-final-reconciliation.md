@@ -52,12 +52,12 @@ decision. A focused test pass alone is never a `Ready` decision.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | master | 8 | `f29c1f43d4c99ad67f8520f2bd4f2bc1af0abc7b40c7a9ab14e84c7d188f9952` |
-| master | 9 | `a4ffe5ca7864d7fa197622257f5d2459398648d8ec1f3d60f0ce0c56f78b4766` |
+| master | 9 | `a29964faa102da876f190755e099d8b50d1ee016ceee39ae475ca4e76dbb5a5e` |
 | master | 10 | `64c086421a3234770bf1e971f20900bfa64ba1bc6699af1ea999f74ed397ef15` |
 | api | 10 | `1101f8462765ca7e0bfd63c534f2bed36aa85d10a528bc168655e1774e01d2fc` |
 | api | 11 | `059fff9e1378472918ee0a64ec018e379c25eaa0484a4f2aa51bfe6e6ab6e266` |
 | web | 12 | `7e1719746bfe470e8b8e620c2aa6ae5618be17d388c4a6fdb1a58f9aa7d72ae8` |
-| web | 13 | `925292683f8fed347b4aa5f9293d3efa108806abd4dd474df7d04a02c0fefb14` |
+| web | 13 | `171a5082649cf26c4fb32d178a5d5fc2caeb4bd8bf235d55d81ca1238609491b` |
 | web | 14 | `80765976d54ff8e1c218832a3dbd4d3643fda41d5caa77f3878160e71213626c` |
 | mobile | 14 | `08cb057f3997117b0ae4d276616cec02b645fa8bfdff10907253644d7360112a` |
 | mobile | 15 | `7fd51151939907e42eeda66b24dcbcefc87b13a2563a2e8ee45715b98f02b0fb` |

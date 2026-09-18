@@ -3,31 +3,30 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box } from "@mui/material";
 import { useEffect } from "react";
-import { type Resolver, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { MyForm, MyTextField, toFormErrorMessages } from "@/shared/components/forms";
 import {
-  getJobDescriptionApprovalSchema,
-  getJobDescriptionRejectionSchema,
+  getJobDescriptionDecisionSchema,
+  type JobDescriptionDecisionValues,
 } from "../validation/organizationalStructureSchema";
 
 type DecisionMode = "approve" | "reject";
-interface DecisionValues { effectiveDate: string; expiryDate: string; reason: string }
 interface Props {
   open: boolean;
   mode: DecisionMode;
   loading: boolean;
   onClose: () => void;
-  onSubmit: (values: DecisionValues) => Promise<void>;
+  onSubmit: (values: JobDescriptionDecisionValues) => Promise<void>;
 }
 
 const today = () => new Date().toISOString().slice(0, 10);
 
 export default function JobDescriptionDecisionDialog({ open, mode, loading, onClose, onSubmit }: Props) {
   const { t } = useTranslation();
-  const schema = mode === "approve" ? getJobDescriptionApprovalSchema(t) : getJobDescriptionRejectionSchema(t);
-  const { control, handleSubmit, reset, formState: { errors, isDirty } } = useForm<DecisionValues>({
-    resolver: zodResolver(schema) as unknown as Resolver<DecisionValues>,
+  const schema = getJobDescriptionDecisionSchema(mode, t);
+  const { control, handleSubmit, reset, formState: { errors, isDirty } } = useForm<JobDescriptionDecisionValues>({
+    resolver: zodResolver(schema),
     defaultValues: { effectiveDate: today(), expiryDate: "", reason: "" },
   });
   useEffect(() => {

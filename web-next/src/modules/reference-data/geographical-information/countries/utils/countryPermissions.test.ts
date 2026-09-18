@@ -20,7 +20,13 @@ describe("country action guards", () => {
   });
 
   it("fails closed when the permission is absent", () => {
-    const none = Object.fromEntries(Object.keys(all).map((key) => [key, false])) as unknown as CountryPermissionSet;
+    const none: CountryPermissionSet = {
+      canView: false,
+      canCreate: false,
+      canEdit: false,
+      canDelete: false,
+      canRestore: false,
+    };
     expect(canRunCountryAction("view", none)).toBe(false);
     expect(canRunCountryAction("create", none)).toBe(false);
     expect(canRunCountryAction("edit", none, { isDeleted: false })).toBe(false);

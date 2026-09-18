@@ -8,7 +8,7 @@ const options = {
   errorColor: "error",
   warningThreshold: 70,
   errorThreshold: 90,
-};
+} as const;
 
 describe("character counter", () => {
   it("calculates the current, remaining, and percentage values", () => {

@@ -6,29 +6,49 @@ import type {
   TenantManagementResponse,
 } from "./types";
 import type { ManagementPageQuery, ManagementPageResponse } from "@/lib/api/pagination";
+import {
+  parseTenantArrayResponse,
+  parseTenantDashboardSummaryResponse,
+  parseTenantPageResponse,
+  parseTenantResponse,
+} from "./tenantApiSchemas";
 
 export { tenantKeys } from "./tenantQueryKeys";
 
 export const tenantApi = {
-  getPage: (query: ManagementPageQuery) =>
-    apiService.get<ManagementPageResponse<TenantManagementResponse>>(
+  getPage: async (query: ManagementPageQuery): Promise<ManagementPageResponse<TenantManagementResponse>> => {
+    const response = await apiService.get<unknown>(
       apiRoutes.tenants.getPage,
       { ...query },
-    ),
-  getAll: () =>
-    apiService.get<TenantManagementResponse[]>(apiRoutes.tenants.getAll),
-  getDashboardSummary: () =>
-    apiService.get<TenantDashboardSummaryResponse>(apiRoutes.tenants.getDashboardSummary),
-  create: (request: TenantManagementRequest) =>
-    apiService.post<TenantManagementResponse>(apiRoutes.tenants.create, request),
-  update: (id: string, request: TenantManagementRequest) =>
-    apiService.put<TenantManagementResponse>(apiRoutes.tenants.update(id), request),
-  archive: (id: string, reason: string, rowVersion: string, purgeScheduledOn?: string) =>
-    apiService.post<TenantManagementResponse>(apiRoutes.tenants.archive(id), {
+    );
+    return parseTenantPageResponse(response);
+  },
+  getAll: async (): Promise<TenantManagementResponse[]> => {
+    const response = await apiService.get<unknown>(apiRoutes.tenants.getAll);
+    return parseTenantArrayResponse(response);
+  },
+  getDashboardSummary: async (): Promise<TenantDashboardSummaryResponse> => {
+    const response = await apiService.get<unknown>(apiRoutes.tenants.getDashboardSummary);
+    return parseTenantDashboardSummaryResponse(response);
+  },
+  create: async (request: TenantManagementRequest): Promise<TenantManagementResponse> => {
+    const response = await apiService.post<unknown>(apiRoutes.tenants.create, request);
+    return parseTenantResponse(response);
+  },
+  update: async (id: string, request: TenantManagementRequest): Promise<TenantManagementResponse> => {
+    const response = await apiService.put<unknown>(apiRoutes.tenants.update(id), request);
+    return parseTenantResponse(response);
+  },
+  archive: async (id: string, reason: string, rowVersion: string, purgeScheduledOn?: string): Promise<TenantManagementResponse> => {
+    const response = await apiService.post<unknown>(apiRoutes.tenants.archive(id), {
       reason,
       rowVersion,
       purgeScheduledOn: purgeScheduledOn ?? null,
-    }),
-  restore: (id: string, rowVersion: string) =>
-    apiService.post<TenantManagementResponse>(apiRoutes.tenants.restore(id), { rowVersion }),
+    });
+    return parseTenantResponse(response);
+  },
+  restore: async (id: string, rowVersion: string): Promise<TenantManagementResponse> => {
+    const response = await apiService.post<unknown>(apiRoutes.tenants.restore(id), { rowVersion });
+    return parseTenantResponse(response);
+  },
 };

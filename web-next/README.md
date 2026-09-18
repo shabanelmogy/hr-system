@@ -37,10 +37,9 @@ The application uses the applied `src/platform`, `src/modules`, `src/shell` and
 ```bash
 npm run check:architecture
 npm run type-check
-npm run type-check:strict
 npm run lint -- --quiet
 npm run test:module-generator
-npm test
+npm run test:coverage
 npm run build
 npm run measure:build
 ```

@@ -5,6 +5,7 @@ import {
   getSignalRRestartDelayMs,
   signalRDiagnostics,
 } from "./signalRDiagnostics";
+import { getJwtExpiration, parseRealtimeTokenPayload } from "./realtimeToken";
 
 const TOKEN_EXPIRY_BUFFER_MS = 30_000;
 
@@ -202,8 +203,9 @@ class SignalRService {
       throw new Error(`Realtime token request failed with status ${response.status}`);
     }
 
-    const payload = (await response.json()) as { token?: unknown };
-    if (typeof payload.token !== "string" || !payload.token) {
+    const payload: unknown = await response.json();
+    const realtimeToken = parseRealtimeTokenPayload(payload);
+    if (!realtimeToken) {
       throw new Error("Realtime token response did not contain a token");
     }
 
@@ -215,10 +217,10 @@ class SignalRService {
     }
 
     this.cachedToken = {
-      value: payload.token,
-      expiresAt: getJwtExpiration(payload.token),
+      value: realtimeToken,
+      expiresAt: getJwtExpiration(realtimeToken),
     };
-    return payload.token;
+    return realtimeToken;
   }
 
   private scheduleRestart() {
@@ -254,20 +256,6 @@ class SignalRLogger implements signalR.ILogger {
   log(logLevel: signalR.LogLevel, message: string): void {
     if (logLevel < signalR.LogLevel.Warning) return;
     signalRDiagnostics.report("library", message);
-  }
-}
-
-function getJwtExpiration(token: string): number {
-  try {
-    const encodedPayload = token.split(".")[1];
-    if (!encodedPayload) return 0;
-
-    const normalized = encodedPayload.replace(/-/g, "+").replace(/_/g, "/");
-    const padding = "=".repeat((4 - (normalized.length % 4)) % 4);
-    const payload = JSON.parse(atob(normalized + padding)) as { exp?: unknown };
-    return typeof payload.exp === "number" ? payload.exp * 1_000 : 0;
-  } catch {
-    return 0;
   }
 }
 

@@ -1,5 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
-import { installHistoryTraversalGuard, type NavigationNavigateEventLike, type NavigationTraversalController } from "./historyTraversalGuard";
+import {
+  asNavigationTraversalController,
+  installHistoryTraversalGuard,
+  type NavigationNavigateEventLike,
+  type NavigationTraversalController,
+} from "./historyTraversalGuard";
 function setup() {
   let listener: ((e: NavigationNavigateEventLike) => void) | undefined;
   let resolve!: (v: boolean) => void;
@@ -33,6 +38,25 @@ function setup() {
   return { emit, visited, navigation, requestDiscard, dispose, decide: (v: boolean) => resolve(v), clean: () => { dirty = false; } };
 }
 describe("precommit history guard", () => {
+  it("adapts only navigation-like runtime values without a chained cast", () => {
+    const addEventListener = vi.fn();
+    const removeEventListener = vi.fn();
+    const source = { addEventListener, removeEventListener };
+    const navigation = asNavigationTraversalController(source);
+    const listener = vi.fn();
+
+    expect(navigation).toBeDefined();
+    navigation?.addEventListener("navigate", listener);
+    navigation?.removeEventListener("navigate", listener);
+    expect(addEventListener).toHaveBeenCalledWith("navigate", listener);
+    expect(removeEventListener).toHaveBeenCalledWith("navigate", listener);
+  });
+
+  it("rejects incomplete Navigation API values", () => {
+    expect(asNavigationTraversalController(undefined)).toBeUndefined();
+    expect(asNavigationTraversalController({ addEventListener() {} })).toBeUndefined();
+  });
+
   it("blocks repeated traversal with one dialog and cancels without visiting either destination", async () => {
     const s = setup(); const first = s.emit("B"); const second = s.emit("A");
     expect(s.requestDiscard).toHaveBeenCalledTimes(1); expect(s.visited).toEqual([]);

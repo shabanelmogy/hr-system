@@ -1,15 +1,23 @@
+export type CounterPaletteColor =
+  | "primary"
+  | "secondary"
+  | "error"
+  | "warning"
+  | "info"
+  | "success";
+
 export type CharacterCount = {
   count: number;
   percentage: number;
-  color: string;
+  color: CounterPaletteColor;
   remaining?: number;
 };
 
 type CharacterCountOptions = {
   maxLength?: number;
-  normalColor: string;
-  warningColor: string;
-  errorColor: string;
+  normalColor: CounterPaletteColor;
+  warningColor: CounterPaletteColor;
+  errorColor: CounterPaletteColor;
   warningThreshold: number;
   errorThreshold: number;
 };

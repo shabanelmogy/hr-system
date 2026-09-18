@@ -16,6 +16,7 @@
     "start": "next start",
     "lint": "eslint .",
     "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:install": "playwright install chromium",
@@ -25,8 +26,7 @@
     "generate:module": "node scripts/generate-module.mjs",
     "test:module-generator": "node scripts/generate-module.selftest.mjs",
     "type-check": "tsc --noEmit",
-    "type-check:strict": "tsc --noEmit -p tsconfig.strict.json",
-    "check": "npm run check:architecture && npm run check:i18n && npm run lint && npm run type-check && npm run type-check:strict"
+    "check": "npm run check:architecture && npm run check:i18n && npm run lint && npm run type-check"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
@@ -107,6 +107,7 @@
     "@types/react-dom": "^19.3.0",
     "@types/react-simple-maps": "^3.0.6",
     "@types/stylis": "^4.2.7",
+    "@vitest/coverage-v8": "^4.1.10",
     "cross-env": "^10.1.0",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.3.5",

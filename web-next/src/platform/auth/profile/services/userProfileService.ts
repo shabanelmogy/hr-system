@@ -1,36 +1,14 @@
 import apiService from "@/shared/services/apiService";
 import { apiRoutes } from "@/config";
+import { parseSessionClaimsEnvelope } from "@/lib/auth/session";
+import { parseUserInfoResponse, parseUserPhotoResponse } from "./userProfileResponse";
+import type { CompleteUserProfile, UserInfo, UserPhoto } from "./userProfileTypes";
+
+export type { CompleteUserProfile, UserInfo, UserPhoto } from "./userProfileTypes";
 
 /**
  * Simplified User Profile Service
  */
-export interface UserInfo {
-  id?: string;
-  firstName?: string;
-  lastName?: string;
-  userName?: string;
-  email?: string;
-  roles?: string[];
-  permissions?: string[];
-  profilePicture?: string | null;
-}
-
-export interface CompleteUserProfile extends UserInfo {
-  id: string;
-  userName: string;
-  email: string;
-  roles: string[];
-  permissions: string[];
-  firstName: string;
-  lastName: string;
-  profilePicture: string | null;
-}
-
-export interface UserPhoto {
-  profilePicture?: string;
-  contentType?: string;
-}
-
 export const getUserPhotoDataUrl = (photo?: UserPhoto | null) => {
   if (!photo?.profilePicture) return undefined;
   if (photo.profilePicture.startsWith("data:")) return photo.profilePicture;
@@ -43,21 +21,23 @@ class UserProfileService {
    * Get user info from API
    */
   static async getUserInfo(): Promise<UserInfo> {
-    return await apiService.get(apiRoutes.auth.getUserInfo);
+    const response = await apiService.get<unknown>(apiRoutes.auth.getUserInfo);
+    return parseUserInfoResponse(response);
   }
 
   /**
    * Get user photo from API
    */
   static async getUserPhoto(): Promise<UserPhoto> {
-    return await apiService.get(apiRoutes.auth.getUserPhoto);
+    const response = await apiService.get<unknown>(apiRoutes.auth.getUserPhoto);
+    return parseUserPhotoResponse(response);
   }
 
   /**
    * Update user information
    */
   static async updateUserInfo(userData: UserInfo) {
-    return apiService.put(apiRoutes.auth.updateUserInfo, userData);
+    return apiService.put<void>(apiRoutes.auth.updateUserInfo, userData);
   }
 
   /**
@@ -71,7 +51,7 @@ class UserProfileService {
       formData.append("Remove", "true");
     }
 
-    return await apiService.put(apiRoutes.auth.updateUserPhoto, formData);
+    return await apiService.put<void>(apiRoutes.auth.updateUserPhoto, formData);
   }
 
   /**
@@ -82,7 +62,11 @@ class UserProfileService {
     if (!sessionResponse.ok) {
       throw new Error("User not authenticated");
     }
-    const { user } = await sessionResponse.json();
+    const sessionPayload: unknown = await sessionResponse.json();
+    const user = parseSessionClaimsEnvelope(sessionPayload);
+    if (!user) {
+      throw new Error("Invalid authenticated session response");
+    }
     const profile: CompleteUserProfile = {
       id: user.userId || "",
       userName: user.userName || "",

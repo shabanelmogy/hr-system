@@ -18,7 +18,7 @@ function requestBody(request: CreateAddressTypeRequest): CreateAddressTypeReques
 
 export class AddressTypeService {
   static getPage(query: AddressTypePageQuery): Promise<AddressTypePageResponse> {
-    return apiService.get<AddressTypePageResponse>(apiRoutes.addressTypes.page, query as unknown as Record<string, unknown>);
+    return apiService.get<AddressTypePageResponse>(apiRoutes.addressTypes.page, { ...query });
   }
   static getLookup(): Promise<AddressTypeLookup[]> { return apiService.get<AddressTypeLookup[]>(apiRoutes.addressTypes.lookup); }
   static getById(id: string | number): Promise<AddressTypeDetail> { return apiService.get<AddressTypeDetail>(apiRoutes.addressTypes.getById(id)); }

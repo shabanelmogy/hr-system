@@ -76,6 +76,12 @@ export function isSessionClaims(value: unknown): value is SessionClaims {
   );
 }
 
+export function parseSessionClaimsEnvelope(value: unknown): SessionClaims | null {
+  if (!value || typeof value !== "object") return null;
+  const user = (value as Record<string, unknown>).user;
+  return isSessionClaims(user) ? user : null;
+}
+
 function isCompanyOptions(
   value: unknown,
   currentCompanyId: number | undefined,

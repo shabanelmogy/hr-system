@@ -7,12 +7,13 @@ const eslintConfig = [
   {
     ignores: [
       ".next/**",
+      "coverage/**",
       "node_modules/**",
       "out/**"
     ],
     rules: {
-      "@typescript-eslint/no-explicit-any": "warn",
-      "@typescript-eslint/ban-ts-comment": "warn",
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/ban-ts-comment": "error",
       "@typescript-eslint/no-duplicate-enum-values": "warn",
       "prefer-const": "warn",
       "react/display-name": "warn",

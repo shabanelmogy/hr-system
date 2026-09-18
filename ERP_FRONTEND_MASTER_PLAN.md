@@ -110,7 +110,6 @@ Examples already addressed:
 
 ```bash
 npm run type-check
-npm run type-check:strict
 npm run lint
 npm run check:architecture
 npm test
@@ -526,7 +525,6 @@ hydration mismatch
 
 ```bash
 npm run type-check
-npm run type-check:strict
 npm run lint
 npm run check:architecture
 npm test
@@ -1127,7 +1125,7 @@ or a persistent customer database.
 
 ---
 
-# Phase 9 — TypeScript & Code Quality 🟡
+# Phase 9 — TypeScript & Code Quality ✅
 
 ## Objective
 
@@ -1135,14 +1133,16 @@ Gradually move toward a stricter and safer ERP codebase.
 
 ## 9.1 Strict TypeScript baseline
 
-Keep both:
+Use one canonical strict gate:
 
 ```bash
 npm run type-check
-npm run type-check:strict
 ```
 
-until strict mode can become the normal default.
+`tsconfig.json` now has `strict: true` and `noImplicitAny: true`, so the normal
+editor, CI and production-build configuration all share the same strict baseline.
+The temporary `tsconfig.strict.json` migration gate has been removed rather than
+keeping two divergent TypeScript policies.
 
 ## 9.2 Remove unsafe escape hatches
 
@@ -1168,9 +1168,44 @@ narrowing
 
 Keep strengthening architecture rules when new violation categories appear.
 
+## Closure — 2026-09-18
+
+Phase 9 is closed with one strict compile-time policy plus explicit runtime
+validation at the highest-risk frontend trust boundaries:
+
+- strict TypeScript is the normal `tsconfig.json` baseline for the whole project;
+- the duplicate `type-check:strict` script/configuration and CI step were removed;
+- ESLint now treats explicit `any` and banned TypeScript comments as errors;
+- all existing `as unknown as` chains were removed from source/tests;
+- shared character-counter palette tokens are a typed finite contract instead of
+  arbitrary strings;
+- the browser Navigation API boundary is runtime-narrowed through a typed adapter
+  rather than trusted through a chained cast;
+- the Job Description approval/rejection resolver now uses one typed Zod schema
+  contract instead of overriding React Hook Form's resolver type;
+- the Address Types page query now passes a normal typed object to the API client;
+- `check:architecture` rejects chained `as unknown as` escape hatches so they do
+  not return unnoticed;
+- session, realtime-token/JWT, profile, tenant-management and tenant-admin
+  successful responses are now received as `unknown` and narrowed or Zod-parsed
+  before entering trusted application state;
+- management-page response metadata has one shared runtime schema instead of
+  repeated trusted generic envelopes;
+- the architecture gate now protects the hardened auth/platform boundary files
+  from returning to trusted response generics or `response.json()` casts;
+- coverage is measured against an explicit critical-infrastructure scope rather
+  than all visual source. The reliable baseline is `80.81%` statements,
+  `76.35%` branches, `81.54%` functions and `83.18%` lines; CI fails below
+  `79% / 74% / 80% / 82%` respectively and publishes the LCOV/JSON report;
+- the complete covered Vitest run passes `162/162` files and `565/565` tests.
+
+Low-risk feature DTOs are not required to be rewritten merely to inflate this
+phase. New or materially changed untrusted boundaries must continue the
+`unknown` + parse/narrow rule under normal architecture governance.
+
 ## Status
 
-🟠 **Partially established; long-term hardening remains**
+✅ **Complete — strict baseline, critical runtime parsing and coverage regression gates closed**
 
 ---
 
@@ -1524,8 +1559,7 @@ npm run check:architecture
 npm run check:i18n
 npm run lint
 npm run type-check
-npm run type-check:strict
-npm test
+npm run test:coverage
 npm run build
 ```
 
@@ -1537,12 +1571,13 @@ Documentation gate when architecture/contracts/manifests change:
 
 Current CI now also enforces:
 
+- baseline-derived critical-infrastructure coverage thresholds and publishes a
+  repeatable LCOV/JSON coverage artifact;
 - Playwright E2E after the production build, using deterministic browser/BFF
   fixtures and Chromium desktop/mobile projects.
 
 Future gates:
 
-- coverage thresholds;
 - bundle-size regression limits;
 - dependency/security audit;
 - generated documentation consistency.
@@ -1662,7 +1697,7 @@ Correctness
 | Phase 6 — Observability | ✅ Complete — deployment smoke remains a production release gate |
 | Phase 7 — CSP/browser security | ✅ Complete — enforced CSP active; authenticated deployment smoke remains a release gate |
 | Phase 8 — E2E/testing depth | ✅ Complete — Playwright critical journeys run in CI |
-| Phase 9 — TypeScript/code quality | 🟠 Ongoing |
+| Phase 9 — TypeScript/code quality | ✅ Complete |
 | Phase 10 — Dependency strategy | 🟠 Baseline done |
 | Phase 11 — Performance engineering | ✅ Cross-route/runtime baseline complete |
 | Phase 12 — CI quality gates | 🟠 Partial |
@@ -1679,15 +1714,14 @@ baseline are closed. The latest architecture pass also restored a fully green
 instead of broad barrels.
 
 The remaining hardening work is independent and can proceed in parallel with ERP
-business functionality. Phase 6, Phase 7 and Phase 8 source work are closed; the
+business functionality. Phase 6, Phase 7, Phase 8 and Phase 9 source work are closed; the
 Phase 6/7 real
 Collector/dashboard/alert and authenticated CSP integration smoke checks now
 belong to the production release gate:
 
-1. **Phase 9 — TypeScript/code quality:** continue reducing unsafe escape hatches
-   while preserving the already-green normal/strict type gates.
-2. **Phase 12 — CI quality gates:** continue with coverage/accessibility policy;
-   Playwright E2E is already enforced after the production build.
+1. **Phase 12 — CI quality gates:** continue with accessibility and the remaining
+   consolidated release-policy work; unit coverage thresholds and Playwright E2E
+   are already enforced in CI.
 
 At Production-readiness time, also run authenticated browser smoke for the real
 Google popup, SignalR connection, reports/PDF viewers, file/media previews,
