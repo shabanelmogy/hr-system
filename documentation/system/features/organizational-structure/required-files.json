@@ -188,8 +188,8 @@
     {
       "id": "web-route-index",
       "layer": "web",
-      "path": "web-next/src/app/(main)/basic-data/organizational-structure/(hr)/page.tsx",
-      "purpose": "Organizational Structure index redirect to Branches"
+      "path": "web-next/next.config.ts",
+      "purpose": "Pre-render Organizational Structure index redirect to Branches"
     },
     {
       "id": "web-page-branches",
@@ -274,12 +274,6 @@
       "layer": "web",
       "path": "web-next/src/modules/hr/basic-data/organizational-structure/management/components/import-view/import-utils.ts",
       "purpose": "Resource-specific import headers and dependency mapping"
-    },
-    {
-      "id": "web-legacy-route",
-      "layer": "web",
-      "path": "web-next/src/app/(main)/basic-data/organizational-structure/(hr)/manage/page.tsx",
-      "purpose": "Legacy management URL redirect to Branches"
     },
     {
       "id": "web-api-routes",

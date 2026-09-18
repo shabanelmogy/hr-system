@@ -1,9 +1,11 @@
 import * as signalR from "@microsoft/signalr";
 import { SESSION_CHANGED_EVENT } from "@/lib/auth/constants";
 import { resolveSignalRHubUrl } from "./signalRHubUrl";
+import {
+  getSignalRRestartDelayMs,
+  signalRDiagnostics,
+} from "./signalRDiagnostics";
 
-const SIGNALR_TAG = "[SignalR]";
-const RESTART_DELAY_MS = 5_000;
 const TOKEN_EXPIRY_BUFFER_MS = 30_000;
 
 type SignalRCallback = (...args: unknown[]) => void;
@@ -19,6 +21,7 @@ class SignalRService {
   private cachedToken: { value: string; expiresAt: number } | null = null;
   private tokenPromise: Promise<string> | null = null;
   private tokenVersion = 0;
+  private restartAttempt = 0;
 
   constructor(hubUrl: string) {
     const options: signalR.IHttpConnectionOptions = {
@@ -39,16 +42,26 @@ class SignalRService {
       .configureLogging(new SignalRLogger())
       .build();
 
-    this.connection.onreconnecting(() => this.notifyState(false, true));
-    this.connection.onreconnected(() => this.notifyState(true, false));
-    this.connection.onclose(() => {
+    this.connection.onreconnecting((error) => {
+      this.notifyState(false, true);
+      signalRDiagnostics.report("reconnecting", error);
+    });
+    this.connection.onreconnected(() => {
+      this.restartAttempt = 0;
+      this.notifyState(true, false);
+    });
+    this.connection.onclose((error) => {
       this.notifyState(false, false);
+      if (error) signalRDiagnostics.report("closed", error);
       if (!this.intentionallyStopped) this.scheduleRestart();
     });
 
     if (typeof window !== "undefined") {
       window.addEventListener("online", () => {
-        if (this.enabled) void this.start();
+        if (this.enabled) {
+          this.restartAttempt = 0;
+          void this.start();
+        }
       });
       window.addEventListener("auth:logout", () => void this.setEnabled(false));
     }
@@ -67,6 +80,8 @@ class SignalRService {
     this.tokenVersion += 1;
     this.cachedToken = null;
     this.tokenPromise = null;
+    this.restartAttempt = 0;
+    signalRDiagnostics.reset();
     await this.stop();
   }
 
@@ -143,11 +158,12 @@ class SignalRService {
   private async startConnection(): Promise<boolean> {
     try {
       await this.connection.start();
+      this.restartAttempt = 0;
       this.notifyState(true, false);
       return true;
     } catch (error) {
       this.notifyState(false, false);
-      console.warn(`${SIGNALR_TAG} Connection delayed: ${getErrorMessage(error)}`);
+      signalRDiagnostics.report("start", error);
       if (!this.intentionallyStopped) this.scheduleRestart();
       return false;
     }
@@ -215,10 +231,12 @@ class SignalRService {
       return;
     }
 
+    const delay = getSignalRRestartDelayMs(this.restartAttempt);
+    this.restartAttempt += 1;
     this.restartTimer = setTimeout(() => {
       this.restartTimer = null;
       void this.start();
-    }, RESTART_DELAY_MS);
+    }, delay);
   }
 
   private clearRestartTimer() {
@@ -235,15 +253,8 @@ class SignalRService {
 class SignalRLogger implements signalR.ILogger {
   log(logLevel: signalR.LogLevel, message: string): void {
     if (logLevel < signalR.LogLevel.Warning) return;
-
-    // Keep recoverable connection warnings visible without turning them into a
-    // Next.js console-error overlay.
-    console.warn(`${SIGNALR_TAG} ${message}`);
+    signalRDiagnostics.report("library", message);
   }
-}
-
-function getErrorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error);
 }
 
 function getJwtExpiration(token: string): number {

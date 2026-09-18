@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { resolveSession } from "@/lib/auth/backend-session";
 import { readAuthTokens, setAuthCookies } from "@/lib/auth/cookies";
 import { resolveRequestBackendUrl } from "@/lib/env/server";
+import { annotateActiveVerifiedSessionScope } from "@/lib/observability/serverTelemetry";
 
 export async function GET(request: NextRequest) {
   const { accessToken, refreshToken } = readAuthTokens(request.cookies);
@@ -27,6 +28,8 @@ export async function GET(request: NextRequest) {
       { status: 401, headers: { "cache-control": "no-store" } },
     );
   }
+
+  annotateActiveVerifiedSessionScope(resolved.session);
 
   const response = NextResponse.json(
     { isAuthenticated: true, user: resolved.session },

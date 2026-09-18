@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   DEFAULT_RUNTIME_PREFERENCES,
+  reconcileRuntimePreferences,
   resolveRuntimePreferences,
 } from "./runtime-preferences";
 
@@ -37,6 +38,28 @@ describe("runtime preferences", () => {
       language: "en",
       direction: "ltr",
       themeMode: "light",
+    });
+  });
+
+  it("prefers newer browser cookies over a stale streamed server snapshot", () => {
+    expect(reconcileRuntimePreferences(
+      { language: "en", direction: "ltr", themeMode: "light" },
+      "i18next=ar; currentMode=dark",
+    )).toEqual({
+      language: "ar",
+      direction: "rtl",
+      themeMode: "dark",
+    });
+  });
+
+  it("falls back to the streamed preferences when client cookies are absent", () => {
+    expect(reconcileRuntimePreferences(
+      { language: "ar", direction: "rtl", themeMode: "dark" },
+      "unrelated=value",
+    )).toEqual({
+      language: "ar",
+      direction: "rtl",
+      themeMode: "dark",
     });
   });
 });

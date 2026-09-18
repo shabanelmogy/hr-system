@@ -82,7 +82,7 @@ Dynamic.
 | 5 | React 19 / Client Architecture Correctness | ⬜ Planned |
 | 6 | Observability | ⬜ Planned |
 | 7 | CSP / Security Headers | ⬜ Planned |
-| 8 | E2E Testing | ⬜ Planned |
+| 8 | E2E Testing | ✅ Completed |
 | 9 | Coverage Strategy | ⬜ Planned |
 | 10 | Dependency Upgrade Policy | ⬜ Planned |
 | 11 | Performance Budget / Measurement | ⬜ Planned |
@@ -456,7 +456,7 @@ Make production failures diagnosable without leaking secrets or personal data.
 
 ---
 
-## Phase 7 — CSP / Security Headers ⬜
+## Phase 7 — CSP / Security Headers ✅
 
 ### Objective
 
@@ -493,9 +493,45 @@ Current Next.js configuration already emits:
 - Policy does not use unnecessary broad wildcards.
 - Auth, SignalR, reporting, and UI styling continue to work.
 
+### Applied and enforced — 2026-09-17
+
+- Centralized CSP generation now emits enforced `Content-Security-Policy`.
+- The initial inventory covers Google Identity Services, configured report/API
+  frames, production SignalR, Syncfusion PDF runtime resources, browser-created
+  blob/data media, and local fonts without broad host wildcards.
+- A bounded same-origin CSP report endpoint normalizes legacy and Reporting API
+  payloads and never retains full document/source/blocked URLs or query strings.
+- `Reporting-Endpoints` is emitted only with a secure configured public web
+  origin; `report-uri` remains the compatibility fallback.
+- Nonce CSP was deliberately not introduced because the installed Next `16.3.5`
+  runtime documents per-request nonces as incompatible with PPR.
+- Google popup compatibility uses `Cross-Origin-Opener-Policy:
+  same-origin-allow-popups`.
+- A real Chrome HTTPS smoke loaded the login surface, Next runtime,
+  MUI/Emotion-generated styles and the Google GIS script under enforcement without
+  an observed CSP block. The collector also accepted an `enforce` report while
+  retaining only its normalized directive/source classification and external
+  origin.
+- The production `next start` response has the enforced header, no Report-Only
+  header, no `'unsafe-eval'`, no development-wide WebSocket schemes and does have
+  `upgrade-insecure-requests`.
+- Focused browser-security tests pass `12/12`; the full frontend suite passes
+  `155/155` files and `542/542` tests. TypeScript normal/strict, architecture,
+  i18n, lint, module-generator and dependency audit are green.
+- The production build succeeds for `68/68` pages. Application routes remain PPR
+  (`◐`), `/api/security/csp-report` remains dynamic (`ƒ`), and bundle budgets
+  remain green, proving enforcement did not trade away the Phase 3 runtime model.
+
+Status: **Complete at source/runtime-policy level. Authenticated smoke against real
+deployment SignalR, reporting/PDF, file/media, Hangfire and external-frame data is
+a Production release gate because it requires the target environment and valid
+representative session/data. Any confirmed violation must be remediated through
+the bounded central allowlist, never with a wildcard. Demo Login remains a separate
+Production-readiness removal action.**
+
 ---
 
-## Phase 8 — E2E Testing ⬜
+## Phase 8 — E2E Testing ✅
 
 ### Objective
 
@@ -537,6 +573,30 @@ Start with:
 This gives coverage across multiple ownership boundaries instead of testing only
 one module.
 
+### Applied closure — 2026-09-18
+
+- `@playwright/test` is a direct development dependency with explicit E2E scripts
+  and `playwright.config.ts`.
+- The deterministic upstream fixture runs locally and in CI through the real Next
+  BFF/cookie/session path; no production credentials or persistent customer data
+  are required.
+- The suite contains `21` browser tests and covers login/Demo Login,
+  tenant/company selection, module launcher, permission guards, company switch,
+  refresh/expiry/logout, `403`, `404`, `503`, RTL, mobile authenticated smoke,
+  unsaved browser traversal, Back/Forward/hard refresh and PPR/Instant Navigation.
+- Countries provides list/search/validation/create/update/API-failure coverage;
+  Fiscal Years provides a second create/update path through the shared tenant
+  form pattern; Appointments and HR provide representative cross-owner browser
+  smoke.
+- Company-context tests prove the server session is revalidated and stale
+  company-scoped business data is not exposed after the switch.
+- Vitest explicitly excludes `e2e/**`, so unit/integration and browser suites are
+  owned by separate runners.
+- Web CI installs Chromium after the production build, runs `npm run test:e2e`,
+  and uploads `playwright-report/` / `test-results/` on failure.
+- Final closure evidence: production build `68/68`; Vitest `155/155` files and
+  `544/544` tests; CI-mode Playwright `21/21` against `next start`.
+
 ### Exit criteria
 
 - Critical authenticated user journey runs in CI.
@@ -544,6 +604,11 @@ one module.
   protection.
 - At least one representative CRUD flow exists for major frontend ownership
   patterns.
+
+Status: **Complete at source/CI level.** Production deployment-specific Google,
+SignalR, reporting/PDF/file and external-frame smoke remains part of the separate
+production release gate; it is not a reason to use production credentials in the
+deterministic Phase 8 browser suite.
 
 ---
 
@@ -705,7 +770,6 @@ the existing pipeline green and make it the Definition of Done.
 
 ### Planned additions after baseline stabilization
 
-- Playwright E2E smoke suite.
 - Coverage reporting/thresholds.
 - Accessibility smoke checks for critical routes.
 - Optional Web Vitals/performance regression evidence where stable enough for CI.
@@ -725,6 +789,7 @@ npm.cmd run test:module-generator
 npm.cmd test
 npm.cmd run build
 npm.cmd run measure:build
+npm.cmd run test:e2e
 ```
 
 Documentation-affecting changes must also pass the centralized documentation
@@ -806,17 +871,15 @@ src/lib/signalr/signalRService.ts
 
 Use this order unless a new production-critical defect overrides it:
 
-1. Finish Phase 3 root `/` Instant Navigation correction.
-2. Re-establish Phase 0 full green baseline on the current tree.
-3. Record a clean Phase 11 performance baseline.
-4. Execute Phase 4 bundle/client-runtime reduction using measurement evidence.
-5. Execute Phase 5 React 19/client correctness cleanup.
-6. Add Phase 6 observability foundations needed for production diagnosis.
-7. Roll out Phase 7 CSP in Report-Only and then enforced mode.
-8. Add Phase 8 Playwright critical journeys.
-9. Add Phase 9 coverage policy based on real critical paths.
-10. Continue Phase 10 dependency majors incrementally.
-11. Extend Phase 12 CI with E2E, coverage, and accessibility gates.
+1. Keep the completed Phase 0–7 foundation gates green while business work
+   continues; do not reopen them without concrete regression evidence.
+2. Continue Phase 9 code-quality/coverage hardening based on real critical paths.
+3. Continue Phase 10 dependency majors incrementally.
+4. Extend Phase 12 CI with coverage, accessibility and the established
+   browser-security gates; Playwright E2E is already enforced.
+5. At Production-readiness time, run the documented authenticated CSP integration
+   smoke and remove Demo Login; treat these as release gates rather than reverting
+   Phase 7 to Report-Only.
 
 The roadmap should be updated after each phase so it remains the current source
 of execution status rather than a historical checklist.

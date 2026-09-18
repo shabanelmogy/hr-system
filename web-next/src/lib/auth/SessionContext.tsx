@@ -13,6 +13,7 @@ import { SessionRequestState } from "./session-request-state";
 import { auth as authRoutes } from "@/config/api/auth";
 import { verifyTargetCompany } from "./company-switch-verification";
 import { appRoutes } from "@/config/routes";
+import { reportSessionRevalidationFailure } from "@/lib/observability/clientTelemetry";
 
 const sessionRevalidationIntervalMs = 5 * 60_000;
 const sessionExpiryBufferMs = 30_000;
@@ -108,6 +109,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         if (!response.ok) {
           if (refreshStateRef.current!.isCurrent(requestGeneration)) {
             revalidationResultRef.current = "error";
+            reportSessionRevalidationFailure("unavailable");
             const currentPathname = pathnameRef.current;
             setError(`Server error: ${response.status}`);
             if (!suppressFailureRedirect && !userRef.current && currentPathname !== UNAVAILABLE_ROUTE) {
@@ -131,6 +133,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
           setError(null);
         } else {
           revalidationResultRef.current = "invalid";
+          reportSessionRevalidationFailure("invalid");
           const currentPathname = pathnameRef.current;
           setError("Invalid session data");
           userRef.current = null;
@@ -143,6 +146,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         // Network errors - don't clear user
         if (refreshStateRef.current!.isCurrent(requestGeneration)) {
           revalidationResultRef.current = "error";
+          reportSessionRevalidationFailure(classifySessionTransportFailure(err));
           const currentPathname = pathnameRef.current;
           setError(err instanceof Error ? err.message : "Network error");
           if (!suppressFailureRedirect && !userRef.current && currentPathname !== UNAVAILABLE_ROUTE) {
@@ -441,6 +445,17 @@ function unavailableUrlWithReturnTo() {
   if (typeof window === "undefined") return UNAVAILABLE_ROUTE;
   const returnTo = `${window.location.pathname}${window.location.search}`;
   return `${UNAVAILABLE_ROUTE}?reason=service&returnTo=${encodeURIComponent(returnTo)}`;
+}
+
+function classifySessionTransportFailure(error: unknown): "timeout" | "network" {
+  if (
+    typeof DOMException !== "undefined" &&
+    error instanceof DOMException &&
+    error.name === "TimeoutError"
+  ) {
+    return "timeout";
+  }
+  return "network";
 }
 
 export function useSession() {

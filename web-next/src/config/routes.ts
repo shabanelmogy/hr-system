@@ -73,7 +73,6 @@ export interface OrganizationalStructureRoutes {
   jobDescriptions: AppPath;
   costCenters: AppPath;
   currencies: AppPath;
-  manage: AppPath;
 }
 
 export interface WorkforcePlanningRoutes {
@@ -194,7 +193,6 @@ export const appRoutes: AppRoutes = {
         ),
         costCenters: toAppPath("/basic-data/organizational-structure/cost-centers"),
         currencies: toAppPath("/basic-data/organizational-structure/currencies"),
-        manage: toAppPath("/basic-data/organizational-structure/manage"),
       },
       attendanceDevices: {
         index: toAppPath("/attendance-devices"),

@@ -129,16 +129,30 @@ describe("API BFF transport", () => {
   });
 
   it("preserves problem details metadata and does not trust forwarded client IPs", async () => {
-    const fetchMock = vi.fn().mockResolvedValue(new Response(
-      JSON.stringify({ type: "urn:problem", title: "Scanner unavailable", status: 503, code: "FileScannerUnavailable" }),
-      { status: 503, headers: { "content-type": "application/problem+json", "retry-after": "10", "x-correlation-id": "corr-1" } },
-    ));
+    const fetchMock = vi.fn().mockImplementation((_url: URL, init: RequestInit) => {
+      const correlationId = new Headers(init.headers).get("x-correlation-id");
+      return Promise.resolve(new Response(
+        JSON.stringify({ type: "urn:problem", title: "Scanner unavailable", status: 503, code: "FileScannerUnavailable" }),
+        {
+          status: 503,
+          headers: {
+            "content-type": "application/problem+json",
+            "retry-after": "10",
+            ...(correlationId ? { "x-correlation-id": correlationId } : {}),
+          },
+        },
+      ));
+    });
     vi.stubGlobal("fetch", fetchMock);
 
     const response = await POST(
       new NextRequest("https://app.example.test/api/v1/Files/Upload", {
         method: "POST",
-        headers: { "content-type": "application/json", "x-forwarded-for": "198.51.100.1" },
+        headers: {
+          "content-type": "application/json",
+          "x-forwarded-for": "198.51.100.1",
+          "x-correlation-id": "caller-controlled-correlation",
+        },
         body: JSON.stringify({}),
       }),
       parameters("v1", "Files", "Upload"),
@@ -147,10 +161,14 @@ describe("API BFF transport", () => {
     expect(response.status).toBe(503);
     expect(response.headers.get("content-type")).toContain("application/problem+json");
     expect(response.headers.get("retry-after")).toBe("10");
-    expect(response.headers.get("x-correlation-id")).toBe("corr-1");
     await expect(response.json()).resolves.toMatchObject({ code: "FileScannerUnavailable" });
     const [, init] = fetchMock.mock.calls[0] as [URL, RequestInit];
-    expect(new Headers(init.headers).get("x-forwarded-for")).toBeNull();
+    const backendHeaders = new Headers(init.headers);
+    const correlationId = backendHeaders.get("x-correlation-id");
+    expect(backendHeaders.get("x-forwarded-for")).toBeNull();
+    expect(correlationId).toMatch(/^[A-Za-z0-9._-]+$/);
+    expect(correlationId).not.toBe("caller-controlled-correlation");
+    expect(response.headers.get("x-correlation-id")).toBe(correlationId);
   });
 
   it("returns a Problem Details 413 before calling the backend for oversized JSON", async () => {
@@ -185,6 +203,7 @@ describe("API BFF transport", () => {
     );
     expect(response.status).toBe(400);
     expect(response.headers.get("content-type")).toContain("application/problem+json");
+    expect(response.headers.get("x-correlation-id")).toMatch(/^[A-Za-z0-9._-]+$/);
     await expect(response.json()).resolves.toMatchObject({ type: "about:blank", code: "UnsafeBackendPath" });
     expect(fetchMock).not.toHaveBeenCalled();
   });

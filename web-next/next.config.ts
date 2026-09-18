@@ -1,4 +1,10 @@
 import type { NextConfig } from "next";
+import { appRoutes } from "./src/config/routes";
+import {
+  buildContentSecurityPolicy,
+  buildReportingEndpointsHeader,
+  CONTENT_SECURITY_POLICY_HEADER,
+} from "./src/config/browserSecurity";
 
 function validateBufferedBodyLimit() {
   const raw = process.env.BFF_MAX_BUFFERED_BODY_BYTES;
@@ -15,13 +21,31 @@ const nextConfig: NextConfig = {
   typedRoutes: true,
   cacheComponents: true,
   poweredByHeader: false,
+  async redirects() {
+    return [
+      {
+        source: appRoutes.modules.hr.organizationalStructure.index,
+        destination: appRoutes.modules.hr.organizationalStructure.branches,
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
+    const reportingEndpoints = buildReportingEndpointsHeader();
     return [{
       source: "/(.*)",
       headers: [
+        {
+          key: CONTENT_SECURITY_POLICY_HEADER,
+          value: buildContentSecurityPolicy(),
+        },
+        ...(reportingEndpoints
+          ? [{ key: "Reporting-Endpoints", value: reportingEndpoints }]
+          : []),
         { key: "X-Content-Type-Options", value: "nosniff" },
         { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
         { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+        { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
         { key: "X-Frame-Options", value: "SAMEORIGIN" },
         { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
       ],

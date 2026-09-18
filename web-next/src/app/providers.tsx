@@ -8,7 +8,10 @@ import {
   type ThemeMode,
 } from "@/theme/ThemePreferences";
 import { ThemeShell, useThemeSettingsContext } from "@/theme/ThemeShell";
-import type { RuntimePreferences } from "./runtime-preferences";
+import {
+  reconcileRuntimePreferences,
+  type RuntimePreferences,
+} from "./runtime-preferences";
 
 type ProvidersProps = {
   children: ReactNode;
@@ -49,22 +52,26 @@ export function RuntimePreferencesClientSync({
   useEffect(() => {
     let cancelled = false;
     let readyFrame = 0;
+    const effectivePreferences = reconcileRuntimePreferences(
+      preferences,
+      document.cookie,
+    );
 
-    document.documentElement.lang = preferences.language;
-    document.documentElement.dir = preferences.direction;
-    document.documentElement.dataset.theme = preferences.themeMode;
-    setMode(preferences.themeMode);
+    document.documentElement.lang = effectivePreferences.language;
+    document.documentElement.dir = effectivePreferences.direction;
+    document.documentElement.dataset.theme = effectivePreferences.themeMode;
+    setMode(effectivePreferences.themeMode);
 
-    const languageChange = i18n.resolvedLanguage === preferences.language
+    const languageChange = i18n.resolvedLanguage === effectivePreferences.language
       ? Promise.resolve()
-      : i18n.changeLanguage(preferences.language);
+      : i18n.changeLanguage(effectivePreferences.language);
 
     void languageChange.finally(() => {
       if (cancelled) return;
       readyFrame = window.requestAnimationFrame(() => {
         if (cancelled) return;
         document.body.classList.remove("dark", "light");
-        document.body.classList.add(preferences.themeMode);
+        document.body.classList.add(effectivePreferences.themeMode);
         document.documentElement.dataset.appReady = "true";
       });
     });
@@ -73,7 +80,7 @@ export function RuntimePreferencesClientSync({
       cancelled = true;
       if (readyFrame) window.cancelAnimationFrame(readyFrame);
     };
-  }, [preferences.direction, preferences.language, preferences.themeMode, setMode]);
+  }, [preferences, setMode]);
 
   return null;
 }

@@ -6,7 +6,9 @@ import {
   RefreshOutlined as RetryIcon,
 } from "@mui/icons-material";
 import { Button } from "@mui/material";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { reportClientError } from "@/lib/observability/clientTelemetry";
 import { showErrorDialog } from "../transient";
 import { FeedbackState } from "../states/FeedbackState";
 
@@ -19,6 +21,10 @@ export interface RouteErrorProps {
 export function RouteError({ error, reset, retry }: RouteErrorProps) {
   const { t } = useTranslation();
   const retryRoute = retry ?? reset;
+
+  useEffect(() => {
+    reportClientError("route-boundary", error);
+  }, [error]);
 
   return (
     <FeedbackState

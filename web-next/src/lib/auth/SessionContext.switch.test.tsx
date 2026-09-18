@@ -5,6 +5,7 @@ const mocks = vi.hoisted(() => ({
   endContextTransition: vi.fn(),
   rotateRequestContext: vi.fn(),
   resetLogoutGuard: vi.fn(),
+  reportSessionRevalidationFailure: vi.fn(),
 }));
 // Exercise the provider's real async callbacks and refs without a DOM renderer.
 vi.mock("react", async (importOriginal) => {
@@ -15,6 +16,9 @@ vi.mock("react", async (importOriginal) => {
 });
 vi.mock("next/navigation", () => ({ usePathname: () => "/basic-data", useRouter: () => ({ replace: mocks.replace }) }));
 vi.mock("@/lib/api/client", () => ({ default: mocks }));
+vi.mock("@/lib/observability/clientTelemetry", () => ({
+  reportSessionRevalidationFailure: mocks.reportSessionRevalidationFailure,
+}));
 import { SessionProvider } from "./SessionContext";
 const user = (companyId: number) => ({
   userId: "u", tenantId: "t", tenantName: "Tenant", tenantPlanName: "Pro", companyId,
@@ -33,6 +37,27 @@ function setup(responses: Array<Response | Promise<Response>>) {
   return { value: element.props.value as { refresh(): Promise<void>; logout(): Promise<void>; switchCompany(id: number): Promise<void> }, fetchMock };
 }
 describe("company switch provider callbacks", () => {
+  it("reports classified session revalidation failures but not expected 401 state", async () => {
+    const unavailable = setup([response({}, 503)]);
+    await unavailable.value.refresh();
+    expect(mocks.reportSessionRevalidationFailure).toHaveBeenLastCalledWith("unavailable");
+
+    vi.clearAllMocks();
+    const invalid = setup([response({ user: { tenantId: "not-a-session" } })]);
+    await invalid.value.refresh();
+    expect(mocks.reportSessionRevalidationFailure).toHaveBeenLastCalledWith("invalid");
+
+    vi.clearAllMocks();
+    const timedOut = setup([Promise.reject(new DOMException("private timeout", "TimeoutError"))]);
+    await timedOut.value.refresh();
+    expect(mocks.reportSessionRevalidationFailure).toHaveBeenLastCalledWith("timeout");
+
+    vi.clearAllMocks();
+    const unauthenticated = setup([response({}, 401)]);
+    await unauthenticated.value.refresh();
+    expect(mocks.reportSessionRevalidationFailure).not.toHaveBeenCalled();
+  });
+
   it("does not redirect on invalid first session followed by verified retry", async () => {
     const { value, fetchMock } = setup([response({ user: user(1) }), response({}), response({ user: null }), response({ user: user(2) })]);
     await value.refresh(); await value.switchCompany(2);

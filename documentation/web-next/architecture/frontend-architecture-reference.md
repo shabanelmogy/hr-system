@@ -573,6 +573,62 @@ started directly on Long Polling. The super-admin smoke separately verified
 request in about `0.29 s` on the local development stack. Treat the first dev
 compile separately from these warmed runtime timings.
 
+On 2026-09-17 an additional development-only Instant Navigation failure was
+reproduced after a long-running Turbopack dev session had absorbed several shell
+and instrumentation edits. A normal authenticated-shaped `/` request returned
+`200`, while the same route through Next's Instant Navigation testing path
+returned `500` with `Could not validate instant ... target segment was prevented
+from rendering`. The current source was then verified against Next `16.3.5`'s
+local Instant Navigation implementation: that wrapper is emitted when validation
+cannot reach the expected target boundary because an error was thrown outside it.
+No current shell component required an `instant = false` exemption. After a clean
+restart of the ERPSYSTEM `next dev` process, both the normal `/` request and the
+Instant Navigation testing request returned `200` (the latter with postponed PPR
+state), and the authenticated browser resumed its session/dashboard requests
+without a server render error. Type-check and the architecture gate also passed.
+
+**Development prevention rule.** When an Instant Navigation validation error
+appears immediately after structural App Router, provider, instrumentation, or
+Cache Components edits, first reproduce the route in both normal and Instant
+Navigation validation modes. If current source is structurally valid but only the
+long-running Turbopack process fails, restart that project's dev server before
+changing route semantics. Do not hide stale HMR/validation state with
+`instant = false` or by disabling Cache Components. Also remember that Next's
+Navigation Inspector cookie is scoped to `localhost`, not to a port; when several
+local Next projects are in use, close the Inspector or clear its testing cookie
+when switching projects if validation behavior is unexpectedly shared.
+
+The organizational-structure index later exposed a separate deterministic case:
+`/basic-data/organizational-structure` existed only to call `redirect()` from its
+Server Component page. In Next `16.3.5`, `redirect()` throws `NEXT_REDIRECT` and
+terminates rendering of that segment; Instant Navigation validation can therefore
+report that the target segment was prevented from rendering even though the
+redirect is intentional. Entry-point redirects that do not need render-time data
+now belong in `next.config.ts` so they execute before rendering. Do not keep an
+otherwise empty App Router page whose only job is to throw a redirect, and do not
+silence this case with `instant = false`. The obsolete `/organizational-structure/manage`
+alias was removed instead of preserving an unused compatibility route.
+
+The same route also exposed a real development SSR failure hidden behind the
+Instant Navigation wrapper. The stack moved through several eagerly evaluated
+barrels as they were narrowed: `feedback/states` pulled `EmptyChartState`, which
+pulled the complete charts/Recharts graph; the organizational multi-view loaded a
+card-only header and MUI Grid even while the active view was Grid; and the shared
+`MyDataGrid` shell still evaluated the `@mui/x-data-grid` toolbar graph on the
+server even though the actual DataGrid had already been marked `ssr: false`.
+Clean Turbopack boots overflowed during these module evaluations and Next fell
+back to client rendering.
+
+The fix follows the runtime boundaries already intended by the UI: low-level
+shared components use narrow imports, the card-only header is loaded only with its
+view, the cards layout uses CSS grid instead of pulling MUI Grid into the default
+route, and the organizational DataGrid shell is client-only together with its
+MUI X runtime. A clean dev restart now renders `/basic-data/organizational-structure/branches`
+without `RangeError` or the client-render fallback. Shared low-level components
+must keep heavyweight optional runtimes out of broad barrels, and a browser-only
+widget must move its whole runtime shell behind the client boundary rather than
+leaving toolbar/hooks in SSR while only its innermost widget is client-only.
+
 The same smoke exposed a development SSR failure in the hand-maintained Emotion
 streaming registry (`Stylis` stack overflow on a normal Fiscal Years render).
 The project now delegates App Router Emotion streaming to MUI's version-aware
@@ -630,6 +686,52 @@ These items are accepted follow-up optimizations, not unresolved causes of the
 cross-route duplicate-request and shared-bundle problems fixed above. Re-open
 them only with a production measurement or a concrete user-visible latency
 trace.
+
+### Browser E2E and CI testing contract
+
+Phase 8 closed on 2026-09-18 with Playwright as the browser-level owner and
+Vitest remaining the unit/integration owner. `vitest.config.ts` must exclude
+`e2e/**`; do not rename or duplicate Playwright scenarios merely to make Vitest
+ignore them.
+
+The Playwright upstream is deterministic and local to the test process. It models
+multi-tenant/multi-company authentication, permissions, session refresh/expiry,
+company-specific data and bounded feature endpoints while all browser traffic
+still passes through the real Next BFF and its HttpOnly cookie/session behavior.
+Browser CI must not depend on production credentials, a persistent developer
+database or customer data.
+
+`playwright.config.ts` keeps the mutable fixture serial (`workers: 1`) until each
+worker owns an independent backend state. CI runs the already-built application
+through `next start`; local development may reuse the development server. Desktop
+Chromium owns the main suite and the focused mobile project owns tests tagged
+`@mobile`. Trace, screenshot and video are retained on failure and CI uploads the
+Playwright report/test-results artifacts.
+
+The required browser confidence model is:
+
+- auth: anonymous redirect, Demo Login, tenant/company selection, logout,
+  successful refresh, terminal expiry and auth-service `503`;
+- authorization: denied `403` and allowed super-admin boundary;
+- company context: verified switch plus stale-company data isolation;
+- business: Countries search/validation/create/update/API failure/unsaved guard,
+  Fiscal Years create/update, and Appointments/HR ownership-boundary smoke;
+- runtime: Back/Forward, hard refresh, App Router `404`, live RTL switch and
+  same-document PPR/Instant Navigation;
+- mobile: login controls plus authenticated launcher/company context.
+
+Prefer accessible roles, names and labels over CSS implementation selectors. A
+PPR/transition tree can temporarily contain hidden and visible copies of the same
+semantic heading; when that is expected, constrain the locator to the visible
+semantic element instead of using `.first()` as a brittle ordering assumption.
+Only add a test ID when the user-visible semantics cannot uniquely express the
+domain action.
+
+Final Phase 8 closure evidence was production build `68/68`, Vitest `155/155`
+files / `544/544` tests, and Playwright `21/21` in CI mode against `next start`.
+Web CI installs Chromium after the build, executes `npm run test:e2e`, and uploads
+failure artifacts. New auth/company/navigation/shared-form regressions must extend
+this suite rather than relying on manual browser checks.
 
 ### Route and entitlement ownership baseline
 
@@ -799,6 +901,288 @@ Current examples:
 - Fiscal Years live under `src/modules/accounting/fiscal-years`; other modules consume their lookup/query surface through the Accounting public API.
 - Generic SignalR connection infrastructure lives under `src/lib/signalr`.
 - Reusable content wrapping and sidebar context live under `src/shared`.
+
+## Observability and production diagnostics
+
+The first production-observability foundation was applied on 2026-09-17.
+
+**Observed problem.** The API already had OpenTelemetry and an
+`X-Correlation-ID` contract, while the Next.js BFF only copied a backend
+correlation header on the response. The web request, BFF operation and backend
+call therefore did not have one explicit BFF-owned correlation boundary. SignalR
+also logged raw library error strings and, after automatic reconnect was
+exhausted, retried on a fixed five-second timer indefinitely. A WebSocket-style
+`access_token` query value could additionally reach a backend URL even though the
+same-origin BFF intentionally uses HTTP Long Polling rather than WebSocket
+tunnelling.
+
+**Decision.** Next.js server instrumentation uses OpenTelemetry with service name
+`ErpSystem.Web` and service namespace `ErpSystem` when `WEB_OTEL_ENABLED=true`.
+Registration is opt-in so ordinary local/development servers do not create
+exporter noise. When telemetry is explicitly enabled in self-hosted production,
+configuration must name an OTLP endpoint and sampler; the application does not
+accept `@vercel/otel`'s implicit localhost exporter or implicit 100% sampling as a
+production configuration. Vercel-managed telemetry may own the exporter.
+Distributed trace propagation is restricted to configured ERP backend origins.
+Each generic API or SignalR BFF
+request creates a server-owned correlation ID, forwards it as
+`X-Correlation-ID`, returns it to the browser, and adds only safe route/method/
+status/failure-classification attributes to ERP BFF spans. Browser-supplied
+correlation IDs are not the trusted BFF operation identity. SignalR diagnostic
+logs contain classifications only, never raw transport messages, and duplicate
+classifications are suppressed for a bounded window.
+
+**Implementation impact.** `src/instrumentation.ts` conditionally registers
+`@vercel/otel` and marks `onRequestError` spans failed without recording raw
+exception messages.
+`src/lib/observability/` owns correlation and BFF tracing primitives. The API and
+hub Route Handlers apply the shared correlation contract and traced backend-call
+wrapper. SignalR manual restart delay progresses through 5, 15, 30 and 60 seconds
+and remains capped at 60 seconds; a successful connection or explicit online/
+session transition resets the backoff. The hub proxy moves a query-string
+`access_token` into the Authorization header and removes it from the backend URL
+before tracing/fetching. `otelEnvironment.ts` validates the installed
+`@vercel/otel` runtime contract before registration: enabled self-hosted production
+requires an explicit OTLP endpoint and sampler, endpoint URLs must be HTTP(S)
+without embedded credentials/query/fragment, the supported trace protocols are
+`http/protobuf` and `http/json`, and ratio sampling must be from `0` through `1`.
+It also rejects a browser-telemetry/server-export mismatch, `OTEL_SDK_DISABLED`
+while the application switch is enabled, service-name overrides away from
+`ErpSystem.Web`, and propagator configuration that drops W3C `tracecontext`.
+Collector credentials remain secret-backed `OTEL_EXPORTER_OTLP_HEADERS` values
+and are never copied into application diagnostics.
+
+Tenant/company enrichment follows the authentication trust boundary. Only a route
+that has already received validated `SessionClaims` from `resolveSession()` may
+call `annotateActiveVerifiedSessionScope`; current examples are the session and
+realtime-token routes. Those spans use the stable `erp.tenant.id` and
+`erp.company.id` attributes. The catch-all API/SignalR proxies must not trust a
+browser-supplied tenant/company header, decode an unverified bearer payload for
+telemetry, or add a separate session-validation request solely to gain scope tags.
+That would either make telemetry forgeable or add a serial request to every BFF
+call. Deeper business traces already execute behind backend authentication and are
+the correct place for any additional scope enrichment required by the API.
+
+### Client errors, navigation and Web Vitals
+
+**Observed problem.** `global-error.tsx` and the shared `RouteError` already gave
+users recovery UI, but browser failures stopped there. There was no early global
+error/unhandled-rejection observer, no Web Vitals reporter, and no App Router
+navigation timing export. Sending raw browser errors or URLs directly to a
+Collector would also risk leaking reset/invitation tokens, query parameters,
+stack-frame URLs or other user-controlled text.
+
+**Decision.** Client observability is opt-in through
+`NEXT_PUBLIC_WEB_TELEMETRY_ENABLED=true` and uses a same-origin
+`/api/telemetry/client` ingestion route. The browser sends only a small allowlisted
+contract: error source plus a bounded error classification and safe Next digest,
+Web Vital name/value/delta/rating/navigation type, or App Router navigation type
+plus route-commit duration. Session revalidation and SignalR diagnostics reuse the
+same endpoint with bounded failure/phase classifications and an optional bounded
+suppressed-repeat count. They never send raw transport/session error text. The
+client contract never sends error messages, stacks, current/target URLs, query
+strings, Web Vital IDs, tenant/company IDs, cookies or bearer tokens. The
+telemetry fetch explicitly omits credentials and referrer data. The server
+normalizes the payload again, caps it at 2 KiB, drops it when `WEB_OTEL_ENABLED` is
+off, and records the accepted event as an `ErpSystem.Web.ClientTelemetry` span.
+
+**Implementation impact.** `src/instrumentation-client.ts` installs the early
+`error` and `unhandledrejection` observers and starts App Router transition timing.
+The isolated `ClientObservability` client component uses `useReportWebVitals` and
+the committed pathname/search-parameter state to close navigation timing without
+turning the root layout into a client boundary. `global-error.tsx` and the shared
+`RouteError` explicitly report their caught errors because React error boundaries
+do not guarantee a matching global browser error event. The browser/server payload
+contract lives under `src/lib/observability/`, and the exact telemetry Route
+Handler is intentionally separate from the generic authenticated API proxy.
+
+**Verification.** Focused tests cover allowlist normalization, rejection of invalid
+performance/diagnostic payloads, disabled telemetry, credential/referrer omission,
+safe error/session/SignalR classification, Web Vitals/navigation reporting,
+server-disabled dropping, ingestion normalization, content-type enforcement and
+the body-size cap. Normal TypeScript remains a required gate for the integrated
+root/layout convention.
+
+**Prevention rule.** Do not add raw `Error.message`, stack traces, filenames,
+browser URLs, query parameters, arbitrary error names, Web Vital IDs or session
+credentials to client telemetry. New client signals must extend the shared
+allowlisted contract and be normalized on both sides of the same-origin boundary.
+Client telemetry must stay fail-open: an exporter or ingestion failure must never
+block navigation, rendering, recovery UI or business requests.
+
+### Production collector, dashboards and alerts
+
+The application defines the signals and verification contract while the selected
+hosting/observability platform owns Collector topology, storage/retention,
+dashboard resources, SLO thresholds and alert delivery destinations. This keeps
+provider-specific infrastructure out of the frontend runtime while still making
+production readiness testable.
+
+The minimum production view must expose request/error/latency for
+`ErpSystem.Web` by stable route, BFF backend latency/status by stable route and
+channel, transport timeout/network failure classifications, and the matching
+`ErpSystem.Api` trace path. Client navigation/Web Vitals and global client errors
+arrive through the same-origin client telemetry route; SignalR failure/reconnect
+signals belong on the same operational view. Tenant/company IDs are trace-drilldown attributes;
+they must not become dashboard or alert grouping labels because that creates
+unbounded cardinality and can expose customer identifiers to broad operational
+channels.
+
+Production alerts must cover sustained web 5xx errors, BFF 502/503/504 or timeout
+growth, latency breaching the environment's approved SLO, significant client
+error/Web-Vitals regression when those signals are enabled, and sustained
+realtime connection/reconnect failure. The deployment owner selects numerical
+thresholds only after a staging/production traffic baseline exists. Alert payloads
+use service/environment/stable-route/failure-class labels and correlation/trace
+links; they do not contain bearer tokens, cookies, request bodies, raw exception
+messages, tenant names or user PII.
+
+Before an external production launch with `WEB_OTEL_ENABLED=true`, run a staging
+smoke through the real proxy and Collector. Confirm that `ErpSystem.Web` arrives
+with the expected service namespace, one controlled BFF call returns a correlation
+ID and produces a web -> BFF -> `ErpSystem.Api` distributed trace, handled
+timeout/5xx cases retain safe status/failure classification, and exported
+attributes contain no token/query/payload secrets. Exercise an already-verified
+session route to confirm tenant/company scope appears only from validated server
+session data. Finally verify the required dashboards are populated and route a
+controlled test condition through every production alert destination. These are
+deployment release gates; source tests cannot prove Collector reachability,
+retention, dashboard provisioning or alert delivery.
+
+**Verification.** Focused coverage owns correlation generation/forwarding,
+caller-correlation rejection, token-query removal, SignalR failure
+classification, warning suppression, capped backoff, and production OpenTelemetry
+configuration validation. Normal/strict TypeScript, architecture, lint and the
+documentation generation check remain required before the Phase 6 slice is handed
+off; the Collector/dashboard/alert smoke above remains a production-deployment
+gate.
+
+**Prevention rule.** Never put bearer tokens, cookie values, raw SignalR error
+strings, query-string secrets or unbounded user-controlled identifiers into logs
+or custom telemetry attributes. Catch-all BFF spans use stable route patterns,
+not entity-specific paths. New BFF calls must preserve trace context only to trusted
+ERP backend origins and must expose a safe correlation identifier on handled
+failures as well as successful responses. Realtime retry logic must use bounded
+backoff and classified/throttled diagnostics rather than tight retry/log loops.
+Never add a BFF session lookup purely for telemetry enrichment and never recover
+tenant/company scope from an unverified browser header or token payload. If the
+runtime exporter changes, update `otelEnvironment.ts`, `.env.example`, this guide
+and the deployment smoke contract together so permissive library fallbacks cannot
+silently become production policy.
+
+## Browser security and CSP rollout
+
+The Phase 7 browser-security rollout started on 2026-09-17 with a CSP
+**Report-Only** baseline and is now enforced. The pre-existing browser headers
+already provided `nosniff`, strict referrer handling, restricted
+camera/microphone/geolocation, same-origin framing and HSTS, but there had been no
+Content Security Policy capable of constraining browser resource origins.
+
+**Rendering constraint.** The application intentionally uses Next `16.3.5` Cache
+Components and Partial Prerendering. The installed Next CSP guide states that a
+per-request nonce forces dynamic rendering and is incompatible with PPR because
+the prerendered shell cannot receive the request nonce. Do not replace the Phase 3
+static/PPR runtime architecture with nonce-based rendering merely to satisfy CSP.
+Next's SRI-based CSP support remains experimental in this version and is not a
+production dependency until it has been evaluated independently against the real
+build and runtime.
+
+**Decision.** `src/config/browserSecurity.ts` owns one generated CSP contract and
+`next.config.ts` emits it as enforced `Content-Security-Policy`. The policy does
+not use broad host wildcards. Its current source inventory is evidence-driven:
+
+- Google Identity Services uses the documented
+  `https://accounts.google.com/gsi/` parent plus its exact client script and style
+  URLs;
+- Syncfusion PDF viewer resource files are currently loaded from
+  `https://cdn.syncfusion.com` by the file-manager PDF viewer;
+- the configured report origin is admitted to `connect-src` and `frame-src`
+  because reports are fetched and/or framed there;
+- a configured production SignalR hub contributes only its validated HTTP(S)
+  origin and corresponding WS(S) origin, while development continues to use the
+  same-origin hub BFF and permits local HMR WebSocket traffic;
+- report/file media that is deliberately created in-browser accounts for the
+  required `blob:` / `data:` sources;
+- application fonts are packaged through `@fontsource`, so Google Fonts origins
+  are not opened by default.
+
+The static/PPR-compatible policy currently retains `script-src 'unsafe-inline'`
+and `style-src 'unsafe-inline'` because the application/Next runtime contains
+inline bootstrap/script/style behavior and MUI/Emotion emits runtime styles.
+`script-src-attr 'none'` still rejects inline HTML event-handler attributes. These
+allowances are explicit security tradeoffs, not permission to add arbitrary new
+inline code. A future evidence-backed hardening pass may externalize app-authored
+inline bootstrap code or adopt a stable hash/SRI strategy if that can remove a
+script allowance without sacrificing PPR; experimental SRI is not a current
+production dependency.
+
+Google login currently uses popup UX, so the global browser headers also use
+`Cross-Origin-Opener-Policy: same-origin-allow-popups`. This preserves popup
+communication for Google Identity Services while retaining same-origin opener
+isolation for ordinary navigation. Do not add `Cross-Origin-Embedder-Policy`
+globally without a separate compatibility review because third-party identity,
+reporting and viewer assets are legitimate cross-origin consumers.
+
+### CSP violation collection and privacy
+
+`/api/security/csp-report` accepts both legacy `application/csp-report` payloads
+and Reporting API `application/reports+json` batches. The endpoint is deliberately
+separate from the generic authenticated API proxy, rejects explicit cross-site
+mutations, rejects unsupported content types, caps the request at 16 KiB and
+normalizes every accepted record before diagnostics are emitted.
+
+The normalized record contains only the effective directive, a bounded blocked
+source classification, report/enforce disposition, optional HTTP status and—only
+for an external network source—the normalized origin. Document URLs, source-file
+paths, referrers, CSP samples, full blocked URLs, path/query/fragment data and
+credentials are discarded. Same-origin violations never retain the page/resource
+path. This prevents reset/invitation tokens or business identifiers in URLs from
+turning browser-security diagnostics into a second data-leak path.
+
+Legacy `report-uri /api/security/csp-report` remains available after enforcement.
+Modern `report-to` is emitted only when
+`WEB_PUBLIC_ORIGIN=https://...` is configured, because `Reporting-Endpoints`
+requires a secure absolute endpoint URI. A missing deployment origin must not
+produce a dangling Reporting API configuration.
+
+### Enforced state and release smoke
+
+The shipped path now enforces `Content-Security-Policy`; there is no default mode
+switch that silently leaves Production in Report-Only. A Chrome HTTPS smoke loaded
+the login surface, Next development runtime, MUI/Emotion styling and Google GIS
+client under enforcement without an observed CSP block. An explicit enforced CSP
+report returned `204` and the server diagnostic retained only the normalized
+directive, external origin, disposition and status—not the supplied private path,
+query or token-like value.
+
+The production runtime was also started from the optimized build. `/login`
+returned `200` with `Content-Security-Policy`, no
+`Content-Security-Policy-Report-Only`, no production `'unsafe-eval'`, no broad
+development `ws:`/`wss:` schemes, and `upgrade-insecure-requests`. The `68/68`
+page production build retained application routes as PPR (`◐`) while the CSP report
+Route Handler remained dynamic (`ƒ`). Focused browser-security coverage passes
+`12/12`; the full frontend suite passes `155/155` files and `542/542` tests;
+normal/strict TypeScript, architecture, i18n, lint, module-generator, dependency
+audit and configured bundle budgets are green.
+
+Source inspection accounts for Google popup auth, production SignalR HTTP/WS
+origins, blob/report frames, Syncfusion PDF resources, file/media `blob:`/`data:`,
+same-origin Hangfire and configured public-API external frames. A local Demo Login
+attempt did not establish an authenticated session in the current environment, so
+real protected deployment data was not fabricated merely to claim a runtime pass.
+Before an external Production launch, exercise the real authenticated Google popup,
+SignalR connection, report/PDF viewers, file/media previews, Hangfire and configured
+external-tool frames with representative environment data. This is a release smoke
+gate rather than a reason to keep the source CSP in Report-Only. Any confirmed
+violation must be classified and reflected in the bounded central source inventory
+and regression tests. Demo Login stays available through development and is
+removed only as a separate Production-readiness step.
+
+**Prevention rule.** Do not solve a CSP violation by adding `*`, a broad scheme or
+an unrelated third-party origin. Do not add raw CSP reports to logs or telemetry.
+Update the centralized policy, its normalization tests, this guide and the Phase 7
+inventory together whenever a new browser integration genuinely requires a new
+source.
 
 ## App Router Rules
 

@@ -1,18 +1,21 @@
 "use client";
 
-import { Box, Button, Chip, Grid, LinearProgress, Stack, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import LinearProgress from "@mui/material/LinearProgress";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import dynamic from "next/dynamic";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { EntityCard } from "@/shared/components/cards";
-import { EmptyState } from "@/shared/components/feedback/states";
-import { CardViewPagination } from "@/shared/components/lists/card-view";
-import { PageHeader } from "@/shared/components/navigation/header";
+import EntityCard from "@/shared/components/cards/EntityCard";
+import { EmptyState } from "@/shared/components/feedback/states/EmptyState";
+import CardViewPagination from "@/shared/components/lists/card-view/CardViewPagination";
+import PageHeader from "@/shared/components/navigation/header/PageHeader";
 import { permissions as appPermissions } from "@/lib/auth/permissions";
 import { usePermissions } from "@/shared/hooks/usePermissions";
-import { useAccessibleModulesQuery } from "@/platform/modules";
-import OrganizationalStructureCardViewHeader from "./card-view/OrganizationalStructureCardViewHeader";
-import OrganizationalStructureDataGrid from "./grid-view/OrganizationalStructureDataGrid";
+import { useAccessibleModulesQuery } from "@/platform/modules/queries";
 import {
   type OrganizationalResource,
   type OrganizationalSearchField,
@@ -23,6 +26,11 @@ import {
 } from "../types/OrganizationalStructure";
 
 const OrganizationalStructureChartView = dynamic(() => import("./chart-view/OrganizationalStructureChartView"));
+const OrganizationalStructureCardViewHeader = dynamic(() => import("./card-view/OrganizationalStructureCardViewHeader"));
+const OrganizationalStructureDataGrid = dynamic(
+  () => import("./grid-view/OrganizationalStructureDataGrid"),
+  { ssr: false },
+);
 const OrganizationalStructureReport = dynamic(() => import("./report-view/OrganizationalStructureReport"));
 const OrganizationalStructureImport = dynamic(() => import("./import-view/OrganizationalStructureImport"));
 const DepartmentTreeDiagram = dynamic(() => import("./tree-view/DepartmentTreeDiagram"));
@@ -180,7 +188,18 @@ export default function OrganizationalStructureMultiView(props: Props) {
           <Box sx={{ flex: 1, minHeight: 0, minWidth: 0, overflowX: "hidden", overflowY: "auto", p: { xs: 1, md: 1.5 }, scrollbarGutter: "stable" }}>
             {props.items.length === 0 && !props.loading ? <EmptyState title={t("organizationalStructure.empty")}
               actionText={props.permissions.canCreate ? t("actions.add") : undefined} onAction={props.onAdd} /> : null}
-            <Grid container spacing={3}>{props.items.map((item, index) => <Grid key={item.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }} sx={{ minWidth: 0 }}>
+            <Box
+              sx={{
+                display: "grid",
+                gap: 3,
+                gridTemplateColumns: {
+                  xs: "minmax(0, 1fr)",
+                  sm: "repeat(2, minmax(0, 1fr))",
+                  md: "repeat(3, minmax(0, 1fr))",
+                  lg: "repeat(4, minmax(0, 1fr))",
+                },
+              }}
+            >{props.items.map((item, index) => <Box key={item.id} sx={{ minWidth: 0 }}>
               <EntityCard index={index} height={280} title={name(item)} subtitle={item.code}
                 endBadge={<Chip size="small" color={item.isDeleted ? "default" : "success"} label={t(item.isDeleted ? "organizationalStructure.status.archived" : "organizationalStructure.status.active")} />}
                 content={<Stack spacing={1} sx={{ minWidth: 0 }}><Typography variant="body2" color="text.secondary">{t("organizationalStructure.fields.parent")}</Typography><Typography>{parentName(item)}</Typography>
@@ -192,7 +211,7 @@ export default function OrganizationalStructureMultiView(props: Props) {
                   {props.permissions.canDelete ? <Button size="small" color={item.isDeleted ? "success" : "warning"} onClick={() => props.onLifecycle(item)}>{t(item.isDeleted ? "actions.restore" : "actions.archive")}</Button> : null}
                   {canDecide(item) ? <><Button size="small" color="success" onClick={() => props.onApprove(item)}>{t("organizationalStructure.decision.approve")}</Button><Button size="small" color="error" onClick={() => props.onReject(item)}>{t("organizationalStructure.decision.reject")}</Button></> : null}
                 </Stack>} />
-            </Grid>)}</Grid>
+            </Box>)}</Box>
           </Box>
           <CardViewPagination page={props.page} rowsPerPage={props.pageSize} totalItems={props.totalCount}
             itemsPerPageOptions={[5, 10, 25, 50]} pinned onPageChange={props.onPageChange} onRowsPerPageChange={props.onPageSizeChange} />

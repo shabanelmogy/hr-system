@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense, type ReactNode } from "react";
 import { Providers } from "./providers";
 import { RuntimePreferencesBoundary } from "./RuntimePreferencesBoundary";
+import { ClientObservability } from "./ClientObservability";
 import {
   DEFAULT_RUNTIME_PREFERENCES,
   runtimePreferenceBootstrapScript,
@@ -55,6 +56,9 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         `}} />
       </head>
       <body>
+        <Suspense fallback={null}>
+          <ClientObservability />
+        </Suspense>
         <div id="app-loader">
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
             <circle cx="24" cy="24" r="20" stroke="currentColor" strokeOpacity="0.2" strokeWidth="4" />

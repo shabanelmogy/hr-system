@@ -5,6 +5,15 @@ import {
   isCrossSiteMutation,
 } from "@/lib/api/proxy-security";
 import { resolveRequestBackendUrl } from "@/lib/env/server";
+import {
+  applyCorrelationHeader,
+  createCorrelationId,
+} from "@/lib/observability/correlation";
+import {
+  annotateActiveBffRequest,
+  recordBffResponse,
+  traceBackendCall,
+} from "@/lib/observability/serverTelemetry";
 
 type RouteParameters = { params: Promise<{ path: string[] }> };
 
@@ -13,68 +22,89 @@ const TAG = "[SignalR Proxy]";
 /**
  * Proxy for SignalR hub connections.
  *
- * The SignalR JS client sends the realtime JWT as:
- *  - An `Authorization: Bearer <token>` header on negotiate and long-polling requests.
- *  - A `?access_token=<token>` query parameter on WebSocket upgrade requests.
- *
- * We forward both so the backend can authenticate via either mechanism.
- * Running this server-side keeps the browser on the same origin. Local
- * development uses the backend HTTP launch URL, avoiding untrusted certificates.
+ * The same-origin BFF supports ordinary SignalR HTTP transports (the client uses
+ * Long Polling for this route), not transparent WebSocket tunneling. If a caller
+ * supplies the WebSocket-style `access_token` query parameter, convert it to the
+ * Authorization header and remove it from the backend URL so secrets never enter
+ * server access logs or telemetry URL attributes.
  */
 async function handle(request: NextRequest, parameters: RouteParameters) {
+  const correlationId = createCorrelationId();
+  annotateActiveBffRequest({
+    channel: "signalr",
+    correlationId,
+    method: request.method,
+    route: "/api/hubs/[...path]",
+  });
+
   if (isCrossSiteMutation(request)) {
-    return NextResponse.json(
-      { type: "about:blank", title: "Cross-site request rejected", status: 403, code: "CrossSiteRequestRejected" },
-      { status: 403, headers: { "content-type": "application/problem+json", "cache-control": "no-store" } },
+    return problemResponse(
+      403,
+      "Cross-site request rejected",
+      "CrossSiteRequestRejected",
+      correlationId,
     );
   }
 
   const { path } = await parameters.params;
   if (hasUnsafeBackendPath(path)) {
-    return NextResponse.json(
-      { type: "about:blank", title: "Invalid backend path", status: 400, code: "UnsafeBackendPath" },
-      { status: 400, headers: { "content-type": "application/problem+json", "cache-control": "no-store" } },
-    );
+    return problemResponse(400, "Invalid backend path", "UnsafeBackendPath", correlationId);
   }
   const hubPath = path.join("/");
 
   const backendUrl = new URL(`${resolveRequestBackendUrl(request)}/hubs/${hubPath}`);
-  // Preserve all query parameters (access_token, negotiateVersion, id, etc.)
+  // Preserve SignalR transport parameters, but never put bearer tokens in the URL.
   backendUrl.search = request.nextUrl.search;
 
   const authHeader = request.headers.get("authorization");
   const queryToken = request.nextUrl.searchParams.get("access_token");
-  console.log(`${TAG} ${request.method} /hubs/${hubPath}`);
-  if (process.env.NODE_ENV !== "production") {
-    console.log(`${TAG} Authentication: ${authHeader || queryToken ? "present" : "missing"}`);
-  }
+  backendUrl.searchParams.delete("access_token");
 
   const forwardHeaders = new Headers();
-  for (const name of ["authorization", "content-type", "user-agent"] as const) {
+  for (const name of ["content-type", "user-agent"] as const) {
     const value = request.headers.get(name);
     if (value) forwardHeaders.set(name, value);
   }
+  if (authHeader) {
+    forwardHeaders.set("authorization", authHeader);
+  } else if (queryToken) {
+    forwardHeaders.set("authorization", `Bearer ${queryToken}`);
+  }
+  applyCorrelationHeader(forwardHeaders, correlationId);
 
   const isBodyless = request.method === "GET" || request.method === "HEAD";
 
   let backendResponse: Response;
   try {
-    backendResponse = await fetch(backendUrl, {
-      method: request.method,
-      headers: forwardHeaders,
-      body: isBodyless ? undefined : await request.arrayBuffer(),
-      cache: "no-store",
-      redirect: "manual",
-    });
+    backendResponse = await traceBackendCall(
+      {
+        channel: "signalr",
+        correlationId,
+        method: request.method,
+        route: "/api/hubs/[...path]",
+      },
+      async () => {
+        const body = isBodyless ? undefined : await request.arrayBuffer();
+        return fetch(backendUrl, {
+          method: request.method,
+          headers: forwardHeaders,
+          body,
+          cache: "no-store",
+          redirect: "manual",
+        });
+      },
+    );
   } catch (err) {
-    console.error(`${TAG} Backend unreachable:`, err);
-    return NextResponse.json({ message: "SignalR backend unavailable" }, { status: 503 });
-  }
-
-  console.log(`${TAG} Backend returned ${backendResponse.status} ${backendResponse.statusText}`);
-
-  if (backendResponse.status === 401) {
-    console.warn(`${TAG} Long-poll request was unauthorized; reconnecting with a fresh token`);
+    console.error(`${TAG} Backend unreachable`, {
+      failureKind: err instanceof DOMException ? err.name : "network",
+      correlationId,
+    });
+    return problemResponse(
+      503,
+      "SignalR backend unavailable",
+      "SignalRBackendUnavailable",
+      correlationId,
+    );
   }
 
   const responseHeaders = new Headers();
@@ -82,12 +112,36 @@ async function handle(request: NextRequest, parameters: RouteParameters) {
     const value = backendResponse.headers.get(name);
     if (value) responseHeaders.set(name, value);
   }
+  applyCorrelationHeader(responseHeaders, correlationId);
   responseHeaders.set("cache-control", "no-store");
 
-  return new NextResponse(backendResponse.body, {
+  const response = new NextResponse(backendResponse.body, {
     status: backendResponse.status,
     headers: responseHeaders,
   });
+  recordBffResponse(response.status);
+  return response;
+}
+
+function problemResponse(
+  status: number,
+  title: string,
+  code: string,
+  correlationId: string,
+) {
+  const response = NextResponse.json(
+    { type: "about:blank", title, status, detail: title, code },
+    {
+      status,
+      headers: {
+        "content-type": "application/problem+json",
+        "cache-control": "no-store",
+      },
+    },
+  );
+  applyCorrelationHeader(response.headers, correlationId);
+  recordBffResponse(status);
+  return response;
 }
 
 export const GET = handle;

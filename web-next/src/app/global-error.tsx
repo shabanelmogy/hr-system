@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import i18n from "@/locales/i18n";
+import { reportClientError } from "@/lib/observability/clientTelemetry";
 
 type GlobalErrorProps = {
   error: Error & { digest?: string };
@@ -10,6 +12,10 @@ type GlobalErrorProps = {
 export default function GlobalError({ error, retry }: GlobalErrorProps) {
   const language = i18n.resolvedLanguage ?? i18n.language ?? "en";
   const t = i18n.getFixedT(language, "core");
+
+  useEffect(() => {
+    reportClientError("global-boundary", error);
+  }, [error]);
 
   return (
     <html lang={language} dir={i18n.dir(language)}>

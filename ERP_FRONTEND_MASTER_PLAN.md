@@ -1,6 +1,6 @@
 # ERP Frontend Foundation — Master Hardening Plan
 
-**Project:** `/hr-system/web-next`  
+**Project:** `/erpsystem/web-next`
 **Goal:** Build a strong, scalable ERP frontend foundation in Next.js — not just isolated fixes.
 
 ---
@@ -470,6 +470,18 @@ Dashboard behavior:
 - show `RouteLoading` during session bootstrap;
 - do not start accessible-module/dashboard queries before the session state is known.
 
+Development diagnostic rule established 2026-09-17:
+
+- a long-running Turbopack process can retain stale Instant Navigation validation
+  state across structural shell/instrumentation edits;
+- when `/` renders normally but the validation path reports `target segment was
+  prevented from rendering`, reproduce both modes before changing route behavior;
+- if a clean restart makes both normal and validation requests return `200`, treat
+  the stale dev/HMR state as the cause rather than adding `instant = false`;
+- Next's Navigation Inspector testing cookie is localhost-domain scoped rather
+  than port scoped, so clear/close the Inspector when switching between local Next
+  projects if its validation state leaks between them.
+
 ## 3.8 Security layering
 
 Authorization remains layered:
@@ -811,13 +823,72 @@ Target:
 - no noisy repeated console errors;
 - no impact on page rendering.
 
+## Applied foundation — 2026-09-17
+
+The first Phase 6 slice is now implemented on the server/BFF/realtime path:
+
+- Next.js server instrumentation registers OpenTelemetry as `ErpSystem.Web` when
+  `WEB_OTEL_ENABLED=true`, with the `ErpSystem` service namespace. Registration is
+  opt-in; when it is enabled in self-hosted production, startup now requires an
+  explicit OTLP endpoint and explicit sampler instead of inheriting
+  `@vercel/otel`'s localhost/100%-sampling fallbacks. Vercel-managed telemetry is
+  allowed to own the exporter. Endpoint, protocol and ratio-sampler values are
+  validated before registration, and trace-context propagation is restricted to
+  configured ERP backend origins rather than arbitrary third-party fetches.
+- The generic API BFF and SignalR BFF now create a trusted server-owned
+  `X-Correlation-ID`, forward it to the backend, and return the same identifier to
+  the browser. Caller-supplied correlation headers are not trusted as the BFF
+  operation identity.
+- BFF backend calls create ERP-specific spans with correlation ID, stable route
+  pattern, method, response status and transport-failure classification. Raw
+  bearer tokens, entity-specific catch-all paths and exception messages are not
+  added as custom telemetry attributes.
+- Next.js `onRequestError` marks the active span as failed and records only safe
+  request/error metadata while retaining the existing sanitized server log.
+- SignalR client diagnostics classify failures (`network`, `negotiation`,
+  `transport`, `timeout`, `token`, `unauthorized`, `unknown`), suppress repeated
+  identical warnings for a bounded window, and never print the raw SignalR error
+  string that could contain a URL or token.
+- Manual SignalR restart backoff is now `5s -> 15s -> 30s -> 60s` with a 60-second
+  ceiling, resetting after a successful connection or an explicit online/session
+  transition rather than retrying every five seconds indefinitely.
+- The SignalR BFF converts any `access_token` query parameter into an Authorization
+  header before the backend fetch and removes it from the URL so access tokens do
+  not enter server access logs or telemetry URL attributes.
+- Tenant/company trace enrichment is applied only after the existing
+  `resolveSession()` path has returned validated `SessionClaims`. The session and
+  realtime-token routes may therefore add stable tenant/company identifiers to
+  their active server span without a second lookup. Generic catch-all BFF routes
+  deliberately do not decode bearer-token payloads, trust browser scope headers,
+  or add an extra session-validation round trip just to enrich telemetry.
+- The production dashboard/alert contract is documented in the canonical frontend
+  architecture reference. Provider choice, retention, numeric SLO thresholds and
+  alert destinations remain deployment inputs and must be proven in the target
+  environment rather than hard-coded into the application.
+- Client-side observability now exports safe global/route errors, Web Vitals,
+  navigation commit timing, session-revalidation failures and throttled SignalR
+  diagnostics through a bounded same-origin ingestion contract. The browser sends
+  no raw error text, stacks, URLs/query strings, tenant/company IDs, cookies or
+  bearer tokens, and the server normalizes the allowlist again before creating an
+  `ErpSystem.Web.ClientTelemetry` span.
+- Production configuration rejects a client/server telemetry flag mismatch,
+  unsupported OTLP settings, an exporter-disable override while telemetry is
+  enabled, service-name drift away from `ErpSystem.Web`, and propagator settings
+  that would break W3C trace-context continuity.
+
+The source-level Phase 6 contract is closed. Before an external production launch,
+the selected hosting environment must still provision the documented operational
+dashboards/alerts and run the Collector smoke gate with real routing, retention,
+SLO thresholds and alert destinations. Those are deployment release gates rather
+than frontend source changes.
+
 ## Status
 
-⏳ **Planned**
+✅ **Complete — source observability and production-diagnostics contract closed**
 
 ---
 
-# Phase 7 — Browser Security Hardening 🟡
+# Phase 7 — Browser Security Hardening ✅
 
 ## Objective
 
@@ -868,13 +939,62 @@ When preparing Production:
 - remove hardcoded demo credentials;
 - verify no demo credentials exist in production bundles.
 
+## Applied and enforced — 2026-09-17
+
+Phase 7 is now implemented without weakening the completed PPR/Cache Components
+runtime architecture:
+
+- `src/config/browserSecurity.ts` owns one CSP source inventory and
+  `next.config.ts` emits it as enforced `Content-Security-Policy`;
+- the policy contains no broad host wildcards and accounts explicitly for Google
+  Identity Services, the current Syncfusion PDF resource CDN, configured report
+  and SignalR origins, same-origin application traffic, and the required
+  `blob:`/`data:` report/media paths;
+- local `@fontsource` assets mean external Google Fonts origins are not admitted;
+- the policy preserves the current PPR architecture instead of introducing
+  request nonces: Next `16.3.5` documents nonce CSP as dynamically rendered and
+  incompatible with PPR;
+- Google popup auth is paired with
+  `Cross-Origin-Opener-Policy: same-origin-allow-popups` rather than weakening the
+  existing referrer or framing policy;
+- `/api/security/csp-report` accepts bounded legacy/Reporting-API violation
+  payloads and strips document/source/referrer/full-URL/query data before logging
+  the normalized directive/source classification;
+- modern `Reporting-Endpoints`/`report-to` is enabled only when the deployment
+  supplies a secure absolute `WEB_PUBLIC_ORIGIN`; same-origin `report-uri` remains
+  the compatibility fallback;
+- the enforced policy intentionally retains the inline script/style allowances
+  required by the current Next/MUI/Emotion runtime model while
+  `script-src-attr 'none'` continues to reject inline event-handler attributes;
+- a real Chrome HTTPS smoke loaded the login surface, Next development runtime,
+  MUI/Emotion styling and the Google GIS client under enforcement with no observed
+  CSP blocks; the sanitized collector also accepted an enforced violation and
+  retained only the external origin/classification;
+- the production `next start` path returns `Content-Security-Policy` with no stale
+  Report-Only header, no production `'unsafe-eval'`, no development-wide `ws:` /
+  `wss:` allowances, and with `upgrade-insecure-requests` enabled;
+- focused browser-security coverage passes `12/12`; the full frontend suite passes
+  `155/155` files and `542/542` tests; normal/strict TypeScript, architecture,
+  i18n, lint, module-generator and dependency-audit gates are green;
+- the production build succeeds for `68/68` pages, keeps application routes in
+  Partial Prerender (`◐`) while the CSP collector remains dynamic (`ƒ`), and the
+  bundle measurement stays inside all configured budgets.
+
+The source/browser-security contract is therefore closed. Authenticated smoke of
+real deployment-only SignalR/report/PDF/file/Hangfire data remains a production
+release check because it requires the target environment, a valid account/session
+and representative data. That release smoke may identify a new legitimate origin,
+but it does not keep the source phase in Report-Only. Any such finding must update
+the centralized allowlist and tests rather than adding a wildcard. Demo Login
+remains unchanged until the explicit Production-readiness step.
+
 ## Status
 
-⏳ **Planned**
+✅ **Complete — enforced CSP active, PPR preserved; authenticated deployment smoke remains a release gate**
 
 ---
 
-# Phase 8 — Testing Strategy 🟡
+# Phase 8 — Testing Strategy ✅
 
 ## Objective
 
@@ -969,9 +1089,41 @@ query safety
 business-critical shared infrastructure
 ```
 
+## Applied closure — 2026-09-18
+
+Phase 8 is now closed at source/CI level with a deterministic Playwright suite
+that exercises the real Next.js browser/BFF path without production credentials
+or a persistent customer database.
+
+- Playwright owns `21` browser tests across authentication, authorization,
+  company/tenant transitions, representative business smoke, runtime navigation,
+  RTL and mobile Chromium coverage.
+- Authentication coverage includes Demo Login, tenant/company selection, logout,
+  successful refresh, terminal expiry and the `503` recovery surface.
+- Company switching verifies the revalidated session and proves old-company data
+  is dropped before new-company data is exposed.
+- Authorization coverage includes authenticated `403` and super-admin-only
+  Countries access.
+- Countries covers search, validation, create/update, recoverable API failure and
+  unsaved browser-history traversal. Fiscal Years covers create/update through the
+  shared tenant-scoped form pattern. Appointments and HR organizational structure
+  provide browser-level ownership-boundary smoke.
+- Runtime coverage includes Back/Forward, hard refresh, App Router `404`, live RTL
+  switching and a same-document assertion for PPR/Instant Navigation.
+- Mobile Chromium covers both login controls and the authenticated launcher/company
+  context.
+- `vitest.config.ts` excludes `e2e/**`, keeping the `155` Vitest files / `544`
+  source tests separate from Playwright ownership.
+- `.github/workflows/web-ci.yml` installs Chromium after the production build,
+  runs `npm run test:e2e`, and uploads Playwright failure artifacts.
+- Final closure evidence on 2026-09-18: production build generated `68/68` routes
+  with application routes still in PPR, full Vitest passed `155/155` files and
+  `544/544` tests, and the final CI-mode Playwright run passed `21/21` against
+  `next start` with the deterministic upstream fixture.
+
 ## Status
 
-⏳ **Planned**
+✅ **Complete — browser critical journeys and CI E2E gate closed**
 
 ---
 
@@ -1383,9 +1535,13 @@ Documentation gate when architecture/contracts/manifests change:
 ./documentation/system/Generate-Documentation.ps1 -Check
 ```
 
+Current CI now also enforces:
+
+- Playwright E2E after the production build, using deterministic browser/BFF
+  fixtures and Chromium desktop/mobile projects.
+
 Future gates:
 
-- Playwright E2E;
 - coverage thresholds;
 - bundle-size regression limits;
 - dependency/security audit;
@@ -1503,9 +1659,9 @@ Correctness
 | Phase 3 — Next.js Runtime Architecture | ✅ Complete |
 | Phase 4 — Provider/runtime optimization | ✅ Runtime policy implemented |
 | Phase 5 — Navigation/mobile safety | ✅ Complete |
-| Phase 6 — Observability | ⏳ Planned |
-| Phase 7 — CSP/browser security | ⏳ Planned |
-| Phase 8 — E2E/testing depth | ⏳ Planned |
+| Phase 6 — Observability | ✅ Complete — deployment smoke remains a production release gate |
+| Phase 7 — CSP/browser security | ✅ Complete — enforced CSP active; authenticated deployment smoke remains a release gate |
+| Phase 8 — E2E/testing depth | ✅ Complete — Playwright critical journeys run in CI |
 | Phase 9 — TypeScript/code quality | 🟠 Ongoing |
 | Phase 10 — Dependency strategy | 🟠 Baseline done |
 | Phase 11 — Performance engineering | ✅ Cross-route/runtime baseline complete |
@@ -1523,18 +1679,21 @@ baseline are closed. The latest architecture pass also restored a fully green
 instead of broad barrels.
 
 The remaining hardening work is independent and can proceed in parallel with ERP
-business functionality:
+business functionality. Phase 6, Phase 7 and Phase 8 source work are closed; the
+Phase 6/7 real
+Collector/dashboard/alert and authenticated CSP integration smoke checks now
+belong to the production release gate:
 
-1. **Phase 6 — Observability:** production request/error/performance telemetry and
-   bounded SignalR diagnostics.
-2. **Phase 7 — Browser security:** CSP report-only inventory, remediation and
-   eventual enforcement; remove Demo Login only at Production-readiness time.
-3. **Phase 8 — E2E/testing depth:** Playwright coverage for authentication,
-   company context, authorization, business smoke and runtime navigation.
-4. **Phase 9 — TypeScript/code quality:** continue reducing unsafe escape hatches
+1. **Phase 9 — TypeScript/code quality:** continue reducing unsafe escape hatches
    while preserving the already-green normal/strict type gates.
-5. **Phase 12 — CI quality gates:** consolidate the existing architecture, i18n,
-   lint, type, test, build, documentation and security checks into enforced CI.
+2. **Phase 12 — CI quality gates:** continue with coverage/accessibility policy;
+   Playwright E2E is already enforced after the production build.
+
+At Production-readiness time, also run authenticated browser smoke for the real
+Google popup, SignalR connection, reports/PDF viewers, file/media previews,
+Hangfire and configured external-tool frames, and remove Demo Login as already
+planned. Treat any confirmed CSP violation as an allowlist evidence update, not a
+reason to reopen broad browser permissions.
 
 Performance work should now be reopened only from evidence: production route
 measurement or a concrete user-visible latency. Deferred items such as

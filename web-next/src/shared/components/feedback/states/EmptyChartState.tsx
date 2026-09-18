@@ -7,7 +7,7 @@ import {
 import { Button } from "@mui/material";
 import type { SvgIconProps, SxProps, Theme } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { ChartContainer } from "../../charts";
+import ChartContainer from "../../charts/core/ChartContainer";
 import { FeedbackState } from "./FeedbackState";
 
 export interface EmptyChartStateProps {

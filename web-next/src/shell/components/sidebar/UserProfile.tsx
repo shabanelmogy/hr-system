@@ -8,12 +8,6 @@ import {
   getUserPhotoDataUrl,
   useUserPhoto,
 } from "@/platform/auth/profile";
-import {
-  TenantNameBadge,
-  TenantPlanBadge,
-  TenantReadOnlyBadge,
-  TenantSubscriptionStatusBadge,
-} from "@/platform/tenant-access";
 import { useSession } from "@/lib/auth/SessionContext";
 
 interface UserProfileProps {
@@ -64,12 +58,11 @@ const UserProfile = ({ open }: UserProfileProps) => {
     <Box
       dir={theme.direction}
       sx={{
-        p: open ? 1.5 : 0.5,
+        p: open ? 1 : 0.5,
         mx: 1,
-        mt: 1,
+        mt: 0.75,
         mb: 0,
         borderRadius: 2,
-        textAlign: "center",
         overflow: "hidden",
         position: "relative",
         background: theme.palette.mode === "dark"
@@ -85,7 +78,7 @@ const UserProfile = ({ open }: UserProfileProps) => {
             : theme.transitions.duration.leavingScreen,
         }),
         "&:hover": {
-          transform: "translateY(-2px)",
+          transform: open ? "translateY(-1px)" : "none",
           boxShadow: theme.palette.mode === "dark"
             ? "0 6px 16px rgba(0, 0, 0, 0.4)"
             : "0 6px 16px rgba(99, 102, 241, 0.3)",
@@ -97,23 +90,23 @@ const UserProfile = ({ open }: UserProfileProps) => {
         placement={theme.direction === "rtl" ? "left" : "right"}
         arrow
       >
-        <Box 
-          sx={{ 
+        <Box
+          sx={{
             display: "flex",
-            justifyContent: "center",
             alignItems: "center",
-            position: "relative",
-            mb: open ? 0.5 : 0,
+            justifyContent: open ? "flex-start" : "center",
+            gap: open ? 1 : 0,
+            minWidth: 0,
           }}
         >
-          <Box sx={{ position: "relative", display: "inline-block" }}>
+          <Box sx={{ position: "relative", display: "inline-flex", flexShrink: 0 }}>
             <Avatar
               src={avatarSrc}
               sx={{
-                width: open ? 64 : 38,
-                height: open ? 64 : 38,
+                width: open ? 42 : 38,
+                height: open ? 42 : 38,
                 bgcolor: theme.palette.primary.main,
-                border: "3px solid rgba(255, 255, 255, 0.2)",
+                border: "2px solid rgba(255, 255, 255, 0.24)",
                 transition: theme.transitions.create(["width", "height"], {
                   duration: open
                     ? theme.transitions.duration.enteringScreen
@@ -122,7 +115,7 @@ const UserProfile = ({ open }: UserProfileProps) => {
               }}
               alt={displayName}
             >
-              {open ? initials : <PersonIcon />}
+              {initials || <PersonIcon />}
             </Avatar>
             {/* Online indicator - positioned inside avatar bounds */}
             <Box
@@ -139,75 +132,53 @@ const UserProfile = ({ open }: UserProfileProps) => {
               }}
             />
           </Box>
-        </Box>
-      </Tooltip>
 
-      <Box
-        aria-hidden={!open}
-        sx={{
-          maxHeight: open ? 150 : 0,
-          opacity: open ? 1 : 0,
-          overflow: "hidden",
-          pointerEvents: open ? "auto" : "none",
-          transition: theme.transitions.create(["max-height", "opacity"], {
-            duration: open
-              ? theme.transitions.duration.enteringScreen
-              : theme.transitions.duration.leavingScreen,
-          }),
-        }}
-      >
-          <Typography 
-            variant="subtitle2" 
-            sx={{ 
-              fontWeight: 600, 
-              mb: 0.5,
-              color: "white",
-              textShadow: "0 1px 2px rgba(0, 0, 0, 0.2)",
-            }}
-          >
-            {displayName}
-          </Typography>
           <Box
+            aria-hidden={!open}
             sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 0.5,
-              px: 1,
-              py: 0.25,
-              borderRadius: 1,
-              bgcolor: "rgba(255, 255, 255, 0.15)",
-              backdropFilter: "blur(10px)",
-              border: "1px solid rgba(255, 255, 255, 0.2)",
+              display: open ? "block" : "none",
+              flex: 1,
+              minWidth: 0,
+              textAlign: "start",
             }}
           >
-            {getRoleIcon()}
-            <Typography 
-              variant="caption" 
-              sx={{ 
-                fontWeight: 500,
-                color: "white",
+            <Tooltip title={displayName} enterDelay={600}>
+              <Typography
+                variant="subtitle2"
+                noWrap
+                sx={{
+                  fontWeight: 700,
+                  lineHeight: 1.25,
+                  color: "white",
+                  textShadow: "0 1px 2px rgba(0, 0, 0, 0.2)",
+                }}
+              >
+                {displayName}
+              </Typography>
+            </Tooltip>
+
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.5,
+                mt: 0.25,
+                minWidth: 0,
+                color: "rgba(255, 255, 255, 0.88)",
               }}
             >
-              {userRole}
-            </Typography>
+              {getRoleIcon()}
+              <Typography
+                variant="caption"
+                noWrap
+                sx={{ fontWeight: 500, minWidth: 0 }}
+              >
+                {userRole}
+              </Typography>
+            </Box>
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              gap: 0.5,
-              mt: 1,
-              minWidth: 0,
-            }}
-          >
-            <TenantNameBadge compact />
-            <TenantPlanBadge compact />
-            <TenantSubscriptionStatusBadge compact />
-            <TenantReadOnlyBadge compact />
-          </Box>
-      </Box>
+        </Box>
+      </Tooltip>
     </Box>
   );
 };

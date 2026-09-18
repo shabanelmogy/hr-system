@@ -3,6 +3,10 @@ import { NextResponse } from "next/server";
 import { resolveSession } from "@/lib/auth/backend-session";
 import { readAuthTokens, setAuthCookies } from "@/lib/auth/cookies";
 import { resolveRequestBackendUrl } from "@/lib/env/server";
+import {
+  annotateActiveVerifiedSessionScope,
+  classifyTransportFailure,
+} from "@/lib/observability/serverTelemetry";
 
 const TAG = "[Realtime Token]";
 
@@ -28,6 +32,8 @@ export async function GET(request: NextRequest) {
       { status: 401, headers: { "cache-control": "no-store" } },
     );
   }
+
+  annotateActiveVerifiedSessionScope(resolved.session);
 
   const currentAccessToken = resolved.authPayload?.token ?? accessToken;
   if (!currentAccessToken) {
@@ -65,8 +71,10 @@ export async function GET(request: NextRequest) {
     );
     if (resolved.authPayload) setAuthCookies(response, resolved.authPayload);
     return response;
-  } catch (err) {
-    console.error(`${TAG} Backend fetch error:`, err);
+  } catch (error) {
+    console.error(`${TAG} Backend fetch failed`, {
+      failureKind: classifyTransportFailure(error),
+    });
     return NextResponse.json({ message: "Realtime service unavailable" }, { status: 503 });
   }
 }
