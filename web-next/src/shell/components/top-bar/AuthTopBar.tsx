@@ -39,6 +39,7 @@ export default function AuthTopBar() {
       <StyledToolbar open={false} dir={direction}>
         <Link
           href="/"
+          aria-label={t("general.mainTitle")}
           style={{ display: "flex", alignItems: "center", minWidth: 0, textDecoration: "none", color: "inherit" }}
         >
           <Diversity3Icon sx={{ flexShrink: 0, marginInlineEnd: { xs: 0, sm: 2 } }} />

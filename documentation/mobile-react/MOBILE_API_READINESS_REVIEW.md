@@ -1,6 +1,6 @@
 # Mobile API Readiness Review
 
-Status: **foundation closed for business-feature work; external release checks remain**.
+Status: **Phase 00 baseline recorded; foundation is not closed for business-feature work**.
 
 This review records the mobile client's verified API and platform boundaries. It
 does not claim a live production smoke test or store-signing validation.
@@ -110,7 +110,10 @@ disposable system temporary directory.
 
 ## Deployment and verification
 
-Expo SDK 57 package versions have been aligned with `npx expo install --fix`.
+Expo SDK 57 package versions were behind the `npx expo install --check`
+expectations at the start of Phase 00. The Phase 00 baseline records the patch
+alignment work and its verification status; this review must not claim Expo
+alignment until a clean install and Expo Doctor pass are recorded.
 `eas.json` defines internal preview APK and production profiles on Node 22.13.0.
 EAS builds require one consistent real project ID from `EXPO_EAS_PROJECT_ID`,
 `extra.eas.projectId`, or EAS's built-in `EAS_BUILD_PROJECT_ID`; local
@@ -153,9 +156,12 @@ source-map evidence remain external checks requiring a real EAS project UUID,
 account/project provisioning, credentials/build secrets, and device
 verification.
 
-## Findings closed in this review
+## Findings recorded before Phase 00
 
-- Aligned SDK 57 patch dependencies and added doctor/export CI gates.
+- The previous review stated that SDK 57 patch dependencies were aligned. The
+  baseline check contradicted that statement (Expo Doctor reported 20/21 with
+  ten patch mismatches), so it is treated as an historical claim pending a
+  clean-install verification.
 - Removed the `core` to `shared` provider cycle by moving transient feedback
   composition to the root application layout.
 - Added enforced route/presentation transport boundaries and an AST localization

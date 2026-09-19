@@ -31,8 +31,12 @@ test("authenticated shell survives hard refresh and browser history navigation",
   await expect(currentCompanyTrigger(page, "Company One")).toBeVisible();
 });
 
-test("unknown public route renders the App Router 404 surface", async ({ page }) => {
-  await page.goto("/login/e2e-missing-route");
+test("authenticated unknown route renders the App Router 404 surface", async ({ page }) => {
+  await loginWithDemoRole(page, "User");
+  await completeUserTenantAndCompanySelection(page);
+  await expect(page.getByRole("heading", { name: "Applications" })).toBeVisible();
+
+  await page.goto("/e2e-missing-route");
   await expect(page.getByText("404", { exact: true })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Page not found" })).toBeVisible();
 });

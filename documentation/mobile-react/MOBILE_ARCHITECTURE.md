@@ -155,8 +155,17 @@ The mobile quality gate is `npm run check`, which runs:
 1. strict TypeScript;
 2. ESLint;
 3. architecture boundaries;
-4. AST localization, visible-string and EN/AR catalog parity;
-5. Jest through the Expo-compatible `jest-expo` preset.
+4. the route/API contract matrix checker;
+5. AST localization, visible-string and EN/AR catalog parity;
+6. Jest through the Expo-compatible `jest-expo` preset.
+
+`npm run check:contracts` validates the canonical
+[MOBILE_API_COMPATIBILITY_MATRIX.json](MOBILE_API_COMPATIBILITY_MATRIX.json)
+against every physical `app/**/*.tsx` route and every exported member in
+`src/**/*endpoints.ts`. Adding a route or endpoint without recording its owner,
+scope, permission boundary, and explicit offline policy fails the gate. The
+matrix records compatibility findings; it does not replace the API catalog or
+perform the Phase 01 ownership migration.
 
 CI also runs `npm run check:dependencies` and a moderate production audit,
 `npm run check:expo` for SDK/package compatibility, and

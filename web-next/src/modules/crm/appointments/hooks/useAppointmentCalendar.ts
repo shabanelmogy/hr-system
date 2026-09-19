@@ -1,5 +1,10 @@
-import type { DateSelectArg, DatesSetArg, EventDropArg, EventClickArg } from "@fullcalendar/core";
-import type { EventResizeDoneArg } from "@fullcalendar/interaction";
+import type {
+  DateSelectInfo,
+  DatesSetInfo,
+  EventClickInfo,
+  EventDropInfo,
+  EventResizeDoneInfo,
+} from "@fullcalendar/react";
 import dayjs from "dayjs";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -57,7 +62,7 @@ export function useAppointmentCalendar(access: AppointmentCalendarAccess) {
     setEditingId(null);
   };
 
-  const onSelect = (selection: DateSelectArg) => {
+  const onSelect = (selection: DateSelectInfo) => {
     if (!access.canCreate) return;
     selection.view.calendar.unselect();
 
@@ -93,7 +98,7 @@ export function useAppointmentCalendar(access: AppointmentCalendarAccess) {
     }
   };
 
-  const persistCalendarEvent = async ({ event, revert }: EventDropArg | EventResizeDoneArg) => {
+  const persistCalendarEvent = async ({ event, revert }: EventDropInfo | EventResizeDoneInfo) => {
     if (!access.canEdit) {
       revert();
       return;
@@ -114,7 +119,7 @@ export function useAppointmentCalendar(access: AppointmentCalendarAccess) {
     }
   };
 
-  const onEventClick = (clickInfo: EventClickArg) => {
+  const onEventClick = (clickInfo: EventClickInfo) => {
     if (!access.canView) return;
     const id = Number(clickInfo.event.id);
     if (!Number.isInteger(id) || id <= 0) return;
@@ -124,7 +129,7 @@ export function useAppointmentCalendar(access: AppointmentCalendarAccess) {
     setDialogOpen(true);
   };
 
-  const onDatesSet = (dates: DatesSetArg) => {
+  const onDatesSet = (dates: DatesSetInfo) => {
     const nextRange = {
       start: dates.start.toISOString(),
       end: dates.end.toISOString(),

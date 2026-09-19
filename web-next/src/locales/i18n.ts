@@ -19,7 +19,7 @@ i18n
     defaultNS: "core",
     fallbackNS: "core",
     supportedLngs: ["en", "ar"],
-    initImmediate: false,
+    initAsync: false,
     interpolation: {
       escapeValue: false,
     },

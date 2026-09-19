@@ -163,6 +163,7 @@ const TopBar = ({
             )}
             <Link
               href={appRoutes.shell.home}
+              aria-label={t("general.mainTitle")}
               style={{
                 display: "flex",
                 minWidth: 0,

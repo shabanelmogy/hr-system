@@ -73,7 +73,6 @@ export const FormHeader: React.FC = () => {
               sx={{
                 color: "text.secondary",
                 mt: 0.5,
-                opacity: 0.8
               }}>
               {subtitle}
             </Typography>

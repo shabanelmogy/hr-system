@@ -21,6 +21,7 @@ import {
 import type { KeyboardEvent, ReactNode } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import type { FeatureCollection } from "geojson";
 import {
   ComposableMap,
   Geographies,
@@ -28,6 +29,8 @@ import {
   Marker,
   ZoomableGroup,
 } from "react-simple-maps";
+import { feature } from "topojson-client";
+import type { GeometryCollection, Topology } from "topojson-specification";
 import {
   MAX_WORLD_MAP_ZOOM,
   MIN_WORLD_MAP_ZOOM,
@@ -60,7 +63,7 @@ export interface WorldMapProps {
   height?: number;
 }
 
-type WorldTopology = Record<string, unknown>;
+type WorldTopology = Topology<{ countries: GeometryCollection }>;
 
 interface WorldGeography {
   id?: string | number;
@@ -71,14 +74,22 @@ interface WorldGeography {
 type TopologyStatus = "loading" | "ready" | "error";
 
 function isWorldTopology(value: unknown): value is WorldTopology {
-  if (!value || typeof value !== "object") return false;
+  if (!isRecord(value)) return false;
+  const objects = value.objects;
+  if (!isRecord(objects)) return false;
+  const countries = objects.countries;
 
-  const topology = value as Record<string, unknown>;
   return (
-    topology.type === "Topology" &&
-    Boolean(topology.objects) &&
-    typeof topology.objects === "object"
+    value.type === "Topology" &&
+    Array.isArray(value.arcs) &&
+    isRecord(countries) &&
+    countries.type === "GeometryCollection" &&
+    Array.isArray(countries.geometries)
   );
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
 
 function getStringProperty(
@@ -183,7 +194,7 @@ const WorldMap = ({
   const [zoom, setZoom] = useState(1);
   const [center, setCenter] = useState<WorldMapCenter>([0, 15]);
   const [focusedCountryId, setFocusedCountryId] = useState<string | null>(null);
-  const [topology, setTopology] = useState<WorldTopology | null>(null);
+  const [geographyData, setGeographyData] = useState<FeatureCollection | null>(null);
   const [topologyStatus, setTopologyStatus] = useState<TopologyStatus>("loading");
   const [loadAttempt, setLoadAttempt] = useState(0);
   const moveEndFrame = useRef<number | null>(null);
@@ -202,10 +213,10 @@ const WorldMap = ({
           throw new Error("Map topology response is invalid.");
         }
 
-        return payload;
+        return feature(payload, payload.objects.countries);
       })
       .then((payload) => {
-        setTopology(payload);
+        setGeographyData(payload);
         setTopologyStatus("ready");
       })
       .catch((error: unknown) => {
@@ -292,7 +303,7 @@ const WorldMap = ({
     mixColors(startHex, endHex, normalizeValue(value));
 
   const handleRetry = () => {
-    setTopology(null);
+    setGeographyData(null);
     setTopologyStatus("loading");
     setLoadAttempt((attempt) => attempt + 1);
   };
@@ -418,7 +429,7 @@ const WorldMap = ({
           </Box>
         )}
 
-        {topologyStatus === "ready" && topology && (
+        {topologyStatus === "ready" && geographyData && (
           <ComposableMap
             projectionConfig={{ scale: 145 }}
             style={{ width: "100%", height: "100%" }}
@@ -451,7 +462,7 @@ const WorldMap = ({
                 });
               }}
             >
-              <Geographies geography={topology}>
+              <Geographies geography={geographyData}>
                 {({ geographies }) =>
                   geographies.map((geo, index) => {
                     const geography = geo as WorldGeography;
@@ -494,7 +505,8 @@ const WorldMap = ({
                     );
 
                     const geographyNode = (
-                      <g
+                      <Box
+                        component="g"
                         key={geographyKey}
                         role={isInteractive ? "button" : "img"}
                         tabIndex={isInteractive ? 0 : undefined}
@@ -509,34 +521,32 @@ const WorldMap = ({
                         onKeyDown={(event) => handleCountryKeyDown(event, country)}
                         onFocus={() => setFocusedCountryId(geographyKey)}
                         onBlur={() => setFocusedCountryId(null)}
+                        sx={{
+                          "& .rsm-geography": {
+                            fill,
+                            outline: "none",
+                            stroke: isFocused
+                              ? theme.palette.primary.main
+                              : theme.palette.divider,
+                            strokeWidth: isFocused ? 1.8 : 0.7,
+                          },
+                          "&:hover .rsm-geography, &:active .rsm-geography": {
+                            fill,
+                            outline: "none",
+                            stroke: theme.palette.primary.main,
+                            strokeWidth: 1.2,
+                          },
+                          "&:hover .rsm-geography": {
+                            filter: "brightness(1.05)",
+                          },
+                        }}
                       >
                         <Geography
                           geography={geo}
-                          style={{
-                            default: {
-                              fill,
-                              outline: "none",
-                              stroke: isFocused
-                                ? theme.palette.primary.main
-                                : theme.palette.divider,
-                              strokeWidth: isFocused ? 1.8 : 0.7,
-                            },
-                            hover: {
-                              fill,
-                              outline: "none",
-                              stroke: theme.palette.primary.main,
-                              strokeWidth: 1.2,
-                              filter: "brightness(1.05)",
-                            },
-                            pressed: {
-                              fill,
-                              outline: "none",
-                              stroke: theme.palette.primary.main,
-                              strokeWidth: 1.2,
-                            },
-                          }}
+                          tabIndex={-1}
+                          aria-hidden="true"
                         />
-                      </g>
+                      </Box>
                     );
 
                     return country ? (

@@ -37,6 +37,15 @@ describe("page proxy", () => {
     expect(response.headers.get("location")).toBe("https://app.example.test/");
     expect(fetchMock).not.toHaveBeenCalled();
   });
+
+  it("does not let an auth-page prefix make an unknown route public", () => {
+    const response = proxy(request("/login/e2e-missing-route"));
+
+    expect(response.status).toBe(307);
+    expect(response.headers.get("location")).toBe(
+      "https://app.example.test/login?returnTo=%2Flogin%2Fe2e-missing-route",
+    );
+  });
 });
 
 function request(pathname: string, cookie?: string) {

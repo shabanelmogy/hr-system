@@ -21,7 +21,17 @@ test("Countries covers list search, validation, create and update through the re
   const search = page.getByPlaceholder("Search countries by name, code, phone, or currency...");
   await search.fill("Egypt");
   await expect(page.getByText("Egypt", { exact: true }).first()).toBeVisible();
+
+  const missingCountryResponse = page.waitForResponse((response) => {
+    const url = new URL(response.url());
+    return (
+      response.request().method() === "GET" &&
+      url.pathname === "/api/v1/countries" &&
+      url.searchParams.get("search") === "missing-country"
+    );
+  });
   await search.fill("missing-country");
+  expect((await missingCountryResponse).ok()).toBeTruthy();
   await expect(page.getByText("Egypt", { exact: true })).toHaveCount(0);
   await search.fill("");
 
@@ -42,7 +52,7 @@ test("Countries covers list search, validation, create and update through the re
   await expect(page.getByText("Saudi Arabia", { exact: true }).first()).toBeVisible();
 
   const createdRow = page.getByRole("row").filter({ hasText: "Saudi Arabia" });
-  await createdRow.getByRole("menuitem", { name: "Edit" }).click();
+  await createdRow.getByRole("button", { name: "Edit" }).click();
   const editForm = page.getByRole("dialog").filter({ has: page.getByRole("heading", { name: "Edit Country" }) });
   await expect(editForm).toBeVisible();
   await editForm.getByLabel("Name English").fill("Saudi Arabia Updated");
@@ -95,7 +105,7 @@ test("Fiscal Years, Appointments and HR each have a browser-level module smoke",
   await expect(page.getByText("FY-ONE", { exact: true }).first()).toBeVisible({ timeout: 15_000 });
 
   await page.goto("/appointments");
-  await expect(page.locator(".fc").first()).toBeVisible();
+  await expect(page.getByRole("grid").first()).toBeVisible();
 
   await page.context().clearCookies();
   await loginWithDemoRole(page, "Admin", "/basic-data/organizational-structure/branches");
@@ -123,7 +133,7 @@ test("Fiscal Years covers tenant-scoped create and update through the shared for
 
   await expect(page.getByText("FY-2027", { exact: true }).first()).toBeVisible();
   const createdRow = page.getByRole("row").filter({ hasText: "FY-2027" });
-  await createdRow.getByRole("menuitem", { name: "Edit" }).click();
+  await createdRow.getByRole("button", { name: "Edit" }).click();
 
   const editForm = page.getByRole("dialog").filter({
     has: page.getByRole("heading", { name: "Edit Fiscal Year" }),

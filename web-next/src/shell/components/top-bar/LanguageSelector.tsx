@@ -5,16 +5,23 @@ import {
   Select,
   useTheme,
 } from "@mui/material";
+import { useId } from "react";
 import { useTranslation } from "react-i18next";
 
 const LanguageSelector = ({ direction, handleLanguageChange }: { direction: string; handleLanguageChange: (value: string) => void }) => {
   const theme = useTheme();
   const { t } = useTranslation();
+  const labelId = useId();
+  const selectId = useId();
 
   return (
     <FormControl variant="outlined" size="small">
-      <InputLabel sx={{ color: "white" }}>{t("general.lang")}</InputLabel>
+      <InputLabel id={labelId} htmlFor={selectId} sx={{ color: "white" }}>
+        {t("general.lang")}
+      </InputLabel>
       <Select
+        id={selectId}
+        labelId={labelId}
         value={direction}
         onChange={(e) => handleLanguageChange(e.target.value)}
         MenuProps={{ disableScrollLock: true }}

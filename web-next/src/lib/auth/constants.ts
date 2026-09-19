@@ -15,19 +15,21 @@ export const PUBLIC_ROUTES = [
   appRoutes.auth.acceptInvitation,
   appRoutes.auth.resendEmailConfirmation,
   appRoutes.auth.emailConfirmed,
-  "/.well-known",
-  
-  // Static assets (Next.js)
-  "/_next",
   "/favicon.ico",
   "/robots.txt",
   "/sitemap.xml",
 ] as const;
 
+const PUBLIC_ROUTE_PREFIXES = [
+  "/.well-known",
+  "/_next",
+] as const;
+
 // Helper function to check if a path should be public
 export function isPublicRoute(pathname: string): boolean {
-  // Exact match or prefix match
-  return PUBLIC_ROUTES.some(route => 
-    pathname === route || pathname.startsWith(`${route}/`)
+  if (PUBLIC_ROUTES.some((route) => pathname === route)) return true;
+
+  return PUBLIC_ROUTE_PREFIXES.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`),
   );
 }

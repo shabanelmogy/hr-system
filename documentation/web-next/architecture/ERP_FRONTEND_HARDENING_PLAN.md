@@ -668,7 +668,7 @@ raise the metric.
 
 ---
 
-## Phase 10 — Dependency Upgrade Policy ⬜
+## Phase 10 — Dependency Upgrade Policy ✅
 
 ### Objective
 
@@ -696,6 +696,76 @@ This list is historical planning input, not a command to upgrade all packages.
 Re-run `npm outdated` immediately before each dependency phase and use the current
 installed tree as the source of truth.
 
+### Closure execution
+
+Phase 10 was closed by applying the policy to each material family, not by forcing
+the outdated report to zero. Completed migrations/cleanup are:
+
+- MUI X `9.14.0`, TanStack Query `5.103.1`, `react-hot-toast` `2.6.1`, ESLint
+  `9.39.5` and the matched Vitest/coverage `4.1.11` pair were refreshed within
+  their verified majors;
+- SignalR moved to `10.0.11` and retained the existing realtime contract against
+  the .NET 10 backend;
+- i18next moved to `26.4.2` and react-i18next to `17.0.14`; configuration now
+  uses v26 `initAsync` rather than removed `initImmediate`;
+- react-simple-maps moved to `5.0.5`; the map boundary validates TopoJSON and
+  converts it to typed GeoJSON using `topojson-client` rather than weakening the
+  type boundary;
+- FullCalendar moved to React `7.1.0`, its React subpath plugins/locales, Temporal
+  polyfill and explicit skeleton/Classic theme CSS;
+- lucide-react moved to `1.47.0` for its small health/Hangfire surface;
+- unused `react-error-boundary`, obsolete `@types/react-simple-maps`, and redundant
+  direct `@eslint/js`, `eslint-plugin-react-hooks` and `globals` dependencies were
+  removed instead of version-chased.
+
+FullCalendar v7 produced an important runtime migration finding: the historical
+root `.fc` class is no longer present. The previous `.fc .fc-*` MUI selectors and
+the browser smoke's `.fc` locator therefore stopped representing the runtime even
+though TypeScript and the production build were green. The calendar styling now
+uses FullCalendar v7's supported class hooks plus Classic-theme variables, and the
+browser assertion uses the semantic calendar grid. The focused appointment suite
+passes `7/7`, and the CI-mode browser smoke verifies the rendered calendar.
+
+### Intentional defers / reopen triggers
+
+The closing `npm outdated` result still contains known majors. They are deferred
+for specific engineering reasons and are not Phase 10 failures:
+
+- **Framer Motion 13:** reopen after interaction coverage exists for the shared
+  drag/gesture surfaces (tree views, organization diagram and recruitment Kanban).
+- **Syncfusion 34:** reopen as one coordinated family after the PDF viewer's
+  currently versioned external runtime resource is tied to the package family and
+  a real PDF browser smoke is available.
+- **docx-preview 0.4:** reopen with a real DOCX viewer fixture/smoke before taking
+  the pre-1.0 change.
+- **ESLint 10:** reopen when the current Next/`eslint-plugin-import` chain supports
+  ESLint 10 without a peer mismatch; the verified ESLint 9 line remains current
+  for this application.
+- **Vitest / coverage-v8 5:** reopen as a paired toolchain migration that proves
+  the Phase 9 thresholds and coverage reports remain equivalent.
+- **TypeScript 7:** blocked by the installed `typescript-eslint` compatibility
+  range (`<6.1.0`); do not suppress or override that peer constraint.
+- **`@types/node` 26:** reopen together with an intentional runtime/CI Node policy
+  change; CI currently runs Node 22.
+
+### Closure evidence
+
+- `npm run check` — PASS (architecture, i18n, lint and type-check).
+- `npm run test:coverage` — `162/162` files and `565/565` tests; `80.81%`
+  statements, `76.35%` branches, `81.54%` functions and `83.18%` lines.
+- `npm run test:module-generator` — PASS.
+- `npm audit --omit=dev --audit-level=high` — `0` vulnerabilities.
+- production build — `68/68` pages.
+- bundle — `24.39 MiB` total JavaScript versus approximately `24.37 MiB` before
+  the FullCalendar/final tranche; `/appointments` is `2.33 MiB`, with both values
+  inside the existing `26 MiB` / `4.5 MiB` budgets.
+- CI-mode Playwright — `21/21` passed, including the appointment runtime smoke.
+- documentation recipes — `77/77` passed; `git diff --check` passed.
+
+Status: **Complete.** A deferred family is reopened only when its compatibility
+or runtime-evidence trigger is met; the one-family-at-a-time policy remains the
+normal dependency governance rule.
+
 ### Exit criteria
 
 - No blind bulk-major upgrade.
@@ -704,7 +774,7 @@ installed tree as the source of truth.
 
 ---
 
-## Phase 11 — Performance Budget / Measurement ⬜
+## Phase 11 — Performance Budget / Measurement ✅
 
 ### Objective
 
@@ -715,53 +785,72 @@ Treat perceived speed and bundle growth as measurable architecture properties.
 - `npm run measure:build`
 - `documentation/web-next/architecture/performance-baseline.md`
 
-### Historical measurements to replace with a clean baseline
+### Current accepted baseline — 2026-09-18
 
-Earlier measurements included approximately:
+The clean production baseline is now recorded from the post-Phase-10 tree:
 
 ```text
-App paths                ~80
-Measured routes          ~71
-Total JS                 ~23 MiB
-/login First Load JS     ~1.68 MiB
-/register First Load JS  ~2.04 MiB
-Typical ERP routes       ~3.75–4.01 MiB
+App-path manifest entries       71
+Measured First Load routes      60
+Generated JS chunks             270
+Aggregate generated JS          24.39 MiB
+Largest emitted chunk           11.06 MiB
+Protected shared intersection   26 chunks / 1.60 MiB
+/                               2.00 MiB
+/login                          1.14 MiB
+/register                       1.94 MiB
+/finance/fiscal-years           2.23 MiB
+/appointments                   2.33 MiB
 ```
 
-These are historical reference values. They must be remeasured after the current
-Next.js 16 / Cache Components / route-group work before being treated as current
-budgets.
+The canonical detailed record is
+`documentation/web-next/architecture/performance-baseline.md`.
 
-### Planned measurements
+### Measurement policy
 
-- Route First Load JS.
-- Shared/common chunk weight.
-- Largest chunks and their owners.
-- Login/auth route cost.
-- Dashboard/root route cost.
-- LCP.
-- INP.
-- client navigation latency.
-- company/module switch latency.
-- PPR and Instant Navigation behavior.
-- cost of locale, date, reporting, Syncfusion, and other heavy integrations.
+- Production `measure:build` owns route First Load JS, shared protected chunk
+  weight, largest emitted chunks and route-class budgets.
+- Login/auth, shell/launcher, ordinary business routes, heavyweight feature
+  routes and the minimal error route are budgeted separately.
+- PPR/Instant Navigation behavior remains covered by browser E2E.
+- LCP, INP, client-navigation latency and company/module-switch latency are
+  browser/runtime experience metrics. Observe them in authenticated browser or
+  production telemetry and investigate from evidence; do not add unstable CI
+  wall-clock thresholds tied to runner performance.
+- Heavy locale/date/reporting/viewer runtimes remain route/interaction local and
+  are reopened only when bundle ownership or runtime evidence shows regression.
 
 ### Budget policy
 
-- Establish a clean post-Phase-3 baseline first.
-- Define budgets per route class rather than one unrealistic global number.
-- Flag regressions in CI only after the baseline is stable.
+- The clean current baseline is established and versioned in the performance guide.
+- `measure:build` enforces route-class budgets: `1.10 MiB` error fallback,
+  `2.15 MiB` public auth, `2.25 MiB` protected shell/launcher, `2.55 MiB`
+  business application and `2.75 MiB` heavy feature entry.
+- Protected shared First Load JavaScript is capped at `1.85 MiB`.
+- Existing backstops remain: `26 MiB` total emitted JS, `12 MiB` largest chunk and
+  `4.5 MiB` absolute route maximum.
+- CI already runs `npm run measure:build`, so the class/shared budgets are release
+  gates without adding another workflow stage.
 - A budget increase requires an explicit product/architecture justification.
+
+Focused policy coverage verifies route classification, protected membership and
+the exact over-budget violation shape in
+`scripts/performance-budget-policy.test.mjs`.
 
 ### Exit criteria
 
-- Current baseline is recorded.
-- Major route classes have agreed budgets.
-- Future architecture changes can be compared objectively against the baseline.
+- ✅ Current baseline is recorded.
+- ✅ Major route classes have agreed and CI-enforced budgets.
+- ✅ Future architecture changes can be compared objectively against the same
+  production-build policy.
+
+Status: **Complete.** Future performance work is evidence-driven feature-local
+tuning; do not reopen the shared runtime merely because an emitted chunk count
+changes while route/shared budgets remain healthy.
 
 ---
 
-## Phase 12 — CI as Definition of Done 🟡
+## Phase 12 — CI as Definition of Done ✅
 
 ### Objective
 
@@ -770,7 +859,7 @@ checks as optional cleanup.
 
 ### Existing CI foundation
 
-The current web CI already includes or has included gates for:
+The current web CI now enforces:
 
 - Node environment setup.
 - `npm ci`.
@@ -778,22 +867,40 @@ The current web CI already includes or has included gates for:
 - architecture checks.
 - i18n checks.
 - ESLint.
-- normal type-check.
-- strict type-check.
-- tests.
+- the canonical project-wide strict type-check.
+- critical-infrastructure coverage thresholds and coverage artifact publication.
 - module generator self-test.
 - production build.
-- bundle budget/measurement.
-- documentation check.
+- aggregate, shared-runtime and route-class bundle budgets/measurement.
+- Playwright browser E2E against the production server.
+- automated WCAG A/AA accessibility smoke on critical desktop/mobile surfaces.
+- a production-path browser-security header/CSP regression smoke.
+- generated-documentation consistency.
 
 Therefore the roadmap is **not** to "add CI" from scratch. The work is to keep
 the existing pipeline green and make it the Definition of Done.
 
-### Planned additions after baseline stabilization
+### Applied closure additions
 
-- Coverage reporting/thresholds.
-- Accessibility smoke checks for critical routes.
-- Optional Web Vitals/performance regression evidence where stable enough for CI.
+- Phase 9 coverage thresholds are enforced by `test:coverage`, and CI publishes
+  the resulting coverage directory as an artifact.
+- `@axe-core/playwright` scans the public login route, authenticated application
+  shell, representative Countries CRUD page/form and mobile login against WCAG
+  A/AA rules. The first run exposed real shared accessibility defects rather than
+  being baselined away: the language Select was not programmatically tied to its
+  label, icon-only theme controls and responsive brand links lacked accessible
+  names, the sidebar section used invalid list-child semantics, and the shared
+  form subtitle compounded `text.secondary` with opacity until it failed contrast.
+  Those shared root causes are fixed and the regression smoke stays in the normal
+  Playwright suite.
+- The production browser-security smoke requests the actual built application and
+  verifies enforced CSP, absence of Report-Only/production `unsafe-eval`, and the
+  core hardening headers emitted by Next configuration.
+- Playwright keeps CI retries for diagnostic evidence but enables
+  `failOnFlakyTests`, so a test that only passes on retry still fails the CI
+  Definition of Done.
+- Optional Web Vitals / real-user timing remains telemetry evidence rather than a
+  runner-dependent PR timing threshold.
 
 ### Definition of Done for frontend changes
 
@@ -805,8 +912,9 @@ npm.cmd run check:architecture
 npm.cmd run check:i18n
 npm.cmd run lint -- --quiet
 npm.cmd run type-check
+npm.cmd audit --omit=dev --audit-level=high
+npm.cmd run test:coverage
 npm.cmd run test:module-generator
-npm.cmd test
 npm.cmd run build
 npm.cmd run measure:build
 npm.cmd run test:e2e
@@ -821,6 +929,28 @@ documentation/system/Generate-Documentation.ps1 -Check
 
 If a gate is blocked by pre-existing unrelated work, record the exact failure and
 do not report the complete CI baseline as green.
+
+### Deterministic CI versus deployment release gates
+
+Generic PR CI must remain deterministic and self-contained. Real
+Collector/dashboard/alert retention and delivery, authenticated Google popup,
+deployment SignalR, report/PDF/file previews, Hangfire, configured external-frame
+integrations and final Production Demo Login removal require the target deployment,
+credentials or representative data. They remain explicit staging/Production release
+checks and do not keep Phase 12 source/CI closure open.
+
+### Exit criteria
+
+- ✅ Architecture, i18n, lint and the single strict type policy are CI-blocking.
+- ✅ Production dependency audit, coverage thresholds/artifact, generator test,
+  production build and Phase 11 budgets are CI-blocking.
+- ✅ Critical browser journeys, WCAG A/AA smoke and production browser-security
+  headers are exercised against the built application.
+- ✅ A pass-on-retry is treated as CI failure rather than a silent flaky success.
+- ✅ Generated documentation consistency is part of the same release contract.
+
+Status: **Complete.** Keep this contract green as business work continues; add a
+new deterministic gate only when it protects a demonstrated regression class.
 
 ---
 
@@ -895,9 +1025,12 @@ Use this order unless a new production-critical defect overrides it:
    continues; do not reopen them without concrete regression evidence.
 2. Keep the completed Phase 9 strict/runtime-boundary and critical coverage gates
    green while business work continues.
-3. Continue Phase 10 dependency majors incrementally.
-4. Extend Phase 12 CI with accessibility and the remaining consolidated
-   browser-security/release gates; coverage and Playwright E2E are already enforced.
+3. Keep the completed Phase 10 dependency policy green; reopen a deferred family
+   only when its compatibility/runtime-evidence trigger is met, still one family
+   at a time.
+4. Keep the completed Phase 12 CI Definition of Done green, including coverage,
+   Phase 11 budgets, accessibility, production browser-security and fail-on-flaky
+   browser gates.
 5. At Production-readiness time, run the documented authenticated CSP integration
    smoke and remove Demo Login; treat these as release gates rather than reverting
    Phase 7 to Report-Only.

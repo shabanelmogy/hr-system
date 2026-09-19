@@ -2,15 +2,19 @@ import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTypescript from "eslint-config-next/typescript";
 
 const eslintConfig = [
-  ...nextVitals,
-  ...nextTypescript,
   {
     ignores: [
       ".next/**",
       "coverage/**",
       "node_modules/**",
-      "out/**"
-    ],
+      "out/**",
+      "playwright-report/**",
+      "test-results/**"
+    ]
+  },
+  ...nextVitals,
+  ...nextTypescript,
+  {
     rules: {
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/ban-ts-comment": "error",

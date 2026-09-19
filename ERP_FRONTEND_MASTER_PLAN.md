@@ -1209,7 +1209,7 @@ phase. New or materially changed untrusted boundaries must continue the
 
 ---
 
-# Phase 10 — Dependency Upgrade Strategy 🟡
+# Phase 10 — Dependency Upgrade Strategy ✅
 
 ## Objective
 
@@ -1243,7 +1243,7 @@ Important packages:
 - charts;
 - document/report viewers.
 
-## Current baseline
+## Closed baseline
 
 ```text
 Next.js 16.3.5
@@ -1252,15 +1252,71 @@ ReactDOM 19.3.0
 TypeScript 5.9.3
 ```
 
-Earlier audit:
+Phase 10 was executed as controlled dependency-family migrations rather than a
+bulk `latest` refresh. The completed runtime/tooling tranches are:
+
+- semver-safe refreshes for MUI X (`9.14.0`), TanStack Query (`5.103.1`),
+  `react-hot-toast` (`2.6.1`), ESLint 9 and the Vitest 4 pair;
+- SignalR `10.0.11`, verified against the .NET 10 backend and the realtime
+  focused suite;
+- i18next `26.4.2` + react-i18next `17.0.14`, including the v26
+  `initImmediate` -> `initAsync` migration;
+- react-simple-maps `5.0.5`, with explicit validated TopoJSON -> GeoJSON
+  conversion instead of an unsafe type cast, plus current `topojson-client`;
+- FullCalendar React `7.1.0`, migrated to its v7 React subpath exports,
+  Temporal polyfill, explicit skeleton/theme CSS, Classic theme plugin and v7
+  class hooks. The browser regression found that the removed v6 `.fc` root
+  class made the old selector-based styling and smoke assertion obsolete; the
+  calendar now uses supported v7 class hooks and a semantic grid smoke;
+- lucide-react `1.47.0` for the isolated health/Hangfire icon consumers.
+
+Cleanup performed as part of the same policy:
+
+- removed unused `react-error-boundary`;
+- removed obsolete `@types/react-simple-maps` because v5 owns its types;
+- removed redundant direct `@eslint/js`, `eslint-plugin-react-hooks` and
+  `globals` declarations. ESLint/Next still supply the required transitive
+  packages, and lint/type-check remain green.
+
+The final `npm outdated` result is intentionally **not** empty. The following
+majors are deferred with explicit reopen conditions rather than upgraded merely
+to satisfy an outdated report:
+
+| Family | Decision / reopen trigger |
+|---|---|
+| Framer Motion 13 | Keep the verified 12.x gesture engine until drag/gesture browser coverage exists for shared trees, org structure and Kanban before taking the major. |
+| Syncfusion 34 | Keep the coordinated 31.2.x PDF-viewer family until the viewer's versioned runtime resource URL is coupled to the package version and a real PDF browser smoke exists. |
+| docx-preview 0.4 | Keep 0.3.7 until the document-viewer tranche has a real DOCX fixture/smoke; pre-1.0 changes are not promoted without runtime evidence. |
+| ESLint 10 | Keep 9.39.5 while the current `eslint-plugin-import`/Next dependency chain still advertises ESLint <=9 compatibility. |
+| Vitest / coverage-v8 5 | Keep the matched 4.1.11 pair until a dedicated test-toolchain migration proves identical coverage semantics, reports and thresholds. |
+| TypeScript 7 | Keep 5.9.3 while the installed `typescript-eslint` line declares TypeScript `<6.1.0`; do not bypass the peer contract. |
+| `@types/node` 26 | Keep Node 20 types while CI runs Node 22 and the application supports Node >=20.9; move the runtime/CI/type policy deliberately rather than model newer Node APIs accidentally. |
+
+## Closure evidence
+
+The final Phase 10 tree passed the complete frontend gate in sequence:
 
 ```text
 npm audit: 0 vulnerabilities
+npm run check: PASS
+npm run test:coverage: 162/162 files, 565/565 tests
+coverage: 80.81% statements / 76.35% branches / 81.54% functions / 83.18% lines
+npm run test:module-generator: PASS
+production build: 68/68 pages
+Playwright CI-mode E2E: 21/21 passed
+documentation recipes: 77/77 passed
+git diff --check: PASS
 ```
+
+The pre-FullCalendar comparison point was approximately `24.37 MiB` total
+JavaScript. The closed tree measures `24.39 MiB` (`25,579,513` bytes), still
+below the `26 MiB` budget; `/appointments` is `2.33 MiB` first-load against the
+`4.5 MiB` route budget. This is a roughly `+0.02 MiB` total change while taking
+the calendar major and the final low-risk dependency tranche.
 
 ## Status
 
-🟠 **Baseline upgraded; future majors should be controlled batches**
+✅ **Complete — controlled major migrations verified; remaining majors have explicit compatibility/risk reopen triggers**
 
 ---
 
@@ -1478,11 +1534,35 @@ Final shared protected intersection:  36 chunks / ~1.61 MB
 largest measured First Load    ~3.09 -> 2.77 MiB
 ```
 
-Final emitted-JS inventory is `263` chunks / `24.22 MiB` versus the earlier
-`230` / `23.36 MiB`; it remains below the `26 MiB` total-JS budget. The route
-startup result is materially better despite the larger split-chunk inventory,
-which is why per-route/shared First Load remains the primary startup metric.
-ActiveReports and Syncfusion remain isolated from ordinary first-load routes.
+The original cross-route closure emitted `263` chunks / `24.22 MiB` versus the
+earlier `230` / `23.36 MiB`. After the controlled Phase 10 dependency work, the
+refreshed Phase 11 baseline is `270` chunks / `24.39 MiB`; it remains below the
+`26 MiB` total-JS budget. The route startup result remains materially better than
+the pre-hardening state despite the larger split-chunk inventory, which is why
+per-route/shared First Load remains the primary startup metric. ActiveReports and
+Syncfusion remain isolated from ordinary first-load routes.
+
+### Formal route-class budget baseline — 2026-09-18
+
+The closing production build records `71` app-path manifest entries and `60`
+routes with First Load diagnostics. The protected shared First Load intersection
+is `26` chunks / `1.60 MiB` across `52` protected routes.
+
+```text
+error fallback          current max 0.84 MiB   budget 1.10 MiB
+public auth             current max 1.94 MiB   budget 2.15 MiB
+protected shell         current max 2.04 MiB   budget 2.25 MiB
+business application    current max 2.28 MiB   budget 2.55 MiB
+heavy feature entry     current max 2.33 MiB   budget 2.75 MiB
+protected shared JS     current     1.60 MiB   budget 1.85 MiB
+```
+
+The absolute backstops remain `26 MiB` aggregate JS, `12 MiB` largest emitted
+chunk and `4.5 MiB` for any measured first-load route. `measure:build` now
+enforces the class/shared limits as part of the existing CI bundle gate, and
+`scripts/performance-budget-policy.test.mjs` protects the route-class policy.
+The canonical current measurements live in
+`documentation/web-next/architecture/performance-baseline.md`.
 
 Final gates for this closure: architecture, normal + strict TypeScript, full
 lint, module-generator self-test, full Vitest, documentation check, production
@@ -1546,7 +1626,7 @@ feature-hook registration graph.
 
 ---
 
-# Phase 12 — CI Quality Gates 🟢
+# Phase 12 — CI Quality Gates ✅
 
 ## Objective
 
@@ -1569,22 +1649,34 @@ Documentation gate when architecture/contracts/manifests change:
 ./documentation/system/Generate-Documentation.ps1 -Check
 ```
 
-Current CI now also enforces:
+The consolidated CI contract now also enforces:
 
-- baseline-derived critical-infrastructure coverage thresholds and publishes a
-  repeatable LCOV/JSON coverage artifact;
-- Playwright E2E after the production build, using deterministic browser/BFF
-  fixtures and Chromium desktop/mobile projects.
+- `npm audit --omit=dev --audit-level=high` for production dependencies;
+- baseline-derived critical-infrastructure coverage thresholds and a repeatable
+  LCOV/JSON coverage artifact;
+- module-generator self-test;
+- production build followed by the Phase 11 aggregate, shared-runtime and
+  route-class bundle budgets;
+- Playwright E2E against the production `next start` server with deterministic
+  browser/BFF fixtures and Chromium desktop/mobile projects;
+- WCAG A/AA automated accessibility smoke for `/login`, the authenticated shell,
+  a representative Countries CRUD page/form and the critical mobile login path;
+- a production-path browser-security smoke that asserts the real response keeps
+  enforced CSP, does not emit Report-Only or production `unsafe-eval`, and keeps
+  the core security headers;
+- generated documentation consistency;
+- CI retries remain diagnostic, but `failOnFlakyTests` makes a pass-on-retry a
+  failed release gate rather than silently accepting flakiness.
 
-Future gates:
-
-- bundle-size regression limits;
-- dependency/security audit;
-- generated documentation consistency.
+Web Vitals / real-user timing remains evidence-driven rather than a synthetic CI
+wall-clock threshold. Real Collector/dashboard/alert delivery plus authenticated
+Google, deployment SignalR, report/PDF/file previews, Hangfire and configured
+external-frame journeys remain staging/Production release checks because they
+require deployment infrastructure, credentials or representative data.
 
 ## Status
 
-🟠 **Most individual gates exist; consolidated enforcement still needs completion**
+✅ **Complete — the deterministic CI pipeline is the frontend Definition of Done; deployment-only integration smokes remain release gates**
 
 ---
 
@@ -1698,9 +1790,9 @@ Correctness
 | Phase 7 — CSP/browser security | ✅ Complete — enforced CSP active; authenticated deployment smoke remains a release gate |
 | Phase 8 — E2E/testing depth | ✅ Complete — Playwright critical journeys run in CI |
 | Phase 9 — TypeScript/code quality | ✅ Complete |
-| Phase 10 — Dependency strategy | 🟠 Baseline done |
+| Phase 10 — Dependency strategy | ✅ Complete |
 | Phase 11 — Performance engineering | ✅ Cross-route/runtime baseline complete |
-| Phase 12 — CI quality gates | 🟠 Partial |
+| Phase 12 — CI quality gates | ✅ Complete |
 | Phase 13 — Documentation/governance | ✅ Baseline complete / ongoing governance |
 
 ---
@@ -1713,15 +1805,15 @@ baseline are closed. The latest architecture pass also restored a fully green
 `check:architecture` after the performance refactors by using narrow public APIs
 instead of broad barrels.
 
-The remaining hardening work is independent and can proceed in parallel with ERP
-business functionality. Phase 6, Phase 7, Phase 8 and Phase 9 source work are closed; the
-Phase 6/7 real
-Collector/dashboard/alert and authenticated CSP integration smoke checks now
-belong to the production release gate:
+The source hardening roadmap through Phase 12 is closed and can stay green while
+ERP business functionality continues. Phase 13 remains the ongoing documentation
+and architecture-governance discipline. The Phase 6/7 real Collector/dashboard/
+alert and authenticated CSP integration smoke checks belong to the production
+release gate rather than generic PR CI.
 
-1. **Phase 12 — CI quality gates:** continue with accessibility and the remaining
-   consolidated release-policy work; unit coverage thresholds and Playwright E2E
-   are already enforced in CI.
+Dependency majors are no longer an open phase. Reopen only the affected family
+when its documented compatibility/runtime-evidence trigger is met, and retain the
+Phase 10 one-family-at-a-time verification policy.
 
 At Production-readiness time, also run authenticated browser smoke for the real
 Google popup, SignalR connection, reports/PDF viewers, file/media previews,

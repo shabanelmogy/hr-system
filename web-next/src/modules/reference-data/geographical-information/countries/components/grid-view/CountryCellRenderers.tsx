@@ -25,6 +25,10 @@ export const renderPhoneCode = ({ value }: GridRenderCellParams<CountryListItem>
       variant="outlined"
       color="primary"
       icon={<Phone sx={{ fontSize: 12 }} />}
+      sx={{
+        color: "primary.dark",
+        "& .MuiChip-icon": { color: "primary.dark" },
+      }}
     />
   );
 };

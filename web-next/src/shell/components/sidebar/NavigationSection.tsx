@@ -142,7 +142,7 @@ function NavigationSection({
   }
 
   return (
-    <List dir={theme.direction}>
+    <List component="div" dir={theme.direction}>
       {/* Section Header - Always clickable */}
       <Tooltip
         title={open ? null : t(section.title)}

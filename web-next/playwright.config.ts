@@ -12,6 +12,7 @@ export default defineConfig({
   // another test's authenticated session or CRUD state.
   fullyParallel: false,
   forbidOnly: isCi,
+  failOnFlakyTests: isCi,
   retries: isCi ? 2 : 0,
   workers: 1,
   reporter: isCi ? [["list"], ["html", { open: "never" }]] : "list",

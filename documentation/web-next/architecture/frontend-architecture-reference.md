@@ -556,6 +556,21 @@ report/PDF runtimes remain isolated from ordinary routes. The largest emitted
 chunk remains under the `12 MiB` budget and the largest route remains well under
 the `4.5 MiB` First Load budget.
 
+The Phase 11 budget baseline was refreshed on 2026-09-18 after the controlled
+dependency work. The current build emits `270` chunks / `24.39 MiB`; the largest
+chunk is `11.06 MiB`. The protected shared First Load intersection is `26` chunks
+/ `1.60 MiB` across `52` protected routes, and the largest measured route is
+`/appointments` at `2.33 MiB`.
+
+`measure:build` now enforces route-class budgets in addition to the original
+global backstops: error fallback `1.10 MiB`, public auth `2.15 MiB`, protected
+shell/launcher `2.25 MiB`, business application `2.55 MiB`, heavy feature entry
+`2.75 MiB`, plus a `1.85 MiB` protected-shared intersection cap. The detailed
+baseline and class definitions live in `performance-baseline.md`. Any budget
+increase requires an explicit product/architecture justification and an updated
+baseline; new routes default to the business-application class until deliberately
+classified otherwise.
+
 Final verification for this closure includes architecture check, normal and
 strict TypeScript, full quiet lint, module-generator self-test, full Vitest,
 documentation generation/check, production build, bundle measurement, focused
@@ -1183,6 +1198,54 @@ an unrelated third-party origin. Do not add raw CSP reports to logs or telemetry
 Update the centralized policy, its normalization tests, this guide and the Phase 7
 inventory together whenever a new browser integration genuinely requires a new
 source.
+
+### CI Definition of Done and accessibility/browser regression policy
+
+Phase 12 consolidates the frontend's deterministic release contract. The web CI
+installs from the lockfile, audits production dependencies, enforces architecture,
+i18n, lint and the single strict TypeScript policy, runs critical-infrastructure
+coverage thresholds with an uploaded report, verifies the module generator, builds
+the production application, enforces the Phase 11 bundle budgets, runs Playwright
+against `next start`, and verifies generated documentation.
+
+The browser suite now includes automated WCAG A/AA smoke through
+`@axe-core/playwright` for the public login route, authenticated application shell,
+a representative Countries list/create interaction and mobile login. The first
+baseline run exposed real shared defects: `LanguageSelector` rendered a visual MUI
+label without a programmatic Select association; `ThemeToggler` and responsive
+brand links could become icon-only controls without accessible names; sidebar
+section markup used a semantic list whose direct children were not list items; and
+the shared `FormHeader` subtitle reduced an already-secondary foreground with
+additional opacity until contrast fell below the automated WCAG threshold. Fix
+these problems in the shared owner rather than excluding the axe rule or copying
+route-local patches. When a modal interaction is tested, scan the underlying page
+before opening it, then scope the interaction scan to the active dialog so hidden
+background content is not confused with the modal surface.
+
+Browser-security regression coverage also reaches the actual production response:
+the Playwright smoke asserts an enforced `Content-Security-Policy`, no Report-Only
+header, no production `'unsafe-eval'`, and the core hardening headers configured by
+Next. CI may retry a failed browser test to preserve diagnostic traces, but
+`failOnFlakyTests` is enabled there: a pass on retry does not make the release gate
+green.
+
+That policy immediately exposed a formerly hidden 404 smoke flake. The test used
+`/login/e2e-missing-route`, while `isPublicRoute()` historically treated every
+auth-route prefix as public. The request could therefore enter the protected
+catch-all layout without a session and sit on its bootstrap loader before the
+not-found surface completed. Public auth pages are now exact matches; only genuine
+static prefix families such as `/.well-known/*` and `/_next/*` use prefix matching.
+Unknown application routes remain protected by default, and the 404 browser smoke
+establishes an authenticated context before exercising the catch-all. Do not make
+an arbitrary path public merely to simplify a 404 test.
+
+Deterministic PR CI is intentionally separate from deployment-only integration
+smoke. Real Collector/dashboard/alert delivery, authenticated Google popup,
+deployment SignalR, report/PDF/file viewers, Hangfire, configured external-frame
+integrations and Production Demo Login removal require the target environment,
+credentials or representative data and remain staging/Production release gates.
+Web Vitals and user-perceived latency should likewise be driven by stable browser
+or production telemetry rather than machine-specific CI timing thresholds.
 
 ## App Router Rules
 

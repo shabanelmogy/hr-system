@@ -1,10 +1,14 @@
-import arLocale from "@fullcalendar/core/locales/ar";
-import enGbLocale from "@fullcalendar/core/locales/en-gb";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import listPlugin from "@fullcalendar/list";
 import FullCalendar from "@fullcalendar/react";
-import timeGridPlugin from "@fullcalendar/timegrid";
+import dayGridPlugin from "@fullcalendar/react/daygrid";
+import interactionPlugin from "@fullcalendar/react/interaction";
+import listPlugin from "@fullcalendar/react/list";
+import arLocale from "@fullcalendar/react/locales/ar";
+import enGbLocale from "@fullcalendar/react/locales/en-gb";
+import timeGridPlugin from "@fullcalendar/react/timegrid";
+import classicThemePlugin from "@fullcalendar/react/themes/classic";
+import "@fullcalendar/react/skeleton.css";
+import "@fullcalendar/react/themes/classic/theme.css";
+import "@fullcalendar/react/themes/classic/palette.css";
 import { ErrorOutlineOutlined as ErrorOutlineIcon, Refresh as RefreshIcon } from "@mui/icons-material";
 import { Box, Button, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -16,7 +20,13 @@ import { useAppointmentCalendar } from "../../hooks/useAppointmentCalendar";
 import AppointmentDialog from "../dialogs/AppointmentDialog";
 import { appointmentCalendarStyles } from "./appointmentCalendarStyles";
 
-const calendarPlugins = [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin];
+const calendarPlugins = [
+  dayGridPlugin,
+  timeGridPlugin,
+  listPlugin,
+  interactionPlugin,
+  classicThemePlugin,
+];
 
 export default function AppointmentCalendar() {
   const { t, i18n } = useTranslation();
@@ -62,6 +72,19 @@ export default function AppointmentCalendar() {
         initialView="dayGridMonth"
         locale={isArabic ? arLocale : enGbLocale}
         direction={theme.direction}
+        toolbarClass="erp-calendar-toolbar"
+        toolbarSectionClass="erp-calendar-toolbar-section"
+        toolbarTitleClass="erp-calendar-toolbar-title"
+        buttonClass="erp-calendar-button"
+        tableClass="erp-calendar-table"
+        viewClass="erp-calendar-view"
+        dayHeaderClass="erp-calendar-day-header"
+        dayHeaderInnerClass="erp-calendar-day-header-inner"
+        dayCellClass={(info) =>
+          info.isToday ? "erp-calendar-day erp-calendar-day-today" : "erp-calendar-day"
+        }
+        dayCellTopInnerClass="erp-calendar-day-number"
+        slotLaneClass="erp-calendar-slot"
         headerToolbar={{
           start: "prev,next today",
           center: "title",
