@@ -7,7 +7,11 @@ import { alpha, Avatar, Box, Divider, Typography, type Theme } from "@mui/materi
 import { useState, type Dispatch, type RefObject, type SetStateAction } from "react";
 import Link from "next/link";
 import { gradientIconStyle } from "@/theme/componentStyles";
-import { publicBackendOverrideEnabled, publicSelfRegistrationEnabled } from "@/config/publicEnv";
+import {
+  publicBackendOverrideEnabled,
+  publicDemoLoginEnabled,
+  publicSelfRegistrationEnabled,
+} from "@/config/publicEnv";
 import type { AppRoutes } from "@/config/routes";
 import type { Translator } from "../../types";
 import type { SocialLoginHandler } from "../types";
@@ -140,15 +144,16 @@ const LoginForm = ({
         {/* Original login button */}
         <LoginButton t={t} loading={activeButton === "main"} disabled={isAnySubmitting} />
 
-        {/* Demo quick access panel */}
-        <DemoLoginSection
-          t={t}
-          theme={theme}
-          isDarkMode={isDarkMode}
-          disabled={isAnySubmitting}
-          activeRole={activeButton !== "main" ? activeButton : null}
-          onLoginAs={handleDemoLogin}
-        />
+        {publicDemoLoginEnabled && (
+          <DemoLoginSection
+            t={t}
+            theme={theme}
+            isDarkMode={isDarkMode}
+            disabled={isAnySubmitting}
+            activeRole={activeButton !== "main" ? activeButton : null}
+            onLoginAs={handleDemoLogin}
+          />
+        )}
       </form>
       {/* Social Login Section */}
       <DividerWithText t={t} />

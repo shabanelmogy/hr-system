@@ -27,7 +27,7 @@
     {
       "id": "mobile-feature",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/states",
+      "path": "mobile-react/src/modules/reference-data/geography/states",
       "minimumFiles": 15,
       "purpose": "Expo schemas, API, queries, screen, form, controls, integration tests, and views"
     }
@@ -420,31 +420,31 @@
     {
       "id": "mobile-screen",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/states/presentation/screens/StatesScreen.tsx",
+      "path": "mobile-react/src/modules/reference-data/geography/states/presentation/screens/StatesScreen.tsx",
       "purpose": "Controlled mobile feature screen"
     },
     {
       "id": "mobile-screen-tests",
       "layer": "mobile-react-test",
-      "path": "mobile-react/src/modules/hr/basic-data/states/presentation/screens/StatesScreen.test.tsx",
+      "path": "mobile-react/src/modules/reference-data/geography/states/presentation/screens/StatesScreen.test.tsx",
       "purpose": "Server criteria, view/form composition, lifecycle, bulk, and permission coverage"
     },
     {
       "id": "mobile-query-hook-tests",
       "layer": "mobile-react-test",
-      "path": "mobile-react/src/modules/hr/basic-data/states/presentation/queries/use-states.test.ts",
+      "path": "mobile-react/src/modules/reference-data/geography/states/presentation/queries/use-states.test.ts",
       "purpose": "Create/update/lifecycle transport and root invalidation coverage"
     },
     {
       "id": "mobile-api",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/states/data/remote/state-remote-data-source.ts",
+      "path": "mobile-react/src/modules/reference-data/geography/states/data/remote/state-remote-data-source.ts",
       "purpose": "Runtime-validated State API"
     },
     {
       "id": "mobile-schema",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/states/data/remote/state-schemas.ts",
+      "path": "mobile-react/src/modules/reference-data/geography/states/data/remote/state-schemas.ts",
       "purpose": "Zod boundary"
     },
     {
@@ -516,13 +516,13 @@
     {
       "id": "mobile-geographical-name-validation",
       "layer": "mobile-react-shared",
-      "path": "mobile-react/src/modules/hr/basic-data/validation/geographical-name.ts",
+      "path": "mobile-react/src/modules/reference-data/validation/geographical-name.ts",
       "purpose": "Mobile name validation aligned with API"
     },
     {
       "id": "mobile-geographical-name-validation-test",
       "layer": "mobile-react-test",
-      "path": "mobile-react/src/modules/hr/basic-data/validation/geographical-name.test.ts",
+      "path": "mobile-react/src/modules/reference-data/validation/geographical-name.test.ts",
       "purpose": "Mobile printable-Unicode name validation coverage"
     },
     {
@@ -540,13 +540,13 @@
     {
       "id": "mobile-form",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/states/presentation/components/StateForm.tsx",
+      "path": "mobile-react/src/modules/reference-data/geography/states/presentation/components/StateForm.tsx",
       "purpose": "Country-dependent State form and development mock-data action"
     },
     {
       "id": "mobile-mock-data",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/states/presentation/utils/state-mock-data.ts",
+      "path": "mobile-react/src/modules/reference-data/geography/states/presentation/utils/state-mock-data.ts",
       "purpose": "Domain-valid development-only State samples"
     },
     {

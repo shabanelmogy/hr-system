@@ -38,7 +38,7 @@
     {
       "id": "mobile-feature",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/finance/fiscal-years",
+      "path": "mobile-react/src/modules/accounting/fiscal-years",
       "minimumFiles": 12,
       "purpose": "Expo runtime schemas, API, queries, validation, period preview, form, filter, Table/Cards screen, and tests"
     }
@@ -347,43 +347,43 @@
     {
       "id": "mobile-screen",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/finance/fiscal-years/presentation/screens/FiscalYearsScreen.tsx",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/presentation/screens/FiscalYearsScreen.tsx",
       "purpose": "Table/Cards, filtering, permissions, actions, and lifecycle"
     },
     {
       "id": "mobile-form",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/finance/fiscal-years/presentation/components/FiscalYearForm.tsx",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/presentation/components/FiscalYearForm.tsx",
       "purpose": "Shared full-screen create/edit/view form and periods"
     },
     {
       "id": "mobile-api",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/finance/fiscal-years/data/remote/fiscal-year-remote-data-source.ts",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/data/remote/fiscal-year-remote-data-source.ts",
       "purpose": "Transport and query serialization"
     },
     {
       "id": "mobile-schemas",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/finance/fiscal-years/data/remote/fiscal-year-schemas.ts",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/data/remote/fiscal-year-schemas.ts",
       "purpose": "Runtime response validation"
     },
     {
       "id": "mobile-period-preview",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/finance/fiscal-years/domain/policies/fiscal-period-preview.ts",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/domain/policies/fiscal-period-preview.ts",
       "purpose": "Live contiguous period preview aligned with Domain"
     },
     {
       "id": "mobile-lifecycle",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/finance/fiscal-years/domain/policies/fiscal-year-lifecycle.ts",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/domain/policies/fiscal-year-lifecycle.ts",
       "purpose": "Exact lifecycle actions including separate Closed-state reopen and lock choices"
     },
     {
       "id": "mobile-api-tests",
       "layer": "mobile-react-test",
-      "path": "mobile-react/src/modules/hr/finance/fiscal-years/data/remote/__tests__/fiscal-year-remote-boundary.test.ts",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/data/remote/__tests__/fiscal-year-remote-boundary.test.ts",
       "purpose": "Endpoint, list, detail, period, validation, and preview coverage"
     },
     {

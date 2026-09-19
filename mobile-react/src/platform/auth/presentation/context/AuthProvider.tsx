@@ -4,6 +4,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import { AppState } from 'react-native';
@@ -43,6 +44,7 @@ interface AuthContextValue {
   refreshSession: () => Promise<void>;
   authority: AuthAuthority;
   isServerAuthenticated: boolean;
+  offlineLeaseValidUntil: string | null;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -52,57 +54,89 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const [session, setSession] = useState<SessionResponse | null>(null);
   const [isSwitchingCompany, setIsSwitchingCompany] = useState(false);
   const [authority, setAuthority] = useState<AuthAuthority>(null);
+  const [offlineLeaseValidUntil, setOfflineLeaseValidUntil] = useState<string | null>(null);
   const database = useOfflineDatabase();
   const connectivity = useConnectivity();
+  const transitionGeneration = useRef(0);
+
+  const beginLocalTransition = useCallback(() => {
+    transitionGeneration.current += 1;
+    return transitionGeneration.current;
+  }, []);
+
+  const isCurrentTransition = useCallback(
+    (generation: number) => transitionGeneration.current === generation,
+    [],
+  );
+
+  const expireOfflineAuthority = useCallback(() => {
+    beginLocalTransition();
+    queryClient.clear();
+    setSession(null);
+    setAuthority(null);
+    setOfflineLeaseValidUntil(null);
+    setStatus('unavailable');
+  }, [beginLocalTransition]);
 
   const handleAuthFailure = useCallback(() => {
+    beginLocalTransition();
     rotateAxiosRequestContext();
     void Promise.all([secureSession.clear(), offlineSessionLeaseUseCases.invalidate(), clearSensitiveFileCache()]);
     queryClient.clear();
     setSession(null);
     setStatus('unauthenticated');
     setAuthority(null);
-  }, []);
+    setOfflineLeaseValidUntil(null);
+  }, [beginLocalTransition]);
 
   const bootstrap = useCallback(async () => {
+    const generation = beginLocalTransition();
     const [token, refreshToken] = await Promise.all([
       secureSession.getAccessToken(),
       secureSession.getRefreshToken(),
     ]);
 
+    if (!isCurrentTransition(generation)) return;
     if (!token || !refreshToken) {
       void clearSensitiveFileCache();
       setSession(null);
       setStatus('unauthenticated');
       setAuthority(null);
+      setOfflineLeaseValidUntil(null);
       return;
     }
 
     setStatus('loading');
     try {
       const validated = await authApi.session();
+      if (!isCurrentTransition(generation)) return;
+      const validUntil = await offlineSessionLeaseUseCases.save(database, validated);
+      if (!isCurrentTransition(generation)) return;
       setSession(validated);
       setAuthority('server');
-      await offlineSessionLeaseUseCases.save(database, validated);
+      setOfflineLeaseValidUntil(validUntil);
       setStatus('authenticated');
     } catch (error) {
       if (isTemporaryFailure(error)) {
-        const lease = await offlineSessionLeaseUseCases.load(database);
+        const lease = await offlineSessionLeaseUseCases.loadSnapshot(database);
+        if (!isCurrentTransition(generation)) return;
         if (lease) {
-          setSession(lease);
+          setSession(lease.session);
+          setOfflineLeaseValidUntil(lease.validUntil);
           setAuthority('offline-lease');
           setStatus('authenticated');
         } else {
           setSession(null);
           setAuthority(null);
+          setOfflineLeaseValidUntil(null);
           setStatus('unavailable');
         }
         return;
       }
 
-      handleAuthFailure();
+      if (isCurrentTransition(generation)) handleAuthFailure();
     }
-  }, [database, handleAuthFailure]);
+  }, [beginLocalTransition, database, handleAuthFailure, isCurrentTransition]);
 
   useEffect(
     () =>
@@ -118,43 +152,67 @@ export function AuthProvider({ children }: PropsWithChildren) {
     return () => clearTimeout(timer);
   }, [bootstrap]);
 
-  const completeAuthentication = async (response: AuthResponse) => {
+  const completeAuthentication = async (response: AuthResponse, generation: number) => {
+    if (!isCurrentTransition(generation)) return;
     rotateAxiosRequestContext();
     queryClient.clear();
     await clearSensitiveFileCache();
     await offlineSessionLeaseUseCases.invalidate();
+    if (!isCurrentTransition(generation)) return;
     await secureSession.setTokens(response.token, response.refreshToken);
+    if (!isCurrentTransition(generation)) {
+      await clearTokensIfOwned(response);
+      return;
+    }
 
     try {
       const validated = await authApi.session();
+      if (!isCurrentTransition(generation)) {
+        await clearTokensIfOwned(response);
+        return;
+      }
+      const validUntil = await offlineSessionLeaseUseCases.save(database, validated);
+      if (!isCurrentTransition(generation)) {
+        if (validUntil) await offlineSessionLeaseUseCases.invalidateSnapshot(validated, validUntil);
+        await clearTokensIfOwned(response);
+        return;
+      }
       setSession(validated);
       setAuthority('server');
-      await offlineSessionLeaseUseCases.save(database, validated);
+      setOfflineLeaseValidUntil(validUntil);
     } catch (error) {
+      if (!isCurrentTransition(generation)) return;
       if (!isTemporaryFailure(error)) {
         await secureSession.clear();
         queryClient.clear();
         setSession(null);
         setStatus('unauthenticated');
+        setAuthority(null);
+        setOfflineLeaseValidUntil(null);
         throw error;
       }
 
       setSession(null);
       setAuthority(null);
+      setOfflineLeaseValidUntil(null);
       setStatus('unavailable');
       return;
     }
 
-    setStatus('authenticated');
+    if (isCurrentTransition(generation)) setStatus('authenticated');
   };
 
   const refreshSession = useCallback(async () => {
+    const generation = beginLocalTransition();
     const refreshedSession = await authApi.session();
+    if (!isCurrentTransition(generation)) return;
+    const validUntil = await offlineSessionLeaseUseCases.save(database, refreshedSession);
+    if (!isCurrentTransition(generation)) return;
     setSession(refreshedSession);
     setAuthority('server');
-    await offlineSessionLeaseUseCases.save(database, refreshedSession);
+    setOfflineLeaseValidUntil(validUntil);
     setStatus('authenticated');
-  }, [database]);
+  }, [beginLocalTransition, database, isCurrentTransition]);
 
   useEffect(() => {
     if (!connectivity.isOnline || status !== 'authenticated' || authority === 'server') return undefined;
@@ -169,33 +227,49 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (nextState) => {
-      if (nextState === 'active' && connectivity.isOnline && status === 'authenticated' && authority === 'offline-lease') {
+      if (nextState !== 'active' || status !== 'authenticated' || authority !== 'offline-lease') return;
+      if (!offlineLeaseValidUntil || Date.parse(offlineLeaseValidUntil) <= Date.now()) {
+        expireOfflineAuthority();
+      } else if (connectivity.isOnline) {
         void refreshSession().catch((error) => {
           if (!isTemporaryFailure(error)) handleAuthFailure();
         });
       }
     });
     return () => subscription.remove();
-  }, [authority, connectivity.isOnline, handleAuthFailure, refreshSession, status]);
+  }, [authority, connectivity.isOnline, expireOfflineAuthority, handleAuthFailure,
+    offlineLeaseValidUntil, refreshSession, status]);
+
+  useEffect(() => {
+    if (authority !== 'offline-lease' || !offlineLeaseValidUntil) return undefined;
+    const remaining = Date.parse(offlineLeaseValidUntil) - Date.now();
+    const delay = Number.isFinite(remaining) ? Math.max(0, remaining + 1) : 0;
+    const timer = setTimeout(expireOfflineAuthority, delay);
+    return () => clearTimeout(timer);
+  }, [authority, expireOfflineAuthority, offlineLeaseValidUntil]);
 
   const signIn = async (request: LoginRequest): Promise<LoginOutcome> => {
+    const generation = beginLocalTransition();
     const result = await authApi.login(request);
-    if (result.kind === 'authenticated') {
-      await completeAuthentication(result.response);
+    if (result.kind === 'authenticated' && isCurrentTransition(generation)) {
+      await completeAuthentication(result.response, generation);
     }
     return result;
   };
 
   const selectTenant = async (token: string, tenantId: string): Promise<LoginOutcome> => {
+    const generation = beginLocalTransition();
     const result = await authApi.selectTenant(token, tenantId);
-    if (result.kind === 'authenticated') {
-      await completeAuthentication(result.response);
+    if (result.kind === 'authenticated' && isCurrentTransition(generation)) {
+      await completeAuthentication(result.response, generation);
     }
     return result;
   };
 
   const selectCompany = async (token: string, companyId: number) => {
-    await completeAuthentication(await authApi.selectCompany(token, companyId));
+    const generation = beginLocalTransition();
+    const response = await authApi.selectCompany(token, companyId);
+    await completeAuthentication(response, generation);
   };
 
   const switchCompany = async (companyId: number) => {
@@ -204,11 +278,13 @@ export function AuthProvider({ children }: PropsWithChildren) {
     }
     if (companyId === session.companyId) return;
 
+    const generation = beginLocalTransition();
     const endAuthenticationTransition = beginAxiosAuthenticationTransition();
     setIsSwitchingCompany(true);
     try {
       await queryClient.cancelQueries();
-      await completeAuthentication(await authApi.switchCompany(companyId));
+      const response = await authApi.switchCompany(companyId);
+      await completeAuthentication(response, generation);
     } finally {
       endAuthenticationTransition();
       setIsSwitchingCompany(false);
@@ -216,17 +292,20 @@ export function AuthProvider({ children }: PropsWithChildren) {
   };
 
   const signOut = async () => {
+    const generation = beginLocalTransition();
     const endAuthenticationTransition = beginAxiosAuthenticationTransition();
     try {
       try {
         await authApi.logout();
       } finally {
+        if (!isCurrentTransition(generation)) return;
         rotateAxiosRequestContext();
         await Promise.all([secureSession.clear(), offlineSessionLeaseUseCases.invalidate(), clearSensitiveFileCache()]);
         queryClient.clear();
         setSession(null);
         setStatus('unauthenticated');
         setAuthority(null);
+        setOfflineLeaseValidUntil(null);
       }
     } finally {
       endAuthenticationTransition();
@@ -246,6 +325,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     refreshSession,
     authority,
     isServerAuthenticated: status === 'authenticated' && authority === 'server',
+    offlineLeaseValidUntil,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
@@ -264,5 +344,15 @@ function isTemporaryFailure(error: unknown): boolean {
     error instanceof ApiError &&
     (error.status === 0 || error.status === 408 || error.status === 429 || error.status >= 500)
   );
+}
+
+async function clearTokensIfOwned(response: AuthResponse): Promise<void> {
+  const [accessToken, refreshToken] = await Promise.all([
+    secureSession.getAccessToken(),
+    secureSession.getRefreshToken(),
+  ]);
+  if (accessToken === response.token && refreshToken === response.refreshToken) {
+    await secureSession.clear();
+  }
 }
 

@@ -9,18 +9,29 @@ baseline and the work intentionally left for Phase 01.
 
 - 74 physical Expo Router files under `mobile-react/app/**/*.tsx` are listed,
   including layouts, public/authentication routes, dynamic routes, and pages.
-- 25 endpoint source files under `mobile-react/src/**/*endpoints.ts` are listed,
-  with every exported object member recorded. The checker also catches a new
-  endpoint member or route file that is not added to the matrix.
-- Each entry records current and target ownership, route/module policy,
-  tenant/company scope, offline policy, API/request-response boundary, and a
-  status of `aligned`, `mismatch`, or `deferred`.
+- 27 endpoint source files under `mobile-react/src/**/*endpoints.ts` are listed,
+  with all 200 exported leaf members and 226 caller operations recorded using full paths such as
+  `openings.byId` and `applications.hire`. The checker also catches a new
+  endpoint member or route file that is not added to the matrix. It rejects
+  local endpoint objects and direct `apiService`, `axiosClient`, or SignalR URLs
+  that bypass a reviewed `*-endpoints.ts` catalog.
+- Each entry records current and target ownership, the exact current route
+  policy and module requirement, the target policy or explicit Phase 01
+  deferral, tenant/company scope, offline policy, traced caller operations,
+  request/response schema boundary, and a status of `aligned`, `mismatch`, or
+  `deferred`.
 
 Run the gate from `mobile-react/`:
 
 ```powershell
 npm run check:contracts
 ```
+
+After deliberately adding a route or endpoint leaf, refresh the traced manifest
+with `npm run sync:contracts`, review the ownership, permission source, scope,
+and offline decision, then run the gate. The sync command discovers a new
+endpoint file, but gives an unknown path an `UNREVIEWED` boundary; the gate then
+fails until its ownership and permission policy are explicitly classified.
 
 ## Ownership findings for Phase 01
 
@@ -29,11 +40,16 @@ Phase 00:
 
 | Surface | Current mobile boundary | Target API boundary | Status |
 |---|---|---|---|
-| Countries, states, districts, address types, geographic scope | `HR/basic-data` | `ReferenceData/geography` | mismatch |
+| Countries, states, districts | `HR/basic-data` | `ReferenceData/geography` (global) | mismatch |
+| Address types | `HR/basic-data` | `ReferenceData/addresses` (tenant/company) | mismatch |
+| Company geographic scope | `HR/basic-data` | `Platform/tenant-administration` | mismatch |
 | Appointments | `Platform/tools` and legacy `extras` route policy | `CRM/appointments` | mismatch |
-| Users, roles, invitations, tenant administration | legacy HR administration route policy | `Platform/administration` | mismatch |
-| Change logs and Crystal/reporting surfaces | platform/legacy HR analytics paths | `Reporting/analytics` where the API module owns reporting | mismatch |
-| HR organizational structure, recruitment, workforce planning, fiscal-year endpoints | HR module paths | corresponding HR module boundaries | aligned pending API permission verification |
+| Users, roles, invitations, offline policy | Platform feature code with legacy `hr/administration` route requirement | `Platform/tenant-administration` | mismatch |
+| Change logs and localization | Platform feature code with legacy HR route requirements | `Platform/tenant-administration` | mismatch |
+| Hangfire, health, and API diagnostics | Platform feature code with legacy HR route requirements | `Platform/operations` | mismatch |
+| Crystal/reporting | `Platform/reporting` | `Reporting/analytics` | mismatch |
+| Fiscal years | `HR/finance` and `hr/workforce` route requirement | `Accounting/fiscal-years` (`acc/fiscal-years`) | mismatch |
+| HR organizational structure, recruitment, workforce planning | HR module paths | corresponding HR module boundaries | aligned pending exact API permission parity |
 | Entitlement-driven `/apps` routes | dynamic catalog | installed module catalog and API module definition | deferred |
 
 These are compatibility observations, not an approval to add forwarding wrappers
@@ -61,10 +77,15 @@ conflict strategy, and tests together.
 
 ## Request, response, and permission boundary
 
-Endpoint entries point to the caller DTO/path/query and response adapter rather
-than copying server DTOs into documentation. The API module catalog and endpoint
-policy remain the authorization source of truth. Phase 01 must replace any
-legacy mobile permission/module key with the exact API claim and entitlement
-contract, then add fixture-backed contract tests for super-admin, tenant admin,
-limited, read-only, and no-entitlement roles.
-
+Endpoint entries contain an `operations` array traced from non-test remote data
+sources. Each operation records the actual caller method, transport/HTTP verb, request
+argument, response schema (or the concrete API generic when no parser is
+present), and the API permission boundary. Unwired constants are explicitly
+`verb: ["UNUSED"]`, `status: "deferred"`, and carry no fabricated schema.
+Profile, realtime token/hub, host health, Swagger, Hangfire, file upload,
+authenticated download/stream, and binary report rendering are included in the
+same catalog rather than being treated as invisible special cases.
+The API module catalog and endpoint policy remain the authorization source of
+truth. Phase 01 must replace any legacy mobile permission/module key with the
+exact API claim and entitlement contract, then add fixture-backed contract tests
+for super-admin, tenant admin, limited, read-only, and no-entitlement roles.

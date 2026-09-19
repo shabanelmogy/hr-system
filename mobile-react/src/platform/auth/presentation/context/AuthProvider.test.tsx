@@ -80,6 +80,10 @@ function AuthProbe() {
         onPress={() => void auth.signIn({ userName: 'user-b', password: 'secret' })}
         testID="sign-in-user-b"
       />
+      <Pressable
+        onPress={() => void auth.signIn({ userName: 'user-c', password: 'secret' })}
+        testID="sign-in-user-c"
+      />
       <Pressable onPress={() => void auth.signOut().catch(() => undefined)} testID="sign-out" />
     </View>
   );
@@ -181,6 +185,34 @@ describe('AuthProvider context isolation', () => {
     expect(mockClearSession).toHaveBeenCalledTimes(1);
     expect(mockClearQueries).toHaveBeenCalledTimes(1);
     expect(mockRotateContext).toHaveBeenCalled();
+  });
+
+  it('ignores an older login response that completes after a newer authentication transition', async () => {
+    mockSession
+      .mockResolvedValueOnce(createSession('user-a', 1))
+      .mockResolvedValueOnce(createSession('user-c', 1));
+    let resolveOlderLogin!: (value: LoginOutcome) => void;
+    const olderLogin = new Promise<LoginOutcome>((resolve) => { resolveOlderLogin = resolve; });
+    mockLogin
+      .mockReturnValueOnce(olderLogin)
+      .mockResolvedValueOnce({ kind: 'authenticated', response: createAuthResponse('user-c', 1) });
+
+    await render(
+      <AuthProvider>
+        <AuthProbe />
+      </AuthProvider>,
+    );
+    await waitFor(() => expect(screen.getByTestId('auth-user').props.children).toBe('user-a'));
+
+    fireEvent.press(screen.getByTestId('sign-in-user-b'));
+    fireEvent.press(screen.getByTestId('sign-in-user-c'));
+    await waitFor(() => expect(screen.getByTestId('auth-user').props.children).toBe('user-c'));
+
+    resolveOlderLogin({ kind: 'authenticated', response: createAuthResponse('user-b', 1) });
+    await waitFor(() => expect(mockLogin).toHaveBeenCalledTimes(2));
+    expect(screen.getByTestId('auth-user').props.children).toBe('user-c');
+    expect(mockSetTokens).toHaveBeenCalledTimes(1);
+    expect(mockSetTokens).toHaveBeenCalledWith('user-c-company-1-access', 'user-c-company-1-refresh');
   });
 });
 

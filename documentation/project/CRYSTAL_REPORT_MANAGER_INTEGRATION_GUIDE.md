@@ -485,6 +485,6 @@ granted, and both allowlisted runtime profiles support its `entityKey`.
   `mobile-react/src/platform/reporting/data/remote/crystal-report-remote-data-source.ts` and
   `mobile-react/src/platform/reporting/data/remote/crystal-report-schemas.ts`
 - Applied mobile consumer:
-  `mobile-react/src/modules/hr/basic-data/countries/presentation/components/CountryReportView.tsx`
+  `mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryReportView.tsx`
 - Manager administration page:
   `web-next/src/modules/reporting/crystal-report-manager/CrystalReportManagerPage.tsx`

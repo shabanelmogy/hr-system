@@ -30,7 +30,7 @@ semantics, but they do not need identical controls or screen composition.
 | Item | Countries decision or evidence |
 |---|---|
 | Web feature owner | `web-next/src/modules/hr/basic-data/geographical-information/countries` |
-| Mobile feature owner | `mobile-react/src/modules/hr/basic-data/countries` |
+| Mobile feature owner | `mobile-react/src/modules/reference-data/geography/countries` |
 | Web route adapter | `web-next/src/app/(main)/basic-data/(geographical-information)/countries/page.tsx` |
 | Mobile route adapter | `mobile-react/app/(main)/basic-data/geographical-information/countries.tsx` |
 | Web primary UI shape | Server-managed Grid with modal create/edit/view workflows |
@@ -116,16 +116,16 @@ services, controller logic, or internal view components.
 | Thin guarded route | `mobile-react/app/(main)/basic-data/geographical-information/countries.tsx` |
 | Typed route constant | `mobile-react/src/core/constants/routes.ts` |
 | Canonical route policy | `mobile-react/src/platform/auth/presentation/rbac/route-manifest.ts` |
-| Screen orchestration | `mobile-react/src/modules/hr/basic-data/countries/presentation/screens/CountriesScreen.tsx` |
-| Endpoint constants | `mobile-react/src/modules/hr/basic-data/countries/data/remote/country-endpoints.ts` |
-| Runtime response validation | `mobile-react/src/modules/hr/basic-data/countries/data/remote/country-schemas.ts` |
-| HTTP and query serialization | `mobile-react/src/modules/hr/basic-data/countries/data/remote/country-remote-data-source.ts` |
-| Transport and list types | `mobile-react/src/modules/hr/basic-data/countries/domain/models/country.ts` |
-| Query keys, queries and mutations | `mobile-react/src/modules/hr/basic-data/countries/presentation/queries/` |
-| Card presentation | `mobile-react/src/modules/hr/basic-data/countries/presentation/components/CountryCard.tsx` |
-| Full-screen form | `mobile-react/src/modules/hr/basic-data/countries/presentation/components/CountryForm.tsx` |
-| Device report workflow | `mobile-react/src/modules/hr/basic-data/countries/presentation/components/CountryReportView.tsx` |
-| Deliberate public API | `mobile-react/src/modules/hr/basic-data/countries/index.ts` |
+| Screen orchestration | `mobile-react/src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.tsx` |
+| Endpoint constants | `mobile-react/src/modules/reference-data/geography/countries/data/remote/country-endpoints.ts` |
+| Runtime response validation | `mobile-react/src/modules/reference-data/geography/countries/data/remote/country-schemas.ts` |
+| HTTP and query serialization | `mobile-react/src/modules/reference-data/geography/countries/data/remote/country-remote-data-source.ts` |
+| Transport and list types | `mobile-react/src/modules/reference-data/geography/countries/domain/models/country.ts` |
+| Query keys, queries and mutations | `mobile-react/src/modules/reference-data/geography/countries/presentation/queries/` |
+| Card presentation | `mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryCard.tsx` |
+| Full-screen form | `mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryForm.tsx` |
+| Device report workflow | `mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryReportView.tsx` |
+| Deliberate public API | `mobile-react/src/modules/reference-data/geography/countries/index.ts` |
 | Shared list state | `mobile-react/src/shared/listing/useServerListState.ts` |
 | Shared list composition | `mobile-react/src/shared/components/multi-view/AppListScreen.tsx` |
 
@@ -779,7 +779,7 @@ instead of recreating the original gap.
 | Shared bulk limit normalization | `shared/utils/bulkSelection.test.ts` |
 | Shared XLSX safety contract | `shared/services/excelService.test.ts` |
 | Countries Import duplicate scope | `components/import-data/countryImport.test.ts` |
-| Mobile endpoint/query and response schemas | `mobile-react/src/modules/hr/basic-data/countries/data/remote/__tests__/country-remote-boundary.test.ts` |
+| Mobile endpoint/query and response schemas | `mobile-react/src/modules/reference-data/geography/countries/data/remote/__tests__/country-remote-boundary.test.ts` |
 | Mobile shared list debounce/reset | `mobile-react/src/shared/listing/__tests__/useServerListState.test.ts` |
 | Mobile route authorization | `mobile-react/src/platform/auth/presentation/rbac/__tests__/route-access.test.ts` |
 | Mobile realtime resource mapping | `mobile-react/src/platform/realtime/application/realtime-query-registry.test.ts` |

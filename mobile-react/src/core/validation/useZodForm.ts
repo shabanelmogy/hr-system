@@ -3,9 +3,11 @@ import {
   useForm,
   type FieldErrors,
   type FieldValues,
+  type FieldPath,
   type UseFormProps,
   type UseFormReturn,
 } from 'react-hook-form';
+import { ApiError } from '@/src/core/api';
 import { z } from 'zod';
 
 type ZodFormOptions<TInput extends FieldValues, TOutput extends FieldValues> = Omit<
@@ -41,4 +43,29 @@ export function toFormErrorMap<TValues extends FieldValues>(
   return Object.fromEntries(entries) as Partial<
     Record<Extract<keyof TValues, string>, string>
   >;
+}
+
+/** Maps ASP.NET ProblemDetails validation errors to the matching RHF paths. */
+export function applyApiFieldErrors<TValues extends FieldValues>(
+  form: Pick<UseFormReturn<TValues>, 'setError'>,
+  error: unknown,
+): boolean {
+  if (!(error instanceof ApiError) || !error.problem?.errors) return false;
+  let applied = false;
+  for (const [rawPath, messages] of Object.entries(error.problem.errors)) {
+    const path = normalizeFieldPath(rawPath);
+    const message = messages.find((value) => value.trim().length > 0);
+    if (!path || !message) continue;
+    form.setError(path as FieldPath<TValues>, { type: 'server', message });
+    applied = true;
+  }
+  return applied;
+}
+
+function normalizeFieldPath(value: string): string {
+  return value
+    .replaceAll(']', '')
+    .replaceAll('[', '.')
+    .replace(/\.{2,}/g, '.')
+    .replace(/^\.|\.$/g, '');
 }

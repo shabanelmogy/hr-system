@@ -3,7 +3,6 @@ export * from './navigation';
 
 // Legacy feature-root screen exports remain stable for existing consumers.
 export { FileManagerScreen } from './file-manager';
-export { AppointmentManagementScreen } from './appointments';
 export { TrackChangesScreen } from './track-changes';
 export { LocalizationManagementScreen } from './localization';
 export {
@@ -11,3 +10,4 @@ export {
   HangfireDashboardScreen,
   HealthCheckScreen,
 } from './operations';
+export { getPlatformToolErrorMessage } from './utils/platform-tool-utils';

@@ -29,6 +29,15 @@ export const moduleDirectories = Object.freeze({
   reporting: "src/modules/reporting",
 });
 
+/** Documentation package owning each registered frontend business module. */
+export const moduleDocumentationSlugs = Object.freeze({
+  hr: "hr",
+  accounting: "accounting",
+  crm: "customer-relationship-management",
+  "reference-data": "reference-data",
+  reporting: "reporting",
+});
+
 /**
  * App Router route groups are ownership markers only; Next.js removes them from
  * the public URL. Every protected page must sit beneath exactly one of these
@@ -56,3 +65,18 @@ export const sharedMainRouteRoots = Object.freeze([
   "basic-data",
   "super-admin",
 ]);
+
+/**
+ * Phase 13 governance contracts for routes whose bounded-context ownership is
+ * important enough to keep both machine-enforced and explicitly documented.
+ * Add entries deliberately when a route becomes a canonical ownership example;
+ * do not use this as a second copy of the entire route tree.
+ */
+export const documentedRouteOwnership = Object.freeze({
+  "/finance/fiscal-years": "accounting",
+  "/appointments": "crm",
+  "/super-admin/geography/countries": "reference-data",
+  "/super-admin/geography/states": "reference-data",
+  "/super-admin/geography/districts": "reference-data",
+  "/administration/crystal-reports": "reporting",
+});

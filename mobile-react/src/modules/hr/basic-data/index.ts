@@ -3,10 +3,5 @@ export { BasicDataOverviewScreen } from './presentation/screens/BasicDataOvervie
 export { GeographicalInformationScreen } from './presentation/screens/GeographicalInformationScreen';
 export { OrganizationalStructureScreen } from './presentation/screens/OrganizationalStructureScreen';
 export { OrganizationalStructureManagementScreen } from './organizational-structure';
-export { CountriesScreen } from './countries';
-export { StatesScreen } from './states';
-export { DistrictsScreen } from './districts';
-export { AddressTypesScreen } from './address-types';
-export { CompanyGeographicScopeScreen } from './company-geographic-scope';
 export { useOrganizationalLookup } from './organizational-structure';
 export type { OrganizationalStructureLookup } from './organizational-structure';

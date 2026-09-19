@@ -1,5 +1,5 @@
 import { apiService } from '@/src/core/api';
-import { requireApiRootUrl, requireApiUrl } from '@/src/core/config/env';
+import { requireApiRootUrl } from '@/src/core/config/env';
 
 import type { OperationsRepository } from '../../domain/repositories/operations-repository';
 import { operationsEndpoints } from './operations-endpoints';
@@ -7,7 +7,9 @@ import { backgroundJobDashboardSchema, healthCheckSchema } from './operations-sc
 
 export const operationsRemoteDataSource: OperationsRepository = {
   async getHealthCheck() {
-    const response = await apiService.get<unknown>(`${requireApiRootUrl()}/health`);
+    const response = await apiService.get<unknown>(
+      `${requireApiRootUrl()}/${operationsEndpoints.health}`,
+    );
     const healthCheck = healthCheckSchema.parse(response);
     return {
       ...healthCheck,
@@ -21,10 +23,10 @@ export const operationsRemoteDataSource: OperationsRepository = {
   },
 
   getSwaggerUrl() {
-    return `${requireApiRootUrl()}/swagger/index.html`;
+    return `${requireApiRootUrl()}/${operationsEndpoints.swagger}`;
   },
 
   getHangfireUrl() {
-    return `${requireApiUrl()}/backgroundJobs/openDashboard`;
+    return `${requireApiRootUrl()}/${operationsEndpoints.hangfireDashboard}`;
   },
 };

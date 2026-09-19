@@ -385,8 +385,8 @@ function runSelfTests() {
     'Platform feature ownership must be detected',
   );
   assert.equal(
-    getCleanLayerInfo('src/modules/hr/basic-data/countries/domain/models/country.ts'.split('/')).root,
-    'src/modules/hr/basic-data/countries',
+    getCleanLayerInfo('src/modules/reference-data/geography/countries/domain/models/country.ts'.split('/')).root,
+    'src/modules/reference-data/geography/countries',
     'nested clean subdomain roots must be detected',
   );
 }

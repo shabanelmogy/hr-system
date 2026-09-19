@@ -1,6 +1,6 @@
 import { ROUTES } from '@/src/core/constants/routes';
 import { RouteGuard } from '@/src/platform/auth';
-import { AppointmentManagementScreen } from '@/src/platform/tools/appointments';
+import { AppointmentManagementScreen } from '@/src/modules/crm/appointments';
 
 export default function AppointmentsRoute() {
   return (

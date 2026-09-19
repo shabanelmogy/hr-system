@@ -27,9 +27,7 @@ export async function initializeOfflineDatabase(db: SQLiteDatabase): Promise<voi
   if (version === 0) {
     await createVersion3Schema(db);
   } else if (version < OFFLINE_SCHEMA_VERSION) {
-    // Version 1 predated per-user partitioning. It never backed a released
-    // offline feature, so discard that unsafe cache rather than guessing ownership.
-    await migrateToVersion3(db);
+    await migrateToVersion3(db, version);
   }
 
   await cleanupTerminalOutbox(db);
@@ -65,16 +63,40 @@ export async function pruneExpiredOfflineScopes(
   );
 }
 
-async function migrateToVersion3(db: SQLiteDatabase): Promise<void> {
+async function migrateToVersion3(db: SQLiteDatabase, sourceVersion: number): Promise<void> {
   await runInOfflineWriteTransaction(db, async (tx) => {
-    await tx.execAsync(`
-      DROP TABLE IF EXISTS offline_outbox;
-      DROP TABLE IF EXISTS offline_sync_state;
-      DROP TABLE IF EXISTS offline_records;
-      DROP TABLE IF EXISTS offline_scopes;
-    `);
+    // Older development schemas were not scope-safe. Preserve them under
+    // explicit legacy names so a recovery/export tool can inspect the data;
+    // never destroy drafts or queued work during a client upgrade.
+    for (const table of ['offline_outbox', 'offline_sync_state', 'offline_records', 'offline_scopes']) {
+      const exists = await tx.getFirstAsync<{ name: string }>(
+        "SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?",
+        table,
+      );
+      if (exists?.name) {
+        const legacyName = await nextLegacyTableName(tx, table, sourceVersion);
+        await tx.execAsync(`ALTER TABLE ${table} RENAME TO ${legacyName}`);
+      }
+    }
   });
   await createVersion3Schema(db);
+}
+
+async function nextLegacyTableName(
+  db: SQLiteDatabase,
+  table: string,
+  sourceVersion: number,
+): Promise<string> {
+  const base = `${table}_legacy_v${sourceVersion}`;
+  for (let suffix = 0; suffix < 100; suffix += 1) {
+    const candidate = suffix === 0 ? base : `${base}_${suffix}`;
+    const exists = await db.getFirstAsync<{ name: string }>(
+      "SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?",
+      candidate,
+    );
+    if (!exists?.name) return candidate;
+  }
+  throw new Error(`Unable to preserve legacy offline table ${table}; all recovery names are in use.`);
 }
 
 async function createVersion3Schema(db: SQLiteDatabase): Promise<void> {
@@ -154,8 +176,18 @@ async function createVersion3Schema(db: SQLiteDatabase): Promise<void> {
         ON offline_outbox (user_id, tenant_id, company_id, idempotency_key)
         WHERE idempotency_key IS NOT NULL;
 
+      CREATE TABLE IF NOT EXISTS offline_schema_migrations (
+        version INTEGER NOT NULL PRIMARY KEY,
+        applied_at TEXT NOT NULL
+      );
+
       PRAGMA user_version = 3;
     `);
+    await tx.runAsync(
+      'INSERT OR IGNORE INTO offline_schema_migrations (version, applied_at) VALUES (?, ?)',
+      OFFLINE_SCHEMA_VERSION,
+      new Date().toISOString(),
+    );
   });
 }
 

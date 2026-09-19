@@ -1,4 +1,3 @@
-import { ENV } from '@/src/core/config/env';
 import { apiService } from '@/src/core/api';
 import type {
   ChangeProfilePasswordRequest,
@@ -8,29 +7,20 @@ import type {
   UserProfilePhoto,
 } from '../../../domain/models/profile';
 import type { ProfileRepository } from '../../../domain/repositories/profile-repository';
+import { profileEndpoints } from './profile-endpoints';
 import { userProfilePhotoSchema, userProfileSchema } from './profile-schemas';
-
-const accountInfoUrl = ENV.apiUrl.replace(/\/api\/v\d+$/i, '') + '/AccountInfo';
-
-const endpoints = {
-  info: `${accountInfoUrl}/GetInfo`,
-  photo: `${accountInfoUrl}/GetUserPhoto`,
-  updateInfo: `${accountInfoUrl}/UpdateInfo`,
-  updatePhoto: `${accountInfoUrl}/UpdateUserPicture`,
-  changePassword: `${accountInfoUrl}/ChangePassword`,
-} as const;
 
 export const profileRemoteDataSource: ProfileRepository = {
   async getInfo(): Promise<UserProfile> {
-    return userProfileSchema.parse(await apiService.get<unknown>(endpoints.info));
+    return userProfileSchema.parse(await apiService.get<unknown>(profileEndpoints.info));
   },
 
   async getPhoto(): Promise<UserProfilePhoto> {
-    return userProfilePhotoSchema.parse(await apiService.get<unknown>(endpoints.photo));
+    return userProfilePhotoSchema.parse(await apiService.get<unknown>(profileEndpoints.photo));
   },
 
   updateInfo: (request: UpdateProfileRequest) =>
-    apiService.put<void, UpdateProfileRequest>(endpoints.updateInfo, request),
+    apiService.put<void, UpdateProfileRequest>(profileEndpoints.updateInfo, request),
 
   updatePhoto: (photo: ProfilePhotoUpload | null) => {
     const formData = new FormData();
@@ -44,11 +34,11 @@ export const profileRemoteDataSource: ProfileRepository = {
       formData.append('Remove', 'true');
     }
 
-    return apiService.put<void, FormData>(endpoints.updatePhoto, formData);
+    return apiService.put<void, FormData>(profileEndpoints.updatePhoto, formData);
   },
 
   changePassword: (request: ChangeProfilePasswordRequest) =>
-    apiService.put<void, ChangeProfilePasswordRequest>(endpoints.changePassword, request, {
+    apiService.put<void, ChangeProfilePasswordRequest>(profileEndpoints.changePassword, request, {
       allowWhenReadOnly: true,
     }),
 };

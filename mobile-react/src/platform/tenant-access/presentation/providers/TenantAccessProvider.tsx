@@ -59,14 +59,37 @@ function TenantAccessState({
   }, []);
 
   useEffect(() => {
-    const endsAt = parseEndTime(session?.tenantSubscriptionEndsOn);
-    if (endsAt === null || endsAt <= Date.now()) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let cancelled = false;
 
-    const timer = setTimeout(
-      () => setSubscriptionEnded(true),
-      Math.min(endsAt - Date.now() + 1_000, maxTimerDelayMs),
-    );
-    return () => clearTimeout(timer);
+    const schedule = () => {
+      if (cancelled) return;
+      const endsAt = parseEndTime(session?.tenantSubscriptionEndsOn);
+      if (endsAt === null) {
+        setSubscriptionEnded(false);
+        return;
+      }
+      const remaining = endsAt - Date.now();
+      if (remaining <= 0) {
+        setSubscriptionEnded(true);
+        return;
+      }
+      setSubscriptionEnded(false);
+      // JavaScript timers are implementation-limited. Recalculate after each
+      // bounded interval so subscriptions longer than the timer limit never
+      // enter read-only mode prematurely.
+      timer = setTimeout(schedule, Math.min(remaining + 1_000, maxTimerDelayMs));
+    };
+
+    schedule();
+    const subscription = AppState.addEventListener('change', (state) => {
+      if (state === 'active') schedule();
+    });
+    return () => {
+      cancelled = true;
+      if (timer) clearTimeout(timer);
+      subscription.remove();
+    };
   }, [session?.tenantSubscriptionEndsOn]);
 
   useEffect(

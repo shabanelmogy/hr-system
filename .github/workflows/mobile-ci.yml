@@ -52,6 +52,10 @@ jobs:
         working-directory: ./mobile-react
         run: npm run check:native-config
 
+      - name: Verify release metadata and app links
+        working-directory: ./mobile-react
+        run: npm run check:release
+
       - name: Smoke-test Android bundle export
         working-directory: ./mobile-react
         run: npm run check:export

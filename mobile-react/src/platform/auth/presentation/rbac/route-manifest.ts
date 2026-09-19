@@ -110,12 +110,13 @@ export const routePolicies: readonly RoutePolicy[] = [
     ],
   },
   { path: ROUTES.extras.files, roles: [appRoles.admin] },
-  { path: ROUTES.extras.appointments, permissions: [permissions.ViewUsers] },
+  { path: ROUTES.extras.appointments, permissions: [permissions.ViewAppointments] },
   {
     path: ROUTES.extras.root,
     anyOf: [
       { roles: [appRoles.admin] },
       { permissions: [permissions.ViewUsers] },
+      { permissions: [permissions.ViewAppointments] },
     ],
   },
   { path: ROUTES.advancedTools.trackChanges, permissions: [permissions.ViewChangeLogs] },

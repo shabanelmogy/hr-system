@@ -17,6 +17,7 @@ export type {
   EnqueueOutboxCommand,
   OutboxCommand,
   OutboxCommandStatus,
+  OutboxCommandSummary,
   OutboxStore,
 } from './outbox';
 export { normalizeOfflineScope, offlineScopeKey } from './scope';
@@ -31,8 +32,10 @@ export type {
   SyncCommandHandler,
   SyncCommandOutcome,
   SyncRunResult,
+  SyncRunGuard,
 } from './sync-coordinator';
 export { OfflineSyncStateRepository } from './sync-state';
 export type { OfflineSyncState } from './sync-state';
 export { isOfflineReadFresh, OFFLINE_READ_POLICIES } from './offline-read-policy';
 export type { OfflineReadableFeature, OfflineReadPolicy } from './offline-read-policy';
+export { requestOfflineSync, subscribeToOfflineSyncRequests } from './offline-sync-events';

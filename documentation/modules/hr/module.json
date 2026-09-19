@@ -9,6 +9,12 @@
   "allowsTenantEntitlement": true,
   "lifecycle": "active",
   "status": "foundation",
+  "webNextSurface": {
+    "status": "active",
+    "owner": "hr",
+    "sourceRoot": "web-next/src/modules/hr",
+    "moduleDefinition": "web-next/src/modules/hr/moduleDefinition.tsx"
+  },
   "runtimePaths": {
     "root": "api/Modules/HR",
     "contracts": "api/Modules/HR/ErpSystem.Modules.HR.Contracts",

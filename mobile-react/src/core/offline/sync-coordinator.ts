@@ -33,6 +33,11 @@ export interface SyncAuthorization {
   readOnly: boolean;
 }
 
+export interface SyncRunGuard {
+  getAuthorization(): SyncAuthorization;
+  isScopeCurrent(scope: OfflineScope): boolean;
+}
+
 export class SyncCoordinator {
   private readonly handlers = new Map<string, SyncCommandHandler>();
   private activeRun: Promise<SyncRunResult> | null = null;
@@ -54,17 +59,22 @@ export class SyncCoordinator {
     };
   }
 
-  run(scope: OfflineScope, authorization: SyncAuthorization): Promise<SyncRunResult> {
+  run(scope: OfflineScope, authorization: SyncAuthorization, guard?: SyncRunGuard): Promise<SyncRunResult> {
     if (this.activeRun) return this.activeRun;
-    this.activeRun = this.runInternal(scope, authorization).finally(() => {
+    this.activeRun = this.runInternal(scope, authorization, guard).finally(() => {
       this.activeRun = null;
     });
     return this.activeRun;
   }
 
+  nextAttemptAt(scope: OfflineScope): Promise<string | null> {
+    return this.outbox.getNextAttemptAtByTypes(scope, [...this.handlers.keys()]);
+  }
+
   private async runInternal(
     scope: OfflineScope,
     authorization: SyncAuthorization,
+    guard?: SyncRunGuard,
   ): Promise<SyncRunResult> {
     const result: SyncRunResult = {
       processed: 0,
@@ -78,7 +88,7 @@ export class SyncCoordinator {
       deadLettered: 0,
     };
 
-    if (!authorization.authenticated || authorization.readOnly) {
+    if (!isAuthorizedForScope(scope, authorization, guard)) {
       result.skippedUnauthorized = true;
       return result;
     }
@@ -104,6 +114,10 @@ export class SyncCoordinator {
       if (commands.length === 0) break;
       let progressed = false;
       for (const command of commands) {
+        if (!isAuthorizedForScope(scope, authorization, guard)) {
+          result.skippedUnauthorized = true;
+          break;
+        }
         seen.add(command.commandId);
         const handler = this.handlers.get(command.commandType);
         if (!handler) continue;
@@ -147,6 +161,15 @@ export class SyncCoordinator {
 
     return result;
   }
+}
+
+function isAuthorizedForScope(
+  scope: OfflineScope,
+  fallback: SyncAuthorization,
+  guard?: SyncRunGuard,
+): boolean {
+  const current = guard?.getAuthorization() ?? fallback;
+  return current.authenticated && !current.readOnly && (guard?.isScopeCurrent(scope) ?? true);
 }
 
 function hasRequiredReplayGuard(command: OutboxCommand, safety: ReplaySafety): boolean {

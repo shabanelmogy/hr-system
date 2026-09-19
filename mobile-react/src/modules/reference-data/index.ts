@@ -1,0 +1,1 @@
+export { referenceDataModuleDefinition } from './moduleDefinition';

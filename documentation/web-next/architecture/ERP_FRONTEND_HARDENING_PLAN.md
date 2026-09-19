@@ -25,8 +25,9 @@ The current implementation must preserve these product constraints:
 - Do not disable Instant Navigation as a shortcut around validation failures.
 - Do not reintroduce broad `force-dynamic` declarations.
 - Preserve the dirty working tree and do not reset unrelated work.
-- Keep Demo Login available during development. It is intentionally deferred for
-  removal until Production hardening.
+- Keep Demo Login available in both development and Production under the current
+  product policy. Its removal is not part of Production hardening unless a future
+  explicit product decision changes that requirement.
 
 ## 2. Current Runtime Baseline
 
@@ -212,7 +213,8 @@ under tenant/company switching, SignalR, Hangfire, logout, and malformed paths.
 
 ### Demo Login decision
 
-Demo Login intentionally remains enabled during development.
+Demo Login intentionally remains enabled during development **and Production**
+under the current product policy.
 
 Relevant files include:
 
@@ -223,8 +225,9 @@ src/platform/auth/login/components/DemoLoginSection.tsx
 src/platform/auth/login/hooks/useLoginForm.ts
 ```
 
-Do not remove Demo Login as part of the current hardening phases. Remove it only
-as an explicit Production-readiness task.
+Do not remove, hide, or gate Demo Login as part of the current hardening or
+Production-readiness phases. Revisit it only after an explicit product decision
+changes this requirement.
 
 ### Key files
 
@@ -898,7 +901,10 @@ the existing pipeline green and make it the Definition of Done.
   core hardening headers emitted by Next configuration.
 - Playwright keeps CI retries for diagnostic evidence but enables
   `failOnFlakyTests`, so a test that only passes on retry still fails the CI
-  Definition of Done.
+  Definition of Done. This exposed a Countries server-search race caused by the
+  shared debounce plus React Query `placeholderData`; the smoke now waits for the
+  matching BFF search response before asserting filtered rows instead of relying on
+  timing or sleeps.
 - Optional Web Vitals / real-user timing remains telemetry evidence rather than a
   runner-dependent PR timing threshold.
 
@@ -934,10 +940,11 @@ do not report the complete CI baseline as green.
 
 Generic PR CI must remain deterministic and self-contained. Real
 Collector/dashboard/alert retention and delivery, authenticated Google popup,
-deployment SignalR, report/PDF/file previews, Hangfire, configured external-frame
-integrations and final Production Demo Login removal require the target deployment,
-credentials or representative data. They remain explicit staging/Production release
-checks and do not keep Phase 12 source/CI closure open.
+deployment SignalR, report/PDF/file previews, Hangfire and configured external-frame
+integrations require the target deployment, credentials or representative data.
+They remain explicit staging/Production release checks and do not keep Phase 12
+source/CI closure open. Demo Login is intentionally allowed in Production and is
+not a release-removal gate under the current product policy.
 
 ### Exit criteria
 
@@ -1031,9 +1038,13 @@ Use this order unless a new production-critical defect overrides it:
 4. Keep the completed Phase 12 CI Definition of Done green, including coverage,
    Phase 11 budgets, accessibility, production browser-security and fail-on-flaky
    browser gates.
-5. At Production-readiness time, run the documented authenticated CSP integration
-   smoke and remove Demo Login; treat these as release gates rather than reverting
-   Phase 7 to Report-Only.
+5. Keep Phase 13 governance active: canonical ownership contracts and the generated
+   Web route/ownership manifest plus module-package `webNextSurface` declarations
+   must stay synchronized through `check:architecture`, `check:governance` and the
+   documentation check.
+6. At Production-readiness time, run the documented authenticated CSP integration
+   smoke. Keep Demo Login available per the current product policy; do not turn its
+   removal into a release gate unless that policy changes explicitly.
 
 The roadmap should be updated after each phase so it remains the current source
 of execution status rather than a historical checklist.

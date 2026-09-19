@@ -10,6 +10,8 @@ import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon
 import { AppCard } from '@/src/shared/components/surfaces/AppCard';
 import { AppModal } from '@/src/shared/components/surfaces/AppModal';
 import { AppText } from '@/src/shared/components/typography/AppText';
+import { AppTextField } from './AppTextField';
+import { AppButton } from './AppButton';
 import { useAppReadOnly } from '@/src/shared/contexts/AppReadOnlyContext';
 
 export interface AppSelectOption<Value extends string | number> {
@@ -35,6 +37,17 @@ export interface AppSelectFieldProps<Value extends string | number> {
   style?: StyleProp<ViewStyle>;
   /** Keeps non-mutating controls such as report filters enabled in app read-only mode. */
   allowWhenReadOnly?: boolean;
+  searchable?: boolean;
+  searchValue?: string;
+  onSearchChange?: (value: string) => void;
+  searchPlaceholder?: string;
+  loadingMore?: boolean;
+  hasMore?: boolean;
+  onLoadMore?: () => void;
+  optionsLoading?: boolean;
+  optionsError?: string;
+  emptyMessage?: string;
+  onRetryOptions?: () => void;
 }
 
 export function AppSelectField<Value extends string | number>({
@@ -51,6 +64,17 @@ export function AppSelectField<Value extends string | number>({
   helperText,
   style,
   allowWhenReadOnly = false,
+  searchable = false,
+  searchValue = '',
+  onSearchChange,
+  searchPlaceholder,
+  loadingMore = false,
+  hasMore = false,
+  onLoadMore,
+  optionsLoading = false,
+  optionsError,
+  emptyMessage,
+  onRetryOptions,
 }: AppSelectFieldProps<Value>) {
   const { t } = useTranslation();
   const { direction, isRTL } = useLocalization();
@@ -143,6 +167,25 @@ export function AppSelectField<Value extends string | number>({
         title={label}
         visible={open}>
         <View style={styles.options}>
+          {searchable ? (
+            <AppTextField
+              label={label}
+              leadingIcon="search-outline"
+              onChangeText={onSearchChange}
+              placeholder={searchPlaceholder}
+              value={searchValue}
+            />
+          ) : null}
+          {optionsLoading && options.length === 0 ? <AppText color="muted">{t('common.loading')}</AppText> : null}
+          {optionsError ? (
+            <View style={styles.optionsFeedback}>
+              <AppText color="danger">{optionsError}</AppText>
+              {onRetryOptions ? <AppButton onPress={onRetryOptions} variant="outline">{t('common.retry')}</AppButton> : null}
+            </View>
+          ) : null}
+          {!optionsLoading && !optionsError && options.length === 0 ? (
+            <AppText color="muted">{emptyMessage ?? t('common.noResults')}</AppText>
+          ) : null}
           {options.map((option) => {
             const selected = option.value === value;
             return (
@@ -181,6 +224,15 @@ export function AppSelectField<Value extends string | number>({
               </AppCard>
             );
           })}
+          {hasMore && onLoadMore ? (
+            <AppButton
+              disabled={loadingMore}
+              loading={loadingMore}
+              onPress={onLoadMore}
+              variant="outline">
+              {t('common.loadMore')}
+            </AppButton>
+          ) : null}
         </View>
       </AppModal>
     </View>
@@ -242,4 +294,5 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 2,
   },
+  optionsFeedback: { gap: 8 },
 });

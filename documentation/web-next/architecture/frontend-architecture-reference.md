@@ -1190,8 +1190,10 @@ SignalR connection, report/PDF viewers, file/media previews, Hangfire and config
 external-tool frames with representative environment data. This is a release smoke
 gate rather than a reason to keep the source CSP in Report-Only. Any confirmed
 violation must be classified and reflected in the bounded central source inventory
-and regression tests. Demo Login stays available through development and is
-removed only as a separate Production-readiness step.
+and regression tests. Demo Login remains intentionally available in both
+development and Production under the current product policy. Do not remove or hide
+it as part of Production readiness unless a future explicit product decision changes
+that requirement.
 
 **Prevention rule.** Do not solve a CSP violation by adding `*`, a broad scheme or
 an unrelated third-party origin. Do not add raw CSP reports to logs or telemetry.
@@ -1239,11 +1241,22 @@ Unknown application routes remain protected by default, and the 404 browser smok
 establishes an authenticated context before exercising the catch-all. Do not make
 an arbitrary path public merely to simplify a 404 test.
 
+The same fail-on-flaky policy also exposed a server-search timing race on the
+Countries smoke. Shared list state debounces the search term and React Query keeps
+`placeholderData` from the previous result while the next BFF request is in flight,
+so asserting that the old row disappeared immediately after `fill()` could pass or
+fail depending on render/network timing. Browser tests for debounced server filters
+must synchronize with the matching BFF response (or another deterministic state
+transition) before asserting the filtered rows; do not paper over the race with
+arbitrary sleeps or disabled retries.
+
 Deterministic PR CI is intentionally separate from deployment-only integration
 smoke. Real Collector/dashboard/alert delivery, authenticated Google popup,
 deployment SignalR, report/PDF/file viewers, Hangfire, configured external-frame
-integrations and Production Demo Login removal require the target environment,
-credentials or representative data and remain staging/Production release gates.
+integrations require the target environment, credentials or representative data and
+remain staging/Production release gates. Demo Login is intentionally allowed in
+Production and is not part of the release-removal gate under the current product
+policy.
 Web Vitals and user-perceived latency should likewise be driven by stable browser
 or production telemetry rather than machine-specific CI timing thresholds.
 
@@ -1255,6 +1268,35 @@ or production telemetry rather than machine-specific CI timing thresholds.
 - Use `loading.tsx`, `error.tsx`, and `not-found.tsx` at the nearest meaningful route boundary.
 - Do not duplicate route-level business logic in App Router adapters.
 - Keep application routes centralized in `src/config/routes.ts` and use typed routes.
+
+### Phase 13 architecture governance manifest
+
+**Observed problem.** Ownership and route-group enforcement existed in code, but
+an engineer still had to inspect `module-boundaries.mjs` plus the App Router tree
+to reconstruct the current ownership map. Prose examples could also drift from
+the filesystem without a dedicated freshness check.
+
+**Decision.** `scripts/module-boundaries.mjs` owns the small set of explicit
+`documentedRouteOwnership` contracts, while
+`scripts/architecture-governance.mjs` generates
+`documentation/web-next/architecture/frontend-architecture-manifest.md` from the
+live policy and protected App Router pages. `check:architecture` verifies those
+canonical routes still belong to their declared bounded context, and
+`check:governance` verifies the generated manifest is byte-current.
+
+The same governance check reads each registered business module's
+`documentation/modules/<module>/module.json`. Its `webNextSurface` must be
+`active` and must point back to the same owner, `src/modules/<owner>` root,
+`moduleDefinition.tsx`, and an existing module Web README. The generated manifest
+includes that module-documentation parity table. Module package prose may add
+context, but the machine-readable manifest is the freshness contract.
+
+**Regression rule.** Do not hand-edit the generated architecture manifest. For an
+intentional route/ownership move, change the owning policy and source tree,
+regenerate with `npm run generate:architecture-manifest`, review the manifest diff,
+update the owning module package when its Web status/owner changes, then run
+`npm run check`. CI runs the governance check independently as part of the
+Definition of Done.
 
 ## Naming Rules
 
@@ -1272,6 +1314,7 @@ Before completing a structural change, run:
 
 ```powershell
 npm.cmd run check:architecture
+npm.cmd run check:governance
 npm.cmd run type-check
 npm.cmd run lint -- --quiet
 npm.cmd run test:module-generator

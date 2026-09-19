@@ -3,6 +3,10 @@
     "preview": {
       "node": "22.13.0",
       "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_RELEASE_CHANNEL": "preview",
+        "EXPO_PUBLIC_API_CONTRACT_VERSION": "v1"
+      },
       "android": {
         "buildType": "apk"
       },
@@ -10,6 +14,11 @@
     },
     "production": {
       "node": "22.13.0",
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_RELEASE_CHANNEL": "production",
+        "EXPO_PUBLIC_API_CONTRACT_VERSION": "v1"
+      },
       "uploadSourceMaps": true
     }
   }

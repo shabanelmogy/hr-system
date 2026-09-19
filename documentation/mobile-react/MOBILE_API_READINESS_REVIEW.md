@@ -1,9 +1,15 @@
 # Mobile API Readiness Review
 
-Status: **Phase 00 baseline recorded; foundation is not closed for business-feature work**.
+Status: **Phases 01–07 source foundations are implemented and verified; Phase 08 device/EAS evidence remains open**.
 
 This review records the mobile client's verified API and platform boundaries. It
 does not claim a live production smoke test or store-signing validation.
+
+Implementation evidence and the external validation boundary are recorded in
+[MOBILE_PHASES_01_08_IMPLEMENTATION.md](MOBILE_PHASES_01_08_IMPLEMENTATION.md),
+[MOBILE_RELEASE_RUNBOOK.md](MOBILE_RELEASE_RUNBOOK.md),
+[MOBILE_UI_EVIDENCE_MATRIX.md](MOBILE_UI_EVIDENCE_MATRIX.md), and
+[MOBILE_PERFORMANCE_BUDGETS.md](MOBILE_PERFORMANCE_BUDGETS.md).
 
 The code-level release safety gates are now present: production dependency
 audits run at moderate severity, the two upstream advisory roots are pinned to
@@ -22,6 +28,13 @@ checked by `scripts/module-boundaries.mjs`; the core allowlist is empty. Route
 and presentation files cannot import `apiService` or `axiosClient`. Feature
 remote adapters own routes, request mapping, and runtime parsing of server
 responses from `unknown`.
+
+The Phase 00 compatibility gate covers 74 routes, 27 endpoint catalogs, 200
+endpoint leaf members, and 226 traced operations. Profile, SignalR, host
+diagnostics, file transfer, and binary report calls are part of that inventory.
+The gate rejects local endpoint objects and direct transport URLs outside a
+reviewed endpoint catalog, so these calls cannot silently disappear from future
+ownership and offline-policy reviews.
 
 `EXPO_PUBLIC_API_URL` accepts an absolute versioned `/api/vN` API address only,
 rejects credentials, query and fragment values, and requires HTTPS in production.
@@ -111,9 +124,10 @@ disposable system temporary directory.
 ## Deployment and verification
 
 Expo SDK 57 package versions were behind the `npx expo install --check`
-expectations at the start of Phase 00. The Phase 00 baseline records the patch
-alignment work and its verification status; this review must not claim Expo
-alignment until a clean install and Expo Doctor pass are recorded.
+expectations at the start of Phase 00. Phase 00 aligned the ten patch versions;
+the recorded clean `npm ci`, `npx expo install --check`, and Expo Doctor run now
+pass (21/21). This proves dependency compatibility on the recorded local Node
+runtime, while the Node 22.13.0 CI/EAS build remains a separate environment gate.
 `eas.json` defines internal preview APK and production profiles on Node 22.13.0.
 EAS builds require one consistent real project ID from `EXPO_EAS_PROJECT_ID`,
 `extra.eas.projectId`, or EAS's built-in `EAS_BUILD_PROJECT_ID`; local
@@ -159,9 +173,9 @@ verification.
 ## Findings recorded before Phase 00
 
 - The previous review stated that SDK 57 patch dependencies were aligned. The
-  baseline check contradicted that statement (Expo Doctor reported 20/21 with
-  ten patch mismatches), so it is treated as an historical claim pending a
-  clean-install verification.
+  Phase 00 pre-check contradicted that statement (20/21 with ten mismatches),
+  then the Phase 00 patch update and clean-install verification closed that
+  dependency mismatch with Expo Doctor 21/21.
 - Removed the `core` to `shared` provider cycle by moving transient feedback
   composition to the root application layout.
 - Added enforced route/presentation transport boundaries and an AST localization

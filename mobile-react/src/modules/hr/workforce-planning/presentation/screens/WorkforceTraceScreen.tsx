@@ -3,7 +3,7 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { AppDataCard, AppPaginationNavigation, AppScreen, AppSegmentedControl, AppSelectField, AppStateView, AppStatusBadge, AppText, AppTextField, type AppSelectOption } from '@/src/shared/components';
 import { permissions, useAuthorization } from '@/src/platform/auth';
-import { useFiscalYearLookup } from '@/src/modules/hr/finance';
+import { useFiscalYearLookup } from '@/src/modules/accounting';
 import { useWorkforceTraceByApplication, useWorkforceTraceByEmployee, useWorkforceTraceByOffer, usePlanCommitmentSummary } from '../queries/use-workforce-trace';
 import type { PlanCommitmentPageQuery } from '../../domain/models/workforce-trace';
 

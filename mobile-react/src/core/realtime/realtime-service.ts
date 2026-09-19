@@ -3,6 +3,7 @@ import { z } from 'zod';
 
 import { apiService } from '@/src/core/api';
 import { ENV } from '@/src/core/config/env';
+import { realtimeEndpoints } from './realtime-endpoints';
 
 type RealtimeCallback = (...args: unknown[]) => void;
 type ConnectionStateCallback = (connected: boolean, connecting: boolean) => void;
@@ -137,9 +138,9 @@ class RealtimeService {
     if (this.connection) return this.connection;
 
     const connection = new signalR.HubConnectionBuilder()
-      .withUrl(getHubUrl(), {
+      .withUrl(realtimeEndpoints.companyHub, {
         accessTokenFactory: async () => {
-          const response = await apiService.get<unknown>('auth/realtimeToken', {
+          const response = await apiService.get<unknown>(realtimeEndpoints.token, {
             allowWhenReadOnly: true,
           });
           return realtimeTokenSchema.parse(response).token;
@@ -192,11 +193,6 @@ class RealtimeService {
   private notifyState(connected: boolean, connecting: boolean): void {
     this.stateCallbacks.forEach((callback) => callback(connected, connecting));
   }
-}
-
-function getHubUrl(): string {
-  const apiRootUrl = ENV.apiUrl.replace(/\/api\/v\d+$/i, '');
-  return `${apiRootUrl}/hubs/company`;
 }
 
 export const realtimeService = new RealtimeService();

@@ -1,6 +1,3 @@
-import type { AppointmentInput } from './appointments/domain/models/appointment';
-import type { AppointmentRepository } from './appointments/domain/repositories/appointment-repository';
-import { DefaultAppointmentRepository } from './appointments/data/repositories/default-appointment-repository';
 import type {
   PreparedFilePreview,
   StoredFile,
@@ -37,31 +34,6 @@ describe('platform tools online-authoritative repositories', () => {
 
     expect(uploaded).toEqual([[file]]);
     expect(deleted).toEqual(['stored-policy.pdf']);
-  });
-
-  it('delegates appointment writes directly to the remote data source', async () => {
-    const saved: AppointmentInput[] = [];
-    const deleted: number[] = [];
-    const appointment = {
-      id: 3,
-      start: '2026-09-10T08:00:00.000Z',
-      end: '2026-09-10T09:00:00.000Z',
-      text: 'Review',
-      isAllDay: false,
-    };
-    const remote: AppointmentRepository = {
-      getAppointments: async () => [],
-      saveAppointment: async (input) => { saved.push(input); return appointment; },
-      deleteAppointment: async (id) => { deleted.push(id); },
-    };
-    const repository = new DefaultAppointmentRepository(remote);
-    const input: AppointmentInput = { ...appointment, id: undefined };
-
-    await repository.saveAppointment(input);
-    await repository.deleteAppointment(3);
-
-    expect(saved).toEqual([input]);
-    expect(deleted).toEqual([3]);
   });
 
   it('delegates localization updates directly to the remote data source', async () => {

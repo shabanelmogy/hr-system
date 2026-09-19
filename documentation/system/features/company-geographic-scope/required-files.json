@@ -31,7 +31,7 @@
     {
       "id": "mobile-feature",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/company-geographic-scope",
+      "path": "mobile-react/src/platform/tenant-administration/company-geographic-scope",
       "minimumFiles": 8,
       "purpose": "Runtime schema, API, query, form validation, and native screen"
     }
@@ -166,19 +166,19 @@
     {
       "id": "mobile-screen",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/company-geographic-scope/presentation/screens/CompanyGeographicScopeScreen.tsx",
+      "path": "mobile-react/src/platform/tenant-administration/company-geographic-scope/presentation/screens/CompanyGeographicScopeScreen.tsx",
       "purpose": "Native reusable configuration screen"
     },
     {
       "id": "mobile-api",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/company-geographic-scope/data/remote/company-geographic-scope-remote-data-source.ts",
+      "path": "mobile-react/src/platform/tenant-administration/company-geographic-scope/data/remote/company-geographic-scope-remote-data-source.ts",
       "purpose": "Runtime-validated GET/PUT boundary"
     },
     {
       "id": "mobile-schema",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/company-geographic-scope/data/remote/company-geographic-scope-schemas.ts",
+      "path": "mobile-react/src/platform/tenant-administration/company-geographic-scope/data/remote/company-geographic-scope-schemas.ts",
       "purpose": "Untrusted response parsing"
     },
     {

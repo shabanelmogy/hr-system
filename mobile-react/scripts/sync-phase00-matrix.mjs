@@ -5,10 +5,66 @@ import * as ts from 'typescript';
 const mobileRoot = path.resolve(import.meta.dirname, '..');
 const matrixPath = path.resolve(mobileRoot, '..', 'documentation', 'mobile-react', 'MOBILE_API_COMPATIBILITY_MATRIX.json');
 const matrix = JSON.parse(fs.readFileSync(matrixPath, 'utf8'));
+const sourceRenames = new Map([
+  ['src/modules/hr/basic-data/address-types/', 'src/modules/reference-data/addresses/address-types/'],
+  ['src/modules/hr/basic-data/countries/', 'src/modules/reference-data/geography/countries/'],
+  ['src/modules/hr/basic-data/states/', 'src/modules/reference-data/geography/states/'],
+  ['src/modules/hr/basic-data/districts/', 'src/modules/reference-data/geography/districts/'],
+  ['src/modules/hr/basic-data/company-geographic-scope/', 'src/platform/tenant-administration/company-geographic-scope/'],
+  ['src/modules/hr/finance/fiscal-years/', 'src/modules/accounting/fiscal-years/'],
+  ['src/platform/tools/appointments/', 'src/modules/crm/appointments/'],
+]);
+const renameSource = (source) => [...sourceRenames.entries()].reduce(
+  (value, [from, to]) => value.replace(from, to), source,
+);
+for (const route of matrix.routes) route.source = renameSource(route.source);
+for (const endpointFile of matrix.endpointFiles) endpointFile.source = renameSource(endpointFile.source);
 const verbNames = new Set(['GET', 'POST', 'PUT', 'PATCH', 'DELETE']);
 const wrapperVerbs = new Map([
   ['getParsed', 'GET'], ['postParsed', 'POST'], ['putParsed', 'PUT'],
   ['patchParsed', 'PATCH'], ['deleteParsed', 'DELETE'],
+]);
+
+const referencedEndpointOperations = new Map([
+  ['src/core/realtime/realtime-endpoints.ts#companyHub', {
+    verb: ['CONNECT'],
+    caller: 'src/core/realtime/realtime-service.ts#getConnection',
+    requestBoundary: 'SignalR access token factory',
+    responseBoundary: 'SignalR company hub events',
+  }],
+  ['src/platform/tools/file-manager/data/remote/file-manager-endpoints.ts#download', {
+    verb: ['GET'],
+    caller: 'src/platform/tools/file-manager/data/remote/file-manager-remote-data-source.ts#prepareFilePreview',
+    requestBoundary: 'storedFileName path parameter',
+    responseBoundary: 'authenticated Blob/native file download',
+  }],
+  ['src/platform/tools/file-manager/data/remote/file-manager-endpoints.ts#stream', {
+    verb: ['GET'],
+    caller: 'src/platform/tools/file-manager/data/remote/file-manager-remote-data-source.ts#getAuthenticatedFileSource',
+    requestBoundary: 'file id path parameter',
+    responseBoundary: 'authenticated file stream',
+  }],
+  ['src/platform/tools/operations/data/remote/operations-endpoints.ts#swagger', {
+    verb: ['GET'],
+    caller: 'src/platform/tools/operations/data/remote/operations-remote-data-source.ts#getSwaggerUrl',
+    requestBoundary: 'none',
+    responseBoundary: 'Swagger HTML document',
+  }],
+  ['src/platform/tools/operations/data/remote/operations-endpoints.ts#hangfireDashboard', {
+    verb: ['GET'],
+    caller: 'src/platform/tools/operations/data/remote/operations-remote-data-source.ts#getHangfireUrl',
+    requestBoundary: 'none',
+    responseBoundary: 'Hangfire dashboard HTML document',
+  }],
+]);
+
+const endpointPermissionOverrides = new Map([
+  ['src/core/realtime/realtime-endpoints.ts#token', 'Platform AuthController.RealtimeToken with an authenticated session'],
+  ['src/core/realtime/realtime-endpoints.ts#companyHub', 'Platform authenticated SignalR hub connection and tenant/company claims'],
+  ['src/platform/tools/operations/data/remote/operations-endpoints.ts#health', 'Authenticated host readiness health endpoint'],
+  ['src/platform/tools/operations/data/remote/operations-endpoints.ts#backgroundJobs', 'Platform BackgroundJobsController and PlatformPermissions.ViewHangfireDashboard'],
+  ['src/platform/tools/operations/data/remote/operations-endpoints.ts#swagger', 'Host OpenAPI exposure policy for the active environment'],
+  ['src/platform/tools/operations/data/remote/operations-endpoints.ts#hangfireDashboard', 'Platform Hangfire dashboard and PlatformPermissions.ViewHangfireDashboard'],
 ]);
 
 function walk(directory) {
@@ -77,7 +133,11 @@ function endpointImports(sf, endpointSource, variable) {
 function calleeVerb(call) {
   if (ts.isPropertyAccessExpression(call.expression)) {
     const name = call.expression.name.text;
-    if (ts.isIdentifier(call.expression.expression) && call.expression.expression.text === 'apiService' && verbNames.has(name.toUpperCase())) return name.toUpperCase();
+    if (ts.isIdentifier(call.expression.expression)) {
+      const owner = call.expression.expression.text;
+      if (owner === 'apiService' && name === 'upload') return 'POST';
+      if ((owner === 'apiService' || owner === 'axiosClient') && verbNames.has(name.toUpperCase())) return name.toUpperCase();
+    }
     return wrapperVerbs.get(name);
   }
   if (ts.isIdentifier(call.expression)) return wrapperVerbs.get(call.expression.text);
@@ -90,7 +150,8 @@ function functionName(node, sf) {
     if (ts.isFunctionDeclaration(current) && current.name) return current.name.text;
     if (ts.isMethodDeclaration(current) && current.name) return current.name.getText(sf);
     if (ts.isPropertyAssignment(current) && current.name) return current.name.getText(sf);
-    if (ts.isVariableDeclaration(current) && ts.isIdentifier(current.name)) return current.name.text;
+    if (ts.isVariableDeclaration(current) && ts.isIdentifier(current.name) && current.initializer &&
+      (ts.isArrowFunction(current.initializer) || ts.isFunctionExpression(current.initializer))) return current.name.text;
     current = current.parent;
   }
   return '<module scope>';
@@ -164,12 +225,26 @@ function operationsFor(endpointSource, variable, members) {
       const calls = [];
       const collect = (node) => { if (ts.isCallExpression(node) && calleeVerb(node) && node.arguments[0]?.getText(sf).includes(`${aliases.find((alias) => source.includes(`${alias}[`))}[`)) calls.push(node); ts.forEachChild(node, collect); };
       collect(sf);
-      for (const member of members) for (const call of calls) {
+      // A computed selector can only account for leaves that were not already
+      // traced through a concrete property access. This avoids falsely adding
+      // the lifecycle POST to unrelated leaves such as base, lookup, or byId.
+      for (const member of members.filter((candidate) => (operations.get(candidate)?.length ?? 0) === 0)) for (const call of calls) {
         const verb = calleeVerb(call);
         const operation = { verb: [verb], caller: `${rel(file)}#${functionName(call, sf)} (dynamic endpoint selector)`, requestBoundary: requestBoundary(call, verb, sf), responseBoundary: responseBoundary(call, verb, sf), permissionAuthority: `API module catalog/endpoint policy; caller ${rel(file)}` };
         const current = operations.get(member);
         if (current && !current.some((item) => JSON.stringify(item) === JSON.stringify(operation))) current.push(operation);
       }
+    }
+  }
+
+  for (const member of members) {
+    const referenced = referencedEndpointOperations.get(`${endpointSource}#${member}`);
+    const current = operations.get(member);
+    if (referenced && current && !current.some((item) => item.caller === referenced.caller)) {
+      current.push({
+        ...referenced,
+        permissionAuthority: `API module catalog/endpoint policy; caller ${referenced.caller.split('#')[0]}`,
+      });
     }
   }
   return operations;
@@ -224,55 +299,256 @@ function moduleRequirement(pathname) {
   if (!pathname.startsWith('/')) return null;
   if (pathname === '/apps') return null;
   if (pathname.startsWith('/apps/')) return { status: 'dynamic', moduleCode: ':moduleCode', submoduleCode: ':submoduleCode' };
+  if (/^\/basic-data\/geographical-information\/(countries|states|districts)$/.test(pathname)) return { moduleCode: 'reference-data', submoduleCode: 'geography' };
+  if (pathname === '/basic-data/geographical-information/address-types') return { moduleCode: 'reference-data', submoduleCode: 'addresses' };
+  if (pathname === '/basic-data/organizational-structure/geographic-scope') return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
   if (pathname.startsWith('/basic-data')) return { moduleCode: 'hr', submoduleCode: 'basic-data' };
   if (pathname.startsWith('/recruitment')) return { moduleCode: 'hr', submoduleCode: 'recruitment' };
-  if (pathname.startsWith('/workforce-planning') || pathname.startsWith('/finance')) return { moduleCode: 'hr', submoduleCode: 'workforce' };
-  if (pathname.startsWith('/advanced-tools/localization-api')) return { moduleCode: 'hr', submoduleCode: 'basic-data' };
-  if (pathname.startsWith('/advanced-tools/track-changes') || pathname.startsWith('/advanced-tools/hangfire-dashboard')) return { moduleCode: 'hr', submoduleCode: 'analytics' };
-  if (pathname.startsWith('/advanced-tools') || pathname.startsWith('/administration') || pathname.startsWith('/extras')) return { moduleCode: 'hr', submoduleCode: 'administration' };
+  if (pathname.startsWith('/workforce-planning')) return { moduleCode: 'hr', submoduleCode: 'workforce' };
+  if (pathname.startsWith('/finance')) return { moduleCode: 'acc', submoduleCode: 'fiscal-years' };
+  if (pathname.startsWith('/advanced-tools/track-changes') || pathname.startsWith('/advanced-tools/localization-api')) return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
+  if (pathname.startsWith('/advanced-tools') || pathname.startsWith('/administration')) return { moduleCode: 'platform', submoduleCode: 'operations' };
+  if (pathname.startsWith('/extras/appointments')) return { moduleCode: 'crm', submoduleCode: 'appointments' };
+  if (pathname.startsWith('/extras')) return { moduleCode: 'platform', submoduleCode: 'operations' };
   return null;
 }
 
-function targetPolicy(pathname, current, targetOwner, status) {
-  if (status === 'mismatch' || status === 'deferred') return { status: 'deferred', owner: targetOwner, reason: 'Exact API permission/module policy is owned by Phase 01.' };
+function routeProfile(route, pathname) {
+  const effectivePath = pathname.startsWith('layout:') ? pathname.slice('layout:'.length) || '/' : pathname;
+  const profile = {
+    currentOwner: route.currentOwner,
+    targetOwner: route.targetOwner,
+    scope: route.scope,
+    offlineMode: route.offlineMode,
+    status: route.status,
+    note: route.note,
+  };
+
+  if (effectivePath === '/basic-data' || effectivePath === '/basic-data/geographical-information') {
+    return {
+      ...profile,
+      currentOwner: 'ReferenceData/geography',
+      targetOwner: 'Shell/composite',
+      status: 'mismatch',
+      note: 'The aggregate route spans HR, Platform, and ReferenceData; Phase 01 must remove the blanket HR module requirement.',
+    };
+  }
+  if (/^\/basic-data\/geographical-information\/(countries|states|districts)$/.test(effectivePath)) {
+    return {
+      ...profile,
+      currentOwner: 'ReferenceData/geography',
+      targetOwner: 'ReferenceData/geography',
+      scope: 'platform-global',
+      offlineMode: 'read-cache',
+      status: 'aligned',
+      note: 'Global geography is owned by ReferenceData/geography with the server global geography entitlement.',
+    };
+  }
+  if (effectivePath === '/basic-data/geographical-information/address-types') {
+    return {
+      ...profile,
+      currentOwner: 'ReferenceData/addresses',
+      targetOwner: 'ReferenceData/addresses',
+      scope: 'tenant/company',
+      offlineMode: 'read-cache',
+      status: 'aligned',
+      note: 'Address types are tenant reference data in ReferenceData/addresses.',
+    };
+  }
+  if (effectivePath === '/basic-data/organizational-structure/geographic-scope') {
+    return {
+      ...profile,
+      currentOwner: 'Platform/tenant-administration',
+      targetOwner: 'Platform/tenant-administration',
+      scope: 'tenant/company',
+      status: 'aligned',
+      note: 'Company geographic scope is a Platform tenancy capability.',
+    };
+  }
+  if (effectivePath.startsWith('/finance')) {
+    return {
+      ...profile,
+      currentOwner: 'Accounting/fiscal-years',
+      targetOwner: 'Accounting/fiscal-years',
+      scope: 'tenant/company',
+      status: 'aligned',
+      note: 'Fiscal years are owned by the Accounting module (acc/fiscal-years).',
+    };
+  }
+  if (effectivePath.startsWith('/administration')) {
+    return {
+      ...profile,
+      currentOwner: 'Platform/administration',
+      targetOwner: 'Platform/tenant-administration',
+      scope: 'tenant/company',
+      status: 'mismatch',
+      note: 'The feature is Platform-owned but still has the legacy hr/administration module requirement.',
+    };
+  }
+  if (effectivePath === '/advanced-tools/track-changes' || effectivePath === '/advanced-tools/localization-api') {
+    return {
+      ...profile,
+      currentOwner: 'CRM/appointments',
+      targetOwner: 'Platform/tenant-administration',
+      scope: 'tenant/company',
+      status: 'mismatch',
+      note: 'The API surface is Platform tenant administration; the current route still requires an HR submodule.',
+    };
+  }
+  if (effectivePath === '/advanced-tools/hangfire-dashboard' || effectivePath === '/advanced-tools/health-check' || effectivePath === '/advanced-tools/api-endpoints') {
+    return {
+      ...profile,
+      currentOwner: 'Platform/tools',
+      targetOwner: 'Platform/operations',
+      scope: 'platform-global',
+      status: 'mismatch',
+      note: 'The API surface is Platform operations; the current route still requires an HR submodule.',
+    };
+  }
+  if (effectivePath === '/advanced-tools') {
+    return {
+      ...profile,
+      currentOwner: 'Platform/tools',
+      targetOwner: 'Shell/composite',
+      status: 'mismatch',
+      note: 'The aggregate route spans Platform tenant administration and global operations.',
+    };
+  }
+  if (effectivePath === '/extras/appointments') {
+    return {
+      ...profile,
+      currentOwner: 'Platform/tools',
+      targetOwner: 'CRM/appointments',
+      status: 'aligned',
+      note: 'Appointments are CRM-owned and require CRM appointment permissions and entitlement.',
+    };
+  }
+  if (effectivePath === '/extras' || effectivePath === '/extras/files') {
+    return {
+      ...profile,
+      currentOwner: 'Platform/tools',
+      targetOwner: effectivePath === '/extras/files' ? 'Platform/files' : 'Shell/composite',
+      status: 'mismatch',
+      note: 'The current route has a blanket hr/administration requirement that does not match its API owner.',
+    };
+  }
+  if (effectivePath === '/super-admin-dashboard' || effectivePath === '/tenant-management' || effectivePath === '/tenant-admin-management') {
+    return {
+      ...profile,
+      currentOwner: 'Platform',
+      targetOwner: 'Platform',
+      scope: 'platform-global',
+      status: 'aligned',
+      note: 'Platform super-admin route; no tenant entitlement selector is required.',
+    };
+  }
+  return profile;
+}
+
+function targetRoutePolicy(pathname, current, profile) {
+  if (pathname.startsWith('layout:') || pathname.startsWith('system:')) return { kind: 'inherited' };
+  if (/^\/basic-data\/geographical-information\/countries$/.test(pathname)) return { kind: 'permissions', permissions: ['Countries:View'] };
+  if (/^\/basic-data\/geographical-information\/states$/.test(pathname)) return { kind: 'permissions', permissions: ['States:View'] };
+  if (/^\/basic-data\/geographical-information\/districts$/.test(pathname)) return { kind: 'permissions', permissions: ['Districts:View'] };
+  if (pathname === '/basic-data/geographical-information/address-types') return { kind: 'permissions', permissions: ['AddressTypes:View'] };
+  if (pathname === '/basic-data/organizational-structure/geographic-scope') return { kind: 'permissions', permissions: ['CompanyGeographicScope:View'] };
+  if (pathname === '/extras/appointments') return { kind: 'permissions', permissions: ['Appointments:View'] };
+  if (pathname === '/finance' || pathname === '/finance/fiscal-years') return { kind: 'permissions', permissions: ['FiscalYears:View'] };
+  if (profile.targetOwner === 'Shell/composite' || profile.targetOwner === 'Platform/files') {
+    return { status: 'deferred', owner: profile.targetOwner, reason: 'Phase 01 must split the aggregate route by its actual API owners.' };
+  }
   return current;
+}
+
+function targetModuleRequirement(pathname, currentModule, profile) {
+  if (pathname.startsWith('layout:') || pathname.startsWith('system:')) return { status: 'inherited' };
+  if (/^\/basic-data\/geographical-information\/(countries|states|districts)$/.test(pathname)) return { moduleCode: 'reference-data', submoduleCode: 'geography' };
+  if (pathname === '/basic-data/geographical-information/address-types') return { moduleCode: 'reference-data', submoduleCode: 'addresses' };
+  if (pathname === '/basic-data/organizational-structure/geographic-scope') return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
+  if (pathname === '/extras/appointments') return { moduleCode: 'crm', submoduleCode: 'appointments' };
+  if (pathname.startsWith('/finance')) return { moduleCode: 'acc', submoduleCode: 'fiscal-years' };
+  if (pathname.startsWith('/administration') || pathname === '/advanced-tools/track-changes' || pathname === '/advanced-tools/localization-api') return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
+  if (pathname === '/advanced-tools/hangfire-dashboard' || pathname === '/advanced-tools/health-check' || pathname === '/advanced-tools/api-endpoints') return { moduleCode: 'platform', submoduleCode: 'operations' };
+  if (profile.targetOwner === 'Shell/composite' || profile.targetOwner === 'Platform/files') return { status: 'deferred', owner: profile.targetOwner, reason: 'Phase 01 must split the aggregate route by API owner.' };
+  return currentModule;
+}
+
+function endpointProfile(source) {
+  if (source.includes('/core/realtime/')) return { currentOwner: 'Platform/realtime', targetOwner: 'Platform/realtime', scope: 'session/tenant/company', status: 'aligned', permissionSource: 'Platform authenticated realtime policy' };
+  if (source.includes('/hr/recruitment/')) return { currentOwner: 'HR/recruitment', targetOwner: 'HR/recruitment', scope: 'tenant/company', status: 'aligned', permissionSource: 'HR API endpoint policy backed by HrPermissions.Recruitment' };
+  if (source.includes('/accounting/fiscal-years/')) return { currentOwner: 'Accounting/fiscal-years', targetOwner: 'Accounting/fiscal-years', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting FiscalYearsController and AccountingPermissions.FiscalYears' };
+  if (source.includes('/reference-data/addresses/address-types/')) return { currentOwner: 'ReferenceData/addresses', targetOwner: 'ReferenceData/addresses', scope: 'tenant/company', status: 'aligned', permissionSource: 'ReferenceData AddressTypesController and ReferenceDataPermissions.TenantReferenceData' };
+  if (source.includes('/reference-data/geography/countries/') || source.includes('/reference-data/geography/states/') || source.includes('/reference-data/geography/districts/')) return { currentOwner: 'ReferenceData/geography', targetOwner: 'ReferenceData/geography', scope: 'platform-global', status: 'aligned', permissionSource: 'ReferenceData geography controllers and ReferenceDataPermissions.GlobalGeography' };
+  if (source.includes('/platform/tenant-administration/company-geographic-scope/')) return { currentOwner: 'Platform/tenant-administration', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform CompanyGeographicScopeController and PlatformPermissions.CompanyGeographicScope' };
+  if (source.includes('/hr/basic-data/organizational-structure/')) return { currentOwner: 'HR/basic-data', targetOwner: 'HR/basic-data', scope: 'tenant/company', status: 'aligned', permissionSource: 'HR OrganizationalStructureController and HrPermissions.OrganizationalStructure' };
+  if (source.includes('/hr/workforce-planning/')) return { currentOwner: 'HR/workforce', targetOwner: 'HR/workforce', scope: 'tenant/company', status: 'aligned', permissionSource: 'HR workforce endpoint policy backed by HrPermissions.Workforce' };
+  if (source.includes('/modules/crm/appointments/')) return { currentOwner: 'CRM/appointments', targetOwner: 'CRM/appointments', scope: 'tenant/company', status: 'aligned', permissionSource: 'CRM AppointmentsController and CrmPermissions.Appointments' };
+  if (source.includes('/platform/reporting/')) return { currentOwner: 'Platform/reporting', targetOwner: 'Reporting/analytics', scope: 'tenant/company', status: 'mismatch', permissionSource: 'Reporting API endpoint policy and ReportingPermissions.Reports' };
+  if (source.includes('/platform/tools/track-changes/')) return { currentOwner: 'Platform/tools', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'mismatch', permissionSource: 'Platform EntityChangeLogsController and PlatformPermissions.ViewChangeLogs' };
+  if (source.includes('/platform/tools/localization/')) return { currentOwner: 'Platform/tenant-administration', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform LocalizationController and PlatformPermissions localizations' };
+  if (source.includes('/platform/tools/operations/')) return { currentOwner: 'Platform/operations', targetOwner: 'Platform/operations', scope: 'platform-global', status: 'aligned', permissionSource: 'Platform BackgroundJobsController and PlatformPermissions.GlobalOperations' };
+  if (source.includes('/platform/administration/') || source.includes('/platform/offline-operations/') || source.includes('/platform/tenant-admins/') || source.includes('/platform/tenants/')) return { currentOwner: 'Platform/tenant-administration', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform endpoint policy and PlatformPermissions.TenantAdministration' };
+  if (source.includes('/platform/auth/')) return { currentOwner: 'Platform/identity', targetOwner: 'Platform/identity', scope: 'session/tenant/company', status: 'aligned', permissionSource: 'Platform authentication/session endpoint policy' };
+  if (source.includes('/platform/modules/')) return { currentOwner: 'Platform/modules', targetOwner: 'Platform/modules', scope: 'session/tenant', status: 'aligned', permissionSource: 'Platform module catalog endpoint policy' };
+  if (source.includes('/platform/notifications/')) return { currentOwner: 'Platform/notifications', targetOwner: 'Platform/notifications', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform notification endpoint policy' };
+  if (source.includes('/platform/tools/file-manager/')) return { currentOwner: 'Platform/files', targetOwner: 'Platform/files', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform file endpoint policy' };
+  return { currentOwner: 'UNREVIEWED', targetOwner: 'UNREVIEWED', scope: 'unreviewed', status: 'deferred', permissionSource: 'UNREVIEWED endpoint ownership and permission policy' };
 }
 
 for (const route of matrix.routes) {
   const pathname = routePath(route.source);
+  const profile = routeProfile(route, pathname);
   const current = pathname.startsWith('layout:') || pathname.startsWith('system:') ? { kind: 'inherited' } : policy(pathname);
   const currentModule = pathname.startsWith('layout:') || pathname.startsWith('system:') ? { status: 'inherited' } : moduleRequirement(pathname);
+  Object.assign(route, profile);
   route.path = pathname;
   route.currentRoutePolicy = current;
-  route.targetRoutePolicy = targetPolicy(pathname, current, route.targetOwner, route.status);
+  route.targetRoutePolicy = targetRoutePolicy(pathname, current, profile);
   route.currentModuleRequirement = currentModule;
-  route.targetModuleRequirement = route.status === 'aligned' ? currentModule : { status: 'deferred', owner: route.targetOwner, reason: 'Phase 01 API catalog alignment.' };
-  route.routePolicy = current.kind;
-  route.moduleRequirement = typeof route.targetModuleRequirement === 'object' && route.targetModuleRequirement?.moduleCode ? `${route.targetModuleRequirement.moduleCode}:${route.targetModuleRequirement.submoduleCode ?? ''}` : (route.targetOwner ?? 'none');
+  route.targetModuleRequirement = targetModuleRequirement(pathname, currentModule, profile);
+  delete route.routePolicy;
+  delete route.moduleRequirement;
 }
+
+const endpointSources = walk(path.join(mobileRoot, 'src'))
+  .filter((file) => file.endsWith('endpoints.ts'))
+  .map(rel)
+  .sort();
+const existingEndpointSources = new Set(matrix.endpointFiles.map((entry) => entry.source));
+for (const source of endpointSources) {
+  if (existingEndpointSources.has(source)) continue;
+  matrix.endpointFiles.push({
+    source,
+    family: path.basename(source, '.ts').replace(/-endpoints$/, ''),
+    members: [],
+  });
+}
+matrix.endpointFiles.sort((left, right) => left.source.localeCompare(right.source));
 
 for (const endpointFile of matrix.endpointFiles) {
   const absolute = path.join(mobileRoot, endpointFile.source);
   const source = fs.readFileSync(absolute, 'utf8');
   const parsed = endpointObject(source, endpointFile.source);
   const operations = operationsFor(endpointFile.source, parsed.variable, parsed.members);
-  const fileMetadata = endpointFile.members[0] ?? {};
+  const profile = endpointProfile(endpointFile.source);
   endpointFile.members = parsed.members.map((key) => {
     const ops = operations.get(key) ?? [];
-    const first = ops[0];
-    const prior = endpointFile.members.find((member) => member.key === key || member.key?.split('.').at(-1) === key) ?? fileMetadata;
+    const permissionAuthority = endpointPermissionOverrides.get(`${endpointFile.source}#${key}`) ?? profile.permissionSource;
+    const tracedOperations = ops.map((operation) => ({ ...operation, permissionAuthority }));
     return {
       key,
       pattern: `endpoint member ${key}`,
-      verb: ops.length ? [...new Set(ops.flatMap((operation) => operation.verb))] : ['UNUSED'],
-      operations: ops,
-      currentOwner: prior?.currentOwner ?? 'Platform',
-      targetOwner: prior?.targetOwner ?? 'Platform',
-      permissionAuthority: first?.permissionAuthority ?? 'No non-test caller found; API module catalog remains authoritative.',
-      scope: prior?.scope ?? 'tenant/company',
-      offlineMode: prior?.offlineMode ?? 'online-only',
-      status: ops.length ? (prior?.status ?? 'aligned') : 'deferred',
-      note: ops.length ? 'Verb and caller boundaries were traced from non-test remote data sources; server permission claims remain API-owned.' : 'Unwired endpoint constant; no non-test caller was found.',
+      verb: tracedOperations.length ? [...new Set(tracedOperations.flatMap((operation) => operation.verb))] : ['UNUSED'],
+      operations: tracedOperations,
+      currentOwner: profile.currentOwner,
+      targetOwner: profile.targetOwner,
+      permissionAuthority,
+      scope: profile.scope,
+      offlineMode: 'online-only',
+      status: tracedOperations.length ? profile.status : 'deferred',
+      note: tracedOperations.length
+        ? `Verb and request/response boundaries are traced from non-test callers; permission authority: ${permissionAuthority}.`
+        : 'Unwired endpoint constant; no non-test caller was found.',
     };
   });
 }

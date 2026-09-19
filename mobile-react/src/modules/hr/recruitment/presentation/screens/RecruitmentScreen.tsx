@@ -41,7 +41,6 @@ import {
   useIssueJobOffer,
 } from '../queries/use-recruitment';
 import {
-  ApplicationStage,
   ApplicationStatus,
   EmploymentApplicationDto,
   JobRequisitionMutation,
@@ -61,7 +60,6 @@ import { RecruitmentSummaryStats } from '../components/RecruitmentSummaryStats';
 import { ScheduleInterviewModal } from '../components/ScheduleInterviewModal';
 import { InterviewEvaluationModal } from '../components/InterviewEvaluationModal';
 import { ApplicationInterviewPickerModal } from '../components/ApplicationInterviewPickerModal';
-import { getApplicationPipelineStage } from '../utils/application-pipeline-stage';
 
 type ActiveTab = 'openings' | 'requisitions' | 'pipeline' | 'offers' | 'settings';
 type PendingOfferAction = { action: 'submit' | 'approve' | 'reject' | 'issue'; offer: JobOfferDto } | null;
@@ -72,9 +70,12 @@ export function RecruitmentScreen() {
 
   const [activeTab, setActiveTab] = useState<ActiveTab>('openings');
   const [selectedOpeningId, setSelectedOpeningId] = useState<number | null>(null);
-  const [selectedStage, setSelectedStage] = useState<ApplicationStage | 'all'>('all');
+  const [selectedStatus, setSelectedStatus] = useState<ApplicationStatus | 'all'>('all');
   const [search, setSearch] = useState('');
   const [offersPage, setOffersPage] = useState(0);
+  const [openingsPage, setOpeningsPage] = useState(0);
+  const [requisitionsPage, setRequisitionsPage] = useState(0);
+  const [applicationsPage, setApplicationsPage] = useState(0);
   const [pendingOfferAction, setPendingOfferAction] = useState<PendingOfferAction>(null);
   const [offerRejectReason, setOfferRejectReason] = useState('');
 
@@ -89,15 +90,22 @@ export function RecruitmentScreen() {
 
   // Queries
   const summaryQuery = useRecruitmentSummary();
-  const openingsQuery = useJobOpenings({ search });
-  const requisitionsQuery = useJobRequisitions({ search });
+  const openingsQuery = useJobOpenings({ pageNumber: openingsPage + 1, pageSize: 25, search });
+  const requisitionsQuery = useJobRequisitions({ pageNumber: requisitionsPage + 1, pageSize: 25, search });
   const applicationsQuery = useApplications({
-    pageNumber: 1,
-    pageSize: 100,
+    pageNumber: applicationsPage + 1,
+    pageSize: 25,
     jobOpeningId: selectedOpeningId ?? undefined,
+    status: selectedStatus === 'all' ? undefined : selectedStatus,
     search,
   });
   const offersQuery = useJobOffers({ pageNumber: offersPage + 1, pageSize: 10 });
+
+  const resetListPages = () => {
+    setOpeningsPage(0);
+    setRequisitionsPage(0);
+    setApplicationsPage(0);
+  };
 
   // Mutations
   const openOpeningMutation = useOpenJobOpening();
@@ -132,20 +140,17 @@ export function RecruitmentScreen() {
   const openings = openingsQuery.data?.items ?? [];
   const requisitions = requisitionsQuery.data?.items ?? [];
   const loadedApplications = applicationsQuery.data?.items ?? [];
-  const applications = selectedStage === 'all'
-    ? loadedApplications
-    : loadedApplications.filter((application) => getApplicationPipelineStage(application.status) === selectedStage);
+  const applications = loadedApplications;
   const offers = offersQuery.data?.items ?? [];
 
-  const stageChips: { id: ApplicationStage | 'all'; label: string }[] = [
+  const stageChips: { id: ApplicationStatus | 'all'; label: string }[] = [
     { id: 'all', label: t('common.all') },
-    { id: ApplicationStage.Applied, label: t('recruitment.stages.applied') },
-    { id: ApplicationStage.Shortlisted, label: t('recruitment.stages.shortlisted') },
-    { id: ApplicationStage.Interview, label: t('recruitment.stages.interview') },
-    { id: ApplicationStage.Offer, label: t('recruitment.stages.offer') },
-    { id: ApplicationStage.Hired, label: t('recruitment.stages.hired') },
-    { id: ApplicationStage.Rejected, label: t('recruitment.stages.rejected') },
-    { id: ApplicationStage.Withdrawn, label: t('recruitment.stages.withdrawn') },
+    ...Object.values(ApplicationStatus)
+      .filter((value): value is ApplicationStatus => typeof value === 'number')
+      .map((value) => ({
+        id: value,
+        label: t(`recruitment.applicationStatuses.${ApplicationStatus[value]}`),
+      })),
   ];
 
   const handleConfirmHire = async () => {
@@ -342,7 +347,7 @@ export function RecruitmentScreen() {
             <AppIcon name="search-outline" size={18} color={theme.colors.textMuted} />
             <TextInput
               value={search}
-              onChangeText={setSearch}
+              onChangeText={(value) => { resetListPages(); setSearch(value); }}
               placeholder={
                 activeTab === 'openings'
                   ? t('recruitment.openings.searchPlaceholder')
@@ -354,7 +359,7 @@ export function RecruitmentScreen() {
               style={[styles.searchInput, { color: theme.colors.text }]}
             />
             {Boolean(search) && (
-              <Pressable onPress={() => setSearch('')}>
+              <Pressable onPress={() => { resetListPages(); setSearch(''); }}>
                 <AppIcon name="close-circle" size={16} color={theme.colors.textMuted} />
               </Pressable>
             )}
@@ -369,7 +374,7 @@ export function RecruitmentScreen() {
                 <AppText variant="caption" weight="700" style={{ color: theme.colors.primary }}>
                   {t('recruitment.pipeline.filteredByOpening')}
                 </AppText>
-                <Pressable onPress={() => setSelectedOpeningId(null)}>
+                <Pressable onPress={() => { resetListPages(); setSelectedOpeningId(null); }}>
                   <AppIcon name="close-circle" size={16} color={theme.colors.primary} />
                 </Pressable>
               </View>
@@ -381,11 +386,11 @@ export function RecruitmentScreen() {
               contentContainerStyle={styles.stageChipsList}
             >
               {stageChips.map((item) => {
-                const isSelected = selectedStage === item.id;
+                const isSelected = selectedStatus === item.id;
                 return (
                   <Pressable
                     key={item.id}
-                    onPress={() => setSelectedStage(item.id)}
+                    onPress={() => { resetListPages(); setSelectedStatus(item.id); }}
                     style={[
                       styles.stageChip,
                       {
@@ -427,6 +432,7 @@ export function RecruitmentScreen() {
                   opening={item}
                   isSelected={selectedOpeningId === item.id}
                   onSelect={(id) => {
+                    resetListPages();
                     setSelectedOpeningId(selectedOpeningId === id ? null : id);
                     setActiveTab('pipeline');
                   }}
@@ -441,6 +447,9 @@ export function RecruitmentScreen() {
                   }) : undefined}
                 />
               ))}
+              {(openingsQuery.data?.metaData.totalPages ?? 0) > 1 ? (
+                <AppPaginationNavigation page={openingsPage} pageCount={openingsQuery.data?.metaData.totalPages ?? 1} onPageChange={setOpeningsPage} />
+              ) : null}
             </View>
           )
         ) : activeTab === 'requisitions' ? (
@@ -462,6 +471,9 @@ export function RecruitmentScreen() {
                   onOpenOpening={perms.canManageOpenings ? () => setActiveTab('openings') : undefined}
                 />
               ))}
+              {(requisitionsQuery.data?.metaData.totalPages ?? 0) > 1 ? (
+                <AppPaginationNavigation page={requisitionsPage} pageCount={requisitionsQuery.data?.metaData.totalPages ?? 1} onPageChange={setRequisitionsPage} />
+              ) : null}
             </View>
           )
         ) : activeTab === 'pipeline' ? (
@@ -506,6 +518,9 @@ export function RecruitmentScreen() {
                   }
                 />
               ))}
+              {(applicationsQuery.data?.metaData.totalPages ?? 0) > 1 ? (
+                <AppPaginationNavigation page={applicationsPage} pageCount={applicationsQuery.data?.metaData.totalPages ?? 1} onPageChange={setApplicationsPage} />
+              ) : null}
             </View>
           )
         ) : activeTab === 'offers' ? (

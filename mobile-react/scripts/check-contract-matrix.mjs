@@ -9,7 +9,7 @@ const errors = [];
 const routeKinds = new Set(['public', 'auth', 'layout', 'dynamic']);
 const statuses = new Set(['aligned', 'mismatch', 'deferred']);
 const offlineModes = new Set(Object.keys(matrix.definitions?.offlineModes ?? {}));
-const httpVerbs = new Set(['GET', 'POST', 'PUT', 'PATCH', 'DELETE']);
+const transportVerbs = new Set(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'CONNECT']);
 
 function walk(directory) {
   const entries = fs.readdirSync(directory, { withFileTypes: true });
@@ -82,6 +82,14 @@ function readEndpointMembers(source, file) {
   return members;
 }
 
+function unwrapExpression(node) {
+  let current = node;
+  while (current && (ts.isAsExpression(current) || ts.isParenthesizedExpression(current) || ts.isTypeAssertionExpression(current))) {
+    current = current.expression;
+  }
+  return current;
+}
+
 function requireFields(entry, fields, label) {
   for (const field of fields) {
     if (typeof entry[field] !== 'string' || entry[field].trim() === '') errors.push(`${label} is missing ${field}`);
@@ -95,7 +103,7 @@ const endpointSources = unique(endpointEntries.map((entry) => entry.source), 'en
 
 for (const route of routeEntries) {
   const label = `route ${route.source}`;
-  requireFields(route, ['source', 'path', 'kind', 'currentOwner', 'targetOwner', 'routePolicy', 'moduleRequirement', 'scope', 'offlineMode', 'apiSurface', 'status', 'note'], label);
+  requireFields(route, ['source', 'path', 'kind', 'currentOwner', 'targetOwner', 'scope', 'offlineMode', 'apiSurface', 'status', 'note'], label);
   if (route.path !== expectedRoutePath(route.source)) errors.push(`${label} has invalid URL/layout path ${route.path}; expected ${expectedRoutePath(route.source)}`);
   if (!route.currentRoutePolicy || !route.targetRoutePolicy) errors.push(`${label} must record currentRoutePolicy and targetRoutePolicy`);
   if (!Object.prototype.hasOwnProperty.call(route, 'currentModuleRequirement') || !Object.prototype.hasOwnProperty.call(route, 'targetModuleRequirement')) errors.push(`${label} must record currentModuleRequirement and targetModuleRequirement`);
@@ -119,12 +127,13 @@ for (const endpointFile of endpointEntries) {
     if (member.verb.includes('UNUSED')) {
       if (member.verb.length !== 1 || operations.length !== 0 || member.status !== 'deferred' || !/unwired endpoint constant/i.test(member.note ?? '')) errors.push(`${memberLabel} UNUSED must be deferred, unwired, and have no operations`);
     } else if (operations.length === 0) errors.push(`${memberLabel} has no traced non-test caller; use UNUSED only for an unwired member`);
-    for (const verb of member.verb) if (verb !== 'UNUSED' && !httpVerbs.has(verb)) errors.push(`${memberLabel} has invalid verb ${verb}`);
+    for (const verb of member.verb) if (verb !== 'UNUSED' && !transportVerbs.has(verb)) errors.push(`${memberLabel} has invalid verb ${verb}`);
     for (const operation of operations) {
       requireFields(operation, ['caller', 'requestBoundary', 'responseBoundary', 'permissionAuthority'], `${memberLabel} operation`);
-      if (!Array.isArray(operation.verb) || operation.verb.length === 0 || operation.verb.some((verb) => !httpVerbs.has(verb))) errors.push(`${memberLabel} operation has invalid HTTP verbs`);
+      if (!Array.isArray(operation.verb) || operation.verb.length === 0 || operation.verb.some((verb) => !transportVerbs.has(verb))) errors.push(`${memberLabel} operation has invalid transport verbs`);
     }
     if (JSON.stringify(member).includes('caller DTO/path/query') || JSON.stringify(member).includes('caller response adapter')) errors.push(`${memberLabel} contains a stale placeholder boundary`);
+    if (JSON.stringify(member).includes('UNREVIEWED')) errors.push(`${memberLabel} has not completed ownership and permission review`);
     if (!statuses.has(member.status)) errors.push(`${memberLabel} has invalid status ${member.status}`);
     if (!offlineModes.has(member.offlineMode)) errors.push(`${memberLabel} has invalid offlineMode ${member.offlineMode}`);
   }
@@ -153,6 +162,77 @@ for (const file of physicalEndpointFiles) {
   for (const member of actualMembers) if (!expectedMembers.has(member)) errors.push(`matrix endpoint member does not exist: ${source}#${member}`);
 }
 for (const source of endpointSources) if (!physicalEndpointFiles.map(relative).includes(source)) errors.push(`matrix endpoint file does not exist: ${source}`);
+
+function endpointAliases(sourceFile) {
+  const aliases = new Set();
+  for (const statement of sourceFile.statements) {
+    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier)) continue;
+    if (!/(?:^|\/)\w[\w-]*-endpoints$/.test(statement.moduleSpecifier.text)) continue;
+    const bindings = statement.importClause?.namedBindings;
+    if (!bindings || !ts.isNamedImports(bindings)) continue;
+    for (const element of bindings.elements) aliases.add(element.name.text);
+  }
+  return aliases;
+}
+
+function hasEndpointReference(node, sourceFile, aliases, initializers, seen = new Set()) {
+  const text = node.getText(sourceFile);
+  if ([...aliases].some((alias) => new RegExp(`\\b${alias}\\b`).test(text))) return true;
+  if (!ts.isIdentifier(node) || seen.has(node.text)) return false;
+  seen.add(node.text);
+  const initializer = initializers.get(node.text);
+  return initializer ? hasEndpointReference(initializer, sourceFile, aliases, initializers, seen) : false;
+}
+
+function isFunctionParameter(node, name) {
+  let current = node.parent;
+  while (current) {
+    if (ts.isFunctionLike(current)) {
+      return current.parameters.some((parameter) => ts.isIdentifier(parameter.name) && parameter.name.text === name);
+    }
+    current = current.parent;
+  }
+  return false;
+}
+
+const sourceFiles = walk(path.join(mobileRoot, 'src')).filter((file) => /\.tsx?$/.test(file) && !/\.(?:test|spec)\.tsx?$/.test(file));
+for (const file of sourceFiles) {
+  const source = fs.readFileSync(file, 'utf8');
+  const sourceFile = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true, file.endsWith('.tsx') ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
+  const aliases = endpointAliases(sourceFile);
+  const initializers = new Map();
+
+  const collect = (node) => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer) {
+      initializers.set(node.name.text, node.initializer);
+      if (!file.endsWith('endpoints.ts') && /endpoints$/i.test(node.name.text) && ts.isObjectLiteralExpression(unwrapExpression(node.initializer))) {
+        errors.push(`local endpoint catalog must be moved to a *-endpoints.ts file: ${relative(file)}#${node.name.text}`);
+      }
+    }
+    ts.forEachChild(node, collect);
+  };
+  collect(sourceFile);
+
+  if (relative(file) === 'src/core/api/api-service.ts') continue;
+  const inspect = (node) => {
+    if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)) {
+      const method = node.expression.name.text;
+      const owner = ts.isIdentifier(node.expression.expression) ? node.expression.expression.text : undefined;
+      const isApiCall = (owner === 'apiService' && ['get', 'post', 'put', 'patch', 'delete', 'upload'].includes(method))
+        || (owner === 'axiosClient' && ['get', 'post', 'put', 'patch', 'delete'].includes(method))
+        || method === 'withUrl';
+      if (isApiCall) {
+        const target = node.arguments[0];
+        const delegatedUrl = target && ts.isIdentifier(target) && isFunctionParameter(node, target.text);
+        if (!target || (!delegatedUrl && !hasEndpointReference(target, sourceFile, aliases, initializers))) {
+          errors.push(`transport URL is not sourced from a *-endpoints.ts catalog: ${relative(file)} (${target?.getText(sourceFile) ?? 'missing URL'})`);
+        }
+      }
+    }
+    ts.forEachChild(node, inspect);
+  };
+  inspect(sourceFile);
+}
 
 const pagePaths = new Map();
 for (const route of routeEntries.filter((entry) => entry.kind !== 'layout' && !entry.path.startsWith('system:'))) {

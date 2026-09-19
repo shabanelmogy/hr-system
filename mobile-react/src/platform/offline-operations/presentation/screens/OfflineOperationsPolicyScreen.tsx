@@ -26,6 +26,7 @@ import { useAppReadOnly } from '@/src/shared/contexts/AppReadOnlyContext';
 
 import { OfflineOperationsPolicyConflictError } from '../../domain/models/offline-operations-policy';
 import { useOfflineOperationsPolicy } from '../providers/OfflineOperationsProvider';
+import { SyncQueuePanel } from '../components/SyncQueuePanel';
 
 const modeTranslationKeys: Record<OfflineOperationMode, string> = {
   'online-only': 'offlineOperations.modes.onlineOnly',
@@ -235,6 +236,7 @@ function OfflineOperationsPolicyContent() {
         variant="secondary">
         {t('offlineOperations.reset')}
       </AppButton>
+      <SyncQueuePanel />
       <ConfirmationDialog
         visible={resetPending}
         title={t('offlineOperations.resetConfirmTitle')}

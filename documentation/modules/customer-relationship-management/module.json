@@ -9,6 +9,12 @@
   "allowsTenantEntitlement": true,
   "lifecycle": "active",
   "status": "foundation",
+  "webNextSurface": {
+    "status": "active",
+    "owner": "crm",
+    "sourceRoot": "web-next/src/modules/crm",
+    "moduleDefinition": "web-next/src/modules/crm/moduleDefinition.tsx"
+  },
   "runtimePaths": {
     "root": "api/Modules/CRM",
     "contracts": "api/Modules/CRM/ErpSystem.Modules.CRM.Contracts",

@@ -11,14 +11,17 @@
     "typecheck": "tsc --noEmit",
     "check:architecture": "node scripts/check-architecture.mjs",
     "check:contracts": "node scripts/check-contract-matrix.mjs",
+    "sync:contracts": "node scripts/sync-phase00-matrix.mjs",
     "check:dependencies": "node scripts/check-dependency-compatibility.mjs",
     "check:i18n": "node scripts/check-i18n.mjs",
     "check:native-config": "node scripts/check-native-config.mjs",
+    "check:release": "node scripts/check-release-readiness.mjs",
     "check:expo": "npx expo-doctor",
     "check:export": "node scripts/check-android-export.mjs",
+    "check:foundation": "node scripts/check-foundation-readiness.mjs",
     "test": "jest --runInBand",
     "test:watch": "jest --watch",
-    "check": "npm run typecheck && npm run lint && npm run check:architecture && npm run check:contracts && npm run check:i18n && npm run test"
+    "check": "npm run typecheck && npm run lint && npm run check:architecture && npm run check:contracts && npm run check:i18n && npm run check:foundation && npm run check:release && npm run test"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",

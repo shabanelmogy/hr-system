@@ -9,6 +9,12 @@
   "allowsTenantEntitlement": true,
   "lifecycle": "active",
   "status": "foundation",
+  "webNextSurface": {
+    "status": "active",
+    "owner": "reference-data",
+    "sourceRoot": "web-next/src/modules/reference-data",
+    "moduleDefinition": "web-next/src/modules/reference-data/moduleDefinition.tsx"
+  },
   "runtimePaths": {
     "root": "api/Modules/ReferenceData",
     "contracts": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Contracts",

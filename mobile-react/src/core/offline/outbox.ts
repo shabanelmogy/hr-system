@@ -42,6 +42,8 @@ export interface EnqueueOutboxCommand {
   idempotencyKey?: string | null;
 }
 
+export type OutboxCommandSummary = Omit<OutboxCommand, 'payload'>;
+
 interface OutboxRow {
   command_id: string;
   user_id: string;
@@ -60,10 +62,12 @@ interface OutboxRow {
   created_at: string;
   updated_at: string;
 }
+type OutboxSummaryRow = Omit<OutboxRow, 'payload_json'>;
 
 export interface OutboxStore {
   listPending(scope: OfflineScope, limit?: number): Promise<OutboxCommand[]>;
   listPendingByTypes(scope: OfflineScope, commandTypes: readonly string[], limit?: number): Promise<OutboxCommand[]>;
+  getNextAttemptAtByTypes(scope: OfflineScope, commandTypes: readonly string[]): Promise<string | null>;
   markProcessing(commandId: string): Promise<boolean>;
   markSucceeded(commandId: string): Promise<void>;
   markFailed(commandId: string, error: string, nextAttemptAt?: string | null): Promise<void>;
@@ -152,6 +156,28 @@ export class OfflineOutboxRepository implements OutboxStore {
     return rows.map(mapOutboxRow);
   }
 
+  async listSummaries(scope: OfflineScope, limit = 100): Promise<OutboxCommandSummary[]> {
+    const normalized = normalizeOfflineScope(scope);
+    const safeLimit = Math.min(250, Math.max(1, Math.trunc(limit)));
+    const rows = await this.db.getAllAsync<OutboxSummaryRow>(
+      `SELECT command_id, user_id, tenant_id, company_id, command_type, aggregate_type,
+              aggregate_id, status, attempts, base_row_version, idempotency_key,
+              last_error, next_attempt_at, created_at, updated_at
+       FROM offline_outbox
+       WHERE user_id = ? AND tenant_id = ? AND company_id = ?
+       ORDER BY updated_at DESC LIMIT ?`,
+      normalized.userId,
+      normalized.tenantId,
+      normalized.companyId,
+      safeLimit,
+    );
+    return rows.map((row) => {
+      const mapped = mapOutboxRow({ ...row, payload_json: '{}' });
+      const { payload: _ignored, ...summary } = mapped;
+      return summary;
+    });
+  }
+
   async recoverProcessingAsUncertain(scope: OfflineScope): Promise<number> {
     const normalized = normalizeOfflineScope(scope);
     const result = await this.db.runAsync(
@@ -219,6 +245,26 @@ export class OfflineOutboxRepository implements OutboxStore {
     return rows.map(mapOutboxRow);
   }
 
+  async getNextAttemptAtByTypes(scope: OfflineScope, commandTypes: readonly string[]): Promise<string | null> {
+    const normalized = normalizeOfflineScope(scope);
+    const types = commandTypes.map((type) => requireText(type, 'command type'));
+    if (types.length === 0) return null;
+    const placeholders = types.map(() => '?').join(', ');
+    const now = new Date().toISOString();
+    const row = await this.db.getFirstAsync<{ next_attempt_at: string | null }>(
+      `SELECT MIN(COALESCE(next_attempt_at, ?)) AS next_attempt_at
+       FROM offline_outbox
+       WHERE user_id = ? AND tenant_id = ? AND company_id = ?
+         AND command_type IN (${placeholders}) AND status IN ('pending', 'failed')`,
+      now,
+      normalized.userId,
+      normalized.tenantId,
+      normalized.companyId,
+      ...types,
+    );
+    return row?.next_attempt_at ?? null;
+  }
+
   async markProcessing(commandId: string): Promise<boolean> {
     const result = await this.db.runAsync(
       `UPDATE offline_outbox
@@ -265,6 +311,17 @@ export class OfflineOutboxRepository implements OutboxStore {
       `UPDATE offline_outbox
        SET status = 'pending', attempts = 0, last_error = NULL, next_attempt_at = NULL, updated_at = ?
        WHERE command_id = ? AND status = 'dead-letter'`,
+      new Date().toISOString(),
+      requireUuid(commandId),
+    );
+    return result.changes === 1;
+  }
+
+  async resetFailedToPending(commandId: string): Promise<boolean> {
+    const result = await this.db.runAsync(
+      `UPDATE offline_outbox
+       SET status = 'pending', last_error = NULL, next_attempt_at = NULL, updated_at = ?
+       WHERE command_id = ? AND status = 'failed'`,
       new Date().toISOString(),
       requireUuid(commandId),
     );

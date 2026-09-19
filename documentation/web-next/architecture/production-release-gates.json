@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "phase": 14,
+  "name": "Production Readiness & Release Validation",
+  "gates": [
+    {
+      "id": "production-env-preflight",
+      "kind": "automated-preflight",
+      "required": true,
+      "evidence": "npm run release:preflight"
+    },
+    {
+      "id": "demo-login-disabled",
+      "kind": "automated-preflight",
+      "required": true,
+      "evidence": "NEXT_PUBLIC_DEMO_LOGIN_ENABLED=false"
+    },
+    {
+      "id": "collector-trace",
+      "kind": "deployment-smoke",
+      "required": true,
+      "evidence": "Real web -> BFF -> ErpSystem.Api trace through the configured Collector"
+    },
+    {
+      "id": "dashboards-alerts",
+      "kind": "deployment-smoke",
+      "required": true,
+      "evidence": "Production dashboards populated and controlled alert delivered to every configured destination"
+    },
+    {
+      "id": "google-popup",
+      "kind": "deployment-smoke",
+      "required": true,
+      "evidence": "Authenticated Google popup completes on the deployed HTTPS origin"
+    },
+    {
+      "id": "signalr",
+      "kind": "deployment-smoke",
+      "required": true,
+      "evidence": "Authenticated deployed SignalR connection and reconnect path"
+    },
+    {
+      "id": "reports-pdf",
+      "kind": "deployment-smoke",
+      "required": true,
+      "evidence": "Representative report and PDF viewer render using deployed CSP/resources"
+    },
+    {
+      "id": "files-media",
+      "kind": "deployment-smoke",
+      "required": true,
+      "evidence": "Upload/download/range stream plus image/video/document preview"
+    },
+    {
+      "id": "hangfire",
+      "kind": "deployment-smoke",
+      "required": true,
+      "evidence": "Authenticated same-origin Hangfire dashboard journey"
+    },
+    {
+      "id": "external-frames",
+      "kind": "deployment-smoke",
+      "required": true,
+      "evidence": "Every configured external-tool frame loads without broadening CSP"
+    },
+    {
+      "id": "health-readiness",
+      "kind": "deployment-smoke",
+      "required": true,
+      "evidence": "Deployed live/readiness/API health surfaces verified"
+    },
+    {
+      "id": "tenant-company-rbac",
+      "kind": "deployment-smoke",
+      "required": true,
+      "evidence": "Allowed/denied role and tenant/company switch verified against representative data"
+    }
+  ]
+}

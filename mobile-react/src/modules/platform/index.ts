@@ -1,0 +1,1 @@
+export { platformModuleDefinition } from './moduleDefinition';

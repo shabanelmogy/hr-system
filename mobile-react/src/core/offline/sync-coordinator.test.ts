@@ -29,6 +29,7 @@ function createOutbox(commands: OutboxCommand[]) {
   const store: jest.Mocked<OutboxStore> = {
     listPending: jest.fn().mockResolvedValue(commands),
     listPendingByTypes: jest.fn().mockResolvedValue(commands),
+    getNextAttemptAtByTypes: jest.fn().mockResolvedValue(null),
     markProcessing: jest.fn().mockResolvedValue(true),
     markSucceeded: jest.fn().mockResolvedValue(undefined),
     markFailed: jest.fn().mockResolvedValue(undefined),
@@ -114,5 +115,42 @@ describe('SyncCoordinator', () => {
     await expect(coordinator.run(scope, { authenticated: true, readOnly: true }))
       .resolves.toMatchObject({ skippedUnauthorized: true, processed: 0 });
     expect(outbox.markProcessing).not.toHaveBeenCalled();
+  });
+
+  it('revalidates current authorization and scope before every queued command', async () => {
+    const first = command({ idempotencyKey: 'country-1' });
+    const second = command({ commandId: '123e4567-e89b-42d3-a456-426614174001', idempotencyKey: 'country-2' });
+    const outbox = createOutbox([]);
+    outbox.listPendingByTypes.mockResolvedValueOnce([first, second]).mockResolvedValue([]);
+    let active = true;
+    const coordinator = new SyncCoordinator(outbox, () => ({ isOnline: true }));
+    coordinator.registerHandler({
+      commandType: 'countries.update',
+      replaySafety: 'idempotent',
+      execute: async () => {
+        active = false;
+        return { kind: 'succeeded' };
+      },
+    });
+
+    await expect(coordinator.run(scope, authorization, {
+      getAuthorization: () => ({ authenticated: active, readOnly: false }),
+      isScopeCurrent: (candidate) => candidate === scope,
+    })).resolves.toMatchObject({ processed: 1, succeeded: 1, skippedUnauthorized: true });
+    expect(outbox.markProcessing).toHaveBeenCalledTimes(1);
+  });
+
+  it('exposes the next persisted retry time for registered handlers', async () => {
+    const outbox = createOutbox([]);
+    outbox.getNextAttemptAtByTypes.mockResolvedValue('2026-09-19T12:00:00.000Z');
+    const coordinator = new SyncCoordinator(outbox, () => ({ isOnline: true }));
+    coordinator.registerHandler({
+      commandType: 'countries.update',
+      replaySafety: 'idempotent',
+      execute: async () => ({ kind: 'succeeded' }),
+    });
+
+    await expect(coordinator.nextAttemptAt(scope)).resolves.toBe('2026-09-19T12:00:00.000Z');
+    expect(outbox.getNextAttemptAtByTypes).toHaveBeenCalledWith(scope, ['countries.update']);
   });
 });

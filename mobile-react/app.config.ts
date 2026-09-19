@@ -7,7 +7,16 @@ function getAppLinkHost(value: string | undefined): string | null {
   if (!candidate) return null;
 
   const url = new URL(candidate.includes('://') ? candidate : `https://${candidate}`);
-  if (url.protocol !== 'https:' || url.port || url.pathname !== '/' || url.search || url.hash) {
+  if (
+    url.protocol !== 'https:' ||
+    !url.hostname ||
+    url.username ||
+    url.password ||
+    url.port ||
+    url.pathname !== '/' ||
+    url.search ||
+    url.hash
+  ) {
     throw new Error('EXPO_PUBLIC_APP_LINK_HOST must be an HTTPS host without a port, path, or query.');
   }
 
@@ -49,6 +58,20 @@ export default ({ config }: ConfigContext): ExpoConfig => {
   const realProjectId = configuredProjectId ?? existingProjectId ?? buildProjectId;
   const localNativeBuild = process.env.ERP_LOCAL_NATIVE_BUILD === 'true';
   const easBuild = process.env.EAS_BUILD === 'true';
+  if (easBuild && !appLinkHost) {
+    throw new Error(
+      'EAS_BUILD requires EXPO_PUBLIC_APP_LINK_HOST to be a valid HTTPS host for app links.',
+    );
+  }
+  const releaseChannel = process.env.EXPO_PUBLIC_RELEASE_CHANNEL?.trim()
+    || (easBuild ? 'production' : 'development');
+  const apiContractVersion = process.env.EXPO_PUBLIC_API_CONTRACT_VERSION?.trim() || 'v1';
+  if (!/^[a-z][a-z0-9-]{1,31}$/i.test(releaseChannel)) {
+    throw new Error('EXPO_PUBLIC_RELEASE_CHANNEL must be a short alphanumeric channel name.');
+  }
+  if (!/^v\d+$/.test(apiContractVersion)) {
+    throw new Error('EXPO_PUBLIC_API_CONTRACT_VERSION must use the vN format.');
+  }
 
   if (easBuild && !realProjectId) {
     throw new Error(
@@ -138,6 +161,11 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     extra: {
       ...existingExtra,
       ...(eas ? { eas } : {}),
+      release: {
+        channel: releaseChannel,
+        apiContractVersion,
+        commit: process.env.EAS_BUILD_GIT_COMMIT_HASH?.trim() || 'development',
+      },
     }
   };
 };

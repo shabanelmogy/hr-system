@@ -31,6 +31,12 @@ export const publicSelfRegistrationEnabled =
 export const publicBackendOverrideEnabled =
   process.env.NEXT_PUBLIC_BACKEND_OVERRIDE_ENABLED === "true";
 
+// Demo credentials are intentionally available for development and deterministic
+// CI browser fixtures. Production release builds must set this explicitly false;
+// Phase 14 release preflight rejects a Production deployment otherwise.
+export const publicDemoLoginEnabled =
+  process.env.NEXT_PUBLIC_DEMO_LOGIN_ENABLED !== "false";
+
 export const publicBackendAllowedOrigins = parsePublicOrigins(
   process.env.NEXT_PUBLIC_BACKEND_ALLOWED_ORIGINS,
 );

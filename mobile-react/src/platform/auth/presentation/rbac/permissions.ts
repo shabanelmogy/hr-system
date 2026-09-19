@@ -139,6 +139,10 @@ export const permissions = {
   EditKanbanBoardMembers: 'KanbanBoardMembers:Edit',
   DeleteKanbanBoardMembers: 'KanbanBoardMembers:Delete',
   ViewUsers: 'Users:View',
+  ViewAppointments: 'Appointments:View',
+  CreateAppointments: 'Appointments:Create',
+  EditAppointments: 'Appointments:Edit',
+  DeleteAppointments: 'Appointments:Delete',
   CreateUsers: 'Users:Create',
   EditUsers: 'Users:Edit',
   DeleteUsers: 'Users:Delete',
@@ -200,6 +204,7 @@ export type PermissionModule =
   | 'KanbanLabels'
   | 'KanbanBoardMembers'
   | 'Users'
+  | 'Appointments'
   | 'ChatUsers'
   | 'Conversations'
   | 'Messages'

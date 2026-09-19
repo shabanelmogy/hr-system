@@ -1,6 +1,6 @@
 # مراجعة جاهزية ERP Mobile وخطة التنفيذ
 
-تاريخ المراجعة: 2026-09-19. الحالة: **مراجعة وخطة تنفيذ؛ لم تُنفّذ إصلاحات runtime في هذه المهمة**.
+تاريخ المراجعة: 2026-09-19. الحالة: **تم تنفيذ Phases 01–07 وبوابات المستودع لـPhase 08؛ يظل توقيع Phase 08 معلقاً على EAS وأجهزة وHosted API فعلية**.
 
 ## 1. الحكم التنفيذي وحدود الأدلة
 
@@ -34,7 +34,7 @@
 
 - **الدليل:** `src/platform/auth/presentation/rbac/route-access.ts:21-26` يربط كل `/basic-data` بـ`hr/basic-data`، والإدارة وextras بـ`hr/administration`، وبعض الأدوات بـ`hr/analytics`.
 - `src/modules/hr/moduleDefinition.ts` ما زال يعرّف administration/analytics/collaboration؛ `src/shell/module-registration.ts:8-9` يسجل HR وAccounting فقط.
-- الـAPI الحالي يعرّف HR basic-data/recruitment/workforce/attendance فقط في `api/Modules/HR/ErpSystem.Modules.HR/HrModuleDefinition.cs`. الجغرافيا تتبع `reference-data/geography`، والمواعيد `crm/appointments`، والإدارة Platform.
+- الـAPI الحالي يعرّف HR basic-data/recruitment/workforce/attendance فقط في `api/Modules/HR/ErpSystem.Modules.HR/HrModuleDefinition.cs`. Countries/States/Districts تتبع `reference-data/geography`، وAddressTypes تتبع `reference-data/addresses`، وCompany Geographic Scope تتبع `platform/tenant-administration`، والمواعيد `crm/appointments`، وFiscal Years تتبع `acc/fiscal-years`.
 - `RouteGuard` يقارن هذه الاشتراطات حرفياً مع كتالوج الخادم؛ المستخدم الذي لديه صلاحية صحيحة يمكن منعه بسبب submodule لم يعد موجوداً. ReferenceData وCRM لا يدخلان تقاطع mobile registry أصلاً.
 - **الإصلاح:** جرد routes → owner → API permission → entitlement، نقل features عبر كل طبقاتها للمالك الصحيح، واستخدام تعريف موحد لاشتراطات التنقل والحماية. لا تُستبدل هذه المعالجة بتجاوز RouteGuard أو منح admin صلاحيات مطلقة.
 - **القبول:** مستخدم ReferenceData يعمل دون شراء HR؛ إدارة المستخدمين لا تتطلب `hr:administration`؛ الكتالوج الصادر من API ينجح في اختبارات mobile contract.
@@ -116,11 +116,11 @@
 - **الإصلاح:** bootstrap boundary مستقل عن theme/i18n المتعطلين، تشخيص محلي آمن، Retry مناسب دون حذف بيانات. معالجة rejected async startup بصورة صريحة؛ ErrorBoundary وحده لا يلتقط كل Promise rejection.
 - **القبول:** fault injection لـDB initialization/SecureStore، وشاشة قابلة للاسترداد دون دورة crash.
 
-### M13 — P2: بوابة Expo غير خضراء حالياً
+### M13 — مغلقة في Phase 00: بوابة Expo لم تكن خضراء
 
 - **الدليل التنفيذي:** `npm run check:expo` أعاد 20/21؛ 10 patch mismatches في Expo/Asset/BackgroundTask/Constants/ImageManipulator/ImagePicker/Observe/Router/Sharing/TaskManager.
-- المتوقع وقت المراجعة: expo `~57.0.24` مقابل المثبت `57.0.22`؛ باقي التفاصيل في خرج Expo Doctor. ليست النتيجة دليلاً أن كل الحزم تسبب runtime crash.
-- **الإصلاح:** تحديث متوافق داخل SDK 57 باستخدام Expo، تثبيت lockfile والتحقق من `npm ci` وDoctor وnative/export. لا downgrade ولا تعطيل doctor لإخفاء الفرق.
+- المتوقع وقت المراجعة: expo `~57.0.24` مقابل المثبت `57.0.22`؛ لم تكن النتيجة دليلاً أن كل الحزم تسبب runtime crash.
+- **الإغلاق:** حُدّثت patch versions داخل SDK 57، وثُبّت lockfile، ونجح clean `npm ci` و`npx expo install --check` وExpo Doctor (21/21). يبقى build على Node 22.13.0 في CI/EAS دليلاً بيئياً مستقلاً.
 
 ### M14 — R: فجوة إثبات end-to-end وiOS والإصدار
 
@@ -168,9 +168,7 @@ src/shell/                        # registration/bootstrap/navigation/sync compo
 
 ## 5. خطة التنفيذ على مراحل
 
-Phase 00 دخل التنفيذ. ما تم إثباته موضح كـ **Implemented/Verified** في سجله،
-وكل ما لم يُتحقق منه يظل **Pending verification**. المراحل 01–08 أدناه ما زالت
-**Planned**؛ ترتيبها dependency order وليس تصريحاً بإغلاق أي فجوة معروفة.
+تم تنفيذ Phases 00–07 وبوابات المصدر والإصدار الخاصة بـPhase 08. سجل الأدلة التفصيلي في [MOBILE_PHASES_01_08_IMPLEMENTATION.md](MOBILE_PHASES_01_08_IMPLEMENTATION.md). يظل كل تحقق يحتاج جهازاً أو Hosted API أو حساب EAS بحالة **Pending external evidence**، ولا تتحول بوابات المصدر إلى شهادة إصدار.
 
 | المرحلة | النتيجة المطلوبة | ترتبط بالملاحظات | تعتمد على |
 |---|---|---|---|
@@ -191,7 +189,9 @@ Phase 00 دخل التنفيذ. ما تم إثباته موضح كـ **Implement
    تغييرات الويب الحالية.
 2. **Implemented/Verified:** تحديث مواصفات Expo SDK 57 patch والـlockfile؛ نجح
    `npm ci` و`npx expo install --check` وExpo Doctor (21/21).
-3. **Implemented/Verified:** جرد 74 route و25 endpoint source وكل member في
+3. **Implemented/Verified:** جرد 74 route و27 endpoint source و200 leaf member
+   و226 عملية مستدعاة
+   بالمسارات الكاملة مثل `openings.byId` في
    [MOBILE_API_COMPATIBILITY_MATRIX.json](MOBILE_API_COMPATIBILITY_MATRIX.json)،
    مع owner/scope/permission boundary/offline policy/status لكل إدخال.
 4. **Recorded:** Countries وStates هما مراجع اختيارية للقراءة والتوثيق؛ لم تُنقل
@@ -201,24 +201,26 @@ Phase 00 دخل التنفيذ. ما تم إثباته موضح كـ **Implement
 
 **الملفات:** `mobile-react/package.json` وlockfile، scripts/check-*، `documentation/mobile-react/MOBILE_ARCHITECTURE.md` و`MOBILE_API_READINESS_REVIEW.md`، مصفوفة contracts جديدة في نفس مجلد التوثيق.
 
-**شرط الخروج:** تثبيت قابل للتكرار بعد clean install، نتائج الفحوص مؤكدة، كل
-route له owner وعقد واضح، ولا يُستخدم تقرير readiness سابق دليلاً على الحالة
-الحالية. بوابات Phase 00 الأساسية مكتملة؛ parent review ما زال يشغّل `npm run
-check` الكامل وباقي gates كتحقق تكاملي قبل بدء Phase 01.
+**شرط الخروج — Verified:** التثبيت قابل للتكرار بعد clean install، ونجح
+`npm run check` وبوابات dependencies/audit/Expo/native/export/documentation.
+كل route وendpoint leaf له سجل owner وعقد وسياسة Offline صريحة، واختبار سلبي
+يثبت أن البوابة تفشل عند حذف route أو endpoint من المصفوفة. لا يُستخدم تقرير
+readiness سابق دليلاً على الحالة الحالية.
 
-### Phase 01 — Ownership + API parity + RBAC
+### Phase 01 — Ownership + API parity + RBAC — Implemented / automated gates verified
 
-1. نقل Countries/States/Districts/AddressTypes وما يلزم Addresses إلى ReferenceData بكل الطبقات والاختبارات.
-2. نقل Appointments إلى CRM؛ إبقاء Users/Roles/Invitations/tenancy والأدوات التقنية تحت Platform.
-3. تصحيح registry وroute-manifest وmodule requirements، حذف تعريفات HR القديمة، وتحديث realtime keys والتوثيق.
-4. اعتماد مصدر موحد لمتطلبات route؛ اختبار تقاطع mobile registry مع catalog fixture مولّد من الخادم.
-5. مطابقة صلاحيات الأفعال؛ super-admin يدير platform/global data وفق عقد الخادم دون خلطه بمستخدم شركة.
+1. نقل Countries/States/Districts إلى `ReferenceData/geography`، ونقل AddressTypes إلى `ReferenceData/addresses`، بكل الطبقات والاختبارات.
+2. نقل Company Geographic Scope إلى `Platform/tenant-administration`، وFiscal Years إلى `Accounting/fiscal-years`، وAppointments إلى `CRM/appointments`.
+3. إبقاء Users/Roles/Invitations/ChangeLogs/Localization تحت `Platform/tenant-administration`، وHangfire/health/diagnostics تحت `Platform/operations`.
+4. تصحيح registry وroute-manifest وmodule requirements، حذف تعريفات HR القديمة، وتحديث realtime keys والتوثيق.
+5. اعتماد مصدر موحد لمتطلبات route؛ اختبار تقاطع mobile registry مع catalog fixture مولّد من الخادم.
+6. مطابقة صلاحيات الأفعال؛ super-admin يدير platform/global data وفق عقد الخادم دون خلطه بمستخدم شركة.
 
 **الملفات:** `src/shell/module-registration.ts`، `src/modules/*/moduleDefinition.ts`، `src/platform/auth/presentation/rbac/*`، `src/platform/modules/registry/*`، `scripts/module-boundaries.mjs`، feature public exports و`app/`، كتب الموديولات المتأثرة.
 
 **شرط الخروج:** لا 403 ناتج عن module قديم في matrix؛ لا imports من ملكية قديمة أو forwarding legacy wrappers؛ APIs والـroutes الحالية تستمر وفق العقد المتفق عليه.
 
-### Phase 02 — Session/tenant/company lifecycle
+### Phase 02 — Session/tenant/company lifecycle — Implemented / automated gates verified
 
 1. الاحتفاظ بوقت انتهاء lease والتفويض المحلي في state، والتحقق عند deadline وresume/reconnect.
 2. entitlement snapshot دائم scoped ومؤقت يتيح cold-start offline ضمن المسموح فقط.
@@ -230,7 +232,7 @@ check` الكامل وباقي gates كتحقق تكاملي قبل بدء Phase
 
 **شرط الخروج:** مصفوفة مستخدمين × tenants × شركات × offline × read-only تمر؛ late responses لا تغيّر session الجديدة؛ expiry يعمل دون restart؛ لا replay بسلطة offline lease.
 
-### Phase 03 — Offline runtime ودورة البيانات المحلية
+### Phase 03 — Offline runtime ودورة البيانات المحلية — Implemented / native fault evidence pending
 
 1. تسجيل sync handlers من shell مع ports مستقلة عن HR، وتشغيل enqueue/retry due/manual/foreground/reconnect.
 2. إلغاء/إعادة فحص scope بين الأوامر ورفض stale policy؛ مراقبة nextAttemptAt دون polling عدواني.
@@ -243,7 +245,7 @@ check` الكامل وباقي gates كتحقق تكاملي قبل بدء Phase
 
 **شرط الخروج:** restart/timeouts/double-submit/kill-during-sync/cross-company/clock-shift/disk-full تجتاز الاختبارات؛ المسودات لا تضيع أو تُرسل باسم شركة أخرى؛ foreground retry يستأنف وحده.
 
-### Phase 04 — اكتمال القوائم والنماذج
+### Phase 04 — اكتمال القوائم والنماذج — Implemented / hosted large-data evidence pending
 
 1. Recruitment paging/search/filter لكل تبويب، وعدم قص pipeline أو استخدام تحميل كل rows كحل.
 2. server-backed selectors عامة مع search/debounce/loading/empty/error/load-more/selected-item hydration. استخدام endpoints lookup عندما يملكها الخادم أو إضافة العقد في مالكه.
@@ -255,7 +257,7 @@ check` الكامل وباقي gates كتحقق تكاملي قبل بدء Phase
 
 **شرط الخروج:** datasets تتجاوز 100/50، view لا يتحول إلى create، كل field error ظاهر؛ حفظ collections دون فقد؛ keyboard وback/discard يعملان.
 
-### Phase 05 — UX موحد للموبايل وtablet
+### Phase 05 — UX موحد للموبايل وtablet — Source baseline implemented / device matrix pending
 
 1. جرد shared library قبل أي component جديد؛ توحيد AppScreen/AppListScreen/AppForm وتخفيف النماذج اليدوية المكررة.
 2. cards كعرض مناسب للهاتف حيث يلزم، وجداول محدودة الصفحات على tablet؛ لا تفرض نسخة شاشة الويب حرفياً.
@@ -267,7 +269,7 @@ check` الكامل وباقي gates كتحقق تكاملي قبل بدء Phase
 
 **شرط الخروج:** evidence matrix على phone/tablet وLTR/RTL وlight/dark؛ اختلاف مقصود عن Countries/States موثق؛ لا نسخ متوازية لنفس shared behavior.
 
-### Phase 06 — عقود ERP والأداء والمراقبة
+### Phase 06 — عقود ERP والأداء والمراقبة — Contracts implemented / measurements pending
 
 1. اعتماد money/decimal/currency/rounding وdate-only/UTC/timezone وquantity/unit DTO conventions؛ الخادم يحسب القيم المالية النهائية.
 2. قياس release build: startup/navigation/search/large tree/long forms/file preview/import والذاكرة؛ تعيين budgets بعد baseline.
@@ -279,7 +281,7 @@ check` الكامل وباقي gates كتحقق تكاملي قبل بدء Phase
 
 **شرط الخروج:** budgets وmeasurements مسجلة، contracts مستخدمة في feature حقيقية، وقرارات capabilities محسومة؛ لا ادعاء دعم POS offline/payments أو push قبل تنفيذه واختباره.
 
-### Phase 07 — منع التراجع واختبارات التكامل
+### Phase 07 — منع التراجع واختبارات التكامل — Automated gates implemented
 
 تبدأ الاختبارات المصاحبة من Phase 01؛ هذه المرحلة تجمع gates ولا تؤجل كتابة الاختبارات حتى النهاية.
 
@@ -294,7 +296,7 @@ check` الكامل وباقي gates كتحقق تكاملي قبل بدء Phase
 
 **شرط الخروج:** إعادة إنتاج M01–M12 كاختبارات ثم نجاحها؛ كل failure مصنف implementation/inherited/environment/manual؛ لا تمرير gate بتحويل assertion إلى mock يطابق الخطأ.
 
-### Phase 08 — إصدار تجريبي موثوق وإغلاق الأساس
+### Phase 08 — إصدار تجريبي موثوق وإغلاق الأساس — Repository gates implemented / external evidence pending
 
 1. preview/production EAS environments واضحة، API version/build metadata وproject identity وsource maps دون أسرار داخل EXPO_PUBLIC.
 2. Android APK وiOS internal build يعملان مع hosted test API وبيانات تجريبية معزولة.
@@ -326,9 +328,9 @@ npm run check:export
 ./documentation/system/Generate-Documentation.ps1 -Check
 ```
 
-تم تنفيذ تحديث Expo patch والـlockfile في Phase 00. يظل `npm ci` في بيئة
-تحقق نظيفة و`eas build` خارج نطاق هذا التنفيذ؛ Android export هو bundle smoke
-وليس APK build.
+تم تنفيذ تحديث Expo patch والـlockfile وclean `npm ci` محلياً في Phase 00.
+يظل `eas build` على Node 22.13.0 خارج نطاق هذا التنفيذ؛ Android export هو
+bundle smoke وليس APK build.
 
 | الفحص | نتيجة تشغيل هذه المراجعة |
 |---|---|
@@ -343,7 +345,7 @@ npm run check:export
 | Android export | نجح: 2876 modules، Hermes bundle نحو 9.3MB؛ هذا حجم bundle وليس قياس startup أو حجم APK |
 | documentation check | نجح: 77 recipe |
 | device Android/iOS / hosted API journeys | لم يُنفّذ في هذه المراجعة |
-| Contract matrix | نجح: 74 routes و25 endpoint files؛ كل member مسجل |
+| Contract matrix | نجح: 74 routes و27 endpoint files و200 full-path endpoint members و226 traced operations؛ كل member مسجل ولا يسمح باستدعاء transport مباشر خارج catalog مراجع |
 
 ## 7. قواعد إغلاق المراحل وتحديث التوثيق
 

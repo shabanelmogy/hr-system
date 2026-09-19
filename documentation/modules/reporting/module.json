@@ -9,6 +9,12 @@
   "allowsTenantEntitlement": true,
   "lifecycle": "active",
   "status": "foundation",
+  "webNextSurface": {
+    "status": "active",
+    "owner": "reporting",
+    "sourceRoot": "web-next/src/modules/reporting",
+    "moduleDefinition": "web-next/src/modules/reporting/moduleDefinition.tsx"
+  },
   "runtimePaths": {
     "root": "api/Modules/Reporting",
     "contracts": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts",

@@ -40,6 +40,14 @@ jobs:
         working-directory: ./web-next
         run: npm run check:architecture
 
+      - name: Verify architecture documentation governance
+        working-directory: ./web-next
+        run: npm run check:governance
+
+      - name: Verify production release contract
+        working-directory: ./web-next
+        run: npm run check:release-contract
+
       - name: Verify translations
         working-directory: ./web-next
         run: npm run check:i18n

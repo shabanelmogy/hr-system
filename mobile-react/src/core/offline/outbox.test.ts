@@ -96,4 +96,30 @@ describe('OfflineOutboxRepository recovery helpers', () => {
     expect(runAsync.mock.calls[0]?.[1]).toBe('blocked');
     expect(runAsync.mock.calls[0]?.[2]).toBe('discarded');
   });
+
+  it('returns scope-safe queue summaries without exposing payloads', async () => {
+    const getAllAsync = jest.fn().mockResolvedValue([{
+      command_id: commandId, user_id: 'user-a', tenant_id: 'tenant-a', company_id: 4,
+      command_type: 'workforce-plan.update-draft', aggregate_type: 'workforce-plan', aggregate_id: '8',
+      payload_json: '{"salary":999}', status: 'failed', attempts: 2, base_row_version: 'AQ==',
+      idempotency_key: null, last_error: 'offline', next_attempt_at: '2026-09-20T00:00:00.000Z',
+      created_at: '2026-09-19T00:00:00.000Z', updated_at: '2026-09-19T00:01:00.000Z',
+    }]);
+    const repository = new OfflineOutboxRepository({ getAllAsync } as unknown as SQLiteDatabase);
+
+    const summaries = await repository.listSummaries(scope);
+
+    expect(summaries[0]).not.toHaveProperty('payload');
+    expect(summaries[0]).toMatchObject({ commandId, commandType: 'workforce-plan.update-draft', status: 'failed' });
+    expect(getAllAsync.mock.calls[0]?.slice(1, 4)).toEqual(['user-a', 'tenant-a', 4]);
+  });
+
+  it('allows an explicit retry to re-arm only failed commands', async () => {
+    const runAsync = jest.fn().mockResolvedValue({ changes: 1 });
+    const repository = new OfflineOutboxRepository({ runAsync } as unknown as SQLiteDatabase);
+
+    await expect(repository.resetFailedToPending(commandId)).resolves.toBe(true);
+    expect(String(runAsync.mock.calls[0]?.[0])).toContain("status = 'failed'");
+    expect(String(runAsync.mock.calls[0]?.[0])).toContain("status = 'pending'");
+  });
 });

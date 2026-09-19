@@ -1,0 +1,15 @@
+import type { TFunction } from 'i18next';
+import { createGeographicalNameSchema } from '@/src/modules/reference-data/validation/geographical-name';
+import { z } from 'zod';
+
+export function createStateRequestSchema(t: TFunction) {
+  return z.object({
+    nameAr: createGeographicalNameSchema(t),
+    nameEn: createGeographicalNameSchema(t),
+    code: z.string().trim()
+      .min(2, t('validation.minLength', { count: 2 }))
+      .max(10, t('validation.maxLength', { count: 10 }))
+      .regex(/^[A-Za-z0-9-]+$/, t('states.codeInvalid')),
+    countryId: z.number().int().positive(t('states.countryRequired')),
+  });
+}

@@ -30,11 +30,7 @@ async function expectNoAccessibilityViolations(page: Page, include?: string) {
 }
 
 async function waitForStableUserWelcome(page: Page) {
-  const userWelcome = page
-    .locator(".MuiPaper-root")
-    .filter({ hasText: "E2E user" })
-    .visible()
-    .first();
+  const userWelcome = page.getByTestId("user-welcome").filter({ visible: true });
 
   await expect(userWelcome).toHaveCSS("opacity", "1");
 }
@@ -68,6 +64,7 @@ test("@a11y representative CRUD page and form have no WCAG A/AA automated violat
   await expect(
     page.getByRole("heading", { name: "Countries Management" }).filter({ visible: true }),
   ).toBeVisible();
+  await waitForStableUserWelcome(page);
 
   await expectNoAccessibilityViolations(page);
 

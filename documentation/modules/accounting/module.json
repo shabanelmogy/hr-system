@@ -9,6 +9,12 @@
   "allowsTenantEntitlement": true,
   "lifecycle": "active",
   "status": "foundation",
+  "webNextSurface": {
+    "status": "active",
+    "owner": "accounting",
+    "sourceRoot": "web-next/src/modules/accounting",
+    "moduleDefinition": "web-next/src/modules/accounting/moduleDefinition.tsx"
+  },
   "runtimePaths": {
     "root": "api/Modules/Accounting",
     "contracts": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Contracts",

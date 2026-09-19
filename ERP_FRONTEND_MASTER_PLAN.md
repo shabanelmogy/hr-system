@@ -20,7 +20,9 @@ The frontend foundation should follow these rules:
 - Cross-module access must go through public APIs.
 - Business logic should not leak into App Router files.
 - The architecture should support long-term ERP growth: more modules, more companies/tenants, permissions, reporting, and real-time features.
-- Demo Login remains available during development and will be removed later for Production.
+- Demo Login remains available in both development and Production for the current
+  product policy. Its removal is not a Production-readiness requirement unless a
+  future explicit product decision changes that policy.
 
 ---
 
@@ -315,13 +317,14 @@ When company/session context changes:
 
 ## 2.7 Demo Login
 
-**Keep Demo Login in development.**
+**Keep Demo Login enabled in development and Production for the current product policy.**
 
 - User Demo Login stays.
 - Admin Demo Login stays.
 - Super Admin Demo Login stays.
 - Current login behavior stays.
-- Remove later only when preparing Production.
+- Do not make Production readiness depend on removing Demo Login. Revisit only
+  after an explicit product decision changes this requirement.
 
 ## Previous verification
 
@@ -929,13 +932,18 @@ report-only
 → enforce CSP
 ```
 
-## 7.3 Production Demo Login removal
+## 7.3 Production Demo Login policy
 
-When preparing Production:
+For the current product policy, Demo Login remains intentionally available in
+Production:
 
-- remove Demo Login buttons;
-- remove hardcoded demo credentials;
-- verify no demo credentials exist in production bundles.
+- User Demo Login stays;
+- Admin Demo Login stays;
+- Super Admin Demo Login stays;
+- release readiness must not fail merely because Demo Login is present.
+
+If this requirement changes later, treat removal as a separate explicit product
+decision and security hardening task rather than an assumed release step.
 
 ## Applied and enforced — 2026-09-17
 
@@ -984,7 +992,7 @@ release check because it requires the target environment, a valid account/sessio
 and representative data. That release smoke may identify a new legitimate origin,
 but it does not keep the source phase in Report-Only. Any such finding must update
 the centralized allowlist and tests rather than adding a wildcard. Demo Login
-remains unchanged until the explicit Production-readiness step.
+remains intentionally enabled in Production under the current product policy.
 
 ## Status
 
@@ -1666,7 +1674,9 @@ The consolidated CI contract now also enforces:
   the core security headers;
 - generated documentation consistency;
 - CI retries remain diagnostic, but `failOnFlakyTests` makes a pass-on-retry a
-  failed release gate rather than silently accepting flakiness.
+  failed release gate rather than silently accepting flakiness. The resulting
+  Countries search regression is synchronized to the matching BFF response so the
+  gate validates the server result rather than debounce/placeholder timing.
 
 Web Vitals / real-user timing remains evidence-driven rather than a synthetic CI
 wall-clock threshold. Real Collector/dashboard/alert delivery plus authenticated
@@ -1713,6 +1723,27 @@ code change
 + documentation generation/check
 ```
 
+### Automated ownership/route manifest
+
+Phase 13 now keeps a generated Web architecture manifest at
+`documentation/web-next/architecture/frontend-architecture-manifest.md`. It is
+derived from `scripts/module-boundaries.mjs` and the live protected App Router
+tree, so engineers can review owner roots, allowed dependency direction and route
+ownership without reverse-engineering folders.
+
+The canonical ownership examples in this phase are machine-enforced through
+`documentedRouteOwnership`; `check:architecture` rejects a missing or re-owned
+contract route, while `check:governance` rejects a stale generated manifest. CI
+runs both gates. Intentional ownership/route changes therefore require an explicit
+policy change, manifest regeneration and review of the documentation diff.
+
+Registered frontend business modules must also declare an active `webNextSurface`
+inside their `documentation/modules/<module>/module.json`. The governance check
+validates the documented owner, source root, module definition path and Web README
+for HR, Accounting, CRM, ReferenceData and Reporting, then renders that parity into
+the generated architecture manifest. This prevents a live module from drifting
+back to documentation that still claims its Web surface is absent.
+
 ### Continuous guide update rule
 
 Do not wait until the end of a phase to document important findings. After each
@@ -1734,7 +1765,7 @@ Guide before handoff.
 
 ## Status
 
-✅ **Baseline complete / ongoing governance**
+🟢 **Active ongoing governance**
 
 The Route Group and public-boundary cleanup is complete. Canonical architecture
 documentation and generated documentation checks were included in the final
@@ -1793,7 +1824,7 @@ Correctness
 | Phase 10 — Dependency strategy | ✅ Complete |
 | Phase 11 — Performance engineering | ✅ Cross-route/runtime baseline complete |
 | Phase 12 — CI quality gates | ✅ Complete |
-| Phase 13 — Documentation/governance | ✅ Baseline complete / ongoing governance |
+| Phase 13 — Documentation/governance | 🟢 Active / ongoing governance |
 
 ---
 
@@ -1817,8 +1848,9 @@ Phase 10 one-family-at-a-time verification policy.
 
 At Production-readiness time, also run authenticated browser smoke for the real
 Google popup, SignalR connection, reports/PDF viewers, file/media previews,
-Hangfire and configured external-tool frames, and remove Demo Login as already
-planned. Treat any confirmed CSP violation as an allowlist evidence update, not a
+Hangfire and configured external-tool frames. Demo Login remains intentionally
+available in Production under the current product policy and is not a release
+blocker. Treat any confirmed CSP violation as an allowlist evidence update, not a
 reason to reopen broad browser permissions.
 
 Performance work should now be reopened only from evidence: production route
@@ -1833,7 +1865,7 @@ fetch-on-intent are not startup blockers.
 
 Do not:
 
-- remove Demo Login yet;
+- remove or hide Demo Login without a new explicit product decision;
 - disable `cacheComponents` to hide a runtime issue;
 - disable/suppress Instant Navigation validation;
 - reintroduce broad `dynamic = "force-dynamic"`;

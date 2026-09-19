@@ -31,7 +31,7 @@
     {
       "id": "mobile-feature",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/address-types",
+      "path": "mobile-react/src/modules/reference-data/addresses/address-types",
       "minimumFiles": 21,
       "purpose": "Expo API, queries, table/cards/chart/report/import, screen, and tests"
     }
@@ -244,37 +244,37 @@
     {
       "id": "mobile-screen",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/address-types/presentation/screens/AddressTypesScreen.tsx",
+      "path": "mobile-react/src/modules/reference-data/addresses/address-types/presentation/screens/AddressTypesScreen.tsx",
       "purpose": "Table, Cards, Chart, Report, and Import composition"
     },
     {
       "id": "mobile-form",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/address-types/presentation/components/AddressTypeForm.tsx",
+      "path": "mobile-react/src/modules/reference-data/addresses/address-types/presentation/components/AddressTypeForm.tsx",
       "purpose": "Address Type data-entry form and development mock-data action"
     },
     {
       "id": "mobile-mock-data",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/address-types/presentation/utils/address-type-mock-data.ts",
+      "path": "mobile-react/src/modules/reference-data/addresses/address-types/presentation/utils/address-type-mock-data.ts",
       "purpose": "Domain-valid development-only Address Type samples"
     },
     {
       "id": "mobile-api",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/address-types/data/remote/address-type-remote-data-source.ts",
+      "path": "mobile-react/src/modules/reference-data/addresses/address-types/data/remote/address-type-remote-data-source.ts",
       "purpose": "Runtime-validated API and exact request envelopes"
     },
     {
       "id": "mobile-import",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/address-types/presentation/components/import-data/AddressTypeImportView.tsx",
+      "path": "mobile-react/src/modules/reference-data/addresses/address-types/presentation/components/import-data/AddressTypeImportView.tsx",
       "purpose": "Required native XLSX import flow"
     },
     {
       "id": "mobile-report",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/address-types/presentation/components/AddressTypeReportView.tsx",
+      "path": "mobile-react/src/modules/reference-data/addresses/address-types/presentation/components/AddressTypeReportView.tsx",
       "purpose": "Managed Crystal PDF report flow"
     },
     {
@@ -370,19 +370,19 @@
     {
       "id": "mobile-address-type-api-tests",
       "layer": "mobile-react-test",
-      "path": "mobile-react/src/modules/hr/basic-data/address-types/data/remote/__tests__/address-type-remote-boundary.test.ts",
+      "path": "mobile-react/src/modules/reference-data/addresses/address-types/data/remote/__tests__/address-type-remote-boundary.test.ts",
       "purpose": "Address Type API parsing and serialization coverage"
     },
     {
       "id": "mobile-address-type-query-tests",
       "layer": "mobile-react-test",
-      "path": "mobile-react/src/modules/hr/basic-data/address-types/presentation/queries/use-address-types.test.ts",
+      "path": "mobile-react/src/modules/reference-data/addresses/address-types/presentation/queries/use-address-types.test.ts",
       "purpose": "Mutation and invalidation coverage"
     },
     {
       "id": "mobile-address-type-import-tests",
       "layer": "mobile-react-test",
-      "path": "mobile-react/src/modules/hr/basic-data/address-types/presentation/components/import-data/address-type-import.test.ts",
+      "path": "mobile-react/src/modules/reference-data/addresses/address-types/presentation/components/import-data/address-type-import.test.ts",
       "purpose": "Import validation and duplicate coverage"
     },
     {
@@ -412,13 +412,13 @@
     {
       "id": "mobile-geographical-name-validation",
       "layer": "mobile-react-shared",
-      "path": "mobile-react/src/modules/hr/basic-data/validation/geographical-name.ts",
+      "path": "mobile-react/src/modules/reference-data/validation/geographical-name.ts",
       "purpose": "Mobile name validation aligned with API"
     },
     {
       "id": "mobile-geographical-name-validation-test",
       "layer": "mobile-react-test",
-      "path": "mobile-react/src/modules/hr/basic-data/validation/geographical-name.test.ts",
+      "path": "mobile-react/src/modules/reference-data/validation/geographical-name.test.ts",
       "purpose": "Mobile printable-Unicode name validation coverage"
     }
   ]

@@ -1,10 +1,10 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller, useFieldArray, useWatch, type Control, type FieldPath } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import { toFormErrorMap, useZodForm } from '@/src/core/validation';
-import { useFiscalYear, useFiscalYearLookup } from '@/src/modules/hr/finance';
+import { applyApiFieldErrors, toFormErrorMap, useZodForm } from '@/src/core/validation';
+import { useFiscalYear, useFiscalYearLookup } from '@/src/modules/accounting';
 import { useOrganizationalLookup } from '@/src/modules/hr/basic-data';
 import { AppButton, AppCard, AppForm, AppFormSection, AppIconButton, AppSelectField, AppStatusBadge, AppText, AppTextField, type AppSelectOption } from '@/src/shared/components';
 import { useAppTheme } from '@/src/core/theme';
@@ -70,6 +70,7 @@ export function WorkforcePlanForm({ item, revisions, mode, loading, detailLoadin
   const { t, i18n } = useTranslation(); const { theme } = useAppTheme(); const readOnly = mode === 'view'; const disabled = readOnly || loading || detailLoading;
   const schema = useMemo(() => createWorkforcePlanSchema(t), [t]);
   const form = useZodForm<Values>(schema, { defaultValues: valuesFrom(item, draftRequest) });
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const lines = useFieldArray({ control: form.control, name: 'lines' });
   const fiscalYearId = useWatch({ control: form.control, name: 'fiscalYearId' });
   const fiscalYears = useFiscalYearLookup();
@@ -107,11 +108,21 @@ export function WorkforcePlanForm({ item, revisions, mode, loading, detailLoadin
       [String(fiscalYearId || fallbackFiscalYearId)]: periodValues.map(({ id, code, nameEn, nameAr }) => ({ id, code, nameEn, nameAr })),
     },
   });
-  const save = form.handleSubmit(values => onSave({ ...values, description: values.description || null, lines: values.lines.map(line => ({ ...line, justification: line.justification || null })) }, createEditingSnapshot()));
-  const saveLocally = form.handleSubmit(values => onSaveLocally?.({ ...values, description: values.description || null, lines: values.lines.map(line => ({ ...line, justification: line.justification || null })) }, createEditingSnapshot()));
+  const requestFrom = (values: Values): WorkforcePlanRequest => ({ ...values, description: values.description || null, lines: values.lines.map(line => ({ ...line, justification: line.justification || null })) });
+  const runSave = async (values: Values, local: boolean) => {
+    setSubmitError(null);
+    try {
+      if (local) await onSaveLocally?.(requestFrom(values), createEditingSnapshot());
+      else await onSave(requestFrom(values), createEditingSnapshot());
+    } catch (error) {
+      if (!applyApiFieldErrors(form, error)) setSubmitError(error instanceof Error ? error.message : t('workforcePlanning.messages.saveFailed'));
+    }
+  };
+  const save = form.handleSubmit(values => runSave(values, false));
+  const saveLocally = form.handleSubmit(values => runSave(values, true));
   const totalSlots = (plan: WorkforcePlanDetail) => plan.lines.reduce((sum, line) => sum + line.plannedHiringSlots, 0);
   const previous = revisions.find(revision => revision.revisionNumber === (item?.revisionNumber ?? 1) - 1);
-  return <AppForm visible presentation="fullScreen" title={t(`workforcePlanning.form.${mode}Title`)} subtitle={t('workforcePlanning.form.subtitle')} icon={mode === 'create' ? 'add-circle-outline' : readOnly ? 'eye-outline' : 'create-outline'} errors={toFormErrorMap(form.formState.errors)} isDirty={form.formState.isDirty} submitting={loading || form.formState.isSubmitting} serverError={detailError} onCancel={onClose} onSubmit={readOnly ? undefined : save} submitLabel={t(mode === 'edit' ? 'common.save' : 'common.create')} contentContainerStyle={styles.content} footer={detailError && onRetryDetail ? <AppButton variant="outline" onPress={onRetryDetail}>{t('common.retry')}</AppButton> : mode === 'edit' && onSaveLocally ? <AppButton variant="outline" onPress={saveLocally}>{t('workforcePlanning.offline.saveLocally')}</AppButton> : undefined} mockDataAction={__DEV__ && !readOnly ? { onGenerate: generateMockData, disabled: disabled || !fallbackFiscalYearId || !positionsLookup.data?.length || !fiscalYear.data?.periods.length } : undefined}>
+  return <AppForm visible presentation="fullScreen" title={t(`workforcePlanning.form.${mode}Title`)} subtitle={t('workforcePlanning.form.subtitle')} icon={mode === 'create' ? 'add-circle-outline' : readOnly ? 'eye-outline' : 'create-outline'} errors={toFormErrorMap(form.formState.errors)} isDirty={form.formState.isDirty} submitting={loading || form.formState.isSubmitting} serverError={detailError ?? submitError} onCancel={onClose} onSubmit={readOnly ? undefined : save} submitLabel={t(mode === 'edit' ? 'common.save' : 'common.create')} contentContainerStyle={styles.content} footer={detailError && onRetryDetail ? <AppButton variant="outline" onPress={onRetryDetail}>{t('common.retry')}</AppButton> : mode === 'edit' && onSaveLocally ? <AppButton variant="outline" onPress={saveLocally}>{t('workforcePlanning.offline.saveLocally')}</AppButton> : undefined} mockDataAction={__DEV__ && !readOnly ? { onGenerate: generateMockData, disabled: disabled || !fallbackFiscalYearId || !positionsLookup.data?.length || !fiscalYear.data?.periods.length } : undefined}>
     {draftStatus ? <AppFormSection title={t('workforcePlanning.offline.title')} icon="cloud-offline-outline">
       <AppStatusBadge color={['conflict', 'dead-letter'].includes(draftStatus) ? theme.colors.danger : draftStatus === 'uncertain' ? theme.colors.warning : theme.colors.primary} label={t(`workforcePlanning.offline.${draftStatus}`)} />
       {draftError ? <AppText color="danger" variant="bodySmall">{draftError}</AppText> : null}

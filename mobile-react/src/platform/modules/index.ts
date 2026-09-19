@@ -6,6 +6,7 @@ export {
   useTenantEntitlementModules,
 } from './presentation/queries/use-modules';
 export type { ErpModule } from './domain/models/module';
+export { ModuleCatalogUnavailableError } from './data/repositories/default-module-repository';
 export {
   findMobileRouteOwner,
   getMobileModuleDefinition,

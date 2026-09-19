@@ -41,5 +41,16 @@ export const enOfflineOperations = {
       workforcePlanUpdateDraft: 'Update a draft workforce plan',
       workforcePlanUpdateDraftDescription: 'Save a scoped local draft, or opt into row-versioned replay with conflict reconciliation when connectivity returns.',
     },
+    syncCenter: {
+      title: 'Sync Center',
+      description: 'Review this company’s queued commands without exposing their business payloads.',
+      empty: 'There are no commands waiting for attention.',
+      loadFailed: 'Could not load the local sync queue.',
+      discard: 'Discard command',
+      status: {
+        pending: 'Pending', processing: 'Processing', succeeded: 'Succeeded', failed: 'Retry scheduled',
+        conflict: 'Conflict', uncertain: 'Outcome uncertain', blocked: 'Discarded', deadLetter: 'Retry limit reached',
+      },
+    },
   },
 };

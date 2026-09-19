@@ -41,5 +41,16 @@ export const arOfflineOperations = {
       workforcePlanUpdateDraft: 'تعديل مسودة خطة القوى العاملة',
       workforcePlanUpdateDraftDescription: 'احفظ مسودة محلية معزولة، أو فعّل مزامنة محكومة بـ RowVersion مع مطابقة التعارض عند عودة الاتصال.',
     },
+    syncCenter: {
+      title: 'مركز المزامنة',
+      description: 'راجع أوامر هذه الشركة المنتظرة دون عرض محتوى بيانات الأعمال.',
+      empty: 'لا توجد أوامر تحتاج إلى متابعة.',
+      loadFailed: 'تعذر تحميل قائمة المزامنة المحلية.',
+      discard: 'استبعاد الأمر',
+      status: {
+        pending: 'قيد الانتظار', processing: 'جارٍ التنفيذ', succeeded: 'تمت المزامنة', failed: 'مجدول لإعادة المحاولة',
+        conflict: 'تعارض', uncertain: 'النتيجة غير مؤكدة', blocked: 'تم الاستبعاد', deadLetter: 'انتهى حد المحاولات',
+      },
+    },
   },
 };

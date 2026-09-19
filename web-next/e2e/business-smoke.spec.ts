@@ -126,9 +126,10 @@ test("Fiscal Years covers tenant-scoped create and update through the shared for
   await addForm.getByLabel("Name Arabic").fill("السنة المالية 2027");
   await addForm.getByLabel("Name English").fill("Fiscal Year 2027");
   const startDate = addForm.getByRole("group", { name: "Start date" });
-  await startDate.getByRole("spinbutton", { name: "Day" }).fill("01");
-  await startDate.getByRole("spinbutton", { name: "Month" }).fill("01");
-  await startDate.getByRole("spinbutton", { name: "Year" }).fill("2027");
+  const startDateInput = startDate.getByRole("textbox", { includeHidden: true });
+  await startDate.click();
+  await startDateInput.fill("01/01/2027");
+  await expect(startDateInput).toHaveValue("01/01/2027");
   await addForm.getByRole("button", { name: "Create", exact: true }).click();
 
   await expect(page.getByText("FY-2027", { exact: true }).first()).toBeVisible();

@@ -56,7 +56,7 @@ This is the applied evidence ledger for the current Countries feature. The detai
 | E-WEB-05 | Import validates file metadata, canonical headers, value-only rows, bounds and duplicate scope, then distinguishes failed from uncertain submissions | `src/shared/services/excelService.ts`, `src/shared/components/file-upload/SpreadsheetImportCard.tsx`, and Countries `components/import-data/` |
 | E-API-07 | Report templates/revisions are tenant-filtered, drafts are absent from public reads, lifecycle writes use RowVersion, revisions are append-only, and the source catalog permits only `endpoint=/api/v1/countries/report-data` | `Domain/Application/Infrastructure/Api` ReportTemplates slices, `GetCountryReportDataQuery`, migration `20260823075732_AddTenantReportTemplates`, and `ReportTemplateFeatureTests.cs` |
 | E-MOB-01 | One controlled state owns the mobile server list | `mobile-react/src/shared/listing/useServerListState.ts` and `CountriesScreen.tsx` |
-| E-MOB-02 | Runtime schemas guard mobile API responses | `mobile-react/src/modules/hr/basic-data/countries/data/remote/country-schemas.ts` |
+| E-MOB-02 | Runtime schemas guard mobile API responses | `mobile-react/src/modules/reference-data/geography/countries/data/remote/country-schemas.ts` |
 | E-MOB-03 | Route authorization and deep-link integration are registered | mobile route manifest, realtime registry, and notification presentation utility |
 
 ## Intentional platform differences

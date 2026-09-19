@@ -22,21 +22,26 @@ describe('route access manifest', () => {
       submoduleCode: 'recruitment',
     });
     expect(requiredModuleForPath(ROUTES.advancedTools.localizationApi)).toEqual({
-      moduleCode: 'hr',
-      submoduleCode: 'basic-data',
+      moduleCode: 'platform',
+      submoduleCode: 'tenant-administration',
     });
     expect(requiredModuleForPath(ROUTES.advancedTools.trackChanges)).toEqual({
-      moduleCode: 'hr',
-      submoduleCode: 'analytics',
+      moduleCode: 'platform',
+      submoduleCode: 'tenant-administration',
     });
     expect(requiredModuleForPath(ROUTES.administration.roles)).toEqual({
-      moduleCode: 'hr',
-      submoduleCode: 'administration',
+      moduleCode: 'platform',
+      submoduleCode: 'tenant-administration',
     });
     expect(requiredModuleForPath(ROUTES.administration.offlineOperations)).toEqual({
-      moduleCode: 'hr',
-      submoduleCode: 'administration',
+      moduleCode: 'platform',
+      submoduleCode: 'tenant-administration',
     });
+    expect(requiredModuleForPath(ROUTES.basicData.countries)).toEqual({ moduleCode: 'reference-data', submoduleCode: 'geography' });
+    expect(requiredModuleForPath(ROUTES.basicData.addressTypes)).toEqual({ moduleCode: 'reference-data', submoduleCode: 'addresses' });
+    expect(requiredModuleForPath(ROUTES.basicData.companyGeographicScope)).toEqual({ moduleCode: 'platform', submoduleCode: 'tenant-administration' });
+    expect(requiredModuleForPath(ROUTES.extras.appointments)).toEqual({ moduleCode: 'crm', submoduleCode: 'appointments' });
+    expect(requiredModuleForPath(ROUTES.advancedTools.healthCheck)).toEqual({ moduleCode: 'platform', submoduleCode: 'operations' });
   });
 
   it('defaults unknown routes to denied', () => {

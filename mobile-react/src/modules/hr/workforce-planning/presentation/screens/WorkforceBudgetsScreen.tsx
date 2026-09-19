@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/src/core/api';
 import { useAppTheme } from '@/src/core/theme';
 import { appRoles, permissions, useAuthorization } from '@/src/platform/auth';
-import { useFiscalYearLookup } from '@/src/modules/hr/finance';
+import { useFiscalYearLookup } from '@/src/modules/accounting';
 import { useAppReadOnly } from '@/src/shared/contexts/AppReadOnlyContext';
 import { toApiPageNumber, useServerListState } from '@/src/shared/listing';
 import { AppDataCard, AppDataTable, type AppDataTableColumn, AppIconButton, AppListScreen, AppScreen, AppStateView, AppStatusBadge, AppText, AppTextField, ConfirmationDialog, showToast, type AppSelectOption } from '@/src/shared/components';
@@ -36,7 +36,7 @@ export function WorkforceBudgetsScreen() {
   const fiscalOptions = useMemo<AppSelectOption<number>[]>(() => (fiscalYears.data ?? []).map(year => ({ value: year.id, label: `${year.code} — ${i18n.language.startsWith('ar') ? year.nameAr : year.nameEn}`, icon: 'calendar-outline' })), [fiscalYears.data, i18n.language]);
   const openForm = useCallback((mode: FormMode, item: WorkforceBudget | null) => { if (mode !== 'view' && isReadOnly) return notifyBlockedAction(); setSelected(item); setFormMode(mode); setFormOpen(true); }, [isReadOnly, notifyBlockedAction]);
   const closeForm = useCallback(() => { setFormOpen(false); setSelected(null); }, []);
-  const save = useCallback(async (request: WorkforceBudgetRequest) => { try { if (formMode === 'create') await create.mutateAsync(request); else if (selected && details.data) await update.mutateAsync({ id: selected.id, request: { currencyCode: request.currencyCode, lines: request.lines, rowVersion: details.data.rowVersion } }); showToast.success(t(formMode === 'create' ? 'workforceBudget.messages.created' : 'workforceBudget.messages.updated')); closeForm(); } catch (error) { showToast.error(error, t('workforceBudget.messages.saveFailed')); } }, [closeForm, create, details.data, formMode, selected, t, update]);
+  const save = useCallback(async (request: WorkforceBudgetRequest) => { try { if (formMode === 'create') await create.mutateAsync(request); else if (selected && details.data) await update.mutateAsync({ id: selected.id, request: { currencyCode: request.currencyCode, lines: request.lines, rowVersion: details.data.rowVersion } }); showToast.success(t(formMode === 'create' ? 'workforceBudget.messages.created' : 'workforceBudget.messages.updated')); closeForm(); } catch (error) { showToast.error(error, t('workforceBudget.messages.saveFailed')); throw error; } }, [closeForm, create, details.data, formMode, selected, t, update]);
   const beginPending = useCallback((item: WorkforceBudget, kind = lifecycleKind(item)) => { if (isReadOnly) return notifyBlockedAction(); setSelected(item); setReason(''); setReasonTouched(false); setPending({ kind, item }); }, [isReadOnly, notifyBlockedAction]);
   const confirm = useCallback(async () => {
     if (!pending) return; if (isReadOnly) return notifyBlockedAction(); const action = { id: pending.item.id, rowVersion: pending.item.rowVersion };

@@ -274,7 +274,7 @@
     {
       "id": "mobile-countries-report-consumer",
       "layer": "mobile-react",
-      "path": "mobile-react/src/modules/hr/basic-data/countries/presentation/components/CountryReportView.tsx",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryReportView.tsx",
       "purpose": "Permission-aware Countries report selector, filters, preview, and sharing"
     },
     {

@@ -6,6 +6,7 @@ import {
   allowedOwnerDependencies,
   appBusinessRouteGroup,
   appRouteOwnerGroups,
+  documentedRouteOwnership,
   moduleDirectories,
   ownershipGroups,
   sharedMainRouteRoots,
@@ -173,6 +174,7 @@ const appPageFiles = sourceFiles.filter(
 );
 
 const pagesByCanonicalRoute = new Map();
+const protectedRouteOwners = new Map();
 for (const pageFile of appPageFiles) {
   const route = canonicalAppRoute(pageFile);
   const existing = pagesByCanonicalRoute.get(route);
@@ -211,9 +213,34 @@ for (const pageFile of appPageFiles) {
   }
 
   const owner = owners[0];
+  protectedRouteOwners.set(route, owner);
   if (segments.includes(appBusinessRouteGroup) && !Object.hasOwn(moduleDirectories, owner)) {
     appRouteViolations.push(
       `${path.relative(process.cwd(), pageFile)}: '${appBusinessRouteGroup}' may contain only registered business-module owners`,
+    );
+  }
+}
+
+for (const [route, expectedOwner] of Object.entries(documentedRouteOwnership)) {
+  const pageFile = pagesByCanonicalRoute.get(route);
+  if (!pageFile) {
+    appRouteViolations.push(
+      `${route}: documented Phase 13 ownership contract points to a missing App Router page`,
+    );
+    continue;
+  }
+
+  const actualOwner = protectedRouteOwners.get(route);
+  if (!actualOwner) {
+    appRouteViolations.push(
+      `${path.relative(process.cwd(), pageFile)}: '${route}' is a documented Phase 13 ownership contract and must remain a protected owner-group route`,
+    );
+    continue;
+  }
+
+  if (actualOwner !== expectedOwner) {
+    appRouteViolations.push(
+      `${path.relative(process.cwd(), pageFile)}: '${route}' is owned by '${actualOwner}' but Phase 13 requires '${expectedOwner}'`,
     );
   }
 }

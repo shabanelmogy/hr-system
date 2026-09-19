@@ -11,6 +11,7 @@ import { OfflineFoundationProvider } from '@/src/core/offline';
 import { OnboardingProvider } from '@/src/core/onboarding';
 import { MockDataPreferencesProvider, OfflineReadPreferencesProvider } from '@/src/core/preferences';
 import { queryClient } from '@/src/core/query/query-client';
+import { QueryLifecycleCoordinator } from '@/src/core/query/QueryLifecycleCoordinator';
 import { AppThemeProvider, useAppTheme } from '@/src/core/theme';
 
 function DirectionRoot({ children }: PropsWithChildren) {
@@ -39,6 +40,7 @@ export function AppProviders({ children }: PropsWithChildren) {
       <KeyboardProvider preserveEdgeToEdge>
         <SafeAreaProvider>
           <QueryClientProvider client={queryClient}>
+            <QueryLifecycleCoordinator>
             <OfflineFoundationProvider>
               <LocalizationProvider>
                 <OfflineReadPreferencesProvider>
@@ -54,6 +56,7 @@ export function AppProviders({ children }: PropsWithChildren) {
                 </OfflineReadPreferencesProvider>
               </LocalizationProvider>
             </OfflineFoundationProvider>
+            </QueryLifecycleCoordinator>
           </QueryClientProvider>
         </SafeAreaProvider>
       </KeyboardProvider>

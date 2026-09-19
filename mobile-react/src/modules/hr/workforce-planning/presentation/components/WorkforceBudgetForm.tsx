@@ -1,13 +1,13 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller, useFieldArray, useWatch, type Control, type FieldPath } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import { toFormErrorMap, useZodForm } from '@/src/core/validation';
+import { applyApiFieldErrors, toFormErrorMap, useZodForm } from '@/src/core/validation';
 import { AppButton, AppCard, AppForm, AppFormSection, AppIconButton, AppSelectField, AppStatusBadge, AppText, AppTextField, type AppSelectOption } from '@/src/shared/components';
 import { useAppTheme } from '@/src/core/theme';
 import { createWorkforceBudgetSchema } from '../validation/workforce-budget-schema';
-import { useBudgetSourcePlan, useBudgetSourcePlans } from '../queries/use-workforce-budgets';
+import { useBudgetSourcePlanSelector } from '../hooks/use-budget-source-plan-selector';
 import type { BudgetSourcePlan, WorkforceBudgetDetail, WorkforceBudgetRequest } from '../../domain/models/workforce-budget';
 
 type Values = z.infer<ReturnType<typeof createWorkforceBudgetSchema>>;
@@ -51,17 +51,17 @@ export function WorkforceBudgetForm({ item, mode, loading, detailLoading = false
   const { t, i18n } = useTranslation(); const { theme } = useAppTheme(); const readOnly = mode === 'view'; const disabled = readOnly || loading || detailLoading;
   const schema = useMemo(() => createWorkforceBudgetSchema(t), [t]);
   const form = useZodForm<Values>(schema, { defaultValues: emptyValues() });
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const planId = useWatch({ control: form.control, name: 'workforcePlanId' });
   const currency = useWatch({ control: form.control, name: 'currencyCode' }) || 'EGP';
   const isArabic = i18n.language.startsWith('ar');
-  const sourcePlans = useBudgetSourcePlans({ pageNumber: 1, pageSize: 50 }, mode === 'create');
-  const sourcePlan = useBudgetSourcePlan(mode === 'create' ? Number(planId) || null : null, mode === 'create' && Boolean(planId));
+  const planSelector = useBudgetSourcePlanSelector(Number(planId) || 0, mode === 'create');
   const activePlan: BudgetSourcePlan | null = useMemo(() => {
     if (mode !== 'create') return null;
-    if (sourcePlan.data) return sourcePlan.data;
-    return (sourcePlans.data?.items ?? []).find(plan => plan.id === Number(planId)) ?? null;
-  }, [mode, sourcePlan.data, sourcePlans.data, planId]);
-  const planOptions: AppSelectOption<number>[] = useMemo(() => (sourcePlans.data?.items ?? []).map(plan => ({ value: plan.id, label: `${plan.planCode} — ${isArabic ? plan.titleAr : plan.titleEn}`, icon: 'document-text-outline' })), [sourcePlans.data, isArabic]);
+    if (planSelector.selected) return planSelector.selected;
+    return planSelector.plans.find(plan => plan.id === Number(planId)) ?? null;
+  }, [mode, planId, planSelector.plans, planSelector.selected]);
+  const planOptions: AppSelectOption<number>[] = useMemo(() => planSelector.plans.map(plan => ({ value: plan.id, label: `${plan.planCode} — ${isArabic ? plan.titleAr : plan.titleEn}`, icon: 'document-text-outline' })), [planSelector.plans, isArabic]);
   const periodOptions: AppSelectOption<number>[] = useMemo(() => (activePlan?.fiscalPeriodIds ?? []).map(id => ({ value: id, label: `${t('workforceBudget.fields.fiscalPeriod')} ${id}`, icon: 'calendar-outline' })), [activePlan, t]);
 
   useEffect(() => {
@@ -129,7 +129,9 @@ export function WorkforceBudgetForm({ item, mode, loading, detailLoading = false
   };
 
   const lines = useWatch({ control: form.control, name: 'lines' }) ?? [];
-  const save = form.handleSubmit(values => onSave({
+  const save = form.handleSubmit(async values => {
+    setSubmitError(null);
+    const request: WorkforceBudgetRequest = {
     budgetCode: values.budgetCode.trim().toUpperCase(),
     workforcePlanId: Number(values.workforcePlanId),
     currencyCode: values.currencyCode.trim().toUpperCase(),
@@ -145,11 +147,17 @@ export function WorkforceBudgetForm({ item, mode, loading, detailLoading = false
         allocatedRecruitmentCost: Number(allocation.allocatedRecruitmentCost),
       })),
     })),
-  }));
-  return <AppForm visible presentation="fullScreen" title={t(`workforceBudget.form.${mode}Title`)} subtitle={t('workforceBudget.form.subtitle')} icon={mode === 'create' ? 'add-circle-outline' : readOnly ? 'eye-outline' : 'create-outline'} errors={toFormErrorMap(form.formState.errors)} isDirty={form.formState.isDirty} submitting={loading || form.formState.isSubmitting} serverError={detailError} onCancel={onClose} onSubmit={readOnly ? undefined : save} submitLabel={t(mode === 'edit' ? 'common.save' : 'common.create')} contentContainerStyle={styles.content} footer={detailError && onRetryDetail ? <AppButton variant="outline" onPress={onRetryDetail}>{t('common.retry')}</AppButton> : undefined} mockDataAction={__DEV__ && !readOnly ? { onGenerate: generateMockData, disabled: disabled || !activePlan || !activePlan.lines.length } : undefined}>
+    };
+    try {
+      await onSave(request);
+    } catch (error) {
+      if (!applyApiFieldErrors(form, error)) setSubmitError(error instanceof Error ? error.message : t('workforceBudget.messages.saveFailed'));
+    }
+  });
+  return <AppForm visible presentation="fullScreen" title={t(`workforceBudget.form.${mode}Title`)} subtitle={t('workforceBudget.form.subtitle')} icon={mode === 'create' ? 'add-circle-outline' : readOnly ? 'eye-outline' : 'create-outline'} errors={toFormErrorMap(form.formState.errors)} isDirty={form.formState.isDirty} submitting={loading || form.formState.isSubmitting} serverError={detailError ?? submitError} onCancel={onClose} onSubmit={readOnly ? undefined : save} submitLabel={t(mode === 'edit' ? 'common.save' : 'common.create')} contentContainerStyle={styles.content} footer={detailError && onRetryDetail ? <AppButton variant="outline" onPress={onRetryDetail}>{t('common.retry')}</AppButton> : undefined} mockDataAction={__DEV__ && !readOnly ? { onGenerate: generateMockData, disabled: disabled || !activePlan || !activePlan.lines.length } : undefined}>
     <AppFormSection title={t('workforceBudget.form.identity')} icon="document-text-outline">
       <Controller control={form.control} name="budgetCode" render={({ field, fieldState }) => <AppTextField name={field.name} label={t('workforceBudget.fields.budgetCode')} value={field.value} onChangeText={field.onChange} onBlur={field.onBlur} editable={!disabled && mode === 'create'} error={fieldState.error?.message} required />} />
-      <Controller control={form.control} name="workforcePlanId" render={({ field, fieldState }) => <AppSelectField name={field.name} label={t('workforceBudget.fields.plan')} options={planOptions} value={field.value} onChange={field.onChange} disabled={disabled || mode !== 'create'} required error={fieldState.error?.message} leadingIcon="document-text-outline" />} />
+      <Controller control={form.control} name="workforcePlanId" render={({ field, fieldState }) => <AppSelectField name={field.name} label={t('workforceBudget.fields.plan')} options={planOptions} value={field.value} onChange={field.onChange} disabled={disabled || mode !== 'create'} required error={fieldState.error?.message} leadingIcon="document-text-outline" searchable={mode === 'create'} searchValue={planSelector.search} onSearchChange={planSelector.setSearch} searchPlaceholder={t('workforceBudget.search.placeholder')} hasMore={planSelector.hasMore} loadingMore={planSelector.loadingMore} onLoadMore={() => { void planSelector.loadMore(); }} optionsLoading={planSelector.loading} optionsError={planSelector.error ? t('workforceBudget.messages.fetchError') : undefined} onRetryOptions={() => { void planSelector.retry(); }} />} />
       <Controller control={form.control} name="currencyCode" render={({ field, fieldState }) => <AppTextField name={field.name} label={t('workforceBudget.fields.currency')} value={field.value} onChangeText={field.onChange} onBlur={field.onBlur} editable={!disabled && (mode === 'create' || (item ? [1, 4].includes(item.status) : true))} error={fieldState.error?.message} required />} />
     </AppFormSection>
     <AppFormSection title={t('workforceBudget.lines.title')} icon="list-outline">

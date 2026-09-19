@@ -75,6 +75,8 @@ jest.mock('../providers/OfflineOperationsProvider', () => ({
   }),
 }));
 
+jest.mock('../components/SyncQueuePanel', () => ({ SyncQueuePanel: () => null }));
+
 jest.mock('@/src/shared/components', () => {
   const React = require('react');
   const { Pressable, Text, View } = require('react-native');

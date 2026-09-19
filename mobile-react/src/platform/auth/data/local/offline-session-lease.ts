@@ -26,11 +26,16 @@ interface SessionPointer {
   validUntil: string;
 }
 
+export interface OfflineSessionLeaseSnapshot {
+  readonly session: SessionResponse;
+  readonly validUntil: string;
+}
+
 export async function saveOfflineSessionLease(
   database: SQLiteDatabase | null,
   session: SessionResponse,
-): Promise<void> {
-  if (!database) return;
+): Promise<string | null> {
+  if (!database) return null;
   try {
     const scope = scopeFromSession(session);
     const now = Date.now();
@@ -52,15 +57,24 @@ export async function saveOfflineSessionLease(
       scope,
       validUntil: lease.validUntil,
     } satisfies SessionPointer));
+    return lease.validUntil;
   } catch {
     // Server authentication remains authoritative when local persistence is
     // unavailable; the next successful validation can try again.
+    return null;
   }
 }
 
 export async function loadOfflineSessionLease(
   database: SQLiteDatabase | null,
 ): Promise<SessionResponse | null> {
+  const snapshot = await loadOfflineSessionLeaseSnapshot(database);
+  return snapshot?.session ?? null;
+}
+
+export async function loadOfflineSessionLeaseSnapshot(
+  database: SQLiteDatabase | null,
+): Promise<OfflineSessionLeaseSnapshot | null> {
   if (!database) return null;
   try {
     const rawPointer = await secureSession.getOfflineSessionPointer();
@@ -80,7 +94,7 @@ export async function loadOfflineSessionLease(
       await invalidateOfflineSessionLease();
       return null;
     }
-    return lease.session;
+    return { session: lease.session, validUntil: lease.validUntil };
   } catch {
     return null;
   }
@@ -92,6 +106,20 @@ export async function invalidateOfflineSessionLease(): Promise<void> {
   } catch {
     // Sign-out still clears network credentials even if the optional pointer
     // cannot be removed in a transient keychain failure.
+  }
+}
+
+export async function invalidateOfflineSessionLeaseSnapshot(
+  session: SessionResponse,
+  validUntil: string,
+): Promise<void> {
+  try {
+    const pointer = parsePointer(await secureSession.getOfflineSessionPointer());
+    if (pointer && pointer.validUntil === validUntil && sameScope(pointer.scope, scopeFromSession(session))) {
+      await secureSession.clearOfflineSessionPointer?.();
+    }
+  } catch {
+    // A superseded authentication transition must not fail the active one.
   }
 }
 

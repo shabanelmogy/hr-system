@@ -9,6 +9,8 @@ import 'react-native-reanimated';
 import '@/src/shell';
 
 import { AppProviders } from '@/src/core/providers/AppProviders';
+import { BootstrapErrorBoundary } from '@/src/core/providers/BootstrapErrorBoundary';
+import { SENSITIVE_ROUTE_PARAMS } from '@/src/core/observability/telemetry-redaction';
 import { useOnboarding } from '@/src/core/onboarding';
 import { useAppTheme } from '@/src/core/theme';
 import { AuthProvider, useAuth } from '@/src/platform/auth';
@@ -25,7 +27,7 @@ Observe.configure({
   dispatchInDebug: false,
   integrations: {
     'expo-router': {
-      filteredParams: ['email', 'code', 'userId', 'invitationId', 'token', 'id'],
+      filteredParams: [...SENSITIVE_ROUTE_PARAMS],
     },
   },
 });
@@ -37,16 +39,18 @@ export const unstable_settings = {
 export default function RootLayout() {
   return (
     <ObserveRoot>
-      <AppProviders>
-        <AppErrorBoundary>
-          <AuthProvider>
-            <RealtimeProvider>
-              <RootNavigator />
-            </RealtimeProvider>
-          </AuthProvider>
-          <AppFeedbackHost />
-        </AppErrorBoundary>
-      </AppProviders>
+      <BootstrapErrorBoundary>
+        <AppProviders>
+          <AppErrorBoundary>
+            <AuthProvider>
+              <RealtimeProvider>
+                <RootNavigator />
+              </RealtimeProvider>
+            </AuthProvider>
+            <AppFeedbackHost />
+          </AppErrorBoundary>
+        </AppProviders>
+      </BootstrapErrorBoundary>
     </ObserveRoot>
   );
 }

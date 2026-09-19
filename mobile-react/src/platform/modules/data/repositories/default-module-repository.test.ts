@@ -23,11 +23,20 @@ describe('DefaultModuleRepository', () => {
     expect(remote.getTenantEntitlements).toHaveBeenCalledTimes(1);
   });
 
-  it('fails closed while offline', () => {
+  it('fails closed while offline when no scoped entitlement snapshot exists', async () => {
     const remote = remoteMock();
     const repository = new DefaultModuleRepository(remote, () => false);
 
-    expect(() => repository.getInstalled()).toThrow('requires an internet connection');
+    await expect(repository.getInstalled()).rejects.toThrow('unavailable offline');
     expect(remote.getInstalled).not.toHaveBeenCalled();
+  });
+
+  it('uses a scoped catalog snapshot while offline', async () => {
+    const remote = remoteMock();
+    const cached = [{ code: 'acc', name: 'Accounting', submodules: [] }];
+    const cache = { read: jest.fn().mockResolvedValue(cached), write: jest.fn() };
+    const repository = new DefaultModuleRepository(remote, () => false, cache);
+    await expect(repository.getAccessible()).resolves.toEqual(cached);
+    expect(cache.read).toHaveBeenCalledWith('accessible');
   });
 });

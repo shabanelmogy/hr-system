@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/src/core/api';
 import { useAppTheme } from '@/src/core/theme';
 import { permissions, useAuthorization } from '@/src/platform/auth';
-import { useFiscalYearLookup } from '@/src/modules/hr/finance';
+import { useFiscalYearLookup } from '@/src/modules/accounting';
 import { toApiPageNumber, useServerListState } from '@/src/shared/listing';
 import { AppDataCard, AppDataTable, type AppDataTableColumn, AppForm, AppFormSection, AppIconButton, AppListScreen, AppScreen, AppStateView, AppStatusBadge, AppText, type AppSelectOption } from '@/src/shared/components';
 import { WorkforceBudgetFilterButton, type WorkforceBudgetFilters } from '../components/WorkforceBudgetFilterButton';

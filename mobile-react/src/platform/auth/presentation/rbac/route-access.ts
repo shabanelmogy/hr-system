@@ -18,12 +18,39 @@ export function requiredModuleForPath(pathname: string): { moduleCode: string; s
     const [, , moduleCode, submoduleCode] = pathname.split('/');
     return moduleCode ? { moduleCode, submoduleCode } : null;
   }
-  if (pathname.startsWith('/basic-data')) return { moduleCode: 'hr', submoduleCode: 'basic-data' };
-  if (pathname.startsWith('/recruitment')) return { moduleCode: 'hr', submoduleCode: 'recruitment' };
-  if (pathname.startsWith('/workforce-planning') || pathname.startsWith('/finance')) return { moduleCode: 'hr', submoduleCode: 'workforce' };
-  if (pathname.startsWith('/advanced-tools/localization-api')) return { moduleCode: 'hr', submoduleCode: 'basic-data' };
-  if (pathname.startsWith('/advanced-tools/track-changes') || pathname.startsWith('/advanced-tools/hangfire-dashboard')) return { moduleCode: 'hr', submoduleCode: 'analytics' };
-  if (pathname.startsWith('/advanced-tools') || pathname.startsWith('/administration') || pathname.startsWith('/extras')) return { moduleCode: 'hr', submoduleCode: 'administration' };
+  if (matchesRoute(pathname, ROUTES.basicData.addressTypes)) {
+    return { moduleCode: 'reference-data', submoduleCode: 'addresses' };
+  }
+  if ([ROUTES.basicData.countries, ROUTES.basicData.states, ROUTES.basicData.districts]
+    .some((route) => matchesRoute(pathname, route))) {
+    return { moduleCode: 'reference-data', submoduleCode: 'geography' };
+  }
+  if (matchesRoute(pathname, ROUTES.basicData.companyGeographicScope)) {
+    return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
+  }
+  if (pathname === ROUTES.basicData.root
+    || pathname === ROUTES.basicData.geographicalInformation
+    || pathname === ROUTES.basicData.organizationalStructure) return null;
+  if (matchesRoute(pathname, ROUTES.basicData.organizationalStructure)) {
+    return { moduleCode: 'hr', submoduleCode: 'basic-data' };
+  }
+  if (matchesRoute(pathname, ROUTES.recruitment.root)) return { moduleCode: 'hr', submoduleCode: 'recruitment' };
+  if (matchesRoute(pathname, ROUTES.workforcePlanning.index)) return { moduleCode: 'hr', submoduleCode: 'workforce' };
+  if (matchesRoute(pathname, ROUTES.finance.root)) return { moduleCode: 'acc', submoduleCode: 'fiscal-years' };
+  if ([ROUTES.advancedTools.trackChanges, ROUTES.advancedTools.localizationApi]
+    .some((route) => matchesRoute(pathname, route))) {
+    return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
+  }
+  if ([ROUTES.advancedTools.healthCheck, ROUTES.advancedTools.apiEndpoints, ROUTES.advancedTools.hangfireDashboard]
+    .some((route) => matchesRoute(pathname, route))) {
+    return { moduleCode: 'platform', submoduleCode: 'operations' };
+  }
+  if (pathname === ROUTES.advancedTools.root || pathname === ROUTES.extras.root) return null;
+  if (matchesRoute(pathname, ROUTES.administration.root)) {
+    return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
+  }
+  if (matchesRoute(pathname, ROUTES.extras.appointments)) return { moduleCode: 'crm', submoduleCode: 'appointments' };
+  if (matchesRoute(pathname, ROUTES.extras.files)) return { moduleCode: 'platform', submoduleCode: 'operations' };
   return null;
 }
 

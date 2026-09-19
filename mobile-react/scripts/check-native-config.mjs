@@ -109,6 +109,7 @@ try {
       ERP_LOCAL_NATIVE_BUILD: 'false',
       EAS_BUILD: 'true',
       EAS_BUILD_PROJECT_ID: easProjectId,
+      EXPO_PUBLIC_APP_LINK_HOST: 'app.example.com',
     },
   );
   const easConfig = JSON.parse(easConfigOutput);

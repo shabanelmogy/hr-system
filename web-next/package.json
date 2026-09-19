@@ -21,12 +21,16 @@
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:install": "playwright install chromium",
     "check:architecture": "node scripts/check-architecture.mjs",
+    "check:governance": "node scripts/architecture-governance.mjs --check",
+    "check:release-contract": "node scripts/release-readiness.mjs --check-contract",
     "check:i18n": "node scripts/check-i18n.mjs",
     "measure:build": "node scripts/measure-build.mjs",
     "generate:module": "node scripts/generate-module.mjs",
+    "generate:architecture-manifest": "node scripts/architecture-governance.mjs --write",
     "test:module-generator": "node scripts/generate-module.selftest.mjs",
+    "release:preflight": "node scripts/release-readiness.mjs --production-preflight",
     "type-check": "tsc --noEmit",
-    "check": "npm run check:architecture && npm run check:i18n && npm run lint && npm run type-check"
+    "check": "npm run check:architecture && npm run check:governance && npm run check:release-contract && npm run check:i18n && npm run lint && npm run type-check"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",

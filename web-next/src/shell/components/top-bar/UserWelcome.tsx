@@ -98,6 +98,7 @@ const UserWelcome = ({ isMobile = false }: { isMobile?: boolean }) => {
 
   // Mobile version (avatar only)
   if (isMobile) {
+    const userColor = getUserColor();
     return (
       <Fade in={showWelcome} timeout={800}>
         <Avatar
@@ -105,8 +106,8 @@ const UserWelcome = ({ isMobile = false }: { isMobile?: boolean }) => {
           sx={{
             width: 32,
             height: 32,
-            bgcolor: avatarSrc ? "transparent" : getUserColor(),
-            color: "white",
+            bgcolor: avatarSrc ? "transparent" : userColor,
+            color: avatarSrc ? undefined : theme.palette.getContrastText(userColor),
             fontWeight: "bold",
             fontSize: "0.75rem",
             boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
@@ -124,9 +125,11 @@ const UserWelcome = ({ isMobile = false }: { isMobile?: boolean }) => {
   }
 
   // Desktop version (full welcome message)
+  const userColor = getUserColor();
   return (
     <Fade in={showWelcome} timeout={800}>
       <Paper
+        data-testid="user-welcome"
         elevation={0}
         sx={{
           display: "flex",
@@ -175,8 +178,8 @@ const UserWelcome = ({ isMobile = false }: { isMobile?: boolean }) => {
           <Avatar
             src={avatarSrc}
             sx={{
-              bgcolor: avatarSrc ? "transparent" : getUserColor(),
-              color: "white",
+              bgcolor: avatarSrc ? "transparent" : userColor,
+              color: avatarSrc ? undefined : theme.palette.getContrastText(userColor),
               fontWeight: "bold",
               fontSize: "0.9rem",
               width: 34,

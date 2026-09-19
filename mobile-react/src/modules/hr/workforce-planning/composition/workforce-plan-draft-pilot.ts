@@ -5,6 +5,7 @@ import { ApiError, getAxiosRequestContextSignal } from '@/src/core/api';
 import {
   connectivityService,
   OfflineOutboxRepository,
+  requestOfflineSync,
   SyncCoordinator,
   offlineScopeKey,
   useConnectivity,
@@ -14,6 +15,7 @@ import {
   type SyncAuthorization,
   type SyncCommandOutcome,
   type SyncRunResult,
+  type SyncRunGuard,
 } from '@/src/core/offline';
 import { OFFLINE_CAPABILITY_IDS } from '@/src/core/offline-policy';
 import { useAuth } from '@/src/platform/auth';
@@ -67,9 +69,11 @@ export class WorkforcePlanDraftPilot {
     editingSnapshot: WorkforcePlanEditingSnapshot,
     queueForReplay: boolean,
   ): Promise<WorkforcePlanDraftState> {
-    return queueForReplay
+    const operation = queueForReplay
       ? this.drafts.queueUpdate(scope, baseDetail, request, editingSnapshot)
       : this.drafts.saveLocalDraft(scope, baseDetail, request, editingSnapshot);
+    if (queueForReplay) void operation.then(requestOfflineSync);
+    return operation;
   }
 
   get(scope: OfflineScope, planId: number): Promise<WorkforcePlanDraftState | null> {
@@ -89,7 +93,7 @@ export class WorkforcePlanDraftPilot {
     return this.drafts.retry(scope, planId);
   }
 
-  sync(scope: OfflineScope, authorization: SyncAuthorization): Promise<SyncRunResult> {
+  sync(scope: OfflineScope, authorization: SyncAuthorization, guard?: SyncRunGuard): Promise<SyncRunResult> {
     const scopeKey = offlineScopeKey(scope);
     const active = this.activeSync;
     if (active) {
@@ -99,12 +103,12 @@ export class WorkforcePlanDraftPilot {
       // sync a new scope while the old request context is still unwinding.
       // Serialize those runs so the replacement scope is not silently skipped.
       return active.promise.then(
-        () => this.sync(scope, authorization),
-        () => this.sync(scope, authorization),
+        () => this.sync(scope, authorization, guard),
+        () => this.sync(scope, authorization, guard),
       );
     }
 
-    const operation = this.syncInternal(scope, authorization);
+    const operation = this.syncInternal(scope, authorization, guard);
     const tracked = operation.finally(() => {
       if (this.activeSync?.promise === tracked) this.activeSync = null;
     });
@@ -112,9 +116,13 @@ export class WorkforcePlanDraftPilot {
     return tracked;
   }
 
-  private async syncInternal(scope: OfflineScope, authorization: SyncAuthorization) {
+  nextAttemptAt(scope: OfflineScope): Promise<string | null> {
+    return this.coordinator.nextAttemptAt(scope);
+  }
+
+  private async syncInternal(scope: OfflineScope, authorization: SyncAuthorization, guard?: SyncRunGuard) {
     if (!authorization.authenticated || !connectivityService.getSnapshot().isOnline) {
-      return this.coordinator.run(scope, authorization);
+      return this.coordinator.run(scope, authorization, guard);
     }
 
     // Bind every replay/reconciliation request in this run to the authenticated
@@ -138,7 +146,7 @@ export class WorkforcePlanDraftPilot {
       }
     }
 
-    const result = await this.coordinator.run(scope, authorization);
+    const result = await this.coordinator.run(scope, authorization, guard);
     await this.cleanupSucceededDrafts(scope);
     return result;
   }
