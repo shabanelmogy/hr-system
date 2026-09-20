@@ -63,8 +63,10 @@ Rules:
   `./documentation/system/New-FeatureDocumentation.ps1 -FeatureId <id> -FeatureName "<name>" -PlanId <plan-id> -SliceId "<exact authorized slice>" -Module <module>`.
   Add `-ReferenceFeature <reviewed-feature>` only when useful. Complete Phase 00
   Implementation Preflight, the generated `IMPLEMENTATION-REQUEST.md`, and review
-  artifact before runtime work. Keep its required-file manifest in draft state until
-  referenced runtime files exist.
+  artifact before runtime work. During Phase 00, create the initial applied books
+  and finalize/register a required-file manifest containing only evidence that
+  already exists; Phases 01–05 extend it with actual runtime sources as they are
+  created. Never register future/nonexistent runtime paths.
 - Treat `Required` as current-release and gated, `Deferred` as owned/scheduled with a reopening trigger, and `Excluded` as deliberately absent with no runtime placeholder. Decide every optional capability independently for web and mobile.
 - For a review of an existing feature, default to read-only evidence collection unless the user also asks for changes. Record verified behavior, requested behavior, intentional platform differences, and unresolved findings separately.
 - Register final canonical books, the final required-file manifest, and feature-scoped recipes under `generated/<feature>/`; do not reuse the unscoped Countries packets for another feature.

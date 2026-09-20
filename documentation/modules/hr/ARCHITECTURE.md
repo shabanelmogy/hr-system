@@ -45,6 +45,12 @@ contract. Reporting owns report definitions and Crystal metadata. These
 boundaries are implemented and covered by module dependency tests; do not add
 platform or reference-data persistence back to HR.
 
+Currency is transitional current-state data inside HR Organizational Structure.
+Accounting Core GL Slice 1 is the approved ownership migration point: the single
+company Currency master moves to Accounting, HR continues to persist financial
+facts as CurrencyCode snapshots, and HR currency selectors/validation consume the
+Accounting Contracts surface. Branch and CostCenter remain HR-owned.
+
 ## Reuse-first workflow
 
 Before adding an HR component, service, or Contract, search the shared

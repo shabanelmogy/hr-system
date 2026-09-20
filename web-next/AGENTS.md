@@ -4,7 +4,10 @@ For any frontend change in this project, read [`../documentation/web-next/archit
 
 For a new business capability or substantial business rebuild, also start from
 [`../documentation/plans/README.md`](../documentation/plans/README.md) and require
-the plan to pass G0-G4 before runtime implementation. Web-only production checks,
+the gates required by the exact authorized implementation scope to pass before
+runtime implementation. Overall `Implementation Ready` still requires G0-G4; a
+bounded slice may start earlier only through the planning system's explicit
+slice-authorization rule when remaining G4 findings are release-only. Web-only production checks,
 deferrals, risks, follow-ups, and open decisions use stable IDs under
 `../documentation/plans/notes/` rather than remaining only in a feature TODO.
 

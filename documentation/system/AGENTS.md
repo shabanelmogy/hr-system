@@ -5,7 +5,13 @@
 - Keep paths in feature manifests repository-relative and use forward slashes.
 - A required source file belongs in its application project. Reference it from a manifest; do not copy runtime source into `documentation/`.
 - Preserve the distinction between verified current behavior, desired behavior, and an unresolved finding.
-- Keep a new feature's required-file manifest as `required-files.draft.json` until all declared runtime sources exist. Only final manifests belong in `recipe-manifest.json`.
+- Keep the scaffold manifest as `required-files.draft.json` only during Phase 00
+  investigation. Before runtime coding, Phase 00 creates the initial applied
+  implementation books, finalizes `required-files.json` from evidence that already
+  exists, registers the feature recipes, and generates/checks the Phase 00 packet.
+  Phases 01–05 extend that same manifest with actual runtime sources as they are
+  created; never predeclare nonexistent runtime paths merely to make the manifest
+  look complete.
 - For planned work, record the canonical Plan ID + authorized Slice ID and complete
   Phase 00 Implementation Preflight before runtime implementation. The scaffolded
   `IMPLEMENTATION-REQUEST.md` and review artifact translate approved plan decisions

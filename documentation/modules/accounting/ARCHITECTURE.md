@@ -19,15 +19,26 @@ or event. Resolve the boundary before implementing either workflow.
 
 ## Repository-specific platform reuse
 
-Platform owns identity, authentication, tenancy, users, companies, branches,
-and the common authorization plumbing. Accounting
-must consume those capabilities through stable Contracts or platform abstractions
-and must not create duplicate auth/user/company/branch tables, services, or UI.
+Platform owns identity, authentication, tenancy, users, companies, memberships,
+entitlements and the common authorization plumbing. HR Organizational Structure
+currently owns Branch and CostCenter. Accounting consumes those capabilities
+through stable Contracts/projections when a financial workflow needs them and must
+not create duplicate auth/user/company/branch/cost-center tables, services, or UI.
 Accounting owns only financial permissions and authorization policies (for
 example posting, approval, close, and report access). If a neutral capability is
 missing, extend it at its owning platform/module boundary and expose a Contract;
 do not copy it into Accounting. Validate this reuse boundary in Phase 00 before
 Phase 01 implementation.
+
+The company Currency master is a deliberate ownership transition for Core GL
+Slice 1. It currently exists under HR Organizational Structure, but the earlier
+canonical Geography/Countries design reserved financial Currency ownership for
+Finance/Payroll once that bounded context existed. Slice 1 therefore migrates the
+single writable Currency master into Accounting, introduces company accounting
+settings for Functional Currency/Primary Book, and replaces
+`ExchangeRateToDefault` as financial authority with historical Accounting FX.
+HR retains CurrencyCode snapshots and consumes the Accounting currency Contract;
+there is no permanent duplicate Currency master.
 
 ## Persistence and boundaries
 

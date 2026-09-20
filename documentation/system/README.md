@@ -156,20 +156,26 @@ when requirements change.
    `IMPLEMENTATION-REQUEST.md`, and review artifact before runtime work. Confirm its
    Existing-System Relationship Review plus Business Rules, Edge Cases & Validation,
    and Impact matrices against the approved plan; every edge-case category must be
-   covered or explicitly reasoned `N/A`. Its
-   required-file and recipe-registration manifests remain draft files and are
-   intentionally excluded from `recipe-manifest.json` while runtime paths are
-   being created.
-4. Translate the approved slice into the feature execution contract in the evidence artifact, including a separate
+   covered or explicitly reasoned `N/A`.
+4. During Phase 00, create the initial cross-platform master plus API/Web/Mobile
+   applied implementation contracts from the approved plan and **verified current
+   source**. Mark target-only behavior explicitly; these books are execution
+   contracts, not claims that runtime already exists.
+5. Finalize a preflight `required-files.json` containing the current evidence and
+   the four applied books, merge the reviewed recipe registration, generate the
+   feature packets, and require the generated Phase 00 packet/check to pass before
+   coding. Future runtime files are added to the manifest as they are created.
+6. Translate the approved slice into the feature execution contract in the evidence artifact, including a separate
    Required/Deferred/Excluded decision for every optional view on web and mobile.
    When Import is Required, freeze its format, exact API envelope, limits,
    duplicate/relationship rules, atomicity, permissions, side effects, and tests.
    Then implement phases 01 through 05.
-5. Create the cross-platform master and API/web/mobile applied profiles from verified source.
-6. Replace the required-file draft with a complete `required-files.json`, review and merge `recipe-registration.draft.json`, and generate outputs under `generated/<feature>/`.
-7. Complete Phase 06 Verification & Acceptance. It must record `Verified`; missing
+7. Update the applied books and required-file manifest with actual runtime evidence
+   throughout Phases 01–05; generated packets are regenerated, never hand-edited.
+8. Complete Phase 06 Verification & Acceptance. It reconciles the implementation
+   contracts against actual runtime and must record `Verified`; missing
    Required behavior or a feature regression yields `Not Verified`.
-8. Only after `Verified`, complete Phase 07 Customer Education & Closure for
+9. Only after `Verified`, complete Phase 07 Customer Education & Closure for
    customer-visible work using
    `documentation/plans/CUSTOMER_EDUCATION_TEMPLATE.md`.
 

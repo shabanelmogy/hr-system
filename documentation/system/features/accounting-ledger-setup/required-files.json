@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "status": "final-preflight",
+  "feature": "accounting-ledger-setup",
+  "featureName": "Accounting Ledger Setup",
+  "referenceFeature": "fiscal-years",
+  "planId": "accounting-core-gl",
+  "sliceId": "Slice 1 — Ledger setup spine",
+  "canonicalPlan": "documentation/plans/business/accounting-core-gl/PLAN.md",
+  "plannedCustomerEducation": "documentation/plans/business/accounting-core-gl/education/accounting-ledger-setup.md",
+  "purpose": "Phase 00 evidence manifest. It proves planning authority, current runtime boundaries and frozen implementation contracts before Ledger Setup runtime coding. Phases 01-05 extend this manifest with actual runtime evidence.",
+  "reviewArtifact": "documentation/system/features/accounting-ledger-setup/ACCOUNTING_LEDGER_SETUP-REVIEW-ARTIFACTS.md",
+  "implementationRequest": "documentation/system/features/accounting-ledger-setup/IMPLEMENTATION-REQUEST.md",
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository planning, architecture, reuse and verification rules"
+    },
+    {
+      "id": "api-agent-guidance",
+      "layer": "configuration",
+      "path": "api/AGENTS.md",
+      "purpose": "API implementation rules"
+    },
+    {
+      "id": "web-agent-guidance",
+      "layer": "configuration",
+      "path": "web-next/AGENTS.md",
+      "purpose": "Web implementation and slice-authorization rules"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/system/features/accounting-ledger-setup/IMPLEMENTATION-REQUEST.md",
+      "purpose": "Frozen Slice 1 execution contract and readiness matrices"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/system/features/accounting-ledger-setup/ACCOUNTING_LEDGER_SETUP-REVIEW-ARTIFACTS.md",
+      "purpose": "Phase 00 evidence, findings and reconciliation ledger"
+    },
+    {
+      "id": "canonical-plan",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/PLAN.md",
+      "purpose": "Business scope, gates and authorized Slice 1"
+    },
+    {
+      "id": "plan-evidence",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/EVIDENCE.md",
+      "purpose": "Verified current versus requested target evidence"
+    },
+    {
+      "id": "plan-decisions",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/DECISIONS.md",
+      "purpose": "Frozen Accounting decisions including Phase 00 ownership resolutions"
+    },
+    {
+      "id": "accounting-architecture",
+      "layer": "documentation",
+      "path": "documentation/modules/accounting/ARCHITECTURE.md",
+      "purpose": "Accounting ownership, persistence and cross-module boundaries"
+    },
+    {
+      "id": "hr-architecture",
+      "layer": "documentation",
+      "path": "documentation/modules/hr/ARCHITECTURE.md",
+      "purpose": "Branch/CostCenter ownership and Currency transition boundary"
+    },
+    {
+      "id": "shared-reuse-catalog",
+      "layer": "documentation",
+      "path": "documentation/project/SHARED_REUSE_CATALOG.md",
+      "purpose": "Shared component and architecture reuse inventory"
+    },
+    {
+      "id": "api-workflow",
+      "layer": "documentation",
+      "path": "documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md",
+      "purpose": "Mandatory API CQRS/domain implementation authority"
+    },
+    {
+      "id": "master-contract",
+      "layer": "documentation",
+      "path": "documentation/project/ACCOUNTING_LEDGER_SETUP_FEATURE_FULL_REVIEW.md",
+      "purpose": "Cross-platform Phase 00 implementation contract"
+    },
+    {
+      "id": "api-contract",
+      "layer": "documentation",
+      "path": "documentation/api/AccountingLedgerSetup_API_Implementation_Profile.md",
+      "purpose": "API Phase 00 implementation contract"
+    },
+    {
+      "id": "web-contract",
+      "layer": "documentation",
+      "path": "documentation/web-next/features/accounting-ledger-setup-frontend-reference.md",
+      "purpose": "Next.js Phase 00 implementation contract"
+    },
+    {
+      "id": "mobile-contract",
+      "layer": "documentation",
+      "path": "documentation/mobile-react/accounting-ledger-setup-mobile-reference.md",
+      "purpose": "Expo Phase 00 implementation contract"
+    },
+    {
+      "id": "fiscal-years-reference-manifest",
+      "layer": "documentation",
+      "path": "documentation/system/features/fiscal-years/required-files.json",
+      "purpose": "Same-module applied reference evidence surface"
+    },
+    {
+      "id": "fiscal-years-master",
+      "layer": "documentation",
+      "path": "documentation/project/FISCAL_YEARS_FEATURE_FULL_REVIEW.md",
+      "purpose": "Verified Accounting vertical-slice reference"
+    },
+    {
+      "id": "accounting-module",
+      "layer": "api-bootstrap",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting/AccountingModule.cs",
+      "purpose": "Current Accounting module catalog and dependencies"
+    },
+    {
+      "id": "accounting-permissions",
+      "layer": "api-contracts",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Contracts/Authorization/AccountingPermissions.cs",
+      "purpose": "Current Accounting permission catalog to extend"
+    },
+    {
+      "id": "accounting-db-context",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/AccountingDbContext.cs",
+      "purpose": "acc schema, scope filters, RowVersion and current DbSets"
+    },
+    {
+      "id": "accounting-initial-migration",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Migrations/20260914181049_InitialAccounting.cs",
+      "purpose": "Current Accounting persisted baseline"
+    },
+    {
+      "id": "fiscal-year-domain",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/FiscalYears/Entities/FiscalYear.cs",
+      "purpose": "Existing calendar and generated-period authority"
+    },
+    {
+      "id": "fiscal-years-controller",
+      "layer": "api-presentation",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Presentation/Features/Finance/FiscalYears/V1/FiscalYearsController.cs",
+      "purpose": "Current thin ISender/controller pattern"
+    },
+    {
+      "id": "currency-current-owner",
+      "layer": "api-domain",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/OrganizationalStructure/Entities/Currency.cs",
+      "purpose": "Transitional HR Currency master to move into Accounting"
+    },
+    {
+      "id": "contacts-party",
+      "layer": "api-domain",
+      "path": "api/Modules/Contacts/ErpSystem.Modules.Contacts.Domain/Party.cs",
+      "purpose": "Current Contacts Party boundary"
+    },
+    {
+      "id": "contacts-party-events",
+      "layer": "api-contracts",
+      "path": "api/Modules/Contacts/ErpSystem.Modules.Contacts.Contracts/PartyIntegrationEvents.cs",
+      "purpose": "Current public Contacts integration contract"
+    },
+    {
+      "id": "web-accounting-module",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/moduleDefinition.tsx",
+      "purpose": "Current Accounting Web module/navigation owner"
+    },
+    {
+      "id": "web-fiscal-years-page",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/fiscal-years/pages/FiscalYearsPage.tsx",
+      "purpose": "Same-module Web orchestration reference"
+    },
+    {
+      "id": "web-shared-tree",
+      "layer": "web-next",
+      "path": "web-next/src/shared/components/tree-view/SplitTreeView.tsx",
+      "purpose": "Shared COA tree workspace candidate"
+    },
+    {
+      "id": "mobile-accounting-module",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/moduleDefinition.ts",
+      "purpose": "Current Accounting Mobile module/route owner"
+    },
+    {
+      "id": "mobile-fiscal-years-screen",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/presentation/screens/FiscalYearsScreen.tsx",
+      "purpose": "Same-module Mobile list/form/action reference"
+    },
+    {
+      "id": "mobile-shared-tree",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/shared/components/tree-view/AppHierarchicalTree.tsx",
+      "purpose": "Shared touch-friendly COA hierarchy candidate"
+    }
+  ]
+}

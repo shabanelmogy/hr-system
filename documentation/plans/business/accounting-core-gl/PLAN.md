@@ -152,6 +152,8 @@ Every server operation re-evaluates current tenant/company and permission state.
 | AccountHierarchyLevel | Entity/config | Accounting | company + level number | Name + CanPost; depth configured per company |
 | DimensionDefinition | Aggregate | Accounting | company + code | Configurable analysis axis with typed value source |
 | DimensionValue | Entity/reference | Accounting | definition + code/reference | Accounting-owned value or typed reference to owning module |
+| Currency | Aggregate/reference | Accounting | company + ISO code | Migrated from current HR Organizational Structure ownership; identity/metadata only, not a single mutable FX truth |
+| AccountingCompanySettings | Company singleton | Accounting | tenant + company | FunctionalCurrencyId + PrimaryBookId + RowVersion; one row per company |
 | Book | Aggregate | Accounting | company + code | Exactly one primary book in V1; additional adjustment books Deferred |
 | Journal | Aggregate | Accounting | company/book + code | Category/numbering policy |
 | ExchangeRateType | Aggregate/config | Accounting | scope + code | Built-in behavior + configurable business series |
@@ -310,6 +312,8 @@ server invariants or audit requirements.
 | Accounts | `acc` | unique company+code; parent/type/level indexes | Required | Archive after use |
 | AccountHierarchyLevels | `acc` | unique company+level; posting-level policy | Required | Controlled config |
 | DimensionDefinitions/Values | `acc` | unique company+code; typed value-source/reference indexes | Required | Archive |
+| Currencies | `acc` | unique company+ISO code; preserve migrated company currency business keys | Required | Archive when unused; canonical company Currency master |
+| AccountingCompanySettings | `acc` | unique tenant+company singleton; FunctionalCurrencyId + PrimaryBookId; RowVersion | Required | Update only; no hard delete |
 | Books | `acc` | unique company+code; exactly one primary in V1 | Required | Archive when safe |
 | Journals | `acc` | unique company/book+code | Required | Archive |
 | ExchangeRateTypes/Rates | `acc` | rate type + currency pair + effective/version uniqueness | Required | Version/end-date; used historical versions retained |
@@ -325,9 +329,11 @@ Migration strategy:
 
 1. Real Accounting EF migrations.
 2. No Fiscal Years/Periods recreation.
-3. Seed only explicitly approved technical defaults; never invent statutory COA.
-4. Additive schema for existing environments.
-5. Opening balances/legacy migration handled by separate cutover plan.
+3. Move the existing company Currency master from `hr.Currencies` to Accounting ownership in one coordinated migration: preserve ISO business keys/company scope and current metadata, switch HR/Web/Mobile consumers to the Accounting contract/surface, then remove the HR Currency persistence/management owner. Do not run two writable Currency masters.
+4. Replace the former single mutable `ExchangeRateToDefault` authority with Accounting `ExchangeRateType` + historical `ExchangeRate`; migrated values may seed an initial technical rate only when their meaning is unambiguous and migration evidence records the source.
+5. Seed only explicitly approved technical defaults; never invent statutory COA.
+6. Additive schema for other existing Accounting data.
+7. Opening balances/legacy migration handled by separate cutover plan.
 
 Posting transaction owns journal transition, freezing the same journal lines as
 posted truth, receipt and mandatory audit in one unit/commit boundary. GL/TB read
@@ -447,6 +453,8 @@ before offering another financial mutation.
 | Integration | Direction | Trigger | Contract | Failure/recovery |
 | --- | --- | --- | --- | --- |
 | Platform auth/scope | Platform → Accounting context | Every request | Existing actor/scope/permissions | Fail closed |
+| HR Currency consumers | Accounting → HR | Currency lookup/validation after ownership migration | New stable Accounting currency catalog Contract; HR persists business CurrencyCode snapshots | Fail closed for new invalid/inactive code; historical code snapshots remain readable |
+| HR organizational references | HR → Accounting | Only when an enabled dimension/source requires Branch/CostCenter | Stable HR Contract/projection; never HR DbContext/FK | Unavailable source type is not selectable; existing mapping remains diagnosable |
 | Fiscal year/current period state | Accounting internal | Posting | Existing Fiscal Years/year-generated periods | Slice 1 reuses current authority; fail invalid posting |
 | Month Closing | Accounting internal | Slice 3 close/reopen | New additive PeriodClose policy/run contract | Audited blocking/warning checks; no Fiscal Years rebuild |
 | Contacts projection | Contacts → Accounting | Existing party events | Current inbox/projection | Not required for manual GL |
@@ -621,13 +629,28 @@ Later subledger plans start only after Slice 3 proves the backbone.
 | Preflight | PASS for plan drafting | Discovery/evidence/spec and approval exist |
 | G0 Scope & ownership | PASS | R/D/E explicit; branch/intercompany Deferred; Fiscal Years vs additive Month Close boundary frozen |
 | G1 Business readiness | PASS for Slice 1 | COA/dimensions/book/currency/link-account rules are approved; Slice 2 workflow policy baseline is also resolved |
-| G2 Architecture readiness | PASS for Slice 1 | One primary book/functional currency, historical FX, single JournalLine truth and account-determination contracts are frozen; period-close schema is not part of Slice 1 |
+| G2 Architecture readiness | PASS for Slice 1 | One Accounting-owned Currency master, company settings for functional currency/primary book, historical FX, single JournalLine truth and account-determination contracts are frozen; period-close schema is not part of Slice 1 |
 | G3 Product/client readiness | PASS for Slice 1 | Web/Mobile/states/reuse mapping explicit; notifications/import/realtime classified Deferred |
 | G4 Delivery readiness | BLOCKED | Production scale and jurisdiction-dependent release decision remain |
 
 The overall release plan is not production-ready while G4 remains blocked, but Slice 1
 is explicitly authorized for implementation. Later slices must satisfy their own entry
 conditions; Slice 3 must gate the new Month Closing/per-period lifecycle before work.
+
+### Phase 00 implementation-preflight revalidation — 2026-09-20
+
+Current-source inspection found the transitional HR-owned Currency master, confirmed
+that HR financial facts persist CurrencyCode rather than CurrencyId relationships,
+and confirmed that several long-term Link Account source masters do not yet exist.
+Decisions D-020 through D-022 resolve those findings in the canonical plan before
+runtime coding: Currency moves once into Accounting, company Functional Currency /
+Primary Book live in `AccountingCompanySettings`, and typed source mappings become
+available only with real owner Contracts.
+
+After these corrections, G0–G3 remain **PASS for Slice 1**. The findings do not
+expand Slice 1 into JournalEntry/posting/GL/Month Close and do not create a second
+Currency owner. G4 remains blocked only by production scale/jurisdiction release
+evidence.
 
 ## 25. Handoff
 

@@ -205,15 +205,15 @@ $draftManifest = [ordered]@{
         'Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.',
         'Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.',
         'Remove every remaining placeholder from IMPLEMENTATION-REQUEST.md before runtime implementation.',
-        'Add existing API, web, mobile, configuration, localization, and test sources.',
+        'Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.',
         'Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.',
         'When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.',
         'Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.',
         'Add source collections with evidence-based minimum file counts.',
-        'Create and complete the four planned canonical books.',
-        'Rename this file to required-files.json only after every declared path exists.',
+        'Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.',
+        'Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.',
         'Update the review artifact to point at required-files.json and mark its documentation state Final.',
-        'Merge recipe-registration.draft.json into recipe-manifest.json only after the four canonical books are complete.',
+        'Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.',
         "Write generated packets under documentation/system/generated/$FeatureId/.",
         'Run generation and then Generate-Documentation.ps1 -Check.',
         'Complete phase 06 with an explicit verification decision.',
@@ -235,7 +235,7 @@ $registrationDraft = [ordered]@{
     sliceId = $sliceIdDisplay
     canonicalPlan = $canonicalPlanRelativePath
     plannedCustomerEducation = $educationRelativePath
-    instructions = 'Merge these entries into recipe-manifest.json only after required-files.json and all four canonical books exist.'
+    instructions = 'Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.'
     books = @(
         [ordered]@{ id = $masterBookId; path = "../project/${upperFeature}_FEATURE_FULL_REVIEW.md"; title = "$FeatureName cross-platform master review" },
         [ordered]@{ id = $apiBookId; path = "../api/${pascalFeature}_API_Implementation_Profile.md"; title = "$FeatureName API implementation profile" },
@@ -340,5 +340,5 @@ Write-Host "Plan: $planIdDisplay / Slice: $sliceIdDisplay"
 Write-Host "Reference selected: $referenceDisplay"
 Write-Host 'The draft manifest is intentionally not registered in recipe-manifest.json.'
 Write-Host 'Runtime implementation starts only after Phase 00 implementation preflight and execution-readiness evidence are complete.'
-Write-Host "After runtime evidence and the four canonical books exist, finalize the manifest and register recipes under generated/$FeatureId/."
+Write-Host "During Phase 00, create the four initial applied implementation books, finalize the preflight manifest, register recipes, and generate the Phase 00 packet before runtime coding."
 Write-Host 'Phase 06 must record Verified before Phase 07 customer education/closure can complete.'

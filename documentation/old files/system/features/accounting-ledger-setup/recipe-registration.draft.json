@@ -1,0 +1,336 @@
+{
+    "status":  "draft",
+    "referenceFeature":  "N/A",
+    "planId":  "accounting-core-gl",
+    "sliceId":  "Slice 1 — Ledger setup spine",
+    "canonicalPlan":  "documentation/plans/business/accounting-core-gl/PLAN.md",
+    "plannedCustomerEducation":  "documentation/plans/business/accounting-core-gl/education/accounting-ledger-setup.md",
+    "instructions":  "Merge these entries into recipe-manifest.json only after required-files.json and all four canonical books exist.",
+    "books":  [
+                  {
+                      "id":  "accounting-ledger-setup-master",
+                      "path":  "../project/ACCOUNTING_LEDGER_SETUP_FEATURE_FULL_REVIEW.md",
+                      "title":  "Accounting Ledger Setup cross-platform master review"
+                  },
+                  {
+                      "id":  "accounting-ledger-setup-api",
+                      "path":  "../api/AccountingLedgerSetup_API_Implementation_Profile.md",
+                      "title":  "Accounting Ledger Setup API implementation profile"
+                  },
+                  {
+                      "id":  "accounting-ledger-setup-web",
+                      "path":  "../web-next/features/accounting-ledger-setup-frontend-reference.md",
+                      "title":  "Accounting Ledger Setup Next.js implementation profile"
+                  },
+                  {
+                      "id":  "accounting-ledger-setup-mobile",
+                      "path":  "../mobile-react/accounting-ledger-setup-mobile-reference.md",
+                      "title":  "Accounting Ledger Setup Expo implementation profile"
+                  }
+              ],
+    "requiredFileManifest":  "features/accounting-ledger-setup/required-files.json",
+    "recipes":  [
+                    {
+                        "id":  "accounting-ledger-setup-phase-00-implementation-preflight",
+                        "title":  "Accounting Ledger Setup Phase 00 - Implementation Preflight",
+                        "template":  "templates/PHASE-00-implementation-preflight.template.md",
+                        "output":  "generated/accounting-ledger-setup/PHASE-00-implementation-preflight.md",
+                        "sources":  [
+                                        {
+                                            "book":  "accounting-ledger-setup-master",
+                                            "sections":  [
+                                                             1,
+                                                             2,
+                                                             5,
+                                                             8,
+                                                             9
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-api",
+                                            "sections":  [
+                                                             1,
+                                                             10,
+                                                             11
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-web",
+                                            "sections":  [
+                                                             1,
+                                                             2,
+                                                             12,
+                                                             13
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-mobile",
+                                            "sections":  [
+                                                             1,
+                                                             14,
+                                                             15
+                                                         ]
+                                        }
+                                    ]
+                    },
+                    {
+                        "id":  "accounting-ledger-setup-phase-01-domain-api",
+                        "title":  "Accounting Ledger Setup Phase 01 - Domain and API",
+                        "template":  "templates/PHASE-01-domain-api.template.md",
+                        "output":  "generated/accounting-ledger-setup/PHASE-01-domain-api.md",
+                        "sources":  [
+                                        {
+                                            "book":  "accounting-ledger-setup-master",
+                                            "sections":  [
+                                                             3,
+                                                             4,
+                                                             6
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-api",
+                                            "sections":  [
+                                                             1,
+                                                             2,
+                                                             3,
+                                                             4,
+                                                             5,
+                                                             6,
+                                                             7,
+                                                             8,
+                                                             9,
+                                                             10
+                                                         ]
+                                        }
+                                    ]
+                    },
+                    {
+                        "id":  "accounting-ledger-setup-phase-02-web-client",
+                        "title":  "Accounting Ledger Setup Phase 02 - Next.js Client",
+                        "template":  "templates/PHASE-02-web-client.template.md",
+                        "output":  "generated/accounting-ledger-setup/PHASE-02-web-client.md",
+                        "sources":  [
+                                        {
+                                            "book":  "accounting-ledger-setup-master",
+                                            "sections":  [
+                                                             3,
+                                                             4,
+                                                             6,
+                                                             7
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-web",
+                                            "sections":  [
+                                                             1,
+                                                             2,
+                                                             3,
+                                                             4,
+                                                             5,
+                                                             6,
+                                                             7,
+                                                             8,
+                                                             9,
+                                                             10,
+                                                             11,
+                                                             12,
+                                                             13,
+                                                             14
+                                                         ]
+                                        }
+                                    ]
+                    },
+                    {
+                        "id":  "accounting-ledger-setup-phase-03-mobile-client",
+                        "title":  "Accounting Ledger Setup Phase 03 - Expo Mobile Client",
+                        "template":  "templates/PHASE-03-mobile-client.template.md",
+                        "output":  "generated/accounting-ledger-setup/PHASE-03-mobile-client.md",
+                        "sources":  [
+                                        {
+                                            "book":  "accounting-ledger-setup-master",
+                                            "sections":  [
+                                                             3,
+                                                             4,
+                                                             6,
+                                                             7
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-mobile",
+                                            "sections":  [
+                                                             1,
+                                                             2,
+                                                             3,
+                                                             4,
+                                                             5,
+                                                             6,
+                                                             7,
+                                                             8,
+                                                             9,
+                                                             10,
+                                                             11,
+                                                             12,
+                                                             13,
+                                                             14,
+                                                             15
+                                                         ]
+                                        }
+                                    ]
+                    },
+                    {
+                        "id":  "accounting-ledger-setup-phase-04-domain-actions",
+                        "title":  "Accounting Ledger Setup Phase 04 - Domain Actions and Lifecycle",
+                        "template":  "templates/PHASE-04-domain-actions.template.md",
+                        "output":  "generated/accounting-ledger-setup/PHASE-04-domain-actions.md",
+                        "sources":  [
+                                        {
+                                            "book":  "accounting-ledger-setup-master",
+                                            "sections":  [
+                                                             3,
+                                                             4,
+                                                             6,
+                                                             7,
+                                                             8
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-api",
+                                            "sections":  [
+                                                             6,
+                                                             7,
+                                                             8
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-web",
+                                            "sections":  [
+                                                             6,
+                                                             7,
+                                                             8,
+                                                             9
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-mobile",
+                                            "sections":  [
+                                                             9,
+                                                             10,
+                                                             11
+                                                         ]
+                                        }
+                                    ]
+                    },
+                    {
+                        "id":  "accounting-ledger-setup-phase-05-integration-runtime",
+                        "title":  "Accounting Ledger Setup Phase 05 - Integration and Runtime",
+                        "template":  "templates/PHASE-05-integration-runtime.template.md",
+                        "output":  "generated/accounting-ledger-setup/PHASE-05-integration-runtime.md",
+                        "sources":  [
+                                        {
+                                            "book":  "accounting-ledger-setup-master",
+                                            "sections":  [
+                                                             4,
+                                                             5,
+                                                             6,
+                                                             7,
+                                                             9
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-api",
+                                            "sections":  [
+                                                             8,
+                                                             9,
+                                                             10
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-web",
+                                            "sections":  [
+                                                             8,
+                                                             10,
+                                                             13
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-mobile",
+                                            "sections":  [
+                                                             2,
+                                                             11,
+                                                             12,
+                                                             15
+                                                         ]
+                                        }
+                                    ]
+                    },
+                    {
+                        "id":  "accounting-ledger-setup-phase-06-verification-acceptance",
+                        "title":  "Accounting Ledger Setup Phase 06 - Verification and Acceptance",
+                        "template":  "templates/PHASE-06-verification-acceptance.template.md",
+                        "output":  "generated/accounting-ledger-setup/PHASE-06-verification-acceptance.md",
+                        "sources":  [
+                                        {
+                                            "book":  "accounting-ledger-setup-master",
+                                            "sections":  [
+                                                             8,
+                                                             9,
+                                                             10
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-api",
+                                            "sections":  [
+                                                             10,
+                                                             11
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-web",
+                                            "sections":  [
+                                                             12,
+                                                             13,
+                                                             14
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-mobile",
+                                            "sections":  [
+                                                             14,
+                                                             15
+                                                         ]
+                                        }
+                                    ]
+                    },
+                    {
+                        "id":  "accounting-ledger-setup-phase-07-customer-education-closure",
+                        "title":  "Accounting Ledger Setup Phase 07 - Customer Education and Closure",
+                        "template":  "templates/PHASE-07-customer-education-closure.template.md",
+                        "output":  "generated/accounting-ledger-setup/PHASE-07-customer-education-closure.md",
+                        "sources":  [
+                                        {
+                                            "book":  "accounting-ledger-setup-master",
+                                            "sections":  [
+                                                             8,
+                                                             9,
+                                                             10
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-web",
+                                            "sections":  [
+                                                             12,
+                                                             13,
+                                                             14
+                                                         ]
+                                        },
+                                        {
+                                            "book":  "accounting-ledger-setup-mobile",
+                                            "sections":  [
+                                                             14,
+                                                             15
+                                                         ]
+                                        }
+                                    ]
+                    }
+                ]
+}

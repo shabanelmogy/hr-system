@@ -1,0 +1,66 @@
+{
+    "schemaVersion":  1,
+    "status":  "draft",
+    "feature":  "accounting-ledger-setup",
+    "featureName":  "Accounting Ledger Setup",
+    "referenceFeature":  "N/A",
+    "planId":  "accounting-core-gl",
+    "sliceId":  "Slice 1 — Ledger setup spine",
+    "canonicalPlan":  "documentation/plans/business/accounting-core-gl/PLAN.md",
+    "plannedCustomerEducation":  "documentation/plans/business/accounting-core-gl/education/accounting-ledger-setup.md",
+    "purpose":  "Draft evidence plan for Accounting Ledger Setup. This file is not registered until every final source exists.",
+    "reviewArtifact":  "documentation/system/features/accounting-ledger-setup/ACCOUNTING_LEDGER_SETUP-REVIEW-ARTIFACTS.md",
+    "implementationRequest":  "documentation/system/features/accounting-ledger-setup/IMPLEMENTATION-REQUEST.md",
+    "plannedCanonicalBooks":  {
+                                  "master":  "documentation/project/ACCOUNTING_LEDGER_SETUP_FEATURE_FULL_REVIEW.md",
+                                  "api":  "documentation/api/AccountingLedgerSetup_API_Implementation_Profile.md",
+                                  "web":  "documentation/web-next/features/accounting-ledger-setup-frontend-reference.md",
+                                  "mobile":  "documentation/mobile-react/accounting-ledger-setup-mobile-reference.md"
+                              },
+    "sourceCollections":  [
+
+                          ],
+    "requiredFiles":  [
+                          {
+                              "id":  "root-agent-guidance",
+                              "layer":  "configuration",
+                              "path":  "AGENTS.md",
+                              "purpose":  "Repository-wide feature and documentation rules"
+                          },
+                          {
+                              "id":  "review-artifact",
+                              "layer":  "documentation",
+                              "path":  "documentation/system/features/accounting-ledger-setup/ACCOUNTING_LEDGER_SETUP-REVIEW-ARTIFACTS.md",
+                              "purpose":  "Feature requirement, evidence, finding, and verification ledger"
+                          },
+                          {
+                              "id":  "implementation-request",
+                              "layer":  "documentation",
+                              "path":  "documentation/system/features/accounting-ledger-setup/IMPLEMENTATION-REQUEST.md",
+                              "purpose":  "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+                          }
+                      ],
+    "finalizationChecklist":  [
+                                  "Replace every placeholder in the review artifact.",
+                                  "Complete the Existing-System Relationship Review and every decision in IMPLEMENTATION-REQUEST.md before implementation.",
+                                  "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+                                  "Complete every Edge Cases \u0026 Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+                                  "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+                                  "Remove every remaining placeholder from IMPLEMENTATION-REQUEST.md before runtime implementation.",
+                                  "Add existing API, web, mobile, configuration, localization, and test sources.",
+                                  "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+                                  "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+                                  "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+                                  "Add source collections with evidence-based minimum file counts.",
+                                  "Create and complete the four planned canonical books.",
+                                  "Rename this file to required-files.json only after every declared path exists.",
+                                  "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+                                  "Merge recipe-registration.draft.json into recipe-manifest.json only after the four canonical books are complete.",
+                                  "Write generated packets under documentation/system/generated/accounting-ledger-setup/.",
+                                  "Run generation and then Generate-Documentation.ps1 -Check.",
+                                  "Complete phase 06 with an explicit verification decision.",
+                                  "Do not start customer-facing education until phase 06 records Verified.",
+                                  "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+                                  "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+                              ]
+}
