@@ -10,7 +10,10 @@ remains the evidence ledger; this request states the work to perform.
 | --- | --- |
 | Feature | `<Feature Name>` (`<feature>`) |
 | Operating mode | `<new feature | existing-feature change>` |
-| Applied reference | `<ReferenceFeature>` |
+| Plan ID | `<PlanId or N/A>` |
+| Authorized slice / phase | `<SliceId or N/A>` |
+| Canonical plan | `<CanonicalPlanPath or N/A>` |
+| Applied implementation reference | `<ReferenceFeature or N/A>` |
 | Request date | `<YYYY-MM-DD>` |
 | Review artifact | `<repository-relative review artifact path>` |
 | Required-file manifest | `<repository-relative draft or final manifest path>` |
@@ -22,10 +25,13 @@ remains the evidence ledger; this request states the work to perform.
 ## Execution request
 
 Implement or refactor `<Feature Name>` end to end in every Required platform.
-Use the centralized documentation system and `<ReferenceFeature>` only as an
-architecture and verification reference. Audit current source first, preserve
-unrelated changes, and do not copy reference-specific fields, ownership, views,
-or findings.
+When a canonical Plan ID / authorized slice is present, that plan owns product
+intent, business scope, lifecycle, ownership, and approved decisions. This request
+translates those decisions into implementation work; it must not silently reopen or
+replace them. Use the centralized documentation system and
+`<ReferenceFeature or N/A>` only as an architecture/implementation reference.
+Audit current source first, preserve unrelated changes, and do not copy
+reference-specific fields, ownership, views, or findings.
 
 Before changing runtime source:
 
@@ -34,19 +40,27 @@ Before changing runtime source:
    `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md` when API work is in scope,
    `documentation/project/ERP_DOCUMENTATION_GUIDE_AR.md`,
    `documentation/project/SHARED_REUSE_CATALOG.md`, this request, the review
-   artifact, the feature's generated phase packets, and the selected reference's
-   required-file manifest.
+   artifact, and the feature's generated phase packets. When an implementation
+   reference is selected, also read its required-file manifest.
 3. Verify every referenced runtime path and record current, requested,
    intentionally different, and unresolved behavior separately.
-4. Complete the Existing-System Relationship Review and the Business Readiness Gate
-   below. Do not infer a missing decision from the reference.
-5. Freeze the remaining product/platform decisions below.
+4. For planned work, read the canonical plan and authorized slice first, then
+   complete the implementation preflight. Import approved decisions into the
+   matrices below instead of re-deciding them.
+5. Complete the Existing-System Relationship Review and execution-readiness
+   matrices. Do not infer a missing decision from the reference.
+6. If implementation inspection discovers a material contradiction or a new
+   business decision affecting persisted meaning, lifecycle, ownership, security,
+   or a Required customer journey, reopen the affected plan gate before coding.
 
-Runtime implementation is blocked while ownership is unresolved, any Business
-Readiness row still contains a placeholder, or an edge-case category is neither
+Runtime implementation is blocked while ownership is unresolved, any execution
+readiness row still contains a placeholder, or an edge-case category is neither
 covered nor explicitly marked `N/A` with a reason.
 
-## Frozen product decisions
+## Approved product decisions translated for execution
+
+For planned work, every row below must trace to the canonical plan/decision log.
+This section is an implementation summary, not a parallel product authority.
 
 | Concern | Required decision |
 | --- | --- |
@@ -60,6 +74,7 @@ covered nor explicitly marked `N/A` with a reason.
 | Reporting | `<Required | Deferred | Excluded; engine, dataset, permissions>` |
 | Import | `<Required | Deferred | Excluded independently for web and mobile>` |
 | Realtime and notifications | `<resource, actions, audience, route, localized keys>` |
+| Customer Education Pack | `<Required | N/A: reason>` — target: `<CustomerEducationPath>` |
 
 ## Existing-System Relationship Review
 
@@ -95,8 +110,11 @@ compatibility, and tests; link every affected consumer profile.
 ## Mandatory Business Readiness Gate
 
 Complete all three matrices before runtime implementation. They are execution
-evidence, not optional documentation. Update them when implementation discovery
-changes a rule, relationship, edge case, or affected surface.
+traceability/evidence, not optional documentation. When a canonical plan exists,
+populate them from approved plan decisions plus current-runtime inspection. If
+implementation discovery materially changes a business rule, relationship,
+lifecycle, scope, or Required customer behavior, update/reopen the canonical plan
+first rather than creating a feature-local exception.
 
 ### Business Rules Matrix
 
@@ -210,7 +228,8 @@ decision, reason, owner, and trigger that would reopen it.
   realtime/deep links, and tests for every Required capability.
 - Documentation: cross-platform master, API/web/mobile applied profiles, final
   required-file manifest, review artifact, feature-scoped recipes, and regenerated
-  phases 00 through 06.
+  phases 00 through 07 for the new planned-feature flow. Phase 06 is verification;
+  Phase 07 is customer education/closure when applicable.
 
 ## Optional offline and synchronization decisions
 
@@ -246,10 +265,18 @@ platform tables. Update the generic guide and every affected consumer profile
 in the same change when a shared capability changed, then regenerate and check
 the documentation packets.
 
+Phase 06 must record `Verified` before customer education is finalized. After
+verification, complete Phase 07 from
+`documentation/plans/CUSTOMER_EDUCATION_TEMPLATE.md` when the delivered scope is
+customer-visible. A feature is not `Closed` merely because code/tests finished;
+customer-visible work closes only after verified education/video material is
+accurate and complete.
+
 Report at handoff:
 
 - completed behavior and exact contracts;
 - intentional platform differences;
 - verification results separated into feature, repository, and environment gates;
+- Phase 06 verification decision and Phase 07 customer-education/closure decision;
 - remaining findings with severity, evidence, owner, and release decision;
 - every modified and newly created runtime/documentation path.

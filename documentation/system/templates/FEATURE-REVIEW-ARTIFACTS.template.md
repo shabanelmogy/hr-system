@@ -7,6 +7,9 @@ Use this file as the evidence ledger for one feature. Replace every bracketed va
 | Field | Value |
 | --- | --- |
 | Feature | `<feature>` |
+| Plan ID | `<PlanId or N/A>` |
+| Authorized slice / phase | `<SliceId or N/A>` |
+| Canonical plan | `<CanonicalPlanPath or N/A>` |
 | API route | `<route>` |
 | Web route | `<route>` |
 | Mobile route | `<route>` |
@@ -16,12 +19,14 @@ Use this file as the evidence ledger for one feature. Replace every bracketed va
 | Required-file manifest | `<repository-relative path>` |
 | Operating mode | `<new feature | existing-feature review | existing-feature change>` |
 | Documentation state | `Draft` until runtime evidence exists; `Final` only after recipe registration and check mode pass |
-| Applied reference | `Countries`, `States`, or `<documented alternative>` |
+| Applied implementation reference | `<ReferenceFeature or N/A>` |
 | Import decision | `<Required | Deferred | Excluded>` |
 | Import platforms | `<Web | Mobile | Both | N/A>` |
 | Import format | `<XLSX | CSV | JSON | N/A>` |
 | Reporting decision | `<Required | Deferred | Excluded>` |
 | Reporting engine | `<Managed Crystal | Server-managed browser templates | N/A>` |
+| Customer Education Pack | `<Required | N/A: reason>` |
+| Customer education path | `<repository-relative path or N/A>` |
 
 ## Requirement manifest
 
@@ -164,3 +169,6 @@ pass does not convert a failing full gate into a pass.
 - [ ] Focused and project-level quality gates pass.
 - [ ] Failed/skipped gates include their classification, exact failure identity,
       owner, and release decision.
+- [ ] Phase 06 records `Verified` before any customer-facing education is finalized.
+- [ ] Customer-visible work has a completed Phase 07 Customer Education & Closure
+      decision and an education document derived from verified runtime behavior.

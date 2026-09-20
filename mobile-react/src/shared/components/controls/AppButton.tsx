@@ -5,7 +5,9 @@ import {
   type ColorValue,
   Pressable,
   type PressableProps,
+  type StyleProp,
   StyleSheet,
+  type TextStyle,
   View,
 } from 'react-native';
 
@@ -114,9 +116,9 @@ export function AppButton({
                 weight="700">
                 {children}
               </AppText>
-            ) : React.isValidElement(children) ? (
-              React.cloneElement(children as React.ReactElement<{ style?: any }>, {
-                style: [(children.props as any)?.style, { color: foregroundMap[variant] }],
+            ) : React.isValidElement<{ style?: StyleProp<TextStyle> }>(children) ? (
+              React.cloneElement(children, {
+                style: [children.props.style, { color: foregroundMap[variant] }],
               })
             ) : (
               <AppText

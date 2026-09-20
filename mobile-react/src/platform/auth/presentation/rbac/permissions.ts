@@ -20,6 +20,13 @@ export const permissions = {
   CreateCategories: 'Categories:Create',
   EditCategories: 'Categories:Edit',
   DeleteCategories: 'Categories:Delete',
+  ViewAppointments: 'Appointments:View',
+  CreateAppointments: 'Appointments:Create',
+  EditAppointments: 'Appointments:Edit',
+  DeleteAppointments: 'Appointments:Delete',
+  ViewContactsParties: 'ContactsParties:View',
+  CreateContactsParties: 'ContactsParties:Create',
+  UpdateContactsParties: 'ContactsParties:Update',
   ViewCountries: 'Countries:View',
   CreateCountries: 'Countries:Create',
   EditCountries: 'Countries:Edit',
@@ -47,6 +54,7 @@ export const permissions = {
   EditFiscalYears: 'FiscalYears:Edit',
   DeleteFiscalYears: 'FiscalYears:Delete',
   ManageFiscalYearLifecycle: 'FiscalYears:ManageLifecycle',
+  GenerateInvoiceQrCode: 'Invoices:GenerateQrCode',
   ViewWorkforcePlans: 'WorkforcePlans:View',
   CreateWorkforcePlans: 'WorkforcePlans:Create',
   EditWorkforcePlans: 'WorkforcePlans:Edit',
@@ -76,6 +84,8 @@ export const permissions = {
   DeleteDistricts: 'Districts:Delete',
   ViewChangeLogs: 'ChangeLogs:View',
   ViewHangfireDashboard: 'Hangfire:View',
+  ViewDashboard: 'Analytics:ViewDashboard',
+  ExportData: 'Analytics:Export',
   ManageDatabaseViews: 'DatabaseViews:Manage',
   ViewLocalizations: 'Localizations:View',
   CreateLocalizations: 'Localizations:Create',
@@ -85,6 +95,11 @@ export const permissions = {
   CreateReportsCategories: 'ReportsCategories:Create',
   EditReportsCategories: 'ReportsCategories:Edit',
   DeleteReportsCategories: 'ReportsCategories:Delete',
+  ViewReportTemplates: 'ReportTemplates:View',
+  CreateReportTemplates: 'ReportTemplates:Create',
+  EditReportTemplates: 'ReportTemplates:Edit',
+  DeleteReportTemplates: 'ReportTemplates:Delete',
+  PublishReportTemplates: 'ReportTemplates:Publish',
   ViewRoles: 'Roles:View',
   CreateRoles: 'Roles:Create',
   EditRoles: 'Roles:Edit',
@@ -98,69 +113,15 @@ export const permissions = {
   CreateSubCategories: 'SubCategories:Create',
   EditSubCategories: 'SubCategories:Edit',
   DeleteSubCategories: 'SubCategories:Delete',
-  ViewKanbanBoards: 'KanbanBoards:View',
-  CreateKanbanBoards: 'KanbanBoards:Create',
-  EditKanbanBoards: 'KanbanBoards:Edit',
-  DeleteKanbanBoards: 'KanbanBoards:Delete',
-  ViewKanbanColumns: 'KanbanColumns:View',
-  CreateKanbanColumns: 'KanbanColumns:Create',
-  EditKanbanColumns: 'KanbanColumns:Edit',
-  DeleteKanbanColumns: 'KanbanColumns:Delete',
-  ViewKanbanCards: 'KanbanCards:View',
-  CreateKanbanCards: 'KanbanCards:Create',
-  EditKanbanCards: 'KanbanCards:Edit',
-  DeleteKanbanCards: 'KanbanCards:Delete',
-  ViewKanbanCardAssignees: 'KanbanCardAssignees:View',
-  CreateKanbanCardAssignees: 'KanbanCardAssignees:Create',
-  EditKanbanCardAssignees: 'KanbanCardAssignees:Edit',
-  DeleteKanbanCardAssignees: 'KanbanCardAssignees:Delete',
-  ViewKanbanCardAttachments: 'KanbanCardAttachments:View',
-  CreateKanbanCardAttachments: 'KanbanCardAttachments:Create',
-  EditKanbanCardAttachments: 'KanbanCardAttachments:Edit',
-  DeleteKanbanCardAttachments: 'KanbanCardAttachments:Delete',
-  ViewBoardTaskAttachments: 'BoardTaskAttachments:View',
-  CreateBoardTaskAttachments: 'BoardTaskAttachments:Create',
-  EditBoardTaskAttachments: 'BoardTaskAttachments:Edit',
-  DeleteBoardTaskAttachments: 'BoardTaskAttachments:Delete',
-  ViewKanbanCardComments: 'KanbanCardComments:View',
-  CreateKanbanCardComments: 'KanbanCardComments:Create',
-  EditKanbanCardComments: 'KanbanCardComments:Edit',
-  DeleteKanbanCardComments: 'KanbanCardComments:Delete',
-  ViewBoardTaskComments: 'BoardTaskComments:View',
-  CreateBoardTaskComments: 'BoardTaskComments:Create',
-  EditBoardTaskComments: 'BoardTaskComments:Edit',
-  DeleteBoardTaskComments: 'BoardTaskComments:Delete',
-  ViewKanbanLabels: 'KanbanLabels:View',
-  CreateKanbanLabels: 'KanbanLabels:Create',
-  EditKanbanLabels: 'KanbanLabels:Edit',
-  DeleteKanbanLabels: 'KanbanLabels:Delete',
-  ViewKanbanBoardMembers: 'KanbanBoardMembers:View',
-  CreateKanbanBoardMembers: 'KanbanBoardMembers:Create',
-  EditKanbanBoardMembers: 'KanbanBoardMembers:Edit',
-  DeleteKanbanBoardMembers: 'KanbanBoardMembers:Delete',
   ViewUsers: 'Users:View',
-  ViewAppointments: 'Appointments:View',
-  CreateAppointments: 'Appointments:Create',
-  EditAppointments: 'Appointments:Edit',
-  DeleteAppointments: 'Appointments:Delete',
   CreateUsers: 'Users:Create',
   EditUsers: 'Users:Edit',
   DeleteUsers: 'Users:Delete',
-  ViewChatUsers: 'ChatUsers:View',
-  CreateChatUsers: 'ChatUsers:Create',
-  EditChatUsers: 'ChatUsers:Edit',
-  DeleteChatUsers: 'ChatUsers:Delete',
-  ViewConversations: 'Conversations:View',
-  CreateConversations: 'Conversations:Create',
-  EditConversations: 'Conversations:Edit',
-  DeleteConversations: 'Conversations:Delete',
-  ViewMessages: 'Messages:View',
-  CreateMessages: 'Messages:Create',
-  EditMessages: 'Messages:Edit',
-  DeleteMessages: 'Messages:Delete',
-  AccessChat: 'Chat:Access',
-  ModerateChat: 'Chat:Moderate',
-  ViewChatAnalytics: 'Chat:ViewAnalytics',
+  ViewAttendanceDevices: 'AttendanceDevices:View',
+  ManageAttendanceDevices: 'AttendanceDevices:Manage',
+  ManageAttendanceDeviceCredentials: 'AttendanceDevices:Credentials',
+  PullAttendanceDevices: 'AttendanceDevices:Pull',
+  ViewRawAttendanceDevices: 'AttendanceDevices:ViewRaw',
 } as const;
 
 export type PermissionString = (typeof permissions)[keyof typeof permissions];
@@ -171,11 +132,14 @@ export type PermissionModule =
   | 'ApiKeys'
   | 'Backups'
   | 'Categories'
+  | 'Appointments'
+  | 'ContactsParties'
   | 'Countries'
   | 'CompanyGeographicScope'
   | 'OrganizationalStructure'
   | 'Recruitment'
   | 'FiscalYears'
+  | 'Invoices'
   | 'WorkforcePlans'
   | 'WorkforceBudgets'
   | 'PositionEnvelopes'
@@ -186,29 +150,17 @@ export type PermissionModule =
   | 'Districts'
   | 'ChangeLogs'
   | 'Hangfire'
+  | 'Analytics'
   | 'DatabaseViews'
   | 'Localizations'
   | 'ReportsCategories'
+  | 'ReportTemplates'
   | 'Roles'
   | 'OfflineOperations'
   | 'States'
   | 'SubCategories'
-  | 'KanbanBoards'
-  | 'KanbanColumns'
-  | 'KanbanCards'
-  | 'KanbanCardAssignees'
-  | 'KanbanCardAttachments'
-  | 'BoardTaskAttachments'
-  | 'KanbanCardComments'
-  | 'BoardTaskComments'
-  | 'KanbanLabels'
-  | 'KanbanBoardMembers'
   | 'Users'
-  | 'Appointments'
-  | 'ChatUsers'
-  | 'Conversations'
-  | 'Messages'
-  | 'Chat';
+  | 'AttendanceDevices';
 
 export const getAllPermissions = (): PermissionString[] => Object.values(permissions);
 

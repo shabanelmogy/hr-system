@@ -1,12 +1,22 @@
 const isDevelopmentBuild = typeof __DEV__ === 'boolean' ? __DEV__ : process.env.NODE_ENV !== 'production';
 const apiUrl = validateApiUrl(process.env.EXPO_PUBLIC_API_URL, isDevelopmentBuild);
 const publicSelfRegistrationEnabled = process.env.EXPO_PUBLIC_ENABLE_SELF_REGISTRATION === 'true';
+const demoLoginEnabled = parseBooleanFlag(process.env.EXPO_PUBLIC_DEMO_LOGIN_ENABLED, isDevelopmentBuild);
 
 export const ENV = {
   apiUrl,
   isApiConfigured: apiUrl.length > 0,
   publicSelfRegistrationEnabled,
+  demoLoginEnabled,
 } as const;
+
+export function parseBooleanFlag(value: string | undefined, defaultValue: boolean): boolean {
+  if (value === undefined || value.trim() === '') return defaultValue;
+  const normalized = value.trim().toLowerCase();
+  if (normalized === 'true') return true;
+  if (normalized === 'false') return false;
+  throw new Error('Boolean environment flags must be either true or false.');
+}
 
 export function requireApiUrl(): string {
   if (!ENV.isApiConfigured) {

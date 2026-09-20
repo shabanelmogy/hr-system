@@ -8,7 +8,7 @@
 
 ## حالة التنفيذ
 
-آخر تحديث: 2026-09-12
+آخر تحديث: 2026-09-19
 
 الحزم الثلاث الأولى من المرحلة 0 اكتملت واختُبرت:
 
@@ -504,3 +504,43 @@ hosts/CORS غير آمن، أو secrets placeholder، أو startup migrations/se
 - كل feature مدفوعة enforced من الخادم بواسطة entitlements.
 - توجد backups مجربة، CI/CD، migration process، monitoring وalerts.
 - توجد سياسات audit، retention، export وtenant termination قابلة للتنفيذ والإثبات.
+
+---
+
+## توسعة المنتج إلى قنوات رقمية
+
+التوسع إلى Job Portal وCommerce للجملة والقطاعي على الويب والموبايل أصبح
+اتجاهًا استراتيجيًا معتمدًا، لكنه لا يضيف capability إلى الموديولات الحالية في
+هذه المرحلة. المرجع التفصيلي هو
+[OMNICHANNEL_ERP_PRODUCT_BLUEPRINT.md](OMNICHANNEL_ERP_PRODUCT_BLUEPRINT.md)
+و[ADR-008](../api/adr/ADR-008-digital-channels-and-commerce-boundaries.md).
+
+ترتيب الأساس التجاري قبل أي Sales أو Procurement أو Commerce هو:
+
+1. Accounting: chart of accounts، fiscal periods، double-entry posting، tax،
+   AR/AP، وidempotent source facts.
+2. Inventory: product/SKU، UOM، warehouses، stock ledger، costing، reservation،
+   ATP، وconcurrency.
+3. Sales وProcurement كموديولات مستقلة عند اعتماد نطاقهما؛ Sales يملك
+   quotations/terms/price validation/SalesOrder، وProcurement يملك RFQ/PO/ASN
+   handoff/vendor terms.
+4. POS business والعمليات retail؛ POS ينشر sale facts بعقود ولا يصبح Commerce.
+5. Commerce المستقل، ثم storefront web/mobile؛ Commerce يرسل idempotent order
+   request إلى Sales ولا يملك SalesOrder truth.
+6. Payments وFulfillment بعد order contracts؛ Payments يملك provider
+   intents/webhook/reconciliation، وFulfillment يملك shipments/carriers/
+   delivery/returns.
+7. Job Portal كمجرى مستقل بعد عقود Recruitment public وprivacy/consent، ولا
+   ينتظر Accounting أو Inventory إلا إذا أضيفت خدمة مدفوعة له.
+
+يمكن تطوير Accounting وInventory في توازٍ منضبط بعد مراجعة العقود، مع التكامل
+عبر Contracts وOutbox/Inbox فقط، وبدون cross-DbContext أو distributed
+transaction. لا ينشئ هذا القسم routes أو entities أو migrations؛ كل موديول
+مستقبلي يحتاج Phase 00 evidence ثم New-ErpModule.ps1 وحزمة قياسية مملوكة.
+
+## فرص التوسع المؤجلة
+
+تُراجع Omnichannel stock/reservation، B2B pricing والاعتمادات، payments
+reconciliation، returns/RMA، Supplier/Procurement Portal، loyalty، subscriptions،
+marketplace، BI، AI search، وmulti-region بالترتيب الوارد في blueprint، مع
+ربط إعادة الفتح بدليل عميل أو حجم أو متطلب قانوني أو ضغط تشغيلي.

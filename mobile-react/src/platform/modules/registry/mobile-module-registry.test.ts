@@ -1,4 +1,5 @@
 import type { ErpModule } from '../domain/models/module';
+import type { AppRoute } from '@/src/core/constants/routes';
 import {
   intersectModulesWithMobileRegistry,
   registerMobileModule,
@@ -13,7 +14,7 @@ const catalogDefinition: MobileModuleDefinition = {
   optionalDependencies: [],
   submodules: [{
     code: 'known',
-    entryCandidates: [],
+    entryCandidates: ['/known' as AppRoute],
     routePrefixes: ['/known'],
   }],
 };
@@ -50,7 +51,7 @@ describe('mobile module registry', () => {
       code: 'duplicate',
       requiredDependencies: [],
       optionalDependencies: [],
-      submodules: [{ code: 'other', entryCandidates: [], routePrefixes: ['/known'] }],
+      submodules: [{ code: 'other', entryCandidates: ['/known' as AppRoute], routePrefixes: ['/known'] }],
     });
     expect(() => validateMobileModuleRegistry()).toThrow('Ambiguous mobile module route');
   });
@@ -64,5 +65,19 @@ describe('mobile module registry', () => {
       submodules: [],
     });
     expect(() => validateMobileModuleRegistry()).toThrow('Missing mobile module dependencies');
+  });
+
+  it('rejects dead submodules without an entry candidate or route prefix', () => {
+    resetMobileModuleRegistryForTests();
+    registerMobileModule({
+      code: 'dead',
+      requiredDependencies: [],
+      optionalDependencies: [],
+      submodules: [{ code: 'empty', entryCandidates: [], routePrefixes: [] }],
+    });
+
+    expect(() => validateMobileModuleRegistry()).toThrow(
+      "must declare at least one entry candidate and route prefix",
+    );
   });
 });

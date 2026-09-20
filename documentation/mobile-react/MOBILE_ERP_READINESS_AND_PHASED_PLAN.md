@@ -1,6 +1,6 @@
 # مراجعة جاهزية ERP Mobile وخطة التنفيذ
 
-تاريخ المراجعة: 2026-09-19. الحالة: **تم تنفيذ Phases 01–07 وبوابات المستودع لـPhase 08؛ يظل توقيع Phase 08 معلقاً على EAS وأجهزة وHosted API فعلية**.
+تاريخ المراجعة: 2026-09-19. الحالة: **تم تنفيذ Phases 01–07 وبوابات المستودع لـPhase 08؛ أُجل توقيع Phase 08 بقرار صريح إلى أول Preview خارجي أو Release Candidate يحتاج EAS وأجهزة وHosted API فعلية**.
 
 ## 1. الحكم التنفيذي وحدود الأدلة
 
@@ -279,7 +279,9 @@ readiness سابق دليلاً على الحالة الحالية.
 
 **الملفات:** core API/query/runtime/config، reporting/file/notification adapters، shared selectors/formatting، feature contracts، documentation/mobile-react؛ إنشاء connectors الجديدة فقط إذا Required.
 
-**شرط الخروج:** budgets وmeasurements مسجلة، contracts مستخدمة في feature حقيقية، وقرارات capabilities محسومة؛ لا ادعاء دعم POS offline/payments أو push قبل تنفيذه واختباره.
+**شرط الخروج:** العقود والـbudgets وقرارات capabilities محسومة ومستخدمة في
+feature حقيقية. القياسات الفعلية على release build مؤجلة إلى Phase 08 ولا تمنع
+بدء الـBusiness؛ لا ادعاء دعم POS offline/payments أو push قبل تنفيذه واختباره.
 
 ### Phase 07 — منع التراجع واختبارات التكامل — Automated gates implemented
 
@@ -289,8 +291,8 @@ readiness سابق دليلاً على الحالة الحالية.
 - component: guards/forms/field errors/view loading/empty/error/paging/search/permissions.
 - contract: catalog + permissions + response fixtures مصدرها API الحالي، وتشغيل roles واقعية (super-admin/admin/limited/read-only/no-entitlement).
 - native data: SQLite/SQLCipher حقيقي، transaction rollback، migration/retention/protected draft وprocess death.
-- device E2E: sign-in/company switch/revocation/CRUD/deep links/kill/restart/airplane mode/reconcile/RTL. استخدام Maestro أو ما يعادله بعد قرار الفريق.
-- performance: release build budgets؛ production dependency audit وExpo Doctor وAndroid/iOS build evidence.
+- device E2E: السيناريوهات معرفة، وتنفيذها بأداة Maestro أو ما يعادلها مؤجل إلى Phase 08 عند وجود artifact وجهاز فعلي.
+- performance: budgets معرفة؛ قياسات release build وAndroid/iOS artifact evidence مؤجلة إلى Phase 08، بينما dependency audit وExpo Doctor جزء من gate الحالي.
 
 **الملفات:** الاختبارات بجوار runtime، suite device خارج `app/`، `.github/workflows/mobile-ci.yml`، scripts verification وتقارير fixtures.
 
@@ -308,6 +310,27 @@ readiness سابق دليلاً على الحالة الحالية.
 **الملفات:** app.config.ts/app.json/eas.json، CI، release runbook تحت documentation/mobile-react، linking assets في مالك host إن لزم.
 
 **شرط الخروج:** نتائج device journeys مسجلة مع build/API/commit، لا P1 مفتوح في الأساس، والفحوص العامة خضراء. يجوز بعدها التركيز على business داخل حدود الأساس المعتمدة؛ لا يعني ذلك اكتمال ERP business كله.
+
+### قرار تأجيل شروط الإصدار
+
+تم تأجيل الأدلة التالية بقرار صريح إلى أول Preview خارجي أو Release Candidate.
+لا تمنع هذه البنود بدء تطوير الـBusiness، ولا يجوز في المقابل اعتبارها منجزة
+أو توقيع Phase 08 قبل تسجيل الدليل المطلوب.
+
+| البوابة المؤجلة | المالك | موعد إعادة الفتح | الدليل المطلوب |
+|---|---|---|---|
+| Android/iOS EAS artifacts والتوقيع | Mobile Release | أول build لمستخدمين خارجيين | Build IDs وcommit وبيانات التوقيع وتثبيت APK/IPA الفعلي |
+| Device E2E والرحلات الموثقة | QA + Mobile | أول Preview خارجي | تسجيل دخول، tenant/company، RBAC، CRUD، offline pilot، قتل/استعادة التطبيق |
+| Hosted API وSwagger drift | API + Mobile | نشر API أو تغيير version/endpoints | Swagger diff واختبار authenticated smoke ضد الـhosted API |
+| App/Universal Links | Platform Release | تثبيت host/package/fingerprint النهائي | association files وفتح invitation/reset/confirmation على الجهاز |
+| Observe وsource-map symbolication | Observability | أول EAS artifact حقيقي | crash مستلم ومفكوك الرموز مع إثبات redaction |
+| Accessibility وRTL/theme/tablet | UX + QA | قبل Public Preview أو Store | مصفوفة أجهزة فعلية لـTalkBack/VoiceOver وRTL/LTR وdark/light وtablet |
+| Performance budgets | Mobile Performance | قبل Public Preview أو Store | نتائج release p50/p95 للبدء والاستئناف والتنقل والبحث والذاكرة والملفات |
+
+أزرار Demo Login ليست بندًا مؤجلًا: أصبحت مفعلة صراحة في development/preview
+ومعطلة في production. كما أن Attendance المؤجل لا يملك registry entry أو
+launcher placeholder. تظل خدمة التقارير المشتركة تحت `Platform/reporting`
+لأن نقلها إلى business module سيخلق اعتمادًا بين الموديولات المستهلكة.
 
 ## 6. أوامر التحقق ونتائج هذه المراجعة
 
@@ -336,7 +359,7 @@ bundle smoke وليس APK build.
 |---|---|
 | TypeScript | نجح ضمن npm run check |
 | ESLint / architecture / i18n | نجحت جميعها ضمن npm run check |
-| Jest | نجح: 142 suite و425 test، بدون snapshots |
+| Jest + full-source coverage | نجح: 148 suite و440 test؛ baseline 21.57/14.08/18.52/24.02 وحدود منع التراجع 20/13/17/22 |
 | dependency compatibility | نجح |
 | production npm audit | نجح، 0 vulnerabilities وقت الفحص |
 | Expo Doctor (pre-Phase baseline) | فشل: 20/21، عشر حزم patch غير متوافقة مع المتوقع |
@@ -345,7 +368,7 @@ bundle smoke وليس APK build.
 | Android export | نجح: 2876 modules، Hermes bundle نحو 9.3MB؛ هذا حجم bundle وليس قياس startup أو حجم APK |
 | documentation check | نجح: 77 recipe |
 | device Android/iOS / hosted API journeys | لم يُنفّذ في هذه المراجعة |
-| Contract matrix | نجح: 74 routes و27 endpoint files و200 full-path endpoint members و226 traced operations؛ كل member مسجل ولا يسمح باستدعاء transport مباشر خارج catalog مراجع |
+| Contract matrix | نجح: 74 routes و27 endpoint files و193 full-path endpoint members و226 traced operations؛ كل عنصر active aligned، ولا يسمح بثابت endpoint غير مستخدم أو transport مباشر خارج catalog مراجع |
 
 ## 7. قواعد إغلاق المراحل وتحديث التوثيق
 

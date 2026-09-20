@@ -90,15 +90,7 @@ export function AppHierarchicalTree<T>({
   // Normalization helper
   const normalizeParentId = useCallback(
     (item: T): string | null => {
-      const itAny = item as any;
-      const pid =
-        getParentId(item) ??
-        itAny.parentCostCenterId ??
-        itAny.parentDepartmentId ??
-        itAny.parentId ??
-        itAny.ParentCostCenterId ??
-        itAny.ParentDepartmentId ??
-        itAny.ParentId;
+      const pid = getParentId(item);
       if (pid === null || pid === undefined || pid === 0 || pid === '' || pid === '0') {
         return null;
       }

@@ -66,6 +66,13 @@ export default ({ config }: ConfigContext): ExpoConfig => {
   const releaseChannel = process.env.EXPO_PUBLIC_RELEASE_CHANNEL?.trim()
     || (easBuild ? 'production' : 'development');
   const apiContractVersion = process.env.EXPO_PUBLIC_API_CONTRACT_VERSION?.trim() || 'v1';
+  const demoLoginSetting = process.env.EXPO_PUBLIC_DEMO_LOGIN_ENABLED?.trim().toLowerCase();
+  if (demoLoginSetting && demoLoginSetting !== 'true' && demoLoginSetting !== 'false') {
+    throw new Error('EXPO_PUBLIC_DEMO_LOGIN_ENABLED must be true or false.');
+  }
+  const demoLoginEnabled = demoLoginSetting
+    ? demoLoginSetting === 'true'
+    : !easBuild && process.env.NODE_ENV !== 'production';
   if (!/^[a-z][a-z0-9-]{1,31}$/i.test(releaseChannel)) {
     throw new Error('EXPO_PUBLIC_RELEASE_CHANNEL must be a short alphanumeric channel name.');
   }
@@ -164,6 +171,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       release: {
         channel: releaseChannel,
         apiContractVersion,
+        demoLoginEnabled,
         commit: process.env.EAS_BUILD_GIT_COMMIT_HASH?.trim() || 'development',
       },
     }

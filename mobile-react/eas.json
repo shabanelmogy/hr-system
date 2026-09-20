@@ -5,7 +5,8 @@
       "distribution": "internal",
       "env": {
         "EXPO_PUBLIC_RELEASE_CHANNEL": "preview",
-        "EXPO_PUBLIC_API_CONTRACT_VERSION": "v1"
+        "EXPO_PUBLIC_API_CONTRACT_VERSION": "v1",
+        "EXPO_PUBLIC_DEMO_LOGIN_ENABLED": "true"
       },
       "android": {
         "buildType": "apk"
@@ -17,7 +18,8 @@
       "autoIncrement": true,
       "env": {
         "EXPO_PUBLIC_RELEASE_CHANNEL": "production",
-        "EXPO_PUBLIC_API_CONTRACT_VERSION": "v1"
+        "EXPO_PUBLIC_API_CONTRACT_VERSION": "v1",
+        "EXPO_PUBLIC_DEMO_LOGIN_ENABLED": "false"
       },
       "uploadSourceMaps": true
     }

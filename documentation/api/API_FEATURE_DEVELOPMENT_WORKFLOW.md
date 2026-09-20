@@ -5,9 +5,25 @@
 
 This is the single implementation workflow for ERPSYSTEM API work. Start here before changing code.
 
-The workflow-hardening phase that established this path is formally closed in
-`API_DEVELOPMENT_WORKFLOW_CLOSURE.md`. Ordinary business delivery must apply this
-workflow rather than reopen its foundation.
+For a new business capability or a substantial business rebuild, implementation
+also requires an approved central plan under `documentation/plans/`. The plan
+must satisfy the gates required by the exact authorized implementation scope in
+`documentation/plans/PLAN_QUALITY_GATE.md` before runtime work starts. Overall
+`Implementation Ready` still requires G0-G4; a bounded slice may start earlier
+only through the explicit slice-authorization rule when remaining G4 findings are
+release-only. This API workflow remains the technical implementation authority
+after that planning preflight; the planning system does not override the
+architecture constitution.
+
+Small corrective changes inside an already approved capability do not require a
+new master plan, but they still follow this workflow and must update any affected
+central `PROD-*`, `DEF-*`, `RISK-*`, `FOLLOW-*`, or `DEC-*` note.
+
+The workflow-hardening phase that established this path is closed. Its historical
+closure record is archived under
+`documentation/old files/api/API_DEVELOPMENT_WORKFLOW_CLOSURE.md`; ordinary
+business delivery must apply this workflow rather than depend on or reopen that
+historical record.
 
 The architecture law remains `ERP_ARCHITECTURE_CONSTITUTION.md`. This workflow explains how to apply that law to day-to-day feature delivery. Detailed technical patterns live in `Clean_Architecture_CQRS_Guide.md`; new bounded contexts additionally follow `MODULAR_MONOLITH_ARCHITECTURE.md`.
 
@@ -16,11 +32,14 @@ The architecture law remains `ERP_ARCHITECTURE_CONSTITUTION.md`. This workflow e
 When documents or examples disagree, use this order:
 
 1. `ERP_ARCHITECTURE_CONSTITUTION.md` — non-negotiable architecture policy.
-2. `API_FEATURE_DEVELOPMENT_WORKFLOW.md` — mandatory implementation path and Definition of Done.
-3. The owning module documentation under `documentation/modules/<module>/` — ownership and module-specific business boundaries.
-4. `Clean_Architecture_CQRS_Guide.md` — CQRS/layer implementation reference.
-5. `MODULAR_MONOLITH_ARCHITECTURE.md` — module boundaries and new-module creation.
-6. Feature-specific profiles/reviews — applied examples only; they never override the rules above.
+2. The approved central capability plan/authorized slice under
+   `documentation/plans/` — product intent, business scope, and approved business
+   decisions for planned work; it cannot override the architecture constitution.
+3. `API_FEATURE_DEVELOPMENT_WORKFLOW.md` — mandatory technical implementation path and Definition of Done.
+4. The owning module documentation under `documentation/modules/<module>/` — ownership and module-specific business boundaries.
+5. `Clean_Architecture_CQRS_Guide.md` — CQRS/layer implementation reference.
+6. `MODULAR_MONOLITH_ARCHITECTURE.md` — module boundaries and new-module creation.
+7. Feature-specific profiles/reviews — applied implementation evidence only; they never override the rules above.
 
 Historical plans, closed review matrices, generated packets, or an older feature's implementation are never architecture authority.
 
@@ -42,7 +61,8 @@ Do not introduce broad CRUD services, controller-to-store shortcuts, cross-modul
 
 ## 3. Step 0 — Define the business change
 
-Before touching implementation, write down the business intent in use-case language:
+For planned work, **import** the authorized business intent from the central
+Plan/Slice rather than defining it again. Confirm in use-case language:
 
 - actor and permission;
 - command/query intent;
@@ -57,7 +77,16 @@ Before touching implementation, write down the business intent in use-case langu
 - expected volume and list/query behavior;
 - wire-contract compatibility constraints.
 
-Do not start with a controller, table, DTO, or screen. Start with the business behavior.
+Do not start with a controller, table, DTO, or screen. Start with the approved
+business behavior and current runtime evidence.
+
+If this change belongs to a central business plan, cite its Plan ID + authorized
+Slice ID here and keep API decisions consistent with that plan. The implementation
+request is an execution mapping, not a parallel business authority. If
+implementation discovers a new
+material deferred item, production-only gate, risk, follow-up, or unresolved
+decision, create one canonical note ID under `documentation/plans/notes/` rather
+than leaving it only in this feature document.
 
 ## 4. Step 1 — Existing-System Relationship Review
 
@@ -124,8 +153,9 @@ If ownership is unclear, resolve it before creating persistence or endpoints.
 
 ## 6. Step 3 — Business Readiness Gate
 
-This gate is mandatory before implementation. Convert the business requirement and
-the existing-system review into three explicit matrices. A category may be `N/A`,
+This gate is mandatory before implementation. For planned work, convert the
+**approved plan decisions** and existing-system review into three explicit execution
+matrices. A category may be `N/A`,
 but only when the reason is recorded. Do not rely on a developer or coding agent to
 remember edge cases implicitly while writing handlers.
 
@@ -247,8 +277,10 @@ Cover at least:
 - documentation/operational runbooks where affected.
 
 Implementation may start only when ownership is resolved and these three matrices are
-sufficiently complete for the known business requirement. Discoveries during coding
-must update the matrices rather than becoming undocumented exceptions.
+sufficiently complete for the approved requirement. Implementation-only discoveries
+update the matrices. A material discovery that changes business meaning, lifecycle,
+ownership, security/scope, or a Required customer journey reopens the affected plan
+gate before coding continues.
 
 ## 7. Step 4 — Model the Domain first
 
@@ -452,6 +484,14 @@ Review the completed change against these questions:
 - Are docs and consumer contracts updated?
 - Is all obsolete implementation removed instead of retained as a legacy façade?
 
+### Verification before customer education
+
+- Does Phase 06 reconcile the delivered runtime back to the authorized Plan/Slice?
+- Are all Required behaviors implemented and tested on applicable platforms?
+- Are feature regressions resolved rather than accepted as documentation findings?
+- Is the verification decision explicitly `Verified` or `Not Verified`?
+- Is customer-facing education blocked until `Verified`?
+
 ## 18. Definition of Done
 
 Run the focused module tests first, then the full closure gates.
@@ -479,7 +519,7 @@ git diff --check
 
 When package references change, run the direct/transitive vulnerability audit before handoff.
 
-A feature is `Done` only when:
+A runtime implementation is `Verified` only when:
 
 - the business behavior is correct;
 - the Existing-System Relationship Review leaves one canonical ownership model;
@@ -488,6 +528,12 @@ A feature is `Done` only when:
 - applicable Constitution P0/P1/P2/P3 rules pass;
 - tests/build/migration/docs gates pass or any environment-only deployment evidence is explicitly identified as such;
 - no obsolete compatibility path is left behind.
+
+For customer-visible planned work, `Verified` is not the final `Closed` state.
+After verification, complete Phase 07 Customer Education & Closure from actual
+verified runtime behavior using
+`documentation/plans/CUSTOMER_EDUCATION_TEMPLATE.md`. If verification is
+`Not Verified`, customer education/closure is blocked.
 
 ## 19. What not to do
 

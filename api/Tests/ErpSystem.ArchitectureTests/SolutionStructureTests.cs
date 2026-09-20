@@ -17,7 +17,12 @@ public sealed class SolutionStructureTests
         var repositoryRoot = Directory.GetParent(ApiRoot)!.FullName;
         var documentationRoot = Path.Combine(repositoryRoot, "documentation", "api");
         var workflow = Path.Combine(documentationRoot, "API_FEATURE_DEVELOPMENT_WORKFLOW.md");
-        var workflowClosure = Path.Combine(documentationRoot, "API_DEVELOPMENT_WORKFLOW_CLOSURE.md");
+        var workflowClosure = Path.Combine(
+            repositoryRoot,
+            "documentation",
+            "old files",
+            "api",
+            "API_DEVELOPMENT_WORKFLOW_CLOSURE.md");
         var agents = File.ReadAllText(Path.Combine(ApiRoot, "AGENTS.md"));
         var rootAgents = File.ReadAllText(Path.Combine(repositoryRoot, "AGENTS.md"));
         var documentationIndex = File.ReadAllText(Path.Combine(repositoryRoot, "documentation", "README.md"));
@@ -32,6 +37,18 @@ public sealed class SolutionStructureTests
             documentationSystemRoot,
             "templates",
             "PHASE-00-discovery-evidence.template.md"));
+        var implementationPreflightTemplate = File.ReadAllText(Path.Combine(
+            documentationSystemRoot,
+            "templates",
+            "PHASE-00-implementation-preflight.template.md"));
+        var verificationTemplate = File.ReadAllText(Path.Combine(
+            documentationSystemRoot,
+            "templates",
+            "PHASE-06-verification-acceptance.template.md"));
+        var educationClosureTemplate = File.ReadAllText(Path.Combine(
+            documentationSystemRoot,
+            "templates",
+            "PHASE-07-customer-education-closure.template.md"));
         var generatedPhaseZero = File.ReadAllText(Path.Combine(
             documentationSystemRoot,
             "generated",
@@ -39,9 +56,14 @@ public sealed class SolutionStructureTests
         var newFeatureGenerator = File.ReadAllText(Path.Combine(
             documentationSystemRoot,
             "New-FeatureDocumentation.ps1"));
+        var documentationGenerator = File.ReadAllText(Path.Combine(
+            documentationSystemRoot,
+            "Generate-Documentation.ps1"));
 
         Assert.True(File.Exists(workflow), "The canonical API feature workflow must exist.");
-        Assert.True(File.Exists(workflowClosure), "The API development-workflow closure record must exist.");
+        Assert.True(
+            File.Exists(workflowClosure),
+            "The historical API development-workflow closure record must remain archived.");
         Assert.Contains("API_FEATURE_DEVELOPMENT_WORKFLOW.md", agents, StringComparison.Ordinal);
         Assert.Contains("API_FEATURE_DEVELOPMENT_WORKFLOW.md", rootAgents, StringComparison.Ordinal);
         Assert.Contains("API_FEATURE_DEVELOPMENT_WORKFLOW.md", documentationIndex, StringComparison.Ordinal);
@@ -69,15 +91,28 @@ public sealed class SolutionStructureTests
             Assert.Contains(requiredSection, implementationRequestTemplate, StringComparison.Ordinal);
             Assert.Contains(requiredSection, phaseZeroTemplate, StringComparison.Ordinal);
             Assert.Contains(requiredSection, generatedPhaseZero, StringComparison.Ordinal);
-            Assert.Contains(requiredSection, documentationSystemReadme, StringComparison.Ordinal);
-            Assert.Contains(requiredSection, documentationSystemAgents, StringComparison.Ordinal);
         }
 
+        Assert.Contains("Implementation Preflight", documentationSystemReadme, StringComparison.Ordinal);
+        Assert.Contains("Phase 07 Customer Education & Closure", documentationSystemReadme, StringComparison.Ordinal);
+        Assert.Contains("mandatory traceability evidence", documentationSystemAgents, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Business Rules Matrix", documentationSystemAgents, StringComparison.Ordinal);
+        Assert.Contains("Impact Matrix", documentationSystemAgents, StringComparison.Ordinal);
         Assert.Contains("API_FEATURE_DEVELOPMENT_WORKFLOW.md", implementationRequestTemplate, StringComparison.Ordinal);
         Assert.Contains("Existing-System Relationship Review", implementationRequestTemplate, StringComparison.Ordinal);
         Assert.Contains("implementation cannot begin", phaseZeroTemplate, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("Existing-System Relationship Review", generatedPhaseZero, StringComparison.Ordinal);
-        Assert.Contains("all three Business Readiness matrices", newFeatureGenerator, StringComparison.Ordinal);
+        Assert.Contains("PlanId", newFeatureGenerator, StringComparison.Ordinal);
+        Assert.Contains("SliceId", newFeatureGenerator, StringComparison.Ordinal);
+        Assert.Contains("Phase 00 implementation preflight", newFeatureGenerator, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("PHASE-00-implementation-preflight.template.md", newFeatureGenerator, StringComparison.Ordinal);
+        Assert.Contains("PHASE-06-verification-acceptance.template.md", newFeatureGenerator, StringComparison.Ordinal);
+        Assert.Contains("PHASE-07-customer-education-closure.template.md", newFeatureGenerator, StringComparison.Ordinal);
+        Assert.Contains("authorized slice/phase", implementationPreflightTemplate, StringComparison.Ordinal);
+        Assert.Contains("Verified", verificationTemplate, StringComparison.Ordinal);
+        Assert.Contains("must not start", verificationTemplate, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Phase 06 has recorded `Verified`", educationClosureTemplate, StringComparison.Ordinal);
+        Assert.Contains("documentation/old files", documentationGenerator, StringComparison.Ordinal);
 
         Assert.False(File.Exists(Path.Combine(documentationRoot, "Feature_Module_Implementation_Checklist.md")));
         Assert.False(File.Exists(Path.Combine(documentationRoot, "ERP_ARCHITECTURE_REVIEW_MATRIX.md")));

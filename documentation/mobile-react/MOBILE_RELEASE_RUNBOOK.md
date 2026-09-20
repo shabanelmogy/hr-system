@@ -6,6 +6,8 @@
 - Set `EXPO_EAS_PROJECT_ID` to the real Expo UUID. Do not commit credentials.
 - Set `EXPO_PUBLIC_API_URL` to the hosted HTTPS `/api/vN` URL.
 - Set `EXPO_PUBLIC_APP_LINK_HOST` to the HTTPS host whose association files are deployed.
+- Set `EXPO_PUBLIC_DEMO_LOGIN_ENABLED=true` only for development/preview builds;
+  the production profile pins it to `false` and the release source gate verifies it.
 - EAS exposes the commit through `EAS_BUILD_GIT_COMMIT_HASH`; `app.config.ts`
   records commit, release channel and API contract version in non-secret metadata.
 
@@ -75,6 +77,21 @@ not release evidence. Production builds use EAS remote versioning with
   as an incident response while pending work exists.
 - OTA is currently not an accepted release mechanism. If introduced, define
   `runtimeVersion`, native-change compatibility and rollback evidence first.
+
+## Deferred Release Gates
+
+These gates are intentionally postponed and do not block business development;
+they become mandatory when a preview/store build or external tester is planned.
+
+| Gate | Owner | Trigger | Evidence |
+|---|---|---|---|
+| EAS artifacts/signing | Mobile release | Candidate build | Build IDs, commit, signing and installed APK/IPA |
+| Hosted API/device E2E | QA + API | External tester or API change | Auth, tenant/company, permissions, offline, files/reports |
+| Swagger drift | API + Mobile | Endpoint/API version change | Hosted snapshot diff and smoke report |
+| Links | Platform release | Final host/package/fingerprint | Association files and device evidence |
+| Observe/source maps | Observability | First real EAS artifact | Symbolicated crash and redaction result |
+| Accessibility/RTL/theme/tablet | UX + QA | Before public preview/store | Physical device matrix |
+| Performance | Mobile performance | Before public preview/store | Release p95 startup/resume/navigation/search/memory/file results |
 
 Phase 08 is signed only after the journey record is filled with real artifact
 IDs and results. Repository gates alone do not close Android/iOS evidence.

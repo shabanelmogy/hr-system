@@ -1,0 +1,30 @@
+# Accounting Core GL — Decision Log
+
+| ID | Decision | Status | Selected direction | Reason | Affected surfaces |
+| --- | --- | --- | --- | --- | --- |
+| D-001 | First business slice | Approved | Core GL before subledgers | Proves backbone once | API + Web + Mobile |
+| D-002 | Fiscal Years | Approved | Reuse current slice; additive integration only | Already implemented | API + Web + Mobile |
+| D-003 | Posted history | Approved | Immutable; linked reversal/correction | Audit/history integrity | Domain + persistence |
+| D-004 | Posting ownership | Approved | One Accounting posting engine | Prevent duplicated logic | Accounting |
+| D-005 | UI strategy | Approved | Reuse → generic extension → new reusable → domain composition | Maintain one UI pattern | Web + Mobile |
+| D-006 | Offline mutation | Approved | Financial posting online-only | Server authority | API + Mobile |
+| D-007 | Party dependency | Approved | Not Required for manual Core GL | Keep GL independent of AP/AR | Accounting + Contacts |
+| D-008 | Formal statements | Approved | Separate reporting plan | Avoid scope mixing | Accounting |
+| D-009 | Provider payment lifecycle | Approved | Outside Accounting ownership | Payments owns provider state | Future Payments |
+| DEC-007 | Launch jurisdiction/statutory/retention | Open | Core GL remains jurisdiction-neutral until a launch jurisdiction is selected | Product/compliance decision | Country-dependent release only |
+| DEC-008 | Book + currency model | Approved | One functional currency + one primary book per company in V1; multi-currency transactions; historical rate series + applied-rate snapshot; optional reporting currency is translated at report time; additional adjustment books are deferred but the model is book-aware | Powerful core without duplicating reporting amounts or forcing parallel ledgers | Core GL |
+| DEC-009 | Branch/intercompany balancing | Approved | Branch is analysis/authorization context in Core GL V1; branch-balanced and intercompany auto-balancing are Deferred | Keep first GL slice bounded; add only when business requirement exists | Later interbranch/intercompany plan |
+| DEC-010 | SoD/override/reopen | Approved | Journal approval policy is None/Single/MultiLevel; self-approval default Blocked with optional Allowed/AllowedWithOverride; approve/post are separate permissions; flexible versioned approval policies; period reopen/late-posting remains audited and policy-controlled | Flexible control without hard-coded actor combinations | Workflow + period control |
+| D-010 | Company chart ownership | Approved | Every company owns an independent COA; templates may initialize but never live-sync it | Company-specific accounting truth | COA |
+| D-011 | Account hierarchy | Approved | Company config defines hierarchy levels and which levels may post; account `AllowPosting` remains the final posting flag and posting accounts cannot have children | Flexible hierarchy without level-number business logic | COA |
+| D-012 | Account control policy | Approved | Manual posting policy is Allowed/Restricted/Blocked and may be overridden per account | Protect control accounts without forcing one behavior | COA + journals |
+| D-013 | Dimensions | Approved | Configurable dimensions with typed value sources; journal-line assignments are authoritative, header dimensions are defaults only | Flexible analytics without duplicating master data | Dimensions + journals |
+| D-014 | Account code/lifecycle/currency | Approved | System proposes account code, authorized user may change within rules; used accounts archive instead of delete; account currency policy is Any/FunctionalOnly/SpecificCurrency | Maintain history while supporting controlled setup | COA |
+| D-015 | Journal lifecycle and void | Approved | Draft→Submitted→Approved→Posted; return/reject supported; pre-post Void has no financial effect; posted Void creates exact reversal and audit; Posted content is immutable | Complete audit-safe lifecycle | Journals |
+| D-016 | Month close | Approved | Per-period Month Closing is new additive Core GL scope, implemented after posting in Slice 3; current Fiscal Years remains reused and is not claimed to expose independent period close APIs | Preserve current feature boundary and add close deliberately | Period control |
+| D-017 | Link Accounts | Approved | Simple Link Accounts is a typed UI over direct purpose mappings; banks map per BankAccount; ContactGroup + PartyRole + Purpose maps contacts; entity overrides allowed; advanced conditional resolution remains Posting Profiles | Simple surface over one account-determination model | Setup + posting profiles |
+| D-018 | Posting contract | Approved | Source modules send typed accounting purposes/components + debit/credit effects and context, never GL AccountIds; source owns business amounts, Accounting owns account resolution/journal/GL | Enforces bounded-context ownership | Contracts + posting |
+| D-019 | Ledger source of truth | Approved | `JournalEntry` + `JournalLine` is the sole accounting truth; no duplicated `PostedLedgerEntry` table; posted lines become immutable; performance models are rebuildable projections | Avoid duplicate financial truth | Persistence + reporting |
+
+Only DEC-007 remains open and it does not block Slice 1. Any later decision that
+changes persisted financial meaning requires migration/reconciliation review.

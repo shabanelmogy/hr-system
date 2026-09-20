@@ -128,7 +128,7 @@ describe('recruitment remote data source', () => {
       `${recruitmentEndpoints.interviews.base}?pageNumber=1&pageSize=10&applicationId=${applicationResponse.id}`,
     );
     expect(interviewPageResponse.items[0].id).not.toBe(applicationResponse.id);
-    expect(get).not.toHaveBeenCalledWith(recruitmentEndpoints.interviews.byId(applicationResponse.id));
+    expect(get).not.toHaveBeenCalledWith(`recruitment/interviews/${applicationResponse.id}`);
   });
 
   it('uses the selected InterviewDto id for scorecard, completion, and evaluation routes', async () => {

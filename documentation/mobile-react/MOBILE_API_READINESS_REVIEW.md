@@ -1,6 +1,6 @@
 # Mobile API Readiness Review
 
-Status: **Phases 01–07 source foundations are implemented and verified; Phase 08 device/EAS evidence remains open**.
+Status: **Phases 01–07 source foundations are implemented and verified; Phase 08 device/EAS evidence is intentionally deferred until the first external preview or release candidate**.
 
 This review records the mobile client's verified API and platform boundaries. It
 does not claim a live production smoke test or store-signing validation.
@@ -29,12 +29,24 @@ and presentation files cannot import `apiService` or `axiosClient`. Feature
 remote adapters own routes, request mapping, and runtime parsing of server
 responses from `unknown`.
 
-The Phase 00 compatibility gate covers 74 routes, 27 endpoint catalogs, 200
+The Phase 00 compatibility gate covers 74 routes, 27 endpoint catalogs, 193
 endpoint leaf members, and 226 traced operations. Profile, SignalR, host
 diagnostics, file transfer, and binary report calls are part of that inventory.
 The gate rejects local endpoint objects and direct transport URLs outside a
-reviewed endpoint catalog, so these calls cannot silently disappear from future
+reviewed endpoint catalog, and fails on active mismatch, deferred, or
+`UNREVIEWED` entries. These calls cannot silently disappear from future
 ownership and offline-policy reviews.
+
+Composite Shell routes intentionally have no module requirement. A mobile
+submodule must expose an entry candidate and route prefix; Attendance is
+deferred and absent from the mobile registry until its device workflow exists.
+Reporting remains a cross-cutting Platform/reporting capability until it becomes
+a first-class mobile module.
+
+The main gate collects coverage from all executable `src` files rather than
+only modules loaded by tests. The measured baseline is 21.57% statements,
+14.08% branches, 18.52% functions and 24.02% lines; conservative thresholds of
+20/13/17/22 prevent regression while new business features raise coverage.
 
 `EXPO_PUBLIC_API_URL` accepts an absolute versioned `/api/vN` API address only,
 rejects credentials, query and fragment values, and requires HTTPS in production.
@@ -193,6 +205,20 @@ verification.
 - Added disposable native prebuild verification for SQLCipher and disabled
   Android backups, plus Expo Observe configuration with filtered route params
   and source-map upload settings.
+
+## Deferred Release Gates
+
+These gates are postponed by decision and do not block business development.
+
+| Gate | Owner | Trigger | Evidence |
+|---|---|---|---|
+| Real EAS Android/iOS artifacts and signing | Mobile release | Preview or store candidate | EAS IDs, commit, signing, installed APK/IPA |
+| Hosted authenticated device E2E | QA + API | External tester build or API change | Auth, tenant/company, permissions, offline pilot, files/reports |
+| Swagger/API drift | API + Mobile | Endpoint or API version change | Hosted Swagger diff and authenticated smoke |
+| App/Universal Links | Platform release | Final host/package/fingerprint | Association files and device route evidence |
+| Observe/source maps | Observability | Real EAS artifact | Delivered symbolicated crash with redaction |
+| Physical accessibility/RTL/theme/tablet | UX + QA | Before public preview/store | Phone/tablet matrix evidence |
+| Measured performance budgets | Mobile performance | Before public preview/store | Release p95 startup/resume/navigation/search/memory/file results |
 
 ## External release checks
 

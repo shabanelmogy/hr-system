@@ -22,14 +22,15 @@ Verified in the runtime repository today:
 Unimplemented roadmap surfaces remain intentionally absent rather than hidden
 behind placeholders. Start with [ARCHITECTURE.md](ARCHITECTURE.md), then use
 [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md) to sequence the first vertical slice.
-The complete dependency-ordered Accounting plan is in
-[phases/README.md](phases/README.md); phase plans are planning artifacts and are
-not runtime evidence unless their feature slice is verified separately.
+The first gated execution plan is
+[`accounting-core-gl`](../../plans/business/accounting-core-gl/PLAN.md).
+[phases/README.md](phases/README.md) preserves the historical 00–21 decomposition
+as source/traceability material and is not execution authority.
 
 ## Package map
 
-- [API](api/README.md) — Accounting transport boundary (currently scaffold only)
-- [Web](web-next/README.md) — Next.js ownership and future UI decisions
-- [Mobile](mobile-react/README.md) — Expo/React Native ownership and future UI decisions
+- [API](api/README.md) — Accounting transport boundary and current feature contracts
+- [Web](web-next/README.md) — Next.js Accounting ownership and feature evidence
+- [Mobile](mobile-react/README.md) — Expo/React Native Accounting ownership and feature evidence
 - [Feature catalog](features/README.md) — one entry per reviewed vertical slice
-- [Phase plan](phases/README.md) — PHASE-00 through PHASE-21 and final acceptance
+- [Historical phase source](phases/README.md) — PHASE-00 through PHASE-21 source material

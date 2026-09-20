@@ -153,13 +153,13 @@ export function AppInteractiveEntityChart<T>({
         {/* Horizontal CartesianGrid lines & Y-Axis Labels */}
         <View pointerEvents="none" style={[styles.cartesianGrid, { height: plotHeight }]}>
           {yTicks.map((tick) => {
-            const bottomPercent = (tick / yMax) * 100;
+            const bottomPercent = `${(tick / yMax) * 100}%` as `${number}%`;
             return (
               <View
                 key={tick}
                 style={[
                   styles.gridRow,
-                  { bottom: `${bottomPercent}%` as any },
+                  { bottom: bottomPercent },
                 ]}
               >
                 <AppText color="muted" style={styles.yAxisLabel}>
@@ -236,7 +236,7 @@ export function AppInteractiveEntityChart<T>({
                           backgroundColor: isSelected
                             ? theme.colors.primary
                             : barColor,
-                          height: columnHeightPercent as any,
+                          height: columnHeightPercent,
                           borderRadius: 4,
                         },
                       ]}

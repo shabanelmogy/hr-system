@@ -83,3 +83,22 @@ locations; it does not duplicate or move them. A future move must update
 and generated packets in one manifest-aware change, then pass
 `Generate-Documentation.ps1 -Check`. Until that migration is complete, the
 current paths remain authoritative.
+
+## Future business and channel modules
+
+The product blueprint plans independent future modules for JobPortal, Commerce,
+Sales, Procurement, Payments, and (when justified) Fulfillment or Supplier
+Portal. These names are roadmap boundaries only; no runtime project, route, table, or
+documentation package is implied by this section.
+
+When one of these modules is approved for implementation, complete Phase 00
+feature evidence and the shared reuse inventory first, then create the package
+atomically with New-ErpModule.ps1. The package must contain the standard
+Contracts, Domain, Application, Infrastructure, Presentation, and Bootstrap
+projects, module-owned Tests, and an owned schema/migrations boundary. Its
+web/mobile surfaces and integration contracts are documented with the module;
+they are not added to HR, Inventory, PointOfSale, Contacts, or Accounting as
+shortcuts.
+
+See the omnichannel product blueprint and ADR-008 for ownership, sequencing,
+and reopening triggers.

@@ -21,10 +21,5 @@ export const hrModuleDefinition: MobileModuleDefinition = {
       entryCandidates: [ROUTES.workforcePlanning.index],
       routePrefixes: [ROUTES.workforcePlanning.index],
     },
-    {
-      code: 'attendance',
-      entryCandidates: [],
-      routePrefixes: [],
-    },
   ],
 };

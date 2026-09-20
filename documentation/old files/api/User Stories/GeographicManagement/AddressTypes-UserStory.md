@@ -1,4 +1,4 @@
-﻿# AddressType Entity User Story
+# AddressType Entity User Story
 
 ## 📋 Story Status Legend:
 	- ✅ Completed

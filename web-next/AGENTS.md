@@ -2,6 +2,12 @@
 
 For any frontend change in this project, read [`../documentation/web-next/architecture/frontend-architecture-reference.md`](../documentation/web-next/architecture/frontend-architecture-reference.md) before editing files.
 
+For a new business capability or substantial business rebuild, also start from
+[`../documentation/plans/README.md`](../documentation/plans/README.md) and require
+the plan to pass G0-G4 before runtime implementation. Web-only production checks,
+deferrals, risks, follow-ups, and open decisions use stable IDs under
+`../documentation/plans/notes/` rather than remaining only in a feature TODO.
+
 The architecture reference is the baseline for feature ownership, App Router boundaries, shared-layer usage, dependency direction, naming, and required verification. New code must follow it unless an explicit exception is documented in the same change.
 
 For server-managed feature work, also read [`../documentation/web-next/features/server-managed-feature-reference.md`](../documentation/web-next/features/server-managed-feature-reference.md). When following Countries, use the [cross-platform master](../documentation/project/COUNTRIES_FEATURE_FULL_REVIEW.md), the [web applied profile](../documentation/web-next/features/countries-frontend-reference.md), and phases 02, 04, 05, and 06 under `../documentation/system/generated/`.

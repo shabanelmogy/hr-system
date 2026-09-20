@@ -4,10 +4,14 @@
 No mobile runtime source exists in phase one.
 
 ## 2. Product Decision
-Mobile is Deferred; reopen after API/web workflow hardware verification.
+Mobile is Deferred; no registry entry or launcher surface exists. Reopen after
+API/web workflow and hardware verification, then add it through module,
+permission-parity and contract gates.
 
 ## 3. Route and Authorization
-No placeholder mobile route, drawer item, or permission is added.
+No placeholder mobile route, drawer item, or authorization policy is added. The
+shared permission catalog still mirrors the complete backend catalogs, including
+Attendance constants, but those constants do not expose a mobile surface.
 
 ## 4. Runtime Schema Contract
 Future mobile client validates exact device, raw-user, raw-punch, run, provider, branch and page contracts.

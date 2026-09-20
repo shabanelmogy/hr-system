@@ -1,4 +1,16 @@
-import { validateApiUrl } from './env';
+import { parseBooleanFlag, validateApiUrl } from './env';
+
+describe('parseBooleanFlag', () => {
+  it('defaults demo flags for local development and accepts explicit build values', () => {
+    expect(parseBooleanFlag(undefined, true)).toBe(true);
+    expect(parseBooleanFlag(undefined, false)).toBe(false);
+    expect(parseBooleanFlag(' TRUE ', false)).toBe(true);
+    expect(parseBooleanFlag('false', true)).toBe(false);
+    expect(() => parseBooleanFlag('enabled', true)).toThrow(
+      'Boolean environment flags must be either true or false.',
+    );
+  });
+});
 
 describe('validateApiUrl', () => {
   it('allows an unconfigured API and normalizes the versioned root', () => {

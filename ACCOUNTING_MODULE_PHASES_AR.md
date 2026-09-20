@@ -1,9 +1,9 @@
 # خطة تطوير موديول الحسابات داخل ERPSYSTEM — Business Phases
 
-الإصدار: 1.2
-التاريخ: 2026-09-13
-الحالة: خطة تنفيذ Business فوق أساس ERPSYSTEM الفني القائم؛ القدرات المحاسبية التشغيلية لم تبدأ بعد.
-الاستخدام: الوثيقة هي الخطة التنفيذية لموديول Accounting داخل ERPSYSTEM، وتعيد استخدام Platform وContacts وBuildingBlocks والحدود الحالية بدل إنشاء بدائل لها داخل Accounting.
+الإصدار: 1.3
+التاريخ: 2026-09-19
+الحالة: مصدر Business/Domain تفصيلي ومرجع roadmap تاريخي؛ ليس سلطة التنفيذ canonical بعد اعتماد نظام `documentation/plans/`. Fiscal Years قدرة منفذة حاليًا ويجب عدم إعادة تخطيطها كـ greenfield.
+الاستخدام: تحفظ الوثيقة النطاق والقواعد والسيناريوهات المحاسبية الواسعة. الترتيب الحالي للموديول يملكه `documentation/modules/accounting/DELIVERY-ROADMAP.md`، والتنفيذ الفعلي يتم بخطط capability-scoped مسجلة تحت `documentation/plans/business/`. أول خطة تنفيذية هي `accounting-core-gl`.
 
 ### خط أساس ERPSYSTEM الحالي
 

@@ -12,6 +12,8 @@ This directory is the single home for project-owned documentation. Product sourc
 | `mobile-react/` | Expo architecture, style, and feature guides |
 | `modules/` | Module-owned documentation packages and ownership indexes |
 | `system/` | Reusable documentation recipes, manifests, generated phase packets, and feature review artifacts |
+| `plans/` | Canonical business-planning standard, plan registry, production/deferred notes, risks, and cross-platform planning gates |
+| `old files/` | Historical archive only; never an active planning/implementation authority or recipe dependency |
 
 Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain beside their projects because development tools discover them there. They link back to this directory for the canonical documentation.
 
@@ -20,7 +22,6 @@ Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain
 - General ERP documentation guide: [`project/ERP_DOCUMENTATION_GUIDE_AR.md`](project/ERP_DOCUMENTATION_GUIDE_AR.md)
 - Shared reuse catalog: [`project/SHARED_REUSE_CATALOG.md`](project/SHARED_REUSE_CATALOG.md)
 - API feature development workflow: [`api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](api/API_FEATURE_DEVELOPMENT_WORKFLOW.md)
-- API development workflow closure: [`api/API_DEVELOPMENT_WORKFLOW_CLOSURE.md`](api/API_DEVELOPMENT_WORKFLOW_CLOSURE.md)
 - API architecture constitution: [`api/ERP_ARCHITECTURE_CONSTITUTION.md`](api/ERP_ARCHITECTURE_CONSTITUTION.md)
 - Cross-platform CQRS/web reference: [`project/CORE_FEATURE_CQRS_WEB_GUIDE.md`](project/CORE_FEATURE_CQRS_WEB_GUIDE.md)
 - Managed Crystal reporting integration: [`project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md`](project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md)
@@ -40,6 +41,9 @@ Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain
 - API production deployment runbook: [`api/PRODUCTION_DEPLOYMENT_RUNBOOK.md`](api/PRODUCTION_DEPLOYMENT_RUNBOOK.md)
 - Foundation closure matrix: [`api/FOUNDATION_CLOSURE_MATRIX.md`](api/FOUNDATION_CLOSURE_MATRIX.md)
 - API architecture decisions: [`api/adr/README.md`](api/adr/README.md)
+- ERP planning system: [`plans/README.md`](plans/README.md)
+- Business plan quality gate: [`plans/PLAN_QUALITY_GATE.md`](plans/PLAN_QUALITY_GATE.md)
+- Central production/deferred notes: [`plans/notes/README.md`](plans/notes/README.md)
 
 ## Organization rules
 
@@ -55,6 +59,15 @@ Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain
    new pieces module-local; promote them to shared only when they are genuinely
    domain-neutral and used by multiple modules. Never put HR or Accounting
    domain logic in shared code or copy/paste a shared capability.
+8. New business build plans start in `plans/` and must pass the planning quality
+   gates before implementation begins. Production-only checks, deferred work,
+   known risks, follow-ups, and open decisions use stable IDs under
+   `plans/notes/` instead of being left only in chat history or scattered TODOs.
+9. Run `./documentation/plans/Check-Planning.ps1` after changing the planning
+   system, plan registry, business-plan folders, or central note registries.
+10. Keep superseded/high-confidence stale documentation under `old files/` only
+    when historical retention is useful. Active guides/manifests/recipes must not
+    reference that archive.
 
 ## Adding a new feature review
 
@@ -64,20 +77,24 @@ Create the draft evidence workspace first:
 
 ```powershell
 ./documentation/system/New-FeatureDocumentation.ps1 `
-  -FeatureId employees `
-  -FeatureName "Employees" `
-  -ReferenceFeature countries
+  -FeatureId accounting-ledger-setup `
+  -FeatureName "Accounting Ledger Setup" `
+  -PlanId accounting-core-gl `
+  -SliceId "Slice 1 — Ledger setup spine" `
+  -Module accounting
 ```
 
 The scaffold creates a copy-ready `IMPLEMENTATION-REQUEST.md`, an evidence
 artifact, `required-files.draft.json`, and a feature-scoped
-`recipe-registration.draft.json`. Complete the request and evidence decisions
-before runtime work. The scaffold does not weaken the global documentation check
-by registering paths that do not exist yet. After the implementation sources and
-four canonical profiles exist, replace the required-file draft with
-`required-files.json`, merge the reviewed registration draft into
-`system/recipe-manifest.json`, generate `system/generated/<feature>/PHASE-00`
-through `PHASE-06`, and finish the mandatory reconciliation phase.
+`recipe-registration.draft.json`. For planned work it also binds the implementation
+to the canonical Plan ID and exact authorized Slice ID. Complete Phase 00
+Implementation Preflight before runtime work. The scaffold does not weaken the
+global documentation check by registering paths that do not exist yet.
+
+After implementation sources and canonical applied profiles exist, finalize the
+manifest/recipe registration. Phase 06 must end `Verified` before Phase 07 creates
+or finalizes customer education/video material. Customer-visible work is `Closed`
+only after that verified education closure.
 
 ## Web client readiness
 
@@ -89,3 +106,10 @@ through `PHASE-06`, and finish the mandatory reconciliation phase.
 - [Mobile/API readiness review](mobile-react/MOBILE_API_READINESS_REVIEW.md)
 - [Mobile architecture guide](mobile-react/MOBILE_ARCHITECTURE.md)
 - [Mobile feature guide](mobile-react/MOBILE_FEATURE_GUIDE.md)
+
+## Product expansion
+
+- [Omnichannel ERP product blueprint](project/OMNICHANNEL_ERP_PRODUCT_BLUEPRINT.md)
+- [Van Sales product plan](project/VAN_SALES_PRODUCT_PLAN.md)
+- [Enterprise SaaS core roadmap](project/ENTERPRISE_SAAS_CORE_ROADMAP.md)
+- [API architecture decisions](api/adr/README.md)

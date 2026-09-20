@@ -56,3 +56,19 @@ The outbox health settings live under
 
 Reuse-first is part of the module workflow: search shared BuildingBlocks and
 local abstractions before creating a new piece, and keep domain logic local.
+
+## Future channel boundary
+
+Contacts remains the owner of Party, customer profile, supplier profile, and
+contact data for approved external parties. HR owns Candidate profile/link and
+the candidate consent lifecycle unless a reviewed channel contract assigns a
+specific responsibility. Commerce and JobPortal may maintain only
+channel-scoped preferences and display projections; they must consume Contacts
+Contracts and must not turn Contacts into a storefront, checkout, candidate
+portal, or campaign engine.
+
+Customer consent, candidate consent, tenant/company ownership, and account
+linking must be explicit at the consuming boundary. Public identities and
+customer sessions do not automatically gain access to Contacts or HR data.
+Future channel modules are created independently after Phase 00 evidence and
+New-ErpModule.ps1 generation; no new routes or persistence are implied here.

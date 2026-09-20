@@ -10,6 +10,7 @@ Deferred or Excluded capability has no runtime placeholder that implies support.
 | Files and attachments | **Required** | Platform Files | Online-authoritative bearer upload/download and sensitive cache cleanup | Offline attachment work requires a separate retention and replay protocol |
 | Managed reporting | **Required** | Platform Reporting | Online generation/download; no embedded Crystal runtime | Offline report packs require an explicit product requirement |
 | Workforce-plan offline drafts | **Required** | HR Workforce | RowVersion, outbox, uncertain reconciliation and Sync Center | Extend only per certified command |
+| Attendance devices | **Deferred** | HR Attendance | No mobile route or registry entry until provider/device workflow is approved | Reopen after provider/device matrix and hosted HR contract are approved |
 | General offline writes | **Excluded** | Each business module | No generic HTTP queue | Reopen per operation after idempotency/concurrency/reconciliation approval |
 | Payments, posting and stock reservation offline | **Excluded** | Accounting/POS/Inventory | Online-authoritative | Reopen only with server idempotency and financial/stock reconciliation design |
 | Push notifications | **Deferred** | Platform Notifications | In-app/realtime notifications only | Server device-registration contract and notification privacy policy approved |

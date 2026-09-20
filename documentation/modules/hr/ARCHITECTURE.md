@@ -61,3 +61,30 @@ until a manifest-aware move places them under this package. A move must update
 `documentation/system/recipe-manifest.json`, required-file manifests, links,
 and generated packets together; do not create a second copy with divergent
 rules.
+
+## Digital-channel boundary
+
+HR remains the current and future source of truth for Candidate profile/link,
+EmploymentApplication, requisition/job posting/opening, interview, offer, and
+hire lifecycle, in addition to employee and organization data. A future
+JobPortal module is a separate bounded context and channel surface. It owns only
+public vacancy projection/search/index, tenant-branded channel content, saved
+jobs/alerts/preferences, draft application UX, and public/employer BFF workflow
+or read models.
+
+At submission JobPortal calls an HR-owned Contract idempotently; it does not own
+EmploymentApplication or candidate lifecycle and must not read HR
+Infrastructure, EF models, or the hr schema. Platform owns the external auth
+principal. Tenant/company resolution comes from approved publication and
+host/channel context, never manual visitor selection.
+
+Public job search/indexing and candidate-facing channel UX are excluded from the
+current HR runtime, while their source-of-truth lifecycle remains HR-owned.
+JobPortal starts only after Recruitment public contracts and privacy/consent
+evidence, independently of Accounting or Inventory, and is created with the
+future-module workflow rather than added to HR.
+
+Commerce, storefront, checkout, customer ordering, supplier portal, and
+fulfillment are also outside HR ownership. HR can publish explicitly approved
+recruitment facts through Contracts/events; it does not own external channel
+identity or billing.

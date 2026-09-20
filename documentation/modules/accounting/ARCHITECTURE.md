@@ -74,3 +74,27 @@ posting engine; accounts payable; accounts receivable; cash and bank; tax;
 fixed assets; approved external-fact integration; period close, reporting, and
 audit. Each area requires its own reviewed feature contract and tests before
 being marked Required or implemented.
+
+## Future commercial-channel boundary
+
+The existing Accounting module is the commercial financial source of truth.
+Sales, Procurement, POS, Commerce, Payments, and Fulfillment contexts may
+publish approved source facts or request financial decisions through
+Contracts/events; they do not write acc tables or share the Accounting
+DbContext. Sales owns SalesOrder truth, Procurement owns PO/vendor terms,
+Payments owns provider state and webhook reconciliation, and Fulfillment owns
+shipment/delivery state; Accounting owns financial posting and settlement truth.
+
+Commerce checkout, customer carts, storefront pricing, stock ledger,
+reservation, terminal cash UX, and Job Portal workflow are excluded from
+Accounting. The first commercial sequence is Accounting and Inventory in
+parallel after contract review, then Sales/Procurement, POS, Commerce, and
+Payments/Fulfillment. Coordination uses Outbox/Inbox and idempotent
+reconciliation, never a distributed transaction.
+
+No new channel capability is runtime-ready because it appears in this
+architecture book. Accounting slices are completed in this existing module
+through the feature documentation workflow. Each future Sales, Procurement,
+Commerce, Payments, or Fulfillment module requires Phase 00 evidence, the
+standard New-ErpModule.ps1 package, owned schema/migrations, and client/test
+evidence.

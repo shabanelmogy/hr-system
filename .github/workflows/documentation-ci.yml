@@ -33,6 +33,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Verify planning contracts
+        shell: pwsh
+        run: ./documentation/plans/Check-Planning.ps1
+
       - name: Verify manifests and generated recipes
         shell: pwsh
         run: ./documentation/system/Generate-Documentation.ps1 -Check

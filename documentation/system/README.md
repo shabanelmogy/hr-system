@@ -2,6 +2,24 @@
 
 This system turns reviewed implementations such as Countries and States into repeatable evidence-based workflows for API, Next.js, and Expo features. It follows the useful structure of the Sigma ERP recipe system while remaining specific to this repository.
 
+For new business capabilities and substantial rebuilds, this is the **execution and
+verification system after planning**, not a parallel product-planning system.
+The canonical flow is:
+
+```text
+documentation/plans/
+  Discovery → Evidence → Spec → Plan/Decisions → authorized slice
+        ↓
+documentation/system/
+  Phase 00 Implementation Preflight
+        ↓
+  Phase 01–05 Implementation
+        ↓
+  Phase 06 Verification & Acceptance
+        ↓ only when Verified
+  Phase 07 Customer Education & Closure
+```
+
 For any change that includes API work, implementation starts with
 [`../api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](../api/API_FEATURE_DEVELOPMENT_WORKFLOW.md)
 and the API Architecture Constitution. This documentation system records decisions,
@@ -15,7 +33,7 @@ recipe mechanics; it does not make HR the owner of every future feature.
 
 ## Authority model
 
-The canonical books own factual rules:
+The canonical applied books own factual implementation evidence:
 
 - `../project/COUNTRIES_FEATURE_FULL_REVIEW.md`
 - `../api/Countries_API_Implementation_Profile.md`
@@ -30,7 +48,7 @@ The canonical books own factual rules:
 - `../web-next/features/addresses-frontend-reference.md`
 - `../mobile-react/addresses-mobile-reference.md`
 
-`recipe-manifest.json` declares which numbered sections support each phase. `Generate-Documentation.ps1` hashes those sections and writes derivative packets into `generated/`. The generated packets are navigation and verification aids; they never replace the canonical books.
+`recipe-manifest.json` declares which numbered sections support each phase. `Generate-Documentation.ps1` hashes those sections and writes derivative packets into `generated/`. The generated packets are navigation and verification aids; they never replace the canonical books or an approved central business plan.
 
 ## Module ownership
 
@@ -81,28 +99,30 @@ From the repository root:
 ./documentation/system/Generate-Documentation.ps1
 ./documentation/system/Generate-Documentation.ps1 -Recipe phase-02-web-client
 ./documentation/system/Generate-Documentation.ps1 -Check
-./documentation/system/New-FeatureDocumentation.ps1 -FeatureId employees -FeatureName "Employees" -ReferenceFeature countries
+./documentation/system/New-FeatureDocumentation.ps1 `
+  -FeatureId accounting-ledger-setup `
+  -FeatureName "Accounting Ledger Setup" `
+  -PlanId accounting-core-gl `
+  -SliceId "Slice 1 — Ledger setup spine" `
+  -Module accounting
 ```
 
 Generation validates every required file and source collection before writing. Check mode also recomputes every selected output and fails when a packet is missing or stale.
 
-The new-feature scaffold also writes a copy-ready `IMPLEMENTATION-REQUEST.md`.
-Complete its decision tables and mandatory Business Readiness Gate, then use that
-file as the request given to an implementing agent. The gate consists of a
-Business Rules Matrix, an Edge Cases & Validation Matrix, and an Impact Matrix. Every
-edge-case category must contain scenarios or an explicit `N/A` with a reason, and
-runtime work does not start while ownership, an impact decision, or a matrix
-placeholder remains unresolved. The review artifact records evidence and findings;
-the request records the desired work. Neither replaces the canonical applied
-profiles or the API feature workflow.
+The new-feature scaffold writes a copy-ready `IMPLEMENTATION-REQUEST.md`, review
+artifact, draft evidence manifest, and draft recipe registration. For planned work,
+pass the exact `PlanId` and authorized `SliceId`; the script verifies that the
+canonical plan exists and that the slice is present before creating the scaffold.
 
-`New-FeatureDocumentation.ps1` currently accepts only `countries` and `states`
-as `-ReferenceFeature` values and initially plans central canonical book paths.
-For another business module, choose the closest reference, then deliberately
-adapt the draft manifest and recipe registration to the owning module's
-canonical profiles before final registration. Do not invent command parameters,
-copy CRUD rules, or register a path before its source and numbered sections
-exist.
+The implementation request's matrices remain mandatory because they map approved
+rules to concrete enforcement layers/tests, but they are **execution traceability**.
+They do not become a second authority for business decisions already frozen in the
+plan. A material contradiction discovered during Phase 00 reopens the affected plan
+gate before coding.
+
+`-ReferenceFeature` is optional. Use a reviewed feature only when it is genuinely
+useful as an architecture/implementation reference. `none` is valid. References
+never supply business ownership, fields, lifecycle, or product scope.
 
 ## Decision vocabulary
 
@@ -122,26 +142,36 @@ when requirements change.
 
 ### New feature
 
+0. For a new business capability or substantial rebuild, create/register its
+   central plan under `documentation/plans/` and pass the gates required by the
+   authorized implementation slice before runtime work. The documentation recipe
+   system starts after product/business decisions are mature enough to implement;
+   it does not replace the planning gate.
 1. Run check mode against the already registered references.
 2. Choose the closest reference deliberately:
    - `countries`: flat global reference data, lifecycle, bulk actions, reports, and multi-view lists;
    - `states`: parent-dependent reference data and parent-filter/selector behavior.
-3. Run `New-FeatureDocumentation.ps1`. Complete the generated
-   `IMPLEMENTATION-REQUEST.md` and review artifact before runtime work. Complete its
+3. Run `New-FeatureDocumentation.ps1` with `PlanId` + `SliceId` for planned
+   work. Complete Phase 00 Implementation Preflight, the generated
+   `IMPLEMENTATION-REQUEST.md`, and review artifact before runtime work. Confirm its
    Existing-System Relationship Review plus Business Rules, Edge Cases & Validation,
-   and Impact matrices; every edge-case category must be covered or explicitly
-   reasoned `N/A`. Its
+   and Impact matrices against the approved plan; every edge-case category must be
+   covered or explicitly reasoned `N/A`. Its
    required-file and recipe-registration manifests remain draft files and are
    intentionally excluded from `recipe-manifest.json` while runtime paths are
    being created.
-4. Freeze the feature contract in the evidence artifact, including a separate
+4. Translate the approved slice into the feature execution contract in the evidence artifact, including a separate
    Required/Deferred/Excluded decision for every optional view on web and mobile.
    When Import is Required, freeze its format, exact API envelope, limits,
    duplicate/relationship rules, atomicity, permissions, side effects, and tests.
    Then implement phases 01 through 05.
 5. Create the cross-platform master and API/web/mobile applied profiles from verified source.
 6. Replace the required-file draft with a complete `required-files.json`, review and merge `recipe-registration.draft.json`, and generate outputs under `generated/<feature>/`.
-7. Complete phase 06 and run check mode.
+7. Complete Phase 06 Verification & Acceptance. It must record `Verified`; missing
+   Required behavior or a feature regression yields `Not Verified`.
+8. Only after `Verified`, complete Phase 07 Customer Education & Closure for
+   customer-visible work using
+   `documentation/plans/CUSTOMER_EDUCATION_TEMPLATE.md`.
 
 ### Existing-feature review
 
@@ -150,6 +180,10 @@ Default to read-only inspection unless implementation changes were also requeste
 ### Existing-feature change
 
 Read only the relevant generated phases and applied profiles, preserve the frozen contract or update it explicitly, implement the change, then repeat phase 04–06 reconciliation for the affected actions and integrations. If Import is created or refactored, also repeat phases 01 and 02 because its server envelope and browser parsing contract are coupled. Repeat phase 03 when mobile Import changes. Update the required-file manifest whenever the evidence surface changes.
+
+When an existing-feature change intentionally postpones work or creates a
+deployment-only check/risk/open decision, assign the canonical item a stable ID in
+`documentation/plans/notes/` and reference that ID from the feature artifact.
 
 When a change creates or extends a reusable web behavior, record its general
 contract in `web-next/features/server-managed-feature-reference.md` and its
@@ -160,13 +194,25 @@ the rule into `generated/` files or feature-local documentation by hand.
 ## Workflow
 
 1. Run check mode before starting. Resolve stale registered documentation first.
-2. Read the selected reference's phase 00 and create a feature evidence artifact from `templates/FEATURE-REVIEW-ARTIFACTS.template.md`.
-3. Complete the Existing-System Relationship Review and all three Business
-   Readiness matrices in `IMPLEMENTATION-REQUEST.md`; Phase 00 is not closed while
-   ownership, any matrix row, or an Edge Cases & Validation category is unresolved.
+2. For planned work, read the canonical plan/authorized slice and use
+   `PHASE-00-implementation-preflight.template.md`; inspect a selected reference
+   only as implementation evidence/navigation when applicable.
+3. Complete the Existing-System Relationship Review and all three execution
+   readiness matrices in `IMPLEMENTATION-REQUEST.md`; Phase 00 is not closed while
+   ownership, plan drift, any matrix row, or an Edge Cases & Validation category is
+   unresolved.
 4. Complete phases 01 through 05 in order. Record evidence using repository-relative paths and exact symbols.
-5. Complete phase 06 after tests and cross-client reconciliation.
-6. If a canonical rule changes, update the canonical book and regenerate. Never patch generated output.
+5. Complete Phase 06 after tests, cross-client reconciliation, and explicit review;
+   customer-visible work cannot proceed to education without `Verified`.
+6. Complete Phase 07 Customer Education & Closure where Required.
+7. If a canonical rule changes, update the canonical book and regenerate. Never patch generated output.
+
+### Compatibility with already registered features
+
+Existing registered recipes that use the historical Phase 00 Discovery packet and
+end at Phase 06 remain valid evidence; do not rewrite them merely for numbering
+symmetry. New scaffolds use the plan-aware Phase 00 plus Phase 07. Existing
+capabilities adopt Phase 07 when a future customer-visible phase/change is closed.
 
 ## Change-impact matrix
 
@@ -205,10 +251,18 @@ shared contract changed.
   exactly once in `requiredFiles`; check mode rejects unresolved angle-bracket
   placeholders in it.
 - Use unique book IDs prefixed by the feature ID.
-- Use recipe IDs `<feature>-phase-00-discovery-evidence` through `<feature>-phase-06-final-reconciliation`.
-- Write outputs to `generated/<feature>/PHASE-00-discovery-evidence.md` through `PHASE-06-final-reconciliation.md`.
+- New planned features use recipe IDs
+  `<feature>-phase-00-implementation-preflight` through
+  `<feature>-phase-07-customer-education-closure`.
+- New planned features write outputs under `generated/<feature>/` from
+  `PHASE-00-implementation-preflight.md` through
+  `PHASE-07-customer-education-closure.md`.
+- Existing registered 00–06 recipe IDs/outputs remain stable unless a separate
+  migration is explicitly approved.
 - Point recipe sources at the new feature's canonical books. A reference feature may guide decisions, but its fingerprints are not evidence for the new implementation.
-- Run generation, then `Generate-Documentation.ps1 -Check`. Phase 06 records exact commands, skipped gates, and one handoff decision.
+- Run generation, then `Generate-Documentation.ps1 -Check`. Phase 06 records exact
+  commands, skipped gates, and one verification decision. Phase 07 records the
+  customer-education/closure decision.
 - Keep the generated implementation request as working scope evidence or archive
   its final decisions into the review artifact; do not register an uncompleted
   placeholder request as final evidence.

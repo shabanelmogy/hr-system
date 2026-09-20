@@ -94,6 +94,13 @@ Each routed business feature exposes a curated public API below its owning modul
 
 Platform tools are now owned directly under `src/platform/tools`; new code targets the owning subdomain public API. The removed top-level `src/features` compatibility root must not be recreated.
 
+`src/platform/reporting` is the shared mobile client for the backend Reporting
+module. It remains Platform-owned because ReferenceData and future business
+modules consume the same online report catalog/render contract; moving it under
+one business module would create a forbidden module-to-module dependency. A
+future first-class Reporting screen may own its presentation under
+`src/modules/reporting` while continuing to consume this Platform capability.
+
 ## Server state and lists
 
 - React Query owns server state; local component state owns only transient UI state.
@@ -157,15 +164,18 @@ The mobile quality gate is `npm run check`, which runs:
 3. architecture boundaries;
 4. the route/API contract matrix checker;
 5. AST localization, visible-string and EN/AR catalog parity;
-6. Jest through the Expo-compatible `jest-expo` preset.
+6. Jest through the Expo-compatible `jest-expo` preset with collection across
+   all executable `src` files and a non-regression coverage threshold.
 
 `npm run check:contracts` validates the canonical
 [MOBILE_API_COMPATIBILITY_MATRIX.json](MOBILE_API_COMPATIBILITY_MATRIX.json)
 against every physical `app/**/*.tsx` route and every exported member in
 `src/**/*endpoints.ts`. Adding a route or endpoint without recording its owner,
-scope, permission boundary, and explicit offline policy fails the gate. The
-matrix records compatibility findings; it does not replace the API catalog or
-perform the Phase 01 ownership migration.
+scope, permission boundary, and explicit offline policy fails the gate. Active
+routes and endpoint members must be `aligned`; current and target ownership,
+route policy and module requirement must match. Unused endpoint constants are
+rejected until a reviewed caller exists. The matrix does not replace the API
+catalog or hosted release smoke tests.
 
 CI also runs `npm run check:dependencies` and a moderate production audit,
 `npm run check:expo` for SDK/package compatibility, and

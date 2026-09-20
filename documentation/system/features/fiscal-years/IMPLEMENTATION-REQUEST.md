@@ -9,7 +9,7 @@
 | Applied reference | `countries` for CQRS, server-list, form, lifecycle, and verification discipline only |
 | Request date | `2026-09-05` |
 | Review artifact | `documentation/system/features/fiscal-years/FISCAL_YEARS-REVIEW-ARTIFACTS.md` |
-| Required-file manifest | `documentation/system/features/fiscal-years/required-files.draft.json` |
+| Required-file manifest | `documentation/system/features/fiscal-years/required-files.json` |
 
 ## Objective and ownership
 

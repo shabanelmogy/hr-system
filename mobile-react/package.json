@@ -20,8 +20,9 @@
     "check:export": "node scripts/check-android-export.mjs",
     "check:foundation": "node scripts/check-foundation-readiness.mjs",
     "test": "jest --runInBand",
+    "test:coverage": "jest --runInBand --coverage --coverageReporters=text-summary --coverageReporters=json-summary",
     "test:watch": "jest --watch",
-    "check": "npm run typecheck && npm run lint && npm run check:architecture && npm run check:contracts && npm run check:i18n && npm run check:foundation && npm run check:release && npm run test"
+    "check": "npm run typecheck && npm run lint && npm run check:architecture && npm run check:contracts && npm run check:i18n && npm run check:foundation && npm run check:release && npm run test:coverage"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -103,6 +104,20 @@
     "moduleNameMapper": {
       "^\\./sweet/setUpJsLogger\\.fx$": "<rootDir>/scripts/jest-noop-expo-js-logger.cjs",
       "^@/(.*)$": "<rootDir>/$1"
+    },
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/**/*.test.{ts,tsx}",
+      "!src/**/*.spec.{ts,tsx}",
+      "!src/**/index.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 20,
+        "branches": 13,
+        "functions": 17,
+        "lines": 22
+      }
     }
   },
   "private": true,

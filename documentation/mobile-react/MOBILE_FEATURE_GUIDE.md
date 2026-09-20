@@ -2,6 +2,20 @@
 
 Use this guide for every new business feature inside a mobile ERP module. The goal is consistent ownership and predictable behavior, not identical folder counts. Small features may omit folders they do not need.
 
+For a new business capability or substantial rebuild, start from the approved
+central plan under `documentation/plans/`. The gates required by the exact
+authorized implementation scope must be green before runtime implementation.
+Overall `Implementation Ready` still requires G0-G4; a bounded slice may start
+earlier only through the planning system's explicit slice-authorization rule when
+remaining G4 findings are release-only. The plan must contain an explicit Mobile
+Required/Deferred/Excluded decision for each optional capability; this guide then
+defines how the Required Mobile surface is implemented.
+
+Production-only device evidence, intentionally deferred Mobile capabilities,
+known risks, and open decisions are centralized under
+`documentation/plans/notes/` and indexed from `MOBILE_NOTES.md`. Do not leave a
+material Mobile deferral only in a feature README or TODO.
+
 ## 1. Define the boundary first
 
 Write down the business capability and actor, API resources and permissions, tenant/company ownership, read-only behavior, list/filter/sort requirements, workflows, and realtime/offline expectations.

@@ -108,7 +108,10 @@ function endpointObject(source, file) {
       const fullPath = prefix ? `${prefix}.${key}` : key;
       const initializer = ts.isPropertyAssignment(property) ? property.initializer : undefined;
       if (initializer && ts.isObjectLiteralExpression(initializer)) walkObject(initializer, fullPath);
-      else members.push(fullPath);
+      else members.push({
+        key: fullPath,
+        pattern: initializer ? initializer.getText(sf) : property.getText(sf),
+      });
     }
   };
   walkObject(root, '');
@@ -188,7 +191,7 @@ function requestBoundary(call, verb, sf) {
 
 function operationsFor(endpointSource, variable, members) {
   const expressionFiles = walk(path.join(mobileRoot, 'src')).filter((file) => file.endsWith('.ts') && !file.endsWith('.test.ts') && !file.endsWith('.spec.ts'));
-  const operations = new Map(members.map((member) => [member, []]));
+  const operations = new Map(members.map((member) => [member.key, []]));
   const endpointBase = path.basename(endpointSource);
   for (const file of expressionFiles) {
     const source = fs.readFileSync(file, 'utf8');
@@ -201,7 +204,8 @@ function operationsFor(endpointSource, variable, members) {
         if (verb) {
           const first = node.arguments[0]?.getText(sf) ?? '';
           for (const member of members) {
-            if (aliases.some((alias) => first.includes(memberExpression(alias, member)))) {
+            const memberKey = member.key;
+            if (aliases.some((alias) => first.includes(memberExpression(alias, memberKey)))) {
               const operation = {
                 verb: [verb],
                 caller: `${rel(file)}#${functionName(node, sf)}`,
@@ -210,7 +214,7 @@ function operationsFor(endpointSource, variable, members) {
                 permissionAuthority: `API module catalog/endpoint policy; caller ${rel(file)}`,
               };
               const key = JSON.stringify(operation);
-              const current = operations.get(member);
+              const current = operations.get(memberKey);
               if (current && !current.some((item) => JSON.stringify(item) === key)) current.push(operation);
             }
           }
@@ -228,18 +232,18 @@ function operationsFor(endpointSource, variable, members) {
       // A computed selector can only account for leaves that were not already
       // traced through a concrete property access. This avoids falsely adding
       // the lifecycle POST to unrelated leaves such as base, lookup, or byId.
-      for (const member of members.filter((candidate) => (operations.get(candidate)?.length ?? 0) === 0)) for (const call of calls) {
+      for (const member of members.filter((candidate) => (operations.get(candidate.key)?.length ?? 0) === 0)) for (const call of calls) {
         const verb = calleeVerb(call);
         const operation = { verb: [verb], caller: `${rel(file)}#${functionName(call, sf)} (dynamic endpoint selector)`, requestBoundary: requestBoundary(call, verb, sf), responseBoundary: responseBoundary(call, verb, sf), permissionAuthority: `API module catalog/endpoint policy; caller ${rel(file)}` };
-        const current = operations.get(member);
+        const current = operations.get(member.key);
         if (current && !current.some((item) => JSON.stringify(item) === JSON.stringify(operation))) current.push(operation);
       }
     }
   }
 
   for (const member of members) {
-    const referenced = referencedEndpointOperations.get(`${endpointSource}#${member}`);
-    const current = operations.get(member);
+    const referenced = referencedEndpointOperations.get(`${endpointSource}#${member.key}`);
+    const current = operations.get(member.key);
     if (referenced && current && !current.some((item) => item.caller === referenced.caller)) {
       current.push({
         ...referenced,
@@ -269,8 +273,12 @@ function policy(pathname) {
   if (pathname === '/basic-data/organizational-structure') return anyOf([{ permissions: ['ViewCompanyGeographicScope'] }, { permissions: ['ViewOrganizationalStructure'] }]);
   if (pathname === '/basic-data') return anyOf([{ permissions: ['ViewAddressTypes', 'ViewCompanyGeographicScope', 'ViewOrganizationalStructure'] }, { roles: ['superAdmin'] }]);
   if (pathname === '/extras/files') return role(['admin']);
-  if (pathname === '/extras/appointments') return permission(['ViewUsers']);
-  if (pathname === '/extras') return anyOf([{ roles: ['admin'] }, { permissions: ['ViewUsers'] }]);
+  if (pathname === '/extras/appointments') return permission(['ViewAppointments']);
+  if (pathname === '/extras') return anyOf([
+    { roles: ['admin'] },
+    { permissions: ['ViewUsers'] },
+    { permissions: ['ViewAppointments'] },
+  ]);
   if (pathname === '/advanced-tools/track-changes') return permission(['ViewChangeLogs']);
   if (pathname === '/advanced-tools/localization-api') return permission(['ViewLocalizations']);
   if (pathname === '/advanced-tools/health-check' || pathname === '/advanced-tools/api-endpoints') return role(['admin']);
@@ -298,16 +306,28 @@ function routePath(source) {
 function moduleRequirement(pathname) {
   if (!pathname.startsWith('/')) return null;
   if (pathname === '/apps') return null;
-  if (pathname.startsWith('/apps/')) return { status: 'dynamic', moduleCode: ':moduleCode', submoduleCode: ':submoduleCode' };
+  if (pathname.startsWith('/apps/')) {
+    const [, , moduleCode, submoduleCode] = pathname.split('/');
+    return {
+      status: 'dynamic',
+      moduleCode,
+      ...(submoduleCode ? { submoduleCode } : {}),
+    };
+  }
   if (/^\/basic-data\/geographical-information\/(countries|states|districts)$/.test(pathname)) return { moduleCode: 'reference-data', submoduleCode: 'geography' };
   if (pathname === '/basic-data/geographical-information/address-types') return { moduleCode: 'reference-data', submoduleCode: 'addresses' };
   if (pathname === '/basic-data/organizational-structure/geographic-scope') return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
+  if (pathname === '/basic-data'
+    || pathname === '/basic-data/geographical-information'
+    || pathname === '/basic-data/organizational-structure') return null;
   if (pathname.startsWith('/basic-data')) return { moduleCode: 'hr', submoduleCode: 'basic-data' };
   if (pathname.startsWith('/recruitment')) return { moduleCode: 'hr', submoduleCode: 'recruitment' };
   if (pathname.startsWith('/workforce-planning')) return { moduleCode: 'hr', submoduleCode: 'workforce' };
   if (pathname.startsWith('/finance')) return { moduleCode: 'acc', submoduleCode: 'fiscal-years' };
   if (pathname.startsWith('/advanced-tools/track-changes') || pathname.startsWith('/advanced-tools/localization-api')) return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
-  if (pathname.startsWith('/advanced-tools') || pathname.startsWith('/administration')) return { moduleCode: 'platform', submoduleCode: 'operations' };
+  if (pathname === '/advanced-tools' || pathname === '/extras') return null;
+  if (pathname.startsWith('/administration')) return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
+  if (pathname.startsWith('/advanced-tools')) return { moduleCode: 'platform', submoduleCode: 'operations' };
   if (pathname.startsWith('/extras/appointments')) return { moduleCode: 'crm', submoduleCode: 'appointments' };
   if (pathname.startsWith('/extras')) return { moduleCode: 'platform', submoduleCode: 'operations' };
   return null;
@@ -324,13 +344,15 @@ function routeProfile(route, pathname) {
     note: route.note,
   };
 
-  if (effectivePath === '/basic-data' || effectivePath === '/basic-data/geographical-information') {
+  if (effectivePath === '/basic-data'
+    || effectivePath === '/basic-data/geographical-information'
+    || effectivePath === '/basic-data/organizational-structure') {
     return {
       ...profile,
-      currentOwner: 'ReferenceData/geography',
+      currentOwner: 'Shell/composite',
       targetOwner: 'Shell/composite',
-      status: 'mismatch',
-      note: 'The aggregate route spans HR, Platform, and ReferenceData; Phase 01 must remove the blanket HR module requirement.',
+      status: 'aligned',
+      note: 'Aggregate shell route; individual child routes own their module entitlements.',
     };
   }
   if (/^\/basic-data\/geographical-information\/(countries|states|districts)$/.test(effectivePath)) {
@@ -378,46 +400,46 @@ function routeProfile(route, pathname) {
   if (effectivePath.startsWith('/administration')) {
     return {
       ...profile,
-      currentOwner: 'Platform/administration',
+      currentOwner: 'Platform/tenant-administration',
       targetOwner: 'Platform/tenant-administration',
       scope: 'tenant/company',
-      status: 'mismatch',
-      note: 'The feature is Platform-owned but still has the legacy hr/administration module requirement.',
+      status: 'aligned',
+      note: 'Tenant administration is owned by the Platform module.',
     };
   }
   if (effectivePath === '/advanced-tools/track-changes' || effectivePath === '/advanced-tools/localization-api') {
     return {
       ...profile,
-      currentOwner: 'CRM/appointments',
+      currentOwner: 'Platform/tenant-administration',
       targetOwner: 'Platform/tenant-administration',
       scope: 'tenant/company',
-      status: 'mismatch',
-      note: 'The API surface is Platform tenant administration; the current route still requires an HR submodule.',
+      status: 'aligned',
+      note: 'Tenant administration owns track changes and localization settings.',
     };
   }
   if (effectivePath === '/advanced-tools/hangfire-dashboard' || effectivePath === '/advanced-tools/health-check' || effectivePath === '/advanced-tools/api-endpoints') {
     return {
       ...profile,
-      currentOwner: 'Platform/tools',
+      currentOwner: 'Platform/operations',
       targetOwner: 'Platform/operations',
       scope: 'platform-global',
-      status: 'mismatch',
-      note: 'The API surface is Platform operations; the current route still requires an HR submodule.',
+      status: 'aligned',
+      note: 'Global operational diagnostics are owned by Platform/operations.',
     };
   }
   if (effectivePath === '/advanced-tools') {
     return {
       ...profile,
-      currentOwner: 'Platform/tools',
+      currentOwner: 'Shell/composite',
       targetOwner: 'Shell/composite',
-      status: 'mismatch',
-      note: 'The aggregate route spans Platform tenant administration and global operations.',
+      status: 'aligned',
+      note: 'Aggregate shell route; tenant administration and operations own their child routes.',
     };
   }
   if (effectivePath === '/extras/appointments') {
     return {
       ...profile,
-      currentOwner: 'Platform/tools',
+      currentOwner: 'CRM/appointments',
       targetOwner: 'CRM/appointments',
       status: 'aligned',
       note: 'Appointments are CRM-owned and require CRM appointment permissions and entitlement.',
@@ -426,10 +448,30 @@ function routeProfile(route, pathname) {
   if (effectivePath === '/extras' || effectivePath === '/extras/files') {
     return {
       ...profile,
-      currentOwner: 'Platform/tools',
+      currentOwner: effectivePath === '/extras/files' ? 'Platform/files' : 'Shell/composite',
       targetOwner: effectivePath === '/extras/files' ? 'Platform/files' : 'Shell/composite',
-      status: 'mismatch',
-      note: 'The current route has a blanket hr/administration requirement that does not match its API owner.',
+      status: 'aligned',
+      note: effectivePath === '/extras/files'
+        ? 'File transfer is owned by Platform/files and remains online-authoritative.'
+        : 'Aggregate shell route; files and CRM own their child routes.',
+    };
+  }
+  if (effectivePath.startsWith('/apps/')) {
+    return {
+      ...profile,
+      currentOwner: 'Shell/dynamic',
+      targetOwner: 'Shell/dynamic',
+      status: 'aligned',
+      note: 'Dynamic module route is resolved through the server catalog and mobile registry.',
+    };
+  }
+  if (effectivePath === '/apps') {
+    return {
+      ...profile,
+      currentOwner: 'Shell/composite',
+      targetOwner: 'Shell/composite',
+      status: 'aligned',
+      note: 'Dynamic module launcher; individual module routes own their entitlements.',
     };
   }
   if (effectivePath === '/super-admin-dashboard' || effectivePath === '/tenant-management' || effectivePath === '/tenant-admin-management') {
@@ -445,31 +487,11 @@ function routeProfile(route, pathname) {
   return profile;
 }
 
-function targetRoutePolicy(pathname, current, profile) {
-  if (pathname.startsWith('layout:') || pathname.startsWith('system:')) return { kind: 'inherited' };
-  if (/^\/basic-data\/geographical-information\/countries$/.test(pathname)) return { kind: 'permissions', permissions: ['Countries:View'] };
-  if (/^\/basic-data\/geographical-information\/states$/.test(pathname)) return { kind: 'permissions', permissions: ['States:View'] };
-  if (/^\/basic-data\/geographical-information\/districts$/.test(pathname)) return { kind: 'permissions', permissions: ['Districts:View'] };
-  if (pathname === '/basic-data/geographical-information/address-types') return { kind: 'permissions', permissions: ['AddressTypes:View'] };
-  if (pathname === '/basic-data/organizational-structure/geographic-scope') return { kind: 'permissions', permissions: ['CompanyGeographicScope:View'] };
-  if (pathname === '/extras/appointments') return { kind: 'permissions', permissions: ['Appointments:View'] };
-  if (pathname === '/finance' || pathname === '/finance/fiscal-years') return { kind: 'permissions', permissions: ['FiscalYears:View'] };
-  if (profile.targetOwner === 'Shell/composite' || profile.targetOwner === 'Platform/files') {
-    return { status: 'deferred', owner: profile.targetOwner, reason: 'Phase 01 must split the aggregate route by its actual API owners.' };
-  }
+function targetRoutePolicy(_pathname, current, _profile) {
   return current;
 }
 
-function targetModuleRequirement(pathname, currentModule, profile) {
-  if (pathname.startsWith('layout:') || pathname.startsWith('system:')) return { status: 'inherited' };
-  if (/^\/basic-data\/geographical-information\/(countries|states|districts)$/.test(pathname)) return { moduleCode: 'reference-data', submoduleCode: 'geography' };
-  if (pathname === '/basic-data/geographical-information/address-types') return { moduleCode: 'reference-data', submoduleCode: 'addresses' };
-  if (pathname === '/basic-data/organizational-structure/geographic-scope') return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
-  if (pathname === '/extras/appointments') return { moduleCode: 'crm', submoduleCode: 'appointments' };
-  if (pathname.startsWith('/finance')) return { moduleCode: 'acc', submoduleCode: 'fiscal-years' };
-  if (pathname.startsWith('/administration') || pathname === '/advanced-tools/track-changes' || pathname === '/advanced-tools/localization-api') return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
-  if (pathname === '/advanced-tools/hangfire-dashboard' || pathname === '/advanced-tools/health-check' || pathname === '/advanced-tools/api-endpoints') return { moduleCode: 'platform', submoduleCode: 'operations' };
-  if (profile.targetOwner === 'Shell/composite' || profile.targetOwner === 'Platform/files') return { status: 'deferred', owner: profile.targetOwner, reason: 'Phase 01 must split the aggregate route by API owner.' };
+function targetModuleRequirement(_pathname, currentModule, _profile) {
   return currentModule;
 }
 
@@ -483,8 +505,8 @@ function endpointProfile(source) {
   if (source.includes('/hr/basic-data/organizational-structure/')) return { currentOwner: 'HR/basic-data', targetOwner: 'HR/basic-data', scope: 'tenant/company', status: 'aligned', permissionSource: 'HR OrganizationalStructureController and HrPermissions.OrganizationalStructure' };
   if (source.includes('/hr/workforce-planning/')) return { currentOwner: 'HR/workforce', targetOwner: 'HR/workforce', scope: 'tenant/company', status: 'aligned', permissionSource: 'HR workforce endpoint policy backed by HrPermissions.Workforce' };
   if (source.includes('/modules/crm/appointments/')) return { currentOwner: 'CRM/appointments', targetOwner: 'CRM/appointments', scope: 'tenant/company', status: 'aligned', permissionSource: 'CRM AppointmentsController and CrmPermissions.Appointments' };
-  if (source.includes('/platform/reporting/')) return { currentOwner: 'Platform/reporting', targetOwner: 'Reporting/analytics', scope: 'tenant/company', status: 'mismatch', permissionSource: 'Reporting API endpoint policy and ReportingPermissions.Reports' };
-  if (source.includes('/platform/tools/track-changes/')) return { currentOwner: 'Platform/tools', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'mismatch', permissionSource: 'Platform EntityChangeLogsController and PlatformPermissions.ViewChangeLogs' };
+  if (source.includes('/platform/reporting/')) return { currentOwner: 'Platform/reporting', targetOwner: 'Platform/reporting', scope: 'tenant/company', status: 'aligned', permissionSource: 'Reporting API endpoint policy and ReportingPermissions.Reports' };
+  if (source.includes('/platform/tools/track-changes/')) return { currentOwner: 'Platform/tenant-administration', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform EntityChangeLogsController and PlatformPermissions.ViewChangeLogs' };
   if (source.includes('/platform/tools/localization/')) return { currentOwner: 'Platform/tenant-administration', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform LocalizationController and PlatformPermissions localizations' };
   if (source.includes('/platform/tools/operations/')) return { currentOwner: 'Platform/operations', targetOwner: 'Platform/operations', scope: 'platform-global', status: 'aligned', permissionSource: 'Platform BackgroundJobsController and PlatformPermissions.GlobalOperations' };
   if (source.includes('/platform/administration/') || source.includes('/platform/offline-operations/') || source.includes('/platform/tenant-admins/') || source.includes('/platform/tenants/')) return { currentOwner: 'Platform/tenant-administration', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform endpoint policy and PlatformPermissions.TenantAdministration' };
@@ -531,13 +553,13 @@ for (const endpointFile of matrix.endpointFiles) {
   const parsed = endpointObject(source, endpointFile.source);
   const operations = operationsFor(endpointFile.source, parsed.variable, parsed.members);
   const profile = endpointProfile(endpointFile.source);
-  endpointFile.members = parsed.members.map((key) => {
+  endpointFile.members = parsed.members.map(({ key, pattern }) => {
     const ops = operations.get(key) ?? [];
     const permissionAuthority = endpointPermissionOverrides.get(`${endpointFile.source}#${key}`) ?? profile.permissionSource;
     const tracedOperations = ops.map((operation) => ({ ...operation, permissionAuthority }));
     return {
       key,
-      pattern: `endpoint member ${key}`,
+      pattern,
       verb: tracedOperations.length ? [...new Set(tracedOperations.flatMap((operation) => operation.verb))] : ['UNUSED'],
       operations: tracedOperations,
       currentOwner: profile.currentOwner,

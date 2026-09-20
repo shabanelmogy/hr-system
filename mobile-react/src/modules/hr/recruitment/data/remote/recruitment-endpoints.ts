@@ -11,7 +11,6 @@ export const recruitmentEndpoints = {
   },
   candidates: {
     base: 'recruitment/candidates',
-    byId: (id: number) => `recruitment/candidates/${id}`,
   },
   applications: {
     base: 'recruitment/applications',
@@ -21,20 +20,16 @@ export const recruitmentEndpoints = {
   },
   interviews: {
     base: 'recruitment/interviews',
-    byId: (id: number) => `recruitment/interviews/${id}`,
     complete: (id: number) => `recruitment/interviews/${id}/complete`,
     evaluations: (id: number) => `recruitment/interviews/${id}/evaluations`,
     scorecardTemplate: (id: number) => `recruitment/interviews/${id}/scorecard-template`,
   },
   offers: {
     base: 'recruitment/offers',
-    byId: (id: number) => `recruitment/offers/${id}`,
     submit: (id: number) => `recruitment/offers/${id}/submit`,
     approve: (id: number) => `recruitment/offers/${id}/approve`,
     reject: (id: number) => `recruitment/offers/${id}/reject`,
     issue: (id: number) => `recruitment/offers/${id}/issue`,
-    accept: (id: number) => `recruitment/offers/${id}/accept`,
-    decline: (id: number) => `recruitment/offers/${id}/decline`,
   },
   requisitions: {
     base: 'recruitment/requisitions',

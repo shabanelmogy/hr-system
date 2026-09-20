@@ -14,6 +14,7 @@ they do not replace `ERP_ARCHITECTURE_CONSTITUTION.md` or
 | [ADR-005](ADR-005-cross-module-contracts-outbox-inbox.md) | Contracts-only cross-module dependencies and durable messaging | Accepted |
 | [ADR-006](ADR-006-tenant-company-isolation.md) | Independent tenant and company isolation | Accepted |
 | [ADR-007](ADR-007-analyzer-warning-adoption.md) | Incremental analyzer-debt burn-down without weakening compiler safety | Accepted |
+| [ADR-008](ADR-008-digital-channels-and-commerce-boundaries.md) | Digital channels, Job Portal, and Commerce ownership and sequence | Accepted (planning) |
 
 Create a new ADR only when a material architecture choice has rationale or
 tradeoffs that are not already captured here. Ordinary feature decisions belong

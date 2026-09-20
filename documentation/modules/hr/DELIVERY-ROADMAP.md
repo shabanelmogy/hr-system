@@ -33,3 +33,21 @@ in the feature evidence before implementation.
 Classify each optional report, import, workflow, and client surface explicitly
 in its feature evidence. Do not use a copied HR reference as a global ERP
 requirement.
+
+## Future product boundary
+
+The public Job Portal is a planned independent module and is not an HR screen
+or a new HR persistence surface. HR remains the owner of Candidate profile/link,
+EmploymentApplication, requisition/job posting/opening, interview, offer, and
+hire lifecycle. JobPortal owns only public vacancy projection/search/index,
+tenant-branded channel content, saved jobs/alerts/preferences, draft application
+UX, and public/employer BFF read models. Submit calls an HR Contract
+idempotently; tenant/company comes from approved publication and host/channel.
+
+It starts only after Recruitment public contracts, privacy/consent rules, and
+Phase 00 feature evidence are reviewed. This stream is independent of
+Accounting and Inventory. Platform owns the external auth principal.
+
+Commerce, Sales, Procurement, storefront, checkout, and fulfillment remain
+Excluded from HR. If a future integration is required, document a narrow
+Contracts/Events boundary and keep the source of truth in the owning module.

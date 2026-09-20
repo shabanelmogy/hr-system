@@ -57,7 +57,8 @@ mobile profile      ← Expo، التنقل، الاتصال، وOffline إن ك
 5. قرر لكل من API والويب والموبايل هل capability هي `Required` أو `Deferred`
    أو `Excluded`، بما في ذلك Import وReport وOffline read/write.
 6. نفذ الشريحة كاملة في الموديول المالك، ثم حدّث ملفات الأدلة والـmanifest
-   وشغّل التحقق. مرحلة 06 تسجل الجاهزية والفشل الموروث وقرار الإصدار.
+   وشغّل التحقق. للـflow الجديد: Phase 06 هي Verification & Acceptance ويجب أن
+   تنتهي بـ`Verified` قبل بدء Phase 07 الخاصة بتوثيق العميل والفيديو والإغلاق.
 
 ## دورة التحسين المستمرة للمكونات المشتركة
 
@@ -71,10 +72,10 @@ mobile profile      ← Expo، التنقل، الاتصال، وOffline إن ك
 
 ## استخدام مولّد التوثيق بدقة
 
-الأمر الحالي `New-FeatureDocumentation.ps1` يقبل `countries` أو `states`
-فقط كـ`ReferenceFeature`. لا تضف معاملات غير موجودة ولا تمرر اسم Accounting
-أو POS لهذا الخيار. اختر المرجع الأقرب لسلوك الميزة: Countries للبيانات
-المسطحة، وStates للبيانات التابعة.
+للعمل المخطط، الأمر `New-FeatureDocumentation.ps1` يستقبل `PlanId` و
+`SliceId` و`Module` لربط التنفيذ بالخطة والشريحة المصرح بها. خيار
+`ReferenceFeature` اختياري ويستخدم فقط عندما يوجد مرجع تنفيذي مناسب فعلًا؛
+`none` صحيح للميزات التي لا يشبهها Countries أو States.
 
 المولّد يخطط مبدئيًا لكتب مركزية تحت `documentation/project/` و`documentation/api/`
 و`documentation/web-next/` و`documentation/mobile-react/`. بالنسبة لميزة أعمال
@@ -86,10 +87,13 @@ manifest النهائي. لا تنسخ قواعد CRUD من Countries أو HR؛ 
 ثم أعد تقرير الحقول والملكية والعلاقات والتعارضات من الصفر.
 
 استخدم معرفات فريدة مسبوقة بالموديول، مثل
-`accounting-chart-of-accounts` أو `pos-shift-closing`. الوصفات تتبع صيغة
-`<feature-id>-phase-00-discovery-evidence` حتى
-`<feature-id>-phase-06-final-reconciliation` وتكتب مخرجاتها تحت
-`documentation/system/generated/<feature-id>/`. لا تعدّل `generated/` يدويًا.
+`accounting-chart-of-accounts` أو `pos-shift-closing`. الميزات الجديدة
+المرتبطة بخطة تستخدم Phase 00 Implementation Preflight ثم 01–05 للتنفيذ ثم
+Phase 06 Verification & Acceptance ثم Phase 07 Customer Education & Closure.
+الوصفات تكتب مخرجاتها تحت
+`documentation/system/generated/<feature-id>/`. الوصفات المسجلة تاريخيًا
+بـ00–06 تظل مستقرة ولا يعاد ترقيمها لمجرد التماثل. لا تعدّل `generated/`
+يدويًا.
 
 ## دليل القرار للـOffline في الموبايل
 

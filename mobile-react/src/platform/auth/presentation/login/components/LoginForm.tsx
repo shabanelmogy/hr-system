@@ -137,75 +137,79 @@ export function LoginForm({ compact, form }: LoginFormProps) {
           </View>
         ) : null}
 
-        <View style={styles.quickAccessHeading}>
-          <View style={[styles.divider, { backgroundColor: theme.colors.border }]} />
-          <AppText color="muted" variant="caption">
-            {t('auth.quickAccess')}
-          </AppText>
-          <View style={[styles.divider, { backgroundColor: theme.colors.border }]} />
-        </View>
+        {ENV.demoLoginEnabled ? (
+          <>
+            <View style={styles.quickAccessHeading}>
+              <View style={[styles.divider, { backgroundColor: theme.colors.border }]} />
+              <AppText color="muted" variant="caption">
+                {t('auth.quickAccess')}
+              </AppText>
+              <View style={[styles.divider, { backgroundColor: theme.colors.border }]} />
+            </View>
 
-        <View
-          style={[
-            styles.quickActions,
-            compact ? styles.quickActionsCompact : styles.quickActionsWide,
-          ]}>
-          <AppButton
-            disabled={form.isAnySubmitting}
-            fullWidth={compact}
-            icon="person-outline"
-            loading={form.activeAction === 'user'}
-            onPress={() => void form.loginAs('user')}
-            style={[
-              styles.quickButton,
-              compact ? styles.quickButtonCompact : styles.quickButtonWide,
-            ]}
-            variant="outline">
-            {t('auth.loginAsUser')}
-          </AppButton>
-          <View
-            style={[
-              styles.adminButtonShell,
-              {
-                backgroundColor: theme.colors.danger,
-                shadowColor: theme.colors.danger,
-              },
-              compact ? styles.quickButtonCompact : styles.quickButtonWide,
-            ]}>
-            <AppButton
-              disabled={form.isAnySubmitting}
-              fullWidth
-              gradientColors={[theme.colors.danger, theme.colors.warning]}
-              icon="shield-outline"
-              loading={form.activeAction === 'admin'}
-              onPress={() => void form.loginAs('admin')}
-              style={styles.adminButton}
-              variant="danger">
-              {t('auth.loginAsAdmin')}
-            </AppButton>
-          </View>
-          <View
-            style={[
-              styles.superAdminButtonShell,
-              {
-                backgroundColor: theme.colors.secondary,
-                shadowColor: theme.colors.secondary,
-              },
-              compact ? styles.quickButtonCompact : styles.quickButtonWide,
-            ]}>
-            <AppButton
-              disabled={form.isAnySubmitting}
-              fullWidth
-              gradientColors={[theme.colors.secondary, theme.colors.primary]}
-              icon="diamond-outline"
-              loading={form.activeAction === 'superAdmin'}
-              onPress={() => void form.loginAs('superAdmin')}
-              style={styles.adminButton}
-              variant="secondary">
-              {t('auth.loginAsSuperAdmin')}
-            </AppButton>
-          </View>
-        </View>
+            <View
+              style={[
+                styles.quickActions,
+                compact ? styles.quickActionsCompact : styles.quickActionsWide,
+              ]}>
+              <AppButton
+                disabled={form.isAnySubmitting}
+                fullWidth={compact}
+                icon="person-outline"
+                loading={form.activeAction === 'user'}
+                onPress={() => void form.loginAs('user')}
+                style={[
+                  styles.quickButton,
+                  compact ? styles.quickButtonCompact : styles.quickButtonWide,
+                ]}
+                variant="outline">
+                {t('auth.loginAsUser')}
+              </AppButton>
+              <View
+                style={[
+                  styles.adminButtonShell,
+                  {
+                    backgroundColor: theme.colors.danger,
+                    shadowColor: theme.colors.danger,
+                  },
+                  compact ? styles.quickButtonCompact : styles.quickButtonWide,
+                ]}>
+                <AppButton
+                  disabled={form.isAnySubmitting}
+                  fullWidth
+                  gradientColors={[theme.colors.danger, theme.colors.warning]}
+                  icon="shield-outline"
+                  loading={form.activeAction === 'admin'}
+                  onPress={() => void form.loginAs('admin')}
+                  style={styles.adminButton}
+                  variant="danger">
+                  {t('auth.loginAsAdmin')}
+                </AppButton>
+              </View>
+              <View
+                style={[
+                  styles.superAdminButtonShell,
+                  {
+                    backgroundColor: theme.colors.secondary,
+                    shadowColor: theme.colors.secondary,
+                  },
+                  compact ? styles.quickButtonCompact : styles.quickButtonWide,
+                ]}>
+                <AppButton
+                  disabled={form.isAnySubmitting}
+                  fullWidth
+                  gradientColors={[theme.colors.secondary, theme.colors.primary]}
+                  icon="diamond-outline"
+                  loading={form.activeAction === 'superAdmin'}
+                  onPress={() => void form.loginAs('superAdmin')}
+                  style={styles.adminButton}
+                  variant="secondary">
+                  {t('auth.loginAsSuperAdmin')}
+                </AppButton>
+              </View>
+            </View>
+          </>
+        ) : null}
       </AppForm>
     </View>
   );

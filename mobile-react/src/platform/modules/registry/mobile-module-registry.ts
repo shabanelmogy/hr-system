@@ -105,6 +105,12 @@ export function validateMobileModuleRegistry(): void {
       }
       submoduleCodes.add(submoduleCode);
 
+      if (submodule.entryCandidates.length === 0 || submodule.routePrefixes.length === 0) {
+        throw new Error(
+          `Mobile submodule '${moduleDefinition.code}/${submodule.code}' must declare at least one entry candidate and route prefix.`,
+        );
+      }
+
       for (const routePrefix of submodule.routePrefixes) {
         const prefix = normalizeRoute(routePrefix);
         const owner = `${normalize(moduleDefinition.code)}/${submoduleCode}`;

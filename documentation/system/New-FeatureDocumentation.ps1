@@ -8,8 +8,20 @@ param(
     [ValidateNotNullOrEmpty()]
     [string]$FeatureName,
 
-    [ValidateSet('countries', 'states')]
-    [string]$ReferenceFeature = 'countries'
+    [Parameter(Mandatory)]
+    [ValidatePattern('^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$')]
+    [string]$PlanId,
+
+    [Parameter(Mandatory)]
+    [ValidateNotNullOrEmpty()]
+    [string]$SliceId,
+
+    [Parameter(Mandatory)]
+    [ValidatePattern('^[A-Za-z][A-Za-z0-9.-]*$')]
+    [string]$Module,
+
+    [ValidatePattern('^(?:none|[a-z][a-z0-9]*(?:-[a-z0-9]+)*)$')]
+    [string]$ReferenceFeature = 'none'
 )
 
 Set-StrictMode -Version Latest
@@ -31,6 +43,71 @@ if (-not $featureRoot.StartsWith($expectedPrefix, [System.StringComparison]::Ord
 
 if (Test-Path -LiteralPath $featureRoot) {
     throw "Feature documentation already exists: $featureRoot. This command never overwrites an existing scaffold."
+}
+
+$registryPath = Join-Path $repositoryRoot 'documentation/plans/PLAN_REGISTRY.md'
+if (-not (Test-Path -LiteralPath $registryPath -PathType Leaf)) {
+    throw "Planning registry is missing: documentation/plans/PLAN_REGISTRY.md"
+}
+
+$registryLine = Get-Content -LiteralPath $registryPath -Encoding UTF8 |
+    Where-Object { $_ -match ("^\|\s*``" + [regex]::Escape($PlanId) + "``\s*\|") } |
+    Select-Object -First 1
+if ([string]::IsNullOrWhiteSpace($registryLine)) {
+    throw "PlanId '$PlanId' is not registered in documentation/plans/PLAN_REGISTRY.md."
+}
+
+$registryColumns = @($registryLine -split '\|' | ForEach-Object { $_.Trim().Trim('`') })
+$registeredModule = $registryColumns[3]
+$registeredPlanPath = $registryColumns[5]
+if (-not $registeredModule.Equals($Module, [System.StringComparison]::OrdinalIgnoreCase)) {
+    throw "PlanId '$PlanId' is registered for module '$registeredModule', not '$Module'."
+}
+if ([string]::IsNullOrWhiteSpace($registeredPlanPath) -or $registeredPlanPath -match '[<>]') {
+    throw "PlanId '$PlanId' has an invalid canonical plan path in PLAN_REGISTRY.md: '$registeredPlanPath'."
+}
+
+$canonicalPlanRelativePath = $registeredPlanPath -replace '\\', '/'
+$canonicalPlanPath = [System.IO.Path]::GetFullPath((Join-Path $repositoryRoot ($canonicalPlanRelativePath -replace '/', [System.IO.Path]::DirectorySeparatorChar)))
+$repositoryPrefix = $repositoryRoot.TrimEnd([System.IO.Path]::DirectorySeparatorChar) + [System.IO.Path]::DirectorySeparatorChar
+if (-not $canonicalPlanPath.StartsWith($repositoryPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+    throw "Canonical plan path resolves outside the repository: $canonicalPlanRelativePath"
+}
+$archiveRoot = [System.IO.Path]::GetFullPath((Join-Path $repositoryRoot 'documentation/old files'))
+$archivePrefix = $archiveRoot.TrimEnd([System.IO.Path]::DirectorySeparatorChar) + [System.IO.Path]::DirectorySeparatorChar
+if ($canonicalPlanPath.Equals($archiveRoot, [System.StringComparison]::OrdinalIgnoreCase) -or
+    $canonicalPlanPath.StartsWith($archivePrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+    throw "PlanId '$PlanId' cannot use an archived canonical plan under documentation/old files."
+}
+if (-not (Test-Path -LiteralPath $canonicalPlanPath -PathType Leaf)) {
+    throw "Canonical plan does not exist for PlanId '$PlanId': $canonicalPlanRelativePath"
+}
+
+$planText = Get-Content -LiteralPath $canonicalPlanPath -Raw -Encoding UTF8
+if ($planText -notmatch ("(?im)^\|\s*Plan ID\s*\|\s*" + [regex]::Escape($PlanId) + "\s*\|")) {
+    throw "Canonical plan metadata does not declare Plan ID '$PlanId'."
+}
+if ($planText -notmatch ("(?im)^\|\s*Owning module\s*\|\s*" + [regex]::Escape($Module) + "\s*\|")) {
+    throw "Canonical plan metadata does not declare owning module '$Module'."
+}
+if ($planText -notmatch [regex]::Escape($SliceId)) {
+    throw "SliceId '$SliceId' was not found in canonical plan '$canonicalPlanRelativePath'. Use the exact authorized slice identifier/name from the plan."
+}
+if ($planText -notmatch '(?im)^\|\s*Status\s*\|\s*[^|]*(execution-ready|implementation ready|in progress|verified)[^|]*\|') {
+    throw "Canonical plan '$PlanId' is not marked execution-ready/Implementation Ready/In Progress/Verified. Resolve the planning gate before scaffolding runtime work."
+}
+
+$planIdDisplay = $PlanId
+$sliceIdDisplay = $SliceId
+$moduleDisplay = $Module
+$canonicalPlanDirectory = [System.IO.Path]::GetDirectoryName(($canonicalPlanRelativePath -replace '/', [System.IO.Path]::DirectorySeparatorChar))
+$educationRelativePath = (($canonicalPlanDirectory -replace '\\', '/').TrimEnd('/')) + "/education/$FeatureId.md"
+$referenceDisplay = if ([string]::IsNullOrWhiteSpace($ReferenceFeature) -or $ReferenceFeature -eq 'none') { 'N/A' } else { $ReferenceFeature }
+if ($referenceDisplay -ne 'N/A') {
+    $referenceManifest = Join-Path $systemRoot "features/$ReferenceFeature/required-files.json"
+    if (-not (Test-Path -LiteralPath $referenceManifest -PathType Leaf)) {
+        throw "ReferenceFeature '$ReferenceFeature' has no final required-files.json under documentation/system/features/$ReferenceFeature/."
+    }
 }
 
 $featureParts = @($FeatureId -split '-')
@@ -64,19 +141,25 @@ $artifact = $artifact.Replace('<Feature Name>', $FeatureName)
 $artifact = $artifact.Replace('<feature>', $FeatureId)
 $artifact = $artifact.Replace('<FEATURE>', $upperFeature)
 $artifact = $artifact.Replace('<YYYY-MM-DD>', (Get-Date).ToString('yyyy-MM-dd'))
+$artifact = $artifact.Replace('<PlanId or N/A>', $planIdDisplay)
+$artifact = $artifact.Replace('<SliceId or N/A>', $sliceIdDisplay)
+$artifact = $artifact.Replace('<CanonicalPlanPath or N/A>', $canonicalPlanRelativePath)
+$artifact = $artifact.Replace('<ReferenceFeature or N/A>', $referenceDisplay)
+$artifact = $artifact.Replace('<repository-relative path or N/A>', $educationRelativePath)
 $artifact = $artifact.Replace('<repository-relative implementation request path>', $implementationRequestRelativePath)
 $artifact = $artifact.Replace('<repository-relative path>', $draftManifestRelativePath)
 $artifact = $artifact.Replace('<new feature | existing-feature review | existing-feature change>', 'new feature')
-$artifact = $artifact.Replace(
-    '| Applied reference | `Countries`, `States`, or `<documented alternative>` |',
-    "| Applied reference | ``$ReferenceFeature`` |"
-)
 
 $implementationRequest = Get-Content -LiteralPath $implementationRequestTemplatePath -Raw -Encoding UTF8
 $implementationRequest = $implementationRequest.Replace('<Feature Name>', $FeatureName)
 $implementationRequest = $implementationRequest.Replace('<feature>', $FeatureId)
-$implementationRequest = $implementationRequest.Replace('<ReferenceFeature>', $ReferenceFeature)
 $implementationRequest = $implementationRequest.Replace('<YYYY-MM-DD>', (Get-Date).ToString('yyyy-MM-dd'))
+$implementationRequest = $implementationRequest.Replace('<PlanId or N/A>', $planIdDisplay)
+$implementationRequest = $implementationRequest.Replace('<SliceId or N/A>', $sliceIdDisplay)
+$implementationRequest = $implementationRequest.Replace('<CanonicalPlanPath or N/A>', $canonicalPlanRelativePath)
+$implementationRequest = $implementationRequest.Replace('<ReferenceFeature or N/A>', $referenceDisplay)
+$implementationRequest = $implementationRequest.Replace('<CustomerEducationPath>', $educationRelativePath)
+$implementationRequest = $implementationRequest.Replace('<platform | hr | accounting | ...>', $moduleDisplay)
 $implementationRequest = $implementationRequest.Replace('<repository-relative review artifact path>', $artifactRelativePath)
 $implementationRequest = $implementationRequest.Replace('<repository-relative draft or final manifest path>', $draftManifestRelativePath)
 
@@ -85,7 +168,11 @@ $draftManifest = [ordered]@{
     status = 'draft'
     feature = $FeatureId
     featureName = $FeatureName
-    referenceFeature = $ReferenceFeature
+    referenceFeature = $referenceDisplay
+    planId = $planIdDisplay
+    sliceId = $sliceIdDisplay
+    canonicalPlan = $canonicalPlanRelativePath
+    plannedCustomerEducation = $educationRelativePath
     purpose = "Draft evidence plan for $FeatureName. This file is not registered until every final source exists."
     reviewArtifact = $artifactRelativePath
     implementationRequest = $implementationRequestRelativePath
@@ -129,7 +216,10 @@ $draftManifest = [ordered]@{
         'Merge recipe-registration.draft.json into recipe-manifest.json only after the four canonical books are complete.',
         "Write generated packets under documentation/system/generated/$FeatureId/.",
         'Run generation and then Generate-Documentation.ps1 -Check.',
-        'Complete phase 06 with an explicit handoff decision.'
+        'Complete phase 06 with an explicit verification decision.',
+        'Do not start customer-facing education until phase 06 records Verified.',
+        'For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.',
+        'When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed.'
     )
 }
 $draftJson = $draftManifest | ConvertTo-Json -Depth 10
@@ -140,7 +230,11 @@ $webBookId = "$FeatureId-web"
 $mobileBookId = "$FeatureId-mobile"
 $registrationDraft = [ordered]@{
     status = 'draft'
-    referenceFeature = $ReferenceFeature
+    referenceFeature = $referenceDisplay
+    planId = $planIdDisplay
+    sliceId = $sliceIdDisplay
+    canonicalPlan = $canonicalPlanRelativePath
+    plannedCustomerEducation = $educationRelativePath
     instructions = 'Merge these entries into recipe-manifest.json only after required-files.json and all four canonical books exist.'
     books = @(
         [ordered]@{ id = $masterBookId; path = "../project/${upperFeature}_FEATURE_FULL_REVIEW.md"; title = "$FeatureName cross-platform master review" },
@@ -151,8 +245,8 @@ $registrationDraft = [ordered]@{
     requiredFileManifest = "features/$FeatureId/required-files.json"
     recipes = @(
         [ordered]@{
-            id = "$FeatureId-phase-00-discovery-evidence"; title = "$FeatureName Phase 00 - Discovery and Evidence"
-            template = 'templates/PHASE-00-discovery-evidence.template.md'; output = "generated/$FeatureId/PHASE-00-discovery-evidence.md"
+            id = "$FeatureId-phase-00-implementation-preflight"; title = "$FeatureName Phase 00 - Implementation Preflight"
+            template = 'templates/PHASE-00-implementation-preflight.template.md'; output = "generated/$FeatureId/PHASE-00-implementation-preflight.md"
             sources = @(
                 [ordered]@{ book = $masterBookId; sections = @(1, 2, 5, 8, 9) },
                 [ordered]@{ book = $apiBookId; sections = @(1, 10, 11) },
@@ -205,11 +299,20 @@ $registrationDraft = [ordered]@{
             )
         },
         [ordered]@{
-            id = "$FeatureId-phase-06-final-reconciliation"; title = "$FeatureName Phase 06 - Final Reconciliation"
-            template = 'templates/PHASE-06-final-reconciliation.template.md'; output = "generated/$FeatureId/PHASE-06-final-reconciliation.md"
+            id = "$FeatureId-phase-06-verification-acceptance"; title = "$FeatureName Phase 06 - Verification and Acceptance"
+            template = 'templates/PHASE-06-verification-acceptance.template.md'; output = "generated/$FeatureId/PHASE-06-verification-acceptance.md"
             sources = @(
                 [ordered]@{ book = $masterBookId; sections = @(8, 9, 10) },
                 [ordered]@{ book = $apiBookId; sections = @(10, 11) },
+                [ordered]@{ book = $webBookId; sections = @(12, 13, 14) },
+                [ordered]@{ book = $mobileBookId; sections = @(14, 15) }
+            )
+        },
+        [ordered]@{
+            id = "$FeatureId-phase-07-customer-education-closure"; title = "$FeatureName Phase 07 - Customer Education and Closure"
+            template = 'templates/PHASE-07-customer-education-closure.template.md'; output = "generated/$FeatureId/PHASE-07-customer-education-closure.md"
+            sources = @(
+                [ordered]@{ book = $masterBookId; sections = @(8, 9, 10) },
                 [ordered]@{ book = $webBookId; sections = @(12, 13, 14) },
                 [ordered]@{ book = $mobileBookId; sections = @(14, 15) }
             )
@@ -233,7 +336,9 @@ Write-Host "Created $artifactRelativePath"
 Write-Host "Created $implementationRequestRelativePath"
 Write-Host "Created $draftManifestRelativePath"
 Write-Host "Created $registrationDraftRelativePath"
-Write-Host "Reference selected: $ReferenceFeature"
+Write-Host "Plan: $planIdDisplay / Slice: $sliceIdDisplay"
+Write-Host "Reference selected: $referenceDisplay"
 Write-Host 'The draft manifest is intentionally not registered in recipe-manifest.json.'
-Write-Host 'Runtime implementation starts only after the Existing-System Relationship Review and all three Business Readiness matrices are complete.'
+Write-Host 'Runtime implementation starts only after Phase 00 implementation preflight and execution-readiness evidence are complete.'
 Write-Host "After runtime evidence and the four canonical books exist, finalize the manifest and register recipes under generated/$FeatureId/."
+Write-Host 'Phase 06 must record Verified before Phase 07 customer education/closure can complete.'

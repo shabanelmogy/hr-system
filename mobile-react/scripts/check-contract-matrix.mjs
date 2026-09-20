@@ -109,6 +109,10 @@ for (const route of routeEntries) {
   if (!Object.prototype.hasOwnProperty.call(route, 'currentModuleRequirement') || !Object.prototype.hasOwnProperty.call(route, 'targetModuleRequirement')) errors.push(`${label} must record currentModuleRequirement and targetModuleRequirement`);
   if (!routeKinds.has(route.kind)) errors.push(`${label} has invalid kind ${route.kind}`);
   if (!statuses.has(route.status)) errors.push(`${label} has invalid status ${route.status}`);
+  if (route.status !== 'aligned') errors.push(`${label} remains ${route.status}; active mobile routes must be aligned before business development.`);
+  if (route.status === 'aligned' && route.currentOwner !== route.targetOwner) errors.push(`${label} is aligned but its current and target owners differ.`);
+  if (route.status === 'aligned' && JSON.stringify(route.currentRoutePolicy) !== JSON.stringify(route.targetRoutePolicy)) errors.push(`${label} is aligned but its current and target route policies differ.`);
+  if (route.status === 'aligned' && JSON.stringify(route.currentModuleRequirement) !== JSON.stringify(route.targetModuleRequirement)) errors.push(`${label} is aligned but its current and target module requirements differ.`);
   if (!offlineModes.has(route.offlineMode)) errors.push(`${label} has invalid offlineMode ${route.offlineMode}`);
 }
 
@@ -124,9 +128,11 @@ for (const endpointFile of endpointEntries) {
     if (!Array.isArray(member.verb) || member.verb.length === 0) errors.push(`${memberLabel} must declare at least one HTTP verb or UNUSED`);
     if (!Array.isArray(member.operations)) errors.push(`${memberLabel} must declare traced operations`);
     const operations = Array.isArray(member.operations) ? member.operations : [];
-    if (member.verb.includes('UNUSED')) {
-      if (member.verb.length !== 1 || operations.length !== 0 || member.status !== 'deferred' || !/unwired endpoint constant/i.test(member.note ?? '')) errors.push(`${memberLabel} UNUSED must be deferred, unwired, and have no operations`);
-    } else if (operations.length === 0) errors.push(`${memberLabel} has no traced non-test caller; use UNUSED only for an unwired member`);
+    if (member.verb.includes('UNUSED')) errors.push(`${memberLabel} is unused; remove the endpoint constant until a reviewed caller exists.`);
+    else if (operations.length === 0) errors.push(`${memberLabel} has no traced non-test caller.`);
+    if (member.status !== 'aligned') errors.push(`${memberLabel} remains ${member.status}; endpoint members must be aligned.`);
+    if (member.status === 'aligned' && member.currentOwner !== member.targetOwner) errors.push(`${memberLabel} is aligned but its current and target owners differ.`);
+    if (/^endpoint member\s/i.test(member.pattern)) errors.push(`${memberLabel} has a placeholder endpoint pattern.`);
     for (const verb of member.verb) if (verb !== 'UNUSED' && !transportVerbs.has(verb)) errors.push(`${memberLabel} has invalid verb ${verb}`);
     for (const operation of operations) {
       requireFields(operation, ['caller', 'requestBoundary', 'responseBoundary', 'permissionAuthority'], `${memberLabel} operation`);

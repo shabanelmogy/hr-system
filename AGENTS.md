@@ -34,15 +34,46 @@ Rules:
 ## Centralized documentation system
 
 - All project-owned guides live under [`documentation/`](documentation/README.md). Do not create new `Docs/`, `docs/`, or `doc/` trees inside application projects.
+- For a new business capability or substantial business rebuild, start with
+  [`documentation/plans/README.md`](documentation/plans/README.md), create or
+  register the plan, follow
+  [`documentation/plans/PLAN_CREATION_PROTOCOL.md`](documentation/plans/PLAN_CREATION_PROTOCOL.md),
+  and satisfy the gates required by the exact authorized implementation scope in
+  [`documentation/plans/PLAN_QUALITY_GATE.md`](documentation/plans/PLAN_QUALITY_GATE.md)
+  before runtime implementation. Overall `Implementation Ready` still requires
+  G0-G4; a bounded slice may start earlier only through the documented
+  slice-authorization rule when remaining G4 findings are release-only. Planning
+  owns intent and approved decisions; it does not replace canonical API/Web/Mobile
+  implementation evidence.
+- Production-only checks, deliberately deferred work, known risks, follow-ups,
+  and unresolved decisions must receive a stable central ID under
+  `documentation/plans/notes/`. API/Mobile/Cross-platform index files reference
+  the canonical note ID instead of duplicating the note. Do not leave a material
+  deferred/release item only in chat history, TODO comments, or a secondary plan.
+- Run `./documentation/plans/Check-Planning.ps1` when changing the planning
+  system, plan registry, business-plan folders, or central note registries.
 - Any change that includes API work must follow [`documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md) first. The documentation recipe system organizes evidence and cross-platform handoff; it does not replace API ownership, business-rule, or existing-system relationship decisions.
 - Before creating or restructuring a feature that spans API, `web-next`, or `mobile-react`, read [`documentation/system/README.md`](documentation/system/README.md) and run `./documentation/system/Generate-Documentation.ps1 -Check`.
-- Choose the closest reviewed reference explicitly: Countries for a flat global reference-data lifecycle, or States for a parent-dependent reference-data lifecycle. Neither reference supplies tenant/company ownership rules for HR aggregates.
+- Choose a reviewed implementation reference only when it genuinely matches the
+  implementation shape. Countries/States remain useful reference-data examples but
+  are no longer mandatory references for unrelated ERP domains. A reference never
+  supplies product scope or business ownership.
 - Use the selected feature's `documentation/system/features/<reference>/required-files.json` to discover its complete evidence surface. Verify current source before applying the pattern.
-- For a new feature, run `./documentation/system/New-FeatureDocumentation.ps1 -FeatureId <kebab-case-id> -FeatureName "<Display Name>" -ReferenceFeature countries|states`. Complete the generated `IMPLEMENTATION-REQUEST.md` and review artifact before runtime work. Keep its required-file manifest in draft state until the referenced runtime files exist.
+- For planned new work, run
+  `./documentation/system/New-FeatureDocumentation.ps1 -FeatureId <id> -FeatureName "<name>" -PlanId <plan-id> -SliceId "<exact authorized slice>" -Module <module>`.
+  Add `-ReferenceFeature <reviewed-feature>` only when useful. Complete Phase 00
+  Implementation Preflight, the generated `IMPLEMENTATION-REQUEST.md`, and review
+  artifact before runtime work. Keep its required-file manifest in draft state until
+  referenced runtime files exist.
 - Treat `Required` as current-release and gated, `Deferred` as owned/scheduled with a reopening trigger, and `Excluded` as deliberately absent with no runtime placeholder. Decide every optional capability independently for web and mobile.
 - For a review of an existing feature, default to read-only evidence collection unless the user also asks for changes. Record verified behavior, requested behavior, intentional platform differences, and unresolved findings separately.
 - Register final canonical books, the final required-file manifest, and feature-scoped recipes under `generated/<feature>/`; do not reuse the unscoped Countries packets for another feature.
-- During a new-feature draft, use the phase templates and the selected reference packets as navigation, never as implementation evidence. After canonical books are registered, generate the feature's own phases 00 through 06; phase 06 is mandatory for handoff.
+- During a new-feature draft, use the plan-aware Phase 00 and any selected reference
+  packets as navigation, never as proof of the new implementation. New planned
+  features use phases 00 through 07: Phase 06 is mandatory Verification &
+  Acceptance; Phase 07 Customer Education & Closure is allowed only after Phase 06
+  records `Verified`. Existing registered 00–06 recipes remain stable unless
+  separately migrated.
 - Never edit `documentation/system/generated/` directly. Update a canonical numbered section, recipe template, or manifest and regenerate.
 - Keep runtime source in its owning application. Documentation manifests reference source files; they do not duplicate them.
 - Every domain change must update its owning canonical documentation in the same

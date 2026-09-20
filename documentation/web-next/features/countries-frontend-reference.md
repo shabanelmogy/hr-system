@@ -10,7 +10,7 @@
 | Project master | [Countries Feature Full Review](../../project/COUNTRIES_FEATURE_FULL_REVIEW.md) |
 | Web guide | [Server-Managed Feature Frontend Reference](server-managed-feature-reference.md) |
 | Web architecture | [Frontend Architecture Reference](../architecture/frontend-architecture-reference.md) |
-| Mobile profile/guides | [Countries profile](../../mobile-react/countries-mobile-reference.md), [architecture](../../mobile-react/MOBILE_ARCHITECTURE.md), [feature guide](../../mobile-react/MOBILE_FEATURE_GUIDE.md), [implementation guide](../../mobile-react/mobile-feature-implementation-guide.md), [style guide](../../mobile-react/MOBILE_STYLE_GUIDE.md) |
+| Mobile profile/guides | [Countries profile](../../mobile-react/countries-mobile-reference.md), [architecture](../../mobile-react/MOBILE_ARCHITECTURE.md), [feature guide](../../mobile-react/MOBILE_FEATURE_GUIDE.md), [style guide](../../mobile-react/MOBILE_STYLE_GUIDE.md) |
 | Backend workflow | [API Feature Development Workflow](../../api/API_FEATURE_DEVELOPMENT_WORKFLOW.md) |
 | API profile | [Countries API Implementation Profile](../../api/Countries_API_Implementation_Profile.md) |
 

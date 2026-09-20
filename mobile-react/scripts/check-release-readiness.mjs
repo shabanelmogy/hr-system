@@ -26,16 +26,27 @@ const local = runExpoConfig({
 assert(!local.error, `Local Expo config failed: ${local.error ?? ''}`);
 assert(local.extra?.eas?.projectId === '00000000-0000-4000-8000-000000000057', 'Local config must use the reserved local native project ID.');
 assert(local.extra?.eas?.observe?.dispatchingEnabled === false, 'Local config must disable Observe dispatching.');
+assert(local.extra?.release?.demoLoginEnabled === true, 'Local development config must enable demo login by default.');
 
 const easProjectId = '11111111-1111-4111-8111-111111111111';
+const preview = runExpoConfig({
+  ERP_LOCAL_NATIVE_BUILD: 'false', EAS_BUILD: 'true', EAS_BUILD_PROJECT_ID: easProjectId, EXPO_EAS_PROJECT_ID: '',
+  EXPO_PUBLIC_RELEASE_CHANNEL: 'preview', EXPO_PUBLIC_API_CONTRACT_VERSION: 'v1', EXPO_PUBLIC_APP_LINK_HOST: 'app.example.com',
+  EXPO_PUBLIC_DEMO_LOGIN_ENABLED: 'true',
+});
+assert(!preview.error, `Preview EAS Expo config failed: ${preview.error ?? ''}`);
+assert(preview.extra?.release?.demoLoginEnabled === true, 'Preview EAS config must enable demo login.');
+
 const eas = runExpoConfig({
   ERP_LOCAL_NATIVE_BUILD: 'false', EAS_BUILD: 'true', EAS_BUILD_PROJECT_ID: easProjectId, EXPO_EAS_PROJECT_ID: '',
   EXPO_PUBLIC_RELEASE_CHANNEL: 'production', EXPO_PUBLIC_API_CONTRACT_VERSION: 'v1', EXPO_PUBLIC_APP_LINK_HOST: 'app.example.com',
+  EXPO_PUBLIC_DEMO_LOGIN_ENABLED: 'false',
 });
 assert(!eas.error, `EAS Expo config failed: ${eas.error ?? ''}`);
 assert(eas.extra?.eas?.projectId === easProjectId, 'EAS config must use its build project ID.');
 assert(eas.extra?.eas?.observe?.dispatchingEnabled === true, 'EAS config must enable Observe dispatching.');
 assert(eas.extra?.release?.apiContractVersion === 'v1', 'Release metadata must declare API contract v1.');
+assert(eas.extra?.release?.demoLoginEnabled === false, 'Production EAS config must disable demo login.');
 assert(eas.ios?.associatedDomains?.includes('applinks:app.example.com'), 'iOS app-link association is missing.');
 
 const requiredPaths = ['/confirm-email', '/accept-invitation', '/reset-password'];
@@ -51,6 +62,8 @@ assert(easJson.build?.preview?.distribution === 'internal', 'Preview EAS profile
 assert(easJson.build?.preview?.uploadSourceMaps === true, 'Preview EAS profile must upload source maps.');
 assert(easJson.build?.production?.autoIncrement === true, 'Production EAS profile must auto-increment versions.');
 assert(easJson.build?.production?.uploadSourceMaps === true, 'Production EAS profile must upload source maps.');
+assert(easJson.build?.preview?.env?.EXPO_PUBLIC_DEMO_LOGIN_ENABLED === 'true', 'Preview EAS profile must enable demo login.');
+assert(easJson.build?.production?.env?.EXPO_PUBLIC_DEMO_LOGIN_ENABLED === 'false', 'Production EAS profile must disable demo login.');
 
 const missingHost = runExpoConfig({ ERP_LOCAL_NATIVE_BUILD: 'false', EAS_BUILD: 'true', EAS_BUILD_PROJECT_ID: easProjectId, EXPO_PUBLIC_APP_LINK_HOST: '' });
 assert(Boolean(missingHost.error) && missingHost.error.includes('EXPO_PUBLIC_APP_LINK_HOST'), 'EAS config must fail when the app-link host is absent.');

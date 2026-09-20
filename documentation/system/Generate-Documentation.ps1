@@ -31,6 +31,13 @@ function Assert-RepositoryPath {
         throw "$Label resolves outside the repository: $fullPath"
     }
 
+    $archiveRoot = [System.IO.Path]::GetFullPath((Join-Path $repositoryRoot 'documentation/old files'))
+    $archivePrefix = $archiveRoot.TrimEnd([System.IO.Path]::DirectorySeparatorChar) + [System.IO.Path]::DirectorySeparatorChar
+    if ($fullPath.Equals($archiveRoot, [System.StringComparison]::OrdinalIgnoreCase) -or
+        $fullPath.StartsWith($archivePrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+        throw "$Label cannot use archived documentation under 'documentation/old files': $fullPath"
+    }
+
     return $fullPath
 }
 

@@ -9,11 +9,13 @@ to a later milestone; **Excluded** means outside this module's contract.
 
 - Six-project module structure and explicit host registration.
 - Module-owned `crm` database schema and migration boundary.
-- Empty feature surface awaiting the first domain slice.
+- Appointments is an implemented CRM vertical slice across Domain/Application,
+  versioned API/CQRS, Web calendar/form flows, Mobile appointment management, and
+  focused tests. Broader CRM capabilities remain planned feature work.
 
 ## Planned
 
-1. Freeze the domain contract and ownership decisions.
+1. Freeze the next CRM domain contract and ownership decisions beyond Appointments.
 2. Implement one vertical slice through Domain, Application, Infrastructure,
    Presentation, and the applicable clients.
 3. Add migrations, authorization, observability, and end-to-end verification.

@@ -299,13 +299,13 @@
       "source": "app/(main)/administration/_layout.tsx",
       "path": "layout:/administration",
       "kind": "layout",
-      "currentOwner": "Platform/administration",
+      "currentOwner": "Platform/tenant-administration",
       "targetOwner": "Platform/tenant-administration",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "none",
-      "status": "mismatch",
-      "note": "The feature is Platform-owned but still has the legacy hr/administration module requirement.",
+      "status": "aligned",
+      "note": "Tenant administration is owned by the Platform module.",
       "currentRoutePolicy": {
         "kind": "inherited"
       },
@@ -323,13 +323,13 @@
       "source": "app/(main)/administration/index.tsx",
       "path": "/administration",
       "kind": "auth",
-      "currentOwner": "Platform/administration",
+      "currentOwner": "Platform/tenant-administration",
       "targetOwner": "Platform/tenant-administration",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The feature is Platform-owned but still has the legacy hr/administration module requirement.",
+      "status": "aligned",
+      "note": "Tenant administration is owned by the Platform module.",
       "currentRoutePolicy": {
         "kind": "anyOf",
         "anyOf": [
@@ -372,7 +372,7 @@
       },
       "currentModuleRequirement": {
         "moduleCode": "platform",
-        "submoduleCode": "operations"
+        "submoduleCode": "tenant-administration"
       },
       "targetModuleRequirement": {
         "moduleCode": "platform",
@@ -383,13 +383,13 @@
       "source": "app/(main)/administration/invitations.tsx",
       "path": "/administration/invitations",
       "kind": "auth",
-      "currentOwner": "Platform/administration",
+      "currentOwner": "Platform/tenant-administration",
       "targetOwner": "Platform/tenant-administration",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The feature is Platform-owned but still has the legacy hr/administration module requirement.",
+      "status": "aligned",
+      "note": "Tenant administration is owned by the Platform module.",
       "currentRoutePolicy": {
         "kind": "permissions",
         "permissions": [
@@ -404,7 +404,7 @@
       },
       "currentModuleRequirement": {
         "moduleCode": "platform",
-        "submoduleCode": "operations"
+        "submoduleCode": "tenant-administration"
       },
       "targetModuleRequirement": {
         "moduleCode": "platform",
@@ -415,13 +415,13 @@
       "source": "app/(main)/administration/offline-operations.tsx",
       "path": "/administration/offline-operations",
       "kind": "auth",
-      "currentOwner": "Platform/administration",
+      "currentOwner": "Platform/tenant-administration",
       "targetOwner": "Platform/tenant-administration",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The feature is Platform-owned but still has the legacy hr/administration module requirement.",
+      "status": "aligned",
+      "note": "Tenant administration is owned by the Platform module.",
       "currentRoutePolicy": {
         "kind": "permissions",
         "permissions": [
@@ -436,7 +436,7 @@
       },
       "currentModuleRequirement": {
         "moduleCode": "platform",
-        "submoduleCode": "operations"
+        "submoduleCode": "tenant-administration"
       },
       "targetModuleRequirement": {
         "moduleCode": "platform",
@@ -447,13 +447,13 @@
       "source": "app/(main)/administration/role-permissions/[id].tsx",
       "path": "/administration/role-permissions/:id",
       "kind": "dynamic",
-      "currentOwner": "Platform/administration",
+      "currentOwner": "Platform/tenant-administration",
       "targetOwner": "Platform/tenant-administration",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The feature is Platform-owned but still has the legacy hr/administration module requirement.",
+      "status": "aligned",
+      "note": "Tenant administration is owned by the Platform module.",
       "currentRoutePolicy": {
         "kind": "permissions",
         "permissions": [
@@ -468,7 +468,7 @@
       },
       "currentModuleRequirement": {
         "moduleCode": "platform",
-        "submoduleCode": "operations"
+        "submoduleCode": "tenant-administration"
       },
       "targetModuleRequirement": {
         "moduleCode": "platform",
@@ -479,13 +479,13 @@
       "source": "app/(main)/administration/roles.tsx",
       "path": "/administration/roles",
       "kind": "auth",
-      "currentOwner": "Platform/administration",
+      "currentOwner": "Platform/tenant-administration",
       "targetOwner": "Platform/tenant-administration",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The feature is Platform-owned but still has the legacy hr/administration module requirement.",
+      "status": "aligned",
+      "note": "Tenant administration is owned by the Platform module.",
       "currentRoutePolicy": {
         "kind": "permissions",
         "permissions": [
@@ -500,7 +500,7 @@
       },
       "currentModuleRequirement": {
         "moduleCode": "platform",
-        "submoduleCode": "operations"
+        "submoduleCode": "tenant-administration"
       },
       "targetModuleRequirement": {
         "moduleCode": "platform",
@@ -511,13 +511,13 @@
       "source": "app/(main)/advanced-tools/_layout.tsx",
       "path": "layout:/advanced-tools",
       "kind": "layout",
-      "currentOwner": "Platform/tools",
+      "currentOwner": "Shell/composite",
       "targetOwner": "Shell/composite",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "none",
-      "status": "mismatch",
-      "note": "The aggregate route spans Platform tenant administration and global operations.",
+      "status": "aligned",
+      "note": "Aggregate shell route; tenant administration and operations own their child routes.",
       "currentRoutePolicy": {
         "kind": "inherited"
       },
@@ -535,13 +535,13 @@
       "source": "app/(main)/advanced-tools/api-endpoints.tsx",
       "path": "/advanced-tools/api-endpoints",
       "kind": "auth",
-      "currentOwner": "Platform/tools",
+      "currentOwner": "Platform/operations",
       "targetOwner": "Platform/operations",
       "scope": "platform-global",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The API surface is Platform operations; the current route still requires an HR submodule.",
+      "status": "aligned",
+      "note": "Global operational diagnostics are owned by Platform/operations.",
       "currentRoutePolicy": {
         "kind": "roles",
         "roles": [
@@ -567,13 +567,13 @@
       "source": "app/(main)/advanced-tools/hangfire-dashboard.tsx",
       "path": "/advanced-tools/hangfire-dashboard",
       "kind": "auth",
-      "currentOwner": "Platform/tools",
+      "currentOwner": "Platform/operations",
       "targetOwner": "Platform/operations",
       "scope": "platform-global",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The API surface is Platform operations; the current route still requires an HR submodule.",
+      "status": "aligned",
+      "note": "Global operational diagnostics are owned by Platform/operations.",
       "currentRoutePolicy": {
         "kind": "permissions",
         "permissions": [
@@ -599,13 +599,13 @@
       "source": "app/(main)/advanced-tools/health-check.tsx",
       "path": "/advanced-tools/health-check",
       "kind": "auth",
-      "currentOwner": "Platform/tools",
+      "currentOwner": "Platform/operations",
       "targetOwner": "Platform/operations",
       "scope": "platform-global",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The API surface is Platform operations; the current route still requires an HR submodule.",
+      "status": "aligned",
+      "note": "Global operational diagnostics are owned by Platform/operations.",
       "currentRoutePolicy": {
         "kind": "roles",
         "roles": [
@@ -631,13 +631,13 @@
       "source": "app/(main)/advanced-tools/index.tsx",
       "path": "/advanced-tools",
       "kind": "auth",
-      "currentOwner": "Platform/tools",
+      "currentOwner": "Shell/composite",
       "targetOwner": "Shell/composite",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The aggregate route spans Platform tenant administration and global operations.",
+      "status": "aligned",
+      "note": "Aggregate shell route; tenant administration and operations own their child routes.",
       "currentRoutePolicy": {
         "kind": "anyOf",
         "anyOf": [
@@ -664,31 +664,44 @@
         ]
       },
       "targetRoutePolicy": {
-        "status": "deferred",
-        "owner": "Shell/composite",
-        "reason": "Phase 01 must split the aggregate route by its actual API owners."
+        "kind": "anyOf",
+        "anyOf": [
+          {
+            "permissions": [
+              "ViewChangeLogs"
+            ]
+          },
+          {
+            "permissions": [
+              "ViewLocalizations"
+            ]
+          },
+          {
+            "roles": [
+              "admin"
+            ]
+          },
+          {
+            "permissions": [
+              "ViewHangfireDashboard"
+            ]
+          }
+        ]
       },
-      "currentModuleRequirement": {
-        "moduleCode": "platform",
-        "submoduleCode": "operations"
-      },
-      "targetModuleRequirement": {
-        "status": "deferred",
-        "owner": "Shell/composite",
-        "reason": "Phase 01 must split the aggregate route by API owner."
-      }
+      "currentModuleRequirement": null,
+      "targetModuleRequirement": null
     },
     {
       "source": "app/(main)/advanced-tools/localization-api.tsx",
       "path": "/advanced-tools/localization-api",
       "kind": "auth",
-      "currentOwner": "CRM/appointments",
+      "currentOwner": "Platform/tenant-administration",
       "targetOwner": "Platform/tenant-administration",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The API surface is Platform tenant administration; the current route still requires an HR submodule.",
+      "status": "aligned",
+      "note": "Tenant administration owns track changes and localization settings.",
       "currentRoutePolicy": {
         "kind": "permissions",
         "permissions": [
@@ -714,13 +727,13 @@
       "source": "app/(main)/advanced-tools/track-changes.tsx",
       "path": "/advanced-tools/track-changes",
       "kind": "auth",
-      "currentOwner": "CRM/appointments",
+      "currentOwner": "Platform/tenant-administration",
       "targetOwner": "Platform/tenant-administration",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The API surface is Platform tenant administration; the current route still requires an HR submodule.",
+      "status": "aligned",
+      "note": "Tenant administration owns track changes and localization settings.",
       "currentRoutePolicy": {
         "kind": "permissions",
         "permissions": [
@@ -746,13 +759,13 @@
       "source": "app/(main)/apps/[moduleCode]/[submoduleCode].tsx",
       "path": "/apps/:moduleCode/:submoduleCode",
       "kind": "dynamic",
-      "currentOwner": "Dynamic catalog",
-      "targetOwner": "Installed module catalog",
+      "currentOwner": "Shell/dynamic",
+      "targetOwner": "Shell/dynamic",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "deferred",
-      "note": "Concrete module is entitlement-driven; Phase 01.",
+      "status": "aligned",
+      "note": "Dynamic module route is resolved through the server catalog and mobile registry.",
       "currentRoutePolicy": {
         "kind": "authenticated"
       },
@@ -774,13 +787,13 @@
       "source": "app/(main)/apps/[moduleCode]/index.tsx",
       "path": "/apps/:moduleCode",
       "kind": "dynamic",
-      "currentOwner": "Dynamic catalog",
-      "targetOwner": "Installed module catalog",
+      "currentOwner": "Shell/dynamic",
+      "targetOwner": "Shell/dynamic",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "deferred",
-      "note": "Concrete module is entitlement-driven; Phase 01.",
+      "status": "aligned",
+      "note": "Dynamic module route is resolved through the server catalog and mobile registry.",
       "currentRoutePolicy": {
         "kind": "authenticated"
       },
@@ -789,26 +802,24 @@
       },
       "currentModuleRequirement": {
         "status": "dynamic",
-        "moduleCode": ":moduleCode",
-        "submoduleCode": ":submoduleCode"
+        "moduleCode": ":moduleCode"
       },
       "targetModuleRequirement": {
         "status": "dynamic",
-        "moduleCode": ":moduleCode",
-        "submoduleCode": ":submoduleCode"
+        "moduleCode": ":moduleCode"
       }
     },
     {
       "source": "app/(main)/apps/index.tsx",
       "path": "/apps",
       "kind": "auth",
-      "currentOwner": "Dynamic catalog",
-      "targetOwner": "Installed module catalog",
+      "currentOwner": "Shell/composite",
+      "targetOwner": "Shell/composite",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "deferred",
-      "note": "Concrete module is entitlement-driven; Phase 01.",
+      "status": "aligned",
+      "note": "Dynamic module launcher; individual module routes own their entitlements.",
       "currentRoutePolicy": {
         "kind": "authenticated"
       },
@@ -822,13 +833,13 @@
       "source": "app/(main)/basic-data/_layout.tsx",
       "path": "layout:/basic-data",
       "kind": "layout",
-      "currentOwner": "ReferenceData/geography",
+      "currentOwner": "Shell/composite",
       "targetOwner": "Shell/composite",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "none",
-      "status": "mismatch",
-      "note": "The aggregate route spans HR, Platform, and ReferenceData; Phase 01 must remove the blanket HR module requirement.",
+      "status": "aligned",
+      "note": "Aggregate shell route; individual child routes own their module entitlements.",
       "currentRoutePolicy": {
         "kind": "inherited"
       },
@@ -846,13 +857,13 @@
       "source": "app/(main)/basic-data/geographical-information/_layout.tsx",
       "path": "layout:/basic-data/geographical-information",
       "kind": "layout",
-      "currentOwner": "ReferenceData/geography",
+      "currentOwner": "Shell/composite",
       "targetOwner": "Shell/composite",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "none",
-      "status": "mismatch",
-      "note": "The aggregate route spans HR, Platform, and ReferenceData; Phase 01 must remove the blanket HR module requirement.",
+      "status": "aligned",
+      "note": "Aggregate shell route; individual child routes own their module entitlements.",
       "currentRoutePolicy": {
         "kind": "inherited"
       },
@@ -886,7 +897,7 @@
       "targetRoutePolicy": {
         "kind": "permissions",
         "permissions": [
-          "AddressTypes:View"
+          "ViewAddressTypes"
         ]
       },
       "currentModuleRequirement": {
@@ -916,9 +927,9 @@
         ]
       },
       "targetRoutePolicy": {
-        "kind": "permissions",
-        "permissions": [
-          "Countries:View"
+        "kind": "roles",
+        "roles": [
+          "superAdmin"
         ]
       },
       "currentModuleRequirement": {
@@ -948,9 +959,9 @@
         ]
       },
       "targetRoutePolicy": {
-        "kind": "permissions",
-        "permissions": [
-          "Districts:View"
+        "kind": "roles",
+        "roles": [
+          "superAdmin"
         ]
       },
       "currentModuleRequirement": {
@@ -966,13 +977,13 @@
       "source": "app/(main)/basic-data/geographical-information/index.tsx",
       "path": "/basic-data/geographical-information",
       "kind": "auth",
-      "currentOwner": "ReferenceData/geography",
+      "currentOwner": "Shell/composite",
       "targetOwner": "Shell/composite",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The aggregate route spans HR, Platform, and ReferenceData; Phase 01 must remove the blanket HR module requirement.",
+      "status": "aligned",
+      "note": "Aggregate shell route; individual child routes own their module entitlements.",
       "currentRoutePolicy": {
         "kind": "anyOf",
         "anyOf": [
@@ -989,19 +1000,22 @@
         ]
       },
       "targetRoutePolicy": {
-        "status": "deferred",
-        "owner": "Shell/composite",
-        "reason": "Phase 01 must split the aggregate route by its actual API owners."
+        "kind": "anyOf",
+        "anyOf": [
+          {
+            "roles": [
+              "superAdmin"
+            ]
+          },
+          {
+            "permissions": [
+              "ViewAddressTypes"
+            ]
+          }
+        ]
       },
-      "currentModuleRequirement": {
-        "moduleCode": "hr",
-        "submoduleCode": "basic-data"
-      },
-      "targetModuleRequirement": {
-        "status": "deferred",
-        "owner": "Shell/composite",
-        "reason": "Phase 01 must split the aggregate route by API owner."
-      }
+      "currentModuleRequirement": null,
+      "targetModuleRequirement": null
     },
     {
       "source": "app/(main)/basic-data/geographical-information/states.tsx",
@@ -1021,9 +1035,9 @@
         ]
       },
       "targetRoutePolicy": {
-        "kind": "permissions",
-        "permissions": [
-          "States:View"
+        "kind": "roles",
+        "roles": [
+          "superAdmin"
         ]
       },
       "currentModuleRequirement": {
@@ -1039,13 +1053,13 @@
       "source": "app/(main)/basic-data/index.tsx",
       "path": "/basic-data",
       "kind": "auth",
-      "currentOwner": "ReferenceData/geography",
+      "currentOwner": "Shell/composite",
       "targetOwner": "Shell/composite",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The aggregate route spans HR, Platform, and ReferenceData; Phase 01 must remove the blanket HR module requirement.",
+      "status": "aligned",
+      "note": "Aggregate shell route; individual child routes own their module entitlements.",
       "currentRoutePolicy": {
         "kind": "anyOf",
         "anyOf": [
@@ -1064,31 +1078,36 @@
         ]
       },
       "targetRoutePolicy": {
-        "status": "deferred",
-        "owner": "Shell/composite",
-        "reason": "Phase 01 must split the aggregate route by its actual API owners."
+        "kind": "anyOf",
+        "anyOf": [
+          {
+            "permissions": [
+              "ViewAddressTypes",
+              "ViewCompanyGeographicScope",
+              "ViewOrganizationalStructure"
+            ]
+          },
+          {
+            "roles": [
+              "superAdmin"
+            ]
+          }
+        ]
       },
-      "currentModuleRequirement": {
-        "moduleCode": "hr",
-        "submoduleCode": "basic-data"
-      },
-      "targetModuleRequirement": {
-        "status": "deferred",
-        "owner": "Shell/composite",
-        "reason": "Phase 01 must split the aggregate route by API owner."
-      }
+      "currentModuleRequirement": null,
+      "targetModuleRequirement": null
     },
     {
       "source": "app/(main)/basic-data/organizational-structure/_layout.tsx",
       "path": "layout:/basic-data/organizational-structure",
       "kind": "layout",
-      "currentOwner": "HR/basic-data",
-      "targetOwner": "HR/basic-data",
+      "currentOwner": "Shell/composite",
+      "targetOwner": "Shell/composite",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "none",
       "status": "aligned",
-      "note": "Baseline entry; verify ownership and permissions against the API catalog in Phase 01.",
+      "note": "Aggregate shell route; individual child routes own their module entitlements.",
       "currentRoutePolicy": {
         "kind": "inherited"
       },
@@ -1282,7 +1301,7 @@
       "targetRoutePolicy": {
         "kind": "permissions",
         "permissions": [
-          "CompanyGeographicScope:View"
+          "ViewCompanyGeographicScope"
         ]
       },
       "currentModuleRequirement": {
@@ -1298,13 +1317,13 @@
       "source": "app/(main)/basic-data/organizational-structure/index.tsx",
       "path": "/basic-data/organizational-structure",
       "kind": "auth",
-      "currentOwner": "HR/basic-data",
-      "targetOwner": "HR/basic-data",
+      "currentOwner": "Shell/composite",
+      "targetOwner": "Shell/composite",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
       "status": "aligned",
-      "note": "Baseline entry; verify ownership and permissions against the API catalog in Phase 01.",
+      "note": "Aggregate shell route; individual child routes own their module entitlements.",
       "currentRoutePolicy": {
         "kind": "anyOf",
         "anyOf": [
@@ -1335,14 +1354,8 @@
           }
         ]
       },
-      "currentModuleRequirement": {
-        "moduleCode": "hr",
-        "submoduleCode": "basic-data"
-      },
-      "targetModuleRequirement": {
-        "moduleCode": "hr",
-        "submoduleCode": "basic-data"
-      }
+      "currentModuleRequirement": null,
+      "targetModuleRequirement": null
     },
     {
       "source": "app/(main)/basic-data/organizational-structure/job-descriptions.tsx",
@@ -1508,13 +1521,13 @@
       "source": "app/(main)/extras/_layout.tsx",
       "path": "layout:/extras",
       "kind": "layout",
-      "currentOwner": "Platform/tools",
+      "currentOwner": "Shell/composite",
       "targetOwner": "Shell/composite",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "none",
-      "status": "mismatch",
-      "note": "The current route has a blanket hr/administration requirement that does not match its API owner.",
+      "status": "aligned",
+      "note": "Aggregate shell route; files and CRM own their child routes.",
       "currentRoutePolicy": {
         "kind": "inherited"
       },
@@ -1532,7 +1545,7 @@
       "source": "app/(main)/extras/appointments.tsx",
       "path": "/extras/appointments",
       "kind": "auth",
-      "currentOwner": "Platform/tools",
+      "currentOwner": "CRM/appointments",
       "targetOwner": "CRM/appointments",
       "scope": "tenant/company",
       "offlineMode": "online-only",
@@ -1542,13 +1555,13 @@
       "currentRoutePolicy": {
         "kind": "permissions",
         "permissions": [
-          "ViewUsers"
+          "ViewAppointments"
         ]
       },
       "targetRoutePolicy": {
         "kind": "permissions",
         "permissions": [
-          "Appointments:View"
+          "ViewAppointments"
         ]
       },
       "currentModuleRequirement": {
@@ -1564,13 +1577,13 @@
       "source": "app/(main)/extras/files.tsx",
       "path": "/extras/files",
       "kind": "auth",
-      "currentOwner": "Platform/tools",
+      "currentOwner": "Platform/files",
       "targetOwner": "Platform/files",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The current route has a blanket hr/administration requirement that does not match its API owner.",
+      "status": "aligned",
+      "note": "File transfer is owned by Platform/files and remains online-authoritative.",
       "currentRoutePolicy": {
         "kind": "roles",
         "roles": [
@@ -1578,31 +1591,31 @@
         ]
       },
       "targetRoutePolicy": {
-        "status": "deferred",
-        "owner": "Platform/files",
-        "reason": "Phase 01 must split the aggregate route by its actual API owners."
+        "kind": "roles",
+        "roles": [
+          "admin"
+        ]
       },
       "currentModuleRequirement": {
         "moduleCode": "platform",
         "submoduleCode": "operations"
       },
       "targetModuleRequirement": {
-        "status": "deferred",
-        "owner": "Platform/files",
-        "reason": "Phase 01 must split the aggregate route by API owner."
+        "moduleCode": "platform",
+        "submoduleCode": "operations"
       }
     },
     {
       "source": "app/(main)/extras/index.tsx",
       "path": "/extras",
       "kind": "auth",
-      "currentOwner": "Platform/tools",
+      "currentOwner": "Shell/composite",
       "targetOwner": "Shell/composite",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
-      "status": "mismatch",
-      "note": "The current route has a blanket hr/administration requirement that does not match its API owner.",
+      "status": "aligned",
+      "note": "Aggregate shell route; files and CRM own their child routes.",
       "currentRoutePolicy": {
         "kind": "anyOf",
         "anyOf": [
@@ -1615,23 +1628,36 @@
             "permissions": [
               "ViewUsers"
             ]
+          },
+          {
+            "permissions": [
+              "ViewAppointments"
+            ]
           }
         ]
       },
       "targetRoutePolicy": {
-        "status": "deferred",
-        "owner": "Shell/composite",
-        "reason": "Phase 01 must split the aggregate route by its actual API owners."
+        "kind": "anyOf",
+        "anyOf": [
+          {
+            "roles": [
+              "admin"
+            ]
+          },
+          {
+            "permissions": [
+              "ViewUsers"
+            ]
+          },
+          {
+            "permissions": [
+              "ViewAppointments"
+            ]
+          }
+        ]
       },
-      "currentModuleRequirement": {
-        "moduleCode": "platform",
-        "submoduleCode": "operations"
-      },
-      "targetModuleRequirement": {
-        "status": "deferred",
-        "owner": "Shell/composite",
-        "reason": "Phase 01 must split the aggregate route by API owner."
-      }
+      "currentModuleRequirement": null,
+      "targetModuleRequirement": null
     },
     {
       "source": "app/(main)/finance/_layout.tsx",
@@ -1677,7 +1703,7 @@
       "targetRoutePolicy": {
         "kind": "permissions",
         "permissions": [
-          "FiscalYears:View"
+          "ViewFiscalYears"
         ]
       },
       "currentModuleRequirement": {
@@ -1709,7 +1735,7 @@
       "targetRoutePolicy": {
         "kind": "permissions",
         "permissions": [
-          "FiscalYears:View"
+          "ViewFiscalYears"
         ]
       },
       "currentModuleRequirement": {
@@ -2257,7 +2283,7 @@
       "members": [
         {
           "key": "token",
-          "pattern": "endpoint member token",
+          "pattern": "'auth/realtimeToken'",
           "verb": [
             "GET"
           ],
@@ -2282,7 +2308,7 @@
         },
         {
           "key": "companyHub",
-          "pattern": "endpoint member companyHub",
+          "pattern": "`${apiRootUrl}/hubs/company`",
           "verb": [
             "CONNECT"
           ],
@@ -2313,7 +2339,7 @@
       "members": [
         {
           "key": "base",
-          "pattern": "endpoint member base",
+          "pattern": "'fiscal-years'",
           "verb": [
             "GET",
             "POST"
@@ -2348,7 +2374,7 @@
         },
         {
           "key": "lookup",
-          "pattern": "endpoint member lookup",
+          "pattern": "'fiscal-years/lookup'",
           "verb": [
             "GET"
           ],
@@ -2373,7 +2399,7 @@
         },
         {
           "key": "byId",
-          "pattern": "endpoint member byId",
+          "pattern": "(id: number) => `fiscal-years/${id}`",
           "verb": [
             "GET",
             "PUT",
@@ -2418,7 +2444,7 @@
         },
         {
           "key": "restore",
-          "pattern": "endpoint member restore",
+          "pattern": "(id: number) => `fiscal-years/${id}/restore`",
           "verb": [
             "POST"
           ],
@@ -2443,7 +2469,7 @@
         },
         {
           "key": "open",
-          "pattern": "endpoint member open",
+          "pattern": "(id: number) => `fiscal-years/${id}/open`",
           "verb": [
             "POST"
           ],
@@ -2468,7 +2494,7 @@
         },
         {
           "key": "beginClosing",
-          "pattern": "endpoint member beginClosing",
+          "pattern": "(id: number) => `fiscal-years/${id}/begin-closing`",
           "verb": [
             "POST"
           ],
@@ -2493,7 +2519,7 @@
         },
         {
           "key": "close",
-          "pattern": "endpoint member close",
+          "pattern": "(id: number) => `fiscal-years/${id}/close`",
           "verb": [
             "POST"
           ],
@@ -2518,7 +2544,7 @@
         },
         {
           "key": "lock",
-          "pattern": "endpoint member lock",
+          "pattern": "(id: number) => `fiscal-years/${id}/lock`",
           "verb": [
             "POST"
           ],
@@ -2543,7 +2569,7 @@
         },
         {
           "key": "reopen",
-          "pattern": "endpoint member reopen",
+          "pattern": "(id: number) => `fiscal-years/${id}/reopen`",
           "verb": [
             "POST"
           ],
@@ -2574,7 +2600,7 @@
       "members": [
         {
           "key": "getAll",
-          "pattern": "endpoint member getAll",
+          "pattern": "'appointments/getAll'",
           "verb": [
             "GET"
           ],
@@ -2599,7 +2625,7 @@
         },
         {
           "key": "add",
-          "pattern": "endpoint member add",
+          "pattern": "'appointments/add'",
           "verb": [
             "POST"
           ],
@@ -2624,7 +2650,7 @@
         },
         {
           "key": "update",
-          "pattern": "endpoint member update",
+          "pattern": "'appointments/update'",
           "verb": [
             "PUT"
           ],
@@ -2649,7 +2675,7 @@
         },
         {
           "key": "delete",
-          "pattern": "endpoint member delete",
+          "pattern": "(id: number) => `appointments/delete?id=${id}`",
           "verb": [
             "DELETE"
           ],
@@ -2680,7 +2706,7 @@
       "members": [
         {
           "key": "base",
-          "pattern": "endpoint member base",
+          "pattern": "base",
           "verb": [
             "GET",
             "POST"
@@ -2715,7 +2741,7 @@
         },
         {
           "key": "bulk",
-          "pattern": "endpoint member bulk",
+          "pattern": "(resource: OrganizationalResource) => `${base(resource)}/bulk`",
           "verb": [
             "POST"
           ],
@@ -2740,7 +2766,7 @@
         },
         {
           "key": "lookup",
-          "pattern": "endpoint member lookup",
+          "pattern": "(resource: OrganizationalResource) => `${base(resource)}/lookup`",
           "verb": [
             "GET"
           ],
@@ -2765,7 +2791,7 @@
         },
         {
           "key": "byId",
-          "pattern": "endpoint member byId",
+          "pattern": "(resource: OrganizationalResource, id: number) => `${base(resource)}/${id}`",
           "verb": [
             "PUT",
             "DELETE"
@@ -2800,7 +2826,7 @@
         },
         {
           "key": "restore",
-          "pattern": "endpoint member restore",
+          "pattern": "(resource: OrganizationalResource, id: number) => `${base(resource)}/${id}/restore`",
           "verb": [
             "POST"
           ],
@@ -2825,7 +2851,7 @@
         },
         {
           "key": "approve",
-          "pattern": "endpoint member approve",
+          "pattern": "(id: number) => `${base('job-descriptions')}/${id}/approve`",
           "verb": [
             "POST"
           ],
@@ -2850,7 +2876,7 @@
         },
         {
           "key": "reject",
-          "pattern": "endpoint member reject",
+          "pattern": "(id: number) => `${base('job-descriptions')}/${id}/reject`",
           "verb": [
             "POST"
           ],
@@ -2875,7 +2901,7 @@
         },
         {
           "key": "changeLogs",
-          "pattern": "endpoint member changeLogs",
+          "pattern": "(resource: OrganizationalResource, id: number) => `${base(resource)}/${id}/change-logs`",
           "verb": [
             "GET"
           ],
@@ -2906,7 +2932,7 @@
       "members": [
         {
           "key": "dashboard.summary",
-          "pattern": "endpoint member dashboard.summary",
+          "pattern": "'recruitment/dashboard/summary'",
           "verb": [
             "GET"
           ],
@@ -2931,7 +2957,7 @@
         },
         {
           "key": "openings.base",
-          "pattern": "endpoint member openings.base",
+          "pattern": "'recruitment/openings'",
           "verb": [
             "GET"
           ],
@@ -2956,7 +2982,7 @@
         },
         {
           "key": "openings.byId",
-          "pattern": "endpoint member openings.byId",
+          "pattern": "(id: number) => `recruitment/openings/${id}`",
           "verb": [
             "GET"
           ],
@@ -2981,7 +3007,7 @@
         },
         {
           "key": "openings.open",
-          "pattern": "endpoint member openings.open",
+          "pattern": "(id: number) => `recruitment/openings/${id}/open`",
           "verb": [
             "POST"
           ],
@@ -3006,7 +3032,7 @@
         },
         {
           "key": "openings.pause",
-          "pattern": "endpoint member openings.pause",
+          "pattern": "(id: number) => `recruitment/openings/${id}/pause`",
           "verb": [
             "POST"
           ],
@@ -3031,7 +3057,7 @@
         },
         {
           "key": "openings.close",
-          "pattern": "endpoint member openings.close",
+          "pattern": "(id: number) => `recruitment/openings/${id}/close`",
           "verb": [
             "POST"
           ],
@@ -3056,7 +3082,7 @@
         },
         {
           "key": "candidates.base",
-          "pattern": "endpoint member candidates.base",
+          "pattern": "'recruitment/candidates'",
           "verb": [
             "POST"
           ],
@@ -3080,23 +3106,8 @@
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: HR API endpoint policy backed by HrPermissions.Recruitment."
         },
         {
-          "key": "candidates.byId",
-          "pattern": "endpoint member candidates.byId",
-          "verb": [
-            "UNUSED"
-          ],
-          "operations": [],
-          "currentOwner": "HR/recruitment",
-          "targetOwner": "HR/recruitment",
-          "permissionAuthority": "HR API endpoint policy backed by HrPermissions.Recruitment",
-          "scope": "tenant/company",
-          "offlineMode": "online-only",
-          "status": "deferred",
-          "note": "Unwired endpoint constant; no non-test caller was found."
-        },
-        {
           "key": "applications.base",
-          "pattern": "endpoint member applications.base",
+          "pattern": "'recruitment/applications'",
           "verb": [
             "GET",
             "POST"
@@ -3131,7 +3142,7 @@
         },
         {
           "key": "applications.byId",
-          "pattern": "endpoint member applications.byId",
+          "pattern": "(id: number) => `recruitment/applications/${id}`",
           "verb": [
             "GET"
           ],
@@ -3156,7 +3167,7 @@
         },
         {
           "key": "applications.moveStage",
-          "pattern": "endpoint member applications.moveStage",
+          "pattern": "(id: number) => `recruitment/applications/${id}/move-stage`",
           "verb": [
             "POST"
           ],
@@ -3181,7 +3192,7 @@
         },
         {
           "key": "applications.hire",
-          "pattern": "endpoint member applications.hire",
+          "pattern": "(id: number) => `recruitment/applications/${id}/hire`",
           "verb": [
             "POST"
           ],
@@ -3206,7 +3217,7 @@
         },
         {
           "key": "interviews.base",
-          "pattern": "endpoint member interviews.base",
+          "pattern": "'recruitment/interviews'",
           "verb": [
             "POST",
             "GET"
@@ -3240,23 +3251,8 @@
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: HR API endpoint policy backed by HrPermissions.Recruitment."
         },
         {
-          "key": "interviews.byId",
-          "pattern": "endpoint member interviews.byId",
-          "verb": [
-            "UNUSED"
-          ],
-          "operations": [],
-          "currentOwner": "HR/recruitment",
-          "targetOwner": "HR/recruitment",
-          "permissionAuthority": "HR API endpoint policy backed by HrPermissions.Recruitment",
-          "scope": "tenant/company",
-          "offlineMode": "online-only",
-          "status": "deferred",
-          "note": "Unwired endpoint constant; no non-test caller was found."
-        },
-        {
           "key": "interviews.complete",
-          "pattern": "endpoint member interviews.complete",
+          "pattern": "(id: number) => `recruitment/interviews/${id}/complete`",
           "verb": [
             "POST"
           ],
@@ -3281,7 +3277,7 @@
         },
         {
           "key": "interviews.evaluations",
-          "pattern": "endpoint member interviews.evaluations",
+          "pattern": "(id: number) => `recruitment/interviews/${id}/evaluations`",
           "verb": [
             "POST"
           ],
@@ -3306,7 +3302,7 @@
         },
         {
           "key": "interviews.scorecardTemplate",
-          "pattern": "endpoint member interviews.scorecardTemplate",
+          "pattern": "(id: number) => `recruitment/interviews/${id}/scorecard-template`",
           "verb": [
             "GET"
           ],
@@ -3331,7 +3327,7 @@
         },
         {
           "key": "offers.base",
-          "pattern": "endpoint member offers.base",
+          "pattern": "'recruitment/offers'",
           "verb": [
             "GET",
             "POST"
@@ -3365,23 +3361,8 @@
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: HR API endpoint policy backed by HrPermissions.Recruitment."
         },
         {
-          "key": "offers.byId",
-          "pattern": "endpoint member offers.byId",
-          "verb": [
-            "UNUSED"
-          ],
-          "operations": [],
-          "currentOwner": "HR/recruitment",
-          "targetOwner": "HR/recruitment",
-          "permissionAuthority": "HR API endpoint policy backed by HrPermissions.Recruitment",
-          "scope": "tenant/company",
-          "offlineMode": "online-only",
-          "status": "deferred",
-          "note": "Unwired endpoint constant; no non-test caller was found."
-        },
-        {
           "key": "offers.submit",
-          "pattern": "endpoint member offers.submit",
+          "pattern": "(id: number) => `recruitment/offers/${id}/submit`",
           "verb": [
             "POST"
           ],
@@ -3406,7 +3387,7 @@
         },
         {
           "key": "offers.approve",
-          "pattern": "endpoint member offers.approve",
+          "pattern": "(id: number) => `recruitment/offers/${id}/approve`",
           "verb": [
             "POST"
           ],
@@ -3431,7 +3412,7 @@
         },
         {
           "key": "offers.reject",
-          "pattern": "endpoint member offers.reject",
+          "pattern": "(id: number) => `recruitment/offers/${id}/reject`",
           "verb": [
             "POST"
           ],
@@ -3456,7 +3437,7 @@
         },
         {
           "key": "offers.issue",
-          "pattern": "endpoint member offers.issue",
+          "pattern": "(id: number) => `recruitment/offers/${id}/issue`",
           "verb": [
             "POST"
           ],
@@ -3480,38 +3461,8 @@
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: HR API endpoint policy backed by HrPermissions.Recruitment."
         },
         {
-          "key": "offers.accept",
-          "pattern": "endpoint member offers.accept",
-          "verb": [
-            "UNUSED"
-          ],
-          "operations": [],
-          "currentOwner": "HR/recruitment",
-          "targetOwner": "HR/recruitment",
-          "permissionAuthority": "HR API endpoint policy backed by HrPermissions.Recruitment",
-          "scope": "tenant/company",
-          "offlineMode": "online-only",
-          "status": "deferred",
-          "note": "Unwired endpoint constant; no non-test caller was found."
-        },
-        {
-          "key": "offers.decline",
-          "pattern": "endpoint member offers.decline",
-          "verb": [
-            "UNUSED"
-          ],
-          "operations": [],
-          "currentOwner": "HR/recruitment",
-          "targetOwner": "HR/recruitment",
-          "permissionAuthority": "HR API endpoint policy backed by HrPermissions.Recruitment",
-          "scope": "tenant/company",
-          "offlineMode": "online-only",
-          "status": "deferred",
-          "note": "Unwired endpoint constant; no non-test caller was found."
-        },
-        {
           "key": "requisitions.base",
-          "pattern": "endpoint member requisitions.base",
+          "pattern": "'recruitment/requisitions'",
           "verb": [
             "GET",
             "POST"
@@ -3546,7 +3497,7 @@
         },
         {
           "key": "requisitions.byId",
-          "pattern": "endpoint member requisitions.byId",
+          "pattern": "(id: number) => `recruitment/requisitions/${id}`",
           "verb": [
             "GET"
           ],
@@ -3571,7 +3522,7 @@
         },
         {
           "key": "requisitions.headcountSummary",
-          "pattern": "endpoint member requisitions.headcountSummary",
+          "pattern": "(positionId: number) => `recruitment/requisitions/positions/${positionId}/headcount-summary`",
           "verb": [
             "GET"
           ],
@@ -3596,7 +3547,7 @@
         },
         {
           "key": "requisitions.staffingRequestOptions",
-          "pattern": "endpoint member requisitions.staffingRequestOptions",
+          "pattern": "'recruitment/requisitions/staffing-request-options'",
           "verb": [
             "GET"
           ],
@@ -3621,7 +3572,7 @@
         },
         {
           "key": "requisitions.submit",
-          "pattern": "endpoint member requisitions.submit",
+          "pattern": "(id: number) => `recruitment/requisitions/${id}/submit`",
           "verb": [
             "POST"
           ],
@@ -3646,7 +3597,7 @@
         },
         {
           "key": "requisitions.approve",
-          "pattern": "endpoint member requisitions.approve",
+          "pattern": "(id: number) => `recruitment/requisitions/${id}/approve`",
           "verb": [
             "POST"
           ],
@@ -3671,7 +3622,7 @@
         },
         {
           "key": "requisitions.reject",
-          "pattern": "endpoint member requisitions.reject",
+          "pattern": "(id: number) => `recruitment/requisitions/${id}/reject`",
           "verb": [
             "POST"
           ],
@@ -3696,7 +3647,7 @@
         },
         {
           "key": "requisitions.cancel",
-          "pattern": "endpoint member requisitions.cancel",
+          "pattern": "(id: number) => `recruitment/requisitions/${id}/cancel`",
           "verb": [
             "POST"
           ],
@@ -3721,7 +3672,7 @@
         },
         {
           "key": "settings.base",
-          "pattern": "endpoint member settings.base",
+          "pattern": "'recruitment/settings'",
           "verb": [
             "GET",
             "PUT"
@@ -3762,7 +3713,7 @@
       "members": [
         {
           "key": "amendments",
-          "pattern": "endpoint member amendments",
+          "pattern": "'workforce-planning/envelope-amendments'",
           "verb": [
             "GET",
             "POST"
@@ -3797,7 +3748,7 @@
         },
         {
           "key": "amendmentById",
-          "pattern": "endpoint member amendmentById",
+          "pattern": "(id: number) => `workforce-planning/envelope-amendments/${id}`",
           "verb": [
             "GET"
           ],
@@ -3822,7 +3773,7 @@
         },
         {
           "key": "amendmentSubmit",
-          "pattern": "endpoint member amendmentSubmit",
+          "pattern": "(id: number) => `workforce-planning/envelope-amendments/${id}/submit`",
           "verb": [
             "POST"
           ],
@@ -3847,7 +3798,7 @@
         },
         {
           "key": "amendmentApprove",
-          "pattern": "endpoint member amendmentApprove",
+          "pattern": "(id: number) => `workforce-planning/envelope-amendments/${id}/approve`",
           "verb": [
             "POST"
           ],
@@ -3872,7 +3823,7 @@
         },
         {
           "key": "amendmentReject",
-          "pattern": "endpoint member amendmentReject",
+          "pattern": "(id: number) => `workforce-planning/envelope-amendments/${id}/reject`",
           "verb": [
             "POST"
           ],
@@ -3897,7 +3848,7 @@
         },
         {
           "key": "requests",
-          "pattern": "endpoint member requests",
+          "pattern": "'workforce-planning/staffing-requests'",
           "verb": [
             "GET",
             "POST"
@@ -3932,7 +3883,7 @@
         },
         {
           "key": "requestById",
-          "pattern": "endpoint member requestById",
+          "pattern": "(id: number) => `workforce-planning/staffing-requests/${id}`",
           "verb": [
             "GET"
           ],
@@ -3957,7 +3908,7 @@
         },
         {
           "key": "requestSubmit",
-          "pattern": "endpoint member requestSubmit",
+          "pattern": "(id: number) => `workforce-planning/staffing-requests/${id}/submit`",
           "verb": [
             "POST"
           ],
@@ -3982,7 +3933,7 @@
         },
         {
           "key": "requestApprove",
-          "pattern": "endpoint member requestApprove",
+          "pattern": "(id: number) => `workforce-planning/staffing-requests/${id}/approve`",
           "verb": [
             "POST"
           ],
@@ -4007,7 +3958,7 @@
         },
         {
           "key": "requestReject",
-          "pattern": "endpoint member requestReject",
+          "pattern": "(id: number) => `workforce-planning/staffing-requests/${id}/reject`",
           "verb": [
             "POST"
           ],
@@ -4032,7 +3983,7 @@
         },
         {
           "key": "requestClose",
-          "pattern": "endpoint member requestClose",
+          "pattern": "(id: number) => `workforce-planning/staffing-requests/${id}/close`",
           "verb": [
             "POST"
           ],
@@ -4063,7 +4014,7 @@
       "members": [
         {
           "key": "base",
-          "pattern": "endpoint member base",
+          "pattern": "'workforce-planning/budgets'",
           "verb": [
             "GET"
           ],
@@ -4088,7 +4039,7 @@
         },
         {
           "key": "create",
-          "pattern": "endpoint member create",
+          "pattern": "'workforce-planning/budgets'",
           "verb": [
             "POST"
           ],
@@ -4113,7 +4064,7 @@
         },
         {
           "key": "byId",
-          "pattern": "endpoint member byId",
+          "pattern": "(id: number) => `workforce-planning/budgets/${id}`",
           "verb": [
             "GET",
             "PUT"
@@ -4148,7 +4099,7 @@
         },
         {
           "key": "submit",
-          "pattern": "endpoint member submit",
+          "pattern": "(id: number) => `workforce-planning/budgets/${id}/submit`",
           "verb": [
             "POST"
           ],
@@ -4173,7 +4124,7 @@
         },
         {
           "key": "approve",
-          "pattern": "endpoint member approve",
+          "pattern": "(id: number) => `workforce-planning/budgets/${id}/approve`",
           "verb": [
             "POST"
           ],
@@ -4198,7 +4149,7 @@
         },
         {
           "key": "reject",
-          "pattern": "endpoint member reject",
+          "pattern": "(id: number) => `workforce-planning/budgets/${id}/reject`",
           "verb": [
             "POST"
           ],
@@ -4223,7 +4174,7 @@
         },
         {
           "key": "sourcePlans",
-          "pattern": "endpoint member sourcePlans",
+          "pattern": "'workforce-planning/budgets/source-plans'",
           "verb": [
             "GET"
           ],
@@ -4248,7 +4199,7 @@
         },
         {
           "key": "sourcePlanById",
-          "pattern": "endpoint member sourcePlanById",
+          "pattern": "(planId: number) => `workforce-planning/budgets/source-plans/${planId}`",
           "verb": [
             "GET"
           ],
@@ -4273,7 +4224,7 @@
         },
         {
           "key": "envelopes",
-          "pattern": "endpoint member envelopes",
+          "pattern": "'workforce-planning/position-envelopes'",
           "verb": [
             "GET"
           ],
@@ -4298,7 +4249,7 @@
         },
         {
           "key": "envelopeById",
-          "pattern": "endpoint member envelopeById",
+          "pattern": "(id: number) => `workforce-planning/position-envelopes/${id}`",
           "verb": [
             "GET"
           ],
@@ -4329,7 +4280,7 @@
       "members": [
         {
           "key": "base",
-          "pattern": "endpoint member base",
+          "pattern": "'workforce-planning/plans'",
           "verb": [
             "GET"
           ],
@@ -4354,7 +4305,7 @@
         },
         {
           "key": "create",
-          "pattern": "endpoint member create",
+          "pattern": "'workforce-planning/plans'",
           "verb": [
             "POST"
           ],
@@ -4379,7 +4330,7 @@
         },
         {
           "key": "byId",
-          "pattern": "endpoint member byId",
+          "pattern": "(id: number) => `workforce-planning/plans/${id}`",
           "verb": [
             "GET",
             "PUT",
@@ -4424,7 +4375,7 @@
         },
         {
           "key": "restore",
-          "pattern": "endpoint member restore",
+          "pattern": "(id: number) => `workforce-planning/plans/${id}/restore`",
           "verb": [
             "POST"
           ],
@@ -4449,7 +4400,7 @@
         },
         {
           "key": "submit",
-          "pattern": "endpoint member submit",
+          "pattern": "(id: number) => `workforce-planning/plans/${id}/submit`",
           "verb": [
             "POST"
           ],
@@ -4474,7 +4425,7 @@
         },
         {
           "key": "beginReview",
-          "pattern": "endpoint member beginReview",
+          "pattern": "(id: number) => `workforce-planning/plans/${id}/begin-review`",
           "verb": [
             "POST"
           ],
@@ -4499,7 +4450,7 @@
         },
         {
           "key": "approve",
-          "pattern": "endpoint member approve",
+          "pattern": "(id: number) => `workforce-planning/plans/${id}/approve`",
           "verb": [
             "POST"
           ],
@@ -4524,7 +4475,7 @@
         },
         {
           "key": "reject",
-          "pattern": "endpoint member reject",
+          "pattern": "(id: number) => `workforce-planning/plans/${id}/reject`",
           "verb": [
             "POST"
           ],
@@ -4549,7 +4500,7 @@
         },
         {
           "key": "revisions",
-          "pattern": "endpoint member revisions",
+          "pattern": "(id: number) => `workforce-planning/plans/${id}/revisions`",
           "verb": [
             "GET",
             "POST"
@@ -4590,7 +4541,7 @@
       "members": [
         {
           "key": "application",
-          "pattern": "endpoint member application",
+          "pattern": "(id: number) => `workforce-planning/trace/application/${id}`",
           "verb": [
             "GET"
           ],
@@ -4615,7 +4566,7 @@
         },
         {
           "key": "offer",
-          "pattern": "endpoint member offer",
+          "pattern": "(id: number) => `workforce-planning/trace/offer/${id}`",
           "verb": [
             "GET"
           ],
@@ -4640,7 +4591,7 @@
         },
         {
           "key": "employee",
-          "pattern": "endpoint member employee",
+          "pattern": "(id: number) => `workforce-planning/trace/employee/${id}`",
           "verb": [
             "GET"
           ],
@@ -4665,7 +4616,7 @@
         },
         {
           "key": "commitment",
-          "pattern": "endpoint member commitment",
+          "pattern": "'workforce-planning/trace/plan-commitment'",
           "verb": [
             "GET"
           ],
@@ -4696,7 +4647,7 @@
       "members": [
         {
           "key": "base",
-          "pattern": "endpoint member base",
+          "pattern": "'addresstypes'",
           "verb": [
             "GET",
             "POST"
@@ -4730,23 +4681,8 @@
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: ReferenceData AddressTypesController and ReferenceDataPermissions.TenantReferenceData."
         },
         {
-          "key": "lookup",
-          "pattern": "endpoint member lookup",
-          "verb": [
-            "UNUSED"
-          ],
-          "operations": [],
-          "currentOwner": "ReferenceData/addresses",
-          "targetOwner": "ReferenceData/addresses",
-          "permissionAuthority": "ReferenceData AddressTypesController and ReferenceDataPermissions.TenantReferenceData",
-          "scope": "tenant/company",
-          "offlineMode": "online-only",
-          "status": "deferred",
-          "note": "Unwired endpoint constant; no non-test caller was found."
-        },
-        {
           "key": "byId",
-          "pattern": "endpoint member byId",
+          "pattern": "(id: number) => `addresstypes/${id}`",
           "verb": [
             "GET",
             "PUT",
@@ -4790,23 +4726,8 @@
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: ReferenceData AddressTypesController and ReferenceDataPermissions.TenantReferenceData."
         },
         {
-          "key": "withAddresses",
-          "pattern": "endpoint member withAddresses",
-          "verb": [
-            "UNUSED"
-          ],
-          "operations": [],
-          "currentOwner": "ReferenceData/addresses",
-          "targetOwner": "ReferenceData/addresses",
-          "permissionAuthority": "ReferenceData AddressTypesController and ReferenceDataPermissions.TenantReferenceData",
-          "scope": "tenant/company",
-          "offlineMode": "online-only",
-          "status": "deferred",
-          "note": "Unwired endpoint constant; no non-test caller was found."
-        },
-        {
           "key": "restore",
-          "pattern": "endpoint member restore",
+          "pattern": "(id: number) => `addresstypes/${id}/restore`",
           "verb": [
             "POST"
           ],
@@ -4831,7 +4752,7 @@
         },
         {
           "key": "bulkArchive",
-          "pattern": "endpoint member bulkArchive",
+          "pattern": "'addresstypes/bulk-archive'",
           "verb": [
             "POST"
           ],
@@ -4856,7 +4777,7 @@
         },
         {
           "key": "bulkCreate",
-          "pattern": "endpoint member bulkCreate",
+          "pattern": "'addresstypes/bulk'",
           "verb": [
             "POST"
           ],
@@ -4887,7 +4808,7 @@
       "members": [
         {
           "key": "base",
-          "pattern": "endpoint member base",
+          "pattern": "'countries'",
           "verb": [
             "GET",
             "POST"
@@ -4922,7 +4843,7 @@
         },
         {
           "key": "lookup",
-          "pattern": "endpoint member lookup",
+          "pattern": "'countries/lookup'",
           "verb": [
             "GET"
           ],
@@ -4947,7 +4868,7 @@
         },
         {
           "key": "byId",
-          "pattern": "endpoint member byId",
+          "pattern": "(id: number) => `countries/${id}`",
           "verb": [
             "GET",
             "PUT",
@@ -4992,7 +4913,7 @@
         },
         {
           "key": "withStates",
-          "pattern": "endpoint member withStates",
+          "pattern": "(id: number) => `countries/${id}/states`",
           "verb": [
             "GET"
           ],
@@ -5017,7 +4938,7 @@
         },
         {
           "key": "restore",
-          "pattern": "endpoint member restore",
+          "pattern": "(id: number) => `countries/${id}/restore`",
           "verb": [
             "POST"
           ],
@@ -5042,7 +4963,7 @@
         },
         {
           "key": "bulkArchive",
-          "pattern": "endpoint member bulkArchive",
+          "pattern": "'countries/bulk-archive'",
           "verb": [
             "POST"
           ],
@@ -5067,7 +4988,7 @@
         },
         {
           "key": "bulkCreate",
-          "pattern": "endpoint member bulkCreate",
+          "pattern": "'countries/bulk'",
           "verb": [
             "POST"
           ],
@@ -5098,7 +5019,7 @@
       "members": [
         {
           "key": "base",
-          "pattern": "endpoint member base",
+          "pattern": "'districts'",
           "verb": [
             "GET",
             "POST"
@@ -5133,7 +5054,7 @@
         },
         {
           "key": "lookup",
-          "pattern": "endpoint member lookup",
+          "pattern": "(stateId?: number) => stateId == null ? 'districts/lookup' : `districts/lookup?stateId=${stateId}`",
           "verb": [
             "GET"
           ],
@@ -5158,7 +5079,7 @@
         },
         {
           "key": "byState",
-          "pattern": "endpoint member byState",
+          "pattern": "(stateId: number) => `districts/by-state/${stateId}`",
           "verb": [
             "GET"
           ],
@@ -5183,7 +5104,7 @@
         },
         {
           "key": "byId",
-          "pattern": "endpoint member byId",
+          "pattern": "(id: number) => `districts/${id}`",
           "verb": [
             "GET",
             "PUT",
@@ -5228,7 +5149,7 @@
         },
         {
           "key": "withAddresses",
-          "pattern": "endpoint member withAddresses",
+          "pattern": "(id: number) => `districts/${id}/addresses`",
           "verb": [
             "GET"
           ],
@@ -5253,7 +5174,7 @@
         },
         {
           "key": "restore",
-          "pattern": "endpoint member restore",
+          "pattern": "(id: number) => `districts/${id}/restore`",
           "verb": [
             "POST"
           ],
@@ -5278,7 +5199,7 @@
         },
         {
           "key": "bulkArchive",
-          "pattern": "endpoint member bulkArchive",
+          "pattern": "'districts/bulk-archive'",
           "verb": [
             "POST"
           ],
@@ -5303,7 +5224,7 @@
         },
         {
           "key": "bulkCreate",
-          "pattern": "endpoint member bulkCreate",
+          "pattern": "'districts/bulk'",
           "verb": [
             "POST"
           ],
@@ -5334,7 +5255,7 @@
       "members": [
         {
           "key": "base",
-          "pattern": "endpoint member base",
+          "pattern": "'states'",
           "verb": [
             "GET",
             "POST"
@@ -5369,7 +5290,7 @@
         },
         {
           "key": "lookup",
-          "pattern": "endpoint member lookup",
+          "pattern": "(countryId?: number) => countryId == null ? 'states/lookup' : `states/lookup?countryId=${countryId}`",
           "verb": [
             "GET"
           ],
@@ -5394,7 +5315,7 @@
         },
         {
           "key": "byCountry",
-          "pattern": "endpoint member byCountry",
+          "pattern": "(countryId: number) => `states/by-country/${countryId}`",
           "verb": [
             "GET"
           ],
@@ -5419,7 +5340,7 @@
         },
         {
           "key": "byId",
-          "pattern": "endpoint member byId",
+          "pattern": "(id: number) => `states/${id}`",
           "verb": [
             "GET",
             "PUT",
@@ -5464,7 +5385,7 @@
         },
         {
           "key": "withDistricts",
-          "pattern": "endpoint member withDistricts",
+          "pattern": "(id: number) => `states/${id}/districts`",
           "verb": [
             "GET"
           ],
@@ -5489,7 +5410,7 @@
         },
         {
           "key": "restore",
-          "pattern": "endpoint member restore",
+          "pattern": "(id: number) => `states/${id}/restore`",
           "verb": [
             "POST"
           ],
@@ -5514,7 +5435,7 @@
         },
         {
           "key": "bulkArchive",
-          "pattern": "endpoint member bulkArchive",
+          "pattern": "'states/bulk-archive'",
           "verb": [
             "POST"
           ],
@@ -5539,7 +5460,7 @@
         },
         {
           "key": "bulkCreate",
-          "pattern": "endpoint member bulkCreate",
+          "pattern": "'states/bulk'",
           "verb": [
             "POST"
           ],
@@ -5570,7 +5491,7 @@
       "members": [
         {
           "key": "users",
-          "pattern": "endpoint member users",
+          "pattern": "'users/getAll'",
           "verb": [
             "GET"
           ],
@@ -5604,7 +5525,7 @@
         },
         {
           "key": "usersPage",
-          "pattern": "endpoint member usersPage",
+          "pattern": "'users/getPage'",
           "verb": [
             "GET"
           ],
@@ -5629,7 +5550,7 @@
         },
         {
           "key": "createUser",
-          "pattern": "endpoint member createUser",
+          "pattern": "'users/add'",
           "verb": [
             "POST"
           ],
@@ -5654,7 +5575,7 @@
         },
         {
           "key": "companyOptions",
-          "pattern": "endpoint member companyOptions",
+          "pattern": "'users/getCompanyOptions'",
           "verb": [
             "GET"
           ],
@@ -5679,7 +5600,7 @@
         },
         {
           "key": "invitations",
-          "pattern": "endpoint member invitations",
+          "pattern": "'userinvitations/getAll'",
           "verb": [
             "GET"
           ],
@@ -5704,7 +5625,7 @@
         },
         {
           "key": "createInvitation",
-          "pattern": "endpoint member createInvitation",
+          "pattern": "'userinvitations/create'",
           "verb": [
             "POST"
           ],
@@ -5729,7 +5650,7 @@
         },
         {
           "key": "resendInvitation",
-          "pattern": "endpoint member resendInvitation",
+          "pattern": "(id: string) => `userinvitations/resend/${encodeURIComponent(id)}`",
           "verb": [
             "POST"
           ],
@@ -5754,7 +5675,7 @@
         },
         {
           "key": "revokeInvitation",
-          "pattern": "endpoint member revokeInvitation",
+          "pattern": "(id: string) => `userinvitations/revoke/${encodeURIComponent(id)}`",
           "verb": [
             "DELETE"
           ],
@@ -5779,7 +5700,7 @@
         },
         {
           "key": "updateUser",
-          "pattern": "endpoint member updateUser",
+          "pattern": "(id: string) => `users/update/${id}`",
           "verb": [
             "PUT"
           ],
@@ -5804,7 +5725,7 @@
         },
         {
           "key": "changePassword",
-          "pattern": "endpoint member changePassword",
+          "pattern": "(id: string) => `users/changePassword/${id}`",
           "verb": [
             "PUT"
           ],
@@ -5829,7 +5750,7 @@
         },
         {
           "key": "toggleUser",
-          "pattern": "endpoint member toggleUser",
+          "pattern": "(id: string) => `users/toggle/${id}`",
           "verb": [
             "PUT"
           ],
@@ -5854,7 +5775,7 @@
         },
         {
           "key": "unlockUser",
-          "pattern": "endpoint member unlockUser",
+          "pattern": "(id: string) => `users/unlock/${id}`",
           "verb": [
             "PUT"
           ],
@@ -5879,7 +5800,7 @@
         },
         {
           "key": "archiveUser",
-          "pattern": "endpoint member archiveUser",
+          "pattern": "(id: string) => `users/archive/${id}`",
           "verb": [
             "POST"
           ],
@@ -5904,7 +5825,7 @@
         },
         {
           "key": "restoreUser",
-          "pattern": "endpoint member restoreUser",
+          "pattern": "(id: string) => `users/restore/${id}`",
           "verb": [
             "POST"
           ],
@@ -5929,7 +5850,7 @@
         },
         {
           "key": "revokeSessions",
-          "pattern": "endpoint member revokeSessions",
+          "pattern": "(userId: string) =>\n    `auth/revokeRefreshTokenByUserId?userId=${encodeURIComponent(userId)}`",
           "verb": [
             "PUT"
           ],
@@ -5954,7 +5875,7 @@
         },
         {
           "key": "roles",
-          "pattern": "endpoint member roles",
+          "pattern": "'roles/getAll'",
           "verb": [
             "GET"
           ],
@@ -5979,7 +5900,7 @@
         },
         {
           "key": "createRole",
-          "pattern": "endpoint member createRole",
+          "pattern": "'roles/add'",
           "verb": [
             "POST"
           ],
@@ -6004,7 +5925,7 @@
         },
         {
           "key": "updateRole",
-          "pattern": "endpoint member updateRole",
+          "pattern": "'roles/update'",
           "verb": [
             "PUT"
           ],
@@ -6038,7 +5959,7 @@
         },
         {
           "key": "toggleRole",
-          "pattern": "endpoint member toggleRole",
+          "pattern": "(id: string) => `roles/toggle/${encodeURIComponent(id)}`",
           "verb": [
             "PUT"
           ],
@@ -6063,7 +5984,7 @@
         },
         {
           "key": "roleClaims",
-          "pattern": "endpoint member roleClaims",
+          "pattern": "(id: string) => `roles/getRoleClaims?roleId=${encodeURIComponent(id)}`",
           "verb": [
             "GET"
           ],
@@ -6088,7 +6009,7 @@
         },
         {
           "key": "updateRoleClaims",
-          "pattern": "endpoint member updateRoleClaims",
+          "pattern": "'roles/updateRoleClaims'",
           "verb": [
             "PUT"
           ],
@@ -6119,7 +6040,7 @@
       "members": [
         {
           "key": "login",
-          "pattern": "endpoint member login",
+          "pattern": "'auth/login'",
           "verb": [
             "POST"
           ],
@@ -6144,7 +6065,7 @@
         },
         {
           "key": "register",
-          "pattern": "endpoint member register",
+          "pattern": "'auth/register'",
           "verb": [
             "POST"
           ],
@@ -6169,7 +6090,7 @@
         },
         {
           "key": "forgetPassword",
-          "pattern": "endpoint member forgetPassword",
+          "pattern": "'auth/forgetPassword'",
           "verb": [
             "POST"
           ],
@@ -6194,7 +6115,7 @@
         },
         {
           "key": "resetPassword",
-          "pattern": "endpoint member resetPassword",
+          "pattern": "'auth/resetPassword'",
           "verb": [
             "POST"
           ],
@@ -6219,7 +6140,7 @@
         },
         {
           "key": "confirmEmail",
-          "pattern": "endpoint member confirmEmail",
+          "pattern": "'auth/confirmEmail'",
           "verb": [
             "POST"
           ],
@@ -6244,7 +6165,7 @@
         },
         {
           "key": "acceptInvitation",
-          "pattern": "endpoint member acceptInvitation",
+          "pattern": "'account-invitations/accept'",
           "verb": [
             "POST"
           ],
@@ -6269,7 +6190,7 @@
         },
         {
           "key": "resendConfirmationEmail",
-          "pattern": "endpoint member resendConfirmationEmail",
+          "pattern": "'auth/resendConfirmationEmail'",
           "verb": [
             "POST"
           ],
@@ -6294,7 +6215,7 @@
         },
         {
           "key": "selectTenant",
-          "pattern": "endpoint member selectTenant",
+          "pattern": "'auth/selectTenant'",
           "verb": [
             "POST"
           ],
@@ -6319,7 +6240,7 @@
         },
         {
           "key": "selectCompany",
-          "pattern": "endpoint member selectCompany",
+          "pattern": "'auth/selectCompany'",
           "verb": [
             "POST"
           ],
@@ -6344,7 +6265,7 @@
         },
         {
           "key": "switchCompany",
-          "pattern": "endpoint member switchCompany",
+          "pattern": "'auth/switchCompany'",
           "verb": [
             "POST"
           ],
@@ -6369,7 +6290,7 @@
         },
         {
           "key": "refreshToken",
-          "pattern": "endpoint member refreshToken",
+          "pattern": "'auth/refreshToken'",
           "verb": [
             "POST"
           ],
@@ -6394,7 +6315,7 @@
         },
         {
           "key": "logout",
-          "pattern": "endpoint member logout",
+          "pattern": "'auth/logOut'",
           "verb": [
             "POST"
           ],
@@ -6419,7 +6340,7 @@
         },
         {
           "key": "session",
-          "pattern": "endpoint member session",
+          "pattern": "'auth/session'",
           "verb": [
             "GET"
           ],
@@ -6444,7 +6365,7 @@
         },
         {
           "key": "userPhoto",
-          "pattern": "endpoint member userPhoto",
+          "pattern": "`${apiRootUrl}/AccountInfo/GetUserPhoto`",
           "verb": [
             "GET"
           ],
@@ -6475,7 +6396,7 @@
       "members": [
         {
           "key": "info",
-          "pattern": "endpoint member info",
+          "pattern": "`${accountInfoUrl}/GetInfo`",
           "verb": [
             "GET"
           ],
@@ -6500,7 +6421,7 @@
         },
         {
           "key": "photo",
-          "pattern": "endpoint member photo",
+          "pattern": "`${accountInfoUrl}/GetUserPhoto`",
           "verb": [
             "GET"
           ],
@@ -6525,7 +6446,7 @@
         },
         {
           "key": "updateInfo",
-          "pattern": "endpoint member updateInfo",
+          "pattern": "`${accountInfoUrl}/UpdateInfo`",
           "verb": [
             "PUT"
           ],
@@ -6550,7 +6471,7 @@
         },
         {
           "key": "updatePhoto",
-          "pattern": "endpoint member updatePhoto",
+          "pattern": "`${accountInfoUrl}/UpdateUserPicture`",
           "verb": [
             "PUT"
           ],
@@ -6575,7 +6496,7 @@
         },
         {
           "key": "changePassword",
-          "pattern": "endpoint member changePassword",
+          "pattern": "`${accountInfoUrl}/ChangePassword`",
           "verb": [
             "PUT"
           ],
@@ -6606,7 +6527,7 @@
       "members": [
         {
           "key": "accessible",
-          "pattern": "endpoint member accessible",
+          "pattern": "'modules/accessible'",
           "verb": [
             "GET"
           ],
@@ -6631,7 +6552,7 @@
         },
         {
           "key": "installed",
-          "pattern": "endpoint member installed",
+          "pattern": "'modules/installed'",
           "verb": [
             "GET"
           ],
@@ -6656,7 +6577,7 @@
         },
         {
           "key": "tenantEntitlements",
-          "pattern": "endpoint member tenantEntitlements",
+          "pattern": "'modules/tenant-entitlements'",
           "verb": [
             "GET"
           ],
@@ -6687,7 +6608,7 @@
       "members": [
         {
           "key": "list",
-          "pattern": "endpoint member list",
+          "pattern": "'notifications/getAll'",
           "verb": [
             "GET"
           ],
@@ -6712,7 +6633,7 @@
         },
         {
           "key": "unreadCount",
-          "pattern": "endpoint member unreadCount",
+          "pattern": "'notifications/getUnreadCount'",
           "verb": [
             "GET"
           ],
@@ -6737,7 +6658,7 @@
         },
         {
           "key": "markRead",
-          "pattern": "endpoint member markRead",
+          "pattern": "(id: number) => `notifications/markRead/${id}`",
           "verb": [
             "PATCH"
           ],
@@ -6762,7 +6683,7 @@
         },
         {
           "key": "markUnread",
-          "pattern": "endpoint member markUnread",
+          "pattern": "(id: number) => `notifications/markUnread/${id}`",
           "verb": [
             "PATCH"
           ],
@@ -6787,7 +6708,7 @@
         },
         {
           "key": "markAllRead",
-          "pattern": "endpoint member markAllRead",
+          "pattern": "'notifications/markAllRead'",
           "verb": [
             "PATCH"
           ],
@@ -6812,7 +6733,7 @@
         },
         {
           "key": "markAllUnread",
-          "pattern": "endpoint member markAllUnread",
+          "pattern": "'notifications/markAllUnread'",
           "verb": [
             "PATCH"
           ],
@@ -6837,7 +6758,7 @@
         },
         {
           "key": "dismiss",
-          "pattern": "endpoint member dismiss",
+          "pattern": "(id: number) => `notifications/dismiss/${id}`",
           "verb": [
             "DELETE"
           ],
@@ -6871,7 +6792,7 @@
         },
         {
           "key": "dismissAll",
-          "pattern": "endpoint member dismissAll",
+          "pattern": "'notifications/dismissAll'",
           "verb": [
             "DELETE"
           ],
@@ -6902,7 +6823,7 @@
       "members": [
         {
           "key": "policy",
-          "pattern": "endpoint member policy",
+          "pattern": "'/api/v1/offline-operations/policy'",
           "verb": [
             "GET",
             "PUT"
@@ -6943,7 +6864,7 @@
       "members": [
         {
           "key": "base",
-          "pattern": "endpoint member base",
+          "pattern": "'crystal-reports'",
           "verb": [
             "GET"
           ],
@@ -6959,16 +6880,16 @@
             }
           ],
           "currentOwner": "Platform/reporting",
-          "targetOwner": "Reporting/analytics",
+          "targetOwner": "Platform/reporting",
           "permissionAuthority": "Reporting API endpoint policy and ReportingPermissions.Reports",
           "scope": "tenant/company",
           "offlineMode": "online-only",
-          "status": "mismatch",
+          "status": "aligned",
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Reporting API endpoint policy and ReportingPermissions.Reports."
         },
         {
           "key": "render",
-          "pattern": "endpoint member render",
+          "pattern": "(id: string) => `crystal-reports/${id}/render`",
           "verb": [
             "POST"
           ],
@@ -6984,11 +6905,11 @@
             }
           ],
           "currentOwner": "Platform/reporting",
-          "targetOwner": "Reporting/analytics",
+          "targetOwner": "Platform/reporting",
           "permissionAuthority": "Reporting API endpoint policy and ReportingPermissions.Reports",
           "scope": "tenant/company",
           "offlineMode": "online-only",
-          "status": "mismatch",
+          "status": "aligned",
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Reporting API endpoint policy and ReportingPermissions.Reports."
         }
       ]
@@ -6999,7 +6920,7 @@
       "members": [
         {
           "key": "current",
-          "pattern": "endpoint member current",
+          "pattern": "'company-geographic-scope'",
           "verb": [
             "GET",
             "PUT"
@@ -7040,7 +6961,7 @@
       "members": [
         {
           "key": "getAll",
-          "pattern": "endpoint member getAll",
+          "pattern": "'tenantAdmins/getAll'",
           "verb": [
             "GET"
           ],
@@ -7065,7 +6986,7 @@
         },
         {
           "key": "getPage",
-          "pattern": "endpoint member getPage",
+          "pattern": "'tenantAdmins/getPage'",
           "verb": [
             "GET"
           ],
@@ -7090,7 +7011,7 @@
         },
         {
           "key": "create",
-          "pattern": "endpoint member create",
+          "pattern": "'tenantAdmins/create'",
           "verb": [
             "POST"
           ],
@@ -7115,7 +7036,7 @@
         },
         {
           "key": "update",
-          "pattern": "endpoint member update",
+          "pattern": "(id: string) => `tenantAdmins/update/${id}`",
           "verb": [
             "PUT"
           ],
@@ -7140,7 +7061,7 @@
         },
         {
           "key": "archive",
-          "pattern": "endpoint member archive",
+          "pattern": "(id: string) => `tenantAdmins/delete/${id}`",
           "verb": [
             "DELETE"
           ],
@@ -7165,7 +7086,7 @@
         },
         {
           "key": "restore",
-          "pattern": "endpoint member restore",
+          "pattern": "(id: string) => `tenantAdmins/restore/${id}`",
           "verb": [
             "POST"
           ],
@@ -7196,7 +7117,7 @@
       "members": [
         {
           "key": "getAll",
-          "pattern": "endpoint member getAll",
+          "pattern": "'tenants/getAll'",
           "verb": [
             "GET"
           ],
@@ -7221,7 +7142,7 @@
         },
         {
           "key": "getPage",
-          "pattern": "endpoint member getPage",
+          "pattern": "'tenants/getPage'",
           "verb": [
             "GET"
           ],
@@ -7246,7 +7167,7 @@
         },
         {
           "key": "create",
-          "pattern": "endpoint member create",
+          "pattern": "'tenants/create'",
           "verb": [
             "POST"
           ],
@@ -7271,7 +7192,7 @@
         },
         {
           "key": "update",
-          "pattern": "endpoint member update",
+          "pattern": "(id: string) => `tenants/update/${id}`",
           "verb": [
             "PUT"
           ],
@@ -7296,7 +7217,7 @@
         },
         {
           "key": "archive",
-          "pattern": "endpoint member archive",
+          "pattern": "(id: string) => `tenants/archive/${id}`",
           "verb": [
             "POST"
           ],
@@ -7321,7 +7242,7 @@
         },
         {
           "key": "restore",
-          "pattern": "endpoint member restore",
+          "pattern": "(id: string) => `tenants/restore/${id}`",
           "verb": [
             "POST"
           ],
@@ -7352,7 +7273,7 @@
       "members": [
         {
           "key": "getAll",
-          "pattern": "endpoint member getAll",
+          "pattern": "'files/getAll'",
           "verb": [
             "GET"
           ],
@@ -7377,7 +7298,7 @@
         },
         {
           "key": "uploadMany",
-          "pattern": "endpoint member uploadMany",
+          "pattern": "'files/uploadMany'",
           "verb": [
             "POST"
           ],
@@ -7402,7 +7323,7 @@
         },
         {
           "key": "download",
-          "pattern": "endpoint member download",
+          "pattern": "(storedFileName: string) => `files/download/${encodeURIComponent(storedFileName)}`",
           "verb": [
             "GET"
           ],
@@ -7427,7 +7348,7 @@
         },
         {
           "key": "stream",
-          "pattern": "endpoint member stream",
+          "pattern": "(id: string) => `files/stream/${encodeURIComponent(id)}`",
           "verb": [
             "GET"
           ],
@@ -7452,7 +7373,7 @@
         },
         {
           "key": "delete",
-          "pattern": "endpoint member delete",
+          "pattern": "(storedFileName: string) => `files/delete/${encodeURIComponent(storedFileName)}`",
           "verb": [
             "DELETE"
           ],
@@ -7483,7 +7404,7 @@
       "members": [
         {
           "key": "get",
-          "pattern": "endpoint member get",
+          "pattern": "(culture: LocalizationCulture) => `localization/getLocalization/${culture}`",
           "verb": [
             "GET"
           ],
@@ -7508,7 +7429,7 @@
         },
         {
           "key": "update",
-          "pattern": "endpoint member update",
+          "pattern": "'localization/updateLocalizationKey'",
           "verb": [
             "PUT"
           ],
@@ -7539,7 +7460,7 @@
       "members": [
         {
           "key": "health",
-          "pattern": "endpoint member health",
+          "pattern": "'health'",
           "verb": [
             "GET"
           ],
@@ -7564,7 +7485,7 @@
         },
         {
           "key": "backgroundJobs",
-          "pattern": "endpoint member backgroundJobs",
+          "pattern": "'backgroundJobs/getDashboard'",
           "verb": [
             "GET"
           ],
@@ -7589,7 +7510,7 @@
         },
         {
           "key": "swagger",
-          "pattern": "endpoint member swagger",
+          "pattern": "'swagger/index.html'",
           "verb": [
             "GET"
           ],
@@ -7614,7 +7535,7 @@
         },
         {
           "key": "hangfireDashboard",
-          "pattern": "endpoint member hangfireDashboard",
+          "pattern": "'hangfire'",
           "verb": [
             "GET"
           ],
@@ -7645,7 +7566,7 @@
       "members": [
         {
           "key": "all",
-          "pattern": "endpoint member all",
+          "pattern": "'entityChangeLogs/getAllChangesLogs'",
           "verb": [
             "GET"
           ],
@@ -7660,12 +7581,12 @@
               "permissionAuthority": "Platform EntityChangeLogsController and PlatformPermissions.ViewChangeLogs"
             }
           ],
-          "currentOwner": "Platform/tools",
+          "currentOwner": "Platform/tenant-administration",
           "targetOwner": "Platform/tenant-administration",
           "permissionAuthority": "Platform EntityChangeLogsController and PlatformPermissions.ViewChangeLogs",
           "scope": "tenant/company",
           "offlineMode": "online-only",
-          "status": "mismatch",
+          "status": "aligned",
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform EntityChangeLogsController and PlatformPermissions.ViewChangeLogs."
         }
       ]
